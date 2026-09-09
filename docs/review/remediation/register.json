@@ -8,7 +8,7 @@
     "infrastructure": "eac591fb060458ebb6c6ba34599309e8c424bd08",
     "trace": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
   },
-  "scope": "Nur Planung; keine funktionale Behebung oder neue Laufzeitverifikation.",
+  "scope": "Aktive Umsetzung. Historische Quellen unverändert; aktueller Status separat pro Finding. Keine Deployments, Merges oder CI-Auslösung.",
   "counts": {
     "pipeline": 103,
     "trace": 17,
@@ -23,7 +23,7 @@
       "root_fix": "Wire-/Typverträge vereinheitlichen, JSON vor rekursiver Verarbeitung budgetieren; Registryinstanzen unabhängig halten. Unbenutzte Altverträge erst nach belegter Consumerprüfung entfernen.",
       "acceptance": "Originalvalidatoren und Generatoren prüfen gültige/ungültige Werte, Tiefen-/Zyklusgrenzen, wiederholten Registryaufbau und echte Paketbuilds; keine Dummyregistrierung zum Bestehen alter Tests.",
       "verification_environment": "lokal; benötigte Sprachtoolchains sichtbar nachweisen",
-      "status": "geplant",
+      "status": "in Bearbeitung",
       "owner": null,
       "finding_ids": [
         "PCR-AGENT-CONTRACT-001",
@@ -50,7 +50,7 @@
       "root_fix": "Atomare Besitzwechsel und dauerhafte Ergebnis-/Projektionsverträge herstellen; fremde Objektmutation ausschließen; ungewisse externe Aktionen abgleichen.",
       "acceptance": "Echte konkurrierende Prozesse, SIGKILL und gültige Journalpräfixe: kein paralleler kritischer Abschnitt, kein verlorener Wait/Artefaktzustand, manipulierte Persistenz abgelehnt; Restart führt zum identischen Zustand.",
       "verification_environment": "lokale Prozesse/Dateisystem; externe Reconciliation später als Integration",
-      "status": "geplant",
+      "status": "in Bearbeitung",
       "owner": null,
       "finding_ids": [
         "PCR-EFFECT-001",
@@ -72,7 +72,7 @@
       "root_fix": "Gemeinsamen Worker-Vertrag von Engines trennen; absolute Deadline über Dispatch, Capabilityarbeit, Import und Abschluss durchreichen; echte Prozessbäume beenden und Pipefehler behandeln.",
       "acceptance": "Originalprozesse mit früh geschlossenem stdin, offenem Kindprozess, UTF-8-Chunkgrenze, verlorener Submitantwort und hängendem Download: kein Hostcrash, kein verwaister Auftrag, wirksames Ressourcen-/Zeitlimit und eindeutiger Outcome.",
       "verification_environment": "lokal soweit Runtime vorhanden; echte Remote-/Browser-/Sandboxintegration separat",
-      "status": "geplant",
+      "status": "in Bearbeitung",
       "owner": null,
       "finding_ids": [
         "PCR-BUSTER-ENGINE-001",
@@ -152,7 +152,7 @@
       "root_fix": "Ausgeführt/skipped/failed/blocked unterscheiden, Pflichtumfang explizit binden; keine All-skipped/No-op-Passes. Originale Ursachen in Parsern, Providern und Fehlerdispositionen beheben.",
       "acceptance": "Echte Testcommands/Reports und Originalimporte: all-skipped, leere Suites und null Requests erfüllen keine Pflicht; Interaktionsfehler früherer Module verhindert kumulativen Abschluss trotz grünem letztem Modul. Lintabbruch und Repositorygrenzen prüfen.",
       "verification_environment": "lokale Originaltools, Browser/BuildKit/Kubernetes je Provider; fehlende Dienste blockieren nur ihren Nachweis",
-      "status": "geplant",
+      "status": "in Bearbeitung",
       "owner": null,
       "finding_ids": [
         "PATH-T11-001",
@@ -220,7 +220,7 @@
       "root_fix": "Operationen verlustfrei definieren, Patchkomposition und Editor-Roundtrip korrigieren; Assets konsistent auflösen und Runtimecache begrenzen.",
       "acceptance": "Originaldomain/Renderer: Move-in-Nachkommen abweisen, nichtleeren Baum duplizieren, unabhängige Eigenschaften bewahren; unveränderten Editor-Roundtrip und Pagination mit echtem Browser prüfen.",
       "verification_environment": "lokale Domainprüfungen; Browser-/Studiointegration erforderlich",
-      "status": "geplant",
+      "status": "in Bearbeitung",
       "owner": null,
       "finding_ids": [
         "PCR-PRISM-DOMAIN-001",
@@ -400,7 +400,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP01",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -419,18 +419,24 @@
       "family": "pipeline",
       "severity": "niedrig",
       "work_package": "WP01",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "b39d0e16c171b3be237b3288beb5a6dae5dc332d",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/registry.md",
+          "summary": "Real registry/default/canonical-ref isolation and package syntax rejection; all24 capability-security assertions; original relevant gates/typecheck/lint; independent review."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/contract.plugin-system.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-CONTRACT-PLUGIN-001 — Leeres Plugin passiert die Manifestvalidierung\n\n- **Niedrig, nachgewiesener Defekt:** begrenzter Konfigurationsfehler, kein\n  Sicherheitsbypass daraus abgeleitet.\n- **Beleg:** Schema pluginManifest.anyOf:335–341; Zweige für optionale\n  testProviders/reportAdapters ohne required. Parser schema.ts:44–61 übernimmt\n  Schemaentscheid; build.ts:231–295 fügt Paket hinzu, überspringt leere Schleifen.\n- **Auslöser/Ablauf:** gültige Paketmetadaten mit drei leeren Pflichtarrays und\n  ohne optionale Arrays. Optionaler anyOf-Zweig ist bei Abwesenheit wahr.\n- **Auswirkung:** leeres Plugin wird nicht an der vorgesehenen Grenze abgewiesen;\n  fehlende Funktion fällt erst beim späteren Aufrufer auf.\n- **Ursachenbehebung:** jeder anyOf-Zweig muss die zugehörige nichtleere Surface\n  auch als Pflichtfeld verlangen; keine Registry-Kompatibilitätssonderregel.\n- **Echter Nachweis:** [Reproduktion](../evidence/plugin-contract-sdk-repro.mjs)\n  ruft Originalparser auf; [Ausgabe](../evidence/plugin-contract-sdk-repro.txt).\n  Regression: Matrix fehlender/leerer/gefüllter Arrays gegen denselben Parser;\n  alle fünf einzelnen Surfaces müssen weiterhin gültig sein.\n\nWeitere offene Fragen sind implementationsabhängige Invarianten, keine fehlenden\nPrüfpfade dieses Datenvertrags. Zuständige Core-Reviews bleiben separat.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Betroffene Gesamtintegration und erforderliche Betriebsnachweise im Paketabschluss durchführen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe."
     },
     {
       "id": "PCR-PACKAGES-001",
@@ -438,18 +444,24 @@
       "family": "pipeline",
       "severity": "niedrig",
       "work_package": "WP01",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "b39d0e16c171b3be237b3288beb5a6dae5dc332d",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/registry.md",
+          "summary": "Real registry/default/canonical-ref isolation and package syntax rejection; all24 capability-security assertions; original relevant gates/typecheck/lint; independent review."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.packages.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-PACKAGES-001 — Report-Adapter umgehen Installations-Syntaxprüfung\n\n- **Niedrig, nachgewiesener Defekt:** ungültiges Paket als installiert bestätigt,\n  spätere Ausführung kann nicht starten. Kein Codeausführungsbypass behauptet.\n- **Beleg:** install.ts:113–142 validateModules iteriert stages/observers/\n  testProviders, nicht reportAdapters. validatePackage:166 ruft diese Auswahl\n  nach Registrybuild auf; Registrybuild prüft Reportmoduldatei, nicht Syntax.\n- **Auslöser/Ablauf:** korrektes ReportAdapter-Manifest und allowgelisteter\n  Digest, Modul mit `export function parse( {`. Originalinstaller kopiert und\n  bestätigt es, statt Syntaxfehler zu melden.\n- **Auswirkung:** beabsichtigte Validierung aller ausführbaren Surfaces vor\n  Paketaufnahme unvollständig; Fehler wird in späteren Reportauswertungspfad\n  verschoben. Aktive produktive Installcaller nicht gefunden, begrenzter Grad.\n- **Ursachenbehebung:** gemeinsame vollständige Enumeration ausführbarer\n  Surfaces und deren gebündelter Importclosure für Vorprüfung verwenden;\n  dabei keine Pluginimporte auf trusted Host ausführen.\n- **Echter Nachweis:** [Repro](../evidence/install-report-syntax.mjs) verwendet\n  Originalinstaller/Registry und echte Dateien, Log oben. Regression muss alle\n  erlaubten Surfaces mit gültiger/ungültiger Syntax prüfen und darf nach\n  Fehler kein Zielpaket hinterlassen. Keine Dummy-Stage als Workaround.\n\nRestunsicherheit: tatsächlicher Operatorpfad und spätere sichere Aktivierung,\nkeine ungelesenen Installationspfade. Gemeinsamer EmptyManifest-Schemafehler\nverbleibt bei [contract.plugin-system](contract.plugin-system.md).\n\nNachprüfung: Phase11 Originaltest inzwischen ausgeführt; Installation/Trustaufbau\nlaufen bis zur ersten isolierten Invocation, dann unbehandeltes EPIPE. Restliche\nAssertions nicht erreicht; [Isolationreview](foundation.isolation.md) führt die\nUrsache PCR-ISOLATION-001 und Umgebungsblocker. Kein kompletter Phase11-Pass.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Betroffene Gesamtintegration und erforderliche Betriebsnachweise im Paketabschluss durchführen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe."
     },
     {
       "id": "PCR-PRISM-CONTRACT-001",
@@ -457,7 +469,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP01",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -476,7 +488,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP01",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -495,10 +507,15 @@
       "family": "pipeline",
       "severity": "niedrig",
       "work_package": "WP01",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "b85b4c18fedcfb5a509295c082d59aab631b0617",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/contracts.md",
+          "summary": "SDK/prompt tests and builds; real artifact/journal and Git consumers; 100 accepted JSON byte compatibility probes; independent review."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/lib.prompt-contract.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## 12. PCR-PROMPT-001 — Akzeptierte Nicht-JSON-Eigenschaften gehen verloren\n\n- Schweregrad: niedrig; Bibliothek derzeit ohne Produktionsaufrufer. Bei späterer\n  Nutzung können Evidenz verloren gehen und wiederholte Serialisierungen abweichen.\n- Evidenzklasse: nachgewiesener Defekt, reproduziert an Originalimplementierung.\n- Beleg: `src/index.ts:48–63` prüft Array-Sparsity nur über Anzahl enumerable\n  Keys und liest Records mit `Object.keys` / `value[key]`; `:102–107` serialisiert\n  das Ergebnis. Pfade relativ zur oben genannten Komponente.\n- Auslöser: `new Array(1)` mit zusätzlichem enumerable `extra` hat Keys-Anzahl 1,\n  passiert die Prüfung und wird `[null]`. Symbolwerte werden zu `{}`. Ein Getter,\n  der seinen Zähler erhöht, erzeugt bei zwei Aufrufen unterschiedliche JSON-Werte.\n- Auswirkung: stiller Evidenzverlust und gebrochener Determinismus für akzeptierte\n  Eingaben; kein nachgewiesener Produktionsvorfall.\n- Ursache beheben: vorzugsweise ungenutzte Bibliothek nach Referenzprüfung entfernen.\n  Falls beibehalten: ausschließlich eigene Data-Properties zulassen, `Reflect.ownKeys`\n  und Deskriptoren prüfen, jeden Array-Index auf Existenz prüfen und zusätzliche\n  Eigenschaften ablehnen; Getter nicht ausführen.\n- Regression: Reproduktion in echten Serializer-Test überführen; alle drei\n  problematischen Eingaben müssen gezielt abgelehnt werden. Vorhandene normale\n  JSON-Golden-Ausgabe unverändert erhalten.",
@@ -506,9 +523,10 @@
       "unresolved_code_references": [
         "src/index.ts:48–63"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Betroffene Gesamtintegration und erforderliche Betriebsnachweise im Paketabschluss durchführen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe."
     },
     {
       "id": "PCR-REGISTRY-001",
@@ -516,10 +534,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP01",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "b39d0e16c171b3be237b3288beb5a6dae5dc332d",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/registry.md",
+          "summary": "Real registry/default/canonical-ref isolation and package syntax rejection; all24 capability-security assertions; original relevant gates/typecheck/lint; independent review."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.registry.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## 12. PCR-REGISTRY-001 — Globale Ajv-ID verhindert erneuten Registryaufbau\n\n- **Schweregrad: mittel.** Gültige Plugin-Konfiguration mit `$id` kann im selben\n  langlebigen Prozess nur einmal registriert werden; weiterer Start/Build bricht\n  ab. Die Auswirkung ist Verfügbarkeit, keine nachgewiesene Rechteausweitung.\n- **Einordnung: nachgewiesener Defekt.** `schema.ts:31–40,64–83` hält Ajv global,\n  parst Schemas bei jeder Registrierung in neue Objekte und compile ruft addSchema\n  mit derselben `$id` erneut auf. `build.ts` registriert referenzierte Schemas\n  pro Paket bei jedem Build; Nova `prepareRuntime` baut pro Vorbereitung neu.\n- **Auslöser:** zweimal dasselbe gültige Schema mit `$id` über\n  validateReferencedSchema laden. Zweiter Aufruf wirft REGISTRY_MANIFEST_INVALID\n  mit „schema with key or id … already exists“. Originalrepro\n  [registry-schema-reload.mjs](../evidence/registry-schema-reload.mjs), keine Ajv-\n  Ersatzimplementierung. Aktive Builtins brauchen nicht alle solche referenzierten\n  IDs; eine flächendeckende aktuelle Produktionsstörung wird nicht behauptet.\n- **Ursachenbehebung:** Validatorinstanzen/Referenzen an unveränderlichen\n  Registrysnapshot bzw. geprüften Schemadigest binden. Gleiche Inhalte sicher\n  wiederverwenden, Änderungen in neuem Snapshot isolieren; keine pauschale\n  Fehlerunterdrückung und kein Entfernen gültiger `$id`-Informationen.\n- **Regression:** reales Paket mit referenziertem `$id`-Schema zweimal entdecken,\n  bauen und Config validieren; beide Starts erfolgreich und gleicher Digest.\n  Danach neue Paketversion mit verändertem Schema: neuer Snapshot wendet neues\n  Schema an, alter Snapshot bleibt unverändert. Ebenfalls zwei getrennte Pakete\n  mit gleichlautender ID und verschiedenem Inhalt auf definierte Konfliktregel\n  prüfen. Bisher Repro auf Originalschemafunktion; kompletter Mehrfachstarttest\n  und geänderte Snapshotvalidatoren nicht ausgeführt.\n\n### PCR-REGISTRY-002 — Securitytest erreicht seine Autorisierungsfälle nicht\n\n- **Niedrig, nachgewiesener Testdefekt:** vorhandener Sicherheitstest bricht vor\n  seinem Zyklus- und 24-Capability-Dispatchblock ab; das ist eine Nachweislücke,\n  kein Nachweis einer produktiven Autorisierungsumgehung.\n- **Beleg/Auslöser:** check-plugin-system-v2-capability-security.mjs:163–180\n  erwartet Ambiguität für artifacts.write, aktiviert project-summary aber ohne\n  dessen zuerst angeforderte artifacts.read-Providerauswahl. capabilities.ts:110\n  liefert deshalb REGISTRY_CAPABILITY_PROVIDER_MISSING, Assertion scheitert.\n  Originalausführung Exit1 in registry-tests.txt. Vorherige Mapping-/Lintgrant-\n  Assertions liefen; die späteren Symlink-/Invocationfälle wurden nur gelesen.\n- **Ursachenbehebung:** den Ambiguitätsfall mit vollständigen echten sonstigen\n  Grants/Providern aufbauen und Zielcapability isoliert variieren. Sicherheits-\n  fälle unabhängig testbar machen, damit ein Bestandsdrift nicht alle verdeckt.\n- **Regression:** unveränderte Produktimplementierung mit korrigierter Policy-\n  Fixture des echten Registrytests; anschließend gesamte Autorisierungsmatrix\n  ausführen. Kein Entfernen der produktiven artifacts.read-Anforderung oder\n  Ersatzprovider, um die bisherige Fixture grün zu bekommen.\n\nIsolationsgegenstelle abgeschlossen: [foundation.isolation](foundation.isolation.md)\nführt PCR-ISOLATION-001 bis004 (Hostpipefehler, Supervisorbeendigung, UTF-8,\nMemorygrenze). Externe Registryaktivierung übernimmt diese Risiken.",
@@ -528,9 +551,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/common/plugin-runtime/foundation/registry/build.ts"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Betroffene Gesamtintegration und erforderliche Betriebsnachweise im Paketabschluss durchführen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe."
     },
     {
       "id": "PCR-REGISTRY-002",
@@ -538,18 +562,24 @@
       "family": "pipeline",
       "severity": "niedrig",
       "work_package": "WP01",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "b39d0e16c171b3be237b3288beb5a6dae5dc332d",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/registry.md",
+          "summary": "Real registry/default/canonical-ref isolation and package syntax rejection; all24 capability-security assertions; original relevant gates/typecheck/lint; independent review."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.registry.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-REGISTRY-002 — Securitytest erreicht seine Autorisierungsfälle nicht\n\n- **Niedrig, nachgewiesener Testdefekt:** vorhandener Sicherheitstest bricht vor\n  seinem Zyklus- und 24-Capability-Dispatchblock ab; das ist eine Nachweislücke,\n  kein Nachweis einer produktiven Autorisierungsumgehung.\n- **Beleg/Auslöser:** check-plugin-system-v2-capability-security.mjs:163–180\n  erwartet Ambiguität für artifacts.write, aktiviert project-summary aber ohne\n  dessen zuerst angeforderte artifacts.read-Providerauswahl. capabilities.ts:110\n  liefert deshalb REGISTRY_CAPABILITY_PROVIDER_MISSING, Assertion scheitert.\n  Originalausführung Exit1 in registry-tests.txt. Vorherige Mapping-/Lintgrant-\n  Assertions liefen; die späteren Symlink-/Invocationfälle wurden nur gelesen.\n- **Ursachenbehebung:** den Ambiguitätsfall mit vollständigen echten sonstigen\n  Grants/Providern aufbauen und Zielcapability isoliert variieren. Sicherheits-\n  fälle unabhängig testbar machen, damit ein Bestandsdrift nicht alle verdeckt.\n- **Regression:** unveränderte Produktimplementierung mit korrigierter Policy-\n  Fixture des echten Registrytests; anschließend gesamte Autorisierungsmatrix\n  ausführen. Kein Entfernen der produktiven artifacts.read-Anforderung oder\n  Ersatzprovider, um die bisherige Fixture grün zu bekommen.\n\nIsolationsgegenstelle abgeschlossen: [foundation.isolation](foundation.isolation.md)\nführt PCR-ISOLATION-001 bis004 (Hostpipefehler, Supervisorbeendigung, UTF-8,\nMemorygrenze). Externe Registryaktivierung übernimmt diese Risiken.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Betroffene Gesamtintegration und erforderliche Betriebsnachweise im Paketabschluss durchführen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe."
     },
     {
       "id": "PCR-SDK-001",
@@ -557,18 +587,25 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP01",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "b85b4c18fedcfb5a509295c082d59aab631b0617",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/contracts.md",
+          "summary": "SDK/prompt tests and builds; real artifact/journal and Git consumers; 100 accepted JSON byte compatibility probes; independent review."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/lib.sdk.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-SDK-001 — Serialisierung erzeugt ungültige oder kollidierende Daten\n\n- **Mittel, nachgewiesener Defekt:** Funktion in aktiven Artefakt-/Effektpfaden;\n  kein bisheriger Produktionsvorfall mit normalen JSON-Eingaben behauptet.\n- **Beleg:** src/values.ts:42–51: map/join, undefined→null, localeCompare;\n  ArtifactStore.adapter.ts:108–135 speichert diese Bytes als application/json,\n  Core.effects/identity.ts:5–24 vergleicht so Payloads. unknown ohne JSON-Prüfung.\n- **Auslöser/Ablauf:** in-process Array(2) ergibt ungültiges `[,]`;\n  `{x:undefined}` und `{x:null}` identische Bytes. Originalfunktion tatsächlich\n  ausgeführt: [Reproduktion](../evidence/plugin-contract-sdk-repro.mjs).\n- **Auswirkung:** ungültige JSON-Artefakte bzw. verschiedene Nicht-JSON-Payloads\n  bei Idempotenz gleichgesetzt. Voller Adapterfehlerpfad ist Code-Trace, kein\n  hier gelaufener E2E-Test. Localeordnung zusätzliches Portabilitätsrisiko,\n  noch nicht durch mehrere Umgebungen gemessen.\n- **Ursachenbehebung:** akzeptierten JSON-Datenbereich validieren, Sparsearrays,\n  nichtendliche Zahlen, Getter, exotische Objekte/Zyklen ablehnen und\n  sprachunabhängig ordnen. Persistierte Digestversionen kontrolliert umstellen;\n  kein stiller Fallbackserializer.\n- **Regression:** Originalserializer-Negativ-/Localevektoren; echter\n  ArtifactStore put/get und EffectJournal-Replay dürfen weder ungültige Bytes\n  quittieren noch verschiedene akzeptierte Payloads gleichsetzen.\n  [PCR-PROMPT-001](lib.prompt-contract.md) betrifft getrennten ungenutzten Code,\n  nicht denselben Laufzeitpfad.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Alle persistierten Digest-/Signaturconsumer inventarisieren und kontrollierte explizite Serializer-Versionierung ausarbeiten; kein stiller Fallback.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe.",
+      "remaining_work": "Portable Ordnung/versionierte Digestumstellung noch offen; aktuelle akzeptierte Bytes bewusst unverändert."
     },
     {
       "id": "PCR-SDK-002",
@@ -576,18 +613,24 @@
       "family": "pipeline",
       "severity": "niedrig",
       "work_package": "WP01",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "b85b4c18fedcfb5a509295c082d59aab631b0617",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/contracts.md",
+          "summary": "SDK/prompt tests and builds; real artifact/journal and Git consumers; 100 accepted JSON byte compatibility probes; independent review."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/lib.sdk.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-SDK-002 — Deklarierter Workspacebuild nicht ausführbar\n\n- **Niedrig, nachgewiesener Defekt:** Entwickler-/Paketbuild blockiert;\n  Root-Buildpfad nicht pauschal als defekt eingestuft.\n- **Beleg:** package.json:6 ruft `tsc --noEmit -p tsconfig.json`; vorhanden ist\n  nur tsconfig.build.json. Root package.json:156 nutzt letztere.\n- **Auslöser/Auswirkung:** `npm run build --workspace @kubeclaw/plugin-sdk`\n  endet mit TS5058/Exit 1. Fehlende Konfiguration, kein fehlendes externes Tool.\n- **Ursachenbehebung:** Paket-/Rootscript auf beabsichtigte gemeinsame\n  Buildkonfiguration ausrichten, keine divergierende Konfigkopie.\n- **Regression:** beide echten Buildaufrufe aus sauberem Checkout; deklarierte\n  Ausgaben bzw. beabsichtigte reine Typechecks überprüfen.\n\nOffene Nachweise: Negativregressionen nach späterer Reparatur, isolierte Agent-/\nProviderlaufzeit und Clean-Install. Keine fehlenden SDK-Implementierungsprüfpfade.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Betroffene Gesamtintegration und erforderliche Betriebsnachweise im Paketabschluss durchführen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe."
     },
     {
       "id": "PCR-TELEMETRY-CONTRACT-001",
@@ -633,7 +676,7 @@
       "family": "pipeline",
       "severity": "niedrig",
       "work_package": "WP01",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -654,7 +697,7 @@
       "family": "pipeline",
       "severity": "niedrig",
       "work_package": "WP01",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -679,10 +722,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP02",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "8711c9d1ac0e0e12257629505643dee5ff5ee0a4",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/effects.md",
+          "summary": "Four original effect lifetime cases, three fail before/pass after; real artifact adapter; independent review."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/nova.effects.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-EFFECT-001 — Konflikt nach Lockakquise lässt Ressourcenlock zurück\n\n- **Schweregrad: mittel.** Die Ressource bleibt für andere Attempts blockiert,\n  solange der Coreprozess lebt; TTL allein heilt den Zustand nicht. Keine\n  Datenkorruption oder unautorisierte Mutation in der Reproduktion.\n- **Einordnung: nachgewiesener Defekt**, mit Originalimplementierungen reproduziert.\n- **Belege:** `durable-invocation.ts:36–45` akquiriert in Zeile 40, prüft\n  anschließend Request/Receipt außerhalb eines finally. Erst\n  `#executeLocked:62–74` schützt Freigabe. `locks.ts:101–105` verweigert\n  Ersatz bei lebendem Besitzer unabhängig von der abgelaufenen TTL.\n- **Auslöser:** erster Journalread liefert keinen Request; eine zweite Instanz\n  schreibt denselben Key mit anderer Payload; Core akquiriert Lock, erkennt\n  beim zweiten Read den Konflikt und wirft. `#release` wird nicht erreicht.\n- **Auswirkung:** konkurrierende Zugriffe auf dieselbe kanonische Ressource\n  scheitern weiter mit RESOURCE_LOCKED. Ein Neustart kann Dead-PID-Übernahme\n  ermöglichen, ist aber keine dauerhafte Ursachenbehebung.\n- **Ursachenbehebung:** unmittelbar nach acquire zentralen try/finally-Bereich\n  über alle weiteren Reads, Validierungen, Replay- und Invokewege legen;\n  Doppel-Freigabe durch eine klare Besitzerzuständigkeit vermeiden.\n- **Regression:** vorhandene Reproduktion nach Reparatur mit erfolgreicher\n  Folgeakquise und höherem Fencingtoken, beide echten Journalinstanzen erhalten.\n  Ergänzend echter korrupter Journal-/Receiptread nach Akquise: Primärfehler\n  sichtbar, keine aktive Lockdatei zurückgelassen.\n\nNicht dupliziert: PCR-STATE-001/002, PCR-SDK-001 und gemeinsame Retentionsfrage.\nExterne automatische Wiederaufnahme bleibt bewusst begrenzt; fehlender echter\nSandboxlauf ist eine sichtbare Testblockade, kein abgeschlossener E2E-Nachweis.",
@@ -691,9 +739,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/nova/core/effects/locks.ts#L101"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Betroffene Gesamtintegration und erforderliche Betriebsnachweise im Paketabschluss durchführen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe."
     },
     {
       "id": "PCR-EXEC-001",
@@ -701,7 +750,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP02",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -720,7 +769,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP02",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -739,7 +788,7 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP02",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -758,10 +807,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP02",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "4cd09442ad34e4927d82b59c8681bb7ad10cf31b",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/state.md",
+          "summary": "Six state regressions incl real SIGKILL/12 contenders; effect ownership3; phase7/lifecycle/scale/typecheck/lint; independent review."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/nova.state.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-STATE-001 — Journal-Cache enthält fremd veränderbare Payloads\n\n- Schweregrad: mittel; ein akzeptierter Journalwert kann im laufenden Prozess von\n  seinem persistierten Wert abweichen. Auswirkungen auf konkrete Pipeline-Entscheidungen\n  noch verfolgen, daher keine Behauptung eines nachgewiesenen falschen Gates.\n- Evidenzklasse: nachgewiesener Defekt an der Speichergrenze.\n- Belege: `journal.ts:141–170` friert nur äußeren Record ein und hält `entry`;\n  `:196–204` gibt dieselben verschachtelten Objekte zurück. `plugins.ts` übernimmt\n  ebenfalls Input-Payload/Registrierung und gibt Einträge direkt zurück.\n- Ablauf: Objekt mit `decision: approved` appendieren, danach Original-Payload\n  auf `rejected` ändern; `refresh()` meldet rejected, neues Journal meldet approved.\n  Auch Mutation über `records()[0].entry` bleibt im Cache erhalten.\n- Auswirkung: laufende Projektion und Neustart-Replay können unterschiedliche Werte\n  sehen, ohne Hashfehler beim unveränderten Dateistand auszulösen.\n- Ursachenbehebung: JSON-Werte an Append-Grenze validieren, unabhängig kopieren und\n  intern tief einfrieren; keine veränderbaren internen Referenzen an Leser geben.\n- Echter Nachweis: `node docs/review/evidence/journal-mutation.mjs` reproduziert beide\n  Wege. Nach Reparatur muss derselbe Ablauf überall den ursprünglichen Wert liefern\n  oder Mutationen ausdrücklich ablehnen. Plugin-State- und Event-Reducer mitprüfen.",
@@ -771,9 +825,10 @@
       "unresolved_code_references": [
         "journal.ts:141–170"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Betroffene Gesamtintegration und erforderliche Betriebsnachweise im Paketabschluss durchführen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe."
     },
     {
       "id": "PCR-STATE-002",
@@ -781,10 +836,15 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP02",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "4cd09442ad34e4927d82b59c8681bb7ad10cf31b",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/state.md",
+          "summary": "Six state regressions incl real SIGKILL/12 contenders; effect ownership3; phase7/lifecycle/scale/typecheck/lint; independent review."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/nova.state.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-STATE-002 — Stale-Lock-Übernahme ist nicht an beobachteten Besitzer gebunden\n\n- Schweregrad: hoch, falls parallele Reclaimer auftreten: Verletzung gegenseitigen\n  Ausschlusses kann die zentrale Journal-Hashkette beschädigen und Recovery stoppen.\n- Evidenzklasse: nachgewiesener Defekt. Zwölf echte Prozesse mit insgesamt\n  1200 Lock-Aufrufen erzeugten 266 überlappende kritische Sektionen.\n- Belege: `file-mutex.ts:17–21,40–43`: Besitzer lesen und später denselben Pfad\n  unabhängig von Token/Inode wegbenennen. `:48–49` prüft erst beim Release den Token.\n- Ablauf: A und B lesen alten toten Besitzer. A entfernt ihn und setzt einen neuen\n  gültigen Lock. B entfernt auf Basis seines alten Reads jetzt A's Lock. B kann\n  selbst claimen, während A in seiner kritischen Sektion arbeitet.\n- Auswirkung: parallele kritische Sektionen; Sequenz-/Hashkonflikte oder verlorene\n  Fortschritte. Der vorhandene Contention-Test hält nur einen lebenden Besitzer;\n  er erzeugt keine konkurrierende Stale-Reclamation.\n- Ursachenbehebung: verlässliche kernelgebundene Sperre mit Freigabe bei Prozessende\n  oder anderer atomarer Besitzerwechsel; ein weiteres ungeschütztes Read vor Rename\n  beseitigt das Rennen nicht.\n- Verifikation: mehrere echte Prozesse nach SIGKILL eines Besitzers gleichzeitig\n  starten; kritische Sektionen mit exklusiver Kontroll-Datei beobachten und Journal\n  danach vollständig validieren. Keine Dateisystem-Mocks einsetzen.",
@@ -792,9 +852,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/nova/core/state/file-mutex.ts#L17"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Betroffene Gesamtintegration und erforderliche Betriebsnachweise im Paketabschluss durchführen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe."
     },
     {
       "id": "PCR-BUSTER-ENGINE-001",
@@ -900,7 +961,7 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP03",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -1024,7 +1085,7 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP03",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -1045,7 +1106,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP03",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -1751,7 +1812,7 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP06",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -1776,7 +1837,7 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP06",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -1801,7 +1862,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -2361,18 +2422,24 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP08",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "9d651a8851b5a0bfa05ffbc03a0fb58e4ac23882",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/prism-domain.md",
+          "summary": "Domain/PGlite13, engine7, storage/control6; seven baseline negative regressions; typecheck/lint and independent review."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.domain.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-PRISM-DOMAIN-001 — Move in eigenen Nachkommen verliert Teilbaum\n\n- **Hoch, nachgewiesener Defekt:** gültige Operation erhöht Revision und entfernt\n  bestehende Inhalte aus dem zurückgegebenen/persistierbaren Dokument.\n- **Belege:** index.ts:80–85 findet Ziel vor Entfernen der Quelle, prüft nur\n  nodeId===parentId, trennt dann Quelle von ihrer alten Root und hängt sie in den\n  eigenen nun unerreichbaren Nachkommen. ensureUnique prüft nur erreichbare Nodes;\n  resultierender leerer Stack ist schema-valid. Storage.apply :310–333 persistiert\n  den Returnwert bei erfolgreichem CAS.\n- **Auslöser:** Root→parent→child, node.move(parent,parentId=child,index=0).\n  Originalrepro: Revision2 und root.children=[]; Sourceklon unverändert.\n  Datenverlust im Reducer nachgewiesen, DBcommit nur nachvollzogener Codepfad.\n- **Ursachenbehebung:** Ziel vor Mutation auf Zugehörigkeit zum Quellsubtree prüfen\n  und solche Moves abweisen. Danach Erreichbarkeit/IDmenge konsistent prüfen.\n- **Regression:** echter Reducer mit direktem/tiefem Nachkommen, Cross-View-Move,\n  legalem Geschwistermove und originalem Source; ungültiger Move wirft ohne neue\n  Revision, gültiger erhält jeden Node. Zusätzlich echter Storage-Transaktionstest\n  belegt keinen Commit bei verworfener Operation.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Betroffene Gesamtintegration und erforderliche Betriebsnachweise im Paketabschluss durchführen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe."
     },
     {
       "id": "PCR-PRISM-DOMAIN-002",
@@ -2380,18 +2447,24 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP08",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "9d651a8851b5a0bfa05ffbc03a0fb58e4ac23882",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/prism-domain.md",
+          "summary": "Domain/PGlite13, engine7, storage/control6; seven baseline negative regressions; typecheck/lint and independent review."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.domain.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-PRISM-DOMAIN-002 — Nichtleere Teilbäume lassen sich nicht duplizieren\n\n- **Mittel, nachgewiesener Defekt:** angebotene Duplicateoperation scheitert für\n  Layouts mit Children; Blattkopien funktionieren.\n- **Beleg/Ablauf:** index.ts:75–78 structuredClone(node), nur copy.id wird ersetzt;\n  ensureUnique findet identische Child-IDs mit Original. Repro parent→child plus\n  newNodeId=copy-parent ergibt „duplicate node ID: child“.\n- **Ursachenbehebung:** vollständiges deterministisches IDremapping samt internen\n  Action-/Patchreferenzen für geklonten Subtree definieren. Contract muss benötigte\n  Identitäten/Seed explizit tragen. Nicht Eindeutigkeitsprüfung entfernen.\n- **Regression:** Originaloperation dupliziert verschachtelten Layoutbaum; alle\n  Kopie-IDs eindeutig und wiederholbar, Inhalte und interne Referenzen erhalten,\n  Original unverändert. Snapshot-/Undoverhalten über reale Storagegrenze prüfen.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Betroffene Gesamtintegration und erforderliche Betriebsnachweise im Paketabschluss durchführen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe."
     },
     {
       "id": "PCR-PRISM-DOMAIN-003",
@@ -2399,18 +2472,24 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP08",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "9d651a8851b5a0bfa05ffbc03a0fb58e4ac23882",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/prism-domain.md",
+          "summary": "Domain/PGlite13, engine7, storage/control6; seven baseline negative regressions; typecheck/lint and independent review."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.domain.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-PRISM-DOMAIN-003 — Responsivepatch verwirft andere Stateproperties\n\n- **Mittel, nachgewiesener Defekt:** unabhängige Stateeigenschaften verschwinden\n  sobald derselbe Node irgendeinen Responsivepatch hat; Preview zeigt falschen State.\n- **Beleg:** index.ts:103 merged zwei Node→Patchmaps per Spread; :104 wendet nur\n  den zuletzt erhaltenen Nodepatch auf Baseprops an. Im Originalrepro setzt State\n  title.content='State title', wide setzt title.hidden=true; Result enthält\n  hidden=true, aber ursprüngliches content='Deployments'.\n- **Ursachenbehebung:** pro Node Propertymaps in Reihenfolge Base→State→Viewport\n  zusammenführen; nur gleiche Properties sollen durch spätere Layer überschrieben\n  werden. Derselbe Layerfehler ist für Renderer-Variant/Override-Patches bei dessen\n  Review zu prüfen, hier nicht bereits als ausgeführter Rendererfall behauptet.\n- **Regression:** OriginalresolveView mit disjunkten und kollidierenden Properties\n  für alle Viewports, fehlenden Layern und unveränderter Source; Kombination muss\n  beide disjunkten Werte erhalten und kollidierende gemäß deklarierter Priorität.\n\nHistorische Prototypen und ihre getrennte Testaussage: [Prism-Spikeabgrenzung](../prism-spikes.md).",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Betroffene Gesamtintegration und erforderliche Betriebsnachweise im Paketabschluss durchführen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe."
     },
     {
       "id": "PCR-PRISM-ENGINE-001",
@@ -3842,5 +3921,13 @@
       ],
       "decision_notes": []
     }
-  ]
+  ],
+  "implementation_branch": "fix/remediation-foundations-20260909",
+  "updated_at": "2026-09-09",
+  "progress_counts": {
+    "in Bearbeitung": 14,
+    "verifiziert": 12,
+    "implementiert": 1,
+    "offen": 127
+  }
 }

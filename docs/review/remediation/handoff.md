@@ -1,4 +1,6 @@
-# Fortsetzung nach abgeschlossener Planung
+# Übergabe des ursprünglichen Planungsstands
+
+**Historischer Planungscheckpoint. Die Umsetzung läuft inzwischen; aktueller Stand und nächste Schritte stehen in [progress.md](progress.md) und register.json.**
 
 ## Gespeicherter Stand
 

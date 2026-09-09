@@ -1,6 +1,6 @@
 # Behebungsplan nach Inventar, Einzelreviews und Traces
 
-Planungsstand 2026-09-09. **154 historische Finding-Kennungen vollständig erfasst und 14 Arbeitspaketen zugeordnet. Keine funktionale Behebung in diesem Auftrag.** Entscheidungen sind bestätigte Zielvorgaben, keine Beschreibung des gegenwärtigen Implementierungsstands.
+Planungsstand 2026-09-09. **154 historische Finding-Kennungen vollständig erfasst und 14 Arbeitspaketen zugeordnet. Planungsauftrag abgeschlossen; aktive Umsetzung auf `fix/remediation-foundations-20260909`, siehe [Fortschritt](progress.md).** Entscheidungen sind bestätigte Zielvorgaben, keine Beschreibung des gegenwärtigen Implementierungsstands.
 
 - [Bestätigte Entscheidungen D01–D11](decisions.md)
 - [Arbeitspakete, Reihenfolge und Abnahmekriterien](work-packages.md)
@@ -43,8 +43,12 @@ Das Infrastrukturreview berücksichtigt zusätzlich Cilium-Code an `1313cc3a89d7
 
 Verifikation separat: nicht ausgeführt / bestanden / fehlgeschlagen / blockiert. Bei nur lokaler Verifikation und erforderlichem offenen Clusterbeleg bleibt das Finding **implementiert** mit offener Betriebsprüfung. Dokumentationsfindings können durch konkret geprüfte korrigierte Dokumentation geschlossen werden; eine Betriebsfrage braucht den passenden realen Nachweis. Kein globales „alles gefixt“ bei offenen Kennungen.
 
-## Grenzen dieses Auftrags
+## Grenzen des ursprünglichen Planungsauftrags
 
-Nur neue Planungsdokumentation unter `docs/review/remediation/`. Keine funktionalen Änderungen, Deployments, Publikation, kostenpflichtigen Ressourcen, CI-Anforderung oder Merge. Dokumentationscommit mit `[skip ci]`. Die bestätigte Demo-Credentialregel ist kein Anlass, echte Credentials in diesen Plan zu kopieren.
+Der ursprüngliche Planungsauftrag änderte nur neue Planungsdokumentation unter `docs/review/remediation/`. Keine funktionalen Änderungen, Deployments, Publikation, kostenpflichtigen Ressourcen, CI-Anforderung oder Merge. Dokumentationscommit mit `[skip ci]`. Die bestätigte Demo-Credentialregel ist kein Anlass, echte Credentials in diesen Plan zu kopieren.
 
 Repositoryregeln `CONTRIBUTING.md` und `docs/CONTRIBUTING.md` wurden gelesen. Die darin genannten allgemeinen Software-/Deploymentchecks sind für diesen Dokumentationsschritt nicht als bestanden behauptet; die relevante Prüfung ist Vollständigkeit, Quellen-/Link-/Abhängigkeitskonsistenz und `git diff --check`. Softwarechecks und Runtimevoraussetzungen gehören zu den späteren Paketen.
+
+## Autorisierte Umsetzung
+
+Der Auftraggeber hat nach Bestätigung des Plans die eigenständige Implementierung, Subagentdelegation und Gegenprüfung beauftragt. Funktionale Root-Cause-Fixes und echte Tests sind jetzt im Rahmen der Arbeitspakete autorisiert. Keine Shims, abgeschwächten Tests, Architekturabweichungen oder zusätzlichen Features. Deployments, Merges und CI bleiben ausgeschlossen. Fortschritt im Register/progress.md; ursprüngliche Planungsprüfung in validation.md bleibt historisch.
