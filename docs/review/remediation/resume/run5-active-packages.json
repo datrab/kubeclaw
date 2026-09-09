@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "run_id": "20260909t223837",
-  "fresh_remote_base": "4627f01fe532d3dd890b7c8f93df40ae59547071",
-  "last_source_integration": "84688686127cfcc0f8940381006d0b6ab9035095",
+  "run_id": "20260909t225913",
+  "fresh_remote_base": "5a437c726646d75d5500c23504ee3a3540547c3f",
+  "last_source_integration": "b06c06dce3364c482a1da5637c36bc2b14ba8c72",
   "frozen_baseline": "c38779c71bb92bc15c3fcb89930348e5417aa475",
   "frozen_count": 47,
   "verified_count": 7,
@@ -12,6 +12,7 @@
     "source": "96236ba725bc4d57f0543f1fc0e76afa97f25de7",
     "review": "359bf27ea83ea614a57e778f359935b283d56a5f",
     "backup": "44b6aea8266e61efbb25a9f6be852dbb05e3756d",
+    "integration_commit": "0c3ab36434020730b326bb2aa5c84ea0210f9d6d",
     "root_full_tests": 55,
     "fresh_checkout_repeat": 11,
     "next_action": "Reader package is complete; retain original quotas and exact digest semantics. Dispatch projection remains separate and unapproved."
@@ -29,6 +30,7 @@
       "commit": "ab59d84676eb3e04fc91bd106f023a5bcb4ffef3",
       "review_branch": "fix/resume-47-run6-adapter-review-28ebe60",
       "review_commit": "65609f74dfee274952c47e8808db147955e5a427",
+      "integration_commit": "b06c06dce3364c482a1da5637c36bc2b14ba8c72",
       "status": "independently-reviewed-root-tested-in-this-integration",
       "latest_review_local": "28ebe602122cda8c4c966f24d5ecf9f905a0144e",
       "next_action": "Bounded Adapter package complete: independent28/28, rootcombined87/87 and originalhistoricalCLI passed. Continue originalSDK remainingconsumer audit; no global finding closure from this package."
@@ -40,8 +42,9 @@
       "native_review_backup": "c5fd31aa328577125c6d64770b0020ba566b3a27",
       "full_candidate_backup": "7bfa6bbf467e56c2191a1dd4ed44c43cc80daa85",
       "full_candidate_review_backup": "91697e0bde855efaccb750d29d078d5f29561b87",
+      "fresh_b06_candidate_backup": "7f9055c58d85e09cdece2ee2cb112689832f1845",
       "status": "native-gates-independently-tested-full-coupled-candidate-pending",
-      "next_action": "Complete real API status/CEL/signed transitions and alternate-controller-SA VAP Namespace CREATE/DELETE denials; independently rerun. No workload deployment. Coupled Product459e/controllere21/chart47b remain unintegrated."
+      "next_action": "Fresh b06 candidate retains all Reader/Adapter changes and exact73 coupled paths. Repeat affected suites after actual ENOSPC interruption and obtain final independent approval; then root-integrate exact-parent ff-only. Native API gate passes, but complete fresh review/integration is pending. No workload or full delivery claim."
     },
     {
       "package": "nova-dispatch-archive-projection",
@@ -51,7 +54,20 @@
       "design_remote_commit": "1cd953bd689c08ada97b5cbf359bc92abb9ed4ae",
       "incomplete_source_backup": "ad16dde796ef6ec7350cc257145a7064124bc2a9",
       "failing_review_backup": "cebd19aa95ad7c949143cd15a6f068929a5f5c46",
+      "read_fence_review_backup": "776e966f01572bbaa4dc78af3ef537d7d96e1073",
       "next_action": "Fix independently reproduced cross-Core authority bug: unrelated actual terminalCore sharing runId must not authorize foreign job/import projection. Require original causal stage/effect/source/attempt consumer binding, not standalone manual authority. Preserve3prototypecases as narrow store/HTTP proof, not complete acceptance."
+    },
+    {
+      "package": "sdk-openclaw-run-frozen-transport-profile",
+      "status": "causal-counterexample-proven-versioned-design-approved-implementation-pending",
+      "audit_backup": "a79809da359452eaba2a4305b83a0dd564154730",
+      "next_action": "Implement explicit canonical run-snapshot.v3 transport profile at genuine run creation; v1/v2 remain exact legacy. Propagate through original Core context and eleven dispatch producers before journaling, excluding control from model/network bytes. Validate real old resume and new en/sv transport with independent review. Confidential support remains explicit, not silently removed; no Gateway success or confidential exactly-once claim."
+    },
+    {
+      "package": "worker-trust-native-envoy",
+      "status": "original-native-prerequisite-obtained-author-test-passed-independent-review-pending",
+      "source_candidate": "docs/review/remediation/candidates/worker-trust-native-unverified.patch",
+      "next_action": "Preserve exact official Envoy1.39.0 digest/version and full raw six-configuration/TLS/SDS test output in a remote package checkpoint; independently inspect and repeat before integrating configuration. Actual SPIRE gRPC attestation and delivered operator alarm remain open. No deployment."
     }
   ],
   "rule": "Backup is not acceptance. Restore only verified frozen commits into a new checkout, never another writer's checkout or dirty work based on an old heartbeat. Exact-parent ff-only integration after review/tests; no CI/deployment."
