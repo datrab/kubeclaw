@@ -1,8 +1,8 @@
-import type { Data } from "@puckeditor/core";
+import type { Data, Slot } from "@puckeditor/core";
 import type { PrismDocument, PrismNode } from "@kubeclaw/prism-contracts-v1";
 
 export type Props = {
-  Stack: { gap: number; content: unknown };
+  Stack: { gap: number; content: Slot<Props> };
   Heading: { text: string };
   Text: { text: string };
   Button: { label: string };
@@ -12,7 +12,7 @@ export type Props = {
     text: string;
     action: string;
     tone: string;
-    content: unknown;
+    content: Slot<Props>;
   };
 };
 export function mapNode(node: PrismNode): Data<Props>["content"][number] {

@@ -1,0 +1,2 @@
+baseline errors=5 rules={'max-lines-per-function': 1, 'complexity': 1, 'discipline/no-dynamic-module-loading': 1, 'max-lines': 1, 'discipline/no-fallback-chain': 1}
+current errors=5 rules={'max-lines-per-function': 1, 'complexity': 1, 'discipline/no-dynamic-module-loading': 1, 'max-lines': 1, 'discipline/no-fallback-chain': 1}

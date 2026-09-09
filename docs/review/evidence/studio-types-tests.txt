@@ -1,0 +1,100 @@
+$ node_modules/.bin/tsc --noEmit -p skills/prism/studio/tsconfig.json
+
+exit=0
+
+$ node_modules/.bin/tsc --noEmit -p contracts/prism/v1/tsconfig.json
+
+exit=0
+
+$ node --test skills/prism/tests/studio-flows.test.mts skills/prism/tests/studio-adapter.test.mts skills/prism/tests/studio-roundtrip.test.mts skills/prism/tests/design-round-client.test.mts skills/prism/tests/preview-assets.test.mts
+✔ original round client retains a lost-response request across reload and pending retry over real HTTP (77.203443ms)
+✔ original round HTTP calls preserve 400, 500 and text diagnostics and identify broken success contracts (16.196252ms)
+✔ real stored image traverses HTTP with integrity, size, load and cancellation denials (80.084088ms)
+✔ desktop startup and failure panels remain visible (1.891403ms)
+✔ Puck insertion becomes a typed canonical operation (2.006246ms)
+✔ Puck completes a split with one explicit child (0.487225ms)
+✔ an empty canvas renders a safe empty state (0.313413ms)
+✔ a valid leaf root renders as content (0.890994ms)
+✔ Puck preserves nested content and inserts into the correct parent (0.291249ms)
+✔ Puck edits a nested node through a typed operation (0.222546ms)
+✔ one Puck change emits one atomic batch for multiple edits (0.836462ms)
+✔ the isolated preview uses the trusted renderer for every node (0.488968ms)
+✔ actual schema initialState and validated flow action preserve source, action and optional node matching (18.633229ms)
+✔ malformed unknown flows fail actual contract validation before Studio navigation (8.432261ms)
+✔ canonical stack survives actual projection no-op and another node edit (14.713706ms)
+✔ canonical grid survives actual projection no-op and another node edit (3.676596ms)
+✔ canonical split survives actual projection no-op and another node edit (2.275673ms)
+✔ canonical scroll survives actual projection no-op and another node edit (1.794036ms)
+✔ canonical overlay survives actual projection no-op and another node edit (1.484259ms)
+✔ canonical text survives actual projection no-op and another node edit (1.628246ms)
+✔ canonical heading survives actual projection no-op and another node edit (1.300722ms)
+✔ canonical image survives actual projection no-op and another node edit (1.34544ms)
+✔ canonical icon survives actual projection no-op and another node edit (1.348214ms)
+✔ canonical divider survives actual projection no-op and another node edit (1.61104ms)
+✔ canonical code survives actual projection no-op and another node edit (1.243837ms)
+✔ canonical button survives actual projection no-op and another node edit (1.558992ms)
+✔ canonical link survives actual projection no-op and another node edit (2.17472ms)
+✔ canonical text-input survives actual projection no-op and another node edit (1.04722ms)
+✔ canonical select survives actual projection no-op and another node edit (0.985467ms)
+✔ canonical checkbox survives actual projection no-op and another node edit (0.982062ms)
+✔ canonical list survives actual projection no-op and another node edit (0.987149ms)
+✔ canonical table survives actual projection no-op and another node edit (1.062033ms)
+✔ canonical badge survives actual projection no-op and another node edit (1.160551ms)
+✔ canonical progress survives actual projection no-op and another node edit (1.154952ms)
+✔ canonical chart survives actual projection no-op and another node edit (1.174692ms)
+✔ canonical navigation survives actual projection no-op and another node edit (1.183495ms)
+✔ canonical tabs survives actual projection no-op and another node edit (1.2401ms)
+✔ canonical breadcrumb survives actual projection no-op and another node edit (1.690651ms)
+✔ canonical pagination survives actual projection no-op and another node edit (1.325479ms)
+✔ canonical alert survives actual projection no-op and another node edit (1.013489ms)
+✔ canonical dialog survives actual projection no-op and another node edit (1.037625ms)
+✔ canonical toast survives actual projection no-op and another node edit (0.955551ms)
+✔ canonical tooltip survives actual projection no-op and another node edit (1.109984ms)
+✔ canonical empty-state survives actual projection no-op and another node edit (1.066549ms)
+✔ canonical spinner survives actual projection no-op and another node edit (1.003494ms)
+✔ canonical component survives actual projection no-op and another node edit (0.86224ms)
+✔ canonical terminal survives actual projection no-op and another node edit (0.98146ms)
+✔ canonical command survives actual projection no-op and another node edit (1.049653ms)
+✔ canonical prompt survives actual projection no-op and another node edit (1.108743ms)
+✔ canonical output survives actual projection no-op and another node edit (1.697271ms)
+ℹ tests 50
+ℹ suites 0
+ℹ pass 50
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 385.671067
+
+exit=0
+
+$ node contracts/prism/v1/tests/contracts.test.mts
+Prism v1 contract fixtures passed
+
+exit=0
+
+$ node contracts/prism/v1/tests/remediation.test.mts
+Prism patch/complexity regressions and real renderer passed
+
+exit=0
+
+$ node_modules/.bin/esbuild skills/prism/studio/puck-render.test.tsx --bundle --platform=node --packages=external --format=esm --jsx=automatic --outfile=/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/prism/studio-render-kdqo6kci/render.mjs
+
+  skills/prism/studio-render-kdqo6kci/render.mjs  6.2kb
+
+⚡ Done in 3ms
+
+exit=0
+
+$ node --test /workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/prism/studio-render-kdqo6kci/render.mjs
+✔ installed Puck renders both actual Studio slot components with nested projected content (19.886235ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 322.563417
+
+exit=0

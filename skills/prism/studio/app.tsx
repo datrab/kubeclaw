@@ -1,7 +1,7 @@
 import { savedRound, pendingRound, submitRound, currentDirections, loadRoundDocument, completeRound, waitForRound, type RoundClient, type StudioDirection } from "./design-round-client.ts";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Puck, type Config } from "@puckeditor/core";
+import { Puck } from "@puckeditor/core";
 import "@puckeditor/core/puck.css";
 import "./studio.css";
 import type { PrismDocument, PrismNode } from "@kubeclaw/prism-contracts-v1";
@@ -11,120 +11,16 @@ import {
   type Viewport,
 } from "../domain/index.ts";
 import { puckChangeToOperation } from "./puck-adapter.ts";
-import { project, type Props } from "./projection.ts";
+import { project } from "./projection.ts";
 import { loadPreviewAssets, type PreviewAssets } from "./preview-assets.ts";
 import { previewDocument } from "./preview.ts";
+import { config } from "./puck-config.tsx";
+import { studioFlows, previewActionTarget, previewSelection } from "./flows.ts";
 
-const nodeTypes = [
-  "grid",
-  "split",
-  "scroll",
-  "overlay",
-  "image",
-  "icon",
-  "divider",
-  "code",
-  "link",
-  "text-input",
-  "select",
-  "checkbox",
-  "list",
-  "table",
-  "badge",
-  "progress",
-  "chart",
-  "navigation",
-  "tabs",
-  "breadcrumb",
-  "pagination",
-  "alert",
-  "dialog",
-  "toast",
-  "tooltip",
-  "empty-state",
-  "spinner",
-  "component",
-  "terminal",
-  "command",
-  "prompt",
-  "output",
-];
-const config: Config<Props> = {
-  components: {
-    Stack: {
-      fields: {
-        gap: { type: "number", min: 0, max: 48 },
-        content: { type: "slot" },
-      },
-      defaultProps: { gap: 16, content: [] },
-      render: ({ gap, content: Content }) => (
-        <section className="canvas-stack" style={{ gap }}>
-          <Content />
-        </section>
-      ),
-    },
-    Heading: {
-      fields: { text: { type: "text", contentEditable: true } },
-      defaultProps: { text: "Heading" },
-      render: ({ text }) => <h2>{text}</h2>,
-    },
-    Text: {
-      fields: { text: { type: "textarea", contentEditable: true } },
-      defaultProps: { text: "Text" },
-      render: ({ text }) => <p>{text}</p>,
-    },
-    Button: {
-      fields: { label: { type: "text", contentEditable: true } },
-      defaultProps: { label: "Continue" },
-      render: ({ label }) => (
-        <button type="button" className="preview-button">
-          {label}
-        </button>
-      ),
-    },
-    PrismBlock: {
-      fields: {
-        nodeType: {
-          type: "select",
-          options: nodeTypes.map((value) => ({ label: value, value })),
-        },
-        label: { type: "text", contentEditable: true },
-        text: { type: "textarea" },
-        action: { type: "text" },
-        tone: {
-          type: "select",
-          options: [
-            "default",
-            "muted",
-            "info",
-            "success",
-            "warning",
-            "danger",
-          ].map((value) => ({ label: value, value })),
-        },
-        content: { type: "slot" },
-      },
-      defaultProps: {
-        nodeType: "alert",
-        label: "",
-        text: "Describe this item",
-        action: "",
-        tone: "default",
-        content: [],
-      },
-      render: ({ nodeType, label, text, content: Content }) => (
-        <section data-prism-type={nodeType} className="generic-block">
-          <strong>{label || nodeType}</strong>
-          {text ? <p>{text}</p> : null}
-          <Content />
-        </section>
-      ),
-    },
-  },
-};
 
 function App() {
   const [document, setDocument] = useState<PrismDocument | null>(null);
+  const flows = useMemo(() => document ? studioFlows(document) : [], [document]);
   const [previewAssets, setPreviewAssets] = useState<{ document: PrismDocument; assets: PreviewAssets } | null>(null);
   const [previewAssetError, setPreviewAssetError] = useState<string | null>(null);
   useEffect(() => {
@@ -185,14 +81,17 @@ function App() {
       return current&&contains(root)?current:firstEditable(root).id;
     });
   },[document,viewId]);
-  useEffect(()=>{const receive=(event:MessageEvent)=>{
-    if(event.source!==previewRef.current?.contentWindow||!event.data)return;
-    if(event.data.schema==="prism.selection.v1"&&typeof event.data.nodeId==="string")setSelectedNodeId(event.data.nodeId);
-    if(event.data.schema==="prism.action.v1"&&typeof event.data.action==="string"&&document){
-      const transition=Object.values(document.flows).flatMap((flow)=>flow.transitions).find((item)=>item.from.view===viewId&&item.from.state===viewState&&item.trigger.action===event.data.action&&(!item.trigger.node||item.trigger.node===event.data.nodeId));
-      if(transition){setViewId(transition.to.view);setViewState(transition.to.state);}
-    }
-  };addEventListener("message",receive);return()=>removeEventListener("message",receive);},[document,viewId,viewState]);
+  useEffect(() => {
+    const receive = (event: MessageEvent<unknown>) => {
+      if (event.source !== previewRef.current?.contentWindow) return;
+      const selection = previewSelection(event.data);
+      if (selection) setSelectedNodeId(selection);
+      const target = previewActionTarget(flows, { view: viewId, state: viewState }, event.data);
+      if (target) { setViewId(target.view); setViewState(target.state); }
+    };
+    addEventListener("message", receive);
+    return () => removeEventListener("message", receive);
+  }, [flows, viewId, viewState]);
   useEffect(() => {
     if (import.meta.env.DEV) {
       void import("./dev-fixture.ts").then(({ developmentDocument }) =>
@@ -782,23 +681,18 @@ function App() {
           </div>
         ))}
         <h2>Flows</h2>
-        {Object.entries(document.flows).map(([id, flow]) => (
+        {flows.map((flow) => (
           <button
-            key={id}
+            key={flow.id}
             className="nav-item"
             onClick={() => {
-              const start = (
-                flow as { start?: { view: string; state: string } }
-              ).start;
-              if (start) {
-                setViewId(start.view);
-                setViewState(start.state);
-              }
+              setViewId(flow.start.view);
+              setViewState(flow.start.state);
             }}
           >
-            {(flow as { title?: string }).title ?? id}
+            {flow.title}
             <span>
-              {((flow as { transitions?: unknown[] }).transitions ?? []).length}{" "}
+              {flow.transitions.length}{" "}
               steps
             </span>
           </button>

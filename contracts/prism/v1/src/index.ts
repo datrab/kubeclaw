@@ -132,6 +132,7 @@ export type PrismDocument = {
       title: string;
       surface: string;
       root: PrismNode;
+      initialState?: string;
       states: Record<
         string,
         { patches: Record<string, Record<string, unknown>> }
