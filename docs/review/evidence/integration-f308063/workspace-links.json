@@ -1,0 +1,312 @@
+[
+  {
+    "name": "agent-observability-contract",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/contracts/agent-observability/v1",
+    "exists": true
+  },
+  {
+    "name": "buster-engine",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/engine",
+    "exists": true
+  },
+  {
+    "name": "nova-core",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/core",
+    "exists": true
+  },
+  {
+    "name": "nova-project",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/project",
+    "exists": true
+  },
+  {
+    "name": "openclaw-agent-observer",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/openclaw-agent-observer",
+    "exists": true
+  },
+  {
+    "name": "pipeline-observability-contract",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/contracts/pipeline-observability/v1",
+    "exists": true
+  },
+  {
+    "name": "pipeline-test-gate-contract",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/contracts/pipeline-test-gate/v1",
+    "exists": true
+  },
+  {
+    "name": "pipeline-worker-core-contract",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/contracts/pipeline-worker-core/v1",
+    "exists": true
+  },
+  {
+    "name": "plugin-agent-observability",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/agent-observability",
+    "exists": true
+  },
+  {
+    "name": "plugin-api-flow-test-provider",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/api-flow",
+    "exists": true
+  },
+  {
+    "name": "plugin-architecture-validator",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/architecture-validator",
+    "exists": true
+  },
+  {
+    "name": "plugin-artifact-store",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/artifact-store",
+    "exists": true
+  },
+  {
+    "name": "plugin-axe",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/axe",
+    "exists": true
+  },
+  {
+    "name": "plugin-blueprint-sync",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/blueprint-sync",
+    "exists": true
+  },
+  {
+    "name": "plugin-buster-quality-gate",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/buster-quality-gate",
+    "exists": true
+  },
+  {
+    "name": "plugin-case-study",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/case-study",
+    "exists": true
+  },
+  {
+    "name": "plugin-command-runner",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/command-runner",
+    "exists": true
+  },
+  {
+    "name": "plugin-container-build-test-provider",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/container-build",
+    "exists": true
+  },
+  {
+    "name": "plugin-coverage-budget-test-provider",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/coverage-budget",
+    "exists": true
+  },
+  {
+    "name": "plugin-delivery-lint",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/delivery-lint",
+    "exists": true
+  },
+  {
+    "name": "plugin-demo-auth-smoke",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/demo-auth-smoke",
+    "exists": true
+  },
+  {
+    "name": "plugin-direct-command-test-provider",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/direct-command",
+    "exists": true
+  },
+  {
+    "name": "plugin-foundation",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugin-runtime/foundation",
+    "exists": true
+  },
+  {
+    "name": "plugin-git-workspace",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/git-workspace",
+    "exists": true
+  },
+  {
+    "name": "plugin-http-test-provider",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/http",
+    "exists": true
+  },
+  {
+    "name": "plugin-human-approval",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/human-approval",
+    "exists": true
+  },
+  {
+    "name": "plugin-implementation-agent",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/implementation-agent",
+    "exists": true
+  },
+  {
+    "name": "plugin-junit-report-adapter",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/junit-report-adapter",
+    "exists": true
+  },
+  {
+    "name": "plugin-kubernetes-fixture-provider",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/kubernetes-fixture",
+    "exists": true
+  },
+  {
+    "name": "plugin-lighthouse",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/lighthouse",
+    "exists": true
+  },
+  {
+    "name": "plugin-lint",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/lint",
+    "exists": true
+  },
+  {
+    "name": "plugin-network-http",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/network-http",
+    "exists": true
+  },
+  {
+    "name": "plugin-notification-observer",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/notification-observer",
+    "exists": true
+  },
+  {
+    "name": "plugin-openapi-test-provider",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/openapi",
+    "exists": true
+  },
+  {
+    "name": "plugin-openclaw-agent-events",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/openclaw-agent-events",
+    "exists": true
+  },
+  {
+    "name": "plugin-operator-messaging",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/operator-messaging",
+    "exists": true
+  },
+  {
+    "name": "plugin-pipeline-review",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/pipeline-review",
+    "exists": true
+  },
+  {
+    "name": "plugin-playwright",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/playwright",
+    "exists": true
+  },
+  {
+    "name": "plugin-preflight-contract",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/preflight-contract",
+    "exists": true
+  },
+  {
+    "name": "plugin-prism-design",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/prism-design",
+    "exists": true
+  },
+  {
+    "name": "plugin-project-summary",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/project-summary",
+    "exists": true
+  },
+  {
+    "name": "plugin-redis-transport",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/redis-transport",
+    "exists": true
+  },
+  {
+    "name": "plugin-remote-test-gate",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/remote-test-gate",
+    "exists": true
+  },
+  {
+    "name": "plugin-repository-adapter",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/repository-adapter",
+    "exists": true
+  },
+  {
+    "name": "plugin-review",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/review",
+    "exists": true
+  },
+  {
+    "name": "plugin-runtime-dispatch",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/runtime-dispatch",
+    "exists": true
+  },
+  {
+    "name": "plugin-sdk",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugin-runtime/sdk",
+    "exists": true
+  },
+  {
+    "name": "plugin-secret-resolver",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/secret-resolver",
+    "exists": true
+  },
+  {
+    "name": "plugin-security-providers",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/security-providers",
+    "exists": true
+  },
+  {
+    "name": "plugin-size-budget-test-provider",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/size-budget",
+    "exists": true
+  },
+  {
+    "name": "plugin-state-store",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/state-store",
+    "exists": true
+  },
+  {
+    "name": "plugin-tailscale-exposure-provider",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/tailscale-exposure",
+    "exists": true
+  },
+  {
+    "name": "plugin-telemetry-observer",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/telemetry-observer",
+    "exists": true
+  },
+  {
+    "name": "plugin-telemetry-store",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/telemetry-store",
+    "exists": true
+  },
+  {
+    "name": "plugin-test-agent",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/test-agent",
+    "exists": false
+  },
+  {
+    "name": "plugin-transport-publisher",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/transport-publisher",
+    "exists": true
+  },
+  {
+    "name": "plugin-visual",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/visual",
+    "exists": true
+  },
+  {
+    "name": "plugin-wait-store",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/wait-store",
+    "exists": true
+  },
+  {
+    "name": "prism",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/prism",
+    "exists": true
+  },
+  {
+    "name": "prism-contracts-v1",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/contracts/prism/v1",
+    "exists": true
+  },
+  {
+    "name": "prompt-contract",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/prompt-contract",
+    "exists": true
+  },
+  {
+    "name": "worker-core",
+    "target": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/worker/core",
+    "exists": true
+  }
+]

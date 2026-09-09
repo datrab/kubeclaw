@@ -1,0 +1,99 @@
+{
+  "commit": "f3080637b03c84dc82069385292e2b05615ddfc2",
+  "initialCommit": "f10ad7a8a9369d1e67a7bc294392068de1d2a4b4",
+  "initialTrackedClean": true,
+  "worktree": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9",
+  "startedAt": "2026-09-09T17:28:22.122794+00:00",
+  "workspaceLinks": "workspace-links.json",
+  "knownDependencyLimitation": "One preexisting dangling local test-agent package link; no link escapes isolated tree. No source or link changes.",
+  "scope": "Committed combined retention, registry health and ingestion; no main WIP or handoff integration. Actual local original Go/HTTP/Helm/loader tests. No deployment/model/BuildKit/CRI proof; unchanged native Trivy intentionally not rerun.",
+  "pathPrefix": [
+    "/workspace/scratch/4e25cf57c177/toolchains/bin",
+    "/workspace/scratch/4e25cf57c177/toolchains/go/bin"
+  ],
+  "commands": {
+    "go-race": "go test -race -count=1 ./cmd/buster-namespace-controller",
+    "ready-helm": "KUBECLAW_TEST_HELM=/workspace/scratch/4e25cf57c177/toolchains/bin/helm node --test tests/verification/contracts/check-demo-ready-controller.mts",
+    "ingestion-helm": "KUBECLAW_TEST_HELM=/workspace/scratch/4e25cf57c177/toolchains/bin/helm node --test tests/verification/deployment/prism-ingestion-resources.test.mjs",
+    "ingestion-service": "node --test skills/prism/tests/ingestion-service.test.mts",
+    "registry-health": "node --test tests/verification/deployment/registry-health.test.mts",
+    "production-config": "node tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "workspace": "node --test tests/verification/e2e/real-run-workspace.test.mjs",
+    "nova-tsc": "npx tsc --noEmit -p skills/nova/tsconfig.json",
+    "buster-tsc": "npx tsc --noEmit -p skills/buster/engine/tsconfig.json"
+  },
+  "finalTrackedStatus": "",
+  "finishedAt": "2026-09-09T17:29:30.222195+00:00",
+  "results": {
+    "go-race": {
+      "exitCode": 0,
+      "log": "go-race.txt"
+    },
+    "ready-helm": {
+      "exitCode": 0,
+      "log": "ready-helm.txt",
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "skipped": 0
+    },
+    "ingestion-helm": {
+      "exitCode": 0,
+      "log": "ingestion-helm.txt",
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0
+    },
+    "ingestion-service": {
+      "exitCode": 0,
+      "log": "ingestion-service.txt",
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "skipped": 0
+    },
+    "registry-health": {
+      "exitCode": 0,
+      "log": "registry-health.txt",
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0
+    },
+    "production-config": {
+      "exitCode": 0,
+      "log": "production-config.txt"
+    },
+    "workspace": {
+      "exitCode": 0,
+      "log": "workspace.txt",
+      "tests": 61,
+      "pass": 61,
+      "fail": 0,
+      "skipped": 0
+    },
+    "nova-tsc": {
+      "exitCode": 0,
+      "log": "nova-tsc.txt"
+    },
+    "buster-tsc": {
+      "exitCode": 0,
+      "log": "buster-tsc.txt"
+    }
+  },
+  "toolVersions": {
+    "node": {
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "version": "v24.19.0"
+    },
+    "go": {
+      "executable": "/workspace/scratch/4e25cf57c177/toolchains/go/bin/go",
+      "version": "go version go1.24.13 linux/amd64"
+    },
+    "helm": {
+      "executable": "/workspace/scratch/4e25cf57c177/toolchains/bin/helm",
+      "version": "v3.18.4+gd80839c"
+    }
+  }
+}

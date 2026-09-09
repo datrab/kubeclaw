@@ -1,0 +1,12 @@
+✔ original HTTP and API-flow providers use genuine registry TLS/auth and preserve success/failure assertions (2252.565397ms)
+✔ foreign allowed origin receives no registry credential; explicit HTTP lab is anonymous (37.193593ms)
+✔ actual E2E generator consumes only the operator contract origin and fails when it is absent (9.885632ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2586.482213
+exit_code=0

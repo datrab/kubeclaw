@@ -267,3 +267,5 @@ Registry-Health-Consumer lokal `fdec920`, remote `5fe58e4d8de9d546af899b2ef1c44b
 Konfigurierbare initiale Demo-Laufzeit lokal `f308063` committed. Eine unabhängige Pruning-Gegenprobe erzwang einen eigenen gespeicherten v2-Vertrag mit Pflichtdauer; nur echte historische v1-Datensätze behalten den impliziten Sieben-Tage-Wert. Replay und Status lehnen beschädigte neue Datensätze ab. Menschlich autorisierte Verlängerung bleibt ohne echten Operator-Authentifizierungseingang nicht implementiert.
 
 Der echte Nova-Übergabepfad fand eine reentrante Sperrkollision zwischen logischer Evidenzprüfung und innerem Artefaktzugriff. Diese wird durch korrekte Ressourcendomänen behoben, ohne Core-Sperrausnahme oder vertraulichen Ersatzaufruf. Noch uncommittete Übergabearbeit wird nicht als Ready-Abschluss gezählt.
+
+Versionierte initiale Demo-Laufzeit ist remote `05c88ff331deac4a932126e8a686e7f9865aa758` gesichert. [Isolierter kombinierter Commitcheck f308063](../evidence/integration-f308063/README.md) besteht vollständig innerhalb seiner neun ausgewählten Kommandos. Die weiterhin uncommittete Nova-Handoff-/Readinessarbeit war im Checkout nicht enthalten.
