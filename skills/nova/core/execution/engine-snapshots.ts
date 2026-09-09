@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import { portableJson, type AdministrativeReopenDecision, type PipelineDefinition, type ResumeSignal } from '@kubeclaw/plugin-sdk';
+import { CURRENT_RUNTIME_DISPATCH_PROFILE, parseRuntimeDispatchProfile, portableJson, type RuntimeDispatchProfile, type AdministrativeReopenDecision, type PipelineDefinition, type ResumeSignal } from '@kubeclaw/plugin-sdk';
 import type { StageRuntimeState } from '../lifecycle/reducer.ts';
 import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
 import { ExecutionGraph, type ExecutionGraphSnapshot } from './graph.ts';
@@ -72,13 +72,24 @@ export function verifyPinnedGraph(runRoot: string, definition: PipelineDefinitio
   if (stored.digest !== current.digest) throw new Error(`RECOVERY_GRAPH_DIGEST_MISMATCH:${stored.digest}:${current.digest}`); return current;
 }
 
-export interface RunSnapshot { readonly schemaVersion: 'run-snapshot.v1' | 'run-snapshot.v2'; readonly graph: ExecutionGraphSnapshot; readonly registry: Readonly<Record<string, unknown>>; readonly digest: string }
-function snapshotDigest(value: unknown, version: RunSnapshot['schemaVersion']): string { return `sha256:${crypto.createHash('sha256').update(version === 'run-snapshot.v2' ? portableJson(value) : canonicalJson(value)).digest('hex')}`; }
+interface RunSnapshotBase { readonly graph: ExecutionGraphSnapshot; readonly registry: Readonly<Record<string, unknown>>; readonly digest: string }
+export type RunSnapshot = RunSnapshotBase & (
+  { readonly schemaVersion: 'run-snapshot.v1' | 'run-snapshot.v2'; readonly runtimeDispatchProfile?: never }
+  | { readonly schemaVersion: 'run-snapshot.v3'; readonly runtimeDispatchProfile: RuntimeDispatchProfile }
+);
+function snapshotDigest(value: unknown, version: RunSnapshot['schemaVersion']): string {
+  if (!['run-snapshot.v1', 'run-snapshot.v2', 'run-snapshot.v3'].includes(version)) throw new Error('RUN_SNAPSHOT_VERSION_INVALID');
+  return `sha256:${crypto.createHash('sha256').update(version === 'run-snapshot.v1' ? canonicalJson(value) : portableJson(value)).digest('hex')}`;
+}
 export function assertRunSnapshot(snapshot: RunSnapshot): void {
   const { digest, ...unsigned } = snapshot;
-  if (!['run-snapshot.v1', 'run-snapshot.v2'].includes(snapshot.schemaVersion)
+  if (!['run-snapshot.v1', 'run-snapshot.v2', 'run-snapshot.v3'].includes(snapshot.schemaVersion)
     || !['execution-graph-snapshot.v2', 'execution-graph-snapshot.v3'].includes(snapshot.graph?.schemaVersion)
     || digest !== snapshotDigest(unsigned, snapshot.schemaVersion)) throw new Error('RUN_SNAPSHOT_INTEGRITY_INVALID');
+  if (snapshot.schemaVersion === 'run-snapshot.v3') {
+    parseRuntimeDispatchProfile(snapshot.runtimeDispatchProfile); validateContractValue('runtimeRunSnapshot', snapshot);
+  }
+  else if (Object.hasOwn(snapshot, 'runtimeDispatchProfile')) throw new Error('RUN_SNAPSHOT_LEGACY_PROFILE_INVALID');
 }
 export function readRunSnapshot(runRoot: string): RunSnapshot {
   const snapshot = JSON.parse(fs.readFileSync(path.join(runRoot, 'run-snapshot.json'), 'utf8')) as RunSnapshot;
@@ -87,11 +98,13 @@ export function readRunSnapshot(runRoot: string): RunSnapshot {
 }
 export function writeRunSnapshots(runRoot: string, graph: ExecutionGraphSnapshot, registry: Readonly<Record<string, unknown>>): void {
   if (['run-snapshot.json', 'graph-snapshot.json', 'registry-snapshot.json'].some((name) => fs.existsSync(path.join(runRoot, name)))) throw new Error(`RUN_ALREADY_EXISTS:${runRoot}`);
-  const unsigned = { schemaVersion: 'run-snapshot.v2' as const, graph, registry };
+  const unsigned = { schemaVersion: 'run-snapshot.v3' as const, graph, registry, runtimeDispatchProfile: CURRENT_RUNTIME_DISPATCH_PROFILE };
+  const snapshot = { ...unsigned, digest: snapshotDigest(unsigned, unsigned.schemaVersion) };
+  assertRunSnapshot(snapshot);
   const file = path.join(runRoot, 'run-snapshot.json');
   const temporary = path.join(runRoot, `.snapshot-${crypto.randomUUID()}.tmp`);
   const descriptor = fs.openSync(temporary, 'wx', 0o600);
-  try { fs.writeFileSync(descriptor, JSON.stringify({ ...unsigned, digest: snapshotDigest(unsigned, unsigned.schemaVersion) })); fs.fsyncSync(descriptor); }
+  try { fs.writeFileSync(descriptor, JSON.stringify(snapshot)); fs.fsyncSync(descriptor); }
   finally { fs.closeSync(descriptor); }
   try {
     // Atomic no-replace publication: readers can never see half a snapshot pair.

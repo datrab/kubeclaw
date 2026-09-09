@@ -18,10 +18,10 @@ export async function execute(input: ArchitectureInput, context: PluginInvocatio
     input = await reviewedInput(input, context);
     subject = input.subject;
     if (subject) await verifyReviewSubject(subject, context);
-    output = parseArchitectureOutput(await context.invoke('runtime.dispatch', {
+    output = parseArchitectureOutput(await context.invoke('runtime.dispatch', withRuntimeDispatchProfile({
       operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent },
       payload: buildArchitectureRequest(agent, { ...input, ...(subject ? { subject } : {}) }, context.contract.guidance?.helperPrompt),
-    }));
+    }, context.contract.runtimeDispatchProfile)));
     if (subject) {
       if (subject.paths.some(file => !output.checkedFiles.includes(file))) throw new Error('REVIEW_SUBJECT_COVERAGE_MISSING');
       await verifyReviewSubject(subject, context);
@@ -57,3 +57,4 @@ export async function execute(input: ArchitectureInput, context: PluginInvocatio
     artifacts,
   };
 }
+import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';
