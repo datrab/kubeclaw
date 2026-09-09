@@ -4,6 +4,7 @@ export {assertDurableRecordReplay} from './record-retirement.ts';
 export type {DurableRecord, DurableRecordState, RecordRetirementIntent, RecordRetirement, RecordTombstone} from './record-retirement.ts';
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
+import { constants } from 'node:fs';
 import path from "node:path";
 import { canonicalJson } from "@kubeclaw/pipeline-observability-contract";
 import {
@@ -293,6 +294,19 @@ export class FileDurableBlobStore implements DurableBlobStore {
 
   async get(digest: string): Promise<Buffer> {
     const file = this.#path(digest);
+    const parents = new Map<string, string>();
+    let directory = path.parse(file).root;
+    for (const segment of path.dirname(file).slice(directory.length).split(path.sep).filter(Boolean)) {
+      directory = path.join(directory, segment);
+      let parent;
+      try { parent = await fs.lstat(directory); }
+      catch (error) {
+        if ((error as NodeJS.ErrnoException).code === 'ENOENT') throw new Error('DURABLE_BLOB_NOT_FOUND');
+        throw error;
+      }
+      if (!parent.isDirectory() || parent.isSymbolicLink()) throw new Error('DURABLE_BLOB_PATH_INVALID');
+      parents.set(directory, `${parent.dev}:${parent.ino}`);
+    }
     let stat;
     try { stat = await fs.lstat(file); } catch (error) {
       if ((error as NodeJS.ErrnoException).code === "ENOENT") throw new Error("DURABLE_BLOB_NOT_FOUND");
@@ -300,9 +314,35 @@ export class FileDurableBlobStore implements DurableBlobStore {
     }
     if (!stat.isFile() || stat.isSymbolicLink())
       throw new Error("DURABLE_BLOB_PATH_INVALID");
-    const bytes = await fs.readFile(file);
-    const actual = `sha256:${crypto.createHash("sha256").update(bytes).digest("hex")}`;
-    if (actual !== digest) throw new Error("DURABLE_BLOB_INTEGRITY_FAILED");
-    return bytes;
+    const stamp = (value: typeof stat): string => `${value.dev}:${value.ino}:${value.size}:${value.mtimeMs}:${value.ctimeMs}`;
+    const handle = await fs.open(file, constants.O_RDONLY | constants.O_NOFOLLOW | constants.O_NONBLOCK);
+    try {
+      const opened = await handle.stat();
+      if (!opened.isFile() || stamp(opened) !== stamp(stat)) throw new Error('DURABLE_BLOB_PATH_CHANGED');
+      if (!Number.isSafeInteger(opened.size) || opened.size < 0 || opened.size > this.#maximumBytes) {
+        throw new Error('DURABLE_BLOB_SIZE_EXCEEDED');
+      }
+      const bounded = Buffer.alloc(opened.size + 1);
+      let total = 0;
+      while (total < bounded.byteLength) {
+        const read = await handle.read(bounded, total, bounded.byteLength - total, total);
+        if (!read.bytesRead) break;
+        total += read.bytesRead;
+      }
+      if (total !== opened.size || stamp(await handle.stat()) !== stamp(opened)
+        || stamp(await fs.lstat(file)) !== stamp(opened)) throw new Error('DURABLE_BLOB_PATH_CHANGED');
+      // These observed identity checks reject changed/symlink parents. They are
+      // not a claim of race-proof path confinement against an adversarial host.
+      for (const [parentPath, identity] of parents) {
+        const parent = await fs.lstat(parentPath);
+        if (!parent.isDirectory() || parent.isSymbolicLink() || `${parent.dev}:${parent.ino}` !== identity) {
+          throw new Error('DURABLE_BLOB_PATH_CHANGED');
+        }
+      }
+      const bytes = bounded.subarray(0, total);
+      const actual = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
+      if (actual !== digest) throw new Error('DURABLE_BLOB_INTEGRITY_FAILED');
+      return bytes;
+    } finally { await handle.close(); }
   }
 }
