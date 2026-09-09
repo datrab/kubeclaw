@@ -3599,7 +3599,7 @@
       "family": "infrastructure",
       "severity": "hoch",
       "work_package": "WP11",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3610,7 +3610,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/my-values/infra/k3s-registries.yaml#L1"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Aktive Ursachenbehebung und echte Consumerprüfung; unabhängige Gegenprüfung und gesicherte Belege vor Abschluss. Keine Deployment-/CI-Ausführung.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3620,7 +3620,7 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP11",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3629,7 +3629,7 @@
       "source_finding_text": "## Befund IFR-08-002\n**Mittel; nachgewiesener Retention-/Dokumentationsdefekt.** Manifestkommentar behauptet, Test-Images würden bei Namespace-Löschung entfernt. Tatsächlich speichert der gemeinsame Registry-Pod ohne Volume in seiner Container-Schreibschicht; das Löschen eines Test-Namespace berührt ihn nicht. Keine GC-/Löschroutine zwischen Lease-Ende und Registry nachgewiesen. Folge: ungebundenes Disk-Wachstum bis Containerverlust/Node-Druck; Registry-Neustart verliert wiederum benötigte Images.\n\nUrsachenbehebung: explizite Artefaktlebensdauer und GC mit Referenzschutz plus definierte Persistenz/Disk-Budgets. Test: mehrere echte Lease-Zyklen, GC, noch benötigten Digest erneut ziehen, Registry-Pod ersetzen. Schema- und Source-Prüfung ersetzt diese Tests nicht. Registry und Build-Cache bleiben getrennte Einheiten.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Aktive Ursachenbehebung und echte Consumerprüfung; unabhängige Gegenprüfung und gesicherte Belege vor Abschluss. Keine Deployment-/CI-Ausführung.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3639,7 +3639,7 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP11",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3651,7 +3651,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/my-values/infra/k3s-registries.yaml"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Aktive Ursachenbehebung und echte Consumerprüfung; unabhängige Gegenprüfung und gesicherte Belege vor Abschluss. Keine Deployment-/CI-Ausführung.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4541,7 +4541,7 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP14",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -4556,7 +4556,7 @@
         "protocol.ts:1–22",
         "stage.ts:6–11"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Aktive Ursachenbehebung und echte Consumerprüfung; unabhängige Gegenprüfung und gesicherte Belege vor Abschluss. Keine Deployment-/CI-Ausführung.",
       "related_findings": [
         "PCR-PREPORT-001"
       ],

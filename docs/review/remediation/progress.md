@@ -4,7 +4,7 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**85/154 lokal verifiziert und unabhängig gegengeprüft; 40 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 4 in Bearbeitung; 25 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
+**85/154 lokal verifiziert und unabhängig gegengeprüft; 40 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 8 in Bearbeitung; 21 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
 
 | Bereich | Remote-Commit | Stand / Nachweis |
 |---|---|---|
@@ -238,3 +238,5 @@ Controllervertrag muss Produkt-Ready von bestehendem Infrastruktur-Ready trennen
 Zeitpunkte serverseitig festlegen und mit Ablauf/Bereinigung konkurrierende Writes
 per CAS schützen. Nova-Produktkomposition und aktuelle Storebelege werden parallel
 vorbereitet; geteilte Dateipfade werden abgestimmt.
+
+Demo-Voraussetzung und isolierte Belege sind remote in `3e0f50e8fa915aa2dc6c640ef178b5552d79680a` und `63354d93af540e09a562af2bc850de5b3f078657` gesichert. Registry-Clientverträge (IFR-08/09) und T15-F01 sind jetzt aktiv in Bearbeitung; keine zusätzlichen Findings als abgeschlossen gezählt.
