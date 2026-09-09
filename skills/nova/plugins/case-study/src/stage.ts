@@ -1,12 +1,26 @@
+import { canonicalJson, sha256Text, type AttemptIdentity } from '@kubeclaw/plugin-sdk';
 import type{ArtifactRef,PluginInvocationContext,StageResult}from'@kubeclaw/plugin-sdk';
 import{buildRequest,parseCaseStudy,type CaseStudyInput}from'./protocol.ts';
 export async function execute(input:CaseStudyInput,context:PluginInvocationContext):Promise<StageResult>{
   const agent=context.contract.config.agent;if(typeof agent!=='string'||!agent.trim())throw new Error('case study agent is not configured');
+  const execution={...context.contract.lease.attempt};
   let study;
-  try{const response=await context.invoke('runtime.dispatch',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:agent},payload:buildRequest(agent,input)});
-    study=parseCaseStudy(response.result,input);
+  try{const response=await context.invoke('runtime.dispatch',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:agent},payload:buildRequest(agent,input,execution)});
+    study=parseCaseStudy(response.result,input,execution);
   }catch(error){return{schemaVersion:'stage-result.v2',outcome:'blocked',reason:{code:'case_study.invalid_output',message:error instanceof Error?error.message:String(error)},artifacts:[]};}
-  const stored=await context.invoke('artifacts.write',{operation:'put_json',resource:{type:'artifact.object',canonicalId:`case-study:${input.runId}`},
+  const artifactId=`case-study:${sha256Text(canonicalJson(execution)).slice(7)}`;
+  const stored=await context.invoke('artifacts.write',{operation:'put_json',resource:{type:'artifact.object',canonicalId:artifactId},
     payload:{namespace:'kubeclaw.case-study',mediaType:'application/json',value:study}});
+  assertReportArtifact(stored.artifact,artifactId,study,execution);
   return{schemaVersion:'stage-result.v2',outcome:'passed',artifacts:[stored.artifact as ArtifactRef]};
+}
+
+/** Verify the original store response against the bytes and active producer being committed. */
+export function assertReportArtifact(value:unknown,artifactId:string,report:unknown,execution:AttemptIdentity):asserts value is ArtifactRef {
+  if(!value || typeof value!=='object')throw new Error('REPORT_ARTIFACT_INVALID');
+  const artifact=value as ArtifactRef;
+  const bytes=canonicalJson(report);
+  if(artifact.artifactId!==artifactId || artifact.namespace!=='kubeclaw.case-study' || artifact.mediaType!=='application/json'
+    || artifact.digest!==sha256Text(bytes) || artifact.sizeBytes!==Buffer.byteLength(bytes)
+    || canonicalJson(artifact.producer)!==canonicalJson(execution))throw new Error('REPORT_ARTIFACT_BINDING_MISMATCH');
 }

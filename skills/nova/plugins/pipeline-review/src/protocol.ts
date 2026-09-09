@@ -1,19 +1,22 @@
+import type { AttemptIdentity } from '@kubeclaw/plugin-sdk';
 export interface ReviewInput {
   readonly runId: string; readonly attempt: number; readonly task: string;
   readonly evidence: readonly { readonly kind: string; readonly digest: string }[];
 }
 export interface ReviewReport {
   readonly status: 'reviewed'; readonly runId: string; readonly attempt: number; readonly summary: string;
+  readonly execution: AttemptIdentity; readonly reportTarget: { readonly runId: string; readonly attempt: number };
+  readonly evidenceStatus: 'unverified-caller-input'; readonly evidence: ReviewInput['evidence'];
   readonly observations: readonly { readonly dimension: 'architecture'|'agents'|'prompts'|'tests'|'configuration'; readonly finding: string; readonly priority: 'low'|'medium'|'high' }[];
 }
 const dimensions = ['architecture','agents','prompts','tests','configuration'] as const;
-export function buildRequest(agent: string, input: ReviewInput): Readonly<Record<string, unknown>> {
-  return { protocol:'kubeclaw.pipeline-review.v2', agent, identity:{runId:input.runId,attempt:input.attempt},
-    task:[input.task,'Return only the agent-owned output object described by outputContract.','Do not copy protocol, agent, identity, task, evidence, requiredDimensions, or outputContract into the output.','Runtime/core bind run and attempt identity.'].join('\n\n'),
+export function buildRequest(agent: string, input: ReviewInput, execution: AttemptIdentity): Readonly<Record<string, unknown>> {
+  return { protocol:'kubeclaw.pipeline-review.v3', agent, identity:execution, reportTarget:{runId:input.runId,attempt:input.attempt}, evidenceStatus:'unverified-caller-input',
+    task:[input.task,'Return only the agent-owned output object described by outputContract.','Do not copy protocol, agent, identity, task, evidence, requiredDimensions, or outputContract into the output.','Execution identity is supplied by the active Core lease; reportTarget may name a historical run. Supplied evidence is unverified caller input. The report is an agent assessment, not proof of passed tests or verified facts.'].join('\n\n'),
     evidence:input.evidence, requiredDimensions:dimensions,
     outputContract:{type:'object',additionalProperties:false,required:['status','summary','observations'],properties:{status:{const:'reviewed'},summary:{type:'string'},observations:{type:'array',items:{type:'object',additionalProperties:false,required:['dimension','finding','priority'],properties:{dimension:{enum:dimensions},finding:{type:'string'},priority:{enum:['low','medium','high']}}}}}} };
 }
-export function parseReport(value: unknown, input: ReviewInput): ReviewReport {
+export function parseReport(value: unknown, input: ReviewInput, execution: AttemptIdentity): ReviewReport {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('review report must be an object');
   const report=value as Record<string,unknown>;
   if (Object.keys(report).some((key)=>!['status','summary','observations'].includes(key)) || report.status!=='reviewed') throw new Error('review report shape is invalid');
@@ -28,5 +31,6 @@ export function parseReport(value: unknown, input: ReviewInput): ReviewReport {
     return item as unknown as ReviewReport['observations'][number];
   });
   for(const dimension of dimensions) if(!observations.some((item)=>item.dimension===dimension)) throw new Error(`review is missing ${dimension}`);
-  return {status:'reviewed',runId:input.runId,attempt:input.attempt,summary:report.summary,observations};
+  return {status:'reviewed',runId:execution.runId,attempt:execution.attemptNumber,execution:{...execution},
+    reportTarget:{runId:input.runId,attempt:input.attempt},evidenceStatus:'unverified-caller-input',evidence:structuredClone(input.evidence),summary:report.summary,observations};
 }

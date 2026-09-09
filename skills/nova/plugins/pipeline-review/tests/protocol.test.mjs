@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
+import { sha256Text } from '@kubeclaw/plugin-sdk';
 import {buildRequest,parseReport} from '../src/protocol.ts';
-const input={runId:'run-1',attempt:1,task:'Review.',evidence:[{kind:'summary',digest:`sha256:${'a'.repeat(64)}`}]};
-assert.equal(buildRequest('reviewer',input).protocol,'kubeclaw.pipeline-review.v2');
+const execution={runId:'run:executor',stageId:'report',attemptId:'attempt:real-contract',attemptNumber:2};
+const input={runId:'run-1',attempt:1,task:'Review.',evidence:[{kind:'summary',digest:sha256Text('unverified caller protocol note')}]};
+assert.equal(buildRequest('reviewer',input,execution).protocol,'kubeclaw.pipeline-review.v3');
 const observations=['architecture','agents','prompts','tests','configuration'].map((dimension)=>({dimension,finding:`${dimension} reviewed`,priority:'low'}));
 const valid={status:'reviewed',summary:'Complete.',observations};
-assert.deepEqual(parseReport(valid,input),{...valid,runId:'run-1',attempt:1});
-for(const bad of [{...valid,identity:{runId:'run-1',attempt:1}},{...valid,extra:true},{...valid,observations:observations.slice(1)}]) assert.throws(()=>parseReport(bad,input));
+assert.deepEqual(parseReport(valid,input,execution),{...valid,runId:execution.runId,attempt:2,execution,reportTarget:{runId:'run-1',attempt:1},evidenceStatus:'unverified-caller-input',evidence:input.evidence});
+for(const bad of [{...valid,identity:{runId:'run-1',attempt:1}},{...valid,extra:true},{...valid,observations:observations.slice(1)}]) assert.throws(()=>parseReport(bad,input,execution));
 console.log(JSON.stringify({ok:true,plugin:'kubeclaw.pipeline-review',suite:'protocol'}));
