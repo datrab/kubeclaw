@@ -1,0 +1,45 @@
+$ npm test --workspace=@kubeclaw/plugin-remote-test-gate
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node --test tests/evidence-projection.test.ts
+
+{"ok":true,"plugin":"kubeclaw.remote-test-gate","live":true}
+✖ original HTTP importer, artifact store and evidence adapter preserve ownership across reopen; envelopes are contract vectors (561.384659ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1019.22861
+
+✖ failing tests:
+
+test at tests/evidence-projection.test.ts:57:1
+✖ original HTTP importer, artifact store and evidence adapter preserve ownership across reopen; envelopes are contract vectors (561.384659ms)
+  Error: Command failed: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node --test /workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/demo-auth-smoke/tests/live-function.test.ts
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts:60:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    status: 1,
+    signal: null,
+    output: [ null, <Buffer e2 9c 96 20 6f 72 69 67 69 6e 61 6c 20 63 6f 6e 74 72 6f 6c 6c 65 72 20 63 72 65 64 65 6e 74 69 61 6c 73 20 61 75 74 68 65 6e 74 69 63 61 74 65 20 61 ... 2229 more bytes>, <Buffer > ],
+    pid: 78,
+    stdout: <Buffer e2 9c 96 20 6f 72 69 67 69 6e 61 6c 20 63 6f 6e 74 72 6f 6c 6c 65 72 20 63 72 65 64 65 6e 74 69 61 6c 73 20 61 75 74 68 65 6e 74 69 63 61 74 65 20 61 ... 2229 more bytes>,
+    stderr: <Buffer >
+  }
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path /workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/remote-test-gate
+npm error workspace @kubeclaw/plugin-remote-test-gate
+npm error location /workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/remote-test-gate
+npm error command failed
+npm error command sh -c node tests/live-function.test.ts && node --test tests/evidence-projection.test.ts

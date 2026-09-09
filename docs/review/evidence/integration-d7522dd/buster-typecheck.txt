@@ -1,0 +1,2 @@
+$ node_modules/.bin/tsc --noEmit -p skills/buster/engine/tsconfig.json
+PATH prefix: /workspace/scratch/4e25cf57c177/toolchains/go/bin

@@ -226,3 +226,15 @@ T01-F01/F02 und OBS-002 bleiben teilweise: Legacyimport, vollständige Demo-/Rea
 Komposition und weitere ausgeschöpfte Storequoten sind nicht erledigt. Aktuell
 laufen Demo-Nachweisprüfung, Registry-Clientintegration und die Untersuchung der
 noch unbelegten historischen Berichtsfakten (T15-F01). Kein CI/Deployment gestartet.
+
+## Demo-Authentifizierung als geprüfte Voraussetzung
+
+Lokaler Commit `d7522ddf6c62e3c5ffe4a89ffa8ea4f891ce17de` ergänzt die echte
+Anmeldung mit controllergenerierten Demozugangsdaten und eine quellgebundene
+Projektion bereits verifizierter finaler Ergebnisse. [Unabhängige Prüfung](implementation/demo-auth-evidence.md)
+und [isolierte Commitintegration](../evidence/integration-d7522dd/README.md) bestehen.
+Das ist ausdrücklich noch kein Ready-/Delivery-Abschluss. Der nun implementierte
+Controllervertrag muss Produkt-Ready von bestehendem Infrastruktur-Ready trennen,
+Zeitpunkte serverseitig festlegen und mit Ablauf/Bereinigung konkurrierende Writes
+per CAS schützen. Nova-Produktkomposition und aktuelle Storebelege werden parallel
+vorbereitet; geteilte Dateipfade werden abgestimmt.
