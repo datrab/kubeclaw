@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { syncContract } from './sync-contract.mjs';
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -6,6 +7,11 @@ import path from 'node:path';
 import process from 'node:process';
 
 const pluginRoot = path.resolve(import.meta.dirname, '..');
+const sourceIndex = process.argv.indexOf('--contract-source');
+if (sourceIndex >= 0 && (!process.argv[sourceIndex + 1] || process.argv[sourceIndex + 1].startsWith('--'))) {
+  throw new Error('--contract-source requires a canonical source directory');
+}
+syncContract(sourceIndex >= 0 ? process.argv[sourceIndex + 1] : undefined);
 const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-observer-build-'));
 const output = path.join(temporaryRoot, 'dist');
 const tscIndex = process.argv.indexOf('--tsc');

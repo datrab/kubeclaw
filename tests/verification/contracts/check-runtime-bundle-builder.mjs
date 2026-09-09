@@ -30,6 +30,15 @@ try {
     const forbidden = execFileSync('find', [output, '-type', 'd', '(', '-name', 'test', '-o', '-name', 'tests', '-o', '-name', 'node_modules', ')'], { encoding: 'utf8' })
       .split('\n').filter((entry) => entry && entry !== path.join(output, 'skills/node_modules'));
     assert.deepEqual(forbidden, [], `${role} bundle contains development directories`);
+    const observer = path.join(output, 'skills/plugins/openclaw-agent-observer');
+    const canonicalContract = path.join(root, 'contracts/agent-observability/v1/src');
+    for (const name of fs.readdirSync(canonicalContract)) {
+      assert.deepEqual(fs.readFileSync(path.join(observer, 'src/generated/agent-observability', name)),
+        fs.readFileSync(path.join(canonicalContract, name)), `${role} observer must contain canonical contract bytes`);
+    }
+    execFileSync(process.execPath, ['--input-type=module', '-e',
+      `const {resolveAgentObserverConfig}=await import(${JSON.stringify(pathToFileURL(path.join(observer, 'src/config.ts')).href)});if(typeof resolveAgentObserverConfig!=='function')process.exit(2);`],
+    { cwd: temporary, env: { PATH: process.env.PATH ?? '', NODE_PATH: '' } });
     const entrypoint = pathToFileURL(path.join(output, 'skills', roleManifest.entrypoint.output)).href;
     const expression = role === 'nova'
       ? `import('${entrypoint}').then(m=>{if(typeof m.PipelineRunner!=='function'||'WorkerAttemptExecutor' in m)process.exit(2)})`

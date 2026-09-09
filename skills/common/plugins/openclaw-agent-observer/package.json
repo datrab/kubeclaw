@@ -23,9 +23,8 @@
     "sync-contract": "node scripts/sync-contract.mjs",
     "pretypecheck": "npm run sync-contract",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "prebuild": "npm run sync-contract",
     "build": "node scripts/build.mjs",
-    "test": "node --check scripts/build.mjs && node --check scripts/sync-contract.mjs && npm run typecheck && node tests/config.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node --test tests/remediation.test.ts"
+    "test": "node tests/clean-build.test.mjs && node --check scripts/build.mjs && node --check scripts/sync-contract.mjs && npm run typecheck && node tests/config.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node --test tests/remediation.test.ts"
   },
   "devDependencies": {
     "@types/node": "24.13.3",

@@ -193,6 +193,7 @@ const extensionSources = new Map([
 for (const extensionId of roleManifest.extensions) {
   const sourceRoot = extensionSources.get(extensionId);
   assert(sourceRoot, `unknown runtime extension: ${extensionId}`);
+  execFileSync(process.execPath, [path.join(sourceRoot, 'scripts/sync-contract.mjs')], { stdio: 'inherit' });
   const files = selectedFiles(sourceRoot);
   collectDependencies(sourceRoot);
   const before = contentDigest(sourceRoot, files);
