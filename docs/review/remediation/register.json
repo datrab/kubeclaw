@@ -4291,10 +4291,13 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "8b4238f5e0c9e383911c20726e4386bfa72fb846",
+      "verification_status": "Helm und Originaldienst lokal bestanden; native Ressourcen-/OOM-Gates offen",
+      "verification_evidence": [
+        "implementation/prism-ingestion-resources.md",
+        "../evidence/prism-ingestion-resources-root.txt"
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/prism-workloads.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-20-001\n**Mittel; nachgewiesene fehlende Ressourcenbegrenzung.** Auslöser: ingestion.enabled=true. `templates/ingestion.yaml` definiert keine CPU-/Memory-Requests/Limits, lediglich 4Gi emptyDir. Render der aktivierten Variante bestätigt 0 angeforderte CPU/Memory. Die Ingestion verarbeitet externe Inhalte; weder Ressourcenplanung noch Begrenzung erfolgt lokal, außer ein externer LimitRange greift.\n\nUrsachenbehebung: sinnvolle konfigurierbare Requests/Limits sowie Liveness/Abbruch- und Quarantäne-Retention passend zum Importvertrag festlegen. Echter Test: große/defekte Inputs mit realem Dienst, maximale RAM-/CPU-/Disknutzung, Ablehnung/Abbruch und Recovery nach OOM beobachten.",
@@ -4302,7 +4305,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/charts/prism/templates/ingestion.yaml"
       ],
       "unresolved_code_references": [],
-      "next_action": "Konfigurierbare Ingestion-Ressourcen und echte Health-/Quarantäne-Konfiguration werden geprüft. Native RAM/CPU/OOM-Messung bleibt separates Betriebsgate.",
+      "next_action": "Mit tatsächlicher Hostkapazität Ressourcen konfigurieren; Last, RAM/CPU/Diskgrenzen und Recovery nach OOM im echten Pod prüfen. Keine geratenen Kapazitätswerte.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4339,7 +4342,7 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -4352,7 +4355,7 @@
       "unresolved_code_references": [
         "configmap-worker-trust.yaml:19–38"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Tatsächliche Liveness-, Bootstrap- und funktionale Readinesspfade werden abgeglichen; keine pauschale200-Zusage und keine Restartschleife wegen externer Abhängigkeit.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4579,9 +4582,9 @@
   "updated_at": "2026-09-09",
   "progress_counts": {
     "verifiziert": 85,
-    "implementiert": 44,
+    "implementiert": 45,
     "in Bearbeitung": 5,
-    "offen": 20
+    "offen": 19
   },
   "additional_integration_findings": [
     {

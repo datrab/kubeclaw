@@ -4,7 +4,7 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**85/154 lokal verifiziert und unabhängig gegengeprüft; 44 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 5 in Bearbeitung; 20 noch offen.** Zusätzlich fünf bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
+**85/154 lokal verifiziert und unabhängig gegengeprüft; 45 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 5 in Bearbeitung; 19 noch offen.** Zusätzlich fünf bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
 
 | Bereich | Remote-Commit | Stand / Nachweis |
 |---|---|---|
@@ -259,3 +259,11 @@ T15-Code lokal `f10ad7a`, remote `86b11c0c7e58cbb7f87ef35bd67bbbccdfad6b37`: urs
 Generation/Receipt-Kontext lokal `4eece95`, remote `aa8d48b51e02f660d5405addc7441db21f53d24b`: tatsächlich beobachtete Exposuregeneration ist vom Provider über Authentifizierung bis zum Originalimport gebunden. Receipt-Recovery erhält die originale Parent-Identität, auch nach echtem SIGKILL.
 
 [Isolierte gemeinsame Commitprüfung](../evidence/integration-f10ad7a/README.md) besteht: 10 Source-, 29 Cleanup-, 7 Generation-/Recoveryfälle, Originalreport-/Artefaktpakete sowie Nova-/Buster-Typechecks. Nativer Modellwriter und Deployment bleiben unbestätigt; T15 zählt deshalb noch nicht als vollständig verifiziert. IFR-20-Ingestionressourcen sind jetzt in Bearbeitung.
+
+Ingestionressourcen lokal `47af477`, remote `8b4238f5e0c9e383911c20726e4386bfa72fb846`: [fünf Originaldienst-/Helmprüfungen](implementation/prism-ingestion-resources.md) bestanden, darunter pausierte null Replikate, explizite CPU-/RAM-Konfiguration und endliche Quarantäne-TTL. Keine Logaufbewahrung verändert. Native Last-/OOM-/Schedulingbelege fehlen, daher teilweise implementiert. IFR-25-funktionale Readiness ist im Codeabgleich.
+
+Registry-Health-Consumer lokal `fdec920`, remote `5fe58e4d8de9d546af899b2ef1c44bb79ae5c2e6`: tatsächliche HTTP-/API-Provider greifen mit streng begrenzter Runtime-Authentifizierung auf die konfigurierte Registry zu. Unabhängig bestanden: HTTPS/Provider3, Originalworkspace61 und geladene Runtime-Konfiguration. Vollständiger geladener Runtime-zu-Registry-Aufruf und vier andere breitere Generatorgates bleiben ausdrücklich offen; [Scope](implementation/registry-health.md).
+
+Konfigurierbare initiale Demo-Laufzeit lokal `f308063` committed. Eine unabhängige Pruning-Gegenprobe erzwang einen eigenen gespeicherten v2-Vertrag mit Pflichtdauer; nur echte historische v1-Datensätze behalten den impliziten Sieben-Tage-Wert. Replay und Status lehnen beschädigte neue Datensätze ab. Menschlich autorisierte Verlängerung bleibt ohne echten Operator-Authentifizierungseingang nicht implementiert.
+
+Der echte Nova-Übergabepfad fand eine reentrante Sperrkollision zwischen logischer Evidenzprüfung und innerem Artefaktzugriff. Diese wird durch korrekte Ressourcendomänen behoben, ohne Core-Sperrausnahme oder vertraulichen Ersatzaufruf. Noch uncommittete Übergabearbeit wird nicht als Ready-Abschluss gezählt.
