@@ -25,6 +25,10 @@ import {
   exchangeTailscaleIdentity,
   verifySession,
 } from "../control/session.ts";
+import { acceptedCachedResult } from "../control/worker-results.ts";
+import { hydrateWorkerResult } from "../control/worker-evidence.ts";
+import { WorkerArtifactClient } from "./worker-artifacts.ts";
+import { handleInternalArtifact } from "./internal-artifacts.ts";
 import { prismAttempt, prismRequestDigest } from "../engine/worker-envelope.ts";
 import { ingest, search, type CorpusInput } from "../corpus/index.ts";
 import { evaluate } from "../evaluation/index.ts";
@@ -122,26 +126,6 @@ function authenticated(request: IncomingMessage): {
     throw new Error("invalid CSRF token");
   return { user: session.user, roles: session.roles, csrf };
 }
-type WorkerEvidence = { evidenceId?:string; type?:string; artifact?:{ storageUrl?:string; contentDigest?:string; mediaType?:string } };
-async function hydrateWorkerEvidence(
-  portableValues: Record<string, unknown>,
-  evidence: WorkerEvidence[],
-): Promise<Record<string, unknown>> {
-  const values={...portableValues};
-  for(const item of evidence){
-    if(!item.evidenceId||!item.artifact?.storageUrl||!item.artifact.contentDigest)throw new Error("Prism worker returned invalid evidence");
-    const evidenceUrl=new URL(item.artifact.storageUrl);
-    if(evidenceUrl.origin!==controlInternalUrl.origin||evidenceUrl.pathname!==`/v1/internal/artifacts/${item.artifact.contentDigest}`)throw new Error("Prism worker evidence location is not allowed");
-    const evidenceResponse=await fetch(evidenceUrl,{headers:spiffeEnabled?{}:{authorization:`Bearer ${workerSecret}`}});
-    if(!evidenceResponse.ok)throw new Error("Prism worker evidence could not be read");
-    const bytes=Buffer.from(await evidenceResponse.arrayBuffer());
-    if(sha256(bytes)!==item.artifact.contentDigest)throw new Error("Prism worker evidence digest mismatch");
-    if(item.evidenceId==="render-screenshot")values.screenshotBase64=bytes.toString("base64");
-    else if(item.evidenceId==="render-aria")values.ariaSnapshot=bytes.toString("utf8");
-    else if(item.evidenceId==="evaluation-report")values.report=JSON.parse(bytes.toString("utf8"));
-  }
-  return values;
-}
 async function runWorker(
   operation: "generate" | "render" | "evaluate" | "ingest" | "publish",
   input: Record<string, unknown>,
@@ -162,9 +146,10 @@ async function runWorker(
     ]);
     const prior = await client.query<{
       request_digest: string | null;
+      attempt_id: string;
       result: Record<string, unknown> | null;
     }>(
-      "SELECT request_digest,result FROM prism.engine_operation WHERE idempotency_key=$1",
+      "SELECT request_digest,attempt_id,result FROM prism.engine_operation WHERE idempotency_key=$1",
       [idempotencyKey],
     );
     if (
@@ -173,9 +158,11 @@ async function runWorker(
     )
       throw new Error("idempotency key was used for a different Prism request");
     if (prior.rows[0]?.result) {
+      const stored = acceptedCachedResult(prior.rows[0].result, requestDigest, prior.rows[0].attempt_id);
+      const cached = await hydrateWorkerResult(stored.attempt, stored.workerResult,
+        new WorkerArtifactClient(controlInternalUrl, workerSecret, spiffeEnabled));
       await client.query("COMMIT");
-      const stored=prior.rows[0].result as {values?:Record<string,unknown>;evidence?:WorkerEvidence[]};
-      return hydrateWorkerEvidence(stored.values??stored,stored.evidence??[]);
+      return cached.values;
     }
     await client.query(
       "INSERT INTO prism.engine_operation(idempotency_key,attempt_id,operation,request_digest) VALUES($1,$2,$3,$4) ON CONFLICT(idempotency_key) DO UPDATE SET attempt_id=excluded.attempt_id,request_digest=COALESCE(prism.engine_operation.request_digest,excluded.request_digest)",
@@ -197,24 +184,14 @@ async function runWorker(
       body,
     });
     if (!result.ok) throw new Error(`Prism worker failed: ${result.status}`);
-    const workerResult = (await result.json()) as {
-      state?: string;
-      error?: { message?: string } | null;
-      specialistResult?: { values?: Record<string, unknown> } | null;
-      evidence?:WorkerEvidence[];
-    };
-    if (workerResult.state !== "completed")
-      throw new Error(
-        workerResult.error?.message ?? "Prism worker attempt failed",
-      );
-    const portableValues = workerResult.specialistResult?.values ?? {};
-    const values = await hydrateWorkerEvidence(portableValues,workerResult.evidence??[]);
+    const accepted = await hydrateWorkerResult(attempt, await result.json(),
+      new WorkerArtifactClient(controlInternalUrl, workerSecret, spiffeEnabled));
     await client.query(
       "UPDATE prism.engine_operation SET result=$2::jsonb,completed_at=now() WHERE idempotency_key=$1",
-      [idempotencyKey, JSON.stringify({ values: portableValues, evidence: workerResult.evidence ?? [] })],
+      [idempotencyKey, JSON.stringify({ attempt, workerResult: accepted.result })],
     );
     await client.query("COMMIT");
-    return values;
+    return accepted.values;
   } catch (error) {
     await client.query("ROLLBACK").catch(() => undefined);
     throw error;
@@ -242,24 +219,9 @@ const server = createServer(async (request, response) => {
       await pool.query("SELECT 1");
       return json(response, 200, { status: "ready" });
     }
-    const internalArtifact=/^\/v1\/internal\/artifacts\/(sha256:[a-f0-9]{64})$/.exec(url.pathname);
-    if(internalArtifact){
-      if(spiffeEnabled){
-        try{authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedWorkerSpiffeId,trustedControlSpiffeId]));}
-        catch{return json(response,401,{error:"unauthorized"});}
-      }else{
-        const supplied=Buffer.from(String(request.headers.authorization??"").replace(/^Bearer /,""));const expected=Buffer.from(workerSecret);
-        if(supplied.length!==expected.length||!timingSafeEqual(supplied,expected))return json(response,401,{error:"unauthorized"});
-      }
-      if(request.method==="GET"){
-        const bytes=await artifacts.get(`artifact:${internalArtifact[1]}`);response.writeHead(200,{"content-type":"application/octet-stream","cache-control":"no-store"});return response.end(bytes);
-      }
-      if(request.method==="POST"){
-        const chunks:Buffer[]=[];let size=0;for await(const chunk of request){size+=chunk.length;if(size>134_217_728)throw new Error("evidence is too large");chunks.push(chunk);}const stored=await artifacts.put(Buffer.concat(chunks));
-        if(stored.digest!==internalArtifact[1])throw new Error("evidence digest does not match URL");return json(response,201,stored);
-      }
-      return json(response,405,{error:"method not allowed"});
-    }
+    if (await handleInternalArtifact(request, response, url, {
+      artifacts, spiffeEnabled, workerSecret, trustedWorkerSpiffeId, trustedControlSpiffeId,
+    })) return;
     if (url.pathname === "/v1/session" && request.method === "POST") {
       const headers = Object.fromEntries(
         Object.entries(request.headers).map(([key, value]) => [
