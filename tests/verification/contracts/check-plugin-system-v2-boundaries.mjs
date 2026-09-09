@@ -349,7 +349,41 @@ const pluginPackageNames = new Set(
     .filter(Boolean),
 );
 assert(!fs.existsSync('pipeline'), 'role-agnostic pipeline/ scaffolding must not return');
-assert(!fs.existsSync('plugins'), 'role-agnostic plugins/ scaffolding must not return');
+// Root plugins/ contains Codex operations extensions, whose manifest contract
+// is .codex-plugin/plugin.json. Pipeline discovery reads package/plugin.json
+// (foundation/registry/discovery.ts) and must stay under the role roots above.
+function assertOnlyCodexPlugins(root) {
+  if (!fs.existsSync(root)) return;
+  for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
+    assert(entry.isDirectory(), `root plugins/ entry must be a Codex plugin directory: ${entry.name}`);
+    const packageRoot = path.join(root, entry.name);
+    const codexManifest = path.join(packageRoot, '.codex-plugin', 'plugin.json');
+    assert(fs.existsSync(codexManifest), `root plugin requires a Codex manifest: ${packageRoot}`);
+    const manifest = JSON.parse(fs.readFileSync(codexManifest, 'utf8'));
+    assert.equal(typeof manifest.name, 'string');
+    assert.notEqual(manifest.apiVersion, 'pipeline-plugin-v2', 'Codex manifest cannot declare a pipeline plugin');
+    for (const file of allFiles(packageRoot)) {
+      if (file === codexManifest) continue;
+      assert(!['plugin.json', 'openclaw.plugin.json'].includes(path.basename(file)),
+        `role-agnostic pipeline/plugin registration must not return: ${file}`);
+    }
+  }
+}
+assertOnlyCodexPlugins('plugins');
+const rootPluginFixture = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-root-plugin-boundary-'));
+try {
+  const codexRoot = path.join(rootPluginFixture, 'operations');
+  fs.mkdirSync(path.join(codexRoot, '.codex-plugin'), { recursive: true });
+  fs.writeFileSync(path.join(codexRoot, '.codex-plugin/plugin.json'), JSON.stringify({ name: 'operations' }));
+  assertOnlyCodexPlugins(rootPluginFixture);
+  fs.writeFileSync(path.join(codexRoot, 'plugin.json'), JSON.stringify({ apiVersion: 'pipeline-plugin-v2' }));
+  assert.throws(() => assertOnlyCodexPlugins(rootPluginFixture), /role-agnostic pipeline\/plugin registration/);
+  fs.rmSync(path.join(codexRoot, 'plugin.json'));
+  fs.mkdirSync(path.join(rootPluginFixture, 'role-agnostic'));
+  assert.throws(() => assertOnlyCodexPlugins(rootPluginFixture), /requires a Codex manifest/);
+} finally {
+  fs.rmSync(rootPluginFixture, { recursive: true, force: true });
+}
 for (const packageRoot of isolatedPackageRoots) {
   const pipelineManifestPath = path.join(packageRoot, 'plugin.json');
   if (fs.existsSync(pipelineManifestPath)) {

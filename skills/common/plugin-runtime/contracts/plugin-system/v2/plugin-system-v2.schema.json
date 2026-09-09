@@ -329,11 +329,11 @@
         }
       },
       "anyOf": [
-        { "properties": { "stages": { "type": "array", "minItems": 1 } } },
-        { "properties": { "observers": { "type": "array", "minItems": 1 } } },
-        { "properties": { "adapters": { "type": "array", "minItems": 1 } } },
-        { "properties": { "testProviders": { "type": "array", "minItems": 1 } } },
-        { "properties": { "reportAdapters": { "type": "array", "minItems": 1 } } }
+        { "required": ["stages"], "properties": { "stages": { "type": "array", "minItems": 1 } } },
+        { "required": ["observers"], "properties": { "observers": { "type": "array", "minItems": 1 } } },
+        { "required": ["adapters"], "properties": { "adapters": { "type": "array", "minItems": 1 } } },
+        { "required": ["testProviders"], "properties": { "testProviders": { "type": "array", "minItems": 1 } } },
+        { "required": ["reportAdapters"], "properties": { "reportAdapters": { "type": "array", "minItems": 1 } } }
       ]
     },
     "stageDefinition": {

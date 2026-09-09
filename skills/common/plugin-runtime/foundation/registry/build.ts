@@ -17,7 +17,7 @@ import type {
 } from '@kubeclaw/plugin-sdk';
 import { RegistryError } from './errors.ts';
 import { FrozenMap } from './frozen-map.ts';
-import { validateReferencedSchema } from './schema.ts';
+import { validateReferencedSchema, type ReferencedSchemaValidator } from './schema.ts';
 import type {
   AdapterRegistryEntry,
   DiscoveredPackage,
@@ -56,21 +56,18 @@ function assertPackageFile(pkg: DiscoveredPackage, relative: string, label: stri
   return canonical;
 }
 
-function validateRegistrationFiles(pkg: DiscoveredPackage, registration: Registration): string {
+function validateRegistrationFiles(pkg: DiscoveredPackage, registration: Registration, schemas: Map<string, ReferencedSchemaValidator>): void {
   assertPackageFile(pkg, registration.module, 'registration module');
-  const schemas = [
+  const schemaReferences = [
     ...('configSchema' in registration ? [['configuration schema', registration.configSchema] as const] : []),
     ...('inputSchema' in registration ? [['input schema', registration.inputSchema] as const] : []),
     ...('resultSchema' in registration ? [['result schema', registration.resultSchema] as const] : []),
     ...('checkpointSchema' in registration ? [['checkpoint schema', registration.checkpointSchema] as const] : []),
   ] as const;
-  for (const [label, relative] of schemas) {
+  for (const [label, relative] of schemaReferences) {
     const canonical = assertPackageFile(pkg, relative, label);
-    validateReferencedSchema(fs.readFileSync(canonical, 'utf8'), canonical);
+    if (!schemas.has(canonical)) schemas.set(canonical, validateReferencedSchema(fs.readFileSync(canonical, 'utf8'), canonical));
   }
-  return 'configSchema' in registration
-    ? assertPackageFile(pkg, registration.configSchema, 'configuration schema')
-    : '';
 }
 
 function provenance(
@@ -195,8 +192,21 @@ function snapshotDigest(packageEntries: Array<readonly [string, DiscoveredPackag
   return `sha256:${crypto.createHash('sha256').update(JSON.stringify(facts)).digest('hex')}`;
 }
 
-function registrySnapshot(packageEntries: Array<readonly [string, DiscoveredPackage]>, stageEntries: Array<readonly [string, StageRegistryEntry]>, observerEntries: Array<readonly [string, ObserverRegistryEntry]>, adapterEntries: Array<readonly [string, AdapterRegistryEntry]>, capabilityEntries: Map<string, AdapterRegistryEntry[]>, testProviderEntries: Array<readonly [string, TestProviderRegistryEntry]>, testProviderContractEntries: Array<readonly [string, TestProviderRegistryEntry]>, reportAdapterEntries: Array<readonly [string, ReportAdapterRegistryEntry]>, reportAdapterFormatEntries: Map<string, ReportAdapterRegistryEntry[]>): RegistrySnapshot {
-  return Object.freeze({ apiVersion: 'pipeline-plugin-v2', snapshotDigest: snapshotDigest(packageEntries, stageEntries, observerEntries, adapterEntries, testProviderEntries, reportAdapterEntries), packages: new FrozenMap(packageEntries), stages: new FrozenMap(stageEntries),
+interface RegistryCollections {
+  readonly schemas: Map<string, ReferencedSchemaValidator>;
+  readonly packageEntries: Array<readonly [string, DiscoveredPackage]>;
+  readonly stageEntries: Array<readonly [string, StageRegistryEntry]>;
+  readonly observerEntries: Array<readonly [string, ObserverRegistryEntry]>;
+  readonly adapterEntries: Array<readonly [string, AdapterRegistryEntry]>;
+  readonly capabilityEntries: Map<string, AdapterRegistryEntry[]>;
+  readonly testProviderEntries: Array<readonly [string, TestProviderRegistryEntry]>;
+  readonly testProviderContractEntries: Array<readonly [string, TestProviderRegistryEntry]>;
+  readonly reportAdapterEntries: Array<readonly [string, ReportAdapterRegistryEntry]>;
+  readonly reportAdapterFormatEntries: Map<string, ReportAdapterRegistryEntry[]>;
+}
+
+function registrySnapshot({ schemas, packageEntries, stageEntries, observerEntries, adapterEntries, capabilityEntries, testProviderEntries, testProviderContractEntries, reportAdapterEntries, reportAdapterFormatEntries }: RegistryCollections): RegistrySnapshot {
+  return Object.freeze({ schemas: new FrozenMap(schemas), apiVersion: 'pipeline-plugin-v2', snapshotDigest: snapshotDigest(packageEntries, stageEntries, observerEntries, adapterEntries, testProviderEntries, reportAdapterEntries), packages: new FrozenMap(packageEntries), stages: new FrozenMap(stageEntries),
     observers: new FrozenMap(observerEntries), adapters: new FrozenMap(adapterEntries),
     capabilityProviders: new FrozenMap([...capabilityEntries].map(([capability, providers]) => [capability, Object.freeze([...providers])])),
     testProviders: new FrozenMap(testProviderEntries), testProviderContracts: new FrozenMap(testProviderContractEntries),
@@ -210,7 +220,50 @@ function registrySnapshot(packageEntries: Array<readonly [string, DiscoveredPack
       }))] as const)) });
 }
 
+function registerRuntimeSurfaces(
+  pkg: DiscoveredPackage,
+  claim: (registration: Registration) => string,
+  stageTypes: Set<string>,
+  { stageEntries, observerEntries, adapterEntries, capabilityEntries }: Pick<RegistryCollections, 'stageEntries' | 'observerEntries' | 'adapterEntries' | 'capabilityEntries'>,
+): void {
+  for (const registration of pkg.manifest.stages) {
+    claim(registration);
+    if (stageTypes.has(registration.type)) {
+      throw new RegistryError('REGISTRY_STAGE_OWNER_CONFLICT', `Duplicate stage type owner: ${registration.type}`);
+    }
+    stageTypes.add(registration.type);
+    stageEntries.push([registration.type, Object.freeze({
+      registration: Object.freeze(registration),
+      provenance: provenance(pkg, 'stage', registration.id),
+      package: pkg,
+    })]);
+  }
+  for (const registration of pkg.manifest.observers) {
+    const globalId = claim(registration);
+    observerEntries.push([globalId, Object.freeze({
+      registration: Object.freeze(registration),
+      provenance: provenance(pkg, 'observer', registration.id),
+      package: pkg,
+    })]);
+  }
+  for (const registration of pkg.manifest.adapters) {
+    const globalId = claim(registration);
+    const entry = Object.freeze({
+      registration: Object.freeze(registration),
+      provenance: provenance(pkg, 'adapter', registration.id),
+      package: pkg,
+    });
+    adapterEntries.push([globalId, entry]);
+    for (const capability of registration.providesCapabilities) {
+      const providers = capabilityEntries.get(capability) ?? [];
+      providers.push(entry);
+      capabilityEntries.set(capability, providers);
+    }
+  }
+}
+
 export function buildRegistry(packages: readonly DiscoveredPackage[]): RegistrySnapshot {
+  const schemas = new Map<string, ReferencedSchemaValidator>();
   const packageEntries: Array<readonly [string, DiscoveredPackage]> = [];
   const stageEntries: Array<readonly [string, StageRegistryEntry]> = [];
   const observerEntries: Array<readonly [string, ObserverRegistryEntry]> = [];
@@ -230,8 +283,8 @@ export function buildRegistry(packages: readonly DiscoveredPackage[]): RegistryS
     packageIds.add(pkg.manifest.id);
     packageEntries.push([pkg.manifest.id, pkg]);
 
-    const claim = (registration: Registration, surface: RegistrationProvenance['surface']): string => {
-      validateRegistrationFiles(pkg, registration);
+    const claim = (registration: Registration): string => {
+      validateRegistrationFiles(pkg, registration, schemas);
       const globalId = `${pkg.manifest.id}:${registration.id}`;
       if (registrationIds.has(globalId)) {
         throw new RegistryError('REGISTRY_REGISTRATION_CONFLICT', `Duplicate registration ID: ${globalId}`);
@@ -240,42 +293,9 @@ export function buildRegistry(packages: readonly DiscoveredPackage[]): RegistryS
       return globalId;
     };
 
-    for (const registration of pkg.manifest.stages) {
-      claim(registration, 'stage');
-      if (stageTypes.has(registration.type)) {
-        throw new RegistryError('REGISTRY_STAGE_OWNER_CONFLICT', `Duplicate stage type owner: ${registration.type}`);
-      }
-      stageTypes.add(registration.type);
-      stageEntries.push([registration.type, Object.freeze({
-        registration: Object.freeze(registration),
-        provenance: provenance(pkg, 'stage', registration.id),
-        package: pkg,
-      })]);
-    }
-    for (const registration of pkg.manifest.observers) {
-      const globalId = claim(registration, 'observer');
-      observerEntries.push([globalId, Object.freeze({
-        registration: Object.freeze(registration),
-        provenance: provenance(pkg, 'observer', registration.id),
-        package: pkg,
-      })]);
-    }
-    for (const registration of pkg.manifest.adapters) {
-      const globalId = claim(registration, 'adapter');
-      const entry = Object.freeze({
-        registration: Object.freeze(registration),
-        provenance: provenance(pkg, 'adapter', registration.id),
-        package: pkg,
-      });
-      adapterEntries.push([globalId, entry]);
-      for (const capability of registration.providesCapabilities) {
-        const providers = capabilityEntries.get(capability) ?? [];
-        providers.push(entry);
-        capabilityEntries.set(capability, providers);
-      }
-    }
+    registerRuntimeSurfaces(pkg, claim, stageTypes, { stageEntries, observerEntries, adapterEntries, capabilityEntries });
     for (const registration of pkg.manifest.testProviders ?? []) {
-      const globalId = claim(registration, 'test_provider');
+      const globalId = claim(registration);
       if (testProviderContracts.has(registration.contractId)) {
         throw new RegistryError('REGISTRY_TEST_PROVIDER_CONTRACT_CONFLICT', `Duplicate test-provider contract: ${registration.contractId}`);
       }
@@ -285,7 +305,7 @@ export function buildRegistry(packages: readonly DiscoveredPackage[]): RegistryS
       testProviderContractEntries.push([registration.contractId, entry]);
     }
     for (const registration of pkg.manifest.reportAdapters ?? []) {
-      const globalId = claim(registration, 'report_adapter');
+      const globalId = claim(registration);
       const entry = canonicalReportAdapter(pkg, registration);
       reportAdapterEntries.push([globalId, entry]);
       const entries = reportAdapterFormatEntries.get(registration.format) ?? [];
@@ -294,5 +314,5 @@ export function buildRegistry(packages: readonly DiscoveredPackage[]): RegistryS
     }
   }
 
-  return registrySnapshot(packageEntries, stageEntries, observerEntries, adapterEntries, capabilityEntries, testProviderEntries, testProviderContractEntries, reportAdapterEntries, reportAdapterFormatEntries);
+  return registrySnapshot({ schemas, packageEntries, stageEntries, observerEntries, adapterEntries, capabilityEntries, testProviderEntries, testProviderContractEntries, reportAdapterEntries, reportAdapterFormatEntries });
 }

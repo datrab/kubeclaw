@@ -52,7 +52,7 @@ export class ObserverRuntime {
     const entry = this.#options.registry.snapshot.observers.get(observerId); if (!entry) throw new Error(`OBSERVER_NOT_REGISTERED:${observerId}`);
     const key = checkpointKey(observerId, event.identity.runId); const checkpoint: ObserverCheckpoint = { schemaVersion: 'observer-checkpoint.v2',
       observer: entry.provenance, runId: event.identity.runId, sequence: event.sequence, eventId: event.eventId, updatedAt: this.#now().toISOString() };
-    validateReferencedValue(fs.realpathSync(path.join(entry.package.root, entry.registration.checkpointSchema)), { sequence: checkpoint.sequence, eventId: checkpoint.eventId });
+    validateReferencedValue(fs.realpathSync(path.join(entry.package.root, entry.registration.checkpointSchema)), { sequence: checkpoint.sequence, eventId: checkpoint.eventId }, this.#options.registry.snapshot.schemas);
     const appended = this.#options.checkpoints.transact((records, append) => this.#appendCheckpoint(records, append, observerId, event, checkpoint));
     this.#checkpoints.set(key, checkpoint); return appended;
   }

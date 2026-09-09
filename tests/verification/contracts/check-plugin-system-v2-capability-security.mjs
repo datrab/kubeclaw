@@ -168,7 +168,7 @@ assert.throws(() => core.resolveCapabilityGrants({
   ]),
 }, {
   enabledRegistrations: new Set(['kubeclaw.project-summary:summary']),
-  providers: new Map(),
+  providers: new Map([['artifacts.read', 'kubeclaw.artifact-store:artifact-store']]),
   grants: new Map([[
     'kubeclaw.project-summary:summary',
     new Map([['artifacts.write', { allowedNamespaces: ['kubeclaw.project-summary'] }]]),

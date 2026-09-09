@@ -38,8 +38,8 @@ export function validatePipelineDefinitionAgainstRegistry(definition: PipelineDe
   ExecutionGraph.fromDefinition(definition);
   for (const stage of definition.stages) {
     const owner = registry.snapshot.stages.get(stage.type); if (!owner) throw new Error(`PIPELINE_STAGE_OWNER_MISSING:${stage.type}`);
-    validateReferencedValue(fs.realpathSync(path.join(owner.package.root, owner.registration.configSchema)), stage.config);
-    validateReferencedValue(fs.realpathSync(path.join(owner.package.root, owner.registration.inputSchema)), stage.input);
+    validateReferencedValue(fs.realpathSync(path.join(owner.package.root, owner.registration.configSchema)), stage.config, registry.snapshot.schemas);
+    validateReferencedValue(fs.realpathSync(path.join(owner.package.root, owner.registration.inputSchema)), stage.input, registry.snapshot.schemas);
   }
 }
 

@@ -31,12 +31,14 @@ const installFormats = addFormats as unknown as (instance: AjvInstance) => AjvIn
 const ajv = new AjvConstructor({ allErrors: true, strict: true });
 installFormats(ajv);
 ajv.addSchema(contract);
-const defaultsAjv = new AjvConstructor({ allErrors: true, strict: true, useDefaults: true });
-installFormats(defaultsAjv);
-defaultsAjv.addSchema(contract);
 const validate = ajv.compile({ $ref: `${contract.$id}#/$defs/pluginManifest` });
-const referencedValidators = new Map<string, AjvValidator>();
-const referencedDefaultValidators = new Map<string, AjvValidator>();
+
+export interface ReferencedSchemaValidator {
+  readonly validate: (value: unknown) => void;
+  readonly resolve: (value: unknown) => unknown;
+}
+export type ReferencedSchemaValidators = ReadonlyMap<string, ReferencedSchemaValidator>;
+
 const contractValidators = new Map<string, AjvValidator>();
 
 export function parsePluginManifest(source: string, manifestPath: string): PluginManifest {
@@ -58,49 +60,53 @@ export function parsePluginManifest(source: string, manifestPath: string): Plugi
   return value as PluginManifest;
 }
 
-export function validateReferencedSchema(source: string, schemaPath: string): void {
-  let value: unknown;
+// Each referenced document owns its $id namespace. Validators retain the exact
+// schema bytes read at build time, and live only as long as their snapshot.
+export function validateReferencedSchema(source: string, schemaPath: string): ReferencedSchemaValidator {
   try {
-    value = JSON.parse(source);
-  } catch (error) {
-    throw new RegistryError('REGISTRY_MANIFEST_INVALID', `Invalid JSON Schema in ${schemaPath}`, {
-      schemaPath,
-      cause: error instanceof Error ? error.message : String(error),
+    const value = JSON.parse(source) as object;
+    const compile = (useDefaults: boolean): AjvValidator => {
+      const instance = new AjvConstructor({ allErrors: true, strict: true, useDefaults });
+      installFormats(instance);
+      instance.addSchema(contract);
+      return instance.compile(value);
+    };
+    const validator = compile(false);
+    const defaultsValidator = compile(true);
+    const check = (compiled: AjvValidator, input: unknown): void => {
+      if (!compiled(input)) {
+        throw new RegistryError('REGISTRY_RESULT_INVALID', `Value failed schema ${schemaPath}`, {
+          schemaPath, errors: compiled.errors ?? [],
+        });
+      }
+    };
+    return Object.freeze({
+      validate: (input: unknown): void => check(validator, input),
+      resolve: (input: unknown): unknown => {
+        const resolved = structuredClone(input);
+        check(defaultsValidator, resolved);
+        return resolved;
+      },
     });
-  }
-  try {
-    referencedValidators.set(schemaPath, ajv.compile(value as object));
-    referencedDefaultValidators.set(schemaPath, defaultsAjv.compile(value as object));
   } catch (error) {
     throw new RegistryError('REGISTRY_MANIFEST_INVALID', `Invalid JSON Schema in ${schemaPath}`, {
-      schemaPath,
-      cause: error instanceof Error ? error.message : String(error),
+      schemaPath, cause: error instanceof Error ? error.message : String(error),
     });
   }
 }
 
-export function resolveReferencedValue(schemaPath: string, value: unknown): unknown {
-  const validateValue = referencedDefaultValidators.get(schemaPath);
-  if (!validateValue) throw new Error(`REGISTRY_SCHEMA_NOT_COMPILED:${schemaPath}`);
-  const resolved = structuredClone(value);
-  if (!validateValue(resolved)) {
-    throw new RegistryError('REGISTRY_RESULT_INVALID', `Value failed schema ${schemaPath}`, {
-      schemaPath,
-      errors: validateValue.errors ?? [],
-    });
-  }
-  return resolved;
+function referencedValidator(schemaPath: string, schemas: ReferencedSchemaValidators): ReferencedSchemaValidator {
+  const validator = schemas.get(schemaPath);
+  if (!validator) throw new Error(`REGISTRY_SCHEMA_NOT_COMPILED:${schemaPath}`);
+  return validator;
 }
 
-export function validateReferencedValue(schemaPath: string, value: unknown): void {
-  const validateValue = referencedValidators.get(schemaPath);
-  if (!validateValue) throw new Error(`REGISTRY_SCHEMA_NOT_COMPILED:${schemaPath}`);
-  if (!validateValue(value)) {
-    throw new RegistryError('REGISTRY_RESULT_INVALID', `Value failed schema ${schemaPath}`, {
-      schemaPath,
-      errors: validateValue.errors ?? [],
-    });
-  }
+export function resolveReferencedValue(schemaPath: string, value: unknown, schemas: ReferencedSchemaValidators): unknown {
+  return referencedValidator(schemaPath, schemas).resolve(value);
+}
+
+export function validateReferencedValue(schemaPath: string, value: unknown, schemas: ReferencedSchemaValidators): void {
+  referencedValidator(schemaPath, schemas).validate(value);
 }
 
 export function validateContractValue(definition: string, value: unknown): void {

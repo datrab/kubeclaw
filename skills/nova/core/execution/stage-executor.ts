@@ -40,7 +40,7 @@ export class StageExecutor {
     let result: StageResult;
     try {
       result = await this.#invoke(activated.execute(definition.input, runtime.context, runtime.controller.signal) as Promise<StageResult>, definition.execution.timeoutMs, runtime);
-      validateReferencedValue(fs.realpathSync(path.join(owner.package.root, owner.registration.resultSchema)), result);
+      validateReferencedValue(fs.realpathSync(path.join(owner.package.root, owner.registration.resultSchema)), result, this.#options.registry.snapshot.schemas);
       this.#recordResult(runId, state.stageId, runtime.attempt.attemptId, result);
     } catch (error) {
       result = this.#failure(error);

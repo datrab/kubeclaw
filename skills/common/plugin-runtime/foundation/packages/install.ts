@@ -115,29 +115,39 @@ function installedProvenance(root: string, manifest: ReturnType<typeof parsePlug
 }
 
 function validateModules(root: string, manifest: ReturnType<typeof parsePluginManifest>): void {
-  for (const registration of [
+  const registrations = [
     ...manifest.stages,
     ...manifest.observers,
+    ...manifest.adapters,
     ...(manifest.testProviders ?? []),
-  ]) {
-    const modulePath = path.join(root, registration.module);
-    if (!/\.(?:mjs|mts|js|ts)$/.test(modulePath)) throw new Error(`PLUGIN_INSTALL_MODULE_FORMAT_INVALID:${registration.module}`);
+    ...(manifest.reportAdapters ?? []),
+  ];
+  for (const registration of registrations) {
+    if (!/\.(?:mjs|mts|js|ts)$/.test(registration.module)) {
+      throw new Error(`PLUGIN_INSTALL_MODULE_FORMAT_INVALID:${registration.module}`);
+    }
+  }
+  // Check every bundled executable file, including transitive/dynamic imports,
+  // without importing code on the installer host. node_modules is forbidden.
+  for (const { relative } of entries(root)) {
+    if (!/\.(?:[cm]?js|[cm]?ts)$/.test(relative)) continue;
+    const modulePath = path.join(root, relative);
     let source = fs.readFileSync(modulePath, 'utf8');
     try {
-      if (/\.(?:mts|ts)$/.test(modulePath)) {
+      if (/\.(?:[cm]?ts)$/.test(modulePath)) {
         source = stripTypeScriptTypes(source, { mode: 'strip', sourceUrl: modulePath });
       }
     } catch {
-      throw new Error(`PLUGIN_INSTALL_MODULE_INVALID:${registration.module}`);
+      throw new Error(`PLUGIN_INSTALL_MODULE_INVALID:${relative}`);
     }
-    const checked = spawnSync(process.execPath, ['--check', '--input-type=module'], {
+    const checked = spawnSync(process.execPath, ['--check', `--input-type=${/\.(?:cjs|cts)$/.test(relative) ? 'commonjs' : 'module'}`], {
       cwd: root,
       env: { NODE_NO_WARNINGS: '1' },
       encoding: 'utf8',
       input: source,
       timeout: 30_000,
     });
-    if (checked.status !== 0) throw new Error(`PLUGIN_INSTALL_MODULE_INVALID:${registration.module}`);
+    if (checked.status !== 0) throw new Error(`PLUGIN_INSTALL_MODULE_INVALID:${relative}`);
   }
 }
 

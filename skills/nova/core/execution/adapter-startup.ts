@@ -47,7 +47,7 @@ export class AdapterStarter {
 
   #config(adapterId: string, root: string, schema: string): Readonly<Record<string, unknown>> {
     const config = this.#options.runtime.configs.get(adapterId) ?? Object.freeze({});
-    validateReferencedValue(fs.realpathSync(path.join(root, schema)), config); return config;
+    validateReferencedValue(fs.realpathSync(path.join(root, schema)), config, this.#options.runtime.granted.snapshot.schemas); return config;
   }
 
   async #dependencies(adapterId: string, capabilities: readonly string[]): Promise<void> {

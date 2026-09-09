@@ -45,7 +45,7 @@ export function validateRuntimeRegistrationConfiguration(
         `Configured stage owner is not enabled: ${registrationId}`,
       );
     }
-    validateReferencedValue(schemaPath(entry), stage.config);
+    validateReferencedValue(schemaPath(entry), stage.config, snapshot.schemas);
   }
 
   for (const registrationId of configured.observers.keys()) {
@@ -70,6 +70,7 @@ export function validateRuntimeRegistrationConfiguration(
     validateReferencedValue(
       schemaPath(entry),
       configured.observers.get(registrationId) ?? Object.freeze({}),
+      snapshot.schemas,
     );
   }
   for (const [registrationId, entry] of snapshot.adapters) {
@@ -77,6 +78,7 @@ export function validateRuntimeRegistrationConfiguration(
     validateReferencedValue(
       schemaPath(entry),
       configured.adapters.get(registrationId) ?? Object.freeze({}),
+      snapshot.schemas,
     );
   }
 }
@@ -94,7 +96,7 @@ export function validateTestProviderConfiguration(
       { contractId },
     );
   }
-  validateReferencedValue(entry.configSchemaPath, value);
+  validateReferencedValue(entry.configSchemaPath, value, snapshot.schemas);
 }
 
 export function resolveTestProviderConfiguration(
@@ -114,6 +116,6 @@ export function resolveTestProviderConfiguration(
     schemaVersion: 'provider-configuration.v1',
     contractId,
     schemaDigest: entry.configSchemaDigest,
-    values: resolveReferencedValue(entry.configSchemaPath, value) as Record<string, JsonValue>,
+    values: resolveReferencedValue(entry.configSchemaPath, value, snapshot.schemas) as Record<string, JsonValue>,
   });
 }

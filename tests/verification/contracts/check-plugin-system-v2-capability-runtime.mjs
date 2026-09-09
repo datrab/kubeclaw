@@ -186,7 +186,7 @@ assert.equal(
 );
 
 const runtimeRoot = path.resolve('skills/common/plugins/agent-observability');
-core.buildRegistry(core.discoverPackages({
+const runtimeSnapshot = core.buildRegistry(core.discoverPackages({
   installationRoots: [path.resolve('skills/common/plugins')],
   trustPolicy: {
     trustedBuiltinRoots: [path.resolve('skills/common/plugins')],
@@ -216,6 +216,7 @@ let secondShutdowns = 0;
 const runtime = new core.AdapterRuntime({
   granted: {
     snapshot: {
+      ...runtimeSnapshot,
       adapters: new Map([
         [firstId, adapterRegistration('example.first', 'first')],
         [secondId, adapterRegistration('example.second', 'second')],
@@ -259,6 +260,7 @@ let lifecycleShutdowns = 0;
 const lifecycleRuntime = new core.AdapterRuntime({
   granted: {
     snapshot: {
+      ...runtimeSnapshot,
       adapters: new Map([[firstId, adapterRegistration('example.first', 'first')]]),
     },
     enabledRegistrations: new Set([firstId]),
@@ -317,6 +319,7 @@ let racingShutdowns = 0;
 const racingRuntime = new core.AdapterRuntime({
   granted: {
     snapshot: {
+      ...runtimeSnapshot,
       adapters: new Map([[firstId, adapterRegistration('example.first', 'first')]]),
     },
     enabledRegistrations: new Set([firstId]),
@@ -379,6 +382,7 @@ let factoryShutdowns = 0;
 const factoryRaceRuntime = new core.AdapterRuntime({
   granted: {
     snapshot: {
+      ...runtimeSnapshot,
       adapters: new Map([[firstId, adapterRegistration('example.first', 'first')]]),
     },
     enabledRegistrations: new Set([firstId]),
@@ -430,6 +434,7 @@ const stalledReadyEntered = new Promise((resolve) => { signalStalledReady = reso
 const stalledRuntime = new core.AdapterRuntime({
   granted: {
     snapshot: {
+      ...runtimeSnapshot,
       adapters: new Map([[firstId, adapterRegistration('example.first', 'first')]]),
     },
     enabledRegistrations: new Set([firstId]),
@@ -473,6 +478,7 @@ let lateShutdowns = 0;
 const lateRuntime = new core.AdapterRuntime({
   granted: {
     snapshot: {
+      ...runtimeSnapshot,
       adapters: new Map([[firstId, adapterRegistration('example.first', 'first')]]),
     },
     enabledRegistrations: new Set([firstId]),

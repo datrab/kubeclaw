@@ -14,7 +14,7 @@ export interface ObserverRecovery { readonly checkpoints: Map<string, ObserverCh
 export function recoverObservers(options: ObserverRuntimeOptions): ObserverRecovery {
   const events = validateEvents(options); const checkpoints = recoverCheckpoints(options, events); const deliveries = recoverDeliveries(options, events);
   for (const [id, entry] of options.registry.snapshot.observers) {
-    if (options.registry.grants.has(id)) validateReferencedValue(fs.realpathSync(path.join(entry.package.root, entry.registration.configSchema)), options.configs.get(id) ?? {});
+    if (options.registry.grants.has(id)) validateReferencedValue(fs.realpathSync(path.join(entry.package.root, entry.registration.configSchema)), options.configs.get(id) ?? {}, options.registry.snapshot.schemas);
   }
   return { checkpoints, ...deliveries };
 }

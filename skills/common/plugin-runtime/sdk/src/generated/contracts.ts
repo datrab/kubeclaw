@@ -38,35 +38,35 @@ export type PluginManifest1 =
       /**
        * @minItems 1
        */
-      stages?: [any, ...any[]];
+      stages: [any, ...any[]];
       [k: string]: any;
     }
   | {
       /**
        * @minItems 1
        */
-      observers?: [any, ...any[]];
+      observers: [any, ...any[]];
       [k: string]: any;
     }
   | {
       /**
        * @minItems 1
        */
-      adapters?: [any, ...any[]];
+      adapters: [any, ...any[]];
       [k: string]: any;
     }
   | {
       /**
        * @minItems 1
        */
-      testProviders?: [any, ...any[]];
+      testProviders: [any, ...any[]];
       [k: string]: any;
     }
   | {
       /**
        * @minItems 1
        */
-      reportAdapters?: [any, ...any[]];
+      reportAdapters: [any, ...any[]];
       [k: string]: any;
     };
 export type OpaqueId = string;

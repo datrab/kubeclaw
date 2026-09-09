@@ -1,3 +1,4 @@
+import type { ReferencedSchemaValidators } from './schema.ts';
 import type {
   AdapterRegistration,
   ObserverRegistration,
@@ -52,6 +53,7 @@ export interface ReportAdapterRegistryEntry {
 }
 
 export interface RegistrySnapshot {
+  readonly schemas: ReferencedSchemaValidators;
   readonly apiVersion: 'pipeline-plugin-v2';
   readonly snapshotDigest: string;
   readonly packages: ReadonlyMap<string, DiscoveredPackage>;

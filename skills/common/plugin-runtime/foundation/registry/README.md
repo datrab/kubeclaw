@@ -58,10 +58,16 @@ registry preserves all candidates. A resolved plan must select one exact
 package, registration, contract version, and content digest. Discovery order
 never selects the adapter.
 
-## Migration state
+## Schema lifetime and consumers
 
-The registry substrate is prepared and tested independently. The retained v1
-pipeline remains the sole production authority until every behavior required
-by the Nova/Buster workflow has a parity-proven v2 owner. The final cutover
-switches all consumers once and deletes v1, bridges, fallbacks, legacy
-configuration, and legacy documentation in the same change.
+Nova runtime preparation and Buster production use this registry. Nova activates
+stages, observers and capability adapters; Buster's separate isolated loaders
+execute test providers and report adapters.
+
+Referenced validators belong to each immutable registry snapshot. Builds retain
+schema `$id` values and compile each document in its own namespace, including
+canonical contract references. Same-ID documents in separate packages are
+independent; arbitrary cross-package `$ref` resolution is not supported.
+Configuration, defaults, result and checkpoint validation use the owning
+snapshot. Rebuilding does not replace prior validators. Runtime path resolution
+still requires the original immutable package files to remain available.
