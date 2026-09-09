@@ -16,7 +16,10 @@ let loseResponse = false;
 fs.mkdirSync(path.join(agentWorkspace, 'src'), { recursive: true });
 const transcript = 'start forge\nhandoff task\nwrite src/api.ts\nrun unit\ncomplete\n';
 const transcriptDigest = crypto.createHash('sha256').update(transcript).digest('hex');
-const server = http.createServer((_request, response) => {
+const server = http.createServer(async (_request, response) => {
+  const chunks: Buffer[] = []; for await (const chunk of _request) chunks.push(Buffer.from(chunk));
+  const dispatch = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+  workerWorkspace = dispatch.workspaceReference?.workspacePath ?? agentWorkspace;
   fs.mkdirSync(path.join(workerWorkspace, 'src'), { recursive: true });
   fs.writeFileSync(path.join(workerWorkspace, 'src/api.ts'), 'export const ready = true;\n');
   execFileSync(process.execPath, ['--input-type=module', '-e', `import assert from 'node:assert/strict'; import { ready } from ${JSON.stringify(new URL('file://' + path.join(workerWorkspace, 'src/api.ts')).href)}; assert.equal(ready, true);`]);

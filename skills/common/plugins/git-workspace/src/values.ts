@@ -46,11 +46,21 @@ export function authorizedDirectory(value: unknown, roots: readonly string[], la
   return canonical;
 }
 
+function ensureWorkspaceParent(destination: string, root: string): void {
+  let current = canonicalExistingDirectory(root, 'workspaceRoot');
+  for (const segment of path.relative(root, path.dirname(destination)).split(path.sep).filter(Boolean)) {
+    current = path.join(current, segment);
+    try { fs.mkdirSync(current, { mode: 0o700 }); }
+    catch (error) { if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error; }
+    canonicalExistingDirectory(current, 'workspaceParent');
+  }
+}
+
 export function workspaceDestination(value: unknown, root: string): string {
   if (typeof value !== 'string' || !path.isAbsolute(value) || path.resolve(value) !== value) throw new Error('GIT_PATH_INVALID:workspacePath');
   if (!inside(value, root) || value === root) throw new Error(`GIT_PATH_DENIED:${value}`);
   if (fs.existsSync(value)) throw new Error(`GIT_WORKSPACE_EXISTS:${value}`);
-  if (!inside(fs.realpathSync(path.dirname(value)), root)) throw new Error(`GIT_PATH_DENIED:${value}`);
+  ensureWorkspaceParent(value, root);
   return value;
 }
 

@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { AdapterInvocation } from '@kubeclaw/plugin-sdk';
 import type { GitRunner } from './runner.ts';
+import { recordWorkspaceOwner, verifyWorkspaceOwner } from './workspace-ownership.ts';
 import { authorizedDirectory, canonicalExistingDirectory, commitMessage, gitRef, gitToken, pathInside, scopedPaths, workspaceDestination } from './values.ts';
 
 interface GitContext { readonly roots: readonly string[]; readonly workspaceRoot: string; readonly runner: GitRunner; }
@@ -17,7 +18,11 @@ async function createWorkspace(ctx: GitContext, invocation: AdapterInvocation): 
   const canonical = canonicalExistingDirectory(workspace, 'workspacePath');
   if (!pathInside(canonical, ctx.workspaceRoot)) throw new Error(`GIT_PATH_DENIED:${canonical}`);
   const revision = await ctx.runner.run(canonical, ['rev-parse', '--verify', 'HEAD'], signal);
-  return { workspace: canonical, sourceRevision: String(revision.stdout).trim() };
+  const sourceRevision = String(revision.stdout).trim();
+  const workspaceReference = { schemaVersion: 'runtime-workspace.v1' as const, repositoryRoot: repository,
+    workspaceRoot: ctx.workspaceRoot, workspacePath: canonical, branch, sourceRevision, owner: request.attempt };
+  recordWorkspaceOwner(workspaceReference);
+  return { workspace: canonical, sourceRevision, workspaceReference };
 }
 
 async function removeWorkspace(ctx: GitContext, invocation: AdapterInvocation): Promise<Result> {
@@ -25,6 +30,10 @@ async function removeWorkspace(ctx: GitContext, invocation: AdapterInvocation): 
   const repository = authorizedDirectory(request.payload.repositoryRoot ?? request.resource.canonicalId, ctx.roots, 'repositoryRoot');
   if (request.resource.canonicalId !== repository) throw new Error('GIT_RESOURCE_MISMATCH');
   const workspace = request.payload.workspacePath;
+  if (request.payload.workspaceReference !== undefined) {
+    const ref = verifyWorkspaceOwner(request.payload.workspaceReference, request.attempt, ctx.workspaceRoot);
+    if (ref.repositoryRoot !== repository || ref.workspacePath !== workspace || ref.branch !== request.payload.branch) throw new Error('GIT_WORKSPACE_RESOURCE_MISMATCH');
+  }
   if (typeof workspace !== 'string' || !path.isAbsolute(workspace) || path.resolve(workspace) !== workspace || !pathInside(workspace, ctx.workspaceRoot) || workspace === ctx.workspaceRoot) throw new Error(`GIT_PATH_DENIED:${String(workspace)}`);
   const branch = request.payload.branch === undefined ? undefined : gitToken(request.payload.branch, 'branch');
   const existed = fs.existsSync(workspace);
@@ -56,8 +65,20 @@ async function syncPaths(ctx: GitContext, workspace: string, invocation: Adapter
   return { synced, missing };
 }
 
+function verifyOperationWorkspace(ctx: GitContext, workspace: string, invocation: AdapterInvocation): void {
+  const { request } = invocation;
+  if (request.payload.workspaceReference !== undefined) {
+    const ref = verifyWorkspaceOwner(request.payload.workspaceReference, request.attempt, ctx.workspaceRoot);
+    const matches = request.capability === 'git.merge'
+      ? ref.repositoryRoot === workspace && request.payload.sourceRef === ref.branch
+      : ref.workspacePath === workspace;
+    if (!matches) throw new Error('GIT_WORKSPACE_RESOURCE_MISMATCH');
+  }
+}
+
 async function workspaceOperation(ctx: GitContext, workspace: string, invocation: AdapterInvocation): Promise<Result> {
   const { request, signal } = invocation;
+  verifyOperationWorkspace(ctx, workspace, invocation);
   if (request.capability === 'git.commit' && request.operation === 'commit') {
     const paths = scopedPaths(request.payload.paths, workspace);
     await ctx.runner.run(workspace, ['add', '--', ...paths], signal);

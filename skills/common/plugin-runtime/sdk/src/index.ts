@@ -22,3 +22,4 @@ export type {
 
 export const PLUGIN_API_VERSION = 'pipeline-plugin-v2' as const;
 export * from './source-revision.ts';
+export * from './runtime-workspace.ts';

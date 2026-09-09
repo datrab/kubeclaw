@@ -1,9 +1,11 @@
+import type { RuntimeWorkspaceReference } from '@kubeclaw/plugin-sdk';
 export interface ImplementationInput {
   readonly runId: string;
   readonly moduleId: string;
   readonly attempt: number;
   readonly task: string;
   readonly headBefore: string;
+  readonly workspaceReference?: RuntimeWorkspaceReference;
   readonly workspace?: {
     readonly repositoryRoot: string;
     readonly workspacePath: string;
@@ -39,6 +41,7 @@ export function buildRequest(agent: string, input: ImplementationInput, helperPr
     protocol: 'kubeclaw.implementation.v2', agent,
     identity: { runId: input.runId, moduleId: input.moduleId, attempt: input.attempt },
     headBefore: input.headBefore,
+    ...(input.workspaceReference ? { workspaceReference: input.workspaceReference } : {}),
     task: [
       input.task,
       helperPrompt?.trim() || 'No additional implementation guidance was supplied.',

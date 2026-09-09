@@ -1,6 +1,7 @@
 import type { AdapterInstance, EffectJournal, EffectReceipt, EffectRequest, PackageResolution, ResourceLock } from '@kubeclaw/plugin-sdk';
 import type { EffectAuditSink, EffectInvocation, EffectLockManager } from './contracts.ts';
 import { assertMatchingRequest, stableEffectId } from './identity.ts';
+import { acquireResource } from './resource-acquisition.ts';
 
 interface Dependencies {
   readonly journal: EffectJournal;
@@ -37,7 +38,7 @@ class DurableInvocation {
     assertMatchingRequest(prior, this.#invocation);
     const existing = await this.#existingReceipt(prior);
     if (existing) return existing;
-    this.#lock = this.#dependencies.locks.acquire(lockResource(this.#invocation), this.#invocation.attempt.attemptId, this.#dependencies.lockTtlMs);
+    this.#lock = await acquireResource(this.#dependencies.locks, lockResource(this.#invocation), this.#invocation.attempt.attemptId, this.#dependencies.lockTtlMs, this.#signal);
     let failed = false;
     let failure: unknown;
     try {

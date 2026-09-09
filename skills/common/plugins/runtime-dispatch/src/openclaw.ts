@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 import path from 'node:path';
-import { buildRuntimeAgentTask, canonicalJson, RUNTIME_RESULT_FILE_MAX_BYTES, type AdapterActivationContext } from '@kubeclaw/plugin-sdk';
+import { buildRuntimeAgentTask, canonicalJson, RUNTIME_RESULT_FILE_MAX_BYTES, type AdapterActivationContext, type RuntimeWorkspaceReference } from '@kubeclaw/plugin-sdk';
 import { get_encoding } from 'tiktoken';
 import { readOpenClawResult } from './openclaw-result.ts';
 export { attachRuntimeEvidence } from './openclaw-result.ts';
@@ -14,6 +14,8 @@ export interface OpenClawTarget {
   readonly collectorMode?: boolean;
   readonly spawnIntervalMs: number;
   readonly cwd: string; readonly repositoryRoot: string; readonly pollMs: number; readonly maxPollMs: number;
+  readonly workspaceRoot?: string;
+  readonly workspaceReference?: RuntimeWorkspaceReference;
   readonly maxPolls: number; readonly sessionTimeoutMs: number; readonly resultPathPrefix: string;
   readonly tokenizerEncoding: 'o200k_base' | 'cl100k_base'; readonly maxPromptBytes: number;
   readonly maxInputTokens: number; readonly maxOutputTokens: number; readonly maxContextTokens: number;
@@ -69,7 +71,7 @@ function runtimePromptBudget(value: unknown): RuntimePromptBudget | undefined {
 }
 function dispatchPayload(payload: JsonRecord): Readonly<{ modelPayload: JsonRecord; budget?: RuntimePromptBudget }> {
   const budget = runtimePromptBudget(payload.runtimePromptBudget);
-  const { runtimePromptBudget: _control, runtimeDispatchAttempt: _attempt, ...modelPayload } = payload;
+  const { runtimePromptBudget: _control, runtimeDispatchAttempt: _attempt, workspaceReference: _workspace, ...modelPayload } = payload;
   return { modelPayload, ...(budget ? { budget } : {}) };
 }
 function runtimeDispatchAttempt(value: unknown): number {
@@ -168,8 +170,9 @@ export function assertOpenClawOutputBudget(
 function resultLocation(target: OpenClawTarget, dispatchId: string): Readonly<{ file: string; relative: string }> {
   const resultId = crypto.createHash('sha256').update(dispatchId).digest('hex');
   const relative = `${target.resultPathPrefix.replace(/\/+$/u, '')}/${resultId}.json`;
-  const file = path.join(target.repositoryRoot, relative);
-  const repositoryRelative = path.relative(target.repositoryRoot, file);
+  const resultRoot = target.workspaceReference ? target.cwd : target.repositoryRoot;
+  const file = path.join(resultRoot, relative);
+  const repositoryRelative = path.relative(resultRoot, file);
   const workspaceRelative = path.relative(target.cwd, file);
   const outside = (value: string): boolean => !value || value.startsWith(`..${path.sep}`) || path.isAbsolute(value);
   if (outside(repositoryRelative)) throw new Error('OPENCLAW_RESULT_PATH_OUTSIDE_REPOSITORY');
@@ -203,7 +206,6 @@ async function pacedSpawn<T>(
   return queued;
 }
 
-// eslint-disable-next-line max-params -- Dispatch identity remains explicit at the external spawn boundary.
 async function spawnSession(context: AdapterActivationContext, target: OpenClawTarget, token: string, payload: JsonRecord,
   resultFile: string, dispatchId: string, signal: AbortSignal): Promise<OpenClawSessionIdentity> {
   const identity = record(payload.identity) ? first(payload.identity.moduleId, payload.identity.gateId) : undefined;
@@ -230,7 +232,6 @@ function runtimeAttestation(targetId: string, target: OpenClawTarget): Readonly<
     identityDigest: `sha256:${crypto.createHash('sha256').update(canonicalJson(identity)).digest('hex')}` });
 }
 
-// eslint-disable-next-line max-lines-per-function, max-params, complexity -- One transaction owns secret resolution, spawn, cancellation, polling, import, and attestation.
 export async function dispatchOpenClaw(
   context: AdapterActivationContext, targetId: string, target: OpenClawTarget, payload: JsonRecord,
   signal: AbortSignal, dispatchId: string,

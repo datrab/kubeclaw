@@ -31,6 +31,7 @@
           "maxContextTokens": { "const": 128000, "default": 128000 },
           "cwd": { "type": "string", "pattern": "^/" },
           "repositoryRoot": { "type": "string", "pattern": "^/" },
+          "workspaceRoot": { "type": "string", "pattern": "^/", "description": "Trusted Git workspace root required for attempt-owned runtime workspaces." },
           "pollMs": { "type": "integer", "minimum": 10, "default": 1000 },
           "maxPollMs": { "type": "integer", "minimum": 10, "default": 15000 },
           "maxPolls": { "type": "integer", "minimum": 1, "default": 1800 },

@@ -33,3 +33,12 @@ regular files remain idempotent; conflicting content is not overwritten. File
 and containing-directory fsync are retained. Authorized roots/ancestor locations
 must remain protected; this is not a sandbox against relocating the authorized
 root itself. No retention or automatic cleanup policy for final results is added.
+
+Attempt-owned workspace dispatch requires explicit `workspaceRoot` configuration.
+The adapter checks the Git-issued reference against the trusted request attempt,
+canonical configured roots and the protected Git owner record before setting the
+spawn cwd. Its result file is read inside that worktree and persisted at the
+established repository result location before workspace cleanup. The gateway must
+share these filesystem paths; configuration does not itself provision mounts or
+sandbox the agent. Static requests without a workspace reference retain their
+configured cwd.

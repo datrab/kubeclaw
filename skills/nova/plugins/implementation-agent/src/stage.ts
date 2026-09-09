@@ -1,4 +1,6 @@
 import { repairEvidence } from './repair-evidence.ts';
+import { parseRuntimeWorkspace, type RuntimeWorkspaceReference } from '@kubeclaw/plugin-sdk';
+import { attemptWorkspace } from './workspace.ts';
 import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
 import {
   buildRequest,
@@ -7,7 +9,7 @@ import {
   type ImplementationInput,
 } from './protocol.ts';
 
-async function createWorkspace(input: ImplementationInput, context: PluginInvocationContext): Promise<string | undefined> {
+async function createWorkspace(input: ImplementationInput, context: PluginInvocationContext): Promise<RuntimeWorkspaceReference | undefined> {
   if (!input.workspace) return undefined;
   const created = await context.invoke('git.workspace.create', {
     operation: 'create', resource: { type: 'git.repository', canonicalId: input.workspace.repositoryRoot },
@@ -17,7 +19,10 @@ async function createWorkspace(input: ImplementationInput, context: PluginInvoca
     },
   });
   if (typeof created.sourceRevision !== 'string' || !/^[a-f0-9]{40}$/u.test(created.sourceRevision)) throw new Error('IMPLEMENTATION_SOURCE_REVISION_INVALID');
-  return created.sourceRevision;
+  const ref = parseRuntimeWorkspace(created.workspaceReference, context.contract.lease.attempt);
+  if (ref.repositoryRoot !== input.workspace.repositoryRoot || ref.workspacePath !== input.workspace.workspacePath
+    || ref.branch !== input.workspace.branch || ref.sourceRevision !== created.sourceRevision) throw new Error('IMPLEMENTATION_WORKSPACE_REFERENCE_MISMATCH');
+  return ref;
 }
 
 async function dispatchImplementation(
@@ -36,11 +41,11 @@ async function integrateWorkspace(
   if (!input.workspace || completion.status !== 'ready_for_testing') return undefined;
   await context.invoke('git.commit', {
     operation: 'commit', resource: { type: 'git.workspace', canonicalId: input.workspace.workspacePath },
-    payload: { paths: completion.changedPaths, message: input.workspace.commitMessage },
+    payload: { paths: completion.changedPaths, message: input.workspace.commitMessage, workspaceReference: input.workspaceReference },
   });
   const merged = await context.invoke('git.merge', {
     operation: 'merge', resource: { type: 'git.repository', canonicalId: input.workspace.mergeTarget },
-    payload: { sourceRef: input.workspace.branch },
+    payload: { sourceRef: input.workspace.branch, workspaceReference: input.workspaceReference },
   });
   if (typeof merged.sourceRevision !== 'string' || !/^[a-f0-9]{40}$/u.test(merged.sourceRevision)) throw new Error('IMPLEMENTATION_SOURCE_REVISION_INVALID');
   return merged.sourceRevision;
@@ -53,6 +58,7 @@ async function removeWorkspace(input: ImplementationInput, context: PluginInvoca
     payload: {
       repositoryRoot: input.workspace.repositoryRoot, workspacePath: input.workspace.workspacePath,
       branch: input.workspace.branch,
+      workspaceReference: input.workspaceReference,
     },
   });
 }
@@ -61,11 +67,12 @@ function blockedFailure(error: Error | undefined, input: ImplementationInput, re
   return { schemaVersion: 'stage-result.v2', outcome: 'blocked',
     reason: { code: error?.message.startsWith('EFFECT_') ? 'implementation.effect_reconciliation_required' : 'implementation.invalid_completion',
       message: error?.message ?? 'implementation completion missing',
-      ...(retained && input.workspace ? { details: { retainedWorkspace: input.workspace.workspacePath, branch: input.workspace.branch, headBefore: input.headBefore } } : {}) }, artifacts: [] };
+      ...(retained && input.workspace ? { details: { retainedWorkspace: input.workspace.workspacePath, branch: input.workspace.branch, headBefore: input.headBefore, workspaceReference: input.workspaceReference } } : {}) }, artifacts: [] };
 }
 
 export async function execute(input: ImplementationInput, context: PluginInvocationContext): Promise<StageResult> {
   input = { ...input, runId: context.contract.lease.attempt.runId, attempt: context.contract.lease.attempt.attemptNumber };
+  input = attemptWorkspace(input, context.contract.lease.attempt);
 
   const agent = context.contract.config.agent;
   if (typeof agent !== 'string' || !agent.trim()) throw new Error('implementation agent is not configured');
@@ -76,9 +83,9 @@ export async function execute(input: ImplementationInput, context: PluginInvocat
   let cleanupFailure: Error | undefined;
   try {
     const evidence = await repairEvidence(context);
-    const baseRevision = await createWorkspace(input, context);
-    workspaceCreated = baseRevision !== undefined;
-    if (baseRevision) input = { ...input, headBefore: baseRevision };
+    const workspaceReference = await createWorkspace(input, context);
+    workspaceCreated = workspaceReference !== undefined;
+    if (workspaceReference) input = { ...input, headBefore: workspaceReference.sourceRevision, workspaceReference };
     completion = await dispatchImplementation(agent, input, context, evidence);
     workspaceIntegrated = await integrateWorkspace(input, completion, context);
   } catch (error) {
@@ -94,10 +101,17 @@ export async function execute(input: ImplementationInput, context: PluginInvocat
     }
   }
   if (workspaceFailure || !completion) return blockedFailure(workspaceFailure, input, workspaceCreated && !workspaceIntegrated);
+  return storeCompletion(input, completion, context, workspaceCreated, workspaceIntegrated, cleanupFailure);
+}
+
+async function storeCompletion(
+  input: ImplementationInput, completion: ImplementationCompletion, context: PluginInvocationContext,
+  workspaceCreated: boolean, workspaceIntegrated: string | undefined, cleanupFailure: Error | undefined,
+): Promise<StageResult> {
   const stored = await context.invoke('artifacts.write', {
     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: `implementation:${input.moduleId}:${input.attempt}` },
     payload: { namespace: 'kubeclaw.implementation-agent', mediaType: 'application/json', value: { ...completion, sourceRevision: workspaceIntegrated ?? null, headBefore: input.headBefore,
-      ...(workspaceCreated && !workspaceIntegrated && input.workspace ? { retainedWorkspace: input.workspace.workspacePath, branch: input.workspace.branch } : {}) } },
+      ...(workspaceCreated && !workspaceIntegrated && input.workspace ? { retainedWorkspace: input.workspace.workspacePath, branch: input.workspace.branch, workspaceReference: input.workspaceReference } : {}) } },
   });
   const artifacts = [stored.artifact as ArtifactRef];
   if (cleanupFailure) {
@@ -111,6 +125,8 @@ export async function execute(input: ImplementationInput, context: PluginInvocat
           schemaVersion: 'implementation-cleanup.v1',
           status: 'failed',
           message: cleanupFailure.message,
+          workspaceReference: input.workspaceReference,
+          sourceRevision: workspaceIntegrated,
         },
       },
     });

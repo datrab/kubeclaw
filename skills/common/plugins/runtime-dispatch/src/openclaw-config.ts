@@ -1,7 +1,7 @@
 import type { OpenClawTarget } from './openclaw.ts';
 
 const ID = /^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$/;
-const KEYS = new Set(['endpoint', 'tokenSecret', 'runtime', 'agentId', 'agentRole', 'model', 'thinking', 'controllerSessionKey', 'collectorMode', 'spawnIntervalMs', 'cwd', 'repositoryRoot', 'pollMs', 'maxPollMs', 'maxPolls', 'sessionTimeoutMs', 'resultPathPrefix', 'resultEndpoint', 'resultTokenSecret', 'tokenizerEncoding', 'maxPromptBytes', 'maxInputTokens', 'maxOutputTokens', 'maxContextTokens']);
+const KEYS = new Set(['endpoint', 'tokenSecret', 'runtime', 'agentId', 'agentRole', 'model', 'thinking', 'controllerSessionKey', 'collectorMode', 'spawnIntervalMs', 'cwd', 'repositoryRoot', 'workspaceRoot', 'pollMs', 'maxPollMs', 'maxPolls', 'sessionTimeoutMs', 'resultPathPrefix', 'resultEndpoint', 'resultTokenSecret', 'tokenizerEncoding', 'maxPromptBytes', 'maxInputTokens', 'maxOutputTokens', 'maxContextTokens']);
 
 function record(value: unknown): value is Record<string, unknown> { return value !== null && typeof value === 'object' && !Array.isArray(value); }
 function exact(value: Record<string, unknown>, allowed: ReadonlySet<string>, code: string): void { for (const key of Object.keys(value)) if (!allowed.has(key)) throw new Error(`${code}:${key}`); }
@@ -57,6 +57,7 @@ function parseTarget(id: string, raw: unknown): OpenClawTarget {
     runtime: raw.runtime as 'acp' | 'subagent',
     agentId: idValue(raw.agentId, 'codex'), agentRole: idValue(raw.agentRole, id), model: text(raw.model),
     thinking: text(raw.thinking, 'high'), cwd: absolute(raw.cwd), repositoryRoot: absolute(raw.repositoryRoot),
+    ...(raw.workspaceRoot === undefined ? {} : { workspaceRoot: absolute(raw.workspaceRoot) }),
     pollMs: numberValue(raw.pollMs, 1_000), maxPollMs: numberValue(raw.maxPollMs, 15_000),
     maxPolls: numberValue(raw.maxPolls, 1_800), sessionTimeoutMs: numberValue(raw.sessionTimeoutMs, 1_800_000),
     resultPathPrefix: prefixValue(raw.resultPathPrefix), resultEndpoint: optionalUrl(raw.resultEndpoint),
@@ -71,6 +72,7 @@ function parseTarget(id: string, raw: unknown): OpenClawTarget {
   if (sessionKey === '') throw new Error(`RUNTIME_CONFIG_INVALID:controllerSessionKey:${id}`);
   if (sessionKey) Object.assign(target, { controllerSessionKey: sessionKey });
   if (!targetValid(target, endpoint)) throw new Error(`RUNTIME_CONFIG_INVALID:openclaw:${id}`);
+  if (raw.workspaceRoot !== undefined && !target.workspaceRoot) throw new Error(`RUNTIME_CONFIG_INVALID:workspaceRoot:${id}`);
   return target;
 }
 

@@ -41,6 +41,29 @@ function sameExisting(destination: string, content: Buffer): boolean {
   } finally { fs.closeSync(descriptor); }
 }
 
+/** Read an authorized worker result through the same pinned no-follow boundary. */
+export function readResult(root: string, relative: string, maximumBytes = 1_048_576): string | undefined {
+  const components = parts(relative);
+  let directory = openRoot(root);
+  try {
+    for (const component of components.slice(0, -1)) {
+      const next = descend(directory, component, false); fs.closeSync(directory); directory = next;
+    }
+    const descriptor = fs.openSync(`${anchor(directory)}/${components.at(-1)!}`, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
+    try {
+      const stat = fs.fstatSync(descriptor);
+      if (!stat.isFile() || stat.size > maximumBytes) throw new Error('OPENCLAW_RESULT_SIZE_INVALID');
+      const bytes = Buffer.alloc(stat.size + 1);
+      const count = fs.readSync(descriptor, bytes, 0, bytes.length, 0);
+      if (count !== stat.size) throw new Error('OPENCLAW_RESULT_CHANGED_DURING_READ');
+      return new TextDecoder('utf-8', { fatal: true }).decode(bytes.subarray(0, count));
+    } finally { fs.closeSync(descriptor); }
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined;
+    throw failure(error);
+  } finally { fs.closeSync(directory); }
+}
+
 /** Linux directory descriptors pin each ancestor; no lexical-path publish. */
 export function persistResult(root: string, relative: string, content: string): void {
   const components = parts(relative);

@@ -5,7 +5,7 @@ import type { OpenClawTarget, RuntimeSessionEvidence } from './openclaw.ts';
 import type { OpenClawSessionState } from './openclaw-session.ts';
 import { gateway } from './openclaw-session.ts';
 import { openClawToolDetails } from './openclaw-response.ts';
-import { persistResult } from './result-persistence.ts';
+import { persistResult, readResult } from './result-persistence.ts';
 
 type JsonRecord = Record<string, unknown>;
 function record(value: unknown): value is JsonRecord { return value !== null && typeof value === 'object' && !Array.isArray(value); }
@@ -62,6 +62,15 @@ function terminalAssistantText(value: unknown): string {
 
 async function localResult(context: AdapterActivationContext, target: OpenClawTarget,
   relative: string, key: string, token: string, state: OpenClawSessionState): Promise<JsonRecord> {
+  if (target.workspaceReference) {
+    const content = readResult(target.cwd, relative);
+    if (content !== undefined) {
+      parseJsonText(content);
+      // Preserve the established repository result record before Git cleanup.
+      persistResult(target.repositoryRoot, relative, content);
+      return { content };
+    }
+  }
   try {
     return await context.invokeConfidential('git.repository.read', { operation: 'read_text',
       resource: { type: 'git.repository.path', canonicalId: relative.split(path.sep).join('/') }, payload: {} }) as JsonRecord;
