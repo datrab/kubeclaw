@@ -1,0 +1,99 @@
+{
+  "sourceSHA": "ab79ad928cbf54072fe0b3eaabd8b5ee60dea7d1",
+  "checkout": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9",
+  "cleanStatus": "",
+  "toolchainPATH": [
+    "/workspace/scratch/4e25cf57c177/toolchains/bin",
+    "/workspace/scratch/4e25cf57c177/toolchains/go/bin"
+  ],
+  "dependencies": "cp -a from existing real node_modules; all dependency symlinks relative; no absolute links",
+  "commands": [
+    {
+      "command": "npm run verify:worker-core:contracts",
+      "exit": 0,
+      "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/core-1.log",
+      "sha256": "30ea37032b114e5193d08b783a19c88fda32ef6d84fc9c0f3762d02922a3e2ed"
+    },
+    {
+      "command": "npm run verify:worker-core:attempt-executor",
+      "exit": 0,
+      "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/core-2.log",
+      "sha256": "d687164b864eb82fb5f09389e7caa9a18827fe9ba49e1e532750443e3c654afb"
+    },
+    {
+      "command": "npm run verify:worker-core:local-runtime",
+      "exit": 0,
+      "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/core-3.log",
+      "sha256": "be74d5e68e2e6bedd7b4ccf0c3d18f717fc81e8bd5b9d5fd7ae73dfe2235800d"
+    },
+    {
+      "command": "npm run verify:worker-core:role-surfaces",
+      "exit": 0,
+      "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/core-4.log",
+      "sha256": "26d9888e9a9c8b44691ade5f1c59bb1bf6c5c52dd919b2caebb31c99a26564e8"
+    },
+    {
+      "command": "npm run verify:test-gate:remote-import",
+      "exit": 0,
+      "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/core-5.log",
+      "sha256": "c907bccf819363994284474aa6db1648dcbf4c5d211e4e82c588267130fbdd9d"
+    },
+    {
+      "command": "node tests/verification/contracts/check-pipeline-committed-source-snapshot.mts",
+      "exit": 0,
+      "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/core-6.log",
+      "sha256": "1e8825c36e56aa4ed7ef9b2d3ddc50d8cbf3ac02a449a1261d16de9beb589d67"
+    },
+    {
+      "command": "node --test skills/prism/tests/engine.test.mts skills/prism/tests/engine-cache.test.mts skills/prism/tests/worker-service.test.mts skills/prism/tests/worker-cancellation.test.mts skills/prism/tests/provider-cancellation.test.mts tests/verification/reliability/worker-deadline.test.mts",
+      "exit": 0,
+      "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/prism-1.log",
+      "sha256": "f10a0936c623ac342c946e5639dfd25ef95072f01f30ab440553916b7931acfe"
+    },
+    {
+      "command": "node --test skills/prism/tests/design-rounds.test.mts skills/prism/tests/design-round-client.test.mts skills/prism/tests/preferences-generation.test.mts skills/prism/tests/pipeline-preference-subject.test.mts skills/prism/tests/preference-bridge.test.mjs",
+      "exit": 0,
+      "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/prism-2.log",
+      "sha256": "f3a56522c747f3aca5e775ccf705dde5ee595182791a888e48412c7fc8a1dbe0"
+    },
+    {
+      "command": "npm run typecheck --workspace @kubeclaw/prism",
+      "exit": 0,
+      "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/prism-3.log",
+      "sha256": "58f58c25a1e662801a73d4320d90f51fd909137a99882bbca7d9d931befa4480"
+    },
+    {
+      "command": "node --test tests/verification/deployment/deployment-release.test.mjs tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/release-images.test.mjs",
+      "exit": 0,
+      "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/release-scaffold-source-1.log",
+      "sha256": "a46bdd8b414f555525aaf1e90397d54ef3dab7cc9e0a7430a1d013378820f344"
+    },
+    {
+      "command": "node tests/verification/contracts/check-deploy-prism-command.mts",
+      "exit": 0,
+      "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/release-scaffold-source-2.log",
+      "sha256": "0f7cc63c212122571c3cc0ed5e29efaceba8cc887a1526c98f505f54dec6f21c"
+    },
+    {
+      "command": "node --test tests/skills/nova/project_setup/progress-scaffold.test.mjs tests/skills/nova/project_setup/scaffold-regeneration.test.mjs",
+      "exit": 0,
+      "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/release-scaffold-source-3.log",
+      "sha256": "5a3a4798319e28e27b298c62d4959d5666559d3555893756bde3b1ae4532f19b"
+    },
+    {
+      "command": "npm run progress:scaffold:typecheck",
+      "exit": 0,
+      "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/release-scaffold-source-4.log",
+      "sha256": "ed98f5add88eb121e2aa1d34b5e774a627a8a5be860ce8c957543faff745c6be"
+    },
+    {
+      "command": "node --test tests/verification/reliability/approval-source.test.mjs tests/verification/reliability/admin-repair.test.mjs",
+      "exit": 0,
+      "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/release-scaffold-source-5.log",
+      "sha256": "de710c3b86b339a456aeee1c0ce32674777c3ebcf187014b568268755c94ae1c"
+    }
+  ],
+  "firstFailingGate": null,
+  "nodeTestCases": 112,
+  "nodeTestSkips": 0
+}

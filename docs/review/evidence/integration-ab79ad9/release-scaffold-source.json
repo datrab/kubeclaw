@@ -1,0 +1,32 @@
+[
+  {
+    "command": "node --test tests/verification/deployment/deployment-release.test.mjs tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/release-images.test.mjs",
+    "exit": 0,
+    "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/release-scaffold-source-1.log",
+    "sha256": "a46bdd8b414f555525aaf1e90397d54ef3dab7cc9e0a7430a1d013378820f344"
+  },
+  {
+    "command": "node tests/verification/contracts/check-deploy-prism-command.mts",
+    "exit": 0,
+    "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/release-scaffold-source-2.log",
+    "sha256": "0f7cc63c212122571c3cc0ed5e29efaceba8cc887a1526c98f505f54dec6f21c"
+  },
+  {
+    "command": "node --test tests/skills/nova/project_setup/progress-scaffold.test.mjs tests/skills/nova/project_setup/scaffold-regeneration.test.mjs",
+    "exit": 0,
+    "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/release-scaffold-source-3.log",
+    "sha256": "5a3a4798319e28e27b298c62d4959d5666559d3555893756bde3b1ae4532f19b"
+  },
+  {
+    "command": "npm run progress:scaffold:typecheck",
+    "exit": 0,
+    "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/release-scaffold-source-4.log",
+    "sha256": "ed98f5add88eb121e2aa1d34b5e774a627a8a5be860ce8c957543faff745c6be"
+  },
+  {
+    "command": "node --test tests/verification/reliability/approval-source.test.mjs tests/verification/reliability/admin-repair.test.mjs",
+    "exit": 0,
+    "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/release-scaffold-source-5.log",
+    "sha256": "de710c3b86b339a456aeee1c0ce32674777c3ebcf187014b568268755c94ae1c"
+  }
+]

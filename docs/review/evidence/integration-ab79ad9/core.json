@@ -1,0 +1,38 @@
+[
+  {
+    "command": "npm run verify:worker-core:contracts",
+    "exit": 0,
+    "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/core-1.log",
+    "sha256": "30ea37032b114e5193d08b783a19c88fda32ef6d84fc9c0f3762d02922a3e2ed"
+  },
+  {
+    "command": "npm run verify:worker-core:attempt-executor",
+    "exit": 0,
+    "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/core-2.log",
+    "sha256": "d687164b864eb82fb5f09389e7caa9a18827fe9ba49e1e532750443e3c654afb"
+  },
+  {
+    "command": "npm run verify:worker-core:local-runtime",
+    "exit": 0,
+    "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/core-3.log",
+    "sha256": "be74d5e68e2e6bedd7b4ccf0c3d18f717fc81e8bd5b9d5fd7ae73dfe2235800d"
+  },
+  {
+    "command": "npm run verify:worker-core:role-surfaces",
+    "exit": 0,
+    "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/core-4.log",
+    "sha256": "26d9888e9a9c8b44691ade5f1c59bb1bf6c5c52dd919b2caebb31c99a26564e8"
+  },
+  {
+    "command": "npm run verify:test-gate:remote-import",
+    "exit": 0,
+    "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/core-5.log",
+    "sha256": "c907bccf819363994284474aa6db1648dcbf4c5d211e4e82c588267130fbdd9d"
+  },
+  {
+    "command": "node tests/verification/contracts/check-pipeline-committed-source-snapshot.mts",
+    "exit": 0,
+    "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/core-6.log",
+    "sha256": "1e8825c36e56aa4ed7ef9b2d3ddc50d8cbf3ac02a449a1261d16de9beb589d67"
+  }
+]

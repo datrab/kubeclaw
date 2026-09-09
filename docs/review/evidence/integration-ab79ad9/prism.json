@@ -1,0 +1,20 @@
+[
+  {
+    "command": "node --test skills/prism/tests/engine.test.mts skills/prism/tests/engine-cache.test.mts skills/prism/tests/worker-service.test.mts skills/prism/tests/worker-cancellation.test.mts skills/prism/tests/provider-cancellation.test.mts tests/verification/reliability/worker-deadline.test.mts",
+    "exit": 0,
+    "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/prism-1.log",
+    "sha256": "f10a0936c623ac342c946e5639dfd25ef95072f01f30ab440553916b7931acfe"
+  },
+  {
+    "command": "node --test skills/prism/tests/design-rounds.test.mts skills/prism/tests/design-round-client.test.mts skills/prism/tests/preferences-generation.test.mts skills/prism/tests/pipeline-preference-subject.test.mts skills/prism/tests/preference-bridge.test.mjs",
+    "exit": 0,
+    "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/prism-2.log",
+    "sha256": "f3a56522c747f3aca5e775ccf705dde5ee595182791a888e48412c7fc8a1dbe0"
+  },
+  {
+    "command": "npm run typecheck --workspace @kubeclaw/prism",
+    "exit": 0,
+    "log": "/workspace/scratch/4e25cf57c177/integration-ab79ad9-evidence/prism-3.log",
+    "sha256": "58f58c25a1e662801a73d4320d90f51fd909137a99882bbca7d9d931befa4480"
+  }
+]
