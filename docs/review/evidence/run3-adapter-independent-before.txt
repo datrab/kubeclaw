@@ -1,0 +1,42 @@
+Fresh source: remote9628872976da8d43c3a17faa89962f9e32d88979 / local8734df5; 2046 non-docs blobs independently match.
+Audit probe source50eea9bbfb47d869c7928d9f5c850a1a74fbb3d4, copied without changing its expected-defect assertions.
+Command: node docs/review/evidence/run3-adapter-dependency-locale.mjs
+Exit0 means the historical defect reproduced, NOT an acceptance pass.
+{
+  "observations": [
+    {
+      "name": "same",
+      "resumeLocale": "en-US",
+      "receiverCalls": 1,
+      "requestBodies": [
+        {
+          "ä": 1,
+          "z": 2
+        }
+      ],
+      "dependencyKeys": [
+        "adapter:test.locale-dependency:consumer:network.http:d588c7b7b58d07629632b7ded26dfd586b8624cc96f18a15cfcab758e08fc2b9:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"
+      ]
+    },
+    {
+      "name": "cross",
+      "resumeLocale": "sv-SE",
+      "receiverCalls": 2,
+      "requestBodies": [
+        {
+          "ä": 1,
+          "z": 2
+        },
+        {
+          "ä": 1,
+          "z": 2
+        }
+      ],
+      "dependencyKeys": [
+        "adapter:test.locale-dependency:consumer:network.http:55b73ec47db81ee9489e5b4b2610b4abddbf5a54a789dd5e4a6100c1a9446d79:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604",
+        "adapter:test.locale-dependency:consumer:network.http:9f35e2d4b2a6b468ed70ba68dcf7bbe63d78a6bf7a649e519e87b38f57fb39aa:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"
+      ]
+    }
+  ],
+  "boundary": "Actual registered adapter via original AdapterRuntime; real SIGKILL after child HTTP completion before parent completion; original dependency receipt recovery and disk effect journal; local HTTP receiver only, no gateway or production service"
+}
