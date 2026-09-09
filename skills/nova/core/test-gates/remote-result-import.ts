@@ -1,3 +1,4 @@
+import { validateVerifiedOutput } from './verified-output.ts';
 import { bindGateCoverage, coveragePassed } from '@kubeclaw/pipeline-test-gate-contract';
 import { GateDeadline, checkGateSignal } from './deadline.ts';
 import type { StageResult } from '@kubeclaw/plugin-sdk';
@@ -233,6 +234,14 @@ export class FileNovaGateImportStore {
     // store quota, and the third argument enforces that quota across all jobs.
     this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);
   }
+  /** Read only a completed import under an exact caller-independent execution binding. */
+  async readVerifiedResult(binding: { readonly jobId: string; readonly runId: string; readonly pipelineStageId: string;
+    readonly sourceRevision: string; readonly decisionDigest: string; readonly resultDigest: string }) {
+    const record = (await this.#records.read<StoredGateImportV2>('remote-gate-imports'))
+      .find(item => item.idempotencyKey === binding.jobId);
+    return validateVerifiedOutput(record?.payload, binding);
+  }
+
   async readExecutionGraphs(): Promise<readonly NovaTestExecutionGraphV1[]> {
     return (await this.#records.read<StoredGateImportV2>('remote-gate-imports'))
       .filter(record => record.payload.state === 'complete')

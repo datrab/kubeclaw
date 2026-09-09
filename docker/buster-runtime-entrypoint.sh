@@ -236,7 +236,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   networkHttp: {
     allowedOrigins: exactHttpOrigins, allowedHostSuffixes: ['.svc.cluster.local', '.ts.net'], allowedPorts: [80, 443],
     allowedMethods: ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT'],
-    allowedRequestHeaders: ['accept', 'authorization', 'content-type', 'x-api-key'],
+    allowedRequestHeaders: ['accept', 'authorization', 'content-type', 'cookie', 'x-api-key'],
     allowWebSocket: process.env.BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET === 'true',
     maximumRequestBytes: 1048576, maximumResponseBytes: 16777216, maximumExecutionMs: 120000,
   },

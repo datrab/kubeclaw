@@ -1,0 +1,66 @@
+{
+  "id": "kubeclaw.demo-auth-smoke",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [],
+  "testProviders": [
+    {
+      "id": "session",
+      "contractId": "kubeclaw.demo-auth-smoke@1",
+      "kind": "test",
+      "module": "src/provider.js",
+      "export": "provider",
+      "configSchema": "schemas/config.schema.json",
+      "inputs": [
+        {
+          "name": "deployment",
+          "kind": "value",
+          "required": true,
+          "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+        },
+        {
+          "name": "credentials",
+          "kind": "value",
+          "required": true,
+          "schemaId": "kubeclaw.generated-demo-credentials@1"
+        },
+        {
+          "name": "exposure",
+          "kind": "value",
+          "required": true,
+          "schemaId": "kubeclaw.public-endpoint-fixture@1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "authentication",
+          "kind": "value",
+          "schemaId": "kubeclaw.demo-auth-evidence@1",
+          "required": true
+        }
+      ],
+      "requiredCapabilities": [
+        "network.http"
+      ],
+      "retrySafe": false,
+      "matrixFields": [],
+      "reportFormats": [],
+      "evidenceTypes": [
+        "log"
+      ],
+      "evidenceDefaults": {
+        "onPass": [
+          "log"
+        ],
+        "onFail": [
+          "log"
+        ],
+        "onError": [
+          "log"
+        ]
+      }
+    }
+  ]
+}

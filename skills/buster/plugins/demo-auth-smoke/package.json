@@ -1,0 +1,1 @@
+{"name":"@kubeclaw/plugin-demo-auth-smoke","private":true,"type":"module","scripts":{"build":"tsc --noEmit -p tsconfig.json","test":"node --test tests/live-function.test.ts"},"dependencies":{"@kubeclaw/plugin-sdk":"*"}}

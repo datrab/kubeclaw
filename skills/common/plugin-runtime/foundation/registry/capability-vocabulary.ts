@@ -93,6 +93,7 @@ export const CAPABILITY_DEFINITIONS = Object.freeze({
     ['lint.project'],
     ['allowedProjects', 'allowedRoots', 'allowedPolicyRoots'],
   ),
+  'test.plan.evidence': definition(['demo'], ['artifact.object'], ['allowedNamespaces']),
   'test.plan.execute': definition(
     ['run'],
     ['test.resolved-plan'],

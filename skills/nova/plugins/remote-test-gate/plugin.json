@@ -9,9 +9,25 @@
       "id": "plan",
       "module": "src/adapter.ts",
       "export": "activate",
-      "providesCapabilities": ["test.plan.execute"],
-      "requiredCapabilities": ["secrets.read"],
+      "providesCapabilities": [
+        "test.plan.execute"
+      ],
+      "requiredCapabilities": [
+        "secrets.read"
+      ],
       "configSchema": "schemas/config.schema.json"
+    },
+    {
+      "id": "evidence",
+      "module": "src/evidence-adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "test.plan.evidence"
+      ],
+      "requiredCapabilities": [
+        "artifacts.read"
+      ],
+      "configSchema": "schemas/evidence-config.schema.json"
     }
   ]
 }
