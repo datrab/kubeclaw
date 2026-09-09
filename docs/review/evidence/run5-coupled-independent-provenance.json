@@ -1,0 +1,446 @@
+{
+  "base": "5a437c726646d75d5500c23504ee3a3540547c3f",
+  "candidate": "ef41e378633ea04cf728e48c2413e92c33d39bd8",
+  "baseBlobsVerified": 3389,
+  "all73CandidateBlobsModesMatch": true,
+  "entries": [
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/server/control-config.ts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/server/control-server.ts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/server/control.ts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/server/studio-request.ts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/tests/control-generation-http.test.mts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/run3-product-independent-restoration.json",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/run3-product-independent-static.json",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/run3-product-independent-tests.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/run3-product-port/lint-final.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/run3-product-port/manifest.json",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/run3-product-port/restored-remote-blobs.json",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/run3-product-port/server-lint-baseline.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/run3-product-port/server-lint-final.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/run3-product-port/server-lint-import-error.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/run3-product-port/tests-final.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/run3-product-port/tests-initial.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/run3-product-port/typecheck-final.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-prism-product/baseline-control-lint.log",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-prism-product/existing-lint.log",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-prism-product/lint.log",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-prism-product/targeted-tests.log",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-prism-product/typecheck.log",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-independent/go-product-cost-followup.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-independent/go-product.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-independent/prism-chart.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-independent/prism-product.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-independent/prism-tls.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-independent/source-sha256.json",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/remediation/implementation/prism-product-decisions.md",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/remediation/implementation/product-decisions-independent-review.md",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/remediation/implementation/run3-product-control-port.md",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/remediation/implementation/run3-product-port-independent-review.md",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/control/product-decisions.ts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/server/product-controller.ts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/server/product-decisions.ts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/server/product-operator-page.ts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/storage/migrations/015_product_decisions.sql",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/storage/product-decisions.ts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/tests/control-product-composition.test.mts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/tests/control-product-independent.test.mts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/tests/export-product-vectors.mts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/tests/product-controller.test.mts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "skills/prism/tests/product-decisions.test.mts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "charts/kubeclaw/templates/demo-ready-service.yaml",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "charts/kubeclaw/values.yaml",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "cmd/buster-namespace-controller/demo-readiness.go",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "cmd/buster-namespace-controller/main.go",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "tests/verification/contracts/check-demo-ready-controller.mts",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "cmd/buster-namespace-controller/demo-product.go",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "cmd/buster-namespace-controller/demo-product_test.go",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-controller/controller-final.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-controller/controller-full-initial.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-controller/go-vet-final.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-controller/helm-cel-boundary.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-controller/helm-contract-final.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-controller/helm-contract-initial.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-controller/native-k8s-context.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-controller/product-cel-boundary.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave48-product-controller/product-interop-initial.txt",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/remediation/implementation/wave48-product-controller.md",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "charts/prism/templates/workloads.yaml",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "charts/prism/values.schema.json",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "charts/prism/values.yaml",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "charts/prism/templates/_product-decisions.tpl",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "charts/prism/templates/product-decisions-networkpolicy.yaml",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/operations/prism-product-decisions.md",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave47-product-chart/product-chart-final.log",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave47-product-chart/product-chart-lint.log",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "docs/review/evidence/wave47-product-chart/product-chart.log",
+      "unconflicted": true
+    },
+    {
+      "correctCurrent": true,
+      "correctSource": true,
+      "path": "tests/verification/deployment/prism-product-decisions.test.mjs",
+      "unconflicted": true
+    }
+  ]
+}

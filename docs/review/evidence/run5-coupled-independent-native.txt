@@ -1,0 +1,5 @@
+Source: ef41e378633ea04cf728e48c2413e92c33d39bd8
+Command: HELM=/workspace/scratch/4e25cf57c177/toolchains/bin/helm GO=/workspace/scratch/4e25cf57c177/toolchains/go/bin/go KUBEBUILDER_ASSETS=/workspace/scratch/15fb596e6560/run5-envtest-assets/controller-tools/envtest NATIVE_CONTROLLER=true NATIVE_EVIDENCE_DIR=/workspace/scratch/15fb596e6560/run5-coupled-review/docs/review/evidence/run5-coupled-independent-native node tests/verification/integration/product-native-api.mjs
+Exit: 0
+Native RBAC/ServiceAccount/VAP fence and original CRD status/CEL matrix passed. No workload or full product-delivery claim.
+

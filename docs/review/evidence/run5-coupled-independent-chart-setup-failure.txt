@@ -1,0 +1,70 @@
+Command: KUBECLAW_TEST_HELM=/workspace/scratch/4e25cf57c177/toolchains/bin/helm node --test tests/verification/contracts/check-demo-ready-controller.mts tests/verification/deployment/prism-product-decisions.test.mjs
+Exit: 1
+Error: execution error at (kubeclaw/templates/buster-namespace-controller.yaml:229:181): Ready producer ServiceAccount is required
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/buster-namespace-controller.yaml:237:16): Product decisions require the Ready TLS listener
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/buster-namespace-controller.yaml:246:24): Human product issuer is required
+
+Use --debug flag to render out invalid YAML
+✔ original Helm renders internal Ready TLS server and exact TokenReview authority (395.438537ms)
+✔ original chart mounts opt-in audience token only into actual Nova runtime container (413.16451ms)
+✔ product decisions are disabled by default and require separate explicit human authority (938.258083ms)
+✖ disabled product authority creates no key mount, audience token, environment or network access (13.073948ms)
+✖ explicit product authority belongs only to Control and uses separate signing and scoped transport (27.338883ms)
+✔ incomplete or ambiguous product authority fails actual Helm validation (92.786569ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2138.386228
+
+✖ failing tests:
+
+test at tests/verification/deployment/prism-product-decisions.test.mjs:32:1
+✖ disabled product authority creates no key mount, audience token, environment or network access (13.073948ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at success (file:///workspace/scratch/15fb596e6560/run5-coupled-review/tests/verification/deployment/prism-product-decisions.test.mjs:27:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run5-coupled-review/tests/verification/deployment/prism-product-decisions.test.mjs:33:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-product-decisions.test.mjs:43:1
+✖ explicit product authority belongs only to Control and uses separate signing and scoped transport (27.338883ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at success (file:///workspace/scratch/15fb596e6560/run5-coupled-review/tests/verification/deployment/prism-product-decisions.test.mjs:27:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run5-coupled-review/tests/verification/deployment/prism-product-decisions.test.mjs:44:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
