@@ -8,6 +8,7 @@ import {
 } from "../domain/index.ts";
 import { renderNode } from "../renderer/index.ts";
 import { evaluate } from "../evaluation/index.ts";
+import { EngineExecutionCache, type EngineCacheLimits } from "./execution-cache.ts";
 
 export type EngineOperation =
   "generate" | "render" | "evaluate" | "ingest" | "publish";
@@ -32,7 +33,6 @@ export interface DesignProvider {
 }
 const hash = (value: string) =>
   `sha256:${createHash("sha256").update(value).digest("hex")}`;
-type Execution = { fingerprint: string; result: Promise<EngineResult> };
 function exactInput(
   input: Record<string, unknown>,
   allowed: readonly string[],
@@ -47,31 +47,23 @@ function exactInput(
 
 export class PrismEngine {
   private readonly provider: DesignProvider;
-  private readonly executions = new Map<string, Execution>();
-  constructor(provider: DesignProvider) {
+  private readonly executions: EngineExecutionCache<EngineResult>;
+  constructor(provider: DesignProvider, cacheLimits?: EngineCacheLimits) {
     this.provider = provider;
+    this.executions = new EngineExecutionCache(cacheLimits);
+  }
+  cacheUsage() {
+    return this.executions.usage();
   }
   async execute(request: EngineRequest): Promise<EngineResult> {
     if (request.contract !== "kubeclaw.prism-design-engine@1")
       throw new Error("unsupported Prism engine contract");
+    // Bind deferred execution to the same caller-independent input as its identity.
+    const ownedRequest = structuredClone(request);
     const fingerprint = hash(
-      JSON.stringify({ operation: request.operation, input: request.input }),
+      JSON.stringify({ operation: ownedRequest.operation, input: ownedRequest.input }),
     );
-    const cached = this.executions.get(request.idempotencyKey);
-    if (cached) {
-      if (cached.fingerprint !== fingerprint)
-        throw new Error("idempotency key was used for a different request");
-      return cached.result;
-    }
-    const result = this.executeOnce(request);
-    this.executions.set(request.idempotencyKey, { fingerprint, result });
-    try {
-      return await result;
-    } catch (error) {
-      if (this.executions.get(request.idempotencyKey)?.result === result)
-        this.executions.delete(request.idempotencyKey);
-      throw error;
-    }
+    return this.executions.execute(ownedRequest.idempotencyKey, fingerprint, () => this.executeOnce(ownedRequest));
   }
   private async executeOnce(request: EngineRequest): Promise<EngineResult> {
     if (request.operation === "generate")
