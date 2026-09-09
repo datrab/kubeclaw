@@ -1,11 +1,11 @@
 import crypto from 'node:crypto';
-import fs from 'node:fs';
 import path from 'node:path';
 import type { AdapterActivationContext } from '@kubeclaw/plugin-sdk';
 import type { OpenClawTarget, RuntimeSessionEvidence } from './openclaw.ts';
 import type { OpenClawSessionState } from './openclaw-session.ts';
 import { gateway } from './openclaw-session.ts';
 import { openClawToolDetails } from './openclaw-response.ts';
+import { persistResult } from './result-persistence.ts';
 
 type JsonRecord = Record<string, unknown>;
 function record(value: unknown): value is JsonRecord { return value !== null && typeof value === 'object' && !Array.isArray(value); }
@@ -59,23 +59,6 @@ function terminalAssistantText(value: unknown): string {
   return requiredText(texts[0], 'SESSION_OUTPUT');
 }
 
-function persistResult(root: string, relative: string, content: string): void {
-  const absoluteRoot = path.resolve(root), destination = path.resolve(absoluteRoot, relative);
-  if (destination !== absoluteRoot && !destination.startsWith(`${absoluteRoot}${path.sep}`)) throw new Error('OPENCLAW_RESULT_PATH_INVALID');
-  fs.mkdirSync(path.dirname(destination), { recursive: true });
-  const temporary = `${destination}.tmp-${crypto.randomUUID()}`;
-  try {
-    fs.writeFileSync(temporary, content, { encoding: 'utf8', flag: 'wx' });
-    const handle = fs.openSync(temporary, 'r'); try { fs.fsyncSync(handle); } finally { fs.closeSync(handle); }
-    try { fs.linkSync(temporary, destination); }
-    catch (error) {
-      if (!(error instanceof Error) || !('code' in error) || error.code !== 'EEXIST'
-        || fs.readFileSync(destination, 'utf8') !== content) throw error;
-    }
-    fs.unlinkSync(temporary);
-    const directory = fs.openSync(path.dirname(destination), 'r'); try { fs.fsyncSync(directory); } finally { fs.closeSync(directory); }
-  } finally { try { fs.unlinkSync(temporary); } catch { /* temporary was renamed or already absent */ } }
-}
 
 async function localResult(context: AdapterActivationContext, target: OpenClawTarget,
   relative: string, key: string, token: string, state: OpenClawSessionState): Promise<JsonRecord> {

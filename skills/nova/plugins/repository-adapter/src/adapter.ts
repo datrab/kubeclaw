@@ -5,22 +5,9 @@ import type {
   AdapterInvocation,
   AdapterInstance,
 } from '@kubeclaw/plugin-sdk';
-import { repositoryRelativePath, RevisionReader } from './revision-reader.ts';
+import { RevisionReader } from './revision-reader.ts';
+import { readRepositoryFile } from './repository-file.ts';
 
-function repositoryFile(root: string, relative: string): string {
-  const candidate = path.resolve(root, repositoryRelativePath(relative));
-  if (!candidate.startsWith(`${root}${path.sep}`)) throw new Error('REPOSITORY_PATH_FORBIDDEN');
-  let canonical: string;
-  try {
-    canonical = fs.realpathSync(candidate);
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') throw new Error('REPOSITORY_FILE_NOT_FOUND');
-    throw error;
-  }
-  if (!canonical.startsWith(`${root}${path.sep}`)) throw new Error('REPOSITORY_PATH_FORBIDDEN');
-  if (!fs.statSync(canonical).isFile()) throw new Error('REPOSITORY_NOT_A_FILE');
-  return canonical;
-}
 
 async function invokeRepository(
   invocation: AdapterInvocation,
@@ -40,12 +27,9 @@ async function invokeRepository(
   if (request.operation !== 'read_text') {
     throw new Error(`REPOSITORY_OPERATION_UNSUPPORTED:${request.capability}:${request.operation}`);
   }
-  const file = repositoryFile(root, request.resource.canonicalId);
-  const size = fs.statSync(file).size;
-  if (size > maxFileBytes) throw new Error(`REPOSITORY_FILE_TOO_LARGE:${size}:${maxFileBytes}`);
-  const content = fs.readFileSync(file, 'utf8');
+  const result = readRepositoryFile(root, request.resource.canonicalId, maxFileBytes);
   if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
-  return { content, sizeBytes: Buffer.byteLength(content), path: repositoryRelativePath(request.resource.canonicalId) };
+  return result;
 }
 
 type RepositoryRequest = AdapterInvocation['request'];
@@ -83,6 +67,7 @@ function positiveInteger(value: unknown, fallback: number, label: string): numbe
 function activationConfig(context: AdapterActivationContext) {
   const configured = context.config.repositoryRoot;
   if (typeof configured !== 'string' || configured.length === 0) throw new Error('repositoryRoot is required');
+  if (fs.lstatSync(configured).isSymbolicLink() || fs.realpathSync(configured) !== path.resolve(configured)) throw new Error('REPOSITORY_PATH_FORBIDDEN');
   const expectedHead = context.config.expectedHead;
   if (expectedHead !== undefined && typeof expectedHead !== 'string') throw new Error('expectedHead is invalid');
   return {

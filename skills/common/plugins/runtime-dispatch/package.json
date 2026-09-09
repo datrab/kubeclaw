@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc --noEmit -p tsconfig.json",
-    "test": "node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+    "test": "node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node ../../../../tests/verification/reliability/repository-result-paths.test.mjs"
   },
   "dependencies": {
     "@kubeclaw/plugin-sdk": "*",

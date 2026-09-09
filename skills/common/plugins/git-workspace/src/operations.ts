@@ -36,15 +36,21 @@ async function removeWorkspace(ctx: GitContext, invocation: AdapterInvocation): 
 async function syncPaths(ctx: GitContext, workspace: string, invocation: AdapterInvocation): Promise<Result> {
   const { request, signal } = invocation;
   const ref = gitRef(request.payload.ref, 'ref');
+  const resolved = await ctx.runner.run(workspace, ['rev-parse', '--verify', `${ref}^{tree}`], signal);
+  const tree = String(resolved.stdout).trim();
+  if (!/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/.test(tree)) throw new Error('GIT_SYNC_TREE_INVALID');
   const synced: Array<{ path: string; action: 'created' | 'updated' }> = [];
   const missing: string[] = [];
   for (const file of scopedPaths(request.payload.paths, workspace)) {
-    let remote: Result;
-    try { remote = await ctx.runner.run(workspace, ['show', `${ref}:${file}`], signal); } catch { missing.push(file); continue; }
+    const listing = await ctx.runner.run(workspace, ['--literal-pathspecs', 'ls-tree', '-z', '--full-tree', tree, '--', file], signal);
+    if (listing.stdout === '') { missing.push(file); continue; }
+    const metadata = String(listing.stdout);
+    if (!/^[0-7]{6} blob [a-f0-9]{40,64}\t/.test(metadata) || metadata.slice(metadata.indexOf('\t') + 1) !== `${file}\0`) throw new Error(`GIT_SYNC_NOT_A_FILE:${file}`);
+    const remote = await ctx.runner.run(workspace, ['show', `${tree}:${file}`], signal);
     const destination = path.join(workspace, file);
     const local = fs.existsSync(destination) ? fs.readFileSync(destination, 'utf8') : undefined;
     if (local !== undefined && local === String(remote.stdout)) continue;
-    await ctx.runner.run(workspace, ['checkout', ref, '--', file], signal);
+    await ctx.runner.run(workspace, ['--literal-pathspecs', 'checkout', tree, '--', file], signal);
     synced.push({ path: file, action: local === undefined ? 'created' : 'updated' });
   }
   return { synced, missing };
