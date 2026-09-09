@@ -62,10 +62,11 @@ function closureEvidenceReplay(closure: ProducerClosureV1, evidence: Iterable<Du
   // retention contract. Missing bytes/metadata remain a completeness issue;
   // present metadata must never contradict the closure's producer identity.
 }
-export function assertAttemptReplay(state: DurableAttemptStoreSnapshot, root: string, limits: DurableAttemptStoreLimits): void {
+export function assertAttemptReplay(state: DurableAttemptStoreSnapshot, root: string, limits: DurableAttemptStoreLimits, validatedProjectedResults = 0): void {
   replayObject(state, ['schemaVersion', 'evidence', 'results', 'closures'], 'attempt-envelope');
   replayAssert(state.schemaVersion === 'durable-attempt-store.v1' && Array.isArray(state.evidence) && Array.isArray(state.results) && Array.isArray(state.closures), 'attempt-version');
-  replayAssert(state.evidence.length <= limits.maximumEvidenceObjects && state.results.length <= limits.maximumResults && state.closures.length <= limits.maximumClosures, 'attempt-count');
+  replayAssert(Number.isSafeInteger(validatedProjectedResults) && validatedProjectedResults >= 0 && validatedProjectedResults <= state.results.length, 'attempt-projection-count');
+  replayAssert(state.evidence.length <= limits.maximumEvidenceObjects && state.results.length - validatedProjectedResults <= limits.maximumResults && state.closures.length <= limits.maximumClosures, 'attempt-count');
   const evidenceKeys = new Set<string>();
   const evidence = new Map<string, DurableEvidenceMetadata>();
   for (const item of state.evidence) { evidenceReplay(item, root, evidenceKeys); evidence.set(evidenceKey(item), item); }

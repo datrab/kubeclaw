@@ -1,4 +1,6 @@
 import { completionRetirementSource, type AdmissionRetiredEntry } from './admission-retirement.ts';
+import {decodeAttemptState, encodeAttemptState, createAttemptProjection, attemptProjectionKey, attemptStoreDigest, assertAttemptRetirementIntent, readAttemptJournalPrefix,
+  type AttemptProjections, type AttemptRetirementIntent, type PersistedAttemptV2} from './attempt-projection.ts';
 import { assertAttemptReplay, assertCompletionIntent } from "./attempt-replay.ts";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -200,6 +202,7 @@ export class FileDurableAttemptStore {
   readonly #file: string;
   readonly #limits: DurableAttemptStoreLimits;
   #queue: Promise<unknown> = Promise.resolve();
+  #projections: AttemptProjections = new Map();
   constructor(root: string, limits: DurableAttemptStoreLimits) {
     if (!path.isAbsolute(root))
       throw new Error("OBSERVABILITY_ATTEMPT_STORE_ROOT_NOT_ABSOLUTE");
@@ -226,14 +229,20 @@ export class FileDurableAttemptStore {
     return result;
   }
   async #readState(): Promise<DurableAttemptStoreSnapshot> {
-    const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumMetadataBytes);
-    assertAttemptReplay(state, this.#root, this.#limits);
+    const raw = await readDurableState<DurableAttemptStoreSnapshot|PersistedAttemptV2>(this.#file, EMPTY_STATE, this.#limits.maximumMetadataBytes);
+    const {state,projections}=decodeAttemptState(raw,this.#root,this.#limits);
+    this.#projections=projections;
     return state;
   }
+  async #writeState(state:DurableAttemptStoreSnapshot):Promise<void> {
+    this.#checkSize(state);
+    await writeDurableState(this.#file,encodeAttemptState(state,this.#projections));
+  }
   #checkSize(state: DurableAttemptStoreSnapshot): void {
-    assertAttemptReplay(state, this.#root, this.#limits);
+    const encoded=encodeAttemptState(state,this.#projections);
+    assertAttemptReplay(state, this.#root, this.#limits,this.#projections.size);
     if (
-      Buffer.byteLength(canonicalJson(state)) >
+      Buffer.byteLength(canonicalJson(encoded)) >
       this.#limits.maximumMetadataBytes
     )
       throw new Error("OBSERVABILITY_ATTEMPT_METADATA_FULL");
@@ -262,7 +271,7 @@ export class FileDurableAttemptStore {
     if (retained.length === state.evidence.length) return;
     state.evidence = retained;
     this.#checkSize(state);
-    await writeDurableState(this.#file, state);
+    await this.#writeState(state);
     await cleanupUnreferencedBlobs(this.#root, state);
   }
   async storeEvidence(
@@ -346,7 +355,7 @@ export class FileDurableAttemptStore {
       const candidate = { ...state, evidence: [...state.evidence, metadata] };
       this.#checkSize(candidate);
       await durableBlob(this.#root, contentDigest, content);
-      await writeDurableState(this.#file, candidate);
+      await this.#writeState(candidate);
       return structuredClone({
         evidenceId: snapshot.evidenceId,
         type: snapshot.type,
@@ -401,7 +410,7 @@ export class FileDurableAttemptStore {
         if (existing.storedAt === null) {
           existing.storedAt = new Date().toISOString();
           this.#checkSize(state);
-          await writeDurableState(this.#file, state);
+          await this.#writeState(state);
         }
         return structuredClone(existing);
       }
@@ -444,7 +453,7 @@ export class FileDurableAttemptStore {
             `OBSERVABILITY_RESULT_EVIDENCE_CORRUPT:${evidence.evidenceId}`,
           );
       }
-      if (state.results.length >= this.#limits.maximumResults)
+      if (state.results.length - this.#projections.size >= this.#limits.maximumResults)
         throw new Error("OBSERVABILITY_RESULT_STORE_FULL");
       const metadata: DurableResultMetadata = {
         pipelineRunId,
@@ -466,7 +475,7 @@ export class FileDurableAttemptStore {
         ...state,
         results: [...state.results, reservedCommit],
       });
-      await writeDurableState(this.#file, pending);
+      await this.#writeState(pending);
       const committed: DurableResultMetadata = {
         ...metadata,
         storedAt: new Date().toISOString(),
@@ -476,7 +485,7 @@ export class FileDurableAttemptStore {
         results: [...state.results, committed],
       };
       this.#checkSize(committedState);
-      await writeDurableState(this.#file, committedState);
+      await this.#writeState(committedState);
       return structuredClone(committed);
     });
   }
@@ -534,6 +543,38 @@ export class FileDurableAttemptStore {
       return admission.retireCompletion({authority:scope.authority,operationId:scope.operationId,actor:scope.actor,recordDigest:scope.recordDigest,source},authorize);
     });
   }
+  /** Manual removal of only a duplicate payload, behind the canonical consumer's fence. */
+  async retireImportedResult(
+    input:AttemptRetirementIntent,
+    withCheckpointFence:(operation:()=>Promise<{newlyRetired:boolean;releasedBytes:number}>)=>Promise<{newlyRetired:boolean;releasedBytes:number}>,
+    authorize:()=>Promise<void>,
+  ):Promise<{newlyRetired:boolean;releasedBytes:number}> {
+    const intent=structuredClone(input);
+    assertAttemptRetirementIntent(intent,this.#root);
+    return this.#serial(()=>withCheckpointFence(async()=>{
+      const state=await this.#readState(),key=attemptProjectionKey(intent);
+      const existing=this.#projections.get(key);
+      await authorize();
+      if(existing) {
+        if(canonicalJson(existing.resultReference.intent)!==canonicalJson(intent))throw new Error('OBSERVABILITY_RESULT_RETIREMENT_CONFLICT');
+        return {newlyRetired:false,releasedBytes:0};
+      }
+      const before=readAttemptJournalPrefix(this.#file,this.#limits.maximumMetadataBytes);
+      if(attemptStoreDigest(before)!==intent.expectedStoreDigest)throw new Error('OBSERVABILITY_RESULT_RETIREMENT_STORE_CHANGED');
+      const item=state.results.find(result=>attemptProjectionKey(result)===key);
+      if(!item||item.result.resultDigest!==intent.resultDigest||!item.storedAt)throw new Error('OBSERVABILITY_RESULT_RETIREMENT_UNCONFIRMED');
+      // Reuse the original full completion/evidence/closure validation. Never fabricate an ACK.
+      await completionRetirementSource(state,intent,this.#file,this.#limits.maximumMetadataBytes);
+      const projected=createAttemptProjection(item,intent,this.#root,this.#limits.maximumMetadataBytes);
+      this.#projections.set(key,projected);
+      this.#checkSize(state);
+      const releasedBytes=before.length-Buffer.byteLength(canonicalJson(encodeAttemptState(state,this.#projections)));
+      if(releasedBytes<=0)throw new Error('OBSERVABILITY_RESULT_RETIREMENT_NOT_SMALLER');
+      await authorize();
+      await this.#writeState(state);
+      return {newlyRetired:true,releasedBytes};
+    }));
+  }
   async #storeClosureUnlocked(
     state: DurableAttemptStoreSnapshot,
     snapshot: ProducerClosureV1,
@@ -580,7 +621,7 @@ export class FileDurableAttemptStore {
       throw new Error("OBSERVABILITY_CLOSURE_STORE_FULL");
     const candidate = { ...state, closures: [...state.closures, snapshot] };
     this.#checkSize(candidate);
-    await writeDurableState(this.#file, candidate);
+    await this.#writeState(candidate);
     return structuredClone(snapshot);
   }
   async storeClosure(

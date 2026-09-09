@@ -21,4 +21,17 @@ export class FileMutex {
       fs.closeSync(descriptor);
     }
   }
+  /** Hold the same kernel lock across awaited filesystem transitions. */
+  async withAsyncLock<T>(operation: () => Promise<T>): Promise<T> {
+    const descriptor=fs.openSync(this.#file,'a',0o600);
+    try {
+      const acquired=spawnSync('/usr/bin/flock',['--exclusive','--timeout',String(this.#timeoutMs/1000),'--conflict-exit-code','75','3'],{
+        stdio:['ignore','ignore','pipe',descriptor],
+      });
+      if(acquired.error)throw new Error(`FILE_MUTEX_ACQUIRE_FAILED:${this.#file}`,{cause:acquired.error});
+      if(acquired.status===75)throw new Error(this.#timeoutCode);
+      if(acquired.status!==0)throw new Error(`FILE_MUTEX_ACQUIRE_FAILED:${this.#file}`);
+      return await operation();
+    } finally {fs.closeSync(descriptor);}
+  }
 }
