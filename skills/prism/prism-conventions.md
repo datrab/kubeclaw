@@ -26,15 +26,15 @@ Store these files in the project repository:
 
 `browser-profiles.json` uses `kubeclaw.browser-profiles.v1`. Each named profile fixes the browser, viewport, color scheme, reduced-motion setting, locale, time zone, scale, and mobile conditions.
 
-`visual/baselines.json` uses `kubeclaw.visual-baselines.v1`. Each entry records:
+`visual/baselines.json` uses `kubeclaw.visual-baselines.v2`. Each entry records:
 
 - a stable target ID;
 - an origin-local route;
 - one named browser profile;
 - the baseline PNG path and SHA-256 digest;
-- the browser, viewport, and page conditions.
+- the browser family and exact version observed during capture, viewport, and page conditions.
 
-The manifest can also record a digest for the complete baseline image set. The provider verifies all identities and digests before capture.
+The manifest can also record a digest for the complete baseline image set. The provider verifies baseline identities and digests before capture, then requires the captured browser version to match before pixel comparison.
 
 ## Provider declaration
 

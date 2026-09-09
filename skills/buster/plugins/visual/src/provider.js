@@ -1,6 +1,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { assertBaselineVersion, assertBrowserVersion, assertBaselineBrowserVersion } from './browser-identity.js';
 
 const COMPARISON_PROFILES = Object.freeze({
   'strict-v1': Object.freeze({ maximumDifferencePercent: 0, pixelThreshold: 0.1, uncertaintyMarginPercent: 0 }),
@@ -79,12 +80,13 @@ function profiles(repository, relative) {
 }
 function manifest(repository, relative, profileMap, limits) {
   const document = jsonFile(repository, relative, 'VISUAL_MANIFEST_INVALID');
-  if (document.schemaVersion !== 'kubeclaw.visual-baselines.v1') throw new Error('VISUAL_MANIFEST_INVALID');
+  assertBaselineVersion(document.schemaVersion);
   exact(document, ['schemaVersion', 'baselineBundleDigest', 'entries'], 'VISUAL_MANIFEST_INVALID');
   if (!Array.isArray(document.entries) || !document.entries.length || document.entries.length > 128) throw new Error('VISUAL_MANIFEST_INVALID');
   const ids = new Set(); const entries = new Map();
   for (const raw of document.entries) {
-    const entry = object(raw, 'VISUAL_MANIFEST_INVALID'); exact(entry, ['id', 'route', 'profile', 'baselineFile', 'sha256', 'browser', 'viewport', 'pageConditions'], 'VISUAL_MANIFEST_INVALID');
+    const entry = object(raw, 'VISUAL_MANIFEST_INVALID'); exact(entry, ['id', 'route', 'profile', 'baselineFile', 'sha256', 'browser', 'browserVersion', 'viewport', 'pageConditions'], 'VISUAL_MANIFEST_INVALID');
+    assertBrowserVersion(entry.browserVersion);
     if (typeof entry.id !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u.test(entry.id) || ids.has(entry.id)
       || typeof entry.route !== 'string' || entry.route.length > 1024 || !entry.route.startsWith('/') || entry.route.startsWith('//') || /[?#\r\n]/u.test(entry.route)
       || typeof entry.profile !== 'string' || !profileMap[entry.profile] || typeof entry.baselineFile !== 'string'
@@ -149,6 +151,7 @@ export function provider() { return { async execute(invocation, context) {
       || current.viewport?.width !== entry.viewport.width || current.viewport?.height !== entry.viewport.height
       || !samePageConditions(current.pageConditions, entry.profile)
       || JSON.stringify(current.masks) !== JSON.stringify(masks.get(entry.id) ?? [])) throw new Error('VISUAL_CAPABILITY_RESULT_INVALID');
+    assertBaselineBrowserVersion(entry.browserVersion, current.browserVersion, entry.id);
     const actualBytes = base64(current.data, 'VISUAL_CAPABILITY_RESULT_INVALID');
     if (`sha256:${crypto.createHash('sha256').update(actualBytes).digest('hex')}` !== current.sha256) throw new Error('VISUAL_CAPABILITY_RESULT_INVALID');
     const baselineBytes = fs.readFileSync(entry.baseline); const compared = await context.invoke('browser.visual', {
@@ -170,7 +173,7 @@ export function provider() { return { async execute(invocation, context) {
     if (!passed) findings.push({ id: `visual:${stable(`${entry.id}\0${result.diffPercent}`)}`, severity: uncertain ? 'medium' : 'high', rule: uncertain ? 'visual-difference-uncertain' : 'visual-difference',
       message: `${entry.id}: ${result.diffPercent.toFixed(4)}% differs from maximum ${policy.maximumDifferencePercent}%${uncertain ? '; explicit agent review is not configured, so the result fails safely' : ''}` });
     results.push({ id: entry.id, route: entry.route, profile: entry.profile.name, browser: current.browser, browserVersion: current.browserVersion,
-      baselineDigest: entry.sha256, currentDigest: current.sha256, masks: current.masks, width: result.width, height: result.height,
+      baselineBrowserVersion: entry.browserVersion, baselineDigest: entry.sha256, currentDigest: current.sha256, masks: current.masks, width: result.width, height: result.height,
       diffCount: result.diffCount, diffPercent: result.diffPercent, status: passed ? 'passed' : uncertain ? 'uncertain' : 'failed' });
   }
   const report = { schemaVersion: 'kubeclaw.visual-report.v1', manifestDigest: baselineManifest.manifestDigest,

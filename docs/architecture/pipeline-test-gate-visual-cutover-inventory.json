@@ -13,7 +13,7 @@
   "replacementFilesRequired":[
     "skills/buster/plugins/visual/plugin.json","skills/buster/plugins/visual/src/provider.js",
     "skills/buster/engine/test-gates/browser-visual-runtime.ts","contracts/pipeline-test-gate/v1/suites/visual.v1.json",
-    "contracts/pipeline-test-gate/v1/schemas/visual-baselines.v1.schema.json"
+    "contracts/pipeline-test-gate/v1/schemas/visual-baselines.v2.schema.json"
   ],
   "requiredAbsence":[
     {"file":"skills/buster/plugins/buster-suite-runtime/src/protocol.ts","token":"'visual-reg'"},

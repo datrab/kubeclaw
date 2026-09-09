@@ -46,9 +46,9 @@ try {
     desktop: { browser: 'chromium', viewport: profile.viewport, colorScheme: 'light', reducedMotion: 'reduce', locale: 'en-US', timezoneId: 'UTC', deviceScaleFactor: 1 },
   } }));
   const manifestPath = path.join(repository, '.swarm/visual/manifest.json');
-  const manifestDocument: any = { schemaVersion: 'kubeclaw.visual-baselines.v1',
+  const manifestDocument: any = { schemaVersion: 'kubeclaw.visual-baselines.v2',
     baselineBundleDigest: `sha256:${crypto.createHash('sha256').update(`sha256:${crypto.createHash('sha256').update(baseline).digest('hex')}`).digest('hex')}`, entries: [{ id: 'home', route: '/', profile: 'desktop', baselineFile,
-      sha256: `sha256:${crypto.createHash('sha256').update(baseline).digest('hex')}`, browser: 'chromium', viewport: profile.viewport,
+      sha256: `sha256:${crypto.createHash('sha256').update(baseline).digest('hex')}`, browser: 'chromium', browserVersion: capture.results[0].browserVersion, viewport: profile.viewport,
       pageConditions: { colorScheme: 'light', reducedMotion: 'reduce', locale: 'en-US', timezoneId: 'UTC', deviceScaleFactor: 1,
         hasTouch: false, isMobile: false, fullPage: true } }] };
   const writeManifest = (value = manifestDocument) => fs.writeFileSync(manifestPath, JSON.stringify(value)); writeManifest();
@@ -80,6 +80,13 @@ try {
   changed = false;
 
   const originalManifest = JSON.parse(JSON.stringify(manifestDocument));
+  writeManifest({ ...originalManifest, entries: [{ ...originalManifest.entries[0], browserVersion: '0.0.0-obsolete' }] });
+  await assert.rejects(() => provider().execute(invocation, context), /VISUAL_BASELINE_BROWSER_VERSION_MISMATCH/);
+  writeManifest();
+  const renewed = await provider().execute(invocation, context);
+  assert.equal(renewed.outcome, 'passed');
+  assert.equal(renewed.providerDetails.values.results[0].baselineBrowserVersion, capture.results[0].browserVersion);
+  assert.equal(renewed.providerDetails.values.results[0].browserVersion, capture.results[0].browserVersion);
   writeManifest({ ...originalManifest, entries: [{ ...originalManifest.entries[0], sha256: `sha256:${'0'.repeat(64)}` }] });
   await assert.rejects(() => provider().execute(invocation, context), /VISUAL_BASELINE_DIGEST_MISMATCH/);
   writeManifest({ ...originalManifest, entries: [{ ...originalManifest.entries[0], browser: 'firefox' }] });

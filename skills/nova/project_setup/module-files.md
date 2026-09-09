@@ -225,7 +225,7 @@ Every module should have at least 1 test hitting an endpoint from the previous m
 
 Do not put `visual-reg` in `test_suites` or `test_config`. Those fields are retired. Declare `kubeclaw.visual@1` in `.swarm/pipeline.json`.
 
-The node requires a reviewed `kubeclaw.visual-baselines.v1` manifest, a shared `kubeclaw.browser-profiles.v1` profile file, and digest-bound PNG images. Select each route/profile pair by its manifest ID. The provider rejects missing files, path escape, digest mismatch, and capture identity mismatch.
+The node requires a reviewed `kubeclaw.visual-baselines.v2` manifest, a shared `kubeclaw.browser-profiles.v1` profile file, and digest-bound PNG images. Select each route/profile pair by its manifest ID. The provider rejects missing files, path escape, digest mismatch, and capture identity mismatch.
 
 Baseline generation is a separate trusted workflow. Test execution never updates baseline files. Review a candidate and its difference evidence, approve it through the durable human gate, then apply all PNG and manifest digest changes in one commit. See the [visual user guide](../../../docs/architecture/pipeline-test-gate-visual-user-guide.md).
 

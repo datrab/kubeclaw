@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { chromium } from 'playwright';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -16,7 +17,7 @@ try{
   for(const directory of ['.swarm/visual','baselines']) fs.mkdirSync(path.join(repository,directory),{recursive:true});
   await new Promise<void>((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve);});
   const address=server.address(); if(!address||typeof address==='string') throw new Error('VISUAL_REMOTE_BIND_FAILED'); const origin=`http://127.0.0.1:${address.port}`;
-  const executable='/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell'; assert.equal(fs.existsSync(executable),true,'real Chromium required');
+  const executable=chromium.executablePath(); assert.equal(fs.existsSync(executable),true,'real Chromium required');
   const profile={name:'desktop',browser:'chromium' as const,viewport:{width:640,height:480},colorScheme:'light',reducedMotion:'reduce',locale:'en-US',timezoneId:'UTC',deviceScaleFactor:1,hasTouch:false,isMobile:false};
   const captureInvoker=new BrowserVisualCapabilityInvoker({allowedOrigins:[origin],allowedBrowsers:['chromium'],browserExecutables:{chromium:executable},maximumCombinations:2,maximumConcurrency:1,maximumExecutionMs:60000,maximumResultBytes:33554432,maximumScreenshotBytes:8388608,maximumMasksPerCombination:4});
   const capture:any=await captureInvoker.invoke('browser.visual',{operation:'capture',resource:{type:'network.url',canonicalId:origin},payload:{combinations:[{id:'home',route:'/',profile,masks:[]}],timeoutMs:30000}},new AbortController().signal);
@@ -24,7 +25,7 @@ try{
   fs.writeFileSync(path.join(repository,'baselines/home.png'),image);
   fs.writeFileSync(path.join(repository,'.swarm/visual/profiles.json'),JSON.stringify({schemaVersion:'kubeclaw.browser-profiles.v1',profiles:{desktop:{...profile,name:undefined}}},(_key,value)=>value===undefined?undefined:value));
   const bundleDigest=`sha256:${crypto.createHash('sha256').update(imageDigest).digest('hex')}`;
-  fs.writeFileSync(path.join(repository,'.swarm/visual/manifest.json'),JSON.stringify({schemaVersion:'kubeclaw.visual-baselines.v1',baselineBundleDigest:bundleDigest,entries:[{id:'home',route:'/',profile:'desktop',baselineFile:'baselines/home.png',sha256:imageDigest,browser:'chromium',viewport:profile.viewport,pageConditions:{colorScheme:'light',reducedMotion:'reduce',locale:'en-US',timezoneId:'UTC',deviceScaleFactor:1,hasTouch:false,isMobile:false,fullPage:true}}]}));
+  fs.writeFileSync(path.join(repository,'.swarm/visual/manifest.json'),JSON.stringify({schemaVersion:'kubeclaw.visual-baselines.v2',baselineBundleDigest:bundleDigest,entries:[{id:'home',route:'/',profile:'desktop',baselineFile:'baselines/home.png',sha256:imageDigest,browser:'chromium',browserVersion:capture.results[0].browserVersion,viewport:profile.viewport,pageConditions:{colorScheme:'light',reducedMotion:'reduce',locale:'en-US',timezoneId:'UTC',deviceScaleFactor:1,hasTouch:false,isMobile:false,fullPage:true}}]}));
   execFileSync('git',['-C',repository,'init','-q']);execFileSync('git',['-C',repository,'config','user.email','visual@example.invalid']);execFileSync('git',['-C',repository,'config','user.name','Visual Proof']);execFileSync('git',['-C',repository,'add','.']);execFileSync('git',['-C',repository,'commit','-qm','Visual fixture']);
   const pluginRoot=path.resolve('skills/buster/plugins'); const registry=buildRegistry(discoverPackages({installationRoots:[pluginRoot],trustPolicy:{trustedBuiltinRoots:[pluginRoot],allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'visual-remote-vertical'}}));
   const limits={cpuMillis:120000,memoryBytes:1073741824,logBytes:1048576,artifactBytes:67108864,artifactFiles:32,processes:64};
