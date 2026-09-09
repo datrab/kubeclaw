@@ -1,0 +1,296 @@
+[
+  {
+    "label": "native-alternate-a: namespace",
+    "method": "POST",
+    "url": "/api/v1/namespaces",
+    "status": 201,
+    "body": "{\"kind\":\"Namespace\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"native-alternate-a\",\"uid\":\"3162cd20-da96-4f88-8bc6-1e055771fc84\",\"resourceVersion\":\"203\",\"creationTimestamp\":\"2026-09-09T22:53:32Z\",\"labels\":{\"kubernetes.io/metadata.name\":\"native-alternate-a\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"v1\",\"time\":\"2026-09-09T22:53:32Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:metadata\":{\"f:labels\":{\".\":{},\"f:kubernetes.io/metadata.name\":{}}}}}]},\"spec\":{\"finalizers\":[\"kubernetes\"]},\"status\":{\"phase\":\"Active\"}}\n"
+  },
+  {
+    "label": "native-alternate-a: install ServiceAccount",
+    "method": "POST",
+    "url": "/api/v1/namespaces/native-alternate-a/serviceaccounts",
+    "status": 201,
+    "body": "{\"kind\":\"ServiceAccount\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"agent-buster-namespace-controller\",\"namespace\":\"native-alternate-a\",\"uid\":\"dafadd83-972d-4b6c-bb97-6cd79b24d16d\",\"resourceVersion\":\"204\",\"creationTimestamp\":\"2026-09-09T22:53:32Z\",\"labels\":{\"app.kubernetes.io/component\":\"buster\",\"app.kubernetes.io/instance\":\"native-a\",\"app.kubernetes.io/managed-by\":\"Helm\",\"app.kubernetes.io/name\":\"kubeclaw\",\"kubeclaw/role\":\"buster\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"v1\",\"time\":\"2026-09-09T22:53:32Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:automountServiceAccountToken\":{},\"f:metadata\":{\"f:labels\":{\".\":{},\"f:app.kubernetes.io/component\":{},\"f:app.kubernetes.io/instance\":{},\"f:app.kubernetes.io/managed-by\":{},\"f:app.kubernetes.io/name\":{},\"f:kubeclaw/role\":{}}}}}]},\"automountServiceAccountToken\":true}\n"
+  },
+  {
+    "label": "native-alternate-a: install ClusterRole",
+    "method": "POST",
+    "url": "/apis/rbac.authorization.k8s.io/v1/clusterroles",
+    "status": 201,
+    "body": "{\"kind\":\"ClusterRole\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-controller-secrets\",\"uid\":\"57673e54-2cd0-479d-bbfe-cb7512b05aee\",\"resourceVersion\":\"205\",\"creationTimestamp\":\"2026-09-09T22:53:32Z\",\"labels\":{\"app.kubernetes.io/component\":\"buster\",\"app.kubernetes.io/instance\":\"native-a\",\"app.kubernetes.io/managed-by\":\"Helm\",\"app.kubernetes.io/name\":\"kubeclaw\",\"kubeclaw/role\":\"buster\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"time\":\"2026-09-09T22:53:32Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:metadata\":{\"f:labels\":{\".\":{},\"f:app.kubernetes.io/component\":{},\"f:app.kubernetes.io/instance\":{},\"f:app.kubernetes.io/managed-by\":{},\"f:app.kubernetes.io/name\":{},\"f:kubeclaw/role\":{}}},\"f:rules\":{}}}]},\"rules\":[{\"verbs\":[\"get\",\"create\",\"patch\"],\"apiGroups\":[\"\"],\"resources\":[\"secrets\"]}]}\n"
+  },
+  {
+    "label": "native-alternate-a: install ClusterRole",
+    "method": "POST",
+    "url": "/apis/rbac.authorization.k8s.io/v1/clusterroles",
+    "status": 201,
+    "body": "{\"kind\":\"ClusterRole\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-namespace-deployer\",\"uid\":\"1da4dd7a-e702-4464-bacb-e86b2c652d89\",\"resourceVersion\":\"206\",\"creationTimestamp\":\"2026-09-09T22:53:32Z\",\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"time\":\"2026-09-09T22:53:32Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:rules\":{}}}]},\"rules\":[{\"verbs\":[\"create\",\"get\",\"list\",\"watch\",\"delete\",\"patch\",\"update\"],\"apiGroups\":[\"\"],\"resources\":[\"pods\",\"pods/log\",\"services\",\"endpoints\",\"configmaps\",\"persistentvolumeclaims\",\"serviceaccounts\"]},{\"verbs\":[\"get\",\"list\"],\"apiGroups\":[\"\"],\"resources\":[\"secrets\"]},{\"verbs\":[\"create\",\"get\",\"list\",\"watch\",\"delete\",\"patch\",\"update\"],\"apiGroups\":[\"apps\"],\"resources\":[\"deployments\",\"replicasets\",\"statefulsets\"]},{\"verbs\":[\"create\",\"get\",\"list\",\"watch\",\"delete\",\"patch\",\"update\"],\"apiGroups\":[\"batch\"],\"resources\":[\"jobs\",\"cronjobs\"]}]}\n"
+  },
+  {
+    "label": "native-alternate-a: install ClusterRole",
+    "method": "POST",
+    "url": "/apis/rbac.authorization.k8s.io/v1/clusterroles",
+    "status": 201,
+    "body": "{\"kind\":\"ClusterRole\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-namespace-tester\",\"uid\":\"89438df1-8b82-4ce7-a63a-da7380968daa\",\"resourceVersion\":\"207\",\"creationTimestamp\":\"2026-09-09T22:53:32Z\",\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"time\":\"2026-09-09T22:53:32Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:rules\":{}}}]},\"rules\":[{\"verbs\":[\"get\",\"list\",\"watch\"],\"apiGroups\":[\"\"],\"resources\":[\"pods\",\"pods/log\",\"services\",\"endpoints\",\"configmaps\"]},{\"verbs\":[\"create\",\"get\",\"list\",\"watch\",\"delete\",\"patch\",\"update\"],\"apiGroups\":[\"batch\"],\"resources\":[\"jobs\"]}]}\n"
+  },
+  {
+    "label": "native-alternate-a: install ClusterRole",
+    "method": "POST",
+    "url": "/apis/rbac.authorization.k8s.io/v1/clusterroles",
+    "status": 201,
+    "body": "{\"kind\":\"ClusterRole\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-namespace-controller\",\"uid\":\"17292d49-523f-4183-a1e5-e9e6e0b58896\",\"resourceVersion\":\"208\",\"creationTimestamp\":\"2026-09-09T22:53:32Z\",\"labels\":{\"app.kubernetes.io/component\":\"buster\",\"app.kubernetes.io/instance\":\"native-a\",\"app.kubernetes.io/managed-by\":\"Helm\",\"app.kubernetes.io/name\":\"kubeclaw\",\"kubeclaw/role\":\"buster\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"time\":\"2026-09-09T22:53:32Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:metadata\":{\"f:labels\":{\".\":{},\"f:app.kubernetes.io/component\":{},\"f:app.kubernetes.io/instance\":{},\"f:app.kubernetes.io/managed-by\":{},\"f:app.kubernetes.io/name\":{},\"f:kubeclaw/role\":{}}},\"f:rules\":{}}}]},\"rules\":[{\"verbs\":[\"get\",\"list\",\"watch\",\"patch\",\"update\"],\"apiGroups\":[\"kubeclaw.forgestack.ai\"],\"resources\":[\"busternamespaceleases\"]},{\"verbs\":[\"get\",\"patch\",\"update\"],\"apiGroups\":[\"kubeclaw.forgestack.ai\"],\"resources\":[\"busternamespaceleases/status\"]},{\"verbs\":[\"create\",\"get\",\"delete\"],\"apiGroups\":[\"\"],\"resources\":[\"namespaces\"]},{\"verbs\":[\"get\",\"list\"],\"apiGroups\":[\"\"],\"resources\":[\"pods\",\"services\"]},{\"verbs\":[\"get\"],\"apiGroups\":[\"\"],\"resources\":[\"endpoints\"]},{\"verbs\":[\"create\",\"get\",\"delete\",\"patch\"],\"apiGroups\":[\"\"],\"resources\":[\"resourcequotas\",\"limitranges\"]},{\"verbs\":[\"create\",\"get\",\"list\",\"delete\",\"patch\"],\"apiGroups\":[\"networking.k8s.io\"],\"resources\":[\"ingresses\"]},{\"verbs\":[\"create\",\"get\",\"delete\",\"patch\"],\"apiGroups\":[\"networking.k8s.io\"],\"resources\":[\"networkpolicies\"]},{\"verbs\":[\"create\",\"get\",\"list\",\"delete\",\"patch\"],\"apiGroups\":[\"rbac.authorization.k8s.io\"],\"resources\":[\"roles\",\"rolebindings\"]},{\"verbs\":[\"bind\"],\"apiGroups\":[\"rbac.authorization.k8s.io\"],\"resources\":[\"clusterroles\"],\"resourceNames\":[\"agent-buster-controller-secrets\",\"agent-buster-namespace-deployer\",\"agent-buster-namespace-tester\"]}]}\n"
+  },
+  {
+    "label": "native-alternate-a: install ClusterRoleBinding",
+    "method": "POST",
+    "url": "/apis/rbac.authorization.k8s.io/v1/clusterrolebindings",
+    "status": 201,
+    "body": "{\"kind\":\"ClusterRoleBinding\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-namespace-controller\",\"uid\":\"4be64a98-7ba5-422b-ab7d-e4927e8a1fed\",\"resourceVersion\":\"209\",\"creationTimestamp\":\"2026-09-09T22:53:32Z\",\"labels\":{\"app.kubernetes.io/component\":\"buster\",\"app.kubernetes.io/instance\":\"native-a\",\"app.kubernetes.io/managed-by\":\"Helm\",\"app.kubernetes.io/name\":\"kubeclaw\",\"kubeclaw/role\":\"buster\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"time\":\"2026-09-09T22:53:32Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:metadata\":{\"f:labels\":{\".\":{},\"f:app.kubernetes.io/component\":{},\"f:app.kubernetes.io/instance\":{},\"f:app.kubernetes.io/managed-by\":{},\"f:app.kubernetes.io/name\":{},\"f:kubeclaw/role\":{}}},\"f:roleRef\":{},\"f:subjects\":{}}}]},\"subjects\":[{\"kind\":\"ServiceAccount\",\"name\":\"agent-buster-namespace-controller\",\"namespace\":\"native-alternate-a\"}],\"roleRef\":{\"apiGroup\":\"rbac.authorization.k8s.io\",\"kind\":\"ClusterRole\",\"name\":\"agent-buster-namespace-controller\"}}\n"
+  },
+  {
+    "label": "native-alternate-a: install Role",
+    "method": "POST",
+    "url": "/apis/rbac.authorization.k8s.io/v1/namespaces/native-alternate-a/roles",
+    "status": 201,
+    "body": "{\"kind\":\"Role\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-namespace-controller-source-secrets\",\"namespace\":\"native-alternate-a\",\"uid\":\"c14e926d-24ad-425d-9b19-a088d420230b\",\"resourceVersion\":\"210\",\"creationTimestamp\":\"2026-09-09T22:53:32Z\",\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"time\":\"2026-09-09T22:53:32Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:rules\":{}}}]},\"rules\":[{\"verbs\":[\"get\"],\"apiGroups\":[\"\"],\"resources\":[\"secrets\"],\"resourceNames\":[\"kubeclaw-fixture-preflight\",\"prism-test-provider\",\"prism-test-runtime\",\"prism-test-postgresql-auth\",\"prism-test-ghcr\"]}]}\n"
+  },
+  {
+    "label": "native-alternate-a: install RoleBinding",
+    "method": "POST",
+    "url": "/apis/rbac.authorization.k8s.io/v1/namespaces/native-alternate-a/rolebindings",
+    "status": 201,
+    "body": "{\"kind\":\"RoleBinding\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-namespace-controller-source-secrets\",\"namespace\":\"native-alternate-a\",\"uid\":\"014512b9-f23e-4215-9d02-05ba6fc760d3\",\"resourceVersion\":\"211\",\"creationTimestamp\":\"2026-09-09T22:53:32Z\",\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"time\":\"2026-09-09T22:53:32Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:roleRef\":{},\"f:subjects\":{}}}]},\"subjects\":[{\"kind\":\"ServiceAccount\",\"name\":\"agent-buster-namespace-controller\",\"namespace\":\"native-alternate-a\"}],\"roleRef\":{\"apiGroup\":\"rbac.authorization.k8s.io\",\"kind\":\"Role\",\"name\":\"agent-buster-namespace-controller-source-secrets\"}}\n"
+  },
+  {
+    "label": "native-alternate-a: genuine authenticated identity",
+    "identity": {
+      "authenticated": true,
+      "user": {
+        "username": "system:serviceaccount:native-alternate-a:agent-buster-namespace-controller",
+        "uid": "dafadd83-972d-4b6c-bb97-6cd79b24d16d",
+        "groups": [
+          "system:serviceaccounts",
+          "system:serviceaccounts:native-alternate-a",
+          "system:authenticated"
+        ],
+        "extra": {
+          "authentication.kubernetes.io/credential-id": [
+            "JTI=c99d9cdb-efed-4eda-879d-ae610b3b75dd"
+          ]
+        }
+      },
+      "audiences": [
+        "https://127.0.0.1"
+      ]
+    }
+  },
+  {
+    "label": "native-alternate-a: install ValidatingAdmissionPolicy",
+    "method": "POST",
+    "url": "/apis/admissionregistration.k8s.io/v1/validatingadmissionpolicies",
+    "status": 201,
+    "body": "{\"kind\":\"ValidatingAdmissionPolicy\",\"apiVersion\":\"admissionregistration.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-58ac4314-namespace-fence\",\"uid\":\"cdfaf60e-d87f-498a-8b4f-17b94f5f207c\",\"resourceVersion\":\"212\",\"generation\":1,\"creationTimestamp\":\"2026-09-09T22:53:32Z\",\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"admissionregistration.k8s.io/v1\",\"time\":\"2026-09-09T22:53:32Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:spec\":{\"f:failurePolicy\":{},\"f:matchConditions\":{\".\":{},\"k:{\\\"name\\\":\\\"broker-identity\\\"}\":{\".\":{},\"f:expression\":{},\"f:name\":{}}},\"f:matchConstraints\":{},\"f:validations\":{},\"f:variables\":{\".\":{},\"k:{\\\"name\\\":\\\"target\\\"}\":{}}}}}]},\"spec\":{\"matchConstraints\":{\"namespaceSelector\":{},\"objectSelector\":{},\"resourceRules\":[{\"operations\":[\"CREATE\",\"DELETE\"],\"apiGroups\":[\"\"],\"apiVersions\":[\"v1\"],\"resources\":[\"namespaces\"],\"scope\":\"*\"}],\"matchPolicy\":\"Equivalent\"},\"validations\":[{\"expression\":\"request.userInfo.username != \\\"system:serviceaccount:native-alternate-a:agent-buster\\\"\",\"message\":\"Buster must request a lease rather than creating or deleting namespaces directly.\"},{\"expression\":\"[\\\"proofa\\\"].exists(prefix, variables.target.metadata.name.startsWith(prefix + \\\"-\\\")) \\u0026\\u0026 has(variables.target.metadata.labels) \\u0026\\u0026 \\\"kubeclaw/managed-by\\\" in variables.target.metadata.labels \\u0026\\u0026 variables.target.metadata.labels[\\\"kubeclaw/managed-by\\\"] == \\\"buster-namespace-controller\\\"\",\"message\":\"Broker may only create or delete managed namespaces with configured prefixes.\"}],\"failurePolicy\":\"Fail\",\"matchConditions\":[{\"name\":\"broker-identity\",\"expression\":\"request.userInfo.username in [\\\"system:serviceaccount:native-alternate-a:agent-buster-namespace-controller\\\", \\\"system:serviceaccount:native-alternate-a:agent-buster\\\"]\"}],\"variables\":[{\"name\":\"target\",\"expression\":\"request.operation == \\\"DELETE\\\" ? oldObject : object\"}]},\"status\":{}}\n"
+  },
+  {
+    "label": "native-alternate-a: install ValidatingAdmissionPolicyBinding",
+    "method": "POST",
+    "url": "/apis/admissionregistration.k8s.io/v1/validatingadmissionpolicybindings",
+    "status": 201,
+    "body": "{\"kind\":\"ValidatingAdmissionPolicyBinding\",\"apiVersion\":\"admissionregistration.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-58ac4314-namespace-fence\",\"uid\":\"f08337cf-0bf3-48c1-8ab7-cb8a2c5f9eab\",\"resourceVersion\":\"213\",\"generation\":1,\"creationTimestamp\":\"2026-09-09T22:53:32Z\",\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"admissionregistration.k8s.io/v1\",\"time\":\"2026-09-09T22:53:32Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:spec\":{\"f:policyName\":{},\"f:validationActions\":{\".\":{},\"v:\\\"Deny\\\"\":{}}}}}]},\"spec\":{\"policyName\":\"agent-buster-58ac4314-namespace-fence\",\"validationActions\":[\"Deny\"]}}\n"
+  },
+  {
+    "label": "native-alternate-a: admission readiness",
+    "status": 422,
+    "body": "{\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Failure\",\"message\":\"namespaces \\\"native-alternate-a-forbidden\\\" is forbidden: ValidatingAdmissionPolicy 'agent-buster-58ac4314-namespace-fence' with binding 'agent-buster-58ac4314-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\",\"reason\":\"Invalid\",\"details\":{\"name\":\"native-alternate-a-forbidden\",\"kind\":\"namespaces\",\"causes\":[{\"message\":\"ValidatingAdmissionPolicy 'agent-buster-58ac4314-namespace-fence' with binding 'agent-buster-58ac4314-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\"}]},\"code\":422}\n"
+  },
+  {
+    "label": "native-alternate-a: native policy status",
+    "method": "GET",
+    "url": "/apis/admissionregistration.k8s.io/v1/validatingadmissionpolicies/agent-buster-58ac4314-namespace-fence",
+    "status": 200,
+    "body": "{\"kind\":\"ValidatingAdmissionPolicy\",\"apiVersion\":\"admissionregistration.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-58ac4314-namespace-fence\",\"uid\":\"cdfaf60e-d87f-498a-8b4f-17b94f5f207c\",\"resourceVersion\":\"212\",\"generation\":1,\"creationTimestamp\":\"2026-09-09T22:53:32Z\",\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"admissionregistration.k8s.io/v1\",\"time\":\"2026-09-09T22:53:32Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:spec\":{\"f:failurePolicy\":{},\"f:matchConditions\":{\".\":{},\"k:{\\\"name\\\":\\\"broker-identity\\\"}\":{\".\":{},\"f:expression\":{},\"f:name\":{}}},\"f:matchConstraints\":{},\"f:validations\":{},\"f:variables\":{\".\":{},\"k:{\\\"name\\\":\\\"target\\\"}\":{}}}}}]},\"spec\":{\"matchConstraints\":{\"namespaceSelector\":{},\"objectSelector\":{},\"resourceRules\":[{\"operations\":[\"CREATE\",\"DELETE\"],\"apiGroups\":[\"\"],\"apiVersions\":[\"v1\"],\"resources\":[\"namespaces\"],\"scope\":\"*\"}],\"matchPolicy\":\"Equivalent\"},\"validations\":[{\"expression\":\"request.userInfo.username != \\\"system:serviceaccount:native-alternate-a:agent-buster\\\"\",\"message\":\"Buster must request a lease rather than creating or deleting namespaces directly.\"},{\"expression\":\"[\\\"proofa\\\"].exists(prefix, variables.target.metadata.name.startsWith(prefix + \\\"-\\\")) \\u0026\\u0026 has(variables.target.metadata.labels) \\u0026\\u0026 \\\"kubeclaw/managed-by\\\" in variables.target.metadata.labels \\u0026\\u0026 variables.target.metadata.labels[\\\"kubeclaw/managed-by\\\"] == \\\"buster-namespace-controller\\\"\",\"message\":\"Broker may only create or delete managed namespaces with configured prefixes.\"}],\"failurePolicy\":\"Fail\",\"matchConditions\":[{\"name\":\"broker-identity\",\"expression\":\"request.userInfo.username in [\\\"system:serviceaccount:native-alternate-a:agent-buster-namespace-controller\\\", \\\"system:serviceaccount:native-alternate-a:agent-buster\\\"]\"}],\"variables\":[{\"name\":\"target\",\"expression\":\"request.operation == \\\"DELETE\\\" ? oldObject : object\"}]},\"status\":{}}\n"
+  },
+  {
+    "label": "native-alternate-a: allowed create",
+    "method": "POST",
+    "url": "/api/v1/namespaces",
+    "status": 201,
+    "body": "{\"kind\":\"Namespace\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"proofa-allowed\",\"uid\":\"051ee84a-4ad0-4c63-9ea4-86b9cc860d53\",\"resourceVersion\":\"214\",\"creationTimestamp\":\"2026-09-09T22:53:33Z\",\"labels\":{\"kubeclaw/managed-by\":\"buster-namespace-controller\",\"kubernetes.io/metadata.name\":\"proofa-allowed\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"v1\",\"time\":\"2026-09-09T22:53:33Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:metadata\":{\"f:labels\":{\".\":{},\"f:kubeclaw/managed-by\":{},\"f:kubernetes.io/metadata.name\":{}}}}}]},\"spec\":{\"finalizers\":[\"kubernetes\"]},\"status\":{\"phase\":\"Active\"}}\n"
+  },
+  {
+    "label": "native-alternate-a: allowed delete",
+    "method": "DELETE",
+    "url": "/api/v1/namespaces/proofa-allowed",
+    "status": 200,
+    "body": "{\"kind\":\"Namespace\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"proofa-allowed\",\"uid\":\"051ee84a-4ad0-4c63-9ea4-86b9cc860d53\",\"resourceVersion\":\"215\",\"creationTimestamp\":\"2026-09-09T22:53:33Z\",\"deletionTimestamp\":\"2026-09-09T22:53:33Z\",\"labels\":{\"kubeclaw/managed-by\":\"buster-namespace-controller\",\"kubernetes.io/metadata.name\":\"proofa-allowed\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"v1\",\"time\":\"2026-09-09T22:53:33Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:metadata\":{\"f:labels\":{\".\":{},\"f:kubeclaw/managed-by\":{},\"f:kubernetes.io/metadata.name\":{}}}}}]},\"spec\":{\"finalizers\":[\"kubernetes\"]},\"status\":{\"phase\":\"Terminating\"}}\n"
+  },
+  {
+    "label": "native-alternate-a: deny create wrong prefix",
+    "method": "POST",
+    "url": "/api/v1/namespaces",
+    "status": 422,
+    "body": "{\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Failure\",\"message\":\"namespaces \\\"native-alternate-a-wrong\\\" is forbidden: ValidatingAdmissionPolicy 'agent-buster-58ac4314-namespace-fence' with binding 'agent-buster-58ac4314-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\",\"reason\":\"Invalid\",\"details\":{\"name\":\"native-alternate-a-wrong\",\"kind\":\"namespaces\",\"causes\":[{\"message\":\"ValidatingAdmissionPolicy 'agent-buster-58ac4314-namespace-fence' with binding 'agent-buster-58ac4314-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\"}]},\"code\":422}\n"
+  },
+  {
+    "label": "native-alternate-a: deny create missing label",
+    "method": "POST",
+    "url": "/api/v1/namespaces",
+    "status": 422,
+    "body": "{\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Failure\",\"message\":\"namespaces \\\"proofa-missing\\\" is forbidden: ValidatingAdmissionPolicy 'agent-buster-58ac4314-namespace-fence' with binding 'agent-buster-58ac4314-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\",\"reason\":\"Invalid\",\"details\":{\"name\":\"proofa-missing\",\"kind\":\"namespaces\",\"causes\":[{\"message\":\"ValidatingAdmissionPolicy 'agent-buster-58ac4314-namespace-fence' with binding 'agent-buster-58ac4314-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\"}]},\"code\":422}\n"
+  },
+  {
+    "label": "native-alternate-a: deny control namespace deletion",
+    "method": "DELETE",
+    "url": "/api/v1/namespaces/native-alternate-a",
+    "status": 422,
+    "body": "{\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Failure\",\"message\":\"namespaces \\\"native-alternate-a\\\" is forbidden: ValidatingAdmissionPolicy 'agent-buster-58ac4314-namespace-fence' with binding 'agent-buster-58ac4314-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\",\"reason\":\"Invalid\",\"details\":{\"name\":\"native-alternate-a\",\"kind\":\"namespaces\",\"causes\":[{\"message\":\"ValidatingAdmissionPolicy 'agent-buster-58ac4314-namespace-fence' with binding 'agent-buster-58ac4314-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\"}]},\"code\":422}\n"
+  },
+  {
+    "label": "native-alternate-a: control namespace retained",
+    "method": "GET",
+    "url": "/api/v1/namespaces/native-alternate-a",
+    "status": 200,
+    "body": "{\"kind\":\"Namespace\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"native-alternate-a\",\"uid\":\"3162cd20-da96-4f88-8bc6-1e055771fc84\",\"resourceVersion\":\"203\",\"creationTimestamp\":\"2026-09-09T22:53:32Z\",\"labels\":{\"kubernetes.io/metadata.name\":\"native-alternate-a\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"v1\",\"time\":\"2026-09-09T22:53:32Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:metadata\":{\"f:labels\":{\".\":{},\"f:kubernetes.io/metadata.name\":{}}}}}]},\"spec\":{\"finalizers\":[\"kubernetes\"]},\"status\":{\"phase\":\"Active\"}}\n"
+  },
+  {
+    "label": "native-alternate-a: remove own test binding",
+    "method": "DELETE",
+    "url": "/apis/rbac.authorization.k8s.io/v1/clusterrolebindings/agent-buster-namespace-controller",
+    "status": 200,
+    "body": "{\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Success\",\"details\":{\"name\":\"agent-buster-namespace-controller\",\"group\":\"rbac.authorization.k8s.io\",\"kind\":\"clusterrolebindings\",\"uid\":\"4be64a98-7ba5-422b-ab7d-e4927e8a1fed\"}}\n"
+  },
+  {
+    "label": "native-alternate-b: namespace",
+    "method": "POST",
+    "url": "/api/v1/namespaces",
+    "status": 201,
+    "body": "{\"kind\":\"Namespace\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"native-alternate-b\",\"uid\":\"34916ab9-92d3-4c21-b71d-9fa3278b49d3\",\"resourceVersion\":\"217\",\"creationTimestamp\":\"2026-09-09T22:53:33Z\",\"labels\":{\"kubernetes.io/metadata.name\":\"native-alternate-b\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"v1\",\"time\":\"2026-09-09T22:53:33Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:metadata\":{\"f:labels\":{\".\":{},\"f:kubernetes.io/metadata.name\":{}}}}}]},\"spec\":{\"finalizers\":[\"kubernetes\"]},\"status\":{\"phase\":\"Active\"}}\n"
+  },
+  {
+    "label": "native-alternate-b: install ServiceAccount",
+    "method": "POST",
+    "url": "/api/v1/namespaces/native-alternate-b/serviceaccounts",
+    "status": 201,
+    "body": "{\"kind\":\"ServiceAccount\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"agent-buster-namespace-controller\",\"namespace\":\"native-alternate-b\",\"uid\":\"04c1910f-066a-456d-9345-44222730f911\",\"resourceVersion\":\"218\",\"creationTimestamp\":\"2026-09-09T22:53:33Z\",\"labels\":{\"app.kubernetes.io/component\":\"buster\",\"app.kubernetes.io/instance\":\"native-b\",\"app.kubernetes.io/managed-by\":\"Helm\",\"app.kubernetes.io/name\":\"kubeclaw\",\"kubeclaw/role\":\"buster\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"v1\",\"time\":\"2026-09-09T22:53:33Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:automountServiceAccountToken\":{},\"f:metadata\":{\"f:labels\":{\".\":{},\"f:app.kubernetes.io/component\":{},\"f:app.kubernetes.io/instance\":{},\"f:app.kubernetes.io/managed-by\":{},\"f:app.kubernetes.io/name\":{},\"f:kubeclaw/role\":{}}}}}]},\"automountServiceAccountToken\":true}\n"
+  },
+  {
+    "label": "native-alternate-b: install ClusterRoleBinding",
+    "method": "POST",
+    "url": "/apis/rbac.authorization.k8s.io/v1/clusterrolebindings",
+    "status": 201,
+    "body": "{\"kind\":\"ClusterRoleBinding\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-namespace-controller\",\"uid\":\"589663de-ad87-4655-bcfc-fe79b82105f2\",\"resourceVersion\":\"219\",\"creationTimestamp\":\"2026-09-09T22:53:33Z\",\"labels\":{\"app.kubernetes.io/component\":\"buster\",\"app.kubernetes.io/instance\":\"native-b\",\"app.kubernetes.io/managed-by\":\"Helm\",\"app.kubernetes.io/name\":\"kubeclaw\",\"kubeclaw/role\":\"buster\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"time\":\"2026-09-09T22:53:33Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:metadata\":{\"f:labels\":{\".\":{},\"f:app.kubernetes.io/component\":{},\"f:app.kubernetes.io/instance\":{},\"f:app.kubernetes.io/managed-by\":{},\"f:app.kubernetes.io/name\":{},\"f:kubeclaw/role\":{}}},\"f:roleRef\":{},\"f:subjects\":{}}}]},\"subjects\":[{\"kind\":\"ServiceAccount\",\"name\":\"agent-buster-namespace-controller\",\"namespace\":\"native-alternate-b\"}],\"roleRef\":{\"apiGroup\":\"rbac.authorization.k8s.io\",\"kind\":\"ClusterRole\",\"name\":\"agent-buster-namespace-controller\"}}\n"
+  },
+  {
+    "label": "native-alternate-b: install Role",
+    "method": "POST",
+    "url": "/apis/rbac.authorization.k8s.io/v1/namespaces/native-alternate-b/roles",
+    "status": 201,
+    "body": "{\"kind\":\"Role\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-namespace-controller-source-secrets\",\"namespace\":\"native-alternate-b\",\"uid\":\"885d0ff6-1133-457d-a450-d92e8e49919f\",\"resourceVersion\":\"220\",\"creationTimestamp\":\"2026-09-09T22:53:33Z\",\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"time\":\"2026-09-09T22:53:33Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:rules\":{}}}]},\"rules\":[{\"verbs\":[\"get\"],\"apiGroups\":[\"\"],\"resources\":[\"secrets\"],\"resourceNames\":[\"kubeclaw-fixture-preflight\",\"prism-test-provider\",\"prism-test-runtime\",\"prism-test-postgresql-auth\",\"prism-test-ghcr\"]}]}\n"
+  },
+  {
+    "label": "native-alternate-b: install RoleBinding",
+    "method": "POST",
+    "url": "/apis/rbac.authorization.k8s.io/v1/namespaces/native-alternate-b/rolebindings",
+    "status": 201,
+    "body": "{\"kind\":\"RoleBinding\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-namespace-controller-source-secrets\",\"namespace\":\"native-alternate-b\",\"uid\":\"49b130bf-2b55-4141-91e9-94bdce38e2f1\",\"resourceVersion\":\"221\",\"creationTimestamp\":\"2026-09-09T22:53:33Z\",\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"rbac.authorization.k8s.io/v1\",\"time\":\"2026-09-09T22:53:33Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:roleRef\":{},\"f:subjects\":{}}}]},\"subjects\":[{\"kind\":\"ServiceAccount\",\"name\":\"agent-buster-namespace-controller\",\"namespace\":\"native-alternate-b\"}],\"roleRef\":{\"apiGroup\":\"rbac.authorization.k8s.io\",\"kind\":\"Role\",\"name\":\"agent-buster-namespace-controller-source-secrets\"}}\n"
+  },
+  {
+    "label": "native-alternate-b: genuine authenticated identity",
+    "identity": {
+      "authenticated": true,
+      "user": {
+        "username": "system:serviceaccount:native-alternate-b:agent-buster-namespace-controller",
+        "uid": "04c1910f-066a-456d-9345-44222730f911",
+        "groups": [
+          "system:serviceaccounts",
+          "system:serviceaccounts:native-alternate-b",
+          "system:authenticated"
+        ],
+        "extra": {
+          "authentication.kubernetes.io/credential-id": [
+            "JTI=712b2c71-c9ec-44ce-b1fb-018bbdcfa050"
+          ]
+        }
+      },
+      "audiences": [
+        "https://127.0.0.1"
+      ]
+    }
+  },
+  {
+    "label": "native-alternate-b: install ValidatingAdmissionPolicy",
+    "method": "POST",
+    "url": "/apis/admissionregistration.k8s.io/v1/validatingadmissionpolicies",
+    "status": 201,
+    "body": "{\"kind\":\"ValidatingAdmissionPolicy\",\"apiVersion\":\"admissionregistration.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-84cc5f77-namespace-fence\",\"uid\":\"2b4bc689-653b-44f6-816a-3422a572e879\",\"resourceVersion\":\"222\",\"generation\":1,\"creationTimestamp\":\"2026-09-09T22:53:34Z\",\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"admissionregistration.k8s.io/v1\",\"time\":\"2026-09-09T22:53:34Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:spec\":{\"f:failurePolicy\":{},\"f:matchConditions\":{\".\":{},\"k:{\\\"name\\\":\\\"broker-identity\\\"}\":{\".\":{},\"f:expression\":{},\"f:name\":{}}},\"f:matchConstraints\":{},\"f:validations\":{},\"f:variables\":{\".\":{},\"k:{\\\"name\\\":\\\"target\\\"}\":{}}}}}]},\"spec\":{\"matchConstraints\":{\"namespaceSelector\":{},\"objectSelector\":{},\"resourceRules\":[{\"operations\":[\"CREATE\",\"DELETE\"],\"apiGroups\":[\"\"],\"apiVersions\":[\"v1\"],\"resources\":[\"namespaces\"],\"scope\":\"*\"}],\"matchPolicy\":\"Equivalent\"},\"validations\":[{\"expression\":\"request.userInfo.username != \\\"system:serviceaccount:native-alternate-b:agent-buster\\\"\",\"message\":\"Buster must request a lease rather than creating or deleting namespaces directly.\"},{\"expression\":\"[\\\"proofb\\\"].exists(prefix, variables.target.metadata.name.startsWith(prefix + \\\"-\\\")) \\u0026\\u0026 has(variables.target.metadata.labels) \\u0026\\u0026 \\\"kubeclaw/managed-by\\\" in variables.target.metadata.labels \\u0026\\u0026 variables.target.metadata.labels[\\\"kubeclaw/managed-by\\\"] == \\\"buster-namespace-controller\\\"\",\"message\":\"Broker may only create or delete managed namespaces with configured prefixes.\"}],\"failurePolicy\":\"Fail\",\"matchConditions\":[{\"name\":\"broker-identity\",\"expression\":\"request.userInfo.username in [\\\"system:serviceaccount:native-alternate-b:agent-buster-namespace-controller\\\", \\\"system:serviceaccount:native-alternate-b:agent-buster\\\"]\"}],\"variables\":[{\"name\":\"target\",\"expression\":\"request.operation == \\\"DELETE\\\" ? oldObject : object\"}]},\"status\":{}}\n"
+  },
+  {
+    "label": "native-alternate-b: install ValidatingAdmissionPolicyBinding",
+    "method": "POST",
+    "url": "/apis/admissionregistration.k8s.io/v1/validatingadmissionpolicybindings",
+    "status": 201,
+    "body": "{\"kind\":\"ValidatingAdmissionPolicyBinding\",\"apiVersion\":\"admissionregistration.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-84cc5f77-namespace-fence\",\"uid\":\"d8edbe1d-1989-461f-a31f-d7d087aef82f\",\"resourceVersion\":\"223\",\"generation\":1,\"creationTimestamp\":\"2026-09-09T22:53:34Z\",\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"admissionregistration.k8s.io/v1\",\"time\":\"2026-09-09T22:53:34Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:spec\":{\"f:policyName\":{},\"f:validationActions\":{\".\":{},\"v:\\\"Deny\\\"\":{}}}}}]},\"spec\":{\"policyName\":\"agent-buster-84cc5f77-namespace-fence\",\"validationActions\":[\"Deny\"]}}\n"
+  },
+  {
+    "label": "native-alternate-b: admission readiness",
+    "status": 422,
+    "body": "{\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Failure\",\"message\":\"namespaces \\\"native-alternate-b-forbidden\\\" is forbidden: ValidatingAdmissionPolicy 'agent-buster-84cc5f77-namespace-fence' with binding 'agent-buster-84cc5f77-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\",\"reason\":\"Invalid\",\"details\":{\"name\":\"native-alternate-b-forbidden\",\"kind\":\"namespaces\",\"causes\":[{\"message\":\"ValidatingAdmissionPolicy 'agent-buster-84cc5f77-namespace-fence' with binding 'agent-buster-84cc5f77-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\"}]},\"code\":422}\n"
+  },
+  {
+    "label": "native-alternate-b: native policy status",
+    "method": "GET",
+    "url": "/apis/admissionregistration.k8s.io/v1/validatingadmissionpolicies/agent-buster-84cc5f77-namespace-fence",
+    "status": 200,
+    "body": "{\"kind\":\"ValidatingAdmissionPolicy\",\"apiVersion\":\"admissionregistration.k8s.io/v1\",\"metadata\":{\"name\":\"agent-buster-84cc5f77-namespace-fence\",\"uid\":\"2b4bc689-653b-44f6-816a-3422a572e879\",\"resourceVersion\":\"222\",\"generation\":1,\"creationTimestamp\":\"2026-09-09T22:53:34Z\",\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"admissionregistration.k8s.io/v1\",\"time\":\"2026-09-09T22:53:34Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:spec\":{\"f:failurePolicy\":{},\"f:matchConditions\":{\".\":{},\"k:{\\\"name\\\":\\\"broker-identity\\\"}\":{\".\":{},\"f:expression\":{},\"f:name\":{}}},\"f:matchConstraints\":{},\"f:validations\":{},\"f:variables\":{\".\":{},\"k:{\\\"name\\\":\\\"target\\\"}\":{}}}}}]},\"spec\":{\"matchConstraints\":{\"namespaceSelector\":{},\"objectSelector\":{},\"resourceRules\":[{\"operations\":[\"CREATE\",\"DELETE\"],\"apiGroups\":[\"\"],\"apiVersions\":[\"v1\"],\"resources\":[\"namespaces\"],\"scope\":\"*\"}],\"matchPolicy\":\"Equivalent\"},\"validations\":[{\"expression\":\"request.userInfo.username != \\\"system:serviceaccount:native-alternate-b:agent-buster\\\"\",\"message\":\"Buster must request a lease rather than creating or deleting namespaces directly.\"},{\"expression\":\"[\\\"proofb\\\"].exists(prefix, variables.target.metadata.name.startsWith(prefix + \\\"-\\\")) \\u0026\\u0026 has(variables.target.metadata.labels) \\u0026\\u0026 \\\"kubeclaw/managed-by\\\" in variables.target.metadata.labels \\u0026\\u0026 variables.target.metadata.labels[\\\"kubeclaw/managed-by\\\"] == \\\"buster-namespace-controller\\\"\",\"message\":\"Broker may only create or delete managed namespaces with configured prefixes.\"}],\"failurePolicy\":\"Fail\",\"matchConditions\":[{\"name\":\"broker-identity\",\"expression\":\"request.userInfo.username in [\\\"system:serviceaccount:native-alternate-b:agent-buster-namespace-controller\\\", \\\"system:serviceaccount:native-alternate-b:agent-buster\\\"]\"}],\"variables\":[{\"name\":\"target\",\"expression\":\"request.operation == \\\"DELETE\\\" ? oldObject : object\"}]},\"status\":{}}\n"
+  },
+  {
+    "label": "native-alternate-b: allowed create",
+    "method": "POST",
+    "url": "/api/v1/namespaces",
+    "status": 201,
+    "body": "{\"kind\":\"Namespace\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"proofb-allowed\",\"uid\":\"4c4ab685-8f25-44cd-bfc8-dc2e13b0f27c\",\"resourceVersion\":\"224\",\"creationTimestamp\":\"2026-09-09T22:53:35Z\",\"labels\":{\"kubeclaw/managed-by\":\"buster-namespace-controller\",\"kubernetes.io/metadata.name\":\"proofb-allowed\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"v1\",\"time\":\"2026-09-09T22:53:35Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:metadata\":{\"f:labels\":{\".\":{},\"f:kubeclaw/managed-by\":{},\"f:kubernetes.io/metadata.name\":{}}}}}]},\"spec\":{\"finalizers\":[\"kubernetes\"]},\"status\":{\"phase\":\"Active\"}}\n"
+  },
+  {
+    "label": "native-alternate-b: allowed delete",
+    "method": "DELETE",
+    "url": "/api/v1/namespaces/proofb-allowed",
+    "status": 200,
+    "body": "{\"kind\":\"Namespace\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"proofb-allowed\",\"uid\":\"4c4ab685-8f25-44cd-bfc8-dc2e13b0f27c\",\"resourceVersion\":\"225\",\"creationTimestamp\":\"2026-09-09T22:53:35Z\",\"deletionTimestamp\":\"2026-09-09T22:53:35Z\",\"labels\":{\"kubeclaw/managed-by\":\"buster-namespace-controller\",\"kubernetes.io/metadata.name\":\"proofb-allowed\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"v1\",\"time\":\"2026-09-09T22:53:35Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:metadata\":{\"f:labels\":{\".\":{},\"f:kubeclaw/managed-by\":{},\"f:kubernetes.io/metadata.name\":{}}}}}]},\"spec\":{\"finalizers\":[\"kubernetes\"]},\"status\":{\"phase\":\"Terminating\"}}\n"
+  },
+  {
+    "label": "native-alternate-b: deny create wrong prefix",
+    "method": "POST",
+    "url": "/api/v1/namespaces",
+    "status": 422,
+    "body": "{\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Failure\",\"message\":\"namespaces \\\"native-alternate-b-wrong\\\" is forbidden: ValidatingAdmissionPolicy 'agent-buster-84cc5f77-namespace-fence' with binding 'agent-buster-84cc5f77-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\",\"reason\":\"Invalid\",\"details\":{\"name\":\"native-alternate-b-wrong\",\"kind\":\"namespaces\",\"causes\":[{\"message\":\"ValidatingAdmissionPolicy 'agent-buster-84cc5f77-namespace-fence' with binding 'agent-buster-84cc5f77-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\"}]},\"code\":422}\n"
+  },
+  {
+    "label": "native-alternate-b: deny create missing label",
+    "method": "POST",
+    "url": "/api/v1/namespaces",
+    "status": 422,
+    "body": "{\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Failure\",\"message\":\"namespaces \\\"proofb-missing\\\" is forbidden: ValidatingAdmissionPolicy 'agent-buster-84cc5f77-namespace-fence' with binding 'agent-buster-84cc5f77-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\",\"reason\":\"Invalid\",\"details\":{\"name\":\"proofb-missing\",\"kind\":\"namespaces\",\"causes\":[{\"message\":\"ValidatingAdmissionPolicy 'agent-buster-84cc5f77-namespace-fence' with binding 'agent-buster-84cc5f77-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\"}]},\"code\":422}\n"
+  },
+  {
+    "label": "native-alternate-b: deny control namespace deletion",
+    "method": "DELETE",
+    "url": "/api/v1/namespaces/native-alternate-b",
+    "status": 422,
+    "body": "{\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Failure\",\"message\":\"namespaces \\\"native-alternate-b\\\" is forbidden: ValidatingAdmissionPolicy 'agent-buster-84cc5f77-namespace-fence' with binding 'agent-buster-84cc5f77-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\",\"reason\":\"Invalid\",\"details\":{\"name\":\"native-alternate-b\",\"kind\":\"namespaces\",\"causes\":[{\"message\":\"ValidatingAdmissionPolicy 'agent-buster-84cc5f77-namespace-fence' with binding 'agent-buster-84cc5f77-namespace-fence' denied request: Broker may only create or delete managed namespaces with configured prefixes.\"}]},\"code\":422}\n"
+  },
+  {
+    "label": "native-alternate-b: control namespace retained",
+    "method": "GET",
+    "url": "/api/v1/namespaces/native-alternate-b",
+    "status": 200,
+    "body": "{\"kind\":\"Namespace\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"native-alternate-b\",\"uid\":\"34916ab9-92d3-4c21-b71d-9fa3278b49d3\",\"resourceVersion\":\"217\",\"creationTimestamp\":\"2026-09-09T22:53:33Z\",\"labels\":{\"kubernetes.io/metadata.name\":\"native-alternate-b\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"v1\",\"time\":\"2026-09-09T22:53:33Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:metadata\":{\"f:labels\":{\".\":{},\"f:kubernetes.io/metadata.name\":{}}}}}]},\"spec\":{\"finalizers\":[\"kubernetes\"]},\"status\":{\"phase\":\"Active\"}}\n"
+  },
+  {
+    "label": "native-alternate-b: remove own test binding",
+    "method": "DELETE",
+    "url": "/apis/rbac.authorization.k8s.io/v1/clusterrolebindings/agent-buster-namespace-controller",
+    "status": 200,
+    "body": "{\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Success\",\"details\":{\"name\":\"agent-buster-namespace-controller\",\"group\":\"rbac.authorization.k8s.io\",\"kind\":\"clusterrolebindings\",\"uid\":\"589663de-ad87-4655-bcfc-fe79b82105f2\"}}\n"
+  }
+]

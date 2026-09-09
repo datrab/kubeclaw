@@ -95,7 +95,11 @@ func (r demoReadyRequest) validate() error {
 func readyRequestDigest(r demoReadyRequest) string { return r.wireDigest }
 
 func (c *controller) authenticateReady(ctx context.Context, authorization string) error {
-	if c.readiness == nil || !strings.HasPrefix(authorization, "Bearer ") || len(authorization) > 16384 {
+	return c.authenticateTransport(ctx, authorization, c.readiness)
+}
+
+func (c *controller) authenticateTransport(ctx context.Context, authorization string, cfg *readinessConfig) error {
+	if cfg == nil || !strings.HasPrefix(authorization, "Bearer ") || len(authorization) > 16384 {
 		return errors.New("DEMO_READY_UNAUTHORIZED")
 	}
 	token := strings.TrimPrefix(authorization, "Bearer ")
@@ -111,8 +115,8 @@ func (c *controller) authenticateReady(ctx context.Context, authorization string
 			} `json:"user"`
 		} `json:"status"`
 	}
-	err := c.kube(ctx, http.MethodPost, "/apis/authentication.k8s.io/v1/tokenreviews", map[string]interface{}{"apiVersion": "authentication.k8s.io/v1", "kind": "TokenReview", "spec": map[string]interface{}{"token": token, "audiences": []string{c.readiness.Audience}}}, "application/json", &review)
-	if err != nil || !review.Status.Authenticated || review.Status.User.Username != c.readiness.Producer || !contains(review.Status.Audiences, c.readiness.Audience) {
+	err := c.kube(ctx, http.MethodPost, "/apis/authentication.k8s.io/v1/tokenreviews", map[string]interface{}{"apiVersion": "authentication.k8s.io/v1", "kind": "TokenReview", "spec": map[string]interface{}{"token": token, "audiences": []string{cfg.Audience}}}, "application/json", &review)
+	if err != nil || !review.Status.Authenticated || review.Status.User.Username != cfg.Producer || !contains(review.Status.Audiences, cfg.Audience) {
 		return errors.New("DEMO_READY_UNAUTHORIZED")
 	}
 	return nil
@@ -120,6 +124,10 @@ func (c *controller) authenticateReady(ctx context.Context, authorization string
 
 func (c *controller) readinessHandler() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.HasPrefix(r.URL.Path, "/v1/demo-product/") {
+			c.productHandler(w, r)
+			return
+		}
 		w.Header().Set("Content-Type", "application/json")
 		w.Header().Set("Cache-Control", "no-store")
 		if r.Method != http.MethodPost || (r.URL.Path != "/v1/demo-ready" && r.URL.Path != "/v1/demo-ready/status") {

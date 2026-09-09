@@ -413,6 +413,15 @@ busterNamespaceBroker:
   defaultTtlSeconds: 7200
   maxTtlSeconds: 86400
   controller:
+    # Independent human-decision authority; empty configuration denies all.
+    productDecisions:
+      enabled: false
+      audience: ""
+      producerNamespace: ""
+      producerServiceAccount: ""
+      issuer: ""
+      verifyKey: "" # Raw Ed25519 public key, standard base64; never a signing key.
+      allowedActors: []
     readiness:
       enabled: false
       audience: ""
