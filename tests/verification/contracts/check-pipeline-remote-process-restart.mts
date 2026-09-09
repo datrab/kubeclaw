@@ -6,7 +6,7 @@ import http from 'node:http';
 import os from 'node:os';
 import path from 'node:path';
 import readline from 'node:readline';
-import { buildCommittedSourceSnapshot, buildRegistry, createRemotePlanJob, discoverPackages } from '@kubeclaw/nova-core';
+import { FileNovaGateImportStore, buildCommittedSourceSnapshot, buildRegistry, createRemotePlanJob, discoverPackages } from '@kubeclaw/nova-core';
 import { remotePlanJobDigest, resolvedTestPlanDigest, stableTestIdentity, type RemotePlanJobV1, type RemotePlanStatusV1, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'remote-process-restart-'));
@@ -122,7 +122,7 @@ export function provider() { return { async execute(invocation, context) {
   execFileSync('git', ['-C', repository, 'config', 'user.name', 'Phase 7 Proof']);
   execFileSync('git', ['-C', repository, 'add', 'README.md']);
   execFileSync('git', ['-C', repository, 'commit', '-qm', 'committed restart source']);
-  const source = buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:phase7-restart',
+  const source = await buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:phase7-restart',
     pipelineStageId: 'stage:test-gate',
     creatorAuthority: 'nova:production', attestationPrivateKey: sourceAttestationPrivateKey,
     maximumArchiveBytes: 4 * 1024 * 1024 });
@@ -220,9 +220,14 @@ export function provider() { return { async execute(invocation, context) {
   assert.equal(restartedNova.code, 0, JSON.stringify(restartedNova));
   const novaResult = restartedNova.output as { remote?: { decision?: { state?: string } } };
   assert.equal(novaResult.remote?.decision?.state, 'passed');
-  const graphState = fs.readFileSync(path.join(temporary, 'nova-state', 'execution-graph', 'records', 'store.json'), 'utf8');
-  assert.match(graphState, /nova-test-execution-graph\.v1/u, 'Nova restart must retain the canonical test subgraph');
-  assert.match(graphState, new RegExp(reconnectJob.plan.nodes[0]!.testIdentity, 'u'));
+  const graphs = await new FileNovaGateImportStore(path.join(temporary, 'nova-state', 'imports'), {
+    recordLimits: records, maximumEvidenceStoreBytes: 16 * 1024 * 1024,
+  }).readExecutionGraphs();
+  const graph = graphs.find(item => item.jobId === reconnectJob.jobId);
+  assert.ok(graph, 'Nova restart must retain the canonical test subgraph');
+  assert.equal(graph.schemaVersion, 'nova-test-execution-graph.v1');
+  assert.equal(graph.sourceRevision, reconnectJob.sourceSnapshot.revision);
+  assert.ok(graph.nodes.some(node => node.testIdentity === reconnectJob.plan.nodes[0]!.testIdentity));
   const busterState = fs.readFileSync(path.join(temporary, 'buster-state', 'records', 'store.json'), 'utf8');
   assert.match(busterState, new RegExp(reconnectJob.sourceSnapshot.revision, 'u'),
     'Buster restart state must retain the committed source identity');

@@ -375,6 +375,10 @@ try {
   const changedJob = { ...changed, requestDigest: remotePlanJobDigest(changed) };
   await assert.rejects(() => transport.submit(changedJob), /HTTP_409/u);
 
+  // Resolve from the repository root so the historical generated HTTP fault probe can reuse this fixture.
+  const { checkRemoteFaults } = await import(pathToFileURL(path.resolve('tests/verification/reliability/nova-remote-faults.mts')).href);
+  await checkRemoteFaults({ port, token, temporary, service, job, novaStore });
+
   const hangingServer = http.createServer(() => undefined);
   await new Promise<void>((resolve) => hangingServer.listen(0, '127.0.0.1', resolve));
   try {

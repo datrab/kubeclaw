@@ -27,10 +27,10 @@ try {
   fs.writeFileSync(path.join(repository, 'tracked.txt'), 'changed but not committed\n');
   fs.writeFileSync(path.join(repository, 'untracked.txt'), 'untracked\n');
 
-  const first = buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:source-proof',
+  const first = await buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:source-proof',
     pipelineStageId: 'stage:test-gate',
     creatorAuthority: 'nova:production', attestationPrivateKey, revision: 'HEAD', maximumArchiveBytes: 1024 * 1024 });
-  const second = buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:source-proof',
+  const second = await buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:source-proof',
     pipelineStageId: 'stage:test-gate',
     creatorAuthority: 'nova:production', attestationPrivateKey, revision: commit, maximumArchiveBytes: 1024 * 1024 });
   assert.equal(first.sourceSnapshot.revision, `git:${commit}`);
@@ -56,14 +56,14 @@ try {
   execFileSync('/usr/bin/tar', ['-xzf', archive, '-C', extracted]);
   assert.equal(fs.readFileSync(path.join(extracted, 'tracked.txt'), 'utf8'), 'committed\n');
   assert.equal(fs.existsSync(path.join(extracted, 'untracked.txt')), false);
-  assert.throws(() => buildCommittedSourceSnapshot({ repositoryRoot: repository,
+  await assert.rejects(() => buildCommittedSourceSnapshot({ repositoryRoot: repository,
     repositoryId: 'repository:source-proof', pipelineStageId: 'stage:test-gate', creatorAuthority: 'nova:production', attestationPrivateKey, revision: 'missing',
-    maximumArchiveBytes: 1024 * 1024 }), /Command failed/u);
-  assert.throws(() => buildCommittedSourceSnapshot({ repositoryRoot: repository,
+    maximumArchiveBytes: 1024 * 1024 }), /NOVA_SOURCE_GIT_FAILED/u);
+  await assert.rejects(() => buildCommittedSourceSnapshot({ repositoryRoot: repository,
     repositoryId: 'repository:source-proof', pipelineStageId: 'stage:test-gate', creatorAuthority: 'nova:production', attestationPrivateKey, revision: '--help',
-    maximumArchiveBytes: 1024 * 1024 }), /Command failed/u,
+    maximumArchiveBytes: 1024 * 1024 }), /NOVA_SOURCE_GIT_FAILED/u,
   'revision input must not be interpreted as a Git option');
-  assert.throws(() => buildCommittedSourceSnapshot({ repositoryRoot: repository,
+  await assert.rejects(() => buildCommittedSourceSnapshot({ repositoryRoot: repository,
     repositoryId: 'repository:source-proof', pipelineStageId: 'stage:test-gate', creatorAuthority: 'nova:production', attestationPrivateKey, maximumArchiveBytes: 1 }),
   /NOVA_SOURCE_ARCHIVE_SIZE_EXCEEDED/u);
   console.log(JSON.stringify({ ok: true, decision: 'D-094', revision: first.sourceSnapshot.revision,

@@ -1,3 +1,8 @@
+import { dispatchOperation, type RemoteInterruption } from './dispatch-operation.ts';
+import { checkGateSignal } from './deadline.ts';
+import { remoteBytes, retryableStatus } from './http-response.ts';
+import { RemotePlanTransportError } from './transport-error.ts';
+export { RemotePlanTransportError } from './transport-error.ts';
 import crypto from 'node:crypto';
 import { isSpiffeProxyLoopback } from './secure-endpoint.ts';
 import type {
@@ -76,7 +81,8 @@ export class FileNovaRemotePlanStore {
     this.#maximumArchiveBytes = options.maximumArchiveBytes;
   }
 
-  async persistBeforeDispatch(job: RemotePlanJobV1): Promise<RemotePlanJobV1> {
+  async persistBeforeDispatch(job: RemotePlanJobV1, signal?: AbortSignal): Promise<RemotePlanJobV1> {
+    checkGateSignal(signal);
     const maximumEncodedBytes = Math.ceil(this.#maximumArchiveBytes / 3) * 4;
     if (
       job.repositoryArchive.sizeBytes > this.#maximumArchiveBytes
@@ -90,21 +96,33 @@ export class FileNovaRemotePlanStore {
       job: structuredClone(job),
     };
     await this.#records.append('remote-plan-jobs', job.idempotencyKey, payload);
+    checkGateSignal(signal);
     const stored = await this.#blobs.put(archive);
     if (stored.digest !== job.repositoryArchive.contentDigest || stored.sizeBytes !== archive.byteLength) {
       throw new Error('NOVA_REMOTE_PLAN_ARCHIVE_STORE_MISMATCH');
     }
-    return this.load(job.jobId);
+    checkGateSignal(signal);
+    return this.load(job.jobId, signal);
   }
 
-  async load(jobId: string): Promise<RemotePlanJobV1> {
+  async recordInterruption(outcome: RemoteInterruption): Promise<void> {
+    await this.#records.append('remote-plan-interruptions', `interruption:${crypto.randomUUID()}`, outcome);
+  }
+  async interruptions(): Promise<readonly RemoteInterruption[]> {
+    return (await this.#records.read<RemoteInterruption>('remote-plan-interruptions')).map(({ payload }) => payload);
+  }
+
+  async load(jobId: string, signal?: AbortSignal): Promise<RemotePlanJobV1> {
+    checkGateSignal(signal);
     const records = await this.#records.read<StoredRemotePlanJob>('remote-plan-jobs');
     const payload = records.find((record) => record.payload.job.jobId === jobId)?.payload;
     if (!payload || payload.schemaVersion !== 'nova-remote-plan-dispatch.v1') {
       throw new Error('NOVA_REMOTE_PLAN_JOB_NOT_FOUND');
     }
     const recordedArchive = repositoryArchiveBytes(payload.job.repositoryArchive);
+    checkGateSignal(signal);
     await this.#blobs.put(recordedArchive);
+    checkGateSignal(signal);
     const archive = await this.#blobs.get(payload.job.repositoryArchive.contentDigest);
     if (archive.byteLength > this.#maximumArchiveBytes) throw new Error('NOVA_REMOTE_PLAN_ARCHIVE_SIZE_EXCEEDED');
     const job: RemotePlanJobV1 = {
@@ -112,6 +130,7 @@ export class FileNovaRemotePlanStore {
       repositoryArchive: { ...payload.job.repositoryArchive, data: archive.toString('base64') },
     };
     validatePipelineTestGateContract('remotePlanJob', job);
+    checkGateSignal(signal);
     return Object.freeze(job);
   }
 }
@@ -130,41 +149,17 @@ export interface RemotePlanResultTransport {
   result(jobId: string, contentDigest: string, maximumBytes: number, signal?: AbortSignal): Promise<RemotePlanResultV1>;
 }
 
-export class RemotePlanTransportError extends Error {
-  readonly retryable: boolean;
-  constructor(message: string, retryable: boolean, cause?: unknown) {
-    super(message, cause === undefined ? undefined : { cause });
-    this.name = 'RemotePlanTransportError';
-    this.retryable = retryable;
-  }
-}
-
-async function abortableDelay(milliseconds: number, signal?: AbortSignal): Promise<void> {
-  if (signal?.aborted) throw new Error('NOVA_REMOTE_PLAN_CANCELLED');
-  await new Promise<void>((resolve, reject) => {
-    const timer = setTimeout(resolve, milliseconds);
-    signal?.addEventListener('abort', () => {
-      clearTimeout(timer);
-      reject(new Error('NOVA_REMOTE_PLAN_CANCELLED'));
-    }, { once: true });
-  });
-}
-
-function deadlineSignal(deadline: number, caller?: AbortSignal): AbortSignal {
-  const remaining = Math.max(1, deadline - Date.now());
-  const timeout = AbortSignal.timeout(remaining);
-  return caller ? AbortSignal.any([caller, timeout]) : timeout;
-}
-
 export class NovaRemotePlanDispatcher {
   readonly #store: FileNovaRemotePlanStore;
   readonly #transport: RemotePlanTransport;
   readonly #pollMilliseconds: number;
+  readonly #cleanupMilliseconds: number;
 
   constructor(options: {
     readonly store: FileNovaRemotePlanStore;
     readonly transport: RemotePlanTransport;
     readonly pollMilliseconds: number;
+    readonly cleanupMilliseconds?: number;
   }) {
     if (!Number.isSafeInteger(options.pollMilliseconds) || options.pollMilliseconds < 10) {
       throw new Error('NOVA_REMOTE_PLAN_POLL_INVALID');
@@ -172,64 +167,16 @@ export class NovaRemotePlanDispatcher {
     this.#store = options.store;
     this.#transport = options.transport;
     this.#pollMilliseconds = options.pollMilliseconds;
+    this.#cleanupMilliseconds = options.cleanupMilliseconds ?? 10_000;
+    if (!Number.isSafeInteger(this.#cleanupMilliseconds) || this.#cleanupMilliseconds < 1) throw new Error('NOVA_REMOTE_CLEANUP_TIMEOUT_INVALID');
   }
 
   async dispatch(job: RemotePlanJobV1, options: {
     readonly timeoutMs: number;
     readonly signal?: AbortSignal;
   }): Promise<RemotePlanStatusV1> {
-    if (!Number.isSafeInteger(options.timeoutMs) || options.timeoutMs < 1) {
-      throw new Error('NOVA_REMOTE_PLAN_TIMEOUT_INVALID');
-    }
-    const stored = await this.#store.persistBeforeDispatch(job);
-    const deadline = Date.now() + options.timeoutMs;
-    let status: RemotePlanStatusV1 | null = null;
-    try { for (;;) {
-      if (status === null) {
-        try { status = await this.#transport.submit(stored, deadlineSignal(deadline, options.signal)); }
-        catch (error) {
-          if (!(error instanceof RemotePlanTransportError) || !error.retryable) throw error;
-          try { status = await this.#transport.status(stored.jobId, deadlineSignal(deadline, options.signal)); }
-          catch (statusError) {
-            const absent = statusError instanceof RemotePlanTransportError
-              && statusError.message.startsWith('NOVA_REMOTE_PLAN_HTTP_404:');
-            if (!absent && (!(statusError instanceof RemotePlanTransportError) || !statusError.retryable)) {
-              throw statusError;
-            }
-          }
-          if (status === null) {
-            if (Date.now() >= deadline) throw new Error('NOVA_REMOTE_PLAN_TIMEOUT');
-            await abortableDelay(Math.min(this.#pollMilliseconds, Math.max(1, deadline - Date.now())), options.signal);
-            continue;
-          }
-        }
-      }
-      validatePipelineTestGateContract('remotePlanStatus', status);
-      if (status.jobId !== stored.jobId || status.requestDigest !== stored.requestDigest) {
-        throw new Error('NOVA_REMOTE_PLAN_STATUS_IDENTITY_MISMATCH');
-      }
-      if (['completed', 'failed', 'cancelled'].includes(status.state)) return status;
-      if (options.signal?.aborted) {
-        await this.#transport.cancel(stored.jobId, AbortSignal.timeout(10_000)).catch(() => undefined);
-        throw new Error('NOVA_REMOTE_PLAN_CANCELLED');
-      }
-      if (Date.now() >= deadline) {
-        await this.#transport.cancel(stored.jobId, AbortSignal.timeout(10_000)).catch(() => undefined);
-        throw new Error('NOVA_REMOTE_PLAN_TIMEOUT');
-      }
-      await abortableDelay(Math.min(this.#pollMilliseconds, Math.max(1, deadline - Date.now())), options.signal);
-      try { status = await this.#transport.status(stored.jobId, deadlineSignal(deadline, options.signal)); }
-      catch (error) {
-        if (!(error instanceof RemotePlanTransportError) || !error.retryable) throw error;
-        status = null;
-      }
-    } } catch (error) {
-      if (options.signal?.aborted) {
-        await this.#transport.cancel(stored.jobId, AbortSignal.timeout(10_000)).catch(() => undefined);
-        throw new Error('NOVA_REMOTE_PLAN_CANCELLED', { cause: error });
-      }
-      throw error;
-    }
+    return dispatchOperation({ store: this.#store, transport: this.#transport, pollMilliseconds: this.#pollMilliseconds,
+      cleanupMilliseconds: this.#cleanupMilliseconds }, job, options);
   }
 }
 
@@ -266,39 +213,10 @@ export class HttpRemotePlanTransport implements RemotePlanTransport {
   }
 
   async #request(method: string, suffix: string, body?: unknown, signal?: AbortSignal): Promise<RemotePlanStatusV1> {
-    let response: Response;
-    try {
-      response = await fetch(`${this.#endpoint}${suffix}`, {
-        method,
-        headers: { ...(this.#token ? { authorization: `Bearer ${this.#token}` } : {}), ...(body === undefined ? {} : { 'content-type': 'application/json' }) },
-        ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-        redirect: 'error',
-        ...(signal ? { signal } : {}),
-      });
-    } catch (error) {
-      throw new RemotePlanTransportError('NOVA_REMOTE_PLAN_NETWORK_ERROR', true, error);
-    }
-    const declared = Number(response.headers.get('content-length'));
-    if (Number.isFinite(declared) && declared > this.#maximumResponseBytes) {
-      throw new Error('NOVA_REMOTE_PLAN_RESPONSE_SIZE_EXCEEDED');
-    }
-    const chunks: Buffer[] = [];
-    let total = 0;
-    const reader = response.body?.getReader();
-    if (reader) {
-      for (;;) {
-        const part = await reader.read();
-        if (part.done) break;
-        const bytes = Buffer.from(part.value);
-        total += bytes.byteLength;
-        if (total > this.#maximumResponseBytes) {
-          await reader.cancel();
-          throw new RemotePlanTransportError('NOVA_REMOTE_PLAN_RESPONSE_SIZE_EXCEEDED', false);
-        }
-        chunks.push(bytes);
-      }
-    }
-    const bytes = Buffer.concat(chunks);
+    const { response, bytes } = await remoteBytes(`${this.#endpoint}${suffix}`, {
+      method, headers: { ...(this.#token ? { authorization: `Bearer ${this.#token}` } : {}), ...(body === undefined ? {} : { 'content-type': 'application/json' }) },
+      ...(body === undefined ? {} : { body: JSON.stringify(body) }), redirect: 'error', ...(signal ? { signal } : {}),
+    }, this.#maximumResponseBytes, 'NOVA_REMOTE_PLAN_RESPONSE', true);
     let parsed: unknown;
     try { parsed = JSON.parse(bytes.toString('utf8')); }
     catch (error) { throw new Error('NOVA_REMOTE_PLAN_RESPONSE_INVALID', { cause: error }); }
@@ -306,7 +224,7 @@ export class HttpRemotePlanTransport implements RemotePlanTransport {
       const message = parsed && typeof parsed === 'object' && 'error' in parsed ? String(parsed.error) : response.statusText;
       throw new RemotePlanTransportError(
         `NOVA_REMOTE_PLAN_HTTP_${response.status}:${message}`,
-        response.status === 408 || response.status === 425 || response.status === 429 || response.status >= 500,
+        retryableStatus(response.status),
       );
     }
     validatePipelineTestGateContract('remotePlanStatus', parsed);
@@ -329,30 +247,9 @@ export class HttpRemotePlanTransport implements RemotePlanTransport {
     if (!/^sha256:[a-f0-9]{64}$/u.test(contentDigest)) throw new Error('NOVA_REMOTE_EVIDENCE_DIGEST_INVALID');
     if (!Number.isSafeInteger(maximumBytes) || maximumBytes < 0) throw new Error('NOVA_REMOTE_EVIDENCE_LIMIT_INVALID');
     const responseLimit = Math.min(this.#maximumResponseBytes, maximumBytes);
-    let response: Response;
-    try {
-      response = await fetch(`${this.#endpoint}/v1/plan-jobs/${encodeURIComponent(jobId)}/evidence/${encodeURIComponent(contentDigest)}`, {
-        headers: this.#token ? { authorization: `Bearer ${this.#token}` } : {}, redirect: 'error', ...(signal ? { signal } : {}),
-      });
-    } catch (error) { throw new RemotePlanTransportError('NOVA_REMOTE_EVIDENCE_NETWORK_ERROR', true, error); }
-    if (!response.ok) throw new RemotePlanTransportError(
-      `NOVA_REMOTE_EVIDENCE_HTTP_${response.status}`,
-      response.status === 408 || response.status === 425 || response.status === 429 || response.status >= 500,
-    );
-    const declared = Number(response.headers.get('content-length'));
-    if (Number.isFinite(declared) && declared > responseLimit) throw new Error('NOVA_REMOTE_EVIDENCE_SIZE_EXCEEDED');
-    const chunks: Buffer[] = [];
-    let total = 0;
-    const reader = response.body?.getReader();
-    if (reader) for (;;) {
-      const part = await reader.read();
-      if (part.done) break;
-      const bytes = Buffer.from(part.value);
-      total += bytes.byteLength;
-      if (total > responseLimit) { await reader.cancel(); throw new Error('NOVA_REMOTE_EVIDENCE_SIZE_EXCEEDED'); }
-      chunks.push(bytes);
-    }
-    const bytes = Buffer.concat(chunks);
+    const { bytes } = await remoteBytes(`${this.#endpoint}/v1/plan-jobs/${encodeURIComponent(jobId)}/evidence/${encodeURIComponent(contentDigest)}`, {
+      headers: this.#token ? { authorization: `Bearer ${this.#token}` } : {}, redirect: 'error', ...(signal ? { signal } : {}),
+    }, responseLimit, 'NOVA_REMOTE_EVIDENCE');
     if (`sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}` !== contentDigest) {
       throw new Error('NOVA_REMOTE_EVIDENCE_DIGEST_MISMATCH');
     }
@@ -363,30 +260,9 @@ export class HttpRemotePlanTransport implements RemotePlanTransport {
     if (!/^sha256:[a-f0-9]{64}$/u.test(contentDigest)) throw new Error('NOVA_REMOTE_RESULT_DIGEST_INVALID');
     if (!Number.isSafeInteger(maximumBytes) || maximumBytes < 1) throw new Error('NOVA_REMOTE_RESULT_LIMIT_INVALID');
     const responseLimit = Math.min(this.#maximumResultBytes, maximumBytes);
-    let response: Response;
-    try {
-      response = await fetch(`${this.#endpoint}/v1/plan-jobs/${encodeURIComponent(jobId)}/results/${encodeURIComponent(contentDigest)}`, {
-        headers: this.#token ? { authorization: `Bearer ${this.#token}` } : {}, redirect: 'error', ...(signal ? { signal } : {}),
-      });
-    } catch (error) { throw new RemotePlanTransportError('NOVA_REMOTE_RESULT_NETWORK_ERROR', true, error); }
-    if (!response.ok) throw new RemotePlanTransportError(
-      `NOVA_REMOTE_RESULT_HTTP_${response.status}`,
-      response.status === 408 || response.status === 425 || response.status === 429 || response.status >= 500,
-    );
-    const declared = Number(response.headers.get('content-length'));
-    if (Number.isFinite(declared) && declared > responseLimit) throw new Error('NOVA_REMOTE_RESULT_SIZE_EXCEEDED');
-    const chunks: Buffer[] = [];
-    let total = 0;
-    const reader = response.body?.getReader();
-    if (reader) for (;;) {
-      const part = await reader.read();
-      if (part.done) break;
-      const bytes = Buffer.from(part.value);
-      total += bytes.byteLength;
-      if (total > responseLimit) { await reader.cancel(); throw new Error('NOVA_REMOTE_RESULT_SIZE_EXCEEDED'); }
-      chunks.push(bytes);
-    }
-    const bytes = Buffer.concat(chunks);
+    const { bytes } = await remoteBytes(`${this.#endpoint}/v1/plan-jobs/${encodeURIComponent(jobId)}/results/${encodeURIComponent(contentDigest)}`, {
+      headers: this.#token ? { authorization: `Bearer ${this.#token}` } : {}, redirect: 'error', ...(signal ? { signal } : {}),
+    }, responseLimit, 'NOVA_REMOTE_RESULT');
     const byteDigest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
     if (byteDigest !== contentDigest) throw new Error('NOVA_REMOTE_RESULT_CONTENT_DIGEST_MISMATCH');
     let parsed: unknown;

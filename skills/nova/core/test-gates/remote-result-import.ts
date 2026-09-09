@@ -1,3 +1,4 @@
+import { GateDeadline, checkGateSignal } from './deadline.ts';
 import type { StageResult } from '@kubeclaw/plugin-sdk';
 import crypto from 'node:crypto';
 import {
@@ -227,7 +228,8 @@ export class FileNovaGateImportStore {
   }
   async record(job: RemotePlanJobV1, status: RemotePlanStatusV1, remoteResult: RemotePlanResultV1 | null,
     decision: GateDecisionV1,
-    evidence: readonly { artifact: ArtifactRefV1; bytes: Uint8Array }[]): Promise<GateDecisionV1> {
+    evidence: readonly { artifact: ArtifactRefV1; bytes: Uint8Array }[], signal?: AbortSignal): Promise<GateDecisionV1> {
+    checkGateSignal(signal);
     const digests = evidence.map((item) => item.artifact.contentDigest).sort();
     const pending: StoredGateImportV2 = { schemaVersion: 'nova-test-gate-import.v2', jobId: job.jobId, source: importSource(job),
       requestDigest: job.requestDigest, remoteResultDigest: remoteResult?.resultDigest ?? null,
@@ -236,11 +238,13 @@ export class FileNovaGateImportStore {
     let appended;
     try {
       appended = await this.#records.append('remote-gate-imports', job.jobId, pending);
+      checkGateSignal(signal);
     } catch (error) {
       if (!(error instanceof Error) || error.message !== 'DURABLE_RECORD_IDEMPOTENCY_CONFLICT') throw error;
       const record = (await this.#records.read<StoredGateImportV2>('remote-gate-imports'))
         .find((item) => item.idempotencyKey === job.jobId);
       if (!record) throw error;
+      checkGateSignal(signal);
       const existing = record.payload;
       if (existing.schemaVersion !== 'nova-test-gate-import.v2' || !same(existing.source, pending.source) || existing.requestDigest !== pending.requestDigest || existing.remoteResultDigest !== pending.remoteResultDigest
         || existing.decision.decisionDigest !== decision.decisionDigest || !same(existing.evidenceDigests, evidence.map((item) => item.artifact.contentDigest).sort())) {
@@ -260,13 +264,16 @@ export class FileNovaGateImportStore {
       return structuredClone(existing.decision);
     }
     for (const item of evidence) {
+      checkGateSignal(signal);
       const stored = await this.#blobs.put(item.bytes);
       if (stored.digest !== item.artifact.contentDigest || stored.sizeBytes !== item.artifact.sizeBytes) {
         throw new Error('NOVA_REMOTE_EVIDENCE_STORE_MISMATCH');
       }
     }
+    checkGateSignal(signal);
     const complete: StoredGateImportV2 = { ...pending, state: 'complete' };
     const stored = await this.#records.transition('remote-gate-imports', job.jobId, appended.record.payloadDigest, complete);
+    checkGateSignal(signal);
     return structuredClone((stored.payload as StoredGateImportV2).decision);
   }
 }
@@ -285,6 +292,7 @@ export class NovaRemoteGateImporter {
     this.#maximumEvidenceBytes = options.maximumEvidenceBytes; this.#maximumResultBytes = options.maximumResultBytes;
   }
   async import(job: RemotePlanJobV1, status: RemotePlanStatusV1, signal?: AbortSignal): Promise<GateDecisionV1> {
+    checkGateSignal(signal);
     validatePipelineTestGateContract('remotePlanJob', job);
     validatePipelineTestGateContract('remotePlanStatus', status);
     if (status.jobId !== job.jobId || status.requestDigest !== job.requestDigest
@@ -293,6 +301,7 @@ export class NovaRemoteGateImporter {
       ? await this.#results.result(job.jobId, status.result.contentDigest,
         Math.min(status.result.sizeBytes, this.#maximumResultBytes), signal)
       : null;
+    checkGateSignal(signal);
     if (status.state === 'completed') {
       if (!result) throw new Error('NOVA_REMOTE_RESULT_MISSING');
       verifyCompletedResult(job, status, result);
@@ -302,6 +311,7 @@ export class NovaRemoteGateImporter {
     let total = 0;
     const evidence: Array<{ artifact: ArtifactRefV1; bytes: Buffer }> = [];
     for (const artifact of source) {
+      checkGateSignal(signal);
       total += artifact.sizeBytes;
       if (!Number.isSafeInteger(total) || total > this.#maximumEvidenceBytes) throw new Error('NOVA_REMOTE_EVIDENCE_TOTAL_EXCEEDED');
       const bytes = await this.#evidence.evidence(
@@ -311,9 +321,11 @@ export class NovaRemoteGateImporter {
         || `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}` !== artifact.contentDigest) {
         throw new Error('NOVA_REMOTE_EVIDENCE_INVALID');
       }
+      checkGateSignal(signal);
       evidence.push({ artifact, bytes });
     }
-    return this.#store.record(job, status, result, decision, evidence);
+    checkGateSignal(signal);
+    return this.#store.record(job, status, result, decision, evidence, signal);
   }
 }
 
@@ -331,8 +343,16 @@ export class NovaRemoteTestGate {
   async execute(job: RemotePlanJobV1, options: { timeoutMs: number; signal?: AbortSignal }): Promise<{
     status: RemotePlanStatusV1; decision: GateDecisionV1; stageResult: StageResult;
   }> {
-    const status = await this.#dispatcher.dispatch(job, options);
-    const decision = await this.#importer.import(job, status, options.signal);
-    return { status, decision, stageResult: gateDecisionStageResult(decision) };
+    const deadline = new GateDeadline(options.timeoutMs, options.signal);
+    try {
+      deadline.check();
+      const status = await this.#dispatcher.dispatch(job, { timeoutMs: deadline.remaining(), signal: deadline.signal });
+      deadline.check();
+      const decision = await this.#importer.import(job, status, deadline.signal).catch((error: unknown) => {
+        deadline.check(); throw error;
+      });
+      deadline.check();
+      return { status, decision, stageResult: gateDecisionStageResult(decision) };
+    } finally { deadline.dispose(); }
   }
 }

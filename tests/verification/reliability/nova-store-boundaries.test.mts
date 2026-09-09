@@ -17,7 +17,7 @@ import { activate } from '../../../skills/nova/plugins/remote-test-gate/src/adap
 
 const recordLimits = { maximumRecords: 100, maximumRecordBytes: 1_000_000, maximumBytes: 10_000_000 };
 const privateKey = crypto.generateKeyPairSync('ed25519').privateKey.export({ type: 'pkcs8', format: 'pem' });
-function source(root: string, revision: number) {
+async function source(root: string, revision: number) {
   const repository = path.join(root, 'repository');
   fs.mkdirSync(repository, { recursive: true });
   const git = (...args: string[]) => execFileSync('git', ['-C', repository, ...args], { encoding: 'utf8' });
@@ -25,7 +25,7 @@ function source(root: string, revision: number) {
   fs.writeFileSync(path.join(repository, 'README.md'), `Committed source ${revision}\n`);
   git('add', 'README.md');
   git('-c', 'user.name=Regression', '-c', 'user.email=regression@example.invalid', 'commit', '-qm', `source ${revision}`);
-  const snapshot = buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:quota',
+  const snapshot = await buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:quota',
     pipelineStageId: 'stage:quota', creatorAuthority: 'nova:quota', attestationPrivateKey: privateKey, maximumArchiveBytes: 100_000 });
   return createRemotePlanJob({ idempotencyKey: `quota:${revision}`, pipelineStageId: 'stage:quota', plan: plan('blocking', null),
     ...snapshot, grants: new Map([['test', []]]), maximumConcurrency: 1, submittedAt: '2026-08-10T03:00:00.000Z' });
@@ -53,7 +53,7 @@ test('SPIFFE transport and adapter agree on IPv4, bracketed IPv6 and denied remo
 test('two real Git archives share a total quota while deduplicated bytes remain readable', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nova-archive-quota-'));
   try {
-    const jobs = [source(root, 0), source(root, 1)];
+    const jobs = [await source(root, 0), await source(root, 1)];
     const budget = Math.max(...jobs.map(job => job.repositoryArchive.sizeBytes)) + 1;
     const storeRoot = path.join(root, 'dispatch');
     const options = { recordLimits, maximumArchiveBytes: 100_000, maximumArchiveStoreBytes: budget };
@@ -71,7 +71,7 @@ test('two real Git archives share a total quota while deduplicated bytes remain 
 test('real HTTP evidence import cannot mark a second over-quota job complete', async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nova-evidence-quota-'));
   const bytes = [Buffer.from('first evidence bytes'), Buffer.from('other evidence bytes')];
-  const jobs = [source(root, 0), source(root, 1)];
+  const jobs = [await source(root, 0), await source(root, 1)];
   const artifacts = bytes.map(content => ({ artifactId: 'artifact:log', type: 'log', mediaType: 'text/plain',
     contentDigest: `sha256:${crypto.createHash('sha256').update(content).digest('hex')}`, sizeBytes: content.length, storageUrl: 'file:///buster/evidence' }));
   const results = jobs.map((job, i) => completed(job, { outcome: 'passed', artifact: artifacts[i]! }));

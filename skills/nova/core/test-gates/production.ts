@@ -1,3 +1,4 @@
+import { GateDeadline } from './deadline.ts';
 import path from 'node:path';
 import { assertSecureRemoteEndpoint } from './secure-endpoint.ts';
 import type { ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
@@ -59,19 +60,24 @@ export class ProductionNovaTestGate {
     this.#maximumArchiveBytes = options.maximumArchiveBytes;
   }
   async execute(input: ProductionNovaTestGateExecutionInput) {
-    const source = buildCommittedSourceSnapshot({ repositoryRoot: input.repositoryRoot,
-      repositoryId: input.repositoryId, pipelineStageId: input.pipelineStageId,
-      creatorAuthority: this.#sourceAuthority,
-      attestationPrivateKey: this.#sourceAttestationPrivateKey,
-      maximumArchiveBytes: this.#maximumArchiveBytes,
-      ...(input.revision ? { revision: input.revision } : {}) });
-    const job = createRemotePlanJob({ idempotencyKey: input.idempotencyKey,
-      pipelineStageId: input.pipelineStageId, plan: input.plan, sourceSnapshot: source.sourceSnapshot,
-      repositoryArchive: source.repositoryArchive, grants: input.grants,
-      maximumConcurrency: input.maximumConcurrency, submittedAt: input.submittedAt });
-    const result = await this.#remote.execute(job, { timeoutMs: input.timeoutMs,
-      ...(input.signal ? { signal: input.signal } : {}) });
-    return { remote: result } as const;
+    const deadline = new GateDeadline(input.timeoutMs, input.signal);
+    try {
+      deadline.check();
+      const source = await buildCommittedSourceSnapshot({ repositoryRoot: input.repositoryRoot,
+        repositoryId: input.repositoryId, pipelineStageId: input.pipelineStageId,
+        creatorAuthority: this.#sourceAuthority,
+        attestationPrivateKey: this.#sourceAttestationPrivateKey,
+        maximumArchiveBytes: this.#maximumArchiveBytes, timeoutMs: deadline.remaining(), signal: deadline.signal,
+        ...(input.revision ? { revision: input.revision } : {}) });
+      deadline.check();
+      const job = createRemotePlanJob({ idempotencyKey: input.idempotencyKey,
+        pipelineStageId: input.pipelineStageId, plan: input.plan, sourceSnapshot: source.sourceSnapshot,
+        repositoryArchive: source.repositoryArchive, grants: input.grants,
+        maximumConcurrency: input.maximumConcurrency, submittedAt: input.submittedAt });
+      const result = await this.#remote.execute(job, { timeoutMs: deadline.remaining(), signal: deadline.signal });
+      deadline.check();
+      return { remote: result } as const;
+    } finally { deadline.dispose(); }
   }
 }
 

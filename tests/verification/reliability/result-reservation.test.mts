@@ -20,7 +20,7 @@ test('result admission reserves capacity across competing processes and reconstr
     execFileSync('git', ['-C', repository, 'add', '.']);
     execFileSync('git', ['-C', repository, '-c', 'user.name=Proof', '-c', 'user.email=proof@example.invalid', 'commit', '-qm', 'source']);
     const keys = crypto.generateKeyPairSync('ed25519');
-    const snapshot = buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:reservation', pipelineStageId: 'test',
+    const snapshot = await buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:reservation', pipelineStageId: 'test',
       creatorAuthority: 'nova:reservation', attestationPrivateKey: keys.privateKey.export({ type: 'pkcs8', format: 'pem' }), maximumArchiveBytes: 1024 * 1024 });
     const providers = path.resolve('skills/buster/plugins');
     const registry = buildRegistry(discoverPackages({ installationRoots: [providers], trustPolicy: {
