@@ -4,7 +4,7 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**83/154 lokal verifiziert und unabhängig gegengeprüft; 33 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 8 in Bearbeitung; 30 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
+**85/154 lokal verifiziert und unabhängig gegengeprüft; 35 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 9 in Bearbeitung; 25 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
 
 | Bereich | Remote-Commit | Stand / Nachweis |
 |---|---|---|
@@ -193,3 +193,12 @@ Die Coverage-Slice ist mit 44 Dateien eingefroren und wird unabhängig geprüft.
 - Credential-/Pending-Handoff-Vorstufe: lokal `dea72baac30b981873118525c81d47e90dab4d51`, remote `5ce5bda2318efff700343ad623c62cfb520e8732`; unabhängige Go/HTTP-Gegenprüfung einschließlich fremder Vorbelegung, verlorener Create-Antwort, Lease-UID-Wechsel und Status-CAS bestanden. Finaler Ready-/Receipt-Produzent offen.
 - Bridge bleibt blockiert: echte Gegenprobe verbrauchte im Kindprozess mindestens 1500 ms CPU bei deklarierten 200 ms, während Elternzähler 49 ms meldete. Elternmessung wird nicht als Kindprozessbudget akzeptiert. Cgroup-Alternative benötigt echte Deployment-/Delegationsprüfung und korrekte Thread-/Prozesssemantik; kein stiller Wechsel auf eine standardmäßig funktionslose Konfiguration.
 - Runtime-Identitätsgegenprüfung und native Trivy-Datenbankprüfung laufen weiter. Keine Gesamt-E2E-, Deployment- oder pauschale Regressionsfreiheitsbehauptung.
+
+## Weitere geprüfte Commitgrenzen
+
+- Discord: lokal `391b074b6569b753fc0553b83dc8748cafc4d5a6`, remote `7ac8a7fe95066b5dcf3bf9bf53ad1894410bc4e9`; Root-Gegenprüfung mit 9 echten Core/HTTP/Store-Regressionen bestanden. Keine externe Nachricht gesendet.
+- Runtime: lokal `daf8f6558d7e5b2e6c476acd65e22b55dc4737e6` plus `718cf8993a9fadbe27d8f90c3936a110eccfb219`, remote `d37425393bbf5781cf38867a722f0a8d61a36cc1` plus `6d5781891c081ed9ba4da03f5f66a8961eb869ce`. Root führte alle 28 damaligen Fälle aus; der danach konkret gefundene transitive Identitätsfehler wurde vor Branch-Publikation korrigiert und mit vier gezielten echten Fällen unabhängig nachgeprüft (29 Fälle insgesamt verfügbar).
+- Preflight: lokal `d020b8837a9a92a7144dff40e869905a48f92505`, remote `452591423dd19e987454137193a50d6afe615b5f`; lokaler Finding abgeschlossen, globale Source-/Compiler-Vorphase separat in Arbeit.
+- Reports: lokal `b8ca3f3267ca68e3c1299fcaa95df92fd52a4715`, remote `2e17a3d04cc460851031234890c0accfaff78b09`; beide originalen Consumerpfade unabhängig bestanden. T15-Fakten-/Sourceautorität bleibt offen.
+- Trivy: lokal `fab6f1d749cdf4c3afa3bb3b4c3d26878ffd71ec`, remote `d02296f7a681210b21320d0fc6c43dc61abb25fc`; 4 Native-Regressionsfälle unabhängig bestanden, einschließlich echter FIFO-Abbruchgegenprobe. Root prüfte anschließend den gemeinsamen TypeScript-Consumer erfolgreich; dies ist ein Arbeitsbaum-Integrationscheck einschließlich parallel korrigiertem WorkerCore-V2, kein unveränderlicher Vollbranch-Test. Ein finaler kombinierter Commitcheck folgt nach dessen Abschluss.
+- In Arbeit: generischer Worker-Core mit expliziter Ressourcenfähigkeit statt falscher Elternmessung, verpflichtender deterministischer Source-Preflight, read-only PR-/trusted-main Workflowtrennung und manuelle Buster-Quellkopiekompaktion. Keine automatische Loglöschung, kein CI-Auftrag und keine Änderung am Deployment.

@@ -1402,10 +1402,15 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP03",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "6d5781891c081ed9ba4da03f5f66a8961eb869ce",
+      "verification_status": "Teilnachweise bestanden; benannte native Integrationsgates offen",
+      "verification_evidence": [
+        {
+          "report": "implementation/runtime-session-cleanup.md",
+          "summary": "Autorisierte einmalige Cleanupfrist und transitive Sessionbindung; ursprüngliche 25 Fälle plus vier finale Identitätsgegenproben bestanden. Native OpenClaw-Terminierung nicht behauptet."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.runtime-dispatch.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-RUNTIME-001 — Sessioncleanup bleibt bei Ablauf/Elternabbruch wirkungslos\n\nSchweregrad hoch: externe Agentarbeit kann nach lokalem Abbruch/Timeout weiter\nlaufen und Ressourcen/Dateien ändern, während der Pipelineversuch endet.\nNachgewiesener Codepfad, nicht extern laufzeitreproduziert:\n`src/openclaw.ts:271–286` installiert Abortlistener, entfernt ihn jedoch bei jedem\nPollfehler ohne cancelSession. `openclaw-session.ts:180–197` wirft sessionTimeout\noder maxPolls-Timeout, ohne das Signal auszulösen. Deshalb gar kein Cancelversuch\nbei diesem regulären Timeout. Bei echtem Core-Elternabbruch ruft der Listener\ncancelSession, aber dessen gateway nutzt denselben Context;\n`nova/core/execution/adapter-startup.ts:71–73` lehnt jede Dependencyinvoke mit\nabgebrochenem parent.signal sofort ab. `openclaw-session.ts:200–211` schluckt\nden Cleanupfehler. Lokale zusätzliche deadline allein ist von Elternabbruch zu\nunterscheiden: dort ist Cancellationtransport nicht zwingend schon revokiert.\n\nUrsachenbehebung: explizit kontrollierte Cancel-/Reconciliationphase für alle\nnichtterminalen Ausstiege mit eigenem begrenzten Cleanupbudget und entsprechender\nCore-Autorisierung, anschließend persistiertes unbekanntes Ergebnis, falls\nAbbruch remote nicht bestätigt. Kein unbegrenztes Umgehen von Grants/Revocation.\nRegression mit echtem Core-AdapterRuntime und kontrolliertem HTTP-Peer: lebende\nSession, maxPolls-/sessionTimeout und Parentabort; Peer muss genau passenden\nCancel erhalten oder Reconciliation muss dauerhaft sichtbar sein. Zusätzlich\nspäte Spawnantwort nach Abort und Timeout während Pollrequest prüfen.\n\nNachprüfung der Resultimport-Gegenstelle: **PCR-REPOSITORY-001** wird kanonisch\nim Repositoryreview geführt. Fehlende Datei unter einem bereits existierenden\nausbrechenden Directorysymlink wird dort zunächst FILE_NOT_FOUND; OpenClaws\nlocalResult behandelt dies als fehlendes lokales Resultat und persistResult\nschreibt über den nur lexikalisch begrenzten Pfad. Nova-Reviewer bestätigte die\nKette mit Original readOpenClawResult, echtem Repositoryadapter und echten\nSymlinks (`../evidence/nova-batch-repository-symlink-probe.mjs`). Der Fix muss\ndeshalb auch diese schreibende Runtimegegenstelle sicher binden, einschließlich\nfehlender Zieldateien und bereits vorhandener Elternsymlinks; kein eigener\ndoppelter Runtimebefund.",
@@ -1418,7 +1423,7 @@
       "unresolved_code_references": [
         "../evidence/nova-batch-repository-symlink-probe.mjs"
       ],
-      "next_action": "Originale Ausführungs-/Konfigurationsgrenze ursächlich korrigieren und unabhängig prüfen; fehlende native Laufzeitnachweise sichtbar halten.",
+      "next_action": "Autorisierte einmalige Cleanupfrist und transitive Sessionbindung; ursprüngliche 25 Fälle plus vier finale Identitätsgegenproben bestanden. Native OpenClaw-Terminierung nicht behauptet.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -1497,7 +1502,12 @@
       "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "verification_evidence": [
+        {
+          "report": "implementation/discord-delivery-receipt.md",
+          "summary": "Remote 7ac8a7fe95066b5dcf3bf9bf53ad1894410bc4e9: tatsächliche Discord-ID+Wire-Payloaddigest und dauerhaft unsichere verlorene Antwort; neun Originalregressionen bestanden. Native Zustellung/Ready-Produzent offen."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PATH-T04-002 — Acceptance und bewusste Akzeptanz blockierender Findings fehlen im gewünschten Produktpfad\n\nEigentümertrace: [T04-risk-acceptance.md](T04-risk-acceptance.md); Codecommit wie oben.\n\n**Mittel; statisch belegte Zielbildabweichung, kein behaupteter Sicherheitsdefekt.** Projectcompiler erzeugt keine Architektur-/Acceptanceknoten (`project/compiler.ts:103–136`). Im expliziten Graphen sind nur passed-Berichte mit nichtblockierenden Findings akzeptierbar (`architecture-validator/src/output.ts:75–80`; `stage.ts:25–42`; `human-approval/src/architecture-approval.ts:107–118`). Admincontinuations umgehen den Reviewer nicht (`core/execution/engine-admin.ts:84–92`). Wer im Zielablauf „bei Problemen Behebung oder bewusste Akzeptanz“ auch auf blocking bezieht, erreicht diese Wahl derzeit nicht.\n\nUrsachenbehebung: Produktpolicy ausdrücklich festlegen: nicht übersteuerbare harte Constraints von bewusst akzeptierbaren Risiken trennen; Graphkomposition für den gewünschten Modus explizit herstellen. Kein pauschales force-passed. Verifikation: Compile-/Graphinspektion und reale Gatefolge für clean, advisory/error, nichtübersteuerbares blocking und akzeptierbares Risiko; Entscheidung muss an Reviewsubject und autorisierten Operator gebunden bleiben.",
@@ -3388,6 +3398,10 @@
         {
           "report": "implementation/demo-credential-handoff.md",
           "summary": "Vorstufe unabhängig geprüft: dauerhafter Credential-Intent vor Create, Ablehnung fremder Vorbelegung, verlorene Antwort rekonstruierbar; pending Exposure ohne TTL-Verlängerung. Finaler Ready-/Receipt-Produzent fehlt."
+        },
+        {
+          "report": "implementation/discord-delivery-receipt.md",
+          "summary": "Remote 7ac8a7fe95066b5dcf3bf9bf53ad1894410bc4e9: tatsächliche Discord-ID+Wire-Payloaddigest und dauerhaft unsichere verlorene Antwort; neun Originalregressionen bestanden. Native Zustellung/Ready-Produzent offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -3709,7 +3723,7 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP11",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3721,7 +3735,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/.github/workflows/docs-checks.yaml#L35"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Aktiver Änderungssatz: ursprüngliche Source-/Consumerpfade integrieren, unabhängige Gegenprüfung vor Commit; keine CI-Ausführung oder Deployment.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3779,10 +3793,15 @@
       "family": "infrastructure",
       "severity": "hoch",
       "work_package": "WP11",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "d02296f7a681210b21320d0fc6c43dc61abb25fc",
+      "verification_status": "Teilnachweise bestanden; benannte native Integrationsgates offen",
+      "verification_evidence": [
+        {
+          "report": "implementation/trivy-freshness.md",
+          "summary": "Vier echte Native-Trivy-Fälle einschließlich FIFO sowie tatsächlicher Dependencyprovider geprüft. Imageprovider und Remoteabnahme blockiert. Originaler gemeinsamer Typcheck nach Konfigurationskorrektur erneut bestanden."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/updates-security.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-24-002\n**Hoch; nachgewiesene fehlende Frischegrenze.** `Dockerfile.buster-runtime:110–117` lädt Trivy-/Java-DB beim Imagebau. `skills/buster/engine/test-gates/security-scan-runtime.ts:170–190` scannt mit skip-db-update, skip-java-db-update und offline-scan; Konstruktor/Aufruf prüfen kein Datenbankalter. Ein alter Runtime-Digest kann folglich aktuelle Prüfungen mit alten Advisorydaten erfolgreich abschließen.\n\nUrsachenbehebung: geprüfte DB-Snapshots mit Alter/Version explizit bereitstellen, Höchstalter erzwingen und ein abgelaufenes Wissensdatum als blockiert behandeln; regelmäßig aktualisieren, ohne unkontrolliertes Netzwerk in fremden Jobs zu öffnen. Echter Test: tatsächlicher gepinnter Trivy mit absichtlich veralteter DB; Frischegate muss vor Erfolg sperren. Das Datum des Scanlaufs ist kein Datum der Advisories.",
@@ -3790,7 +3809,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/buster/engine/test-gates/security-scan-runtime.ts#L170"
       ],
       "unresolved_code_references": [],
-      "next_action": "Originale Ausführungs-/Konfigurationsgrenze ursächlich korrigieren und unabhängig prüfen; fehlende native Laufzeitnachweise sichtbar halten.",
+      "next_action": "Vier echte Native-Trivy-Fälle einschließlich FIFO sowie tatsächlicher Dependencyprovider geprüft. Imageprovider und Remoteabnahme blockiert. Originaler gemeinsamer Typcheck nach Konfigurationskorrektur erneut bestanden.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4360,10 +4379,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP14",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "452591423dd19e987454137193a50d6afe615b5f",
+      "verification_status": "lokale Originalprüfungen und unabhängige Gegenprüfung bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/preflight-declarations.md",
+          "summary": "Explizite vollständige FORGE-Deklaration statt Prosa/Basename. Originale 11 Runnerfälle, Build und unabhängige Gegenprüfung bestanden. Globale Compiler-Source-Integration separat unter T01 offen."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.preflight-contract.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## 12. PCR-PREFLIGHT-001 — Dateinennung wird als Lieferdeklaration akzeptiert\n\n**Mittel; nachgewiesener Defekt der deklarierten Preflightaussage.**\n`src/stage.ts`, validateDeclarations, insbesondere `content.includes(name)` in\nbeiden Zweigen (Zeilen 84–102 am Baseline). Auslöser: gültiger Blueprinttext\n„Do not deliver Dockerfile or openapi.yaml. These files belong to another project.“\nbei Input mit diesen eigenen Dateien. Originalfunktion liefert keine Failure.\nAuswirkung: fehlende oder explizit ausgeschlossene Deliverables passieren den\nPreflight; außerdem genügt gleichnamige Datei an anderer Stelle. Dies behauptet\nkeine spätere erfolgreiche Build-/Reviewumgehung. Lösung an der Ursache:\nmaschinenlesbare normalisierte Deliverablepfade als gemeinsame Quelle prüfen,\nProsa als Erklärung behalten. Echter Regressionstest: solche negierten/fremden\nBasenamen durch vorhandenen Realdatei-/Runnerpfad führen, bis ausschließlich\nexplizite richtige Pfaddeklarationen bestehen. Ownership-Verzeichnisse und\nSubstepzuordnung dabei separat spezifizieren.",
@@ -4371,7 +4395,7 @@
       "unresolved_code_references": [
         "src/stage.ts"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Explizite vollständige FORGE-Deklaration statt Prosa/Basename. Originale 11 Runnerfälle, Build und unabhängige Gegenprüfung bestanden. Globale Compiler-Source-Integration separat unter T01 offen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4381,10 +4405,15 @@
       "family": "pipeline",
       "severity": "niedrig",
       "work_package": "WP14",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "2e17a3d04cc460851031234890c0accfaff78b09",
+      "verification_status": "lokale Originalprüfungen und unabhängige Gegenprüfung bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/report-identity.md",
+          "summary": "Beide Originalplugins: tatsächliche Lease-Ausführung getrennt vom historischen Ziel; echte Core/Admin-Reopen/HTTP/Artefaktpfade unabhängig bestanden. Historische Faktenautorität unter T15 bleibt offen."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.pipeline-review.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## 12. PCR-PREPORT-001 — Calleridentität statt aktiver Run-/Attemptbindung\n\n**Niedrig; nachgewiesener Dokumentations-/Provenienzvertragsdefekt durch Code und bestehenden Originaltest.**\n`src/protocol.ts:10–13,31`, `src/stage.ts:7–15` übernehmen Inputidentität ohne\nVergleich mit `context.contract.lease.attempt`; Runtime-HTTP sendet sie unverändert.\nAuslöser: Graph für Run B enthält Berichtinput Run A oder ein neuer Attempt\nverwendet die alte input.attempt. Parser ergänzt A, Artefaktname enthält A,\nCoreproducer bleibt B. Auswirkung: falsch zugeordnete Berichte/Auditinterpretation;\nkein behaupteter ACLbypass. Gleiche Ursache in\n[case-study](kubeclaw.case-study.md), `src/protocol.ts:5–6,21`, stage.ts.\nUrsachenbehebung: Berichtziel (auch historischer Run zulässig) und ausführenden\nRun/Attempt ausdrücklich unterscheiden. Ausführungsidentität aus Lease ableiten;\nangefragte historische Identität als solche kennzeichnen, Dokumentation und\nEvidenzbindung an diese Semantik anpassen. Historische Reports nicht verbieten.\nEchter Regressionstest: bestehende Realadaptertests mit Run A/B und zwei echten\nCoreattempts erweitern, Artefaktinhalt und Producer auf Gleichheit prüfen.\nZusätzlich offene Qualitätsfrage: Welche Instanz liefert dem Reviewer die\nInhalte der nur als Digests übergebenen Evidenz? Ein Formatpass beantwortet das nicht.",
@@ -4394,7 +4423,7 @@
         "src/stage.ts:7–15",
         "src/protocol.ts:5–6,21"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Beide Originalplugins: tatsächliche Lease-Ausführung getrennt vom historischen Ziel; echte Core/Admin-Reopen/HTTP/Artefaktpfade unabhängig bestanden. Historische Faktenautorität unter T15 bleibt offen.",
       "related_findings": [
         "T15-F01"
       ],
@@ -4433,7 +4462,7 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP14",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -4449,7 +4478,7 @@
       "unresolved_code_references": [
         "nova.scaffold.md"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Aktiver Änderungssatz: ursprüngliche Source-/Consumerpfade integrieren, unabhängige Gegenprüfung vor Commit; keine CI-Ausführung oder Deployment.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4459,7 +4488,7 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP14",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -4475,7 +4504,7 @@
       "unresolved_code_references": [
         "nova.entry.md"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Aktiver Änderungssatz: ursprüngliche Source-/Consumerpfade integrieren, unabhängige Gegenprüfung vor Commit; keine CI-Ausführung oder Deployment.",
       "related_findings": [
         "PATH-T04-002",
         "PATH-T13-001",
@@ -4516,10 +4545,10 @@
   "implementation_branch": "fix/remediation-foundations-20260909",
   "updated_at": "2026-09-09",
   "progress_counts": {
-    "verifiziert": 83,
-    "implementiert": 33,
-    "in Bearbeitung": 8,
-    "offen": 30
+    "verifiziert": 85,
+    "implementiert": 35,
+    "in Bearbeitung": 9,
+    "offen": 25
   },
   "additional_integration_findings": [
     {
