@@ -115,3 +115,23 @@ Prism is enabled.
 
 See [Prism OpenClaw runtime](../architecture/prism-openclaw-runtime.md) for the
 request flow and the reason Envoy remains part of the deployment.
+
+### Pipeline preference identity
+
+For automatic Nova design generation, set the platform-owned Helm value
+`control.pipelinePreferenceSubject` to the real subject ID shown as `userId` in
+that operator's authenticated Prism preference events (`user-` followed by 24
+hexadecimal characters). The Control deployment passes it as
+`PRISM_PIPELINE_PREFERENCE_SUBJECT`. No real account is selected by the default
+chart: an empty value leaves automated snapshots without a personal subject.
+
+After verifying Nova's existing signed or SPIFFE dispatch identity, Control uses
+this configured subject even when the request contains no subject field. A
+request containing `preferenceSubjectId` must match the configured subject
+exactly; absent configuration or a mismatch rejects it before project mutation
+or preference access. Project definitions, signal issuer IDs and architecture
+content cannot select another personal account. Studio requests continue using
+the authenticated Studio session's subject. The recorded generation snapshot
+shows which subject and events were actually used. Changing this platform value
+requires access to the deployment configuration; do not populate it from a
+project-authored value or an untrusted request header.

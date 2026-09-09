@@ -6,6 +6,8 @@ images:
 imagePullSecrets:
   - name: ghcr-secret
 control:
+  # Existing authenticated Prism subject; empty disables pipeline personal learning.
+  pipelinePreferenceSubject: ""
   replicas: 1
   resources: { requests: { cpu: 500m, memory: 1Gi }, limits: { cpu: "4", memory: 4Gi } }
 studio:

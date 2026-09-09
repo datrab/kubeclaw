@@ -1,3 +1,4 @@
+import { preferencePrompt } from "./preference-prompt.mjs";
 import { createServer } from "node:http";
 import { spawn } from "node:child_process";
 
@@ -70,7 +71,8 @@ const server = createServer(async (request, response) => {
         "Before drafting, read /app/skills/packages/prism-contract/schemas/prism-v1.schema.json and /app/skills/packages/prism-contract/fixtures/minimal-web.json from the versioned Prism code bundle. Every document must validate against that schema; do not invent fields.",
         "You MUST finish by calling prism_create_design_set exactly once with the external projectId and exactly three designs. Do not call OpenAI or any provider directly; your OpenClaw gateway owns all model routing.",
         `Studio base URL: ${studioUrl}`,
-        `Design request: ${JSON.stringify(designRequest)}`
+        `Design request: ${JSON.stringify(designRequest)}`,
+        preferencePrompt(result.preferences)
       ].join("\n\n");
       void runAgent(sessionKey, prompt).catch((error) => console.error("Prism OpenClaw generation failed", error));
       return send(response, 202, result);
@@ -86,10 +88,11 @@ const server = createServer(async (request, response) => {
         `Apply this Studio feedback: ${instruction}`,
         `Target documentId: ${documentId}; expected revision: ${Number(payload.expectedRevision)}`,
         `Current document: ${JSON.stringify(payload.document)}`,
+        preferencePrompt(payload.preferences),
         "Return no prose-only answer. You MUST call prism_apply_revision with the complete updated document."
       ].join("\n\n");
       void runAgent(sessionKey, prompt).catch((error) => console.error("Prism OpenClaw revision failed", error));
-      return send(response, 202, { status: "accepted", sessionKey });
+      return send(response, 202, { status: "accepted", sessionKey, generationId: payload.preferences.generationId, snapshotDigest: payload.preferences.snapshotDigest });
     }
     if (request.url === "/v1/design-set") {
       const externalProjectId = String(payload.projectId || "");
@@ -99,10 +102,11 @@ const server = createServer(async (request, response) => {
         "Create exactly three materially different, complete Prism design documents for this project.",
         "Read /app/skills/packages/prism-contract/schemas/prism-v1.schema.json and /app/skills/packages/prism-contract/fixtures/minimal-web.json from the versioned Prism code bundle before drafting.",
         "You MUST call prism_create_design_set exactly once. Do not return a prose-only result.",
-        `Design request: ${JSON.stringify(payload.request)}`
+        `Design request: ${JSON.stringify(payload.request)}`,
+        preferencePrompt(payload.preferences)
       ].join("\n\n");
       void runAgent(sessionKey, prompt).catch((error) => console.error("Prism OpenClaw design-set generation failed", error));
-      return send(response, 202, { status: "accepted", sessionKey });
+      return send(response, 202, { status: "accepted", sessionKey, generationId: payload.preferences.generationId, snapshotDigest: payload.preferences.snapshotDigest });
     }
     return send(response, 404, { error: "not found" });
   } catch (error) {

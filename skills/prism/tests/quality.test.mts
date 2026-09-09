@@ -34,9 +34,10 @@ test("preferences stay contextual, explain evidence, and support retraction", ()
   ];
   assert.deepEqual(
     projectPreferences(events, Date.parse("2026-08-21T00:00:00Z"))[
-      "personal:personal:dashboard:dense"
+      JSON.stringify(["user-one","personal","personal",null,"dashboard","dense"])
     ],
     {
+      userId: "user-one", trait: "dense", origins: [{eventId:"event-one",userId:"user-one"}],
       positive: ["event-one"],
       negative: [],
       retained: [],
@@ -99,13 +100,13 @@ test("preference projections decay and remain retractable", () => {
     Date.parse("2026-08-21T00:00:00Z"),
   );
   assert.equal(
-    projected["domain:personal:tools:restrained"]?.projection,
+    projected[JSON.stringify(["user-one","domain","personal",null,"tools","restrained"])]?.projection,
     "domain",
   );
   assert(
-    (projected["domain:personal:tools:restrained"]?.effectiveScore ?? 1) < 0.3,
+    (projected[JSON.stringify(["user-one","domain","personal",null,"tools","restrained"])]?.effectiveScore ?? 1) < 0.3,
   );
-  assert.equal(projected["craft:personal:tools:precise"]?.projection, "craft");
+  assert.equal(projected[JSON.stringify(["user-one","craft","personal",null,"tools","precise"])]?.projection, "craft");
 });
 test("preference projections reject invalid occurrence timestamps", () => {
   const invalidEvent = (occurredAt: string) => ({

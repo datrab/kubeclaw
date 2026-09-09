@@ -26,8 +26,9 @@ export default function register(api) {
     parameters: {
       type: "object",
       additionalProperties: false,
-      required: ["projectId", "designs"],
+      required: ["generationId", "projectId", "designs"],
       properties: {
+        generationId: { type: "string", minLength: 1 },
         projectId: { type: "string", minLength: 1 },
         designs: {
           type: "array",
@@ -59,8 +60,9 @@ export default function register(api) {
     parameters: {
       type: "object",
       additionalProperties: false,
-      required: ["projectId", "documentId", "expectedRevision", "instruction", "document"],
+      required: ["generationId", "projectId", "documentId", "expectedRevision", "instruction", "document"],
       properties: {
+        generationId: { type: "string", minLength: 1 },
         projectId: { type: "string", minLength: 1 },
         documentId: { type: "string", minLength: 1 },
         expectedRevision: { type: "integer", minimum: 1 },

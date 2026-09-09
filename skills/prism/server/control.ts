@@ -1,3 +1,6 @@
+import { loadControlConfig } from "./control-config.ts";
+import { authorizePipelinePreferenceSubject } from "../control/pipeline-preference-subject.ts";
+import { createPreferenceGeneration, preferenceEvents, setPersonalPreferences, requirePreferenceGeneration } from "../control/preference-snapshot.ts";
 import { decideDirection, directionIdempotencyKey } from "../control/direction-decisions.ts";
 import { recordPreference } from "../control/preferences.ts";
 import {
@@ -210,6 +213,8 @@ const stableRecord = (record: Record<string, string>) =>
 const userKey = (identity: string) =>
   `user-${createHash("sha256").update(identity).digest("hex").slice(0, 24)}`;
 
+const controlConfig = loadControlConfig();
+
 const server = createServer(async (request, response) => {
   try {
     const url = new URL(request.url ?? "/", "http://prism-control");
@@ -273,8 +278,10 @@ const server = createServer(async (request, response) => {
         if(actual.length !== expected.length || !timingSafeEqual(actual, expected))throw new Error("invalid dispatch signature");
       }
       const payload = JSON.parse(raw.toString("utf8")) as {
+        preferenceSubjectId?: string;
         request?: { projectId?: string; approvalId?: string; schema?: string; architecture?: {artifactId?:string;contentDigest?:string}; architectureContent?: unknown };
       };
+      const preferenceSubjectId = authorizePipelinePreferenceSubject(payload.preferenceSubjectId, controlConfig.pipelinePreferenceSubject);
       const designRequest = validatePrism<{
         schema: "prism.design-request.v1";
         projectId: string;
@@ -305,6 +312,7 @@ const server = createServer(async (request, response) => {
       if (!designRequest.approvalId)
         return json(response, 202, {
           result: { status: "waiting", projectId: project.rows[0]!.id },
+          preferences: await createPreferenceGeneration(pool, preferenceSubjectId, projectKey, Date.now(), {operation:"design-set",architectureDigest:designRequest.architecture.contentDigest}),
         });
       const baseline = await pool.query<{
         bundle_digest: string;
@@ -328,15 +336,17 @@ const server = createServer(async (request, response) => {
       authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedPrismAgentSpiffeId]));
       const input = (await body(request)) as {
         projectId?: string;
+        generationId?: string;
         designs?: Array<{key?:string;title?:string;summary?:string;document?:PrismDocument;evidence?:Record<string,unknown>}>;
       };
       if (!input.projectId || input.designs?.length !== 3) throw new Error("exactly three Prism designs are required");
       if (new Set(input.designs.map((item)=>item.key)).size !== 3) throw new Error("Prism direction keys must be unique");
+      const generation = await requirePreferenceGeneration(pool,input.generationId,input.projectId,{operation:"design-set"});
       const documents=input.designs.map((item)=>validatePrism<PrismDocument>("designDocument",item.document));
       assertMaterialDirectionDiversity(documents);
       const designs = input.designs.map((item, index) => {
         if (!item.key || !item.title || !item.summary) throw new Error("each Prism design requires key, title, and summary");
-        return { key: item.key, title: item.title, summary: item.summary, document: documents[index]!, ...(item.evidence ? { evidence: item.evidence } : {}) };
+        return { key: item.key, title: item.title, summary: item.summary, document: documents[index]!, evidence: {...item.evidence, ...generation} };
       });
       const result = await repository.createDirectionSet(input.projectId, designs);
       return json(response, result.status === 'created' ? 201 : 200, { ...result,
@@ -345,14 +355,15 @@ const server = createServer(async (request, response) => {
     if (url.pathname === "/v1/agent/revisions" && request.method === "POST") {
       if (!spiffeEnabled) throw new Error("Prism agent tools require SPIFFE worker trust");
       authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedPrismAgentSpiffeId]));
-      const input=(await body(request)) as {projectId?:string;documentId?:string;expectedRevision?:number;instruction?:string;document?:PrismDocument};
+      const input=(await body(request)) as {generationId?:string;projectId?:string;documentId?:string;expectedRevision?:number;instruction?:string;document?:PrismDocument};
       if(!input.projectId||!input.documentId||!input.instruction||!Number.isSafeInteger(input.expectedRevision))throw new Error("complete Prism revision input is required");
       const owner=await pool.query<{external_id:string}>("SELECT p.external_id FROM prism.design_document d JOIN prism.project p ON p.id=d.project_id WHERE d.id=$1",[input.documentId]);
       if(owner.rows[0]?.external_id!==input.projectId)throw new Error("document does not belong to the Prism project");
+      const generation = await requirePreferenceGeneration(pool,input.generationId,input.projectId,{operation:"revise",documentId:input.documentId,expectedRevision:input.expectedRevision});
       const current=await repository.current(input.documentId);if(current.document.meta.revision!==input.expectedRevision)throw new Error("revision conflict");
       const document=validatePrism<PrismDocument>("designDocument",input.document);
       if(document.meta.revision!==input.expectedRevision+1)throw new Error("Prism agent must increment the document revision exactly once");
-      const updated=await repository.replace(input.documentId,current.id,document,{type:"agent.revision",instruction:input.instruction},"agent:prism");
+      const updated=await repository.replace(input.documentId,current.id,document,{type:"agent.revision",instruction:input.instruction,...generation},"agent:prism");
       return json(response,200,{status:"updated",document:updated});
     }
     const actor = authenticated(request);
@@ -438,7 +449,7 @@ const server = createServer(async (request, response) => {
       const project=await pool.query<{external_id:string}>("SELECT external_id FROM prism.project WHERE id=$1",[directions[1]]);
       const requestResult=await pool.query<{request:Record<string,unknown>}>("SELECT request FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY created_at DESC LIMIT 1",[directions[1]]);
       if(!project.rows[0]||!requestResult.rows[0])throw new Error("active Prism project not found");
-      const agentResponse=await fetch(new URL("/v1/design-set",prismAgentUrl),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({projectId:project.rows[0].external_id,request:requestResult.rows[0].request})});
+      const agentResponse=await fetch(new URL("/v1/design-set",prismAgentUrl),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({preferences:await createPreferenceGeneration(pool,userKey(actor.user),project.rows[0].external_id,Date.now(),{operation:"design-set"}),projectId:project.rows[0].external_id,request:requestResult.rows[0].request})});
       const accepted=await agentResponse.json();if(!agentResponse.ok)throw new Error(accepted.error??"Prism OpenClaw agent rejected the design request");
       return json(response,202,accepted);
     }
@@ -531,7 +542,7 @@ const server = createServer(async (request, response) => {
         if(!owner.rows[0])throw new Error("Prism project not found");
         const instruction=String(input.input?.instruction??"").trim();
         if(!instruction)throw new Error("Prism revision instruction is required");
-        const agentResponse=await fetch(new URL("/v1/revise",prismAgentUrl),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({projectId:owner.rows[0].external_id,documentId:execute[1],expectedRevision:input.baseRevision,instruction,document:requestDocument.document})});
+        const agentResponse=await fetch(new URL("/v1/revise",prismAgentUrl),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({preferences:await createPreferenceGeneration(pool,userKey(actor.user),owner.rows[0].external_id,Date.now(),{operation:"revise",documentId:execute[1],expectedRevision:input.baseRevision}),projectId:owner.rows[0].external_id,documentId:execute[1],expectedRevision:input.baseRevision,instruction,document:requestDocument.document})});
         const accepted=await agentResponse.json();if(!agentResponse.ok)throw new Error(accepted.error??"Prism OpenClaw agent rejected the revision");
         return json(response,202,accepted);
       }
@@ -980,6 +991,12 @@ const server = createServer(async (request, response) => {
             : null,
       });
     }
+    if (url.pathname === "/v1/preferences/policy" && request.method === "PUT") {
+      const input = await body(request) as {projectId?: string; personalEnabled?: boolean};
+      if (!input.projectId || typeof input.personalEnabled !== "boolean") throw new Error("projectId and personalEnabled are required");
+      await setPersonalPreferences(pool, userKey(actor.user), input.projectId, input.personalEnabled);
+      return json(response,200,{projectId:input.projectId,personalEnabled:input.personalEnabled});
+    }
     if (url.pathname === "/v1/preferences" && request.method === "POST") {
       const event = validatePrism<PreferenceEvent>(
         "preferenceEvent",
@@ -994,11 +1011,7 @@ const server = createServer(async (request, response) => {
     }
     if (url.pathname === "/v1/preferences" && request.method === "GET") {
       const projectId = url.searchParams.get("project");
-      const rows = await pool.query<{ content: PreferenceEvent }>(
-        "SELECT e.content FROM prism.preference_event e LEFT JOIN prism.project p ON p.id=e.project_id WHERE e.subject_id=$1 AND ($2::text IS NULL OR p.external_id=$2) ORDER BY e.occurred_at,e.id",
-        [userKey(actor.user), projectId],
-      );
-      const events = rows.rows.map((row) => row.content);
+      const events = await preferenceEvents(pool, userKey(actor.user), projectId);
       return json(response, 200, {
         events,
         learned: projectPreferences(events),

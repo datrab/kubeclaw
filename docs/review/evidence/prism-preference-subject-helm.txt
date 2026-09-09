@@ -1,0 +1,9 @@
+PASS real helm template spiffe=false configured=False; Control env exact
+PASS real helm template spiffe=false configured=True; Control env exact
+PASS real helm template spiffe=true configured=False; Control env exact
+PASS real helm template spiffe=true configured=True; Control env exact
+PASS invalid subject rejected by real Helm values schema
+==> Linting charts/prism
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed

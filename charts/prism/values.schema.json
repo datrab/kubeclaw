@@ -81,7 +81,13 @@
       }
     },
     "control": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "pipelinePreferenceSubject": {
+          "type": "string",
+          "pattern": "^$|^user-[a-f0-9]{24}$"
+        }
+      }
     },
     "studio": {
       "type": "object"

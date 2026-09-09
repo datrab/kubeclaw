@@ -1,0 +1,22 @@
+✔ Prism OpenClaw plugin enforces one exact three-design commit tool (1.480056ms)
+✔ direction selection rolls back on actual SQL insert failure and replays a committed response (2058.994836ms)
+✔ all feedback actions persist valid wire IDs, explicit retries deduplicate and fresh actions remain distinct (1577.235424ms)
+✔ failed rejection retains proposed state; stale and historical partial selections do not invent receipts (1420.552959ms)
+✔ wire preference IDs replay only exact owner and content while preserving internal UUIDs (1542.671324ms)
+✔ wire ID migration preserves legacy UUID/content and refuses ambiguous historical wire identities (1341.35209ms)
+✔ original bridge forwards persisted preference identities to the OpenClaw process boundary (260.713613ms)
+✔ SQL preference history crosses sessions with consent, isolated scopes, overrides and persisted prompt identity (2194.125903ms)
+✔ projection deduplicates evidence and refuses cross-project or cross-user retractions (1.439053ms)
+✔ preferences stay contextual, explain evidence, and support retraction (41.274727ms)
+✔ quality report keeps objective findings separate (2.317229ms)
+✔ quality blocks a meaningful icon without alternative text (0.477091ms)
+✔ preference projections decay and remain retractable (0.670262ms)
+✔ preference projections reject invalid occurrence timestamps (2.197299ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8181.970399

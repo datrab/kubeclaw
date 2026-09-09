@@ -1,0 +1,56 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { PGlite } from "@electric-sql/pglite";
+import { vector } from "@electric-sql/pglite-pgvector";
+import { migrate, RevisionRepository } from "../storage/index.ts";
+import { recordPreference } from "../control/preferences.ts";
+import { createPreferenceGeneration, preferenceEvents, requirePreferenceGeneration, setPersonalPreferences } from "../control/preference-snapshot.ts";
+import { projectPreferences, type PreferenceEvent } from "../preferences/index.ts";
+import { preferencePrompt } from "../server/preference-prompt.mjs";
+const event = (eventId: string, projectId: string, learningScope: "project"|"personal", action: "liked"|"disliked" = "liked"): PreferenceEvent => ({schema:"prism.preference-event.v1",eventId,projectId,userId:"user-one",learningScope,action,source:"explicit",traits:["dense"],context:{domain:"tools"},occurredAt:"2026-09-01T00:00:00Z"});
+test("SQL preference history crosses sessions with consent, isolated scopes, overrides and persisted prompt identity", async () => {
+ const db = new PGlite({extensions:{vector}});
+ try {
+  await migrate(db); const repo = new RevisionRepository(db);
+  for (const p of ["project-one","project-two","project-three"]) await repo.createProject(p,p);
+  await recordPreference(db,event("personal-one","project-one","personal"));
+  await recordPreference(db,event("project-one-event","project-one","project"));
+  await recordPreference(db,event("project-two-event","project-two","project","disliked"));
+  await recordPreference(db,{...event("other-user","project-two","personal"),userId:"user-two"});
+  const all = await preferenceEvents(db,"user-one",null);
+  const isolated=Object.values(projectPreferences(all));
+  assert.equal(isolated.length,3);
+  assert.equal(isolated.find(e=>e.projectId==="project-two")?.score,-1);
+  const now = Date.parse("2026-09-09T00:00:00Z");
+  const global = await createPreferenceGeneration(db,"user-one","project-three",now);
+  assert.equal(Object.values(global.snapshot.effective)[0]?.scope,"personal");
+  assert.equal(global.snapshot.events[0]?.projectId,"project-one");
+  const first = await createPreferenceGeneration(db,"user-one","project-two",now);
+  const second = await createPreferenceGeneration(db,"user-one","project-two",now);
+  assert.equal(first.snapshotDigest,second.snapshotDigest); assert.notEqual(first.generationId,second.generationId);
+  assert.deepEqual(first.snapshot.events.map(e=>e.eventId),["personal-one","project-two-event"]);
+  assert.equal(Object.values(first.snapshot.effective).length,1);
+  assert.equal(Object.values(first.snapshot.effective)[0]?.score,-1);
+  assert.match(preferencePrompt(first),new RegExp(first.generationId));
+  assert.match(preferencePrompt(first),/personal-one/);
+  assert.deepEqual(await requirePreferenceGeneration(db,first.generationId,"project-two"),{generationId:first.generationId,snapshotDigest:first.snapshotDigest});
+  await assert.rejects(requirePreferenceGeneration(db,first.generationId,"project-one"),/does not belong/);
+  await setPersonalPreferences(db,"user-one","project-two",false);
+  const disabled = await createPreferenceGeneration(db,"user-one","project-two",now);
+  assert.equal(disabled.snapshot.personalEnabled,false);
+  assert.ok(disabled.snapshot.events.every(e=>e.learningScope==="project"));
+  assert.equal((await createPreferenceGeneration(db,null,"project-two",now)).snapshot.events.length,0);
+  const persisted=await db.query<{snapshot:unknown}>("SELECT snapshot FROM prism.preference_generation WHERE id=$1",[first.generationId]);
+  assert.deepEqual(persisted.rows[0]?.snapshot,first.snapshot);
+ } finally { await db.close(); }
+});
+test("projection deduplicates evidence and refuses cross-project or cross-user retractions",()=>{
+ const a=event("one","project-one","project");
+ const b=event("two","project-two","project","disliked");
+ const retract={...b,eventId:"retract",action:"retracted" as const,retractsEventId:"one"};
+ const profile=Object.values(projectPreferences([a,a,b,retract]));
+ assert.equal(profile.find(e=>e.projectId==="project-one")?.score,1);
+ assert.equal(profile.find(e=>e.projectId==="project-two")?.score,-1);
+ const personal=event("personal","project-one","personal");
+ assert.equal(Object.values(projectPreferences([personal,{...personal,userId:"user-two",eventId:"retraction",action:"retracted",retractsEventId:"personal"}])).length,1);
+});
