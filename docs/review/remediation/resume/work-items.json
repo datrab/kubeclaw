@@ -172,7 +172,7 @@
       "id": "PCR-OBS-002",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-telemetry-retirement.md",
-      "next_action": "Weitere Storequoten unter Original-Consumercheckpoint-/Evidence-/Idempotenzbedingungen bearbeiten; Originaldaten und Logs nicht automatisch löschen."
+      "next_action": "Gemeinsamer Blobreader begrenzt/descriptor-geprüft, unabhängig und Root55/55 plus frischer Checkout11/11 bestanden. Dispatch-Archivprojektion unter Original-Import-/Run-/Storefences aktiv implementiert und separat geprüft; nur bestätigte doppelte Metadatabytes freigeben, keine Originaldaten oder Logs löschen, unveränderte Quoten. Gesamtfinding bleibt offen."
     },
     {
       "id": "PCR-OPERATOR-001",

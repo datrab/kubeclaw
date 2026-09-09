@@ -1,0 +1,76 @@
+Independent final source 96236ba725bc4d57f0543f1fc0e76afa97f25de7, local 6349d42 on exact remote e028aad base.
+node --test tests/verification/reliability/blob-read-boundary.test.mjs tests/verification/reliability/blob-read-independent.test.mjs tests/verification/reliability/blob-budget.test.mts tests/verification/reliability/artifact-checkpoint-encoding.test.mjs tests/verification/reliability/artifact-checkpoint-review.test.mjs tests/verification/reliability/observability-retirement-plan.test.mjs tests/verification/reliability/telemetry-retirement.test.mjs tests/verification/reliability/admission-retirement.test.mjs tests/verification/reliability/nova-store-boundaries.test.mts tests/verification/reliability/sdk-json-contract.test.mts
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (1999.096285ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (1215.939235ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (1611.582847ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (1538.052035ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (1830.040054ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (1881.190908ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (1305.355777ms)
+✔ real confirmed import and admission retirement do not release the remaining mixed-run result quota (2278.999599ms)
+ℹ {"admissionBytesReleased":7177,"resultQuota":2,"retainedResults":2,"subsequentResultWrite":"OBSERVABILITY_RESULT_STORE_FULL","realConsumerReplay":"already-imported","journalUnchanged":true,"overallFindingComplete":false}
+✔ existing import journal is a full result checkpoint but not a replacement for the original completion and replay guards (1089.620071ms)
+ℹ {"checkpoint":"real NovaObservabilityReconciler import","resultBytesPresent":true,"completionIntentPresent":false,"sourceDeletion":"fails closed; original delivery remains pending","sourceRestored":"original duplicate ACK and already-imported result recover","overallFindingComplete":false}
+✔ Attempt-v2 releases actual result quota while every original result, Admission, Clawdeck and import consumer reconstructs unchanged (2441.111141ms)
+ℹ {"retiredResultSlots":1,"releasedBytes":19668,"residentLimit":2,"logicalResults":3,"originalImportReplay":"already-imported"}
+✔ Attempt projection rejects stale CAS, run checkpoint and operation conflicts without touching the original state (1248.829378ms)
+✔ Attempt projection preserves an actual waiting run and refuses missing, corrupted or nonregular import authority (2338.982004ms)
+✔ Attempt original writer lock excludes retirement and a killed waiting operator leaves no partial projection (1734.728628ms)
+✔ Attempt SIGKILL after durable projection reopens with exact original result and no duplicate import or quota reinsertion (1339.989946ms)
+✔ real portable ArtifactStore write checkpoints and reopens unchanged across actual locales (901.779559ms)
+✔ legacy checkpoints retain their exact original reference and journal bytes (108.084902ms)
+✔ checkpoint codec binding rejects unknown encodings and authenticated same-byte relabels (50.556804ms)
+✔ recorder does not collapse same-byte references carrying different codec identities (74.125831ms)
+✔ independent genuine-store response still binds all owner and byte fields (107.911205ms)
+✔ independent completion-before-projection recovery preserves the portable original reference (152.432559ms)
+✔ independent unknown-codec disk record rejects without mutating journal bytes (48.897857ms)
+✔ independent unknown-codec recording rejects before journal append (69.433195ms)
+✔ aggregate blob budget survives reconstruction, deduplicates and serializes competing processes (518.279802ms)
+✔ original get rejects genuine content-addressed bytes over its configured maximum before allocation (26.792489ms)
+✔ original bounded reader preserves zero, exact maximum and unchanged quota/digest behavior (173.597197ms)
+✔ final symlink, parent symlink and FIFO cannot become blob bytes (49.652946ms)
+✔ corrupt and truncated content reject repeatedly without losing the original valid reader (102.606662ms)
+✔ actual concurrent parent replacement is rejected or returns only the exact originally addressed bytes (653.798037ms)
+{"maximumBytes":16,"storedBytes":33,"oversizedReadsRejected":160,"exactBoundaryReadsSucceeded":160,"descriptorSoftLimit":64}
+✔ independent real low-descriptor process rejects oversized reads repeatedly and still reads exact-boundary bytes (1013.630329ms)
+✔ SPIFFE transport and adapter agree on IPv4, bracketed IPv6 and denied remote hosts (3.19475ms)
+✔ two real Git archives share a total quota while deduplicated bytes remain readable (356.032875ms)
+✔ real HTTP evidence import cannot mark a second over-quota job complete (513.636552ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (1158.768577ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (1170.199904ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (1028.091816ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (1133.454759ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (1027.655413ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (1178.394687ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1513.444861ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (1016.034668ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.443108ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (3.861356ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (2.436667ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (443.112884ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2456.943733ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (345.070544ms)
+✔ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (852.391084ms)
+Real ArtifactStore and FileEffectJournal replay JSON regressions passed
+✔ tests/verification/reliability/sdk-json-contract.test.mts (582.577645ms)
+✔ exact retirement byte accounting crosses decimal digit boundaries without a fixed point (219.900124ms)
+✔ original v1 stores reopen without rewriting and retain ordinary append/read/transition contracts (69.428182ms)
+✔ manual terminal-run cleanup releases actual bytes and record quota; duplicate replay never resurrects (1439.146749ms)
+✔ waiting run, foreign owner, stale source, reused operation and legacy records reject without release (2653.496288ms)
+✔ real run mutation fence rejects concurrent cleanup; immutable intent survives caller mutation (1185.449402ms)
+✔ SIGKILL after actual atomic store commit retains tombstones and one CLI release (2171.795795ms)
+✔ native competing store writer blocks retirement; SIGKILL before mutation leaves original bytes (1708.214561ms)
+ℹ tests 55
+ℹ suites 0
+ℹ pass 55
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24518.157945
+
+Full shared-runtime and Nova typechecks, plus unchanged canonical focused lint:
+node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json
+node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/common/plugin-runtime/foundation/observability/durable-records.ts skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts tests/verification/reliability/blob-read-boundary.test.mjs tests/verification/reliability/blob-read-independent.test.mjs
+All exit 0, no diagnostics. Exact author/reviewer three-file source/test comparison: empty diff.

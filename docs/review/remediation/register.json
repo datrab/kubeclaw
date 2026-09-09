@@ -3252,7 +3252,10 @@
         "docs/review/remediation/implementation/wave47-retirement-snapshot-integration.md",
         "docs/review/remediation/implementation/run3-attempt-result-independent-review.md",
         "docs/review/evidence/run3-root-attempt-final.txt",
-        "docs/review/remediation/implementation/run3-observability-next-package.md"
+        "docs/review/remediation/implementation/run3-observability-next-package.md",
+        "docs/review/remediation/implementation/run5-blob-reader-independent-review.md",
+        "docs/review/evidence/run5-root-blob-reader-final.txt",
+        "docs/review/evidence/run6-root-blob-reader-recheck.txt"
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.observability.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",

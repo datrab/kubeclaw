@@ -1,0 +1,17 @@
+Source 96236ba725bc4d57f0543f1fc0e76afa97f25de7; later changes docs only.
+Commands: canonical eslint on durable-records.ts and durable-blob-read.ts; Nova tsc --noEmit; node --test blob-read-boundary.test.mjs blob-budget.test.mts.
+Exit 0
+✔ aggregate blob budget survives reconstruction, deduplicates and serializes competing processes (347.732944ms)
+✔ original get rejects genuine content-addressed bytes over its configured maximum before allocation (12.245785ms)
+✔ original bounded reader preserves zero, exact maximum and unchanged quota/digest behavior (48.766802ms)
+✔ final symlink, parent symlink and FIFO cannot become blob bytes (13.754742ms)
+✔ corrupt and truncated content reject repeatedly without losing the original valid reader (83.317964ms)
+✔ actual concurrent parent replacement is rejected or returns only the exact originally addressed bytes (457.762319ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 901.719291

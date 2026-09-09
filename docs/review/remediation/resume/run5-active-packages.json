@@ -7,6 +7,15 @@
   "frozen_count": 47,
   "verified_count": 7,
   "overall_complete": false,
+  "bounded_blob_reader": {
+    "status": "independently-reviewed-root-tested-in-this-integration",
+    "source": "96236ba725bc4d57f0543f1fc0e76afa97f25de7",
+    "review": "359bf27ea83ea614a57e778f359935b283d56a5f",
+    "backup": "44b6aea8266e61efbb25a9f6be852dbb05e3756d",
+    "root_full_tests": 55,
+    "fresh_checkout_repeat": 11,
+    "next_action": "Reader package is complete; retain original quotas and exact digest semantics. Dispatch projection remains separate and unapproved."
+  },
   "integrated_review_codec": {
     "commit": "84688686127cfcc0f8940381006d0b6ab9035095",
     "independent_review": "c100f1b85a7d92c88f4c98ce2b57afa356c1f368",
@@ -16,18 +25,20 @@
   "incomplete_packages": [
     {
       "package": "adapter-dependency-identity",
-      "branch": "fix/resume-47-run5-adapter-466be67",
-      "commit": "2eb9d1020ea3eab6cb681dc12df7c6f8d35dca0b",
+      "branch": "fix/resume-47-run5-adapter-fca25ae",
+      "commit": "9bdc73c19a5518f1292ac126581c9cb941572bb2",
       "review_branch": "fix/resume-47-run5-adapter-review-f36ef19",
       "review_commit": "89b2fdd55c8a77155ef1781b1c875193ef61c2c0",
-      "status": "incomplete-canonical-contract-correction-in-progress",
+      "status": "independently-reviewed-pending-fresh-root-integration",
+      "latest_review_local": "28ebe602122cda8c4c966f24d5ecf9f905a0144e",
       "next_action": "Replace shadow validator with owning canonical request/receipt/resource definitions and bounded genuine historical keys. Verify actual producer edge cases, genuine SIGKILL/HTTP replay and historical recovery independently. Review backup is tests only and requires the separately saved source."
     },
     {
       "package": "native-product-controller-chart-gate",
-      "branch": "fix/resume-47-run5-native-62e68a9",
-      "commit": "4c54d647499c98f20dfd99cfb780f4a850cbc8eb",
-      "status": "incomplete-native-crd-install-only",
+      "branch": "fix/resume-47-run5-native-c3ebfb7",
+      "commit": "c4231af19851adacb75611698300a62ee7eb1604",
+      "native_review_backup": "c5fd31aa328577125c6d64770b0020ba566b3a27",
+      "status": "native-gates-independently-tested-full-coupled-candidate-pending",
       "next_action": "Complete real API status/CEL/signed transitions and alternate-controller-SA VAP Namespace CREATE/DELETE denials; independently rerun. No workload deployment. Coupled Product459e/controllere21/chart47b remain unintegrated."
     },
     {

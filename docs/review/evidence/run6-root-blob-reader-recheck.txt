@@ -1,0 +1,25 @@
+New run root base: exact fresh remote5a437c/local741da29, all3389 blobs verified.
+Source restored: reviewed96236ba, new localf34d4c8; workspace dependencies resolve this checkout.
+Command: node --test tests/verification/reliability/blob-read-boundary.test.mjs tests/verification/reliability/blob-read-independent.test.mjs tests/verification/reliability/blob-budget.test.mts tests/verification/reliability/nova-store-boundaries.test.mts tests/verification/reliability/sdk-json-contract.test.mts
+✔ aggregate blob budget survives reconstruction, deduplicates and serializes competing processes (754.452399ms)
+✔ original get rejects genuine content-addressed bytes over its configured maximum before allocation (43.808903ms)
+✔ original bounded reader preserves zero, exact maximum and unchanged quota/digest behavior (193.547187ms)
+✔ final symlink, parent symlink and FIFO cannot become blob bytes (51.585083ms)
+✔ corrupt and truncated content reject repeatedly without losing the original valid reader (207.80106ms)
+✔ actual concurrent parent replacement is rejected or returns only the exact originally addressed bytes (558.698133ms)
+{"maximumBytes":16,"storedBytes":33,"oversizedReadsRejected":160,"exactBoundaryReadsSucceeded":160,"descriptorSoftLimit":64}
+✔ independent real low-descriptor process rejects oversized reads repeatedly and still reads exact-boundary bytes (790.343688ms)
+✔ SPIFFE transport and adapter agree on IPv4, bracketed IPv6 and denied remote hosts (3.573343ms)
+✔ two real Git archives share a total quota while deduplicated bytes remain readable (634.950452ms)
+✔ real HTTP evidence import cannot mark a second over-quota job complete (373.491531ms)
+Real ArtifactStore and FileEffectJournal replay JSON regressions passed
+✔ tests/verification/reliability/sdk-json-contract.test.mts (881.862693ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2022.213694
+Exit: 0. Narrow fresh-checkout repetition after complete55/55root suite; no native provider acceptance claimed.
