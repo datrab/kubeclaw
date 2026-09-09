@@ -1,0 +1,11 @@
+$ node --test --test-concurrency=1 tests/verification/reliability/coverage-interaction.test.mts tests/verification/reliability/coverage-remote.test.mts
+✔ M5 passes on the same commit where the M1/M2 interaction fails; its plan cannot certify cumulative coverage (662.54257ms)
+✔ original remote Buster skipped execution cannot fulfil required coverage at the same Git candidate (1045.326764ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3289.728907

@@ -1,0 +1,18 @@
+$ node --test --test-concurrency=1 tests/verification/reliability/discord-delivery-receipt.test.mts tests/verification/reliability/operator-delivery.test.mts
+✔ Discord original HTTP and durable store bind wire bytes and replay after reopen (1462.847576ms)
+✔ Discord dropped response remains uncertain after reopen without another POST (1242.415816ms)
+✔ Discord invalid actual ID cannot be replaced by generic messageId or blindly retried (1191.916881ms)
+✔ explicit Discord receipt contract vectors reject legacy acknowledgments and invalid IDs (1.073889ms)
+✔ original observer, effect journal and operator resume a rejected send after reconstruction (1635.782315ms)
+✔ durable receiver receipt reconciles lost HTTP ACK without a duplicate external delivery (1349.109322ms)
+✔ permanent rejection remains bounded across adapter and observer reconstruction (1697.533876ms)
+✔ uncertain delivery without receiver contract is never blindly resent (1449.273226ms)
+✔ configured receipt endpoint without the actual protocol cannot authorize a send (1497.034941ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12442.152402

@@ -1,0 +1,33 @@
+$ node --test --test-concurrency=1 skills/prism/tests/agent-jobs.test.mts skills/prism/tests/agent-job-http.test.mts skills/prism/tests/agent-resource-contract.test.mts skills/prism/tests/agent-revision-client.test.mts skills/prism/tests/agent-package.test.mjs tests/verification/reliability/worker-deadline.test.mts
+✔ actual HTTP job routes authenticate before claim, persist one fence and reject stale completion (2252.411765ms)
+✔ session identities retain full project and namespace identity without lossy legacy adoption (1.912134ms)
+✔ accepted jobs survive a real database reopen; running uncertainty is never replayed (2716.730453ms)
+✔ actual design commit and agent receipt are atomic; stale fence and changed retry cannot mutate (1599.588337ms)
+✔ expired agent cannot commit and missing tool result is explicitly NeedsNova (1737.843995ms)
+✔ revision retries bind actor, source and input and replay the actual committed repository receipt (1492.52055ms)
+✔ provably unstarted superseded work is retired without taking over the new source session (1427.124915ms)
+✔ actual agent image COPY context imports the real bridge, prompt, WorkerCore and locked validators after relocation (556.468038ms)
+✔ real CPU-consuming child has explicit V2 unavailable observations and no parent resource claims (956.018978ms)
+✔ requested unsupported child budget fails before actual process launch (4.339932ms)
+✔ V2 requires explicit policy and correct units; V1 refuses the opt-in envelope (18.932108ms)
+✔ requested runtime measurement unavailable fails even when profile advertised measurement (63.303028ms)
+✔ original generic assessor rejects requested real observed overrun and V1 missing metrics (20.127173ms)
+✔ actual HTTP dropped admission response retains the same client key; SQL replay and NeedsNova remain explicit (1906.301378ms)
+✔ direct: actual optional phases require a complete claim reservation (68.857312ms)
+✔ runtime: actual optional phases require a complete claim reservation (3.048181ms)
+✔ real completion hooks and durable log finish successfully inside the reserved claim (70.275192ms)
+✔ direct: final claim fence rejects completion after a native blocking hook (562.348245ms)
+✔ runtime: final claim fence rejects completion after a native blocking hook (560.250202ms)
+✔ timed out log hook receives cancellation and settles before result, without a later write (210.365944ms)
+✔ uncooperative storage is reported unresolved rather than completed (158.417744ms)
+✔ original executor preserves each UTF-8 byte split and rejects malformed/incomplete byte logs (80.707485ms)
+✔ real Buster evidence I/O drains cancellation and does not publish a later artifact (25.924657ms)
+✔ stdout and stderr streaming decoders retain separate partial byte sequences (8.949366ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17999.503661

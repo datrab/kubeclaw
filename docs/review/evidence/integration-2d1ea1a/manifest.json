@@ -1,0 +1,164 @@
+{
+  "commit": "2d1ea1ace71ac08b7d72d3c4e2eac295866d5809",
+  "results": [
+    {
+      "name": "shared-types",
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "skills/common/plugin-runtime/tsconfig.json"
+      ],
+      "exitCode": 0,
+      "seconds": 4.1
+    },
+    {
+      "name": "worker-contract",
+      "command": [
+        "node",
+        "tests/verification/contracts/check-pipeline-worker-core-contracts.mts"
+      ],
+      "exitCode": 0,
+      "seconds": 0.47
+    },
+    {
+      "name": "worker-executor",
+      "command": [
+        "node",
+        "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts"
+      ],
+      "exitCode": 0,
+      "seconds": 8.0
+    },
+    {
+      "name": "worker-local",
+      "command": [
+        "node",
+        "tests/verification/contracts/check-pipeline-worker-local-runtime.mts"
+      ],
+      "exitCode": 0,
+      "seconds": 0.32
+    },
+    {
+      "name": "prism-receivers",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "skills/prism/tests/agent-jobs.test.mts",
+        "skills/prism/tests/agent-job-http.test.mts",
+        "skills/prism/tests/agent-resource-contract.test.mts",
+        "skills/prism/tests/agent-revision-client.test.mts",
+        "skills/prism/tests/agent-package.test.mjs",
+        "tests/verification/reliability/worker-deadline.test.mts"
+      ],
+      "exitCode": 0,
+      "seconds": 18.08
+    },
+    {
+      "name": "studio-types",
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "skills/prism/studio/tsconfig.json"
+      ],
+      "exitCode": 0,
+      "seconds": 1.77
+    },
+    {
+      "name": "preflight",
+      "command": [
+        "npm",
+        "test",
+        "--workspace",
+        "@kubeclaw/plugin-preflight-contract"
+      ],
+      "exitCode": 0,
+      "seconds": 12.03
+    },
+    {
+      "name": "pipeline-report",
+      "command": [
+        "npm",
+        "test",
+        "--workspace",
+        "@kubeclaw/plugin-pipeline-review"
+      ],
+      "exitCode": 0,
+      "seconds": 6.54
+    },
+    {
+      "name": "case-report",
+      "command": [
+        "npm",
+        "test",
+        "--workspace",
+        "@kubeclaw/plugin-case-study"
+      ],
+      "exitCode": 0,
+      "seconds": 6.81
+    },
+    {
+      "name": "coverage",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/reliability/coverage-interaction.test.mts",
+        "tests/verification/reliability/coverage-remote.test.mts"
+      ],
+      "exitCode": 0,
+      "seconds": 3.38
+    },
+    {
+      "name": "delivery",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/reliability/discord-delivery-receipt.test.mts",
+        "tests/verification/reliability/operator-delivery.test.mts"
+      ],
+      "exitCode": 0,
+      "seconds": 12.52
+    },
+    {
+      "name": "ci-versions",
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/contracts/action-pins.test.mjs",
+        "tests/verification/contracts/workflow-trust-split.test.mjs",
+        "tests/verification/deployment/versions.test.mjs"
+      ],
+      "exitCode": 0,
+      "seconds": 0.32
+    },
+    {
+      "name": "version-generation",
+      "command": [
+        "node",
+        "scripts/versions.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 0.06
+    },
+    {
+      "name": "runtime-identity",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/reliability/runtime-session-cleanup.test.mts",
+        "tests/verification/reliability/adapter-cleanup-scope.test.mts"
+      ],
+      "exitCode": 0,
+      "seconds": 48.39
+    }
+  ],
+  "trackedStatus": ""
+}

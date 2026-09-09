@@ -1,0 +1,9 @@
+$ npm test --workspace @kubeclaw/plugin-case-study
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"protocol"}
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"live-function","modelExecution":false}
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"package-boundary"}

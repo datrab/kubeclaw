@@ -1,0 +1,38 @@
+$ node --test --test-concurrency=1 tests/verification/reliability/runtime-session-cleanup.test.mts tests/verification/reliability/adapter-cleanup-scope.test.mts
+✔ real registry/Core cleanup scope preserves authorization: success (1076.156556ms)
+✔ real registry/Core cleanup scope preserves authorization: origin (977.820093ms)
+✔ real registry/Core cleanup scope preserves authorization: capability (916.463077ms)
+✔ real registry/Core cleanup scope preserves authorization: method (886.212188ms)
+✔ real registry/Core cleanup scope preserves authorization: timeout (1878.921638ms)
+✔ real registry/Core cleanup scope preserves authorization: lifecycle (939.763505ms)
+✔ real registry/Core cleanup scope preserves authorization: blocking (2033.525966ms)
+✔ actual Core/HTTP session cleanup: max-polls (1972.306765ms)
+✔ actual Core/HTTP session cleanup: poll-body (1456.723124ms)
+✔ actual Core/HTTP session cleanup: parent-abort (1390.17852ms)
+✔ actual Core/HTTP session cleanup: late-spawn (1453.985409ms)
+✔ actual Core/HTTP session cleanup: cancel-rejected (1357.885779ms)
+✔ actual Core/HTTP session cleanup: cancel-body (2477.516342ms)
+✔ actual Core/HTTP session cleanup: acp-ack (2356.226448ms)
+✔ actual Core/HTTP session cleanup: acp-terminal (1467.385762ms)
+✔ actual Core/HTTP session cleanup: wrong-terminal (2350.495834ms)
+✔ actual Core/HTTP session cleanup: lost-spawn (2501.249708ms)
+✔ actual Core/HTTP session cleanup: acp-lost (2306.428474ms)
+✔ actual Core/HTTP session cleanup: wrong-poll-terminal (1350.347784ms)
+✔ actual Core/HTTP session cleanup: ambiguous-spawn (1323.400174ms)
+✔ actual Core/HTTP session cleanup: acp-wrong-terminal (2385.010618ms)
+✔ actual Core/HTTP session cleanup: contradictory-terminal (2356.935812ms)
+✔ actual Core/HTTP session cleanup: missing-task-alias (1534.652996ms)
+✔ actual Core/HTTP session cleanup: missing-task-snake (1611.733691ms)
+✔ actual Core/HTTP session cleanup: missing-task-records (1511.613129ms)
+✔ actual Core/HTTP session cleanup: missing-task-transitive (1473.86755ms)
+✔ full dispatch digest separates actual legacy-prefix collisions through Core/HTTP (1573.453462ms)
+✔ legacy colliding label never authorizes adoption, cancellation or respawn (2425.121944ms)
+✔ original registry parser rejects conflicting identifier aliases (0.608919ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48326.563356

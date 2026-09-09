@@ -1,0 +1,2 @@
+$ node scripts/versions.mjs --check
+{"checked":21,"changed":[]}

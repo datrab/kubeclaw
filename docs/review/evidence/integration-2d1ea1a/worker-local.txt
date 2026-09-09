@@ -1,0 +1,2 @@
+$ node tests/verification/contracts/check-pipeline-worker-local-runtime.mts
+{"ok":true,"phase":"5.5-D","states":["starting","ready","draining","stopped","unhealthy"]}

@@ -1,0 +1,18 @@
+$ node --test tests/verification/contracts/action-pins.test.mjs tests/verification/contracts/workflow-trust-split.test.mjs tests/verification/deployment/versions.test.mjs
+✔ all actual active workflows and source action manifests are immutable and have provenance (52.723883ms)
+✔ original guard catches floating references, missing provenance and nested local composite actions (28.281477ms)
+✔ parsed job guards keep PRs and non-main dispatches read-only (1.566414ms)
+✔ read-only jobs cannot publish, persist checkout credentials or pass artifacts forward (0.470319ms)
+✔ trusted publication rebuilds source and retains digest smoke and receipt authority (0.623581ms)
+✔ trusted docs check before a scoped main-only commit and consume no validation artifacts (0.28526ms)
+✔ every external action in the two entrypoints is commit pinned (0.273783ms)
+✔ central versions update actual build/deployment files and reject drift without repairing it (35.6539ms)
+✔ every central base requires a digest, including non-OpenClaw runtimes (0.294164ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 213.000125
