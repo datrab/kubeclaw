@@ -1,0 +1,1 @@
+{"type":"object","additionalProperties":false,"required":["repository","mode"],"properties":{"repository":{"type":"string"},"mode":{"enum":["source","review","sibling"]}}}

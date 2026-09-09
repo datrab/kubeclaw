@@ -46,7 +46,8 @@ export function applyRepair(states: Map<string, StageRuntimeState>, request: Rep
     states.set(id, { ...state, status: id === request.requesterStageId ? 'waiting' : 'pending',
       ...(id === request.requesterStageId ? { remediationTarget: request.targetStageId } : {}) });
   }
-  const { facts: _facts, ...withoutFacts } = target;
-  states.set(request.targetStageId, { ...withoutFacts, status: 'pending',
+  const { facts: _facts, wait: _wait, retryAt: _retry, continuationGuidance: _guidance,
+    remediationTarget: _target, remediationReturnTo: _return, ...withoutDecision } = target;
+  states.set(request.targetStageId, { ...withoutDecision, status: 'pending',
     remediationReturnTo: request.requesterStageId, continuationGuidance: { repairRequest: request } });
 }
