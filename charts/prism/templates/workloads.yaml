@@ -1,6 +1,7 @@
 {{- if ne (int .Values.control.replicas) 1 }}
 {{- fail "control.replicas must be 1 while prism-artifacts uses ReadWriteOnce storage" }}
 {{- end }}
+{{- include "prism.productDecisions.validate" . }}
 {{- range $name := list "control" "studio" "worker" }}
 {{- $image := index $.Values.images $name }}
 apiVersion: apps/v1
@@ -19,9 +20,14 @@ spec:
         {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
         kubeclaw.dev/worker-trust: "true"
         {{- end }}
-      {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
+      {{- if or (and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker"))) (and (eq $name "control") $.Values.control.productDecisions.enabled) }}
       annotations:
+        {{- if and (eq $name "control") $.Values.control.productDecisions.enabled }}
+        checksum/product-decisions: {{ toJson $.Values.control.productDecisions | sha256sum }}
+        {{- end }}
+        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
         checksum/worker-trust: {{ index ((include (print $.Template.BasePath "/configmap-worker-trust.yaml") $) | fromYaml).data (printf "%s.yaml" $name) | sha256sum }}
+        {{- end }}
       {{- end }}
     spec:
       serviceAccountName: prism-{{ $name }}
@@ -48,6 +54,7 @@ spec:
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: worker-secret } }
             {{- end }}
             {{- if eq $name "control" }}
+            {{- include "prism.productDecisions.env" $ | nindent 12 }}
             {{- if $.Values.workerTrust.spiffe.enabled }}
             - { name: PRISM_WORKER_URL, value: "http://127.0.0.1:18081" }
             - { name: PRISM_CONTROL_INTERNAL_URL, value: "http://127.0.0.1:18080" }
@@ -99,6 +106,10 @@ spec:
             - { name: tmp, mountPath: /tmp }
             {{- if eq $name "control" }}
             - { name: artifacts, mountPath: /var/lib/prism/artifacts }
+            {{- if $.Values.control.productDecisions.enabled }}
+            - { name: product-decision-signing, mountPath: /var/run/prism/product-signing, readOnly: true }
+            - { name: product-decision-controller, mountPath: /var/run/prism/product-controller, readOnly: true }
+            {{- end }}
             {{- end }}
           {{- if eq $name "worker" }}
           # The migration is a post-install hook. On the first install the worker
@@ -131,6 +142,7 @@ spec:
         - { name: tmp, emptyDir: { sizeLimit: 4Gi } }
         {{- if eq $name "control" }}
         - { name: artifacts, persistentVolumeClaim: { claimName: prism-artifacts } }
+        {{- include "prism.productDecisions.volumes" $ | nindent 8 }}
         {{- end }}
         {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
         - { name: worker-trust-envoy, configMap: { name: prism-worker-trust, defaultMode: 0444 } }
