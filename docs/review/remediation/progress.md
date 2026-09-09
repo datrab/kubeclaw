@@ -4,7 +4,7 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**78/154 lokal verifiziert und unabhängig gegengeprüft; 18 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 11 in Bearbeitung; 47 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
+**82/154 lokal verifiziert und unabhängig gegengeprüft; 21 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 7 in Bearbeitung; 44 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
 
 | Bereich | Remote-Commit | Stand / Nachweis |
 |---|---|---|
@@ -148,3 +148,15 @@ Fortschritt nach drei abgeschlossenen Findings oder spätestens zehn Minuten.
 - PCR-TSTORE-002: verifiziert; Remote `b0301205076b7914b732f2af42e9fac7895ece4a`. [Nachweis](implementation/telemetry-store.md). Real adapter/store rejects malicious and over-budget graphs before persistence; exact depth/node/byte bounds, shared references, descriptors and no partial write verified. Root reran tests and canonical lint after complexity refactor.
 
 Quellenbindung und Tailscale bleiben vor dem Commit in unabhängiger Nachprüfung: Ein externer Commit im Forge-Arbeitsbaum darf nicht als freigegebene Herkunft übernommen werden; Tailscale muss Besitzerwechsel im Status erkennen und abgebrochene Übernahmen ohne verwaiste Exposures auflösen. Die bestehenden grünen Tests deckten diese Gegenfälle nicht ab. Worker-Claim-Zeitgrenzen und Prism-Generationsrunden werden parallel bearbeitet.
+
+## Quellenbindung, Tailscale und Release-Konfiguration gesichert
+
+- PATH-T04-001: verifiziert; Remote `dda66cc588d9aec61de0a695f6e5b312d3427ab4`. [Nachweis](implementation/approval-source-binding.md). Original engine/Git/artifact/wait path: final17 tests pass. Independent reviewer reproduced and rechecked worktree-source and renewal defects; mode/symlink regressions pass. Root source-boundary review complete. No live model or deployed role E2E claim.
+- PCR-TAILSCALE-001: verifiziert; Remote `02d94751551defdb633442f1c42689a00d9f7a7f`. [Nachweis](implementation/tailscale-exposure.md). Original provider tests cover implicit/explicit80,8080, unauthorized host and service mismatch; builds/typechecks pass.
+- PCR-TAILSCALE-002: verifiziert; Remote `02d94751551defdb633442f1c42689a00d9f7a7f`. [Nachweis](implementation/tailscale-exposure.md). Explicit Kubernetes protocol-prefix probes with native kubectl and actual controller Go race suite pass, independently repeated. Same-spec owner/generation status and canceled/chained takeover cleanup corrected. No live Tailnet or seven-day handoff proof.
+- IFR-23-001: verifiziert; Remote `b577332be3f9d61735d26c6d24074a861a7450bd`. [Nachweis](implementation/release-configuration.md). Five original Git/Helm tests pass independently: exact family chart/value source binding rejects incompatible newer configuration before materialization. Canonical lint and workflow YAML validation pass. No live migration/override compatibility claim.
+- IFR-07-001: implementiert; Remote `fc136fc8d1351f9ef6bccfafa9f63dd55addbce2`. [Nachweis](implementation/rollout-health.md). Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.
+- IFR-14-001: implementiert; Remote `fc136fc8d1351f9ef6bccfafa9f63dd55addbce2`. [Nachweis](implementation/rollout-health.md). Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.
+- IFR-20-002: implementiert; Remote `fc136fc8d1351f9ef6bccfafa9f63dd55addbce2`. [Nachweis](implementation/rollout-health.md). Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.
+
+Die zuvor genannten Quellenbindungs-/Tailscale-Blocker sind behoben und unabhängig nachgeprüft. Aktuell laufen Worker-Abschlusszeitgrenzen, Prism-Runden samt tatsächlicher Studio-Aktion, begrenzter Prism-Ergebniscache und die Bindung tatsächlicher Deployment-Einstiege an ausgewählte Receipts. Die unabhängigen Reviewer prüfen erneut nach jeder fachlichen Nachbesserung.
