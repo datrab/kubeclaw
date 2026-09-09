@@ -14,6 +14,7 @@ import {retireAdmission} from '../../../scripts/retire-admission.mjs';
 import {runPipelineV2} from '../../../skills/nova/core/execution/engine.ts';
 import {runRoot} from '../../../skills/nova/core/execution/run-root.ts';
 import {budgetFixture} from './repair-budget-fixture.mjs';
+import {NovaObservabilityReconciler} from '../../../skills/nova/core/observability/reconciler.ts';
 const admissionLimits={maximumIngressBytes:20000,maximumRecords:2,maximumBytes:50000,maximumQuarantineRecords:10,maximumQuarantineBytes:5000};
 const attemptLimits={maximumEvidenceObjects:10,maximumEvidenceBytes:10000,maximumEvidenceObjectBytes:1000,maximumResults:10,maximumClosures:10,maximumMetadataBytes:100000,maximumPendingEvidenceAgeMs:60000};
 function resultFor(index) {
@@ -173,4 +174,99 @@ test('retirement rejects actual FIFO, final symlink and oversized evidence befor
   await assert.rejects(compact(),/retirement-source-path/);
   fs.unlinkSync(evidenceFile);fs.writeFileSync(evidenceFile,bytes);assert.deepEqual(fs.readFileSync(file),before);
   assert.equal((await retireAdmission(f.scope)).newlyRetired,true);
+});
+
+async function importCompletion(f, attempts = f.attempts) {
+  const journalFile = path.join(f.run, 'observability/reconciliation.jsonl');
+  const desired = {
+    pipelineRunId: f.runId, planId: 'plan:1', nodeId: 'node:1',
+    attemptId: f.result.attemptId, claimId: f.result.claimId,
+    claimGeneration: f.result.claimGeneration, workerId: f.result.workerId,
+    claimExpiresAt: '2100-01-01T00:00:00Z', gateClass: 'authoritative-final',
+    requiredClosures: [{closureId: f.closure.closureId, producer: f.closure.producer}],
+  };
+  const reconciler = new NovaObservabilityReconciler({attemptStore: attempts, admissionStore: f.admission, journalFile});
+  const imported = await reconciler.reconcile([desired]);
+  assert.equal(imported[0].action, 'imported');
+  assert.equal(imported[0].completeness.state, 'complete');
+  assert.deepEqual(imported[0].result, f.result);
+  return {journalFile, desired, reconciler};
+}
+
+test('real confirmed import and admission retirement do not release the remaining mixed-run result quota', async t => {
+  const f = await fixture(t);
+  const limits = {...attemptLimits, maximumResults: 2};
+  const attempts = new FileDurableAttemptStore(f.scope.attemptRoot, limits);
+  const waitingRoot = path.join(f.root, 'actual-waiting-run');
+  fs.mkdirSync(waitingRoot);
+  const waiting = budgetFixture(waitingRoot, {lint: [1, 2, 3]});
+  assert.equal((await runPipelineV2(waiting.platform, waiting.definition, 'run:waiting')).status, 'waiting');
+  const waitingEventsFile = path.join(runRoot(waiting.platform.storageRoot, 'run:waiting'), 'events.jsonl');
+  const waitingEvents = fs.readFileSync(waitingEventsFile);
+  const active = resultFor(2);
+  await attempts.storeResult('run:waiting', active, null, {planId: 'plan:waiting', nodeId: 'node:waiting'});
+  const next = resultFor(3);
+  await assert.rejects(attempts.storeResult('run:next', next), /OBSERVABILITY_RESULT_STORE_FULL/);
+  const imported = await importCompletion(f, attempts);
+  const sourceFile = path.join(f.scope.attemptRoot, 'attempt-store.json');
+  const sourceBytes = fs.readFileSync(sourceFile);
+  const journalBytes = fs.readFileSync(imported.journalFile);
+  const scope = {...f.scope, attemptLimits: limits};
+  const retired = await retireAdmission(scope);
+  assert.equal(retired.newlyRetired, true);
+  assert.ok(retired.releasedBytes > 0);
+  assert.deepEqual(fs.readFileSync(sourceFile), sourceBytes);
+  assert.deepEqual((await attempts.snapshot()).results.map(item => item.pipelineRunId), [f.runId, 'run:waiting']);
+  await assert.rejects(attempts.storeResult('run:next', next), /OBSERVABILITY_RESULT_STORE_FULL/);
+  const reopened = new FileDurableAttemptStore(f.scope.attemptRoot, limits);
+  const replayed = await reopened.storeResult(f.runId, f.result, {record: f.record, closure: f.closure}, {planId: 'plan:1', nodeId: 'node:1'});
+  assert.deepEqual(replayed.result, f.result);
+  const reconciler = new NovaObservabilityReconciler({attemptStore: reopened, admissionStore: f.admission, journalFile: imported.journalFile});
+  assert.equal((await reconciler.reconcile([imported.desired]))[0].action, 'already-imported');
+  assert.deepEqual(fs.readFileSync(imported.journalFile), journalBytes);
+  assert.deepEqual(fs.readFileSync(sourceFile), sourceBytes);
+  assert.deepEqual(fs.readFileSync(waitingEventsFile), waitingEvents);
+  t.diagnostic(JSON.stringify({admissionBytesReleased: retired.releasedBytes, resultQuota: limits.maximumResults,
+    retainedResults: 2, subsequentResultWrite: 'OBSERVABILITY_RESULT_STORE_FULL',
+    realConsumerReplay: 'already-imported', journalUnchanged: true, overallFindingComplete: false}));
+});
+
+test('existing import journal is a full result checkpoint but not a replacement for the original completion and replay guards', async t => {
+  const f = await fixture(t);
+  const imported = await importCompletion(f);
+  await retireAdmission(f.scope);
+  const journalBytes = fs.readFileSync(imported.journalFile);
+  const records = journalBytes.toString().trim().split('\n').map(line => JSON.parse(line));
+  assert.equal(records.length, 1);
+  const entry = records[0].entry;
+  assert.deepEqual(entry.decision.result, f.result);
+  assert.equal(entry.decision.action, 'imported');
+  assert.equal(entry.decision.completeness.state, 'complete');
+  assert.equal(Object.hasOwn(entry.decision, 'completionIntent'), false);
+  assert.equal(Object.hasOwn(entry.decision, 'record'), false);
+  assert.equal(Object.hasOwn(entry.decision, 'closure'), false);
+
+  // Deliberate corruption in this disposable test store proves why deleting a
+  // result is not an implementation of retirement, even with a real import ACK.
+  const sourceFile = path.join(f.scope.attemptRoot, 'attempt-store.json');
+  const sourceBytes = fs.readFileSync(sourceFile);
+  const state = JSON.parse(sourceBytes);
+  state.results = [];
+  fs.writeFileSync(sourceFile, canonicalJson(state));
+  await assert.rejects(f.admission.admit(canonicalJson(f.record)), /retirement-source-result/);
+  await assert.rejects(f.admission.admittedTail(f.runId, 1), /retirement-source-result/);
+  const outbox = new FileProducerOutbox(path.join(f.root, 'result-retirement-negative-outbox'), {maximumRecords: 10, maximumBytes: 50000});
+  await outbox.append(f.record);
+  await assert.rejects(deliverPending(outbox, f.admission), /retirement-source-result/);
+  assert.equal((await outbox.pending()).length, 1);
+  assert.deepEqual(fs.readFileSync(imported.journalFile), journalBytes);
+
+  fs.writeFileSync(sourceFile, sourceBytes);
+  assert.equal(await deliverPending(outbox, f.admission), 1);
+  assert.equal((await outbox.pending()).length, 0);
+  assert.equal((await imported.reconciler.reconcile([imported.desired]))[0].action, 'already-imported');
+  assert.deepEqual(fs.readFileSync(imported.journalFile), journalBytes);
+  t.diagnostic(JSON.stringify({checkpoint: 'real NovaObservabilityReconciler import', resultBytesPresent: true,
+    completionIntentPresent: false, sourceDeletion: 'fails closed; original delivery remains pending',
+    sourceRestored: 'original duplicate ACK and already-imported result recover', overallFindingComplete: false}));
 });

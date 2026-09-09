@@ -1,0 +1,37 @@
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (1235.57188ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (1019.053364ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (1076.488465ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (1043.11898ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (1247.35312ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (1400.688261ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (1052.411941ms)
+✔ real confirmed import and admission retirement do not release the remaining mixed-run result quota (2124.359682ms)
+ℹ {"admissionBytesReleased":7177,"resultQuota":2,"retainedResults":2,"subsequentResultWrite":"OBSERVABILITY_RESULT_STORE_FULL","realConsumerReplay":"already-imported","journalUnchanged":true,"overallFindingComplete":false}
+✔ existing import journal is a full result checkpoint but not a replacement for the original completion and replay guards (981.010956ms)
+ℹ {"checkpoint":"real NovaObservabilityReconciler import","resultBytesPresent":true,"completionIntentPresent":false,"sourceDeletion":"fails closed; original delivery remains pending","sourceRestored":"original duplicate ACK and already-imported result recover","overallFindingComplete":false}
+✔ fresh admission reads and duplicate ACK fail closed for persisted corruption (238.639463ms)
+✔ fresh attempt replay validates result, generation, evidence, intent and closure before recovery (454.354526ms)
+✔ standalone closure producer binding preserves staged-evidence expiry and partial completeness (88.431768ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (910.176597ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (1053.102712ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (782.438896ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (839.085602ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (817.699885ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (878.224184ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1368.558784ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (858.172435ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.39777ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.81461ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.390438ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (356.883097ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2424.058373ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (343.189313ms)
+✔ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (782.755535ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11880.298808
