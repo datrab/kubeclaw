@@ -31,3 +31,25 @@ export function recoverStageStates(
     [...states].map(([stageId, state]) => [stageId, deepFreeze(structuredClone(state))]),
   );
 }
+
+/** A wait projection may be missing after a committed attempt result. Fold the
+ * same reducer to recover its authoritative creation record and timestamp. */
+export function recoverWaitCreation(
+  definition: PipelineDefinition,
+  records: readonly JournalRecord<LifecycleEvent | PluginDomainEvent>[],
+  runId: string,
+  orchestratorIssuerId: string,
+  waitId: string,
+): JournalRecord<LifecycleEvent | PluginDomainEvent> | undefined {
+  const states = initialStageStates(definition);
+  let created: JournalRecord<LifecycleEvent | PluginDomainEvent> | undefined;
+  for (const record of records) {
+    const event = record.entry;
+    if (event.schemaVersion !== 'lifecycle-event.v2' || event.identity.runId !== runId) continue;
+    const stageId = event.identity.stageId;
+    const previous = stageId ? states.get(stageId)?.wait?.waitId : undefined;
+    applyRecoveryEvent(definition, states, event, orchestratorIssuerId);
+    if (stageId && previous !== waitId && states.get(stageId)?.wait?.waitId === waitId) created = record;
+  }
+  return created;
+}

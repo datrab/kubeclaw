@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { AdministrativeReopenDecision, LifecycleEvent, PipelineDefinition, PluginDomainEvent, ResumeSignal } from '@kubeclaw/plugin-sdk';
 import type { PlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
-import { recoverStageStates } from '../lifecycle/recovery.ts';
+import { recoverStageStates, recoverWaitCreation } from '../lifecycle/recovery.ts';
 import type { StageRuntimeState } from '../lifecycle/reducer.ts';
 import { assertEffectRecoverySafe } from './effect-recovery.ts';
 import { FileJournal } from '../state/journal.ts';
@@ -81,7 +81,7 @@ export async function resumePipeline(platform: PlatformConfig, definitionInput: 
     verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);
     const events = new FileJournal<LifecycleEvent | PluginDomainEvent>(path.join(runRoot, 'events.jsonl')); assertRecoverableRun(events, runId, 'WAIT');
     const recovered = recoveryStates(definition, events, runId, platform.orchestratorIssuerId); const waiting = recoveredWait(recovered, signal.waitId);
-    const created = validateWaitHistory(events, runId, signal.waitId); validateSignal(waiting.wait!, signal, created.entry.occurredAt); leaseSignal.throwIfAborted();
+    const created = validateWaitHistory(events, runId, signal.waitId, definition, platform.orchestratorIssuerId); validateSignal(waiting.wait!, signal, created.entry.occurredAt); leaseSignal.throwIfAborted();
     recordSignal(runRoot, signal); recordWaitResolution(events, runId, waiting, signal, leaseSignal);
     const initialStates = recoveryStates(definition, events, runId, platform.orchestratorIssuerId);
     return executePrepared({ platform, definition, runtime, runId, runRoot, leaseSignal, events }, { initialStates,
@@ -92,11 +92,10 @@ export async function resumePipeline(platform: PlatformConfig, definitionInput: 
 function recoveredWait(states: ReadonlyMap<string, StageRuntimeState>, waitId: string): StageRuntimeState {
   const waiting = [...states.values()].find((state) => state.wait?.waitId === waitId); if (!waiting?.wait) throw new Error(`WAIT_UNKNOWN_OR_STALE:${waitId}`); return waiting;
 }
-function validateWaitHistory(events: FileJournal<LifecycleEvent | PluginDomainEvent>, runId: string, waitId: string) {
+function validateWaitHistory(events: FileJournal<LifecycleEvent | PluginDomainEvent>, runId: string, waitId: string, definition: PipelineDefinition, issuer: string) {
   const terminal = [...events.records()].reverse().find(({ entry }) => entry.schemaVersion === 'lifecycle-event.v2' && entry.identity.runId === runId
     && ['run.succeeded', 'run.failed', 'run.blocked', 'run.cancelled'].includes(entry.type));
-  const created = [...events.records()].reverse().find(({ entry }) => entry.schemaVersion === 'lifecycle-event.v2' && entry.identity.runId === runId
-    && (entry.payload.wait as { waitId?: unknown } | undefined)?.waitId === waitId);
+  const created = recoverWaitCreation(definition, events.records(), runId, issuer, waitId);
   if (terminal && (!created || created.sequence <= terminal.sequence)) throw new Error(`WAIT_INVALIDATED_BY_TERMINAL_RUN:${waitId}`);
   if (!created) throw new Error(`WAIT_CREATION_RECORD_MISSING:${waitId}`); return created;
 }

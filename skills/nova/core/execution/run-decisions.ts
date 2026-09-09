@@ -1,6 +1,6 @@
 import { applyRepair, repairRequest } from '../lifecycle/remediation.ts';
 import type { ExecutionGraph } from './graph.ts';
-import crypto from 'node:crypto';
+import { decisionWait } from '../lifecycle/wait-request.ts';
 import type { LifecycleEvent, StageDefinition, StageResult } from '@kubeclaw/plugin-sdk';
 import type { LifecycleDecision, StageRuntimeState } from '../lifecycle/reducer.ts';
 import type { ArtifactCheckpointRecorder } from './artifact-checkpoints.ts';
@@ -38,20 +38,15 @@ export class DecisionRecorder {
     return {
       schedule_attempt: (runId, completed) => this.#retry(runId, completed),
       schedule_remediation: (runId, completed) => this.#remediate(runId, completed),
-      request_orchestrator: (runId, completed) => this.#orchestrator(runId, completed, true),
-      pause_for_orchestrator: (runId, completed) => this.#orchestrator(runId, completed, false),
+      request_orchestrator: (runId, completed) => this.#orchestrator(runId, completed),
+      pause_for_orchestrator: (runId, completed) => this.#orchestrator(runId, completed),
       persist_wait: (runId, completed) => this.#wait(runId, completed), cooldown: (runId, completed) => this.#wait(runId, completed),
       stop: (runId, completed) => this.#stop(runId, completed), complete: (runId, completed) => this.#complete(runId, completed),
     };
   }
 
   #artifacts(runId: string, stageId: string, result: StageResult): void {
-    for (const artifact of result.artifacts) {
-      if (artifact.producer.runId !== runId || artifact.producer.stageId !== stageId) {
-        throw new Error(`ARTIFACT_PRODUCER_MISMATCH:${runId}:${stageId}:${artifact.artifactId}`);
-      }
-      this.#checkpoints.result(artifact);
-    }
+    this.#checkpoints.completedResult(runId, stageId, result);
   }
 
   #administrativeBlocked(runId: string, stageId: string, state: StageRuntimeState): void {
@@ -85,13 +80,10 @@ export class DecisionRecorder {
     this.#recordTerminal(targetStatus === 'failed' ? 'failed' : targetStatus === 'cancelled' ? 'cancelled' : 'blocked');
   }
 
-  #orchestrator(runId: string, { definition, decision }: CompletedStageDecision, afterAttempt: boolean): void {
+  #orchestrator(runId: string, { definition, decision }: CompletedStageDecision): void {
     const action = decision.action;
     if (action.type !== 'request_orchestrator' && action.type !== 'pause_for_orchestrator') return;
-    const wait = { schemaVersion: 'wait-request.v2' as const, waitId: `wait:${crypto.randomUUID()}`, kind: 'orchestrator' as const,
-      signalType: 'core.orchestrator.resume', authorizedIssuer: { type: 'orchestrator' as const, id: this.#issuer }, expiresAt: null,
-      ...(afterAttempt && action.type === 'request_orchestrator' ? { request: { afterAttempt: action.afterAttempt } }
-        : action.type === 'pause_for_orchestrator' && action.wait.request ? { request: action.wait.request } : {}) };
+    const wait = decisionWait(decision, runId, this.#issuer)!;
     this.#states.set(definition.id, { ...decision.state, wait });
     this.#append('orchestrator.required', { runId, stageId: definition.id }, { ...(action.type === 'request_orchestrator' ? { afterAttempt: action.afterAttempt } : {}),
       attemptsUsed: decision.state.attemptsUsed, remediationCyclesUsed: decision.state.remediationCyclesUsed, wait }); this.#paused = true;

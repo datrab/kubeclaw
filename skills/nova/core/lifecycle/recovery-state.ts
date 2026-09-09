@@ -4,8 +4,10 @@ import type {
   PipelineDefinition,
   StageResult,
   WaitRequest,
+  ResumeSignal,
 } from '@kubeclaw/plugin-sdk';
 import { applyStageResult, type StageRuntimeState } from './reducer.ts';
+import { decisionWait } from './wait-request.ts';
 
 type StateMap = Map<string, StageRuntimeState>;
 
@@ -49,32 +51,9 @@ function recoverAttemptResult(
     attemptNumber: Math.max(0, current.attemptNumber - 1),
     attemptsUsed: Math.max(0, current.attemptsUsed - 1),
   }, event.payload.result as StageResult);
-  const waiting = decision.action.type === 'pause_for_orchestrator' || decision.action.type === 'request_orchestrator';
-  const state = waiting ? withOrchestratorWait(decision, event, orchestratorIssuerId) : decision.state;
+  const wait = decisionWait(decision, event.identity.runId, orchestratorIssuerId);
+  const state = wait ? { ...decision.state, wait } : decision.state;
   return decision.action.type === 'schedule_attempt' ? { ...state, status: 'pending' } : state;
-}
-
-function withOrchestratorWait(
-  decision: ReturnType<typeof applyStageResult>,
-  event: LifecycleEvent,
-  orchestratorIssuerId: string,
-): StageRuntimeState {
-  if (decision.action.type !== 'pause_for_orchestrator' && decision.action.type !== 'request_orchestrator') return decision.state;
-  const request = decision.action.type === 'request_orchestrator'
-    ? { afterAttempt: decision.action.afterAttempt }
-    : decision.action.wait.request;
-  return {
-    ...decision.state,
-    wait: {
-      schemaVersion: 'wait-request.v2',
-      waitId: `wait:orchestrator:${event.identity.attemptId ?? event.eventId}`,
-      kind: 'orchestrator',
-      signalType: 'core.orchestrator.resume',
-      authorizedIssuer: { type: 'orchestrator', id: orchestratorIssuerId },
-      expiresAt: null,
-      ...(request ? { request } : {}),
-    },
-  };
 }
 
 function scheduleState(event: LifecycleEvent, current: StageRuntimeState, states: StateMap): StageRuntimeState {
@@ -139,6 +118,13 @@ function stageEventState(event: LifecycleEvent, current: StageRuntimeState, stat
   return status ? { ...current, ...budgets(event, current), status } : undefined;
 }
 
+function resolvedWaitState(event: LifecycleEvent, current: StageRuntimeState): StageRuntimeState {
+  const { wait: _wait, ...withoutWait } = current;
+  const signal = event.payload.signal as ResumeSignal;
+  if (!signal || signal.waitId !== event.identity.waitId) throw new Error('RECOVERY_WAIT_SIGNAL_INVALID');
+  return { ...withoutWait, status: 'pending', continuationGuidance: signal.payload };
+}
+
 export function applyRecoveryEvent(
   definition: PipelineDefinition,
   states: StateMap,
@@ -159,10 +145,7 @@ export function applyRecoveryEvent(
     return;
   }
   if (event.type === 'wait.resolved') {
-    const { wait: _wait, ...withoutWait } = current;
-    const signal = event.payload.signal as import('@kubeclaw/plugin-sdk').ResumeSignal;
-    if (!signal || signal.waitId !== event.identity.waitId) throw new Error('RECOVERY_WAIT_SIGNAL_INVALID');
-    states.set(stageId, { ...withoutWait, status: 'pending', continuationGuidance: signal.payload });
+    states.set(stageId, resolvedWaitState(event, current));
     return;
   }
   const recovered = recoverAttemptResult(definition, event, current, orchestratorIssuerId)

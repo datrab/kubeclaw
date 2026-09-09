@@ -1,6 +1,8 @@
 import { canonicalJson, sha256Text,
   type ArtifactRef, type AttemptIdentity, type CapabilityInvocation,
-  type LifecycleEvent, type PluginDomainEvent } from '@kubeclaw/plugin-sdk';
+  type LifecycleEvent, type PluginDomainEvent, type StageResult } from '@kubeclaw/plugin-sdk';
+
+import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
 
 import type { FileJournal } from '../state/journal.ts';
 import type { AppendLifecycleEvent } from './stage-executor.ts';
@@ -63,11 +65,28 @@ export class ArtifactCheckpointRecorder {
     // cross-process lease leaves one mutable owner for a run journal, while this
     // in-memory index serializes concurrent checkpoint completions in that owner.
     this.#append = append; this.#recorded = this.#read(journal);
+    // Attempt completion is durable before its derived artifact.created rows.
+    // Restore the same projection before dependent stages receive their index.
+    for (const { entry } of journal.records()) {
+      if (entry.schemaVersion !== 'lifecycle-event.v2' || !['attempt.completed', 'attempt.cancelled', 'attempt.timed_out'].includes(entry.type)) continue;
+      if (!entry.payload.result) continue;
+      this.completedResult(entry.identity.runId, entry.identity.stageId!, entry.payload.result as StageResult);
+    }
   }
 
   checkpoint(artifact: ArtifactRef): void { this.#record(artifact, true); }
 
   result(artifact: ArtifactRef): void { this.#record(artifact, false); }
+
+  completedResult(runId: string, stageId: string, result: StageResult): void {
+    validateContractValue('stageResult', result);
+    for (const artifact of result.artifacts) {
+      if (artifact.producer.runId !== runId || artifact.producer.stageId !== stageId) {
+        throw new Error(`ARTIFACT_PRODUCER_MISMATCH:${runId}:${stageId}:${artifact.artifactId}`);
+      }
+      this.result(artifact);
+    }
+  }
 
   #record(artifact: ArtifactRef, checkpoint: boolean): void {
     if (this.#recorded.some((candidate) => exactArtifact(candidate, artifact))) return;
