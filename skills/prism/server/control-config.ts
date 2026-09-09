@@ -1,3 +1,4 @@
+import { loadProductConfig, type ProductConfig } from '../control/product-decisions.ts';
 import { authorizePipelinePreferenceSubject } from '../control/pipeline-preference-subject.ts';
 
 export interface ControlConfig {
@@ -54,4 +55,16 @@ export function loadControlServerConfig(environment: NodeJS.ProcessEnv = process
 /** The production entrypoint remains a pg.Pool listener; no embedded-mode switch. */
 export function loadControlListenerConfig(environment: NodeJS.ProcessEnv = process.env) {
   return {databaseUrl: environment.DATABASE_URL, port: Number(environment.PORT ?? 8080)};
+}
+
+export function loadProductAuthorityConfig(environment: NodeJS.ProcessEnv = process.env): Promise<ProductConfig | undefined> {
+  return loadProductConfig(environment);
+}
+
+/** Capture one startup configuration before asynchronous signing-key I/O. */
+export async function loadControlCompositionConfig(environment: NodeJS.ProcessEnv = process.env) {
+  const snapshot = {...environment};
+  const service = loadControlServerConfig(snapshot);
+  const product = await loadProductAuthorityConfig(snapshot);
+  return {service, product};
 }

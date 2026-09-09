@@ -1,0 +1,31 @@
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/preferences',
+  error: 'preference user does not match the session'
+}
+✔ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (5236.873849ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/agent/design-sets',
+  error: 'stale design generation'
+}
+✔ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (2899.731175ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (4143.340069ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (3439.639452ms)
+✔ Control configuration preserves production listener and original non-SPIFFE service defaults (1.672804ms)
+✔ Control trust configuration fails closed and keeps optional test-runner identity optional (4.364976ms)
+✔ Control service configuration is an owned startup snapshot, not mutable caller environment (0.22519ms)
+✔ original HTTPS client validates actual TLS, rereads rotated token, and rejects HTTP errors and oversized responses (1248.279906ms)
+✔ real session issuer, explicit operator policy, origin and CSRF bind the signer (4.322742ms)
+✔ real HTTP authorization persists signed intent before failed transport and recovers identical bytes after durable database reopen (4873.700192ms)
+✔ SQL receipt replay compares nested signature bytes and preserves append-only history (1872.513581ms)
+✔ receipt contract preserves Go nanosecond expiry and rejects changed nested envelope (2124.965255ms)
+✔ Studio preserves every Control Set-Cookie header (5.751458ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9322.842687

@@ -52,7 +52,7 @@ async function requestBody(request: IncomingMessage): Promise<Buffer<ArrayBuffer
 }
 function upstreamHeaders(request: IncomingMessage, secret: string): Headers {
   const headers = new Headers();
-  for (const name of ['content-type', 'cookie', 'x-prism-csrf', 'idempotency-key', 'tailscale-user-login', 'tailscale-user-name', 'tailscale-user-profile-pic']) {
+  for (const name of ['origin', 'content-type', 'cookie', 'x-prism-csrf', 'idempotency-key', 'tailscale-user-login', 'tailscale-user-name', 'tailscale-user-profile-pic']) {
     const value = request.headers[name]; if (typeof value === 'string') headers.set(name, value);
   }
   headers.set('x-prism-ingress-secret', secret);
