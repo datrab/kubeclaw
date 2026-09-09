@@ -1,8 +1,9 @@
+import { productAuthorityHandler } from './product-decisions.ts';
 import { handleAgentJobs } from './agent-job-routes.ts';
 import { agentJob } from '../control/agent-jobs.ts';
 import { agentReceipt, startAgentRevision, admitDesignAgent } from '../control/agent-admission.ts';
 import { startDesignRound, assertArchitectureTransition, approvedRoundBaseline } from "../control/design-generations.ts";
-import { loadControlConfig } from "./control-config.ts";
+import { loadControlConfig, loadProductAuthorityConfig } from "./control-config.ts";
 import { authorizePipelinePreferenceSubject } from "../control/pipeline-preference-subject.ts";
 import { preferenceEvents, setPersonalPreferences, requirePreferenceGeneration } from "../control/preference-snapshot.ts";
 import { decideDirection, directionIdempotencyKey } from "../control/direction-decisions.ts";
@@ -47,6 +48,7 @@ import { signInternalRequest } from "./internal-auth.ts";
 import { assertMaterialDirectionDiversity } from "../directions/index.ts";
 import { authorizeProxiedSpiffePeer } from "@kubeclaw/worker-core";
 
+const productConfig = await loadProductAuthorityConfig();
 const port = Number(process.env.PORT ?? 8080);
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const repository = new RevisionRepository(pool);
@@ -218,7 +220,7 @@ const userKey = (identity: string) =>
 
 const controlConfig = loadControlConfig();
 
-const server = createServer(async (request, response) => {
+const server = createServer(productAuthorityHandler(async (request, response) => {
   try {
     const url = new URL(request.url ?? "/", "http://prism-control");
     if (url.pathname === "/health")
@@ -1033,7 +1035,7 @@ const server = createServer(async (request, response) => {
       error: error instanceof Error ? error.message : "request failed",
     });
   }
-});
+}, {db: pool, config: productConfig, sessionSecret}));
 
 server.listen(port, "0.0.0.0");
 process.on("SIGTERM", () => server.close(() => pool.end()));
