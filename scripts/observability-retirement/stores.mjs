@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assertDurableRecordReplay } from '../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';
 import { assertAdmissionReplay } from '../../skills/common/plugin-runtime/foundation/observability/replay-validation.ts';
-import { assertAttemptReplay } from '../../skills/common/plugin-runtime/foundation/observability/attempt-replay.ts';
+import { decodeAttemptState } from '../../skills/common/plugin-runtime/foundation/observability/attempt-projection.ts';
 import { identityHash } from './files.mjs';
 import { assertCompactedPlanJobRecord } from '../../skills/buster/engine/test-gates/remote-plan-compaction.ts';
 import { remotePlanJobId } from '../../contracts/pipeline-test-gate/v1/src/index.ts';
@@ -17,6 +17,14 @@ const broadLimits = {
   maximumEvidenceObjectBytes: Number.MAX_SAFE_INTEGER, maximumResults: Number.MAX_SAFE_INTEGER,
   maximumClosures: Number.MAX_SAFE_INTEGER, maximumPendingEvidenceAgeMs: Number.MAX_SAFE_INTEGER,
 };
+function inventoryAttemptState(inventory,root) {
+  const raw=inventory.json(path.join(root,'attempt-store.json'));
+  return decodeAttemptState(raw,root,{...broadLimits,maximumMetadataBytes:inventory.limits.maximumSnapshotBytes},(file,maximumBytes,prefixBytes)=>{
+    const bytes=Buffer.from(inventory.text(file));
+    if(bytes.length>maximumBytes||bytes.length<prefixBytes)throw new Error('SNAPSHOT_BYTE_LIMIT');
+    return bytes.subarray(0,prefixBytes);
+  }).state;
+}
 // The planner's bounded inventory limits allocation. These validator limits do
 // not pretend to be the live deployment's configured admission quotas.
 function blobPath(root, hash) {
@@ -86,8 +94,7 @@ export function inspectAdmission(inventory, root, runId) {
   const retired=(state.retiredEntries??[]).filter(item=>item.acknowledgement.pipelineRunId===runId);
   for(const entry of retired) {
     if(!inventory.files.has(entry.source.file)){inventory.block('ADMISSION_COMPLETION_REFERENCE_UNKNOWN',entry.source.file);continue;}
-    const source=inventory.json(entry.source.file);
-    assertAttemptReplay(source,path.dirname(entry.source.file),broadLimits);
+    const source=inventoryAttemptState(inventory,path.dirname(entry.source.file));
     resolveAdmissionRetiredSnapshot(entry,source);
   }
   return { root, nextCursor: state.nextCursor, retiredCompletions:retired.map(entry=>({
@@ -100,8 +107,7 @@ export function inspectAdmission(inventory, root, runId) {
 }
 
 export function inspectAttempts(inventory, root, runId, references) {
-  const state = inventory.json(path.join(root, 'attempt-store.json'));
-  assertAttemptReplay(state, root, broadLimits);
+  const state = inventoryAttemptState(inventory,root);
   const results = state.results.filter(result => result.pipelineRunId === runId);
   for (const item of results) {
     if (!item.storedAt || !item.completionIntent || item.result.state === 'uncertain') inventory.block('ATTEMPT_COMPLETION_UNCONFIRMED', identityHash(item.attemptId));
