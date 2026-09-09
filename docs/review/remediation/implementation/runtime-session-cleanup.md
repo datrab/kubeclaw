@@ -49,6 +49,11 @@ same-label entry with conflicting run/task/session identity. Registry adoption
 requires unique run, task and session bindings across all records and both
 field aliases, even when the spawn omitted the optional task ID; contradictory
 related status records cannot confirm termination or supply a cancellation target.
+Registry adoption and terminal lookup now share the same transitive identifier
+closure, so discovering an optional task ID cannot hide another run linked through
+that task. The actual Core/HTTP regression reproduced the prior unsafe cancellation
+and false terminal confirmation before the correction; afterward it issues zero
+cancels and persists the unresolved outcome. Both logs are retained.
 ACP responses with explicit conflicting root or nested identifiers also remain
 unknown, even when their status text is terminal. ACP `sessions_send`
 only requests a stop; the existing `session_status` transport must then report a
@@ -84,17 +89,18 @@ live image acceptance were not measured here.
 ## Verification
 
 `docs/review/evidence/runtime-session-cleanup.txt` contains original commands and
-complete output. The new suites cover 28 local cases (the prior 25-case run plus three focused final regressions) with the real registry,
+complete output. The new suites cover 29 local cases (the prior 25-case run plus four focused identity regressions) with the real registry,
 AdapterRuntime, network adapter and filesystem effect journal:
 
-- Twenty original OpenClaw dispatch cases: max polls, stalled poll body, parent
+- Twenty-one original OpenClaw dispatch cases: max polls, stalled poll body, parent
   abort, delayed/lost spawn, rejected/stalled cancel, ACP acknowledgment without
   terminal state, confirmed ACP terminal state, conflicting terminal identity,
   lost ACP identity, conflicting normal-poll identity, a concrete old-prefix hash
   collision, legacy-label refusal, ambiguous lost-spawn registry, conflicting ACP
   identity, contradictory same-run terminal records, and missing spawn task IDs
-  with conflicting aliases, conflicting registry records, or one valid snake-case
-  task ID. The two ambiguous cases issue zero cancel requests; the valid case
+  with conflicting aliases, conflicting registry records, a transitive conflicting
+  run through the discovered task ID, or one valid snake-case
+  task ID with a consistent linked partial record. The three ambiguous cases issue zero cancel requests; the valid case
   cancels the resolved owned task. Real response connections close on cancellation.
 - One original registry-parser regression rejects conflicting snake/camel aliases.
 - Seven Core API cases using a small registered test consumer and actual HTTP:

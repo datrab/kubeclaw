@@ -122,3 +122,84 @@ exit: 0
 
 $ node_modules/.bin/eslint --config charts/kubeclaw/files/config/eslint.config.mjs skills/common/plugins/runtime-dispatch/src/openclaw-session.ts tests/verification/reliability/runtime-session-cleanup.test.mts
 exit: 0
+
+Transitive ownership before correction
+$ node --test --test-name-pattern=missing-task-transitive tests/verification/reliability/runtime-session-cleanup.test.mts
+✖ actual Core/HTTP session cleanup: missing-task-transitive (2121.402244ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2686.322926
+
+✖ failing tests:
+
+test at tests/verification/reliability/runtime-session-cleanup.test.mts:111:3
+✖ actual Core/HTTP session cleanup: missing-task-transitive (2121.402244ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /OPENCLAW_SESSION_CLEANUP_UNRESOLVED/u. Input:
+
+  'Error: EFFECT_OUTCOME_UNRESOLVED:effect:284afe734317818fe97a9d25740d41d4beddc9de0ea5012d19a81fcc85013fde:OPENCLAW_SESSION_TIMEOUT; OPENCLAW_SESSION_TERMINAL_CONFIRMED:run:owned'
+
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/runtime-session-cleanup.test.mts:115:7)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: EFFECT_OUTCOME_UNRESOLVED:effect:284afe734317818fe97a9d25740d41d4beddc9de0ea5012d19a81fcc85013fde:OPENCLAW_SESSION_TIMEOUT; OPENCLAW_SESSION_TERMINAL_CONFIRMED:run:owned
+        at AdapterRuntime.invoke (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/execution/adapters.ts:60:13)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/runtime-session-cleanup.test.mts:115:7)
+        at async Test.run (node:internal/test_runner/test:1389:7)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3),
+    expected: /OPENCLAW_SESSION_CLEANUP_UNRESOLVED/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+exit: 1
+
+After canonical relation closure
+$ node --test --test-name-pattern=missing-task tests/verification/reliability/runtime-session-cleanup.test.mts
+✔ actual Core/HTTP session cleanup: missing-task-alias (2148.284704ms)
+✔ actual Core/HTTP session cleanup: missing-task-snake (1675.984806ms)
+✔ actual Core/HTTP session cleanup: missing-task-records (1383.073874ms)
+✔ actual Core/HTTP session cleanup: missing-task-transitive (1404.801016ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7100.300157
+exit: 0
+
+Original regression
+$ npm test --prefix skills/common/plugins/runtime-dispatch
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node ../../../../tests/verification/reliability/repository-result-paths.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.runtime-dispatch","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.runtime-dispatch","suite":"package-boundary"}
+{"ok":true,"missingSymlink":true,"directWriter":true,"rootSymlink":true,"idempotency":true,"concurrentAttempts":300,"allowed":57,"denied":243,"outsideWrites":0}
+exit: 0
+
+Build
+$ npm run build --prefix skills/common/plugins/runtime-dispatch
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> build
+> tsc --noEmit -p tsconfig.json
+
+exit: 0
+
+Canonical lint
+$ node_modules/.bin/eslint --config charts/kubeclaw/files/config/eslint.config.mjs skills/common/plugins/runtime-dispatch/src/openclaw-session.ts tests/verification/reliability/runtime-session-cleanup.test.mts
+exit: 0

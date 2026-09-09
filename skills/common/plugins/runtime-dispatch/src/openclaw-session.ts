@@ -54,6 +54,21 @@ function includeIdentifiers(target: Set<string>, values: readonly string[]): boo
   return missing.length > 0;
 }
 
+function relatedSessionEntries(entries: readonly JsonRecord[], initialIdentifiers: Iterable<string>, label?: string): readonly JsonRecord[] {
+  const identifiers = new Set(initialIdentifiers);
+  const matchesLabel = (entry: JsonRecord): boolean => label !== undefined && optionalText(entry.label) === label;
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const entry of entries) {
+      const ids = entryIdentifiers(entry);
+      if (!matchesLabel(entry) && !ids.some(id => identifiers.has(id))) continue;
+      changed = includeIdentifiers(identifiers, ids) || changed;
+    }
+  }
+  return entries.filter(entry => matchesLabel(entry) || entryIdentifiers(entry).some(id => identifiers.has(id)));
+}
+
 /** Resolve one previously accepted deterministic task, failing closed if its label is ambiguous or incomplete. */
 export function registeredSessionIdentity(
   value: unknown, label: string, expectedModel: string,
@@ -61,18 +76,7 @@ export function registeredSessionIdentity(
   const entries = sessionListEntries(value);
   const exact = entries.filter((entry) => optionalText(entry.label) === label);
   if (exact.length === 0) return undefined;
-  const identifiers = new Set(exact.flatMap(entryIdentifiers));
-  let changed = true;
-  while (changed) {
-    changed = false;
-    for (const entry of entries) {
-      const ids = entryIdentifiers(entry);
-      if (optionalText(entry.label) !== label && !ids.some((id) => identifiers.has(id))) continue;
-      changed = includeIdentifiers(identifiers, ids) || changed;
-    }
-  }
-  const related = entries.filter((entry) => optionalText(entry.label) === label
-    || entryIdentifiers(entry).some((id) => identifiers.has(id)));
+  const related = relatedSessionEntries(entries, exact.flatMap(entryIdentifiers), label);
   const identifiersFor = (...fields: string[]): Set<string> => new Set(related.flatMap(entry => fields.map(field => optionalText(entry[field])))
     .filter((value): value is string => value !== undefined));
   const runIds = identifiersFor('runId', 'run_id');
@@ -89,13 +93,13 @@ export function registeredSessionIdentity(
   return Object.freeze({ sessionKey, runId, label, model: expectedModel, ...(taskId ? { taskId } : {}) });
 }
 
-function exactSessionEntry(entry: JsonRecord, identity: OpenClawSessionIdentity): boolean {
+function exactSessionEntry(entry: JsonRecord, identity: OpenClawSessionIdentity, requireMatch = true): boolean {
   if ([[entry.runId, entry.run_id], [entry.sessionKey, entry.session_key], [entry.taskId, entry.task_id]]
     .some(([camel, snake]) => camel !== undefined && snake !== undefined && camel !== snake)) return false;
   const pairs = [[entry.runId, identity.runId], [entry.run_id, identity.runId],
     [entry.sessionKey, identity.sessionKey], [entry.session_key, identity.sessionKey],
     [entry.taskId, identity.taskId], [entry.task_id, identity.taskId]];
-  return pairs.some(([actual, expected]) => expected !== undefined && actual === expected)
+  return (!requireMatch || pairs.some(([actual, expected]) => expected !== undefined && actual === expected))
     && pairs.every(([actual, expected]) => actual === undefined || expected === undefined || actual === expected);
 }
 
@@ -108,10 +112,10 @@ function terminal(value: unknown, identity: OpenClawSessionIdentity, subagent: b
       .filter((candidate): candidate is string => typeof candidate === 'string' && candidate.length > 0));
     if (exactIdentity) {
       const strong = new Set([identity.taskId, identity.runId, identity.sessionKey].filter((value): value is string => typeof value === 'string'));
-      const related = sessionListEntries(value).filter(entry => entryIdentifiers(entry).some(id => strong.has(id)));
+      const related = relatedSessionEntries(sessionListEntries(value), strong);
       const ambiguous = [['runId', 'run_id'], ['sessionKey', 'session_key'], ['taskId', 'task_id']]
         .some(fields => new Set(related.flatMap(entry => fields.map(field => optionalText(entry[field]))).filter(value => value !== undefined)).size > 1);
-      if (ambiguous || related.some(entry => !exactSessionEntry(entry, identity))) return { terminal: false, state: 'unknown' };
+      if (ambiguous || related.some(entry => !exactSessionEntry(entry, identity, false))) return { terminal: false, state: 'unknown' };
     }
     for (const collection of [source.tasks, source.active, source.recent]) {
       if (!Array.isArray(collection)) continue;

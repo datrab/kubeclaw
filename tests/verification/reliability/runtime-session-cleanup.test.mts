@@ -9,7 +9,7 @@ import { once } from 'node:events';
 import { registeredSessionIdentity } from '../../../skills/common/plugins/runtime-dispatch/src/openclaw-session.ts';
 import * as core from '../../../skills/nova/core/src/index.ts';
 
-type Mode = 'max-polls' | 'poll-body' | 'parent-abort' | 'late-spawn' | 'cancel-rejected' | 'cancel-body' | 'acp-ack' | 'acp-terminal' | 'wrong-terminal' | 'lost-spawn' | 'acp-lost' | 'wrong-poll-terminal' | 'collision' | 'legacy' | 'ambiguous-spawn' | 'acp-wrong-terminal' | 'contradictory-terminal' | 'missing-task-alias' | 'missing-task-snake' | 'missing-task-records';
+type Mode = 'max-polls' | 'poll-body' | 'parent-abort' | 'late-spawn' | 'cancel-rejected' | 'cancel-body' | 'acp-ack' | 'acp-terminal' | 'wrong-terminal' | 'lost-spawn' | 'acp-lost' | 'wrong-poll-terminal' | 'collision' | 'legacy' | 'ambiguous-spawn' | 'acp-wrong-terminal' | 'contradictory-terminal' | 'missing-task-alias' | 'missing-task-snake' | 'missing-task-records' | 'missing-task-transitive';
 async function fixture(mode: Mode) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'runtime-session-cleanup-'));
   const owner = new AbortController();
@@ -63,9 +63,10 @@ async function fixture(mode: Mode) {
           if(mode==='parent-abort') owner.abort(new Error('parent cancelled poll'));
           return;
         }
+        if (mode === 'missing-task-transitive' && identity) { send({tasks:[{...identity,status:state},{runId:'run:foreign',taskId:identity.taskId,status:'running'}]}); return; }
         if (mode === 'missing-task-alias' && identity) { send({tasks:[{...identity,task_id:'task:foreign',status:'completed'}]}); return; }
         if (mode === 'missing-task-records' && identity) { send({tasks:[{...identity,status:'completed'},{...identity,taskId:'task:foreign',status:'running'}]}); return; }
-        if (mode === 'missing-task-snake' && identity) { const entry: Record<string, unknown>={...identity,task_id:identity.taskId,status:state}; delete entry.taskId; send({tasks:[entry]}); return; }
+        if (mode === 'missing-task-snake' && identity) { const entry: Record<string, unknown>={...identity,task_id:identity.taskId,status:state}; delete entry.taskId; send({tasks:[entry],recent:[{task_id:identity.taskId,status:state}]}); return; }
         if (mode === 'contradictory-terminal' && identity) { send({active:[{...identity,status:'completed'}],recent:[{...identity,taskId:'task:foreign',status:'running'}]}); return; }
         if (mode === 'ambiguous-spawn' && identity) { send({active:[identity],recent:[{...identity,taskId:'task:foreign',sessionKey:'session:foreign'}]}); return; }
         if (mode === 'acp-wrong-terminal' && identity) { send({session:{sessionKey:'session:foreign',state:'idle'}}); return; }
@@ -106,14 +107,14 @@ async function fixture(mode: Mode) {
     async close(){await runtime.shutdown();timers.forEach(clearTimeout);server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));delete process.env[secretName];fs.rmSync(root,{recursive:true,force:true});}};
 }
 
-for(const mode of ['max-polls','poll-body','parent-abort','late-spawn','cancel-rejected','cancel-body','acp-ack','acp-terminal','wrong-terminal','lost-spawn','acp-lost','wrong-poll-terminal','ambiguous-spawn','acp-wrong-terminal','contradictory-terminal','missing-task-alias','missing-task-snake','missing-task-records'] as const){
+for(const mode of ['max-polls','poll-body','parent-abort','late-spawn','cancel-rejected','cancel-body','acp-ack','acp-terminal','wrong-terminal','lost-spawn','acp-lost','wrong-poll-terminal','ambiguous-spawn','acp-wrong-terminal','contradictory-terminal','missing-task-alias','missing-task-snake','missing-task-records','missing-task-transitive'] as const){
   test(`actual Core/HTTP session cleanup: ${mode}`,async()=>{
     const f=await fixture(mode);
     try{
-      const unknown=['cancel-rejected','cancel-body','acp-ack','wrong-terminal','lost-spawn','acp-lost','ambiguous-spawn','acp-wrong-terminal','contradictory-terminal','missing-task-alias','missing-task-records'].includes(mode);
+      const unknown=['cancel-rejected','cancel-body','acp-ack','wrong-terminal','lost-spawn','acp-lost','ambiguous-spawn','acp-wrong-terminal','contradictory-terminal','missing-task-alias','missing-task-records','missing-task-transitive'].includes(mode);
       await assert.rejects(f.runtime.invoke('runtime.dispatch',f.attempt,'dispatch:cleanup',f.request,f.owner.signal),
         unknown?/OPENCLAW_SESSION_CLEANUP_UNRESOLVED/u:/OPENCLAW_SESSION_TERMINAL_CONFIRMED:run:owned/u);
-      assert.equal(f.spawned(),1);assert.equal(f.cancelled(),['lost-spawn','acp-lost','ambiguous-spawn','missing-task-alias','missing-task-records'].includes(mode)?0:1);
+      assert.equal(f.spawned(),1);assert.equal(f.cancelled(),['lost-spawn','acp-lost','ambiguous-spawn','missing-task-alias','missing-task-records','missing-task-transitive'].includes(mode)?0:1);
       const journal=new core.FileEffectJournal(f.journalPath);
       const receipt=await journal.receipt('dispatch:cleanup');assert.equal(receipt?.status,'failed');
       assert.match(receipt?.error?.message??'',unknown?/CLEANUP_UNRESOLVED/u:/TERMINAL_CONFIRMED/u);
