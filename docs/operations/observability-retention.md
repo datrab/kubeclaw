@@ -104,9 +104,13 @@ work stays protected. An explicit decision to end future continuation must be
 recorded before any of its required data can be released. Final project reports,
 code, decisions and acceptance history remain protected until project deletion.
 
-Execution must hold the existing writer/run fences, recheck the planned identities
-and digests, and require durable consumer completion plus an independently checked
-archive of retained material. Producer admission ACK alone is insufficient. Shared
+Execution must hold the existing writer/run fences and recheck the planned
+identities and digests. Durable consumer completion and a checked archive are
+proposed safeguards for preserving downstream availability, not additional user
+conditions on explicitly requested manual log deletion under D07. The operation
+must state whether it preserves or intentionally deletes those logs. Final
+project material and required continuation evidence remain protected as above.
+Producer admission ACK alone does not prove downstream archival. Shared
 artifact/result references must remain valid. Permanent retirement/idempotency
 facts must survive outside the released portion so late deliveries and retries
 cannot recreate work or repeat an external action. Recovery, archival state and

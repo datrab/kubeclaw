@@ -1,0 +1,25 @@
+✔ fresh admission reads and duplicate ACK fail closed for persisted corruption (290.510012ms)
+✔ fresh attempt replay validates result, generation, evidence, intent and closure before recovery (488.246019ms)
+✔ standalone closure producer binding preserves staged-evidence expiry and partial completeness (91.441147ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (922.084545ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (923.965932ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (1112.240807ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (920.452844ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (870.238579ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (1042.272231ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1182.865451ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (705.094186ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.08016ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.733727ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.497599ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (322.488964ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (7458.927265ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (306.769023ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16266.61826

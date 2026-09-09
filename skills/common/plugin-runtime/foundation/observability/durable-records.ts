@@ -66,7 +66,7 @@ function payloadDigest(payload: unknown): string {
   return `sha256:${crypto.createHash("sha256").update(canonicalJson(payload)).digest("hex")}`;
 }
 
-function assertState(state: DurableRecordState): void {
+export function assertDurableRecordReplay(state: DurableRecordState): void {
   if (state.schemaVersion !== "pipeline-durable-record-store.v1" || !Array.isArray(state.records))
     throw new Error("DURABLE_RECORD_STORE_INVALID");
   const sequences = new Map<string, number>();
@@ -123,7 +123,7 @@ export class FileDurableRecordStore implements DurableRecordStore {
       throw new Error("DURABLE_RECORD_SIZE_EXCEEDED");
     return this.#serial(async () => {
       const state = await readDurableState(this.#file, EMPTY_STATE);
-      assertState(state);
+      assertDurableRecordReplay(state);
       const existing = state.records.find(
         (record) => record.stream === stream && record.idempotencyKey === idempotencyKey,
       );
@@ -154,7 +154,7 @@ export class FileDurableRecordStore implements DurableRecordStore {
     identity(stream, "DURABLE_RECORD_STREAM_INVALID");
     return this.#serial(async () => {
       const state = await readDurableState(this.#file, EMPTY_STATE);
-      assertState(state);
+      assertDurableRecordReplay(state);
       return structuredClone(state.records.filter((record) => record.stream === stream)) as DurableRecord<T>[];
     });
   }
@@ -174,7 +174,7 @@ export class FileDurableRecordStore implements DurableRecordStore {
       throw new Error("DURABLE_RECORD_SIZE_EXCEEDED");
     return this.#serial(async () => {
       const state = await readDurableState(this.#file, EMPTY_STATE);
-      assertState(state);
+      assertDurableRecordReplay(state);
       const index = state.records.findIndex(
         (record) => record.stream === stream && record.idempotencyKey === idempotencyKey,
       );
