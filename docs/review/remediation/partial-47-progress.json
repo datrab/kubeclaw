@@ -10,7 +10,7 @@
       "status": "in Bearbeitung",
       "baseline_status": "implementiert",
       "required_evidence": "Portable Ordnung/versionierte Digestumstellung noch offen; aktuelle akzeptierte Bytes bewusst unverändert.",
-      "result": "Artifact-, Effect-, Source-/Subject- und Snapshot-Versionierung samt historischer CLI-Kompatibilität integriert. Weitere persistierte Canonical-Consumer bleiben zu prüfen.",
+      "result": "Artifact-, Effect-, Source-/Subject- und Snapshot-Versionierung samt historischer CLI-Kompatibilität integriert. Zusätzlich tatsächlicher Core-Checkpoint-Consumer an Encoding und Originalreplay gebunden, unabhängig und durch Root geprüft. Weitere persistierte Canonical-Consumer bleiben zu prüfen.",
       "baseline_evidence_requirement": "Portable Ordnung/versionierte Digestumstellung noch offen; aktuelle akzeptierte Bytes bewusst unverändert.",
       "evidence": "implementation/wave47-sdk-independent-review.md"
     },

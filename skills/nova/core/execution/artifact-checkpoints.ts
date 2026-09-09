@@ -1,4 +1,4 @@
-import { canonicalJson, sha256Text,
+import { canonicalJson, portableJson, PORTABLE_JSON_ENCODING, sha256Text,
   type ArtifactRef, type AttemptIdentity, type CapabilityInvocation,
   type LifecycleEvent, type PluginDomainEvent, type StageResult } from '@kubeclaw/plugin-sdk';
 
@@ -22,6 +22,18 @@ function validDigest(value: unknown): value is `sha256:${string}` {
   return typeof value === 'string' && /^sha256:[a-f0-9]{64}$/u.test(value);
 }
 
+function assertEncoding(encoding: unknown): void {
+  if (encoding !== undefined && encoding !== PORTABLE_JSON_ENCODING) {
+    throw new Error('ARTIFACT_CHECKPOINT_ENCODING_INVALID');
+  }
+}
+
+function checkpointJson(payload: Readonly<Record<string, unknown>>): string {
+  assertEncoding(payload.encoding);
+  return payload.encoding === PORTABLE_JSON_ENCODING
+    ? portableJson(payload.value) : canonicalJson(payload.value);
+}
+
 export function artifactFromWrite(
   attempt: AttemptIdentity,
   request: CapabilityInvocation,
@@ -30,10 +42,12 @@ export function artifactFromWrite(
   if (request.payload.checkpoint !== true) return undefined;
   if (request.operation !== 'put_json') throw new Error('ARTIFACT_CHECKPOINT_OPERATION_INVALID');
   const artifact = record(response.artifact), producer = record(artifact?.producer);
-  const serialized = canonicalJson(request.payload.value);
+  const encoding = request.payload.encoding;
+  const serialized = checkpointJson(request.payload);
   if (!artifact || !producer
     || artifact.artifactId !== request.resource.canonicalId
     || artifact.namespace !== request.payload.namespace || artifact.mediaType !== request.payload.mediaType
+    || artifact.encoding !== encoding
     || !validDigest(artifact.digest) || artifact.digest !== sha256Text(serialized)
     || !Number.isSafeInteger(artifact.sizeBytes) || artifact.sizeBytes !== Buffer.byteLength(serialized)) {
     throw new Error(`ARTIFACT_CHECKPOINT_RESPONSE_INVALID:${request.resource.canonicalId}`);
@@ -48,6 +62,7 @@ export function artifactFromWrite(
 function exactArtifact(left: ArtifactRef, right: ArtifactRef): boolean {
   return left.artifactId === right.artifactId && left.namespace === right.namespace
     && left.mediaType === right.mediaType && left.digest === right.digest && left.sizeBytes === right.sizeBytes
+    && left.encoding === right.encoding
     && sameAttempt(left.producer, right.producer);
 }
 
@@ -89,6 +104,7 @@ export class ArtifactCheckpointRecorder {
   }
 
   #record(artifact: ArtifactRef, checkpoint: boolean): void {
+    assertEncoding(artifact.encoding);
     if (this.#recorded.some((candidate) => exactArtifact(candidate, artifact))) return;
     if (this.#recorded.some((candidate) => conflictingArtifact(candidate, artifact))) {
       throw new Error(`ARTIFACT_CHECKPOINT_CONFLICT:${artifact.producer.runId}:${artifact.producer.stageId}:${artifact.artifactId}`);
@@ -121,6 +137,7 @@ export class ArtifactCheckpointRecorder {
       if (entry.schemaVersion !== 'lifecycle-event.v2' || entry.type !== 'artifact.created') continue;
       const artifact = record(entry.payload.artifact);
       if (!artifact) continue;
+      assertEncoding(artifact.encoding);
       artifacts.push(structuredClone(artifact) as unknown as ArtifactRef);
     }
     return artifacts;

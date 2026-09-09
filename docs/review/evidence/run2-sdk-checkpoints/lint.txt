@@ -1,0 +1,6 @@
+
+/workspace/scratch/15fb596e6560/sdk/skills/nova/core/execution/artifact-checkpoints.ts
+  31:8  error  Function 'artifactFromWrite' has a complexity of 16. Maximum allowed is 15  complexity
+
+✖ 1 problem (1 error, 0 warnings)
+

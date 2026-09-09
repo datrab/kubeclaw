@@ -1,0 +1,21 @@
+✔ real portable ArtifactStore write checkpoints and reopens unchanged across actual locales (788.406441ms)
+✔ legacy checkpoints retain their exact original reference and journal bytes (39.798645ms)
+✔ checkpoint codec binding rejects unknown encodings and authenticated same-byte relabels (24.235303ms)
+✔ recorder does not collapse same-byte references carrying different codec identities (25.796533ms)
+✔ independent genuine-store response still binds all owner and byte fields (60.958008ms)
+✔ independent completion-before-projection recovery preserves the portable original reference (72.273515ms)
+✔ independent unknown-codec disk record rejects without mutating journal bytes (32.973594ms)
+✔ independent unknown-codec recording rejects before journal append (102.487267ms)
+✔ original recorded legacy journal prefixes recover without identity migration across native locales (9983.43824ms)
+✔ new original durable producers and completed replay use the same explicit portable identity in both locale directions (2435.372638ms)
+Real ArtifactStore and FileEffectJournal replay JSON regressions passed
+✔ tests/verification/reliability/sdk-json-contract.test.mts (495.750444ms)
+✔ original artifact/source consumers and reopened effect journal preserve byte authority across native locales (2347.751586ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12850.326695

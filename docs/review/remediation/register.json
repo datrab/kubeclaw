@@ -620,6 +620,10 @@
         {
           "report": "implementation/wave47-sdk-subject-independent-review.md",
           "summary": "Versionierter Source-/Snapshot-/CLI-Recovery-Teil unabhängig geprüft. Gemeinsame Retirementconsumer-Regression behoben; kein Gesamtabschluss."
+        },
+        {
+          "report": "implementation/sdk-checkpoint-encoding-independent-review.md",
+          "summary": "Originaler ArtifactStore→Core-Checkpoint→Diskjournal-Consumerfehler behoben; Encodingbindung, unbekannte Versionen, Legacyreplay und echte SIGKILL/CLI-Recovery unabhängig geprüft. Root bestätigt 8/8 gezielte Tests auf integriertem Stand; Gesamtfinding bleibt offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/lib.sdk.md",

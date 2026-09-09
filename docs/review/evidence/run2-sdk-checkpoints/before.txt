@@ -1,0 +1,59 @@
+✖ real portable ArtifactStore write checkpoints and reopens unchanged across actual locales (34.468356ms)
+✔ legacy checkpoints retain their exact original reference and journal bytes (30.410966ms)
+✖ checkpoint codec binding rejects unknown encodings and authenticated same-byte relabels (16.998833ms)
+✖ recorder does not collapse same-byte references carrying different codec identities (21.044356ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 414.197899
+
+✖ failing tests:
+
+test at tests/verification/reliability/artifact-checkpoint-encoding.test.mjs:42:1
+✖ real portable ArtifactStore write checkpoints and reopens unchanged across actual locales (34.468356ms)
+  Error: ARTIFACT_CHECKPOINT_RESPONSE_INVALID:portable:checkpoint
+      at artifactFromWrite (file:///workspace/scratch/15fb596e6560/sdk/skills/nova/core/execution/artifact-checkpoints.ts:39:11)
+      at file:///workspace/scratch/15fb596e6560/sdk/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs:45:22
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async withStore (file:///workspace/scratch/15fb596e6560/sdk/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs:26:9)
+      at async TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/sdk/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs:43:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/verification/reliability/artifact-checkpoint-encoding.test.mjs:83:1
+✖ checkpoint codec binding rejects unknown encodings and authenticated same-byte relabels (16.998833ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at file:///workspace/scratch/15fb596e6560/sdk/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs:87:14
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async withStore (file:///workspace/scratch/15fb596e6560/sdk/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs:26:9)
+      at async TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/sdk/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs:84:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /ARTIFACT_CHECKPOINT_ENCODING_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/artifact-checkpoint-encoding.test.mjs:96:1
+✖ recorder does not collapse same-byte references carrying different codec identities (21.044356ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at file:///workspace/scratch/15fb596e6560/sdk/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs:103:12
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async withStore (file:///workspace/scratch/15fb596e6560/sdk/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs:26:9)
+      at async TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/sdk/tests/verification/reliability/artifact-checkpoint-encoding.test.mjs:97:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /ARTIFACT_CHECKPOINT_CONFLICT/,
+    operator: 'throws',
+    diff: 'simple'
+  }

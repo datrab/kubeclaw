@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "repository": "datrab/kubeclaw",
+  "purpose": "isolated incomplete package backups; no integration or completion approval",
+  "remote_parent": "cbd014b19f6f3498ff709df2e4557357d4f3aac5",
+  "local_delta_base": "147a9e003c8ccdc202953ec122a9112f72d339ca",
+  "verification": "All affected blob SHAs, modes and types matched original local source commits against untruncated recursive remote trees; new branch refs read back; workflow runs zero.",
+  "packages": [
+    {
+      "branch": "fix/resume-47-run2-sdk-4baa569",
+      "remote_commit": "e612b05f385dd4801dc199998325441a02f700a2",
+      "remote_tree": "294b64565dd6a5a70a7fcbf3eeb9117270ef2925",
+      "local_source_commit": "4baa56945abafc608303cf919a365921f2b7a18a",
+      "files": [
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/run2-sdk-checkpoints/after.txt",
+          "sha": "1d344ee3aedc5566b8b88186b34d4300c8eabb64",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/run2-sdk-checkpoints/artifact-store.txt",
+          "sha": "13df361a236424d189203fd49893b6aa895168a7",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/run2-sdk-checkpoints/before.txt",
+          "sha": "f02566cd32e882b021c98c71516b5d690de1ab48",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/run2-sdk-checkpoints/effects.txt",
+          "sha": "4f4bfc300af8d8720e5c993ff0adde5a3e74fe6c",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/run2-sdk-checkpoints/lint-final.txt",
+          "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/run2-sdk-checkpoints/lint.txt",
+          "sha": "85a97c28e8051798f05a8a1bfde233a337c55d85",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/run2-sdk-checkpoints/original-recovery.txt",
+          "sha": "2e720605627e9579220f50685dd30ef7484b5dff",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/run2-sdk-checkpoints/sdk-values.txt",
+          "sha": "957bf86943f295824f670418400ef5a7017525da",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/run2-sdk-checkpoints/typecheck.txt",
+          "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/remediation/design/sdk-canonical-consumers.json",
+          "sha": "fce985aa1ab3c0cca2541b6fe83b9a3f505cb54b",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/remediation/implementation/sdk-checkpoint-encoding.md",
+          "sha": "9515143dffda6546cea00e674ff7d9baa1f7e247",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "skills/nova/core/execution/artifact-checkpoints.ts",
+          "sha": "2185e067c03789d7cb51a5411b5db74368d7ca82",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "tests/verification/reliability/artifact-checkpoint-encoding.test.mjs",
+          "sha": "5e466db727019e43f104794c74b3d5b46c7934f9",
+          "type": "blob"
+        }
+      ],
+      "next_action": "Independent review then root integration against freshly read remediation branch head; overall finding remains incomplete."
+    },
+    {
+      "branch": "fix/resume-47-run2-prism-8a211ba",
+      "remote_commit": "ff325cc9fec943049a9e715828468dd91971b87a",
+      "remote_tree": "b116e1390b76dde95386e5364848d408e9aa9449",
+      "local_source_commit": "8a211ba7bf0350ac4b366da54529b2c8af96cd1c",
+      "files": [
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/wave49-prism-control-http/commands.md",
+          "sha": "2443211f11fb5f3b29817439800c73f3ceedaafb",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/wave49-prism-control-http/deploy-contract-before.txt",
+          "sha": "1006a71ebaede5c93eb3116d032faf181a3fdc94",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/wave49-prism-control-http/deploy-contract.txt",
+          "sha": "6c1a617c82740dc2775c9b63f7a814f78ff23ecb",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/wave49-prism-control-http/lint-before.txt",
+          "sha": "6fd87b82031e1c0e0564e8d5e312a4beaf6ad9cf",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/wave49-prism-control-http/lint.txt",
+          "sha": "4d05ae2e8690e269bb81c3cfb63098f7309a408f",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/wave49-prism-control-http/new-modules-lint.txt",
+          "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/wave49-prism-control-http/regressions.txt",
+          "sha": "d4e4223140a86c4d973ec44bb4a4fd6dfb5e266a",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/wave49-prism-control-http/typecheck-final.txt",
+          "sha": "c6fb73cb174c6bf96b47a499be7faa338aeef76d",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/wave49-prism-control-http/typecheck.txt",
+          "sha": "600047176dc976c4ba1025f49e045990583e2f3b",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/remediation/implementation/wave49-prism-control-http.md",
+          "sha": "6fba5cd911db8279f1b2450f75cf4fc3310e670a",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "skills/prism/openclaw-plugin/index.d.mts",
+          "sha": "30510661ea5ef6967bf4f32b5c34a543990364c7",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "skills/prism/server/agent-prompt.d.mts",
+          "sha": "9760848deabfb0c117dcb0db6340614a328a43db",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "skills/prism/server/control-server.ts",
+          "sha": "fd58200d3daadc849ae7077aeb931bd6e05800e1",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "skills/prism/server/control.ts",
+          "sha": "f351af628f68b3f6b103416061c13a48dd00aba4",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "skills/prism/tests/control-generation-http.test.mts",
+          "sha": "1d5827c786726bff376500d774e0ff158329dbef",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "tests/verification/contracts/check-deploy-prism-command.mts",
+          "sha": "d7a48b0307db37a8de11bc81e7adf00e2e913620",
+          "type": "blob"
+        }
+      ],
+      "next_action": "Independent review underway; root integration only after approval. No native test gate closure from partial checks."
+    }
+  ]
+}

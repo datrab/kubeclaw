@@ -1,0 +1,16 @@
+✔ real portable ArtifactStore write checkpoints and reopens unchanged across actual locales (516.554347ms)
+✔ legacy checkpoints retain their exact original reference and journal bytes (37.82404ms)
+✔ checkpoint codec binding rejects unknown encodings and authenticated same-byte relabels (20.342037ms)
+✔ recorder does not collapse same-byte references carrying different codec identities (26.053303ms)
+✔ independent genuine-store response still binds all owner and byte fields (41.45953ms)
+✔ independent completion-before-projection recovery preserves the portable original reference (53.219657ms)
+✔ independent unknown-codec disk record rejects without mutating journal bytes (28.746533ms)
+✔ independent unknown-codec recording rejects before journal append (28.406743ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1009.580493
