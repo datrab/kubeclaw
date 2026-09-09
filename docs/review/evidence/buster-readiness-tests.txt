@@ -1,0 +1,13 @@
+✔ bounded dependency process terminates actual child process groups and awaits closure (313.943897ms)
+✔ bounded process limits actual output and exports safe cause metadata without payload or inherited credentials (68.671076ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_SPAWN_FAILED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":4}
+✔ missing native BuildKit fails closed; concurrent callers share one check and completed checks are never cached (6.212096ms)
+✔ actual Helm uses bootstrap and functional readiness separately from liveness (220.0643ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 793.44122

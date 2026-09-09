@@ -30,7 +30,7 @@ if (!process.argv.includes('--project')) {
     await validatePipelineRuntimeV2(platform, definition);
     if (args['--compile']) {
       fs.writeFileSync(path.resolve(args['--compile']), `${canonicalJson(definition)}\n`, { flag: 'wx' });
-      process.stdout.write(`${JSON.stringify({ status: 'compiled', runId, stageCount: definition.stages.length, definitionDigest: sha256Text(canonicalJson(definition)) })}\n`);
+      process.stdout.write(`${JSON.stringify({ status: 'compiled', completionScope: project.demo === undefined ? 'technical-only' : 'demo-handoff', runId, stageCount: definition.stages.length, definitionDigest: sha256Text(canonicalJson(definition)) })}\n`);
     } else {
       if (args['--recover'] && args['--recover'] !== runId) throw new Error('PROJECT_RECOVERY_RUN_MISMATCH');
       if (!args['--recover'] && !args['--signal']) {
@@ -43,7 +43,7 @@ if (!process.argv.includes('--project')) {
         : args['--signal'] ? await resumePipelineV2(platform, definition, runId,
           JSON.parse(fs.readFileSync(path.resolve(args['--signal']), 'utf8')) as ResumeSignal)
         : await runPipelineV2(platform, definition, runId);
-      process.stdout.write(`${JSON.stringify({ runId: result.runId, status: result.status, stages: Object.fromEntries(result.stages) })}\n`);
+      process.stdout.write(`${JSON.stringify({ runId: result.runId, status: result.status, completionScope: project.demo === undefined ? 'technical-only' : 'demo-handoff', acceptanceReadiness: project.demo === undefined ? 'not-established' : result.status === 'succeeded' ? 'ready-for-acceptance' : 'not-established', stages: Object.fromEntries(result.stages) })}\n`);
       process.exitCode = result.status === 'succeeded' ? 0 : 1;
     }
   } catch (error) {

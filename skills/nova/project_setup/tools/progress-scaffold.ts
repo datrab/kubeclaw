@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import fs from 'node:fs';
+import {publishJsonPair} from '@kubeclaw/plugin-foundation/config/published-pair';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildScaffold } from './progress-scaffold-discovery.ts';
@@ -127,7 +128,7 @@ function diffSummary(existing: unknown, next: unknown) {
   return `progress.json will change (${before.split('\n').length} -> ${after.split('\n').length} JSON lines)`;
 }
 
-function applyScaffold(args: Args, context: Context) {
+async function applyScaffold(args: Args, context: Context) {
   const scaffold = readJsonIfExists(context.scaffoldFile);
   if (!scaffold) throw new Error(`Scaffold file not found. Run without --apply first: ${context.scaffoldFile}`);
   const { progress, pipeline, diagnostics } = scaffoldToProgress(scaffold, context);
@@ -138,14 +139,13 @@ function applyScaffold(args: Args, context: Context) {
     return 0;
   }
   console.log(diffSummary(readJsonIfExists(context.progressFile), progress));
-  writeJson(context.progressFile, progress);
-  writeJson(context.pipelineFile, pipeline);
+  await publishJsonPair(context.swarmDir,['progress.json','pipeline.json'],[progress,pipeline]);
   console.log(`wrote ${relFromRepo(context.repoRoot, context.progressFile)}`);
   console.log(`wrote ${relFromRepo(context.repoRoot, context.pipelineFile)}`);
   return 0;
 }
 
-export function run(argv: string[] = process.argv.slice(2)): number {
+export async function run(argv: string[] = process.argv.slice(2)): Promise<number> {
   const args = parseArgs(argv);
   if (args.help) {
     console.log(usage());
@@ -165,7 +165,7 @@ export function run(argv: string[] = process.argv.slice(2)): number {
 const isCli = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
 if (isCli) {
   try {
-    process.exitCode = run();
+    process.exitCode = await run();
   } catch (error) {
     const scaffoldError = error as Error & { diagnostics?: Diagnostic[] };
     console.error(errorMessage(error));

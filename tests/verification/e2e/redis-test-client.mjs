@@ -1,7 +1,6 @@
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const Redis = require('ioredis');
 
 function redisOptions(env = process.env) {
   const port = Number(env.REDIS_PORT || 6379);
@@ -21,6 +20,8 @@ function redisOptions(env = process.env) {
 }
 
 export function createRealE2ERedisClient(env = process.env) {
+  // Redis is supplied by the runtime tools image; pure probe utilities need no client.
+  const Redis = require('ioredis');
   return new Redis(redisOptions(env));
 }
 

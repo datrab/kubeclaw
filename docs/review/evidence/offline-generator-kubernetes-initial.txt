@@ -1,0 +1,29 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /TEST_PLAN_LINK_SCHEMA_MISMATCH/u. Input:
+
+'TestPlanResolutionError: TEST_PLAN_PORT_MISSING:tailscale-exposure:outputs:endpoint'
+
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts:140:10 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: TestPlanResolutionError: TEST_PLAN_PORT_MISSING:tailscale-exposure:outputs:endpoint
+      at fail (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:63:9)
+      at port (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:623:15)
+      at connectGraph (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:648:26)
+      at resolveTestPlan (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/test-gates/resolver.ts:733:17)
+      at resolve (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts:125:62)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts:140:23
+      at getActual (node:assert:611:5)
+      at strict.throws (node:assert:759:24)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts:140:10 {
+    code: 'TEST_PLAN_PORT_MISSING'
+  },
+  expected: /TEST_PLAN_LINK_SCHEMA_MISMATCH/u,
+  operator: 'throws',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

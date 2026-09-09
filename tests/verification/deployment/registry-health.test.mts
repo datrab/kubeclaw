@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import https from 'node:https';
 import http from 'node:http';
-import {spawn, spawnSync} from 'node:child_process';
+import {spawn, spawnSync, execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {NetworkHttpCapabilityInvoker} from '../../../skills/buster/engine/test-gates/network-http-runtime.ts';
 import {provider as httpProvider} from '../../../skills/buster/plugins/http/src/provider.js';
@@ -92,7 +92,12 @@ if(process.env.REGISTRY_HEALTH_TEST_CHILD){
   const previous={contract:process.env.KUBECLAW_REGISTRY_CONFIG,image:process.env.REAL_E2E_DEPLOYMENT_IMAGE};
   try{
    process.env.REAL_E2E_DEPLOYMENT_IMAGE='registry.example.svc.cluster.local:5443/nginx@sha256:'+'a'.repeat(64);
+   fs.cpSync(new URL('../e2e/fixtures/nginx-project',import.meta.url),root,{recursive:true});
+   execFileSync('git',['init','-q',root]);
+   execFileSync('git',['-C',root,'add','.']);
+   execFileSync('git',['-C',root,'-c','user.name=Fixture','-c','user.email=fixture@example.invalid','commit','-qm','original fixture']);
    const progress=buildProgress({projectName:'registry-health-test'});
+   progress.real_e2e.coverage_base_revision=execFileSync('git',['-C',root,'rev-parse','HEAD'],{encoding:'utf8'}).trim();
    progress.modules['01-nginx'].test_config={api:{spec_file:'.swarm/intentional-api-failure.json'}};
    delete process.env.KUBECLAW_REGISTRY_CONFIG;
    assert.throws(()=>writeRealE2ESwarmFiles(root,progress),/REAL_E2E_REGISTRY_CONFIG_REQUIRED/u);

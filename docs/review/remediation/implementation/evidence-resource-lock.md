@@ -1,0 +1,9 @@
+# Verified evidence projection resource ownership
+
+The ordinary original effect coordinator rejected `test.plan.evidence/demo` with `RESOURCE_LOCK_REENTRANT_DENIED`: the outer projection claimed the same `artifact.object` resource as its required nested manifest read. The earlier direct confidential invocation did not exercise that resource-lock route.
+
+The capability now claims the logical `test.plan.evidence` resource, with the unchanged exact qualified manifest artifact ID. Its nested `artifacts.read` retains the original artifact lock and all namespace, producer, run, digest and import checks. The provider rejects the former resource type. No generic lock bypass or authorization exemption was introduced.
+
+Frozen source scope: the single existing `test.plan.evidence` vocabulary entry; `skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts`; `tests/evidence-projection.test.ts` and its extracted `tests/demo-import-fixture.ts`. The fixture additionally declares the existing exposure retention mode explicitly. New handoff capabilities and other work in the vocabulary file are excluded from the shared-only patch `/workspace/scratch/4e25cf57c177/evidence-resource-lock.patch` (index applicability checked without staging).
+
+Evidence: `docs/review/evidence/evidence-resource-lock-tests.txt` records the original importer/artifact/evidence regression passing, including a nonconfidential adapter runtime, effect journal and resource lock manager, repeated same-owner projection, foreign-run rejection and old resource-type rejection. The fixture's remote/source terminal envelopes remain explicit contract vectors; they do not prove native build, deployment or provider execution. `evidence-resource-lock-lint.txt` and `evidence-resource-lock-tsc.txt` record canonical scoped ESLint and Nova owning TypeScript passing. No cluster deployment or external notification occurred.

@@ -1,11 +1,13 @@
 {
   "extends": "../../../tsconfig.base.json",
   "include": [
-    "tools/**/*.ts",
-    "types/**/*.d.ts"
+    "tools/**/*.ts"
   ],
   "compilerOptions": {
     "exactOptionalPropertyTypes": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "types": [
+      "node"
+    ]
   }
 }

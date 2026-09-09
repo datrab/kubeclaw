@@ -1,0 +1,10 @@
+{"originalSource":"eaf353a^","observations":[{"locale":"en-US","accepted":115,"bytes":"{\"a\":3,\"ä\":1,\"z\":2}","digest":"sha256:db1796e0fb21fbd70c2b4b7ade2a3570a4ace8b2eeb1fe14d324360c6c72bcb2","storedDigest":"sha256:db1796e0fb21fbd70c2b4b7ade2a3570a4ace8b2eeb1fe14d324360c6c72bcb2","reserializedDigest":"sha256:db1796e0fb21fbd70c2b4b7ade2a3570a4ace8b2eeb1fe14d324360c6c72bcb2"},{"locale":"sv-SE","accepted":115,"bytes":"{\"a\":3,\"z\":2,\"ä\":1}","digest":"sha256:9aabdc44156f32357daefadaa7dcee25eb3b1c98f9a1aeaf560b345590e18e95","storedDigest":"sha256:db1796e0fb21fbd70c2b4b7ade2a3570a4ace8b2eeb1fe14d324360c6c72bcb2","reserializedDigest":"sha256:9aabdc44156f32357daefadaa7dcee25eb3b1c98f9a1aeaf560b345590e18e95"},{"locale":"tr-TR","accepted":115,"bytes":"{\"a\":3,\"ä\":1,\"z\":2}","digest":"sha256:db1796e0fb21fbd70c2b4b7ade2a3570a4ace8b2eeb1fe14d324360c6c72bcb2","storedDigest":"sha256:db1796e0fb21fbd70c2b4b7ade2a3570a4ace8b2eeb1fe14d324360c6c72bcb2","reserializedDigest":"sha256:db1796e0fb21fbd70c2b4b7ade2a3570a4ace8b2eeb1fe14d324360c6c72bcb2"}]}
+✔ original validation cutover preserves accepted JSON bytes in each locale; existing cross-locale portability gap remains visible (695.816037ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 809.54043

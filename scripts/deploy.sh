@@ -59,7 +59,7 @@
 #   LITELLM_NODE_PORT             LiteLLM Service NodePort (default: 30050)
 #   KUBECLAW_DEPLOY_SPIRE         true|false (default: true)
 #   ALLOW_PARTIAL_INFRA           true|false (default: false)
-#   BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE   Rootless BuildKit probe image (default: moby/buildkit:rootless)
+#   BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE   Digest-pinned probe image (default: managed BUILDKIT_BASE)
 #   BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT Probe pod readiness timeout (default: 180s)
 # =============================================================================
 set -euo pipefail
@@ -114,7 +114,7 @@ AGENT_HELM_TIMEOUT="${AGENT_HELM_TIMEOUT:-45m}"
 AGENT_ROLLOUT_TIMEOUT="${AGENT_ROLLOUT_TIMEOUT:-45m}"
 CODE_BUNDLE_RELEASE_TAG="${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}"
 CODE_BUNDLE_PREFLIGHT_SKIP="${CODE_BUNDLE_PREFLIGHT_SKIP:-false}"
-BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:rootless}"
+BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c}"
 BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT="${BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT:-180s}"
 
 export NAMESPACE
@@ -749,8 +749,8 @@ cmd_buildkit_preflight() {
   header "Rootless BuildKit Preflight"
   require_command kubectl
 
-  if [[ ! $probe_image =~ ^[A-Za-z0-9._/@:-]+$ ]]; then
-    err "Invalid BuildKit preflight image: $probe_image"
+  if [[ ! $probe_image =~ ^[A-Za-z0-9._/:-]+@sha256:[a-f0-9]{64}$ ]]; then
+    err "BuildKit preflight requires an immutable image reference ending in @sha256:<64 lowercase hex characters>"
     return 1
   fi
   if [[ -n $pull_secret && ! $pull_secret =~ ^[a-z0-9]([-a-z0-9.]*[a-z0-9])?$ ]]; then

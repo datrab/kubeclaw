@@ -1,4 +1,4 @@
-import fs from 'node:fs';
+import {readPublishedPair} from '@kubeclaw/plugin-foundation/config/published-pair';
 import path from 'node:path';
 import type { LoadedPipelineTestScope, PipelineLintDeclaration, TestPlanScope, TestScopeDeclaration } from './types.ts';
 
@@ -24,7 +24,7 @@ export function loadPipelineTestScope(
   }
   let source: unknown;
   try {
-    source = JSON.parse(fs.readFileSync(pipelinePath, 'utf8'));
+    source = readPublishedPair(path.dirname(pipelinePath),['progress.json','pipeline.json'])[1];
   } catch (error) {
     throw new Error('TEST_PLAN_PIPELINE_INVALID', { cause: error });
   }
@@ -64,7 +64,7 @@ export function loadPipelineLintDeclaration(pipelinePath: string): PipelineLintD
     throw new Error('TEST_PLAN_PIPELINE_LOCATION_INVALID');
   }
   let source: unknown;
-  try { source = JSON.parse(fs.readFileSync(pipelinePath, 'utf8')); }
+  try { source = readPublishedPair(path.dirname(pipelinePath),['progress.json','pipeline.json'])[1]; }
   catch (error) { throw new Error('TEST_PLAN_PIPELINE_INVALID', { cause: error }); }
   const pipeline = objectValue(source, 'root');
   if (pipeline.lint === undefined) return null;

@@ -63,3 +63,51 @@ actual transmitted message contains the required demo URL and generated values.
 
 No SDK, credential, readiness or durable store implementation changes; no staging
 or commits by this author.
+
+
+## Resume review: durable lookup capability
+
+On 2026-09-09 the existing uncommitted `operator.receipt` capability and shared
+Discord renderer were independently reviewed at base `bbc36de` plus working-tree
+changes. Lookup does not reserve or transmit: it requires the exact target,
+original delivery ID, owning run/stage, rendered transport bytes and one completed
+receipt in the original durable store. Legacy records and uncertain deliveries
+cannot authorize handoff. The same renderer is used for send and lookup, avoiding
+a second independently reconstructed transport representation.
+
+The original package boundary expectation omitted this additional advertised
+capability and failed. It now asserts the exact two-capability surface. The
+original live-function test and package boundary test pass. Operator TypeScript
+and canonical lint on all affected operator sources and boundary test pass.
+Existing real HTTP Discord/JSON recovery regressions pass (9 tests; also included
+in the combined 41-test run). Logs: `docs/review/evidence/resume-20260909/remaining/`.
+
+Demo-handoff's existing integration test contains wrong-run, wrong-stage and
+changed-payload lookup rejection checks; its execution evidence belongs to the
+separate handoff work package. No deployed Discord or human acknowledgement is
+claimed by this review.
+
+### Independent review correction: lookup effect recovery
+
+The follow-up audit found that `invoke` supported `operator.receipt`, but the
+adapter's `receipt` lifecycle hook still rejected everything except publish.
+A crash after the core's durable accepted marker therefore made an otherwise
+recoverable local lookup fail with `OPERATOR_OPERATION_UNSUPPORTED`.
+
+Both entrypoints now use the same lookup/ownership/transport-binding function.
+Normal invocation retains its cancellation check; recovery reads the existing
+local receipt without reserving or sending another message. This repairs the
+original lifecycle boundary rather than retrying an uncertain external action.
+
+The existing real-HTTP regression now creates a genuine Discord-format delivery
+through the original activated adapters, records requested/accepted lookup
+prefixes through FileEffectJournal, reconstructs AdapterRuntime, and verifies a
+completed matching receipt and rejection of foreign run/stage/changed payload.
+The HTTP receiver sees exactly one POST throughout. This is a deliberate
+accepted-prefix reconstruction test, not a claimed process kill. All four tests
+in `discord-delivery-receipt.test.mts` pass; canonical lint and operator typecheck
+pass. A read-only source-hook negative control removes only the new recovery
+branch; the identical test fails at the original lifecycle hook with
+`OPERATOR_OPERATION_UNSUPPORTED`. Logs are `lookup-recovery-tests.txt`,
+`lookup-recovery-negative.txt`, `lookup-recovery-all-lint.txt` and
+`lookup-recovery-types.txt` under `docs/review/evidence/resume-20260909/remaining/`.

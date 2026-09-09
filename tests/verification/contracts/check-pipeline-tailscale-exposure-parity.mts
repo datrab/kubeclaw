@@ -22,4 +22,4 @@ assert.equal(ledger.acceptedDeferral.proofState, 'planned');
 assert.equal(ledger.acceptedDeferral.proof, 'tests/verification/e2e/nova-tailscale-production-preflight.mts');
 await import('./check-pipeline-tailscale-exposure-implementation.mts');
 console.log(JSON.stringify({ ok: true, phase: 'tailscale-exposure-parity', items: 38,
-  productionAcceptance: 'pending-deployment-and-live-proof', mocks: 0, emulators: 0 }));
+  productionAcceptance: 'pending-deployment-and-live-proof', injectedExecutorVectors: true, nativeCluster: false }));

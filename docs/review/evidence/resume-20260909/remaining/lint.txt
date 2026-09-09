@@ -1,0 +1,11 @@
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/project_setup/tools/progress-scaffold-discovery.ts
+  191:1  error  Function 'legacyBundleNodes' has a complexity of 16. Maximum allowed is 15    complexity
+  233:1  error  Function 'legacyApiNode' has a complexity of 21. Maximum allowed is 15        complexity
+  269:1  error  Function 'legacyA11yNode' has a complexity of 17. Maximum allowed is 15       complexity
+  318:1  error  File has too many lines (660). Maximum allowed is 300                         max-lines
+  381:1  error  Function 'scopeWithProviders' has too many lines (89). Maximum allowed is 60  max-lines-per-function
+  381:1  error  Function 'scopeWithProviders' has a complexity of 40. Maximum allowed is 15   complexity
+
+✖ 6 problems (6 errors, 0 warnings)
+

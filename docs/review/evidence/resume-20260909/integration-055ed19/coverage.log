@@ -1,0 +1,16 @@
+✔ original HTTP and API-flow providers use genuine registry TLS/auth and preserve success/failure assertions (1961.672222ms)
+✔ foreign allowed origin receives no registry credential; explicit HTTP lab is anonymous (22.210697ms)
+✔ actual E2E generator consumes only the operator contract origin and fails when it is absent (71.362937ms)
+From /tmp/fixture-coverage-aRoeFD/foreign
+ * branch            HEAD       -> FETCH_HEAD
+✔ actual Git baseline survives later commits and scoped resume without inventing coverage (402.544953ms)
+✔ production harness validates native module gates and rejects counter-based repair fixtures (19152.492245ms)
+✔ retired authorities reject while registered v1 contracts remain valid (1.817221ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19425.100541

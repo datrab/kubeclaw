@@ -224,6 +224,10 @@ export function loadProductionBusterRemotePlanRuntime(
       sourceAttestationPublicKey,
     }),
     registry,
+    ...(value.dependencyReadiness === undefined ? {} : { dependencyReadiness: {
+      maximumExecutionMs: integer(object(value.dependencyReadiness, 'dependencyReadiness').maximumExecutionMs, 'dependencyReadiness.maximumExecutionMs'),
+      maximumOutputBytes: integer(object(value.dependencyReadiness, 'dependencyReadiness').maximumOutputBytes, 'dependencyReadiness.maximumOutputBytes'),
+    } }),
     workerRevision,
     runtimeRoot: path.resolve(directory, value.runtimeRoot as string),
     tarExecutable: path.resolve(directory, value.tarExecutable as string),

@@ -612,6 +612,10 @@
         {
           "report": "implementation/contracts.md",
           "summary": "SDK/prompt tests and builds; real artifact/journal and Git consumers; 100 accepted JSON byte compatibility probes; independent review."
+        },
+        {
+          "report": "implementation/sdk-json-compatibility.md",
+          "summary": "345 akzeptierte Originalbytes in drei nativen Locales verglichen; echter Artifactspeicher liest alte Bytes, schwedische Re-Serialisierung ergibt anderen Digest. Historienaudit ausdrücklich kein permanenter Produktgate; versionierter Consumer-Cutover bleibt offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/lib.sdk.md",
@@ -926,7 +930,12 @@
       "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "verification_evidence": [
+        {
+          "report": "implementation/attempt-resource-accountability-boundary.md",
+          "summary": "Aktuelle Parentmessung erfasst nicht den gesamten Attempt; generischer Executor misst zusätzlich vor Finalisierung/Reportadapter. Atomare Owner-/Containment-/Engineintegration sowie echte delegierte Cgroups erforderlich. Keine funktionale Behebung in diesem Slice."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.engine.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-BUSTER-ENGINE-001 — Capabilityarbeit fehlt im Attemptbudget\n\n**Hoch; nachgewiesener Verdrahtungsdefekt.** `runner.ts:1315–1326` measure liest ausschließlich instance.resources; `provider-loader.ts:236–252` misst /proc-Descendants des Providerchild. Capability-RPC (`:267–274`) führt im Busterparent z.B. Browser/Trivy/kubectl/buildctl/CommandRunner aus; diese sind keine Providerchild-Descendants. `remote-plan-service.ts:613–692` routed echte Parentinvoker, und Runner aggregiert deren Kosten nicht. Reportadapter läuft erst nach Measurement. Damit können CPU/RAM/Prozesszahl des Attempts deutlich über deklariertem Nodebudget liegen und als kleine Providerressourcen quittiert werden. Command/Playwright besitzen eigene Operatorlimits, Browser/Scanner teils nur Zeit-/Outputgrenzen; externe BuildKitkosten sind ausdrücklich zusätzlich operatorseitig. **Ursache beheben:** attemptgebundener Ausführungskontext mit gemeinsamer cgroup/Prozessregistrierung oder tatsächlich addierter, nicht providerberichteter Ressourcenmessung und harter Budgetdurchsetzung für alle lokalen Phasen. **Regression:** echter kleiner Provider mit speicher-/CPUverbrauchendem Capabilitychild und Reportadapter; Messwert/Budgetverletzung muss gesamte lokale Arbeit erfassen, einschließlich zweier paralleler RPCs.",
@@ -1016,6 +1025,10 @@
         {
           "report": "implementation/buster-engine.md",
           "summary": "Normale bestätigte Arbeit bereinigt; Restart-/Orphan-/unsichere Eingaben bleiben bis Besitz-/Terminierungsnachweis erhalten."
+        },
+        {
+          "report": "implementation/buster-orphan-recovery-boundary.md",
+          "summary": "Restart besitzt keinen dauerhaften Gesamtprozess-/Cgroup-Quieszenzbeleg. Terminalstatus oder tote Node-PID reichen nicht; unsichere automatische Löschung nicht eingeführt."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.engine.md",
@@ -2792,7 +2805,11 @@
       "implementation_commit": "91030cbc3a30882669b8af834102d368b50bd99d",
       "verification_status": "37/37 echte lokale Tests unabhängig bestanden, inklusive Abbruch an der Cacheabschlussgrenze; Typprüfung und gezielter Lint bestanden. Native Browserprüfung blockiert, parallele CPU-/Kindprozessattribution offen.",
       "verification_evidence": [
-        "docs/review/remediation/implementation/prism-worker-cancellation.md"
+        "docs/review/remediation/implementation/prism-worker-cancellation.md",
+        {
+          "report": "implementation/attempt-resource-accountability-boundary.md",
+          "summary": "Aktuelle Parentmessung erfasst nicht den gesamten Attempt; generischer Executor misst zusätzlich vor Finalisierung/Reportadapter. Atomare Owner-/Containment-/Engineintegration sowie echte delegierte Cgroups erforderlich. Keine funktionale Behebung in diesem Slice."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-worker.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
@@ -2817,7 +2834,11 @@
       "implementation_commit": "91030cbc3a30882669b8af834102d368b50bd99d",
       "verification_status": "37/37 echte lokale Tests unabhängig bestanden, inklusive Abbruch an der Cacheabschlussgrenze; Typprüfung und gezielter Lint bestanden. Native Browserprüfung blockiert, parallele CPU-/Kindprozessattribution offen.",
       "verification_evidence": [
-        "docs/review/remediation/implementation/prism-worker-cancellation.md"
+        "docs/review/remediation/implementation/prism-worker-cancellation.md",
+        {
+          "report": "implementation/attempt-resource-accountability-boundary.md",
+          "summary": "Aktuelle Parentmessung erfasst nicht den gesamten Attempt; generischer Executor misst zusätzlich vor Finalisierung/Reportadapter. Atomare Owner-/Containment-/Engineintegration sowie echte delegierte Cgroups erforderlich. Keine funktionale Behebung in diesem Slice."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-worker.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
@@ -3371,13 +3392,17 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP10",
-      "status": "in Bearbeitung",
+      "status": "implementiert",
       "implementation_commit": "5ce5bda2318efff700343ad623c62cfb520e8732",
-      "verification_status": "nicht ausgeführt",
+      "verification_status": "teilweise / blockiert",
       "verification_evidence": [
         {
           "report": "implementation/demo-credential-handoff.md",
           "summary": "Vorstufe unabhängig geprüft: dauerhafter Credential-Intent vor Create, Ablehnung fremder Vorbelegung, verlorene Antwort rekonstruierbar; pending Exposure ohne TTL-Verlängerung. Finaler Ready-/Receipt-Produzent fehlt."
+        },
+        {
+          "report": "implementation/demo-handoff-independent-review.md",
+          "summary": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -3385,7 +3410,7 @@
       "source_finding_text": "### F-T14-01 — Finalpreview-Exposure wird vor Operatorübergabe entfernt\n\nEigentümertrace: [T14-operator-preview.md](T14-operator-preview.md); Codecommit wie oben.\n\n**Hoch; statisch bestätigter komponentenübergreifender Lifecycledefekt gegenüber dem gewünschten Operatorabschluss.** Trigger: erfolgreicher Plan mit Kubernetesfixture retention=retain und Tailscale-Exposurefixture. Runner finally räumt Fixture auf (runner.ts 897–899,2005–2018), Exposurecleanup ist unbedingt (provider.js 85–90), Runtime schaltet off (231–241), Controller löscht Ingress (1353–1362). Folge: Namespace erhalten, URL nach Abschluss nicht erhalten. Rootfix: bewusster, persistierter Ownership-/Lifecycletransfer einer finalen Preview einschließlich Exposure, Namespace, TTL, Source-/Imagedigest und Cleanupbefugnis; normale Testfixtures weiterhin am Planende aufräumen. Kein pauschales Entfernen des Cleanup-finally. Regression: echter End-to-end-Fixtureplan, danach erlaubter Tailnetbrowser erreicht Anwendung für festgelegten Operatorzeitraum; explizites Release/TTL entfernt exakt diese Generation. Keine Ausführung hier.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Originale Producer-/Consumergrenzen untersuchen und ursächlich integrieren; tatsächliche Zustellung und externe Ausführung nicht aus Konfiguration ableiten.",
+      "next_action": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen.",
       "related_findings": [
         "F-T14-02",
         "IFR-04-001",
@@ -3393,7 +3418,9 @@
       ],
       "decision_notes": [
         "D06: Namespace UND Exposure eine Woche ab Bereit-zur-Abnahme; Planfinally darf den übertragenen Operatorzugang nicht entfernen."
-      ]
+      ],
+      "implementation_local_commit": "055ed19",
+      "remaining_work": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen."
     },
     {
       "id": "F-T14-02",
@@ -3401,9 +3428,9 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP10",
-      "status": "in Bearbeitung",
+      "status": "implementiert",
       "implementation_commit": "5ce5bda2318efff700343ad623c62cfb520e8732",
-      "verification_status": "nicht ausgeführt",
+      "verification_status": "teilweise / blockiert",
       "verification_evidence": [
         {
           "report": "implementation/demo-credential-handoff.md",
@@ -3412,6 +3439,10 @@
         {
           "report": "implementation/discord-delivery-receipt.md",
           "summary": "Remote 7ac8a7fe95066b5dcf3bf9bf53ad1894410bc4e9: tatsächliche Discord-ID+Wire-Payloaddigest und dauerhaft unsichere verlorene Antwort; neun Originalregressionen bestanden. Native Zustellung/Ready-Produzent offen."
+        },
+        {
+          "report": "implementation/demo-handoff-independent-review.md",
+          "summary": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -3419,7 +3450,7 @@
       "source_finding_text": "### F-T14-02 — Vollständiger Operatorzugang und Appauth-Handoff fehlen\n\nEigentümertrace: [T14-operator-preview.md](T14-operator-preview.md); Codecommit wie oben.\n\n**Hoch für das Abschlussziel; statisch bestätigte Integrationslücke, keine behauptete Credentialoffenlegung.** Trigger: Pipeline verlangt Login und „ohne manuelle Clusterarbeit testen“. Controller erstellt nur dediziertes Secret (main.go 1165–1225); Manifest-/Ingresspfad bindet die App nicht automatisch daran; Summary konsumiert keine Exposure (summary.ts 46–68); Previewobserver sendet nur Artefaktmetadaten (observer.ts 139–160). Folge: weder funktionierender Login noch URL-/Credentialempfang/Abnahme sind durch den Runabschluss garantiert. Rootfix: verpflichtender Previewdeliveryvertrag mit Source/Image/Lease/Generation/URL/Authmodus/Expiry, Appseitiger Secretintegration und überprüftem Login; Credentials als gezielt abrufbare geschützte Referenz und autorisierte sichere Zustellung, nicht als unredigiertes allgemeines Runartefakt. Operatorfeedback an dieselbe Generation und Sourcebindung koppeln. Regression: Anwendung mit tatsächlicher Auth, erlaubter Operator kann lesen/login/Feedback geben, anderer Tailnetnutzer und alte Previewgeneration werden abgewiesen; Nachricht enthält nötige URL ohne öffentliche Secretbytes. Keine Tests hier.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Originale Producer-/Consumergrenzen untersuchen und ursächlich integrieren; tatsächliche Zustellung und externe Ausführung nicht aus Konfiguration ableiten.",
+      "next_action": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen.",
       "related_findings": [
         "F-T14-01",
         "IFR-04-001",
@@ -3427,7 +3458,9 @@
       ],
       "decision_notes": [
         "D01/D02/D06: pipelinegenerierte Demo-Credentials dürfen direkt in autorisierten Operatornachrichten stehen. Historische Empfehlung ausschließlich geschützter Referenzzustellung ist hierfür nicht verpflichtend; öffentliche Verbreitung ist nicht autorisiert."
-      ]
+      ],
+      "implementation_local_commit": "055ed19",
+      "remaining_work": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen."
     },
     {
       "id": "PCR-BUSTER-NS-001",
@@ -4342,10 +4375,15 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "in Bearbeitung",
+      "status": "implementiert",
       "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "verification_status": "teilweise / blockiert",
+      "verification_evidence": [
+        {
+          "report": "implementation/readiness-independent-review.md",
+          "summary": "Buster BuildKit-/Prism DB-Funktionsproben, getrennte Bootstrap/Liveness und abgebrochene/abgewartete Probe integriert und unabhängig lokal geprüft. Trust-sidecar/SDS-SVID-Funktionsprüfung und Alarmierung sowie native DB-/BuildKit-/Cluster-Abnahme bleiben offen."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/observability.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-25-001\n**Mittel; nachgewiesene begrenzte Health-Aussage.** Auslöser: erfolgreicher Prozess/Listener bei ausgefallener funktionaler Abhängigkeit. `configmap-worker-trust.yaml:19–38` antwortet pauschal 200; Buster `remote-plan-http.ts:103–106` setzt ready:true; Prism-Worker-Readiness nutzt bewusst /health, um den ersten Migration-Hook nicht zu blockieren. Diese Signale erkennen weder abgelaufenes SDS/SVID noch einen später abgestürzten BuildKit oder fehlende Worker-Datenbanktabelle.\n\nUrsachenbehebung: Prozessliveness, Bootstrap-Readiness und Betriebsbereitschaft getrennt definieren, funktionale Abhängigkeiten mit begrenzten Prüfungen abdecken und Ausfall alarmieren. Echter Test: funktionalen Dienst nach Startup stoppen, Marker/Zertifikat/DB gezielt ungültig machen, Status und Alarm prüfen; keine Restart-Schleife bei Fremddienst-Ausfall.",
@@ -4355,9 +4393,11 @@
       "unresolved_code_references": [
         "configmap-worker-trust.yaml:19–38"
       ],
-      "next_action": "Tatsächliche Liveness-, Bootstrap- und funktionale Readinesspfade werden abgeglichen; keine pauschale200-Zusage und keine Restartschleife wegen externer Abhängigkeit.",
+      "next_action": "Buster BuildKit-/Prism DB-Funktionsproben, getrennte Bootstrap/Liveness und abgebrochene/abgewartete Probe integriert und unabhängig lokal geprüft. Trust-sidecar/SDS-SVID-Funktionsprüfung und Alarmierung sowie native DB-/BuildKit-/Cluster-Abnahme bleiben offen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "implementation_local_commit": "6c171ba",
+      "remaining_work": "Buster BuildKit-/Prism DB-Funktionsproben, getrennte Bootstrap/Liveness und abgebrochene/abgewartete Probe integriert und unabhängig lokal geprüft. Trust-sidecar/SDS-SVID-Funktionsprüfung und Alarmierung sowie native DB-/BuildKit-/Cluster-Abnahme bleiben offen."
     },
     {
       "id": "IFR-26-001",
@@ -4462,13 +4502,17 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP14",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "800cba4033c11337e31d34de11dc6cf66ca10282",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "bestanden (lokale Original-CLI/Dateisystem-/SIGKILL-/Reader-Prüfung)",
       "verification_evidence": [
         {
           "report": "implementation/scaffold-regeneration.md",
           "summary": "Editable provider plan preservation independently verified with four genuine CLI tests, plus25 existing tests and typecheck. Further requested two-file publication probe reproduces first-file modification before second-file EISDIR; coherent publication/reader boundary and crash proof remain open."
+        },
+        {
+          "report": "implementation/scaffold-publication.md",
+          "summary": "Atomare Generation mit genau einem Commitpointer, ursprüngliche Pipeline-/Lintreader, EISDIR, echter SIGKILL, explizite Recovery und konkurrierende Publikation unabhängig geprüft; fixer Commit 055ed19 besteht Original-Scaffoldsuiten."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/nova.scaffold.md",
@@ -4478,10 +4522,11 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/nova/project_setup/tools/progress-scaffold-discovery.ts"
       ],
       "unresolved_code_references": [],
-      "next_action": "Editable provider plan preservation independently verified with four genuine CLI tests, plus25 existing tests and typecheck. Further requested two-file publication probe reproduces first-file modification before second-file EISDIR; coherent publication/reader boundary and crash proof remain open.",
+      "next_action": "Kein offener Codepunkt im Findingumfang; native Supervisor-Adoption bleibt separat PCR-SCAFFOLD-OPS-001.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Editable provider plan preservation independently verified with four genuine CLI tests, plus25 existing tests and typecheck. Further requested two-file publication probe reproduces first-file modification before second-file EISDIR; coherent publication/reader boundary and crash proof remain open."
+      "remaining_work": null,
+      "implementation_local_commit": "4f182af"
     },
     {
       "id": "T01-F01",
@@ -4581,9 +4626,9 @@
   "implementation_branch": "fix/remediation-foundations-20260909",
   "updated_at": "2026-09-09",
   "progress_counts": {
-    "verifiziert": 85,
-    "implementiert": 45,
-    "in Bearbeitung": 5,
+    "verifiziert": 86,
+    "implementiert": 47,
+    "in Bearbeitung": 2,
     "offen": 19
   },
   "additional_integration_findings": [
@@ -4622,5 +4667,13 @@
       "report": "implementation/adapter-dependency-identity.md",
       "scope": "Original nested reads reused a different parent attempt identity. Parent execution identity now bound for invocation; explicit delivery receipt recovery also validates original owner/body. Isolated14tests and Nova typecheck pass. Receipt callback nested-context extension remains separate ongoing integration work."
     }
-  ]
+  ],
+  "resume_verification": {
+    "source_commit": "055ed19a552a1c34bab799d6d9868fbe64dee455",
+    "inventory_correction_local_commit": "c3f8b7d",
+    "report": "implementation/resume-20260909.md",
+    "scope": "Ausgewählte lokale Integrationsgates; keine Gesamt-E2E-, CI- oder Deploymentfreigabe.",
+    "final_source_commit": "b7f496dc51d743afe556c79c6ae18be653d63b66",
+    "selected_gate_result": "14 ausgewählte Gruppen bestanden, mit einem ausdrücklich nicht bestandenen/ausgelassenen nativen PostgreSQL-Gate innerhalb der Readinessgruppe; Originalfehlversuche erhalten."
+  }
 }

@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
+import { registryTestContract } from './registry-test-contract.mjs';
+import { execFileSync } from 'node:child_process';
 import os from 'node:os';
 import path from 'node:path';
 
@@ -25,6 +27,7 @@ import {
 import { expectedFailureContractForScenario } from './real-run-evidence.mjs';
 import { malformedOutputScenarioConfig } from './malformed-output-publisher.mjs';
 
+process.env.KUBECLAW_REGISTRY_CONFIG ??= registryTestContract;
 const FIXTURE_DIR = path.join(REPO_ROOT, 'tests', 'verification', 'e2e', 'fixtures', 'nginx-project');
 process.env.REAL_E2E_DEPLOYMENT_IMAGE = process.env.REAL_E2E_DEPLOYMENT_IMAGE
   || 'registry-mirror.kubeclaw.svc.cluster.local:5000/library/nginx:1.27-alpine@sha256:62223d644fa234c3a1cc785ee14242ec47a77364226f1c811d2f669f96dc2ac8';
@@ -152,6 +155,10 @@ function materializeScenario({ rootDir, suiteId, scenarioId, mode }) {
     const baseProgress = mode === 'restored'
       ? seededStaleCheckpointProgress({ projectName, runId })
       : buildProgress({ projectName, runId, moduleIds: realE2EScenarioModuleIds(scenarioId) });
+    execFileSync('git', ['init', '-q', worktreePath]);
+    execFileSync('git', ['-C', worktreePath, 'add', '.']);
+    execFileSync('git', ['-C', worktreePath, '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid', 'commit', '-qm', 'original fixture']);
+    baseProgress.real_e2e.coverage_base_revision = execFileSync('git', ['-C', worktreePath, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
     const normalized = mode === 'restored'
       ? normalizeRealE2ERuntimeDefaults(cloneJson(baseProgress), { scenarioId })
       : cloneJson(baseProgress);

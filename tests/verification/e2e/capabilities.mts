@@ -1,3 +1,4 @@
+import { probeBusterReadiness } from './buster-readiness.mjs';
 import net, { isIP } from 'node:net';
 import tls from 'node:tls';
 import fs from 'node:fs';
@@ -154,13 +155,7 @@ async function probeBuildkit(): Promise<CapabilityResult> {
     return { capability: 'buildkit', ok: false, reason: 'INFRA_MISSING_TEST_PLAN_PROVIDER' };
   }
   try {
-    const response = await fetch(`${endpoint.replace(/\/+$/u, '')}/healthz`, {
-      signal: AbortSignal.timeout(10_000),
-    });
-    const body = await response.json() as Record<string, unknown>;
-    const ok = response.ok
-      && body.schemaVersion === 'buster-plan-health.v1'
-      && body.ready === true;
+    const { ok } = await probeBusterReadiness(endpoint, 10_000);
     return {
       capability: 'buildkit',
       ok,

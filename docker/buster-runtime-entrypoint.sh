@@ -210,6 +210,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     terminationGraceMs: 2000,
     allowSampledProcessLimit: true,
   },
+  dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
   containerBuild: {
     buildctlExecutable: '/usr/local/bin/buildctl', buildkitHost: process.env.BUILDKIT_HOST,
     ...JSON.parse(fs.readFileSync(process.env.REGISTRY_CLIENT_RUNTIME, 'utf8')),

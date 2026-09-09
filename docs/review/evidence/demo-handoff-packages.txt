@@ -1,0 +1,34 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node tests/remediation.test.ts
+
+{"ok":true,"provider":"api-flow","realHttp":true,"realWebSocket":true,"mocks":0,"wrappers":0}
+{"ok":true,"provider":"api-flow","realHttp":true,"mocks":0}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     npx playwright install                                 ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+    at BrowserAxeCapabilityInvoker.invoke (/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/engine/test-gates/browser-axe-runtime.ts:168:53)
+    at Object.invoke (/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/plugins/axe/tests/live-function.test.ts:63:114)
+    at Object.execute (/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/plugins/axe/src/provider.js:75:34)
+    at /workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/plugins/axe/tests/live-function.test.ts:65:33 {
+  log: [],
+  name: 'Error'
+}
+
+Node.js v24.19.0

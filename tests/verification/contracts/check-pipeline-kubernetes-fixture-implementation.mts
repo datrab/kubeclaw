@@ -18,7 +18,7 @@ assert.equal(entry.registration.kind, 'fixture');
 assert.deepEqual(entry.registration.capabilities, ['kubernetes.fixture']);
 assert.equal(entry.registration.retrySafe, false);
 assert.deepEqual(entry.registration.inputs.map((input) => input.name), ['image', 'checked-manifest']);
-assert.equal(entry.registration.outputs[0]?.schemaId, 'kubeclaw.kubernetes-deployment-fixture@1');
+assert.equal(entry.registration.outputs.find(output => output.name === 'deployment')?.schemaId, 'kubeclaw.kubernetes-deployment-fixture@1');
 const controllerChart = fs.readFileSync('charts/kubeclaw/templates/buster-namespace-controller.yaml', 'utf8');
 const controllerSource = fs.readFileSync('cmd/buster-namespace-controller/main.go', 'utf8');
 const runtimeSource = fs.readFileSync('skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts', 'utf8');
@@ -187,4 +187,4 @@ try {
 } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
 
 console.log(JSON.stringify({ ok: true, phase: 'kubernetes-fixture-implementation', authority: 'replacement-only',
-  providerKind: 'fixture', typedManifestLink: true, narrowCapability: true, mocks: 0 }));
+  providerKind: 'fixture', typedManifestLink: true, narrowCapability: true, injectedExecutorVectors: true, nativeCluster: false }));

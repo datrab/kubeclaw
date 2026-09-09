@@ -1,0 +1,19 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"live-function","deliveries":5}
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"package-boundary"}
+✔ Discord original HTTP and durable store bind wire bytes and replay after reopen (3410.925627ms)
+✔ Discord dropped response remains uncertain after reopen without another POST (3163.07974ms)
+✔ Discord invalid actual ID cannot be replaced by generic messageId or blindly retried (3181.052973ms)
+✔ explicit Discord receipt contract vectors reject legacy acknowledgments and invalid IDs (1.011856ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10153.50519

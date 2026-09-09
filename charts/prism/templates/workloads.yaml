@@ -104,7 +104,7 @@ spec:
           # The migration is a post-install hook. On the first install the worker
           # must become ready before that hook can create its nonce table.
           {{- end }}
-          readinessProbe: { httpGet: { path: {{ ternary "/health" "/ready" (eq $name "worker") | quote }}, port: 8080 }, initialDelaySeconds: 3 }
+          readinessProbe: { httpGet: { path: {{ ternary "/bootstrap" "/ready" (eq $name "worker") | quote }}, port: 8080 }, initialDelaySeconds: 3 }
           livenessProbe: { httpGet: { path: /health, port: 8080 }, initialDelaySeconds: 10 }
         {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
         - name: worker-trust-proxy

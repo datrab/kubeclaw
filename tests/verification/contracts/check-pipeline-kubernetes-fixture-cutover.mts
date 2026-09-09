@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { loadPipelineTestScope } from '@kubeclaw/nova-core';
+import { loadPipelineTestScope, buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
 import { cleanupRealE2ERunWorkspace, createRealE2ERunWorkspace } from '../e2e/real-run-workspace.mjs';
 import { buildScaffold } from '../../../skills/nova/project_setup/tools/progress-scaffold-discovery.ts';
 
@@ -109,9 +109,36 @@ try {
   assert.equal(fixture?.uses, 'kubeclaw.kubernetes-fixture@1');
   assert.equal(fixture?.config?.image, undefined);
   assert.deepEqual(fixture?.inputs?.image, {
-    from: 'container-build', output: 'image', schemaId: 'kubeclaw.container-image@1',
+    from: 'container-build', output: 'image',
   });
   assert.equal(fixture?.inputs?.['checked-manifest']?.from, 'checked-manifest');
+  const pluginRoot = path.resolve('skills/buster/plugins');
+  const registry = buildRegistry(discoverPackages({ installationRoots: [pluginRoot], trustPolicy: {
+    trustedBuiltinRoots: [pluginRoot], allowedSourceDigests: new Map(), verifiedAttestations: new Map(), verifierId: 'fixture-cutover',
+  } }));
+  assert.equal(registry.testProviderContracts.get('kubeclaw.container-build@1')?.registration.outputs.find(port => port.name === 'image')?.schemaId, 'kubeclaw.container-image@1');
+  assert.equal(registry.testProviderContracts.get('kubeclaw.kubernetes-fixture@1')?.registration.inputs.find(port => port.name === 'image')?.schemaId, 'kubeclaw.container-image@1');
+  const suiteRoot = path.resolve('contracts/pipeline-test-gate/v1/suites');
+  const suiteTemplates = fs.readdirSync(suiteRoot).filter(file => file.endsWith('.json')).map(file => JSON.parse(fs.readFileSync(path.join(suiteRoot, file), 'utf8')));
+  const limits = { cpuMillis: 1800000, memoryBytes: 8 * 1024 ** 3, logBytes: 16 * 1024 ** 2,
+    artifactBytes: 64 * 1024 ** 2, artifactFiles: 256, processes: 128 };
+  const resolve = (declaration: typeof scope.declaration) => resolveTestPlan({
+    planId: 'fixture-cutover', runId: 'fixture-cutover', project: scope.project, scope: { moduleId: null, gateId: 'final-buster' },
+    createdAt: new Date().toISOString(), declaration, suiteTemplates, registry,
+    facts: { changedPaths: [], moduleType: 'service', pipelineStage: 'final-buster' },
+    policy: { defaultTimeoutMs: 900000, maximumTimeoutMs: 1800000, defaultLimits: limits, maximumLimits: limits,
+      maximumRetryCount: 2, maximumMatrixSize: 16, maximumNodes: 128, defaultConcurrencyLimit: 1,
+      maximumConcurrencyLimits: declaration.concurrencyLimits ?? {} },
+  });
+  const plan = resolve(scope.declaration);
+  assert.deepEqual(plan.links.find(link => link.to.nodeId === 'kubernetes-deployment' && link.to.input === 'image'), {
+    schemaVersion: 'typed-link.v1', kind: 'value', from: { nodeId: 'container-build', output: 'image' },
+    to: { nodeId: 'kubernetes-deployment', input: 'image' }, schemaId: 'kubeclaw.container-image@1',
+  });
+  const wrongSchema = structuredClone(scope.declaration);
+  wrongSchema.fixtures!['kubernetes-deployment']!.inputs!.image = { from: 'tailscale-exposure', output: 'exposure' };
+  assert.throws(() => resolve(wrongSchema), /TEST_PLAN_LINK_SCHEMA_MISMATCH/u);
+
   assert.equal(scope.declaration.tests?.health?.inputs?.deployment?.from, 'kubernetes-deployment');
 } finally {
   await cleanupRealE2ERunWorkspace(workspace);
@@ -120,4 +147,4 @@ try {
 await import('./check-pipeline-kubernetes-fixture-implementation.mts');
 await import('./check-pipeline-kubernetes-fixture-parity.mts');
 console.log(JSON.stringify({ ok: true, phase: 'kubernetes-fixture-cutover', authority: 'replacement-only',
-  parityItems: 48, legacyDeleted: true, mocks: 0, wrappers: 0 }));
+  parityItems: 48, legacyDeleted: true, injectedExecutorVectors: true, nativeCluster: false }));

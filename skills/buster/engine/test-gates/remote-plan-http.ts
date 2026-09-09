@@ -81,6 +81,27 @@ function resultRoute(url: string | undefined): { jobId: string; digest: string }
   catch { throw new Error('BUSTER_REMOTE_JOB_ID_INVALID'); }
 }
 
+async function healthResponse(request: http.IncomingMessage, response: http.ServerResponse, options: {
+  readonly service: BusterRemotePlanService;
+  readonly maximumResponseBytes: number;
+}): Promise<boolean> {
+  if (request.method === 'GET' && request.url === '/healthz') {
+    send(response, 200, { schemaVersion: 'buster-plan-health.v2', live: true }, options.maximumResponseBytes);
+    return true;
+  }
+  if (request.method === 'GET' && request.url === '/bootstrapz') {
+    const ready = options.service.bootstrapReady();
+    send(response, ready ? 200 : 503, { schemaVersion: 'buster-plan-bootstrap.v1', initialized: ready }, options.maximumResponseBytes);
+    return true;
+  }
+  if (request.method === 'GET' && request.url === '/readyz') {
+    const status = await options.service.readiness();
+    send(response, status.ready ? 200 : 503, status, options.maximumResponseBytes);
+    return true;
+  }
+  return false;
+}
+
 export function createBusterRemotePlanHttpServer(options: {
   readonly service: BusterRemotePlanService;
   readonly token?: string;
@@ -100,10 +121,7 @@ export function createBusterRemotePlanHttpServer(options: {
   }
   const handler: http.RequestListener = (request, response) => {
     void (async () => {
-      if (request.method === 'GET' && request.url === '/healthz') {
-        send(response, 200, { schemaVersion: 'buster-plan-health.v1', ready: true }, options.maximumResponseBytes);
-        return;
-      }
+      if (await healthResponse(request, response, options)) return;
       if (!authorize(request, options)) {
         send(response, 401, { error: 'unauthorized' }, options.maximumResponseBytes);
         return;
@@ -148,7 +166,7 @@ export function createBusterRemotePlanHttpServer(options: {
     })().catch((error) => {
       const message = error instanceof Error ? error.message : String(error);
       const status = ['BUSTER_REMOTE_ADMISSION_FULL', 'BUSTER_REMOTE_RESULT_CAPACITY_EXCEEDED'].includes(message) ? 429
-        : message === 'BUSTER_REMOTE_SHUTTING_DOWN' ? 503
+        : ['BUSTER_REMOTE_SHUTTING_DOWN', 'BUSTER_DEPENDENCY_UNAVAILABLE'].includes(message) ? 503
         : message.includes('NOT_FOUND') ? 404
         : message.includes('CONFLICT') ? 409
           : message.includes('SIZE_EXCEEDED') ? 413 : 400;

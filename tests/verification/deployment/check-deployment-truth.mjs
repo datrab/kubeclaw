@@ -389,7 +389,7 @@ assert.doesNotMatch(
 );
 assert.match(
   prismWorkloads,
-  /readinessProbe:\s*\{\s*httpGet:\s*\{\s*path:\s*\{\{\s*ternary "\/health" "\/ready" \(eq \$name "worker"\)/u,
+  /readinessProbe:\s*\{\s*httpGet:\s*\{\s*path:\s*\{\{\s*ternary "\/bootstrap" "\/ready" \(eq \$name "worker"\)/u,
   'worker readiness must not deadlock the post-install schema migration',
 );
 assert.match(
@@ -463,10 +463,10 @@ assert.equal((busterValues.match(/scheme:\s*HTTP/gu) ?? []).length, 3,
 assert.match(busterValues, /CONTAINER_BUILD_BUILDKIT_HOST[\s\S]*buildkitd\.sock/);
 assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-production\.mts/);
 assert.match(busterRuntimeDockerfile, /check-pipeline-container-build-recovery\.mts/);
-for (const probe of ['startupProbe', 'readinessProbe', 'livenessProbe']) {
+for (const [probe, endpoint] of [['startupProbe', '/bootstrapz'], ['readinessProbe', '/readyz'], ['livenessProbe', '/healthz']]) {
   assert.match(
     busterValues,
-    new RegExp(`${probe}:[\\s\\S]*path:\\s*/healthz[\\s\\S]*port:\\s*28891`),
+    new RegExp(`${probe}:[\\s\\S]*path:\\s*${endpoint}[\\s\\S]*port:\\s*28891`),
     `the Buster v2 runtime must define its own ${probe}`,
   );
 }

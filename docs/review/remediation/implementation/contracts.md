@@ -87,3 +87,17 @@ wurden dem Integrator gemeldet; hier kein vollständiger Erfolg behauptet.
 Clean-Install, Mehrlocalevergleich, vollständige Pflichtsuite und unabhängige
 Integrationreview bleiben Aufgaben des Integrators beziehungsweise späterer
 Migration; keine Aussage zu externer Worker-/Agentlaufzeit.
+
+## PCR-SDK-001: erneuter Consumer-/Kompatibilitätsaudit
+
+Der Folgeaudit ist in [sdk-json-compatibility.md](sdk-json-compatibility.md) mit
+vollständiger benannter Consumerinventur und Originalprozess-/Diskbelegen
+festgehalten. 115 akzeptierte Werte in jeweils drei tatsächlich ausgewählten
+Node-Locales bleiben gegenüber der Originalquelle `eaf353a^` bytegleich. Für die
+bereits erfolgte Eingabevalidierung ist deshalb **keine Digestmigration nötig**.
+Der zuvor nur vermutete Localewechsel ist jetzt dagegen nachgewiesen: ein echtes
+ArtifactStore-Objekt bleibt unter anderer Locale bytegetreu lesbar, seine
+SDK-Reserialisierung erzeugt einen anderen Digest. Sprachunabhängige Ordnung und
+der dafür notwendige explizite Producer-/Consumer-Cutover bleiben offen. Kein
+stiller Fallback, keine neu erfundene Migration bestehender gültiger Daten und
+keine vollständige Schließung dieser Portabilitätsanforderung.

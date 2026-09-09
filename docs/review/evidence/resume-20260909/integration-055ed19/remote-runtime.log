@@ -1,0 +1,4 @@
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_SPAWN_FAILED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":4}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_CANCELLED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":3}
+{"ok":true,"regression":"nova-remote-deadlines","lostSubmit":"cancelled","unavailableRemote":"durable-unknown","stalledBodies":["result","evidence"],"restart":"reconnected"}
+{"ok":true,"phase":"7-C","transport":"authenticated-http"}

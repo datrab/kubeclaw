@@ -1,0 +1,64 @@
+{
+  "id": "kubeclaw.demo-handoff",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [
+    {
+      "id": "candidate",
+      "type": "kubeclaw.demo.candidate",
+      "module": "src/candidate.ts",
+      "export": "execute",
+      "requiredCapabilities": [
+        "test.plan.evidence",
+        "artifacts.write"
+      ],
+      "configSchema": "schemas/empty.schema.json",
+      "inputSchema": "schemas/candidate.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    },
+    {
+      "id": "delivery",
+      "type": "kubeclaw.demo.delivery",
+      "module": "src/delivery.ts",
+      "export": "execute",
+      "requiredCapabilities": [
+        "demo.handoff",
+        "artifacts.write"
+      ],
+      "configSchema": "schemas/empty.schema.json",
+      "inputSchema": "schemas/delivery.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    },
+    {
+      "id": "ready",
+      "type": "kubeclaw.demo.ready",
+      "module": "src/ready.ts",
+      "export": "execute",
+      "requiredCapabilities": [
+        "demo.handoff",
+        "artifacts.write"
+      ],
+      "configSchema": "schemas/empty.schema.json",
+      "inputSchema": "schemas/ready.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    }
+  ],
+  "observers": [],
+  "adapters": [
+    {
+      "id": "handoff",
+      "module": "src/adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "demo.handoff"
+      ],
+      "requiredCapabilities": [
+        "artifacts.read",
+        "test.plan.evidence",
+        "operator.request",
+        "operator.receipt"
+      ],
+      "configSchema": "schemas/adapter.schema.json"
+    }
+  ]
+}

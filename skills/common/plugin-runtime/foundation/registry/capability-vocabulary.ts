@@ -65,6 +65,8 @@ export const CAPABILITY_DEFINITIONS = Object.freeze({
     ['signal.wait'],
     ['allowedSignalTypes', 'allowedIssuerIds'],
   ),
+  'operator.receipt': definition(['lookup'], ['operator.target'], ['allowedTargets']),
+  'demo.handoff': definition(['deliver', 'commit'], ['demo.candidate'], ['allowedNamespaces']),
   'operator.request': definition(['publish'], ['operator.target'], ['allowedTargets']),
   'telemetry.emit': definition(['append'], ['telemetry.event'], ['allowedEventPrefixes']),
   'secrets.read': definition(['resolve'], ['secret.name'], ['allowedNames']),
@@ -94,7 +96,7 @@ export const CAPABILITY_DEFINITIONS = Object.freeze({
     ['lint.project'],
     ['allowedProjects', 'allowedRoots', 'allowedPolicyRoots'],
   ),
-  'test.plan.evidence': definition(['demo'], ['artifact.object'], ['allowedNamespaces']),
+  'test.plan.evidence': definition(['demo'], ['test.plan.evidence'], ['allowedNamespaces']),
   'test.plan.execute': definition(
     ['run'],
     ['test.resolved-plan'],

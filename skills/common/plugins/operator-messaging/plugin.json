@@ -10,7 +10,8 @@
       "module": "src/adapter.ts",
       "export": "activate",
       "providesCapabilities": [
-        "operator.request"
+        "operator.request",
+        "operator.receipt"
       ],
       "requiredCapabilities": [
         "network.http",

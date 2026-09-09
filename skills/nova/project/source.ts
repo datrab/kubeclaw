@@ -1,3 +1,4 @@
+import type {Demo} from './demo.ts';
 import {canonicalJson, sha256Text, parseReviewSource, type StageDefinition} from '@kubeclaw/plugin-sdk';
 
 type ObjectValue = Record<string, any>;
@@ -26,7 +27,7 @@ function moduleSource(module: ObjectValue) {
 }
 
 /** One source admission and one sync precede the entire sequential publication lane. */
-export function sourceStages(project: ObjectValue, ordered: ObjectValue[]) {
+export function sourceStages(project: ObjectValue, ordered: ObjectValue[], demo?:Demo) {
   const architecture = object(project.architecture, ['ref','requiredFiles','review'], 'architecture');
   if (typeof architecture.ref !== 'string' || !architecture.ref.trim() || /[\x00-\x20]/u.test(architecture.ref)) throw new Error('PROJECT_ARCHITECTURE_REF_REQUIRED');
   const requiredFiles = paths(architecture.requiredFiles).sort();
@@ -35,7 +36,7 @@ export function sourceStages(project: ObjectValue, ordered: ObjectValue[]) {
     ? module.substeps.map(substep => `${module.modulePath}/${substep}/FORGE.md`) : [`${module.modulePath}/FORGE.md`])])].sort();
   const source = parseReviewSource({projectId:project.id,repositoryRoot:project.repositoryRoot,architectureRef:architecture.ref,paths:controlPaths});
   const contract = {projectId:project.id,baseRevision:project.baseRevision,requiredFiles,modules,
-    policy:{modules:ordered.map(module => ({moduleId:module.id,task:module.task,dependsOn:module.dependsOn,requirements:module.requirements,requiredChecks:module.test.requiredChecks})),
+    policy:{...(demo===undefined?{}:{demo}),modules:ordered.map(module => ({moduleId:module.id,task:module.task,dependsOn:module.dependsOn,requirements:module.requirements,requiredChecks:module.test.requiredChecks})),
       integrationRequirements:project.final.integrationRequirements,requiredChecks:project.final.test.requiredChecks}};
   const binding = {stageId:'source-preflight',inputDigest:sha256Text(canonicalJson(contract)),
     ...(architecture.review ? {reviewStageId:'architecture-review'}:{})};

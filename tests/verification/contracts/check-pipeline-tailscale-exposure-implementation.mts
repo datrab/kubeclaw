@@ -194,4 +194,4 @@ await assert.rejects(() => supersededReady.invoke('kubernetes.exposure', { opera
 assert.equal(ownershipPatches.length, 1,
   'a superseded prepare must neither report success nor disable the newer exposure owner');
 console.log(JSON.stringify({ ok: true, phase: 'tailscale-exposure-implementation', providerKind: 'fixture',
-  typedLinks: true, narrowCapability: true, mocks: 0, emulators: 0 }));
+  typedLinks: true, narrowCapability: true, injectedExecutorVectors: true, nativeCluster: false }));

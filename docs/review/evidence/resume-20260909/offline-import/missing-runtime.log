@@ -1,0 +1,1 @@
+PASS: original import succeeds; actual client construction and Redis operation reject missing ioredis; operation never runs. No Redis live proof.

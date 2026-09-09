@@ -118,6 +118,7 @@ const HANDLERS: Readonly<Record<string, Handler>> = Object.freeze({
   'artifacts.read':artifact,'artifacts.write':artifact,'runtime.dispatch':agent,'network.http':network,'secrets.read':secret,
   'command.execute':command,'container.build':containerBuild,'kubernetes.fixture':kubernetesFixture,'kubernetes.exposure':kubernetesExposure,'lint.execute':lint,'test.plan.execute':testPlan,'test.plan.evidence':artifact,'state.read':state,'state.append':state,
   'report.evidence.read': (grant, request, constraints) => included(grant, request.resource.canonicalId, constraints, 'allowedRunIds'),
+  'operator.receipt':target,'demo.handoff':artifact,
   'operator.request':target,'transport.publish':target,'signal.wait':signal,'telemetry.emit':telemetry,'agent.events.subscribe':source,
 });
 

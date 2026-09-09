@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { execFile } from 'node:child_process';
+import { execFile, execFileSync } from 'node:child_process';
 import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
 import {
@@ -13,6 +13,7 @@ import {
 } from './failure-scenarios.mjs';
 import { expandSwarmConfig } from './support/platform-config.ts';
 import { registryClientOrigin } from '../../../scripts/registry-client-config.mjs';
+import { fixtureCoverage } from './fixture-coverage.mjs';
 
 const execFileAsync = promisify(execFile);
 
@@ -428,11 +429,6 @@ function executionOrderForBoundary(moduleIds, boundary = 'full') {
     'gate:final-buster',
     'gate:final-review',
   ];
-}
-
-function releaseCandidateModuleId(moduleIds) {
-  const modules = canonicalModuleIds(moduleIds);
-  return modules[modules.length - 1] || REAL_E2E_MODULE_ID;
 }
 
 function architectureIntentForModules(moduleIds) {
@@ -987,6 +983,8 @@ function instructionFiles(progress) {
       helmCharts: [],
     },
     modules: Object.fromEntries(moduleIds.map((moduleId) => [moduleId, {
+      coverage: fixtureCoverage(progress.project, progress.real_e2e?.coverage_base_revision,
+        [{ moduleId, ownedPaths: moduleSurface(moduleId).source_paths.map(source => `${projectSrc}/${source}`) }], 'module'),
       suites: { unit: { uses: 'kubeclaw.unit-suite@1', add: {
         command: { uses: 'kubeclaw.direct-command@1', mode: 'blocking', retries: 1,
           concurrencyGroup: 'unit', config: { executable: 'npm', args: ['run', `verify:${moduleId}`],
@@ -1005,12 +1003,14 @@ function instructionFiles(progress) {
     }])),
     gates: {
       'final-buster': {
-        suites: { unit: { uses: 'kubeclaw.unit-suite@1', add: {
-          command: { uses: 'kubeclaw.direct-command@1', mode: 'blocking', retries: 1,
+        coverage: fixtureCoverage(progress.project, progress.real_e2e?.coverage_base_revision,
+          moduleIds.map(moduleId => ({ moduleId, ownedPaths: moduleSurface(moduleId).source_paths.map(source => `${projectSrc}/${source}`) })), 'cumulative'),
+        suites: { unit: { uses: 'kubeclaw.unit-suite@1', add: Object.fromEntries(moduleIds.map(moduleId => [
+          `command-${moduleId}`, { uses: 'kubeclaw.direct-command@1', mode: 'blocking', retries: 1,
             concurrencyGroup: 'unit', config: { executable: 'npm',
-              args: ['run', `verify:${releaseCandidateModuleId(moduleIds)}`], workingDirectory: projectSrc,
+              args: ['run', `verify:${moduleId}`], workingDirectory: projectSrc,
               resultMode: 'exit-code' } },
-        } } },
+        ])) } },
         tests: {
           ...sizeBudgetTests('final-buster'),
           'container-build': { uses: 'kubeclaw.container-build@1', mode: 'blocking', retries: 1,
@@ -1342,6 +1342,10 @@ function moduleInstructionFiles(progress) {
 }
 
 export function writeRealE2ESwarmFiles(swarmDir, progress) {
+  const baseRevision = progress.real_e2e?.coverage_base_revision;
+  if (typeof baseRevision !== 'string' || !/^[a-f0-9]{40}([a-f0-9]{24})?$/u.test(baseRevision)) throw new Error('REAL_E2E_COVERAGE_BASE_REQUIRED');
+  // Reuse the captured baseline on resume; never silently refresh its policy.
+  execFileSync('git', ['merge-base', '--is-ancestor', baseRevision, 'HEAD'], { cwd: fs.existsSync(swarmDir) ? swarmDir : path.dirname(swarmDir), stdio: 'pipe' });
   for (const [relativePath, contents] of Object.entries({ ...instructionFiles(progress), ...moduleInstructionFiles(progress) })) {
     writeText(path.join(swarmDir, relativePath), contents);
   }
@@ -1560,6 +1564,7 @@ export async function createRealE2ERunWorkspace({ mode = 'full', scenarioId = 's
 
   const sourceBranch = await currentBranch();
   const runOrigin = await cloneRunScopedWorkspace({ artifactRoot, worktreePath, branchName });
+  const coverageBaseRevision = (await execGit(['rev-parse', 'HEAD'], { cwd: worktreePath })).stdout.trim();
 
   const projectSrc = path.join(worktreePath, 'Projects', projectName, 'src');
   fs.mkdirSync(path.dirname(projectSrc), { recursive: true });
@@ -1568,6 +1573,7 @@ export async function createRealE2ERunWorkspace({ mode = 'full', scenarioId = 's
   const swarmDir = path.join(projectSrc, '.swarm');
   const progressModuleIds = realE2EScenarioModuleIds(scenarioId);
   const baseProgress = buildProgress({ projectName, mode, runId, moduleIds: progressModuleIds });
+  baseProgress.real_e2e.coverage_base_revision = coverageBaseRevision;
   applyRealE2EExecutionBoundary(baseProgress);
   const { progress, scenario } = applyRealE2EScenario(baseProgress, scenarioId);
   validateRealE2EContractAuthority(progress);

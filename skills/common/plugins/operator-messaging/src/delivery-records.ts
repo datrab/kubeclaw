@@ -75,3 +75,27 @@ export async function failDelivery(records: FileDurableRecordStore, request: Eff
   }
   throw error;
 }
+
+/** A lookup never reserves or transmits. Legacy records without explicit ownership cannot authorize a handoff. */
+export async function lookupDelivery(records: FileDurableRecordStore, request: EffectRequest, deliveryId: string, stageId: string, payload: Payload): Promise<Payload> {
+  const entries = await records.read<Payload>(`notifications/${request.resource.canonicalId}`);
+  const original = entries.find(entry => entry.idempotencyKey === key(deliveryId, 'request'))?.payload;
+  assertLookupRequest(original,request,deliveryId,stageId,payload);
+  const terminals = entries.filter(entry => entry.idempotencyKey.endsWith(`:${hash(deliveryId)}`)
+    && entry.payload.schemaVersion === 'notification-delivery-receipt.v1');
+  if (terminals.length !== 1) throw new Error('OPERATOR_RECEIPT_UNRESOLVED');
+  const terminal = terminals[0]!.payload;
+  const attempt = terminal.attempt as Payload | undefined;
+  if (attempt?.runId !== request.attempt.runId || attempt.stageId !== stageId) throw new Error('OPERATOR_RECEIPT_OWNER_UNBOUND');
+  const receipt = terminal.receipt;
+  if (!receipt || typeof receipt !== 'object' || Array.isArray(receipt)) throw new Error('OPERATOR_RECEIPT_UNRESOLVED');
+  return receipt as Payload;
+}
+
+function assertLookupRequest(original:Payload|undefined,request:EffectRequest,deliveryId:string,stageId:string,payload:Payload) {
+  const owner = original?.owner as Payload | undefined;
+  if (!original || original.schemaVersion !== 'notification-delivery-request.v2'
+    || original.idempotencyKey !== deliveryId || original.target !== request.resource.canonicalId
+    || owner?.runId !== request.attempt.runId || owner.stageId !== stageId
+    || original.transportBody !== JSON.stringify(payload)) throw new Error('OPERATOR_RECEIPT_REQUEST_UNBOUND');
+}

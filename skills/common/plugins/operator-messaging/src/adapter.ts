@@ -1,37 +1,16 @@
+import { discordWebhookPayload } from './discord-payload.ts';
 import crypto from 'node:crypto';
-import type { AdapterActivationContext, AdapterInstance, AdapterInvocation } from '@kubeclaw/plugin-sdk';
+import type { AdapterActivationContext, AdapterInstance, AdapterInvocation, EffectRequest } from '@kubeclaw/plugin-sdk';
 import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
-import { completeDelivery, deliveryIdentity, deliveryReceipt, failDelivery, reserveDelivery, type Reservation } from './delivery-records.ts';
+import { completeDelivery, lookupDelivery, deliveryIdentity, deliveryReceipt, failDelivery, reserveDelivery, type Reservation } from './delivery-records.ts';
 import { discordEndpoint, discordReceipt, validateDiscordReceipt } from './discord-receipt.ts';
 import { receiverReceipt } from './receiver.ts';
 import { isTargetId, parseConfig, type TargetConfig } from './config.ts';
 import { assertRequest, parsePayload, responseMessageId, secretValue } from './payload.ts';
 
-const COLORS = Object.freeze({ info: 0x3498db, success: 0x2ecc71, warning: 0xf1c40f, error: 0xe74c3c });
-const ICONS = Object.freeze({ info: 'ℹ️', success: '✅', warning: '⚠️', error: '❌' });
 // One exact JSON transport body is stored as a JSON string: escaping can at most
 // double its admitted 1 MiB bytes. Metadata allowance and aggregate quotas stay unchanged.
 const DELIVERY_RECORD_MAX_BYTES = 2 * 1_048_576 + 65_536;
-
-function displayText(value: string, maximum: number): string {
-  return value.length <= maximum ? value : `${value.slice(0, maximum - 1)}…`;
-}
-
-function discordWebhookPayload(payload: Readonly<Record<string, unknown>>): Readonly<Record<string, unknown>> {
-  const severity = typeof payload.severity === 'string' ? payload.severity : 'info';
-  const title = typeof payload.title === 'string' ? payload.title : String(payload.type);
-  const summary = typeof payload.summary === 'string' ? payload.summary
-    : typeof payload.message === 'string' ? payload.message : title;
-  const fields = Array.isArray(payload.fields) ? payload.fields : [];
-  const reason = typeof payload.reasonCode === 'string' ? [{ name: 'Reason', value: payload.reasonCode, inline: false }] : [];
-  return Object.freeze({ allowed_mentions: Object.freeze({ parse: Object.freeze([]) }), embeds: Object.freeze([Object.freeze({
-    title: displayText(`${ICONS[severity as keyof typeof ICONS] ?? 'ℹ️'} ${title}`, 256),
-    description: displayText(summary, 4_096), color: COLORS[severity as keyof typeof COLORS] ?? COLORS.info,
-    fields: Object.freeze([...fields, ...reason].slice(0, 25)),
-    ...(typeof payload.footer === 'string' ? { footer: Object.freeze({ text: displayText(payload.footer, 2_048) }) } : {}),
-    ...(typeof payload.occurredAt === 'string' ? { timestamp: payload.occurredAt } : {}),
-  })]) });
-}
 
 function resolveSecretEndpoint(secret: string, target: TargetConfig): string {
   if (!target.endpointSecret) {
@@ -100,12 +79,18 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       if (!confidential) fence.assertCurrent();
       if (shuttingDown) throw new Error('ADAPTER_SHUTTING_DOWN');
       if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+      if (request.capability === 'operator.receipt') {
+        const receipt = await lookupReceipt(records, request, targets.get(request.resource.canonicalId));
+        signal.throwIfAborted();
+        return receipt;
+      }
       assertRequest(request, isTargetId);
       const target = targets.get(request.resource.canonicalId);
       if (!target) throw new Error(`OPERATOR_TARGET_DENIED:${request.resource.canonicalId}`);
       return deliver(context, invocation, target, records);
     },
     async receipt(request) {
+      if (request.capability === 'operator.receipt') return lookupReceipt(records, request, targets.get(request.resource.canonicalId));
       assertRequest(request, isTargetId);
       const target = targets.get(request.resource.canonicalId);
       if (!target) throw new Error(`OPERATOR_TARGET_DENIED:${request.resource.canonicalId}`);
@@ -117,4 +102,16 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
     },
     async shutdown() { shuttingDown = true; },
   };
+}
+
+async function lookupReceipt(records:FileDurableRecordStore,request:EffectRequest,target:TargetConfig|undefined) {
+  if (request.operation !== 'lookup' || request.resource.type !== 'operator.target' || !isTargetId(request.resource.canonicalId)) throw new Error('OPERATOR_RECEIPT_OPERATION_INVALID');
+  if (!target || target.format !== 'discord_webhook') throw new Error('OPERATOR_RECEIPT_TARGET_DENIED');
+  const { deliveryId, stageId, payload } = request.payload;
+  if (Object.keys(request.payload).some(key => !['deliveryId', 'stageId', 'payload'].includes(key))
+    || typeof deliveryId !== 'string' || !deliveryId || deliveryId.length > 512 || typeof stageId !== 'string' || !stageId
+    || !payload || typeof payload !== 'object' || Array.isArray(payload)) throw new Error('OPERATOR_RECEIPT_QUERY_INVALID');
+  const transport = discordWebhookPayload(parsePayload(payload as Readonly<Record<string, unknown>>, target.maxPayloadBytes));
+  const receipt = await lookupDelivery(records, request, deliveryId, stageId, transport);
+  return validateDiscordReceipt(receipt, { ...request, deliveryId }, transport);
 }

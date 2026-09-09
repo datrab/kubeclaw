@@ -4,7 +4,7 @@ import fs from 'node:fs';
 const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));
 const registration = manifest.adapters.find(({ id }) => id === 'operator');
 assert.ok(registration, 'operator adapter registration is required');
-assert.deepEqual(registration.providesCapabilities, ['operator.request']);
+assert.deepEqual(registration.providesCapabilities, ['operator.request', 'operator.receipt']);
 assert.deepEqual(registration.requiredCapabilities, ['network.http', 'secrets.read']);
 
 for (const file of ['src/adapter.ts', 'src/adapter.ts']) {

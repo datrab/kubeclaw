@@ -1,0 +1,33 @@
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_SPAWN_FAILED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":4}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: shutdown during the actual asynchronous dependency probe must report the current lifecycle state
++ actual - expected
+
+  {
++   code: 'BUSTER_DEPENDENCY_UNAVAILABLE',
+-   code: 'BUSTER_NOT_BOOTSTRAPPED',
+    ready: false,
+    schemaVersion: 'buster-plan-readiness.v1'
+  }
+
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts:260:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: {
+    schemaVersion: 'buster-plan-readiness.v1',
+    ready: false,
+    code: 'BUSTER_DEPENDENCY_UNAVAILABLE'
+  },
+  expected: {
+    schemaVersion: 'buster-plan-readiness.v1',
+    ready: false,
+    code: 'BUSTER_NOT_BOOTSTRAPPED'
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

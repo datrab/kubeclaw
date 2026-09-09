@@ -1,0 +1,8 @@
+{"ok":true,"phase":"kubernetes-fixture-implementation","authority":"replacement-only","providerKind":"fixture","typedManifestLink":true,"narrowCapability":true,"injectedExecutorVectors":true,"nativeCluster":false}
+{"ok":true,"phase":"kubernetes-fixture-parity","items":48,"deploymentRollout":"accepted-deferred","injectedExecutorVectors":true,"nativeCluster":false}
+{"ok":true,"phase":"kubernetes-fixture-cutover","authority":"replacement-only","parityItems":48,"legacyDeleted":true,"injectedExecutorVectors":true,"nativeCluster":false}
+{"ok":true,"contract":"production-receipt-attestation","algorithm":"ed25519"}
+{"ok":true,"phase":"tailscale-exposure-implementation","providerKind":"fixture","typedLinks":true,"narrowCapability":true,"injectedExecutorVectors":true,"nativeCluster":false}
+{"ok":true,"phase":"tailscale-exposure-parity","items":38,"productionAcceptance":"pending-deployment-and-live-proof","injectedExecutorVectors":true,"nativeCluster":false}
+{"ok":true,"phase":"tailscale-exposure-source-cutover","authority":"replacement-only","productionAcceptance":"pending-deployment-and-live-proof","injectedExecutorVectors":true,"nativeCluster":false}
+{"ok":true,"schemaVersion":"real-production-pipeline-validation.v2","model":"openai/gpt-5.3-codex-spark","graphStageCount":16,"conditionalStageCount":1,"packageCount":48,"stageCount":8,"observerCount":2,"adapterCount":11}

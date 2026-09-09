@@ -1,0 +1,178 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: worker readiness must not deadlock the post-install schema migration
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/deployment/check-deployment-truth.mjs:390:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '{{- if ne (int .Values.control.replicas) 1 }}\n' +
+    '{{- fail "control.replicas must be 1 while prism-artifacts uses ReadWriteOnce storage" }}\n' +
+    '{{- end }}\n' +
+    '{{- range $name := list "control" "studio" "worker" }}\n' +
+    '{{- $image := index $.Values.images $name }}\n' +
+    'apiVersion: apps/v1\n' +
+    'kind: Deployment\n' +
+    'metadata: { name: prism-{{ $name }} }\n' +
+    'spec:\n' +
+    '  replicas: {{ (index $.Values $name).replicas }}\n' +
+    '  {{- if eq $name "control" }}\n' +
+    '  strategy: { type: Recreate }\n' +
+    '  {{- end }}\n' +
+    '  selector: { matchLabels: { app: prism-{{ $name }} } }\n' +
+    '  template:\n' +
+    '    metadata:\n' +
+    '      labels:\n' +
+    '        app: prism-{{ $name }}\n' +
+    '        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}\n' +
+    '        kubeclaw.dev/worker-trust: "true"\n' +
+    '        {{- end }}\n' +
+    '      {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}\n' +
+    '      annotations:\n' +
+    '        checksum/worker-trust: {{ index ((include (print $.Template.BasePath "/configmap-worker-trust.yaml") $) | fromYaml).data (printf "%s.yaml" $name) | sha256sum }}\n' +
+    '      {{- end }}\n' +
+    '    spec:\n' +
+    '      serviceAccountName: prism-{{ $name }}\n' +
+    '      imagePullSecrets: {{ toYaml $.Values.imagePullSecrets | nindent 8 }}\n' +
+    '      automountServiceAccountToken: false\n' +
+    '      # The Prism images use the named `node` image user. Kubernetes cannot prove\n' +
+    '      # that a named image user is non-root when runAsNonRoot is set, so make the\n' +
+    "      # image's numeric runtime identity explicit for every Prism application pod.\n" +
+    '      securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, fsGroup: 1000, seccompProfile: { type: RuntimeDefault } }\n' +
+    '      topologySpreadConstraints:\n' +
+    '        - maxSkew: 1\n' +
+    '          topologyKey: kubernetes.io/hostname\n' +
+    '          whenUnsatisfiable: ScheduleAnyway\n' +
+    '          labelSelector: { matchLabels: { app: prism-{{ $name }} } }\n' +
+    '      containers:\n' +
+    '        - name: {{ $name }}\n' +
+    '          image: {{ include "prism.imageRef" $image | quote }}\n' +
+    '          imagePullPolicy: {{ $image.pullPolicy }}\n' +
+    '          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }\n' +
+    '          env:\n' +
+    '            - { name: PORT, value: "8080" }\n' +
+    '            {{- if and (or (eq $name "control") (eq $name "worker")) (not $.Values.workerTrust.spiffe.enabled) }}\n' +
+    '            - name: PRISM_WORKER_SECRET\n' +
+    '              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: worker-secret } }\n' +
+    '            {{- end }}\n' +
+    '            {{- if eq $name "control" }}\n' +
+    '            {{- if $.Values.workerTrust.spiffe.enabled }}\n' +
+    '            - { name: PRISM_WORKER_URL, value: "http://127.0.0.1:18081" }\n' +
+    '            - { name: PRISM_CONTROL_INTERNAL_URL, value: "http://127.0.0.1:18080" }\n' +
+    '            - { name: PRISM_AGENT_URL, value: "http://127.0.0.1:18082" }\n' +
+    '            {{- end }}\n' +
+    '            {{- with $.Values.control.pipelinePreferenceSubject }}\n' +
+    '            - name: PRISM_PIPELINE_PREFERENCE_SUBJECT\n' +
+    '              value: {{ . | quote }}\n' +
+    '            {{- end }}\n' +
+    '            - name: DATABASE_URL\n' +
+    '              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }\n' +
+    '            - name: PRISM_SESSION_SECRET\n' +
+    '              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: session-secret } }\n' +
+    '            - name: PRISM_INGRESS_SECRET\n' +
+    '              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingress-secret } }\n' +
+    '            {{- if not $.Values.workerTrust.spiffe.enabled }}\n' +
+    '            - name: PRISM_DISPATCH_SECRET\n' +
+    '              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: dispatch-secret } }\n' +
+    '            {{- end }}\n' +
+    '            - { name: PRISM_INGESTION_URL, value: "http://prism-ingestion:8080" }\n' +
+    '            - name: PRISM_INGESTION_SECRET\n' +
+    '              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingestion-secret } }\n' +
+    '            {{- end }}\n' +
+    '            {{- if eq $name "studio" }}\n' +
+    '            - { name: PRISM_CONTROL_URL, value: "http://prism-control:8080" }\n' +
+    '            - name: PRISM_INGRESS_SECRET\n' +
+    '              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingress-secret } }\n' +
+    '            {{- end }}\n' +
+    '            {{- if eq $name "worker" }}\n' +
+    '            - { name: PRISM_CONTROL_INTERNAL_URL, value: {{ ternary "http://127.0.0.1:18080" "http://prism-control:8080" $.Values.workerTrust.spiffe.enabled | quote }} }\n' +
+    '            - name: DATABASE_URL\n' +
+    '              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }\n' +
+    '            {{- end }}\n' +
+    '            {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}\n' +
+    '            - { name: SPIFFE_ENDPOINT_SOCKET, value: {{ printf "unix://%s" $.Values.workerTrust.spiffe.socketPath | quote }} }\n' +
+    '            - { name: WORKER_TRUST_SPIFFE_ENABLED, value: "true" }\n' +
+    '            {{- if eq $name "control" }}\n' +
+    '            - { name: PRISM_TRUSTED_NOVA_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/%s" $.Values.workerTrust.spiffe.trustDomain $.Values.workerTrust.spiffe.novaNamespace $.Values.workerTrust.spiffe.novaServiceAccount | quote }} }\n' +
+    '            - { name: PRISM_TRUSTED_TEST_RUNNER_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-test-runner" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }\n' +
+    '            - { name: PRISM_TRUSTED_WORKER_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-worker" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }\n' +
+    '            - { name: PRISM_CONTROL_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-control" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }\n' +
+    '            - { name: PRISM_TRUSTED_AGENT_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/%s" $.Values.workerTrust.spiffe.trustDomain $.Values.workerTrust.spiffe.agentNamespace $.Values.workerTrust.spiffe.agentServiceAccount | quote }} }\n' +
+    '            {{- else }}\n' +
+    '            - { name: PRISM_TRUSTED_CONTROL_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-control" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }\n' +
+    '            {{- end }}\n' +
+    '            {{- end }}\n' +
+    '          resources: {{ toYaml (index $.Values $name).resources | nindent 12 }}\n' +
+    '          volumeMounts:\n' +
+    '            - { name: tmp, mountPath: /tmp }\n' +
+    '            {{- if eq $name "control" }}\n' +
+    '            - { name: artifacts, mountPath: /var/lib/prism/artifacts }\n' +
+    '            {{- end }}\n' +
+    '          {{- if eq $name "worker" }}\n' +
+    '          # The migration is a post-install hook. On the first install the worker\n' +
+    '          # must become ready before that hook can create its nonce table.\n' +
+    '          {{- end }}\n' +
+    '          readinessProbe: { httpGet: { path: {{ ternary "/bootstrap" "/ready" (eq $name "worker") | quote }}, port: 8080 }, initialDelaySeconds: 3 }\n' +
+    '          livenessProbe: { httpGet: { path: /health, port: 8080 }, initialDelaySeconds: 10 }\n' +
+    '        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}\n' +
+    '        - name: worker-trust-proxy\n' +
+    '          image: "{{ $.Values.workerTrust.spiffe.envoy.repository }}:{{ $.Values.workerTrust.spiffe.envoy.tag }}@{{ $.Values.workerTrust.spiffe.envoy.digest }}"\n' +
+    '          imagePullPolicy: {{ $.Values.workerTrust.spiffe.envoy.pullPolicy }}\n' +
+    '          args: ["-c", {{ printf "/etc/kubeclaw-worker-trust/%s.yaml" $name | quote }}, "--service-cluster", {{ printf "prism-%s" $name | quote }}]\n' +
+    '          ports: [{ name: worker-trust, containerPort: 8443, protocol: TCP }]\n' +
+    '          readinessProbe:\n' +
+    '            tcpSocket: { port: worker-trust }\n' +
+    '            initialDelaySeconds: 3\n' +
+    '            timeoutSeconds: 3\n' +
+    '          livenessProbe:\n' +
+    '            tcpSocket: { port: worker-trust }\n' +
+    '            initialDelaySeconds: 10\n' +
+    '            timeoutSeconds: 3\n' +
+    '          securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }\n' +
+    '          resources: {{ toYaml $.Values.workerTrust.spiffe.envoy.resources | nindent 12 }}\n' +
+    '          volumeMounts:\n' +
+    '            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }\n' +
+    '            - { name: spiffe-workload-api, mountPath: /run/spire/sockets, readOnly: true }\n' +
+    '            - { name: worker-trust-tmp, mountPath: /tmp }\n' +
+    '        {{- end }}\n' +
+    '      volumes:\n' +
+    '        - { name: tmp, emptyDir: { sizeLimit: 4Gi } }\n' +
+    '        {{- if eq $name "control" }}\n' +
+    '        - { name: artifacts, persistentVolumeClaim: { claimName: prism-artifacts } }\n' +
+    '        {{- end }}\n' +
+    '        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}\n' +
+    '        - { name: worker-trust-envoy, configMap: { name: prism-worker-trust, defaultMode: 0444 } }\n' +
+    '        - name: spiffe-workload-api\n' +
+    '          csi: { driver: {{ $.Values.workerTrust.spiffe.csiDriver | quote }}, readOnly: true }\n' +
+    '        - { name: worker-trust-tmp, emptyDir: { sizeLimit: 64Mi } }\n' +
+    '        {{- end }}\n' +
+    '---\n' +
+    '{{- end }}\n' +
+    '{{- range $name := list "studio" "worker" }}\n' +
+    'apiVersion: policy/v1\n' +
+    'kind: PodDisruptionBudget\n' +
+    'metadata: { name: prism-{{ $name }} }\n' +
+    'spec: { minAvailable: 1, selector: { matchLabels: { app: prism-{{ $name }} } } }\n' +
+    '---\n' +
+    '{{- end }}\n' +
+    'apiVersion: v1\n' +
+    'kind: PersistentVolumeClaim\n' +
+    'metadata:\n' +
+    '  name: prism-artifacts\n' +
+    '  annotations:\n' +
+    '    helm.sh/resource-policy: keep\n' +
+    'spec:\n' +
+    '  accessModes: [ReadWriteOnce]\n' +
+    '  {{- if .Values.artifactStorage.storageClass }}\n' +
+    '  storageClassName: {{ .Values.artifactStorage.storageClass | quote }}\n' +
+    '  {{- end }}\n' +
+    '  resources: { requests: { storage: {{ .Values.artifactStorage.storage }} } }\n',
+  expected: /readinessProbe:\s*\{\s*httpGet:\s*\{\s*path:\s*\{\{\s*ternary "\/health" "\/ready" \(eq \$name "worker"\)/u,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import http from 'node:http';
+import https from 'node:https';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -27,7 +28,8 @@ test('original controller credentials authenticate against a real local session 
  const produced=JSON.parse(fs.readFileSync(file,'utf8'));
  const username=Buffer.from(produced.secret.data.username,'base64').toString(),password=Buffer.from(produced.secret.data.password,'base64').toString();
  const sessions=new Map<string,string>();let bypass=false,wrongBusiness=false,redirect=false,malformed=false;const requests:string[]=[];
- const app=http.createServer((request,response)=>{
+ const tlsRoot=process.env.KUBECLAW_DEMO_AUTH_TEST_TLS_ROOT;
+ const handler:http.RequestListener=(request,response)=>{
   requests.push(`${request.method} ${request.url}`);
   response.setHeader('content-type','application/json');
   if(request.method==='POST'&&request.url==='/api/login'){
@@ -35,7 +37,7 @@ test('original controller credentials authenticate against a real local session 
     const body=JSON.parse(Buffer.concat(chunks).toString());
     if(body.username!==username||body.password!==password){response.writeHead(401).end('{}');return;}
     const session=crypto.randomBytes(24).toString('hex');sessions.set(session,username);
-    response.setHeader('set-cookie',`demo_session=${session}; Path=/api; HttpOnly; SameSite=Strict`);response.end('{}');
+    response.setHeader('set-cookie',`demo_session=${session}; Path=/api; HttpOnly; SameSite=Strict${tlsRoot?'; Secure':''}`);response.end('{}');
    });return;
   }
   if(redirect){response.writeHead(302,{location:'http://localhost.invalid/steal'}).end();return;}
@@ -43,9 +45,10 @@ test('original controller credentials authenticate against a real local session 
   if(!user&&!bypass){response.writeHead(401).end('{}');return;}
   if(malformed){response.end(`invalid json ${session}`);return;}
   response.end(JSON.stringify({username:user??username,projects:[{name:wrongBusiness?'Different workspace':'Demo workspace'}]}));
- });
+ };
+ const app=tlsRoot?https.createServer({key:fs.readFileSync(path.join(tlsRoot,'key.pem')),cert:fs.readFileSync(path.join(tlsRoot,'cert.pem'))},handler):http.createServer(handler);
  await new Promise<void>(resolve=>app.listen(0,'127.0.0.1',resolve));const address=app.address();assert(address&&typeof address!=='string');
- const origin=`http://127.0.0.1:${address.port}`;
+ const origin=`${tlsRoot?'https':'http'}://127.0.0.1:${address.port}`;
  // Deployment/lease metadata below are explicit wire-contract vectors, not a deployed image/cluster capture.
  const immutableImage=`example.invalid/demo@${sha256Text('local application source identity contract vector')}`;
  const manifestDigest=sha256Text('local application manifest contract vector');const expiresAt=new Date(Date.now()+60000).toISOString();
@@ -88,7 +91,7 @@ test('original controller credentials authenticate against a real local session 
   const roots=['common','nova','buster'].map(role=>path.join(repository,'skills',role,'plugins'));
   const registry=buildRegistry(discoverPackages({installationRoots:roots,trustPolicy:{trustedBuiltinRoots:roots,allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'test:demo-auth'}}));
   assert(registry);
-  if(process.env.KUBECLAW_DEMO_AUTH_TEST_RESULT)fs.writeFileSync(process.env.KUBECLAW_DEMO_AUTH_TEST_RESULT,JSON.stringify({invocation,result}),{mode:0o600});
+  if(process.env.KUBECLAW_DEMO_AUTH_TEST_RESULT)fs.writeFileSync(process.env.KUBECLAW_DEMO_AUTH_TEST_RESULT,JSON.stringify({invocation,result,produced}),{mode:0o600});
  }finally{await new Promise<void>(resolve=>app.close(()=>resolve()));fs.rmSync(root,{recursive:true,force:true});}
 });
 

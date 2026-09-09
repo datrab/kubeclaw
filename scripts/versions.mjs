@@ -59,6 +59,8 @@ export function versionOutputs(root) {
     if ([...source.matchAll(new RegExp(regex.source, 'gm'))].length !== expectedCount) throw new Error(`${file}: version field missing or ambiguous`);
     outputs.set(file, source.replace(new RegExp(regex.source, 'gm'), replacement));
   };
+  replaceOne('scripts/deploy.sh', /^BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="[^"\n]+"$/m,
+    `BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${'${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-'}${manifest.imageOverrides?.['buster-runtime']?.BUILDKIT_BASE ?? args.BUILDKIT_BASE}}"`);
   for (const reference of [manifest.infrastructure?.envoy, ...Object.values(manifest.automation ?? {})]) {
     if (typeof reference !== 'string' || !/^[a-z0-9./_-]+:[a-zA-Z0-9._-]+@sha256:[a-f0-9]{64}$/.test(reference))
       throw new Error('Infrastructure and automation images require exact tags and digests');

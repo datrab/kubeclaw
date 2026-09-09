@@ -1,0 +1,63 @@
+✔ internal request authentication binds time, nonce, and body (2.831161ms)
+✔ nonce replay protection is shared across worker replicas (2262.676652ms)
+✔ actual Helm worker bootstrap readiness preserves post-install migration startup (130.475234ms)
+✔ actual HMAC HTTP admission fails closed on native pg startup timeout; bootstrap remains available (156.27409ms)
+✔ native connection refusal retains its safe operator system code (5.716354ms)
+✔ SPIFFE operational readiness has no unused database dependency; actual admission still authenticates (34.600279ms)
+✔ original readiness SQL requires the migrated nonce table (PGlite SQL proof only) (1802.389312ms)
+﹣ native PostgreSQL query cancellation settles and releases its actual pool client (0.376128ms) # REAL_POSTGRES_DATABASE_REQUIRED (isolated migrated test database)
+✔ original worker operation reproduces missing log store; actual service executor persists the complete log (171.030893ms)
+✔ real durable log store corruption keeps an otherwise successful engine operation errored (27.887883ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (44.29502ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (10.911832ms)
+✔ full log participates in the real neutral evidence budget before upload (13.513667ms)
+✔ bounded dependency process terminates actual child process groups and awaits closure (315.337894ms)
+✔ bounded process limits actual output and exports safe cause metadata without payload or inherited credentials (70.502443ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_SPAWN_FAILED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":3}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_CANCELLED","exitCode":null,"signal":null,"errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":0}
+✔ missing native BuildKit fails closed; concurrent callers share one check and completed checks are never cached (8.452071ms)
+✔ actual Helm uses bootstrap and functional readiness separately from liveness (164.073075ms)
+✔ dependency shutdown cancels native descendants before returning and pre-aborted work never starts (37.996613ms)
+✔ gateway capability performs an authenticated read-only tool request (7.803232ms)
+✔ gateway capability rejects an invalid token (3.197514ms)
+✔ gateway capability distinguishes tool-policy denial from authentication failure (6.331873ms)
+✔ gateway capability refuses to transmit its bearer token over external HTTP (0.975352ms)
+node:internal/modules/cjs/loader:1517
+  const err = new Error(message);
+              ^
+
+Error: Cannot find module 'ioredis'
+Require stack:
+- /workspace/scratch/0d8f8ddb55c3/integration/tests/verification/e2e/redis-test-client.mjs
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+    at Module._load (node:internal/modules/cjs/loader:1294:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1617:12)
+    at require (node:internal/modules/helpers:153:16)
+    at file:///workspace/scratch/0d8f8ddb55c3/integration/tests/verification/e2e/redis-test-client.mjs:4:15
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/workspace/scratch/0d8f8ddb55c3/integration/tests/verification/e2e/redis-test-client.mjs'
+  ]
+}
+
+Node.js v24.19.0
+✖ tests/verification/e2e/check-real-e2e-capabilities.test.mjs (96.217567ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 21
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 2729.405149
+
+✖ failing tests:
+
+test at tests/verification/e2e/check-real-e2e-capabilities.test.mjs:1:1
+✖ tests/verification/e2e/check-real-e2e-capabilities.test.mjs (96.217567ms)
+  'test failed'

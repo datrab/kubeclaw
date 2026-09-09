@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { probeBusterReadiness } from './buster-readiness.mjs';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -493,11 +494,7 @@ async function checkBusterPlanRuntime() {
     return { ok: false, reason: 'INFRA_MISSING_TEST_PLAN_PROVIDER' };
   }
   try {
-    const response = await fetch(`${endpoint.replace(/\/+$/u, '')}/healthz`, {
-      signal: AbortSignal.timeout(20_000),
-    });
-    const body = await response.json();
-    const ok = response.ok && body?.schemaVersion === 'buster-plan-health.v1' && body?.ready === true;
+    const { ok, body } = await probeBusterReadiness(endpoint, 20_000);
     return { ok, reason: ok ? null : 'INFRA_BUSTER_PLAN_RUNTIME_UNREADY', endpoint, body };
   } catch (error) {
     return { ok: false, reason: 'INFRA_BUSTER_PLAN_RUNTIME_UNREACHABLE', endpoint,

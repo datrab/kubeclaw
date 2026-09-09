@@ -1,0 +1,6 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> plugin-system:inventory:check
+> node scripts/plugin-system-inventory.mjs --check
+
+Plugin-system inventory is stale: docs/generated/inventory/plugin-system.json. Run: npm run plugin-system:inventory

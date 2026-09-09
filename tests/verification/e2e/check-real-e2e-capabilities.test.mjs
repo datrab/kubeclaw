@@ -1,5 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { buildProgress } from './real-run-workspace.mjs';
 
 import {
   readReusedCapabilityProbeResult,
@@ -38,10 +42,30 @@ test('reused matrix capability probe preserves structured failures', () => {
   assert.deepEqual(reused.failures, probe.failures);
 });
 
-test('configured Codex capability probe follows production smoke dispatch', () => {
+function generatedProbeProject(t) {
+  const projects = fileURLToPath(new URL('../../../Projects/', import.meta.url));
+  fs.mkdirSync(projects, { recursive: true });
+  const root = fs.mkdtempSync(path.join(projects, 'capability-probe-test-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const project = path.basename(root);
+  const swarm = path.join(root, 'src', '.swarm');
+  fs.mkdirSync(swarm, { recursive: true });
+  const originalImage = process.env.REAL_E2E_DEPLOYMENT_IMAGE;
+  // Original generator metadata only; this test does not pull or deploy the image.
+  process.env.REAL_E2E_DEPLOYMENT_IMAGE = 'registry-mirror.kubeclaw.svc.cluster.local:5000/library/nginx:1.27-alpine@sha256:62223d644fa234c3a1cc785ee14242ec47a77364226f1c811d2f669f96dc2ac8';
+  try {
+    fs.writeFileSync(path.join(swarm, 'progress.json'), JSON.stringify(buildProgress({ projectName: project })));
+  } finally {
+    if (originalImage === undefined) delete process.env.REAL_E2E_DEPLOYMENT_IMAGE;
+    else process.env.REAL_E2E_DEPLOYMENT_IMAGE = originalImage;
+  }
+  return project;
+}
+
+test('configured Codex capability probe follows production smoke dispatch', (t) => {
   const target = resolveProductionCodexLaunchTarget({
     env: {
-      REAL_E2E_CONFIG_PROBE_PROJECT: 'pipeline-smoke-landing',
+      REAL_E2E_CONFIG_PROBE_PROJECT: generatedProbeProject(t),
     },
   });
   assert.equal(target.runtime, 'subagent');
@@ -49,10 +73,11 @@ test('configured Codex capability probe follows production smoke dispatch', () =
   assert.equal(target.model, 'openai/gpt-5.3-codex-spark');
 });
 
-test('configured capability probe rejects non-Spark model overrides', () => {
+test('configured capability probe rejects non-Spark model overrides', (t) => {
+  const project = generatedProbeProject(t);
   assert.throws(() => resolveProductionCodexLaunchTarget({
     env: {
-      REAL_E2E_CONFIG_PROBE_PROJECT: 'pipeline-smoke-landing',
+      REAL_E2E_CONFIG_PROBE_PROJECT: project,
       REAL_E2E_MODEL: 'openai/gpt-4.1',
     },
   }), /REAL_E2E_MODEL_MUST_BE_SPARK/);

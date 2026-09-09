@@ -1,0 +1,110 @@
+✔ internal request authentication binds time, nonce, and body (2.149993ms)
+✔ nonce replay protection is shared across worker replicas (2183.40608ms)
+✖ actual Helm worker bootstrap readiness preserves post-install migration startup (9.095059ms)
+✔ actual HMAC HTTP admission fails closed on native pg startup timeout; bootstrap remains available (157.150108ms)
+✔ native connection refusal retains its safe operator system code (7.694227ms)
+✔ SPIFFE operational readiness has no unused database dependency; actual admission still authenticates (46.306467ms)
+✔ original readiness SQL requires the migrated nonce table (PGlite SQL proof only) (1882.601217ms)
+﹣ native PostgreSQL query cancellation settles and releases its actual pool client (0.396859ms) # REAL_POSTGRES_DATABASE_REQUIRED (isolated migrated test database)
+✔ original worker operation reproduces missing log store; actual service executor persists the complete log (160.563568ms)
+✔ real durable log store corruption keeps an otherwise successful engine operation errored (18.633748ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (41.302444ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (25.688231ms)
+✔ full log participates in the real neutral evidence budget before upload (10.30831ms)
+✖ bounded dependency process terminates actual child process groups and awaits closure (313.098113ms)
+✔ bounded process limits actual output and exports safe cause metadata without payload or inherited credentials (62.398627ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_SPAWN_FAILED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":3}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_CANCELLED","exitCode":null,"signal":null,"errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":0}
+✔ missing native BuildKit fails closed; concurrent callers share one check and completed checks are never cached (4.928004ms)
+✖ actual Helm uses bootstrap and functional readiness separately from liveness (2.352719ms)
+✔ dependency shutdown cancels native descendants before returning and pre-aborted work never starts (45.802081ms)
+✔ gateway capability performs an authenticated read-only tool request (26.966218ms)
+✔ gateway capability rejects an invalid token (6.174694ms)
+✔ gateway capability distinguishes tool-policy denial from authentication failure (0.942472ms)
+✔ gateway capability refuses to transmit its bearer token over external HTTP (0.372552ms)
+✔ Tailscale operator capability probe matches Helm pod label shape (1.334003ms)
+✔ reused matrix capability probe preserves structured failures (0.27193ms)
+✔ configured Codex capability probe follows production smoke dispatch (3.246618ms)
+✔ configured capability probe rejects non-Spark model overrides (1.657039ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 22
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 2748.633208
+
+✖ failing tests:
+
+test at skills/prism/tests/worker-readiness-chart.test.mts:6:1
+✖ actual Helm worker bootstrap readiness preserves post-install migration startup (9.095059ms)
+  Error: spawnSync helm ENOENT
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/integration/skills/prism/tests/worker-readiness-chart.test.mts:7:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawnSync helm',
+    path: 'helm',
+    spawnargs: [ 'template', 'prism', 'charts/prism', '-f', 'charts/prism/ci-values.yaml' ],
+    error: Error: spawnSync helm ENOENT
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/integration/skills/prism/tests/worker-readiness-chart.test.mts:7:20)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.start (node:internal/test_runner/test:1242:17)
+        at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+
+test at tests/verification/deployment/buster-readiness.test.mts:12:1
+✖ bounded dependency process terminates actual child process groups and awaits closure (313.098113ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /\) Z /u. Input:
+  
+  '104 (inotifywait) S 37 37 0 1025 0 4194304 259 0 0 0 0 0 0 0 20 0 1 0 219582 2973696 192 18446744073709551615 1 1 0 0 0 0 0 16781312 0 0 0 0 17 2 0 0 0 0 0 0 0 0 0 0 0 0 0\n'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/integration/tests/verification/deployment/buster-readiness.test.mts:22:70)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '104 (inotifywait) S 37 37 0 1025 0 4194304 259 0 0 0 0 0 0 0 20 0 1 0 219582 2973696 192 18446744073709551615 1 1 0 0 0 0 0 16781312 0 0 0 0 17 2 0 0 0 0 0 0 0 0 0 0 0 0 0\n',
+    expected: /\) Z /u,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/buster-readiness.test.mts:48:1
+✖ actual Helm uses bootstrap and functional readiness separately from liveness (2.352719ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/integration/tests/verification/deployment/buster-readiness.test.mts:50:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

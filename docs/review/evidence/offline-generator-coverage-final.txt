@@ -1,0 +1,17 @@
+✔ all original suite templates selected with excluded tests do not cover a missing mandatory check (47.601331ms)
+✔ condition-skipped and advisory mandatory checks stay visibly unsatisfied (2.438168ms)
+✔ explicit exclusion retains the required declaration without silently reducing policy (1.48517ms)
+✔ all resolved matrix variations are mandatory, with no synthetic execution assertion (2.340351ms)
+✔ policy corruption, duplicate requirements and unmapped requirements fail validation (1.129134ms)
+✔ existing standalone plans retain execution semantics but carry no completeness policy (1.233922ms)
+✔ a literal matrix-shaped declaration cannot impersonate a missing base check (1.468074ms)
+✔ production harness validates native module gates and rejects counter-based repair fixtures (23093.545255ms)
+✔ retired authorities reject while registered v1 contracts remain valid (1.628587ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23394.692277

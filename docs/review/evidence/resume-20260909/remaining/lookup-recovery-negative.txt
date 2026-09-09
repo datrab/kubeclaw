@@ -1,0 +1,25 @@
+✖ Discord original HTTP and durable store bind wire bytes and replay after reopen (3660.179305ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4087.694181
+
+✖ failing tests:
+
+test at tests/verification/reliability/discord-delivery-receipt.test.mts:117:1
+✖ Discord original HTTP and durable store bind wire bytes and replay after reopen (3660.179305ms)
+  Error: OPERATOR_OPERATION_UNSUPPORTED
+      at assertRequest (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/common/plugins/operator-messaging/src/payload.ts:104:91)
+      at Object.receipt (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/common/plugins/operator-messaging/src/adapter.ts:93:7)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/execution/adapter-startup.ts:114:21
+      at AsyncLocalStorage.run (node:internal/async_local_storage/async_context_frame:63:14)
+      at Object.receipt (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/execution/adapter-startup.ts:113:62)
+      at #recover (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/effects/durable-invocation.ts:101:40)
+      at #executeLocked (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/effects/durable-invocation.ts:84:100)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async DurableInvocation.execute (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/effects/durable-invocation.ts:49:14)
+      at async AdapterRuntime.invoke (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/execution/adapters.ts:57:21)

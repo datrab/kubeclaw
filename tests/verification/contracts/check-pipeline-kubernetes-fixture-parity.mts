@@ -40,4 +40,4 @@ assert.doesNotMatch(controller, /pods\/portforward/u);
 
 await import('./check-pipeline-kubernetes-fixture-implementation.mts');
 console.log(JSON.stringify({ ok: true, phase: 'kubernetes-fixture-parity', items: 48,
-  deploymentRollout: 'accepted-deferred', mocks: 0, wrappers: 0 }));
+  deploymentRollout: 'accepted-deferred', injectedExecutorVectors: true, nativeCluster: false }));

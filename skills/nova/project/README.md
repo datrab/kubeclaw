@@ -128,3 +128,18 @@ requires the complete report (including its immutable source subject) to fit
 256 KiB. The source artifact reader separately permits up to 4 MiB. File count
 alone does not establish that these byte budgets fit; oversized inputs block
 rather than producing approval over truncated evidence.
+
+Optional `demo` adds the explicit demo acceptance handoff after the qualified
+project summary. Its closed fields are `authNodeId`, `protocol` (currently
+`json-session.v1`), `operatorTarget`, and optional `retentionSeconds` (default
+604800). Normalized demo policy is bound into the source contract and review
+input digest. The final plan must contain the complete source image build,
+checked manifest, deployment, generated credentials, retained exposure and
+blocking coverage-qualified authentication links. See
+[`demo-handoff`](../plugins/demo-handoff/README.md) for required private delivery,
+controller authentication, grants and remaining native verification boundaries.
+
+An omitted demo section preserves technical-only pipelines. CLI output marks that
+scope explicitly and never treats technical completion as Ready-for-Acceptance
+or human acceptance. A configured demo pipeline establishes Ready only after its
+original evidence, delivery receipt and controller commit have all succeeded.

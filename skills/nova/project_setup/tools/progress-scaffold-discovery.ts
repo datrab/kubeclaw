@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import {readPublishedPair} from '@kubeclaw/plugin-foundation/config/published-pair';
 import path from 'node:path';
 import {
   DEFAULTS,
@@ -474,8 +475,8 @@ function rejectRetiredKubernetesConfig(scope: AnyRecord, scopeId: string) {
   }
 }
 
-function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord, gates: AnyRecord): AnyRecord {
-  const existing = objectOrEmpty(readJsonIfExists(path.join(context.swarmDir, 'pipeline.json')));
+function buildPipeline(context: Context, progress: AnyRecord, modules: AnyRecord, gates: AnyRecord, published: readonly [unknown,unknown]): AnyRecord {
+  const existing = objectOrEmpty(published[1]);
   const existingModules = objectOrEmpty(existing.modules);
   const existingGates = objectOrEmpty(existing.gates);
   const progressModules = objectOrEmpty(progress.modules);
@@ -648,7 +649,8 @@ function mergeObjects(discovered: AnyRecord, existing: unknown) {
 }
 
 export function buildScaffold(context: Context): AnyRecord {
-  const progress = objectOrEmpty(readJsonIfExists(context.progressFile));
+  const published=readPublishedPair(context.swarmDir,['progress.json','pipeline.json'],false);
+  const progress = objectOrEmpty(published[0]);
   const prior = objectOrEmpty(readJsonIfExists(context.scaffoldFile));
   const modules = discoverModules(context, progress);
   const gates = mergeObjects(
@@ -666,7 +668,7 @@ export function buildScaffold(context: Context): AnyRecord {
   if (Object.hasOwn(prior, 'pipeline') && (!isPlainObject(prior.pipeline) || prior.pipeline.project !== context.project)) {
     throw new Error('SCAFFOLD_PIPELINE_INVALID: repair the existing scaffold pipeline before regeneration; no files were written');
   }
-  const pipeline = Object.hasOwn(prior, 'pipeline') ? prior.pipeline : buildPipeline(context, progress, modules, gates);
+  const pipeline = Object.hasOwn(prior, 'pipeline') ? prior.pipeline : buildPipeline(context, progress, modules, gates, published);
   return {
     _schema: SCHEMA,
     _instructions: ['Edit TODO values and gate placements.',

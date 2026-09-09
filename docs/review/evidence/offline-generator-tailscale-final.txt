@@ -1,0 +1,4 @@
+{"ok":true,"contract":"production-receipt-attestation","algorithm":"ed25519"}
+{"ok":true,"phase":"tailscale-exposure-implementation","providerKind":"fixture","typedLinks":true,"narrowCapability":true,"injectedExecutorVectors":true,"nativeCluster":false}
+{"ok":true,"phase":"tailscale-exposure-parity","items":38,"productionAcceptance":"pending-deployment-and-live-proof","injectedExecutorVectors":true,"nativeCluster":false}
+{"ok":true,"phase":"tailscale-exposure-source-cutover","authority":"replacement-only","productionAcceptance":"pending-deployment-and-live-proof","injectedExecutorVectors":true,"nativeCluster":false}

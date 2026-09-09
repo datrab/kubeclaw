@@ -1,0 +1,12 @@
+✔ second-target EISDIR rejects before changing either member or committed generation (618.814719ms)
+✔ SIGKILL after first materialization cannot execute a mixed pair; explicit apply reconciles (1479.68599ms)
+✔ published corruption, traversal, symlinks and missing marker reject without loose-file fallback (812.023728ms)
+✔ concurrent publishers serialize complete generations and an interrupted first publication reconciles (479.830614ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3609.791109

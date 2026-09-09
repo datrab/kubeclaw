@@ -1,0 +1,11 @@
+From /tmp/fixture-coverage-toxq3K/foreign
+ * branch            HEAD       -> FETCH_HEAD
+✔ actual Git baseline survives later commits and scoped resume without inventing coverage (300.644536ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 574.926195

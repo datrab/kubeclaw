@@ -1,0 +1,70 @@
+[
+  {
+    "path": "builds.log",
+    "sha256": "41eab4f38d1e57a6e338bba89d52446cfe669aa5af7a07993b3ba2c57ad48112"
+  },
+  {
+    "path": "controller.log",
+    "sha256": "c0359cf20c50825feb4abb992464c14f8dc0a93d43d844bf6c31da966630860e"
+  },
+  {
+    "path": "coverage.log",
+    "sha256": "79c6fd4211082eb3aff5421ff90e0af6c352be58d71a0ebbf253d34e12dd3056"
+  },
+  {
+    "path": "demo.log",
+    "sha256": "a51195df414721c6f649975b96d892447089b203097eafcfa2f7e2b5690acc85"
+  },
+  {
+    "path": "deployment.log",
+    "sha256": "56d5fe2166b51bf9a6304143dc02a89dc746e6766d291047b14aadb96a5f2f1b"
+  },
+  {
+    "path": "fixture-contracts.log",
+    "sha256": "5f25ba22b508ee5b9cb82e9412cb90d8f70d32cd14ff38a34e13cb77cf545712"
+  },
+  {
+    "path": "inventory.log",
+    "sha256": "a26913dec8d375e7fd21c5314ca9552fd5cfa2d61f7c679212853c28e56f2145"
+  },
+  {
+    "path": "manifest.json",
+    "sha256": "62c3be9aa7582cb34339e37fd35d50c8a05e5c3d4c833b3ea323ffa89c17cb7d"
+  },
+  {
+    "path": "operator.log",
+    "sha256": "8fe24b1f1b16b2217c4bdad5ba6fb11ca140fe41df34116c059cb21959ca6f3f"
+  },
+  {
+    "path": "readiness.log",
+    "sha256": "6a7b7247d296ad920c6c88c8526b1db4fca3cf527106913bf2838c59e2b0df39"
+  },
+  {
+    "path": "registry.log",
+    "sha256": "ae86228b5bd33ed02a1cfef31a0338983c86469899fed84f8ac0cce946648dde"
+  },
+  {
+    "path": "remote-runtime.log",
+    "sha256": "9442176f102b229378885d7d7ebedc98276316990080f7453bfbc2d29b096d3c"
+  },
+  {
+    "path": "run.py",
+    "sha256": "29c716fcf6654540f3dc3bbbb5a2eeb8480b5d9f2daf2e3590c190df822aa5a0"
+  },
+  {
+    "path": "scaffold.log",
+    "sha256": "184324c8f82b2f3dca53c8113e21d3d3c56d56047337febb79e5c484c5ecca14"
+  },
+  {
+    "path": "source-status.txt",
+    "sha256": "91e2466315e0d316fad859db9747775e4a947d75adae00f4bd063447782a09b1"
+  },
+  {
+    "path": "types.log",
+    "sha256": "bd44b3a2fb6a6c433e75d66225530a6ab7a2d93243619035ee731bb8515f142a"
+  },
+  {
+    "path": "versions.log",
+    "sha256": "f2c4ac2c3954c48b8f052dd19bfef364d8801fafdd80e5a97c519fa3c94b10c0"
+  }
+]

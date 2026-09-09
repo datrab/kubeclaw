@@ -29,12 +29,17 @@ test('central versions update actual build/deployment files and reject drift wit
     // A synthetic version tests propagation only; it is never built or declared a real release.
     manifest.openclaw.version = '2099.1.1';
     manifest.buildArgs.KUBECTL_VERSION = '1.99.9';
+    manifest.buildArgs.BUILDKIT_BASE = `moby/buildkit:v99.0.0-rootless@sha256:${'c'.repeat(64)}`;
     manifest.imageOverrides['ops-pod'].HELM_VERSION = 'v3.99.9';
     fs.writeFileSync(path.join(copy, 'versions.json'), JSON.stringify(manifest));
     const before = fs.readFileSync(path.join(copy, 'docker/Dockerfile.prism-agent'), 'utf8');
     assert.throws(() => syncVersions(copy), /Version drift/);
     assert.equal(fs.readFileSync(path.join(copy, 'docker/Dockerfile.prism-agent'), 'utf8'), before);
     assert.ok(syncVersions(copy, false).changed.includes('charts/kubeclaw/values.yaml'));
+    const deploy = fs.readFileSync(path.join(copy, 'scripts/deploy.sh'), 'utf8');
+    assert.ok(deploy.includes(`BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${'${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-'}${manifest.buildArgs.BUILDKIT_BASE}}"`));
+    assert.ok(fs.readFileSync(path.join(copy, 'docker/Dockerfile.buster-runtime'), 'utf8')
+      .includes(`ARG BUILDKIT_BASE=${manifest.buildArgs.BUILDKIT_BASE}`));
     for (const role of ['nova', 'prism-agent', 'buster-gateway']) {
       const dockerfile = fs.readFileSync(path.join(copy, `docker/Dockerfile.${role}`), 'utf8');
       assert.ok(dockerfile.includes('openclaw:2099.1.1@sha256:'));
@@ -51,6 +56,14 @@ test('central versions update actual build/deployment files and reject drift wit
     fs.writeFileSync(path.join(copy, '.github/workflows/build-ops-mcp.yaml'), opsWorkflow);
     assert.deepEqual(syncVersions(copy).changed, []);
     assert.deepEqual(syncVersions(copy, false).changed, []);
+    manifest.imageOverrides['buster-runtime'].BUILDKIT_BASE = `moby/buildkit:v99.1.0-rootless@sha256:${'d'.repeat(64)}`;
+    fs.writeFileSync(path.join(copy, 'versions.json'), JSON.stringify(manifest));
+    syncVersions(copy, false);
+    const effectiveBuildkit = manifest.imageOverrides['buster-runtime'].BUILDKIT_BASE;
+    assert.ok(fs.readFileSync(path.join(copy, 'scripts/deploy.sh'), 'utf8')
+      .includes(`BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${'${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-'}${effectiveBuildkit}}"`));
+    assert.ok(fs.readFileSync(path.join(copy, 'docker/Dockerfile.buster-runtime'), 'utf8')
+      .includes(`ARG BUILDKIT_BASE=${effectiveBuildkit}`));
     fs.appendFileSync(path.join(copy, 'docker/Dockerfile.prism-agent'), '\nARG UNMANAGED_VERSION=1.0\n');
     assert.throws(() => syncVersions(copy, false), /unmanaged version argument/);
     fs.writeFileSync(path.join(copy, 'docker/Dockerfile.prism-agent'), before);

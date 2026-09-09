@@ -1,3 +1,5 @@
+import { probeCapabilities } from '../e2e/capabilities.mts';
+import { probeBusterReadiness } from '../e2e/buster-readiness.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -194,7 +196,72 @@ const runtime = new BusterRemotePlanRuntime({
 const port = (await runtime.start()).port;
 assert.equal((await service.status(startupInterrupted.jobId)).state, 'failed',
   'startup must finish durable recovery before the listener becomes ready');
-assert.equal((await (await fetch(`http://127.0.0.1:${port}/healthz`)).json() as { ready: boolean }).ready, true);
+assert.equal((await (await fetch(`http://127.0.0.1:${port}/healthz`)).json() as { live: boolean }).live, true);
+assert.equal((await fetch(`http://127.0.0.1:${port}/bootstrapz`)).status, 200);
+assert.equal((await fetch(`http://127.0.0.1:${port}/readyz`)).status, 200, 'no BuildKit dependency is invented when container.build is disabled');
+const unavailableStore = new FileBusterPlanJobStore(path.join(temporary, 'unavailable-buildkit-state'), {
+  recordLimits: { maximumRecords: 100, maximumBytes: 16 * 1024 * 1024, maximumRecordBytes: 8 * 1024 * 1024 },
+  maximumArchiveBytes: 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 100 * 16 * 1024 * 1024,
+  trustedSourceAuthority: 'nova:test', sourceAttestationPublicKey,
+});
+const unavailableService = new BusterRemotePlanService({
+  store: unavailableStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'unavailable-buildkit-runs'),
+  tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set(['container.build']),
+  containerBuild: { buildctlExecutable: path.join(temporary, 'missing-native-buildctl-private-path'), buildkitHost: 'unix:///missing-buildkit.sock',
+    registryBaseUrl: 'https://registry.example.test', registryReference: 'registry.example.test', repositoryPrefix: 'kubeclaw/test',
+    allowedPlatforms: ['linux/amd64'], maximumLogBytes: 1024, maximumExecutionMs: 1000, maximumManifestBytes: 1024 },
+});
+assert.equal(unavailableService.bootstrapReady(), false);
+const unavailableRuntime = new BusterRemotePlanRuntime({ service: unavailableService, host: '127.0.0.1', port: 0, token,
+  maximumRequestBytes: 8 * 1024 * 1024, maximumResponseBytes: 8 * 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024, shutdownTimeoutMs: 5000 });
+const unavailablePort = (await unavailableRuntime.start()).port;
+try {
+  assert.equal((await fetch(`http://127.0.0.1:${unavailablePort}/healthz`)).status, 200);
+  assert.equal((await fetch(`http://127.0.0.1:${unavailablePort}/bootstrapz`)).status, 200);
+  const readiness = await fetch(`http://127.0.0.1:${unavailablePort}/readyz`);
+  assert.equal(readiness.status, 503);
+  assert.deepEqual(await readiness.json(), { schemaVersion: 'buster-plan-readiness.v1', ready: false, code: 'BUSTER_DEPENDENCY_UNAVAILABLE' });
+  const previousProviders = process.env.KUBECLAW_CAPABILITY_PROVIDERS;
+  try {
+    for (const [runtimePort, expectedReady] of [[port, true], [unavailablePort, false]] as const) {
+      process.env.KUBECLAW_CAPABILITY_PROVIDERS = JSON.stringify({ buster: { agentRole: 'buster', capabilities: {
+        'test.plan.execute': { adapter: 'buster-plan-v1', endpoint: `http://127.0.0.1:${runtimePort}` },
+      } } });
+      assert.equal((await probeCapabilities(['buildkit']))[0]?.ok, expectedReady);
+      assert.equal((await probeBusterReadiness(`http://127.0.0.1:${runtimePort}`, 20_000)).ok, expectedReady);
+    }
+  } finally {
+    if (previousProviders === undefined) delete process.env.KUBECLAW_CAPABILITY_PROVIDERS;
+    else process.env.KUBECLAW_CAPABILITY_PROVIDERS = previousProviders;
+  }
+  const rejected = await fetch(`http://127.0.0.1:${unavailablePort}/v1/plan-jobs`, { method: 'POST',
+    headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' }, body: JSON.stringify(job('dispatch:missing-native-buildkit')) });
+  assert.equal(rejected.status, 503); assert.deepEqual(await rejected.json(), { error: 'BUSTER_DEPENDENCY_UNAVAILABLE' });
+  assert.equal((await unavailableStore.records()).length, 0, 'unavailable dependency cannot accept or start new work');
+  const terminalJob = job('dispatch:terminal-replay-without-buildkit');
+  await unavailableStore.accept(terminalJob, '2026-08-10T01:00:00.000Z');
+  await unavailableStore.transition(terminalJob.jobId, ['accepted'], 'cancelled', '2026-08-10T01:00:01.000Z', { error: 'cancelled before execution' });
+  const terminalRecords = await unavailableStore.records();
+  const replay = await fetch(`http://127.0.0.1:${unavailablePort}/v1/plan-jobs`, { method: 'POST',
+    headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' }, body: JSON.stringify(terminalJob) });
+  assert.equal(replay.status, 200);
+  assert.equal((await replay.json() as { state: string }).state, 'cancelled');
+  assert.deepEqual(await unavailableStore.records(), terminalRecords, 'dependency failure preserves durable terminal replay');
+  const acceptedJob = job('dispatch:accepted-replay-without-buildkit');
+  await unavailableStore.accept(acceptedJob, '2026-08-10T01:00:00.000Z');
+  const acceptedRecords = await unavailableStore.records();
+  await assert.rejects(unavailableService.submit(acceptedJob), /BUSTER_DEPENDENCY_UNAVAILABLE/u);
+  assert.deepEqual(await unavailableStore.records(), acceptedRecords, 'dependency failure cannot rewrite an existing accepted record');
+
+
+  assert.equal((await fetch(`http://127.0.0.1:${unavailablePort}/healthz`)).status, 200, 'dependency failure cannot fail liveness');
+  let readinessSettled = false;
+  const readinessDuringShutdown = unavailableService.readiness().then(value => { readinessSettled = true; return value; });
+  await unavailableService.shutdown(1000);
+  assert.equal(readinessSettled, true, 'shutdown must await the actual in-flight dependency probe');
+  assert.deepEqual(await readinessDuringShutdown, { schemaVersion: 'buster-plan-readiness.v1', ready: false, code: 'BUSTER_NOT_BOOTSTRAPPED' },
+    'shutdown during the actual asynchronous dependency probe must report the current lifecycle state');
+} finally { await unavailableRuntime.stop(); }
 const transport = new HttpRemotePlanTransport({ endpoint: `http://127.0.0.1:${port}`,
   token, maximumResponseBytes: 8 * 1024 * 1024 });
 assert.doesNotThrow(() => new HttpRemotePlanTransport({ endpoint: 'http://buster.example.test', token,

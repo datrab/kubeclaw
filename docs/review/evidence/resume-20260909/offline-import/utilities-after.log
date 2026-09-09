@@ -1,0 +1,63 @@
+✔ Tailscale operator capability probe matches Helm pod label shape (1.507684ms)
+✔ reused matrix capability probe preserves structured failures (0.293583ms)
+✖ configured Codex capability probe follows production smoke dispatch (0.340193ms)
+✖ configured capability probe rejects non-Spark model overrides (1.035673ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 119.446873
+
+✖ failing tests:
+
+test at tests/verification/e2e/check-real-e2e-capabilities.test.mjs:41:1
+✖ configured Codex capability probe follows production smoke dispatch (0.340193ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4e25cf57c177/kubeclaw-fixes/Projects/pipeline-smoke-landing/src/.swarm/progress.json'
+      at Object.readFileSync (node:fs:484:20)
+      at resolveProductionCodexLaunchTarget (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/e2e/check-real-e2e-capabilities.mjs:322:32)
+      at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/e2e/check-real-e2e-capabilities.test.mjs:42:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4e25cf57c177/kubeclaw-fixes/Projects/pipeline-smoke-landing/src/.swarm/progress.json'
+  }
+
+test at tests/verification/e2e/check-real-e2e-capabilities.test.mjs:52:1
+✖ configured capability probe rejects non-Spark model overrides (1.035673ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /REAL_E2E_MODEL_MUST_BE_SPARK/. Input:
+  
+  "Error: ENOENT: no such file or directory, open '/workspace/scratch/4e25cf57c177/kubeclaw-fixes/Projects/pipeline-smoke-landing/src/.swarm/progress.json'"
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/e2e/check-real-e2e-capabilities.test.mjs:53:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, open '/workspace/scratch/4e25cf57c177/kubeclaw-fixes/Projects/pipeline-smoke-landing/src/.swarm/progress.json'
+        at Object.readFileSync (node:fs:484:20)
+        at resolveProductionCodexLaunchTarget (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/e2e/check-real-e2e-capabilities.mjs:322:32)
+        at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/e2e/check-real-e2e-capabilities.test.mjs:53:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/e2e/check-real-e2e-capabilities.test.mjs:53:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19),
+    expected: /REAL_E2E_MODEL_MUST_BE_SPARK/,
+    operator: 'throws',
+    diff: 'simple'
+  }

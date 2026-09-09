@@ -7,6 +7,7 @@ import path from 'node:path';
 import { once } from 'node:events';
 import { test } from 'node:test';
 import * as core from '../../../skills/nova/core/src/index.ts';
+import { stableEffectId } from '../../../skills/nova/core/effects/identity.ts';
 
 const operatorId = 'kubeclaw.operator-messaging:operator';
 const observerId = 'kubeclaw.notification-observer:notifications';
@@ -37,13 +38,16 @@ async function scenario(mode: 'success' | 'lost' | 'invalid'): Promise<void> {
   const roots = ['skills/common/plugins', 'skills/nova/plugins', 'skills/buster/plugins'].map(value => path.resolve(value));
   const snapshot = core.buildRegistry(core.discoverPackages({ installationRoots: roots,
     trustPolicy: { trustedBuiltinRoots: roots, allowedSourceDigests: new Map(), verifiedAttestations: new Map(), verifierId: 'test:discord-receipt' } }));
-  const granted = core.resolveCapabilityGrants(snapshot, { enabledRegistrations: new Set([observerId]),
-    providers: new Map([['operator.request', operatorId], ['network.http', 'kubeclaw.network-http:http'], ['secrets.read', 'kubeclaw.secret-resolver:secrets']]),
-    grants: new Map([[observerId, new Map([['operator.request', { allowedTargets: ['operators'] }]])], [operatorId, new Map([
+  const granted = core.resolveCapabilityGrants(snapshot, { enabledRegistrations: new Set([observerId, 'kubeclaw.demo-handoff:handoff']),
+    providers: new Map([['operator.request', operatorId], ['operator.receipt', operatorId], ['artifacts.read', 'kubeclaw.artifact-store:artifact-store'], ['test.plan.evidence', 'kubeclaw.remote-test-gate:evidence'], ['network.http', 'kubeclaw.network-http:http'], ['secrets.read', 'kubeclaw.secret-resolver:secrets']]),
+    grants: new Map([['kubeclaw.demo-handoff:handoff', new Map([['operator.request', { allowedTargets: ['operators'] }], ['operator.receipt', { allowedTargets: ['operators'] }], ['artifacts.read', { allowedNamespaces: ['kubeclaw.project-summary'] }], ['test.plan.evidence', { allowedNamespaces: ['kubeclaw.project-summary'] }]])], ['kubeclaw.remote-test-gate:evidence', new Map([['artifacts.read', { allowedNamespaces: ['kubeclaw.project-summary'] }]])], [observerId, new Map([['operator.request', { allowedTargets: ['operators'] }]])], [operatorId, new Map([
       ['network.http', { allowedOrigins: [origin] }], ['secrets.read', { allowedNames: ['discord.webhook'] }],
     ])]]) });
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
   const configs = new Map<string, Record<string, unknown>>([
+    ['kubeclaw.artifact-store:artifact-store', { artifactRoot: path.join(root, 'artifacts') }],
+    ['kubeclaw.remote-test-gate:evidence', { stateRoot: root, manifestStageId: 'summary', gateStageId: 'final-test' }],
+    ['kubeclaw.demo-handoff:handoff', { candidateStageId: 'candidate', deliveryStageId: 'demo-handoff', readyStageId: 'demo-ready', manifestStageId: 'summary', operatorTarget: 'operators', endpoint: 'https://127.0.0.1/v1/demo-ready', tokenPath: path.join(root, 'unused-token'), caPath: path.join(root, 'unused-ca'), stateRoot: path.join(root, 'intents'), timeoutMs: 1000 }],
     [operatorId, { deliveryRoot: path.join(root, 'sender'), targets: { operators: {
       endpointOrigin: origin, endpointSecret: 'discord.webhook', format: 'discord_webhook',
     } } }],
@@ -67,6 +71,34 @@ async function scenario(mode: 'success' | 'lost' | 'invalid'): Promise<void> {
         payloadDigest: `sha256:${crypto.createHash('sha256').update(fs.readFileSync(path.join(root, 'received.json'))).digest('hex')}` });
       await runtime.shutdown(); runtime = create(); await runtime.start();
       assert.deepEqual(await publish(2), receipt);
+      await runtime.shutdown();
+      // Persist the real requested/accepted journal prefix left by a crash before
+      // completion. Reopen the original runtime; do not substitute any adapter.
+      const lookups = [
+        { key: 'lookup:recover', runId: 'run:demo', stageId: 'demo-handoff', message: payload },
+        { key: 'lookup:foreign-run', runId: 'other-run', stageId: 'demo-handoff', message: payload },
+        { key: 'lookup:foreign-stage', runId: 'run:demo', stageId: 'other-stage', message: payload },
+        { key: 'lookup:changed-payload', runId: 'run:demo', stageId: 'demo-handoff', message: { ...payload, summary: 'changed' } },
+      ].map(value => ({
+        idempotencyKey: value.key, capability: 'operator.receipt', operation: 'lookup',
+        attempt: { runId: value.runId, stageId: 'demo-ready', attemptId: value.key, attemptNumber: 1 },
+        resource: { type: 'operator.target', canonicalId: 'operators' },
+        payload: { deliveryId: 'delivery:demo:stable', stageId: value.stageId, payload: value.message },
+      }));
+      const journal = new core.FileEffectJournal(path.join(root, 'effects.jsonl'));
+      for (const invocation of lookups) {
+        const request = { ...invocation, schemaVersion: 'effect-request.v2' as const,
+          effectId: stableEffectId(invocation), requestedAt: new Date().toISOString() };
+        await journal.requested(request); assert.equal(await journal.accepted(request), true);
+      }
+      runtime = create(); await runtime.start();
+      for (const [index, invocation] of lookups.entries()) {
+        const recovered = runtime.invoke('operator.receipt', invocation.attempt, invocation.idempotencyKey,
+          { operation: invocation.operation, resource: invocation.resource, payload: invocation.payload }, new AbortController().signal);
+        if (index === 0) assert.deepEqual(await recovered, receipt);
+        else await assert.rejects(recovered, /OPERATOR_RECEIPT_REQUEST_UNBOUND/);
+      }
+      assert.equal((await new core.FileEffectJournal(path.join(root, 'effects.jsonl')).receipt('lookup:recover'))?.status, 'completed');
       await assert.rejects(publish(3, { ...payload, summary: 'changed credentials' }));
     } else {
       await assert.rejects(publish(1), mode === 'invalid' ? /OPERATOR_DISCORD_RECEIPT_INVALID/ : undefined);

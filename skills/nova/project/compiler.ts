@@ -1,3 +1,4 @@
+import {demoStages,normalizeDemo} from './demo.ts';
 import {sourceStages} from './source.ts';
 import { cumulativeStages, projectCoverage, testConfiguration } from './coverage.ts';
 import path from 'node:path';
@@ -150,7 +151,7 @@ function orderedModules(modules: ReadonlyMap<string, ObjectValue>): ObjectValue[
  * retain their existing concurrency semantics.
  */
 export function compileProject(value: unknown): { runId: string; definition: PipelineDefinition } {
-  const project = object(value, ['schemaVersion', 'id', 'runId', 'repositoryRoot', 'workspaceRoot', 'baseRevision', 'modules', 'final', 'architecture'], 'project');
+  const project = object(value, ['schemaVersion', 'id', 'runId', 'repositoryRoot', 'workspaceRoot', 'baseRevision', 'modules', 'final', 'architecture', 'demo'], 'project');
   if (project.schemaVersion !== 'nova-project.v2') throw new Error('PROJECT_SCHEMA_UNSUPPORTED:nova-project.v2 requires explicit architecture and module blueprint declarations; legacy inputs need authored migration');
   const projectId = id(project.id);
   const runId = text(project.runId, 'runId');
@@ -167,7 +168,8 @@ export function compileProject(value: unknown): { runId: string; definition: Pip
   if (final.review !== undefined) { object(final.review, ['agent'], 'final.review'); text(final.review.agent, 'final.review.agent'); }
   object(final.test, ['agent', 'agentRole', 'testAgentEnabled', 'requiredChecks', 'providerPlan'], 'final.test');
   object(final.test.providerPlan, ['repositoryId', 'plan', 'grants', 'maximumConcurrency', 'submittedAt', 'timeoutMs'], 'final.providerPlan');
-  const source = sourceStages(project, ordered);
+  const demo = normalizeDemo(project.demo);
+  const source = sourceStages(project, ordered, demo);
   const stages: StageDefinition[] = [...source.stages];
   let previousGate: string | undefined = 'blueprint-sync';
   for (const module of ordered) {
@@ -175,6 +177,7 @@ export function compileProject(value: unknown): { runId: string; definition: Pip
     previousGate = `test-${module.id}`;
   }
   stages.push(...cumulativeStages(project, ordered, `implement-${ordered.at(-1)!.id}`));
+  stages.push(...demoStages(demo,final.test.providerPlan.plan));
   const definition = { schemaVersion: 'pipeline-definition.v2', id: `project:${projectId}`, maxConcurrency: 1, stages } as PipelineDefinition;
   validateContractValue('pipelineDefinition', definition);
   return { runId, definition: structuredClone(definition) };

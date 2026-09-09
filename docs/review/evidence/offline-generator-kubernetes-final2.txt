@@ -1,0 +1,3 @@
+{"ok":true,"phase":"kubernetes-fixture-implementation","authority":"replacement-only","providerKind":"fixture","typedManifestLink":true,"narrowCapability":true,"mocks":0}
+{"ok":true,"phase":"kubernetes-fixture-parity","items":48,"deploymentRollout":"accepted-deferred","mocks":0,"wrappers":0}
+{"ok":true,"phase":"kubernetes-fixture-cutover","authority":"replacement-only","parityItems":48,"legacyDeleted":true,"mocks":0,"wrappers":0}

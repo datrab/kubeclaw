@@ -1,0 +1,20 @@
+✔ internal request authentication binds time, nonce, and body (2.323285ms)
+✔ nonce replay protection is shared across worker replicas (2216.896463ms)
+✔ actual HMAC HTTP admission fails closed on native pg startup timeout; bootstrap remains available (162.866977ms)
+✔ native connection refusal retains its safe operator system code (7.298239ms)
+✔ SPIFFE operational readiness has no unused database dependency; actual admission still authenticates (40.011526ms)
+✔ original readiness SQL requires the migrated nonce table (PGlite SQL proof only) (1934.906567ms)
+﹣ native PostgreSQL query cancellation settles and releases its actual pool client (0.456428ms) # REAL_POSTGRES_DATABASE_REQUIRED (isolated migrated test database)
+✔ original worker operation reproduces missing log store; actual service executor persists the complete log (152.395926ms)
+✔ real durable log store corruption keeps an otherwise successful engine operation errored (20.44751ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (43.24204ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (11.517203ms)
+✔ full log participates in the real neutral evidence budget before upload (7.893457ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 2806.797555

@@ -1,0 +1,26 @@
+✔ internal request authentication binds time, nonce, and body (1.959736ms)
+✔ nonce replay protection is shared across worker replicas (1844.1605ms)
+✔ actual Helm worker bootstrap readiness preserves post-install migration startup (135.272003ms)
+✔ actual HMAC HTTP admission fails closed on native pg startup timeout; bootstrap remains available (159.16794ms)
+✔ native connection refusal retains its safe operator system code (5.97172ms)
+✔ SPIFFE operational readiness has no unused database dependency; actual admission still authenticates (33.109482ms)
+✔ original readiness SQL requires the migrated nonce table (PGlite SQL proof only) (1766.081919ms)
+﹣ native PostgreSQL query cancellation settles and releases its actual pool client (0.407355ms) # REAL_POSTGRES_DATABASE_REQUIRED (isolated migrated test database)
+✔ original worker operation reproduces missing log store; actual service executor persists the complete log (155.750614ms)
+✔ real durable log store corruption keeps an otherwise successful engine operation errored (26.570436ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (50.732219ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (15.269877ms)
+✔ full log participates in the real neutral evidence budget before upload (17.024179ms)
+✔ bounded dependency process terminates actual child process groups and awaits closure (310.001044ms)
+✔ bounded process limits actual output and exports safe cause metadata without payload or inherited credentials (66.197787ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_SPAWN_FAILED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":2}
+✔ missing native BuildKit fails closed; concurrent callers share one check and completed checks are never cached (4.420649ms)
+✔ actual Helm uses bootstrap and functional readiness separately from liveness (176.849065ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 2636.162828

@@ -1,0 +1,19 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/engine/test-gates/production.ts
+  116:8   error  Function 'loadProductionBusterRemotePlanRuntime' has too many lines (307). Maximum allowed is 60  max-lines-per-function
+  116:8   error  Function 'loadProductionBusterRemotePlanRuntime' has a complexity of 95. Maximum allowed is 15    complexity
+  118:63  error  Read environment variables only in a declared configuration or infrastructure adapter             discipline/no-direct-env-access
+  314:1   error  File has too many lines (409). Maximum allowed is 300                                             max-lines
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/engine/test-gates/remote-plan-http.ts
+  105:8  error  Function 'createBusterRemotePlanHttpServer' has too many lines (74). Maximum allowed is 60  max-lines-per-function
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/engine/test-gates/remote-plan-service.ts
+  322:1   error  File has too many lines (756). Maximum allowed is 300                          max-lines
+  596:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                         max-depth
+  660:3   error  Private async method #execute has too many lines (140). Maximum allowed is 60  max-lines-per-function
+  660:3   error  Private async method #execute has a complexity of 48. Maximum allowed is 15    complexity
+
+✖ 9 problems (9 errors, 0 warnings)
+

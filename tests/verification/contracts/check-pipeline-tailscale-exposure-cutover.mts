@@ -113,4 +113,4 @@ try {
 
 await import('./check-pipeline-tailscale-exposure-parity.mts');
 console.log(JSON.stringify({ ok: true, phase: 'tailscale-exposure-source-cutover', authority: 'replacement-only',
-  productionAcceptance: 'pending-deployment-and-live-proof', mocks: 0, emulators: 0 }));
+  productionAcceptance: 'pending-deployment-and-live-proof', injectedExecutorVectors: true, nativeCluster: false }));

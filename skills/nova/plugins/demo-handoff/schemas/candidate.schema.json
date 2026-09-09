@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "manifestStageId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "authNodeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "protocol": {
+      "const": "json-session.v1"
+    },
+    "operatorTarget": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+    },
+    "retentionSeconds": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9223372036
+    }
+  },
+  "required": [
+    "manifestStageId",
+    "authNodeId",
+    "protocol",
+    "operatorTarget",
+    "retentionSeconds"
+  ],
+  "additionalProperties": false
+}

@@ -25,7 +25,7 @@ async function read(context:AdapterActivationContext,ref:ArtifactRef,runId:strin
 }
 async function project(context:AdapterActivationContext,invocation:AdapterInvocation,store:FileNovaGateImportStore) {
   const {request}=invocation;
-  if(request.capability!=='test.plan.evidence'||request.operation!=='demo'||request.resource.type!=='artifact.object')throw new Error('DEMO_EVIDENCE_OPERATION_INVALID');
+  if(request.capability!=='test.plan.evidence'||request.operation!=='demo'||request.resource.type!=='test.plan.evidence')throw new Error('DEMO_EVIDENCE_OPERATION_INVALID');
   const runId=request.attempt.runId;
   const manifestRef=object(request.payload.manifest) as ArtifactRef;
   if(request.resource.canonicalId!==manifestRef.artifactId || request.payload.namespace!==manifestRef.namespace)throw new Error('DEMO_EVIDENCE_MANIFEST_INVALID');

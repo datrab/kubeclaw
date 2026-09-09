@@ -1,3 +1,4 @@
+import { BuildkitReadiness } from './buildkit-readiness.ts';
 import { cleanupTerminalWorkspace } from './terminal-workspace.ts';
 import crypto from 'node:crypto';
 import { spawn } from 'node:child_process';
@@ -355,6 +356,7 @@ export interface BusterRemotePlanServiceOptions {
   readonly browserPlaywright?: Omit<BrowserPlaywrightCapabilityInvokerOptions, 'workspaceRoot'>;
   readonly securityScan?: Omit<SecurityScanCapabilityInvokerOptions, 'workspaceRoot'>;
   readonly kubernetesRuntimeSecurity?: Omit<KubernetesRuntimeSecurityCapabilityInvokerOptions, 'workspaceRoot'>;
+  readonly dependencyReadiness?: { readonly maximumExecutionMs: number; readonly maximumOutputBytes: number };
   readonly now?: () => Date;
   readonly execute?: (
     job: RemotePlanJobV1,
@@ -445,6 +447,14 @@ async function safeExtract(
   await runTar(tarExecutable, ['--no-same-owner', '--no-same-permissions', '-xzf', archive, '-C', target], signal);
 }
 
+function configuredBuildkitReadiness(options: BusterRemotePlanServiceOptions): BuildkitReadiness | undefined {
+  if (!options.allowedCapabilities.has('container.build')) return undefined;
+  if (!options.containerBuild) throw new Error('BUSTER_READINESS_BUILDKIT_CONFIG_REQUIRED');
+  return new BuildkitReadiness({ buildctlExecutable: options.containerBuild.buildctlExecutable,
+    buildkitHost: options.containerBuild.buildkitHost, maximumExecutionMs: options.dependencyReadiness?.maximumExecutionMs ?? 1000,
+    maximumOutputBytes: options.dependencyReadiness?.maximumOutputBytes ?? 65536 });
+}
+
 export class BusterRemotePlanService {
   readonly #options: BusterRemotePlanServiceOptions;
   readonly #now: () => Date;
@@ -454,6 +464,8 @@ export class BusterRemotePlanService {
   readonly #weights = new Map<string, number>();
   #submission: Promise<void> = Promise.resolve();
   #stopping = false;
+  #recovered = false;
+  readonly #buildkitReadiness: BuildkitReadiness | undefined;
   readonly #maximumActiveJobs: number;
   readonly #maximumQueuedJobs: number;
   readonly #maximumConcurrentAttempts: number;
@@ -465,6 +477,7 @@ export class BusterRemotePlanService {
     const tar = fs.realpathSync(options.tarExecutable);
     if (!path.isAbsolute(tar) || !fs.statSync(tar).isFile()) throw new Error('BUSTER_REMOTE_TAR_INVALID');
     if (!/^[a-f0-9]{40,64}$/u.test(options.workerRevision)) throw new Error('BUSTER_REMOTE_WORKER_REVISION_INVALID');
+    this.#buildkitReadiness = configuredBuildkitReadiness(options);
     this.#options = { ...options, tarExecutable: tar };
     this.#now = options.now ?? (() => new Date());
     this.#maximumActiveJobs = options.maximumActiveJobs ?? 2;
@@ -497,6 +510,21 @@ export class BusterRemotePlanService {
     }
   }
 
+  bootstrapReady(): boolean { return this.#recovered && !this.#stopping; }
+
+  async readiness() {
+    const initialized = this.bootstrapReady();
+    const dependency = initialized ? await this.#buildkitReadiness?.check() : undefined;
+    const currentInitialized = this.bootstrapReady();
+    const ready = currentInitialized && dependency?.ok !== false;
+    return { schemaVersion: 'buster-plan-readiness.v1', ready,
+      code: ready ? 'BUSTER_READY' : currentInitialized ? 'BUSTER_DEPENDENCY_UNAVAILABLE' : 'BUSTER_NOT_BOOTSTRAPPED' };
+  }
+
+  async #assertDependencies(): Promise<void> {
+    if ((await this.#buildkitReadiness?.check())?.ok === false) throw new Error('BUSTER_DEPENDENCY_UNAVAILABLE');
+  }
+
   async submit(job: RemotePlanJobV1): Promise<RemotePlanStatusV1> {
     this.#options.store.validate(job); this.#validateAuthority(job);
     let release!: () => void;
@@ -510,6 +538,8 @@ export class BusterRemotePlanService {
         if (job.maximumConcurrency > this.#maximumConcurrentAttempts) throw new Error('BUSTER_REMOTE_CONCURRENCY_EXCEEDS_SERVICE_LIMIT');
         if (this.#queue.size >= this.#maximumQueuedJobs) throw new Error('BUSTER_REMOTE_ADMISSION_FULL');
       }
+      if (!known || (known.payload.status.state === 'accepted' && !this.#active.has(job.jobId))) await this.#assertDependencies();
+      if (this.#stopping) throw new Error('BUSTER_REMOTE_SHUTTING_DOWN');
       const status = await this.#options.store.accept(job, this.#now().toISOString());
       if (status.state === 'accepted' && !this.#active.has(job.jobId)) this.#start(job);
       return status;
@@ -556,6 +586,7 @@ export class BusterRemotePlanService {
   }
 
   async recover(): Promise<void> {
+    this.#recovered = false;
     for (const record of await this.#options.store.records()) {
       if (record.payload.schemaVersion === 'buster-plan-job-compacted-record.v1') continue;
       const { job, status } = record.payload;
@@ -583,6 +614,7 @@ export class BusterRemotePlanService {
       // A previous host's terminal record does not prove orphan quiescence.
       // Retain workspace inputs until an ownership reconciliation can prove it.
     }
+    this.#recovered = true;
   }
 
   async shutdown(timeoutMs: number): Promise<void> {
@@ -593,11 +625,11 @@ export class BusterRemotePlanService {
     for (const controller of this.#active.values()) {
       controller.abort(new Error('BUSTER_REMOTE_SHUTDOWN'));
     }
-    if (this.#executions.size === 0) return;
+    const dependencyShutdown = this.#buildkitReadiness?.shutdown();
     let timer: NodeJS.Timeout | undefined;
     try {
       await Promise.race([
-        Promise.allSettled([...this.#executions.values()]),
+        Promise.allSettled([...this.#executions.values(), dependencyShutdown]),
         new Promise<never>((_resolve, reject) => {
           timer = setTimeout(() => reject(new Error('BUSTER_REMOTE_SHUTDOWN_TIMEOUT')), timeoutMs);
         }),

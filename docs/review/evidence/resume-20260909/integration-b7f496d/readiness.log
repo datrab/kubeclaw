@@ -1,0 +1,36 @@
+✔ internal request authentication binds time, nonce, and body (1.992926ms)
+✔ nonce replay protection is shared across worker replicas (2482.02503ms)
+✔ actual Helm worker bootstrap readiness preserves post-install migration startup (132.692704ms)
+✔ actual HMAC HTTP admission fails closed on native pg startup timeout; bootstrap remains available (157.972618ms)
+✔ native connection refusal retains its safe operator system code (6.739717ms)
+✔ SPIFFE operational readiness has no unused database dependency; actual admission still authenticates (38.664274ms)
+✔ original readiness SQL requires the migrated nonce table (PGlite SQL proof only) (1974.411436ms)
+﹣ native PostgreSQL query cancellation settles and releases its actual pool client (0.382657ms) # REAL_POSTGRES_DATABASE_REQUIRED (isolated migrated test database)
+✔ original worker operation reproduces missing log store; actual service executor persists the complete log (168.665842ms)
+✔ real durable log store corruption keeps an otherwise successful engine operation errored (14.585983ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (37.560689ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (7.960708ms)
+✔ full log participates in the real neutral evidence budget before upload (14.389275ms)
+✔ bounded dependency process terminates actual child process groups and awaits closure (309.557508ms)
+✔ bounded process limits actual output and exports safe cause metadata without payload or inherited credentials (96.891183ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_SPAWN_FAILED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":2}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_CANCELLED","exitCode":null,"signal":null,"errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":0}
+✔ missing native BuildKit fails closed; concurrent callers share one check and completed checks are never cached (4.644311ms)
+✔ actual Helm uses bootstrap and functional readiness separately from liveness (150.631168ms)
+✔ dependency shutdown cancels native descendants before returning and pre-aborted work never starts (32.406099ms)
+✔ gateway capability performs an authenticated read-only tool request (13.538723ms)
+✔ gateway capability rejects an invalid token (10.550085ms)
+✔ gateway capability distinguishes tool-policy denial from authentication failure (0.949352ms)
+✔ gateway capability refuses to transmit its bearer token over external HTTP (0.3311ms)
+✔ Tailscale operator capability probe matches Helm pod label shape (1.379351ms)
+✔ reused matrix capability probe preserves structured failures (0.288314ms)
+✔ configured Codex capability probe follows production smoke dispatch (3.61271ms)
+✔ configured capability probe rejects non-Spark model overrides (1.700445ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 2983.397201

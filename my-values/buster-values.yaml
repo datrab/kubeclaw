@@ -127,7 +127,7 @@ extraContainers:
     startupProbe:
       httpGet:
         scheme: HTTP
-        path: /healthz
+        path: /bootstrapz
         port: 28891
       periodSeconds: 2
       timeoutSeconds: 2
@@ -135,7 +135,7 @@ extraContainers:
     readinessProbe:
       httpGet:
         scheme: HTTP
-        path: /healthz
+        path: /readyz
         port: 28891
       initialDelaySeconds: 5
       periodSeconds: 5

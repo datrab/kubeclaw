@@ -4,7 +4,9 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**85/154 lokal verifiziert und unabhängig gegengeprüft; 45 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 5 in Bearbeitung; 19 noch offen.** Zusätzlich fünf bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
+**86/154 lokal verifiziert und unabhängig gegengeprüft; 47 Findings teilweise implementiert; 2 in Bearbeitung; 19 noch offen.** Zusätzliche Integrationsbefunde bleiben separat von den 154 historischen Kennungen dokumentiert. Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
+
+Aktuelle Wiederaufnahme: [geprüfte Pakete, Integrationsnachweise und konkrete Restarbeit](implementation/resume-20260909.md). Die nachfolgenden chronologischen Zwischenstände bleiben historische Belege und sind keine Behauptung aktuell laufender Subagents.
 
 | Bereich | Remote-Commit | Stand / Nachweis |
 |---|---|---|

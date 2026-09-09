@@ -1,0 +1,8 @@
+{
+  "source_commit": "b7f496dc51d743afe556c79c6ae18be653d63b66",
+  "inventory_exit": 0,
+  "readiness_exit": 0,
+  "source_status": "",
+  "readiness_initial_missing_tool_path_exit": 1,
+  "tool_path_prefix": "/workspace/scratch/4e25cf57c177/toolchains/bin:/workspace/scratch/4e25cf57c177/toolchains/go/bin"
+}
