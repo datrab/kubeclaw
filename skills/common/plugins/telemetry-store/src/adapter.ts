@@ -1,18 +1,6 @@
 import type { AdapterActivationContext, AdapterInstance } from '@kubeclaw/plugin-sdk';
 import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
-
-const sensitive = /(?:authorization|cookie|password|secret|token)/i;
-
-function sanitize(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(sanitize);
-  if (value && typeof value === 'object') {
-    return Object.fromEntries(Object.entries(value as Record<string, unknown>).map(([key, item]) => [
-      key,
-      sensitive.test(key) ? '[REDACTED]' : sanitize(item),
-    ]));
-  }
-  return value;
-}
+import { telemetryProjection } from './projection.ts';
 
 export function activate(context: AdapterActivationContext): AdapterInstance {
   const root = context.config.root;
@@ -39,7 +27,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
         const committed = await store.append(
           stream,
           request.idempotencyKey,
-          sanitize(request.payload) as Record<string, unknown>,
+          telemetryProjection(request.payload, maxRecordBytes),
         );
         return { accepted: committed.appended, sequence: committed.record.sequence };
       } catch (error) {
