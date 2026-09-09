@@ -1,6 +1,6 @@
 # Vollständiges Behebungsregister
 
-154 historische Kennungen: 103 Pipeline, 34 Infrastruktur, 17 neue Tracebefunde. Aktueller Umsetzungsstand: **52 lokal verifiziert, 5 teilweise implementiert / blockiert, 21 in Bearbeitung, 76 offen**. Lokale Verifikation ist keine Deployment- oder Gesamt-E2E-Freigabe. Details und offene Gates: [Fortschritt](progress.md).
+154 historische Kennungen: 103 Pipeline, 34 Infrastruktur, 17 neue Tracebefunde. Aktueller Umsetzungsstand: **66 lokal verifiziert, 8 teilweise implementiert / blockiert, 12 in Bearbeitung, 68 offen**. Lokale Verifikation ist keine Deployment- oder Gesamt-E2E-Freigabe. Details und offene Gates: [Fortschritt](progress.md).
 
 Die commitfesten Eigentümerberichte enthalten Evidenzklasse, Auslöser, Ursachenbehebung und vorgeschlagene Regression. [register.json](register.json) bewahrt zusätzlich den vollständigen jeweiligen Findingabschnitt, auflösbare Codeverweise, ungeklärte Kurzreferenzen, Beziehungen sowie Felder für Implementierungscommit und tatsächliche Prüfergebnisse. Unklare Kurzpfade werden nicht als eindeutige Codebelege erfunden.
 

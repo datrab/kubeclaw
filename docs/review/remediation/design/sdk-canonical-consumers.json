@@ -1,0 +1,2170 @@
+{
+  "purpose": "Read-only cutover design inventory; version literals are local, imported constants require contract inspection.",
+  "sdkConsumerFiles": 57,
+  "entries": [
+    {
+      "file": "skills/prism/directions/index.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 5,
+          "expression": "canonical(item)"
+        },
+        {
+          "line": 14,
+          "expression": "canonical(value)"
+        }
+      ]
+    },
+    {
+      "file": "contracts/pipeline-worker-core/v1/src/digest.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 35,
+          "expression": "canonicalJson(value[index])"
+        },
+        {
+          "line": 43,
+          "expression": "canonicalJson(child)"
+        },
+        {
+          "line": 48,
+          "expression": "canonicalJson(value)"
+        }
+      ]
+    },
+    {
+      "file": "contracts/pipeline-worker-core/v1/src/trust.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [
+        {
+          "from": "./digest.ts",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "worker-trust-envelope.v1"
+      ],
+      "calls": [
+        {
+          "line": 9,
+          "expression": "canonicalJson(unsigned)"
+        }
+      ]
+    },
+    {
+      "file": "contracts/pipeline-observability/v1/src/validation.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [
+        {
+          "from": "./canonical-json.ts",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 16,
+          "expression": "canonicalJson(value)"
+        },
+        {
+          "line": 30,
+          "expression": "canonicalJson(value)"
+        }
+      ]
+    },
+    {
+      "file": "contracts/pipeline-observability/v1/src/canonical-json.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 2,
+          "expression": "canonicalJson(value[index])"
+        },
+        {
+          "line": 2,
+          "expression": "canonicalJson(child)"
+        }
+      ]
+    },
+    {
+      "file": "contracts/pipeline-test-gate/v1/src/digest.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/pipeline-observability-contract/canonical-json",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 5,
+          "expression": "canonicalJson(value)"
+        }
+      ]
+    },
+    {
+      "file": "contracts/pipeline-test-gate/v1/src/remote.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/pipeline-observability-contract/canonical-json",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "buster-plan-service.v1",
+        "repository-archive.v1",
+        "source-snapshot-attestation.v1"
+      ],
+      "calls": [
+        {
+          "line": 35,
+          "expression": "canonicalJson(value)"
+        },
+        {
+          "line": 69,
+          "expression": "canonicalJson(unsignedSourceSnapshot(value))"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/core/state/plugins.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "plugin-state-entry.v2"
+      ],
+      "calls": [
+        {
+          "line": 57,
+          "expression": "canonicalJson(record.entry.registration)"
+        },
+        {
+          "line": 57,
+          "expression": "canonicalJson(this.#registration)"
+        },
+        {
+          "line": 70,
+          "expression": "canonicalJson(input.registration)"
+        },
+        {
+          "line": 70,
+          "expression": "canonicalJson(this.#registration)"
+        },
+        {
+          "line": 99,
+          "expression": "canonicalJson(comparable)"
+        },
+        {
+          "line": 99,
+          "expression": "canonicalJson(existingComparable)"
+        }
+      ]
+    },
+    {
+      "file": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/pipeline-observability-contract",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "buster-plan-job-record.v1",
+        "buster-plan-result-ref.v1",
+        "buster-plan-result.v1",
+        "buster-plan-status.v1"
+      ],
+      "calls": [
+        {
+          "line": 215,
+          "expression": "canonicalJson(result)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/core/test-gates/resolver.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [],
+      "schemaVersionLiterals": [
+        "resolved-test-plan.v1",
+        "test-suite-template.v1",
+        "typed-link.v1"
+      ],
+      "calls": [
+        {
+          "line": 318,
+          "expression": "canonical(raw)"
+        },
+        {
+          "line": 709,
+          "expression": "canonical(child)"
+        }
+      ]
+    },
+    {
+      "file": "skills/buster/engine/test-gates/runner.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [],
+      "schemaVersionLiterals": [
+        "attempt-claim.v1",
+        "attempt-result.v1",
+        "kubeclaw.buster-provider-attempt.v1",
+        "kubeclaw.buster-provider-result.v1",
+        "node-result.v1",
+        "producer-closure.v1",
+        "producer-record.v1",
+        "provider-invocation.v1",
+        "worker-attempt-envelope.v1",
+        "worker-profile.v1",
+        "worker-protocol.v1"
+      ],
+      "calls": [
+        {
+          "line": 178,
+          "expression": "canonical(child)"
+        },
+        {
+          "line": 183,
+          "expression": "canonical(value)"
+        },
+        {
+          "line": 247,
+          "expression": "canonical(entry.registration.package)"
+        },
+        {
+          "line": 248,
+          "expression": "canonical({\n          packageId: node.provider.packageId,\n          packageVersion: node.provider.packageVersion,\n          contentDigest: node.provider.contentDigest,\n        })"
+        },
+        {
+          "line": 262,
+          "expression": "canonical(candidate.registration.package)"
+        },
+        {
+          "line": 262,
+          "expression": "canonical(adapter.package)"
+        },
+        {
+          "line": 375,
+          "expression": "canonical(candidate.registration.package)"
+        },
+        {
+          "line": 375,
+          "expression": "canonical(reference.package)"
+        },
+        {
+          "line": 1625,
+          "expression": "canonical(workerResult)"
+        },
+        {
+          "line": 1625,
+          "expression": "canonical(completedWorkerResult)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/core/lifecycle/wait-request.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "wait-request.v2"
+      ],
+      "calls": [
+        {
+          "line": 10,
+          "expression": "canonicalJson([runId, decision.state.stageId, decision.state.attemptNumber])"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/core/telemetry/audit.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "pipeline-audit.v1"
+      ],
+      "calls": [
+        {
+          "line": 27,
+          "expression": "canonicalJson(audit)"
+        }
+      ]
+    },
+    {
+      "file": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 47,
+          "expression": "canonicalJson(payload)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/core/effects/memory-locks.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [
+        {
+          "from": "./identity.ts",
+          "name": "canonical",
+          "local": "canonical"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "resource-lock.v2"
+      ],
+      "calls": [
+        {
+          "line": 11,
+          "expression": "canonical(resource)"
+        },
+        {
+          "line": 27,
+          "expression": "canonical(active.resource)"
+        },
+        {
+          "line": 34,
+          "expression": "canonical(active.resource)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/core/effects/identity.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 8,
+          "expression": "canonical({\n    idempotencyKey: invocation.idempotencyKey,\n    attempt: invocation.attempt,\n    capability: invocation.capability,\n    operation: invocation.operation,\n    resource: invocation.resource,\n  })"
+        },
+        {
+          "line": 20,
+          "expression": "canonical(prior.payload)"
+        },
+        {
+          "line": 20,
+          "expression": "canonical(invocation.payload)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/core/execution/engine-snapshots.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [],
+      "schemaVersionLiterals": [
+        "execution-graph-snapshot.v2",
+        "run-snapshot.v1"
+      ],
+      "calls": [
+        {
+          "line": 16,
+          "expression": "canonicalJson(nested)"
+        },
+        {
+          "line": 32,
+          "expression": "canonicalJson((stored as Record<string, unknown>).configuration)"
+        },
+        {
+          "line": 32,
+          "expression": "canonicalJson(runtime.configuration)"
+        },
+        {
+          "line": 34,
+          "expression": "canonicalJson([...runtime.snapshot.packages.keys()].sort())"
+        },
+        {
+          "line": 34,
+          "expression": "canonicalJson([...pinned.keys()].sort())"
+        },
+        {
+          "line": 53,
+          "expression": "canonicalJson(upgrade.from)"
+        },
+        {
+          "line": 53,
+          "expression": "canonicalJson(expected)"
+        },
+        {
+          "line": 60,
+          "expression": "canonicalJson(current.provenance.package)"
+        },
+        {
+          "line": 60,
+          "expression": "canonicalJson(expected)"
+        },
+        {
+          "line": 75,
+          "expression": "canonicalJson(value)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/core/execution/graph.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [],
+      "schemaVersionLiterals": [
+        "execution-graph-snapshot.v2"
+      ],
+      "calls": [
+        {
+          "line": 8,
+          "expression": "canonical(entry)"
+        },
+        {
+          "line": 43,
+          "expression": "canonical(content)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/core/execution/artifact-checkpoints.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "lifecycle-event.v2"
+      ],
+      "calls": [
+        {
+          "line": 33,
+          "expression": "canonicalJson(request.payload.value)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/core/execution/engine-admin.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [
+        {
+          "from": "./engine-snapshots.ts",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "lifecycle-event.v2"
+      ],
+      "calls": [
+        {
+          "line": 59,
+          "expression": "canonicalJson(prior)"
+        },
+        {
+          "line": 59,
+          "expression": "canonicalJson(this.#decision)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/core/execution/adapter-support.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 7,
+          "expression": "canonical(entry)"
+        },
+        {
+          "line": 10,
+          "expression": "canonical(request)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/core/execution/engine-run.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [
+        {
+          "from": "./engine-snapshots.ts",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "lifecycle-event.v2"
+      ],
+      "calls": [
+        {
+          "line": 105,
+          "expression": "canonicalJson(duplicate)"
+        },
+        {
+          "line": 105,
+          "expression": "canonicalJson(signal)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/prism-design/src/stage.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "prism.design-request.v1",
+        "stage-result.v2",
+        "wait-request.v2"
+      ],
+      "calls": [
+        {
+          "line": 17,
+          "expression": "canonicalJson(architectureResponse.value)"
+        },
+        {
+          "line": 17,
+          "expression": "canonicalJson(architectureResponse.value)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 235,
+          "expression": "canonicalJson(changedPaths)"
+        },
+        {
+          "line": 253,
+          "expression": "canonicalJson(paths)"
+        },
+        {
+          "line": 268,
+          "expression": "canonicalJson(files)"
+        },
+        {
+          "line": 288,
+          "expression": "canonicalJson(unique)"
+        },
+        {
+          "line": 330,
+          "expression": "canonicalJson(ranges)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "stage-result.v2"
+      ],
+      "calls": [
+        {
+          "line": 102,
+          "expression": "canonicalJson(response.value)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/implementation-agent/src/repair-evidence.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "repair-request.v1"
+      ],
+      "calls": [
+        {
+          "line": 19,
+          "expression": "canonicalJson(request)"
+        },
+        {
+          "line": 36,
+          "expression": "canonicalJson(response.value)"
+        },
+        {
+          "line": 43,
+          "expression": "canonicalJson({ request, evidence })"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/project-summary/src/summary.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "delivery-manifest.v1"
+      ],
+      "calls": [
+        {
+          "line": 39,
+          "expression": "canonicalJson(response.value)"
+        },
+        {
+          "line": 68,
+          "expression": "canonicalJson(manifest)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/project/compiler.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "nova-project.v1",
+        "pipeline-definition.v2"
+      ],
+      "calls": [
+        {
+          "line": 116,
+          "expression": "canonicalJson(module.requirements)"
+        },
+        {
+          "line": 125,
+          "expression": "canonicalJson(evidence)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/project/cli.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 32,
+          "expression": "canonicalJson(definition)"
+        },
+        {
+          "line": 33,
+          "expression": "canonicalJson(definition)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-verifier.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 27,
+          "expression": "canonicalJson(request)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-bundle-parser.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 189,
+          "expression": "canonicalJson(scope.changedPaths)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-graph.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "review-graph.v1"
+      ],
+      "calls": [
+        {
+          "line": 124,
+          "expression": "canonicalJson(unsigned)"
+        },
+        {
+          "line": 175,
+          "expression": "canonicalJson(unsigned)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-runtime-attestation.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "runtime-agent-attestation.v1"
+      ],
+      "calls": [
+        {
+          "line": 23,
+          "expression": "canonicalJson(value)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-report-storage.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 66,
+          "expression": "canonicalJson(report)"
+        },
+        {
+          "line": 67,
+          "expression": "canonicalJson({ attemptId: report.attemptId, bundleDigest: report.bundleDigest })"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "repository-review-profile.v1"
+      ],
+      "calls": [
+        {
+          "line": 342,
+          "expression": "canonicalJson(unsigned)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-preparation.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 59,
+          "expression": "canonicalJson(snapshot.bundle)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-context-authority.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 28,
+          "expression": "canonicalJson(resolvedPolicy.policy.limits)"
+        },
+        {
+          "line": 30,
+          "expression": "canonicalJson(scope)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "kubeclaw.repository-finding-revalidation.v1",
+        "repository-revalidation-backlog.v1",
+        "repository-review-report.v1",
+        "stage-result.v2"
+      ],
+      "calls": [
+        {
+          "line": 122,
+          "expression": "canonicalJson(response.value)"
+        },
+        {
+          "line": 293,
+          "expression": "canonicalJson(value)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-context-selection.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 138,
+          "expression": "canonicalJson(candidates.map(({ path, digest, reasons, dependencyDepth }) => ({\n    path, digest, reasons, dependencyDepth,\n  })))"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/simplification-miner.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "simplification-candidate-identity.v1"
+      ],
+      "calls": [
+        {
+          "line": 37,
+          "expression": "canonicalJson({\n    schemaVersion: 'simplification-candidate-identity.v1', ruleId: candidate.ruleId,\n    category: candidate.category, confidence: candidate.confidence, path: candidate.path,\n    ...(candidate.symbol === undefined ? {} : { s"
+        },
+        {
+          "line": 128,
+          "expression": "canonicalJson(candidates.map(({ candidateId }) => candidateId))"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-proposal-preflight.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 249,
+          "expression": "canonicalJson(finding)"
+        },
+        {
+          "line": 299,
+          "expression": "canonicalJson(eligibleProposalIds)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/scalable-review-jobs.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "kubeclaw.echo-review-scale.v1",
+        "scalable-review-job.v1"
+      ],
+      "calls": [
+        {
+          "line": 154,
+          "expression": "canonicalJson(unsigned)"
+        },
+        {
+          "line": 185,
+          "expression": "canonicalJson(unsigned)"
+        },
+        {
+          "line": 316,
+          "expression": "canonicalJson(topology)"
+        },
+        {
+          "line": 340,
+          "expression": "canonicalJson(body)"
+        },
+        {
+          "line": 348,
+          "expression": "canonicalJson(topology)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-context-production.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 108,
+          "expression": "canonicalJson(record.paths)"
+        },
+        {
+          "line": 117,
+          "expression": "canonicalJson(record.references)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-repository.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 107,
+          "expression": "canonicalJson(ranges)"
+        },
+        {
+          "line": 150,
+          "expression": "canonicalJson(changedPaths)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/simplification-manifest.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 35,
+          "expression": "canonicalJson(value)"
+        },
+        {
+          "line": 49,
+          "expression": "canonicalJson(parsed.value)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-report-builder.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "review-report-item.v1"
+      ],
+      "calls": [
+        {
+          "line": 43,
+          "expression": "canonicalJson({ version: 'review-report-item.v1', origin, sourceId })"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-bundle-snapshot.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 16,
+          "expression": "canonicalJson(parsed.value)"
+        },
+        {
+          "line": 30,
+          "expression": "canonicalJson(snapshot.bundle)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-snapshot-inventory.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "review-source-snapshot.v1"
+      ],
+      "calls": [
+        {
+          "line": 119,
+          "expression": "canonicalJson(value.files)"
+        },
+        {
+          "line": 127,
+          "expression": "canonicalJson(canonicalInventory)"
+        },
+        {
+          "line": 129,
+          "expression": "canonicalJson(unsigned)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/simplification-fact-producer.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 58,
+          "expression": "canonicalJson(parsed.value)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-repair-batch.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 35,
+          "expression": "canonicalJson(\n    findings.map(({ fingerprint }) => fingerprint).sort(),\n  )"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-policy-resolver.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 35,
+          "expression": "canonicalJson(value)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-content-cache.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "review-content-cache.v1"
+      ],
+      "calls": [
+        {
+          "line": 42,
+          "expression": "canonicalJson({ unitDigest, identity })"
+        },
+        {
+          "line": 48,
+          "expression": "canonicalJson(value)"
+        },
+        {
+          "line": 53,
+          "expression": "canonicalJson(unsigned)"
+        },
+        {
+          "line": 62,
+          "expression": "canonicalJson(record.identity)"
+        },
+        {
+          "line": 62,
+          "expression": "canonicalJson(identity)"
+        },
+        {
+          "line": 68,
+          "expression": "canonicalJson(record.value)"
+        },
+        {
+          "line": 73,
+          "expression": "canonicalJson(unsigned)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-report-contract.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "review-report.v2"
+      ],
+      "calls": [
+        {
+          "line": 209,
+          "expression": "canonicalJson({\n    schemaVersion: REVIEW_GOVERNOR_SCHEMA_VERSION, baseline,\n  })"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-verified-findings.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "verified-review-finding.v1"
+      ],
+      "calls": [
+        {
+          "line": 49,
+          "expression": "canonicalJson(value)"
+        },
+        {
+          "line": 51,
+          "expression": "canonicalJson(left)"
+        },
+        {
+          "line": 51,
+          "expression": "canonicalJson(right)"
+        },
+        {
+          "line": 61,
+          "expression": "canonicalJson({\n    version: 'verified-review-finding.v1',\n    repositoryBase: snapshot.bundle.revisions.base,\n    category: finding.category,\n    priority: finding.priority,\n    claim: finding.claim,\n    impact: finding.impact,\n    locatio"
+        },
+        {
+          "line": 94,
+          "expression": "canonicalJson(locationIdentity(left))"
+        },
+        {
+          "line": 94,
+          "expression": "canonicalJson(locationIdentity(right))"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-governor.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "review-governor.v1"
+      ],
+      "calls": [
+        {
+          "line": 133,
+          "expression": "canonicalJson(baseline.allowedPrefixes)"
+        },
+        {
+          "line": 133,
+          "expression": "canonicalJson([...values.input.scope.allowedPrefixes].sort())"
+        },
+        {
+          "line": 134,
+          "expression": "canonicalJson(baseline.ownershipPrefixes)"
+        },
+        {
+          "line": 134,
+          "expression": "canonicalJson([...values.input.scope.ownershipPrefixes].sort())"
+        },
+        {
+          "line": 147,
+          "expression": "canonicalJson({ schemaVersion: REVIEW_GOVERNOR_SCHEMA_VERSION, baseline })"
+        },
+        {
+          "line": 171,
+          "expression": "canonicalJson({ schemaVersion: REVIEW_GOVERNOR_SCHEMA_VERSION, baseline })"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-map-artifacts.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "repository-review-map.v1"
+      ],
+      "calls": [
+        {
+          "line": 51,
+          "expression": "canonicalJson(value)"
+        },
+        {
+          "line": 85,
+          "expression": "canonicalJson(unsigned)"
+        },
+        {
+          "line": 95,
+          "expression": "canonicalJson(JSON.parse(line))"
+        },
+        {
+          "line": 101,
+          "expression": "canonicalJson(unsigned)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-scale-slicing.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "review-coverage.v1"
+      ],
+      "calls": [
+        {
+          "line": 102,
+          "expression": "canonicalJson(unsigned)"
+        },
+        {
+          "line": 141,
+          "expression": "canonicalJson(unsigned)"
+        },
+        {
+          "line": 169,
+          "expression": "canonicalJson(coverageUnsigned)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-stage-input.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 109,
+          "expression": "canonicalJson(item.content)"
+        },
+        {
+          "line": 202,
+          "expression": "canonicalJson(value)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/repository-revalidation-contract.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "repository-finding-revalidation.v1"
+      ],
+      "calls": [
+        {
+          "line": 143,
+          "expression": "canonicalJson(value)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-cluster-identity.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 14,
+          "expression": "canonicalJson({\n      version: REVIEW_CLUSTER_SCHEMA_VERSION,\n      repositoryBase,\n      singletonFinding: finding.fingerprint,\n    })"
+        },
+        {
+          "line": 20,
+          "expression": "canonicalJson({\n    version: REVIEW_CLUSTER_SCHEMA_VERSION,\n    repositoryBase,\n    category: cause.category,\n    sharedHint: cause.sharedHint,\n    primaryPath: cause.primaryPath,\n    ...(cause.primarySymbol === undefined ? {} : { primarySy"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/scalable-review-compiler.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "scalable-review-compilation.v1",
+        "scalable-review-job-accounting.v1"
+      ],
+      "calls": [
+        {
+          "line": 123,
+          "expression": "canonicalJson(source)"
+        },
+        {
+          "line": 172,
+          "expression": "canonicalJson(unsigned)"
+        },
+        {
+          "line": 186,
+          "expression": "canonicalJson(accounting.byKind)"
+        },
+        {
+          "line": 229,
+          "expression": "canonicalJson(included)"
+        },
+        {
+          "line": 229,
+          "expression": "canonicalJson(supplied)"
+        },
+        {
+          "line": 234,
+          "expression": "canonicalJson({\n    uncoveredFiles: plan.coverage.uncoveredFiles.slice(0, 10),\n    unresolvedRelations: graph.unresolvedRelations.slice(0, 10), overflows: plan.coverage.overflows.slice(0, 10),\n  })"
+        },
+        {
+          "line": 251,
+          "expression": "canonicalJson(unsigned)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-slicing.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "echo-review-output.v1"
+      ],
+      "calls": [
+        {
+          "line": 179,
+          "expression": "canonicalJson(finding)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "kubeclaw.echo-review-scale-verification.v1",
+        "kubeclaw.echo-review-scale.v1",
+        "repository-review-evidence.v2",
+        "repository-review-follow-up-status.v1",
+        "repository-review-plan.v1",
+        "repository-review-prepared-plan.v1",
+        "repository-review-report.v1",
+        "stage-result.v2"
+      ],
+      "calls": [
+        {
+          "line": 236,
+          "expression": "canonicalJson(unsigned)"
+        },
+        {
+          "line": 240,
+          "expression": "canonicalJson({ head, profileDigest: executionProfile(profile).digest })"
+        },
+        {
+          "line": 244,
+          "expression": "canonicalJson({ schemaVersion: compilation.schemaVersion,\n    snapshotDigest: compilation.snapshotDigest, graphDigest: compilation.graph.digest,\n    coverageDigest: compilation.plan.coverage.digest,\n    jobDigests: compilation.jobs.map(({ d"
+        },
+        {
+          "line": 292,
+          "expression": "canonicalJson(response.value)"
+        },
+        {
+          "line": 309,
+          "expression": "canonicalJson(value)"
+        },
+        {
+          "line": 423,
+          "expression": "canonicalJson(preflight)"
+        },
+        {
+          "line": 629,
+          "expression": "canonicalJson([...run.cacheKeys.entries()]\n      .sort(([left], [right]) => compareCodeUnits(left, right)))"
+        },
+        {
+          "line": 634,
+          "expression": "canonicalJson([])"
+        },
+        {
+          "line": 645,
+          "expression": "canonicalJson(keys)"
+        },
+        {
+          "line": 657,
+          "expression": "canonicalJson(report)"
+        },
+        {
+          "line": 669,
+          "expression": "canonicalJson(value)"
+        },
+        {
+          "line": 696,
+          "expression": "canonicalJson(compilation.plan.coverage)"
+        },
+        {
+          "line": 703,
+          "expression": "canonicalJson(report)"
+        },
+        {
+          "line": 730,
+          "expression": "canonicalJson(report)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/repository-audit-cache.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 71,
+          "expression": "canonicalJson(response.value)"
+        },
+        {
+          "line": 81,
+          "expression": "canonicalJson(record)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/review-bundle-bounds.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 36,
+          "expression": "canonicalJson(parsed)"
+        },
+        {
+          "line": 87,
+          "expression": "canonicalJson(bundle)"
+        }
+      ]
+    },
+    {
+      "file": "skills/nova/plugins/review/src/scalable-review-verification.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "kubeclaw.echo-review-scale-verification.v1"
+      ],
+      "calls": [
+        {
+          "line": 71,
+          "expression": "canonicalJson({\n    category: finding.category, priority: finding.priority, claim: finding.claim,\n    locations: finding.locations, recommendedFix: finding.recommendedFix,\n  })"
+        },
+        {
+          "line": 78,
+          "expression": "canonicalJson({ jobDigest: job.digest, finding })"
+        },
+        {
+          "line": 153,
+          "expression": "canonicalJson(expected)"
+        },
+        {
+          "line": 153,
+          "expression": "canonicalJson(actual)"
+        },
+        {
+          "line": 202,
+          "expression": "canonicalJson({\n    category: job.proposal.finding.category, rootCauseHint: job.proposal.finding.rootCauseHint,\n    primaryPath: job.proposal.finding.locations[0]?.path,\n  })"
+        },
+        {
+          "line": 235,
+          "expression": "canonicalJson({ [value.id]: value.finding })"
+        },
+        {
+          "line": 249,
+          "expression": "canonicalJson(unsigned)"
+        },
+        {
+          "line": 384,
+          "expression": "canonicalJson(unsigned)"
+        }
+      ]
+    },
+    {
+      "file": "skills/common/plugins/state-store/src/adapter.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "plugin-state-record.v2",
+        "plugin-state-value.v1"
+      ],
+      "calls": [
+        {
+          "line": 66,
+          "expression": "canonicalJson(duplicate.payload.value)"
+        },
+        {
+          "line": 66,
+          "expression": "canonicalJson(request.payload)"
+        }
+      ]
+    },
+    {
+      "file": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/pipeline-observability-contract",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "observability-admission-store.v1",
+        "observability-completeness.v1"
+      ],
+      "calls": [
+        {
+          "line": 47,
+          "expression": "canonicalJson(decoded)"
+        },
+        {
+          "line": 47,
+          "expression": "canonicalJson(entry.record)"
+        },
+        {
+          "line": 57,
+          "expression": "canonicalJson([gap.producer, gap.pipelineRunId, gap.fromSequence, gap.toSequence])"
+        },
+        {
+          "line": 60,
+          "expression": "canonicalJson(record.producer)"
+        },
+        {
+          "line": 60,
+          "expression": "canonicalJson(gap.producer)"
+        },
+        {
+          "line": 78,
+          "expression": "canonicalJson(state.quarantine)"
+        }
+      ]
+    },
+    {
+      "file": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/pipeline-observability-contract",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "durable-attempt-store.v1"
+      ],
+      "calls": [
+        {
+          "line": 9,
+          "expression": "canonicalJson(left)"
+        },
+        {
+          "line": 9,
+          "expression": "canonicalJson(right)"
+        },
+        {
+          "line": 27,
+          "expression": "canonicalJson([item.pipelineRunId, item.attemptId, item.claimGeneration, item.evidenceId])"
+        },
+        {
+          "line": 46,
+          "expression": "canonicalJson([item.pipelineRunId, item.attemptId, item.claimGeneration])"
+        },
+        {
+          "line": 51,
+          "expression": "canonicalJson(metadata.artifact)"
+        },
+        {
+          "line": 51,
+          "expression": "canonicalJson(reference.artifact)"
+        },
+        {
+          "line": 76,
+          "expression": "canonicalJson([item.pipelineRunId, item.attemptId])"
+        },
+        {
+          "line": 84,
+          "expression": "canonicalJson([closure.pipelineRunId, closure.closureId])"
+        },
+        {
+          "line": 86,
+          "expression": "canonicalJson(owner.completionIntent!.closure)"
+        },
+        {
+          "line": 86,
+          "expression": "canonicalJson(closure)"
+        }
+      ]
+    },
+    {
+      "file": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/pipeline-observability-contract",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "pipeline-durable-record-store.v1",
+        "pipeline-durable-record.v1"
+      ],
+      "calls": [
+        {
+          "line": 66,
+          "expression": "canonicalJson(payload)"
+        },
+        {
+          "line": 120,
+          "expression": "canonicalJson(payload)"
+        },
+        {
+          "line": 122,
+          "expression": "canonicalJson(snapshot)"
+        },
+        {
+          "line": 146,
+          "expression": "canonicalJson(candidate)"
+        },
+        {
+          "line": 171,
+          "expression": "canonicalJson(payload)"
+        },
+        {
+          "line": 173,
+          "expression": "canonicalJson(snapshot)"
+        },
+        {
+          "line": 195,
+          "expression": "canonicalJson(candidate)"
+        }
+      ]
+    },
+    {
+      "file": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/pipeline-observability-contract",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "admission-acknowledgement.v1",
+        "observability-admission-store.v1",
+        "producer-outbox.v1"
+      ],
+      "calls": [
+        {
+          "line": 171,
+          "expression": "canonicalJson(value)"
+        },
+        {
+          "line": 358,
+          "expression": "canonicalJson(candidateRecord)"
+        },
+        {
+          "line": 383,
+          "expression": "canonicalJson(candidate)"
+        },
+        {
+          "line": 401,
+          "expression": "canonicalJson(ack)"
+        },
+        {
+          "line": 502,
+          "expression": "canonicalJson(state)"
+        },
+        {
+          "line": 536,
+          "expression": "canonicalJson(candidate.quarantine)"
+        },
+        {
+          "line": 538,
+          "expression": "canonicalJson(candidate)"
+        },
+        {
+          "line": 615,
+          "expression": "canonicalJson(candidate)"
+        },
+        {
+          "line": 724,
+          "expression": "canonicalJson(existing)"
+        },
+        {
+          "line": 724,
+          "expression": "canonicalJson(snapshot)"
+        },
+        {
+          "line": 752,
+          "expression": "canonicalJson(candidate)"
+        }
+      ]
+    },
+    {
+      "file": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/pipeline-observability-contract",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "durable-attempt-store.v1",
+        "observability-completeness.v1"
+      ],
+      "calls": [
+        {
+          "line": 235,
+          "expression": "canonicalJson(state)"
+        },
+        {
+          "line": 395,
+          "expression": "canonicalJson(existing.completionIntent)"
+        },
+        {
+          "line": 395,
+          "expression": "canonicalJson(intent)"
+        },
+        {
+          "line": 431,
+          "expression": "canonicalJson(metadata.artifact)"
+        },
+        {
+          "line": 431,
+          "expression": "canonicalJson(evidence.artifact)"
+        },
+        {
+          "line": 511,
+          "expression": "canonicalJson(stored.completionIntent.record)"
+        },
+        {
+          "line": 597,
+          "expression": "canonicalJson(candidate)"
+        },
+        {
+          "line": 597,
+          "expression": "canonicalJson(item)"
+        },
+        {
+          "line": 744,
+          "expression": "canonicalJson({ attemptId, claimGeneration, evidenceId })"
+        }
+      ]
+    },
+    {
+      "file": "skills/common/plugins/openclaw-agent-observer/src/observer-support.ts",
+      "directSdkConsumer": false,
+      "canonicalImports": [],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 43,
+          "expression": "canonical(value[key])"
+        },
+        {
+          "line": 50,
+          "expression": "canonical({\n    type: event.type, identity: event.identity, payload: event.payload,\n  })"
+        }
+      ]
+    },
+    {
+      "file": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 108,
+          "expression": "canonicalJson(request.payload.value)"
+        }
+      ]
+    },
+    {
+      "file": "skills/common/plugins/wait-store/src/adapter.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "wait-record.v2",
+        "wait-request.v2",
+        "wait-value.v1"
+      ],
+      "calls": [
+        {
+          "line": 218,
+          "expression": "canonicalJson(duplicate.wait)"
+        },
+        {
+          "line": 218,
+          "expression": "canonicalJson(expected)"
+        }
+      ]
+    },
+    {
+      "file": "skills/common/plugin-runtime/sdk/src/runtime-workspace.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "./values.ts",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "runtime-workspace.v1"
+      ],
+      "calls": [
+        {
+          "line": 16,
+          "expression": "canonicalJson(owner)"
+        },
+        {
+          "line": 32,
+          "expression": "canonicalJson(ref.owner)"
+        },
+        {
+          "line": 32,
+          "expression": "canonicalJson(owner)"
+        }
+      ]
+    },
+    {
+      "file": "skills/common/plugin-runtime/sdk/src/source-revision.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "./values.ts",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 20,
+          "expression": "canonicalJson(response.value)"
+        }
+      ]
+    },
+    {
+      "file": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [
+        "runtime-agent-attestation.v1",
+        "runtime-prompt-budget.v1"
+      ],
+      "calls": [
+        {
+          "line": 231,
+          "expression": "canonicalJson(identity)"
+        },
+        {
+          "line": 257,
+          "expression": "canonicalJson({ dispatchId, payload: dispatchPayload(payload).modelPayload })"
+        }
+      ]
+    },
+    {
+      "file": "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 27,
+          "expression": "canonicalJson(JSON.parse(fs.readFileSync(descriptor, 'utf8')))"
+        },
+        {
+          "line": 27,
+          "expression": "canonicalJson(ref)"
+        }
+      ]
+    },
+    {
+      "file": "skills/common/plugins/git-workspace/src/workspace-ownership.ts",
+      "directSdkConsumer": true,
+      "canonicalImports": [
+        {
+          "from": "@kubeclaw/plugin-sdk",
+          "name": "canonicalJson",
+          "local": "canonicalJson"
+        }
+      ],
+      "schemaVersionLiterals": [],
+      "calls": [
+        {
+          "line": 14,
+          "expression": "canonicalJson(reference)"
+        },
+        {
+          "line": 31,
+          "expression": "canonicalJson(JSON.parse(fs.readFileSync(descriptor, 'utf8')))"
+        },
+        {
+          "line": 31,
+          "expression": "canonicalJson(ref)"
+        }
+      ]
+    }
+  ]
+}

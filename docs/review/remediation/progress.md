@@ -4,12 +4,11 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**52/154 lokal verifiziert und unabhängig gegengeprüft; 5 Findings teilweise
-implementiert / durch fehlende Betriebsnachweise blockiert; 21 in Bearbeitung;
-76 noch offen.** Nur gesicherte Fixes zählen als verifiziert. Der zusätzlich
-gefundene Prozessende-Fehler von COMMAND-001 ist ebenfalls korrigiert und
-gegengeprüft (Folgecommit unten). Keine pauschale Regressionsfreiheit, kein
-Deployment und keine vollständige Pipeline-E2E-Freigabe.
+**66/154 lokal verifiziert und unabhängig gegengeprüft; 8 Findings teilweise
+implementiert / durch fehlende Betriebsnachweise blockiert; 12 in Bearbeitung;
+68 noch offen.** Zusätzlich drei bei der Integration gefundene Probleme behoben
+(separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine
+vollständige Pipeline-E2E-Freigabe.
 
 | Bereich | Remote-Commit | Stand / Nachweis |
 |---|---|---|
@@ -36,6 +35,13 @@ Deployment und keine vollständige Pipeline-E2E-Freigabe.
 | Ingestion Service | `e51b6b4a77ad726ea2dc29d9e94f0692606f670a` | INGESTION-001 verifiziert; [Nachweis](implementation/ingestion-service.md) |
 | Namespacegebundene Secretprüfung | `94cafe67c2b03bad5869c36a4b7975e0c27968df` | IFR-17-001 per echtem Render verifiziert; Live403 offen; [Nachweis](implementation/verification-secret-rbac.md) |
 | Isolation | `8feafb7fb9ae8a1425fe9439dae668f07b551d70` | ISOLATION-001/003 verifiziert;002/004 Kernelabnahme blockiert; [Nachweis](implementation/isolation.md) |
+| Administrative Reparaturinvalidierung | `36d131179bd0bd9c0e706d404077124eac3717ec` | PATH-T04-003 / APPROVAL-001 verifiziert; [Nachweis](implementation/approval-invalidation.md) |
+| Registry-Startlatenz | `8ea0cc2d4c4446e25a08a32ee1e52e2cc1efb932` | Zusätzliches INT-STARTUP-LATENCY001; unveränderte vollständige Phase6 besteht wieder; [Nachweis](implementation/registry-startup-latency.md) |
+| Prism-Artefakte | `1bf865b076df2a4722d27c0a4e5f839f452a5a31` | STORAGE-001 verifiziert; [Nachweis](implementation/prism-artifacts.md) |
+| Forge-Workspaces | `700d92958fff206b325ef1ecccc6e9cca0bb9bca` | IMPLEMENTATION-001 / PATH-T07-001 / T06-F01 verifiziert; [Nachweis](implementation/forge-workspace.md) |
+| Corpus-Transaktion | `5e4394203f2cfed57a2c404ba045cd1ac8ad9646` | CORPUS-001 teilweise; Native-Poolgate ausdrücklich unter `test:corpus-pool`, Folgecommit `2900148687ea525f4367a32dad04b6394f4225f5`; [Nachweis](implementation/prism-corpus.md) |
+| Renderer / Studioeditor | `a5b09cf32a886deb3205126c9d1eb8ef9fc44f43` | RENDERER-001 / STUDIO-001 verifiziert, jeweilige002 Browserabnahme blockiert; [Nachweis](implementation/prism-renderer-studio.md) |
+| Reviewplugin | `10440ac1e20e3744cfe78e70182c2dd17bacd801` | Sechs Findings plus zusätzliches INT-REVIEW-UNCERTAIN001 verifiziert; [Nachweis](implementation/review.md) |
 
 Jede Änderung enthält Originalregressionen oder konkrete echte Verifikation und
 eine unabhängige Gegenprüfung durch einen anderen Agenten. Separate lokale
@@ -53,11 +59,15 @@ Branches wurden überschrieben, kein Merge ausgeführt.
   Gemischte alte/neue Writer sind unsicher. Nova installiert util-linux explizit
   und prüft flock im Dockerbuild. Source-Deploymentcheck bestanden, aber hier
   kein Image gebaut/gestartet; Linux-Dateisystem-/Container-Betriebsabnahme offen.
-- **Breiter Boundarycheck:** reine Contract-Entrypoints und überprüfte transitive
-  Graphen einschließlich negativer Sicherheitsproben sind integriert und unabhängig
-  gegengeprüft. Review-Tokenizer und veralteter Buster-Protokollimport werden im
-  laufenden Reviewpaket ursächlich korrigiert. Gesamter Plugin-v2-Gate wurde nach
-  diesen noch uncommitteten Änderungen nicht als bestanden erklärt.
+- **Übergreifender Plugin-v2-Gate:** auf sauberem isoliertem Commit `9b4e68a`
+  tatsächlich erneut ausgeführt. SDKprüfung, alle Pluginbuilds, nativer
+  Sandboxbuild, Runtime-Typecheck und aktive Contract-/Agentoutputprüfungen
+  bestehen. Danach scheitert Boundaryprüfung an fehlendem generiertem
+  Agent-Observability-Contract im Hostobserver. Der vorhandene lokale generierte
+  Stand wird nicht als reproduzierbarer Build aus sauberem Checkout gewertet.
+  Generierungs-/Buildreihenfolge wird ursächlich korrigiert; spätere Gates liefen
+  noch nicht. Eine vorherige Ausführung mit unvollständigem Log wird nicht als
+  Beleg benutzt, ebenso keine Ausführung auf parallel verändertem Budgetcode.
 - **Docs-Referenzcheck:** scheitert an historischen Review-Kurzpfaden und
   Zeilenangaben, die der Checker als Dateinamen interpretiert. Neue temporäre
   Prism-Testpfadangabe wurde korrigiert. Historische Befunde nicht gelöscht, um
@@ -83,23 +93,27 @@ Branches wurden überschrieben, kein Merge ausgeführt.
 - ISOLATION-002/004: native Prozess-/Cgroupmechanismen implementiert;
   Credential-drop-/Host-SIGKILL-/OOM-Kernelabnahme mangels Hostdelegation blockiert.
 
+- CORPUS-001: SQL-Transaktionsscope und PGlite-Rollback geprüft. Echte PG17.5/
+  pgvector0.8.0 gebaut, aber initdb verweigert legitimerweise Root; Usernamespace
+  erlaubt keinen anderen Benutzer. Native Mehrverbindungsprüfung nicht ausgeführt.
+- RENDERER-002 / STUDIO-002: Node-/HTTPgegenstellen geprüft, aber echte iframe-
+  Interaktion/Bilddekodierung/CSP mangels Chromium noch nicht ausgeführt.
+
 ## Laufende nächste Arbeit
 
-- WP04: administrative Reparaturinvalidierung und Approvalschema in unabhängigem
-  Gegenreview. Originale Phase6-Cancelzeitassertion scheitert; Baselinevergleich
-  klärt, ob der Fehler durch diesen Fix entsteht. Danach getrennte Reparaturbudgets
-  und sourcegebundene Approvalintegration gemäß bestätigten Entscheidungen.
-- WP05: besitzgebundene Forge-Workspaces, tatsächliches Runtime-cwd und abbrechbares
-  Warten vor Gitmutationen. Originale Git-/Transporttests entstehen parallel.
-- WP06: sechs Reviewplugin-Findings einschließlich Tokenbudget, terminaler Audit-
-  Ergebnisse, Revalidation und Syntax-/Scopeanalyse in Umsetzung.
-- WP08: vier Renderer-/Studioeditor-Findings. Reale Node-/HTTPprüfungen laufen;
-  benötigtes Chromium fehlt, Downloadtimeout verhindert derzeit Browsernachweis.
-- WP07: Corpus-Pooltransaktionen zuerst, atomare Direction-/Preferencecommits
-  anschließend. Echter Mehrverbindungs-Postgresnachweis benötigt zusätzliche
-  lokale native Toolchain; PGlite wird nicht als Poolnachweis ausgegeben.
-- BUSTER-ENGINE-001 bleibt offen in Bearbeitung: Cancellation allein belegt kein
-  hartes aggregiertes CPU-/Speicher-/Prozessbudget.
+- WP04: getrennte monotone Budgets (2 je Modul/Lint/Review/Test) und einmaliger
+  zusätzlicher Nova-Auftrag in Umsetzung. Der bisherige eine technische Retry
+  bleibt separat erhalten. Sourcebindung und Risk-Acceptance danach.
+- WP07: atomare Direction-/Preferencecommits mit expliziten wiederverwendbaren
+  Requestkennungen sowie Worker-Voll-Logspeicher und Control-Ergebnisbindung.
+- WP09: Redis-Zielidentität/RESP-Budgets zuerst, Operator-/Benachrichtigungs-
+  Retrysemantik danach. Lokale echte Dienste, keine externen Nachrichten.
+- WP09: veraltete Observerzahlen in Release-/Importsicherheitsprüfungen auf
+  tatsächliche erwartete Identitäten abgleichen.
+- Übergreifend: sauberen Hostobserver-Contractbuild herstellen und isolierten
+  Plugin-v2-Gate fortsetzen. Neue Blocker werden nicht ausgeblendet.
+- BUSTER-ENGINE-001 weiter offen: Cancellation allein belegt kein hartes
+  aggregiertes CPU-/Speicher-/Prozessbudget.
 
 Nächster Integrationsschritt: weitere Änderungen erst nach Gegenprüfung und
 Originalregressionen getrennt committen. Nicht abgeschlossene Arbeitsdateien
