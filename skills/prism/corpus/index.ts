@@ -1,6 +1,6 @@
 import { createHash, randomUUID } from "node:crypto";
 import { isIP } from "node:net";
-import type { Queryable } from "../storage/index.ts";
+import { inTransaction, type Database, type Queryable } from "../storage/index.ts";
 
 export type SourceKind =
   "internal-project" | "user-upload" | "generated" | "public-web";
@@ -64,7 +64,7 @@ export function validateSource(input: CorpusInput): void {
   }
 }
 export async function ingest(
-  db: Queryable,
+  db: Database,
   input: CorpusInput,
   evidence: EmbeddingEvidence,
   options:{activate?:boolean}={},
@@ -77,75 +77,76 @@ export async function ingest(
   )
     throw new Error("valid embedding evidence is required");
   const digest = hash(JSON.stringify(input));
-  const prior = await db.query<{ id: string }>(
-    "SELECT id FROM prism.corpus_revision WHERE content_digest=$1 LIMIT 1",
-    [digest],
-  );
-  if (prior.rows[0]) return { id: prior.rows[0].id, digest };
+  return inTransaction(db, async (connection) => {
+    // Serialize identical inputs before lookup; all writes share this reserved transaction.
+    await connection.query("SELECT pg_advisory_xact_lock(hashtextextended($1,0))", [`prism-corpus:${digest}`]);
+    const prior = await connection.query<{ id: string }>(
+      "SELECT id FROM prism.corpus_revision WHERE content_digest=$1 LIMIT 1",
+      [digest],
+    );
+    if (prior.rows[0]) return { id: prior.rows[0].id, digest };
+    return insertRevision(connection, input, evidence, digest, options.activate !== false);
+  });
+}
+async function insertRevision(connection: Queryable, input: CorpusInput, evidence: EmbeddingEvidence, digest: string, activate: boolean): Promise<{ id: string; digest: string }> {
   const itemId = randomUUID(),
     revisionId = randomUUID(),
     rightsId = randomUUID();
-  await db.query("BEGIN");
-  try {
-    const allowDesignUse =
-      input.rights === "full" || input.rights === "derived";
-    await db.query(
-      "INSERT INTO prism.rights_policy(id,retention,retain_original,allow_derivatives,allow_embedding,allow_design_use,basis) VALUES($1,$2,$3,$4,true,$5,'explicit-ingestion-policy')",
-      [
-        rightsId,
-        input.rights,
-        false,
-        allowDesignUse,
-        allowDesignUse,
-      ],
-    );
-    await db.query(
-      "INSERT INTO prism.corpus_item(id,corpus_key,kind,status) VALUES($1,$2,$3,$4)",
-      [itemId, digest, input.sourceKind,options.activate===false?"restricted":"active"],
-    );
-    await db.query(
-      "INSERT INTO prism.corpus_revision(id,corpus_item_id,revision,source_kind,source_locator_hash,captured_at,normalized,searchable_text,content_digest,normalization_version,rights_id,source_content_digest) VALUES($1,$2,1,$3,$4,now(),$5::jsonb,$6,$7,'v1',$8,$9)",
-      [
-        revisionId,
-        itemId,
-        input.sourceKind,
-        input.locator ? hash(input.locator) : null,
-        JSON.stringify({
-          title: input.title,
-          summary: input.summary,
-          tags: input.tags,
-          sourceFamily: input.sourceFamily ?? input.sourceKind,
-          ...(input.surface ? { surface: input.surface } : {}),
-          ...(input.industry ? { industry: input.industry } : {}),
-          ...(input.style ? { style: input.style } : {}),
-        }),
-        `${input.title} ${input.summary} ${input.tags.join(" ")}`,
-        digest,
-        rightsId,
-        input.sourceContentDigest??null,
-      ],
-    );
-    await db.query(
-      "UPDATE prism.corpus_item SET current_revision_id=$1 WHERE id=$2",
-      [revisionId, itemId],
-    );
-    await db.query(
-      "INSERT INTO prism.corpus_embedding(corpus_revision_id,model,model_version,normalization_version,source_digest,embedding) VALUES($1,$2,$3,'v1',$4,$5::vector)",
-      [
-        revisionId,
-        evidence.model,
-        evidence.modelVersion,
-        evidence.sourceDigest,
-        `[${evidence.embedding.join(",")}]`,
-      ],
-    );
-    await db.query("COMMIT");
-    return { id: revisionId, digest };
-  } catch (error) {
-    await db.query("ROLLBACK");
-    throw error;
-  }
+  const allowDesignUse =
+    input.rights === "full" || input.rights === "derived";
+  await connection.query(
+    "INSERT INTO prism.rights_policy(id,retention,retain_original,allow_derivatives,allow_embedding,allow_design_use,basis) VALUES($1,$2,$3,$4,true,$5,'explicit-ingestion-policy')",
+    [
+      rightsId,
+      input.rights,
+      false,
+      allowDesignUse,
+      allowDesignUse,
+    ],
+  );
+  await connection.query(
+    "INSERT INTO prism.corpus_item(id,corpus_key,kind,status) VALUES($1,$2,$3,$4)",
+    [itemId, digest, input.sourceKind,!activate?"restricted":"active"],
+  );
+  await connection.query(
+    "INSERT INTO prism.corpus_revision(id,corpus_item_id,revision,source_kind,source_locator_hash,captured_at,normalized,searchable_text,content_digest,normalization_version,rights_id,source_content_digest) VALUES($1,$2,1,$3,$4,now(),$5::jsonb,$6,$7,'v1',$8,$9)",
+    [
+      revisionId,
+      itemId,
+      input.sourceKind,
+      input.locator ? hash(input.locator) : null,
+      JSON.stringify({
+        title: input.title,
+        summary: input.summary,
+        tags: input.tags,
+        sourceFamily: input.sourceFamily ?? input.sourceKind,
+        ...(input.surface ? { surface: input.surface } : {}),
+        ...(input.industry ? { industry: input.industry } : {}),
+        ...(input.style ? { style: input.style } : {}),
+      }),
+      `${input.title} ${input.summary} ${input.tags.join(" ")}`,
+      digest,
+      rightsId,
+      input.sourceContentDigest??null,
+    ],
+  );
+  await connection.query(
+    "UPDATE prism.corpus_item SET current_revision_id=$1 WHERE id=$2",
+    [revisionId, itemId],
+  );
+  await connection.query(
+    "INSERT INTO prism.corpus_embedding(corpus_revision_id,model,model_version,normalization_version,source_digest,embedding) VALUES($1,$2,$3,'v1',$4,$5::vector)",
+    [
+      revisionId,
+      evidence.model,
+      evidence.modelVersion,
+      evidence.sourceDigest,
+      `[${evidence.embedding.join(",")}]`,
+    ],
+  );
+  return { id: revisionId, digest };
 }
+
 export async function search(
   db: Queryable,
   query: string,

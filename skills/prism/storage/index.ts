@@ -74,7 +74,7 @@ export async function migrate(
 
 export { ContentAddressedArtifactStore } from "./artifacts.ts";
 
-type Database = Queryable & { connect?: () => Promise<Queryable & { release(): void }> };
+export type Database = Queryable & { connect?: () => Promise<Queryable & { release(): void }> };
 
 export async function inTransaction<T>(db: Database, execute: (connection: Queryable) => Promise<T>): Promise<T> {
   const connection = db.connect ? await db.connect() : db;
