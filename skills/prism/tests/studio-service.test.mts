@@ -77,6 +77,34 @@ test('actual Studio retains proxy bytes, cookies and upstream status', async t =
   await app.healthy();
 });
 
+test('actual Studio forwards direction idempotency keys and retry payloads to Control', async t => {
+  const upstream = createServer(async (request, response) => {
+    const chunks: Buffer[] = [];
+    for await (const chunk of request) chunks.push(chunk);
+    response.writeHead(200, { 'content-type': 'application/json' });
+    response.end(JSON.stringify({ method: request.method, url: request.url,
+      key: request.headers['idempotency-key'], csrf: request.headers['x-prism-csrf'],
+      cookie: request.headers.cookie, ingress: request.headers['x-prism-ingress-secret'],
+      contentType: request.headers['content-type'], body: Buffer.concat(chunks).toString('utf8') }));
+  });
+  const port = await listen(upstream); t.after(() => close(upstream));
+  const app = await studio(t, `http://127.0.0.1:${port}`);
+  for (const [operation, payload] of [['select', { documentId: 'document-one' }], ['feedback', { action: 'liked' }]] as const) {
+    const route = `/v1/directions/11111111-1111-4111-8111-111111111111/${operation}`;
+    const body = JSON.stringify(payload);
+    for (let retry = 0; retry < 2; retry++) {
+      const result = await fetch(`${app.url}${route}`, { method: 'POST', body,
+        headers: { 'Idempotency-Key': `decision-${operation}`, 'x-prism-csrf': 'csrf-test',
+          cookie: 'prism_session=session-test', 'content-type': 'application/json',
+          'x-prism-ingress-secret': 'untrusted-client-value' } });
+      assert.equal(result.status, 200);
+      assert.deepEqual(await result.json(), { method: 'POST', url: route, key: `decision-${operation}`,
+        csrf: 'csrf-test', cookie: 'prism_session=session-test', ingress: 'local-test-ingress',
+        contentType: 'application/json', body });
+    }
+  }
+});
+
 for (const phase of ['headers', 'empty-body', 'partial-body'] as const) {
   test(`actual Studio bounds upstream ${phase} wait and remains healthy`, async t => {
     let disconnected = false;

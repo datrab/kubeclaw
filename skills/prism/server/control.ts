@@ -1,3 +1,5 @@
+import { decideDirection, directionIdempotencyKey } from "../control/direction-decisions.ts";
+import { recordPreference } from "../control/preferences.ts";
 import {
   createServer,
   type IncomingMessage,
@@ -488,39 +490,8 @@ const server = createServer(async (request, response) => {
       };
       if (!input.action || !["rejected", "liked", "disliked", "preserved"].includes(input.action))
         throw new Error("supported direction feedback action is required");
-      const direction = await pool.query<{
-        project_id: string;
-        external_id: string;
-        direction_key: string;
-        state: string;
-      }>(
-        "SELECT d.project_id,p.external_id,d.direction_key,d.state FROM prism.direction d JOIN prism.project p ON p.id=d.project_id WHERE d.id=$1",
-        [directionFeedback[1]],
-      );
-      if (!direction.rows[0]) throw new Error("direction is not available");
-      if(input.action==="rejected"&&direction.rows[0].state!=="proposed")throw new Error("only a proposed direction can be rejected");
-      if (input.action === "rejected")
-        await pool.query("UPDATE prism.direction SET state='rejected' WHERE id=$1 AND state='proposed'", [directionFeedback[1]]);
-      const eventId = `event-${randomBytes(12).toString("hex")}`;
-      const userId = userKey(actor.user);
-      const event: PreferenceEvent = {
-        schema: "prism.preference-event.v1",
-        eventId,
-        userId,
-        projectId: direction.rows[0].external_id,
-        action: input.action,
-        target: { directionId: directionFeedback[1] },
-        traits: [input.trait?.trim() || direction.rows[0].direction_key],
-        context: { surface: "direction" },
-        source: "explicit",
-        learningScope: "project",
-        occurredAt: new Date().toISOString(),
-      };
-      await pool.query(
-        "INSERT INTO prism.preference_event(id,project_id,subject_id,event_type,content,consent_scope,occurred_at) VALUES($1,$2,$3,$4,$5::jsonb,$6,$7)",
-        [eventId,direction.rows[0].project_id,userId,event.action,JSON.stringify(event),event.learningScope,event.occurredAt],
-      );
-      return json(response, 201, { eventId, state: input.action === "rejected" ? "rejected" : "recorded" });
+      const result = await decideDirection(pool, userKey(actor.user), directionFeedback[1]!, directionIdempotencyKey(request.headers["idempotency-key"]), {action: input.action, ...(input.trait === undefined ? {} : {trait: input.trait})});
+      return json(response, 201, result);
     }
     const selectDirection = /^\/v1\/directions\/([0-9a-f-]+)\/select$/.exec(
       url.pathname,
@@ -528,59 +499,8 @@ const server = createServer(async (request, response) => {
     if (selectDirection && request.method === "POST") {
       const input = (await body(request)) as { documentId?: string };
       if (!input.documentId) throw new Error("documentId is required");
-      const selected = await pool.query<{
-        project_id: string;
-        source_document_id: string;
-        source_revision_id: string;
-        proposal: PrismDocument;
-        direction_key: string;
-        external_id: string;
-      }>(
-        "SELECT d.project_id,d.source_document_id,d.source_revision_id,d.proposal,d.direction_key,p.external_id FROM prism.direction d JOIN prism.project p ON p.id=d.project_id WHERE d.id=$1 AND d.state='proposed'",
-        [selectDirection[1]],
-      );
-      if (!selected.rows[0]) throw new Error("direction is not available");
-      const currentDocument = await repository.current(selected.rows[0].source_document_id);
-      if (selected.rows[0].source_revision_id !== currentDocument.id)
-        throw new Error(
-          "direction is stale; generate new directions from the current revision",
-        );
-      await pool.query(
-        "UPDATE prism.direction SET state=CASE WHEN id=$1 THEN 'selected' ELSE 'rejected' END WHERE project_id=$2 AND source_document_id IN (SELECT d.id FROM prism.design_document d JOIN prism.design_request r ON r.id=d.design_request_id AND r.status='active' WHERE d.project_id=$2) AND state IN ('proposed','selected')",
-        [selectDirection[1], selected.rows[0].project_id],
-      );
-      const eventId = `event-${randomBytes(12).toString("hex")}`;
-      const userId = `user-${createHash("sha256").update(actor.user).digest("hex").slice(0, 24)}`;
-      const event: PreferenceEvent = {
-        schema: "prism.preference-event.v1",
-        eventId,
-        userId,
-        projectId: selected.rows[0].external_id,
-        action: "selected",
-        target: { directionId: selectDirection[1] },
-        traits: [selected.rows[0].direction_key],
-        context: { surface: "direction" },
-        source: "explicit",
-        learningScope: "project",
-        occurredAt: new Date().toISOString(),
-      };
-      await pool.query(
-        "INSERT INTO prism.preference_event(id,project_id,subject_id,event_type,content,consent_scope,occurred_at) VALUES($1,$2,$3,$4,$5::jsonb,$6,$7)",
-        [
-          eventId,
-          selected.rows[0].project_id,
-          userId,
-          event.action,
-          JSON.stringify(event),
-          event.learningScope,
-          event.occurredAt,
-        ],
-      );
-      return json(response, 200, {
-        document: currentDocument.document,
-        documentId: selected.rows[0].source_document_id,
-        directionKey: selected.rows[0].direction_key,
-      });
+      const result = await decideDirection(pool, userKey(actor.user), selectDirection[1]!, directionIdempotencyKey(request.headers["idempotency-key"]), {action: "selected", documentId: input.documentId});
+      return json(response, 200, result);
     }
     const current = /^\/v1\/documents\/([0-9a-f-]+)$/.exec(url.pathname);
     if (current && request.method === "GET")
@@ -1107,18 +1027,7 @@ const server = createServer(async (request, response) => {
         throw new Error("preference user does not match the session");
       if (event.action === "retracted" && !event.retractsEventId)
         throw new Error("retraction target is required");
-      await pool.query(
-        "INSERT INTO prism.preference_event(id,project_id,subject_id,event_type,content,consent_scope,occurred_at) VALUES($1,(SELECT id FROM prism.project WHERE external_id=$2),$3,$4,$5::jsonb,$6,$7)",
-        [
-          event.eventId,
-          event.projectId ?? null,
-          event.userId,
-          event.action,
-          JSON.stringify(event),
-          event.learningScope,
-          event.occurredAt,
-        ],
-      );
+      await recordPreference(pool, event);
       return json(response, 201, { id: event.eventId });
     }
     if (url.pathname === "/v1/preferences" && request.method === "GET") {

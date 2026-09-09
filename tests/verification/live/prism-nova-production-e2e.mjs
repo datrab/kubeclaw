@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { createHash } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 
 const required = (name) => {
   const value = process.env[name];
@@ -84,7 +84,7 @@ const directions = (await directionsResponse.json()).items;
 assert.equal(directions.length,3);
 const chosen = await call(`/v1/directions/${directions[0].id}/select`, {
   method: "POST",
-  headers,
+  headers: {...headers, "Idempotency-Key": `select-${randomUUID()}`},
   body: JSON.stringify({ documentId: directions[0].source_document_id }),
 });
 assert.equal(chosen.status, 200, await chosen.clone().text());

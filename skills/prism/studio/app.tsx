@@ -382,17 +382,20 @@ function App() {
     }
     await loadLearned();
   };
+  const pendingDirectionKeys = useRef(new Map<string, string>());
+  const directionRequest = (route: string, payload: object) => {
+    const body = JSON.stringify(payload);
+    const identity = JSON.stringify([route, body]);
+    const key = pendingDirectionKeys.current.get(identity) ?? crypto.randomUUID();
+    pendingDirectionKeys.current.set(identity, key);
+    return { identity, options: { method: "POST", headers: { "content-type": "application/json", "x-prism-csrf": csrf, "Idempotency-Key": key }, body } };
+  };
   const selectDirection = async (directionId: string) => {
     const documentId = new URLSearchParams(location.search).get("document");
     if (!documentId) throw new Error("Document ID is missing");
-    const response = await fetch(
-      `/v1/directions/${encodeURIComponent(directionId)}/select`,
-      {
-        method: "POST",
-        headers: { "content-type": "application/json", "x-prism-csrf": csrf },
-        body: JSON.stringify({ documentId }),
-      },
-    );
+    const route = `/v1/directions/${encodeURIComponent(directionId)}/select`;
+    const mutation = directionRequest(route, {documentId});
+    const response = await fetch(route, mutation.options);
     const result = (await response.json()) as {
       document?: PrismDocument;
       documentId?: string;
@@ -400,6 +403,7 @@ function App() {
     };
     if (!response.ok || !result.document)
       throw new Error(result.error ?? "Direction selection failed");
+    pendingDirectionKeys.current.delete(mutation.identity);
     setDocument(result.document);
     if(result.documentId){
       const query=new URLSearchParams(location.search);query.set("document",result.documentId);
@@ -418,17 +422,13 @@ function App() {
     directionId: string,
     action: "rejected" | "liked" | "disliked" | "preserved",
   ) => {
-    const response = await fetch(
-      `/v1/directions/${encodeURIComponent(directionId)}/feedback`,
-      {
-        method: "POST",
-        headers: { "content-type": "application/json", "x-prism-csrf": csrf },
-        body: JSON.stringify({ action }),
-      },
-    );
-    const result = (await response.json()) as { error?: string };
-    if (!response.ok)
+    const route = `/v1/directions/${encodeURIComponent(directionId)}/feedback`;
+    const mutation = directionRequest(route, {action});
+    const response = await fetch(route, mutation.options);
+    const result = (await response.json()) as { error?: string; eventId?: string; state?: string };
+    if (!response.ok || !result.eventId || result.state !== (action === "rejected" ? "rejected" : "recorded"))
       throw new Error(result.error ?? "Direction feedback failed");
+    pendingDirectionKeys.current.delete(mutation.identity);
     if (action === "rejected")
       setDirections((items) =>
         items.map((item) =>
