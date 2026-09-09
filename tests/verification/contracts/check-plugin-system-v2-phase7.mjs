@@ -15,16 +15,11 @@ const appendLockFile = `${contendedJournalFile}.append-lock`;
 const appendLockReady = `${appendLockFile}.ready`;
 const lockHolder = spawn(process.execPath, ['-e', `
   const fs = require('node:fs');
-  fs.writeFileSync(process.env.APPEND_LOCK_FILE, JSON.stringify({
-    token: 'test-holder',
-    pid: process.pid,
-    acquiredAt: new Date().toISOString(),
-  }) + '\\n');
-  fs.writeFileSync(process.env.APPEND_LOCK_READY, 'ready\\n');
-  setTimeout(() => {
-    fs.unlinkSync(process.env.APPEND_LOCK_FILE);
-    process.exit(0);
-  }, 150);
+  const { FileMutex } = require('./skills/nova/core/state/file-mutex.ts');
+  new FileMutex(process.env.APPEND_LOCK_FILE, 5000, 'TEST_LOCK_TIMEOUT').withLock(() => {
+    fs.writeFileSync(process.env.APPEND_LOCK_READY, 'ready');
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 150);
+  });
 `], {
   env: {
     ...process.env,

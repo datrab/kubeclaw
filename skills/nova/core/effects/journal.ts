@@ -7,6 +7,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { FileJournal } from '../state/journal.ts';
+import { snapshotJson } from '../state/json-value.ts';
 
 const INLINE_RESULT_LIMIT_BYTES = 64 * 1024;
 
@@ -36,6 +37,7 @@ export class MemoryEffectJournal implements EffectJournal {
   readonly #receipts = new Map<string, EffectReceipt>();
 
   async requested(request: EffectRequest): Promise<void> {
+    request = snapshotJson(request);
     const existing = this.#requestByKey.get(request.idempotencyKey);
     if (existing && JSON.stringify(existing) !== JSON.stringify(request)) {
       throw new Error(`EFFECT_REQUEST_CONFLICT:${request.idempotencyKey}`);
@@ -50,6 +52,7 @@ export class MemoryEffectJournal implements EffectJournal {
   }
 
   async completed(receipt: EffectReceipt): Promise<void> {
+    receipt = snapshotJson(receipt);
     const existing = this.#receipts.get(receipt.idempotencyKey);
     if (existing && JSON.stringify(existing) !== JSON.stringify(receipt)) {
       throw new Error(`EFFECT_RECEIPT_CONFLICT:${receipt.idempotencyKey}`);
@@ -101,6 +104,7 @@ export class FileEffectJournal implements EffectJournal {
   }
 
   async requested(request: EffectRequest): Promise<void> {
+    request = snapshotJson(request);
     this.#journal.transact((records, append) => {
       this.#replay(records);
       const existing = this.#requests.get(request.idempotencyKey);
@@ -126,6 +130,7 @@ export class FileEffectJournal implements EffectJournal {
   }
 
   async completed(receipt: EffectReceipt): Promise<void> {
+    receipt = snapshotJson(receipt);
     const serialized = receipt.result === undefined ? undefined : Buffer.from(JSON.stringify(receipt.result));
     const reference = serialized && serialized.length > INLINE_RESULT_LIMIT_BYTES
       ? this.#persistResult(serialized) : undefined;
@@ -183,7 +188,7 @@ export class FileEffectJournal implements EffectJournal {
     if (serialized.length !== reference.bytes) throw new Error(`EFFECT_RESULT_SIZE_MISMATCH:${reference.contentDigest}`);
     const digest = `sha256:${crypto.createHash('sha256').update(serialized).digest('hex')}`;
     if (digest !== reference.contentDigest) throw new Error(`EFFECT_RESULT_DIGEST_MISMATCH:${reference.contentDigest}`);
-    return Object.freeze({ ...receipt,
+    return snapshotJson({ ...receipt,
       result: JSON.parse(serialized.toString('utf8')) as NonNullable<EffectReceipt['result']> });
   }
 

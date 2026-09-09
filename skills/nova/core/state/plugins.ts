@@ -7,6 +7,7 @@ import {
 } from '@kubeclaw/plugin-sdk';
 import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
 import { FileJournal } from './journal.ts';
+import { snapshotJson } from './json-value.ts';
 
 export interface PluginStateAppend {
   readonly namespace: string;
@@ -34,8 +35,8 @@ export class PluginStateJournal {
     now: () => Date = () => new Date(),
   ) {
     this.#journal = new FileJournal(file);
-    this.#registration = registration;
-    this.#namespace = expectedNamespace(registration);
+    this.#registration = snapshotJson(registration);
+    this.#namespace = expectedNamespace(this.#registration);
     this.#now = now;
     this.#validateRecords(this.#journal.records());
   }
@@ -61,6 +62,7 @@ export class PluginStateJournal {
   }
 
   append(input: PluginStateAppend): PluginStateEntry {
+    input = snapshotJson(input);
     const namespace = expectedNamespace(input.registration);
     if (
       input.namespace !== namespace
@@ -81,7 +83,7 @@ export class PluginStateJournal {
         registration: input.registration,
         attempt: input.attempt ?? null,
         entryType: input.entryType,
-        entrySchemaVersion: input.entrySchemaVersion,
+        ...(input.entrySchemaVersion === undefined ? {} : { entrySchemaVersion: input.entrySchemaVersion }),
         idempotencyKey: input.idempotencyKey,
         payload: input.payload,
       };
@@ -90,7 +92,7 @@ export class PluginStateJournal {
         registration: duplicate.registration,
         attempt: duplicate.attempt ?? null,
         entryType: duplicate.entryType,
-        entrySchemaVersion: duplicate.entrySchemaVersion,
+        ...(duplicate.entrySchemaVersion === undefined ? {} : { entrySchemaVersion: duplicate.entrySchemaVersion }),
         idempotencyKey: duplicate.idempotencyKey,
         payload: duplicate.payload,
       };
@@ -116,8 +118,7 @@ export class PluginStateJournal {
       payload: input.payload,
       });
       validateContractValue('pluginStateEntry', entry);
-      append(entry);
-      return entry;
+      return append(entry).entry;
     });
   }
 

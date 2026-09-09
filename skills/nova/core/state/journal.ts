@@ -2,6 +2,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { FileMutex } from './file-mutex.ts';
+import { snapshotJson } from './json-value.ts';
 
 export interface JournalRecord<T> {
   readonly sequence: number;
@@ -68,7 +69,7 @@ export class FileJournal<T> {
       if (record.hash !== recordHash(record.sequence, record.previousHash, record.entry)) {
         throw new Error(`JOURNAL_HASH_INVALID:${this.#file}:${expectedSequence}`);
       }
-      records.push(Object.freeze(record));
+      records.push(snapshotJson(record));
     }
   }
 
@@ -139,6 +140,7 @@ export class FileJournal<T> {
   }
 
   #appendUnlocked(entry: T): JournalRecord<T> {
+    entry = snapshotJson(entry);
     const sequence = this.#records.length + 1;
     const previousHash = this.#records.at(-1)?.hash ?? null;
     const record: JournalRecord<T> = Object.freeze({
@@ -178,10 +180,16 @@ export class FileJournal<T> {
   ): R {
     return this.#mutex.withLock(() => {
       this.#synchronize();
-      return operation(
-        Object.freeze([...this.#records]),
-        (entry) => this.#appendUnlocked(entry),
-      );
+      let active = true;
+      try {
+        return operation(
+          Object.freeze([...this.#records]),
+          (entry) => {
+            if (!active) throw new Error('JOURNAL_TRANSACTION_CLOSED');
+            return this.#appendUnlocked(entry);
+          },
+        );
+      } finally { active = false; }
     });
   }
 
