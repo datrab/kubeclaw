@@ -137,12 +137,12 @@
     {
       "id": "PATH-T02-001",
       "package": "prism",
-      "status": "implementiert / unvollständig",
+      "status": "verifiziert",
       "baseline_status": "implementiert",
       "required_evidence": "Original services + real DB, save event, capture agent request and demonstrate the persisted snapshot in a new session. | Code present: trusted subject resolution → persisted consent/policy/event-bound preference generation → original prompt/tool generation identity. SQL snapshot and producer/prompt tests pass across projects, with override/disable and subject exclusion. | Original Control/database request admission and captured new-session agent input remain unexercised. No actual model generation or design-quality requirement is added to this finding.",
-      "result": "Original services + real DB, save event, capture agent request and demonstrate the persisted snapshot in a new session. | Code present: trusted subject resolution → persisted consent/policy/event-bound preference generation → original prompt/tool generation identity. SQL snapshot and producer/prompt tests pass across projects, with override/disable and subject exclusion. | Original Control/database request admission and captured new-session agent input remain unexercised. No actual model generation or design-quality requirement is added to this finding.",
+      "result": "Originaler Control-HTTP-/Disk-SQL-/Session-/Generations-/Toolcallback-Pfad unabhängig und durch Root bestanden; verwendete Preference-Snapshotrevision im tatsächlichen Ergebnis gespeichert. Native Infrastruktur und Designqualität werden nicht behauptet.",
       "baseline_evidence_requirement": "Persisted generation snapshot reaches original bridge prompt with generation identity. SQL, configuration and bridge process boundary pass; native PostgreSQL/full Control plus real OpenClaw generation and result callback remain unexecuted. Active architecture/round binding tracked separately in PATH-T02-002/003.",
-      "evidence": "implementation/wave47-prism-reverification.md"
+      "evidence": "implementation/wave49-prism-control-independent-review.md"
     },
     {
       "id": "PATH-T02-002",
@@ -475,8 +475,8 @@
       "evidence": "implementation/wave47-product-gates.md"
     }
   ],
-  "verified_count": 6,
-  "remaining_count": 41,
-  "integration_checkpoint": "48320e8",
+  "verified_count": 7,
+  "remaining_count": 40,
+  "integration_checkpoint": "a134377",
   "overall_complete": false
 }

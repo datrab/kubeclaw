@@ -1,7 +1,8 @@
 # Root checkpoint: reviewed integration and resumable work
 
-Frozen scope remains exactly 47 IDs. Six now satisfy their original finding
-requirements; 41 remain incomplete. Overall completion is false.
+Frozen scope remains exactly 47 IDs. Seven now satisfy their original finding
+requirements; 40 remain incomplete. Overall completion is false. The latest
+continuation and additional evidence are in `run-20260909t2114.md`.
 
 ## Independently integrated work
 

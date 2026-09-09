@@ -1,0 +1,38 @@
+Command: node --test skills/prism/tests/control-generation-http.test.mts skills/prism/tests/design-rounds.test.mts skills/prism/tests/preferences-generation.test.mts skills/prism/tests/pipeline-preference-subject.test.mts
+Source author commit: 22b69a5
+Independent checkout source-equivalent commit: 306fb05c8e9a292f46863154d5d457ec4eb1bd17
+Exit code: 0
+
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/preferences',
+  error: 'preference user does not match the session'
+}
+✔ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (4336.791148ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/agent/design-sets',
+  error: 'stale design generation'
+}
+✔ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (2172.819032ms)
+✔ late architecture generation cannot mutate its successor; exact delivery retry is distinct from a new round (3743.835908ms)
+✔ three rejections feed a successor round while predecessor documents and decisions remain immutable history (1451.282675ms)
+✔ source revision mutation after dispatch rejects result before creating new documents (1635.498745ms)
+✔ real insertion failure rolls back the whole round and leaves its delivery retry usable (1792.154591ms)
+✔ final Nova baseline consumption rejects an approved predecessor after a new round starts (1684.392887ms)
+✔ same architecture revision cannot substitute content under a replayed dispatch (1.873607ms)
+✔ legacy unbound documents can start a first explicit round without invented predecessor identity (1340.594876ms)
+✔ installed pg int8 parser strings cannot bypass the original architecture transition guard (1595.810509ms)
+✔ signed dispatch cannot select a personal subject without exact platform authorization (1.046149ms)
+✔ platform subject automatically selects its real persisted personal history in another project (3594.624352ms)
+✔ Control startup validates and freezes platform subject configuration (1.056484ms)
+✔ SQL preference history crosses sessions with consent, isolated scopes, overrides and persisted prompt identity (3768.533843ms)
+✔ projection deduplicates evidence and refuses cross-project or cross-user retractions (1.409266ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13610.763679

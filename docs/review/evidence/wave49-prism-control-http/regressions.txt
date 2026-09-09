@@ -1,0 +1,42 @@
+✔ session identities retain full project and namespace identity without lossy legacy adoption (1.600655ms)
+✔ accepted jobs survive a real database reopen; running uncertainty is never replayed (5270.930298ms)
+✔ actual design commit and agent receipt are atomic; stale fence and changed retry cannot mutate (2015.63544ms)
+✔ expired agent cannot commit and missing tool result is explicitly NeedsNova (1919.322519ms)
+✔ revision retries bind actor, source and input and replay the actual committed repository receipt (1837.585061ms)
+✔ provably unstarted superseded work is retired without taking over the new source session (1523.761068ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/preferences',
+  error: 'preference user does not match the session'
+}
+✔ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (5547.950199ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/agent/design-sets',
+  error: 'stale design generation'
+}
+✔ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (2021.691674ms)
+✔ original round client retains a lost-response request across reload and pending retry over real HTTP (64.253144ms)
+✔ original round HTTP calls preserve 400, 500 and text diagnostics and identify broken success contracts (24.562432ms)
+✔ late architecture generation cannot mutate its successor; exact delivery retry is distinct from a new round (4992.809491ms)
+✔ three rejections feed a successor round while predecessor documents and decisions remain immutable history (1988.835401ms)
+✔ source revision mutation after dispatch rejects result before creating new documents (1697.884407ms)
+✔ real insertion failure rolls back the whole round and leaves its delivery retry usable (1432.828567ms)
+✔ final Nova baseline consumption rejects an approved predecessor after a new round starts (1817.966024ms)
+✔ same architecture revision cannot substitute content under a replayed dispatch (1.297097ms)
+✔ legacy unbound documents can start a first explicit round without invented predecessor identity (1880.965313ms)
+✔ installed pg int8 parser strings cannot bypass the original architecture transition guard (1767.449235ms)
+✔ signed dispatch cannot select a personal subject without exact platform authorization (1.611943ms)
+✔ platform subject automatically selects its real persisted personal history in another project (4598.357461ms)
+✔ Control startup validates and freezes platform subject configuration (1.216225ms)
+✔ original agent prompt consumes the immutable preference snapshot and exact durable action fence (1.536789ms)
+✔ SQL preference history crosses sessions with consent, isolated scopes, overrides and persisted prompt identity (4750.218801ms)
+✔ projection deduplicates evidence and refuses cross-project or cross-user retractions (1.652154ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16067.735673

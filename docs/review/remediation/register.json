@@ -2484,13 +2484,17 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP07",
-      "status": "implementiert",
-      "implementation_commit": "9a3eff16529032b8a166f09894b3490ccebfc590",
-      "verification_status": "teilweise / blockiert",
+      "status": "verifiziert",
+      "implementation_commit": "ac6f673",
+      "verification_status": "Original-Control-HTTP, echter Disk-SQL-Neustart, neue Session und neues Projekt, tatsächlicher Agentauftrag/Prompt und originaler Toolcallback mit persistiertem Snapshotbezug unabhängig sowie durch Root bestätigt.",
       "verification_evidence": [
         {
           "report": "implementation/prism-preferences.md",
           "summary": "Persisted generation snapshot reaches original bridge prompt with generation identity. SQL, configuration and bridge process boundary pass; native PostgreSQL/full Control plus real OpenClaw generation and result callback remain unexecuted. Active architecture/round binding tracked separately in PATH-T02-002/003."
+        },
+        {
+          "report": "implementation/wave49-prism-control-independent-review.md",
+          "summary": "18/18 unabhängige Original-HTTP/SQL/Configtests, keine Skips, Typecheck und begrenzte neue Module lintfrei. Root wiederholt beide HTTPtests und 3 Konfigurationstests auf integriertem a134377; PATH-T02-002-Diagnose bleibt offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -2503,14 +2507,14 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/server/control.ts#L1124"
       ],
       "unresolved_code_references": [],
-      "next_action": "Persisted generation snapshot reaches original bridge prompt with generation identity. SQL, configuration and bridge process boundary pass; native PostgreSQL/full Control plus real OpenClaw generation and result callback remain unexecuted. Active architecture/round binding tracked separately in PATH-T02-002/003.",
+      "next_action": "Originalscope abgeschlossen; neue ControlService-Komposition bei späterer Integration des separaten Product-Pakets erhalten und HTTPregressionen erneut prüfen.",
       "related_findings": [
         "PCR-PRISM-PREFERENCES-001"
       ],
       "decision_notes": [
         "D11: projektübergreifenden persönlichen Snapshot tatsächlich verwenden; Projektvorgaben haben Vorrang, Override/Disable unterstützen."
       ],
-      "remaining_work": "Persisted generation snapshot reaches original bridge prompt with generation identity. SQL, configuration and bridge process boundary pass; native PostgreSQL/full Control plus real OpenClaw generation and result callback remain unexecuted. Active architecture/round binding tracked separately in PATH-T02-002/003."
+      "remaining_work": ""
     },
     {
       "id": "PATH-T02-002",
@@ -4670,8 +4674,8 @@
   "implementation_branch": "fix/remediation-foundations-20260909",
   "updated_at": "2026-09-09",
   "progress_counts": {
-    "verifiziert": 92,
-    "implementiert": 41,
+    "verifiziert": 93,
+    "implementiert": 40,
     "in Bearbeitung": 2,
     "offen": 19
   },

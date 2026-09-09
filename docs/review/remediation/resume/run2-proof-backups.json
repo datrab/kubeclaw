@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "repository": "datrab/kubeclaw",
+  "verification": "All affected blob SHAs, modes and types match frozen local commits; branch refs read back; Actions runs zero.",
+  "packages": [
+    {
+      "branch": "fix/resume-47-run2-repair-4db5905",
+      "base": "4baa56945abafc608303cf919a365921f2b7a18a",
+      "head": "4db5905b9bfecf23985f7c44644032847009b52c",
+      "next_action": "Continue SDK repair-authorization locale-independent identity implementation and independent review. Reproduction and design only; finding remains open.",
+      "remote_commit": "a29a9df8cce605f393fa0bec413604a5ae426eeb",
+      "remote_tree": "4c4b20f0c4cefcf43cec1f5fb1f40b02f1665824",
+      "remote_parent": "64ef81bde08f4ecb601d8bfc845dd2d80a1d776c",
+      "status": "incomplete reproduction/design checkpoint; not repaired or integrated",
+      "files": [
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/run2-sdk-remaining/repair-authorization-locale.mjs",
+          "sha": "ec6bf3d09cffcd9b9287623b88797466f09967a7",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/run2-sdk-remaining/repair-authorization-locale.txt",
+          "sha": "97677982fd96ad7246ec3c4aff1a4c055029433d",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/remediation/implementation/sdk-remaining-digest-matrix.md",
+          "sha": "fdf58e658bb78c17c9384c3be581cd14af3ffd81",
+          "type": "blob"
+        }
+      ]
+    },
+    {
+      "branch": "fix/resume-47-run2-attempt-82d8c49",
+      "base": "147a9e003c8ccdc202953ec122a9112f72d339ca",
+      "head": "82d8c490b0a6492c8810a6c1c8505bddce212426",
+      "next_action": "Implement and independently verify attempt-retirement boundary root cause. Current checkpoint records reproduction, not a fix.",
+      "remote_commit": "3d41a526dd0a1be1182e118a133f5f31010de45d",
+      "remote_tree": "564bbd3acef568802ae6370f613c3d6d2dd0191f",
+      "remote_parent": "64ef81bde08f4ecb601d8bfc845dd2d80a1d776c",
+      "status": "incomplete reproduction/design checkpoint; not repaired or integrated",
+      "files": [
+        {
+          "mode": "100644",
+          "path": "docs/review/evidence/wave48-attempt-retirement-boundary.txt",
+          "sha": "400822f1a10b3ddf6f9a14a94ccc094b94cbd20a",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "docs/review/remediation/implementation/wave48-attempt-retirement-boundary.md",
+          "sha": "181f8502f5c4d9f631501047d96d8c98841a5cec",
+          "type": "blob"
+        },
+        {
+          "mode": "100644",
+          "path": "tests/verification/reliability/admission-retirement.test.mjs",
+          "sha": "6073c66e59c5103599bd45374a400692459854df",
+          "type": "blob"
+        }
+      ]
+    }
+  ]
+}

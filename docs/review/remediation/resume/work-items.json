@@ -3,7 +3,7 @@
   "baseline": "c38779c71bb92bc15c3fcb89930348e5417aa475",
   "integration_branch": "fix/remediation-foundations-20260909",
   "completion_rule": "Alle 47 behoben, unabhängig geprüft und geforderte echte Tests bestanden. Keine Umdeutung von teilweise/blockiert/skipped/static.",
-  "verified_count_at_checkpoint": 6,
+  "verified_count_at_checkpoint": 7,
   "overall_complete": false,
   "findings": [
     {
@@ -86,9 +86,9 @@
     },
     {
       "id": "PATH-T02-001",
-      "status_at_checkpoint": "implementiert / unvollständig",
-      "evidence": "implementation/wave47-prism-reverification.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original services + real DB, save event, capture agent request and demonstrate the persisted snapshot in a new session. | Code present: trusted subject resolution → persisted consent/policy/event-bound preference generation → original prompt/tool generation identity. SQL snapshot and producer/prompt tests pass across projects, with override/disable and subject exclusion. | Original Control/database request admission and captured new-session agent input remain unexercised. No actual model generation or design-quality requirement is added to this finding."
+      "status_at_checkpoint": "verifiziert",
+      "evidence": "implementation/wave49-prism-control-independent-review.md",
+      "next_action": "Abgeschlossen im Originalscope. Bei Product-Integration auf neue ControlService-Struktur portieren und echte HTTPregressionen erhalten."
     },
     {
       "id": "PATH-T02-002",
