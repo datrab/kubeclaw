@@ -3599,10 +3599,13 @@
       "family": "infrastructure",
       "severity": "hoch",
       "work_package": "WP11",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "85178d4a16b1bec3bb5634c3799ae50d4cc8cb0a",
+      "verification_status": "lokale Vertragsprüfung bestanden; native Betriebsgates offen",
+      "verification_evidence": [
+        "implementation/registry-clients.md",
+        "implementation/registry-client-scope.json"
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/registry-local.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-08-001\n**Hoch; nachgewiesener unvollständiger Default-Vertrag.** Auslöser: Buster erstellt ein Image und ein Node muss es für einen Test-Pod ziehen, ohne extern ergänzten Registry-Endpunkt. Der Service-FQDN/HTTP-Pfad ist in BuildKit konfiguriert, jedoch kein funktionierender Node-Pull-Pfad im Repository eingerichtet. Belege oben und `k3s-registries.yaml:1–20`. Folge: erfolgreicher Push beweist keinen Pod-Start; ImagePull scheitert abhängig von Host-DNS/HTTP-Konfiguration.\n\nUrsachenbehebung: einen expliziten, privaten und authentifizierten/TLS-gesicherten, auf allen Nodes erreichbaren Registry-Pfad als gemeinsamen Vertrag wählen; sämtliche Clients konsistent konfigurieren. Kein pauschales öffentliches NodePort als Symptombehebung. Echter Test: uncached Digest vom Node mit tatsächlichem CRI ziehen, Test-Pod starten und private/unzulässige Clients negativ prüfen.",
@@ -3610,7 +3613,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/my-values/infra/k3s-registries.yaml#L1"
       ],
       "unresolved_code_references": [],
-      "next_action": "Aktive Ursachenbehebung und echte Consumerprüfung; unabhängige Gegenprüfung und gesicherte Belege vor Abschluss. Keine Deployment-/CI-Ausführung.",
+      "next_action": "E2E-Registryzielvertrag ergänzen; echten BuildKit-Push, uncached CRI-Pull und Pod mit Hostkonfiguration prüfen. Kein Deployment in diesem Auftrag.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3620,16 +3623,19 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP11",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "85178d4a16b1bec3bb5634c3799ae50d4cc8cb0a",
+      "verification_status": "lokale Vertragsprüfung bestanden; native Betriebsgates offen",
+      "verification_evidence": [
+        "implementation/registry-clients.md",
+        "implementation/registry-client-scope.json"
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/registry-local.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-08-002\n**Mittel; nachgewiesener Retention-/Dokumentationsdefekt.** Manifestkommentar behauptet, Test-Images würden bei Namespace-Löschung entfernt. Tatsächlich speichert der gemeinsame Registry-Pod ohne Volume in seiner Container-Schreibschicht; das Löschen eines Test-Namespace berührt ihn nicht. Keine GC-/Löschroutine zwischen Lease-Ende und Registry nachgewiesen. Folge: ungebundenes Disk-Wachstum bis Containerverlust/Node-Druck; Registry-Neustart verliert wiederum benötigte Images.\n\nUrsachenbehebung: explizite Artefaktlebensdauer und GC mit Referenzschutz plus definierte Persistenz/Disk-Budgets. Test: mehrere echte Lease-Zyklen, GC, noch benötigten Digest erneut ziehen, Registry-Pod ersetzen. Schema- und Source-Prüfung ersetzt diese Tests nicht. Registry und Build-Cache bleiben getrennte Einheiten.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Aktive Ursachenbehebung und echte Consumerprüfung; unabhängige Gegenprüfung und gesicherte Belege vor Abschluss. Keine Deployment-/CI-Ausführung.",
+      "next_action": "Dokumentationsdefekt korrigiert; Persistenz/Disk-Budget und referenzgeschützte GC bleiben offen, keine Kapazität erfinden.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3639,10 +3645,13 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP11",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "85178d4a16b1bec3bb5634c3799ae50d4cc8cb0a",
+      "verification_status": "lokale Vertragsprüfung bestanden; native Betriebsgates offen",
+      "verification_evidence": [
+        "implementation/registry-clients.md",
+        "implementation/registry-client-scope.json"
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/registry-mirror.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-09-001\n**Mittel; nachgewiesene Client-/Dokumentationsabweichung.** Auslöser: Erwartung, dass alle Image-Pulls den Mirror verwenden. Kommentar beschreibt einen transparenten Cluster-Cache; aber die überprüfte aktive BuildKit-Konfiguration `docker/buster-runtime-entrypoint.sh:11–18` enthält nur den schreibbaren Registry-Eintrag. Die Node-Konfiguration `k3s-registries.yaml` enthält ebenfalls ausschließlich den Legacy-Local-Registry-Pfad. Ein laufender Mirror allein ändert keinen tatsächlichen Client.\n\nAuswirkung: Cold Pulls, Upstream-Rate-Limits und Ausfälle bleiben auf diesen Pfaden direkt wirksam; GHCR und private Images sind ohnehin nicht durch Docker-Hub-Proxy abgedeckt. Keine Aussage, dass extern kein Client eingerichtet wurde. Ursachenbehebung: alle Clients und Registry-Domänen explizit erfassen und nur tatsächlich genutzte Mirrors dokumentieren/konfigurieren. Test: frischen Build und uncached Node-Pull durchführen, Requests am Mirror belegen, Upstream sperren und Cache-Hit sowie Cache-Miss getrennt prüfen.",
@@ -3651,7 +3660,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/my-values/infra/k3s-registries.yaml"
       ],
       "unresolved_code_references": [],
-      "next_action": "Aktive Ursachenbehebung und echte Consumerprüfung; unabhängige Gegenprüfung und gesicherte Belege vor Abschluss. Keine Deployment-/CI-Ausführung.",
+      "next_action": "Tatsächlichen BuildKit-/Node-Mirrorpfad sowie Cache-Hit und Offline-Cache-Miss prüfen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4567,9 +4576,9 @@
   "updated_at": "2026-09-09",
   "progress_counts": {
     "verifiziert": 85,
-    "implementiert": 35,
-    "in Bearbeitung": 9,
-    "offen": 25
+    "implementiert": 43,
+    "in Bearbeitung": 5,
+    "offen": 21
   },
   "additional_integration_findings": [
     {
@@ -4599,6 +4608,13 @@
       "implementation_commit": "e3ae22ba92c533fbbadd6ec744f9db32051234a0",
       "report": "implementation/observer-build.md",
       "scope": "Clean source compilation and actual three-role packaging independently rerun. Canonical generation now prerequisite; no generated-cache fallback. Full global gate runs separately."
+    },
+    {
+      "id": "INT-DEPENDENCY-OWNER001",
+      "status": "verifiziert",
+      "implementation_commit": "6967d056e2ae1eaa8277f51fd95394a1ef8df83d",
+      "report": "implementation/adapter-dependency-identity.md",
+      "scope": "Original nested reads reused a different parent attempt identity. Parent execution identity now bound for invocation; explicit delivery receipt recovery also validates original owner/body. Isolated14tests and Nova typecheck pass. Receipt callback nested-context extension remains separate ongoing integration work."
     }
   ]
 }

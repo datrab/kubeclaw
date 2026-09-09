@@ -1,0 +1,21 @@
+✔ real registry/Core cleanup scope preserves authorization: success (1374.587855ms)
+✔ real registry/Core cleanup scope preserves authorization: origin (1295.912499ms)
+✔ real registry/Core cleanup scope preserves authorization: capability (1144.786276ms)
+✔ real registry/Core cleanup scope preserves authorization: method (1258.243931ms)
+✔ real registry/Core cleanup scope preserves authorization: timeout (2126.477832ms)
+✔ real registry/Core cleanup scope preserves authorization: lifecycle (1012.199841ms)
+✔ real registry/Core cleanup scope preserves authorization: blocking (2171.091938ms)
+✔ original observer, effect journal and operator resume a rejected send after reconstruction (2069.576841ms)
+✔ durable receiver receipt reconciles lost HTTP ACK without a duplicate external delivery (1932.437663ms)
+✔ permanent rejection remains bounded across adapter and observer reconstruction (2244.654246ms)
+✔ uncertain delivery without receiver contract is never blindly resent (1433.828128ms)
+✔ configured receipt endpoint without the actual protocol cannot authorize a send (1707.645916ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10979.123317
+exit_code=0

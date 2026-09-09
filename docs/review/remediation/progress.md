@@ -4,7 +4,7 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**85/154 lokal verifiziert und unabhängig gegengeprüft; 40 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 8 in Bearbeitung; 21 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
+**85/154 lokal verifiziert und unabhängig gegengeprüft; 43 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 5 in Bearbeitung; 21 noch offen.** Zusätzlich fünf bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
 
 | Bereich | Remote-Commit | Stand / Nachweis |
 |---|---|---|
@@ -240,3 +240,12 @@ per CAS schützen. Nova-Produktkomposition und aktuelle Storebelege werden paral
 vorbereitet; geteilte Dateipfade werden abgestimmt.
 
 Demo-Voraussetzung und isolierte Belege sind remote in `3e0f50e8fa915aa2dc6c640ef178b5552d79680a` und `63354d93af540e09a562af2bc850de5b3f078657` gesichert. Registry-Clientverträge (IFR-08/09) und T15-F01 sind jetzt aktiv in Bearbeitung; keine zusätzlichen Findings als abgeschlossen gezählt.
+
+## Gegenprüfungen und gesicherte Ursachenbehebungen
+
+- Gemeinsame Adapteridentität: lokal `d9fd619`, remote `6967d056e2ae1eaa8277f51fd95394a1ef8df83d`. [Isolierte Commitprüfung](../evidence/integration-d9fd619/README.md): 14 echte Tests, Originalpaket und Nova-Typecheck bestanden. Kein fremder Berichtscode im Checkout. Alte aktive Snapshots benötigen ihren Originalruntime; keine verdeckte Migration.
+- Registryclients: lokal `b13da3e`, remote `85178d4a16b1bec3bb5634c3799ae50d4cc8cb0a`. Unabhängige Konfigurations-, Helm- und native Trivy-Transportprüfung bestanden. Drei Findings bleiben teilweise: native BuildKit-/CRI-/Mirror-Nachweise sowie Referenzschutz/GC fehlen. Vollständige [Scope und Grenzen](implementation/registry-clients.md). Rohlogs behalten originale EOF-Leerzeilen; Quellcode-Whitespaceprüfung bestanden.
+- T15 bleibt uncommittet: unabhängige Gegenprobe zeigte akzeptiertes leeres Effect-Journal trotz Lifecycle-Ereignissen. Der Autor ergänzt echte Journal-Reconciliation und Trunkierungsregressionen.
+- Demo-Ready bleibt uncommittet: finaler Response-Fence muss Ablauf nach langsamen Ressourcenreads und offene Exposure-Claims erneut prüfen. Nova-Produzent und tatsächlich beobachtete Exposuregeneration sind weiterhin in Arbeit.
+
+Die JSON-Summenzähler wurden aus den 154 tatsächlichen Findingzeilen neu berechnet; die vorher veralteten Summenmetadaten sind korrigiert. Originaltexte und Kennungen bleiben unverändert.

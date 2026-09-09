@@ -1,0 +1,40 @@
+{
+  "commit": "d9fd619f5463e430394ef6de75dd2db08e04c1ba",
+  "worktree": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9",
+  "initialCommit": "d7522ddf6c62e3c5ffe4a89ffa8ea4f891ce17de",
+  "initialTrackedClean": true,
+  "checkedAt": "2026-09-09T17:02:22.734391+00:00",
+  "pathPrefix": "/workspace/scratch/4e25cf57c177/toolchains/bin:/workspace/scratch/4e25cf57c177/toolchains/go/bin",
+  "workspaceLinks": "workspace-links.json",
+  "knownDependencyLimitation": "One preexisting dangling local link plugin-test-agent to removed package; no workspace link escapes isolated tree. No link/source modification.",
+  "commands": {
+    "identity.txt": "node --test tests/verification/reliability/adapter-dependency-identity.test.mts",
+    "consumers.txt": "node --test tests/verification/reliability/operator-delivery.test.mts tests/verification/reliability/adapter-cleanup-scope.test.mts",
+    "operator-types.txt": [
+      "npm test --prefix skills/common/plugins/operator-messaging",
+      "npx tsc --noEmit -p skills/nova/tsconfig.json"
+    ]
+  },
+  "scope": "Committed d9fd619 original fixtures only; report v4 WIP absent. Local HTTP protocol evidence, no Discord/model/deployed execution.",
+  "finalTrackedStatus": "",
+  "results": {
+    "identity": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0
+    },
+    "originalOperatorAndCleanup": {
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0
+    },
+    "originalOperatorPackage": {
+      "exitCode": 0
+    },
+    "novaTypecheck": {
+      "exitCode": 0
+    }
+  }
+}
