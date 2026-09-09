@@ -1,4 +1,4 @@
-import { createServer } from "node:http";
+import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { request as httpsRequest } from "node:https";
 import { createHash, timingSafeEqual } from "node:crypto";
 import { promises as dns } from "node:dns";
@@ -55,7 +55,8 @@ async function acquire(input:CorpusInput):Promise<{bytes:Buffer;mediaType:string
   if(input.contentBase64){const bytes=Buffer.from(input.contentBase64,"base64");if(bytes.byteLength>6_000_000||bytes.toString("base64")!==input.contentBase64)throw new Error("uploaded content is invalid or too large");return {bytes,mediaType:input.mediaType??"application/octet-stream"};}
   return {bytes:Buffer.from(JSON.stringify({title:input.title,summary:input.summary,tags:input.tags})),mediaType:"application/json"};
 }
-createServer(async(request,response)=>{
+async function handleRequest(request: IncomingMessage, response: ServerResponse) {
+
   if(request.url==="/health"||request.url==="/ready"){response.writeHead(200,{"content-type":"application/json"});return response.end('{"status":"ready"}');}
   const cleanup=/^\/v1\/acquisitions\/([a-f0-9]{64})$/u.exec(request.url??"");
   if(cleanup&&request.method==="DELETE"){
@@ -75,4 +76,20 @@ createServer(async(request,response)=>{
     const normalized={...input,contentBase64:undefined,mediaType:acquired.mediaType,sourceContentDigest:`sha256:${digest}`};
     response.writeHead(202,{"content-type":"application/json"});response.end(JSON.stringify({quarantineDigest:`sha256:${digest}`,contentBase64:acquired.bytes.toString("base64"),normalized}));
   }catch(error){response.writeHead(422,{"content-type":"application/json"});response.end(JSON.stringify({error:error instanceof Error?error.message:"acquisition failed"}));}
+}
+
+function requestFailed(error: unknown, response: ServerResponse): void {
+  const detail = error instanceof Error ? { message: error.message,
+    code: (error as NodeJS.ErrnoException).code, stack: error.stack } : { message: String(error) };
+  process.stderr.write(`${JSON.stringify({ time: new Date().toISOString(), component: "prism-ingestion",
+    event: "PRISM_INGESTION_REQUEST_FAILED", error: detail })}\n`);
+  if (response.destroyed || response.writableEnded) return;
+  if (response.headersSent) { response.destroy(error instanceof Error ? error : new Error(String(error))); return; }
+  response.writeHead(503, { "content-type": "application/json" });
+  response.end(JSON.stringify({ error: { code: "PRISM_INGESTION_IO_FAILED", message: detail.message,
+    ...(detail.code ? { causeCode: detail.code } : {}) } }));
+}
+
+createServer((request, response) => {
+  void handleRequest(request, response).catch(error => requestFailed(error, response));
 }).listen(Number(process.env.PORT??8080),"0.0.0.0");
