@@ -1,0 +1,8 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/protocol.test.ts && node tests/package-boundary.test.mjs && node tests/live-function.test.ts
+
+{"ok":true,"plugin":"kubeclaw.implementation-agent","suite":"protocol"}
+{"ok":true,"plugin":"kubeclaw.implementation-agent","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.implementation-agent","suite":"http-worker-and-real-git"}

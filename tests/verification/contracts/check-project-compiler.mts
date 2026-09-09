@@ -1,3 +1,4 @@
+import { checkLegacyProjectImport } from './project-legacy-import-cases.mts';
 import { gateCoverageDigest } from '@kubeclaw/pipeline-test-gate-contract';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -175,5 +176,6 @@ try {
   fs.rmSync(output); const invalid = structuredClone(project); invalid.modules[0].review.agent = '';
   fs.writeFileSync(projectFile, JSON.stringify(invalid)); const rejected = launch(); assert.notEqual(rejected.status, 0); assert.equal(fs.existsSync(output), false);
   assert.equal(fs.existsSync(platform.storageRoot), false, 'compilation must not start execution or write a run');
+  await checkLegacyProjectImport({ project, platformFile, temporary, runtime, compilerFile });
   console.log(JSON.stringify({ ok: true, scope: archive ? 'extracted-production-launcher' : 'source-launcher', modules: 2, executedStages: 0 }));
 } finally { fs.rmSync(temporary, { recursive: true, force: true }); }

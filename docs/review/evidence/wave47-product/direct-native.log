@@ -1,0 +1,21 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: [{"schemaVersion":"attempt-result.v1","planId":"plan:runner-artifacts:0","runId":"run:runner-artifacts:0","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"command","executionId":"plan:runner-artifacts:0:command","testIdentity":"test:16ec354d42100aa159c1efa3e2cc5d20d4b38f67c5a792857cdc0102b051fae8","nodeKind":"test","attemptId":"attempt:76097b4e0b9936c31bb2f86b673ad604ef5c772c9bd651520e83d4cda8ebd1c1","attemptNumber":1,"provider":{"packageId":"kubeclaw.direct-command","packageVersion":"1.0.0","contentDigest":"sha256:a3c90297c41ba8d5e4c3cc6ae18d255935eb70dab2eea4b9838f35778249f00b","registrationId":"command","contractId":"kubeclaw.direct-command@1"},"mode":"blocking","executionState":"errored","outcome":null,"startedAt":"2026-09-09T19:44:52.162Z","completedAt":"2026-09-09T19:44:52.168Z","durationMs":6,"summary":"TEST_PROVIDER_SANDBOX_NOT_BUILT","counts":{"total":0,"passed":0,"failed":0,"skipped":0},"findings":[],"metrics":[],"reports":[],"evidence":[],"outputs":[],"resources":{"cpuTimeMs":0,"maximumMemoryBytes":0,"logBytes":0,"artifactBytes":0},"exitCode":null,"signal":null,"providerDetails":null,"resultDigest":"sha256:ba7d3a99a3858ce137395abf3dcb830f8df48329623c0098d206a32485b3e9e3","receipt":{"receiptId":"receipt:18511734177584c19ac33196d100ae0c9c93133a753306d7ed5903adaef67b00","receiptDigest":"sha256:27eab7efb9af1424062898eecbfff468d1feddff85b2d7671f2ef0bcefa56a69"}}]
+
++ actual - expected
+
++ 'errored'
+- 'completed'
+
+    at file:///workspace/scratch/0d8f8ddb55c3/wave47-product/skills/buster/plugins/direct-command/tests/runner-artifacts.test.mts:39:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'errored',
+  expected: 'completed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

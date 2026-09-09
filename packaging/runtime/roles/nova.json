@@ -42,6 +42,7 @@
     "kubeclaw.buster-quality-gate",
     "kubeclaw.case-study",
     "kubeclaw.delivery-lint",
+    "kubeclaw.demo-handoff",
     "kubeclaw.human-approval",
     "kubeclaw.implementation-agent",
     "kubeclaw.lint",

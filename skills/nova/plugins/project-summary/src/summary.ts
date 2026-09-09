@@ -1,3 +1,4 @@
+import {verifiedArtifactJsonText} from '@kubeclaw/plugin-sdk';
 import { assertCoverageDecision, coveragePassed, coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import { parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
 import { canonicalJson, sha256Text, resolveSourceRevision, type ArtifactRef, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
@@ -66,9 +67,9 @@ export async function buildSummary(input: SummaryInput, context: PluginInvocatio
     const ref = latest[0]!;
     if (ref.mediaType !== 'application/json' || !Number.isSafeInteger(ref.sizeBytes) || ref.sizeBytes < 1
       || (totalBytes += ref.sizeBytes) > 8 * 1024 * 1024) throw new Error('DELIVERY_EVIDENCE_LIMIT_EXCEEDED');
-    const response = await context.invoke('artifacts.read', { operation: 'get_json',
-      resource: { type: 'artifact.object', canonicalId: ref.artifactId }, payload: { namespace, digest: ref.digest } });
-    const bytes = canonicalJson(response.value);
+    const response = await context.invoke('artifacts.read', { operation: 'get_json_bytes',
+      resource: { type: 'artifact.object', canonicalId: ref.artifactId }, payload: { namespace, digest: ref.digest, reference: ref } });
+    const bytes = verifiedArtifactJsonText(response, ref);
     if (response.digest !== ref.digest || response.sizeBytes !== ref.sizeBytes || sha256Text(bytes) !== ref.digest
       || Buffer.byteLength(bytes) !== ref.sizeBytes) throw new Error('DELIVERY_EVIDENCE_CORRUPT');
     evidence.push(ref);

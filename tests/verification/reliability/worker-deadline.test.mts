@@ -29,7 +29,7 @@ test('real completion hooks and durable log finish successfully inside the reser
   const result = await new WorkerAttemptExecutor({ envelope: attempt, operation,
     storeFullLog: async (_id, content, { signal }) => { await delay(10, undefined, { signal }); return writeEvidence(root, 'log', content, signal); } }).execute();
   assert.equal(result.state, 'completed', JSON.stringify(result.error));
-  assert.equal(await fs.readFile(path.join(root, 'phases'), 'utf8'), 'measure\ncleanup\nevidence\nfinalize\n');
+  assert.equal(await fs.readFile(path.join(root, 'phases'), 'utf8'), 'measure\ncleanup\nevidence\nfinalize\nmeasure\n');
   assert.equal(await fs.readFile(path.join(root, 'log'), 'utf8'), '[stdout] actual operation');
 });
 

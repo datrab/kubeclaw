@@ -16,6 +16,7 @@ class PrismWorkerOperation implements WorkerAttemptOperation {
   private readonly controller = new AbortController();
   private baseline: NodeJS.CpuUsage | undefined;
   private cpuTimeMs: number | undefined;
+  private maximumObservedMemoryBytes = 0;
   private execution: Promise<WorkerAttemptOperationResult> | undefined;
   private settlement: Promise<{ ok: true } | { ok: false; error: unknown }> | undefined;
   private readonly envelope: WorkerAttemptEnvelopeV1;
@@ -59,9 +60,12 @@ class PrismWorkerOperation implements WorkerAttemptOperation {
   async measure() {
     if (!this.baseline) throw new Error('Prism attempt measurement was not prepared');
     const delta = process.cpuUsage(this.baseline);
+    // Preserve the actual sampled maximum across Core's execution and terminal
+    // observations. This remains shared-parent RSS, not an attempt-tree peak.
+    this.maximumObservedMemoryBytes = Math.max(this.maximumObservedMemoryBytes, process.memoryUsage().rss);
     return {
       cpuTimeMs: this.cpuTimeMs ?? Math.round((delta.user + delta.system) / 1000),
-      maximumMemoryBytes: process.memoryUsage().rss,
+      maximumMemoryBytes: this.maximumObservedMemoryBytes,
       maximumProcesses: 1,
     };
   }

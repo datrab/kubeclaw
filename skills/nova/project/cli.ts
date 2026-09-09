@@ -1,3 +1,4 @@
+import { runLegacyImportCLI } from './legacy-import-cli.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -7,7 +8,9 @@ import { canonicalJson, sha256Text, type ResumeSignal } from '@kubeclaw/plugin-s
 import { compileProject } from './compiler.ts';
 
 // Explicit pipeline graphs retain the existing core command surface.
-if (!process.argv.includes('--project')) {
+if (process.argv.includes('--import-legacy')) {
+  await runLegacyImportCLI(process.argv.slice(2));
+} else if (!process.argv.includes('--project')) {
   await import('@kubeclaw/nova-core/cli');
 } else {
   try {

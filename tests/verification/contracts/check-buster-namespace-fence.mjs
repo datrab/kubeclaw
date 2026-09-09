@@ -3,6 +3,7 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { loadAll } from 'js-yaml';
 
 const render = (namespace, version = '1.30.0') => ['template', 'review', 'charts/kubeclaw', '--namespace', namespace,
+  '-f', 'my-values/buster-values.yaml', '--set', 'runtimeInfrastructure.registry.endpoint=https://registry.example.test', '--set', 'runtimeInfrastructure.registry.transport=https', '--set', 'runtimeInfrastructure.registry.authSecretName=registry-test',
   '--kube-version', version, '--set', 'agentRole=buster', '--set', 'busterNamespaceBroker.enabled=true',
   '--set', 'busterNamespaceBroker.allowedPrefixes={test,preview}'];
 const names = new Set();

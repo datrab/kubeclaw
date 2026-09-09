@@ -1,0 +1,4 @@
+Original older reference stays readable after later equal-byte foreign-run and same-run writes.
+Latest remains run-scoped; consumer rejects stale expected ref even for identical bytes.
+Different ID, namespace, producer and encoding rejected by original store selection and independent byte verifier.
+Legacy get_json response shape and latest same-ID/digest selection remain unchanged.

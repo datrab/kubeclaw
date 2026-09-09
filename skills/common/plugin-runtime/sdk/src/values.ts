@@ -43,7 +43,7 @@ export function selectPresentValue(...values: unknown[]): string {
 // Preserve the existing ordering: these bytes already identify durable artifacts
 // and effect payloads. A portable ordering requires a separately versioned cutover.
 export function canonicalJson(value: unknown): string {
-  return serializeJsonValue(value, new Set());
+  return serializeJsonValue(value, new Set(), (left, right) => left.localeCompare(right));
 }
 
 function dataProperty(value: object, key: PropertyKey): unknown {
@@ -54,7 +54,15 @@ function dataProperty(value: object, key: PropertyKey): unknown {
   return descriptor.value;
 }
 
-function serializeJsonValue(value: unknown, seen: Set<object>): string {
+type KeyOrder = (left: string, right: string) => number;
+
+/** Named UTF-16 code-unit ordering; JSON scalar rules and validation match the legacy codec. */
+export const PORTABLE_JSON_ENCODING = 'kubeclaw-json.utf16.v1' as const;
+export function portableJson(value: unknown): string {
+  return serializeJsonValue(value, new Set(), (left, right) => left < right ? -1 : left > right ? 1 : 0);
+}
+
+function serializeJsonValue(value: unknown, seen: Set<object>, order: KeyOrder): string {
   if (value === null || typeof value === 'string' || typeof value === 'boolean') return JSON.stringify(value);
   if (typeof value === 'number') {
     if (!Number.isFinite(value)) throw new Error('CANONICAL_JSON_NUMBER_INVALID');
@@ -66,24 +74,24 @@ function serializeJsonValue(value: unknown, seen: Set<object>): string {
   seen.add(value);
   try {
     const keys = Reflect.ownKeys(value);
-    if (Array.isArray(value)) return serializeJsonArray(value, keys, seen);
+    if (Array.isArray(value)) return serializeJsonArray(value, keys, seen, order);
     const prototype = Object.getPrototypeOf(value);
     if (prototype !== Object.prototype && prototype !== null) throw new Error('CANONICAL_JSON_PROTOTYPE_INVALID');
     if (keys.some((key) => typeof key !== 'string')) throw new Error('CANONICAL_JSON_PROPERTY_INVALID');
-    return `{${(keys as string[]).sort((left, right) => left.localeCompare(right))
-      .map((key) => `${JSON.stringify(key)}:${serializeJsonValue(dataProperty(value, key), seen)}`)
+    return `{${(keys as string[]).sort(order)
+      .map((key) => `${JSON.stringify(key)}:${serializeJsonValue(dataProperty(value, key), seen, order)}`)
       .join(',')}}`;
   } finally {
     seen.delete(value);
   }
 }
 
-function serializeJsonArray(value: unknown[], keys: PropertyKey[], seen: Set<object>): string {
+function serializeJsonArray(value: unknown[], keys: PropertyKey[], seen: Set<object>, order: KeyOrder): string {
   if (Object.getPrototypeOf(value) !== Array.prototype) throw new Error('CANONICAL_JSON_PROTOTYPE_INVALID');
   if (keys.length !== value.length + 1) throw new Error('CANONICAL_JSON_ARRAY_INVALID');
   const entries: string[] = [];
   for (let index = 0; index < value.length; index++) {
-    entries.push(serializeJsonValue(dataProperty(value, String(index)), seen));
+    entries.push(serializeJsonValue(dataProperty(value, String(index)), seen, order));
   }
   return `[${entries.join(',')}]`;
 }

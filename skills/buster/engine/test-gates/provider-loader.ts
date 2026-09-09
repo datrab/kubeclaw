@@ -252,6 +252,9 @@ class ProviderProcessSession {
   resources(): ProviderProcessResources { this.#sample(); return { ...this.#resources }; }
 
   #sample(): void {
+    // After native close the PID can be reused. Retain the observations owned
+    // by this session instead of sampling an unrelated future process.
+    if (this.#closed) return;
     const facts = processFacts(this.#child.pid ?? -1);
     if (!facts) return;
     this.#resources = {
@@ -368,15 +371,28 @@ class IsolatedLoadedProvider implements LoadedTestProvider {
     const recovery = new ProviderProcessSession(this.#entry, this.#invocation, this.#workspaceRoot);
     try { if (await recovery.initialize(context)) await recovery.cleanup(context); }
     finally {
-      this.#resources = recovery.resources();
-      await recovery.terminate();
+      recovery.resources();
+      try { await recovery.terminate(); }
+      finally {
+        const recovered = recovery.resources();
+        // Recovery starts only after the original session has terminated.
+        // CPU is cumulative across those disjoint sessions; their sampled
+        // memory/process peaks are not concurrent and must not be added.
+        this.#resources = {
+          cpuTimeMs: this.#resources.cpuTimeMs + recovered.cpuTimeMs,
+          maximumMemoryBytes: Math.max(this.#resources.maximumMemoryBytes, recovered.maximumMemoryBytes),
+          maximumProcesses: Math.max(this.#resources.maximumProcesses, recovered.maximumProcesses),
+        };
+      }
       this.#removeSnapshot();
     }
   }
 
   async terminate(): Promise<void> {
-    this.#resources = this.#session.resources();
-    await this.#session.terminate();
+    if (this.#terminated) return;
+    this.#session.resources();
+    try { await this.#session.terminate(); }
+    finally { this.#resources = this.#session.resources(); }
     this.#terminated = true;
   }
 

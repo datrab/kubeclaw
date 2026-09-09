@@ -1,0 +1,30 @@
+✔ actual Core/HTTP session cleanup: max-polls (2910.917153ms)
+✔ actual Core/HTTP session cleanup: poll-body (2361.076947ms)
+✔ actual Core/HTTP session cleanup: parent-abort (2137.638003ms)
+✔ actual Core/HTTP session cleanup: late-spawn (1888.974469ms)
+✔ actual Core/HTTP session cleanup: cancel-rejected (1743.950069ms)
+✔ actual Core/HTTP session cleanup: cancel-body (3108.724244ms)
+✔ actual Core/HTTP session cleanup: acp-ack (3060.881904ms)
+✔ actual Core/HTTP session cleanup: acp-terminal (2134.189144ms)
+✔ actual Core/HTTP session cleanup: wrong-terminal (3164.319101ms)
+✔ actual Core/HTTP session cleanup: lost-spawn (3413.157573ms)
+✔ actual Core/HTTP session cleanup: acp-lost (3142.051196ms)
+✔ actual Core/HTTP session cleanup: wrong-poll-terminal (1972.649273ms)
+✔ actual Core/HTTP session cleanup: ambiguous-spawn (2373.376655ms)
+✔ actual Core/HTTP session cleanup: acp-wrong-terminal (2874.069111ms)
+✔ actual Core/HTTP session cleanup: contradictory-terminal (2885.607841ms)
+✔ actual Core/HTTP session cleanup: missing-task-alias (1906.931412ms)
+✔ actual Core/HTTP session cleanup: missing-task-snake (2416.804817ms)
+✔ actual Core/HTTP session cleanup: missing-task-records (2343.144592ms)
+✔ actual Core/HTTP session cleanup: missing-task-transitive (2320.438592ms)
+✔ full dispatch digest separates actual legacy-prefix collisions through Core/HTTP (2231.749732ms)
+✔ legacy colliding label never authorizes adoption, cancellation or respawn (3165.907793ms)
+✔ original registry parser rejects conflicting identifier aliases (0.837964ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 54228.006179

@@ -1517,7 +1517,7 @@ export class TestPlanRunner {
     };
     const issuedAt = this.#now();
     const profile = createBusterWorkerProfile(this.#options.registry, granted);
-    const completionPhases = 2 + Number(Boolean(operation.cleanup)) + Number(Boolean(operation.collectEvidence)) + Number(Boolean(operation.finalizeResult));
+    const completionPhases = 3 + Number(Boolean(operation.cleanup)) + Number(Boolean(operation.collectEvidence)) + Number(Boolean(operation.finalizeResult));
     const claimWindowMs = node.timeoutMs + completionPhases * cleanupTimeoutMs + 60_000;
     const envelopeBase = {
       schemaVersion: "worker-attempt-envelope.v1" as const,

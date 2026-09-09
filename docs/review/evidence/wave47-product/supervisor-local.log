@@ -1,0 +1,13 @@
+✔ original supervisor fails visibly on unreadable status and accepts a later readable success (371.950246ms)
+✔ original supervisor preserves artifact read failure despite a terminal journal (122.013985ms)
+✔ original supervisor reports confirmed failed without claiming success (141.274941ms)
+✔ original supervisor reports confirmed blocked without claiming success (122.039518ms)
+✔ original supervisor reports confirmed cancelled without claiming success (139.149006ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 982.466065

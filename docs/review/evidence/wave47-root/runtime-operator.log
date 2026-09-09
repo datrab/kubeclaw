@@ -1,0 +1,35 @@
+✔ original observer, effect journal and operator resume a rejected send after reconstruction (1649.736501ms)
+✔ durable receiver receipt reconciles lost HTTP ACK without a duplicate external delivery (1426.008828ms)
+✔ permanent rejection remains bounded across adapter and observer reconstruction (1884.706129ms)
+✔ uncertain delivery without receiver contract is never blindly resent (1541.370856ms)
+✔ configured receipt endpoint without the actual protocol cannot authorize a send (1578.785027ms)
+✔ actual Core/HTTP session cleanup: max-polls (2281.841878ms)
+✔ actual Core/HTTP session cleanup: poll-body (2078.539562ms)
+✔ actual Core/HTTP session cleanup: parent-abort (1895.735897ms)
+✔ actual Core/HTTP session cleanup: late-spawn (2040.685657ms)
+✔ actual Core/HTTP session cleanup: cancel-rejected (1826.223069ms)
+✔ actual Core/HTTP session cleanup: cancel-body (2847.622221ms)
+✔ actual Core/HTTP session cleanup: acp-ack (2984.637897ms)
+✔ actual Core/HTTP session cleanup: acp-terminal (1863.036952ms)
+✔ actual Core/HTTP session cleanup: wrong-terminal (2886.477007ms)
+✔ actual Core/HTTP session cleanup: lost-spawn (2900.982076ms)
+✔ actual Core/HTTP session cleanup: acp-lost (2850.764917ms)
+✔ actual Core/HTTP session cleanup: wrong-poll-terminal (1874.891177ms)
+✔ actual Core/HTTP session cleanup: ambiguous-spawn (1848.365327ms)
+✔ actual Core/HTTP session cleanup: acp-wrong-terminal (2790.263271ms)
+✔ actual Core/HTTP session cleanup: contradictory-terminal (2829.688762ms)
+✔ actual Core/HTTP session cleanup: missing-task-alias (1802.9221ms)
+✔ actual Core/HTTP session cleanup: missing-task-snake (1880.769431ms)
+✔ actual Core/HTTP session cleanup: missing-task-records (1921.793831ms)
+✔ actual Core/HTTP session cleanup: missing-task-transitive (1808.26014ms)
+✔ full dispatch digest separates actual legacy-prefix collisions through Core/HTTP (1949.232658ms)
+✔ legacy colliding label never authorizes adoption, cancellation or respawn (2907.143044ms)
+✔ original registry parser rejects conflicting identifier aliases (0.578614ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48566.298324

@@ -38,6 +38,7 @@
     "kubeclaw.container-build",
     "kubeclaw.coverage-budget",
     "kubeclaw.direct-command",
+    "kubeclaw.demo-auth-smoke",
     "kubeclaw.junit-report",
     "kubeclaw.kubernetes-fixture",
     "kubeclaw.tailscale-exposure",

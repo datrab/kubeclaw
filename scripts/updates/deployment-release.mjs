@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import yaml from 'js-yaml';
@@ -112,6 +113,25 @@ export function validateRenderedRelease(baseline, rendered, receipt, requireBund
   if (requireBundle && bundleConsumers === 0) throw new Error('Selected code bundle is missing from rendered workload');
 }
 
+// Only registry connectivity belongs to this render context. Release images and
+// bundle controls must still come from the independently verified selection.
+function withRegistryContext(args, run) {
+  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'release-registry-context-'));
+  const context = [];
+  try {
+    for (let index = 0; index < args.length - 1; index += 1) {
+      if (!['-f', '--values'].includes(args[index])) continue;
+      const values = yaml.load(fs.readFileSync(args[++index], 'utf8'));
+      const registry = values?.runtimeInfrastructure?.registry;
+      if (registry === undefined) continue;
+      const file = path.join(temporary, `${index}.yaml`);
+      fs.writeFileSync(file, yaml.dump({ runtimeInfrastructure: { registry } }), { mode: 0o600 });
+      context.push('-f', file);
+    }
+    return run(context);
+  } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
+}
+
 function validateOverlays(args, root, role, baseline, render, receipt) {
   // Validate each explicit values overlay before a later override can conceal
   // a conflicting image or bundle choice. Helm performs the actual merge.
@@ -145,10 +165,12 @@ if (process.argv[1] === import.meta.filename) {
     const baselineArgs = discovery ? ['-f', discovery] : [];
     baselineArgs.push('-f', path.join(root, `releases/values/${role}.yaml`));
     const render = values => execFileSync('helm', [...common, ...values], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
-    const baseline = render(baselineArgs);
-    validateOverlays(args, root, role, baseline, render, receipt);
-    const rendered = render(args);
-    validateRenderedRelease(baseline, rendered, receipt, control.includes('--bundle'));
-    process.stdout.write(rendered);
+    withRegistryContext(args, context => {
+      const baseline = render([...baselineArgs, ...context]);
+      validateOverlays(args, root, role, baseline, values => render([...context, ...values]), receipt);
+      const rendered = render(args);
+      validateRenderedRelease(baseline, rendered, receipt, control.includes('--bundle'));
+      process.stdout.write(rendered);
+    });
   } else throw new Error('Unknown deployment release command');
 }

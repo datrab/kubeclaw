@@ -1415,13 +1415,17 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP03",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "6d5781891c081ed9ba4da03f5f66a8961eb869ce",
-      "verification_status": "Teilnachweise bestanden; benannte native Integrationsgates offen",
+      "verification_status": "Originalabnahme bestanden; unabhängig geprüft",
       "verification_evidence": [
         {
           "report": "implementation/runtime-session-cleanup.md",
           "summary": "Autorisierte einmalige Cleanupfrist und transitive Sessionbindung; ursprüngliche 25 Fälle plus vier finale Identitätsgegenproben bestanden. Native OpenClaw-Terminierung nicht behauptet."
+        },
+        {
+          "report": "implementation/wave47-root-review.md",
+          "summary": "22 echte Core/HTTP-Cleanupregressionen unabhängig bestanden, einschließlich Timeout, Elternabbruch, später Identität und persistierter Ungewissheit."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.runtime-dispatch.md",
@@ -1436,9 +1440,11 @@
       "unresolved_code_references": [
         "../evidence/nova-batch-repository-symlink-probe.mjs"
       ],
-      "next_action": "Autorisierte einmalige Cleanupfrist und transitive Sessionbindung; ursprüngliche 25 Fälle plus vier finale Identitätsgegenproben bestanden. Native OpenClaw-Terminierung nicht behauptet.",
+      "next_action": "Originalbefund abgeschlossen; breitere Plattformgates bleiben ihren eigenen Findings zugeordnet.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [
+        "Welle47: ursprünglichen Abnahmeumfang mit tatsächlich ausgeführten Tests abgeglichen; keine nachträglich hinzugefügte globale E2E-Pflicht, keine gelockerte Originalanforderung."
+      ]
     },
     {
       "id": "PCR-WORKER-001",
@@ -1837,13 +1843,17 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "0fb075858bf78b2b87b0429f64be6a3bdba80981",
-      "verification_status": "lokale Prüfungen bestanden; native Gesamtintegration offen",
+      "verification_status": "Originalabnahme bestanden; unabhängig geprüft",
       "verification_evidence": [
         {
           "report": "implementation/gate-coverage.md",
           "summary": "44-Dateien-Änderung unabhängig geprüft: vorab deklarierte vollständige Abdeckung, echte Git/HTTP/Store/Node-Gegenproben und originale Consumerchecks; vollständige native Ausführung offen."
+        },
+        {
+          "report": "implementation/wave47-root-review.md",
+          "summary": "Originaler Resolver und reale Nova/Buster HTTP/Store/Git-Entscheidung unabhängig geprüft: unvollständige Pflichtabdeckung blockiert, optionale Skips erhalten."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -1855,13 +1865,15 @@
       "unresolved_code_references": [
         "runner.ts:789–803"
       ],
-      "next_action": "Native kumulative Gesamtpipeline mit echten Providern und anschließendem Ready-/Zustellungsnachweis prüfen; technische delivery-manifest.v2 allein ist keine Ready-Freigabe.",
+      "next_action": "Originalbefund abgeschlossen; breitere Plattformgates bleiben ihren eigenen Findings zugeordnet.",
       "related_findings": [
         "PATH-T11-001",
         "PATH-T13-001",
         "PCR-APIFLOW-001"
       ],
-      "decision_notes": []
+      "decision_notes": [
+        "Welle47: ursprünglichen Abnahmeumfang mit tatsächlich ausgeführten Tests abgeglichen; keine nachträglich hinzugefügte globale E2E-Pflicht, keine gelockerte Originalanforderung."
+      ]
     },
     {
       "id": "PATH-T13-001",
@@ -2527,11 +2539,15 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP07",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "d109cfd917514e3cc526135c4df70b98a9f766f0",
-      "verification_status": "Originale SQL-/HTTP-/Clienttests und unabhängige Gegenprüfung bestanden; verspätete und wiederholte Runden sind versionsgebunden. Native PostgreSQL-Pool-, Browser- und Agentlaufnachweise fehlen.",
+      "verification_status": "Originalabnahme bestanden; unabhängig geprüft",
       "verification_evidence": [
-        "docs/review/remediation/implementation/prism-design-rounds.md"
+        "docs/review/remediation/implementation/prism-design-rounds.md",
+        {
+          "report": "implementation/wave47-root-review.md",
+          "summary": "Originale SQL-Persistenz und HTTP-Retry unabhängig bestanden: zwei Runden, sechs Dokumente, drei historische Ablehnungen; keine zusätzliche native Pool-/Browseranforderung im Originalbefund."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
@@ -2542,12 +2558,14 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/storage/index.ts#L199"
       ],
       "unresolved_code_references": [],
-      "next_action": "Native PostgreSQL-Pool- und Browser-/Agentintegration bei vorhandenen Voraussetzungen ausführen; vorhandene Studio-Typfehler separat beheben.",
+      "next_action": "Originalbefund abgeschlossen; breitere Plattformgates bleiben ihren eigenen Findings zugeordnet.",
       "related_findings": [
         "PATH-T02-002",
         "PCR-PRISM-CONTROL-001"
       ],
-      "decision_notes": []
+      "decision_notes": [
+        "Welle47: ursprünglichen Abnahmeumfang mit tatsächlich ausgeführten Tests abgeglichen; keine nachträglich hinzugefügte globale E2E-Pflicht, keine gelockerte Originalanforderung."
+      ]
     },
     {
       "id": "PCR-PRISM-AGENT-BRIDGE-001",
@@ -3228,13 +3246,17 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP09",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "0ba923525b62faedd78bef3958af50c9e0286d47",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "Originalabnahme bestanden; unabhängig geprüft",
       "verification_evidence": [
         {
           "report": "implementation/operator-notification.md",
           "summary": "Five real durable HTTP receipt/retry cases and legacy identity tests pass independent review. Intended external receiver support for explicit reconciliation protocol unproven; other provider retry semantics unchanged."
+        },
+        {
+          "report": "implementation/wave47-root-review.md",
+          "summary": "Fünf echte Core/HTTP/Disk-Reconciliationregressionen unabhängig bestanden: erneuter Send, genau eine Wirkung, begrenztes persistiertes Retrybudget."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.operator-messaging.md",
@@ -3246,10 +3268,12 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/common/plugins/operator-messaging/src/adapter.ts#L103"
       ],
       "unresolved_code_references": [],
-      "next_action": "Five real durable HTTP receipt/retry cases and legacy identity tests pass independent review. Intended external receiver support for explicit reconciliation protocol unproven; other provider retry semantics unchanged.",
+      "next_action": "Originalbefund abgeschlossen; breitere Plattformgates bleiben ihren eigenen Findings zugeordnet.",
       "related_findings": [],
-      "decision_notes": [],
-      "remaining_work": "Five real durable HTTP receipt/retry cases and legacy identity tests pass independent review. Intended external receiver support for explicit reconciliation protocol unproven; other provider retry semantics unchanged."
+      "decision_notes": [
+        "Welle47: ursprünglichen Abnahmeumfang mit tatsächlich ausgeführten Tests abgeglichen; keine nachträglich hinzugefügte globale E2E-Pflicht, keine gelockerte Originalanforderung."
+      ],
+      "remaining_work": "Keine offene Originalanforderung dieses Findings."
     },
     {
       "id": "PCR-REDISTRANSPORT-001",
@@ -3850,13 +3874,17 @@
       "family": "infrastructure",
       "severity": "hoch",
       "work_package": "WP11",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "d02296f7a681210b21320d0fc6c43dc61abb25fc",
-      "verification_status": "Teilnachweise bestanden; benannte native Integrationsgates offen",
+      "verification_status": "Originalabnahme bestanden; unabhängig geprüft",
       "verification_evidence": [
         {
           "report": "implementation/trivy-freshness.md",
           "summary": "Vier echte Native-Trivy-Fälle einschließlich FIFO sowie tatsächlicher Dependencyprovider geprüft. Imageprovider und Remoteabnahme blockiert. Originaler gemeinsamer Typcheck nach Konfigurationskorrektur erneut bestanden."
+        },
+        {
+          "report": "implementation/wave47-root-review.md",
+          "summary": "Vier echte gepinnte Trivy-/DB-Regressionsfälle unabhängig bestanden; alte Advisorydaten sperren Erfolg trotz aktuellem Downloadzeitpunkt."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/updates-security.md",
@@ -3866,9 +3894,11 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/buster/engine/test-gates/security-scan-runtime.ts#L170"
       ],
       "unresolved_code_references": [],
-      "next_action": "Vier echte Native-Trivy-Fälle einschließlich FIFO sowie tatsächlicher Dependencyprovider geprüft. Imageprovider und Remoteabnahme blockiert. Originaler gemeinsamer Typcheck nach Konfigurationskorrektur erneut bestanden.",
+      "next_action": "Originalbefund abgeschlossen; breitere Plattformgates bleiben ihren eigenen Findings zugeordnet.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [
+        "Welle47: ursprünglichen Abnahmeumfang mit tatsächlich ausgeführten Tests abgeglichen; keine nachträglich hinzugefügte globale E2E-Pflicht, keine gelockerte Originalanforderung."
+      ]
     },
     {
       "id": "IFR-29-001",
@@ -4626,8 +4656,8 @@
   "implementation_branch": "fix/remediation-foundations-20260909",
   "updated_at": "2026-09-09",
   "progress_counts": {
-    "verifiziert": 86,
-    "implementiert": 47,
+    "verifiziert": 91,
+    "implementiert": 42,
     "in Bearbeitung": 2,
     "offen": 19
   },

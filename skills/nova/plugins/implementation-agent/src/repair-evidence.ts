@@ -1,3 +1,4 @@
+import {verifiedArtifactJsonText} from '@kubeclaw/plugin-sdk';
 import { canonicalJson, sha256Text, type ArtifactRef, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
 
 const MAXIMUM_ARTIFACTS = 32;
@@ -30,10 +31,10 @@ export async function repairEvidence(context: PluginInvocationContext): Promise<
   const evidence: { artifact: ArtifactRef; content: unknown }[] = [];
   for (const ref of refs) {
     const response = await context.invoke('artifacts.read', {
-      operation: 'get_json', resource: { type: 'artifact.object', canonicalId: ref.artifactId },
-      payload: { namespace: ref.namespace, digest: ref.digest },
+      operation: 'get_json_bytes', resource: { type: 'artifact.object', canonicalId: ref.artifactId },
+      payload: { namespace: ref.namespace, digest: ref.digest, reference: ref },
     });
-    const content = canonicalJson(response.value);
+    const content = verifiedArtifactJsonText(response, ref);
     if (response.digest !== ref.digest || response.sizeBytes !== ref.sizeBytes
       || Buffer.byteLength(content) !== ref.sizeBytes || sha256Text(content) !== ref.digest) {
       throw new Error('REPAIR_EVIDENCE_CONTENT_INVALID');

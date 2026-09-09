@@ -1,0 +1,11 @@
+file:///workspace/scratch/0d8f8ddb55c3/wave47-product/tests/verification/contracts/check-pipeline-container-build-production.mts:14
+  throw new Error('CONTAINER_BUILD_LIVE_CONFIGURATION_REQUIRED');
+        ^
+
+Error: CONTAINER_BUILD_LIVE_CONFIGURATION_REQUIRED
+    at file:///workspace/scratch/0d8f8ddb55c3/wave47-product/tests/verification/contracts/check-pipeline-container-build-production.mts:14:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0

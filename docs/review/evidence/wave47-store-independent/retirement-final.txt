@@ -1,0 +1,29 @@
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (1405.10653ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (1433.593943ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (1130.634821ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (1068.879011ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (881.635782ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (843.650332ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1306.113797ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (815.865606ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (2.590077ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (2.902599ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (7.778275ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (348.609939ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2555.792411ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (339.767914ms)
+✔ exact retirement byte accounting crosses decimal digit boundaries without a fixed point (230.922672ms)
+✔ original v1 stores reopen without rewriting and retain ordinary append/read/transition contracts (56.06195ms)
+✔ manual terminal-run cleanup releases actual bytes and record quota; duplicate replay never resurrects (1799.682932ms)
+✔ waiting run, foreign owner, stale source, reused operation and legacy records reject without release (2850.661818ms)
+✔ real run mutation fence rejects concurrent cleanup; immutable intent survives caller mutation (1039.051386ms)
+✔ SIGKILL after actual atomic store commit retains tombstones and one CLI release (1625.801149ms)
+✔ native competing store writer blocks retirement; SIGKILL before mutation leaves original bytes (1256.000449ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12837.579702

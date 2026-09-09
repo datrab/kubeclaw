@@ -1,0 +1,19 @@
+Reviewed product commit ba999e2; original compiler fixture with independent review hook and original legacy gate retained.
+Exit code: 1
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: missing cumulative coverage rejected
+    at rejected (file:///workspace/scratch/0d8f8ddb55c3/wave47-resources/docs/review/evidence/wave47-legacy-independent-probe.mjs:39:12)
+    at Module.reviewLegacy (file:///workspace/scratch/0d8f8ddb55c3/wave47-resources/docs/review/evidence/wave47-legacy-independent-probe.mjs:75:3)
+    at file:///workspace/scratch/0d8f8ddb55c3/wave47-product/tests/verification/contracts/check-project-compiler-independent-resource-review.mts:179:140 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '{"status":"error","error":"Invalid pipeline test-gate gateCoverage: /requiredChecks must NOT have fewer than 1 items"}\n',
+  expected: /COVERAGE|CONTRACT|SCHEMA|VALID/u,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

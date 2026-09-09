@@ -28,3 +28,4 @@ export * from './runtime-workspace.ts';
 export * from './review-subject.ts';
 export * from './source-approval.ts';
 export * from './source-preflight.ts';
+export * from './artifact-json.ts';

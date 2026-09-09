@@ -1,0 +1,103 @@
+READ-ONLY ENVIRONMENT
+0::/
+cgroup2 /sys/fs/cgroup cgroup2 ro,nosuid,nodev,noexec,relatime,nsdelegate 0 0
+$ node tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs
+Exit code: 2
+{"status":"blocked","gate":"isolation-kernel","blockers":["proc task children unavailable","explicit delegated cgroupRoot argument required","credential-drop proof requires root and explicit nonzero uid/gid arguments"]}
+
+$ node --test skills/prism/integration/worker-browser-cancellation.mts
+Exit code: 1
+✖ owned original Chromium closes and settles a real page load on cancellation (32.870171ms)
+✖ original engine capture cancellation near launch drains before rejecting and releases ownership (6.88694ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 594.930934
+
+✖ failing tests:
+
+test at skills/prism/integration/worker-browser-cancellation.mts:10:7
+✖ owned original Chromium closes and settles a real page load on cancellation (32.870171ms)
+  browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+  ╔════════════════════════════════════════════════════════════╗
+  ║ Looks like Playwright was just installed or updated.       ║
+  ║ Please run the following command to download new browsers: ║
+  ║                                                            ║
+  ║     npx playwright install                                 ║
+  ║                                                            ║
+  ║ <3 Playwright Team                                         ║
+  ╚════════════════════════════════════════════════════════════╝
+      at openOwnedBrowser (/workspace/scratch/0d8f8ddb55c3/wave47-resources/skills/prism/engine/browser-capture.ts:17:34)
+      at TestContext.<anonymous> (/workspace/scratch/0d8f8ddb55c3/wave47-resources/skills/prism/integration/worker-browser-cancellation.mts:18:23)
+      at async file:///workspace/scratch/0d8f8ddb55c3/wave47-resources/skills/prism/integration/worker-browser-cancellation.mts:10:1 {
+    name: 'Error',
+    log: []
+  }
+
+test at skills/prism/integration/worker-browser-cancellation.mts:31:7
+✖ original engine capture cancellation near launch drains before rejecting and releases ownership (6.88694ms)
+  browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+  ╔════════════════════════════════════════════════════════════╗
+  ║ Looks like Playwright was just installed or updated.       ║
+  ║ Please run the following command to download new browsers: ║
+  ║                                                            ║
+  ║     npx playwright install                                 ║
+  ║                                                            ║
+  ║ <3 Playwright Team                                         ║
+  ╚════════════════════════════════════════════════════════════╝
+      at openOwnedBrowser (/workspace/scratch/0d8f8ddb55c3/wave47-resources/skills/prism/engine/browser-capture.ts:17:34)
+      at TestContext.<anonymous> (/workspace/scratch/0d8f8ddb55c3/wave47-resources/skills/prism/integration/worker-browser-cancellation.mts:33:30)
+      at /workspace/scratch/0d8f8ddb55c3/wave47-resources/skills/prism/integration/worker-browser-cancellation.mts:31:7 {
+    name: 'Error',
+    log: []
+  }
+
+$ node tests/verification/contracts/check-pipeline-remote-process-restart.mts
+Exit code: 1
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"code":1,"output":{"remote":{"status":{"error":null,"jobId":"job:c1d0dfdec1b886afc5462c6784a8b1210bbc80b6237e907fc7b9abe07868aca5","requestDigest":"sha256:47b95139d918b8b7c75993e5a977877e8c790b2d2426e5a76fc5a9273d00ef28","result":{"contentDigest":"sha256:52b91fee7afaf15e91916954bfee526199bfcbd81066f2ff02d23ddcc4ce2abf","resultDigest":"sha256:c6058446a423d654bd0639619664e3c0fc7413b4c66004ade9971f22c2de1f00","schemaVersion":"buster-plan-result-ref.v1","sizeBytes":3509},"schemaVersion":"buster-plan-status.v1","state":"completed","submittedAt":"2026-08-12T07:30:00.000Z","updatedAt":"2026-09-09T19:46:55.046Z"},"decision":{"decisionDigest":"sha256:4bd4a43ca4cd3ce1783cea3648b40d51d12d5721d0fd98704054cdac35c2d448","jobId":"job:c1d0dfdec1b886afc5462c6784a8b1210bbc80b6237e907fc7b9abe07868aca5","nodes":[{"effect":"execution_error","kind":"test","mode":"blocking","nodeId":"restart","reason":"execution errored"}],"planId":"plan:run:nova-restart","resultDigest":"sha256:c6058446a423d654bd0639619664e3c0fc7413b4c66004ade9971f22c2de1f00","reviews":[],"runId":"run:nova-restart","schemaVersion":"test-gate-decision.v1","state":"execution_error"},"stageResult":{"schemaVersion":"stage-result.v2","outcome":"blocked","artifacts":[],"reason":{"code":"test_gate.execution_error","message":"The remote test gate did not complete safely.","details":{"jobId":"job:c1d0dfdec1b886afc5462c6784a8b1210bbc80b6237e907fc7b9abe07868aca5","planId":"plan:run:nova-restart","decisionDigest":"sha256:4bd4a43ca4cd3ce1783cea3648b40d51d12d5721d0fd98704054cdac35c2d448","failedNodes":["restart"],"advisoryFailures":[]}}}}},"stderr":""}
+
+1 !== 0
+
+    at file:///workspace/scratch/0d8f8ddb55c3/wave47-resources/tests/verification/contracts/check-pipeline-remote-process-restart.mts:220:10
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+FINAL PROVIDER-SNAPSHOT-INTEGRATED RECHECK
+$ node tests/verification/contracts/check-pipeline-remote-process-restart.mts
+Exit code: 1
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"code":1,"output":{"remote":{"status":{"error":null,"jobId":"job:c1d0dfdec1b886afc5462c6784a8b1210bbc80b6237e907fc7b9abe07868aca5","requestDigest":"sha256:61f2b72ccdfc6b1357979a94359f44c615ca96a5aa2e85a73511e0b3e32db874","result":{"contentDigest":"sha256:e64cddcfd3e639f9f4c0d92e9dfb86d5424c5ed6126f1ac1c2ae9690ad3970e2","resultDigest":"sha256:701a376725547353e79f6bf88419318ca32ff689d41aed076af1aa1e27bc846b","schemaVersion":"buster-plan-result-ref.v1","sizeBytes":3509},"schemaVersion":"buster-plan-status.v1","state":"completed","submittedAt":"2026-08-12T07:30:00.000Z","updatedAt":"2026-09-09T19:55:12.601Z"},"decision":{"decisionDigest":"sha256:72fdb4a35d2b3092567f4869e88dae296b437dc0aa833a96005bcf421cd9a7eb","jobId":"job:c1d0dfdec1b886afc5462c6784a8b1210bbc80b6237e907fc7b9abe07868aca5","nodes":[{"effect":"execution_error","kind":"test","mode":"blocking","nodeId":"restart","reason":"execution errored"}],"planId":"plan:run:nova-restart","resultDigest":"sha256:701a376725547353e79f6bf88419318ca32ff689d41aed076af1aa1e27bc846b","reviews":[],"runId":"run:nova-restart","schemaVersion":"test-gate-decision.v1","state":"execution_error"},"stageResult":{"schemaVersion":"stage-result.v2","outcome":"blocked","artifacts":[],"reason":{"code":"test_gate.execution_error","message":"The remote test gate did not complete safely.","details":{"jobId":"job:c1d0dfdec1b886afc5462c6784a8b1210bbc80b6237e907fc7b9abe07868aca5","planId":"plan:run:nova-restart","decisionDigest":"sha256:72fdb4a35d2b3092567f4869e88dae296b437dc0aa833a96005bcf421cd9a7eb","failedNodes":["restart"],"advisoryFailures":[]}}}}},"stderr":""}
+
+1 !== 0
+
+    at file:///workspace/scratch/0d8f8ddb55c3/wave47-resources/tests/verification/contracts/check-pipeline-remote-process-restart.mts:220:10
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

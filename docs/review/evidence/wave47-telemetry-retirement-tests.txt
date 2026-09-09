@@ -1,0 +1,31 @@
+✔ fresh admission reads and duplicate ACK fail closed for persisted corruption (349.66347ms)
+✔ fresh attempt replay validates result, generation, evidence, intent and closure before recovery (545.974787ms)
+✔ standalone closure producer binding preserves staged-evidence expiry and partial completeness (146.641865ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (1279.893051ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (1233.075029ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (1038.390089ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (1034.342462ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (966.42977ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (975.480649ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1393.826274ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (862.336855ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (6.241656ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.694859ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.47618ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (420.189781ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2353.106337ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (354.884246ms)
+✔ original v1 stores reopen without rewriting and retain ordinary append/read/transition contracts (74.062797ms)
+✔ manual terminal-run cleanup releases actual bytes and record quota; duplicate replay never resurrects (1423.764771ms)
+✔ waiting run, foreign owner, stale source, reused operation and legacy records reject without release (2559.544999ms)
+✔ real run mutation fence rejects concurrent cleanup; immutable intent survives caller mutation (1227.82107ms)
+✔ SIGKILL after actual atomic store commit retains tombstones and one CLI release (1704.183607ms)
+✔ native competing store writer blocks retirement; SIGKILL before mutation leaves original bytes (1449.689847ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12428.254463

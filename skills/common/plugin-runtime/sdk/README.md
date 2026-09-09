@@ -25,3 +25,20 @@ files and declaration maps into `dist/` using the same `tsconfig.build.json`.
 `npm test --workspace @kubeclaw/plugin-sdk` checks the JSON value contract;
 `node tests/verification/reliability/sdk-json-contract.test.mts` additionally
 checks the real artifact adapter and durable effect journal consumer.
+
+`portableJson` implements the named `kubeclaw-json.utf16.v1` codec: ascending UTF-16
+code-unit object keys, existing strict JSON value admission, JSON.stringify
+string/finite-number spelling, and array order preserved. It never consults ICU,
+locale or an alternate comparator. Select it only through a versioned producer
+contract; `canonicalJson` still denotes the historical unversioned contract.
+
+`verifiedArtifactJsonText` consumes `artifact-json-bytes.v1` responses from the
+existing artifact capability's `get_json_bytes` / `get_latest_json_bytes`
+operations. It checks original UTF-8 byte count/hash, parsed value and stored
+reference, and requires exact portable bytes when the reference declares that
+codec. Untagged historical blobs retain their original byte identities: readers
+do not reconstruct their locale, try collators or rewrite the stored digest.
+Missing original-byte proof rejects. Existing caller run/stage/namespace and
+expected digest checks remain mandatory. The versioned read response includes
+both original JSON text and parsed value; caller artifact-size limits still
+apply, and transport/storage envelopes must budget both representations.

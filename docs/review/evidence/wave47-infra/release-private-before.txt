@@ -1,0 +1,71 @@
+✖ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (1757.739887ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1844.858472
+
+✖ failing tests:
+
+test at tests/verification/deployment/deployment-release.test.mjs:42:1
+✖ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (1757.739887ms)
+  AssertionError [ERR_ASSERTION]: Error: execution error at (kubeclaw/templates/deployment.yaml:1524:13): runtimeInfrastructure.registry.endpoint is required; configure a node-reachable registry origin
+  
+  Use --debug flag to render out invalid YAML
+  node:internal/errors:985
+    const err = new Error(message);
+                ^
+  
+  Error: Command failed: helm template agent-buster /tmp/deployment-selection-MVG19O/charts/kubeclaw --namespace kubeclaw -f /tmp/deployment-selection-MVG19O/releases/values/buster.yaml
+  Error: execution error at (kubeclaw/templates/deployment.yaml:1524:13): runtimeInfrastructure.registry.endpoint is required; configure a node-reachable registry origin
+  
+  Use --debug flag to render out invalid YAML
+  
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at render (file:///tmp/deployment-selection-MVG19O/scripts/updates/deployment-release.mjs:147:30)
+      at file:///tmp/deployment-selection-MVG19O/scripts/updates/deployment-release.mjs:148:22
+      at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+      at async node:internal/modules/esm/loader:643:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+    status: 1,
+    signal: null,
+    output: [
+      null,
+      '',
+      'Error: execution error at (kubeclaw/templates/deployment.yaml:1524:13): runtimeInfrastructure.registry.endpoint is required; configure a node-reachable registry origin\n' +
+        '\n' +
+        'Use --debug flag to render out invalid YAML\n'
+    ],
+    pid: 478,
+    stdout: '',
+    stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1524:13): runtimeInfrastructure.registry.endpoint is required; configure a node-reachable registry origin\n' +
+      '\n' +
+      'Use --debug flag to render out invalid YAML\n'
+  }
+  
+  Node.js v24.19.0
+  
+  
+  1 !== 0
+  
+      at success (file:///workspace/scratch/0d8f8ddb55c3/wave47-infra/tests/verification/deployment/deployment-release.test.mjs:39:35)
+      at file:///workspace/scratch/0d8f8ddb55c3/wave47-infra/tests/verification/deployment/deployment-release.test.mjs:44:18
+      at fixture (file:///workspace/scratch/0d8f8ddb55c3/wave47-infra/tests/verification/deployment/deployment-release.test.mjs:36:5)
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-infra/tests/verification/deployment/deployment-release.test.mjs:42:114)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

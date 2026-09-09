@@ -1,0 +1,11 @@
+✔ baseline wire schema and capture-bound version validation agree on absent or malformed identities (2.722198ms)
+✔ original provider rejects unversioned and legacy manifests before any browser capability is needed (2.51843ms)
+✔ real preflight blocks the historical unbound fixture locally before requesting deployment (464.923069ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 638.165661

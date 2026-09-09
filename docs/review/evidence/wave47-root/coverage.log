@@ -1,0 +1,18 @@
+✔ all original suite templates selected with excluded tests do not cover a missing mandatory check (40.176123ms)
+✔ condition-skipped and advisory mandatory checks stay visibly unsatisfied (2.417076ms)
+✔ explicit exclusion retains the required declaration without silently reducing policy (1.274432ms)
+✔ all resolved matrix variations are mandatory, with no synthetic execution assertion (2.245778ms)
+✔ policy corruption, duplicate requirements and unmapped requirements fail validation (0.877123ms)
+✔ existing standalone plans retain execution semantics but carry no completeness policy (1.048522ms)
+✔ a literal matrix-shaped declaration cannot impersonate a missing base check (1.315765ms)
+✔ original review parser validates cumulative policy and stores its actual immutable bundle (72.951491ms)
+✔ M5 passes on the same commit where the M1/M2 interaction fails; its plan cannot certify cumulative coverage (675.577355ms)
+✔ original remote Buster skipped execution cannot fulfil required coverage at the same Git candidate (925.905697ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2175.084858

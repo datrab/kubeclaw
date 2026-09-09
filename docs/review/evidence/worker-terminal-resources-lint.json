@@ -1,0 +1,1174 @@
+[
+  {
+    "filePath": "/workspace/scratch/0d8f8ddb55c3/wave47-resources/skills/buster/engine/test-gates/provider-loader-resource-before.ts",
+    "errorCount": 7,
+    "warningCount": 0,
+    "messages": [
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 91,
+        "column": 9,
+        "messageId": "forbidden",
+        "endLine": 91,
+        "endColumn": 60
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 97,
+        "column": 50,
+        "messageId": "tooDeeply",
+        "endLine": 97,
+        "endColumn": 52
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 109,
+        "column": 9,
+        "messageId": "forbidden",
+        "endLine": 109,
+        "endColumn": 62
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 112,
+        "column": 5,
+        "messageId": "forbidden",
+        "endLine": 112,
+        "endColumn": 27
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 241,
+        "column": 11,
+        "messageId": "forbidden",
+        "endLine": 241,
+        "endColumn": 81
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Private async method #message has a complexity of 30. Maximum allowed is 15.",
+        "line": 268,
+        "column": 3,
+        "messageId": "complex",
+        "endLine": 268,
+        "endColumn": 17
+      },
+      {
+        "ruleId": "max-lines",
+        "severity": 2,
+        "message": "File has too many lines (371). Maximum allowed is 300.",
+        "line": 325,
+        "column": 1,
+        "messageId": "exceed",
+        "endLine": 410,
+        "endColumn": 1
+      }
+    ]
+  },
+  {
+    "filePath": "/workspace/scratch/0d8f8ddb55c3/wave47-resources/skills/buster/engine/test-gates/provider-loader.ts",
+    "errorCount": 7,
+    "warningCount": 0,
+    "messages": [
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 91,
+        "column": 9,
+        "messageId": "forbidden",
+        "endLine": 91,
+        "endColumn": 60
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 97,
+        "column": 50,
+        "messageId": "tooDeeply",
+        "endLine": 97,
+        "endColumn": 52
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 109,
+        "column": 9,
+        "messageId": "forbidden",
+        "endLine": 109,
+        "endColumn": 62
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 112,
+        "column": 5,
+        "messageId": "forbidden",
+        "endLine": 112,
+        "endColumn": 27
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 241,
+        "column": 11,
+        "messageId": "forbidden",
+        "endLine": 241,
+        "endColumn": 81
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Private async method #message has a complexity of 30. Maximum allowed is 15.",
+        "line": 271,
+        "column": 3,
+        "messageId": "complex",
+        "endLine": 271,
+        "endColumn": 17
+      },
+      {
+        "ruleId": "max-lines",
+        "severity": 2,
+        "message": "File has too many lines (382). Maximum allowed is 300.",
+        "line": 327,
+        "column": 1,
+        "messageId": "exceed",
+        "endLine": 426,
+        "endColumn": 1
+      }
+    ]
+  },
+  {
+    "filePath": "/workspace/scratch/0d8f8ddb55c3/wave47-resources/skills/buster/engine/test-gates/runner-resource-before.ts",
+    "errorCount": 30,
+    "warningCount": 0,
+    "messages": [
+      {
+        "ruleId": "max-lines",
+        "severity": 2,
+        "message": "File has too many lines (1960). Maximum allowed is 300.",
+        "line": 322,
+        "column": 1,
+        "messageId": "exceed",
+        "endLine": 2013,
+        "endColumn": 1
+      },
+      {
+        "ruleId": "max-params",
+        "severity": 2,
+        "message": "Function 'finalNodeResult' has too many parameters (8). Maximum allowed is 7.",
+        "line": 418,
+        "column": 1,
+        "messageId": "exceed",
+        "endLine": 418,
+        "endColumn": 25
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Function 'validateAndMapOutputs' has a complexity of 16. Maximum allowed is 15.",
+        "line": 494,
+        "column": 8,
+        "messageId": "complex",
+        "endLine": 494,
+        "endColumn": 38
+      },
+      {
+        "ruleId": "discipline/no-fallback-chain",
+        "severity": 2,
+        "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority.",
+        "line": 561,
+        "column": 30,
+        "messageId": "forbidden",
+        "endLine": 561,
+        "endColumn": 103
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Constructor has too many lines (133). Maximum allowed is 60.",
+        "line": 625,
+        "column": 3,
+        "messageId": "exceed",
+        "endLine": 625,
+        "endColumn": 14
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Constructor has a complexity of 35. Maximum allowed is 15.",
+        "line": 625,
+        "column": 3,
+        "messageId": "complex",
+        "endLine": 625,
+        "endColumn": 14
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Async method 'run' has too many lines (178). Maximum allowed is 60.",
+        "line": 759,
+        "column": 3,
+        "messageId": "exceed",
+        "endLine": 759,
+        "endColumn": 12
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Async method 'run' has a complexity of 26. Maximum allowed is 15.",
+        "line": 759,
+        "column": 3,
+        "messageId": "complex",
+        "endLine": 759,
+        "endColumn": 12
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 790,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 790,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 806,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 806,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 822,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 822,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 834,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 834,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 851,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 851,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 852,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 852,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+        "line": 855,
+        "column": 13,
+        "messageId": "tooDeeply",
+        "endLine": 855,
+        "endColumn": 15
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+        "line": 859,
+        "column": 13,
+        "messageId": "tooDeeply",
+        "endLine": 859,
+        "endColumn": 15
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 887,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 887,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Private async method #executeNode has a complexity of 16. Maximum allowed is 15.",
+        "line": 1025,
+        "column": 3,
+        "messageId": "complex",
+        "endLine": 1025,
+        "endColumn": 21
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Private async method #executeAttempt has too many lines (659). Maximum allowed is 60.",
+        "line": 1082,
+        "column": 3,
+        "messageId": "exceed",
+        "endLine": 1082,
+        "endColumn": 24
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Private async method #executeAttempt has a complexity of 72. Maximum allowed is 15.",
+        "line": 1082,
+        "column": 3,
+        "messageId": "complex",
+        "endLine": 1082,
+        "endColumn": 24
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Async method 'execute' has too many lines (119). Maximum allowed is 60.",
+        "line": 1192,
+        "column": 7,
+        "messageId": "exceed",
+        "endLine": 1192,
+        "endColumn": 22
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Async method 'collectEvidence' has too many lines (121). Maximum allowed is 60.",
+        "line": 1348,
+        "column": 7,
+        "messageId": "exceed",
+        "endLine": 1348,
+        "endColumn": 30
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Async method 'collectEvidence' has a complexity of 25. Maximum allowed is 15.",
+        "line": 1348,
+        "column": 7,
+        "messageId": "complex",
+        "endLine": 1348,
+        "endColumn": 30
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 1365,
+        "column": 15,
+        "messageId": "tooDeeply",
+        "endLine": 1365,
+        "endColumn": 17
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+        "line": 1369,
+        "column": 17,
+        "messageId": "tooDeeply",
+        "endLine": 1369,
+        "endColumn": 19
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 1445,
+        "column": 15,
+        "messageId": "tooDeeply",
+        "endLine": 1445,
+        "endColumn": 17
+      },
+      {
+        "ruleId": "discipline/no-fallback-chain",
+        "severity": 2,
+        "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority.",
+        "line": 1704,
+        "column": 9,
+        "messageId": "forbidden",
+        "endLine": 1706,
+        "endColumn": 78
+      },
+      {
+        "ruleId": "discipline/no-fallback-chain",
+        "severity": 2,
+        "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority.",
+        "line": 1728,
+        "column": 7,
+        "messageId": "forbidden",
+        "endLine": 1730,
+        "endColumn": 64
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Private async method #persistWorkerCompletion has too many lines (122). Maximum allowed is 60.",
+        "line": 1742,
+        "column": 3,
+        "messageId": "exceed",
+        "endLine": 1742,
+        "endColumn": 33
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 1860,
+        "column": 7,
+        "messageId": "forbidden",
+        "endLine": 1863,
+        "endColumn": 6
+      }
+    ]
+  },
+  {
+    "filePath": "/workspace/scratch/0d8f8ddb55c3/wave47-resources/skills/buster/engine/test-gates/runner.ts",
+    "errorCount": 30,
+    "warningCount": 0,
+    "messages": [
+      {
+        "ruleId": "max-lines",
+        "severity": 2,
+        "message": "File has too many lines (1960). Maximum allowed is 300.",
+        "line": 322,
+        "column": 1,
+        "messageId": "exceed",
+        "endLine": 2013,
+        "endColumn": 1
+      },
+      {
+        "ruleId": "max-params",
+        "severity": 2,
+        "message": "Function 'finalNodeResult' has too many parameters (8). Maximum allowed is 7.",
+        "line": 418,
+        "column": 1,
+        "messageId": "exceed",
+        "endLine": 418,
+        "endColumn": 25
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Function 'validateAndMapOutputs' has a complexity of 16. Maximum allowed is 15.",
+        "line": 494,
+        "column": 8,
+        "messageId": "complex",
+        "endLine": 494,
+        "endColumn": 38
+      },
+      {
+        "ruleId": "discipline/no-fallback-chain",
+        "severity": 2,
+        "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority.",
+        "line": 561,
+        "column": 30,
+        "messageId": "forbidden",
+        "endLine": 561,
+        "endColumn": 103
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Constructor has too many lines (133). Maximum allowed is 60.",
+        "line": 625,
+        "column": 3,
+        "messageId": "exceed",
+        "endLine": 625,
+        "endColumn": 14
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Constructor has a complexity of 35. Maximum allowed is 15.",
+        "line": 625,
+        "column": 3,
+        "messageId": "complex",
+        "endLine": 625,
+        "endColumn": 14
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Async method 'run' has too many lines (178). Maximum allowed is 60.",
+        "line": 759,
+        "column": 3,
+        "messageId": "exceed",
+        "endLine": 759,
+        "endColumn": 12
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Async method 'run' has a complexity of 26. Maximum allowed is 15.",
+        "line": 759,
+        "column": 3,
+        "messageId": "complex",
+        "endLine": 759,
+        "endColumn": 12
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 790,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 790,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 806,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 806,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 822,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 822,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 834,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 834,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 851,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 851,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 852,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 852,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+        "line": 855,
+        "column": 13,
+        "messageId": "tooDeeply",
+        "endLine": 855,
+        "endColumn": 15
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+        "line": 859,
+        "column": 13,
+        "messageId": "tooDeeply",
+        "endLine": 859,
+        "endColumn": 15
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 887,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 887,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Private async method #executeNode has a complexity of 16. Maximum allowed is 15.",
+        "line": 1025,
+        "column": 3,
+        "messageId": "complex",
+        "endLine": 1025,
+        "endColumn": 21
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Private async method #executeAttempt has too many lines (659). Maximum allowed is 60.",
+        "line": 1082,
+        "column": 3,
+        "messageId": "exceed",
+        "endLine": 1082,
+        "endColumn": 24
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Private async method #executeAttempt has a complexity of 72. Maximum allowed is 15.",
+        "line": 1082,
+        "column": 3,
+        "messageId": "complex",
+        "endLine": 1082,
+        "endColumn": 24
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Async method 'execute' has too many lines (119). Maximum allowed is 60.",
+        "line": 1192,
+        "column": 7,
+        "messageId": "exceed",
+        "endLine": 1192,
+        "endColumn": 22
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Async method 'collectEvidence' has too many lines (121). Maximum allowed is 60.",
+        "line": 1348,
+        "column": 7,
+        "messageId": "exceed",
+        "endLine": 1348,
+        "endColumn": 30
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Async method 'collectEvidence' has a complexity of 25. Maximum allowed is 15.",
+        "line": 1348,
+        "column": 7,
+        "messageId": "complex",
+        "endLine": 1348,
+        "endColumn": 30
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 1365,
+        "column": 15,
+        "messageId": "tooDeeply",
+        "endLine": 1365,
+        "endColumn": 17
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+        "line": 1369,
+        "column": 17,
+        "messageId": "tooDeeply",
+        "endLine": 1369,
+        "endColumn": 19
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 1445,
+        "column": 15,
+        "messageId": "tooDeeply",
+        "endLine": 1445,
+        "endColumn": 17
+      },
+      {
+        "ruleId": "discipline/no-fallback-chain",
+        "severity": 2,
+        "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority.",
+        "line": 1704,
+        "column": 9,
+        "messageId": "forbidden",
+        "endLine": 1706,
+        "endColumn": 78
+      },
+      {
+        "ruleId": "discipline/no-fallback-chain",
+        "severity": 2,
+        "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority.",
+        "line": 1728,
+        "column": 7,
+        "messageId": "forbidden",
+        "endLine": 1730,
+        "endColumn": 64
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Private async method #persistWorkerCompletion has too many lines (122). Maximum allowed is 60.",
+        "line": 1742,
+        "column": 3,
+        "messageId": "exceed",
+        "endLine": 1742,
+        "endColumn": 33
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 1860,
+        "column": 7,
+        "messageId": "forbidden",
+        "endLine": 1863,
+        "endColumn": 6
+      }
+    ]
+  },
+  {
+    "filePath": "/workspace/scratch/0d8f8ddb55c3/wave47-resources/skills/prism/server/worker-operation.ts",
+    "errorCount": 0,
+    "warningCount": 0,
+    "messages": []
+  },
+  {
+    "filePath": "/workspace/scratch/0d8f8ddb55c3/wave47-resources/skills/worker/core/worker/attempt-executor-resource-before.ts",
+    "errorCount": 18,
+    "warningCount": 0,
+    "messages": [
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Function 'jsonStringBytes' has a complexity of 17. Maximum allowed is 15.",
+        "line": 118,
+        "column": 1,
+        "messageId": "complex",
+        "endLine": 118,
+        "endColumn": 25
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Function 'preflightJson' has a complexity of 21. Maximum allowed is 15.",
+        "line": 140,
+        "column": 1,
+        "messageId": "complex",
+        "endLine": 140,
+        "endColumn": 23
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 162,
+        "column": 9,
+        "messageId": "tooDeeply",
+        "endLine": 162,
+        "endColumn": 12
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 165,
+        "column": 9,
+        "messageId": "tooDeeply",
+        "endLine": 165,
+        "endColumn": 11
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 168,
+        "column": 9,
+        "messageId": "tooDeeply",
+        "endLine": 168,
+        "endColumn": 12
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+        "line": 169,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 169,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+        "line": 171,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 171,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Private async method #executeOnce has too many lines (318). Maximum allowed is 60.",
+        "line": 236,
+        "column": 3,
+        "messageId": "exceed",
+        "endLine": 236,
+        "endColumn": 21
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Private async method #executeOnce has a complexity of 103. Maximum allowed is 15.",
+        "line": 236,
+        "column": 3,
+        "messageId": "complex",
+        "endLine": 236,
+        "endColumn": 21
+      },
+      {
+        "ruleId": "max-lines",
+        "severity": 2,
+        "message": "File has too many lines (636). Maximum allowed is 300.",
+        "line": 333,
+        "column": 1,
+        "messageId": "exceed",
+        "endLine": 685,
+        "endColumn": 1
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 341,
+        "column": 11,
+        "messageId": "forbidden",
+        "endLine": 343,
+        "endColumn": 10
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 383,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 383,
+        "endColumn": 14
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+        "line": 385,
+        "column": 13,
+        "messageId": "tooDeeply",
+        "endLine": 385,
+        "endColumn": 15
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 386,
+        "column": 13,
+        "messageId": "forbidden",
+        "endLine": 388,
+        "endColumn": 12
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 485,
+        "column": 9,
+        "messageId": "forbidden",
+        "endLine": 487,
+        "endColumn": 8
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 591,
+        "column": 7,
+        "messageId": "forbidden",
+        "endLine": 593,
+        "endColumn": 6
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Private method #result has too many lines (72). Maximum allowed is 60.",
+        "line": 610,
+        "column": 3,
+        "messageId": "exceed",
+        "endLine": 610,
+        "endColumn": 10
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Private method #result has a complexity of 31. Maximum allowed is 15.",
+        "line": 610,
+        "column": 3,
+        "messageId": "complex",
+        "endLine": 610,
+        "endColumn": 10
+      }
+    ]
+  },
+  {
+    "filePath": "/workspace/scratch/0d8f8ddb55c3/wave47-resources/skills/worker/core/worker/attempt-executor.ts",
+    "errorCount": 18,
+    "warningCount": 0,
+    "messages": [
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Function 'jsonStringBytes' has a complexity of 17. Maximum allowed is 15.",
+        "line": 119,
+        "column": 1,
+        "messageId": "complex",
+        "endLine": 119,
+        "endColumn": 25
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Function 'preflightJson' has a complexity of 21. Maximum allowed is 15.",
+        "line": 141,
+        "column": 1,
+        "messageId": "complex",
+        "endLine": 141,
+        "endColumn": 23
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 163,
+        "column": 9,
+        "messageId": "tooDeeply",
+        "endLine": 163,
+        "endColumn": 12
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 166,
+        "column": 9,
+        "messageId": "tooDeeply",
+        "endLine": 166,
+        "endColumn": 11
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 169,
+        "column": 9,
+        "messageId": "tooDeeply",
+        "endLine": 169,
+        "endColumn": 12
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+        "line": 170,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 170,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+        "line": 172,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 172,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Private async method #executeOnce has too many lines (325). Maximum allowed is 60.",
+        "line": 237,
+        "column": 3,
+        "messageId": "exceed",
+        "endLine": 237,
+        "endColumn": 21
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Private async method #executeOnce has a complexity of 106. Maximum allowed is 15.",
+        "line": 237,
+        "column": 3,
+        "messageId": "complex",
+        "endLine": 237,
+        "endColumn": 21
+      },
+      {
+        "ruleId": "max-lines",
+        "severity": 2,
+        "message": "File has too many lines (643). Maximum allowed is 300.",
+        "line": 334,
+        "column": 1,
+        "messageId": "exceed",
+        "endLine": 699,
+        "endColumn": 1
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 342,
+        "column": 11,
+        "messageId": "forbidden",
+        "endLine": 344,
+        "endColumn": 10
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+        "line": 384,
+        "column": 11,
+        "messageId": "tooDeeply",
+        "endLine": 384,
+        "endColumn": 14
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+        "line": 386,
+        "column": 13,
+        "messageId": "tooDeeply",
+        "endLine": 386,
+        "endColumn": 15
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 387,
+        "column": 13,
+        "messageId": "forbidden",
+        "endLine": 389,
+        "endColumn": 12
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 486,
+        "column": 9,
+        "messageId": "forbidden",
+        "endLine": 488,
+        "endColumn": 8
+      },
+      {
+        "ruleId": "discipline/no-swallowed-error",
+        "severity": 2,
+        "message": "Handle the error intentionally or rethrow it with context.",
+        "line": 605,
+        "column": 7,
+        "messageId": "forbidden",
+        "endLine": 607,
+        "endColumn": 6
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Private method #result has too many lines (72). Maximum allowed is 60.",
+        "line": 624,
+        "column": 3,
+        "messageId": "exceed",
+        "endLine": 624,
+        "endColumn": 10
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "message": "Private method #result has a complexity of 31. Maximum allowed is 15.",
+        "line": 624,
+        "column": 3,
+        "messageId": "complex",
+        "endLine": 624,
+        "endColumn": 10
+      }
+    ]
+  },
+  {
+    "filePath": "/workspace/scratch/0d8f8ddb55c3/wave47-resources/skills/worker/core/worker/resource-accounting.ts",
+    "errorCount": 0,
+    "warningCount": 0,
+    "messages": []
+  },
+  {
+    "filePath": "/workspace/scratch/0d8f8ddb55c3/wave47-resources/tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
+    "errorCount": 0,
+    "warningCount": 0,
+    "messages": []
+  },
+  {
+    "filePath": "/workspace/scratch/0d8f8ddb55c3/wave47-resources/tests/verification/reliability/worker-deadline.test.mts",
+    "errorCount": 0,
+    "warningCount": 0,
+    "messages": []
+  },
+  {
+    "filePath": "/workspace/scratch/0d8f8ddb55c3/wave47-resources/tests/verification/reliability/worker-terminal-resources.test.mts",
+    "errorCount": 0,
+    "warningCount": 0,
+    "messages": []
+  }
+]

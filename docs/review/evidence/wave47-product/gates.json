@@ -1,0 +1,10 @@
+{
+  "junit-native": 1,
+  "direct-native": 1,
+  "build-native": 1,
+  "supervisor-adoption": 1,
+  "junit-local": 0,
+  "build-deadline": 0,
+  "output-contract": 0,
+  "runtime-session": 0
+}

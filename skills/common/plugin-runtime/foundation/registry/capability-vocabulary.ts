@@ -38,7 +38,7 @@ export const CAPABILITY_DEFINITIONS = Object.freeze({
   'report.evidence.read': definition(['snapshot'], ['pipeline.run'], ['allowedRunIds']),
   'state.read': definition(['read'], ['state.namespace'], ['allowedNamespaces']),
   'state.append': definition(['append'], ['state.namespace'], ['allowedNamespaces']),
-  'artifacts.read': definition(['get_json', 'get_latest_json'], ['artifact.object'], ['allowedNamespaces']),
+  'artifacts.read': definition(['get_json', 'get_latest_json', 'get_json_bytes', 'get_latest_json_bytes'], ['artifact.object'], ['allowedNamespaces']),
   'artifacts.write': definition(['put_json'], ['artifact.object'], ['allowedNamespaces']),
   'runtime.dispatch': definition(['dispatch'], ['runtime.agent'], ['allowedAgents']),
   'git.repository.read': definition(

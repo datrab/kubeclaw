@@ -28,6 +28,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
           stream,
           request.idempotencyKey,
           telemetryProjection(request.payload, maxRecordBytes),
+          request.attempt.runId,
         );
         return { accepted: committed.appended, sequence: committed.record.sequence };
       } catch (error) {

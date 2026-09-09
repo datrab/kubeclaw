@@ -67,6 +67,7 @@ export interface WorkerAttemptOperation<E extends WorkerAttemptEnvelope = Worker
   prepare(limits: E['limits']): undefined;
   execute(context: WorkerAttemptContext<E>): Promise<WorkerAttemptOperationResult>;
   terminate(): Promise<void>;
+  /** Cumulative owned usage. Called after execution and again after completion hooks. */
   measure(context: { readonly signal: AbortSignal }): Promise<E extends WorkerAttemptEnvelopeV2 ? WorkerResourceObservations : WorkerAttemptOperationResources>;
   cleanup?(context: WorkerAttemptContext<E>): Promise<void>;
   collectEvidence?(context: WorkerAttemptEvidenceContext<E>): Promise<WorkerAttemptEvidenceResult>;
@@ -254,12 +255,12 @@ export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttem
         logBytes: 0, resultBytes: 0, evidenceBytes: 0,
       }, { state: 'not_required', summary: null });
     }
-    const completionPhases = 2 + Number(Boolean(operation.cleanup)) + Number(Boolean(operation.collectEvidence))
+    const completionPhases = 3 + Number(Boolean(operation.cleanup)) + Number(Boolean(operation.collectEvidence))
       + Number(this.#options.retainLogs !== false && Boolean(this.#options.storeFullLog)) + Number(Boolean(operation.finalizeResult));
     const requiredClaimWindow = envelope.limits.timeoutMs + (completionPhases * envelope.limits.cleanupTimeoutMs);
     if (Date.parse(envelope.claim.expiresAt) - started.getTime() < requiredClaimWindow) {
       // The local executor cannot renew a claim. It starts only when the claim
-      // covers execution, termination, measurement and every configured completion hook.
+      // covers execution, termination, both measurements and every configured completion hook.
       return this.#result(started, started, new AttemptFault('interrupted', 'WORKER_CLAIM_WINDOW_INSUFFICIENT'), null, [], {
         logBytes: 0, resultBytes: 0, evidenceBytes: 0,
       }, { state: 'not_required', summary: null });
@@ -440,7 +441,7 @@ export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttem
     let measured:unknown;
     try {measured=await phases.run('WORKER_RESOURCE_MEASUREMENT',signal=>operation.measure({signal}),Boolean(executionFault));}
     catch {measured=undefined;}
-    const assessment=assessWorkerResources(envelope,measured,this.#accounting);
+    let assessment=assessWorkerResources(envelope,measured,this.#accounting);
     if(assessment.error && (!fault || assessment.error.code==='WORKER_RESOURCE_MEASUREMENT_INVALID'))fault=new AttemptFault('errored',assessment.error.code,assessment.error.message);
 
     if (operation.cleanup) {
@@ -539,6 +540,19 @@ export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttem
       } catch (error) {
         fault = new AttemptFault('errored', 'WORKER_RESULT_FINALIZATION_FAILED', detail(error));
       }
+    }
+    // Completion hooks also consume the attempt's resources. Keep the early
+    // check above to avoid starting optional finalization after an overrun, but
+    // bind the terminal receipt to usage after cleanup, evidence and reports.
+    // A failed or quarantined final observation must not reuse an earlier value
+    // as if it covered those phases. Maintenance measurement preserves bounded
+    // diagnostics after cancellation without authorizing additional execution.
+    measured = undefined;
+    try { measured = await phases.run('WORKER_FINAL_RESOURCE_MEASUREMENT', signal => operation.measure({ signal }), Boolean(fault)); }
+    catch { measured = undefined; }
+    assessment = assessWorkerResources(envelope, measured, this.#accounting, assessment.resources);
+    if (assessment.error && !fault) {
+      fault = new AttemptFault('errored', assessment.error.code, assessment.error.message);
     }
     this.#options.signal?.removeEventListener('abort', abort);
     if (this.#options.signal?.aborted) {

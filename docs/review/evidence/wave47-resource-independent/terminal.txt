@@ -1,0 +1,25 @@
+✔ direct: actual optional phases require a complete claim reservation (102.792215ms)
+✔ runtime: actual optional phases require a complete claim reservation (4.092495ms)
+✔ real completion hooks and durable log finish successfully inside the reserved claim (125.498466ms)
+✔ direct: final claim fence rejects completion after a native blocking hook (577.122265ms)
+✔ runtime: final claim fence rejects completion after a native blocking hook (597.261905ms)
+✔ timed out log hook receives cancellation and settles before result, without a later write (226.266392ms)
+✔ uncooperative storage is reported unresolved rather than completed (164.416787ms)
+✔ original executor preserves each UTF-8 byte split and rejects malformed/incomplete byte logs (278.997862ms)
+✔ real Buster evidence I/O drains cancellation and does not publish a later artifact (45.882251ms)
+✔ stdout and stderr streaming decoders retain separate partial byte sequences (26.026556ms)
+✔ real CPU consumed only during cleanup is included in the terminal budget (312.748451ms)
+✔ real CPU consumed only during finalize is included in the terminal budget (279.703492ms)
+✔ early native CPU overrun still prevents optional report finalization (257.032584ms)
+✔ missing final observation cannot reuse a successful early CPU sample (15.71594ms)
+✔ successful native operation publishes its final cumulative sample (9.097996ms)
+✔ V2 late native CPU overrun fails and retains exact accepted policy binding (326.79018ms)
+✔ V2 missing final observation replaces earlier observations with unavailable facts (9.316456ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2523.527699

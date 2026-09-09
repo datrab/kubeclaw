@@ -508,8 +508,30 @@ const stableResources = await new WorkerAttemptExecutor({ envelope: envelope(),
       contentDigest: sha256Text(content), sizeBytes: Buffer.byteLength(content) } };
   },
   now: () => new Date('2026-08-05T12:30:00Z') }).execute();
-assert.equal(stableResources.state, 'completed');
-assert.equal(stableResources.resources.cpuTimeMs, 10);
+assert.equal(stableResources.state, 'errored');
+assert.equal(stableResources.error?.code, 'WORKER_CPU_LIMIT');
+assert.equal(stableResources.resources.cpuTimeMs, 10_000, 'completion work is included in the final observation');
+mutableMeasurements.cpuTimeMs = 0;
+assert.equal(stableResources.resources.cpuTimeMs, 10_000, 'terminal receipt does not retain a mutable measurement reference');
+
+// Explicit contract vectors, not a native resource-attribution test: a provider
+// cannot lower any cumulative counter between execution and terminal receipt.
+for (const metric of ['cpuTimeMs', 'maximumMemoryBytes', 'maximumProcesses'] as const) {
+  let observations = 0;
+  const cumulative = await new WorkerAttemptExecutor({ envelope: envelope(), operation: {
+    prepare: () => undefined,
+    execute: async () => successResult(),
+    terminate: async () => undefined,
+    measure: async () => {
+      const values = { cpuTimeMs: 10, maximumMemoryBytes: 100, maximumProcesses: 2 };
+      if (observations++ > 0) values[metric] /= 2;
+      return values;
+    },
+  }, id, now: () => new Date('2026-08-05T12:30:00Z') }).execute();
+  assert.equal(cumulative.error?.code, 'WORKER_RESOURCE_MEASUREMENT_INVALID');
+  assert.match(cumulative.error?.message ?? '', /regressed/u);
+  assert.equal(cumulative.resources[metric], undefined);
+}
 
 const invalidResources = await new WorkerAttemptExecutor({ envelope: envelope(),
   operation: new Operation(async () => successResult(), { resources: { cpuTimeMs: Number.NaN,

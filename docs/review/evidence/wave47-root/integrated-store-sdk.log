@@ -1,0 +1,38 @@
+✔ fresh admission reads and duplicate ACK fail closed for persisted corruption (892.271855ms)
+✔ fresh attempt replay validates result, generation, evidence, intent and closure before recovery (1243.219634ms)
+✔ standalone closure producer binding preserves staged-evidence expiry and partial completeness (184.838921ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (2131.847976ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (1930.277931ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (1264.991875ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (1070.733559ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (983.141639ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (925.819589ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1250.164993ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (903.123718ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.391349ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (1.421685ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.779354ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (440.539581ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2589.146956ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (387.985178ms)
+✔ original observer, effect journal and operator resume a rejected send after reconstruction (3195.600939ms)
+✔ durable receiver receipt reconciles lost HTTP ACK without a duplicate external delivery (1846.444155ms)
+✔ permanent rejection remains bounded across adapter and observer reconstruction (2151.257768ms)
+✔ uncertain delivery without receiver contract is never blindly resent (1818.93373ms)
+✔ configured receipt endpoint without the actual protocol cannot authorize a send (1739.871862ms)
+✔ original artifact/source consumers and reopened effect journal preserve byte authority across native locales (4114.841602ms)
+✔ exact retirement byte accounting crosses decimal digit boundaries without a fixed point (473.314863ms)
+✔ original v1 stores reopen without rewriting and retain ordinary append/read/transition contracts (158.532946ms)
+✔ manual terminal-run cleanup releases actual bytes and record quota; duplicate replay never resurrects (2460.221769ms)
+✔ waiting run, foreign owner, stale source, reused operation and legacy records reject without release (2998.379655ms)
+✔ real run mutation fence rejects concurrent cleanup; immutable intent survives caller mutation (1059.341212ms)
+✔ SIGKILL after actual atomic store commit retains tombstones and one CLI release (1713.895906ms)
+✔ native competing store writer blocks retirement; SIGKILL before mutation leaves original bytes (1314.194683ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14903.201438

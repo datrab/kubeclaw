@@ -1,0 +1,38 @@
+Error: execution error at (kubeclaw/templates/deployment.yaml:1520:12): Buster registry configuration requires exactly one extraContainers entry named buster-v2-runtime
+
+Use --debug flag to render out invalid YAML
+node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: helm template review charts/kubeclaw --set workerTrust.spiffe.enabled=true --set agentRole=buster
+Error: execution error at (kubeclaw/templates/deployment.yaml:1520:12): Buster registry configuration requires exactly one extraContainers entry named buster-v2-runtime
+
+Use --debug flag to render out invalid YAML
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:942:11)
+    at execFileSync (node:child_process:978:15)
+    at render (file:///workspace/scratch/0d8f8ddb55c3/wave47-infra/tests/verification/contracts/check-rollout-health.mjs:8:50)
+    at file:///workspace/scratch/0d8f8ddb55c3/wave47-infra/tests/verification/contracts/check-rollout-health.mjs:16:20
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  status: 1,
+  signal: null,
+  output: [
+    null,
+    '',
+    'Error: execution error at (kubeclaw/templates/deployment.yaml:1520:12): Buster registry configuration requires exactly one extraContainers entry named buster-v2-runtime\n' +
+      '\n' +
+      'Use --debug flag to render out invalid YAML\n'
+  ],
+  pid: 42,
+  stdout: '',
+  stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1520:12): Buster registry configuration requires exactly one extraContainers entry named buster-v2-runtime\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+}
+
+Node.js v24.19.0

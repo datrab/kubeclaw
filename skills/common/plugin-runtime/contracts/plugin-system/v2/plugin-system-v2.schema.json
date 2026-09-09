@@ -455,6 +455,7 @@
       "additionalProperties": false,
       "required": ["artifactId", "namespace", "mediaType", "digest", "sizeBytes", "producer"],
       "properties": {
+        "encoding": { "const": "kubeclaw-json.utf16.v1" },
         "artifactId": { "$ref": "#/$defs/opaqueId" },
         "namespace": { "$ref": "#/$defs/namespacedId" },
         "mediaType": { "type": "string", "pattern": "^[a-z0-9!#$&^_.+-]+/[a-z0-9!#$&^_.+-]+$" },

@@ -1,0 +1,30 @@
+✔ fresh architecture approval ignores prior subject Blueprint lineage (17798.400051ms)
+✔ review source rejects a Git symlink before architecture dispatch (3048.432053ms)
+✔ approved architecture executable mode is preserved by original Blueprint sync (5948.025943ms)
+✔ original architecture approval source binding: none (11438.383594ms)
+✔ original architecture approval source binding: source-commit (8487.117058ms)
+✔ original architecture approval source binding: dirty-plan (7244.570025ms)
+✔ original architecture approval source binding: architecture-ref (7292.284752ms)
+✔ accepted source drift blocks at original sync admission (10729.297777ms)
+✔ accepted source drift blocks at original api admission (12577.374986ms)
+✔ clean bound report supports skipped approval and real pinned implementation (5126.873946ms)
+✔ source-less report can be reported but cannot authorize Blueprint or Forge (6747.723204ms)
+✔ external source commit during real implementation dispatch cannot become approved lineage (7600.890391ms)
+✔ external worktree commit during Forge cannot enter approved source lineage (7617.698757ms)
+✔ compiled source prefix uses original Git and implementation consumers; architecture agent enabled=false (5399.029322ms)
+✔ compiled source prefix uses original Git and implementation consumers; architecture agent enabled=true (6583.425129ms)
+✔ mandatory source failure prevents enabled architecture review, sync and implementation (3705.758055ms)
+✔ source admission rejects missing-producer before Git sync (2893.145386ms)
+✔ source admission rejects wrong-contract before Git sync (2807.437492ms)
+✔ actual external source change after admission rejects original Git merge (3629.032958ms)
+✔ implementation independently requires the admitted producer after a genuine Blueprint sync (3955.13373ms)
+✔ compiled findings require bound operator approval before Git sync; source changes=false (11425.383486ms)
+✔ compiled findings require bound operator approval before Git sync; source changes=true (9222.436881ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 112134.950874

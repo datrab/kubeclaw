@@ -87,6 +87,7 @@ try {
       transcriptDigest,
     );
     assert.match(fs.readFileSync(path.join(temporary,'artifacts','records','store.json'),'utf8'),/implementation:api:1/);
+    assert.match(fs.readFileSync(path.join(temporary,'artifacts','records','store.json'),'utf8'),/kubeclaw-json\.utf16\.v1/,'original implementation stage persists the explicit portable codec');
     assert.equal(fs.readFileSync(effectsPath,'utf8').includes('implementation-secret'),false);
     // A locked real Git worktree makes cleanup fail after a real commit/merge.
     // This verifies the lifecycle boundary without substituting a Git adapter.

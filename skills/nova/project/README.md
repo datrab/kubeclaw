@@ -49,7 +49,7 @@ The compiler regression uses real Git, resolved provider contracts, the installe
 
 A separate integration regression uses real Git commits and durable artifact storage to verify two module revision ranges, cumulative repair review, actual source contents, tampered references, ambiguous artifacts, and rejection of an unrelated HEAD. It supplies no agent verdicts and does not establish full agent execution.
 
-This route does not yet replace the legacy project scaffold or all production E2E orchestration. Prism source authoring and legacy baseline import, external delivery and deployed acceptance remain open. The optional architecture reviewer uses the original report-bound findings approval when enabled. The compiler now emits mandatory cumulative gates and a verified quality manifest, which does not establish a live demo or operator acceptance. Do not use compile success as evidence of those features.
+This route does not yet replace the legacy project scaffold or all production E2E orchestration. Prism source authoring, external delivery and deployed acceptance remain open. Explicit legacy authoring import is available below; it does not migrate runtime state or acceptance. The optional architecture reviewer uses the original report-bound findings approval when enabled. The compiler now emits mandatory cumulative gates and a verified quality manifest, which does not establish a live demo or operator acceptance. Do not use compile success as evidence of those features.
 
 Quality-stage graphs must migrate to `{gateId, task, providerPlan}`. `runId`, `attempt`, `suitePlan` and `suiteEvidence` are removed from that stage's public input: identity comes from the core lease and evidence from the verified remote import. Keep old runtime versions available to drain existing snapshots; do not rewrite historical authority using current inputs.
 
@@ -106,11 +106,7 @@ The architecture validator now declares `artifacts.read` (including for existing
 standalone registrations); migrate its grant to allow the preflight namespace.
 Enabled approval also needs the original operator-request and durable wait grants.
 
-The setup scaffold remains a legacy declaration editor, not a v2 project importer.
-Author the v2 project file explicitly and resolve its declared provider plans from
-the actual installed registry before the documented `--compile` command. Missing
-source, requirement or coverage fields need an explicit authoring decision. A
-future legacy import must report missing information; this patch does not guess it.
+The setup scaffold remains a legacy declaration editor. Use the explicit import command below to combine its generated version-1 progress with authored v2 source, requirements and resolved coverage. Missing intent is never inferred.
 
 `project-source.test.mjs` compiles full v2 projects and executes their bounded
 source/sync/implementation prefix through original Git and artifact stores plus
@@ -143,3 +139,24 @@ An omitted demo section preserves technical-only pipelines. CLI output marks tha
 scope explicitly and never treats technical completion as Ready-for-Acceptance
 or human acceptance. A configured demo pipeline establishes Ready only after its
 original evidence, delivery receipt and controller commit have all succeeded.
+
+## Explicit legacy authoring import
+
+```sh
+node /app/skills/pipeline.ts --import-legacy /repo/Projects/example/src/.swarm/progress.json --authoring /inputs/import-authoring.json --platform /inputs/platform.json --output /inputs/new-project.json
+node /app/skills/pipeline.ts --project /inputs/new-project.json --platform /inputs/platform.json --compile /inputs/new-pipeline.json
+```
+
+The importer accepts the scaffold's generated version-1 `progress.json`, not a historical runtime snapshot as resumable authority. The legacy file must physically reside within the declared repository; its containing directory is the base for `modules/<dir>`. `--output` must be new. Both commands validate through the original compiler and installed registry/grant validator without dispatching agents or accepting results.
+
+The authoring file has exactly five fields:
+
+- `schemaVersion`: `nova-project-legacy-import.v1`.
+- `project`: the explicit `nova-project.v2` input described above. Supply source admission, a new run ID, tasks, ownership, requirements, selected agents, lint policy, independently resolved mandatory coverage and final gates. Each module's blueprint still requires explicit `serveDockerfile` and `apiSpecFile` selectors. Module `dependsOn` and blueprint `modulePath`/`substeps` may be omitted because these structural fields are imported; if supplied they must agree exactly.
+- `moduleIds`: complete one-to-one mapping from every legacy module key to its authored v2 module ID. No legacy module is silently discarded.
+- `gateDecisions`: an entry for every legacy gate, containing the author's nonempty explanation of its replacement in the explicit v2 policy. These are migration notes, never human approval. Legacy dependencies on gates reject explicitly and require restructuring the old authoring declaration first; they are not silently removed or converted into arbitrary stage edges.
+- `acknowledgeLegacyPolicy`: `true`, acknowledging that all policy must be explicitly authored and historical execution state is discarded.
+
+For example, `moduleIds` can be `{"01-api":"api","02-ui":"ui"}` and `gateDecisions` can be `{"final-buster":"Replaced by the independently declared final.test cumulative policy."}`. The project ID must match the old project. Legacy default reviewers, stage selections, results, retries, approvals, runtime cursors and delivery states do not migrate. The report names ignored legacy fields and binds both inputs and the resulting project by digest. A missing ownership/requirement/coverage field fails with the canonical compiler diagnostic before writing output.
+
+If IDs or source layout change, author matching committed `FORGE.md` deliverable declarations and select the correct immutable architecture ref before execution. Import/compile checks shape and grants; actual source-preflight validates the committed blueprint contents. Commit intended repository files and supply a clean declared baseline for the normal run command. Import success means `authoring-only`; it establishes neither technical completion, Ready-for-Acceptance nor human acceptance.

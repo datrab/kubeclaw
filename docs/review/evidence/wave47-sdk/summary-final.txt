@@ -1,0 +1,33 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node ../../../../tests/verification/integration/project-summary.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /CORRUPT/. Input:
+
+'Error: ARTIFACT_NOT_FOUND'
+
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/integration/project-summary.test.mjs:73:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: Error: ARTIFACT_NOT_FOUND
+      at findArtifact (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/common/plugins/artifact-store/src/adapter.ts:67:9)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async invokeArtifact (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/common/plugins/artifact-store/src/adapter.ts:113:20)
+      at async read (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/plugins/project-summary/src/summary.ts:70:22)
+      at async verify (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/plugins/project-summary/src/summary.ts:83:21)
+      at async buildSummary (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/plugins/project-summary/src/summary.ts:95:84)
+      at async waitForActual (node:assert:646:5)
+      at async strict.rejects (node:assert:769:25)
+      at async file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/integration/project-summary.test.mjs:73:3,
+  expected: /CORRUPT/,
+  operator: 'rejects',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

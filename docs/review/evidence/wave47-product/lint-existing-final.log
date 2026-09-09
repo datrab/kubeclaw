@@ -1,0 +1,11 @@
+
+/workspace/scratch/0d8f8ddb55c3/wave47-product/skills/nova/project/cli.ts
+  14:9  error  Dynamic module loading is allowed only in a declared loader boundary  discipline/no-dynamic-module-loading
+  22:7  error  Blocks are nested too deeply (4). Maximum allowed is 3                max-depth
+  38:7  error  Blocks are nested too deeply (4). Maximum allowed is 3                max-depth
+  39:7  error  Blocks are nested too deeply (4). Maximum allowed is 3                max-depth
+  41:9  error  Blocks are nested too deeply (5). Maximum allowed is 3                max-depth
+  43:9  error  Blocks are nested too deeply (5). Maximum allowed is 3                max-depth
+
+✖ 6 problems (6 errors, 0 warnings)
+

@@ -1,3 +1,4 @@
+import {verifiedArtifactJsonText} from '@kubeclaw/plugin-sdk';
 import { canonicalJson, sha256Text, verifyReviewSubject, type ArtifactRef, type PluginInvocationContext, type StageResult } from '@kubeclaw/plugin-sdk';
 import { execute as executeApproval } from './stage.ts';
 
@@ -95,11 +96,11 @@ async function approvalReport(
   if (artifact.mediaType !== 'application/json' || !Number.isSafeInteger(artifact.sizeBytes)
     || artifact.sizeBytes < 1 || artifact.sizeBytes > 256 * 1024) throw new Error('ARCHITECTURE_APPROVAL_REFERENCE_INVALID');
   const response = await context.invoke('artifacts.read', {
-    operation: 'get_json',
+    operation: 'get_json_bytes',
     resource: { type: 'artifact.object', canonicalId: artifact.artifactId },
-    payload: { namespace: artifact.namespace, digest: artifact.digest },
+    payload: { namespace: artifact.namespace, digest: artifact.digest, reference: artifact },
   });
-  const serialized = canonicalJson(response.value);
+  const serialized = verifiedArtifactJsonText(response, artifact);
   if (response.digest !== artifact.digest || response.sizeBytes !== artifact.sizeBytes
     || sha256Text(serialized) !== artifact.digest || Buffer.byteLength(serialized) !== artifact.sizeBytes) {
     throw new Error('ARCHITECTURE_APPROVAL_CONTENT_INVALID');

@@ -1,0 +1,26 @@
+✖ adopted live process remains alive when its original status reader fails (7.121242ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 92.47612
+
+✖ failing tests:
+
+test at scripts/tests/integration/repository-review-supervisor-adoption.mjs:9:1
+✖ adopted live process remains alive when its original status reader fails (7.121242ms)
+  AssertionError [ERR_ASSERTION]: REAL_PROC_PROCESS_CMDLINE_REQUIRED: live child 58 is not visible through procfs
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-product/scripts/tests/integration/repository-review-supervisor-adoption.mjs:19:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

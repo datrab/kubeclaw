@@ -1,3 +1,4 @@
+import {PORTABLE_JSON_ENCODING} from '@kubeclaw/plugin-sdk';
 import { repairEvidence } from './repair-evidence.ts';
 import { approvedSource, parseRuntimeWorkspace, type RuntimeWorkspaceReference } from '@kubeclaw/plugin-sdk';
 import { attemptWorkspace } from './workspace.ts';
@@ -121,7 +122,7 @@ async function storeCompletion(
 ): Promise<StageResult> {
   const stored = await context.invoke('artifacts.write', {
     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: `implementation:${input.moduleId}:${input.attempt}` },
-    payload: { namespace: 'kubeclaw.implementation-agent', mediaType: 'application/json', value: { ...completion, sourceRevision: workspaceIntegrated ?? null, headBefore: input.headBefore, ...(subjectDigest ? { subjectDigest } : {}),
+    payload: { namespace: 'kubeclaw.implementation-agent', encoding: PORTABLE_JSON_ENCODING, mediaType: 'application/json', value: { ...completion, sourceRevision: workspaceIntegrated ?? null, headBefore: input.headBefore, ...(subjectDigest ? { subjectDigest } : {}),
       ...(workspaceCreated && !workspaceIntegrated && input.workspace ? { retainedWorkspace: input.workspace.workspacePath, branch: input.workspace.branch, workspaceReference: input.workspaceReference } : {}) } },
   });
   const artifacts = [stored.artifact as ArtifactRef];

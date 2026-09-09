@@ -1,0 +1,12 @@
+file:///workspace/scratch/0d8f8ddb55c3/wave47-product/skills/buster/engine/test-gates/report-adapter-runtime.ts:190
+  if (!fs.existsSync(launcher)) throw new Error('REPORT_ADAPTER_SANDBOX_NOT_BUILT');
+                                      ^
+
+Error: REPORT_ADAPTER_SANDBOX_NOT_BUILT
+    at runtimePaths (file:///workspace/scratch/0d8f8ddb55c3/wave47-product/skills/buster/engine/test-gates/report-adapter-runtime.ts:190:39)
+    at #run (file:///workspace/scratch/0d8f8ddb55c3/wave47-product/skills/buster/engine/test-gates/report-adapter-runtime.ts:334:21)
+    at #adaptWithinDeadline (file:///workspace/scratch/0d8f8ddb55c3/wave47-product/skills/buster/engine/test-gates/report-adapter-runtime.ts:302:36)
+    at async RegisteredReportAdapterRuntime.adapt (file:///workspace/scratch/0d8f8ddb55c3/wave47-product/skills/buster/engine/test-gates/report-adapter-runtime.ts:260:14)
+    at async file:///workspace/scratch/0d8f8ddb55c3/wave47-product/tests/verification/contracts/check-pipeline-junit-report-adapter.mts:61:16
+
+Node.js v24.19.0

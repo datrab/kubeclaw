@@ -1,3 +1,7 @@
+import {assertDurableRecordReplay, assertRetirementIntent, payloadDigest, ownerValid, existingRecord,
+  type DurableRecord, type DurableRecordState, type RecordRetirementIntent, type RecordRetirement} from './record-retirement.ts';
+export {assertDurableRecordReplay} from './record-retirement.ts';
+export type {DurableRecord, DurableRecordState, RecordRetirementIntent, RecordRetirement, RecordTombstone} from './record-retirement.ts';
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -9,21 +13,6 @@ import {
   writeDurableState,
 } from "./durable-delivery.ts";
 
-export interface DurableRecord<T = unknown> {
-  readonly schemaVersion: "pipeline-durable-record.v1";
-  readonly stream: string;
-  readonly sequence: number;
-  readonly idempotencyKey: string;
-  readonly committedAt: string;
-  readonly payloadDigest: string;
-  readonly payload: T;
-}
-
-interface DurableRecordState {
-  readonly schemaVersion: "pipeline-durable-record-store.v1";
-  readonly records: DurableRecord[];
-}
-
 export interface DurableRecordLimits {
   readonly maximumRecords: number;
   readonly maximumBytes: number;
@@ -31,7 +20,7 @@ export interface DurableRecordLimits {
 }
 
 export interface DurableRecordStore {
-  append<T>(stream: string, idempotencyKey: string, payload: T): Promise<{
+  append<T>(stream: string, idempotencyKey: string, payload: T, owner?: string): Promise<{
     readonly appended: boolean;
     readonly record: DurableRecord<T>;
   }>;
@@ -62,34 +51,6 @@ function identity(value: string, code: string): void {
   if (!IDENTITY.test(value)) throw new Error(code);
 }
 
-function payloadDigest(payload: unknown): string {
-  return `sha256:${crypto.createHash("sha256").update(canonicalJson(payload)).digest("hex")}`;
-}
-
-export function assertDurableRecordReplay(state: DurableRecordState): void {
-  if (state.schemaVersion !== "pipeline-durable-record-store.v1" || !Array.isArray(state.records))
-    throw new Error("DURABLE_RECORD_STORE_INVALID");
-  const sequences = new Map<string, number>();
-  const identities = new Set<string>();
-  for (const record of state.records) {
-    if (
-      record.schemaVersion !== "pipeline-durable-record.v1" ||
-      !IDENTITY.test(record.stream) ||
-      !IDENTITY.test(record.idempotencyKey) ||
-      !Number.isSafeInteger(record.sequence) ||
-      record.sequence < 1 ||
-      typeof record.committedAt !== "string" ||
-      !DIGEST.test(record.payloadDigest) ||
-      payloadDigest(record.payload) !== record.payloadDigest
-    ) throw new Error("DURABLE_RECORD_STORE_INVALID");
-    const expected = (sequences.get(record.stream) ?? 0) + 1;
-    if (record.sequence !== expected) throw new Error("DURABLE_RECORD_SEQUENCE_INVALID");
-    sequences.set(record.stream, record.sequence);
-    const key = `${record.stream}|${record.idempotencyKey}`;
-    if (identities.has(key)) throw new Error("DURABLE_RECORD_IDENTITY_DUPLICATE");
-    identities.add(key);
-  }
-}
 
 export class FileDurableRecordStore implements DurableRecordStore {
   readonly #file: string;
@@ -111,12 +72,13 @@ export class FileDurableRecordStore implements DurableRecordStore {
     return result;
   }
 
-  async append<T>(stream: string, idempotencyKey: string, payload: T): Promise<{
+  async append<T>(stream: string, idempotencyKey: string, payload: T, owner?: string): Promise<{
     readonly appended: boolean;
     readonly record: DurableRecord<T>;
   }> {
     identity(stream, "DURABLE_RECORD_STREAM_INVALID");
     identity(idempotencyKey, "DURABLE_RECORD_IDEMPOTENCY_KEY_INVALID");
+    if (owner !== undefined && !ownerValid(owner)) throw new Error("DURABLE_RECORD_OWNER_INVALID");
     const snapshot = JSON.parse(canonicalJson(payload)) as T;
     const digest = payloadDigest(snapshot);
     if (Buffer.byteLength(canonicalJson(snapshot)) > this.#limits.maximumRecordBytes)
@@ -124,25 +86,22 @@ export class FileDurableRecordStore implements DurableRecordStore {
     return this.#serial(async () => {
       const state = await readDurableState(this.#file, EMPTY_STATE);
       assertDurableRecordReplay(state);
-      const existing = state.records.find(
-        (record) => record.stream === stream && record.idempotencyKey === idempotencyKey,
-      );
-      if (existing) {
-        if (existing.payloadDigest !== digest) throw new Error("DURABLE_RECORD_IDEMPOTENCY_CONFLICT");
-        return { appended: false, record: structuredClone(existing) as DurableRecord<T> };
-      }
+      const duplicate = existingRecord(state, stream, idempotencyKey, digest, snapshot, owner);
+      if (duplicate) return { appended: false, record: duplicate };
       if (state.records.length >= this.#limits.maximumRecords)
         throw new Error("DURABLE_RECORD_STORE_FULL");
       const record: DurableRecord<T> = {
-        schemaVersion: "pipeline-durable-record.v1",
+        schemaVersion: owner === undefined ? "pipeline-durable-record.v1" : "pipeline-durable-record.v2",
+        ...(owner === undefined ? {} : { owner }),
         stream,
-        sequence: state.records.filter((entry) => entry.stream === stream).length + 1,
+        sequence: state.records.filter((entry) => entry.stream === stream).length + (state.tombstones?.filter(entry => entry.stream === stream).length ?? 0) + 1,
         idempotencyKey,
         committedAt: new Date().toISOString(),
         payloadDigest: digest,
         payload: snapshot,
       };
-      const candidate: DurableRecordState = { ...state, records: [...state.records, record] };
+      const candidate: DurableRecordState = owner === undefined ? { ...state, records: [...state.records, record] }
+        : { ...state, schemaVersion: 'pipeline-durable-record-store.v2', records: [...state.records, record], tombstones: state.tombstones ?? [], retirements: state.retirements ?? [] };
       if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes)
         throw new Error("DURABLE_RECORD_STORE_FULL");
       await writeDurableState(this.#file, candidate);
@@ -156,6 +115,54 @@ export class FileDurableRecordStore implements DurableRecordStore {
       const state = await readDurableState(this.#file, EMPTY_STATE);
       assertDurableRecordReplay(state);
       return structuredClone(state.records.filter((record) => record.stream === stream)) as DurableRecord<T>[];
+    });
+  }
+
+  async retirements(stream: string): Promise<readonly RecordRetirement[]> {
+    identity(stream, 'DURABLE_RECORD_STREAM_INVALID');
+    return this.#serial(async () => {
+      const state = await readDurableState(this.#file, EMPTY_STATE); assertDurableRecordReplay(state);
+      return structuredClone((state.retirements ?? []).filter(entry => entry.intent.stream === stream));
+    });
+  }
+
+  /** Caller holds its domain fence; authorize runs again inside the real store writer fence. */
+  async retire(intentInput: RecordRetirementIntent, authorize: (records: readonly DurableRecord[]) => Promise<void>): Promise<RecordRetirement & { readonly newlyRetired: boolean; readonly releasedBytes: number }> {
+    const intent = JSON.parse(canonicalJson(intentInput)) as RecordRetirementIntent; assertRetirementIntent(intent);
+    const intentDigest = payloadDigest(intent);
+    return this.#serial(async () => {
+      const state = await readDurableState(this.#file, EMPTY_STATE); assertDurableRecordReplay(state);
+      const previous = state.retirements?.find(item => item.intent.operationId === intent.operationId);
+      if (previous) {
+        if (previous.intentDigest !== intentDigest) throw new Error('DURABLE_RETIREMENT_CONFLICT');
+        await authorize([]);
+        return { ...structuredClone(previous), newlyRetired: false, releasedBytes: Number.parseInt(previous.releasedBytesHex,16) };
+      }
+      const selected = intent.records.map(item => {
+        const record = state.records.find(entry => entry.stream === intent.stream && entry.idempotencyKey === item.idempotencyKey);
+        if (!record || record.schemaVersion !== 'pipeline-durable-record.v2' || record.owner !== intent.owner
+          || record.payloadDigest !== item.payloadDigest) throw new Error('DURABLE_RETIREMENT_RECORD_CHANGED');
+        return record;
+      });
+      await authorize(structuredClone(selected));
+      const selectedIds = new Set(selected.map(record => record.idempotencyKey));
+      const retirement = { intent, intentDigest, releasedBytesHex: '0000000000000000' };
+      const candidate: DurableRecordState = {
+        schemaVersion: 'pipeline-durable-record-store.v2',
+        records: state.records.filter(record => record.stream !== intent.stream || !selectedIds.has(record.idempotencyKey)),
+        tombstones: [...state.tombstones ?? [], ...selected.map(record => {
+          const { payload: _payload, ...header } = record; return { ...header, retirementId: intent.operationId };
+        })], retirements: [...state.retirements ?? [], retirement],
+      };
+      const before = Buffer.byteLength(canonicalJson(state));
+      // Fixed-width hex avoids a self-referential decimal digit-count equation.
+      const releasedBytes = before - Buffer.byteLength(canonicalJson(candidate));
+      if (releasedBytes < 1) throw new Error('DURABLE_RETIREMENT_NO_SAVING');
+      retirement.releasedBytesHex = releasedBytes.toString(16).padStart(16,'0');
+      assertDurableRecordReplay(candidate);
+      if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes) throw new Error('DURABLE_RECORD_STORE_FULL');
+      await writeDurableState(this.#file, candidate);
+      return { ...structuredClone(retirement), newlyRetired: true, releasedBytes };
     });
   }
 
@@ -178,7 +185,10 @@ export class FileDurableRecordStore implements DurableRecordStore {
       const index = state.records.findIndex(
         (record) => record.stream === stream && record.idempotencyKey === idempotencyKey,
       );
-      if (index < 0) throw new Error("DURABLE_RECORD_NOT_FOUND");
+      if (index < 0) {
+        if (state.tombstones?.some(record => record.stream === stream && record.idempotencyKey === idempotencyKey)) throw new Error('DURABLE_RECORD_RETIRED');
+        throw new Error("DURABLE_RECORD_NOT_FOUND");
+      }
       const existing = state.records[index];
       if (!existing) throw new Error("DURABLE_RECORD_NOT_FOUND");
       if (existing.payloadDigest !== expectedPayloadDigest)

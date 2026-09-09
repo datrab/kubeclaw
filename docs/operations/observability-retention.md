@@ -88,11 +88,22 @@ run-retirement or tombstone operation. The
 projects admission/attempt state with cursors and completeness; it is not a durable
 consumer checkpoint or storage-deletion acknowledgement.
 
-## Required manual retirement contract — not yet implemented
+## Manual telemetry projection cleanup
+
+An explicit local operator command now releases selected telemetry projection
+payloads from completed runs, with owned record headers, permanent idempotency
+tombstones and original run/store writer fences. It preserves canonical run
+history, artifacts, results and acceptance evidence. See the exact
+[scope, replay contract and verification](../review/remediation/implementation/wave47-telemetry-retirement.md).
+It performs no automatic log deletion and cannot retire historical unowned
+telemetry records, admission records, attempt evidence, shared artifacts or jobs.
+
+## Required broader manual retirement contract — not yet implemented
 
 PCR-OBS-002 remains partially addressed: policy is decided, but a safe capacity
-release operation is missing. There is currently no supported command that
-selectively deletes confirmed history from these stores. Do not edit
+release operation is missing for the remaining stores. Beyond the bounded
+telemetry projection command above, no supported command selectively deletes
+confirmed history from these stores. Do not edit
 `store.json`, `admission.json`, `attempt-store.json`, journal prefixes or referenced
 blob files to make quota space. That would remove sequence, digest, result or
 idempotency facts without the required retirement transition.

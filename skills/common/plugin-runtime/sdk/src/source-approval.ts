@@ -1,3 +1,4 @@
+import {verifiedArtifactJsonText} from './artifact-json.ts';
 import { sourcePreflight, type SourceBinding } from './source-preflight.ts';
 import type { ArtifactRef } from './generated/contracts.ts';
 import type { PluginInvocationContext } from './runtime.ts';
@@ -7,9 +8,9 @@ import { parseReviewSubject, type ReviewSubject } from './review-subject.ts';
 export async function readBoundArtifact(artifact: ArtifactRef, context: PluginInvocationContext): Promise<Record<string, unknown>> {
   if (artifact.producer.runId !== context.contract.lease.attempt.runId || artifact.mediaType !== 'application/json'
     || artifact.sizeBytes > 4_194_304) throw new Error('SOURCE_APPROVAL_ARTIFACT_INVALID');
-  const read = await context.invoke('artifacts.read', { operation: 'get_json', resource: { type: 'artifact.object', canonicalId: artifact.artifactId },
-    payload: { namespace: artifact.namespace, digest: artifact.digest } });
-  const serialized = canonicalJson(read.value);
+  const read = await context.invoke('artifacts.read', { operation: 'get_json_bytes', resource: { type: 'artifact.object', canonicalId: artifact.artifactId },
+    payload: { namespace: artifact.namespace, digest: artifact.digest, reference: artifact } });
+  const serialized = verifiedArtifactJsonText(read, artifact);
   if (read.digest !== artifact.digest || read.sizeBytes !== artifact.sizeBytes
     || sha256Text(serialized) !== artifact.digest || Buffer.byteLength(serialized) !== artifact.sizeBytes) throw new Error('SOURCE_APPROVAL_ARTIFACT_CORRUPT');
   return read.value as Record<string, unknown>;

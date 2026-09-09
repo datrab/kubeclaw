@@ -1,0 +1,19 @@
+✔ Discord original HTTP and durable store bind wire bytes and replay after reopen (3870.908438ms)
+✔ Discord dropped response remains uncertain after reopen without another POST (3324.524341ms)
+✔ Discord invalid actual ID cannot be replaced by generic messageId or blindly retried (3111.121825ms)
+✔ explicit Discord receipt contract vectors reject legacy acknowledgments and invalid IDs (1.052708ms)
+✔ original observer, effect journal and operator resume a rejected send after reconstruction (1721.568597ms)
+✔ durable receiver receipt reconciles lost HTTP ACK without a duplicate external delivery (1530.46061ms)
+✔ permanent rejection remains bounded across adapter and observer reconstruction (1807.249576ms)
+✔ uncertain delivery without receiver contract is never blindly resent (1529.598659ms)
+✔ configured receipt endpoint without the actual protocol cannot authorize a send (1498.99654ms)
+Real ArtifactStore and FileEffectJournal replay JSON regressions passed
+✔ tests/verification/reliability/sdk-json-contract.test.mts (339.667828ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10862.127064

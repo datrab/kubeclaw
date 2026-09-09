@@ -1,4 +1,5 @@
-import { canonicalJson, sha256Text } from './values.ts';
+import {verifiedArtifactJsonText} from './artifact-json.ts';
+import { sha256Text } from './values.ts';
 import type { ArtifactRef } from './generated/contracts.ts';
 import type { PluginInvocationContext } from './runtime.ts';
 
@@ -15,9 +16,9 @@ function atAttempt(candidates: ArtifactRef[], attemptNumber: number): ArtifactRe
 }
 
 async function readImplementation(artifact: ArtifactRef, context: PluginInvocationContext): Promise<{ sourceRevision: string; headBefore: unknown }> {
-  const response = await context.invoke('artifacts.read', { operation: 'get_json', resource: { type: 'artifact.object', canonicalId: artifact.artifactId },
-    payload: { namespace: artifact.namespace, digest: artifact.digest } });
-  const serialized = canonicalJson(response.value);
+  const response = await context.invoke('artifacts.read', { operation: 'get_json_bytes', resource: { type: 'artifact.object', canonicalId: artifact.artifactId },
+    payload: { namespace: artifact.namespace, digest: artifact.digest, reference: artifact } });
+  const serialized = verifiedArtifactJsonText(response, artifact);
   if (response.digest !== artifact.digest || response.sizeBytes !== artifact.sizeBytes
     || sha256Text(serialized) !== artifact.digest || Buffer.byteLength(serialized) !== artifact.sizeBytes) throw new Error('SOURCE_IMPLEMENTATION_ARTIFACT_CORRUPT');
   const result = response.value as { sourceRevision?: unknown; headBefore?: unknown; status?: unknown } | null;

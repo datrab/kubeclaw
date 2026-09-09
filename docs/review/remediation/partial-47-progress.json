@@ -7,378 +7,476 @@
     {
       "id": "PCR-SDK-001",
       "package": "sdk",
-      "status": "in Prüfung",
+      "status": "in Bearbeitung",
       "baseline_status": "implementiert",
       "required_evidence": "Portable Ordnung/versionierte Digestumstellung noch offen; aktuelle akzeptierte Bytes bewusst unverändert.",
-      "result": null
+      "result": "Versionierter tatsächlicher Artifact-Writer/Rawbyte-Reader mit voller Producerbindung umgesetzt und unabhängig geprüft. Semantische Effect/Subject/Input/Report/Repair-/Ownership-Digests benötigen gekoppelte Versionierung; Folgearbeit aktiv.",
+      "baseline_evidence_requirement": "Portable Ordnung/versionierte Digestumstellung noch offen; aktuelle akzeptierte Bytes bewusst unverändert.",
+      "evidence": "implementation/wave47-sdk-independent-review.md"
     },
     {
       "id": "PCR-BUSTER-ENGINE-004",
       "package": "resources",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Normale bestätigte Arbeit bereinigt; Restart-/Orphan-/unsichere Eingaben bleiben bis Besitz-/Terminierungsnachweis erhalten.",
-      "result": null
+      "required_evidence": "Bestätigte terminale Arbeit bereinigt; Recovery-/Orphanbesitz und native completed/failed/cancelled Neustartabnahme bleiben offen. Sequenzielle Providerressourcen nun erhalten.",
+      "result": "Bestätigte terminale Arbeit bereinigt; Recovery-/Orphanbesitz und native completed/failed/cancelled Neustartabnahme bleiben offen. Sequenzielle Providerressourcen nun erhalten.",
+      "baseline_evidence_requirement": "Normale bestätigte Arbeit bereinigt; Restart-/Orphan-/unsichere Eingaben bleiben bis Besitz-/Terminierungsnachweis erhalten.",
+      "evidence": "implementation/worker-terminal-resource-measurement.md"
     },
     {
       "id": "PCR-ISOLATION-002",
       "package": "resources",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Echte Prozessbaum-/Credential-drop-/Host-SIGKILL-Abnahme durch fehlende proc-children und delegierte Cgroups blockiert.",
-      "result": null
+      "required_evidence": "Echte Native-Prozessbaum-/SIGKILL-Abnahme scheitert an fehlendem proc-task-children/delegierter Cgroup; keine Kernelabnahme bestanden.",
+      "result": "Echte Native-Prozessbaum-/SIGKILL-Abnahme scheitert an fehlendem proc-task-children/delegierter Cgroup; keine Kernelabnahme bestanden.",
+      "baseline_evidence_requirement": "Echte Prozessbaum-/Credential-drop-/Host-SIGKILL-Abnahme durch fehlende proc-children und delegierte Cgroups blockiert.",
+      "evidence": "implementation/worker-terminal-resource-measurement.md"
     },
     {
       "id": "PCR-ISOLATION-004",
       "package": "resources",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Reale Cgroup2-Speicher/OOM-Grenze implementiert, konservative Page-Rundung lokal geprüft; Kernelabnahme mangels Delegation blockiert.",
-      "result": null
+      "required_evidence": "Kernel-Speicher-/OOM-Gate nicht bestanden: kein delegierter beschreibbarer Cgroup2-Kontext. Lokale Rundungs-/Policytests ersetzen den Gate nicht.",
+      "result": "Kernel-Speicher-/OOM-Gate nicht bestanden: kein delegierter beschreibbarer Cgroup2-Kontext. Lokale Rundungs-/Policytests ersetzen den Gate nicht.",
+      "baseline_evidence_requirement": "Reale Cgroup2-Speicher/OOM-Grenze implementiert, konservative Page-Rundung lokal geprüft; Kernelabnahme mangels Delegation blockiert.",
+      "evidence": "implementation/worker-terminal-resource-measurement.md"
     },
     {
       "id": "PCR-NOVA-GATE-005",
       "package": "resources",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Öffentlicher Graphreader korrigiert; realer Vollprozess-Restart scheitert an Sandbox vor neuer Assertion; kein bestandener Nachweis.",
-      "result": null
+      "required_evidence": "Originaler voller Buster/Provider-Prozessrestart wurde erneut gestartet und scheitert im Sandboxprozess vor der geforderten Assertion.",
+      "result": "Originaler voller Buster/Provider-Prozessrestart wurde erneut gestartet und scheitert im Sandboxprozess vor der geforderten Assertion.",
+      "baseline_evidence_requirement": "Öffentlicher Graphreader korrigiert; realer Vollprozess-Restart scheitert an Sandbox vor neuer Assertion; kein bestandener Nachweis.",
+      "evidence": "implementation/worker-terminal-resource-measurement.md"
     },
     {
       "id": "PCR-RUNTIME-001",
       "package": "product",
-      "status": "in Prüfung",
+      "status": "verifiziert",
       "baseline_status": "implementiert",
-      "required_evidence": "Autorisierte einmalige Cleanupfrist und transitive Sessionbindung; ursprüngliche 25 Fälle plus vier finale Identitätsgegenproben bestanden. Native OpenClaw-Terminierung nicht behauptet.",
-      "result": null
+      "required_evidence": "Originalabnahme vollständig erfüllt; siehe unabhängigen Nachweis.",
+      "result": "22 echte Core/HTTP-Cleanupregressionen unabhängig bestanden, einschließlich Timeout, Elternabbruch, später Identität und persistierter Ungewissheit.",
+      "evidence": "implementation/wave47-root-review.md",
+      "baseline_evidence_requirement": "Autorisierte einmalige Cleanupfrist und transitive Sessionbindung; ursprüngliche 25 Fälle plus vier finale Identitätsgegenproben bestanden. Native OpenClaw-Terminierung nicht behauptet."
     },
     {
       "id": "PATH-T11-001",
       "package": "product",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Actual Node JUnit output, original parser/finalizer and localhost HTTP Nova import/FileStore verified independently; no review override or invented failed case for missing execution. Full native provider/adapter/runner path blocked by actual EPIPE/exit70 host prerequisite failure.",
-      "result": null
+      "required_evidence": "Original real Node JUnit → original parser/finalizer → real HTTP Nova import and durable reconstruction passes again. | Required original provider/adapter/runner chain still fails through actual supervised native adapter after building its helper (`REPORT_ADAPTER_STDIN_FAILED`, EPIPE). No local finalizer-only result is labelled full runner evidence.",
+      "result": "Original real Node JUnit → original parser/finalizer → real HTTP Nova import and durable reconstruction passes again. | Required original provider/adapter/runner chain still fails through actual supervised native adapter after building its helper (`REPORT_ADAPTER_STDIN_FAILED`, EPIPE). No local finalizer-only result is labelled full runner evidence.",
+      "baseline_evidence_requirement": "Actual Node JUnit output, original parser/finalizer and localhost HTTP Nova import/FileStore verified independently; no review override or invented failed case for missing execution. Full native provider/adapter/runner path blocked by actual EPIPE/exit70 host prerequisite failure.",
+      "evidence": "implementation/wave47-product-gates.md"
     },
     {
       "id": "PATH-T11-002",
       "package": "product",
-      "status": "in Prüfung",
+      "status": "verifiziert",
       "baseline_status": "implementiert",
-      "required_evidence": "Native kumulative Gesamtpipeline mit echten Providern und anschließendem Ready-/Zustellungsnachweis prüfen; technische delivery-manifest.v2 allein ist keine Ready-Freigabe.",
-      "result": null
+      "required_evidence": "Originalabnahme vollständig erfüllt; siehe unabhängigen Nachweis.",
+      "result": "Originaler Resolver und reale Nova/Buster HTTP/Store/Git-Entscheidung unabhängig geprüft: unvollständige Pflichtabdeckung blockiert, optionale Skips erhalten.",
+      "evidence": "implementation/wave47-root-review.md",
+      "baseline_evidence_requirement": "Native kumulative Gesamtpipeline mit echten Providern und anschließendem Ready-/Zustellungsnachweis prüfen; technische delivery-manifest.v2 allein ist keine Ready-Freigabe."
     },
     {
       "id": "PATH-T13-001",
       "package": "product",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Native kumulative Gesamtpipeline mit echten Providern und anschließendem Ready-/Zustellungsnachweis prüfen; technische delivery-manifest.v2 allein ist keine Ready-Freigabe.",
-      "result": null
+      "required_evidence": "Original independent cumulative-policy and source/decision contracts retained and passing; importer cannot reduce authored coverage. | Original same-revision earlier-module interaction defect through complete native cumulative provider chain remains unproved; no synthetic pass report replaces it.",
+      "result": "Original independent cumulative-policy and source/decision contracts retained and passing; importer cannot reduce authored coverage. | Original same-revision earlier-module interaction defect through complete native cumulative provider chain remains unproved; no synthetic pass report replaces it.",
+      "baseline_evidence_requirement": "Native kumulative Gesamtpipeline mit echten Providern und anschließendem Ready-/Zustellungsnachweis prüfen; technische delivery-manifest.v2 allein ist keine Ready-Freigabe.",
+      "evidence": "implementation/wave47-product-gates.md"
     },
     {
       "id": "PCR-CONTAINER-BUILD-001",
       "package": "product",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
-      "result": null
+      "required_evidence": "Original real-file output validator/resolver covers failed omission, mandatory success output, invalid supplied outputs; passes. | Original failed Dockerfile build through original runner cannot run: no native BuildKit/configuration. Failed-vs-errored full provider disposition is not claimed.",
+      "result": "Original real-file output validator/resolver covers failed omission, mandatory success output, invalid supplied outputs; passes. | Original failed Dockerfile build through original runner cannot run: no native BuildKit/configuration. Failed-vs-errored full provider disposition is not claimed.",
+      "baseline_evidence_requirement": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
+      "evidence": "implementation/wave47-product-gates.md"
     },
     {
       "id": "PCR-CONTAINER-BUILD-002",
       "package": "product",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
-      "result": null
+      "required_evidence": "Actual local HTTP delayed/stalled body, full deadline, cancellation and diagnostic preservation regressions pass. | Original real prepared build followed by Registryverify deadline remains unexecuted because BuildKit is unavailable.",
+      "result": "Actual local HTTP delayed/stalled body, full deadline, cancellation and diagnostic preservation regressions pass. | Original real prepared build followed by Registryverify deadline remains unexecuted because BuildKit is unavailable.",
+      "baseline_evidence_requirement": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
+      "evidence": "implementation/wave47-product-gates.md"
     },
     {
       "id": "PCR-DIRECT-COMMAND-001",
       "package": "product",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
-      "result": null
+      "required_evidence": "All eight output positions × six media types pass the original resolver/production validator with actual file copies/hashes. | The original native two-artifact command/provider/runner regression was run after genuine sandbox build and fails (`errored`/EPIPE before command), so the exact original requested native proof remains open. No cluster/BuildKit requirement was added to this finding.",
+      "result": "All eight output positions × six media types pass the original resolver/production validator with actual file copies/hashes. | The original native two-artifact command/provider/runner regression was run after genuine sandbox build and fails (`errored`/EPIPE before command), so the exact original requested native proof remains open. No cluster/BuildKit requirement was added to this finding.",
+      "baseline_evidence_requirement": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
+      "evidence": "implementation/wave47-product-gates.md"
     },
     {
       "id": "PCR-VISUAL-001",
       "package": "prism",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Mit tatsächlichem Workerbrowser neu aufnehmen und freigeben; nativen Versionsabweichungs-/Erneuerungstest und Remote-Vertikale ausführen. Historische v1Fixture bleibt explizit blockiert.",
-      "result": null
+      "required_evidence": "Old manifest version versus actual new capture rejects; accepted newly captured/reviewed baseline succeeds. | Code present: v2 manifest captures actual browser version, provider rejects mismatch before comparison, old manifests require recapture. Three original local identity/preflight tests pass. | Actual browser capture versus obsolete manifest and approved newly captured baseline; native provider gate fails for missing Chromium. No baseline was fabricated or approved.",
+      "result": "Old manifest version versus actual new capture rejects; accepted newly captured/reviewed baseline succeeds. | Code present: v2 manifest captures actual browser version, provider rejects mismatch before comparison, old manifests require recapture. Three original local identity/preflight tests pass. | Actual browser capture versus obsolete manifest and approved newly captured baseline; native provider gate fails for missing Chromium. No baseline was fabricated or approved.",
+      "baseline_evidence_requirement": "Mit tatsächlichem Workerbrowser neu aufnehmen und freigeben; nativen Versionsabweichungs-/Erneuerungstest und Remote-Vertikale ausführen. Historische v1Fixture bleibt explizit blockiert.",
+      "evidence": "implementation/wave47-prism-reverification.md"
     },
     {
       "id": "PATH-T02-001",
       "package": "prism",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Persisted generation snapshot reaches original bridge prompt with generation identity. SQL, configuration and bridge process boundary pass; native PostgreSQL/full Control plus real OpenClaw generation and result callback remain unexecuted. Active architecture/round binding tracked separately in PATH-T02-002/003.",
-      "result": null
+      "required_evidence": "Original services + real DB, save event, capture agent request and demonstrate the persisted snapshot in a new session. | Code present: trusted subject resolution → persisted consent/policy/event-bound preference generation → original prompt/tool generation identity. SQL snapshot and producer/prompt tests pass across projects, with override/disable and subject exclusion. | Original Control/database request admission and captured new-session agent input remain unexercised. No actual model generation or design-quality requirement is added to this finding.",
+      "result": "Original services + real DB, save event, capture agent request and demonstrate the persisted snapshot in a new session. | Code present: trusted subject resolution → persisted consent/policy/event-bound preference generation → original prompt/tool generation identity. SQL snapshot and producer/prompt tests pass across projects, with override/disable and subject exclusion. | Original Control/database request admission and captured new-session agent input remain unexercised. No actual model generation or design-quality requirement is added to this finding.",
+      "baseline_evidence_requirement": "Persisted generation snapshot reaches original bridge prompt with generation identity. SQL, configuration and bridge process boundary pass; native PostgreSQL/full Control plus real OpenClaw generation and result callback remain unexecuted. Active architecture/round binding tracked separately in PATH-T02-002/003.",
+      "evidence": "implementation/wave47-prism-reverification.md"
     },
     {
       "id": "PATH-T02-002",
       "package": "prism",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Native PostgreSQL-Pool- und Browser-/Agentintegration bei vorhandenen Voraussetzungen ausführen; vorhandene Studio-Typfehler separat beheben.",
-      "result": null
+      "required_evidence": "Original Control/agent tool + real DB; overlap A1/A2 and reverse results without A1 mutating A2. | Code present: round binds request, architecture digest/revision and source revision; repository checks before mutations. Reversed architecture-result order, rejection and exact replay tests pass on original repositories/PGlite. | Original Control/agent-tool HTTP flow with DB and reversed A1/A2 delivery remains unexercised. A model call or browser is not required for this original gate.",
+      "result": "Original Control/agent tool + real DB; overlap A1/A2 and reverse results without A1 mutating A2. | Code present: round binds request, architecture digest/revision and source revision; repository checks before mutations. Reversed architecture-result order, rejection and exact replay tests pass on original repositories/PGlite. | Original Control/agent-tool HTTP flow with DB and reversed A1/A2 delivery remains unexercised. A model call or browser is not required for this original gate.",
+      "baseline_evidence_requirement": "Native PostgreSQL-Pool- und Browser-/Agentintegration bei vorhandenen Voraussetzungen ausführen; vorhandene Studio-Typfehler separat beheben.",
+      "evidence": "implementation/wave47-prism-reverification.md"
     },
     {
       "id": "PATH-T02-003",
       "package": "prism",
-      "status": "in Prüfung",
+      "status": "verifiziert",
       "baseline_status": "implementiert",
-      "required_evidence": "Native PostgreSQL-Pool- und Browser-/Agentintegration bei vorhandenen Voraussetzungen ausführen; vorhandene Studio-Typfehler separat beheben.",
-      "result": null
+      "required_evidence": "Originalabnahme vollständig erfüllt; siehe unabhängigen Nachweis.",
+      "result": "Originale SQL-Persistenz und HTTP-Retry unabhängig bestanden: zwei Runden, sechs Dokumente, drei historische Ablehnungen; keine zusätzliche native Pool-/Browseranforderung im Originalbefund.",
+      "evidence": "implementation/wave47-root-review.md",
+      "baseline_evidence_requirement": "Native PostgreSQL-Pool- und Browser-/Agentintegration bei vorhandenen Voraussetzungen ausführen; vorhandene Studio-Typfehler separat beheben."
     },
     {
       "id": "PCR-PRISM-AGENT-BRIDGE-001",
       "package": "prism",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen.",
-      "result": null
+      "required_evidence": "Original bridge/agent/Control; actual aborts after 202, before spawn and after tool commit; restart without duplicate revision. | Code present: durable accepted/running/terminal job, fenced callback transaction, uncertain running outcome becomes NeedsNova without restart. Real database reopen, local process/HTTP and callback rollback tests pass. | Native DB pool, real OpenClaw/gateway accepted/spawn/tool-commit crash prefixes and session reconciliation; Node child tests do not establish gateway cancellation.",
+      "result": "Original bridge/agent/Control; actual aborts after 202, before spawn and after tool commit; restart without duplicate revision. | Code present: durable accepted/running/terminal job, fenced callback transaction, uncertain running outcome becomes NeedsNova without restart. Real database reopen, local process/HTTP and callback rollback tests pass. | Native DB pool, real OpenClaw/gateway accepted/spawn/tool-commit crash prefixes and session reconciliation; Node child tests do not establish gateway cancellation.",
+      "baseline_evidence_requirement": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen.",
+      "evidence": "implementation/wave47-prism-reverification.md"
     },
     {
       "id": "PCR-PRISM-AGENT-BRIDGE-002",
       "package": "prism",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen.",
-      "result": null
+      "required_evidence": "Original requests with long common prefixes and punctuation; separate sessions/history with correct project binding. | Code present: SHA-256 over complete trusted namespace/project tuple, preserved mapping; punctuation, long-prefix and namespace separation tests pass. | Actual OpenClaw session/history isolation for separate real project requests.",
+      "result": "Original requests with long common prefixes and punctuation; separate sessions/history with correct project binding. | Code present: SHA-256 over complete trusted namespace/project tuple, preserved mapping; punctuation, long-prefix and namespace separation tests pass. | Actual OpenClaw session/history isolation for separate real project requests.",
+      "baseline_evidence_requirement": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen.",
+      "evidence": "implementation/wave47-prism-reverification.md"
     },
     {
       "id": "PCR-PRISM-CONTROL-001",
       "package": "prism",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red.",
-      "result": null
+      "required_evidence": "Original Control handler + native Postgres and authenticated transport; another real attempt rejected before persistence, valid path accepted. | Code present: original receiver validates full attempt/claim/worker/result/schema binding before evidence import and DB commit; bound cache replay also validates. Wrong real attempt and altered binding tests pass through original worker/artifact components. | Full original Control + Worker + native PostgreSQL commit/rollback observation, including an authenticated foreign result and valid result.",
+      "result": "Original Control handler + native Postgres and authenticated transport; another real attempt rejected before persistence, valid path accepted. | Code present: original receiver validates full attempt/claim/worker/result/schema binding before evidence import and DB commit; bound cache replay also validates. Wrong real attempt and altered binding tests pass through original worker/artifact components. | Full original Control + Worker + native PostgreSQL commit/rollback observation, including an authenticated foreign result and valid result.",
+      "baseline_evidence_requirement": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red.",
+      "evidence": "implementation/wave47-prism-reverification.md"
     },
     {
       "id": "PCR-PRISM-CONTROL-002",
       "package": "prism",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Atomic direction/preference SQL and real Studio proxy verified independently; Root 12/12 PGlite/HTTP tests pass. Native pooled PostgreSQL and full Control lost-ACK service proof remain unexecuted.",
-      "result": null
+      "required_evidence": "Original Control + native temporary Postgres; selection/four feedback actions, real DB error rollback and lost-ACK replay. | Code present: internal UUID separate from wire identity; direction change and preference/receipt share reserved transaction. Original SQL trigger failures, rollback, four feedback actions and exact replay pass. | Native pooled Control HTTP/session flow, SQL failure before event, lost acknowledgement.",
+      "result": "Original Control + native temporary Postgres; selection/four feedback actions, real DB error rollback and lost-ACK replay. | Code present: internal UUID separate from wire identity; direction change and preference/receipt share reserved transaction. Original SQL trigger failures, rollback, four feedback actions and exact replay pass. | Native pooled Control HTTP/session flow, SQL failure before event, lost acknowledgement.",
+      "baseline_evidence_requirement": "Atomic direction/preference SQL and real Studio proxy verified independently; Root 12/12 PGlite/HTTP tests pass. Native pooled PostgreSQL and full Control lost-ACK service proof remain unexecuted.",
+      "evidence": "implementation/wave47-prism-reverification.md"
     },
     {
       "id": "PCR-PRISM-CORPUS-001",
       "package": "prism",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Reserved transaction/advisory lock source reviewed; actual PGlite rollback tests pass. NativePG17.5/pgvector0.8.0 built but root-only UID mapping prevents legitimate initdb; real multi-connection gate not run.",
-      "result": null
+      "required_evidence": "Native Postgres pool ≥2 connections, competing requests and insert failures; no partial rows/open transaction. | Code present: entire lookup/advisory lock/write scope uses the reserved `inTransaction` connection. Original corpus SQL regressions pass. | Genuine pg.Pool with two backend PIDs, real pgvector, competing barriers and insert failures; existing native gate cannot start without a dedicated DB.",
+      "result": "Native Postgres pool ≥2 connections, competing requests and insert failures; no partial rows/open transaction. | Code present: entire lookup/advisory lock/write scope uses the reserved `inTransaction` connection. Original corpus SQL regressions pass. | Genuine pg.Pool with two backend PIDs, real pgvector, competing barriers and insert failures; existing native gate cannot start without a dedicated DB.",
+      "baseline_evidence_requirement": "Reserved transaction/advisory lock source reviewed; actual PGlite rollback tests pass. NativePG17.5/pgvector0.8.0 built but root-only UID mapping prevents legitimate initdb; real multi-connection gate not run.",
+      "evidence": "implementation/wave47-prism-reverification.md"
     },
     {
       "id": "PCR-PRISM-WORKER-001",
       "package": "prism",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red.",
-      "result": null
+      "required_evidence": "Original Control/Worker + temporary Postgres/artifact store; readable correct full log and store failure remains errored. | Code present: required full log uses the original authenticated/digest-bound artifact path; original Executor/Engine/HTTP/CAS regression yields readable matching bytes; corrupt store still errors and budget rejects oversized log. | Complete original Control + Worker with native DB and artifact storage, confirming completion/rollback at the actual service boundary.",
+      "result": "Original Control/Worker + temporary Postgres/artifact store; readable correct full log and store failure remains errored. | Code present: required full log uses the original authenticated/digest-bound artifact path; original Executor/Engine/HTTP/CAS regression yields readable matching bytes; corrupt store still errors and budget rejects oversized log. | Complete original Control + Worker with native DB and artifact storage, confirming completion/rollback at the actual service boundary.",
+      "baseline_evidence_requirement": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red.",
+      "evidence": "implementation/wave47-prism-reverification.md"
     },
     {
       "id": "PCR-PRISM-WORKER-002",
       "package": "resources",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
-      "result": null
+      "required_evidence": "Terminale Core-Messung nach Cleanup/Evidence/Finalize und monotone verfügbare Beobachtungen behoben; vollständige Child-/Capability-/Browserownership bleibt Codearbeit.",
+      "result": "Terminale Core-Messung nach Cleanup/Evidence/Finalize und monotone verfügbare Beobachtungen behoben; vollständige Child-/Capability-/Browserownership bleibt Codearbeit.",
+      "baseline_evidence_requirement": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
+      "evidence": "implementation/worker-terminal-resource-measurement.md"
     },
     {
       "id": "PCR-PRISM-WORKER-003",
       "package": "resources",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
-      "result": null
+      "required_evidence": "Zusätzliche Completionmessphase vorhanden; tatsächliche Cancel-/Browsernacharbeit und gesamtes Attempt-CPUfenster nicht vollständig nachgewiesen.",
+      "result": "Zusätzliche Completionmessphase vorhanden; tatsächliche Cancel-/Browsernacharbeit und gesamtes Attempt-CPUfenster nicht vollständig nachgewiesen.",
+      "baseline_evidence_requirement": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
+      "evidence": "implementation/worker-terminal-resource-measurement.md"
     },
     {
       "id": "PCR-PRISM-ENGINE-001",
       "package": "prism",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "15 original engine/render tests pass, including reviewer-reproduced mutable request binding correction. Completed count/serialized-byte limits and real artifact persistence verified. Original Chromium capture gate blocked by missing executable; long-lived capture/heap and full Control restart proof remain open.",
-      "result": null
+      "required_evidence": "Many actual captures in a long-lived worker, retained cache/heap budget, coalesced same-key work and Control-backed restart. | Code present: bounded active ownership and completed LRU entry/byte budgets with immutable serialized retention. Original repeated-render/cache/coalescing and durable artifact reopen tests pass. | Long-lived genuine capture/retained-heap acceptance and Control-backed restart replay; prepared capture gate fails because Chromium is absent.",
+      "result": "Many actual captures in a long-lived worker, retained cache/heap budget, coalesced same-key work and Control-backed restart. | Code present: bounded active ownership and completed LRU entry/byte budgets with immutable serialized retention. Original repeated-render/cache/coalescing and durable artifact reopen tests pass. | Long-lived genuine capture/retained-heap acceptance and Control-backed restart replay; prepared capture gate fails because Chromium is absent.",
+      "baseline_evidence_requirement": "15 original engine/render tests pass, including reviewer-reproduced mutable request binding correction. Completed count/serialized-byte limits and real artifact persistence verified. Original Chromium capture gate blocked by missing executable; long-lived capture/heap and full Control restart proof remain open.",
+      "evidence": "implementation/wave47-prism-reverification.md"
     },
     {
       "id": "PCR-PRISM-RENDERER-002",
       "package": "prism",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Action attributes and actual App transition wiring corrected; Node tests pass, actual iframe click proof blocked by missingChromium/CDNtimeout.",
-      "result": null
+      "required_evidence": "Actual iframe Previous/Next clicks cause the original App transitions in both directions. | Code present: distinct declarative previous/next actions reach original preview flow protocol; renderer tests pass. | Actual sandbox iframe clicks changing original App state in both directions; prepared Studio gate fails at browser launch.",
+      "result": "Actual iframe Previous/Next clicks cause the original App transitions in both directions. | Code present: distinct declarative previous/next actions reach original preview flow protocol; renderer tests pass. | Actual sandbox iframe clicks changing original App state in both directions; prepared Studio gate fails at browser launch.",
+      "baseline_evidence_requirement": "Action attributes and actual App transition wiring corrected; Node tests pass, actual iframe click proof blocked by missingChromium/CDNtimeout.",
+      "evidence": "implementation/wave47-prism-reverification.md"
     },
     {
       "id": "PCR-PRISM-STUDIO-002",
       "package": "prism",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Actual HTTP artifact loading/digest/size/auth/abort tests pass; browser image decode/CSP proof blocked by missingChromium/CDNtimeout.",
-      "result": null
+      "required_evidence": "Real canonical image preview/browser rendering with load/size/integrity denials and retained sandbox/CSP. | Code present: same-origin bounded digest-verified asset loading, cancellation, separate resolved sources and data-image CSP retain sandbox. Original asset HTTP/store and projection tests pass. | Real browser image decode/naturalWidth, CSP/sandbox and denied/corrupt/oversized UI cases. Prepared tests did not reach those assertions.",
+      "result": "Real canonical image preview/browser rendering with load/size/integrity denials and retained sandbox/CSP. | Code present: same-origin bounded digest-verified asset loading, cancellation, separate resolved sources and data-image CSP retain sandbox. Original asset HTTP/store and projection tests pass. | Real browser image decode/naturalWidth, CSP/sandbox and denied/corrupt/oversized UI cases. Prepared tests did not reach those assertions.",
+      "baseline_evidence_requirement": "Actual HTTP artifact loading/digest/size/auth/abort tests pass; browser image decode/CSP proof blocked by missingChromium/CDNtimeout.",
+      "evidence": "implementation/wave47-prism-reverification.md"
     },
     {
       "id": "PCR-OBS-002",
       "package": "storage",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
       "required_evidence": "Weitere Storequoten mit erhaltenen Idempotenz-/Continuation-/Resultbelegen und ausdrücklicher manueller Aufbewahrungspolitik bearbeiten; keine automatische Loglöschung.",
-      "result": null
+      "result": "Neue ownergebundene Telemetryprojektionen manuell mit Tombstones/Fences freigebbar; unabhängig geprüft. Admission-/Attempt-/Artefakt-/Busterreferenzabschluss bleibt erforderlich.",
+      "baseline_evidence_requirement": "Weitere Storequoten mit erhaltenen Idempotenz-/Continuation-/Resultbelegen und ausdrücklicher manueller Aufbewahrungspolitik bearbeiten; keine automatische Loglöschung.",
+      "evidence": "implementation/wave47-telemetry-retirement.md"
     },
     {
       "id": "PCR-OPERATOR-001",
       "package": "product",
-      "status": "in Prüfung",
+      "status": "verifiziert",
       "baseline_status": "implementiert",
-      "required_evidence": "Five real durable HTTP receipt/retry cases and legacy identity tests pass independent review. Intended external receiver support for explicit reconciliation protocol unproven; other provider retry semantics unchanged.",
-      "result": null
+      "required_evidence": "Originalabnahme vollständig erfüllt; siehe unabhängigen Nachweis.",
+      "result": "Fünf echte Core/HTTP/Disk-Reconciliationregressionen unabhängig bestanden: erneuter Send, genau eine Wirkung, begrenztes persistiertes Retrybudget.",
+      "evidence": "implementation/wave47-root-review.md",
+      "baseline_evidence_requirement": "Five real durable HTTP receipt/retry cases and legacy identity tests pass independent review. Intended external receiver support for explicit reconciliation protocol unproven; other provider retry semantics unchanged."
     },
     {
       "id": "F-T14-01",
       "package": "product",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen.",
-      "result": null
+      "required_evidence": "Corrected the missing production package for existing retained-demo ownership/Ready implementation. | Original requested end-to-end fixture plan, post-plan Tailnet reachability and exact-generation release/TTL proof unavailable. Human extension authorizer is actual missing code/integration, not merely an unrun test.",
+      "result": "Corrected the missing production package for existing retained-demo ownership/Ready implementation. | Original requested end-to-end fixture plan, post-plan Tailnet reachability and exact-generation release/TTL proof unavailable. Human extension authorizer is actual missing code/integration, not merely an unrun test.",
+      "baseline_evidence_requirement": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen.",
+      "evidence": "implementation/wave47-product-gates.md"
     },
     {
       "id": "F-T14-02",
       "package": "product",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen.",
-      "result": null
+      "required_evidence": "Corrected owning role inclusion of both demo handoff and app-auth provider; actual bundled imports resolve their dependencies. | Real application login, private operator reception, other-user/old-generation denial and authenticated acceptance/extension remain unproved or unimplemented.",
+      "result": "Corrected owning role inclusion of both demo handoff and app-auth provider; actual bundled imports resolve their dependencies. | Real application login, private operator reception, other-user/old-generation denial and authenticated acceptance/extension remain unproved or unimplemented.",
+      "baseline_evidence_requirement": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen.",
+      "evidence": "implementation/wave47-product-gates.md"
     },
     {
       "id": "IFR-08-001",
       "package": "infra",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "E2E-Registryzielvertrag ergänzen; echten BuildKit-Push, uncached CRI-Pull und Pod mit Hostkonfiguration prüfen. Kein Deployment in diesem Auftrag.",
-      "result": null
+      "required_evidence": "Shared explicit client contract; uncached native CRI digest pull and real Pod; unauthorized clients rejected. | Five registry-client configuration/Helm tests pass. Actual pinned Trivy pulls an authenticated local HTTPS OCI image; wrong credentials/scope reject. BuildKit, CRI and Pod proof remains absent; these local clients do not establish node reachability.",
+      "result": "Shared explicit client contract; uncached native CRI digest pull and real Pod; unauthorized clients rejected. | Five registry-client configuration/Helm tests pass. Actual pinned Trivy pulls an authenticated local HTTPS OCI image; wrong credentials/scope reject. BuildKit, CRI and Pod proof remains absent; these local clients do not establish node reachability.",
+      "baseline_evidence_requirement": "E2E-Registryzielvertrag ergänzen; echten BuildKit-Push, uncached CRI-Pull und Pod mit Hostkonfiguration prüfen. Kein Deployment in diesem Auftrag.",
+      "evidence": "implementation/wave47-infrastructure.md"
     },
     {
       "id": "IFR-08-002",
       "package": "storage",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
       "required_evidence": "Dokumentationsdefekt korrigiert; Persistenz/Disk-Budget und referenzgeschützte GC bleiben offen, keine Kapazität erfinden.",
-      "result": null
+      "result": "Registry Producerreferenzen, persistenter Ownershiptransfer und gefenctes GC fehlen. Reale Leasezyklen, Digestpull nach GC und Podersatz nicht nachgewiesen.",
+      "baseline_evidence_requirement": "Dokumentationsdefekt korrigiert; Persistenz/Disk-Budget und referenzgeschützte GC bleiben offen, keine Kapazität erfinden.",
+      "evidence": "implementation/wave47-telemetry-retirement.md"
     },
     {
       "id": "IFR-09-001",
       "package": "infra",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Tatsächlichen BuildKit-/Node-Mirrorpfad sowie Cache-Hit und Offline-Cache-Miss prüfen.",
-      "result": null
+      "required_evidence": "Actual BuildKit/node traffic through mirror; offline cache hit vs miss. | Original generated BuildKit/node mirror configuration assertions pass. No BuildKit daemon, CRI or native mirror cache exists here; traffic/offline gates remain open.",
+      "result": "Actual BuildKit/node traffic through mirror; offline cache hit vs miss. | Original generated BuildKit/node mirror configuration assertions pass. No BuildKit daemon, CRI or native mirror cache exists here; traffic/offline gates remain open.",
+      "baseline_evidence_requirement": "Tatsächlichen BuildKit-/Node-Mirrorpfad sowie Cache-Hit und Offline-Cache-Miss prüfen.",
+      "evidence": "implementation/wave47-infrastructure.md"
     },
     {
       "id": "IFR-19-001",
       "package": "infra",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Ausgewählte Receipt mit tatsächlichen PodimageIDs und aktiven Bundlecommits im späteren autorisierten Clusterlauf vergleichen.",
-      "result": null
+      "required_evidence": "Every documented entrypoint selects immutable receipt images; reject unselected overrides; compare actual Pod imageIDs. | New baseline bug fixed. Ten original Git/Shell/Helm release tests pass after a reproduced before-failure, and both configuration-binding tests passed in the combined run. Local release selection/render defect is verified; Pod imageIDs remain an additional explicitly unperformed operating check.",
+      "result": "Every documented entrypoint selects immutable receipt images; reject unselected overrides; compare actual Pod imageIDs. | New baseline bug fixed. Ten original Git/Shell/Helm release tests pass after a reproduced before-failure, and both configuration-binding tests passed in the combined run. Local release selection/render defect is verified; Pod imageIDs remain an additional explicitly unperformed operating check.",
+      "baseline_evidence_requirement": "Ausgewählte Receipt mit tatsächlichen PodimageIDs und aktiven Bundlecommits im späteren autorisierten Clusterlauf vergleichen.",
+      "evidence": "implementation/wave47-infrastructure.md"
     },
     {
       "id": "IFR-22-001",
       "package": "infra",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Später autorisierte isolierte Fork-/interne PR-Abnahme der effektiven Tokenrechte; keine CI angefordert.",
-      "result": null
+      "required_evidence": "Separate PR vs publication permissions; immutable actions; isolated internal/fork PR token checks. | Five original parsed workflow trust tests pass. No GitHub workflow or test PR was run; effective issued tokens/secret availability remain unobserved.",
+      "result": "Separate PR vs publication permissions; immutable actions; isolated internal/fork PR token checks. | Five original parsed workflow trust tests pass. No GitHub workflow or test PR was run; effective issued tokens/secret availability remain unobserved.",
+      "baseline_evidence_requirement": "Später autorisierte isolierte Fork-/interne PR-Abnahme der effektiven Tokenrechte; keine CI angefordert.",
+      "evidence": "implementation/wave47-infrastructure.md"
     },
     {
       "id": "IFR-24-002",
       "package": "infra",
-      "status": "in Prüfung",
+      "status": "verifiziert",
       "baseline_status": "implementiert",
-      "required_evidence": "Vier echte Native-Trivy-Fälle einschließlich FIFO sowie tatsächlicher Dependencyprovider geprüft. Imageprovider und Remoteabnahme blockiert. Originaler gemeinsamer Typcheck nach Konfigurationskorrektur erneut bestanden.",
-      "result": null
+      "required_evidence": "Originalabnahme vollständig erfüllt; siehe unabhängigen Nachweis.",
+      "result": "Vier echte gepinnte Trivy-/DB-Regressionsfälle unabhängig bestanden; alte Advisorydaten sperren Erfolg trotz aktuellem Downloadzeitpunkt.",
+      "evidence": "implementation/wave47-root-review.md",
+      "baseline_evidence_requirement": "Vier echte Native-Trivy-Fälle einschließlich FIFO sowie tatsächlicher Dependencyprovider geprüft. Imageprovider und Remoteabnahme blockiert. Originaler gemeinsamer Typcheck nach Konfigurationskorrektur erneut bestanden."
     },
     {
       "id": "PCR-SCAFFOLD-OPS-001",
       "package": "product",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Five genuine supervisor/status CLI regressions and independent source review pass; native adoption gate fails visibly because actual child procfs cmdline is unavailable. Complete real pipeline start/recovery remains unexecuted.",
-      "result": null
+      "required_evidence": "Five real supervisor/status CLI regressions pass again. | Original adopted-live-process proof fails its actual process-identity prerequisite (`REAL_PROC_PROCESS_CMDLINE_REQUIRED`); no procfs replacement or successful start/recovery is claimed.",
+      "result": "Five real supervisor/status CLI regressions pass again. | Original adopted-live-process proof fails its actual process-identity prerequisite (`REAL_PROC_PROCESS_CMDLINE_REQUIRED`); no procfs replacement or successful start/recovery is claimed.",
+      "baseline_evidence_requirement": "Five genuine supervisor/status CLI regressions and independent source review pass; native adoption gate fails visibly because actual child procfs cmdline is unavailable. Complete real pipeline start/recovery remains unexecuted.",
+      "evidence": "implementation/wave47-product-gates.md"
     },
     {
       "id": "IFR-07-001",
       "package": "infra",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
-      "result": null
+      "required_evidence": "Configuration-driven rollout and actual old-peer rejection after update. | Original actual Helm/config sensitivity gate passes after restoring required Buster fixture inputs; all relevant checksum changes asserted. No native Envoy peer rollout has run. New trust-readiness work is separate and is not this rollout proof.",
+      "result": "Configuration-driven rollout and actual old-peer rejection after update. | Original actual Helm/config sensitivity gate passes after restoring required Buster fixture inputs; all relevant checksum changes asserted. No native Envoy peer rollout has run. New trust-readiness work is separate and is not this rollout proof.",
+      "baseline_evidence_requirement": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
+      "evidence": "implementation/wave47-infrastructure.md"
     },
     {
       "id": "IFR-18-001",
       "package": "infra",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Config-bound Helm fence and version/identity/prefix checks pass independent review. Real API server CEL/admission and installed legacy-policy migration not run.",
-      "result": null
+      "required_evidence": "Alternate controller SA enforced by actual Kubernetes VAP admission. | Original Helm gate passes both namespaces/identities/prefixes and rejects Kubernetes 1.29. Original controller Go suite passes. Its local HTTP fixtures are not a Kubernetes API server; actual CEL/admission and installed-policy migration remain open.",
+      "result": "Alternate controller SA enforced by actual Kubernetes VAP admission. | Original Helm gate passes both namespaces/identities/prefixes and rejects Kubernetes 1.29. Original controller Go suite passes. Its local HTTP fixtures are not a Kubernetes API server; actual CEL/admission and installed-policy migration remain open.",
+      "baseline_evidence_requirement": "Config-bound Helm fence and version/identity/prefix checks pass independent review. Real API server CEL/admission and installed legacy-policy migration not run.",
+      "evidence": "implementation/wave47-infrastructure.md"
     },
     {
       "id": "IFR-14-001",
       "package": "infra",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
-      "result": null
+      "required_evidence": "Config-only effective model route and process/DB-fault Ready/Unready behavior. | Actual plain-manifest and Helm sensitivity gate passes; probe separation remains asserted. Pinned LiteLLM native runtime with DB is not running, so effective route/fault behavior remains open.",
+      "result": "Config-only effective model route and process/DB-fault Ready/Unready behavior. | Actual plain-manifest and Helm sensitivity gate passes; probe separation remains asserted. Pinned LiteLLM native runtime with DB is not running, so effective route/fault behavior remains open.",
+      "baseline_evidence_requirement": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
+      "evidence": "implementation/wave47-infrastructure.md"
     },
     {
       "id": "IFR-20-001",
       "package": "infra",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Mit tatsächlicher Hostkapazität Ressourcen konfigurieren; Last, RAM/CPU/Diskgrenzen und Recovery nach OOM im echten Pod prüfen. Keine geratenen Kapazitätswerte.",
-      "result": null
+      "required_evidence": "Explicit configured limits; original large/invalid ingestion inputs, measured limits/OOM recovery. | Three real Helm tests and two original native Node service tests pass; invalid TTL, actual cleanup failure/retry, pause and explicit sizing remain verified. There is no resource-isolated ingestion Pod or OOM/CPU/disk observation; these specific resource gates remain open.",
+      "result": "Explicit configured limits; original large/invalid ingestion inputs, measured limits/OOM recovery. | Three real Helm tests and two original native Node service tests pass; invalid TTL, actual cleanup failure/retry, pause and explicit sizing remain verified. There is no resource-isolated ingestion Pod or OOM/CPU/disk observation; these specific resource gates remain open.",
+      "baseline_evidence_requirement": "Mit tatsächlicher Hostkapazität Ressourcen konfigurieren; Last, RAM/CPU/Diskgrenzen und Recovery nach OOM im echten Pod prüfen. Keine geratenen Kapazitätswerte.",
+      "evidence": "implementation/wave47-infrastructure.md"
     },
     {
       "id": "IFR-20-002",
       "package": "infra",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
-      "result": null
+      "required_evidence": "Singleton-control upgrade under writes, cross-node scheduling and failing replacement. | Helm verifies Recreate only for control and preserves worker/studio strategies. No cross-node cluster upgrade or write load was run.",
+      "result": "Singleton-control upgrade under writes, cross-node scheduling and failing replacement. | Helm verifies Recreate only for control and preserves worker/studio strategies. No cross-node cluster upgrade or write load was run.",
+      "baseline_evidence_requirement": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
+      "evidence": "implementation/wave47-infrastructure.md"
     },
     {
       "id": "IFR-25-001",
       "package": "infra",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Buster BuildKit-/Prism DB-Funktionsproben, getrennte Bootstrap/Liveness und abgebrochene/abgewartete Probe integriert und unabhängig lokal geprüft. Trust-sidecar/SDS-SVID-Funktionsprüfung und Alarmierung sowie native DB-/BuildKit-/Cluster-Abnahme bleiben offen.",
-      "result": null
+      "required_evidence": "Functional dependency and expired-cert faults after startup; status plus alarm, independent liveness. | See the separately committed `worker-trust-operational-readiness.md`. New Envoy source/render work is explicitly native-unverified; it must not be counted as this acceptance.",
+      "result": "Functional dependency and expired-cert faults after startup; status plus alarm, independent liveness. | See the separately committed `worker-trust-operational-readiness.md`. New Envoy source/render work is explicitly native-unverified; it must not be counted as this acceptance.",
+      "baseline_evidence_requirement": "Buster BuildKit-/Prism DB-Funktionsproben, getrennte Bootstrap/Liveness und abgebrochene/abgewartete Probe integriert und unabhängig lokal geprüft. Trust-sidecar/SDS-SVID-Funktionsprüfung und Alarmierung sowie native DB-/BuildKit-/Cluster-Abnahme bleiben offen.",
+      "evidence": "implementation/wave47-infrastructure.md"
     },
     {
       "id": "T01-F01",
       "package": "product",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Kanonischen expliziten Legacy-Autorierungsimport und nachgelagerte sourcegebundene Demo-/Delivery-/Ready-/Acceptance-Komposition vervollständigen; keine Annahme aus bloßem Graph-Erfolg.",
-      "result": null
+      "required_evidence": "Canonical explicit legacy import, reachable CLI documentation, source-launcher and extracted-launcher validation completed. Import/compile demonstrably produce accepted v2 inputs/graphs, never old execution authority. | Actual application execution is separately classified under T01-F02; compile is not a run. Legacy gate-dependent declarations require explicit restructuring, with a specific rejection rather than silent migration.",
+      "result": "Canonical explicit legacy import, reachable CLI documentation, source-launcher and extracted-launcher validation completed. Import/compile demonstrably produce accepted v2 inputs/graphs, never old execution authority. | Actual application execution is separately classified under T01-F02; compile is not a run. Legacy gate-dependent declarations require explicit restructuring, with a specific rejection rather than silent migration.",
+      "baseline_evidence_requirement": "Kanonischen expliziten Legacy-Autorierungsimport und nachgelagerte sourcegebundene Demo-/Delivery-/Ready-/Acceptance-Komposition vervollständigen; keine Annahme aus bloßem Graph-Erfolg.",
+      "evidence": "implementation/wave47-product-gates.md"
     },
     {
       "id": "T01-F02",
       "package": "product",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Kanonischen expliziten Legacy-Autorierungsimport und nachgelagerte sourcegebundene Demo-/Delivery-/Ready-/Acceptance-Komposition vervollständigen; keine Annahme aus bloßem Graph-Erfolg.",
-      "result": null
+      "required_evidence": "Existing two-module full technical graph, source admission, cumulative gates and source-bound demo composition retained; role omissions now fixed. | Complete live product lifecycle and authenticated human acceptance remain incomplete; graph success is still correctly distinguished from Ready and Accepted.",
+      "result": "Existing two-module full technical graph, source admission, cumulative gates and source-bound demo composition retained; role omissions now fixed. | Complete live product lifecycle and authenticated human acceptance remain incomplete; graph success is still correctly distinguished from Ready and Accepted.",
+      "baseline_evidence_requirement": "Kanonischen expliziten Legacy-Autorierungsimport und nachgelagerte sourcegebundene Demo-/Delivery-/Ready-/Acceptance-Komposition vervollständigen; keine Annahme aus bloßem Graph-Erfolg.",
+      "evidence": "implementation/wave47-product-gates.md"
     },
     {
       "id": "T15-F01",
       "package": "product",
-      "status": "in Prüfung",
+      "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Echte konfigurierte Writerintegration mit unveränderlichen Quellen nachweisen; generierten Text weiterhin als unverifizierten Entwurf behandeln. Ältere mode-ambige Runs nicht durch geratenen Marker migrieren.",
-      "result": null
+      "required_evidence": "Original immutable report-source suite passes with actual journals/artifact stores, cross-run/stale/missing/tampered/FIFO negatives. | Original requested genuine configured Writer consumption/output remains unavailable. No local source assertion is called a successful Writer.",
+      "result": "Original immutable report-source suite passes with actual journals/artifact stores, cross-run/stale/missing/tampered/FIFO negatives. | Original requested genuine configured Writer consumption/output remains unavailable. No local source assertion is called a successful Writer.",
+      "baseline_evidence_requirement": "Echte konfigurierte Writerintegration mit unveränderlichen Quellen nachweisen; generierten Text weiterhin als unverifizierten Entwurf behandeln. Ältere mode-ambige Runs nicht durch geratenen Marker migrieren.",
+      "evidence": "implementation/wave47-product-gates.md"
     }
-  ]
+  ],
+  "verified_count": 5,
+  "remaining_count": 42,
+  "integration_checkpoint": "0dc13a6",
+  "overall_complete": false
 }

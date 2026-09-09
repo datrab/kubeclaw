@@ -2,7 +2,8 @@
   "extends": "../../../tsconfig.base.json",
   "include": [
     "check-pipeline-worker-attempt-executor.mts",
-    "../reliability/worker-deadline.test.mts"
+    "../reliability/worker-deadline.test.mts",
+    "../reliability/worker-terminal-resources.test.mts"
   ],
   "compilerOptions": {
     "exactOptionalPropertyTypes": true,

@@ -44,7 +44,7 @@ test('generated release values render actual Helm charts with immutable role and
     execFileSync(process.execPath, [path.join(source, 'scripts/updates/materialize-release.mjs')], { cwd: root });
     execFileSync(process.execPath, [path.join(source, 'scripts/updates/materialize-release.mjs'), '--check'], { cwd: root });
     for (const role of ['nova', 'buster', 'prism-agent', 'prism']) {
-      const output = execFileSync('helm', ['template', role, path.join(root, `charts/${role === 'prism' ? 'prism' : 'kubeclaw'}`), '-f', path.join(root, `releases/values/${role}.yaml`)], { encoding: 'utf8' });
+      const output = execFileSync('helm', ['template', role, path.join(root, `charts/${role === 'prism' ? 'prism' : 'kubeclaw'}`), '-f', path.join(root, `releases/values/${role}.yaml`), ...(role === 'buster' ? ['--set', 'runtimeInfrastructure.registry.endpoint=https://registry.example.test', '--set', 'runtimeInfrastructure.registry.transport=https', '--set', 'runtimeInfrastructure.registry.authSecretName=registry-test'] : [])], { encoding: 'utf8' });
       const docs = parseAllDocuments(output).map(doc => { assert.deepEqual(doc.errors, []); return doc.toJSON(); });
       const refs = docs.flatMap(doc => [...(doc?.spec?.template?.spec?.containers ?? []), ...(doc?.spec?.template?.spec?.initContainers ?? [])]).map(container => container.image).filter(image => image.startsWith('ghcr.io/datrab/kubeclaw-'));
       assert.ok(refs.length > 0, `No rendered runtime images for ${role}`);

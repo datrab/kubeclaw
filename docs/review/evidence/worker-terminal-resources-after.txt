@@ -1,0 +1,69 @@
+$ node --test tests/verification/reliability/worker-terminal-resources.test.mts tests/verification/reliability/worker-deadline.test.mts
+Exit code: 0
+✔ direct: actual optional phases require a complete claim reservation (60.867075ms)
+✔ runtime: actual optional phases require a complete claim reservation (3.050225ms)
+✔ real completion hooks and durable log finish successfully inside the reserved claim (85.358733ms)
+✔ direct: final claim fence rejects completion after a native blocking hook (569.059558ms)
+✔ runtime: final claim fence rejects completion after a native blocking hook (560.857198ms)
+✔ timed out log hook receives cancellation and settles before result, without a later write (217.49275ms)
+✔ uncooperative storage is reported unresolved rather than completed (165.150865ms)
+✔ original executor preserves each UTF-8 byte split and rejects malformed/incomplete byte logs (135.187359ms)
+✔ real Buster evidence I/O drains cancellation and does not publish a later artifact (28.068294ms)
+✔ stdout and stderr streaming decoders retain separate partial byte sequences (18.774818ms)
+✔ real CPU consumed only during cleanup is included in the terminal budget (266.172198ms)
+✔ real CPU consumed only during finalize is included in the terminal budget (204.036278ms)
+✔ early native CPU overrun still prevents optional report finalization (206.691045ms)
+✔ missing final observation cannot reuse a successful early CPU sample (5.094349ms)
+✔ successful native operation publishes its final cumulative sample (6.005024ms)
+✔ V2 late native CPU overrun fails and retains exact accepted policy binding (256.68045ms)
+✔ V2 missing final observation replaces earlier observations with unavailable facts (4.432561ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2079.74913
+
+$ node tests/verification/contracts/check-pipeline-worker-attempt-executor.mts
+Exit code: 0
+{"ok":true,"phase":"5.5-B","progressEvents":5,"logParts":2}
+
+$ node tests/verification/contracts/check-pipeline-worker-local-runtime.mts
+Exit code: 0
+{"ok":true,"phase":"5.5-D","states":["starting","ready","draining","stopped","unhealthy"]}
+
+$ node --test skills/prism/tests/agent-resource-contract.test.mts skills/prism/tests/worker-cancellation.test.mts
+Exit code: 0
+✔ real CPU-consuming child has explicit V2 unavailable observations and no parent resource claims (1305.206267ms)
+✔ requested unsupported child budget fails before actual process launch (8.132917ms)
+✔ V2 requires explicit policy and correct units; V1 refuses the opt-in envelope (26.042644ms)
+✔ requested runtime measurement unavailable fails even when profile advertised measurement (76.478118ms)
+✔ original generic assessor rejects requested real observed overrun and V1 missing metrics (8.119437ms)
+✔ only the admitted owner can cancel a pending original render; legacy callers still coalesce (7.656297ms)
+✔ actual attempt CPU excludes prior process work and stays fixed after execution (198.895497ms)
+✔ real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back (157.059735ms)
+✔ terminate aborts and drains the original artifact read before any engine operation starts (17.050298ms)
+✔ owner cancellation before retention rejects every coalesced original-render caller (2.294527ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1661.463667
+
+$ node node_modules/typescript/bin/tsc --noEmit -p skills/worker/core/tsconfig.json
+Exit code: 0
+
+$ node node_modules/typescript/bin/tsc --noEmit -p tests/verification/contracts/tsconfig.worker-attempt-executor.json
+Exit code: 0
+
+$ node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+Exit code: 0
+
+$ node node_modules/typescript/bin/tsc --noEmit -p skills/prism/tsconfig.json
+Exit code: 0
+

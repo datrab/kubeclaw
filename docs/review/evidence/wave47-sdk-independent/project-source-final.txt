@@ -1,0 +1,17 @@
+✔ compiled source prefix uses original Git and implementation consumers; architecture agent enabled=false (5330.47438ms)
+✔ compiled source prefix uses original Git and implementation consumers; architecture agent enabled=true (6893.477121ms)
+✔ mandatory source failure prevents enabled architecture review, sync and implementation (3459.069586ms)
+✔ source admission rejects missing-producer before Git sync (2862.016144ms)
+✔ source admission rejects wrong-contract before Git sync (2740.59447ms)
+✔ actual external source change after admission rejects original Git merge (3610.352067ms)
+✔ implementation independently requires the admitted producer after a genuine Blueprint sync (3141.328409ms)
+✔ compiled findings require bound operator approval before Git sync; source changes=false (9870.794656ms)
+✔ compiled findings require bound operator approval before Git sync; source changes=true (6705.26204ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 45098.617134

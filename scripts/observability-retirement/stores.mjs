@@ -29,6 +29,17 @@ export function recordSnapshot(inventory, root) {
   return snapshot.records;
 }
 
+export function recordRetirementSnapshot(inventory, root) {
+  const snapshot = inventory.json(path.join(root, 'records/store.json'));
+  assertDurableRecordReplay(snapshot);
+  return (snapshot.retirements ?? []).map(entry => ({
+    operationIdHash: identityHash(entry.intent.operationId), ownerRunId: entry.intent.owner,
+    stream: entry.intent.stream, records: entry.intent.records.length,
+    intentDigest: entry.intentDigest, releasedBytes: Number.parseInt(entry.releasedBytesHex,16),
+    disposition: 'retain-idempotency-and-retirement-evidence',
+  }));
+}
+
 function validArtifactRecord(record) {
   const artifact = record.payload;
   return typeof artifact?.producer?.runId === 'string' && record.stream === `artifacts/${artifact.namespace}`

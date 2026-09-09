@@ -2,21 +2,28 @@ import {workerResourceMetrics,type WorkerAttemptEnvelope,type WorkerResourceObse
 
 export type ResourceCheck={resources:Partial<WorkerResourceUseV1>;error?:{code:string;message:string}};
 const positiveObservation=(value:unknown):value is number=>Number.isSafeInteger(value)&&Number(value)>=0;
-function invalid():ResourceCheck{return {resources:{},error:{code:'WORKER_RESOURCE_MEASUREMENT_INVALID',message:'Worker resource observation is missing or invalid'}};}
+function invalid(accounting?:WorkerResourceAccounting,message='Worker resource observation is missing or invalid'):ResourceCheck{
+ if(accounting)for(const metric of workerResourceMetrics)accounting.observations[metric]={status:'unavailable',reason:message};
+ return {resources:{},error:{code:'WORKER_RESOURCE_MEASUREMENT_INVALID',message}};
+}
+function regressed(current:Partial<WorkerResourceUseV1>,previous:Partial<WorkerResourceUseV1>):boolean {
+ return workerResourceMetrics.some(metric=>current[metric]!==undefined && previous[metric]!==undefined && current[metric]!<previous[metric]!);
+}
 
 /** V1 remains strictly bounded. V2 never converts an unavailable observation to zero. */
-export function assessWorkerResources(envelope:WorkerAttemptEnvelope,measured:unknown,accounting?:WorkerResourceAccounting):ResourceCheck {
+export function assessWorkerResources(envelope:WorkerAttemptEnvelope,measured:unknown,accounting?:WorkerResourceAccounting,previous:Partial<WorkerResourceUseV1>={}):ResourceCheck {
  if(envelope.schemaVersion==='worker-attempt-envelope.v1'){
   const values=measured as Record<string,unknown>|null;
   if(!values || !workerResourceMetrics.every(metric=>positiveObservation(values[metric])))return invalid();
   const resources=Object.fromEntries(workerResourceMetrics.map(metric=>[metric,values[metric]])) as Partial<WorkerResourceUseV1>;
+  if(regressed(resources,previous))return invalid(undefined,'Cumulative worker resource observation regressed');
   const limits={cpuTimeMs:envelope.limits.cpuMillis,maximumMemoryBytes:envelope.limits.memoryBytes,maximumProcesses:envelope.limits.processes};
   const codes={cpuTimeMs:'WORKER_CPU_LIMIT',maximumMemoryBytes:'WORKER_MEMORY_LIMIT',maximumProcesses:'WORKER_PROCESS_LIMIT'};
   const exceeded=workerResourceMetrics.find(metric=>Number(resources[metric])>limits[metric]);
   return exceeded?{resources,error:{code:codes[exceeded],message:codes[exceeded]}}:{resources};
  }
- if(!accounting || !measured || typeof measured!=='object')return invalid();
- return assessDeclaredResources(measured as WorkerResourceObservations,accounting);
+ if(!accounting || !measured || typeof measured!=='object')return invalid(accounting);
+ return assessDeclaredResources(measured as WorkerResourceObservations,accounting,previous);
 }
 
 function validObservation(observation:WorkerResourceObservations['cpuTimeMs'],capability:WorkerResourceAccounting['capabilities']['cpuTimeMs']):boolean {
@@ -29,9 +36,9 @@ function budgetError(metric:typeof workerResourceMetrics[number],observation:Wor
  if(observation.value>budget.limit)return {code:'WORKER_RESOURCE_LIMIT',message:`Requested ${metric} limit ${budget.limit} exceeded by ${observation.value}`};
  return undefined;
 }
-function assessDeclaredResources(measured:WorkerResourceObservations,accounting:WorkerResourceAccounting):ResourceCheck {
+function assessDeclaredResources(measured:WorkerResourceObservations,accounting:WorkerResourceAccounting,previous:Partial<WorkerResourceUseV1>):ResourceCheck {
  // Validate the complete batch before mutating receipt accounting.
- if(!workerResourceMetrics.every(metric=>validObservation(measured[metric],accounting.capabilities[metric])))return invalid();
+ if(!workerResourceMetrics.every(metric=>validObservation(measured[metric],accounting.capabilities[metric])))return invalid(accounting);
  const resources:Partial<WorkerResourceUseV1>={};let error:ResourceCheck['error'];
  for(const metric of workerResourceMetrics){
   const observation=measured[metric];
@@ -39,6 +46,7 @@ function assessDeclaredResources(measured:WorkerResourceObservations,accounting:
   accounting.observations[metric]=structuredClone(observation);
   error??=budgetError(metric,observation,accounting.budgets[metric]);
  }
+ if(regressed(resources,previous))return invalid(accounting,'Cumulative worker resource observation regressed');
  return {...(error?{error}:{}),resources};
 }
 

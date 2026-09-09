@@ -1,0 +1,18 @@
+✔ original round client retains a lost-response request across reload and pending retry over real HTTP (58.807315ms)
+✔ original round HTTP calls preserve 400, 500 and text diagnostics and identify broken success contracts (13.339791ms)
+✔ late architecture generation cannot mutate its successor; exact delivery retry is distinct from a new round (1813.867721ms)
+✔ three rejections feed a successor round while predecessor documents and decisions remain immutable history (1522.807541ms)
+✔ source revision mutation after dispatch rejects result before creating new documents (1361.290622ms)
+✔ real insertion failure rolls back the whole round and leaves its delivery retry usable (1347.86802ms)
+✔ final Nova baseline consumption rejects an approved predecessor after a new round starts (1369.240132ms)
+✔ same architecture revision cannot substitute content under a replayed dispatch (1.346903ms)
+✔ legacy unbound documents can start a first explicit round without invented predecessor identity (1356.015479ms)
+✔ installed pg int8 parser strings cannot bypass the original architecture transition guard (1346.536324ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10458.40106

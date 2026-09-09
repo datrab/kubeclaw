@@ -1,3 +1,4 @@
+import {verifiedArtifactJsonText} from '@kubeclaw/plugin-sdk';
 import fs from 'node:fs';
 import path from 'node:path';
 import { canonicalJson,sha256Text,type AdapterActivationContext,type AdapterInstance,type AdapterInvocation,type ArtifactRef } from '@kubeclaw/plugin-sdk';
@@ -17,8 +18,8 @@ function text(value:unknown):string {
 async function read(context:AdapterActivationContext,ref:ArtifactRef,runId:string,stageId:string,namespace:string) {
   if(ref.namespace!==namespace || ref.mediaType!=='application/json' || ref.producer?.runId!==runId || ref.producer.stageId!==stageId
     || !Number.isSafeInteger(ref.sizeBytes) || ref.sizeBytes<1 || ref.sizeBytes>8*1024*1024)throw new Error('DEMO_EVIDENCE_ARTIFACT_OWNER_INVALID');
-  const response=await context.invoke('artifacts.read',{operation:'get_latest_json',resource:{type:'artifact.object',canonicalId:ref.artifactId},payload:{namespace,digest:ref.digest}});
-  const bytes=canonicalJson(response.value);
+  const response=await context.invoke('artifacts.read',{operation:'get_latest_json_bytes',resource:{type:'artifact.object',canonicalId:ref.artifactId},payload:{namespace,digest:ref.digest}});
+  const bytes=verifiedArtifactJsonText(response, ref);
   if(canonicalJson(response.artifact)!==canonicalJson(ref) || response.digest!==ref.digest || sha256Text(bytes)!==ref.digest
     || response.sizeBytes!==ref.sizeBytes || Buffer.byteLength(bytes)!==ref.sizeBytes)throw new Error('DEMO_EVIDENCE_ARTIFACT_INTEGRITY_INVALID');
   return object(response.value);

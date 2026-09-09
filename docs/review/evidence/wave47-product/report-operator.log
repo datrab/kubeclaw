@@ -1,0 +1,24 @@
+✔ original observer, effect journal and operator resume a rejected send after reconstruction (2200.422553ms)
+✔ durable receiver receipt reconciles lost HTTP ACK without a duplicate external delivery (1880.22532ms)
+✔ permanent rejection remains bounded across adapter and observer reconstruction (2344.502844ms)
+✔ uncertain delivery without receiver contract is never blindly resent (1748.753338ms)
+✔ configured receipt endpoint without the actual protocol cannot authorize a send (1834.289805ms)
+▶ historical report source authority rejects foreign, stale, missing and changed actual evidence
+  ✔ cross-run, duplicate, nonexistent and stale source selections reject (93.015575ms)
+  ✔ actual blob loss and changed bytes reject; preserved store reads original bytes after repair (82.256334ms)
+  ✔ incomplete and nonterminal real journal prefixes reject without repair (13.312553ms)
+  ✔ original requested-effect prefix cannot be mistaken for completed run evidence (8.384259ms)
+  ✔ empty and completed effect prefixes cannot satisfy the pinned lifecycle (17.312999ms)
+  ✔ ordinary effect cannot impersonate a policy-owned confidential audit triplet (743.160912ms)
+  ✔ ambiguous historical producer version and inconsistent claimed execution mode reject (402.628328ms)
+  ✔ source mutation during actual artifact read rejects the snapshot (42.142988ms)
+  ✔ bounded legacy FIFO cannot hang the original resolver (98.743922ms)
+✔ historical report source authority rejects foreign, stale, missing and changed actual evidence (13292.042593ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13977.126904

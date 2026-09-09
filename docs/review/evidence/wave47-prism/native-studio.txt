@@ -1,0 +1,29 @@
+
+Running 4 tests using 1 worker
+
+(node:28) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 skills/prism/studio/tests/remediation.spec.mjs:56:1 › real iframe clicks run original App transitions and canonical image loads inside sandbox (1ms)
+Testing stopped early after 1 maximum allowed failures.
+
+
+  1) skills/prism/studio/tests/remediation.spec.mjs:56:1 › real iframe clicks run original App transitions and canonical image loads inside sandbox 
+
+    Error: browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: skills/prism/test-results/remediation-real-iframe-cl-bb8d5--image-loads-inside-sandbox/error-context.md
+
+    Error Context: skills/prism/test-results/remediation-real-iframe-cl-bb8d5--image-loads-inside-sandbox/error-context.md
+
+  1 failed
+    skills/prism/studio/tests/remediation.spec.mjs:56:1 › real iframe clicks run original App transitions and canonical image loads inside sandbox 
+  3 did not run
+  1 error was not a part of any test, see above for details

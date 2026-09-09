@@ -57,3 +57,135 @@ Exact audit scope: this note; appended audit section only in `implementation/con
 ## Resume review: audit is not a permanent product gate
 
 The historical comparison requires the original materialized local Git revision `eaf353a^`, which is not guaranteed to exist in a fresh remote checkout. It also deliberately demonstrates an unfixed portability defect. The script is therefore preserved as `docs/review/evidence/sdk-json-compatibility-audit.mts`, outside the automatic reliability test glob, rather than introducing a history-dependent product test or asserting that the defect must remain forever. Run only with that original history present. Existing SDK and artifact product regressions remain unchanged. The resume run passed all 345 accepted-value comparisons and reproduced the original cross-locale digest mismatch; PCR-SDK-001 remains partial.
+
+## Wave47 implemented cutover: implementation artifact bytes and their consumers
+
+Basis: `a8cf34f`. This is an executed production cutover, not another audit or an
+unused alternative serializer. `portableJson` names `kubeclaw-json.utf16.v1` and
+uses strict existing JSON admission with UTF-16 code-unit key ordering. New
+original implementation-agent completion writes explicitly select the codec.
+The artifact store records it in the schema-generated ArtifactRef; unknown codecs
+reject. Other producer contracts keep their old untagged bytes until their own
+semantic identities can be versioned coherently. No default comparator changes.
+
+The existing artifact capability now has explicit `get_json_bytes` and
+`get_latest_json_bytes` operations registered with the same namespace/resource
+grants. They return the original blob bytes in an `artifact-json-bytes.v1`
+envelope. SDK source approval/revision, implementation repair evidence, original
+human approval, summary, pipeline-review evidence and demo evidence/handoff
+consume and verify these original bytes. SHA-256 and byte count remain bound to
+the original reference, and parsed value must equal those verified bytes. Tagged
+portable content must also satisfy its exact codec. Historical untagged JSON is
+never reserialized for byte authority, guessed by locale or rewritten. Ordinary
+existing get_json/get_latest_json response fields remain unchanged. Byte-proof
+responses include both text and parsed value; existing input limits remain, and
+envelope budgets must account for both representations.
+
+A replay cannot add/remove an encoding tag under an existing metadata key, even
+if content happens to serialize identically: the original durable record checks
+the complete metadata value. Old work that would change a pending payload on
+upgrade is rejected by existing effect matching, not silently adopted. No
+production data migration or automatic operator reconciliation is claimed.
+
+The new original integration test writes actual artifact blobs and an actual
+FileEffectJournal in one native Node locale, reopens them in another process,
+and calls the original SDK source-approval/revision consumers. en-US→sv-SE,
+sv-SE→en-US and tr-TR→sv-SE all pass. In each direction the legacy reserialized
+hash demonstrably differs, yet original legacy source reads retain their correct
+identity. Portable writes/replays retain exactly the same digest and reference.
+Changed value, changed raw text, unknown codec, same-key codec removal and altered
+effect payload reject. The original implementation-agent HTTP/Git test verifies
+that its real stage writes the codec tag. SDK invalid-domain tests exercise both
+serializers without executing getters or proxy traps.
+
+### Remaining boundary — PCR-SDK-001 still not globally closed
+
+Review-subject/input approval (`sdk/src/review-subject.ts`, `source-preflight.ts`,
+`nova/project/source.ts`), repository review report/cache/map semantic digests,
+repair-order/approval digests, runtime/workspace ownership and other inventory
+domains remain their existing unversioned authority contracts. Their producer and
+validator versions must change together; a shared serializer flip would silently
+change those authorities. Report/cache-only readers are deliberately not switched
+without their own producer cutover. Locale-changing replay is proven for the
+original fixed-schema effect identity and payload comparison tested here, not
+for every identity domain in the inventory. No full pipeline portability,
+deployed historical population migration or production upgrade was performed.
+
+This work removes the demonstrated cross-locale original-blob/source-consumer
+failure and installs a real portable producer. It cannot truthfully close the
+broader separately persisted semantic-identity contracts by merely extending an
+artifact ref, and does not claim to do so.
+
+### Independent reference-binding counterprobe and correction
+
+Independent reviewer `remaining_changes` used the original store to persist two
+same-byte/same-ID artifacts with different producers. The first implementation
+verified returned bytes but some readers did not compare returned producer/ref
+with their selected authority. The independent original-disk counterprobe is
+preserved in the reviewer's evidence; it demonstrated the mismatch.
+
+Correction: the shared verifier now requires the full expected ArtifactRef,
+including ID, namespace, media type, digest, size, encoding and every producer
+field. All migrated readers pass it. New exact `get_json_bytes` calls also carry
+`payload.reference`; the store selects that exact durable metadata entry instead
+of allowing a newer same-digest foreign producer to replace it. An existing
+ID+digest with no matching expected ref raises `ARTIFACT_REFERENCE_CORRUPT`;
+missing blobs retain `ARTIFACT_NOT_FOUND`. A missing reference is explicitly
+rejected. Latest reads retain their current-run/latest semantics and reject a
+selected stale or foreign reference. Existing non-byte read selection and
+response fields remain unchanged.
+
+The product regression now persists a genuine foreign same-byte owner, rejects
+its response against the original expected ref, and still reads the legitimate
+older original ref. It additionally varies expected artifactId, namespace,
+mediaType, runId, stageId, attemptId, attemptNumber and encoding. No original
+tests were loosened. The unchanged Summary corruption assertion exposed a new
+NOT_FOUND diagnostic before the precise reference-corruption distinction above;
+the unchanged Demo assertion exposed a domain error-code change, corrected by
+performing its existing full-ref check before byte verification. Both failed
+outputs and corrected reruns are preserved.
+
+### Executed gates and final counterreview
+
+Committed raw outputs are in `docs/review/evidence/wave47-sdk/`:
+
+| Command / scope | Exit | Raw output |
+| --- | --- | --- |
+| `node --test tests/verification/reliability/sdk-json-portable.test.mts` | 0 | portable-reference-final.txt |
+| `npm test --workspace @kubeclaw/plugin-sdk` | 0 | sdk-tests-final.txt |
+| `npm run build --workspace @kubeclaw/plugin-sdk` | 0 | sdk-build-final.txt |
+| `node scripts/generate-plugin-sdk-types.mjs --check` | 0 | generated-check.txt |
+| `npx --no-install tsc --noEmit -p skills/nova/tsconfig.json` | 0 | nova-types-final.txt |
+| `npm test --prefix skills/common/plugins/artifact-store` | 0 | artifact-final.txt |
+| `npm test --prefix skills/nova/plugins/implementation-agent` | 0 | implementation-final.txt |
+| `npm test --prefix skills/nova/plugins/project-summary` | 0 | summary-reference-final.txt |
+| `npm test --workspace @kubeclaw/plugin-demo-handoff` | 0 | demo-reference-final.txt |
+| Original approval-source + project-source graphs (22 tests, after operation registration) | 0 | source-graphs-registered.txt |
+| Original sdk-json-contract disk/effect replay | 0 | original-consumers.txt |
+| Complete changed-source/test canonical ESLint | 1 | lint-complete-final.txt |
+
+The lint result contains only the existing repairEvidence complexity 28/15,
+independently reproduced on HEAD in repair-evidence.ts-baseline-lint.txt. No
+suppression or threshold relaxation was added. Original repair-evidence and
+review-candidate tests passed in source-consumers.txt; that same first grouped
+run preserves 18 initial sourcegraph failures caused by the initially missing
+new-operation registration. summary-final.txt and demo-owner-final.txt preserve
+the diagnostic failures corrected without loosening their tests. Scoped
+`git diff --check` passed.
+
+Independent reviewer `remaining_changes` approved this bounded artifact cutover
+with no further demonstrated blocker. After final reference/diagnostic changes,
+the reviewer reran nine original ProjectSource graphs, the portable locale/replay
+test, original sdk-json-contract, exact/latest/foreign reference probes and
+legacy serializer comparison across three native locales and five vectors.
+Evidence is separately committed as `26816eb`, with
+`wave47-sdk-independent-*` paths; it includes the original failed foreign-ref
+probe. The broader semantic-identity portability requirement stays explicitly
+partial. No deploy, CI invocation, external recipient send or production
+population migration took place.
+
+Raw stdout is preserved byte-for-byte, including blank lines/trailing whitespace
+emitted by Node assertion diagnostics and npm. Consequently an unscoped
+`git diff --check` including these evidence files reports whitespace diagnostics.
+The source/test/documentation-only check excludes the raw evidence directory and
+passes; no raw failure output was edited to make a whitespace gate appear green.

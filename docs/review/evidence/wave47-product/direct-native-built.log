@@ -1,0 +1,23 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: [{"schemaVersion":"attempt-result.v1","planId":"plan:runner-artifacts:0","runId":"run:runner-artifacts:0","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"command","executionId":"plan:runner-artifacts:0:command","testIdentity":"test:16ec354d42100aa159c1efa3e2cc5d20d4b38f67c5a792857cdc0102b051fae8","nodeKind":"test","attemptId":"attempt:2e2302bd87e514a0cfd818817b10964b9e4ff8c3f1b91eee9a8e259aee0f5791","attemptNumber":1,"provider":{"packageId":"kubeclaw.direct-command","packageVersion":"1.0.0","contentDigest":"sha256:a3c90297c41ba8d5e4c3cc6ae18d255935eb70dab2eea4b9838f35778249f00b","registrationId":"command","contractId":"kubeclaw.direct-command@1"},"mode":"blocking","executionState":"errored","outcome":null,"startedAt":"2026-09-09T19:46:18.692Z","completedAt":"2026-09-09T19:46:18.731Z","durationMs":39,"summary":"write EPIPE","counts":{"total":0,"passed":0,"failed":0,"skipped":0},"findings":[],"metrics":[],"reports":[],"evidence":[{"evidenceId":"runner-log","type":"log","artifact":{"artifactId":"artifact:a16b09c5c204efa3847a7359d0ccc65dab227fecc47fd7fbae7d3ad4b96d6b45","type":"log","mediaType":"text/plain; charset=utf-8","contentDigest":"sha256:a16b09c5c204efa3847a7359d0ccc65dab227fecc47fd7fbae7d3ad4b96d6b45","sizeBytes":110,"storageUrl":"file:///tmp/direct-command-runner-artifacts-gvthCx/artifacts-0/observability/attempts/blobs/a1/a16b09c5c204efa3847a7359d0ccc65dab227fecc47fd7fbae7d3ad4b96d6b45"}}],"outputs":[],"resources":{"cpuTimeMs":0,"maximumMemoryBytes":0,"logBytes":110,"artifactBytes":110},"exitCode":null,"signal":null,"providerDetails":null,"resultDigest":"sha256:79a9a1ad1a42b6ebd3aa48364cbca8f31068f2628777f3d016075a0a5b0f60ec","receipt":{"receiptId":"receipt:a817c9f71c7c8afd8096f2934ce3a6854c8cf9d3ee6b9fca7befc4bb24a43494","receiptDigest":"sha256:33d2d15bc8e1fca9a4c4d9393579adaf6ccb8eb1b2f6320a304b39089b2153ea"}}]
+[stderr] open task children: No such file or directory
+[stderr] open task children: No such file or directory
+
++ actual - expected
+
++ 'errored'
+- 'completed'
+
+    at file:///workspace/scratch/0d8f8ddb55c3/wave47-product/skills/buster/plugins/direct-command/tests/runner-artifacts.test.mts:39:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'errored',
+  expected: 'completed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

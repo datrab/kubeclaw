@@ -1,10 +1,11 @@
+import {verifiedArtifactJsonText} from '@kubeclaw/plugin-sdk';
 import { readRunEvidence } from '@kubeclaw/nova-core';
 import { canonicalJson, sha256Text, type AdapterActivationContext, type AdapterInstance, type AdapterInvocation, type ArtifactRef } from '@kubeclaw/plugin-sdk';
 import { assertEvidenceSelection, verifySelectedArtifacts, sourceFact, buildEvidenceBundle, type EvidenceSelection } from './evidence-bundle.ts';
 
 async function readArtifact(context: AdapterActivationContext, invocation: AdapterInvocation, ref: ArtifactRef) {
-  const response = await context.invoke('artifacts.read', { operation: 'get_json', resource: { type: 'artifact.object', canonicalId: ref.artifactId }, payload: { namespace: ref.namespace, digest: ref.digest } }, { signal: invocation.signal });
-  const bytes = canonicalJson(response.value);
+  const response = await context.invoke('artifacts.read', { operation: 'get_json_bytes', resource: { type: 'artifact.object', canonicalId: ref.artifactId }, payload: { namespace: ref.namespace, digest: ref.digest, reference: ref } }, { signal: invocation.signal });
+  const bytes = verifiedArtifactJsonText(response, ref);
   if (canonicalJson(response.artifact) !== canonicalJson(ref) || response.digest !== ref.digest || sha256Text(bytes) !== ref.digest
     || response.sizeBytes !== ref.sizeBytes || Buffer.byteLength(bytes) !== ref.sizeBytes) throw new Error('REPORT_ARTIFACT_INTEGRITY_INVALID');
   return response.value;

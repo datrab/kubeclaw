@@ -1,10 +1,11 @@
 import crypto from 'node:crypto';
 import {
-  canonicalJson,
+  canonicalJson, portableJson, PORTABLE_JSON_ENCODING, verifiedArtifactJsonText,
   type AdapterActivationContext,
   type AdapterInstance,
   type ArtifactRef,
   type AdapterInvocation,
+  type EffectRequest,
 } from '@kubeclaw/plugin-sdk';
 import {
   FileDurableBlobStore,
@@ -40,16 +41,23 @@ async function findArtifact(
   artifactId: string,
   namespace: string,
   predicate: (artifact: ArtifactRef) => boolean,
+  expected?: Readonly<Record<string, unknown>>,
 ): Promise<{
+  readonly schemaVersion: 'artifact-json-bytes.v1';
+  readonly jsonBytes: string;
   readonly value: unknown;
   readonly digest: string;
   readonly sizeBytes: number;
   readonly artifact: ArtifactRef;
 }> {
-  const matches = (await records.read<ArtifactRef>(stream(namespace)))
+  let matches = (await records.read<ArtifactRef>(stream(namespace)))
     .map((record) => record.payload)
     .filter((artifact) => artifact.artifactId === artifactId && predicate(artifact))
     .reverse();
+  if (expected !== undefined && matches.length > 0) {
+    matches = matches.filter(artifact => portableJson(artifact) === portableJson(expected));
+    if (matches.length === 0) throw new Error('ARTIFACT_REFERENCE_CORRUPT');
+  }
   for (const artifact of matches) {
     try {
       return await readArtifact(blobs, artifact);
@@ -65,6 +73,8 @@ async function findArtifact(
 }
 
 async function readArtifact(blobs: DurableBlobStore, artifact: ArtifactRef): Promise<{
+  readonly schemaVersion: 'artifact-json-bytes.v1';
+  readonly jsonBytes: string;
   readonly value: unknown;
   readonly digest: string;
   readonly sizeBytes: number;
@@ -76,7 +86,23 @@ async function readArtifact(blobs: DurableBlobStore, artifact: ArtifactRef): Pro
     if (error instanceof Error && error.message === 'DURABLE_BLOB_INTEGRITY_FAILED') throw new Error('ARTIFACT_INTEGRITY_FAILED');
     throw error;
   }
-  return { value: JSON.parse(bytes.toString('utf8')), digest: artifact.digest, sizeBytes: bytes.byteLength, artifact };
+  const jsonBytes = bytes.toString('utf8');
+  const response = { schemaVersion: 'artifact-json-bytes.v1' as const, jsonBytes, value: JSON.parse(jsonBytes), digest: artifact.digest, sizeBytes: bytes.byteLength, artifact };
+  verifiedArtifactJsonText(response, artifact);
+  return response;
+}
+
+function encodeArtifactJson(payload: Readonly<Record<string, unknown>>) {
+  const encoding = payload.encoding;
+  if (encoding !== undefined && encoding !== PORTABLE_JSON_ENCODING) throw new Error('ARTIFACT_ENCODING_UNSUPPORTED');
+  return {encoding, bytes: Buffer.from(encoding === PORTABLE_JSON_ENCODING ? portableJson(payload.value) : canonicalJson(payload.value))};
+}
+
+function expectedReference(request: EffectRequest): Readonly<Record<string, unknown>> | undefined {
+  if (request.operation !== 'get_json_bytes') return undefined;
+  const reference = request.payload.reference;
+  if (!reference || typeof reference !== 'object' || Array.isArray(reference)) throw new Error('ARTIFACT_REFERENCE_REQUIRED');
+  return reference as Readonly<Record<string, unknown>>;
 }
 
 async function invokeArtifact(
@@ -89,15 +115,16 @@ async function invokeArtifact(
   if (!confidential) fence.assertCurrent();
   if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
   const artifactId = requiredText(request.resource.canonicalId, 'ID');
-  if (request.capability === 'artifacts.read' && request.operation === 'get_json') {
+  if (request.capability === 'artifacts.read' && ['get_json', 'get_json_bytes'].includes(request.operation)) {
     const digest = digestValue(request.payload.digest);
     const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
-    const stored = await findArtifact(records, blobs, artifactId, namespace, (entry) => entry.digest === digest);
-    return { value: stored.value, digest: stored.digest, sizeBytes: stored.sizeBytes, artifact: stored.artifact };
+    const stored = await findArtifact(records, blobs, artifactId, namespace, (entry) => entry.digest === digest, expectedReference(request));
+    return request.operation === 'get_json_bytes' ? stored : { value: stored.value, digest: stored.digest, sizeBytes: stored.sizeBytes, artifact: stored.artifact };
   }
-  if (request.capability === 'artifacts.read' && request.operation === 'get_latest_json') {
+  if (request.capability === 'artifacts.read' && ['get_latest_json', 'get_latest_json_bytes'].includes(request.operation)) {
     const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
-    return findArtifact(records, blobs, artifactId, namespace, (entry) => entry.producer.runId === request.attempt.runId);
+    const stored = await findArtifact(records, blobs, artifactId, namespace, (entry) => entry.producer.runId === request.attempt.runId);
+    return request.operation === 'get_latest_json_bytes' ? stored : { value: stored.value, digest: stored.digest, sizeBytes: stored.sizeBytes, artifact: stored.artifact };
   }
   if (request.capability !== 'artifacts.write' || request.operation !== 'put_json') {
     throw new Error(`ARTIFACT_OPERATION_UNSUPPORTED:${request.capability}:${request.operation}`);
@@ -105,7 +132,7 @@ async function invokeArtifact(
   const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
   const mediaType = requiredText(request.payload.mediaType, 'MEDIA_TYPE');
   if (mediaType !== 'application/json') throw new Error('ARTIFACT_MEDIA_TYPE_UNSUPPORTED');
-  const bytes = Buffer.from(canonicalJson(request.payload.value));
+  const {encoding, bytes} = encodeArtifactJson(request.payload);
   if (bytes.byteLength > maximumArtifactBytes) throw new Error('ARTIFACT_SIZE_EXCEEDED');
   const digest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
   const artifact: ArtifactRef = {
@@ -115,6 +142,7 @@ async function invokeArtifact(
     digest,
     sizeBytes: bytes.byteLength,
     producer: request.attempt,
+    ...(encoding === PORTABLE_JSON_ENCODING ? {encoding} : {}),
   };
   // Admit the bounded metadata record before the blob. A failed admission must
   // not leave an unreferenced blob. If blob storage fails, the same idempotent

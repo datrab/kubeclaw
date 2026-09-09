@@ -6,6 +6,7 @@ import { execFileSync } from 'node:child_process';
 import { dump, loadAll } from 'js-yaml';
 
 const render = (chart, settings = []) => loadAll(execFileSync('helm', ['template', 'review', `charts/${chart}`,
+  ...(settings.includes('agentRole=buster') ? ['-f', 'my-values/buster-values.yaml', '--set', 'runtimeInfrastructure.registry.endpoint=https://registry.example.test', '--set', 'runtimeInfrastructure.registry.transport=https', '--set', 'runtimeInfrastructure.registry.authSecretName=registry-test'] : []),
   ...(chart === 'prism' ? ['-f', 'charts/prism/ci-values.yaml'] : []),
   '--set', 'workerTrust.spiffe.enabled=true', ...settings.flatMap(value => ['--set', value])], { encoding: 'utf8' })).filter(Boolean);
 const deployment = (documents, name) => documents.find(value => value.kind === 'Deployment' && value.metadata.name === name);

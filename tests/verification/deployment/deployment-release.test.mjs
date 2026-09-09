@@ -27,9 +27,11 @@ function fixture(run) {
       node(['scripts/updates/materialize-release.mjs', `--family=${family}`]);
     }
     fs.writeFileSync(path.join(root, 'no-cluster.yaml'), 'apiVersion: v1\nkind: Config\nclusters:\n- name: unavailable\n  cluster:\n    server: http://127.0.0.1:1\ncontexts:\n- name: unavailable\n  context:\n    cluster: unavailable\ncurrent-context: unavailable\n');
+    const registryOverlay = path.join(root, 'registry.yaml');
+    fs.writeFileSync(registryOverlay, yaml.dump({ runtimeInfrastructure: { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } } }));
     const shell = (script, args, environment = {}) => spawnSync('bash', [path.join(root, 'scripts', script), ...args], {
       cwd: root, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024,
-      env: { ...process.env, KUBECONFIG: path.join(root, 'no-cluster.yaml'), CODE_BUNDLE_GITHUB_REPOSITORY: 'datrab/kubeclaw', ...environment },
+      env: { ...process.env, KUBECONFIG: path.join(root, 'no-cluster.yaml'), CODE_BUNDLE_GITHUB_REPOSITORY: 'datrab/kubeclaw', BUSTER_VALUES_FILE: registryOverlay, ...environment },
     });
     run({ root, commit, images, shell });
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
@@ -77,8 +79,8 @@ test('private operational overlays survive while replaced or removed runtime slo
   fs.writeFileSync(overlay, 'replicaCount: 2\n');
   const docs = success(shell('deploy.sh', ['render', 'nova'], { NOVA_VALUES_FILE: overlay }));
   assert.equal(docs.find(doc => doc.kind === 'Deployment' && doc.metadata.name === 'agent-nova').spec.replicas, 2);
-  fs.writeFileSync(overlay, 'extraContainers: []\n');
-  failure(shell('deploy.sh', ['render', 'buster'], { BUSTER_VALUES_FILE: overlay }), /image slot changed or missing/);
+  fs.writeFileSync(overlay, 'extraContainers: []\nruntimeInfrastructure:\n  registry:\n    endpoint: https://registry.example.test\n    transport: https\n    authSecretName: registry-test\n');
+  failure(shell('deploy.sh', ['render', 'buster'], { BUSTER_VALUES_FILE: overlay }), /image slot changed or missing|requires exactly one extraContainers/);
   fs.writeFileSync(overlay, 'image:\n  digest: sha256:' + 'f'.repeat(64) + '\n');
   failure(shell('deploy.sh', ['render', 'nova'], { NOVA_VALUES_FILE: overlay }), /image slot changed or missing/);
 }));

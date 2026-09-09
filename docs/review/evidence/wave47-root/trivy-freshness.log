@@ -1,0 +1,12 @@
+✔ original native Trivy scan returns both actual stable DB identities and source ages (8444.711695ms)
+✔ old copied source metadata fails even with a current DownloadedAt and payload policy override (3570.933685ms)
+✔ real database metadata changes, wrong schema, missing Java metadata and abort cannot authorize success (15487.86106ms)
+✔ real FIFO metadata fails before a blocking open can consume the deadline (11.803781ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27644.798428

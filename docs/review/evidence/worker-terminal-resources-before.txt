@@ -1,0 +1,104 @@
+Original a8cf34f executor against new native CPU/file tests; only import path redirected to temporary adjacent committed source.
+Exit code: 1
+✖ real CPU consumed only during cleanup is included in the terminal budget (299.145541ms)
+✖ real CPU consumed only during finalize is included in the terminal budget (213.495955ms)
+✖ early native CPU overrun still prevents optional report finalization (209.08745ms)
+✖ missing final observation cannot reuse a successful early CPU sample (10.157654ms)
+✖ successful native operation publishes its final cumulative sample (4.585949ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 0
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1062.312925
+
+✖ failing tests:
+
+test at tests/verification/reliability/worker-terminal-resources.resource-before.test.mts:68:55
+✖ real CPU consumed only during cleanup is included in the terminal budget (299.145541ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-resources/tests/verification/reliability/worker-terminal-resources.resource-before.test.mts:70:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/worker-terminal-resources.resource-before.test.mts:68:55
+✖ real CPU consumed only during finalize is included in the terminal budget (213.495955ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-resources/tests/verification/reliability/worker-terminal-resources.resource-before.test.mts:70:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/worker-terminal-resources.resource-before.test.mts:78:1
+✖ early native CPU overrun still prevents optional report finalization (209.08745ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-resources/tests/verification/reliability/worker-terminal-resources.resource-before.test.mts:82:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/worker-terminal-resources.resource-before.test.mts:85:1
+✖ missing final observation cannot reuse a successful early CPU sample (10.157654ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'WORKER_RESOURCE_MEASUREMENT_INVALID'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-resources/tests/verification/reliability/worker-terminal-resources.resource-before.test.mts:89:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'WORKER_RESOURCE_MEASUREMENT_INVALID',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/worker-terminal-resources.resource-before.test.mts:93:1
+✖ successful native operation publishes its final cumulative sample (4.585949ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-resources/tests/verification/reliability/worker-terminal-resources.resource-before.test.mts:96:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

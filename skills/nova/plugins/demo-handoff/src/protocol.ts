@@ -1,3 +1,4 @@
+import {verifiedArtifactJsonText} from '@kubeclaw/plugin-sdk';
 import { canonicalJson, sha256Text, type ArtifactRef, type PluginInvocationContext, type AdapterActivationContext } from '@kubeclaw/plugin-sdk';
 import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
 export const NAMESPACE='kubeclaw.demo-handoff';
@@ -24,9 +25,10 @@ export function select(context:PluginInvocationContext,stageId:string,namespace:
 export async function read(context:Reader,reference:ArtifactRef,runId:string,stageId:string,namespace:string):Promise<Value> {
   if(reference.producer.runId!==runId||reference.producer.stageId!==stageId||reference.namespace!==namespace||reference.mediaType!=='application/json'
     ||reference.sizeBytes<1||reference.sizeBytes>8*1024**2)throw new Error('DEMO_HANDOFF_ARTIFACT_OWNER_INVALID');
-  const response=await context.invoke('artifacts.read',{operation:'get_latest_json',resource:{type:'artifact.object',canonicalId:reference.artifactId},payload:{namespace,digest:reference.digest}});
-  const bytes=canonicalJson(response.value);
-  if(canonicalJson(response.artifact)!==canonicalJson(reference)||response.digest!==reference.digest||response.sizeBytes!==reference.sizeBytes
+  const response=await context.invoke('artifacts.read',{operation:'get_latest_json_bytes',resource:{type:'artifact.object',canonicalId:reference.artifactId},payload:{namespace,digest:reference.digest}});
+  if(canonicalJson(response.artifact)!==canonicalJson(reference))throw new Error('DEMO_HANDOFF_ARTIFACT_CHANGED');
+  const bytes=verifiedArtifactJsonText(response, reference);
+  if(response.digest!==reference.digest||response.sizeBytes!==reference.sizeBytes
     ||Buffer.byteLength(bytes)!==reference.sizeBytes||sha256Text(bytes)!==reference.digest)throw new Error('DEMO_HANDOFF_ARTIFACT_CHANGED');
   return object(response.value);
 }

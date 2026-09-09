@@ -396,6 +396,7 @@ export interface StageAttempt {
   finishedAt?: string;
 }
 export interface ArtifactRef {
+  encoding?: 'kubeclaw-json.utf16.v1';
   artifactId: OpaqueId;
   namespace: NamespacedId;
   mediaType: string;

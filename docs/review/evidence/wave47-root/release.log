@@ -1,0 +1,18 @@
+✔ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (5210.992145ms)
+✔ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (2113.475329ms)
+✔ private operational overlays survive while replaced or removed runtime slots fail (2320.624235ms)
+✔ Prism and Ops reject image overrides even when another value could conceal them (4299.022225ms)
+✔ source configuration and materialized values are rechecked by actual deployment entrypoints (915.571373ms)
+✔ private bundle URL and authentication survive while the selected revision stays fixed (1118.192105ms)
+✔ private extraEnv cannot shadow reserved runtime bundle controls (3621.428985ms)
+✔ noncanonical alias and indirect controls cannot stand in for bundle consumers (2263.51968ms)
+✔ release selection rejects missing, duplicate and cross-commit build receipts (2.448895ms)
+✔ generated release values render actual Helm charts with immutable role and sidecar references (1104.562184ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21951.957061

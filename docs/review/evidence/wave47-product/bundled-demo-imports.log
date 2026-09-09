@@ -1,0 +1,5 @@
+PASS actual bundled nova/demo-handoff/candidate.ts: execute; module import only, no execution
+PASS actual bundled nova/demo-handoff/delivery.ts: execute; module import only, no execution
+PASS actual bundled nova/demo-handoff/ready.ts: execute; module import only, no execution
+PASS actual bundled nova/demo-handoff/adapter.ts: activate; module import only, no execution
+PASS actual bundled buster/demo-auth-smoke/provider.js: provider; module import only, no execution

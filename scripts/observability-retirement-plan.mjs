@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { recordRetirementSnapshot } from './observability-retirement/stores.mjs';
 import { runRoot } from '../skills/nova/core/execution/run-root.ts';
 import { Inventory, identityHash, requireIdentity } from './observability-retirement/files.mjs';
 import { inspectRun, journal } from './observability-retirement/journals.mjs';
@@ -98,7 +99,7 @@ export function planRetirement(scope) {
     guarded(inventory, identityHash(configured), () => {
       const root = inventory.root(configured, 'telemetry-store');
       const records = recordSnapshot(inventory, root);
-      report.telemetry.push({ root, records: records.length, recordIdentities: records.map(record => ({ sequence: record.sequence,
+      report.telemetry.push({ root, records: records.length, retirements: recordRetirementSnapshot(inventory, root), recordIdentities: records.map(record => ({ sequence: record.sequence,
         idempotencyKeyHash: identityHash(record.idempotencyKey), digest: record.payloadDigest, disposition: 'retain' })) });
       inventory.block('TELEMETRY_SHARED_SCOPE_RETAINED', root);
     });

@@ -101,3 +101,16 @@ SDK-Reserialisierung erzeugt einen anderen Digest. Sprachunabhängige Ordnung un
 der dafür notwendige explizite Producer-/Consumer-Cutover bleiben offen. Kein
 stiller Fallback, keine neu erfundene Migration bestehender gültiger Daten und
 keine vollständige Schließung dieser Portabilitätsanforderung.
+
+## Wave47: erster tatsächlicher portabler Artefakt-Cutover
+
+Der Folgeabschnitt in [sdk-json-compatibility.md](sdk-json-compatibility.md)
+implementiert den benannten UTF-16-Codec im Original-Implementation-Produzenten,
+versionierte Originalbyte-Leseoperationen im bestehenden Artefaktadapter und die
+zugehörigen Source-/Approval-/Repair-/Summary-/Demo-Consumer. Historische Blobs
+werden nach ihren ursprünglichen Bytes verifiziert, ohne Locale-Fallback oder
+Umidentifikation. Der unabhängige Producer-Ref-Gegenbeweis führte zu vollständiger
+Ref-Bindung und exakter Originalmetadata-Selektion. Der generelle Legacyserializer
+und separate innere Approval-/Report-/Ownership-Digests bleiben unverändert;
+PCR-SDK-001 ist daher weiterhin nur teilweise, jetzt aber funktional weitergehend,
+behoben. Es wurde kein ungenutzter v2-Helfer als Abschluss ausgegeben.

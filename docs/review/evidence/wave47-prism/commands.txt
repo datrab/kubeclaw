@@ -1,0 +1,40 @@
+Working directory: isolated wave47-prism, base a8cf34fc93c7bcb823ed9c54792a32de743255f1
+Node: v24.19.0; date: 2026-09-09. No production source changes.
+
+original-tests.txt (exit 0, 97 passed):
+node --test --test-concurrency=2 skills/prism/tests/agent-jobs.test.mts skills/prism/tests/agent-process.test.mts skills/prism/tests/agent-job-http.test.mts skills/prism/tests/agent-revision-client.test.mts skills/prism/tests/agent-package.test.mjs skills/prism/tests/agent-bridge-admission.test.mjs skills/prism/tests/preference-bridge.test.mjs skills/prism/tests/preferences-generation.test.mts skills/prism/tests/pipeline-preference-subject.test.mts skills/prism/tests/design-rounds.test.mts skills/prism/tests/design-round-client.test.mts skills/prism/tests/control-decisions.test.mts skills/prism/tests/corpus.test.mts skills/prism/tests/worker-service.test.mts skills/prism/tests/engine-cache.test.mts skills/prism/tests/engine.test.mts skills/prism/tests/renderer-remediation.test.mts skills/prism/tests/preview-assets.test.mts skills/prism/tests/studio-roundtrip.test.mts
+
+visual-identity.txt (exit 0, 3 passed):
+node --test skills/buster/plugins/visual/tests/browser-identity.test.mjs
+
+prism-types.txt and studio-types.txt (exit 0, empty output):
+node_modules/.bin/tsc --noEmit -p skills/prism/tsconfig.json
+node_modules/.bin/tsc --noEmit -p skills/prism/studio/tsconfig.json
+
+studio-build.txt (exit 0):
+npm run build:studio --workspace @kubeclaw/prism
+
+focused-lint.txt (exit 0, empty output):
+node_modules/.bin/eslint --config charts/kubeclaw/files/config/eslint.config.mjs skills/prism/control/design-generations.ts skills/prism/control/agent-jobs.ts skills/prism/server/agent-session.ts skills/prism/control/worker-results.ts skills/prism/control/direction-decisions.ts skills/prism/engine/execution-cache.ts skills/prism/studio/preview-assets.ts skills/buster/plugins/visual/src/browser-identity.js
+
+postgres-version.txt (exit 0):
+/workspace/scratch/4e25cf57c177/toolchains/pg17-native/bin/postgres --version
+initdb.txt (exit 1):
+/workspace/scratch/4e25cf57c177/toolchains/pg17-native/bin/initdb -D /tmp/kubeclaw-wave47-prism/native-db
+uid-map.txt:
+cat /proc/self/uid_map
+local-db-probe.txt: actual Python os.getuid and socket.connect_ex with 300ms deadlines at listed localhost ports; errno111 = connection refused.
+
+browser-install.txt (exit 1 after official CDN retries):
+PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 node node_modules/playwright/cli.js install chromium
+
+native-transactions.txt (exit 1, explicit missing dedicated DB prerequisite):
+node tests/verification/contracts/check-prism-postgres-transactions.mts
+native-corpus.txt (exit 1, explicit missing dedicated DB prerequisite):
+node skills/prism/integration/corpus-pool.mts
+native-cache.txt (exit 1 at real chromium.launch, missing executable):
+node --test skills/prism/integration/engine-cache-capture.mts
+native-visual.txt (exit 1 at real browser prerequisite):
+node skills/buster/plugins/visual/tests/live-function.test.ts
+native-studio.txt (exit 1 at real chromium.launch; three cases not run):
+node node_modules/playwright/cli.js test --config skills/prism/studio/playwright-remediation.mjs --max-failures=1

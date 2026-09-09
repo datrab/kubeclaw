@@ -1,0 +1,403 @@
+✖ fresh architecture approval ignores prior subject Blueprint lineage (4290.602741ms)
+✔ review source rejects a Git symlink before architecture dispatch (3105.730496ms)
+✖ approved architecture executable mode is preserved by original Blueprint sync (3596.992399ms)
+✖ original architecture approval source binding: none (3236.921129ms)
+✖ original architecture approval source binding: source-commit (3526.142564ms)
+✖ original architecture approval source binding: dirty-plan (4190.376359ms)
+✖ original architecture approval source binding: architecture-ref (4529.505871ms)
+✖ accepted source drift blocks at original sync admission (4086.822729ms)
+✖ accepted source drift blocks at original api admission (3278.195771ms)
+✖ clean bound report supports skipped approval and real pinned implementation (3448.156142ms)
+✖ source-less report can be reported but cannot authorize Blueprint or Forge (2686.349742ms)
+✖ external source commit during real implementation dispatch cannot become approved lineage (3475.808943ms)
+✖ external worktree commit during Forge cannot enter approved source lineage (4017.266836ms)
+✖ compiled source prefix uses original Git and implementation consumers; architecture agent enabled=false (3098.42597ms)
+✖ compiled source prefix uses original Git and implementation consumers; architecture agent enabled=true (4093.954053ms)
+✔ mandatory source failure prevents enabled architecture review, sync and implementation (3578.442218ms)
+✔ source admission rejects missing-producer before Git sync (2555.309911ms)
+✔ source admission rejects wrong-contract before Git sync (2539.780257ms)
+✖ actual external source change after admission rejects original Git merge (2860.088423ms)
+✖ implementation independently requires the admitted producer after a genuine Blueprint sync (3262.272287ms)
+✖ compiled findings require bound operator approval before Git sync; source changes=false (4666.652736ms)
+✖ compiled findings require bound operator approval before Git sync; source changes=true (4024.89869ms)
+✔ repair handoff reads real durable findings and rejects corrupt, cross-run and oversized evidence (100.125848ms)
+✔ module review binds real sha1 implementation artifacts, retains its repair baseline and rejects unrelated HEAD (693.794863ms)
+✔ module review binds real sha256 implementation artifacts, retains its repair baseline and rejects unrelated HEAD (947.140722ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 7
+ℹ fail 18
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48011.219707
+
+✖ failing tests:
+
+test at tests/verification/reliability/approval-source.test.mjs:14:1
+✖ fresh architecture approval ignores prior subject Blueprint lineage (4290.602741ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'blocked'
+  - 'waiting'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/approval-source.test.mjs:20:75)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/approval-source.test.mjs:41:1
+✖ approved architecture executable mode is preserved by original Blueprint sync (3596.992399ms)
+  AssertionError [ERR_ASSERTION]: [["api",{"stageId":"api","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["approval",{"stageId":"approval","status":"blocked","attemptNumber":3,"attemptsUsed":3,"remediationCyclesUsed":0}],["architecture",{"stageId":"architecture","status":"succeeded","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0,"facts":{"architecture.review":"clean"}}],["sync",{"stageId":"sync","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["ui",{"stageId":"ui","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}]]
+  + actual - expected
+  
+  + 'blocked'
+  - 'succeeded'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/approval-source.test.mjs:44:88)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'succeeded',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/approval-source.test.mjs:49:80
+✖ original architecture approval source binding: none (3236.921129ms)
+  AssertionError [ERR_ASSERTION]: [["api",{"stageId":"api","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["approval",{"stageId":"approval","status":"blocked","attemptNumber":3,"attemptsUsed":3,"remediationCyclesUsed":0}],["architecture",{"stageId":"architecture","status":"succeeded","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0,"facts":{"architecture.review":"approval_required"}}],["sync",{"stageId":"sync","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["ui",{"stageId":"ui","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}]]
+  + actual - expected
+  
+  + 'blocked'
+  - 'waiting'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/approval-source.test.mjs:53:77)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/approval-source.test.mjs:49:80
+✖ original architecture approval source binding: source-commit (3526.142564ms)
+  AssertionError [ERR_ASSERTION]: [["api",{"stageId":"api","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["approval",{"stageId":"approval","status":"blocked","attemptNumber":3,"attemptsUsed":3,"remediationCyclesUsed":0}],["architecture",{"stageId":"architecture","status":"succeeded","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0,"facts":{"architecture.review":"approval_required"}}],["sync",{"stageId":"sync","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["ui",{"stageId":"ui","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}]]
+  + actual - expected
+  
+  + 'blocked'
+  - 'waiting'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/approval-source.test.mjs:53:77)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/approval-source.test.mjs:49:80
+✖ original architecture approval source binding: dirty-plan (4190.376359ms)
+  AssertionError [ERR_ASSERTION]: [["api",{"stageId":"api","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["approval",{"stageId":"approval","status":"blocked","attemptNumber":3,"attemptsUsed":3,"remediationCyclesUsed":0}],["architecture",{"stageId":"architecture","status":"succeeded","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0,"facts":{"architecture.review":"approval_required"}}],["sync",{"stageId":"sync","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["ui",{"stageId":"ui","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}]]
+  + actual - expected
+  
+  + 'blocked'
+  - 'waiting'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/approval-source.test.mjs:53:77)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/approval-source.test.mjs:49:80
+✖ original architecture approval source binding: architecture-ref (4529.505871ms)
+  AssertionError [ERR_ASSERTION]: [["api",{"stageId":"api","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["approval",{"stageId":"approval","status":"blocked","attemptNumber":3,"attemptsUsed":3,"remediationCyclesUsed":0}],["architecture",{"stageId":"architecture","status":"succeeded","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0,"facts":{"architecture.review":"approval_required"}}],["sync",{"stageId":"sync","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["ui",{"stageId":"ui","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}]]
+  + actual - expected
+  
+  + 'blocked'
+  - 'waiting'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/approval-source.test.mjs:53:77)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/approval-source.test.mjs:72:38
+✖ accepted source drift blocks at original sync admission (4086.822729ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'blocked'
+  - 'waiting'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/approval-source.test.mjs:79:75)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/approval-source.test.mjs:72:38
+✖ accepted source drift blocks at original api admission (3278.195771ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'blocked'
+  - 'waiting'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/approval-source.test.mjs:79:75)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/approval-source.test.mjs:87:1
+✖ clean bound report supports skipped approval and real pinned implementation (3448.156142ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'blocked'
+  - 'succeeded'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/approval-source.test.mjs:90:82)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'succeeded',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/approval-source.test.mjs:94:1
+✖ source-less report can be reported but cannot authorize Blueprint or Forge (2686.349742ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'blocked'
+  - 'waiting'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/approval-source.test.mjs:97:83)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/approval-source.test.mjs:102:1
+✖ external source commit during real implementation dispatch cannot become approved lineage (3475.808943ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'blocked'
+  - 'waiting'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/approval-source.test.mjs:104:143)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/approval-source.test.mjs:111:1
+✖ external worktree commit during Forge cannot enter approved source lineage (4017.266836ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'blocked'
+  - 'waiting'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/approval-source.test.mjs:113:146)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/project-source.test.mjs:17:34
+✖ compiled source prefix uses original Git and implementation consumers; architecture agent enabled=false (3098.42597ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'blocked'
+  - 'succeeded'
+  
+      at file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:20:12
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async scenario (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:13:56)
+      at async TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:18:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'succeeded',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/project-source.test.mjs:17:34
+✖ compiled source prefix uses original Git and implementation consumers; architecture agent enabled=true (4093.954053ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'blocked'
+  - 'succeeded'
+  
+      at file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:20:12
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async scenario (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:13:56)
+      at async TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:18:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'succeeded',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/project-source.test.mjs:56:1
+✖ actual external source change after admission rejects original Git merge (2860.088423ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:60:55
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async scenario (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:13:56)
+      at async TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:57:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/project-source.test.mjs:65:1
+✖ implementation independently requires the admitted producer after a genuine Blueprint sync (3262.272287ms)
+  AssertionError [ERR_ASSERTION]: original sync actually completed
+  
+  false !== true
+  
+      at file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:71:12
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async scenario (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:13:56)
+      at async TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:66:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/project-source.test.mjs:76:34
+✖ compiled findings require bound operator approval before Git sync; source changes=false (4666.652736ms)
+  AssertionError [ERR_ASSERTION]: {"stages":[["architecture-approval",{"stageId":"architecture-approval","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["architecture-review",{"stageId":"architecture-review","status":"blocked","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0}],["blueprint-sync",{"stageId":"blueprint-sync","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["implement-api",{"stageId":"implement-api","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["implement-ui",{"stageId":"implement-ui","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["source-preflight",{"stageId":"source-preflight","status":"succeeded","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0}]],"reasons":[{"code":"architecture.invalid_output","message":"CAPABILITY_OPERATION_DENIED:artifacts.read:get_json_bytes"},{"code":"architecture.invalid_output","message":"CAPABILITY_OPERATION_DENIED:artifacts.read:get_json_bytes"}]}
+  + actual - expected
+  
+  + 'blocked'
+  - 'waiting'
+  
+      at file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:80:12
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async scenario (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:13:56)
+      at async TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:77:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/project-source.test.mjs:76:34
+✖ compiled findings require bound operator approval before Git sync; source changes=true (4024.89869ms)
+  AssertionError [ERR_ASSERTION]: {"stages":[["architecture-approval",{"stageId":"architecture-approval","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["architecture-review",{"stageId":"architecture-review","status":"blocked","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0}],["blueprint-sync",{"stageId":"blueprint-sync","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["implement-api",{"stageId":"implement-api","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["implement-ui",{"stageId":"implement-ui","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["source-preflight",{"stageId":"source-preflight","status":"succeeded","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0}]],"reasons":[{"code":"architecture.invalid_output","message":"CAPABILITY_OPERATION_DENIED:artifacts.read:get_json_bytes"},{"code":"architecture.invalid_output","message":"CAPABILITY_OPERATION_DENIED:artifacts.read:get_json_bytes"}]}
+  + actual - expected
+  
+  + 'blocked'
+  - 'waiting'
+  
+      at file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:80:12
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async scenario (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:13:56)
+      at async TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/reliability/project-source.test.mjs:77:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
