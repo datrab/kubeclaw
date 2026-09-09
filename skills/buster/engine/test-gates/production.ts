@@ -16,6 +16,16 @@ function integer(value: unknown, label: string, minimum = 1): number {
   return value as number;
 }
 
+function optionalDatabasePolicy(value: unknown) {
+  if (value === undefined) return {};
+  const source = object(value, 'securityScan.databasePolicy');
+  return { databasePolicy: {
+    maximumVulnerabilityAgeMs: integer(source.maximumVulnerabilityAgeMs, 'securityScan.databasePolicy.maximumVulnerabilityAgeMs'),
+    maximumJavaAgeMs: integer(source.maximumJavaAgeMs, 'securityScan.databasePolicy.maximumJavaAgeMs'),
+    maximumDatabaseBytes: integer(source.maximumDatabaseBytes, 'securityScan.databasePolicy.maximumDatabaseBytes'),
+  } };
+}
+
 function boolean(value: unknown, label: string): boolean {
   if (typeof value !== 'boolean') throw new Error(`BUSTER_REMOTE_CONFIG_INVALID:${label}`);
   return value;
@@ -340,6 +350,7 @@ export function loadProductionBusterRemotePlanRuntime(
       maximumExecutionMs: integer(securityScanSource.maximumExecutionMs, 'securityScan.maximumExecutionMs'),
       maximumOutputBytes: integer(securityScanSource.maximumOutputBytes, 'securityScan.maximumOutputBytes'),
       cacheDirectory: path.resolve(directory, String(securityScanSource.cacheDirectory)),
+      ...optionalDatabasePolicy(securityScanSource.databasePolicy),
     } } : {}),
     ...(kubernetesRuntimeSecuritySource ? { kubernetesRuntimeSecurity: {
       kubectlExecutable: path.resolve(directory, String(kubernetesRuntimeSecuritySource.kubectlExecutable)),

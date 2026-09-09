@@ -119,6 +119,7 @@ jobs:
           trivy_executable="$(bash scripts/scan-runtime-images.sh --executable)"
           echo "KUBECLAW_SECURITY_TEST_TRIVY=$trivy_executable" >> "$GITHUB_ENV"
           "$trivy_executable" image --download-db-only --cache-dir "$KUBECLAW_SECURITY_TEST_CACHE"
+          "$trivy_executable" image --download-java-db-only --cache-dir "$KUBECLAW_SECURITY_TEST_CACHE"
       - name: Exercise real scanner and HTTP negative controls
         run: npm test --workspace @kubeclaw/plugin-security-providers
 

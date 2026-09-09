@@ -1,0 +1,5 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": { "allowJs": true, "exactOptionalPropertyTypes": true, "noUncheckedIndexedAccess": true },
+  "include": ["**/*.ts", "**/*.mts", "../plugins/security-providers/tests/database-freshness.test.mts"]
+}

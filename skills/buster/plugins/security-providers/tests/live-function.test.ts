@@ -100,6 +100,8 @@ try {
   execFileSync('npm', ['install', '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund', '--save-exact', 'lodash@4.17.20'], { cwd: vulnerable, timeout: 60000, stdio: 'pipe' });
   const cleanDependency = await dependencyProvider().execute(invocation('dependency-clean', { projectDirectory: path.relative(root, healthy), policy: strict }), context);
   assert.equal(cleanDependency.outcome, 'passed');
+  assert.equal(cleanDependency.providerDetails.values.databaseEvidence.schemaVersion, 'trivy-database-evidence.v1');
+  assert.deepEqual(cleanDependency.providerDetails.values.databaseEvidence.databases.map((item: { kind: string }) => item.kind), ['vulnerability', 'java']);
   const dependency = await dependencyProvider().execute(invocation('dependency-vulnerable', { projectDirectory: path.relative(root, vulnerable), policy: strict }), context);
   assert.equal(dependency.outcome, 'failed');
   // https://github.com/advisories/GHSA-35jh-r3h4-6jhm
@@ -115,13 +117,18 @@ try {
     }
   }
 
+  console.log(JSON.stringify({ gate: 'native-dependency-provider', clean: true, knownCve: 'CVE-2021-23337', databaseEvidence: true }));
+
   const alpineDigest = 'sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc';
   const imageInput = { name: 'image', kind: 'value', schemaId: 'kubeclaw.container-image@1', value: {
     schemaVersion: 'container-image.v1', reference: `docker.io/library/alpine@${alpineDigest}`, digest: alpineDigest } };
   const image = await imageProvider().execute(invocation('image', { policy: strict }, [imageInput]), context);
   assert.match(image.outcome, /^(?:passed|failed)$/u);
   assert.equal(image.providerDetails.values.imageDigest, alpineDigest);
+  assert.equal(image.providerDetails.values.databaseEvidence.databases.length, 2);
   assert.ok(Array.isArray(image.providerDetails.values.normalizedFindings));
+
+  console.log(JSON.stringify({ gate: 'native-image-provider', imageDigest: alpineDigest, databaseEvidence: true }));
 
   const manifestFile = fs.realpathSync(path.join(root, 'tests/verification/e2e/fixtures/nginx-project/k8s/deployment.yaml'));
   const manifestBytes = fs.readFileSync(manifestFile);

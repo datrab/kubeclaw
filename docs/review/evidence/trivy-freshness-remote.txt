@@ -1,0 +1,20 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: [{"outcome":null,"summary":"write EPIPE"}]
++ actual - expected
+
++ 'execution_error'
+- 'passed'
+
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/contracts/check-pipeline-security-remote-vertical.mts:28:198 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'execution_error',
+  expected: 'passed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

@@ -133,6 +133,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             KUBECLAW_BUILD_REVISION=${{ github.sha }}
+            TRIVY_DATABASE_REFRESH=${{ github.run_id }}.${{ github.run_attempt }}
           provenance: mode=max
           sbom: true
       - name: Verify the exact published role artifact

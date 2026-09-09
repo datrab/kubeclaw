@@ -2,6 +2,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
+import { assertStableDatabases, databasePolicy, inspectTrivyDatabases, type TrivyDatabasePolicy } from './trivy-database.ts';
 import type { TestProviderCapabilityInvoker } from './runner.ts';
 
 type JsonObject = Record<string, unknown>;
@@ -13,6 +14,7 @@ export interface SecurityScanCapabilityInvokerOptions {
   readonly maximumExecutionMs: number;
   readonly maximumOutputBytes: number;
   readonly cacheDirectory: string;
+  readonly databasePolicy?: TrivyDatabasePolicy;
 }
 
 const DIGEST = /^sha256:[a-f0-9]{64}$/u;
@@ -137,6 +139,10 @@ function policyFindings(root: string, results: JsonObject[]): JsonObject[] {
   return findings;
 }
 
+function scanTarget(operation: string, root: string, target: string): string {
+  return operation === 'image' ? target : path.relative(root, target) || '.';
+}
+
 export class SecurityScanCapabilityInvoker implements TestProviderCapabilityInvoker {
   readonly #root: string;
   readonly #trivy: string;
@@ -144,12 +150,13 @@ export class SecurityScanCapabilityInvoker implements TestProviderCapabilityInvo
   readonly #maximumExecutionMs: number;
   readonly #maximumOutputBytes: number;
   readonly #cache: string;
+  readonly #databasePolicy: TrivyDatabasePolicy;
 
   constructor(options: SecurityScanCapabilityInvokerOptions) {
     this.#root = fs.realpathSync(options.workspaceRoot);
     this.#trivy = fs.realpathSync(options.trivyExecutable);
     fs.accessSync(this.#trivy, fs.constants.X_OK);
-    if (!Number.isSafeInteger(options.maximumExecutionMs) || options.maximumExecutionMs < 1
+    if (!Number.isSafeInteger(options.maximumExecutionMs) || options.maximumExecutionMs < 1 || options.maximumExecutionMs > 2147483647
       || !Number.isSafeInteger(options.maximumOutputBytes) || options.maximumOutputBytes < 1024) {
       throw new Error('SECURITY_SCAN_LIMIT_INVALID');
     }
@@ -158,6 +165,7 @@ export class SecurityScanCapabilityInvoker implements TestProviderCapabilityInvo
     this.#maximumExecutionMs = options.maximumExecutionMs;
     this.#maximumOutputBytes = options.maximumOutputBytes;
     this.#cache = fs.realpathSync(options.cacheDirectory);
+    this.#databasePolicy = databasePolicy(options.databasePolicy);
   }
 
   async invoke(capability: string, request: unknown, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
@@ -168,14 +176,11 @@ export class SecurityScanCapabilityInvoker implements TestProviderCapabilityInvo
     const timeoutMs = Math.min(this.#maximumExecutionMs,
       Number.isSafeInteger(payload.timeoutMs) && Number(payload.timeoutMs) > 0 ? Number(payload.timeoutMs) : this.#maximumExecutionMs);
     let args: string[];
-    let findings: JsonObject[];
     let target: string;
     if (operation === 'dependency') {
       target = contained(this.#root, payload.projectDirectory, 'projectDirectory');
       args = ['fs', '--scanners', 'vuln', '--format', 'json', '--quiet', '--skip-db-update', '--skip-java-db-update', '--offline-scan',
         '--skip-version-check', '--disable-telemetry', '--timeout', `${Math.ceil(timeoutMs / 1000)}s`, target];
-      findings = dependencyFindings(this.#root, trivyResults(await execute(this.#trivy, args, this.#root, this.#cache,
-        timeoutMs, this.#maximumOutputBytes, signal)));
     } else if (operation === 'image') {
       const image = text(payload.image, 'image', 2048);
       const parsed = IMAGE.exec(image);
@@ -186,8 +191,6 @@ export class SecurityScanCapabilityInvoker implements TestProviderCapabilityInvo
       target = image;
       args = ['image', '--scanners', 'vuln', '--format', 'json', '--quiet', '--skip-db-update', '--skip-java-db-update', '--offline-scan',
         '--skip-version-check', '--disable-telemetry', '--timeout', `${Math.ceil(timeoutMs / 1000)}s`, image];
-      findings = dependencyFindings(this.#root, trivyResults(await execute(this.#trivy, args, this.#root, this.#cache,
-        timeoutMs, this.#maximumOutputBytes, signal)));
     } else if (operation === 'kubernetes-policy') {
       target = contained(this.#root, payload.manifestPath, 'manifestPath');
       if (!fs.statSync(target).isFile()) throw new Error('SECURITY_SCAN_PATH_DENIED');
@@ -198,11 +201,34 @@ export class SecurityScanCapabilityInvoker implements TestProviderCapabilityInvo
       // version checks, and telemetry removes each config-scan network path.
       args = ['config', '--format', 'json', '--quiet', '--skip-check-update', '--skip-version-check', '--disable-telemetry',
         '--misconfig-scanners', 'kubernetes', '--timeout', `${Math.ceil(timeoutMs / 1000)}s`, target];
-      findings = policyFindings(this.#root, trivyResults(await execute(this.#trivy, args, this.#root, this.#cache,
-        timeoutMs, this.#maximumOutputBytes, signal)));
     } else throw new Error('SECURITY_SCAN_OPERATION_DENIED');
-    const reportedTarget = operation === 'image' ? target : path.relative(this.#root, target) || '.';
-    return Object.freeze({ scanner: 'trivy', operation, target: reportedTarget,
-      resultDigest: `sha256:${crypto.createHash('sha256').update(JSON.stringify(findings)).digest('hex')}`, findings });
+    return this.#scan(operation, target, args, timeoutMs, signal);
+  }
+
+  async #scan(operation: string, target: string, args: string[], timeoutMs: number, signal: AbortSignal) {
+    const deadline = Date.now() + timeoutMs;
+    const bounded = AbortSignal.any([signal, AbortSignal.timeout(timeoutMs)]);
+    try {
+      const before = operation === 'kubernetes-policy' ? undefined
+        : await inspectTrivyDatabases(this.#cache, this.#databasePolicy, bounded);
+      const remaining = deadline - Date.now();
+      if (remaining <= 0) throw new Error('SECURITY_SCAN_TIMEOUT');
+      const output = trivyResults(await execute(this.#trivy, args, this.#root, this.#cache,
+        remaining, this.#maximumOutputBytes, bounded));
+      const findings = operation === 'kubernetes-policy' ? policyFindings(this.#root, output) : dependencyFindings(this.#root, output);
+      const databaseEvidence = before ? await inspectTrivyDatabases(this.#cache, this.#databasePolicy, bounded) : undefined;
+      if (before && databaseEvidence) assertStableDatabases(before, databaseEvidence);
+      const reportedTarget = scanTarget(operation, this.#root, target);
+      const result = Object.freeze({ scanner: 'trivy', operation, target: reportedTarget,
+        resultDigest: `sha256:${crypto.createHash('sha256').update(JSON.stringify(databaseEvidence ? { findings, databaseEvidence } : findings)).digest('hex')}`,
+        findings, ...(databaseEvidence ? { databaseEvidence } : {}) });
+      bounded.throwIfAborted();
+      if (Date.now() >= deadline) throw new Error('SECURITY_SCAN_TIMEOUT');
+      return result;
+    } catch (error) {
+      if (signal.aborted) throw new Error('SECURITY_SCAN_CANCELLED', { cause: error });
+      if (bounded.aborted || Date.now() >= deadline) throw new Error('SECURITY_SCAN_TIMEOUT', { cause: error });
+      throw error;
+    }
   }
 }

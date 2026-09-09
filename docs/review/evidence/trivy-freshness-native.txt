@@ -1,0 +1,44 @@
+
+> test
+> node --test tests/live-function.test.ts tests/database-freshness.test.mts
+
+✔ original native Trivy scan returns both actual stable DB identities and source ages (8409.601081ms)
+✔ old copied source metadata fails even with a current DownloadedAt and payload policy override (4124.56663ms)
+✔ real database metadata changes, wrong schema, missing Java metadata and abort cannot authorize success (21329.341896ms)
+{"gate":"native-dependency-provider","clean":true,"knownCve":"CVE-2021-23337","databaseEvidence":true}
+file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/engine/test-gates/security-scan-runtime.ts:91
+      if (code !== 0 || childSignal) return finish(new Error(`SECURITY_SCANNER_EXECUTION_FAILED:${code ?? childSignal}`));
+                                                   ^
+
+Error: SECURITY_SCANNER_EXECUTION_FAILED:1
+    at ChildProcess.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/engine/test-gates/security-scan-runtime.ts:91:52)
+    at ChildProcess.emit (node:events:509:28)
+    at maybeClose (node:internal/child_process:1141:16)
+    at Socket.<anonymous> (node:internal/child_process:498:11)
+    at Socket.emit (node:events:509:28)
+    at Pipe.<anonymous> (node:net:355:12)
+
+Node.js v24.19.0
+✖ tests/live-function.test.ts (48294.83933ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48305.928536
+
+✖ failing tests:
+
+test at tests/live-function.test.ts:1:1
+✖ tests/live-function.test.ts (48294.83933ms)
+  'test failed'
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path /workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/plugins/security-providers
+npm error workspace @kubeclaw/plugin-security-providers
+npm error location /workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/buster/plugins/security-providers
+npm error command failed
+npm error command sh -c node --test tests/live-function.test.ts tests/database-freshness.test.mts

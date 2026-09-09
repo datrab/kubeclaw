@@ -295,6 +295,11 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     maximumExecutionMs: 900000,
     maximumOutputBytes: 67108864,
     cacheDirectory: '/home/builder/.cache/trivy',
+    databasePolicy: {
+      maximumVulnerabilityAgeMs: 48 * 60 * 60 * 1000,
+      maximumJavaAgeMs: 7 * 24 * 60 * 60 * 1000,
+      maximumDatabaseBytes: 8 * 1024 * 1024 * 1024,
+    },
   },
   kubernetesRuntimeSecurity: {
     kubectlExecutable: '/usr/local/bin/kubectl',

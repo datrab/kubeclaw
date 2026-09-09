@@ -1,0 +1,6 @@
+Original runtime child environment, exit 1
+2026-09-09T17:26:46+02:00	FATAL	Fatal error	run error: image scan error: scan error: unable to initialize a scan service: unable to initialize artifact: unable to initialize container image: unable to find the specified image "docker.io/library/alpine@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc" in ["docker" "containerd" "podman" "remote"]: 4 errors occurred:
+	* docker error: unable to inspect the image (docker.io/library/alpine@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc): permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+	* containerd error: containerd socket not found: /run/containerd/containerd.sock
+	* podman error: unable to initialize Podman client: no podman socket found: stat podman/podman.sock: no such file or directory
+	* remote error: Get "https://index.docker.io/v2/": dial tcp: lookup index.docker.io on 168.63.129.16:53: dial udp 168.63.129.16:53: connect: network is unreachable

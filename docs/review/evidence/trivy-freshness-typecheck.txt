@@ -1,0 +1,15 @@
+skills/buster/engine/tsconfig.json exit 2
+skills/worker/core/worker/attempt-executor.ts(280,39): error TS2379: Argument of type 'WorkerAttemptOperation<E>' is not assignable to parameter of type 'WorkerAttemptOperation<WorkerAttemptEnvelopeV1>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Type 'E' is not assignable to type 'WorkerAttemptEnvelopeV1'.
+    Type 'WorkerAttemptEnvelope' is not assignable to type 'WorkerAttemptEnvelopeV1'.
+      Type 'WorkerAttemptEnvelopeV2' is not assignable to type 'WorkerAttemptEnvelopeV1'.
+        Types of property 'schemaVersion' are incompatible.
+          Type '"worker-attempt-envelope.v2"' is not assignable to type '"worker-attempt-envelope.v1"'.
+
+skills/common/plugin-runtime/tsconfig.json exit 2
+skills/worker/core/worker/attempt-executor.ts(280,39): error TS2379: Argument of type 'WorkerAttemptOperation<E>' is not assignable to parameter of type 'WorkerAttemptOperation<WorkerAttemptEnvelopeV1>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Type 'E' is not assignable to type 'WorkerAttemptEnvelopeV1'.
+    Type 'WorkerAttemptEnvelope' is not assignable to type 'WorkerAttemptEnvelopeV1'.
+      Type 'WorkerAttemptEnvelopeV2' is not assignable to type 'WorkerAttemptEnvelopeV1'.
+        Types of property 'schemaVersion' are incompatible.
+          Type '"worker-attempt-envelope.v2"' is not assignable to type '"worker-attempt-envelope.v1"'.

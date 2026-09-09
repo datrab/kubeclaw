@@ -72,6 +72,8 @@ jobs:
         with:
           context: .
           file: docker/Dockerfile.buster-runtime
+          build-args: |
+            TRIVY_DATABASE_REFRESH=${{ github.run_id }}.${{ github.run_attempt }}
           load: true
           tags: kubeclaw-buster:proof
           cache-from: type=gha,scope=role-proof-buster-runtime

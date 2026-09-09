@@ -1,3 +1,4 @@
+import { databaseEvidence } from './database-evidence.js';
 import { findingId, integer, object, policy, result } from './common.js';
 
 function imageInput(invocation) {
@@ -35,7 +36,7 @@ export function provider() {
     'IMAGE_SCAN_RESPONSE_INVALID');
     if (response.scanner !== 'trivy' || response.operation !== 'image') throw new Error('IMAGE_SCAN_RESPONSE_INVALID');
     return result(invocation, 'image-trivy', findings(response.findings), config.policy,
-      { resultDigest: response.resultDigest, image: image.image, imageDigest: image.digest });
+      { databaseEvidence: databaseEvidence(response), resultDigest: response.resultDigest, image: image.image, imageDigest: image.digest });
   } };
 }
 

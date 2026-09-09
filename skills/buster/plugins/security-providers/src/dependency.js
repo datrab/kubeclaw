@@ -1,3 +1,4 @@
+import { databaseEvidence } from './database-evidence.js';
 import path from 'node:path';
 import { findingId, integer, object, policy, result } from './common.js';
 
@@ -32,7 +33,7 @@ export function provider() {
       payload: { projectDirectory: config.projectDirectory, timeoutMs: config.timeoutMs } }), 'DEPENDENCY_SCAN_RESPONSE_INVALID');
     if (response.scanner !== 'trivy' || response.operation !== 'dependency') throw new Error('DEPENDENCY_SCAN_RESPONSE_INVALID');
     return result(invocation, 'dependency-trivy', findings(response.findings), config.policy,
-      { resultDigest: response.resultDigest, projectDirectory: invocation.configuration.values.projectDirectory });
+      { databaseEvidence: databaseEvidence(response), resultDigest: response.resultDigest, projectDirectory: invocation.configuration.values.projectDirectory });
   } };
 }
 

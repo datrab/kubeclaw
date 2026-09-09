@@ -2,5 +2,5 @@
   "name": "@kubeclaw/plugin-security-providers",
   "private": true,
   "type": "module",
-  "scripts": { "build": "tsc --noEmit -p tsconfig.json", "test": "node tests/live-function.test.ts" }
+  "scripts": { "build": "tsc --noEmit -p tsconfig.json", "test": "node --test tests/live-function.test.ts tests/database-freshness.test.mts" }
 }

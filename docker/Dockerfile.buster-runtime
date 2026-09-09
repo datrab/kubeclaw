@@ -109,7 +109,9 @@ RUN node /app/node_modules/playwright/cli.js install --with-deps chromium firefo
 
 # Freeze the vulnerability database into this immutable worker image. A new
 # worker image is the controlled database update unit; execution stays offline.
-RUN setpriv --reuid=1000 --regid=1000 --init-groups \
+# Existing release workflows provide a distinct value for each build attempt.
+ARG TRIVY_DATABASE_REFRESH=manual
+RUN test -n "$TRIVY_DATABASE_REFRESH" && setpriv --reuid=1000 --regid=1000 --init-groups \
       env TRIVY_CACHE_DIR=/home/builder/.cache/trivy trivy image --download-db-only \
     && setpriv --reuid=1000 --regid=1000 --init-groups \
       env TRIVY_CACHE_DIR=/home/builder/.cache/trivy trivy image --download-java-db-only \

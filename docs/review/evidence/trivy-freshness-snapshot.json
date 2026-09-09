@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "trivy-database-evidence.v1",
+  "evaluatedAt": "2026-09-09T15:29:53.217Z",
+  "databases": [
+    {
+      "kind": "vulnerability",
+      "schemaVersion": 2,
+      "updatedAt": "2026-09-09T13:11:57.214Z",
+      "nextUpdate": "2026-09-10T13:11:57.214Z",
+      "databaseDigest": "sha256:156b39d6acdbc6065c2864d1f68e3f81d355d47e7e18284b8588e0f161a06bf8",
+      "metadataDigest": "sha256:f5cb318254779c17b0f111e0699fcda00ddc683024dd805915f8f4e0f8e17981",
+      "databaseBytes": 1371942912,
+      "maximumAgeMs": 172800000,
+      "sourceAgeMs": 8276003
+    },
+    {
+      "kind": "java",
+      "schemaVersion": 1,
+      "updatedAt": "2026-09-09T01:11:59.619Z",
+      "nextUpdate": "2026-09-12T01:11:59.619Z",
+      "databaseDigest": "sha256:7b2647e8ff3db13592b351eb7a82f629f18af903c1e99ce835abfaa4dcc33f96",
+      "metadataDigest": "sha256:48337b167f001dab6851f8e126b13b731814360f6073ecf1e46d9790e887e752",
+      "databaseBytes": 1400077824,
+      "maximumAgeMs": 604800000,
+      "sourceAgeMs": 51473598
+    }
+  ]
+}
