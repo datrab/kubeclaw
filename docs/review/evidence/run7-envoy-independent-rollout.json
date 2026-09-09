@@ -1,0 +1,26 @@
+{
+  "before": {
+    "chunk_id": "8f9491",
+    "cmd": "PATH=/workspace/scratch/4e25cf57c177/toolchains/bin:$PATH node tests/verification/contracts/check-rollout-health.mjs",
+    "exit_code": 1,
+    "original_token_count": 467,
+    "output": "Error: execution error at (kubeclaw/templates/deployment.yaml:26:42): workerTrust.spiffe requires serviceAccount.create=true for the actual release ServiceAccount\n\nUse --debug flag to render out invalid YAML\nnode:internal/errors:985\n  const err = new Error(message);\n              ^\n\nError: Command failed: helm template review charts/kubeclaw --set workerTrust.spiffe.enabled=true --set agentRole=nova\nError: execution error at (kubeclaw/templates/deployment.yaml:26:42): workerTrust.spiffe requires serviceAccount.create=true for the actual release ServiceAccount\n\nUse --debug flag to render out invalid YAML\n\n    at genericNodeError (node:internal/errors:985:15)\n    at wrappedFn (node:internal/errors:539:14)\n    at checkExecSyncError (node:child_process:942:11)\n    at execFileSync (node:child_process:978:15)\n    at render (file:///workspace/scratch/15fb596e6560/run7-envoy-review/tests/verification/contracts/check-rollout-health.mjs:8:50)\n    at file:///workspace/scratch/15fb596e6560/run7-envoy-review/tests/verification/contracts/check-rollout-health.mjs:17:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  status: 1,\n  signal: null,\n  output: [\n    null,\n    '',\n    'Error: execution error at (kubeclaw/templates/deployment.yaml:26:42): workerTrust.spiffe requires serviceAccount.create=true for the actual release ServiceAccount\\n' +\n      '\\n' +\n      'Use --debug flag to render out invalid YAML\\n'\n  ],\n  pid: 12,\n  stdout: '',\n  stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:26:42): workerTrust.spiffe requires serviceAccount.create=true for the actual release ServiceAccount\\n' +\n    '\\n' +\n    'Use --debug flag to render out invalid YAML\\n'\n}\n\nNode.js v24.19.0\n",
+    "wall_time_seconds": 0.000003836
+  },
+  "after": {
+    "chunk_id": "7f2830",
+    "cmd": "PATH=/workspace/scratch/4e25cf57c177/toolchains/bin:$PATH node tests/verification/contracts/check-rollout-health.mjs",
+    "exit_code": 0,
+    "original_token_count": 30,
+    "output": "{\"ok\":true,\"scope\":\"actual-helm-and-config-render-sensitivity\",\"liveRollout\":false,\"pinnedLiteLLMProbeExecution\":false}\n",
+    "wall_time_seconds": 0.949457226
+  },
+  "lint": {
+    "chunk_id": "7661a8",
+    "cmd": "node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs tests/verification/contracts/check-rollout-health.mjs",
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": "",
+    "wall_time_seconds": 0.445917115
+  }
+}
