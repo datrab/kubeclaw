@@ -1,0 +1,19 @@
+071dd712b9518cfb3f6e3d0994cdd474b9e05a72
+✔ aggregate blob budget survives reconstruction, deduplicates and serializes competing processes (312.877648ms)
+✔ original get rejects genuine content-addressed bytes over its configured maximum before allocation (11.892932ms)
+✔ original bounded reader preserves zero, exact maximum and unchanged quota/digest behavior (55.447191ms)
+✔ final symlink, parent symlink and FIFO cannot become blob bytes (13.779869ms)
+✔ corrupt and truncated content reject repeatedly without losing the original valid reader (83.575758ms)
+✔ actual concurrent parent replacement is rejected or returns only the exact originally addressed bytes (262.231195ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 722.047389
+skills/nova/core/test-gates/remote-dispatch.ts(197,110): error TS2554: Expected 4 arguments, but got 5.
+skills/nova/core/test-gates/remote-result-import.ts(261,26): error TS2339: Property 'withRecords' does not exist on type 'FileDurableRecordStore'.
+skills/nova/core/test-gates/remote-result-import.ts(261,90): error TS7006: Parameter 'records' implicitly has an 'any' type.
+skills/nova/core/test-gates/remote-result-import.ts(262,35): error TS7006: Parameter 'item' implicitly has an 'any' type.

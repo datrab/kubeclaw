@@ -1,0 +1,17 @@
+Source 071dd712b9518cfb3f6e3d0994cdd474b9e05a72; separate clean frozen checkout.
+Commands: node_modules/.bin/tsc --noEmit -p skills/nova/tsconfig.json && node --test tests/verification/reliability/blob-read-boundary.test.mjs tests/verification/reliability/blob-budget.test.mts
+Exit 0
+✔ aggregate blob budget survives reconstruction, deduplicates and serializes competing processes (466.348375ms)
+✔ original get rejects genuine content-addressed bytes over its configured maximum before allocation (27.280568ms)
+✔ original bounded reader preserves zero, exact maximum and unchanged quota/digest behavior (147.689725ms)
+✔ final symlink, parent symlink and FIFO cannot become blob bytes (31.000329ms)
+✔ corrupt and truncated content reject repeatedly without losing the original valid reader (146.210367ms)
+✔ actual concurrent parent replacement is rejected or returns only the exact originally addressed bytes (509.956415ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1278.303094

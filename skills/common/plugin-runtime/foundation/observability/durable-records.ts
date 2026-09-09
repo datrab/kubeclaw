@@ -4,6 +4,7 @@ export {assertDurableRecordReplay} from './record-retirement.ts';
 export type {DurableRecord, DurableRecordState, RecordRetirementIntent, RecordRetirement, RecordTombstone} from './record-retirement.ts';
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
+import { readDurableBlob } from './durable-blob-read.ts';
 import path from "node:path";
 import { canonicalJson } from "@kubeclaw/pipeline-observability-contract";
 import {
@@ -292,17 +293,6 @@ export class FileDurableBlobStore implements DurableBlobStore {
   }
 
   async get(digest: string): Promise<Buffer> {
-    const file = this.#path(digest);
-    let stat;
-    try { stat = await fs.lstat(file); } catch (error) {
-      if ((error as NodeJS.ErrnoException).code === "ENOENT") throw new Error("DURABLE_BLOB_NOT_FOUND");
-      throw error;
-    }
-    if (!stat.isFile() || stat.isSymbolicLink())
-      throw new Error("DURABLE_BLOB_PATH_INVALID");
-    const bytes = await fs.readFile(file);
-    const actual = `sha256:${crypto.createHash("sha256").update(bytes).digest("hex")}`;
-    if (actual !== digest) throw new Error("DURABLE_BLOB_INTEGRITY_FAILED");
-    return bytes;
+    return readDurableBlob(this.#path(digest), digest, this.#maximumBytes);
   }
 }
