@@ -1428,10 +1428,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP03",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "0fdea5e17be4ce19c0fe0621f382a4ad30728580",
+      "verification_status": "lokal verifiziert",
+      "verification_evidence": [
+        {
+          "report": "implementation/worker-deadline.md",
+          "summary": "15 real worker/Prism tests independently pass; full phase deadline, final materialization fence, real file/upload cancellation and explicit unresolved drain verified. Native Buster process termination remains separate blocked host gate; no arbitrary JavaScript termination or atomic I/O rollback claim."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/worker.core.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## 12. PCR-WORKER-001 — Claim-Deadline deckt nicht alle Abschlussphasen ab\n\n- Schweregrad: mittel; direkter Executor-Aufrufer kann ein Ergebnis nach Ablauf\n  des Claims als completed erhalten. Buster-Wrapper verwirft verspätete Ergebnisse,\n  direkte Prism-Nutzung hat diesen zusätzlichen Schutz nicht.\n- Evidenzklasse: begründeter Verdacht mit konkret nachvollziehbarem Zeitablauf;\n  echter kombinierter Timing-Test noch ausstehend.\n- Beleg: `attempt-executor.ts:249–255` reserviert timeout + 4×cleanupTimeout;\n  `:408–410` entfernt nach execute den Timer. Danach können Messung, Cleanup,\n  collectEvidence, storeFullLog und finalizeResult jeweils ein cleanupTimeout\n  beanspruchen. `:603–620` prüft am Schluss Abort, aber nicht aktuelle Claim-Zeit.\n- Ablauf: Claim deckt reservierte vier Abschlussbudgets knapp; fünf erfolgreiche\n  Hooks verbrauchen zusammen mehr als vier Budgets, ohne einzeln auszulaufen.\n  Finales Result wird nach Claimablauf erzeugt. LocalWorkerRuntime würde beim\n  Rücksprung ablehnen, Executor allein kann completed liefern.\n- Auswirkung: uneinheitliche Claimgültigkeit abhängig vom Wrapper; keine Aussage,\n  dass der aktuelle Prism-Pfad bereits alle fünf optionalen Hooks nutzt.\n- Ursachenbehebung: eine absolute Claim-Deadline durch alle Phasen führen und\n  vor terminaler Bestätigung erneut prüfen; Abschlussbudget aus tatsächlich\n  vorhandenen Phasen ableiten. Operationabbruch weiterhin echt durchsetzen.\n- Verifikation: echte kleine Operation mit realen Dateievidenzen und kontrolliert\n  langsamen Abschlussphasen ausführen, einmal direkt und einmal über Runtime;\n  beide müssen späten Erfolg verweigern. Zusätzlich Nachweis, dass auslaufende\n  Hooks keine unkontrollierten Nebenwirkungen nach dem Result fortsetzen.\n\n\nNachprüfung nach Schema Revision4: attempt-executor.ts:280 decodiert jeden\nByte-Logaufruf separat mit Buffer.toString('utf8'). Providerloader.ts:173 reicht\nreale stderr-Buffer weiter; :263 decodiert base64-RPC-Logchunks zu Buffern. Damit\nist [PCR-ISOLATION-003](foundation.isolation.md) auch für erhaltene Workerlogs\nrelevant: UTF-8 kann an Chunksplit verloren gehen. Zentraler Befund bleibt dort;\nWorker-Verifikation zusätzlich mit Originalexecutor und zwei Byte-Logs innerhalb\neines Mehrbytezeichens, gespeicherter Log muss exakte ursprüngliche Zeichen zeigen.\nDieser Worker-spezifische Repro wurde nicht ausgeführt (Codepfad geprüft).\nExecutor startet selbst keinen Prozess; Supervisorbeendigung ist Verantwortung\nder jeweiligen Operationterminate-Implementierung und bei buster.engine zu prüfen.",
@@ -1439,14 +1444,15 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/worker/core/worker/attempt-executor.ts#L249"
       ],
       "unresolved_code_references": [],
-      "next_action": "Originalpfad ursächlich korrigieren; neue echte Regressionen und unabhängige Gegenprüfung vor Commit.",
+      "next_action": "Abgegrenzter Defekt lokal verifiziert; native engine termination remains separately tracked.",
       "related_findings": [
         "PCR-BUSTER-ENGINE-001",
         "PCR-NOVA-GATE-001",
         "PCR-NOVA-GATE-002",
         "PCR-PRISM-WORKER-003"
       ],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": ""
     },
     {
       "id": "PATH-T04-001",
@@ -1773,10 +1779,15 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP06",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "9db5fc8ec48fc20e4d5bff7d91cf88f57d2f1251",
+      "verification_status": "teilweise / blockiert",
+      "verification_evidence": [
+        {
+          "report": "implementation/junit-executed-required.md",
+          "summary": "Actual Node JUnit output, original parser/finalizer and localhost HTTP Nova import/FileStore verified independently; no review override or invented failed case for missing execution. Full native provider/adapter/runner path blocked by actual EPIPE/exit70 host prerequisite failure."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PATH-T11-001 — Blocking-JUnit kann ohne einen ausgeführten Test bestehen\n\nEigentümertrace: [T11-deterministic-suites.md](T11-deterministic-suites.md); Codecommit wie oben.\n\n**Hoch; statisch nachgewiesene vollständige Bewertungsfolge, nicht ausgeführt.** Konkreter Eingang: gültiger blocking direct-command-Node im junit-required-Modus, realer Prozess Exit0, gültiger JUnitreport mit einem oder mehreren ausschließlich skipped Testcases. `skills/buster/plugins/junit-report-adapter/src/adapter.js#parse:195–196,249–260` zählt total>0, skipped=total, passed=failed=errored=0. `skills/buster/engine/test-gates/runner.ts#finalizeResult:1499–1524` weist nur total==0 ab. outcome hängt ausschließlich an Commandfailure oder failed+errored>0, damit passed; Summary nennt sogar alle reportCounts.total Cases „passed“. `remote-result-import.ts#failedReport/decide:163–166,190–204` sieht weder failed Reportcounts noch failed outcome und gibt Gate passed. `gateDecisionStageResult:40–41` erlaubt Fortsetzung. Kein gefälschtes Result und kein eigener Provider ist nötig.\n\nAuswirkung: Die im Projectcompiler verlangte Existenz eines aktiven blocking Testnodes (`compiler.ts:89`) genügt nicht, um tatsächlich ausgeführte Modultests nachzuweisen. Anders als Playwrights Mindestexecution (`playwright/src/provider.js:49–56`) fehlt dies beim JUnitpfad. **PCR-APIFLOW-001** ist verwandte Ursache unzureichender Ausführungsabdeckung in einem anderen Provider; diese beiden konkreten Pfade dürfen zusammen behoben, aber nicht als derselbe Parserdefekt ausgegeben werden.\n\nUrsachenbehebung: Eine ausdrückliche minimale tatsächlich ausgeführte Testabdeckung für blocking JUnit festlegen und im finalisierten Ergebnis erzwingen; skipped separat berichten. Geeignete Verifikation: Echter Command erzeugt normalen XMLreport mit ausschließlich skipped Testcases und Exit0, Originalprovider→Originaladapter→Originalrunner→Novaimport muss Nichtbestehen liefern; daneben gemischte pass/skip, failed/errored, total0 und normal vollständig passed prüfen. Nicht ausgeführt.",
@@ -1788,13 +1799,14 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/buster/plugins/playwright/src/provider.js#L49"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Actual Node JUnit output, original parser/finalizer and localhost HTTP Nova import/FileStore verified independently; no review override or invented failed case for missing execution. Full native provider/adapter/runner path blocked by actual EPIPE/exit70 host prerequisite failure.",
       "related_findings": [
         "PATH-T11-002",
         "PATH-T13-001",
         "PCR-APIFLOW-001"
       ],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Actual Node JUnit output, original parser/finalizer and localhost HTTP Nova import/FileStore verified independently; no review override or invented failed case for missing execution. Full native provider/adapter/runner path blocked by actual EPIPE/exit70 host prerequisite failure."
     },
     {
       "id": "PATH-T11-002",
@@ -1802,7 +1814,7 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -1815,7 +1827,7 @@
       "unresolved_code_references": [
         "runner.ts:789–803"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Abgestimmten Originalpfad/Policyvertrag umsetzen und unabhängig gegenprüfen; fehlende native Betriebsnachweise ausdrücklich offen halten.",
       "related_findings": [
         "PATH-T11-001",
         "PATH-T13-001",
@@ -1829,7 +1841,7 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP06",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -1845,7 +1857,7 @@
       "unresolved_code_references": [
         "pipeline.ts:39–55"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Abgestimmten Originalpfad/Policyvertrag umsetzen und unabhängig gegenprüfen; fehlende native Betriebsnachweise ausdrücklich offen halten.",
       "related_findings": [
         "PATH-T04-002",
         "PATH-T11-001",
@@ -2450,10 +2462,12 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "d109cfd917514e3cc526135c4df70b98a9f766f0",
+      "verification_status": "Originale SQL-/HTTP-/Clienttests und unabhängige Gegenprüfung bestanden; verspätete und wiederholte Runden sind versionsgebunden. Native PostgreSQL-Pool-, Browser- und Agentlaufnachweise fehlen.",
+      "verification_evidence": [
+        "docs/review/remediation/implementation/prism-design-rounds.md"
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PATH-T02-002 — Verspätetes Designset wird an neue aktive Architektur gebunden\n\nEigentümertrace: [T02-design-feedback.md](T02-design-feedback.md); Codecommit wie oben.\n\n**Hoch; nachgewiesene fehlende Bindung, Race statisch konstruiert, nicht ausgeführt.** Tool und Control nehmen nur projectId/designs an (`openclaw-plugin/index.mjs:29–45`, `control.ts:365–377`). `RevisionRepository.createDirectionSet` liest unter Projektlock erst bei Ergebnisannahme die dann aktive requestId (`storage/index.ts:189–215`).\n\nAuslöserfolge: A1 startet Generierung; Nova persistiert A2 und superseded A1 (`control.ts:330–338`); A1 liefert verspätet drei valide Dokumente mit gleichem external projectId; Repository ordnet sie A2 zu. Wenn für A2 noch nichts existiert, wird die falsche Generation akzeptiert. Ein nachfolgendes korrektes A2-Set kann am Inhaltskonflikt scheitern. Die spätere Approvalprüfung bindet dann an die falsche bereits entstandene Zuordnung und beweist keine Architekturherkunft. Ein Projektlock schützt die Transaktion, nicht die ursprüngliche Auftragseigentümerschaft.\n\nUrsachenbehebung: designRequestId, architectureDigest/revision und eindeutige Generation-ID durch Dispatch, Agenttool und DB-Commit tragen; aktueller Request muss vor Annahme exakt übereinstimmen, stale Ergebnis getrennt archivieren/verwerfen. Verifikation später: Original-Control/Agenttool mit realer DB, zwei überlappende Architekturversionen und umgekehrte Ergebnisreihenfolge; A1 muss vor jeder A2-Dokumentmutation abgelehnt werden, A2 muss weiterhin akzeptierbar sein.",
@@ -2464,7 +2478,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/server/control.ts#L330"
       ],
       "unresolved_code_references": [],
-      "next_action": "Originalpfad ursächlich korrigieren; neue echte Regressionen und unabhängige Gegenprüfung vor Commit.",
+      "next_action": "Native PostgreSQL-Pool- und Browser-/Agentintegration bei vorhandenen Voraussetzungen ausführen; vorhandene Studio-Typfehler separat beheben.",
       "related_findings": [
         "PATH-T02-003",
         "PCR-PRISM-CONTROL-001"
@@ -2477,10 +2491,12 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP07",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "d109cfd917514e3cc526135c4df70b98a9f766f0",
+      "verification_status": "Originale SQL-/HTTP-/Clienttests und unabhängige Gegenprüfung bestanden; verspätete und wiederholte Runden sind versionsgebunden. Native PostgreSQL-Pool-, Browser- und Agentlaufnachweise fehlen.",
+      "verification_evidence": [
+        "docs/review/remediation/implementation/prism-design-rounds.md"
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PATH-T02-003 — Erneutes Dreier-Designset derselben Architektur kann keine neue Runde erzeugen\n\nEigentümertrace: [T02-design-feedback.md](T02-design-feedback.md); Codecommit wie oben.\n\n**Mittel; nachgewiesener Pfadkonflikt.** `control.ts:471–479` nimmt erneute Directionsanforderung an und `agent-bridge.mjs:94–105` fordert drei neue Designs. `storage/index.ts:199–206` akzeptiert bei bestehendem Set ausschließlich identische Inhalte/Keys, sonst Konflikt. Es gibt in diesem Vertrag keine neue proposal-round-ID oder Übergang zu einer Nachfolgergeneration.\n\nAuslöser: Operator verwirft alle drei Vorschläge und fordert unter derselben Architektur neue Varianten. Auswirkung: 202 kann angenommen werden, spätere Speicherung neuer Vorschläge scheitert; initiales Set bleibt die einzige Runde. Einzelne Dokumentrevisionen sind unterstützt und nicht mit dieser fehlenden Mehrvariantenrunde gleichzusetzen. Ursache: Transport bietet Neugenerierung an, Persistenz behandelt jede weitere Generierung ausschließlich als identischen Retry. Behebung: explizite Rundenidentität samt aktuellem Elternstand, archivierten Vorgängerdirections, Feedbackbezug und separater Idempotenz. Verifikation später: erste echte Runde persistieren, drei Designs ablehnen, zweite andere Runde unter derselben Architektur erfolgreich speichern; Retry derselben Runde darf keine dritte Runde erzeugen.",
@@ -2490,7 +2506,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/storage/index.ts#L199"
       ],
       "unresolved_code_references": [],
-      "next_action": "Originalpfad ursächlich korrigieren; neue echte Regressionen und unabhängige Gegenprüfung vor Commit.",
+      "next_action": "Native PostgreSQL-Pool- und Browser-/Agentintegration bei vorhandenen Voraussetzungen ausführen; vorhandene Studio-Typfehler separat beheben.",
       "related_findings": [
         "PATH-T02-002",
         "PCR-PRISM-CONTROL-001"
@@ -2503,7 +2519,7 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -2512,7 +2528,7 @@
       "source_finding_text": "### PCR-PRISM-AGENT-BRIDGE-001 — Angenommene Aufträge sind nach Neustart verloren\n\n**Hoch; Evidenzklasse: nachgewiesener Defekt durch Code-Trace.** agent-bridge.mjs:37–44 speichert nur Promises, :75–76/:91–92/:104–105 quittiert202 vor Agentabschluss. Prozessneustart nach202 vor toolcommit verliert queued Tasks; Controlpersistenz speichert Designrequest, aber keine erneut abzuarbeitende Agentjobphase. Laufender Kindprozess kann ungewiss noch Werkzeugwrites ausführen. Folge: wartender Pipeline-/Studiovorgang ohne terminales Ergebnis oder Recovery; Retry kann Doppelagenten erzeugen. Ursache: EmpfangsACK ohne dauerhaften Job-/Receiptzustand. Behebung: persistierter Job mit requestdigest/idempotency/claim, explizite accepted/running/terminal-Reconciliation und Abbruch-/Unknownpolicy. Regression: Originalbridge/Agent+Control, echte Abbrüche nach202, vor spawn und nach Toolcommit; Neustart verarbeitet genau notwendige Jobs weiter und liefert durable Outcome ohne doppelte Revision.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originale Producer-/Consumergrenzen untersuchen und ursächlich integrieren; tatsächliche Zustellung und externe Ausführung nicht aus Konfiguration ableiten.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -2522,7 +2538,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP07",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -2531,7 +2547,7 @@
       "source_finding_text": "### PCR-PRISM-AGENT-BRIDGE-002 — Sanitizing und Kürzung kollidieren Projektsessions\n\n**Mittel; Evidenzklasse: nachgewiesener Defekt durch Code-Trace.** :66/:83/:97 bilden sessionKey über replace und slice96. Unterschiedliche erlaubte lange Projektkeys mit identischen ersten96Zeichen erhalten denselben OpenClawkontext; die separate Queue serialisiert sie, trennt aber Historie nicht. Folge: fremder Projektkontext beeinflusst nachfolgenden Agentenauftrag; Controlprojektprüfungen begrenzen einzelne Writes, lösen den Kontextmix nicht. Behebung: stabiler Digest des vollständigen externen ProjektIDs mit lesbarem Präfix, Scope/Namensraum explizit. Regression: zwei Original-Designrequests mit langer gemeinsamer Präfix-ID und verschiedene Sonderzeichen, getrennte Sessions/History und jeweils richtige Controlprojektbindung.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originale Producer-/Consumergrenzen untersuchen und ursächlich integrieren; tatsächliche Zustellung und externe Ausführung nicht aus Konfiguration ableiten.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -2741,10 +2757,12 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "91030cbc3a30882669b8af834102d368b50bd99d",
+      "verification_status": "37/37 echte lokale Tests unabhängig bestanden, inklusive Abbruch an der Cacheabschlussgrenze; Typprüfung und gezielter Lint bestanden. Native Browserprüfung blockiert, parallele CPU-/Kindprozessattribution offen.",
+      "verification_evidence": [
+        "docs/review/remediation/implementation/prism-worker-cancellation.md"
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-worker.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-PRISM-WORKER-002 — CPU-Messung zählt die gesamte Prozesslebensdauer\n\n- Schweregrad: hoch; ein langlebiger Worker überschreitet nach genügend CPU-Arbeit\n  das Versuchslimit auch bei späteren kleinen, erfolgreichen Operationen.\n- Evidenzklasse: nachgewiesener Defekt durch Code-Trace; Schwellenüberschreitung\n  im originalen laufenden Prism-Service noch nicht gemessen.\n- Beleg: `worker.ts:101–105` meldet `process.cpuUsage().user / 1000` ohne Startwert;\n  `engine/worker-envelope.ts:31` setzt cpuMillis auf 4000;\n  Worker-Core `attempt-executor.ts:437–438` vergleicht Messwert mit Versuchslimit.\n- Ablauf: Service verbraucht kumulativ mehr als 4 Sekunden User-CPU (auch Start-\n  und frühere Arbeit zählen); jeder folgende Versuch meldet mehr als 4000 ms.\n- Auswirkung: WORKER_CPU_LIMIT nach eigentlich erfolgreicher fachlicher Arbeit.\n  Zusätzlich fehlt System-CPU; gemeinsam ausgeführte Versuche sind nicht isoliert.\n- Ursachenbehebung: echte Ressourcenmessung pro isoliertem Versuch einschließlich\n  Kindprozessen; bloße Prozess-Differenz reicht bei parallelen Versuchen nicht.\n  Den neutralen Worker-Operation-Vertrag korrekt implementieren.\n- Regression: denselben echten Dienst lange genug mit realen Operationen betreiben,\n  sodass dessen Gesamt-CPU 4 Sekunden überschreitet; ein folgender kleiner Versuch\n  muss bestehen, ein einzeln über dem Budget liegender muss scheitern. Erst nach\n  Behebung des Logs-Vertrags ist dieser positive Pfad separat beobachtbar.",
@@ -2754,7 +2772,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/worker/core/worker/attempt-executor.ts#L437"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -2764,16 +2782,18 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "91030cbc3a30882669b8af834102d368b50bd99d",
+      "verification_status": "37/37 echte lokale Tests unabhängig bestanden, inklusive Abbruch an der Cacheabschlussgrenze; Typprüfung und gezielter Lint bestanden. Native Browserprüfung blockiert, parallele CPU-/Kindprozessattribution offen.",
+      "verification_evidence": [
+        "docs/review/remediation/implementation/prism-worker-cancellation.md"
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-worker.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-PRISM-WORKER-003 — Terminate beendet weder Browser noch Evidence-Upload\n\n- **Hoch; Evidenzklasse: nachgewiesener Defekt durch Code-Trace:** worker.ts:97–99 setzt nur terminated=true; Engine.execute (:79–84) und uploadEvidence (:37–40) erhalten kein AbortSignal. Chromium wird erst in Enginefinally geschlossen, Upload hat kein Timeout. Auslöser: laufender Browser/Upload überschreitet Deadline oder Controlclient trennt. Executor kann Ablauf als beendet behandeln, während externe Arbeit/Prozess weiterläuft; harte Claimabschluss-/Ressourcengrenze nicht gewährleistet. Keine tatsächlich beobachtete Prozessleckdauer behauptet.\n- **Behebung:** pro Attempt besitzbarer Browser-/Prozesshandle, Abort weitergeben, Upload/Log/Cleanup gemeinsam gegen absolute Claimdeadline begrenzen; terminate muss tatsächliche Beendigung/Reaping quittieren. Aggregierte Zulassung und messbare Ressourcen pro Versuch ergänzen, nicht nur Configzahlen vergleichen.\n- **Regression:** Originaldienste/echter Chromium, abbrechen während Capture und Upload; nach terminalem Result keine Kindprozesse, keine späteren Writes, alle Abschlussphasen innerhalb Claimdeadline. Disconnect zusätzlich auf bewusste Cancelpolicy prüfen.\n\nDokumentationsabgleich: Implementationplan Engineprofil/Bounded Worker wird nur teilweise umgesetzt; fehlende Logs und fehlende reale Terminierung widerlegen vollständigen neutralen Abschluss. Service-README fehlt; Querverweise Engine-/Storage-/Controlreviews behandeln Idempotenz, CAS und Empfangsbindung. Die drei Befunde ersetzen keine Cluster-/SPIFFE-Betriebsprüfung.\n\nAusführungsprotokoll der ersten Testgruppe: [prism-core-review-tests.txt](../evidence/prism-core-review-tests.txt) (aus Originalausgabe transkribierte Zusammenfassung, kein nachträglich erzeugtes TAP).",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
       "related_findings": [
         "PCR-BUSTER-ENGINE-001",
         "PCR-NOVA-GATE-001",
@@ -2863,18 +2883,24 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP08",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "ba7becc12519cb84a904bc8c0a29605514b68eea",
+      "verification_status": "teilweise / blockiert",
+      "verification_evidence": [
+        {
+          "report": "implementation/prism-engine-cache.md",
+          "summary": "15 original engine/render tests pass, including reviewer-reproduced mutable request binding correction. Completed count/serialized-byte limits and real artifact persistence verified. Original Chromium capture gate blocked by missing executable; long-lived capture/heap and full Control restart proof remain open."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.engine.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-PRISM-ENGINE-001 — Erfolgreiche Renderresultate bleiben unbegrenzt im Cache\n\n**Mittel; Evidenzklasse: nachgewiesener Defekt durch Code-Trace:** index.ts:49–76 legt jede erfolgreiche executionId→Promise dauerhaft ab; Löschung nur im catch. Worker ruft mit neuer executionId auf (worker.ts:79–84), und Engine speichert Captureoutput inklusive screenshotBase64/ARIA (:194–286), bevor Worker es in Evidenz umwandelt. Wiederholt erfolgreiche Engineoperationen wachsen deshalb auch dann dauerhaft weiter, wenn der nachgeschaltete neutrale Worker wegen fehlendem Logstore errored liefert. Folge: langlebiger Service behält große Bilder und erreicht Speichergrenze/OOM; keine Lastmessung behauptet. Ursache ist Idempotenzcache ohne TTL/Volumen/Ownership statt an Claim-/Resultlebensdauer gebundener Speicher. Reparatur: begrenzter In-flight-Cache, erfolgreiche Evidence externalisieren und dauerhaften autoritativen Replaystore klar zuordnen; aktive Retries nicht durch willkürliches Eviction duplizieren. Regression: viele echte Captureoperationen in einem langlebigen Worker, Retained-Heap/Cachebudget nach Abschluss messen, paralleles Same-key weiterhin genau einmal, Restart über Controlpersistenz prüfen.\n\nAusführungsprotokoll der ersten Testgruppe: [prism-core-review-tests.txt](../evidence/prism-core-review-tests.txt) (aus Originalausgabe transkribierte Zusammenfassung, kein nachträglich erzeugtes TAP).",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Originalpfad und tatsächliche Aufrufer ursächlich korrigieren; unabhängige Gegenprüfung vor Commit.",
+      "next_action": "15 original engine/render tests pass, including reviewer-reproduced mutable request binding correction. Completed count/serialized-byte limits and real artifact persistence verified. Original Chromium capture gate blocked by missing executable; long-lived capture/heap and full Control restart proof remain open.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "15 original engine/render tests pass, including reviewer-reproduced mutable request binding correction. Completed count/serialized-byte limits and real artifact persistence verified. Original Chromium capture gate blocked by missing executable; long-lived capture/heap and full Control restart proof remain open."
     },
     {
       "id": "PCR-PRISM-RENDERER-001",
@@ -3122,16 +3148,18 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP09",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "7f1b888eda4a74478a771b1363a844cd3093910b",
+      "verification_status": "D01/D07 Aufbewahrung und tatsächliche Storequoten/codebelegte Bereinigungsgrenzen dokumentiert; keine Laufzeitänderung und kein bestandener Quotafreigabenachweis.",
+      "verification_evidence": [
+        "docs/review/remediation/implementation/observability-retention.md"
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.observability.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-OBS-002 — Aufbewahrungsstrategie für bestätigte Historie fehlt\n\n- **Mittel, offene Architekturfrage:** endliche Quoten verhindern unbeschränktes\n  Wachstum, nach Ausschöpfung steht aber kein sicherer Freigabeweg bereit.\n- **Beleg:** RecordStore hat append/read/transition ohne Delete; Admission ohne\n  Compaction; AttemptStore reclaimExpiredEvidence entfernt nur ohne Result\n  referenzierte Evidence. README benennt fehlende Admissioncompaction, W6 ebenso.\n- **Auslöser/Auswirkung:** fortlaufende Runs füllen globale Stores; weitere\n  notwendige Belege/Writes scheitern, keine automatische Wiederherstellung der\n  Kapazität. Manuelles Löschen könnte Idempotenz/Beweisketten verlieren.\n- **Ursache lösen:** explizite runbezogene Retention mit Consumercheckpoint,\n  referenziertem Evidenceabschluss und nötigen Idempotenz-Tombstones; erst danach\n  zusammenhängend freigeben. Größere Quoten allein verschieben das Problem.\n- **Verifikation:** mit kleinen echten Quoten abgeschlossene und aktive Runs\n  mischen; Retention gibt nur bestätigte Historie frei, Replay von alten\n  Zustellungen führt zu keiner erneuten externen Aktion. Policyentscheidung\n  und Umsetzung gehören zum späteren Reparatur-/Betriebsauftrag.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Read-only Retirementplaner mit echten Referenzen prüfen, anschließend writergefencete Retire-/Replaygrenze umsetzen; keine automatische Loglöschung.",
       "related_findings": [
         "PCR-PRISM-WORKER-001",
         "PCR-TSTORE-001"
@@ -3310,7 +3338,7 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP10",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3319,7 +3347,7 @@
       "source_finding_text": "### F-T14-01 — Finalpreview-Exposure wird vor Operatorübergabe entfernt\n\nEigentümertrace: [T14-operator-preview.md](T14-operator-preview.md); Codecommit wie oben.\n\n**Hoch; statisch bestätigter komponentenübergreifender Lifecycledefekt gegenüber dem gewünschten Operatorabschluss.** Trigger: erfolgreicher Plan mit Kubernetesfixture retention=retain und Tailscale-Exposurefixture. Runner finally räumt Fixture auf (runner.ts 897–899,2005–2018), Exposurecleanup ist unbedingt (provider.js 85–90), Runtime schaltet off (231–241), Controller löscht Ingress (1353–1362). Folge: Namespace erhalten, URL nach Abschluss nicht erhalten. Rootfix: bewusster, persistierter Ownership-/Lifecycletransfer einer finalen Preview einschließlich Exposure, Namespace, TTL, Source-/Imagedigest und Cleanupbefugnis; normale Testfixtures weiterhin am Planende aufräumen. Kein pauschales Entfernen des Cleanup-finally. Regression: echter End-to-end-Fixtureplan, danach erlaubter Tailnetbrowser erreicht Anwendung für festgelegten Operatorzeitraum; explizites Release/TTL entfernt exakt diese Generation. Keine Ausführung hier.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originale Producer-/Consumergrenzen untersuchen und ursächlich integrieren; tatsächliche Zustellung und externe Ausführung nicht aus Konfiguration ableiten.",
       "related_findings": [
         "F-T14-02",
         "IFR-04-001",
@@ -3335,7 +3363,7 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP10",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3344,7 +3372,7 @@
       "source_finding_text": "### F-T14-02 — Vollständiger Operatorzugang und Appauth-Handoff fehlen\n\nEigentümertrace: [T14-operator-preview.md](T14-operator-preview.md); Codecommit wie oben.\n\n**Hoch für das Abschlussziel; statisch bestätigte Integrationslücke, keine behauptete Credentialoffenlegung.** Trigger: Pipeline verlangt Login und „ohne manuelle Clusterarbeit testen“. Controller erstellt nur dediziertes Secret (main.go 1165–1225); Manifest-/Ingresspfad bindet die App nicht automatisch daran; Summary konsumiert keine Exposure (summary.ts 46–68); Previewobserver sendet nur Artefaktmetadaten (observer.ts 139–160). Folge: weder funktionierender Login noch URL-/Credentialempfang/Abnahme sind durch den Runabschluss garantiert. Rootfix: verpflichtender Previewdeliveryvertrag mit Source/Image/Lease/Generation/URL/Authmodus/Expiry, Appseitiger Secretintegration und überprüftem Login; Credentials als gezielt abrufbare geschützte Referenz und autorisierte sichere Zustellung, nicht als unredigiertes allgemeines Runartefakt. Operatorfeedback an dieselbe Generation und Sourcebindung koppeln. Regression: Anwendung mit tatsächlicher Auth, erlaubter Operator kann lesen/login/Feedback geben, anderer Tailnetnutzer und alte Previewgeneration werden abgewiesen; Nachricht enthält nötige URL ohne öffentliche Secretbytes. Keine Tests hier.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originale Producer-/Consumergrenzen untersuchen und ursächlich integrieren; tatsächliche Zustellung und externe Ausführung nicht aus Konfiguration ableiten.",
       "related_findings": [
         "F-T14-01",
         "IFR-04-001",
@@ -3586,10 +3614,12 @@
       "family": "infrastructure",
       "severity": "hoch",
       "work_package": "WP11",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "4870483973cda017f8c2f0465d91b83f6706009b",
+      "verification_status": "13 echte Git-/Helm-/Shelltests und unabhängige Gegenprüfung bestanden; doppelte/indirekte Bundlevariablen abgewiesen. Laufende PodimageIDs nicht bestätigt.",
+      "verification_evidence": [
+        "docs/review/remediation/implementation/deployment-release-selection.md"
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/role-workloads.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-19-001\n**Hoch; nachgewiesene inkonsistente Standard-Releaseauswahl.** `my-values/nova-values.yaml:24–27`, Buster- und Prism-Agent-Values setzen weiterhin latest; generische Chartdefaults ebenso. `.github/workflows/build-images.yaml:119–123` publiziert nur candidate-Commit-Tags. Defaultdirektdeployment aus den Rollen-Values folgt damit nicht dem neu geprüften Artefakt und kann einen alten latest-Stand ziehen oder auf fehlenden Tag laufen. Readiness-/Source-Tests erzwingen teilweise explizit latest; sie beweisen keine Digestwahl.\n\nUrsachenbehebung: einen verbindlichen Release-Values-Einstieg verwenden und mutable/ungewählte Rollen-Deployments für kontrollierte Releases sperren; aktuelle Konfiguration plus gewählte Runtime-/Bundle-Revision als Einheit reviewen. Regression: echtes Helm-Rendering aller dokumentierten Deployment-Einstiege, jedes Image aus einem verifizierten Receipt, kein latest; anschließend Pod-imageID gegen Receipt prüfen. [INF-23](release-promotion.md) führt Receipt-Kette.",
@@ -3598,7 +3628,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/.github/workflows/build-images.yaml#L119"
       ],
       "unresolved_code_references": [],
-      "next_action": "Originalpfad und tatsächliche Aufrufer ursächlich korrigieren; unabhängige Gegenprüfung vor Commit.",
+      "next_action": "Ausgewählte Receipt mit tatsächlichen PodimageIDs und aktiven Bundlecommits im späteren autorisierten Clusterlauf vergleichen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4353,10 +4383,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP14",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "800cba4033c11337e31d34de11dc6cf66ca10282",
+      "verification_status": "teilweise / blockiert",
+      "verification_evidence": [
+        {
+          "report": "implementation/scaffold-regeneration.md",
+          "summary": "Editable provider plan preservation independently verified with four genuine CLI tests, plus25 existing tests and typecheck. Further requested two-file publication probe reproduces first-file modification before second-file EISDIR; coherent publication/reader boundary and crash proof remain open."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/nova.scaffold.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## 12. PCR-SCAFFOLD-001 — Regeneration verwirft ausgefüllten Providerplan\n\n**Mittel; mit Originalcode und echten Dateien reproduziert.**\n`progress-scaffold-discovery.ts#buildScaffold` (Zeilen 649–684) liest prior,\nübernimmt dessen Module/Gates/Order, baut pipeline aber allein über buildPipeline\nneu aus progress.json und pipeline.json. Noch nicht angewandte Änderungen im\nprior.pipeline werden ignoriert; CLI run schreibt dieses neue Scaffold sofort.\nAuslöser: Scaffold erzeugen, HTTP-URL ausfüllen, erneut ohne --apply generieren.\nProbe zeigt geprüfte URL ersetzt durch TODO. Auswirkung: verlorene manuelle\nProviderplanarbeit, wieder blockierender Apply oder unbemerkter Ersatz von\nindividuell konfigurierten Nodes. Rootfix: prior.pipeline als editierte Quelle\nmit expliziter Konfliktstrategie behandeln oder vor Überschreiben abbrechen.\nRegression: Original-CLI über generate → edit → generate → check, alle ausgefüllten\nNodekonfigurationen erhalten; gegen echte gespeicherte Vorversion vergleichen.\nWeitere Designgrenze: nichtatomare Zweidateipublikation durch echten zweiten\nWritefehler/Abbruch prüfen. Operationsbefund separat PCR-SCAFFOLD-OPS-001.",
@@ -4364,9 +4399,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/nova/project_setup/tools/progress-scaffold-discovery.ts"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Editable provider plan preservation independently verified with four genuine CLI tests, plus25 existing tests and typecheck. Further requested two-file publication probe reproduces first-file modification before second-file EISDIR; coherent publication/reader boundary and crash proof remain open.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Editable provider plan preservation independently verified with four genuine CLI tests, plus25 existing tests and typecheck. Further requested two-file publication probe reproduces first-file modification before second-file EISDIR; coherent publication/reader boundary and crash proof remain open."
     },
     {
       "id": "T01-F01",
@@ -4457,10 +4493,10 @@
   "implementation_branch": "fix/remediation-foundations-20260909",
   "updated_at": "2026-09-09",
   "progress_counts": {
-    "verifiziert": 82,
-    "implementiert": 21,
-    "in Bearbeitung": 7,
-    "offen": 44
+    "verifiziert": 83,
+    "implementiert": 30,
+    "in Bearbeitung": 8,
+    "offen": 33
   },
   "additional_integration_findings": [
     {

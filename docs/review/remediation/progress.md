@@ -4,7 +4,7 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**82/154 lokal verifiziert und unabhängig gegengeprüft; 21 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 7 in Bearbeitung; 44 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
+**83/154 lokal verifiziert und unabhängig gegengeprüft; 30 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 8 in Bearbeitung; 33 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
 
 | Bereich | Remote-Commit | Stand / Nachweis |
 |---|---|---|
@@ -160,3 +160,18 @@ Quellenbindung und Tailscale bleiben vor dem Commit in unabhängiger Nachprüfun
 - IFR-20-002: implementiert; Remote `fc136fc8d1351f9ef6bccfafa9f63dd55addbce2`. [Nachweis](implementation/rollout-health.md). Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.
 
 Die zuvor genannten Quellenbindungs-/Tailscale-Blocker sind behoben und unabhängig nachgeprüft. Aktuell laufen Worker-Abschlusszeitgrenzen, Prism-Runden samt tatsächlicher Studio-Aktion, begrenzter Prism-Ergebniscache und die Bindung tatsächlicher Deployment-Einstiege an ausgewählte Receipts. Die unabhängigen Reviewer prüfen erneut nach jeder fachlichen Nachbesserung.
+
+## Worker-Abschluss, Cache, Scaffold und JUnit gesichert
+
+- PCR-WORKER-001: verifiziert; Remote `0fdea5e17be4ce19c0fe0621f382a4ad30728580`. [Nachweis](implementation/worker-deadline.md). 15 real worker/Prism tests independently pass; full phase deadline, final materialization fence, real file/upload cancellation and explicit unresolved drain verified. Native Buster process termination remains separate blocked host gate; no arbitrary JavaScript termination or atomic I/O rollback claim.
+- PCR-PRISM-ENGINE-001: implementiert; Remote `ba7becc12519cb84a904bc8c0a29605514b68eea`. [Nachweis](implementation/prism-engine-cache.md). 15 original engine/render tests pass, including reviewer-reproduced mutable request binding correction. Completed count/serialized-byte limits and real artifact persistence verified. Original Chromium capture gate blocked by missing executable; long-lived capture/heap and full Control restart proof remain open.
+- PCR-SCAFFOLD-001: implementiert; Remote `800cba4033c11337e31d34de11dc6cf66ca10282`. [Nachweis](implementation/scaffold-regeneration.md). Editable provider plan preservation independently verified with four genuine CLI tests, plus25 existing tests and typecheck. Further requested two-file publication probe reproduces first-file modification before second-file EISDIR; coherent publication/reader boundary and crash proof remain open.
+- PATH-T11-001: implementiert; Remote `9db5fc8ec48fc20e4d5bff7d91cf88f57d2f1251`. [Nachweis](implementation/junit-executed-required.md). Actual Node JUnit output, original parser/finalizer and localhost HTTP Nova import/FileStore verified independently; no review override or invented failed case for missing execution. Full native provider/adapter/runner path blocked by actual EPIPE/exit70 host prerequisite failure.
+
+Aktuell: Prism-Designrunden und echte Deployment-Einstiege in finaler Gegenprüfung; Prism-CPU/Browserabbruch sowie explizite Pflicht-/Kumulativabdeckung in Umsetzung. Die genehmigte Retentionspolicy wird anhand der tatsächlichen Speicherbesitzer abgeglichen. Der Scaffold-Apply-Zweidateifehler bleibt mit Original-EISDIR-Reproduktion offen; kein transaktionaler Publish behauptet.
+
+## Gesicherte Fortsetzung: Deployment, Designrunden und Workerabbruch
+
+Die vier Commits `4870483973cda017f8c2f0465d91b83f6706009b`, `d109cfd917514e3cc526135c4df70b98a9f766f0`, `91030cbc3a30882669b8af834102d368b50bd99d` und `7f1b888eda4a74478a771b1363a844cd3093910b` sind auf dem Fixbranch gesichert. Sie enthalten die geprüfte Releaseauswahl, versionsgebundene Designrunden, Abbruch-/Messfensterkorrekturen und den Aufbewahrungsvertrag. Die nativen Grenzen bleiben in den jeweiligen Implementierungsnachweisen offen. Die unabhängige Workergegenprobe bestätigt beide abgebrochenen Cachewarteaufrufer und einen erfolgreichen späteren Neuversuch.
+
+Aktiv: vollständige Pflichtprüfungsabdeckung, Agent-Bridge-Recovery, echte Demo-/Zugangsdatenübergabe, read-only Retirementplaner, bestehende Studio-Typfehler und isolierte Integrationsgegenprüfung des lokalen Commits `ab79ad928cbf54072fe0b3eaabd8b5ee60dea7d1`. Noch keine vollständige E2E-Freigabe.

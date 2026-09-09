@@ -40,7 +40,7 @@ Control persists `request_digest`, `attempt_id` and `result` in
 replay store, server/storage change or weakening of worker evidence validation
 is introduced by this slice.
 
-RAM eviction removes no artifact, log, Git record or database row. D09 retention
+RAM eviction removes no artifact, log, Git record or database row. D07 retention
 is unchanged; no log TTL or seven-day demo policy is introduced.
 
 ## Local evidence and remaining gates
