@@ -1,0 +1,44 @@
+{{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole "buster") -}}
+{{- if not (semverCompare ">=1.30.0-0" .Capabilities.KubeVersion.Version) -}}
+{{- fail "Buster namespace broker requires Kubernetes >=1.30 with admissionregistration.k8s.io/v1 ValidatingAdmissionPolicy" -}}
+{{- end -}}
+{{- $fullname := include "kubeclaw.fullname" . -}}
+{{- $identity := printf "system:serviceaccount:%s:%s-namespace-controller" .Release.Namespace $fullname -}}
+{{- $worker := printf "system:serviceaccount:%s:%s" .Release.Namespace $fullname -}}
+{{- $name := printf "%s-%s-namespace-fence" ($fullname | trunc 32 | trimSuffix "-") (printf "%s/%s" .Release.Namespace $fullname | sha256sum | trunc 8) -}}
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: {{ $name }}
+spec:
+  failurePolicy: Fail
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        resources: ["namespaces"]
+        operations: ["CREATE", "DELETE"]
+  matchConditions:
+    - name: broker-identity
+      expression: {{ printf "request.userInfo.username in [%s, %s]" (toJson $identity) (toJson $worker) | quote }}
+  variables:
+    - name: target
+      expression: 'request.operation == "DELETE" ? oldObject : object'
+  validations:
+    - expression: {{ printf "request.userInfo.username != %s" (toJson $worker) | quote }}
+      message: Buster must request a lease rather than creating or deleting namespaces directly.
+    - expression: >-
+        {{ toJson .Values.busterNamespaceBroker.allowedPrefixes }}.exists(prefix, variables.target.metadata.name.startsWith(prefix + "-")) &&
+        has(variables.target.metadata.labels) &&
+        "kubeclaw/managed-by" in variables.target.metadata.labels &&
+        variables.target.metadata.labels["kubeclaw/managed-by"] == "buster-namespace-controller"
+      message: Broker may only create or delete managed namespaces with configured prefixes.
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicyBinding
+metadata:
+  name: {{ $name }}
+spec:
+  policyName: {{ $name }}
+  validationActions: [Deny]
+{{- end }}

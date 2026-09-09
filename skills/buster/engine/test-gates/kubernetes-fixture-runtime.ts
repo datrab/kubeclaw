@@ -2,7 +2,7 @@ import crypto from 'node:crypto';
 import { runProcessInput } from './process-input.ts';
 import fs from 'node:fs';
 import path from 'node:path';
-import { loadAll } from 'js-yaml';
+import { boundedManifestDocuments } from './kubernetes-manifest.ts';
 import type { TestProviderCapabilityRequest } from '@kubeclaw/plugin-sdk';
 import type { TestProviderCapabilityInvoker } from './runner.ts';
 
@@ -132,18 +132,22 @@ function manifestBytes(file: string, expectedDigest: string, maximumBytes: numbe
   }
 }
 
-function flattenDocuments(values: unknown[]): JsonObject[] {
+function flattenDocuments(values: unknown[], maximumResources: number): JsonObject[] {
   const out: JsonObject[] = [];
-  const visit = (value: unknown): void => {
-    const document = object(value, 'manifestDocument');
+  const pending = values.filter(value => value !== null && value !== undefined).reverse();
+  let visits = 0;
+  while (pending.length) {
+    if (++visits > 100_000) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');
+    const document = object(pending.pop(), 'manifestDocument');
     if (document.kind === 'List') {
       if (!Array.isArray(document.items)) throw new Error('KUBERNETES_FIXTURE_MANIFEST_LIST_INVALID');
-      for (const item of document.items) visit(item);
-      return;
+      if (pending.length + document.items.length > 100_000) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');
+      for (let index = document.items.length - 1; index >= 0; index -= 1) pending.push(document.items[index]);
+    } else {
+      if (out.length >= maximumResources) throw new Error('KUBERNETES_FIXTURE_RESOURCE_COUNT_INVALID');
+      out.push(document);
     }
-    out.push(document);
-  };
-  for (const value of values) if (value !== null && value !== undefined) visit(value);
+  }
   return out;
 }
 
@@ -296,10 +300,8 @@ function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources
   allowedRegistryPrefixes: readonly string[], serviceName: string, servicePort: number,
   expectedServiceTargetPort: number | null, persistentVolumePolicy: PersistentVolumePolicy):
   { resources: number; workloads: number; serviceTargetPort: number } {
-  let loaded: unknown[] = [];
-  try { loadAll(bytes.toString('utf8'), (value) => { loaded.push(value); }); }
-  catch (error) { throw new Error('KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED', { cause: error }); }
-  const documents = flattenDocuments(loaded);
+  const loaded = boundedManifestDocuments(bytes);
+  const documents = flattenDocuments(loaded, maximumResources);
   if (documents.length < 1 || documents.length > maximumResources) throw new Error('KUBERNETES_FIXTURE_RESOURCE_COUNT_INVALID');
   let workloads = 0;
   let matchedImage = false;

@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -44,7 +45,12 @@ func testController(t *testing.T) *controller {
 	if err != nil {
 		t.Fatal(err)
 	}
+	tokenPath := filepath.Join(t.TempDir(), "token")
+	if err := os.WriteFile(tokenPath, []byte("test-token"), 0600); err != nil {
+		t.Fatal(err)
+	}
 	return &controller{
+		tokenPath: tokenPath,
 		namespace: "kubeclaw", allowedPrefixes: []string{"test"}, allowedAccess: allowed,
 		serviceAccountName: "agent-buster-namespace-controller",
 		secretRoleName:     "buster-controller-secrets",
@@ -83,7 +89,6 @@ func TestEnsureControllerSecretAccessUsesOneTargetRoleBinding(t *testing.T) {
 	ctrl := testController(t)
 	ctrl.apiURL = server.URL
 	ctrl.httpClient = server.Client()
-	ctrl.token = "test-token"
 	if err := ctrl.ensureControllerSecretAccess(context.Background(), "test-demo"); err != nil {
 		t.Fatal(err)
 	}
@@ -167,7 +172,7 @@ func TestLegacyRunnerAccessDeletionRemovesRoleAndBinding(t *testing.T) {
 	}))
 	defer server.Close()
 	ctrl := testController(t)
-	ctrl.apiURL, ctrl.httpClient, ctrl.token = server.URL, server.Client(), "test-token"
+	ctrl.apiURL, ctrl.httpClient = server.URL, server.Client()
 	if err := ctrl.deleteLegacyRunnerAccess(context.Background(), "test-demo"); err != nil {
 		t.Fatal(err)
 	}
@@ -186,7 +191,7 @@ func TestLegacyLeaseCannotRevokeAnotherNamespacesAccess(t *testing.T) {
 	}))
 	defer server.Close()
 	ctrl := testController(t)
-	ctrl.apiURL, ctrl.httpClient, ctrl.token = server.URL, server.Client(), "test-token"
+	ctrl.apiURL, ctrl.httpClient = server.URL, server.Client()
 	owned, err := ctrl.legacyNamespaceOwned(context.Background(), &lease{Metadata: metadata{Name: "lease-a"}}, "test-demo")
 	if err != nil || owned {
 		t.Fatalf("foreign legacy namespace reported owned: owned=%v err=%v", owned, err)
@@ -209,7 +214,7 @@ func TestOwnershipMismatchDoesNotBlockLeaseFinalizerRemoval(t *testing.T) {
 	defer server.Close()
 	ctrl := testController(t)
 	ctrl.apiGroup, ctrl.apiVersion, ctrl.finalizer = "kubeclaw.forgestack.ai", "v1alpha1", "kubeclaw.forgestack.ai/cleanup"
-	ctrl.apiURL, ctrl.httpClient, ctrl.token = server.URL, server.Client(), "test-token"
+	ctrl.apiURL, ctrl.httpClient = server.URL, server.Client()
 	item := &lease{Metadata: metadata{Name: "lease-a", UID: "uid-a", Finalizers: []string{ctrl.finalizer}}}
 	if err := ctrl.reconcileDeletedLease(context.Background(), item, "test-demo"); err != nil {
 		t.Fatal(err)
@@ -335,7 +340,7 @@ func TestExistingCredentialSeparatesReaderAndWriterRoles(t *testing.T) {
 	}))
 	defer server.Close()
 	ctrl := testController(t)
-	ctrl.apiURL, ctrl.httpClient, ctrl.token = server.URL, server.Client(), "test-token"
+	ctrl.apiURL, ctrl.httpClient = server.URL, server.Client()
 	request := &testCredentialRequest{
 		Mode: "existing", SecretName: "preview-login",
 		Readers: []serviceAccountRef{{Namespace: "kubeclaw", Name: "agent-buster"}},
@@ -522,7 +527,7 @@ func TestExpiredLeaseDoesNotRewriteStatusOnEveryPoll(t *testing.T) {
 	}))
 	defer server.Close()
 	ctrl := testController(t)
-	ctrl.apiURL, ctrl.httpClient, ctrl.token = server.URL, server.Client(), "test-token"
+	ctrl.apiURL, ctrl.httpClient = server.URL, server.Client()
 	item := &lease{
 		Metadata: metadata{Name: "lease-a", UID: "uid-a", CreationTimestamp: time.Now().Add(-3 * time.Hour).UTC().Format(time.RFC3339)},
 		Spec:     map[string]interface{}{"ttlSeconds": 7200},
@@ -544,7 +549,7 @@ func TestReadyNamespaceOwnershipMustStillMatch(t *testing.T) {
 	}))
 	defer server.Close()
 	ctrl := testController(t)
-	ctrl.apiURL, ctrl.httpClient, ctrl.token = server.URL, server.Client(), "test-token"
+	ctrl.apiURL, ctrl.httpClient = server.URL, server.Client()
 	item := &lease{Metadata: metadata{Name: "lease-a", UID: "uid-a"}}
 	if err := ctrl.verifyNamespaceOwnership(context.Background(), item, "test-demo"); err == nil {
 		t.Fatal("expected ready reconciliation to reject changed namespace ownership")
@@ -570,7 +575,7 @@ func TestRejectedProvisionedLeaseDeletesPreviouslyGrantedNamespace(t *testing.T)
 	}))
 	defer server.Close()
 	ctrl := testController(t)
-	ctrl.apiURL, ctrl.httpClient, ctrl.token, ctrl.pollInterval = server.URL, server.Client(), "test-token", time.Millisecond
+	ctrl.apiURL, ctrl.httpClient, ctrl.pollInterval = server.URL, server.Client(), time.Millisecond
 	item := &lease{
 		Metadata: metadata{Name: "lease-a", UID: "uid-a", Finalizers: []string{ctrl.finalizer}, CreationTimestamp: time.Now().UTC().Format(time.RFC3339)},
 		Spec: map[string]interface{}{
@@ -680,7 +685,7 @@ func TestInspectRuntimeSecurityStateUsesProductionControllerRules(t *testing.T) 
 			"spec": map[string]interface{}{"type": "ClusterIP"}}}},
 		"roles": {"items": []interface{}{}}, "rolebindings": {"items": []interface{}{}}, "ingresses": {"items": []interface{}{}},
 	}
-	findings, pods, services := inspectRuntimeSecurityState(secure, image)
+	findings, pods, services := inspectRuntimeSecurityState(secure, image, nil)
 	if len(findings) != 0 || pods != 1 || services != 1 {
 		t.Fatalf("secure production state was not accepted: findings=%v pods=%d services=%d", findings, pods, services)
 	}
@@ -699,7 +704,7 @@ func TestInspectRuntimeSecurityStateUsesProductionControllerRules(t *testing.T) 
 					"allowPrivilegeEscalation": false, "capabilities": map[string]interface{}{"drop": []interface{}{"ALL"}}}}},
 		},
 	}}}
-	findings, _, _ = inspectRuntimeSecurityState(unsafeCapabilities, image)
+	findings, _, _ = inspectRuntimeSecurityState(unsafeCapabilities, image, nil)
 	capabilityIDs := map[string]bool{}
 	for _, raw := range findings {
 		capabilityIDs[stringValue(securityObject(raw)["id"])] = true
@@ -721,7 +726,7 @@ func TestInspectRuntimeSecurityStateUsesProductionControllerRules(t *testing.T) 
 		"rolebindings": {"items": []interface{}{}},
 		"ingresses":    {"items": []interface{}{map[string]interface{}{"metadata": map[string]interface{}{"name": "public"}}}},
 	}
-	findings, _, _ = inspectRuntimeSecurityState(unsafe, image)
+	findings, _, _ = inspectRuntimeSecurityState(unsafe, image, nil)
 	ids := map[string]bool{}
 	for _, raw := range findings {
 		ids[stringValue(securityObject(raw)["id"])] = true

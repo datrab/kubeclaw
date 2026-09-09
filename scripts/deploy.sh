@@ -1170,9 +1170,7 @@ cmd_infra() {
   wait_for_rollout_required "Registry Local" deployment/registry-local -n "$NAMESPACE" --timeout=60s
   log "Registry Local deployed"
 
-  header "Infrastructure: Buster Namespace Fence (VAP)"
-  kubectl apply -f "$INFRA_DIR/buster-namespace-fence.yaml"
-  log "Buster namespace fence applied"
+  info "Buster namespace admission fence is owned by the broker Helm release (Kubernetes >=1.30)."
 
   header "Infrastructure: Network Policies"
   kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/network-policies.yaml"

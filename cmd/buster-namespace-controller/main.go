@@ -49,7 +49,7 @@ type controller struct {
 	pollInterval         time.Duration
 	finalizer            string
 	apiURL               string
-	token                string
+	tokenPath            string
 	httpClient           *http.Client
 }
 
@@ -155,7 +155,7 @@ func newController() (*controller, error) {
 		pollInterval:       pollInterval,
 		finalizer:          apiGroup + "/buster-namespace-cleanup",
 		apiURL:             "https://" + host + ":" + port,
-		token:              token,
+		tokenPath:          serviceAccountTokenPath,
 		serviceAccountName: env("BUSTER_CONTROLLER_SERVICE_ACCOUNT", "agent-buster-namespace-controller"),
 		secretRoleName:     env("BUSTER_SECRET_ROLE_NAME", "buster-controller-secrets"),
 		deployerRoleName:   env("BUSTER_DEPLOYER_ROLE_NAME", "buster-namespace-deployer"),
@@ -472,7 +472,7 @@ func securityItems(value map[string]interface{}) []interface{} {
 	return interfaceSlice(value["items"])
 }
 
-func inspectRuntimeSecurityState(state map[string]map[string]interface{}, immutableImage string) ([]interface{}, int, int) {
+func inspectRuntimeSecurityState(state map[string]map[string]interface{}, immutableImage string, expectedRBAC []map[string]interface{}) ([]interface{}, int, int) {
 	findings := []interface{}{}
 	for _, rawPod := range securityItems(state["pods"]) {
 		pod := securityObject(rawPod)
@@ -520,15 +520,7 @@ func inspectRuntimeSecurityState(state map[string]map[string]interface{}, immuta
 			findings = append(findings, securityFinding("runtime:service:"+name+":exposure", "critical", "Service has unexpected external exposure.", "Service/"+name))
 		}
 	}
-	allowedRBAC := map[string]bool{"buster-controller-secrets": true, "buster-namespace-deployer": true, "buster-namespace-tester": true}
-	for _, kind := range []string{"roles", "rolebindings"} {
-		for _, rawResource := range securityItems(state[kind]) {
-			name := stringValueDefault(securityObject(securityObject(rawResource)["metadata"])["name"], "unknown")
-			if !allowedRBAC[name] {
-				findings = append(findings, securityFinding("runtime:"+kind+":"+name, "high", "Test workload created namespace RBAC.", kind+"/"+name))
-			}
-		}
-	}
+	findings = append(findings, inspectNamespaceRBAC(state, expectedRBAC)...)
 	for _, rawIngress := range securityItems(state["ingresses"]) {
 		name := stringValueDefault(securityObject(securityObject(rawIngress)["metadata"])["name"], "unknown")
 		findings = append(findings, securityFinding("runtime:ingress:"+name, "critical", "Test workload created an Ingress.", "Ingress/"+name))
@@ -557,7 +549,14 @@ func (c *controller) runtimeSecurityStatus(ctx context.Context, item *lease, nam
 		}
 		state[name] = response
 	}
-	findings, podCount, serviceCount := inspectRuntimeSecurityState(state, immutableImage)
+	if err := c.verifyNamespaceOwnership(ctx, item, namespaceName); err != nil {
+		return nil, err
+	}
+	expected, err := c.expectedNamespaceRBAC(item, namespaceName)
+	if err != nil {
+		return nil, err
+	}
+	findings, podCount, serviceCount := inspectRuntimeSecurityState(state, immutableImage, expected)
 	findings, totalFindingCount, omittedFindingCount := boundedRuntimeSecurityFindings(findings)
 	resultDigest := runtimeSecurityResultDigest(findings, totalFindingCount, omittedFindingCount, podCount, serviceCount)
 	return map[string]interface{}{"phase": "Observed", "observedAt": time.Now().UTC().Format(time.RFC3339),
@@ -721,7 +720,7 @@ func (c *controller) legacyNamespaceOwned(ctx context.Context, item *lease, name
 	}
 	labels := stringMap(objectValue(namespace["metadata"])["labels"])
 	return labels["kubeclaw/managed-by"] == "buster-namespace-controller" &&
-		labels["kubeclaw/buster-lease"] == item.Metadata.Name, nil
+		labels["kubeclaw/buster-lease"] == leaseLabelValue(item), nil
 }
 
 func (c *controller) ensureFinalizer(ctx context.Context, item *lease) (*lease, error) {
@@ -787,7 +786,7 @@ func (c *controller) verifyNamespaceOwnership(ctx context.Context, item *lease, 
 func verifyNamespaceLabels(item *lease, namespaceName string, namespace map[string]interface{}) error {
 	labels := stringMap(objectValue(namespace["metadata"])["labels"])
 	if labels["kubeclaw/managed-by"] != "buster-namespace-controller" ||
-		labels["kubeclaw/buster-lease"] != item.Metadata.Name ||
+		labels["kubeclaw/buster-lease"] != leaseLabelValue(item) ||
 		labels["kubeclaw/buster-lease-uid"] != item.Metadata.UID {
 		return fmt.Errorf("namespace %s exists but is not owned by this lease", namespaceName)
 	}
@@ -1261,49 +1260,17 @@ func deliverableCredentialAvailable(secret map[string]interface{}, request *test
 }
 
 func (c *controller) ensureCredentialAccess(ctx context.Context, namespaceName string, request *testCredentialRequest) error {
-	roleName := "buster-preview-credentials-reader"
-	role := map[string]interface{}{
-		"apiVersion": "rbac.authorization.k8s.io/v1", "kind": "Role",
-		"metadata": map[string]interface{}{"name": roleName, "namespace": namespaceName},
-		"rules": []interface{}{map[string]interface{}{
-			"apiGroups": []string{""}, "resources": []string{"secrets"},
-			"resourceNames": []string{request.SecretName}, "verbs": []string{"get"},
-		}},
+	for _, manifest := range c.credentialAccessObjects(namespaceName, request) {
+		resource := "rolebindings"
+		if manifest["kind"] == "Role" {
+			resource = "roles"
+		}
+		base := "/apis/rbac.authorization.k8s.io/v1/namespaces/" + namespaceName + "/" + resource
+		if err := c.createOrPatch(ctx, base, base+"/"+stringValue(objectValue(manifest["metadata"])["name"]), manifest, nil); err != nil {
+			return err
+		}
 	}
-	if err := c.createOrPatch(ctx,
-		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/roles",
-		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/roles/"+roleName,
-		role, nil); err != nil {
-		return err
-	}
-	if err := c.createOrPatch(ctx,
-		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/rolebindings",
-		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/rolebindings/"+roleName,
-		c.namespaceRoleBinding(namespaceName, roleName, request.Readers, "Role"), nil); err != nil {
-		return err
-	}
-	if request.Mode != "existing" {
-		return nil
-	}
-	writerRoleName := "buster-preview-credentials-writer"
-	writerRole := map[string]interface{}{
-		"apiVersion": "rbac.authorization.k8s.io/v1", "kind": "Role",
-		"metadata": map[string]interface{}{"name": writerRoleName, "namespace": namespaceName},
-		"rules": []interface{}{map[string]interface{}{
-			"apiGroups": []string{""}, "resources": []string{"secrets"},
-			"resourceNames": []string{request.SecretName}, "verbs": []string{"patch"},
-		}},
-	}
-	if err := c.createOrPatch(ctx,
-		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/roles",
-		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/roles/"+writerRoleName,
-		writerRole, nil); err != nil {
-		return err
-	}
-	return c.createOrPatch(ctx,
-		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/rolebindings",
-		"/apis/rbac.authorization.k8s.io/v1/namespaces/"+namespaceName+"/rolebindings/"+writerRoleName,
-		c.namespaceRoleBinding(namespaceName, writerRoleName, request.Writers, "Role"), nil)
+	return nil
 }
 
 type previewExposure struct {
@@ -1589,7 +1556,7 @@ func (c *controller) deleteOwnedNamespace(ctx context.Context, item *lease, name
 	legacyOwned := len(interfaceSlice(item.Spec["access"])) == 0 &&
 		labels["kubeclaw/buster-lease-uid"] == ""
 	if labels["kubeclaw/managed-by"] != "buster-namespace-controller" ||
-		labels["kubeclaw/buster-lease"] != item.Metadata.Name ||
+		labels["kubeclaw/buster-lease"] != leaseLabelValue(item) ||
 		(!legacyOwned && labels["kubeclaw/buster-lease-uid"] != item.Metadata.UID) {
 		return fmt.Errorf("%w: refusing to delete namespace %s", errNamespaceOwnershipMismatch, namespaceName)
 	}
@@ -1641,7 +1608,15 @@ func (c *controller) kube(ctx context.Context, method string, path string, body 
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.token)
+	token, err := os.ReadFile(c.tokenPath)
+	if err != nil {
+		return fmt.Errorf("read Kubernetes ServiceAccount token: %w", err)
+	}
+	credential := strings.TrimSpace(string(token))
+	if credential == "" {
+		return errors.New("Kubernetes ServiceAccount token is empty")
+	}
+	req.Header.Set("Authorization", "Bearer "+credential)
 	req.Header.Set("Accept", "application/json")
 	if body != nil {
 		req.Header.Set("Content-Type", contentType)
