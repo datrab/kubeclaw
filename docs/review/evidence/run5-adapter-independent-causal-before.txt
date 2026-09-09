@@ -1,0 +1,58 @@
+Source author789c42f722f415331a48f38ef845b07477e2ad3b; reviewer localf5d675b; base143b0cf exactremote4627.
+Command: node --test tests/verification/reliability/adapter-dependency-independent.test.mjs tests/verification/reliability/adapter-dependency-canonical-independent.test.mjs
+✔ independent legacy actual HTTP receipt must remain canonically valid after rehashed disk corruption (10743.744751ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ independent current actual HTTP receipt must remain canonically valid after rehashed disk corruption (8307.57951ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✖ independent genuine legacy child history cannot hide corruption behind an absent or changed requested subject (7710.867567ms)
+ℹ orphan accepted: rejected before another HTTP request
+ℹ orphan completed: rejected before another HTTP request
+ℹ requested subject differs from accepted: rejected before another HTTP request
+ℹ duplicate child request: rejected before another HTTP request
+ℹ child request before original parent: rejected before another HTTP request
+✔ independent genuine two-locale historical ambiguity rejects rather than selecting either recorded child alias (3329.781402ms)
+✔ independent actual failed legacy HTTP child remains failed across locale recovery without retransmission (2215.84858ms)
+✔ independent SIGKILL after the receiver observed a legacy POST but before its response keeps the child unresolved (2152.906426ms)
+✔ independent concurrent current producer processes in different locales retain one actual child action and replay (1802.059607ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19202.885908
+
+✖ failing tests:
+
+test at tests/verification/reliability/adapter-dependency-independent.test.mjs:20:1
+✖ independent genuine legacy child history cannot hide corruption behind an absent or changed requested subject (7710.867567ms)
+  AssertionError [ERR_ASSERTION]: child request before parent accepted: 
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run5-adapter-review/tests/verification/reliability/adapter-dependency-independent.test.mjs:40:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

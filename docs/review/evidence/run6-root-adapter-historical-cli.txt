@@ -1,0 +1,7 @@
+Source e77390a, current own checkout and dependencies, no old Git objects used by probe.
+Command: node docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs .
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:4414bc5e75bdfa7f20125be205d458ff569beba59ba14a8c38c08cf90b944d7d:sha256:0453a3eee51d254d2548d79babd1917a728cfd765f8f86b27c3d9b4aaa38c569\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:4414bc5e75bdfa7f20125be205d458ff569beba59ba14a8c38c08cf90b944d7d"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+Exit: 0. Original thirteen-stage graph, source/blueprint execution and expected worker-secret boundary preserved.

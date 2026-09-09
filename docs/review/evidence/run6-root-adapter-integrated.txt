@@ -1,0 +1,156 @@
+Integrated source local e77390a; exact reviewed Adapter source fca25ae over published reader0c3ab364.
+Independent approval28ebe602. Root compared all affected production files with authorfca25ae: no differences.
+Command: node --test --test-concurrency=2 tests/verification/reliability/adapter-dependency-independent.test.mjs tests/verification/reliability/adapter-dependency-canonical-independent.test.mjs tests/verification/reliability/adapter-dependency-contract.test.mjs tests/verification/reliability/adapter-dependency-locale.test.mjs tests/verification/reliability/adapter-dependency-identity.test.mts tests/verification/reliability/adapter-dependency-boundary.test.mjs tests/verification/reliability/adapter-dependency-result.test.mjs tests/verification/reliability/source-snapshot-version.test.mjs tests/verification/reliability/blob-read-boundary.test.mjs tests/verification/reliability/blob-read-independent.test.mjs tests/verification/reliability/blob-budget.test.mts tests/verification/reliability/artifact-checkpoint-encoding.test.mjs tests/verification/reliability/artifact-checkpoint-review.test.mjs tests/verification/reliability/observability-retirement-plan.test.mjs tests/verification/reliability/telemetry-retirement.test.mjs tests/verification/reliability/admission-retirement.test.mjs tests/verification/reliability/nova-store-boundaries.test.mts tests/verification/reliability/sdk-json-contract.test.mts skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs skills/nova/plugins/review/tests/review-evidence-schema-independent.test.mjs
+{"produced":{"locale":"en-US","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9"},"english":{"locale":"en-US","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9","legacyUnicodeAccepted":true,"strippedAcceptedWithDifferentDigest":false},"swedish":{"locale":"sv-SE","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9","legacyUnicodeAccepted":false,"strippedAcceptedWithDifferentDigest":true},"boundary":"original parser, closed schemas, snapshot and disk ArtifactStore; no LLM/gateway completion"}
+✔ independent original parser/bundle/schema/snapshot/ArtifactStore roundtrip across locales (957.703477ms)
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function","portableEvidence":true,"locale":"en-US","nativeGatewayOrModelProof":false}
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function","portableEvidence":true,"locale":"sv-SE","nativeGatewayOrModelProof":false}
+✔ original compiler module-review graph remains recoverable under its existing source version (745.521996ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1205.01037
+✔ original review stage, Git, HTTP and persisted bundle preserve portable evidence under en-US (5865.008948ms)
+✔ original review stage, Git, HTTP and persisted bundle preserve portable evidence under sv-SE (5964.076971ms)
+✔ original review-enabled compiler snapshot recovers without changing graph identity (1277.987689ms)
+{"strictCurrentSchema":true,"comparedOriginalDomainVectors":384,"extraFieldNegatives":384}
+✔ strict changed-path schema preserves original accepted domain across conditional branches (60.680911ms)
+{"mode":"delivery","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":true,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"delivery","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":false,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original delivery boundary survives real cross-locale restart (4311.224498ms)
+{"mode":"activation","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":true,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"activation","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":false,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original activation boundary survives real cross-locale restart (4405.048593ms)
+✔ independent legacy actual HTTP receipt must remain canonically valid after rehashed disk corruption (9656.889542ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ independent current actual HTTP receipt must remain canonically valid after rehashed disk corruption (9972.61395ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ independent unknown portable dependency version cannot hide behind another valid request subject (2771.145962ms)
+✔ canonical effect keys retain opaque bounds and exactly bounded historical producer grammar (20.021686ms)
+✔ new complete subject and owner identity has explicit version and compact bounded key (1.121622ms)
+✔ canonical resource owner admits real resource namespaces without relaxing other request fields (3.702426ms)
+✔ original activation IDs and public delivery tokens propagate only to owning effect and lock fields (2.401283ms)
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (2659.883524ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (3148.727143ms)
+✔ independent genuine legacy child history cannot hide corruption behind an absent or changed requested subject (9469.523333ms)
+ℹ orphan accepted: rejected before another HTTP request
+ℹ orphan completed: rejected before another HTTP request
+ℹ requested subject differs from accepted: rejected before another HTTP request
+ℹ duplicate child request: rejected before another HTTP request
+ℹ child request before original parent: rejected before another HTTP request
+ℹ child request before parent accepted: rejected before another HTTP request
+ℹ unknown original request version: rejected before another HTTP request
+ℹ valid foreign attempt hidden behind known legacy owner key: rejected before another HTTP request
+✔ independent genuine two-locale historical ambiguity rejects rather than selecting either recorded child alias (3198.721513ms)
+✔ independent actual failed legacy HTTP child remains failed across locale recovery without retransmission (2047.500687ms)
+✔ independent SIGKILL after the receiver observed a legacy POST but before its response keeps the child unresolved (2045.779324ms)
+✔ independent concurrent current producer processes in different locales retain one actual child action and replay (1784.330906ms)
+{"mode":"current","receiverCalls":1,"dependencyKeys":["adapter-dep:utf16-v1:51311a52c9e74ceb2629dbc7a912ad980ca0f99c11ebf4c7f6c697ca55e08462:f92c252c4afc221ade80b9a4115b37fe45a53a7ebf7737d5ecc30207c618660f"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity current across native locales (1738.366546ms)
+{"mode":"legacy-resume","receiverCalls":1,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:af14603247a0c9a277f4380543fe6326212343ec7ed99a8dc7dc5ae44fde0067:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity legacy-resume across native locales (2203.077977ms)
+{"mode":"historical-countercheck","receiverCalls":2,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:0073f7daedea6d6617e0b92048aa66a5e710b7c31abfb524eaae057e21e4cc8d:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604","adapter:test.locale-dependency:consumer:network.http:d732c7ea9aeb2e060d5a42ced6664c9bd96d384f0de19282a9e3e9a8f9a9e506:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity historical-countercheck across native locales (2224.073752ms)
+✔ original registered adapter rejects malformed dependency result [] (1611.374527ms)
+✔ original registered adapter rejects malformed dependency result null (1619.845411ms)
+✔ original registered adapter rejects malformed dependency result Array(2) (1589.066182ms)
+✔ original registered adapter rejects malformed dependency result ({value:NaN}) (1629.37692ms)
+✔ original registered adapter rejects malformed dependency result Object.defineProperty({},"value",{enumerable:true,get(){throw new Error("GETTER_MUST_NOT_RUN");}}) (1591.107206ms)
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (1211.768159ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (985.792266ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (1149.189974ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (1135.181869ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (1265.250171ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (1296.54469ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (927.845903ms)
+✔ real confirmed import and admission retirement do not release the remaining mixed-run result quota (2132.14657ms)
+ℹ {"admissionBytesReleased":7177,"resultQuota":2,"retainedResults":2,"subsequentResultWrite":"OBSERVABILITY_RESULT_STORE_FULL","realConsumerReplay":"already-imported","journalUnchanged":true,"overallFindingComplete":false}
+✔ existing import journal is a full result checkpoint but not a replacement for the original completion and replay guards (1152.620505ms)
+ℹ {"checkpoint":"real NovaObservabilityReconciler import","resultBytesPresent":true,"completionIntentPresent":false,"sourceDeletion":"fails closed; original delivery remains pending","sourceRestored":"original duplicate ACK and already-imported result recover","overallFindingComplete":false}
+✔ Attempt-v2 releases actual result quota while every original result, Admission, Clawdeck and import consumer reconstructs unchanged (2307.156238ms)
+ℹ {"retiredResultSlots":1,"releasedBytes":19668,"residentLimit":2,"logicalResults":3,"originalImportReplay":"already-imported"}
+✔ Attempt projection rejects stale CAS, run checkpoint and operation conflicts without touching the original state (1256.615236ms)
+✔ Attempt projection preserves an actual waiting run and refuses missing, corrupted or nonregular import authority (2229.983329ms)
+✔ Attempt original writer lock excludes retirement and a killed waiting operator leaves no partial projection (1717.520006ms)
+✔ Attempt SIGKILL after durable projection reopens with exact original result and no duplicate import or quota reinsertion (1593.317851ms)
+✔ real portable ArtifactStore write checkpoints and reopens unchanged across actual locales (573.154918ms)
+✔ legacy checkpoints retain their exact original reference and journal bytes (42.395824ms)
+✔ checkpoint codec binding rejects unknown encodings and authenticated same-byte relabels (29.784836ms)
+✔ recorder does not collapse same-byte references carrying different codec identities (24.798869ms)
+✔ independent genuine-store response still binds all owner and byte fields (37.010128ms)
+✔ independent completion-before-projection recovery preserves the portable original reference (53.517854ms)
+✔ independent unknown-codec disk record rejects without mutating journal bytes (34.884642ms)
+✔ independent unknown-codec recording rejects before journal append (30.010167ms)
+✔ aggregate blob budget survives reconstruction, deduplicates and serializes competing processes (305.763751ms)
+✔ original get rejects genuine content-addressed bytes over its configured maximum before allocation (11.713832ms)
+✔ original bounded reader preserves zero, exact maximum and unchanged quota/digest behavior (58.386269ms)
+✔ final symlink, parent symlink and FIFO cannot become blob bytes (15.444351ms)
+✔ corrupt and truncated content reject repeatedly without losing the original valid reader (39.07625ms)
+✔ actual concurrent parent replacement is rejected or returns only the exact originally addressed bytes (647.954503ms)
+{"maximumBytes":16,"storedBytes":33,"oversizedReadsRejected":160,"exactBoundaryReadsSucceeded":160,"descriptorSoftLimit":64}
+✔ independent real low-descriptor process rejects oversized reads repeatedly and still reads exact-boundary bytes (464.424831ms)
+✔ SPIFFE transport and adapter agree on IPv4, bracketed IPv6 and denied remote hosts (1.923162ms)
+✔ two real Git archives share a total quota while deduplicated bytes remain readable (219.64005ms)
+✔ real HTTP evidence import cannot mark a second over-quota job complete (242.757182ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (933.237713ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (998.517451ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (817.787698ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (890.294579ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (772.962151ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (766.262968ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1142.30571ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (958.331653ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (2.158126ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.916352ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (2.77721ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (325.013809ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2482.775699ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (336.244913ms)
+✔ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (900.12482ms)
+Real ArtifactStore and FileEffectJournal replay JSON regressions passed
+✔ tests/verification/reliability/sdk-json-contract.test.mts (402.817401ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1195.740271ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (559.724748ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (40.5115ms)
+✔ exact retirement byte accounting crosses decimal digit boundaries without a fixed point (141.976185ms)
+✔ original v1 stores reopen without rewriting and retain ordinary append/read/transition contracts (52.345944ms)
+✔ manual terminal-run cleanup releases actual bytes and record quota; duplicate replay never resurrects (1307.892034ms)
+✔ waiting run, foreign owner, stale source, reused operation and legacy records reject without release (2220.276448ms)
+✔ real run mutation fence rejects concurrent cleanup; immutable intent survives caller mutation (1047.942777ms)
+✔ SIGKILL after actual atomic store commit retains tombstones and one CLI release (1667.077096ms)
+✔ native competing store writer blocks retirement; SIGKILL before mutation leaves original bytes (1440.079531ms)
+ℹ tests 87
+ℹ suites 0
+ℹ pass 87
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 70513.549536
+Exit: 0.
+Command: node scripts/generate-plugin-sdk-types.mjs --check && node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json && node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/nova/core/effects/contracts.ts skills/nova/core/effects/dependency-identity.ts skills/nova/core/effects/dependency-journal.ts skills/nova/core/effects/durable-invocation.ts skills/nova/core/effects/journal.ts skills/nova/core/execution/adapter-invocation-phase.ts skills/nova/core/execution/adapter-startup.ts
+Exit: 0; no diagnostics, all preceding && commands succeeded.

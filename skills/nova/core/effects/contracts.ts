@@ -1,6 +1,8 @@
 import type { AttemptIdentity, EffectReceipt, EffectRequest, ResourceLock } from '@kubeclaw/plugin-sdk';
+import type { DependencyIdentity } from './dependency-identity.ts';
 
 export interface EffectInvocation {
+  readonly dependencyIdentity?: DependencyIdentity;
   readonly idempotencyKey: string;
   readonly deliveryId?: string;
   readonly attempt: AttemptIdentity;

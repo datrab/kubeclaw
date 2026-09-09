@@ -1,0 +1,8 @@
+Source 53640e08b6214909aa495fec48036048a4bd4c2c
+Command: npm run typecheck --prefix skills/nova
+Nova tsc exit 0.
+Command: npx --no-install tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+Foundation tsc exit 0.
+Command: node scripts/generate-plugin-sdk-types.mjs --check
+Canonical generator parity exit 0.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

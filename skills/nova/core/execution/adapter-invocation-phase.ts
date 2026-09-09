@@ -1,6 +1,8 @@
-import type { AttemptIdentity } from '@kubeclaw/plugin-sdk';
+import type { AttemptIdentity, EffectRequest } from '@kubeclaw/plugin-sdk';
 
 export interface AdapterInvocationOwner {
+  readonly request: EffectRequest;
+  readonly confidential: boolean;
   readonly adapterId: string;
   readonly signal: AbortSignal;
   readonly attempt: AttemptIdentity;

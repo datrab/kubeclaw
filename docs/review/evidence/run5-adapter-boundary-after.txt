@@ -1,0 +1,12 @@
+Source 53640e08b6214909aa495fec48036048a4bd4c2c
+Command: node tests/verification/reliability/adapter-dependency-boundary-probe.mjs
+{"mode":"delivery","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":true,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"delivery","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":false,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"activation","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":true,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"activation","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":false,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+
+Exit 0; all actual recovery assertions passed.

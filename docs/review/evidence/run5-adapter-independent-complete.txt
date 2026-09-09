@@ -1,0 +1,77 @@
+Source: fca25ae66dc360560b44f40f2f4444e259a4d301; reviewer b0c5a94, Node24.19.0.
+Command: node --test tests/verification/reliability/adapter-dependency-independent.test.mjs tests/verification/reliability/adapter-dependency-canonical-independent.test.mjs tests/verification/reliability/adapter-dependency-contract.test.mjs tests/verification/reliability/adapter-dependency-locale.test.mjs tests/verification/reliability/adapter-dependency-identity.test.mts tests/verification/reliability/adapter-dependency-boundary.test.mjs tests/verification/reliability/adapter-dependency-result.test.mjs tests/verification/reliability/sdk-json-contract.test.mts tests/verification/reliability/source-snapshot-version.test.mjs
+{"mode":"delivery","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":true,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"delivery","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":false,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original delivery boundary survives real cross-locale restart (5653.481144ms)
+{"mode":"activation","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":true,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"activation","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":false,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original activation boundary survives real cross-locale restart (4462.26238ms)
+✔ independent legacy actual HTTP receipt must remain canonically valid after rehashed disk corruption (12496.146652ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ independent current actual HTTP receipt must remain canonically valid after rehashed disk corruption (12070.251576ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ independent unknown portable dependency version cannot hide behind another valid request subject (3227.304629ms)
+✔ canonical effect keys retain opaque bounds and exactly bounded historical producer grammar (40.175286ms)
+✔ new complete subject and owner identity has explicit version and compact bounded key (1.399954ms)
+✔ canonical resource owner admits real resource namespaces without relaxing other request fields (8.42387ms)
+✔ original activation IDs and public delivery tokens propagate only to owning effect and lock fields (3.024707ms)
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (4142.16341ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (4784.404151ms)
+✔ independent genuine legacy child history cannot hide corruption behind an absent or changed requested subject (11950.103219ms)
+ℹ orphan accepted: rejected before another HTTP request
+ℹ orphan completed: rejected before another HTTP request
+ℹ requested subject differs from accepted: rejected before another HTTP request
+ℹ duplicate child request: rejected before another HTTP request
+ℹ child request before original parent: rejected before another HTTP request
+ℹ child request before parent accepted: rejected before another HTTP request
+ℹ unknown original request version: rejected before another HTTP request
+ℹ valid foreign attempt hidden behind known legacy owner key: rejected before another HTTP request
+✔ independent genuine two-locale historical ambiguity rejects rather than selecting either recorded child alias (3642.610131ms)
+✔ independent actual failed legacy HTTP child remains failed across locale recovery without retransmission (3016.797202ms)
+✔ independent SIGKILL after the receiver observed a legacy POST but before its response keeps the child unresolved (3142.85735ms)
+✔ independent concurrent current producer processes in different locales retain one actual child action and replay (2372.45478ms)
+{"mode":"current","receiverCalls":1,"dependencyKeys":["adapter-dep:utf16-v1:51311a52c9e74ceb2629dbc7a912ad980ca0f99c11ebf4c7f6c697ca55e08462:e6163263eb09dd5c15333edbab4c5df9aabe5baad3b3c2e50e376d2aeba470d8"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity current across native locales (2807.266226ms)
+{"mode":"legacy-resume","receiverCalls":1,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:f13db2edc5148655e7570e88a06e8e4ca49062622df1ed12355793580a2c68e4:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity legacy-resume across native locales (2649.382613ms)
+{"mode":"historical-countercheck","receiverCalls":2,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:bf606cbba282f143f3963776cab7339adb3b71d0131fea9bf278fce7bf256734:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604","adapter:test.locale-dependency:consumer:network.http:b25b515c352d99183e4d6d6445bce86104c5d987af047bd609c04a69e0651062:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity historical-countercheck across native locales (2753.204005ms)
+✔ original registered adapter rejects malformed dependency result [] (2749.090223ms)
+✔ original registered adapter rejects malformed dependency result null (2443.870304ms)
+✔ original registered adapter rejects malformed dependency result Array(2) (2122.490618ms)
+✔ original registered adapter rejects malformed dependency result ({value:NaN}) (2173.982994ms)
+✔ original registered adapter rejects malformed dependency result Object.defineProperty({},"value",{enumerable:true,get(){throw new Error("GETTER_MUST_NOT_RUN");}}) (2091.243202ms)
+Real ArtifactStore and FileEffectJournal replay JSON regressions passed
+✔ tests/verification/reliability/sdk-json-contract.test.mts (766.327707ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1683.33182ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (817.027044ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (46.350198ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27993.447227
+Exit0.

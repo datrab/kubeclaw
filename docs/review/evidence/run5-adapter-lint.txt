@@ -1,0 +1,6 @@
+Source 53640e08b6214909aa495fec48036048a4bd4c2c
+Command: npx --no-install eslint --config charts/kubeclaw/files/config/eslint.config.mjs skills/nova/core/effects/dependency-identity.ts skills/nova/core/effects/dependency-journal.ts skills/nova/core/effects/durable-invocation.ts skills/nova/core/execution/adapter-startup.ts
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+Exit 0.
+

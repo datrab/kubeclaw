@@ -26,18 +26,20 @@
     {
       "package": "adapter-dependency-identity",
       "branch": "fix/resume-47-run5-adapter-fca25ae",
-      "commit": "9bdc73c19a5518f1292ac126581c9cb941572bb2",
-      "review_branch": "fix/resume-47-run5-adapter-review-f36ef19",
-      "review_commit": "89b2fdd55c8a77155ef1781b1c875193ef61c2c0",
-      "status": "independently-reviewed-pending-fresh-root-integration",
+      "commit": "ab59d84676eb3e04fc91bd106f023a5bcb4ffef3",
+      "review_branch": "fix/resume-47-run6-adapter-review-28ebe60",
+      "review_commit": "65609f74dfee274952c47e8808db147955e5a427",
+      "status": "independently-reviewed-root-tested-in-this-integration",
       "latest_review_local": "28ebe602122cda8c4c966f24d5ecf9f905a0144e",
-      "next_action": "Replace shadow validator with owning canonical request/receipt/resource definitions and bounded genuine historical keys. Verify actual producer edge cases, genuine SIGKILL/HTTP replay and historical recovery independently. Review backup is tests only and requires the separately saved source."
+      "next_action": "Bounded Adapter package complete: independent28/28, rootcombined87/87 and originalhistoricalCLI passed. Continue originalSDK remainingconsumer audit; no global finding closure from this package."
     },
     {
       "package": "native-product-controller-chart-gate",
       "branch": "fix/resume-47-run5-native-c3ebfb7",
       "commit": "c4231af19851adacb75611698300a62ee7eb1604",
       "native_review_backup": "c5fd31aa328577125c6d64770b0020ba566b3a27",
+      "full_candidate_backup": "7bfa6bbf467e56c2191a1dd4ed44c43cc80daa85",
+      "full_candidate_review_backup": "91697e0bde855efaccb750d29d078d5f29561b87",
       "status": "native-gates-independently-tested-full-coupled-candidate-pending",
       "next_action": "Complete real API status/CEL/signed transitions and alternate-controller-SA VAP Namespace CREATE/DELETE denials; independently rerun. No workload deployment. Coupled Product459e/controllere21/chart47b remain unintegrated."
     },
@@ -47,7 +49,9 @@
       "design_local_commit": "a0f6c44e5915d97df75d4aafeba7db23ec952db0",
       "design_branch": "fix/resume-47-run5-storage-design-a0f6c44",
       "design_remote_commit": "1cd953bd689c08ada97b5cbf359bc92abb9ed4ae",
-      "next_action": "Save design remotely, implement original import-authority verification under run/import/dispatch fences and exact immutable archive projection; reject root aliases and unconfirmed work; prove unchanged quotas and genuine replay before review."
+      "incomplete_source_backup": "ad16dde796ef6ec7350cc257145a7064124bc2a9",
+      "failing_review_backup": "cebd19aa95ad7c949143cd15a6f068929a5f5c46",
+      "next_action": "Fix independently reproduced cross-Core authority bug: unrelated actual terminalCore sharing runId must not authorize foreign job/import projection. Require original causal stage/effect/source/attempt consumer binding, not standalone manual authority. Preserve3prototypecases as narrow store/HTTP proof, not complete acceptance."
     }
   ],
   "rule": "Backup is not acceptance. Restore only verified frozen commits into a new checkout, never another writer's checkout or dirty work based on an old heartbeat. Exact-parent ff-only integration after review/tests; no CI/deployment."

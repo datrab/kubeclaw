@@ -1,8 +1,26 @@
 // Generated from skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json. Do not edit.
 
-export type TestContractId = string;
+/**
+ * Existing opaque keys, plus the exact historical adapter dependency producer grammar. Package/capability names retain their 160-character bounds and registration its 96-character bound. New dependency keys are compact opaque IDs.
+ */
+export type EffectIdempotencyKey = OpaqueId;
+export type OpaqueId = string;
 export type NamespacedId = string;
+/**
+ * The original public adapter dependency delivery token: nonblank and at most 512 characters. Observer delivery contracts remain opaque IDs.
+ */
+export type EffectDeliveryId = string;
+export type EffectAttemptIdentity =
+  | AttemptIdentity
+  | {
+      runId: AdapterActivationId;
+      stageId: 'adapter-activation';
+      attemptId: AdapterActivationId;
+      attemptNumber: 1;
+    };
 export type LocalId = string;
+export type AdapterActivationId = string;
+export type TestContractId = string;
 export type RelativeModulePath = string;
 export type RelativeSchemaPath = string;
 export type TestProviderPort =
@@ -69,7 +87,6 @@ export type PluginManifest1 =
       reportAdapters: [any, ...any[]];
       [k: string]: any;
     };
-export type OpaqueId = string;
 export type StageResult =
   | (ResultBase & {
       schemaVersion: 'stage-result.v2';
@@ -102,7 +119,7 @@ export type EffectReceipt = {
 } & {
   schemaVersion: 'effect-receipt.v2';
   effectId: OpaqueId;
-  idempotencyKey: OpaqueId;
+  idempotencyKey: EffectIdempotencyKey;
   adapter: PackageResolution;
   status: 'accepted' | 'completed' | 'failed';
   result?: JsonObject;
@@ -184,6 +201,11 @@ export type AdapterLifecycle = {
 };
 
 export interface PluginSystemV2 {
+  effectIdempotencyKey?: EffectIdempotencyKey;
+  resourceIdentity?: ResourceIdentity;
+  effectDeliveryId?: EffectDeliveryId;
+  effectAttemptIdentity?: EffectAttemptIdentity;
+  adapterActivationId?: AdapterActivationId;
   testContractId?: TestContractId;
   packageIdentity?: PackageIdentity;
   packageResolution?: PackageResolution;
@@ -220,6 +242,19 @@ export interface PluginSystemV2 {
   adapterLifecycle?: AdapterLifecycle;
   resourceLock?: ResourceLock;
   pluginStateEntry?: PluginStateEntry;
+}
+/**
+ * Capability-owned resource names include URLs, absolute paths, dot and catalog keys. Capability implementations retain their own URL, path and authorization constraints.
+ */
+export interface ResourceIdentity {
+  type: NamespacedId;
+  canonicalId: string;
+}
+export interface AttemptIdentity {
+  runId: OpaqueId;
+  stageId: LocalId;
+  attemptId: OpaqueId;
+  attemptNumber: number;
 }
 export interface PackageIdentity {
   pluginId: NamespacedId;
@@ -376,12 +411,6 @@ export interface PipelineDefinition {
    */
   stages: [StageDefinition, ...StageDefinition[]];
 }
-export interface AttemptIdentity {
-  runId: OpaqueId;
-  stageId: LocalId;
-  attemptId: OpaqueId;
-  attemptNumber: number;
-}
 export interface StageAttempt {
   schemaVersion: 'stage-attempt.v2';
   identity: AttemptIdentity;
@@ -444,15 +473,12 @@ export interface WaitRequest {
 export interface EffectRequest {
   schemaVersion: 'effect-request.v2';
   effectId: OpaqueId;
-  idempotencyKey: OpaqueId;
-  deliveryId?: OpaqueId;
-  attempt: AttemptIdentity;
+  idempotencyKey: EffectIdempotencyKey;
+  deliveryId?: EffectDeliveryId;
+  attempt: EffectAttemptIdentity;
   capability: NamespacedId;
   operation: LocalId;
-  resource: {
-    type: NamespacedId;
-    canonicalId: OpaqueId;
-  };
+  resource: ResourceIdentity;
   payload: JsonObject;
   requestedAt: string;
 }
@@ -587,11 +613,8 @@ export interface ObserverCheckpoint {
 export interface ResourceLock {
   schemaVersion: 'resource-lock.v2';
   lockId: OpaqueId;
-  resource: {
-    type: NamespacedId;
-    canonicalId: OpaqueId;
-  };
-  ownerLeaseId: OpaqueId;
+  resource: ResourceIdentity;
+  ownerLeaseId: OpaqueId | AdapterActivationId;
   fencingToken: number;
   status: 'active' | 'released' | 'expired';
   acquiredAt: string;

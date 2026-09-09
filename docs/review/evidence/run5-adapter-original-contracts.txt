@@ -1,0 +1,10 @@
+Source c9d957f
+Commands: node tests/verification/contracts/check-plugin-system-v2-contracts.mjs && node tests/verification/contracts/check-plugin-system-v2-registry.mjs && node tests/verification/contracts/check-plugin-system-v2-registry-remediation.mjs
+{"ok":true,"contract":"pipeline-plugin-v2"}
+{"ok":true,"contract":"plugin-system-v2-registry"}
+{"ok":true,"contract":"plugin-system-v2-registry-remediation","manifestSurfaces":5,"installSurfaces":4,"snapshots":4,"realReportAdapter":true}
+(node:2) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Exit0.
+
