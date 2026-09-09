@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { portableJson, verifiedArtifactJsonText } from '../../skills/common/plugin-runtime/sdk/src/index.ts';
+import { validateContractValue } from '../../skills/common/plugin-runtime/foundation/registry/schema.ts';
 import { readRunEvidence } from '../../skills/nova/core/state/read-run-evidence.ts';
 import { createRemotePlanJob } from '../../skills/nova/core/test-gates/remote-dispatch.ts';
 import { repositoryArchiveBytes } from '../../contracts/pipeline-test-gate/v1/src/index.ts';
@@ -43,6 +44,9 @@ function selectedEffect(records, key) {
   const entries = records.filter(({ entry }) => (entry.request?.idempotencyKey ?? entry.receipt?.idempotencyKey) === key);
   if (entries.length !== 3 || entries[0].entry.type !== 'requested' || entries[1].entry.type !== 'accepted'
     || !['completed', 'completed-reference'].includes(entries[2].entry.type)) fail();
+  validateContractValue('effectRequest', entries[0].entry.request);
+  validateContractValue('effectRequest', entries[1].entry.request);
+  validateContractValue('effectReceipt', entries[2].entry.receipt);
   return { request: entries[0].entry.request, completion: entries[2].entry, start: entries[0].sequence, end: entries[2].sequence };
 }
 function boundStage(job, context) {

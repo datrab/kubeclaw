@@ -239,3 +239,42 @@ test('independent canonical-invalid original selected request cannot authorize r
   await assert.rejects(retireNovaDispatch(f.scope));
   assert.deepEqual(fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot)), before);
 });
+
+test('independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release', { timeout: 60000 }, async t => {
+  const f = await fixture(t), file = path.join(f.run, 'effects.jsonl');
+  const original = fs.readFileSync(file, 'utf8'), before = fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot));
+  const changes = [
+    ['stage', request => { request.attempt.stageId = 'foreign-stage'; }],
+    ['attempt', request => { request.attempt.attemptNumber++; }],
+    ['source', request => { request.payload.revision = '0'.repeat(40); }],
+    ['plan', request => { request.payload.plan.planId = 'plan:foreign'; }],
+  ];
+  function rewrite(entries) {
+    let previousHash = null;
+    const records = entries.map((entry, index) => {
+      const value = { sequence: index + 1, previousHash, entry };
+      const hash = `sha256:${crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex')}`;
+      previousHash = hash;
+      return { ...value, hash };
+    });
+    fs.writeFileSync(file, records.map(record => JSON.stringify(record)).join('\n') + '\n');
+  }
+  for (const [name, change] of changes) {
+    const entries = original.trim().split('\n').map(line => JSON.parse(line).entry);
+    const requests = entries.filter(entry => entry.request?.idempotencyKey === f.job.idempotencyKey);
+    assert.equal(requests.length, 2);
+    for (const entry of requests) change(entry.request);
+    rewrite(entries);
+    await assert.rejects(retireNovaDispatch(f.scope), undefined, name);
+    assert.deepEqual(fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot)), before, name);
+  }
+  const entries = original.trim().split('\n').map(line => JSON.parse(line).entry);
+  const completion = entries.find(entry => entry.receipt?.idempotencyKey === f.job.idempotencyKey);
+  assert.ok(completion);
+  completion.receipt.adapter.registrationId = 'foreign-adapter';
+  rewrite(entries);
+  await assert.rejects(retireNovaDispatch(f.scope));
+  assert.deepEqual(fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot)), before);
+  fs.writeFileSync(file, original);
+  assert.equal((await retireNovaDispatch(f.scope)).newlyProjected, true);
+});
