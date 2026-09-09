@@ -9,7 +9,9 @@ import { assertRequest, parsePayload, responseMessageId, secretValue } from './p
 
 const COLORS = Object.freeze({ info: 0x3498db, success: 0x2ecc71, warning: 0xf1c40f, error: 0xe74c3c });
 const ICONS = Object.freeze({ info: 'ℹ️', success: '✅', warning: '⚠️', error: '❌' });
-const DELIVERY_RECORD_MAX_BYTES = 1_048_576 + 65_536;
+// One exact JSON transport body is stored as a JSON string: escaping can at most
+// double its admitted 1 MiB bytes. Metadata allowance and aggregate quotas stay unchanged.
+const DELIVERY_RECORD_MAX_BYTES = 2 * 1_048_576 + 65_536;
 
 function displayText(value: string, maximum: number): string {
   return value.length <= maximum ? value : `${value.slice(0, maximum - 1)}…`;
@@ -105,11 +107,13 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
     },
     async receipt(request) {
       assertRequest(request, isTargetId);
-      const receipt = await deliveryReceipt(records, request);
       const target = targets.get(request.resource.canonicalId);
       if (!target) throw new Error(`OPERATOR_TARGET_DENIED:${request.resource.canonicalId}`);
+      const payload = parsePayload(request.payload, target.maxPayloadBytes);
+      const transportPayload = target.format === 'discord_webhook' ? discordWebhookPayload(payload) : payload;
+      const receipt = await deliveryReceipt(records, request, transportPayload);
       return receipt && target.format === 'discord_webhook'
-        ? validateDiscordReceipt(receipt, request, discordWebhookPayload(parsePayload(request.payload, target.maxPayloadBytes))) : receipt;
+        ? validateDiscordReceipt(receipt, request, transportPayload) : receipt;
     },
     async shutdown() { shuttingDown = true; },
   };

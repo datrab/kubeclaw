@@ -27,6 +27,7 @@ export function recordedPackageUpgrades(decisions: readonly AdministrativeReopen
 }
 export function verifyPinnedPackages(runRoot: string, runtime: PreparedRuntime, upgrades: readonly PackageUpgrade[] = []): void {
   const stored = readRunSnapshot(runRoot).registry as unknown;
+  if (!stored || typeof stored !== 'object' || (stored as Record<string, unknown>).dependencyIdentityVersion !== 'parent-invocation.v1') throw new Error('RECOVERY_DEPENDENCY_IDENTITY_MISMATCH:drain existing runs with their original runtime; automatic migration is unsupported');
   const packages = stored && typeof stored === 'object' && !Array.isArray(stored) ? (stored as { packages?: unknown }).packages : undefined;
   if (!Array.isArray(packages)) throw new Error('RECOVERY_REGISTRY_SNAPSHOT_INVALID');
   if (canonicalJson((stored as Record<string, unknown>).configuration) !== canonicalJson(runtime.configuration)) throw new Error('RECOVERY_RUNTIME_CONFIGURATION_MISMATCH');
@@ -101,7 +102,7 @@ export function frozenRegistryRecord(runtime: PreparedRuntime, definition: Pipel
     observers: [...runtime.snapshot.observers].map(([registrationId, entry]) => ({ registrationId, registration: entry.registration, provenance: entry.provenance })),
     adapters: [...runtime.snapshot.adapters].map(([registrationId, entry]) => ({ registrationId, registration: entry.registration, provenance: entry.provenance })),
   };
-  return Object.freeze({ configuration: runtime.configuration, apiVersion: runtime.snapshot.apiVersion, packages: [...runtime.snapshot.packages].map(([id, pkg]) => [id, pkg.provenance]), registrations,
+  return Object.freeze({ dependencyIdentityVersion: 'parent-invocation.v1', configuration: runtime.configuration, apiVersion: runtime.snapshot.apiVersion, packages: [...runtime.snapshot.packages].map(([id, pkg]) => [id, pkg.provenance]), registrations,
     enabledRegistrations: [...runtime.granted.enabledRegistrations].sort(), grants: [...runtime.granted.grants],
     selectedProviders: [...runtime.granted.selectedProviders].map(([capability, entry]) => ({ capability, provider: entry.provenance })),
     executionGraph: { pipelineId: graph.pipelineId, digest: graph.digest }, configuredStages: definition.stages.map((stage) => {

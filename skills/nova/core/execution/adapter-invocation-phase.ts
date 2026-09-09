@@ -4,7 +4,7 @@ export interface AdapterInvocationOwner {
   readonly adapterId: string;
   readonly signal: AbortSignal;
   readonly attempt: AttemptIdentity;
-  readonly executionKey?: string;
+  readonly executionKey: string;
   readonly phase: AdapterInvocationPhase;
 }
 

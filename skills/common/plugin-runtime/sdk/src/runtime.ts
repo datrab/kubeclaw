@@ -70,7 +70,7 @@ export interface AdapterInstance {
   shutdown(signal: AbortSignal): Promise<void>;
 }
 
-export interface AdapterDependencyOptions { readonly signal?: AbortSignal }
+export interface AdapterDependencyOptions { readonly signal?: AbortSignal; readonly deliveryId?: string }
 export interface AdapterCleanupContext {
   readonly signal: AbortSignal;
   invoke(capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions): Promise<Readonly<Record<string, unknown>>>;

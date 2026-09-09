@@ -73,14 +73,14 @@ export class AdapterStarter {
   async #invokeDependency(adapterId: string, lifecycle: AbortController, active: () => void, capability: string, request: CapabilityInvocation, confidential: boolean, options?: AdapterDependencyOptions): Promise<Readonly<Record<string, unknown>>> {
     active(); const parent = this.#options.invocationContext.getStore();
     parent?.phase.assertActive();
+    const deliveryId = dependencyDeliveryId(options, parent);
     const signal = AbortSignal.any([lifecycle.signal, ...(parent ? [parent.signal] : []), ...(options?.signal ? [options.signal] : [])]);
     if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
     const grant = this.#options.runtime.granted.grants.get(adapterId)?.find((candidate) => candidate.capability === capability);
     if (!grant) throw new Error(`ADAPTER_CAPABILITY_DENIED:${adapterId}:${capability}`); authorizeCapabilityInvocation(grant, request);
     const dependency = this.#options.runtime.granted.selectedProviders.get(capability); if (!dependency) throw new Error(`ADAPTER_CAPABILITY_DENIED:${adapterId}:${capability}`);
     const dependencyId = `${dependency.package.manifest.id}:${dependency.registration.id}`; const adapter = await this.#start(dependencyId);
-    const attempt = parent?.attempt ?? { runId: `adapter:${adapterId}`, stageId: 'adapter-activation', attemptId: `adapter:${adapterId}`, attemptNumber: 1 };
-    const invocation = { idempotencyKey: `adapter:${adapterId}:${capability}:${requestDigest(request)}${parent?.executionKey ? `:parent:${requestDigest({ operation: "owner", resource: { type: "effect.key", canonicalId: parent.executionKey }, payload: { attempt: parent.attempt } })}` : ""}`, attempt, capability, operation: request.operation, resource: request.resource, payload: request.payload };
+    const invocation = dependencyInvocation(adapterId, capability, request, parent, deliveryId);
     const result = confidential || isConfidentialCapability(capability)
       ? await this.#options.runtime.effects.invokeConfidential(adapter, adapterOwner(this.#options.runtime, dependencyId), invocation, signal)
       : await this.#durable(adapter, dependencyId, invocation, signal);
@@ -103,8 +103,7 @@ export class AdapterStarter {
       const signal = AbortSignal.any([invocation.signal, lifecycle.signal]);
       const phase = new AdapterInvocationPhase(lifecycle.signal, this.#options.runtime.shutdownTimeoutMs);
       try {
-        return await this.#options.invocationContext.run({ adapterId, phase, signal, attempt: invocation.request.attempt,
-          ...(invocation.request.deliveryId === undefined ? {} : { executionKey: invocation.request.idempotencyKey }) },
+        return await this.#options.invocationContext.run({ adapterId, phase, signal, attempt: invocation.request.attempt, executionKey: invocation.request.idempotencyKey },
         () => raw.invoke({ ...invocation, signal }));
       } finally { phase.close(); }
     }, ...(raw.receipt ? { receipt: (request) => raw.receipt!(request) } : {}), shutdown: (signal) => raw.shutdown(signal) };
@@ -150,4 +149,17 @@ export class AdapterStarter {
       catch { /* INTENTIONAL_NONCRITICAL(adapter_rollback_failed): Preserve activation failure while attempting rollback. */ } } }
     finally { clearTimeout(timer); this.#starting.clear(); for (const id of this.#controllers.keys()) { this.#options.pendingControllers.delete(id); this.#options.pendingInstances.delete(id); } }
   }
+}
+
+function dependencyDeliveryId(options: AdapterDependencyOptions | undefined, parent: AdapterInvocationOwner | undefined): string | undefined {
+  const value = options?.deliveryId;
+  if (value !== undefined && (typeof value !== 'string' || !value.trim() || value.length > 512 || !parent)) throw new Error('ADAPTER_DELIVERY_OWNER_REQUIRED');
+  return value;
+}
+
+function dependencyInvocation(adapterId: string, capability: string, request: CapabilityInvocation, parent: AdapterInvocationOwner | undefined, deliveryId: string | undefined) {
+  const attempt = parent?.attempt ?? { runId: `adapter:${adapterId}`, stageId: 'adapter-activation', attemptId: `adapter:${adapterId}`, attemptNumber: 1 };
+  const owner = parent ? `:parent:${requestDigest({ operation: 'owner', resource: { type: 'effect.key', canonicalId: parent.executionKey }, payload: { attempt: parent.attempt } })}` : '';
+  return { idempotencyKey: `adapter:${adapterId}:${capability}:${requestDigest(request)}${owner}`, attempt, capability,
+    operation: request.operation, resource: request.resource, payload: request.payload, ...(deliveryId === undefined ? {} : { deliveryId }) };
 }

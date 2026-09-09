@@ -12,14 +12,25 @@ function completed(records: readonly DurableRecord<Payload>[], deliveryId: strin
     && entry.payload.schemaVersion === 'notification-delivery-receipt.v1')?.payload.receipt as Payload | undefined;
 }
 
-export async function deliveryReceipt(records: FileDurableRecordStore, request: EffectRequest): Promise<Payload | undefined> {
-  return completed(await records.read<Payload>(`notifications/${request.resource.canonicalId}`), deliveryIdentity(request));
+export async function deliveryReceipt(records: FileDurableRecordStore, request: EffectRequest, transportPayload?: Payload): Promise<Payload | undefined> {
+  const entries = await records.read<Payload>(`notifications/${request.resource.canonicalId}`);
+  if (request.deliveryId !== undefined) {
+    const original = entries.find(entry => entry.idempotencyKey === key(request.deliveryId!, 'request'))?.payload;
+    if (!original) return undefined;
+    const owner = original.owner as Payload | undefined;
+    if (original.schemaVersion !== 'notification-delivery-request.v2' || original.idempotencyKey !== request.deliveryId
+      || original.target !== request.resource.canonicalId || owner?.runId !== request.attempt.runId || owner.stageId !== request.attempt.stageId
+      || (transportPayload !== undefined && original.transportBody !== JSON.stringify(transportPayload))) throw new Error('OPERATOR_RECEIPT_REQUEST_UNBOUND');
+  }
+  return completed(entries, deliveryIdentity(request));
 }
 
 export async function reserveDelivery(records: FileDurableRecordStore, request: EffectRequest, payload: Payload, receiverSupported: boolean): Promise<Reservation | Payload> {
   const deliveryId = deliveryIdentity(request), stream = `notifications/${request.resource.canonicalId}`;
-  await records.append(stream, key(deliveryId, 'request'), { schemaVersion: 'notification-delivery-request.v1',
-    idempotencyKey: deliveryId, target: request.resource.canonicalId, payload });
+  await records.append(stream, key(deliveryId, 'request'), request.deliveryId === undefined
+    ? { schemaVersion: 'notification-delivery-request.v1', idempotencyKey: deliveryId, target: request.resource.canonicalId, payload }
+    : { schemaVersion: 'notification-delivery-request.v2', idempotencyKey: deliveryId, target: request.resource.canonicalId,
+      owner: { runId: request.attempt.runId, stageId: request.attempt.stageId }, transportBody: JSON.stringify(payload) });
   const prior = await records.read<Payload>(stream), receipt = completed(prior, deliveryId);
   if (receipt) return receipt;
   const uncertain = prior.some(entry => entry.idempotencyKey.endsWith(`:${hash(deliveryId)}`)
