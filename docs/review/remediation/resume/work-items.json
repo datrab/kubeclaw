@@ -9,8 +9,8 @@
     {
       "id": "PCR-SDK-001",
       "status_at_checkpoint": "in Bearbeitung",
-      "evidence": "implementation/run3-sdk-repair-independent-review.md",
-      "next_action": "Repair-Identitätscutover unabhängig 53/53 und Root integriert 84/84 geprüft. Verbleibende tatsächliche Digestconsumer anhand gültiger Inputs untersuchen, insbesondere Review-Evidence/Cache; keine unnötige Migration geschlossener ASCII-Key-Verträge oder pauschal erfundenen nativen Gates."
+      "evidence": "implementation/run3-review-evidence-independent-review.md",
+      "next_action": "Repair-Identitäten und Review-Evidence-Codec unabhängig geprüft; Root bestätigt volle Review-Originalsuite plus 9/9 Recoveryfälle. Adapterabhängigkeit wiederholt echte HTTP-Aktion nach Localewechsel: WIP remote fc14ecca, separate Review aktiv, gemeinsame kanonische Requestdefinition muss vor Integration geklärt werden. Danach ursprüngliche SDK-Abnahmematrix erneut vollständig prüfen; keine präventive Migration geschlossener ASCII-Verträge."
     },
     {
       "id": "PCR-BUSTER-ENGINE-004",

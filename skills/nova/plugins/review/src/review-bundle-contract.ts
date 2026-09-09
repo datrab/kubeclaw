@@ -1,4 +1,5 @@
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
+import { PORTABLE_JSON_ENCODING } from '@kubeclaw/plugin-sdk';
 
 export const REVIEW_BUNDLE_SCHEMA_VERSION = 'review-bundle.v1' as const;
 export const REVIEW_CONTEXT_SELECTION_VERSION = 'focused-context.v1' as const;
@@ -30,6 +31,7 @@ export interface ReviewBundleScope {
 }
 export interface ReviewBundleRequirement { readonly id: string; readonly statement: string }
 export interface ReviewBundleEvidence {
+  readonly encoding?: typeof PORTABLE_JSON_ENCODING;
   readonly kind: string;
   readonly digest: `sha256:${string}`;
   readonly content: string;
@@ -77,6 +79,7 @@ const gitObjectId = {
   type: 'string', pattern: '^(?:[0-9a-f]{40}|[0-9a-f]{64})(?![\\s\\S])',
 } as const;
 const repositoryPath = {
+  type: 'string',
   allOf: [
     boundedText(REVIEW_HARD_LIMITS.pathCharacters),
     { pattern: '^(?!/)(?!.*:)(?!.*\\\\)(?!.*//)(?!.*\/$)(?!.*[\\u0000-\\u001F\\u007F])(?!.*(?:^|/)\\.\\.?(?:/|$)).+$' },
@@ -89,19 +92,21 @@ const closed = <T extends Readonly<Record<string, unknown>>>(
 
 const evidenceSchema = closed(['kind', 'digest', 'content'], {
   kind: identifier, digest,
+  encoding: { const: PORTABLE_JSON_ENCODING },
   content: { type: 'string', maxLength: REVIEW_HARD_LIMITS.evidenceContentBytes },
 });
 const requirementSchema = closed(['id', 'statement'], {
   id: identifier, statement: boundedText(REVIEW_HARD_LIMITS.explanationCharacters),
 });
+const changedPathProperties = {
+  path: repositoryPath, status: { enum: REVIEW_CHANGE_STATUSES }, previousPath: repositoryPath,
+} as const;
 const changedPathSchema = {
-  ...closed(['path', 'status'], {
-    path: repositoryPath, status: { enum: REVIEW_CHANGE_STATUSES }, previousPath: repositoryPath,
-  }),
+  ...closed(['path', 'status'], changedPathProperties),
   allOf: [{
     if: { properties: { status: { enum: ['renamed', 'copied'] } }, required: ['status'] },
-    then: { required: ['path', 'status', 'previousPath'] },
-    else: { not: { required: ['previousPath'] } },
+    then: { properties: changedPathProperties, required: ['path', 'status', 'previousPath'] },
+    else: { not: { properties: { previousPath: {} }, required: ['previousPath'] } },
   }],
 } as const;
 const contextReasonSchema = closed(['kind'], {

@@ -7,6 +7,7 @@ import type {
 } from './review-bundle-contract.ts';
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
 import { SIMPLIFICATION_CANDIDATES_EVIDENCE_KIND } from './simplification-contract.ts';
+import { reviewEvidenceEncoding, reviewEvidenceJson } from './review-evidence-encoding.ts';
 
 export interface ReviewStageInput {
   readonly task: ReviewBundleTask;
@@ -101,18 +102,19 @@ function requirement(value: unknown, index: number): ReviewBundleRequirement {
 function evidence(value: unknown, index: number): ReviewBundleEvidence {
   const label = `evidence[${index}]`;
   const item = plainRecord(value, label);
-  exact(item, ['kind', 'digest', 'content'], label);
+  exact(item, item.encoding === undefined ? ['kind', 'digest', 'content'] : ['kind', 'digest', 'content', 'encoding'], label);
   const kind = identifier(item.kind, `${label}.kind`);
   if (kind === SIMPLIFICATION_CANDIDATES_EVIDENCE_KIND) {
     throw new Error(`${label}.kind is reserved for plugin-authored evidence`);
   }
-  const content = canonicalJson(item.content);
+  const encoding = reviewEvidenceEncoding(item.encoding);
+  const content = reviewEvidenceJson(item.content, encoding);
   const expected = digest(item.digest, `${label}.digest`);
   if (sha256Text(content) !== expected) throw new Error(`${label}.digest does not match canonical content`);
   if (Buffer.byteLength(content, 'utf8') > REVIEW_HARD_LIMITS.evidenceContentBytes) {
     throw new Error(`${label}.content exceeds its byte limit`);
   }
-  return { kind, digest: expected, content };
+  return { kind, digest: expected, content, ...(encoding === undefined ? {} : { encoding }) };
 }
 
 function unique(values: readonly string[], label: string): void {

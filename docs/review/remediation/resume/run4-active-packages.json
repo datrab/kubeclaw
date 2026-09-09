@@ -31,17 +31,18 @@
     },
     {
       "package": "review-evidence-encoding",
-      "branch": "fix/resume-47-run3-review-encoding-c1d2a92",
-      "sha": "04fed6a975a1bdd8a718aeea318fcec01ce21205",
-      "status": "incomplete-source-checkpoint",
-      "next_action": "Original author and independent reviewer remain active. Preserve per-evidence codec, strict schemas and original historical review-enabled graph recovery; do not integrate preventive compiler drift."
+      "branch": "fix/resume-47-run4-review-encoding-43d2a3b",
+      "sha": "3c7d3a33981c7bee504d2920b543ec369829fe9f",
+      "status": "independently-reviewed-root-tested-in-this-integration",
+      "review": "c100f1b85a7d92c88f4c98ce2b57afa356c1f368",
+      "next_action": "Preserve full original suite, new 5/5 codec/schema/live HTTP cases and 9/9 source/recovery checks. This package is complete, but PCR-SDK-001 remains open for remaining original consumer acceptance."
     },
     {
       "package": "adapter-dependency-identity",
-      "branch": "fix/resume-47-run3-sdk-audit-50eea9b",
-      "sha": "9ef2eb3c39cad3814df77ef5e871c17ce00f3bd9",
-      "status": "actual-reproduction-source-fix-in-progress",
-      "next_action": "Original author/reviewer remain active. Bind explicit new child identity and validated legacy parent/child journal requests; preserve uncertain effects and original locks. Genuine SIGKILL/HTTP duplicate beforeproof retained."
+      "branch": "fix/resume-47-run4-adapter-c39d76d",
+      "sha": "fc14ecca04baf2d33a00a7c62be07e76066d7e0a",
+      "status": "incomplete-source-under-independent-review",
+      "next_action": "Original author/reviewer remain active. Genuine SIGKILL/HTTP and corrupt-history regressions are executing. Resolve canonical request/resource contract mismatch at its owner; shadow manual validator is not integration-approved. Preserve uncertainty, causal ownership and wire bytes."
     }
   ],
   "rule": "Existing active package owners keep their own checkouts. No ownership transfer from a heartbeat, force push, native-gate replacement or final-completion claim."

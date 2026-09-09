@@ -6,7 +6,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
-import { canonicalJson } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, portableJson, PORTABLE_JSON_ENCODING, sha256Text } from '@kubeclaw/plugin-sdk';
+import { coverageReviewRequirements, gateCoverageDigest } from '@kubeclaw/pipeline-test-gate-contract';
 import {
   FileDurableBlobStore,
   FileDurableRecordStore,
@@ -31,8 +32,18 @@ fs.writeFileSync(path.join(sourceRepository, 'src/index.ts'), sourceContent);
 execFileSync('git', ['add', '.'], { cwd: sourceRepository });
 execFileSync('git', ['commit', '-qm', 'head'], { cwd: sourceRepository });
 const headRevision = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: sourceRepository, encoding: 'utf8' }).trim();
-const evidenceContent = { tests: 'passed' };
-const evidenceDigest = `sha256:${crypto.createHash('sha256').update(JSON.stringify(evidenceContent)).digest('hex')}`;
+const portableEvidence = process.argv.includes('--portable-evidence');
+const evidenceContent = portableEvidence ? { tests: 'passed', ä: 1, z: 2 } : { tests: 'passed' };
+const evidenceDigest = sha256Text(portableEvidence ? portableJson(evidenceContent) : canonicalJson(evidenceContent));
+const inputEvidence = { kind: 'test', digest: evidenceDigest, content: evidenceContent,
+  ...(portableEvidence ? { encoding: PORTABLE_JSON_ENCODING } : {}) };
+const coverageUnsigned = { schemaVersion: 'gate-coverage.v1' as const, kind: 'cumulative' as const,
+  projectId: 'app', baseRevision,
+  modules: [{ moduleId: 'app', ownedPaths: ['src'], requirements: [{ id: 'works', statement: 'The tests pass.' }] }],
+  integrationRequirements: [], requiredChecks: [{ checkId: 'unit', requirementRefs: [{ moduleId: 'app', requirementId: 'works' }], nodeIds: ['unit'] }] };
+const coverage = { ...coverageUnsigned, policyDigest: gateCoverageDigest(coverageUnsigned) };
+const initialRequirements = portableEvidence ? coverageReviewRequirements(coverage) : [{ id: 'REQ-1', statement: 'The tests pass.' }];
+let capturedInitialBundle: Record<string, unknown> | undefined;
 const evidenceRef = { kind: 'test', digest: evidenceDigest };
 const sourceRef = {
   kind: 'reviewed-source', digest: `sha256:${crypto.createHash('sha256').update(sourceContent).digest('hex')}`,
@@ -122,10 +133,20 @@ const server = http.createServer((request, response) => {
     const review = payload.review as Record<string, unknown> | undefined;
     const bundle = review?.bundle as Record<string, unknown> | undefined;
     const task = bundle?.task as Record<string, unknown> | undefined;
+    if (portableEvidence && task?.id === 'TASK-1') {
+      capturedInitialBundle = bundle;
+      const items = bundle!.evidence as Array<Record<string, unknown>>;
+      const supplied = items.find(item => item.kind === 'test')!;
+      assert.equal(supplied.encoding, PORTABLE_JSON_ENCODING);
+      assert.equal(supplied.content, portableJson(evidenceContent));
+      assert.equal(supplied.digest, evidenceDigest);
+      assert(items.some(item => item.kind === 'gate-coverage' && !Object.hasOwn(item, 'encoding')), 'mixed legacy coverage retained');
+    }
     const verification = payload.verification as Record<string, unknown> | undefined;
     const proposals = verification?.proposals as Record<string, unknown> | undefined;
     const result = typeof task?.id === 'string' && task.id.startsWith('REPAIR-') ? passOutput
-      : reviewScenario === 'pass' ? passOutput
+      : reviewScenario === 'pass' ? { ...passOutput, requirementAssessments: Object.fromEntries(
+        ((bundle?.requirements ?? []) as Array<{ id: string }>).map(({ id }) => [id, passOutput.requirementAssessments['REQ-1']])) }
       : reviewScenario === 'advisories' ? echoAdvisories(payload)
         : payload.role === 'semantic-verifier'
       ? {
@@ -262,8 +283,8 @@ try {
             task: { id: 'TASK-1', statement: 'Review the implementation.' },
             revisions: { base: baseRevision },
             scope: { allowedPrefixes: ['src'] },
-            requirements: [{ id: 'REQ-1', statement: 'The tests pass.' }],
-            evidence: [{ kind: 'test', digest: evidenceDigest, content: evidenceContent }],
+            requirements: initialRequirements,
+            evidence: [inputEvidence, ...(portableEvidence ? [{ kind: 'gate-coverage', digest: sha256Text(canonicalJson(coverage)), content: coverage }] : [])],
             contextCandidates: [],
           },
           execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 5000 },
@@ -281,6 +302,19 @@ try {
       records: initialJournal.records(),
     }));
     assert.equal(result.stages.get('review')?.status, 'succeeded');
+    if (portableEvidence) {
+      assert.ok(capturedInitialBundle);
+      const persisted = await storedReports('run:review-live', 'review');
+      const bundle = persisted.find(item => item.schemaVersion === 'review-bundle.v1');
+      const report = persisted.find(item => item.schemaVersion === 'review-report.v2');
+      assert.deepEqual(bundle, capturedInitialBundle, 'actual dispatched bundle equals original stored artifact');
+      assert.ok(report);
+      assert.equal(report.bundleDigest, sha256Text(canonicalJson(bundle)));
+      const changed = structuredClone(bundle!);
+      const supplied = (changed.evidence as Array<Record<string, unknown>>).find(item => item.kind === 'test')!;
+      delete supplied.encoding;
+      assert.notEqual(report.bundleDigest, sha256Text(canonicalJson(changed)), 'persisted report binds the encoding marker');
+    }
 
     const changedManifestDigest = `sha256:${crypto.createHash('sha256').update(canonicalJson([
       { path: 'src/index.ts', status: 'modified' },
@@ -315,7 +349,7 @@ try {
               revisions: { base: baseRevision }, scope: { allowedPrefixes: ['src'] },
               requirements: [{ id: 'REQ-1', statement: 'The tests pass.' }],
               evidence: [
-                { kind: 'test', digest: evidenceDigest, content: evidenceContent },
+                inputEvidence,
                 { kind: 'simplification-facts', digest: simplificationDigest, content: simplificationFacts },
               ],
               contextCandidates: [],
@@ -354,7 +388,7 @@ try {
         task: { id: 'TASK-2', statement: 'Review the blocking implementation.' },
         revisions: { base: baseRevision }, scope: { allowedPrefixes: ['src'] },
         requirements: [{ id: 'REQ-1', statement: 'The contract holds.' }],
-        evidence: [{ kind: 'test', digest: evidenceDigest, content: evidenceContent }],
+        evidence: [inputEvidence],
         contextCandidates: [],
       },
       execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 5000 },
@@ -428,4 +462,5 @@ try {
   await new Promise((resolve) => server.close(resolve));
   fs.rmSync(temporary, { recursive: true, force: true });
 }
-console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.review', suite: 'live-function' }));
+console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.review', suite: 'live-function', portableEvidence,
+  locale: Intl.DateTimeFormat().resolvedOptions().locale, nativeGatewayOrModelProof: false }));

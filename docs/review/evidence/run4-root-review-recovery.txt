@@ -1,0 +1,20 @@
+Source: local 0b9263c.
+Command: node --test tests/verification/reliability/review-evidence-compiler-recovery.test.mjs tests/verification/reliability/project-recovery-version.test.mjs tests/verification/reliability/source-identity-version.test.mjs
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=false (1545.992705ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=true (1453.653846ms)
+✔ original compiler module-review graph remains recoverable under its existing source version (1208.921308ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=false, Unicode policy=true (12058.396436ms)
+✔ persisted source approval graph sv_SE.UTF-8 -> en_US.UTF-8, legacy=false, Unicode policy=true (12143.888258ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=false (11897.064666ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=true (9222.884314ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=false (3817.175809ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=true (3375.997238ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 53075.144274
+

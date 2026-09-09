@@ -1,0 +1,118 @@
+Source: local 0b9263c, reviewed source d58ee5a and final package43d2a3b.
+Command: npm test (skills/nova/plugins/review)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> pretest
+> node tests/repository-audit-stage.unit.test.mjs && node tests/repository-revalidation.unit.test.mjs
+
+{"ok":true,"suite":"repository-audit-stage"}
+{"ok":true,"suite":"repository-revalidation"}
+
+> test
+> npm run test:cluster && npm run schema:check && node tests/repository-review-profile.unit.test.mjs && node tests/review-prompt-budget.unit.test.mjs && node tests/review-quality-corpus.unit.test.mjs && node tests/review-snapshot-inventory.unit.test.mjs && node tests/review-map-artifacts.unit.test.mjs && node tests/review-fact-extractors.unit.test.mjs && node tests/review-graph.unit.test.mjs && node tests/review-scale-slicing.unit.test.mjs && node tests/scalable-review-topology.unit.test.mjs && node tests/scalable-review-jobs.unit.test.mjs && node tests/scalable-review-verification.unit.test.mjs && node tests/review-content-cache.unit.test.mjs && node tests/scalable-review-compiler.unit.test.mjs && node tests/review-governor.unit.test.mjs && node tests/review-report-contract.unit.test.mjs && node tests/review-report-builder.unit.test.mjs && node tests/simplification-contract.unit.test.mjs && node tests/simplification-miner.unit.test.mjs && node tests/simplification-manifest.unit.test.mjs && node tests/review-bundle-contract.unit.test.mjs && node tests/review-bundle-snapshot.unit.test.mjs && node tests/review-context-selection.unit.test.mjs && node tests/review-context-production.unit.test.mjs && node tests/review-slicing.unit.test.mjs && node tests/echo-review-output.unit.test.mjs && node tests/echo-review-verification.unit.test.mjs && node tests/review-proposal-preflight.unit.test.mjs && node tests/review-verification-reconciliation.unit.test.mjs && node tests/review-verdict-policy.unit.test.mjs && node tests/review-verified-findings.unit.test.mjs && node tests/review-policy-contract.unit.test.mjs && node tests/review-invariants.unit.test.mjs && node tests/review-policy-resolver.unit.test.mjs && node tests/review-policy-profiles.unit.test.mjs && node tests/review-reducer.unit.test.mjs && node tests/review-decision-matrix.unit.test.mjs && node tests/review-contract-parity.unit.test.mjs && node tests/review-evaluation-metadata.unit.test.mjs && node tests/review-stage-input.unit.test.mjs && node tests/review-stage-verification.unit.test.mjs && node tests/protocol.unit.test.mjs && node tests/stage.unit.test.mjs && node tests/live-function.test.ts && node --test tests/review-evidence-encoding-independent.test.mjs tests/review-evidence-live-locales.test.mjs tests/review-evidence-schema-independent.test.mjs && node tests/package-boundary.test.mjs && node tests/remediation.test.mjs && node tests/repository-review-io.test.ts && npm run test:coverage
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:cluster
+> node tests/review-cluster-contract.unit.test.mjs && node tests/review-cluster-identity.unit.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-cluster-contract"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-cluster-identity"}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> schema:check
+> node scripts/generate-policy-schema.mjs --check && node scripts/generate-bundle-schema.mjs --check && node scripts/generate-verification-schema.mjs --check
+
+{"ok":true,"suite":"repository-review-profile"}
+{"ok":true,"suite":"review-prompt-budget"}
+{"ok":true,"suite":"review-quality-corpus"}
+{"ok":true,"suite":"review-snapshot-inventory"}
+{"ok":true,"suite":"review-map-artifacts"}
+{"ok":true,"suite":"review-fact-extractors"}
+{"ok":true,"suite":"review-graph"}
+{"ok":true,"suite":"review-scale-slicing"}
+{"ok":true,"suite":"scalable-review-topology"}
+{"ok":true,"suite":"scalable-review-jobs"}
+{"ok":true,"suite":"scalable-review-verification"}
+{"ok":true,"suite":"review-content-cache"}
+{"ok":true,"suite":"scalable-review-compiler","millionLines":1000000,"files":2000,"slices":100,"boundaries":197,"elapsedMs":33865}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-governor"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-evidence-authority"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-context-production"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-slicing"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-fact-producer"}
+review report contract unit tests passed
+review report builder unit tests passed
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-contract"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-miner"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-manifest"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-bundle-contract"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-bundle-snapshot"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-context-selection"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-context-production"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-slicing"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"echo-review-output"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"echo-review-verification"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-proposal-preflight"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-verification-reconciliation"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-verdict-policy"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-verified-findings"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-policy-contract"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-invariants"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-policy-resolver"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-policy-profiles"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-reducer"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-decision-matrix","cases":34}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-contract-parity","echoCases":15,"verificationCases":9,"policyCases":8,"stageResults":4}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-evaluation-metadata"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-stage-input"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-stage-verification"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"protocol-unit"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"stage-unit"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function","portableEvidence":false,"locale":"en-US","nativeGatewayOrModelProof":false}
+{"produced":{"locale":"en-US","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9"},"english":{"locale":"en-US","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9","legacyUnicodeAccepted":true,"strippedAcceptedWithDifferentDigest":false},"swedish":{"locale":"sv-SE","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9","legacyUnicodeAccepted":false,"strippedAcceptedWithDifferentDigest":true},"boundary":"original parser, closed schemas, snapshot and disk ArtifactStore; no LLM/gateway completion"}
+✔ independent original parser/bundle/schema/snapshot/ArtifactStore roundtrip across locales (1222.051286ms)
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function","portableEvidence":true,"locale":"en-US","nativeGatewayOrModelProof":false}
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function","portableEvidence":true,"locale":"sv-SE","nativeGatewayOrModelProof":false}
+✔ original compiler module-review graph remains recoverable under its existing source version (1026.960642ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1498.29041
+✔ original review stage, Git, HTTP and persisted bundle preserve portable evidence under en-US (5522.311826ms)
+✔ original review stage, Git, HTTP and persisted bundle preserve portable evidence under sv-SE (5027.498121ms)
+✔ original review-enabled compiler snapshot recovers without changing graph identity (1557.437484ms)
+{"strictCurrentSchema":true,"comparedOriginalDomainVectors":384,"extraFieldNegatives":384}
+✔ strict changed-path schema preserves original accepted domain across conditional branches (120.959909ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12224.809817
+{"ok":true,"plugin":"kubeclaw.review","suite":"package-boundary"}
+{"ok":true,"findings":["AUDIT-001","AUDIT-003","POLICY-002"],"tokenizerParity":true,"mocks":0}
+{"ok":true,"boundary":"original-core-stage-repository-and-artifact-adapters","scopeCases":4,"mocks":0}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:coverage
+> node --test tests/review-coverage.test.mts
+
+✔ original review parser validates cumulative policy and stores its actual immutable bundle (61.043713ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 399.321004
+
+Exit: 0
+

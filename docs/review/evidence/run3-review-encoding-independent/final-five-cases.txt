@@ -1,0 +1,30 @@
+Production source d58ee5a; final default-wrapper registration 1d0cd9e. Exact author/reviewer source/schema/package/locale-wrapper comparison returned zero differences.
+Cwd: skills/nova/plugins/review
+Command: node --test tests/review-evidence-encoding-independent.test.mjs tests/review-evidence-live-locales.test.mjs tests/review-evidence-schema-independent.test.mjs
+Exit: 0
+{"produced":{"locale":"en-US","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9"},"english":{"locale":"en-US","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9","legacyUnicodeAccepted":true,"strippedAcceptedWithDifferentDigest":false},"swedish":{"locale":"sv-SE","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9","legacyUnicodeAccepted":false,"strippedAcceptedWithDifferentDigest":true},"boundary":"original parser, closed schemas, snapshot and disk ArtifactStore; no LLM/gateway completion"}
+✔ independent original parser/bundle/schema/snapshot/ArtifactStore roundtrip across locales (993.163092ms)
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function","portableEvidence":true,"locale":"en-US","nativeGatewayOrModelProof":false}
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function","portableEvidence":true,"locale":"sv-SE","nativeGatewayOrModelProof":false}
+✔ original compiler module-review graph remains recoverable under its existing source version (744.44334ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1162.364645
+✔ original review stage, Git, HTTP and persisted bundle preserve portable evidence under en-US (5001.629084ms)
+✔ original review stage, Git, HTTP and persisted bundle preserve portable evidence under sv-SE (4624.303721ms)
+✔ original review-enabled compiler snapshot recovers without changing graph identity (1219.041055ms)
+{"strictCurrentSchema":true,"comparedOriginalDomainVectors":384,"extraFieldNegatives":384}
+✔ strict changed-path schema preserves original accepted domain across conditional branches (75.73309ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10940.905519

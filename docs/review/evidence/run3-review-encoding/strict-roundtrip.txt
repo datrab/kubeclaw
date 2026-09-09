@@ -1,0 +1,13 @@
+Source: b33873e
+Command: node --test skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs
+Exit: 0
+{"produced":{"locale":"en-US","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9"},"english":{"locale":"en-US","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9","legacyUnicodeAccepted":true,"strippedAcceptedWithDifferentDigest":false},"swedish":{"locale":"sv-SE","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9","legacyUnicodeAccepted":false,"strippedAcceptedWithDifferentDigest":true},"boundary":"original parser, closed schemas, snapshot and disk ArtifactStore; no LLM/gateway completion"}
+✔ independent original parser/bundle/schema/snapshot/ArtifactStore roundtrip across locales (957.100072ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1254.335521

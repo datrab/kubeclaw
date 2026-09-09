@@ -629,7 +629,13 @@
           "report": "implementation/run3-sdk-repair-independent-review.md",
           "summary": "Explizite Repair-Identitäten, echte historische Producer und Cross-Locale-Core-Resume unabhängig 53/53 geprüft. Root kombiniert mit aktueller Attempt-/Artifact-Integration 84/84, keine Skips; Nova/Foundation-Typechecks grün. Weitere Digestconsumer bleiben offen."
         },
-        "docs/review/evidence/run3-root-sdk-final.txt"
+        "docs/review/evidence/run3-root-sdk-final.txt",
+        {
+          "report": "implementation/run3-review-evidence-independent-review.md",
+          "summary": "Expliziter Review-Evidence-Codec unabhängig geprüft; Root bestätigt vollständige Originalsuite, 5/5 neue Locale/Schema/HTTP-Regressionen und 9/9 Source-/Recoveryfälle ohne Skips. Historische Compileridentität unverändert; SDK-Gesamtfinding bleibt wegen verbleibendem Adapterconsumer offen."
+        },
+        "docs/review/evidence/run4-root-review-npm.txt",
+        "docs/review/evidence/run4-root-review-recovery.txt"
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/lib.sdk.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",

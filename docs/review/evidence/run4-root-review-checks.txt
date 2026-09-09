@@ -1,0 +1,8 @@
+Source tested: local 0b9263c over exact remote4627f01/local143b0cf.
+Independent source approval: c100f1b; author final43d2a3b.
+node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json
+Exit 0, no diagnostics.
+node node_modules/typescript/bin/tsc --noEmit -p skills/nova/plugins/review/tsconfig.json
+Exit 0, no diagnostics.
+node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/nova/plugins/review/src/review-bundle-bounds.ts skills/nova/plugins/review/src/review-bundle-contract.ts skills/nova/plugins/review/src/review-bundle-parser.ts skills/nova/plugins/review/src/review-evidence-encoding.ts skills/nova/plugins/review/src/review-stage-input.ts skills/nova/plugins/review/src/review-coverage.ts skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs skills/nova/plugins/review/tests/review-evidence-schema-independent.test.mjs skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs skills/nova/plugins/review/tests/live-function.test.ts tests/verification/reliability/review-evidence-compiler-recovery.test.mjs
+Exit 0, no diagnostics.

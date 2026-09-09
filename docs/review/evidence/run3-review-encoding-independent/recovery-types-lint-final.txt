@@ -1,0 +1,28 @@
+Production source frozen at d58ee5a889b8b5d588c679b2b01435dc8204120b; compiler restored to exact remote962887/8734 baseline bytes.
+Command 1: node --test tests/verification/reliability/review-evidence-compiler-recovery.test.mjs tests/verification/reliability/project-recovery-version.test.mjs tests/verification/reliability/source-identity-version.test.mjs
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=false (1671.399451ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=true (1263.915662ms)
+✔ original compiler module-review graph remains recoverable under its existing source version (856.642539ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=false, Unicode policy=true (12471.750933ms)
+✔ persisted source approval graph sv_SE.UTF-8 -> en_US.UTF-8, legacy=false, Unicode policy=true (13384.561311ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=false (11324.302395ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=true (9553.252819ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=false (3627.648316ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=true (3434.830005ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 54288.419847
+
+Command 2: node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json
+Exit: 0; no diagnostics.
+Command 3: node node_modules/typescript/bin/tsc --noEmit -p skills/nova/plugins/review/tsconfig.json
+Exit: 0; no diagnostics.
+Command 4: node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/nova/plugins/review/src/review-bundle-bounds.ts skills/nova/plugins/review/src/review-bundle-contract.ts skills/nova/plugins/review/src/review-bundle-parser.ts skills/nova/plugins/review/src/review-evidence-encoding.ts skills/nova/plugins/review/src/review-stage-input.ts skills/nova/plugins/review/src/review-coverage.ts skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs skills/nova/plugins/review/tests/review-evidence-schema-independent.test.mjs skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs skills/nova/plugins/review/tests/live-function.test.ts tests/verification/reliability/review-evidence-compiler-recovery.test.mjs
+Exit: 0; no diagnostics.
+Source checks: git diff --exit-code d58ee5a HEAD -- skills/nova/plugins/review/src skills/nova/plugins/review/schemas skills/nova/project/compiler.ts; git diff --exit-code 8734df5 HEAD -- skills/nova/project/compiler.ts
+Both exit 0 with no differences.

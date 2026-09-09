@@ -1,0 +1,44 @@
+Run run5-publish-20260909t2239; source local 4a8b59fc8c1af960082767f339f5c84b8c48a1cb.
+Fresh remote parent 4627f01fe532d3dd890b7c8f93df40ae59547071, exact local baseline 143b0cf9d73572f61687f85c6c3c886bad8e7278.
+All 3354 baseline blobs/modes/types matched remote untruncated tree. All 175 review-package source entries matched independently reviewed remote backup 3c7d3a33981c7bee504d2920b543ec369829fe9f.
+Node v24.19.0; dependencies copied as cache, all workspace sources resolved in this checkout.
+node --test skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs skills/nova/plugins/review/tests/review-evidence-schema-independent.test.mjs skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs tests/verification/reliability/review-evidence-compiler-recovery.test.mjs tests/verification/reliability/project-recovery-version.test.mjs tests/verification/reliability/source-identity-version.test.mjs
+{"produced":{"locale":"en-US","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9"},"english":{"locale":"en-US","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9","legacyUnicodeAccepted":true,"strippedAcceptedWithDifferentDigest":false},"swedish":{"locale":"sv-SE","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9","legacyUnicodeAccepted":false,"strippedAcceptedWithDifferentDigest":true},"boundary":"original parser, closed schemas, snapshot and disk ArtifactStore; no LLM/gateway completion"}
+✔ independent original parser/bundle/schema/snapshot/ArtifactStore roundtrip across locales (1399.547212ms)
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function","portableEvidence":true,"locale":"en-US","nativeGatewayOrModelProof":false}
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function","portableEvidence":true,"locale":"sv-SE","nativeGatewayOrModelProof":false}
+✔ original compiler module-review graph remains recoverable under its existing source version (825.810857ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1289.34913
+✔ original review stage, Git, HTTP and persisted bundle preserve portable evidence under en-US (5521.504488ms)
+✔ original review stage, Git, HTTP and persisted bundle preserve portable evidence under sv-SE (5545.846838ms)
+✔ original review-enabled compiler snapshot recovers without changing graph identity (1343.464487ms)
+{"strictCurrentSchema":true,"comparedOriginalDomainVectors":384,"extraFieldNegatives":384}
+✔ strict changed-path schema preserves original accepted domain across conditional branches (148.460554ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=false (1485.352396ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=true (1246.982131ms)
+✔ original compiler module-review graph remains recoverable under its existing source version (910.239427ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=false, Unicode policy=true (12327.297928ms)
+✔ persisted source approval graph sv_SE.UTF-8 -> en_US.UTF-8, legacy=false, Unicode policy=true (12083.815837ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=false (11548.234722ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=true (8634.960609ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=false (3188.440621ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=true (3216.292562ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 51604.386899
+
+Exit 0. Full Nova and review plugin TypeScript checks and unchanged focused ESLint command in run4-root-review-checks.txt rerun: exit 0, no diagnostics.
+All ten current remote workflow files inspected: branch pushes select main only; no workflow change in this package. No CI, deployment or production action.
+These are local consumer/compatibility proofs, not native gateway/model acceptance or complete PCR-SDK-001 closure. Exact frozen scope remains 7 verified / 40 incomplete.

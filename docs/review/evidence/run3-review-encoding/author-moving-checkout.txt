@@ -1,0 +1,76 @@
+Command: node --test skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs
+Exit: 1
+Author edited the package's test files/manifest while its discovered registry was activating. The unchanged registry integrity check correctly rejected this moving worktree. This is not a passing regression; frozen rerun required.
+{"produced":{"locale":"en-US","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9"},"english":{"locale":"en-US","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9","legacyUnicodeAccepted":true,"strippedAcceptedWithDifferentDigest":false},"swedish":{"locale":"sv-SE","digest":"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9","legacyUnicodeAccepted":false,"strippedAcceptedWithDifferentDigest":true},"boundary":"original parser, closed schemas, snapshot and disk ArtifactStore; no LLM/gateway completion"}
+✔ independent original parser/bundle/schema/snapshot/ArtifactStore roundtrip across locales (1117.848094ms)
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function","portableEvidence":true,"locale":"en-US","nativeGatewayOrModelProof":false}
+file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/common/plugin-runtime/foundation/registry/activation.ts:34
+      throw new RegistryError(
+            ^
+
+RegistryError: Plugin package changed after discovery: kubeclaw.review
+    at assertPackageIntegrity (file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/common/plugin-runtime/foundation/registry/activation.ts:34:13)
+    at Module.activateRegistry (file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/common/plugin-runtime/foundation/registry/activation.ts:120:3)
+    at file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/nova/plugins/review/tests/live-function.test.ts:241:32
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  code: 'REGISTRY_PACKAGE_INTEGRITY_MISMATCH',
+  details: {
+    pluginId: 'kubeclaw.review',
+    expectedDigest: 'sha256:c82d91ba004063a3b531165e8d0969f755408f504a3a02884295759f83b984d8',
+    actualDigest: 'sha256:831fa7489692568575673f1ba0d4d509254db7c73acf870072793756104b7c1b'
+  }
+}
+
+Node.js v24.19.0
+✔ original review stage, Git, HTTP and persisted bundle preserve portable evidence under en-US (5720.264103ms)
+✖ original review stage, Git, HTTP and persisted bundle preserve portable evidence under sv-SE (1557.929082ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7413.827965
+
+✖ failing tests:
+
+test at skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs:9:3
+✖ original review stage, Git, HTTP and persisted bundle preserve portable evidence under sv-SE (1557.929082ms)
+  Error: Command failed: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/nova/plugins/review/tests/live-function.test.ts --portable-evidence
+  file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/common/plugin-runtime/foundation/registry/activation.ts:34
+        throw new RegistryError(
+              ^
+  
+  RegistryError: Plugin package changed after discovery: kubeclaw.review
+      at assertPackageIntegrity (file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/common/plugin-runtime/foundation/registry/activation.ts:34:13)
+      at Module.activateRegistry (file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/common/plugin-runtime/foundation/registry/activation.ts:120:3)
+      at file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/nova/plugins/review/tests/live-function.test.ts:241:32
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    code: 'REGISTRY_PACKAGE_INTEGRITY_MISMATCH',
+    details: {
+      pluginId: 'kubeclaw.review',
+      expectedDigest: 'sha256:c82d91ba004063a3b531165e8d0969f755408f504a3a02884295759f83b984d8',
+      actualDigest: 'sha256:831fa7489692568575673f1ba0d4d509254db7c73acf870072793756104b7c1b'
+    }
+  }
+  
+  Node.js v24.19.0
+  
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs:11:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/common/plugin-runtime/foundation/registry/activation.ts:34\n      throw new RegistryError(\n            ^\n\nRegistryError: Plugin package changed after discovery: kubeclaw.review\n    at assertPackageIntegrity (file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/common/plugin-runtime/foundation/registry/activation.ts:34:13)\n    at Module.activateRegistry (file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/common/plugin-runtime/foundation/registry/activation.ts:120:3)\n    at file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/nova/plugins/review/tests/live-function.test.ts:241:32\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {\n  code: 'REGISTRY_PACKAGE_INTEGRITY_MISMATCH',\n  details: {\n    pluginId: 'kubeclaw.review',\n    expectedDigest: 'sha256:c82d91ba004063a3b531165e8d0969f755408f504a3a02884295759f83b984d8',\n    actualDigest: 'sha256:831fa7489692568575673f1ba0d4d509254db7c73acf870072793756104b7c1b'\n  }\n}\n\nNode.js v24.19.0\n" ],
+    pid: 1114,
+    stdout: '',
+    stderr: "file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/common/plugin-runtime/foundation/registry/activation.ts:34\n      throw new RegistryError(\n            ^\n\nRegistryError: Plugin package changed after discovery: kubeclaw.review\n    at assertPackageIntegrity (file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/common/plugin-runtime/foundation/registry/activation.ts:34:13)\n    at Module.activateRegistry (file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/common/plugin-runtime/foundation/registry/activation.ts:120:3)\n    at file:///workspace/scratch/0d8f8ddb55c3/run3-review-encoding/skills/nova/plugins/review/tests/live-function.test.ts:241:32\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {\n  code: 'REGISTRY_PACKAGE_INTEGRITY_MISMATCH',\n  details: {\n    pluginId: 'kubeclaw.review',\n    expectedDigest: 'sha256:c82d91ba004063a3b531165e8d0969f755408f504a3a02884295759f83b984d8',\n    actualDigest: 'sha256:831fa7489692568575673f1ba0d4d509254db7c73acf870072793756104b7c1b'\n  }\n}\n\nNode.js v24.19.0\n"
+  }

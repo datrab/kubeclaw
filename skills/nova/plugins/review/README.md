@@ -39,6 +39,27 @@ FAIL, or `StageResult`. The plugin parses assessments and proposals, verifies th
 available evidence boundary, applies a frozen policy, and creates the result.
 Invalid, incomplete, or semantically unverified blocking output fails closed.
 
+## Evidence JSON identity
+
+New authored graph evidence should declare `encoding: "kubeclaw-json.utf16.v1"`
+and compute `digest` with `sha256Text(portableJson(content))` from the shared
+SDK. The project compiler retains its existing closed ASCII-key legacy evidence
+format so recompiling an existing run cannot change its pinned graph identity.
+Stage input `content` is a JSON
+value; the review owner converts it into an exact canonical JSON string and
+preserves the marker in `review-bundle.v1`. Schemas, parsers, bounds and coverage
+checks reject unknown or mismatched codecs. The enclosing bundle digest binds
+the marker and is retained by stored reports and downstream review authority.
+Legacy and tagged evidence may coexist in one bundle.
+
+Untagged evidence retains its original locale-dependent canonical contract.
+It is never silently relabelled or reserialized as portable evidence. A legacy
+object plus digest does not contain the original serialized bytes: if another
+locale cannot reproduce that digest, reconciliation requires the original
+producer/runtime and existing authorization process. Even legacy bundle strings
+must still meet the old canonical-only validation rule. This format addition
+does not bypass pinned plugin package checks or renew prior approvals.
+
 Repository-audit planning uses `o200k_base` token counts for the complete serialized
 input envelope. It reports byte and token values separately. It enforces per-call
 bytes, per-call input, model context with reserved output, phase ceilings, a

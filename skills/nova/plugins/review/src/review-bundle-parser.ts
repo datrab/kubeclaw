@@ -20,6 +20,7 @@ import {
   type ReviewContextReason,
 } from './review-bundle-contract.ts';
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
+import { reviewEvidenceEncoding } from './review-evidence-encoding.ts';
 import {
   bundleArray,
   bundleCompare,
@@ -53,14 +54,15 @@ function parseRequirement(value: unknown, index: number): ReviewBundleRequiremen
 function parseEvidence(value: unknown, index: number): ReviewBundleEvidence {
   const label = `evidence[${index}]`;
   const item = bundleRecord(value, label);
-  bundleExact(item, ['kind', 'digest', 'content'], [], label);
+  bundleExact(item, ['kind', 'digest', 'content'], ['encoding'], label);
+  const encoding = reviewEvidenceEncoding(item.encoding);
   if (typeof item.content !== 'string') throw new Error(`${label}.content must be a string`);
   const content = item.content;
   if (sha256Text(content) !== item.digest) throw new Error(`${label}.digest does not match content`);
   return {
     kind: bundleIdentifier(item.kind, `${label}.kind`),
     digest: bundleDigest(item.digest, `${label}.digest`),
-    content,
+    content, ...(encoding === undefined ? {} : { encoding }),
   };
 }
 

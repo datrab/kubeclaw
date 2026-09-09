@@ -1,0 +1,13 @@
+{
+  "remote": "9628872976da8d43c3a17faa89962f9e32d88979",
+  "untruncated": true,
+  "matchedSources": {
+    "skills/nova/project/compiler.ts": "7e690c28820dd379f10424b343dd26a5e7c24c88",
+    "skills/common/plugin-runtime/sdk/src/values.ts": "8c929f75a7eb22830fffc39347f541ffc8d89eb6",
+    "skills/nova/plugins/review/src/review-stage-input.ts": "ea06207d44611dfec38ea81b9b7ddb31ef934a0f",
+    "skills/nova/plugins/review/src/review-bundle-parser.ts": "8aa1094de7b926a3e83fd9687146c84e256a5910",
+    "skills/nova/plugins/review/src/review-bundle-bounds.ts": "1b179009de6f11418d84bb935772862dbb1904c3",
+    "skills/nova/plugins/review/src/review-bundle-snapshot.ts": "8b9750f494bb1ef7e1168fa1e48b6623377bbc76",
+    "skills/nova/plugins/review/schemas/review-bundle.v1.schema.json": "dded7e18ac7d987d8af8b54e22a7f8c89cd4ee7c"
+  }
+}

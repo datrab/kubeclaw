@@ -1,0 +1,4 @@
+Original baseline: local8734df5 tree cda01987c1112063875cbfefb9ea1723ccbbea47, exactly remote9628872976da8d43c3a17faa89962f9e32d88979
+Probe: actual generated review-bundle.v1.schema.json compiled by Ajv2020({strict:true}) from original baseline bytes.
+Exit: 1
+ORIGINAL BASELINE: strict mode: required property "path" is not defined at "https://kubeclaw.dev/schemas/review-bundle.v1.schema.json#/properties/scope/properties/changedPaths/items/allOf/0/then" (strictRequired)
