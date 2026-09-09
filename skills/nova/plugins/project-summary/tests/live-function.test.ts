@@ -1,8 +1,15 @@
+import { gateCoverageDigest } from '@kubeclaw/pipeline-test-gate-contract';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import {pathToFileURL} from 'node:url';
 const repository=path.resolve('../../../..');const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'kubeclaw-project-summary-'));
 const core=await import(pathToFileURL(path.join(repository,'skills/nova/core/src/index.ts')).href);
 const roots=['common','nova','buster'].map((role)=>path.join(repository,`skills/${role}/plugins`));
+function coverage(kind: 'module' | 'cumulative') {
+  const value = { schemaVersion: 'gate-coverage.v1' as const, projectId: 'api', kind, baseRevision: 'a'.repeat(40),
+    modules: [{ moduleId: 'api', ownedPaths: ['api'], requirements: [{ id: 'works', statement: 'API works.' }] }], integrationRequirements: [],
+    requiredChecks: [{ checkId: 'works', requirementRefs: [{ moduleId: 'api', requirementId: 'works' }], nodeIds: ['unit'] }] };
+  return { ...value, policyDigest: gateCoverageDigest(value) };
+}
 try{
   const snapshot=core.buildRegistry(core.discoverPackages({installationRoots:roots,trustPolicy:{trustedBuiltinRoots:roots,allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'test:project-summary'},now:()=>new Date('2026-07-26T00:00:00Z')}));
   const enabled=new Set(['kubeclaw.project-summary:summary']);
@@ -14,7 +21,7 @@ try{
   await adapters.start();
   try{
     const runner=new core.PipelineRunner({definition:{schemaVersion:'pipeline-definition.v2',id:'pipeline:summary',maxConcurrency:1,stages:[{
-      id:'summary',type:'kubeclaw.report.project-summary',dependsOn:[],config:{},input:{projectId:'api',modules:[{moduleId:'api',sourceStageId:'forge',testStageId:'test'}],final:{sourceStageId:'forge',testStageId:'test',lintStageId:'lint',reviewStageId:'review'}},
+      id:'summary',type:'kubeclaw.report.project-summary',dependsOn:[],config:{},input:{projectId:'api',modules:[{moduleId:'api',sourceStageId:'forge',testStageId:'test',expectedCoverage:coverage('module')}],final:{sourceStageId:'forge',testStageId:'test',lintStageId:'lint',reviewStageId:'review',expectedCoverage:coverage('cumulative')}},
       execution:{maxAttempts:1,maxRemediationCycles:0,timeoutMs:5000}}]},registry:granted,activated,adapters,journal:new core.FileJournal(path.join(temporary,'events.jsonl'))});
     assert.equal((await runner.run('run:summary')).status,'blocked');
     assert.equal(fs.existsSync(path.join(temporary,'artifacts','records','store.json')),false);

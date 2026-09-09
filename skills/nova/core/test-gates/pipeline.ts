@@ -37,6 +37,7 @@ export function loadPipelineTestScope(
   const collection = objectValue(pipeline[collectionName], collectionName);
   const selected = objectValue(collection[scopeId], `${collectionName}.${scopeId}`);
   const declaration: TestScopeDeclaration = {
+    ...(selected.coverage === undefined ? {} : { coverage: selected.coverage as NonNullable<TestScopeDeclaration['coverage']> }),
     ...(selected.suites === undefined ? {} : { suites: selected.suites as NonNullable<TestScopeDeclaration['suites']> }),
     ...(selected.tests === undefined ? {} : { tests: selected.tests as NonNullable<TestScopeDeclaration['tests']> }),
     ...(selected.fixtures === undefined ? {} : { fixtures: selected.fixtures as NonNullable<TestScopeDeclaration['fixtures']> }),

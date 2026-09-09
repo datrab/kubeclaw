@@ -408,6 +408,280 @@
         }
       ]
     },
+    "gateCoverageResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "policy",
+        "planDigest",
+        "pipelineStageId",
+        "sourceRevision",
+        "sourceTree",
+        "archiveContentDigest",
+        "checks",
+        "coverageDigest"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "gate-coverage-result.v1"
+        },
+        "policy": {
+          "$ref": "#/$defs/gateCoverage"
+        },
+        "planDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "pipelineStageId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "sourceRevision": {
+          "type": "string",
+          "pattern": "^git:(?:[a-f0-9]{40}|[a-f0-9]{64})$"
+        },
+        "sourceTree": {
+          "type": "string",
+          "pattern": "^git:(?:[a-f0-9]{40}|[a-f0-9]{64})$"
+        },
+        "archiveContentDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "checks": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 65536,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "checkId",
+              "declarationId",
+              "nodeId",
+              "state"
+            ],
+            "properties": {
+              "checkId": {
+                "$ref": "#/$defs/stableId"
+              },
+              "declarationId": {
+                "$ref": "#/$defs/stableId"
+              },
+              "nodeId": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/stableId"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "state": {
+                "enum": [
+                  "passed",
+                  "failed",
+                  "missing",
+                  "excluded",
+                  "skipped",
+                  "advisory"
+                ]
+              }
+            }
+          }
+        },
+        "coverageDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "gateCoverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "projectId",
+        "kind",
+        "baseRevision",
+        "modules",
+        "integrationRequirements",
+        "requiredChecks",
+        "policyDigest"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "gate-coverage.v1"
+        },
+        "projectId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "kind": {
+          "enum": [
+            "module",
+            "cumulative"
+          ]
+        },
+        "baseRevision": {
+          "type": "string",
+          "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$"
+        },
+        "modules": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "moduleId",
+              "requirements",
+              "ownedPaths"
+            ],
+            "properties": {
+              "moduleId": {
+                "$ref": "#/$defs/stableId"
+              },
+              "requirements": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 4096,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "statement"
+                  ],
+                  "properties": {
+                    "id": {
+                      "$ref": "#/$defs/stableId"
+                    },
+                    "statement": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8192
+                    }
+                  }
+                }
+              },
+              "ownedPaths": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 1024,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096,
+                  "pattern": "^(?!/)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*\\\\)[^\\u0000-\\u001f]+$"
+                }
+              }
+            }
+          }
+        },
+        "integrationRequirements": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 4096,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "statement"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/stableId"
+              },
+              "statement": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8192
+              }
+            }
+          }
+        },
+        "requiredChecks": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4096,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "checkId",
+              "requirementRefs",
+              "nodeIds"
+            ],
+            "properties": {
+              "checkId": {
+                "$ref": "#/$defs/stableId"
+              },
+              "requirementRefs": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 4096,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "moduleId",
+                    "requirementId"
+                  ],
+                  "properties": {
+                    "moduleId": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/stableId"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "requirementId": {
+                      "$ref": "#/$defs/stableId"
+                    }
+                  }
+                }
+              },
+              "nodeIds": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 4096,
+                "items": {
+                  "$ref": "#/$defs/stableId"
+                }
+              }
+            }
+          }
+        },
+        "policyDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "resolvedGateCoverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy",
+        "excludedNodeIds"
+      ],
+      "properties": {
+        "policy": {
+          "$ref": "#/$defs/gateCoverage"
+        },
+        "excludedNodeIds": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 4096,
+          "items": {
+            "$ref": "#/$defs/stableId"
+          }
+        }
+      }
+    },
     "resolvedTestPlan": {
       "type": "object",
       "additionalProperties": false,
@@ -427,6 +701,7 @@
       ],
       "properties": {
         "schemaVersion": { "const": "resolved-test-plan.v1" },
+        "coverage": { "$ref": "#/$defs/resolvedGateCoverage" },
         "planId": { "$ref": "#/$defs/stableId" },
         "planDigest": { "$ref": "#/$defs/digest" },
         "runId": { "$ref": "#/$defs/stableId" },

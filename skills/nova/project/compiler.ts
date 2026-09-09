@@ -1,7 +1,8 @@
+import { cumulativeStages, projectCoverage, testConfiguration } from './coverage.ts';
 import path from 'node:path';
 import { canonicalJson, sha256Text, type PipelineDefinition, type StageDefinition } from '@kubeclaw/plugin-sdk';
 import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
-import { validatePipelineTestGateContract, resolvedTestPlanDigest, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
+import { coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, resolvedTestPlanDigest, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 
 type ObjectValue = Record<string, any>;
 function object(value: unknown, fields: string[], label: string): ObjectValue {
@@ -49,6 +50,7 @@ function moduleStages(module: ObjectValue, context: ModuleContext): StageDefinit
   const reviewId = `review-${module.id}`;
   const testId = `test-${module.id}`;
   const evidence = { projectId, moduleId: module.id, baseRevision: baseline, requirements: module.requirements };
+  const expectedCoverage = projectCoverage(projectId, baseline, [module], module.test);
   const categories = { lint: 2, ...(module.review ? { review: 2 } : {}), test: 2 };
   const repairBudget = { categories, maximumOrchestratorOrders: 1 };
   // The former maxAttempts:2 allowed one technical retry. Preserve that
@@ -68,12 +70,12 @@ function moduleStages(module: ObjectValue, context: ModuleContext): StageDefinit
     input: { workingDirectory: repository, project: projectId, sourceStageId: implementationId }, execution: { ...execution, repairCategory: 'lint' }, on: { request_fix: implementationId } });
   if (module.review) stages.push({ id: reviewId, type: 'kubeclaw.decision.review', dependsOn: [lintId], config: module.review,
     input: { task: { id: module.id, statement: module.task }, revisions: { sourceStageId: implementationId },
-      scope: { allowedPrefixes: module.ownedPaths, ownershipPrefixes: module.ownedPaths }, requirements: module.requirements,
-      evidence: [{ kind: 'project-requirements', digest: sha256Text(canonicalJson(evidence)), content: evidence }], contextCandidates: [] },
+      scope: { allowedPrefixes: coverageReviewPrefixes(expectedCoverage), ownershipPrefixes: coverageReviewPrefixes(expectedCoverage) }, requirements: coverageReviewRequirements(expectedCoverage),
+      evidence: [{ kind: 'project-requirements', digest: sha256Text(canonicalJson(evidence)), content: evidence }, { kind: 'gate-coverage', digest: sha256Text(canonicalJson(expectedCoverage)), content: expectedCoverage }], contextCandidates: [] },
     execution: { ...execution, repairCategory: 'review' }, on: { request_fix: implementationId } });
   stages.push({ id: testId, type: 'kubeclaw.test.quality-evaluation', dependsOn: [module.review ? reviewId : lintId],
-    config: { agent: module.test.agent, ...(module.test.agentRole === undefined ? {} : { agentRole: module.test.agentRole }) },
-    input: { gateId: testId, task: module.task,
+    config: testConfiguration(module.test),
+    input: { gateId: testId, task: module.task, expectedCoverage,
       providerPlan: { ...module.test.providerPlan, repositoryRoot: repository, sourceStageId: implementationId } },
     execution: { ...execution, repairCategory: 'test' }, on: { request_fix: implementationId } });
   return stages;
@@ -95,8 +97,8 @@ function validateModuleRuntime(module: ObjectValue, moduleId: string, runId: str
   if (module.review !== undefined) { object(module.review, ['agent'], 'review'); text(module.review.agent, 'review.agent'); }
   const lint = object(module.lint, ['policyPath', 'policyProject'], 'lint');
   absolute(lint.policyPath, 'lint.policyPath'); text(lint.policyProject, 'lint.policyProject');
-  const test = object(module.test, ['agent', 'agentRole', 'providerPlan'], 'test');
-  agent({ agent: test.agent, ...(test.agentRole === undefined ? {} : { agentRole: test.agentRole }) });
+  const test = object(module.test, ['agent', 'agentRole', 'testAgentEnabled', 'requiredChecks', 'providerPlan'], 'test');
+  testConfiguration(test);
   const provider = object(test.providerPlan, ['repositoryId', 'plan', 'grants', 'maximumConcurrency', 'submittedAt', 'timeoutMs'], 'providerPlan');
   validatePipelineTestGateContract('resolvedTestPlan', provider.plan);
   const plan = provider.plan as ResolvedTestPlanV1;
@@ -147,7 +149,7 @@ function orderedModules(modules: ReadonlyMap<string, ObjectValue>): ObjectValue[
  * retain their existing concurrency semantics.
  */
 export function compileProject(value: unknown): { runId: string; definition: PipelineDefinition } {
-  const project = object(value, ['schemaVersion', 'id', 'runId', 'repositoryRoot', 'workspaceRoot', 'baseRevision', 'modules'], 'project');
+  const project = object(value, ['schemaVersion', 'id', 'runId', 'repositoryRoot', 'workspaceRoot', 'baseRevision', 'modules', 'final'], 'project');
   if (project.schemaVersion !== 'nova-project.v1') throw new Error('PROJECT_SCHEMA_UNSUPPORTED');
   const projectId = id(project.id);
   const runId = text(project.runId, 'runId');
@@ -163,6 +165,14 @@ export function compileProject(value: unknown): { runId: string; definition: Pip
     stages.push(...moduleStages(module, { projectId, runId, repository, workspaces, baseline, previousGate }));
     previousGate = `test-${module.id}`;
   }
+  const final = object(project.final, ['lint', 'test', 'review', 'integrationRequirements'], 'final');
+  if (!Array.isArray(final.integrationRequirements)) throw new Error('PROJECT_INTEGRATION_REQUIREMENTS_REQUIRED');
+  const finalLint = object(final.lint, ['policyPath', 'policyProject'], 'final.lint');
+  absolute(finalLint.policyPath, 'final.lint.policyPath'); text(finalLint.policyProject, 'final.lint.policyProject');
+  if (final.review !== undefined) { object(final.review, ['agent'], 'final.review'); text(final.review.agent, 'final.review.agent'); }
+  object(final.test, ['agent', 'agentRole', 'testAgentEnabled', 'requiredChecks', 'providerPlan'], 'final.test');
+  object(final.test.providerPlan, ['repositoryId', 'plan', 'grants', 'maximumConcurrency', 'submittedAt', 'timeoutMs'], 'final.providerPlan');
+  stages.push(...cumulativeStages(project, ordered, `implement-${ordered.at(-1)!.id}`));
   const definition = { schemaVersion: 'pipeline-definition.v2', id: `project:${projectId}`, maxConcurrency: 1, stages } as PipelineDefinition;
   validateContractValue('pipelineDefinition', definition);
   return { runId, definition: structuredClone(definition) };

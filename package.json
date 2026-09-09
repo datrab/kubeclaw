@@ -205,7 +205,8 @@
     "verify:prism:production": "npm run verify:prism:repository && node tests/verification/live/check-prism-release-evidence.mjs",
     "verify:reliability": "node --test tests/verification/reliability/*.test.mts tests/verification/reliability/*.test.mjs && node tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs && node tests/verification/contracts/check-plugin-system-v2-phase6.mjs && node tests/verification/contracts/check-plugin-system-v2-engine.mjs && node tests/verification/contracts/check-plugin-system-v2-resume.mjs && node tests/verification/contracts/check-pipeline-remote-result-import.mts && npm test --workspace @kubeclaw/plugin-git-workspace",
     "versions:sync": "node scripts/versions.mjs --write",
-    "versions:check": "node scripts/versions.mjs --check"
+    "versions:check": "node scripts/versions.mjs --check",
+    "verify:test-gate:coverage": "node --test contracts/pipeline-test-gate/v1/tests/coverage.test.mts tests/verification/reliability/coverage-remote.test.mts tests/verification/reliability/coverage-interaction.test.mts skills/nova/plugins/review/tests/review-coverage.test.mts && node tests/verification/contracts/check-project-compiler.mts && npm test --workspace @kubeclaw/plugin-project-summary"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",

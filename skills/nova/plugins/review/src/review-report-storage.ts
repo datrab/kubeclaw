@@ -1,3 +1,4 @@
+import { isReviewBundleSnapshot, type ReviewBundleSnapshot } from './review-bundle-snapshot.ts';
 import { canonicalJson, sha256Text, type ArtifactRef, type PluginInvocationContext, type StageResult } from '@kubeclaw/plugin-sdk';
 
 import { isReviewReport, type ReviewReport, type ReviewReportDisposition } from './review-report-contract.ts';
@@ -76,6 +77,20 @@ export async function storeReviewReport(
   if (!matchesReport(artifact, artifactId, serialized, context)) {
     throw new Error('artifact adapter returned a report reference that does not match the stored report');
   }
+  return artifact;
+}
+
+/** Preserve the actual immutable input selected by the review owner, bound by report.bundleDigest. */
+export async function storeReviewBundle(snapshot: ReviewBundleSnapshot, context: PluginInvocationContext): Promise<ArtifactRef> {
+  if (!isReviewBundleSnapshot(snapshot)) throw new Error('REVIEW_BUNDLE_SNAPSHOT_REQUIRED');
+  const artifactId = `review-bundle:${snapshot.digest.slice(7)}`;
+  const serialized = canonicalJson(snapshot.bundle);
+  const stored = await context.invoke('artifacts.write', {
+    operation: 'put_json', resource: { type: 'artifact.object', canonicalId: artifactId },
+    payload: { namespace: 'kubeclaw.review', mediaType: 'application/json', value: snapshot.bundle },
+  });
+  const artifact = artifactRef(stored);
+  if (!matchesReport(artifact, artifactId, serialized, context)) throw new Error('REVIEW_BUNDLE_STORED_IDENTITY_MISMATCH');
   return artifact;
 }
 

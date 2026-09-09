@@ -1,4 +1,4 @@
-import type { ExecutionLimitsV1, JsonValue, TestMode } from '@kubeclaw/pipeline-test-gate-contract';
+import type { ExecutionLimitsV1, JsonValue, TestMode, GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { RegistrySnapshot } from '@kubeclaw/plugin-foundation/registry/types';
 
 export type ResultFilter = 'passed' | 'failed' | 'skipped' | 'errored' | 'cancelled' | 'timed_out';
@@ -61,6 +61,7 @@ export interface SuiteSelection {
 }
 
 export interface TestScopeDeclaration {
+  readonly coverage?: GateCoverageV1;
   readonly suites?: Readonly<Record<string, SuiteSelection>>;
   readonly tests?: Readonly<Record<string, NodeDeclaration>>;
   readonly fixtures?: Readonly<Record<string, NodeDeclaration>>;

@@ -306,9 +306,10 @@ function draftNodes(input: ResolveTestPlanInput): {
   requestedConcurrency: Map<string, number>;
   projectConcurrencyGroups: Set<string>;
   suites: ResolvedSuiteRefV1[];
+  excludedNodeIds: string[];
 } {
   const declaration = record(input.declaration, 'scope');
-  assertKnownKeys(declaration, new Set(['suites', 'tests', 'fixtures', 'concurrencyLimits']), 'scope');
+  assertKnownKeys(declaration, new Set(['suites', 'tests', 'fixtures', 'concurrencyLimits', 'coverage']), 'scope');
   const catalog = new Map<string, { template: SuiteTemplateV1; templateDigest: string }>();
   for (const raw of input.suiteTemplates) {
     const template = validateSuiteTemplate(raw);
@@ -323,6 +324,7 @@ function draftNodes(input: ResolveTestPlanInput): {
   const requestedConcurrency = new Map<string, number>();
   const projectConcurrencyGroups = new Set<string>();
   const selectedSuites: ResolvedSuiteRefV1[] = [];
+  const excludedNodeIds: string[] = [];
   const addNode = (node: DraftNode): void => {
     if (ids.has(node.id)) fail('TEST_PLAN_NODE_DUPLICATE', node.id);
     ids.add(node.id);
@@ -368,7 +370,7 @@ function draftNodes(input: ResolveTestPlanInput): {
     for (const id of excluded) if (!templateNodes.has(id)) fail('TEST_PLAN_EXCLUDE_INVALID', `${suiteInstanceId}/${id}`);
     for (const id of Object.keys(selection.overrides ?? {})) if (!templateNodes.has(id)) fail('TEST_PLAN_OVERRIDE_INVALID', `${suiteInstanceId}/${id}`);
     for (const [id, value] of [...templateNodes].sort(([a], [b]) => compareText(a, b))) {
-      if (excluded.has(id)) continue;
+      if (excluded.has(id)) { excludedNodeIds.push(`${suiteInstanceId}/${id}`); continue; }
       const merged = mergeNode(value.declaration, selection.overrides?.[id] ?? {});
       addNode({ id: `${suiteInstanceId}/${id}`, suiteInstanceId, kind: value.kind, declaration: localizeNode(merged, suiteInstanceId) });
     }
@@ -388,7 +390,7 @@ function draftNodes(input: ResolveTestPlanInput): {
   }
   if (declaration.concurrencyLimits !== undefined) addProjectConcurrency(record(declaration.concurrencyLimits, 'scope.concurrencyLimits') as Record<string, number>);
   if (nodes.length === 0) fail('TEST_PLAN_EMPTY', 'no declared tests, fixtures, or selected suites');
-  return { nodes, requestedConcurrency, projectConcurrencyGroups, suites: selectedSuites };
+  return { nodes, requestedConcurrency, projectConcurrencyGroups, suites: selectedSuites, excludedNodeIds };
 }
 
 function matchesGlob(pattern: string, candidate: string): boolean {
@@ -725,11 +727,13 @@ export function resolveTestPlan(input: ResolveTestPlanInput): ResolvedTestPlanV1
   if (input.scope.moduleId !== null) stableId(input.scope.moduleId, 'moduleId');
   if (input.scope.gateId !== null) stableId(input.scope.gateId, 'gateId');
   if (!Number.isFinite(Date.parse(input.createdAt))) fail('TEST_PLAN_CREATED_AT_INVALID', input.createdAt);
+  if (input.declaration.coverage) validatePipelineTestGateContract('gateCoverage', input.declaration.coverage);
   const draft = draftNodes(input);
   const { expanded, byBase } = expandNodes(input, draft.nodes);
   const links = connectGraph(expanded, byBase);
   const unsigned = {
     schemaVersion: 'resolved-test-plan.v1' as const,
+    ...(input.declaration.coverage ? { coverage: { policy: structuredClone(input.declaration.coverage), excludedNodeIds: draft.excludedNodeIds.sort() } } : {}),
     planId: input.planId,
     runId: input.runId,
     project: input.project,

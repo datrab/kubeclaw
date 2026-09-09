@@ -1,20 +1,21 @@
+import { assertCoverageDecision, coveragePassed, coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import { parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
 import { canonicalJson, sha256Text, resolveSourceRevision, type ArtifactRef, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
 
 export interface GateBinding {
   readonly sourceStageId: string;
   readonly lintStageId: string;
-  readonly reviewStageId: string;
+  readonly reviewStageId?: string;
+  readonly expectedCoverage: GateCoverageV1;
   readonly testStageId: string;
 }
 export interface SummaryInput {
   readonly projectId: string;
-  readonly modules: readonly { readonly moduleId: string; readonly sourceStageId: string; readonly testStageId: string }[];
+  readonly modules: readonly { readonly moduleId: string; readonly sourceStageId: string; readonly testStageId: string; readonly expectedCoverage: GateCoverageV1 }[];
   readonly final: GateBinding;
 }
 
-/** Delivery is derived from core-supplied, immutable evidence, never caller-owned counts. */
-export async function buildSummary(input: SummaryInput, context: PluginInvocationContext) {
+function validateCoverageInput(input: SummaryInput): void {
   if (!input.projectId?.trim() || !Array.isArray(input.modules) || input.modules.length < 1
     || input.modules.length > 128 || new Set(input.modules.map(module => module.moduleId)).size !== input.modules.length
     || new Set(input.modules.map(module => module.sourceStageId)).size !== input.modules.length
@@ -22,6 +23,37 @@ export async function buildSummary(input: SummaryInput, context: PluginInvocatio
     || !input.modules.some(module => module.sourceStageId === input.final?.sourceStageId)) {
     throw new Error('DELIVERY_INPUT_INVALID');
   }
+  validatePipelineTestGateContract('gateCoverage', input.final.expectedCoverage);
+  if (input.final.expectedCoverage.kind !== 'cumulative' || input.final.expectedCoverage.projectId !== input.projectId) throw new Error('DELIVERY_CUMULATIVE_COVERAGE_REQUIRED');
+  const expectedModules = input.modules.map(module => {
+    validatePipelineTestGateContract('gateCoverage', module.expectedCoverage);
+    if (module.expectedCoverage.kind !== 'module' || module.expectedCoverage.modules[0]?.moduleId !== module.moduleId
+      || module.expectedCoverage.projectId !== input.projectId) throw new Error('DELIVERY_MODULE_COVERAGE_MISMATCH');
+    return module.expectedCoverage.modules[0]!;
+  }).sort((left, right) => left.moduleId < right.moduleId ? -1 : left.moduleId > right.moduleId ? 1 : 0);
+  if (canonicalJson(expectedModules) !== canonicalJson(input.final.expectedCoverage.modules)) throw new Error('DELIVERY_CUMULATIVE_MODULES_MISMATCH');
+}
+
+type ReadEvidence = (stageId: string, namespace: string, select?: (ref: ArtifactRef) => boolean) => Promise<Record<string, any>>;
+
+async function verifyFinalReview(input: SummaryInput, sourceRevision: string, read: ReadEvidence): Promise<void> {
+  if (input.final.reviewStageId) {
+    const review = await read(input.final.reviewStageId, 'kubeclaw.review', ref => ref.artifactId.startsWith('review-report:'));
+    const bundle = await read(input.final.reviewStageId, 'kubeclaw.review', ref => ref.artifactId.startsWith('review-bundle:'));
+    const policy = input.final.expectedCoverage;
+    const coverageEvidence = Array.isArray(bundle.evidence) ? bundle.evidence.filter((item: any) => item.kind === 'gate-coverage') : [];
+    if (review.revision?.head !== sourceRevision || review.revision?.base !== policy.baseRevision
+      || canonicalJson(review.revision) !== canonicalJson(bundle.revisions)
+      || review.outcome !== 'passed' || review.bundleDigest !== sha256Text(canonicalJson(bundle))
+      || coverageEvidence.length !== 1 || coverageEvidence[0].content !== canonicalJson(policy)
+      || canonicalJson(bundle.requirements) !== canonicalJson(coverageReviewRequirements(policy))
+      || canonicalJson(bundle.scope?.allowedPrefixes) !== canonicalJson(coverageReviewPrefixes(policy))) throw new Error('DELIVERY_FINAL_REVIEW_COVERAGE_MISMATCH');
+  }
+}
+
+/** Delivery is derived from core-supplied, immutable evidence, never caller-owned counts. */
+export async function buildSummary(input: SummaryInput, context: PluginInvocationContext) {
+  validateCoverageInput(input);
   const runId = context.contract.lease.attempt.runId;
   let totalBytes = 0;
   const evidence: ArtifactRef[] = [];
@@ -43,7 +75,7 @@ export async function buildSummary(input: SummaryInput, context: PluginInvocatio
     if (!response.value || typeof response.value !== 'object' || Array.isArray(response.value)) throw new Error('DELIVERY_EVIDENCE_INVALID');
     return response.value as Record<string, any>;
   }
-  async function verify(binding: { readonly sourceStageId: string; readonly testStageId: string }) {
+  async function verify(binding: { readonly sourceStageId: string; readonly testStageId: string; readonly expectedCoverage: GateCoverageV1 }) {
     const revision = await resolveSourceRevision({ sourceStageId: binding.sourceStageId }, context);
     await read(binding.sourceStageId, 'kubeclaw.implementation-agent', ref => ref.artifactId.startsWith('implementation:'));
     const decision = parseGateDecision(await read(binding.testStageId, 'kubeclaw.buster-quality-gate', ref => ref.artifactId.includes(':decision:')));
@@ -51,19 +83,21 @@ export async function buildSummary(input: SummaryInput, context: PluginInvocatio
     if (quality.sourceRevision !== revision) {
       throw new Error(`DELIVERY_CANDIDATE_MISMATCH:${binding.sourceStageId}`);
     }
-    if (decision.state !== 'passed' || decision.runId !== runId || quality.verdict?.outcome !== 'passed'
+    assertCoverageDecision(decision, binding.expectedCoverage, revision, binding.testStageId);
+    const qualityPassed = quality.testAgent?.enabled === false ? quality.nativeOutcome === 'passed' : quality.verdict?.outcome === 'passed';
+    if (decision.state !== 'passed' || !coveragePassed(decision.coverage!) || decision.runId !== runId || !qualityPassed
       || quality.decisionDigest !== decision.decisionDigest) throw new Error(`DELIVERY_GATE_NOT_PASSED:${binding.sourceStageId}`);
     const { decisionDigest } = decision;
-    return { ...binding, sourceRevision: revision, decisionDigest };
+    return { ...binding, sourceRevision: revision, decisionDigest, resultDigest: decision.resultDigest, coverage: decision.coverage };
   }
   const modules = [];
   for (const module of input.modules) modules.push({ moduleId: module.moduleId, ...await verify(module) });
   const final = await verify(input.final);
   const lint = await read(input.final.lintStageId, 'kubeclaw.lint');
-  const review = await read(input.final.reviewStageId, 'kubeclaw.review', ref => ref.artifactId.startsWith('review-report:'));
-  if (lint.sourceRevision !== final.sourceRevision || review.revision?.head !== final.sourceRevision) throw new Error('DELIVERY_FINAL_CANDIDATE_MISMATCH');
-  if (lint.summary?.tools_failed !== 0 || lint.summary?.total_blocking !== 0 || review.outcome !== 'passed') throw new Error('DELIVERY_FINAL_GATE_NOT_PASSED');
-  const manifest = { schemaVersion: 'delivery-manifest.v1', projectId: input.projectId, runId,
+  if (lint.sourceRevision !== final.sourceRevision) throw new Error('DELIVERY_FINAL_CANDIDATE_MISMATCH');
+  if (lint.summary?.tools_failed !== 0 || lint.summary?.total_blocking !== 0) throw new Error('DELIVERY_FINAL_GATE_NOT_PASSED');
+  await verifyFinalReview(input, final.sourceRevision, read);
+  const manifest = { schemaVersion: 'delivery-manifest.v2', projectId: input.projectId, runId,
     sourceRevision: final.sourceRevision, modules, final, evidence };
   return { ...manifest, digest: sha256Text(canonicalJson(manifest)) };
 }

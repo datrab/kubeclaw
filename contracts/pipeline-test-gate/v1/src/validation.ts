@@ -1,3 +1,5 @@
+import { gateCoverageResultErrors, type GateCoverageResultV1 } from './coverage-result.ts';
+import { gateCoverageErrors, resolvedCoverageErrors, type GateCoverageV1 } from './coverage.ts';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import Ajv2020 from 'ajv/dist/2020.js';
@@ -145,7 +147,7 @@ function reportAdapterResultErrors(value: ReportAdapterResultV1): string[] {
 }
 
 function resolvedTestPlanErrors(value: ResolvedTestPlanV1): string[] {
-  const errors: string[] = [];
+  const errors: string[] = resolvedCoverageErrors(value);
   for (const node of value.nodes) {
     const expected = stableTestIdentity({ project: value.project, moduleId: value.scope.moduleId,
       gateId: value.scope.gateId, suiteInstanceId: node.suiteInstanceId, nodeId: node.id, variation: node.variation });
@@ -155,7 +157,7 @@ function resolvedTestPlanErrors(value: ResolvedTestPlanV1): string[] {
 }
 
 function remotePlanJobErrors(value: RemotePlanJobV1): string[] {
-  const errors: string[] = [];
+  const errors: string[] = resolvedTestPlanErrors(value.plan);
   try { repositoryArchiveBytes(value.repositoryArchive); }
   catch { errors.push('/repositoryArchive bytes, size, and digest must match'); }
   if (value.sourceSnapshot.archiveContentDigest !== value.repositoryArchive.contentDigest
@@ -249,7 +251,9 @@ export function checkPipelineTestGateContract(definition: PipelineTestGateDefini
   const validate = validator(definition);
   const ok = validate(value);
   if (!ok) return { ok: false, errors: errorText(validate.errors) };
-  const semanticErrors = definition === 'reportAdapterResult'
+  const semanticErrors = definition === 'gateCoverageResult' ? gateCoverageResultErrors(value as GateCoverageResultV1)
+    : definition === 'gateCoverage' ? gateCoverageErrors(value as GateCoverageV1)
+    : definition === 'reportAdapterResult'
     ? reportAdapterResultErrors(value as ReportAdapterResultV1)
     : definition === 'resolvedTestPlan'
       ? resolvedTestPlanErrors(value as ResolvedTestPlanV1)

@@ -1,3 +1,4 @@
+import { assertReviewCoverage } from './review-coverage.ts';
 import { canonicalJson, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
 
 import { buildSimplificationCandidateManifest } from './simplification-manifest.ts';
@@ -110,6 +111,7 @@ function initialSelection(
 export async function prepareReview(
   input: ReviewStageInput, policy: ResolvedReviewPolicy, context: PluginInvocationContext,
 ): Promise<PreparedReview> {
+  assertReviewCoverage(input);
   const revision = await freezeReviewRevision(context);
   if (input.revisions.head !== undefined && revision.head !== input.revisions.head) {
     throw new ReviewRepositoryProofError('REVIEW_CANDIDATE_CHANGED');

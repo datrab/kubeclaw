@@ -1,5 +1,7 @@
+import type { GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
 export interface ProviderPlanInput{readonly revision?:string;readonly sourceStageId?:string;readonly repositoryRoot:string;readonly repositoryId:string;readonly plan:Readonly<Record<string,unknown>>;readonly grants:Readonly<Record<string,readonly string[]>>;readonly maximumConcurrency:number;readonly submittedAt:string;readonly timeoutMs:number}
 export interface GateInput {
+ readonly expectedCoverage?: GateCoverageV1;
  readonly gateId: string;
  readonly task: string;
  readonly providerPlan: ProviderPlanInput;

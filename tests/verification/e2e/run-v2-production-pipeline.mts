@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -396,6 +397,14 @@ async function main(): Promise<void> {
     .filter((file) => file.endsWith('.json'))
     .sort()
     .map((file) => readJson(path.join(repositoryRoot, 'contracts/pipeline-test-gate/v1/suites', file)) as any);
+  const expectedCoverageByStage = new Map<string, GateCoverageV1>();
+  for (const moduleId of [...moduleIds, null]) {
+    const gateId = moduleId === null ? 'final-buster' : null;
+    const coverage = loadPipelineTestScope(path.join(swarm, 'pipeline.json'), { moduleId, gateId }).declaration.coverage;
+    if (!coverage) throw new Error(`REAL_E2E_EXPLICIT_COVERAGE_REQUIRED:${moduleId ?? gateId}`);
+    validatePipelineTestGateContract('gateCoverage', coverage);
+    expectedCoverageByStage.set(moduleId === null ? 'final-buster' : `buster-${moduleId}`, coverage);
+  }
   const providerPlanFor = (scope: { moduleId: string | null; gateId: string | null }, stageId: string) => {
     const loaded = loadPipelineTestScope(path.join(swarm, 'pipeline.json'), scope);
     const concurrency = Object.fromEntries(Object.entries(loaded.declaration.concurrencyLimits ?? {})
@@ -605,6 +614,7 @@ async function main(): Promise<void> {
       config: { agent: `buster.${moduleId}`, agentRole: roles.buster },
       input: {
         gateId: `buster-${moduleId}`,
+        expectedCoverage: expectedCoverageByStage.get(`buster-${moduleId}`),
         task: `Judge the verified production provider evidence for ${moduleId}.`,
         providerPlan: providerPlanFor({ moduleId, gateId: null }, `buster-${moduleId}`),
       },
@@ -613,13 +623,11 @@ async function main(): Promise<void> {
     previousModuleGate = `buster-${moduleId}`;
   }
   const reviewInput = (id: string, statement: string) => {
-    const requirements = moduleIds.map(moduleId => ({ id: `REQ-${moduleId}`,
-      statement: `Module ${moduleId} satisfies its declared task and owned-path contract: ${moduleTask(moduleId, modules[moduleId]!, projectRelative, runId)}` }));
-    const content = { project: projectName, runId, requirements };
-    return { task: { id, statement }, revisions: { base: headBefore },
-      scope: { allowedPrefixes: [projectRelative], ownershipPrefixes: [projectRelative] }, requirements,
-      evidence: [{ kind: 'project-requirements', digest: `sha256:${crypto.createHash('sha256').update(canonicalJson(content)).digest('hex')}`, content }],
-      contextCandidates: [] };
+    const content = expectedCoverageByStage.get('final-buster')!;
+    return { task: { id, statement }, revisions: { sourceStageId: `forge-${moduleIds.at(-1)}`, base: content.baseRevision },
+      scope: { allowedPrefixes: coverageReviewPrefixes(content), ownershipPrefixes: coverageReviewPrefixes(content) },
+      requirements: coverageReviewRequirements(content),
+      evidence: [{ kind: 'gate-coverage', digest: `sha256:${crypto.createHash('sha256').update(canonicalJson(content)).digest('hex')}`, content }], contextCandidates: [] };
   };
   const busterStages = moduleIds.map((moduleId) => `buster-${moduleId}`);
   stages.push(
@@ -671,6 +679,7 @@ async function main(): Promise<void> {
       config: { agent: 'buster.final', agentRole: roles.buster },
       input: {
         gateId: 'final-buster',
+        expectedCoverage: expectedCoverageByStage.get('final-buster'),
         task: 'Judge verified provider results. Reject failed, skipped or missing required proof.',
         providerPlan: providerPlanFor({ moduleId: null, gateId: 'final-buster' }, 'final-buster'),
       },
@@ -692,8 +701,8 @@ async function main(): Promise<void> {
       config: { agentRole: roles.nova },
       input: {
         projectId: projectName,
-        modules: moduleIds.map(moduleId => ({ moduleId, sourceStageId: `forge-${moduleId}`, testStageId: `buster-${moduleId}` })),
-        final: { sourceStageId: `forge-${moduleIds.at(-1)}`, lintStageId: 'manifest-lint', reviewStageId: 'final-review', testStageId: 'final-buster' },
+        modules: moduleIds.map(moduleId => ({ moduleId, sourceStageId: `forge-${moduleId}`, testStageId: `buster-${moduleId}`, expectedCoverage: expectedCoverageByStage.get(`buster-${moduleId}`) })),
+        final: { sourceStageId: `forge-${moduleIds.at(-1)}`, lintStageId: 'manifest-lint', reviewStageId: 'final-review', testStageId: 'final-buster', expectedCoverage: expectedCoverageByStage.get('final-buster') },
       },
       execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 60_000 },
     },

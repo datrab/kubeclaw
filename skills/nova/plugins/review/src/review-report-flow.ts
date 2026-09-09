@@ -3,7 +3,7 @@ import type { PluginInvocationContext, StageResult, WaitRequest } from '@kubecla
 import type { ParsedEchoReviewOutput } from './echo-review-parser.ts';
 import type { ReviewBundleSnapshot } from './review-bundle-snapshot.ts';
 import { buildReviewReport } from './review-report-builder.ts';
-import { attachReviewReport, storeReviewReport } from './review-report-storage.ts';
+import { attachReviewReport, storeReviewReport, storeReviewBundle } from './review-report-storage.ts';
 import type { ResolvedReviewPolicy } from './review-policy-resolver.ts';
 import { reduceReviewDecision } from './review-reducer.ts';
 import type { ReviewSemanticFlowResult } from './review-semantic-flow.ts';
@@ -55,7 +55,9 @@ export async function persistReviewOutcome(values: PersistReviewOutcomeInput): P
       findings: semantic.findings, governor: values.governor,
       ...(governance === undefined ? {} : { governance }),
     });
-    return attachReviewReport(governedResult, report, await storeReviewReport(report, context));
+    const bundle = snapshot.bundle.evidence.some(item => item.kind === 'gate-coverage') ? await storeReviewBundle(snapshot, context) : undefined;
+    const resultWithBundle = bundle ? { ...governedResult, artifacts: [...governedResult.artifacts, bundle] } : governedResult;
+    return attachReviewReport(resultWithBundle, report, await storeReviewReport(report, context));
   } catch (error) {
     return blockedReviewStage(
       'kubeclaw.review.report_write_failed',

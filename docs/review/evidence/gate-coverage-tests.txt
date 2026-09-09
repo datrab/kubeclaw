@@ -1,0 +1,32 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> verify:test-gate:coverage
+> node --test contracts/pipeline-test-gate/v1/tests/coverage.test.mts tests/verification/reliability/coverage-remote.test.mts tests/verification/reliability/coverage-interaction.test.mts skills/nova/plugins/review/tests/review-coverage.test.mts && node tests/verification/contracts/check-project-compiler.mts && npm test --workspace @kubeclaw/plugin-project-summary
+
+✔ all original suite templates selected with excluded tests do not cover a missing mandatory check (57.369174ms)
+✔ condition-skipped and advisory mandatory checks stay visibly unsatisfied (2.471519ms)
+✔ explicit exclusion retains the required declaration without silently reducing policy (1.519162ms)
+✔ all resolved matrix variations are mandatory, with no synthetic execution assertion (4.197341ms)
+✔ policy corruption, duplicate requirements and unmapped requirements fail validation (0.975952ms)
+✔ existing standalone plans retain execution semantics but carry no completeness policy (1.114451ms)
+✔ a literal matrix-shaped declaration cannot impersonate a missing base check (1.488225ms)
+✔ original review parser validates cumulative policy and stores its actual immutable bundle (120.861896ms)
+✔ M5 passes on the same commit where the M1/M2 interaction fails; its plan cannot certify cumulative coverage (953.847088ms)
+✔ original remote Buster skipped execution cannot fulfil required coverage at the same Git candidate (1532.609457ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3239.970119
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node ../../../../tests/verification/integration/project-summary.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+{"ok":true,"suite":"delivery-artifact-contract","providerExecution":false,"agentExecution":false}
+{"ok":true,"plugin":"kubeclaw.project-summary","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.project-summary","suite":"package-boundary"}

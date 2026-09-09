@@ -257,9 +257,9 @@ export async function execute(input: unknown, context: PluginInvocationContext):
   if (preflight !== 'within_limit') return invalidInputResult(`review input preflight failed: ${preflight}`, policy);
   const candidate = input as Record<string, unknown>;
   const revisions = candidate?.revisions as Record<string, unknown> | undefined;
-  if (revisions && Object.keys(revisions).length === 1 && typeof revisions.sourceStageId === 'string') {
+  if (revisions && Object.keys(revisions).every(key => ['sourceStageId', 'base'].includes(key)) && typeof revisions.sourceStageId === 'string') {
     const bound = await resolveImplementationRevisions(revisions.sourceStageId, context);
-    input = { ...candidate, revisions: bound };
+    input = { ...candidate, revisions: { ...bound, ...(revisions.base === undefined ? {} : { base: revisions.base }) } };
   }
   const parsedInput = parseReviewInput(input);
   if (!parsedInput.ok) return invalidInputResult(parsedInput.error, policy);

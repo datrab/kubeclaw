@@ -1,3 +1,4 @@
+import { assertCoveragePlan, assertCoverageExecution, type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createProductionNovaTestGate, isSpiffeProxyLoopback } from '@kubeclaw/nova-core';
@@ -71,6 +72,12 @@ async function execute(context: AdapterActivationContext, config: ReturnType<typ
   validatePipelineTestGateContract('resolvedTestPlan', request.payload.plan);
   const plan = request.payload.plan as ResolvedTestPlanV1;
   if (plan.runId !== request.attempt.runId) throw new Error('REMOTE_TEST_GATE_RUN_MISMATCH');
+  const expectedCoverage = request.payload.expectedCoverage as GateCoverageV1 | undefined;
+  if (plan.coverage && !expectedCoverage) throw new Error('REMOTE_EXPECTED_COVERAGE_REQUIRED');
+  if (expectedCoverage) {
+    assertCoveragePlan(plan, expectedCoverage);
+    if (request.payload.gateId !== request.attempt.stageId) throw new Error('REMOTE_TEST_GATE_STAGE_MISMATCH');
+  }
   const token = config.tokenSecret ? await secret(context, config.tokenSecret) : undefined;
   const privateKey = await secret(context, config.privateKeySecret);
   const gate = createProductionNovaTestGate({ stateRoot: config.stateRoot, endpoint: config.endpoint,
@@ -90,6 +97,8 @@ async function execute(context: AdapterActivationContext, config: ReturnType<typ
     maximumConcurrency: positiveInteger(request.payload.maximumConcurrency, 64, 'REMOTE_TEST_GATE_CONCURRENCY_INVALID'),
     submittedAt: string(request.payload.submittedAt, 'REMOTE_TEST_GATE_SUBMITTED_AT_INVALID'),
     timeoutMs: positiveInteger(request.payload.timeoutMs, 7_200_000, 'REMOTE_TEST_GATE_TIMEOUT_INVALID'), signal });
+  if (expectedCoverage) assertCoverageExecution(plan, result.remote.decision, expectedCoverage,
+    string(request.payload.revision, 'REMOTE_TEST_GATE_REVISION_REQUIRED'), request.attempt.stageId);
   return Object.freeze({ ...result.remote.decision });
 }
 

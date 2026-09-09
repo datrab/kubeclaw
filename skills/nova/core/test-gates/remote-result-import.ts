@@ -1,3 +1,4 @@
+import { bindGateCoverage, coveragePassed } from '@kubeclaw/pipeline-test-gate-contract';
 import { GateDeadline, checkGateSignal } from './deadline.ts';
 import type { StageResult } from '@kubeclaw/plugin-sdk';
 import crypto from 'node:crypto';
@@ -167,12 +168,19 @@ function failedReport(nodeId: string, result: RemotePlanResultV1): boolean {
     .some((attempt) => attempt.reports.some((report) => report.counts.failed > 0 || report.counts.errored > 0));
 }
 
+function coveredDecision(job: RemotePlanJobV1, decision: Omit<GateDecisionV1, 'decisionDigest'>): GateDecisionV1 {
+  const coverage = bindGateCoverage(job, decision.nodes);
+  const unsigned = coverage ? { ...decision, schemaVersion: 'test-gate-decision.v2' as const, coverage,
+    state: decision.state === 'passed' && !coveragePassed(coverage) ? 'failed' as const : decision.state } : decision;
+  return { ...unsigned, decisionDigest: remotePlanDigest(unsigned) };
+}
+
 function decide(job: RemotePlanJobV1, status: RemotePlanStatusV1, result: RemotePlanResultV1 | null): GateDecisionV1 {
   if (status.state !== 'completed' || !result) {
     const state: GateDecisionState = status.state === 'cancelled' ? 'cancelled' : 'execution_error';
     const unsigned = { schemaVersion: 'test-gate-decision.v1' as const, jobId: job.jobId,
       planId: job.plan.planId, runId: job.plan.runId, state, nodes: [], reviews: [], resultDigest: null };
-    return { ...unsigned, decisionDigest: remotePlanDigest(unsigned) };
+    return coveredDecision(job, unsigned);
   }
   const resultNodes = new Map(result.nodes.map((node) => [node.nodeId, node]));
   const attempts = new Map(result.attempts.map((attempt) => [attempt.attemptId, attempt]));
@@ -213,7 +221,7 @@ function decide(job: RemotePlanJobV1, status: RemotePlanStatusV1, result: Remote
   const unsigned = { schemaVersion: 'test-gate-decision.v1' as const, jobId: job.jobId,
     planId: job.plan.planId, runId: job.plan.runId, state, nodes, reviews,
     resultDigest: result.resultDigest };
-  return { ...unsigned, decisionDigest: remotePlanDigest(unsigned) };
+  return coveredDecision(job, unsigned);
 }
 
 export class FileNovaGateImportStore {

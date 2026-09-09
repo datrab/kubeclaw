@@ -20,6 +20,9 @@
     },
     "providerPlan": {
       "$ref": "#/$defs/providerPlan"
+    },
+    "expectedCoverage": {
+      "type": "object"
     }
   },
   "$defs": {

@@ -1,3 +1,4 @@
+import type { ResolvedGateCoverageV1 } from './coverage.ts';
 export type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
 
 export type TestMode = 'blocking' | 'advisory';
@@ -173,6 +174,7 @@ export interface ResolvedSuiteRefV1 {
 
 export interface ResolvedTestPlanV1 {
   schemaVersion: 'resolved-test-plan.v1';
+  coverage?: ResolvedGateCoverageV1;
   planId: string;
   planDigest: string;
   runId: string;
@@ -452,6 +454,8 @@ export interface ContractValidationResult {
 }
 
 export type PipelineTestGateDefinition =
+  | 'gateCoverageResult'
+  | 'gateCoverage'
   | 'providerRegistration'
   | 'providerConfiguration'
   | 'resolvedTestPlan'

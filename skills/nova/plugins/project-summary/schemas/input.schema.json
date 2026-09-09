@@ -23,7 +23,8 @@
         "required": [
           "sourceStageId",
           "testStageId",
-          "moduleId"
+          "moduleId",
+          "expectedCoverage"
         ],
         "properties": {
           "sourceStageId": {
@@ -40,6 +41,9 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 128
+          },
+          "expectedCoverage": {
+            "type": "object"
           }
         }
       }
@@ -50,8 +54,8 @@
       "required": [
         "sourceStageId",
         "lintStageId",
-        "reviewStageId",
-        "testStageId"
+        "testStageId",
+        "expectedCoverage"
       ],
       "properties": {
         "sourceStageId": {
@@ -73,6 +77,9 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 128
+        },
+        "expectedCoverage": {
+          "type": "object"
         }
       }
     }

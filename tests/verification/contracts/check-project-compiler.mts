@@ -1,3 +1,4 @@
+import { gateCoverageDigest } from '@kubeclaw/pipeline-test-gate-contract';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -33,9 +34,14 @@ try {
   const limits = { cpuMillis: 30000, memoryBytes: 512 * 1024 * 1024, logBytes: 1024 * 1024, artifactBytes: 1024 * 1024, artifactFiles: 16, processes: 16 };
   const runId = 'run:project-proof';
   const module = (id: string, dependsOn: string[]) => {
+    const requirements = [{ id: `${id}-works`, statement: `${id} must satisfy its source assertions.` }];
+    const requiredChecks = [{ checkId: `${id}-check`, requirementRefs: [{ moduleId: id, requirementId: `${id}-works` }], nodeIds: ['unit/assertion'] }];
+    const unsignedCoverage = { schemaVersion: 'gate-coverage.v1' as const, projectId: 'proof', kind: 'module' as const, baseRevision: baseline,
+      modules: [{ moduleId: id, ownedPaths: [id], requirements }], integrationRequirements: [], requiredChecks };
+    const coverage = { ...unsignedCoverage, policyDigest: gateCoverageDigest(unsignedCoverage) };
     const plan = resolveTestPlan({ planId: `plan:${id}`, runId, project: 'proof', scope: { moduleId: id, gateId: null },
       createdAt: '2026-09-06T00:00:00Z', registry,
-      declaration: { suites: { unit: { uses: 'kubeclaw.unit-suite@1', add: {
+      declaration: { coverage, suites: { unit: { uses: 'kubeclaw.unit-suite@1', add: {
         assertion: { uses: 'kubeclaw.direct-command@1', mode: 'blocking', config: {
           executable: 'node', args: ['--test'], workingDirectory: '.', resultMode: 'exit-code' } },
       } } } },
@@ -43,17 +49,34 @@ try {
       facts: { changedPaths: [], moduleType: 'service', pipelineStage: 'test' },
       policy: { defaultTimeoutMs: 30000, maximumTimeoutMs: 60000, defaultLimits: limits, maximumLimits: limits,
         maximumRetryCount: 1, maximumMatrixSize: 4, maximumNodes: 8, defaultConcurrencyLimit: 1, maximumConcurrencyLimits: { unit: 4 } } });
-    return { id, dependsOn, task: `Implement ${id}.`, ownedPaths: [id], requirements: [{ id: `${id}-works`, statement: `${id} must satisfy its source assertions.` }],
+    return { id, dependsOn, task: `Implement ${id}.`, ownedPaths: [id], requirements,
       implementation: { agent: 'forge' }, review: { agent: 'echo' }, lint: { policyPath: path.join(temporary, 'lint.json'), policyProject: 'proof' },
-      test: { agent: 'buster', providerPlan: { repositoryId: 'proof', plan,
+      test: { agent: 'buster', requiredChecks, providerPlan: { repositoryId: 'proof', plan,
         grants: Object.fromEntries(plan.nodes.map(node => [node.id, ['command.execute']])), maximumConcurrency: 1, submittedAt: plan.createdAt, timeoutMs: 60000 } } };
   };
-  const project = { schemaVersion: 'nova-project.v1', id: 'proof', runId, repositoryRoot: repo, workspaceRoot: workspaces,
+  const project: any = { schemaVersion: 'nova-project.v1', id: 'proof', runId, repositoryRoot: repo, workspaceRoot: workspaces,
     baseRevision: baseline, modules: [module('app', ['library']), module('library', [])] };
+  const finalModules = project.modules.map((item: any) => ({ moduleId: item.id, ownedPaths: item.ownedPaths, requirements: item.requirements }))
+    .sort((a: any, b: any) => a.moduleId.localeCompare(b.moduleId));
+  const integrationRequirements = [{ id: 'integration', statement: 'The application consumes the library correctly.' }];
+  const requiredChecks = [{ checkId: 'integration', requirementRefs: [
+    ...finalModules.flatMap((item: any) => item.requirements.map((requirement: any) => ({ moduleId: item.moduleId, requirementId: requirement.id }))),
+    { moduleId: null, requirementId: 'integration' }], nodeIds: ['integrated'] }];
+  const unsignedCoverage = { schemaVersion: 'gate-coverage.v1' as const, projectId: 'proof', kind: 'cumulative' as const,
+    baseRevision: baseline, modules: finalModules, integrationRequirements, requiredChecks };
+  const finalCoverage = { ...unsignedCoverage, policyDigest: gateCoverageDigest(unsignedCoverage) };
+  const finalPlan = resolveTestPlan({ planId: 'plan:final', runId, project: 'proof', scope: { moduleId: null, gateId: 'final-test' },
+    createdAt: '2026-09-09T00:00:00Z', registry, declaration: { coverage: finalCoverage, tests: { integrated: {
+      uses: 'kubeclaw.direct-command@1', config: { executable: 'node', args: ['--test'], resultMode: 'exit-code' } } } },
+    suiteTemplates: [], facts: { changedPaths: [], moduleType: null, pipelineStage: null },
+    policy: { defaultTimeoutMs: 30000, maximumTimeoutMs: 60000, defaultLimits: limits, maximumLimits: limits,
+      maximumRetryCount: 1, maximumMatrixSize: 4, maximumNodes: 8, defaultConcurrencyLimit: 1, maximumConcurrencyLimits: {} } });
+  project.final = { lint: project.modules[0].lint, integrationRequirements, test: { requiredChecks,
+    providerPlan: { ...project.modules[0].test.providerPlan, plan: finalPlan, grants: { integrated: ['command.execute'] } } } };
   const compiled = compileProject(project);
   assert.deepEqual(compiled, compileProject({ ...project, modules: [...project.modules].reverse() }));
-  assert.equal(compiled.definition.stages.length, 8);
-  for (const stage of compiled.definition.stages) {
+  assert.equal(compiled.definition.stages.length, 11);
+  for (const stage of compiled.definition.stages.filter((item: any) => !['final-lint', 'final-test', 'project-summary'].includes(item.id))) {
     assert.equal(stage.execution.maxTechnicalRetries, 1, 'retain the former initial-plus-one technical allowance');
     assert.equal(stage.execution.maxAttempts, 9, 'ceiling includes six repairs, one extra and one technical retry');
     if (stage.id.startsWith('implement-')) assert.deepEqual(stage.execution.repairBudget, { categories: { lint: 2, review: 2, test: 2 }, maximumOrchestratorOrders: 1 });
@@ -62,7 +85,11 @@ try {
   const noReview = structuredClone(project);
   for (const module of noReview.modules) delete (module as any).review;
   const deterministicOnly = compileProject(noReview).definition;
-  assert.equal(deterministicOnly.stages.length, 6, 'review defaults off; mandatory lint and tests remain');
+  assert.equal(deterministicOnly.stages.length, 9, 'review defaults off; mandatory lint and tests remain');
+  assert.equal(deterministicOnly.stages.find((stage: any) => stage.id === 'final-test').config.testAgentEnabled, true);
+  const agentOff = structuredClone(noReview); agentOff.final.test.testAgentEnabled = false;
+  assert.equal(compileProject(agentOff).definition.stages.find((stage: any) => stage.id === 'final-test').config.testAgentEnabled, false);
+  assert.equal(deterministicOnly.stages.some((stage: any) => stage.id === 'final-review'), false);
   for (const moduleId of ['library', 'app']) {
     const implementation = deterministicOnly.stages.find((stage: any) => stage.id === `implement-${moduleId}`);
     assert.deepEqual(implementation.execution.repairBudget.categories, { lint: 2, test: 2 });
@@ -105,6 +132,7 @@ try {
       'kubeclaw.lint:full': { 'lint.execute': { allowedRoots: [repo], allowedPolicyRoots: [temporary], allowedProjects: ['proof'] }, 'artifacts.write': artifact('kubeclaw.lint'), 'artifacts.read': artifact('kubeclaw.implementation-agent') },
       'kubeclaw.review:review': { 'runtime.dispatch': { allowedAgents: ['echo'] }, 'git.repository.read': { allowedPrefixes: ['.'] }, 'artifacts.read': { allowedNamespaces: ['kubeclaw.review', 'kubeclaw.implementation-agent'] }, 'artifacts.write': artifact('kubeclaw.review') },
       'kubeclaw.buster-quality-gate:quality': { 'runtime.dispatch': { allowedAgents: ['buster'] }, 'test.plan.execute': { allowedRoots: [repo] }, 'artifacts.read': artifact('kubeclaw.implementation-agent'), 'artifacts.write': artifact('kubeclaw.buster-quality-gate') },
+      'kubeclaw.project-summary:summary': { 'artifacts.read': { allowedNamespaces: ['kubeclaw.implementation-agent', 'kubeclaw.lint', 'kubeclaw.review', 'kubeclaw.buster-quality-gate'] }, 'artifacts.write': artifact('kubeclaw.project-summary') },
       'kubeclaw.runtime-dispatch:runtime': { 'network.http': { allowedOrigins: origins }, 'secrets.read': { allowedNames: ['worker'] } },
       'kubeclaw.remote-test-gate:plan': { 'secrets.read': { allowedNames: ['worker', 'source-key'] } },
     },
