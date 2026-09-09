@@ -1,0 +1,13 @@
+{
+  "official_release": "https://github.com/kubernetes-sigs/controller-tools/releases/tag/envtest-v1.35.0",
+  "archive_size": 52314948,
+  "archive_sha256": "5716719def14a3fec3ed285e5e8c4280e6268854039b5073a96e8c0adafb1c02",
+  "official_metadata_freshly_read": true,
+  "archive_checksum_independently_recomputed": true,
+  "all_extracted_members_byte_equal_to_archive": true,
+  "binaries": [
+    {"name":"etcd","bytes":26079416,"sha256":"e3d7d2950b4efbebb7c585a5876c2dc7db4a0c4b8ed95939121be853e0c55a27"},
+    {"name":"kube-apiserver","bytes":85766328,"sha256":"999e4874de50139f40929d6a9f4844efc66ad09647dc0e84031daca4711f12b6"},
+    {"name":"kubectl","bytes":58597560,"sha256":"a2e984a18a0c063279d692533031c1eff93a262afcc0afdc517375432d060989"}
+  ]
+}
