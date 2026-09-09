@@ -1,0 +1,40 @@
+
+/workspace/scratch/15fb596e6560/prism/skills/prism/server/control-server.ts
+    52:8   error  Function 'createControlServer' has too many lines (971). Maximum allowed is 60         max-lines-per-function
+    52:8   error  Function 'createControlServer' has a complexity of 18. Maximum allowed is 15           complexity
+    52:86  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+   136:1   error  Async function 'runWorker' has too many lines (64). Maximum allowed is 60              max-lines-per-function
+   213:29  error  Promise returned in function argument where a void return was expected                 @typescript-eslint/no-misused-promises
+   213:55  error  Async arrow function has too many lines (810). Maximum allowed is 60                   max-lines-per-function
+   213:55  error  Async arrow function has a complexity of 205. Maximum allowed is 15                    complexity
+   249:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   263:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   273:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   305:1   error  File has too many lines (1020). Maximum allowed is 300                                 max-lines
+   526:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   528:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   529:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   545:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   549:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                                 max-depth
+   553:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                                 max-depth
+   565:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   566:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                                 max-depth
+   575:13  error  Blocks are nested too deeply (6). Maximum allowed is 3                                 max-depth
+   740:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   744:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   770:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+   771:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                                 max-depth
+   786:13  error  Blocks are nested too deeply (6). Maximum allowed is 3                                 max-depth
+   791:13  error  Blocks are nested too deeply (6). Maximum allowed is 3                                 max-depth
+   795:13  error  Blocks are nested too deeply (6). Maximum allowed is 3                                 max-depth
+   913:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+  1014:5   error  Unexpected console statement                                                           no-console
+
+/workspace/scratch/15fb596e6560/prism/skills/prism/server/control.ts
+  4:43  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  6:22  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+  6:22  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  7:42  error  Promise returned in function argument where a void return was expected                 @typescript-eslint/no-misused-promises
+
+✖ 33 problems (33 errors, 0 warnings)
+

@@ -1,0 +1,14 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @kubeclaw/prism@0.1.0 typecheck
+> tsc --noEmit
+
+tests/control-generation-http.test.mts(13,27): error TS7016: Could not find a declaration file for module '../server/agent-prompt.mjs'. '/workspace/scratch/15fb596e6560/prism/skills/prism/server/agent-prompt.mjs' implicitly has an 'any' type.
+tests/control-generation-http.test.mts(14,22): error TS7016: Could not find a declaration file for module '../openclaw-plugin/index.mjs'. '/workspace/scratch/15fb596e6560/prism/skills/prism/openclaw-plugin/index.mjs' implicitly has an 'any' type.
+npm error Lifecycle script `typecheck` failed with error:
+npm error code 2
+npm error path /workspace/scratch/15fb596e6560/prism/skills/prism
+npm error workspace @kubeclaw/prism@0.1.0
+npm error location /workspace/scratch/15fb596e6560/prism/skills/prism
+npm error command failed
+npm error command sh -c tsc --noEmit
