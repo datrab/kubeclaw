@@ -1,0 +1,9 @@
+Source: root dea2ad1 over exact published e028 source; only fixture hook order changed.
+Command: node docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs .
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:62166b1f8e6fed780d57612a14af4850ea013a358f5f15211f54b1fb6b0dff83:sha256:7f1ec1c02f8f59fdb0d5361b2c11c098fe1bccacc6b2ce568036199973f493fa\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:62166b1f8e6fed780d57612a14af4850ea013a358f5f15211f54b1fb6b0dff83"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+Exit: 0. All original assertions retained, including source and blueprint actual execution,
+expected missing-worker-secret block, original unfixed CLI graph mismatch and current
+CLI terminal-run recognition with unchanged persisted files. This is not worker execution.

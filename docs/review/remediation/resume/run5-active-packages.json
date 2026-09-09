@@ -34,6 +34,8 @@
       "package": "nova-dispatch-archive-projection",
       "status": "design-approved-implementation-and-review-pending",
       "design_local_commit": "a0f6c44e5915d97df75d4aafeba7db23ec952db0",
+      "design_branch": "fix/resume-47-run5-storage-design-a0f6c44",
+      "design_remote_commit": "1cd953bd689c08ada97b5cbf359bc92abb9ed4ae",
       "next_action": "Save design remotely, implement original import-authority verification under run/import/dispatch fences and exact immutable archive projection; reject root aliases and unconfirmed work; prove unchanged quotas and genuine replay before review."
     }
   ],

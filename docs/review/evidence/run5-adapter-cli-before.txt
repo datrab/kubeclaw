@@ -1,0 +1,26 @@
+Command: node docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs .
+Source: local143b0cf9d73572f61687f85c6c3c886bad8e7278, exact freshly read remote4627f01fe532d3dd890b7c8f93df40ae59547071 (3354 blob/mode/type matches).
+No Adapter identity package applied. Node24.19.0.
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'blocked'
+- 'succeeded'
+
+    at file:///workspace/scratch/15fb596e6560/run5-adapter-review/tests/verification/contracts/.legacy-resume-cutover-2.mts:193:10
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'blocked',
+  expected: 'succeeded',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+Exit: 1. Before failure retained; not a passing recovery proof.

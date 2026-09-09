@@ -1,0 +1,7 @@
+Command: node docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs .
+Product source: author789c42f722f415331a48f38ef845b07477e2ad3b on base143b0cf; source probe hook moved before independent legacy-authoring mutation. Node24.19.0.
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:48b42f6f3ed7b43bc74c01c23fc97e74c62f4ce34222f227d420e9a19575bf22:sha256:75de72199d52b2358c591c47fdf99199398c838c9e350309c6c82dfa36f7b92b\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:48b42f6f3ed7b43bc74c01c23fc97e74c62f4ce34222f227d420e9a19575bf22"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+Exit: 0; original negative CLI still fails graph mismatch; current CLI reaches original terminal-run boundary without journal mutation.

@@ -22,9 +22,7 @@ for(const entry of provenance.files.filter(entry=>entry.sourcePath.startsWith('s
 }
 const original=path.join(root,'tests/verification/contracts/check-project-compiler.mts');
 const temporary=path.join(path.dirname(original),`.legacy-resume-cutover-${process.pid}.mts`);
-// Run source recovery while the original Git fixture is still clean. The later
-// independent legacy-authoring import deliberately writes progress.json there.
-const marker='  await checkLegacyProjectImport({ project, platformFile, temporary, runtime, compilerFile });';
+const marker='  console.log(JSON.stringify({ ok: true, scope: archive ?';
 const source=fs.readFileSync(original,'utf8');
 if(source.split(marker).length!==2)throw new Error('ORIGINAL_HOOK_BOUNDARY_CHANGED');
 const hook=String.raw`
@@ -40,6 +38,8 @@ const hook=String.raw`
   const historical=await import(pathToFileURL(process.env.REVIEW_HISTORICAL_CORE+'/src/index.ts').href);
   delete process.env.PROJECT_TEST_TOKEN;delete process.env.PROJECT_TEST_SOURCE_KEY;
   const oldRun=await historical.runPipelineV2(platform,oldDefinition,project.runId);
+  console.log(JSON.stringify({diagnostic:'historical-source-stage-results',stages:[...oldRun.stages]}));
+  for(const file of fs.readdirSync(platform.storageRoot,{recursive:true}).filter(file=>String(file).endsWith('events.jsonl')))console.log(JSON.stringify({diagnostic:'original-events',file,content:fs.readFileSync(path.join(platform.storageRoot,file),'utf8')}));
   assert.equal(oldRun.stages.get('source-preflight').status,'succeeded');
   assert.equal(oldRun.stages.get('blueprint-sync').status,'succeeded');
   assert.equal(oldRun.stages.get('implement-library').status,'blocked');
