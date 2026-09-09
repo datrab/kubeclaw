@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { types } from 'node:util';
 
 export type OptionalAbsenceReader<T> = () => T;
 export type ValueRecord = Record<string, any>;
@@ -39,15 +40,52 @@ export function selectPresentValue(...values: unknown[]): string {
   return values.find((value) => typeof value === 'string' && value.length > 0) as string | undefined ?? '';
 }
 
+// Preserve the existing ordering: these bytes already identify durable artifacts
+// and effect payloads. A portable ordering requires a separately versioned cutover.
 export function canonicalJson(value: unknown): string {
-  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
-  if (value && typeof value === 'object') {
-    return `{${Object.entries(value as Record<string, unknown>)
-      .sort(([left], [right]) => left.localeCompare(right))
-      .map(([key, entry]) => `${JSON.stringify(key)}:${canonicalJson(entry)}`)
-      .join(',')}}`;
+  return serializeJsonValue(value, new Set());
+}
+
+function dataProperty(value: object, key: PropertyKey): unknown {
+  const descriptor = Object.getOwnPropertyDescriptor(value, key);
+  if (!descriptor || !('value' in descriptor) || !descriptor.enumerable) {
+    throw new Error('CANONICAL_JSON_PROPERTY_INVALID');
   }
-  return JSON.stringify(value) ?? 'null';
+  return descriptor.value;
+}
+
+function serializeJsonValue(value: unknown, seen: Set<object>): string {
+  if (value === null || typeof value === 'string' || typeof value === 'boolean') return JSON.stringify(value);
+  if (typeof value === 'number') {
+    if (!Number.isFinite(value)) throw new Error('CANONICAL_JSON_NUMBER_INVALID');
+    return JSON.stringify(value);
+  }
+  if (typeof value !== 'object') throw new Error('CANONICAL_JSON_VALUE_UNSUPPORTED');
+  if (types.isProxy(value)) throw new Error('CANONICAL_JSON_PROXY_UNSUPPORTED');
+  if (seen.has(value)) throw new Error('CANONICAL_JSON_CYCLE');
+  seen.add(value);
+  try {
+    const keys = Reflect.ownKeys(value);
+    if (Array.isArray(value)) return serializeJsonArray(value, keys, seen);
+    const prototype = Object.getPrototypeOf(value);
+    if (prototype !== Object.prototype && prototype !== null) throw new Error('CANONICAL_JSON_PROTOTYPE_INVALID');
+    if (keys.some((key) => typeof key !== 'string')) throw new Error('CANONICAL_JSON_PROPERTY_INVALID');
+    return `{${(keys as string[]).sort((left, right) => left.localeCompare(right))
+      .map((key) => `${JSON.stringify(key)}:${serializeJsonValue(dataProperty(value, key), seen)}`)
+      .join(',')}}`;
+  } finally {
+    seen.delete(value);
+  }
+}
+
+function serializeJsonArray(value: unknown[], keys: PropertyKey[], seen: Set<object>): string {
+  if (Object.getPrototypeOf(value) !== Array.prototype) throw new Error('CANONICAL_JSON_PROTOTYPE_INVALID');
+  if (keys.length !== value.length + 1) throw new Error('CANONICAL_JSON_ARRAY_INVALID');
+  const entries: string[] = [];
+  for (let index = 0; index < value.length; index++) {
+    entries.push(serializeJsonValue(dataProperty(value, String(index)), seen));
+  }
+  return `[${entries.join(',')}]`;
 }
 
 export function sha256Text(value: string): `sha256:${string}` {

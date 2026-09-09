@@ -70,4 +70,25 @@ assert.equal(
   'evidence,guidance,responseContract,schemaVersion,task',
 );
 
+
+
+let accessorCalls = 0;
+const accessor = { get evidence() { accessorCalls++; return accessorCalls; } };
+const sparseWithExtra = Object.assign(new Array(1), { extra: 'lost' });
+for (const value of [accessor, sparseWithExtra, { [Symbol('evidence')]: 'lost' },
+  Object.defineProperty({}, 'hidden', { value: 'lost' }),
+  Object.assign([1], { extra: 'lost' }),
+  Object.defineProperty([1], '0', { get() { accessorCalls++; return 1; } }),
+  new Proxy({}, { ownKeys() { accessorCalls++; return []; } }),
+]) assert.throws(() => stablePromptJson(value), /PROMPT_VALUE_/);
+const validInput = { task: 'Review.', evidence: {}, responseContract: {} };
+assert.throws(() => createPromptEnvelope({ ...validInput, get guidance() { accessorCalls++; return []; } }), /PROMPT_VALUE_/);
+assert.throws(() => createPromptEnvelope({ ...validInput, [Symbol('extra')]: 'lost' }), /PROMPT_VALUE_/);
+assert.throws(() => createPromptEnvelope({ ...validInput, guidance: Object.assign(['ok'], { extra: 'lost' }) }), /PROMPT_VALUE_/);
+assert.equal(accessorCalls, 0);
+assert.equal(stablePromptJson({ a: 1 }, { maxDepth: 1, maxEntries: 2 }), '{"a":1}');
+assert.throws(() => stablePromptJson({ a: { b: 1 } }, { maxDepth: 1 }), /PROMPT_VALUE_DEPTH_EXCEEDED/);
+assert.throws(() => stablePromptJson({ a: 1 }, { maxEntries: 1 }), /PROMPT_VALUE_ENTRIES_EXCEEDED/);
+assert.throws(() => stablePromptJson('x'.repeat(262_144)), /PROMPT_VALUE_SIZE_EXCEEDED/);
+
 console.log(JSON.stringify({ ok: true, library: '@kubeclaw/prompt-contract', suite: 'live-function' }));
