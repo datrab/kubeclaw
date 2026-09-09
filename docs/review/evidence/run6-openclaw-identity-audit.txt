@@ -1,0 +1,32 @@
+Command: node docs/review/evidence/run6-openclaw-identity-audit.mjs
+Exit: 0
+Source remote: 0c3ab36434020730b326bb2aa5c84ea0210f9d6d
+Source local equivalent: 46f66a573c905d3eecf6ed0b66eddbc33a9a977b
+{
+  "boundary": "original architecture builder/schema -> registered Core/ACP adapter -> real503 HTTP receiver",
+  "nativeGateway": false,
+  "acceptedGatewaySessions": 0,
+  "locales": ["en-US", "sv-SE"],
+  "sameCanonicalParentEffect": "effect:json-utf16-v1:5354b2a51393f75394e9956b671a320ef7b6914c00655d122b255189d9e297a3",
+  "architecture": {"ä": 1, "z": 2},
+  "outbound": [
+    {
+      "tool": "sessions_spawn",
+      "idempotencyKey": "spawn:session-v1:attempt:0:payload:02f39557e4d826f4804a8964000a6e5dba73cf82ea39b78e4ff14c7bd915a8ca",
+      "label": "architecture-kub-mQ9-bgxQ3wRCi1243ROhIjwO-5T67AxGsujjREcuh4Y",
+      "resultDirective": "Write the exact raw JSON result atomically to /tmp/openclaw-identity-audit-XHAe7E/results/990f7e6e0c50df04428b5db8dd13a1223c0efb94faec0c46b2e8e344472e8786.json."
+    },
+    {
+      "tool": "sessions_spawn",
+      "idempotencyKey": "spawn:session-v1:attempt:0:payload:30ca4c4b46e7119418a9d97bf5d8861e829164b76894dd5de7904491af3cf9fc",
+      "label": "architecture-kub-L5vZJCYCjZJpWgDrDtqRCbJOB8pl5rNzYLsfTLVryH4",
+      "resultDirective": "Write the exact raw JSON result atomically to /tmp/openclaw-identity-audit-XHAe7E/results/2f9bd92426028d92695a00eb0eda9109b24e07ca65e6b37360bb1f4cb56bc87e.json."
+    }
+  ],
+  "replay": {
+    "locale": "sv-SE",
+    "noAdditionalHttp": true,
+    "journalUnchanged": true,
+    "error": "EFFECT_OUTCOME_UNRESOLVED:effect:json-utf16-v1:5354b2a51393f75394e9956b671a320ef7b6914c00655d122b255189d9e297a3:HTTP_503:Deliberate local HTTP failure; this endpoint is not an OpenClaw Gateway.; OPENCLAW_SESSION_CLEANUP_UNRESOLVED:architecture-kub-mQ9-bgxQ3wRCi1243ROhIjwO-5T67AxGsujjREcuh4Y:spawn-identity-unknown:ADAPTER_CLEANUP_TIMEOUT"
+  }
+}
