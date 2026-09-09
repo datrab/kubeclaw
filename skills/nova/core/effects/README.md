@@ -17,6 +17,9 @@ second copy of the result.
 Effect request, acceptance, and receipt decisions synchronize newly appended
 records and commit under the same cross-process journal transaction. Two live
 journal instances therefore cannot accept the same idempotency key twice.
+Requests and receipts are owned immutable JSON snapshots, both when first
+written and when replayed, including results hydrated from verified sidecars.
+Mutating a caller's object cannot change a later receipt or request lookup.
 
 Recovery never blindly repeats an accepted effect. The selected adapter must
 return its durable receipt for the original effect identity; otherwise
@@ -33,3 +36,11 @@ operation unwinds. Stale owners cannot release a replacement lock.
 The platform can set `effectLockTtlMs`; the default is five minutes and is
 independent of the shutdown timeout. Core renews the lease after durable
 pre-dispatch bookkeeping and then periodically while the adapter is active.
+
+The invocation owns the resource lock from successful acquisition through the
+locked journal recheck, receipt replay and awaited execution. A single finalizer
+releases it on every exit, including conflicting requests and invalid journals.
+If both the primary operation and lock release fail, the thrown AggregateError
+retains both errors and identifies the primary error as its cause. A failed
+cleanup must be reconciled explicitly; expiry alone never authorizes stealing
+a lock from a still-running owner.

@@ -38,11 +38,23 @@ class DurableInvocation {
     const existing = await this.#existingReceipt(prior);
     if (existing) return existing;
     this.#lock = this.#dependencies.locks.acquire(lockResource(this.#invocation), this.#invocation.attempt.attemptId, this.#dependencies.lockTtlMs);
-    prior = await this.#dependencies.journal.request(this.#invocation.idempotencyKey);
-    assertMatchingRequest(prior, this.#invocation);
-    const lockedExisting = await this.#existingReceipt(prior);
-    if (lockedExisting) { this.#release(); return lockedExisting; }
-    return this.#executeLocked(prior);
+    let failed = false;
+    let failure: unknown;
+    try {
+      prior = await this.#dependencies.journal.request(this.#invocation.idempotencyKey);
+      assertMatchingRequest(prior, this.#invocation);
+      const lockedExisting = await this.#existingReceipt(prior);
+      if (lockedExisting) return lockedExisting;
+      return await this.#executeLocked(prior);
+    } catch (error) {
+      failed = true; failure = error; throw error;
+    } finally {
+      try { this.#release(); }
+      catch (releaseError) {
+        if (failed) throw new AggregateError([failure, releaseError], 'EFFECT_FAILED_AND_LOCK_RELEASE_FAILED', { cause: failure });
+        throw releaseError;
+      }
+    }
   }
 
   async #existingReceipt(prior: EffectRequest | undefined): Promise<EffectReceipt | undefined> {
@@ -70,7 +82,6 @@ class DurableInvocation {
       return accepted ? await this.#invokeAdapter(request, controller.signal) : await this.#recover(request);
     } finally {
       if (timer) clearInterval(timer);
-      this.#release();
     }
   }
 
