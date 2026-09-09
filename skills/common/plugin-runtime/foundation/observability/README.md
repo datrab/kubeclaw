@@ -39,3 +39,8 @@ the existing result-ingress and completeness checks. These unkeyed digests detec
 inconsistent stored facts; they do not authenticate a complete rewritten store.
 Store roots must remain protected. Replay validation adds no log deletion,
 retention deadline or automatic history repair.
+
+The [operator retention and manual cleanup contract](../../../../../docs/operations/observability-retention.md)
+documents actual roots and quotas under D01/D07. Safe confirmed-history retirement
+remains unimplemented (PCR-OBS-002); the policy does not authorize ad hoc deletion
+of admission, result, journal or artifact records.
