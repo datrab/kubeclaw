@@ -1,0 +1,384 @@
+{
+  "baseline": "c38779c71bb92bc15c3fcb89930348e5417aa475",
+  "local_worktree_base": "a8cf34f",
+  "finding_count": 47,
+  "completion_rule": "Alle 47 behoben, unabhängig geprüft und geforderte echte Tests bestanden. Keine Umdeutung von teilweise/blockiert/skipped/static.",
+  "findings": [
+    {
+      "id": "PCR-SDK-001",
+      "package": "sdk",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Portable Ordnung/versionierte Digestumstellung noch offen; aktuelle akzeptierte Bytes bewusst unverändert.",
+      "result": null
+    },
+    {
+      "id": "PCR-BUSTER-ENGINE-004",
+      "package": "resources",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Normale bestätigte Arbeit bereinigt; Restart-/Orphan-/unsichere Eingaben bleiben bis Besitz-/Terminierungsnachweis erhalten.",
+      "result": null
+    },
+    {
+      "id": "PCR-ISOLATION-002",
+      "package": "resources",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Echte Prozessbaum-/Credential-drop-/Host-SIGKILL-Abnahme durch fehlende proc-children und delegierte Cgroups blockiert.",
+      "result": null
+    },
+    {
+      "id": "PCR-ISOLATION-004",
+      "package": "resources",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Reale Cgroup2-Speicher/OOM-Grenze implementiert, konservative Page-Rundung lokal geprüft; Kernelabnahme mangels Delegation blockiert.",
+      "result": null
+    },
+    {
+      "id": "PCR-NOVA-GATE-005",
+      "package": "resources",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Öffentlicher Graphreader korrigiert; realer Vollprozess-Restart scheitert an Sandbox vor neuer Assertion; kein bestandener Nachweis.",
+      "result": null
+    },
+    {
+      "id": "PCR-RUNTIME-001",
+      "package": "product",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Autorisierte einmalige Cleanupfrist und transitive Sessionbindung; ursprüngliche 25 Fälle plus vier finale Identitätsgegenproben bestanden. Native OpenClaw-Terminierung nicht behauptet.",
+      "result": null
+    },
+    {
+      "id": "PATH-T11-001",
+      "package": "product",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Actual Node JUnit output, original parser/finalizer and localhost HTTP Nova import/FileStore verified independently; no review override or invented failed case for missing execution. Full native provider/adapter/runner path blocked by actual EPIPE/exit70 host prerequisite failure.",
+      "result": null
+    },
+    {
+      "id": "PATH-T11-002",
+      "package": "product",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Native kumulative Gesamtpipeline mit echten Providern und anschließendem Ready-/Zustellungsnachweis prüfen; technische delivery-manifest.v2 allein ist keine Ready-Freigabe.",
+      "result": null
+    },
+    {
+      "id": "PATH-T13-001",
+      "package": "product",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Native kumulative Gesamtpipeline mit echten Providern und anschließendem Ready-/Zustellungsnachweis prüfen; technische delivery-manifest.v2 allein ist keine Ready-Freigabe.",
+      "result": null
+    },
+    {
+      "id": "PCR-CONTAINER-BUILD-001",
+      "package": "product",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
+      "result": null
+    },
+    {
+      "id": "PCR-CONTAINER-BUILD-002",
+      "package": "product",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
+      "result": null
+    },
+    {
+      "id": "PCR-DIRECT-COMMAND-001",
+      "package": "product",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
+      "result": null
+    },
+    {
+      "id": "PCR-VISUAL-001",
+      "package": "prism",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Mit tatsächlichem Workerbrowser neu aufnehmen und freigeben; nativen Versionsabweichungs-/Erneuerungstest und Remote-Vertikale ausführen. Historische v1Fixture bleibt explizit blockiert.",
+      "result": null
+    },
+    {
+      "id": "PATH-T02-001",
+      "package": "prism",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Persisted generation snapshot reaches original bridge prompt with generation identity. SQL, configuration and bridge process boundary pass; native PostgreSQL/full Control plus real OpenClaw generation and result callback remain unexecuted. Active architecture/round binding tracked separately in PATH-T02-002/003.",
+      "result": null
+    },
+    {
+      "id": "PATH-T02-002",
+      "package": "prism",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Native PostgreSQL-Pool- und Browser-/Agentintegration bei vorhandenen Voraussetzungen ausführen; vorhandene Studio-Typfehler separat beheben.",
+      "result": null
+    },
+    {
+      "id": "PATH-T02-003",
+      "package": "prism",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Native PostgreSQL-Pool- und Browser-/Agentintegration bei vorhandenen Voraussetzungen ausführen; vorhandene Studio-Typfehler separat beheben.",
+      "result": null
+    },
+    {
+      "id": "PCR-PRISM-AGENT-BRIDGE-001",
+      "package": "prism",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen.",
+      "result": null
+    },
+    {
+      "id": "PCR-PRISM-AGENT-BRIDGE-002",
+      "package": "prism",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen.",
+      "result": null
+    },
+    {
+      "id": "PCR-PRISM-CONTROL-001",
+      "package": "prism",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red.",
+      "result": null
+    },
+    {
+      "id": "PCR-PRISM-CONTROL-002",
+      "package": "prism",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Atomic direction/preference SQL and real Studio proxy verified independently; Root 12/12 PGlite/HTTP tests pass. Native pooled PostgreSQL and full Control lost-ACK service proof remain unexecuted.",
+      "result": null
+    },
+    {
+      "id": "PCR-PRISM-CORPUS-001",
+      "package": "prism",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Reserved transaction/advisory lock source reviewed; actual PGlite rollback tests pass. NativePG17.5/pgvector0.8.0 built but root-only UID mapping prevents legitimate initdb; real multi-connection gate not run.",
+      "result": null
+    },
+    {
+      "id": "PCR-PRISM-WORKER-001",
+      "package": "prism",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red.",
+      "result": null
+    },
+    {
+      "id": "PCR-PRISM-WORKER-002",
+      "package": "resources",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
+      "result": null
+    },
+    {
+      "id": "PCR-PRISM-WORKER-003",
+      "package": "resources",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
+      "result": null
+    },
+    {
+      "id": "PCR-PRISM-ENGINE-001",
+      "package": "prism",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "15 original engine/render tests pass, including reviewer-reproduced mutable request binding correction. Completed count/serialized-byte limits and real artifact persistence verified. Original Chromium capture gate blocked by missing executable; long-lived capture/heap and full Control restart proof remain open.",
+      "result": null
+    },
+    {
+      "id": "PCR-PRISM-RENDERER-002",
+      "package": "prism",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Action attributes and actual App transition wiring corrected; Node tests pass, actual iframe click proof blocked by missingChromium/CDNtimeout.",
+      "result": null
+    },
+    {
+      "id": "PCR-PRISM-STUDIO-002",
+      "package": "prism",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Actual HTTP artifact loading/digest/size/auth/abort tests pass; browser image decode/CSP proof blocked by missingChromium/CDNtimeout.",
+      "result": null
+    },
+    {
+      "id": "PCR-OBS-002",
+      "package": "storage",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Weitere Storequoten mit erhaltenen Idempotenz-/Continuation-/Resultbelegen und ausdrücklicher manueller Aufbewahrungspolitik bearbeiten; keine automatische Loglöschung.",
+      "result": null
+    },
+    {
+      "id": "PCR-OPERATOR-001",
+      "package": "product",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Five real durable HTTP receipt/retry cases and legacy identity tests pass independent review. Intended external receiver support for explicit reconciliation protocol unproven; other provider retry semantics unchanged.",
+      "result": null
+    },
+    {
+      "id": "F-T14-01",
+      "package": "product",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen.",
+      "result": null
+    },
+    {
+      "id": "F-T14-02",
+      "package": "product",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen.",
+      "result": null
+    },
+    {
+      "id": "IFR-08-001",
+      "package": "infra",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "E2E-Registryzielvertrag ergänzen; echten BuildKit-Push, uncached CRI-Pull und Pod mit Hostkonfiguration prüfen. Kein Deployment in diesem Auftrag.",
+      "result": null
+    },
+    {
+      "id": "IFR-08-002",
+      "package": "storage",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Dokumentationsdefekt korrigiert; Persistenz/Disk-Budget und referenzgeschützte GC bleiben offen, keine Kapazität erfinden.",
+      "result": null
+    },
+    {
+      "id": "IFR-09-001",
+      "package": "infra",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Tatsächlichen BuildKit-/Node-Mirrorpfad sowie Cache-Hit und Offline-Cache-Miss prüfen.",
+      "result": null
+    },
+    {
+      "id": "IFR-19-001",
+      "package": "infra",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Ausgewählte Receipt mit tatsächlichen PodimageIDs und aktiven Bundlecommits im späteren autorisierten Clusterlauf vergleichen.",
+      "result": null
+    },
+    {
+      "id": "IFR-22-001",
+      "package": "infra",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Später autorisierte isolierte Fork-/interne PR-Abnahme der effektiven Tokenrechte; keine CI angefordert.",
+      "result": null
+    },
+    {
+      "id": "IFR-24-002",
+      "package": "infra",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Vier echte Native-Trivy-Fälle einschließlich FIFO sowie tatsächlicher Dependencyprovider geprüft. Imageprovider und Remoteabnahme blockiert. Originaler gemeinsamer Typcheck nach Konfigurationskorrektur erneut bestanden.",
+      "result": null
+    },
+    {
+      "id": "PCR-SCAFFOLD-OPS-001",
+      "package": "product",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Five genuine supervisor/status CLI regressions and independent source review pass; native adoption gate fails visibly because actual child procfs cmdline is unavailable. Complete real pipeline start/recovery remains unexecuted.",
+      "result": null
+    },
+    {
+      "id": "IFR-07-001",
+      "package": "infra",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
+      "result": null
+    },
+    {
+      "id": "IFR-18-001",
+      "package": "infra",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Config-bound Helm fence and version/identity/prefix checks pass independent review. Real API server CEL/admission and installed legacy-policy migration not run.",
+      "result": null
+    },
+    {
+      "id": "IFR-14-001",
+      "package": "infra",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
+      "result": null
+    },
+    {
+      "id": "IFR-20-001",
+      "package": "infra",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Mit tatsächlicher Hostkapazität Ressourcen konfigurieren; Last, RAM/CPU/Diskgrenzen und Recovery nach OOM im echten Pod prüfen. Keine geratenen Kapazitätswerte.",
+      "result": null
+    },
+    {
+      "id": "IFR-20-002",
+      "package": "infra",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
+      "result": null
+    },
+    {
+      "id": "IFR-25-001",
+      "package": "infra",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Buster BuildKit-/Prism DB-Funktionsproben, getrennte Bootstrap/Liveness und abgebrochene/abgewartete Probe integriert und unabhängig lokal geprüft. Trust-sidecar/SDS-SVID-Funktionsprüfung und Alarmierung sowie native DB-/BuildKit-/Cluster-Abnahme bleiben offen.",
+      "result": null
+    },
+    {
+      "id": "T01-F01",
+      "package": "product",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Kanonischen expliziten Legacy-Autorierungsimport und nachgelagerte sourcegebundene Demo-/Delivery-/Ready-/Acceptance-Komposition vervollständigen; keine Annahme aus bloßem Graph-Erfolg.",
+      "result": null
+    },
+    {
+      "id": "T01-F02",
+      "package": "product",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Kanonischen expliziten Legacy-Autorierungsimport und nachgelagerte sourcegebundene Demo-/Delivery-/Ready-/Acceptance-Komposition vervollständigen; keine Annahme aus bloßem Graph-Erfolg.",
+      "result": null
+    },
+    {
+      "id": "T15-F01",
+      "package": "product",
+      "status": "in Prüfung",
+      "baseline_status": "implementiert",
+      "required_evidence": "Echte konfigurierte Writerintegration mit unveränderlichen Quellen nachweisen; generierten Text weiterhin als unverifizierten Entwurf behandeln. Ältere mode-ambige Runs nicht durch geratenen Marker migrieren.",
+      "result": null
+    }
+  ]
+}
