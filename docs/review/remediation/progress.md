@@ -4,7 +4,7 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**85/154 lokal verifiziert und unabhängig gegengeprüft; 35 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 9 in Bearbeitung; 25 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
+**85/154 lokal verifiziert und unabhängig gegengeprüft; 38 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 6 in Bearbeitung; 25 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
 
 | Bereich | Remote-Commit | Stand / Nachweis |
 |---|---|---|
@@ -202,3 +202,10 @@ Die Coverage-Slice ist mit 44 Dateien eingefroren und wird unabhängig geprüft.
 - Reports: lokal `b8ca3f3267ca68e3c1299fcaa95df92fd52a4715`, remote `2e17a3d04cc460851031234890c0accfaff78b09`; beide originalen Consumerpfade unabhängig bestanden. T15-Fakten-/Sourceautorität bleibt offen.
 - Trivy: lokal `fab6f1d749cdf4c3afa3bb3b4c3d26878ffd71ec`, remote `d02296f7a681210b21320d0fc6c43dc61abb25fc`; 4 Native-Regressionsfälle unabhängig bestanden, einschließlich echter FIFO-Abbruchgegenprobe. Root prüfte anschließend den gemeinsamen TypeScript-Consumer erfolgreich; dies ist ein Arbeitsbaum-Integrationscheck einschließlich parallel korrigiertem WorkerCore-V2, kein unveränderlicher Vollbranch-Test. Ein finaler kombinierter Commitcheck folgt nach dessen Abschluss.
 - In Arbeit: generischer Worker-Core mit expliziter Ressourcenfähigkeit statt falscher Elternmessung, verpflichtender deterministischer Source-Preflight, read-only PR-/trusted-main Workflowtrennung und manuelle Buster-Quellkopiekompaktion. Keine automatische Loglöschung, kein CI-Auftrag und keine Änderung am Deployment.
+
+## Gesicherter Integrationsstand 2d1ea1a
+
+- Prism-Agentjobs und explizite Worker-V2-Ressourcenverträge: Remote `06fbf800e7070597c5d481bda6e9dad2aedd653e`. Bestehende V1-Verträge erhalten; unbekannte Kindprozessmesswerte werden ausdrücklich als nicht verfügbar ausgewiesen, nicht als bestandene Limits. Native Betriebsgates bleiben offen.
+- Action-Pins: Remote `2a9481cd7ae69eaa572eb290bf5ba3fcc2ddde07`; Generatorintegration `4757260ea30be569c96a8811caf97b2267190c4d`. Kein CI-Lauf angefordert.
+- [Getrennte Commitprüfung](../evidence/integration-2d1ea1a/README.md): 14 ausgewählte Originalkommandos bestanden, sauberer getrennter Checkout; Rohlogs und exakte Kommandos unter dem Link. Belege gesichert in Remote `1e5e40cfcd0e0ec4f4639edeba8e0ab784b3cc5f`. Keine Gesamt-E2E- oder pauschale Regressionsfreigabe.
+- Noch uncommittet: Source-v2-Integration, Demo-Authentifizierungsnachweise und manuelle Buster-Archivkompaktierung. Die Source-Prüfungen bestehen nach Korrektur der echten fehlenden JUnit-Testabhängigkeit und Registry-Kohärenz; frühere Fehlschläge bleiben sichtbar. Unabhängige Source-Prüfung und zusätzliche Approval-Gegenprobe laufen.
