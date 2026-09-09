@@ -364,7 +364,7 @@ for (const portName of busterRuntimePortNames) {
 
 assert.match(
   chart,
-  /name:\s*envoy-health,\s*containerPort:\s*19000[\s\S]*?readinessProbe:\s*\n\s*tcpSocket:\s*\{\s*port:\s*envoy-health\s*\}[\s\S]*?livenessProbe:\s*\n\s*tcpSocket:\s*\{\s*port:\s*envoy-health\s*\}/u,
+  /name:\s*envoy-health,\s*containerPort:\s*19000[\s\S]*?readinessProbe:\s*\n\s*httpGet:\s*\{\s*path:\s*\/ready,\s*port:\s*envoy-health\s*\}[\s\S]*?livenessProbe:\s*\n\s*httpGet:\s*\{\s*path:\s*\/health,\s*port:\s*envoy-health\s*\}/u,
   'agent Envoy probes must use the dedicated kubelet health listener',
 );
 assert.doesNotMatch(
@@ -373,14 +373,14 @@ assert.doesNotMatch(
   'agent Envoy probes must not depend on shell utilities in the proxy image',
 );
 assert.match(
-  read('charts/kubeclaw/templates/configmap-worker-trust.yaml'),
+  read('charts/kubeclaw/templates/_worker-trust-readiness.tpl'),
   /name:\s*kubelet-health[\s\S]*address:\s*0\.0\.0\.0,\s*port_value:\s*19000[\s\S]*direct_response:\s*\{\s*status:\s*200\s*\}/u,
-  'agent Envoy must expose a probe-only direct-response listener',
+  'agent Envoy must expose a separate process-health listener',
 );
 assert.match(
   prismWorkloads,
-  /name:\s*worker-trust-proxy[\s\S]*readinessProbe:\s*\n\s*tcpSocket:\s*\{\s*port:\s*worker-trust\s*\}[\s\S]*livenessProbe:\s*\n\s*tcpSocket:\s*\{\s*port:\s*worker-trust\s*\}/u,
-  'Prism Envoy probes must use the live mTLS listener without shell dependencies',
+  /name:\s*worker-trust-proxy[\s\S]*readinessProbe:\s*\n\s*httpGet:\s*\{\s*path:\s*\/ready,\s*port:\s*envoy-health\s*\}[\s\S]*livenessProbe:\s*\n\s*httpGet:\s*\{\s*path:\s*\/health,\s*port:\s*envoy-health\s*\}/u,
+  'Prism Envoy must separate functional readiness and process liveness without shell dependencies',
 );
 assert.doesNotMatch(
   prismWorkloads,
