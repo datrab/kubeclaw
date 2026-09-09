@@ -1,0 +1,10 @@
+sourceSHA=ab79ad928cbf54072fe0b3eaabd8b5ee60dea7d1
+command=npm run verify:worker-core:contracts
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> verify:worker-core:contracts
+> node tests/verification/contracts/check-pipeline-worker-core-contracts.mts && tsc --noEmit -p contracts/pipeline-worker-core/v1/tsconfig.json
+
+{"ok":true,"contracts":12,"schema":"contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json"}
+
+exit=0

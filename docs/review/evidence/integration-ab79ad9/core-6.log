@@ -1,0 +1,5 @@
+sourceSHA=ab79ad928cbf54072fe0b3eaabd8b5ee60dea7d1
+command=node tests/verification/contracts/check-pipeline-committed-source-snapshot.mts
+{"ok":true,"decision":"D-094","revision":"git:268a80356d398ce0a14116d1f4689a13e129daf6","excludesWorkingTree":true}
+
+exit=0

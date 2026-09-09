@@ -1,0 +1,26 @@
+sourceSHA=ab79ad928cbf54072fe0b3eaabd8b5ee60dea7d1
+command=node --test tests/verification/deployment/deployment-release.test.mjs tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/release-images.test.mjs
+✔ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (8492.109718ms)
+✔ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (2273.935911ms)
+✔ private operational overlays survive while replaced or removed runtime slots fail (2822.725609ms)
+✔ Prism and Ops reject image overrides even when another value could conceal them (4983.177191ms)
+✔ source configuration and materialized values are rechecked by actual deployment entrypoints (1091.273085ms)
+✔ private bundle URL and authentication survive while the selected revision stays fixed (1269.906581ms)
+✔ private extraEnv cannot shadow reserved runtime bundle controls (4216.597299ms)
+✔ noncanonical alias and indirect controls cannot stand in for bundle consumers (2817.790987ms)
+fatal: not a tree object
+✔ unchanged release configuration survives unrelated later commits, but new chart or values cannot qualify old images (312.371606ms)
+✔ deleted, added, symlinked, and unavailable source configurations fail explicitly (116.731762ms)
+✔ ops chart has its own source binding, independent of runtime-only changes (95.2627ms)
+✔ release selection rejects missing, duplicate and cross-commit build receipts (7.079176ms)
+✔ generated release values render actual Helm charts with immutable role and sidecar references (1847.249452ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28098.608915
+
+exit=0

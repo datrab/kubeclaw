@@ -1,0 +1,9 @@
+sourceSHA=ab79ad928cbf54072fe0b3eaabd8b5ee60dea7d1
+command=npm run typecheck --workspace @kubeclaw/prism
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @kubeclaw/prism@0.1.0 typecheck
+> tsc --noEmit
+
+
+exit=0

@@ -1,0 +1,15 @@
+sourceSHA=ab79ad928cbf54072fe0b3eaabd8b5ee60dea7d1
+command=npm run verify:worker-core:role-surfaces
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> verify:worker-core:role-surfaces
+> node tests/verification/contracts/check-pipeline-runtime-role-surfaces.mts && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && npm run typecheck --prefix skills/nova
+
+{"ok":true,"phase":"5.5-F","surfaces":["nova","worker","buster"]}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+exit=0

@@ -1,0 +1,41 @@
+sourceSHA=ab79ad928cbf54072fe0b3eaabd8b5ee60dea7d1
+command=node --test tests/skills/nova/project_setup/progress-scaffold.test.mjs tests/skills/nova/project_setup/scaffold-regeneration.test.mjs
+✔ progress scaffold writes a fillable form and apply writes progress.json after gaps are filled (356.680522ms)
+✔ progress scaffold rejects all retired visual-reg configuration (164.204906ms)
+✔ progress scaffold rejects retired visual-reg configuration without a suite selector (155.259025ms)
+✔ progress scaffold rejects retired e2e selection (140.756715ms)
+✔ progress scaffold rejects retired e2e configuration without a suite selector (136.21764ms)
+✔ progress scaffold rejects retired security selection (121.708428ms)
+✔ progress scaffold rejects retired security configuration without a suite selector (122.966608ms)
+✔ progress scaffold migrates legacy health settings into provider plan nodes (277.06426ms)
+✔ progress scaffold resolves a legacy API spec inside serve.project_dir (130.911485ms)
+✔ progress scaffold orders a migrated API flow after its deployment fixture (131.30548ms)
+✔ progress scaffold rejects a legacy API spec symlink outside the repository (207.649161ms)
+✔ progress scaffold rejects legacy unit selection without an explicit provider node (126.413165ms)
+✔ progress scaffold accepts explicit direct-command replacement for legacy unit selection (122.625613ms)
+✔ progress scaffold migrates the legacy manifest suite into Nova lint inputs (286.039031ms)
+✔ progress scaffold rejects a legacy manifest selection without an explicit deployment input (112.342607ms)
+✔ progress scaffold links the migrated container image to a Kubernetes fixture (108.003418ms)
+✔ progress scaffold migrates the legacy bundle suite into an explicit size-budget plan (286.159066ms)
+✔ progress scaffold rejects a legacy bundle suite without an explicit output path (129.687427ms)
+✔ progress scaffold migrates a11y into an axe provider linked to the deployment (133.651862ms)
+✔ progress scaffold rejects retired a11y numeric thresholds (113.666005ms)
+✔ progress scaffold rejects an a11y timeout outside the provider contract (120.821155ms)
+✔ progress scaffold rejects retired a11y thresholds beside an existing Axe node (133.397537ms)
+✔ progress scaffold rejects a legacy perf suite without an explicit Lighthouse replacement (139.022558ms)
+✔ progress scaffold accepts an explicit Lighthouse replacement and removes the legacy selector (110.349147ms)
+✔ progress scaffold rejects retired perf configuration beside a Lighthouse replacement (114.734831ms)
+✔ generate-edit-generate-check preserves every edited provider field before apply (575.729263ms)
+✔ scaffold edits remain authoritative over a separately changed applied pipeline (409.136973ms)
+✔ newly discovered modules leave existing plans intact and explicitly require their own plan (412.517279ms)
+✔ invalid prior pipeline fails before any scaffold overwrite (269.028616ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4098.358833
+
+exit=0

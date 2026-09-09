@@ -1,0 +1,10 @@
+sourceSHA=ab79ad928cbf54072fe0b3eaabd8b5ee60dea7d1
+command=npm run verify:worker-core:local-runtime
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> verify:worker-core:local-runtime
+> node tests/verification/contracts/check-pipeline-worker-local-runtime.mts && tsc --noEmit -p tests/verification/contracts/tsconfig.worker-local-runtime.json && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+
+{"ok":true,"phase":"5.5-D","states":["starting","ready","draining","stopped","unhealthy"]}
+
+exit=0

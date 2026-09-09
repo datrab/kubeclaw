@@ -1,0 +1,16 @@
+sourceSHA=ab79ad928cbf54072fe0b3eaabd8b5ee60dea7d1
+command=npm run verify:test-gate:remote-import
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> verify:test-gate:remote-import
+> node tests/verification/contracts/check-pipeline-remote-result-import.mts && node tests/verification/contracts/check-junit-executed-required.mts && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && npm run typecheck --prefix skills/nova
+
+{"ok":true,"phase":"7-D","decisions":7,"evidence":"verified-before-import"}
+PASS actual Node JUnit files -> original parser/finalizer; HTTP import and durable decision reconstruction; no native runner claim
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+exit=0
