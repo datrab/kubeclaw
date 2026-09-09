@@ -1,0 +1,157 @@
+Source freeze 78ef08eaae0c8fcbfc6412d4c0f0f93113caec81
+Command: node --test skills/prism/tests/control-product-independent.test.mts skills/prism/tests/product-decisions.test.mts skills/prism/tests/product-controller.test.mts skills/prism/tests/studio-proxy.test.mts skills/prism/tests/control-generation-http.test.mts skills/prism/tests/control-server-config.test.mts skills/prism/tests/control-product-composition.test.mts
+Exit: 1
+✖ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (4006.805499ms)
+✖ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (3.297236ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (3882.850267ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (519.904889ms)
+✖ asynchronous authority key loading retains a single owned Control startup snapshot (1959.645033ms)
+✖ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (8.53541ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (3592.018786ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (506.536639ms)
+✖ asynchronous authority key loading retains a single owned Control startup snapshot (1.198519ms)
+✖ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (4.325047ms)
+✖ independent composed startup rejects a genuine wrong key type and disabled authority does not read its missing key (5.218256ms)
+✖ independent original composed restart rejects prior session authority before recording and preserves fresh authorized intent (2.906195ms)
+✔ Control configuration preserves production listener and original non-SPIFFE service defaults (2.603033ms)
+✔ Control trust configuration fails closed and keeps optional test-runner identity optional (0.701669ms)
+✔ Control service configuration is an owned startup snapshot, not mutable caller environment (0.297519ms)
+✔ original HTTPS client validates actual TLS, rereads rotated token, and rejects HTTP errors and oversized responses (618.73487ms)
+✔ real session issuer, explicit operator policy, origin and CSRF bind the signer (5.019786ms)
+✔ real HTTP authorization persists signed intent before failed transport and recovers identical bytes after durable database reopen (4418.141276ms)
+✔ SQL receipt replay compares nested signature bytes and preserves append-only history (1948.320428ms)
+✔ receipt contract preserves Go nanosecond expiry and rejects changed nested envelope (1559.12531ms)
+✔ Studio preserves every Control Set-Cookie header (2.18591ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 13
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14553.597898
+
+✖ failing tests:
+
+test at skills/prism/tests/control-generation-http.test.mts:68:1
+✖ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (4006.805499ms)
+  error: could not extend file "base/5/2691": No space left on device
+      at pe.Ue (file:///workspace/scratch/15fb596e6560/run6-coupled/node_modules/@electric-sql/pglite/dist/chunk-2BOC2OMW.js:1:17959)
+      at pe.tt (file:///workspace/scratch/15fb596e6560/run6-coupled/node_modules/@electric-sql/pglite/dist/chunk-2BOC2OMW.js:1:15347)
+      at pe.parse (file:///workspace/scratch/15fb596e6560/run6-coupled/node_modules/@electric-sql/pglite/dist/chunk-2BOC2OMW.js:1:14021)
+      at O.qe (file:///workspace/scratch/15fb596e6560/run6-coupled/node_modules/@electric-sql/pglite/dist/index.js:5:1762)
+      at file:///workspace/scratch/15fb596e6560/run6-coupled/node_modules/@electric-sql/pglite/dist/index.js:5:1155
+      at wasm://wasm/0267b22e:wasm-function[10926]:0x5a5a7a
+      at wasm://wasm/0267b22e:wasm-function[3584]:0x27ea68
+      at wasm://wasm/0267b22e:wasm-function[3626]:0x28694e
+      at wasm://wasm/0267b22e:wasm-function[3636]:0x286baa
+      at wasm://wasm/0267b22e:wasm-function[9913]:0x54fcc7 {
+    length: 328,
+    severity: 'ERROR',
+    code: '53100',
+    detail: undefined,
+    hint: 'Check free disk space.',
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: `SQL statement "CREATE FUNCTION vector_eq(vector, vector) RETURNS bool\n\tAS '$libdir/vector' LANGUAGE C IMMUTABLE STRICT PARALLEL SAFE"\nextension script file "vector--0.8.1.sql", near line 81`,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'md.c',
+    line: '641',
+    routine: 'mdzeroextend',
+    query: 'CREATE EXTENSION IF NOT EXISTS vector',
+    params: [],
+    queryOptions: undefined
+  }
+
+test at skills/prism/tests/control-generation-http.test.mts:96:1
+✖ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (3.297236ms)
+  Error: ENOSPC: no space left on device, mkdtemp '/tmp/prism-original-http-DhCw8Z'
+      at async mkdtemp (node:internal/fs/promises:1254:10)
+      at async setup (file:///workspace/scratch/15fb596e6560/run6-coupled/skills/prism/tests/control-generation-http.test.mts:29:14)
+      at async TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run6-coupled/skills/prism/tests/control-generation-http.test.mts:97:17)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -28,
+    code: 'ENOSPC',
+    syscall: 'mkdtemp',
+    path: '/tmp/prism-original-http-DhCw8Z'
+  }
+
+test at skills/prism/tests/control-product-composition.test.mts:83:1
+✖ asynchronous authority key loading retains a single owned Control startup snapshot (1959.645033ms)
+  { name: 'ErrnoError', errno: 51 }
+
+test at skills/prism/tests/control-product-composition.test.mts:97:1
+✖ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (8.53541ms)
+  Error: ENOSPC: no space left on device, write
+      at async write (node:internal/fs/promises:802:8)
+      at async writeFileHandle (node:internal/fs/promises:505:7)
+      at async setup (file:///workspace/scratch/15fb596e6560/run6-coupled/skills/prism/tests/control-product-composition.test.mts:35:3)
+      at async TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run6-coupled/skills/prism/tests/control-product-composition.test.mts:98:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -28,
+    code: 'ENOSPC',
+    syscall: 'write'
+  }
+
+test at skills/prism/tests/control-product-composition.test.mts:83:1
+✖ asynchronous authority key loading retains a single owned Control startup snapshot (1.198519ms)
+  Error: ENOSPC: no space left on device, mkdtemp '/tmp/prism-product-composition-MPhwRd'
+      at async mkdtemp (node:internal/fs/promises:1254:10)
+      at async setup (file:///workspace/scratch/15fb596e6560/run6-coupled/skills/prism/tests/control-product-composition.test.mts:32:16)
+      at async TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run6-coupled/skills/prism/tests/control-product-composition.test.mts:84:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -28,
+    code: 'ENOSPC',
+    syscall: 'mkdtemp',
+    path: '/tmp/prism-product-composition-MPhwRd'
+  }
+
+test at skills/prism/tests/control-product-composition.test.mts:97:1
+✖ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (4.325047ms)
+  Error: ENOSPC: no space left on device, mkdtemp '/tmp/prism-product-composition-8arirt'
+      at async mkdtemp (node:internal/fs/promises:1254:10)
+      at async setup (file:///workspace/scratch/15fb596e6560/run6-coupled/skills/prism/tests/control-product-composition.test.mts:32:16)
+      at async TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run6-coupled/skills/prism/tests/control-product-composition.test.mts:98:19)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -28,
+    code: 'ENOSPC',
+    syscall: 'mkdtemp',
+    path: '/tmp/prism-product-composition-8arirt'
+  }
+
+test at skills/prism/tests/control-product-independent.test.mts:10:1
+✖ independent composed startup rejects a genuine wrong key type and disabled authority does not read its missing key (5.218256ms)
+  Error: ENOSPC: no space left on device, mkdtemp '/tmp/prism-product-composition-nBls5m'
+      at async mkdtemp (node:internal/fs/promises:1254:10)
+      at async setup (file:///workspace/scratch/15fb596e6560/run6-coupled/skills/prism/tests/control-product-composition.test.mts:32:16)
+      at async TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run6-coupled/skills/prism/tests/control-product-independent.test.mts:11:17)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -28,
+    code: 'ENOSPC',
+    syscall: 'mkdtemp',
+    path: '/tmp/prism-product-composition-nBls5m'
+  }
+
+test at skills/prism/tests/control-product-independent.test.mts:24:1
+✖ independent original composed restart rejects prior session authority before recording and preserves fresh authorized intent (2.906195ms)
+  Error: ENOSPC: no space left on device, mkdtemp '/tmp/prism-product-composition-vMXw1C'
+      at async mkdtemp (node:internal/fs/promises:1254:10)
+      at async setup (file:///workspace/scratch/15fb596e6560/run6-coupled/skills/prism/tests/control-product-composition.test.mts:32:16)
+      at async TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run6-coupled/skills/prism/tests/control-product-independent.test.mts:25:17)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -28,
+    code: 'ENOSPC',
+    syscall: 'mkdtemp',
+    path: '/tmp/prism-product-composition-vMXw1C'
+  }

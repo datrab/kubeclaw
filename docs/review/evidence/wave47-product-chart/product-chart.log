@@ -1,0 +1,34 @@
+✔ disabled product authority creates no key mount, audience token, environment or network access (49.13076ms)
+✖ explicit product authority belongs only to Control and uses separate signing and scoped transport (47.303734ms)
+✔ incomplete or ambiguous product authority fails actual Helm validation (450.455484ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 629.529367
+
+✖ failing tests:
+
+test at tests/verification/deployment/prism-product-decisions.test.mjs:43:1
+✖ explicit product authority belongs only to Control and uses separate signing and scoped transport (47.303734ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  440 !== 288
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-product-chart/tests/verification/deployment/prism-product-decisions.test.mjs:55:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 440,
+    expected: 288,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

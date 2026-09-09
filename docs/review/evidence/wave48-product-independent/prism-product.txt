@@ -1,0 +1,13 @@
+Exit code: 0
+✔ real session issuer, explicit operator policy, origin and CSRF bind the signer (7.006549ms)
+✔ real HTTP authorization persists signed intent before failed transport and recovers identical bytes after durable database reopen (2296.083497ms)
+✔ SQL receipt replay compares nested signature bytes and preserves append-only history (1241.149174ms)
+✔ receipt contract preserves Go nanosecond expiry and rejects changed nested envelope (1626.672352ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5348.889846

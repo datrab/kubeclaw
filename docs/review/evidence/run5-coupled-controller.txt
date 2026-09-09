@@ -1,0 +1,231 @@
+Source freeze ef41e378633ea04cf728e48c2413e92c33d39bd8
+Command: /workspace/scratch/4e25cf57c177/toolchains/go/bin/go test ./cmd/buster-namespace-controller -count=1 -v
+Exit: 0
+=== RUN   TestDemoAuthenticationCredentialProducer
+--- PASS: TestDemoAuthenticationCredentialProducer (0.00s)
+=== RUN   TestGeneratedCredentialHTTPProvenanceAndRestart
+--- PASS: TestGeneratedCredentialHTTPProvenanceAndRestart (0.01s)
+=== RUN   TestNovaDemoHandoffProducerInterop
+--- PASS: TestNovaDemoHandoffProducerInterop (0.01s)
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/accept_leaves_TTL;_exact_replay_and_changed_replay
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/extend_preserves_fractional_expiry_and_rejects_stale_cleanup
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/uncertain_response_recovers_atomically_without_second_apply
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/generation
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/source
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/candidate
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/result
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/ready
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/expiry
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/revision
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/expired
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/deleting
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/signature
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/actor
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/issuer
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/token
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/conflict
+=== RUN   TestProductDecisionCASRecoveryAndLifecycle/non-uuid-decision
+--- PASS: TestProductDecisionCASRecoveryAndLifecycle (0.18s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/accept_leaves_TTL;_exact_replay_and_changed_replay (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/extend_preserves_fractional_expiry_and_rejects_stale_cleanup (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/uncertain_response_recovers_atomically_without_second_apply (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/generation (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/source (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/candidate (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/result (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/ready (0.02s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/expiry (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/revision (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/expired (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/deleting (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/signature (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/actor (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/issuer (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/token (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/conflict (0.01s)
+    --- PASS: TestProductDecisionCASRecoveryAndLifecycle/non-uuid-decision (0.01s)
+=== RUN   TestProductClosedSignedWire
+--- PASS: TestProductClosedSignedWire (0.00s)
+=== RUN   TestProductTypeScriptInterop
+--- PASS: TestProductTypeScriptInterop (0.10s)
+=== RUN   TestProductConfigurationDenyByDefault
+=== RUN   TestProductConfigurationDenyByDefault/BUSTER_PRODUCT_VERIFY_KEY
+=== RUN   TestProductConfigurationDenyByDefault/BUSTER_PRODUCT_AUDIENCE
+=== RUN   TestProductConfigurationDenyByDefault/BUSTER_PRODUCT_PRODUCER
+=== RUN   TestProductConfigurationDenyByDefault/BUSTER_PRODUCT_ISSUER
+=== RUN   TestProductConfigurationDenyByDefault/BUSTER_PRODUCT_ACTORS_JSON
+--- PASS: TestProductConfigurationDenyByDefault (0.00s)
+    --- PASS: TestProductConfigurationDenyByDefault/BUSTER_PRODUCT_VERIFY_KEY (0.00s)
+    --- PASS: TestProductConfigurationDenyByDefault/BUSTER_PRODUCT_AUDIENCE (0.00s)
+    --- PASS: TestProductConfigurationDenyByDefault/BUSTER_PRODUCT_PRODUCER (0.00s)
+    --- PASS: TestProductConfigurationDenyByDefault/BUSTER_PRODUCT_ISSUER (0.00s)
+    --- PASS: TestProductConfigurationDenyByDefault/BUSTER_PRODUCT_ACTORS_JSON (0.00s)
+=== RUN   TestProductExtensionHistoryIsOrderIndependent
+--- PASS: TestProductExtensionHistoryIsOrderIndependent (0.00s)
+=== RUN   TestDemoReadyAuthenticatedCASAndRecovery
+=== RUN   TestDemoReadyAuthenticatedCASAndRecovery/exact_audience_and_producer_required
+=== RUN   TestDemoReadyAuthenticatedCASAndRecovery/commit_replay_and_shared_seven-day_expiry
+=== RUN   TestDemoReadyAuthenticatedCASAndRecovery/lost_status_POST_response_recovers_without_renewal
+=== RUN   TestDemoReadyAuthenticatedCASAndRecovery/CAS_conflict_no_mutation_and_deleting_lease_rejects
+=== RUN   TestDemoReadyAuthenticatedCASAndRecovery/manual_cleanup_remains_immediate
+=== RUN   TestDemoReadyAuthenticatedCASAndRecovery/changed_source_stale_observation_and_foreign_Secret_reject
+=== RUN   TestDemoReadyAuthenticatedCASAndRecovery/committed_status_and_replay_recheck_actual_live_objects
+=== RUN   TestDemoReadyAuthenticatedCASAndRecovery/exclusive_operation_claim_prevents_second_reconciler_and_restart_adoption
+=== RUN   TestDemoReadyAuthenticatedCASAndRecovery/terminating_namespace_or_Secret_and_missing_ingress_cannot_first_admit
+=== RUN   TestDemoReadyAuthenticatedCASAndRecovery/server_pruning_cannot_fake_a_persisted_Ready_or_operation_claim
+=== RUN   TestDemoReadyAuthenticatedCASAndRecovery/fixed_reason_codes_expose_conflicts_without_private_payloads
+=== RUN   TestDemoReadyAuthenticatedCASAndRecovery/final_live_response_fence_rejects_expiry_crossed_during_actual_HTTP_read
+=== RUN   TestDemoReadyAuthenticatedCASAndRecovery/successful_replay_and_status_cannot_cross_an_unresolved_exposure_claim
+--- PASS: TestDemoReadyAuthenticatedCASAndRecovery (1.75s)
+    --- PASS: TestDemoReadyAuthenticatedCASAndRecovery/exact_audience_and_producer_required (0.00s)
+    --- PASS: TestDemoReadyAuthenticatedCASAndRecovery/commit_replay_and_shared_seven-day_expiry (0.01s)
+    --- PASS: TestDemoReadyAuthenticatedCASAndRecovery/lost_status_POST_response_recovers_without_renewal (0.01s)
+    --- PASS: TestDemoReadyAuthenticatedCASAndRecovery/CAS_conflict_no_mutation_and_deleting_lease_rejects (0.01s)
+    --- PASS: TestDemoReadyAuthenticatedCASAndRecovery/manual_cleanup_remains_immediate (0.01s)
+    --- PASS: TestDemoReadyAuthenticatedCASAndRecovery/changed_source_stale_observation_and_foreign_Secret_reject (0.02s)
+    --- PASS: TestDemoReadyAuthenticatedCASAndRecovery/committed_status_and_replay_recheck_actual_live_objects (0.05s)
+    --- PASS: TestDemoReadyAuthenticatedCASAndRecovery/exclusive_operation_claim_prevents_second_reconciler_and_restart_adoption (0.01s)
+    --- PASS: TestDemoReadyAuthenticatedCASAndRecovery/terminating_namespace_or_Secret_and_missing_ingress_cannot_first_admit (0.02s)
+    --- PASS: TestDemoReadyAuthenticatedCASAndRecovery/server_pruning_cannot_fake_a_persisted_Ready_or_operation_claim (0.01s)
+    --- PASS: TestDemoReadyAuthenticatedCASAndRecovery/fixed_reason_codes_expose_conflicts_without_private_payloads (0.01s)
+    --- PASS: TestDemoReadyAuthenticatedCASAndRecovery/final_live_response_fence_rejects_expiry_crossed_during_actual_HTTP_read (1.56s)
+    --- PASS: TestDemoReadyAuthenticatedCASAndRecovery/successful_replay_and_status_cannot_cross_an_unresolved_exposure_claim (0.02s)
+=== RUN   TestDemoConfiguredInitialRetentionThroughOriginalHTTP
+=== RUN   TestDemoConfiguredInitialRetentionThroughOriginalHTTP/omitted_duration_and_existing_committed_records_retain_seven_days
+=== RUN   TestDemoConfiguredInitialRetentionThroughOriginalHTTP/configured-60-seconds
+=== RUN   TestDemoConfiguredInitialRetentionThroughOriginalHTTP/configured-1209600-seconds
+=== RUN   TestDemoConfiguredInitialRetentionThroughOriginalHTTP/configured-9223372036-seconds
+=== RUN   TestDemoConfiguredInitialRetentionThroughOriginalHTTP/invalid_noninteger_and_overflow_duration_never_mutate
+=== RUN   TestDemoConfiguredInitialRetentionThroughOriginalHTTP/custom_expiry_cleanup_and_manual_deletion_preserve_original_lifecycle
+=== RUN   TestDemoConfiguredInitialRetentionThroughOriginalHTTP/invalid_stored_duration_cannot_return_successful_readiness
+=== RUN   TestDemoConfiguredInitialRetentionThroughOriginalHTTP/pruned_default_and_custom_v2_duration_never_acknowledge_replay_or_status
+--- PASS: TestDemoConfiguredInitialRetentionThroughOriginalHTTP (0.16s)
+    --- PASS: TestDemoConfiguredInitialRetentionThroughOriginalHTTP/omitted_duration_and_existing_committed_records_retain_seven_days (0.01s)
+    --- PASS: TestDemoConfiguredInitialRetentionThroughOriginalHTTP/configured-60-seconds (0.02s)
+    --- PASS: TestDemoConfiguredInitialRetentionThroughOriginalHTTP/configured-1209600-seconds (0.01s)
+    --- PASS: TestDemoConfiguredInitialRetentionThroughOriginalHTTP/configured-9223372036-seconds (0.01s)
+    --- PASS: TestDemoConfiguredInitialRetentionThroughOriginalHTTP/invalid_noninteger_and_overflow_duration_never_mutate (0.05s)
+    --- PASS: TestDemoConfiguredInitialRetentionThroughOriginalHTTP/custom_expiry_cleanup_and_manual_deletion_preserve_original_lifecycle (0.02s)
+    --- PASS: TestDemoConfiguredInitialRetentionThroughOriginalHTTP/invalid_stored_duration_cannot_return_successful_readiness (0.01s)
+    --- PASS: TestDemoConfiguredInitialRetentionThroughOriginalHTTP/pruned_default_and_custom_v2_duration_never_acknowledge_replay_or_status (0.02s)
+=== RUN   TestDemoRetentionTimestampArithmeticBound
+--- PASS: TestDemoRetentionTimestampArithmeticBound (0.00s)
+=== RUN   TestExposureAcknowledgesOwnerAndGenerationThroughActualHTTP
+--- PASS: TestExposureAcknowledgesOwnerAndGenerationThroughActualHTTP (0.00s)
+=== RUN   TestStaleExposureReconcileCannotOverwriteOrDeleteReplacement
+--- PASS: TestStaleExposureReconcileCannotOverwriteOrDeleteReplacement (0.01s)
+=== RUN   TestPreviousIngressHostnameDoesNotAcknowledgeNewHostname
+--- PASS: TestPreviousIngressHostnameDoesNotAcknowledgeNewHostname (0.00s)
+=== RUN   TestReadyLeasePersistsOwnershipOnlyTakeover
+--- PASS: TestReadyLeasePersistsOwnershipOnlyTakeover (0.01s)
+=== RUN   TestAbortedTakeoverRetiresOnlyAuthorizedPredecessor
+=== RUN   TestAbortedTakeoverRetiresOnlyAuthorizedPredecessor/A-to-B-abort
+=== RUN   TestAbortedTakeoverRetiresOnlyAuthorizedPredecessor/A-to-B-to-C-abort
+=== RUN   TestAbortedTakeoverRetiresOnlyAuthorizedPredecessor/unknown-owner
+=== RUN   TestAbortedTakeoverRetiresOnlyAuthorizedPredecessor/different-lease
+=== RUN   TestAbortedTakeoverRetiresOnlyAuthorizedPredecessor/corrupt-lineage
+--- PASS: TestAbortedTakeoverRetiresOnlyAuthorizedPredecessor (0.01s)
+    --- PASS: TestAbortedTakeoverRetiresOnlyAuthorizedPredecessor/A-to-B-abort (0.00s)
+    --- PASS: TestAbortedTakeoverRetiresOnlyAuthorizedPredecessor/A-to-B-to-C-abort (0.00s)
+    --- PASS: TestAbortedTakeoverRetiresOnlyAuthorizedPredecessor/unknown-owner (0.00s)
+    --- PASS: TestAbortedTakeoverRetiresOnlyAuthorizedPredecessor/different-lease (0.00s)
+    --- PASS: TestAbortedTakeoverRetiresOnlyAuthorizedPredecessor/corrupt-lineage (0.00s)
+=== RUN   TestKubernetesHTTPClientRequiresServiceAccountCA
+--- PASS: TestKubernetesHTTPClientRequiresServiceAccountCA (0.00s)
+=== RUN   TestControllerPollIntervalRejectsNonPositiveValues
+=== RUN   TestControllerPollIntervalRejectsNonPositiveValues/0
+=== RUN   TestControllerPollIntervalRejectsNonPositiveValues/-1
+=== RUN   TestControllerPollIntervalRejectsNonPositiveValues/9223372036855
+=== RUN   TestControllerPollIntervalRejectsNonPositiveValues/not-a-number
+--- PASS: TestControllerPollIntervalRejectsNonPositiveValues (0.00s)
+    --- PASS: TestControllerPollIntervalRejectsNonPositiveValues/0 (0.00s)
+    --- PASS: TestControllerPollIntervalRejectsNonPositiveValues/-1 (0.00s)
+    --- PASS: TestControllerPollIntervalRejectsNonPositiveValues/9223372036855 (0.00s)
+    --- PASS: TestControllerPollIntervalRejectsNonPositiveValues/not-a-number (0.00s)
+=== RUN   TestControllerSecretRoleIsTargetNamespaceScoped
+--- PASS: TestControllerSecretRoleIsTargetNamespaceScoped (0.00s)
+=== RUN   TestEnsureControllerSecretAccessUsesOneTargetRoleBinding
+--- PASS: TestEnsureControllerSecretAccessUsesOneTargetRoleBinding (0.00s)
+=== RUN   TestBusterE2EEgressPolicyIsLeaseScoped
+--- PASS: TestBusterE2EEgressPolicyIsLeaseScoped (0.00s)
+=== RUN   TestLegacyRunnerAccessDeletionRemovesRoleAndBinding
+--- PASS: TestLegacyRunnerAccessDeletionRemovesRoleAndBinding (0.00s)
+=== RUN   TestLegacyLeaseCannotRevokeAnotherNamespacesAccess
+--- PASS: TestLegacyLeaseCannotRevokeAnotherNamespacesAccess (0.00s)
+=== RUN   TestOwnershipMismatchDoesNotBlockLeaseFinalizerRemoval
+--- PASS: TestOwnershipMismatchDoesNotBlockLeaseFinalizerRemoval (0.00s)
+=== RUN   TestNormalizeLeaseNamespaceName
+--- PASS: TestNormalizeLeaseNamespaceName (0.00s)
+=== RUN   TestAllowedAccessAndLeaseRequests
+--- PASS: TestAllowedAccessAndLeaseRequests (0.00s)
+=== RUN   TestRunnerRolesExcludeSecretsIngressAndPortForward
+--- PASS: TestRunnerRolesExcludeSecretsIngressAndPortForward (0.00s)
+=== RUN   TestCredentialRequestUsesOneDedicatedSecret
+--- PASS: TestCredentialRequestUsesOneDedicatedSecret (0.00s)
+=== RUN   TestCredentialReaderDoesNotNeedWorkloadAccess
+--- PASS: TestCredentialReaderDoesNotNeedWorkloadAccess (0.00s)
+=== RUN   TestExistingCredentialUsesDeployerAsExactSecretWriter
+--- PASS: TestExistingCredentialUsesDeployerAsExactSecretWriter (0.00s)
+=== RUN   TestExistingCredentialSeparatesReaderAndWriterRoles
+--- PASS: TestExistingCredentialSeparatesReaderAndWriterRoles (0.00s)
+=== RUN   TestEveryWorkloadSubjectMustBeCredentialReader
+--- PASS: TestEveryWorkloadSubjectMustBeCredentialReader (0.00s)
+=== RUN   TestCredentialSecretRejectsUndeclaredKeys
+--- PASS: TestCredentialSecretRejectsUndeclaredKeys (0.00s)
+=== RUN   TestCredentialSecretCannotReuseCopiedSourceSecret
+--- PASS: TestCredentialSecretCannotReuseCopiedSourceSecret (0.00s)
+=== RUN   TestLeaseUsesDefaultTTLWhenOmitted
+--- PASS: TestLeaseUsesDefaultTTLWhenOmitted (0.00s)
+=== RUN   TestSanitizeSecretRemovesSourceOwnership
+--- PASS: TestSanitizeSecretRemovesSourceOwnership (0.00s)
+=== RUN   TestPreviewExposureContainsNoCredentialPolicy
+--- PASS: TestPreviewExposureContainsNoCredentialPolicy (0.00s)
+=== RUN   TestPreviewReadinessRequiresDeclaredServiceAndEndpointPort
+--- PASS: TestPreviewReadinessRequiresDeclaredServiceAndEndpointPort (0.00s)
+=== RUN   TestPreviewReadinessAcceptsUnnamedSingleServicePort
+--- PASS: TestPreviewReadinessAcceptsUnnamedSingleServicePort (0.00s)
+=== RUN   TestLeaseValidationRequiresTTLAndApprovedAccess
+--- PASS: TestLeaseValidationRequiresTTLAndApprovedAccess (0.00s)
+=== RUN   TestExpiresAtClampsLegacyTTLToMaximum
+--- PASS: TestExpiresAtClampsLegacyTTLToMaximum (0.00s)
+=== RUN   TestExpiredLeaseDoesNotRewriteStatusOnEveryPoll
+--- PASS: TestExpiredLeaseDoesNotRewriteStatusOnEveryPoll (0.00s)
+=== RUN   TestReadyNamespaceOwnershipMustStillMatch
+--- PASS: TestReadyNamespaceOwnershipMustStillMatch (0.00s)
+=== RUN   TestRejectedProvisionedLeaseDeletesPreviouslyGrantedNamespace
+--- PASS: TestRejectedProvisionedLeaseDeletesPreviouslyGrantedNamespace (0.00s)
+=== RUN   TestLeaseSpecDigestTracksOnlyImmutableFields
+--- PASS: TestLeaseSpecDigestTracksOnlyImmutableFields (0.00s)
+=== RUN   TestLegacyExposureDigestMigrationIsBounded
+--- PASS: TestLegacyExposureDigestMigrationIsBounded (0.00s)
+=== RUN   TestIngressPreviewURLIsCanonical
+--- PASS: TestIngressPreviewURLIsCanonical (0.00s)
+=== RUN   TestPreviewIngressUsesTLSNameAndPathRouting
+--- PASS: TestPreviewIngressUsesTLSNameAndPathRouting (0.00s)
+=== RUN   TestSourceSecretAllowlistIsDenyByDefault
+--- PASS: TestSourceSecretAllowlistIsDenyByDefault (0.00s)
+=== RUN   TestInspectRuntimeSecurityStateUsesProductionControllerRules
+--- PASS: TestInspectRuntimeSecurityStateUsesProductionControllerRules (0.00s)
+=== RUN   TestRuntimeSecurityFindingsFitTheCRD
+--- PASS: TestRuntimeSecurityFindingsFitTheCRD (0.02s)
+=== RUN   TestRuntimeSecurityResultDigestUsesCanonicalPayload
+--- PASS: TestRuntimeSecurityResultDigestUsesCanonicalPayload (0.00s)
+=== RUN   TestRuntimeSecurityRefreshAvoidsStatusPatchLoop
+--- PASS: TestRuntimeSecurityRefreshAvoidsStatusPatchLoop (0.00s)
+=== RUN   TestRotatedTokenAndLongLeaseCleanup
+=== RUN   TestRotatedTokenAndLongLeaseCleanup/63
+=== RUN   TestRotatedTokenAndLongLeaseCleanup/64
+=== RUN   TestRotatedTokenAndLongLeaseCleanup/253
+--- PASS: TestRotatedTokenAndLongLeaseCleanup (0.01s)
+    --- PASS: TestRotatedTokenAndLongLeaseCleanup/63 (0.00s)
+    --- PASS: TestRotatedTokenAndLongLeaseCleanup/64 (0.00s)
+    --- PASS: TestRotatedTokenAndLongLeaseCleanup/253 (0.00s)
+=== RUN   TestProvisionedConfiguredRBACIsExactAuthority
+=== RUN   TestProvisionedConfiguredRBACIsExactAuthority/generate
+=== RUN   TestProvisionedConfiguredRBACIsExactAuthority/existing
+--- PASS: TestProvisionedConfiguredRBACIsExactAuthority (0.01s)
+    --- PASS: TestProvisionedConfiguredRBACIsExactAuthority/generate (0.01s)
+    --- PASS: TestProvisionedConfiguredRBACIsExactAuthority/existing (0.00s)
+PASS
+ok  	github.com/datrab/kubeclaw/cmd/buster-namespace-controller	2.307s

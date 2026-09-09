@@ -1,0 +1,504 @@
+{
+  "schemaVersion": 1,
+  "run": "run6-coupled",
+  "integrationBase": "b06c06dce3364c482a1da5637c36bc2b14ba8c72",
+  "localBase": "ca00dc72893deaae21d66f1b302962f97638f7ae",
+  "baseTree": "78f4ce6ebccc20f5dd00817d7349d68bb64ece60",
+  "restoredPackageRemote": "7bfa6bbf467e56c2191a1dd4ed44c43cc80daa85",
+  "restoredLocalFreeze": "f01bdd5c846f8c013c621c7b1fa26ea77d5ec33e",
+  "restoredAffectedPaths": 249,
+  "untouchedBaseBlobsVerified": 3432,
+  "coreReaderAndAdapterPreserved": true,
+  "sourceAfterReconciliation": "4eeddd40a1b3e2ab731e1f8f4e6dcbffdec14eea",
+  "frozen47Ids": [
+    "F-T14-01",
+    "F-T14-02",
+    "IFR-07-001",
+    "IFR-08-001",
+    "IFR-08-002",
+    "IFR-09-001",
+    "IFR-14-001",
+    "IFR-18-001",
+    "IFR-19-001",
+    "IFR-20-001",
+    "IFR-20-002",
+    "IFR-22-001",
+    "IFR-24-002",
+    "IFR-25-001",
+    "PATH-T02-001",
+    "PATH-T02-002",
+    "PATH-T02-003",
+    "PATH-T11-001",
+    "PATH-T11-002",
+    "PATH-T13-001",
+    "PCR-BUSTER-ENGINE-004",
+    "PCR-CONTAINER-BUILD-001",
+    "PCR-CONTAINER-BUILD-002",
+    "PCR-DIRECT-COMMAND-001",
+    "PCR-ISOLATION-002",
+    "PCR-ISOLATION-004",
+    "PCR-NOVA-GATE-005",
+    "PCR-OBS-002",
+    "PCR-OPERATOR-001",
+    "PCR-PRISM-AGENT-BRIDGE-001",
+    "PCR-PRISM-AGENT-BRIDGE-002",
+    "PCR-PRISM-CONTROL-001",
+    "PCR-PRISM-CONTROL-002",
+    "PCR-PRISM-CORPUS-001",
+    "PCR-PRISM-ENGINE-001",
+    "PCR-PRISM-RENDERER-002",
+    "PCR-PRISM-STUDIO-002",
+    "PCR-PRISM-WORKER-001",
+    "PCR-PRISM-WORKER-002",
+    "PCR-PRISM-WORKER-003",
+    "PCR-RUNTIME-001",
+    "PCR-SCAFFOLD-OPS-001",
+    "PCR-SDK-001",
+    "PCR-VISUAL-001",
+    "T01-F01",
+    "T01-F02",
+    "T15-F01"
+  ],
+  "scopeExactlyMatchesOriginal": true,
+  "productControllerChartOriginalPaths": [
+    {
+      "package": "product",
+      "path": "skills/prism/server/control-config.ts",
+      "sha": "9525a0c6d378d07db26bd82ed1b630fd1f091d27",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/server/control-server.ts",
+      "sha": "4cb2c2380491b3307002ba2e024b44edbda7055c",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/server/control.ts",
+      "sha": "0b1870100a82c084f2814c1616f5a007cca99380",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/server/studio-request.ts",
+      "sha": "1ee0feedd9ca653d057815f6d2a5a3442b0636de",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/tests/control-generation-http.test.mts",
+      "sha": "67d6308eb1d895e5f56c6ea9c390491ca5a8c71e",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/run3-product-independent-restoration.json",
+      "sha": "3bfbe860175b043944b9a14f96004c76c818c49d",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/run3-product-independent-static.json",
+      "sha": "f9fcfb2e096459912c5fb5124c521d58c05f0055",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/run3-product-independent-tests.txt",
+      "sha": "6b7d419a1bc1efcf800b668ae6e0c9f17078ad11",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/run3-product-port/lint-final.txt",
+      "sha": "8b137891791fe96927ad78e64b0aad7bded08bdc",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/run3-product-port/manifest.json",
+      "sha": "1f40cd79001eb36e0a6e6233ea0fc6e87c383d45",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/run3-product-port/restored-remote-blobs.json",
+      "sha": "54360a776e87df3160a3fab9b88bddb963911b80",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/run3-product-port/server-lint-baseline.txt",
+      "sha": "0b6869d0281bb89a253f4d377fd2c5884297852d",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/run3-product-port/server-lint-final.txt",
+      "sha": "be9a4b8e3351f28dc5073e312ea2130b4897e139",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/run3-product-port/server-lint-import-error.txt",
+      "sha": "7946b248568234ac8557c978415a88eec5238951",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/run3-product-port/tests-final.txt",
+      "sha": "d5976bddff64f6330728ed572c7d05ba99dd702e",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/run3-product-port/tests-initial.txt",
+      "sha": "b7e5aa128fac34ac4f7f0b5e8d399cecebf15973",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/run3-product-port/typecheck-final.txt",
+      "sha": "c6fb73cb174c6bf96b47a499be7faa338aeef76d",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/wave48-prism-product/baseline-control-lint.log",
+      "sha": "c939c455569da99172f0ffe7b95ffd43743b973d",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/wave48-prism-product/existing-lint.log",
+      "sha": "60e94802c2cf01cbd2fbb0d9be0eabcb909c89ed",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/wave48-prism-product/lint.log",
+      "sha": "83b5f9d4df0d01aa0059b4e2ce67617225986b34",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/wave48-prism-product/targeted-tests.log",
+      "sha": "536f8eb9946ae10d4d507d2d1f83259fb2d0f0c7",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/wave48-prism-product/typecheck.log",
+      "sha": "c6fb73cb174c6bf96b47a499be7faa338aeef76d",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/wave48-product-independent/go-product-cost-followup.txt",
+      "sha": "281cf11d8a342a60877ab45b8a6e98193f6d3836",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/wave48-product-independent/go-product.txt",
+      "sha": "0ab4fb40c7017e5e78c3c5813e2d882d685dffd6",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/wave48-product-independent/prism-chart.txt",
+      "sha": "e438b791623d480565c5bab9bea2cb3db267d6b0",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/wave48-product-independent/prism-product.txt",
+      "sha": "e83a5043ca3ff77db4253fdaf52bcdf4a116901e",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/wave48-product-independent/prism-tls.txt",
+      "sha": "fba24048cd319fe7e796eebc763a45906543fb79",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/evidence/wave48-product-independent/source-sha256.json",
+      "sha": "099800f3cd43c07011250bb81e3435c72934e916",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/remediation/implementation/prism-product-decisions.md",
+      "sha": "a00dc56dd49b3274a3680e73c4d5a6b77d7d0070",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/remediation/implementation/product-decisions-independent-review.md",
+      "sha": "a8042aeb37d02cbadbee432929dff666b45e5272",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/remediation/implementation/run3-product-control-port.md",
+      "sha": "eb878879ec1dbe1447d67534c94dd0452d216e5a",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "docs/review/remediation/implementation/run3-product-port-independent-review.md",
+      "sha": "d7fd9ac975288b15885f35e8f4e4ba38bbc3ef52",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/control/product-decisions.ts",
+      "sha": "4eccebc1e4b4db3e0b887eb3d5cc7a0928a0b001",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/server/product-controller.ts",
+      "sha": "c1e8bc9b980360f9545f0c930ce2008b73f7e05a",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/server/product-decisions.ts",
+      "sha": "1d55a6141909ca161bb447ff6f62169f001efdaa",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/server/product-operator-page.ts",
+      "sha": "d03e02bbb603fd7891831a5c8fb1f221abb027fd",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/storage/migrations/015_product_decisions.sql",
+      "sha": "1cb0c9bf6a89c692f270665cd832f6028c25f5cd",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/storage/product-decisions.ts",
+      "sha": "f6848da6655ef1db42912c2a83beb6640ab2fa16",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/tests/control-product-composition.test.mts",
+      "sha": "00d6d7ab59e686c0b2ff1f801c1d1af28b5a91e1",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/tests/control-product-independent.test.mts",
+      "sha": "4501379a830b706203cea1b65c03c4a566de3e03",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/tests/export-product-vectors.mts",
+      "sha": "95a750583f34c8ae9b2aac83e2376412a4464a88",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/tests/product-controller.test.mts",
+      "sha": "d5c1dd6245d68f5ef40e4acf17040bad2f9a5643",
+      "mode": "100644"
+    },
+    {
+      "package": "product",
+      "path": "skills/prism/tests/product-decisions.test.mts",
+      "sha": "f45af62263ad645a02cf8cb7987d81326102909a",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "sha": "e1d78565e3d8ca49bfa3141deeadbeab184c0800",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "sha": "1f043f95e28a4de59b3f6868209aa857dbe2009a",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "charts/kubeclaw/templates/demo-ready-service.yaml",
+      "sha": "504a7afe77ebb78a8b234955b4db73b613a3e3f1",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "charts/kubeclaw/values.yaml",
+      "sha": "1f28a5ce01dbadbbf7f712f733002b4af2396ac0",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+      "sha": "8312aea898b5bd6497043c4e12315beb3c2128e6",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "cmd/buster-namespace-controller/demo-readiness.go",
+      "sha": "07eaf36881de13d0ab38484b9c8df7595c3de714",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "cmd/buster-namespace-controller/main.go",
+      "sha": "f5500795690047de69011d517971a2db4213c7d0",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "tests/verification/contracts/check-demo-ready-controller.mts",
+      "sha": "f4b9d0d64f28d5cdfd5302080aec03ffa3f3491b",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "cmd/buster-namespace-controller/demo-product.go",
+      "sha": "0cd737eb2163a3946073fdf56d92ee3a8a2f9b5b",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "cmd/buster-namespace-controller/demo-product_test.go",
+      "sha": "2db202023ca90a755d831838b77f034420aa255e",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "docs/review/evidence/wave48-product-controller/controller-final.txt",
+      "sha": "24e228a62b34084f683fdfc4ce9b9d2ce8855f4c",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "docs/review/evidence/wave48-product-controller/controller-full-initial.txt",
+      "sha": "c5d269535bc2e8888345b7f9d592bddf81f94a49",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "docs/review/evidence/wave48-product-controller/go-vet-final.txt",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "docs/review/evidence/wave48-product-controller/helm-cel-boundary.txt",
+      "sha": "d2754b16bb55caca417253630ee7e025e5e36273",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "docs/review/evidence/wave48-product-controller/helm-contract-final.txt",
+      "sha": "746ed3fb49507eaf0bb5049b4b0c1ecc53c2ce67",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "docs/review/evidence/wave48-product-controller/helm-contract-initial.txt",
+      "sha": "0aaa8b18346249ee2f9c044aad2a3854914784ff",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "docs/review/evidence/wave48-product-controller/native-k8s-context.txt",
+      "sha": "26eee67f320dda8290bce1e6bcf4554695e397bc",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "docs/review/evidence/wave48-product-controller/product-cel-boundary.txt",
+      "sha": "53bcdf16f9190079b4674ecc3f2281febc700abd",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "docs/review/evidence/wave48-product-controller/product-interop-initial.txt",
+      "sha": "477d8d40c90c8d51e17bbc2a17b43f02dbd62b52",
+      "mode": "100644"
+    },
+    {
+      "package": "controller",
+      "path": "docs/review/remediation/implementation/wave48-product-controller.md",
+      "sha": "f7f5f8f6bb1c6e812e98dbe1748f82596b9cb1b9",
+      "mode": "100644"
+    },
+    {
+      "package": "chart",
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha": "b309a9b4bc952a3d52a2e20a5467aafe256fed60",
+      "mode": "100644"
+    },
+    {
+      "package": "chart",
+      "path": "charts/prism/values.schema.json",
+      "sha": "9a33ea3a120f0259a90e93be1ee77e56f9371757",
+      "mode": "100644"
+    },
+    {
+      "package": "chart",
+      "path": "charts/prism/values.yaml",
+      "sha": "8ff9656697e0c775691bbe68f6d848c8ac6bc844",
+      "mode": "100644"
+    },
+    {
+      "package": "chart",
+      "path": "charts/prism/templates/_product-decisions.tpl",
+      "sha": "8a0325f13639a92af7e980f84c665b826a511f37",
+      "mode": "100644"
+    },
+    {
+      "package": "chart",
+      "path": "charts/prism/templates/product-decisions-networkpolicy.yaml",
+      "sha": "6e1df43249d90693fd6fcb1c9f4baf9bfd8c6061",
+      "mode": "100644"
+    },
+    {
+      "package": "chart",
+      "path": "docs/operations/prism-product-decisions.md",
+      "sha": "2a22c0d938394c968a6074e85be16f91f0b22f3c",
+      "mode": "100644"
+    },
+    {
+      "package": "chart",
+      "path": "docs/review/evidence/wave47-product-chart/product-chart-final.log",
+      "sha": "dd213ed7877a35f9ef63f9a6522f83081445869e",
+      "mode": "100644"
+    },
+    {
+      "package": "chart",
+      "path": "docs/review/evidence/wave47-product-chart/product-chart-lint.log",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "mode": "100644"
+    },
+    {
+      "package": "chart",
+      "path": "docs/review/evidence/wave47-product-chart/product-chart.log",
+      "sha": "f70d442ae1e8266b4081ee37b040f51e8c1cf8e0",
+      "mode": "100644"
+    },
+    {
+      "package": "chart",
+      "path": "tests/verification/deployment/prism-product-decisions.test.mjs",
+      "sha": "05d7df6e1d985a0506303d24e8367e89637e691b",
+      "mode": "100644"
+    }
+  ],
+  "status": "AUTHOR_TESTS_PASSED_PENDING_INDEPENDENT_FINAL_REVIEW_AND_ROOT_INTEGRATION"
+}

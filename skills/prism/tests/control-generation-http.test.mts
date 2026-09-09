@@ -29,7 +29,7 @@ async function setup() {
   const root=await mkdtemp(join(tmpdir(),'prism-original-http-'));
   const environment={ARTIFACT_ROOT:join(root,'artifacts'),PRISM_SESSION_SECRET:'local-session-secret',PRISM_INGRESS_SECRET:'local-ingress-secret',PRISM_INGESTION_SECRET:'local-ingestion-secret',WORKER_TRUST_SPIFFE_ENABLED:'true',PRISM_TRUSTED_NOVA_SPIFFE_ID:'spiffe://kubeclaw.test/nova',PRISM_TRUSTED_WORKER_SPIFFE_ID:'spiffe://kubeclaw.test/worker',PRISM_CONTROL_SPIFFE_ID:'spiffe://kubeclaw.test/control',PRISM_TRUSTED_AGENT_SPIFFE_ID:peer,PRISM_PIPELINE_PREFERENCE_SUBJECT:subject};
   let db=new PGlite(join(root,'db'),{extensions:{vector}});await migrate(db);
-  let server=createControlServer(db,environment);let url=await listen(server);
+  let server=await createControlServer(db,environment);let url=await listen(server);
   // This forwards real HTTP bytes to the original handler at its documented
   // loopback/proxy boundary. It is NOT an Envoy, TLS, CNI or SPIFFE issuance test.
   const relay=createServer(async(request,response)=>{
@@ -61,7 +61,7 @@ async function setup() {
   }
   async function deliver(job:any,label:string) {return tools.get('prism_create_design_set')!.execute('actual-tool-invocation',{jobId:job.id,fence:job.fence,generationId:job.id,projectId:job.request.projectId,designs:designs(job.request.projectId,label)},{config:{controlUrl:relayUrl}});}
   return {api,session,dispatch,claim,deliver,db:()=>db,
-    restart:async()=>{await close(server);await db.close();db=new PGlite(join(root,'db'),{extensions:{vector}});await db.waitReady;server=createControlServer(db,environment);url=await listen(server);},
+    restart:async()=>{await close(server);await db.close();db=new PGlite(join(root,'db'),{extensions:{vector}});await db.waitReady;server=await createControlServer(db,environment);url=await listen(server);},
     close:async()=>{await close(relay);await close(server);await db.close();await rm(root,{recursive:true,force:true});}};
 }
 

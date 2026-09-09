@@ -1,0 +1,9 @@
+[
+  {
+    "label": "native-alternate-a: namespace",
+    "method": "POST",
+    "url": "/api/v1/namespaces",
+    "status": 201,
+    "body": "{\"kind\":\"Namespace\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"native-alternate-a\",\"uid\":\"486e6eac-fa06-44e1-a429-fc8c6dc3bb83\",\"resourceVersion\":\"203\",\"creationTimestamp\":\"2026-09-09T22:45:04Z\",\"labels\":{\"kubernetes.io/metadata.name\":\"native-alternate-a\"},\"managedFields\":[{\"manager\":\"unknown\",\"operation\":\"Update\",\"apiVersion\":\"v1\",\"time\":\"2026-09-09T22:45:04Z\",\"fieldsType\":\"FieldsV1\",\"fieldsV1\":{\"f:metadata\":{\"f:labels\":{\".\":{},\"f:kubernetes.io/metadata.name\":{}}}}}]},\"spec\":{\"finalizers\":[\"kubernetes\"]},\"status\":{\"phase\":\"Active\"}}\n"
+  }
+]

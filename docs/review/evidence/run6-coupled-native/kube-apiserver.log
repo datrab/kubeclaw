@@ -1,0 +1,205 @@
+I0910 01:20:12.925892      32 options.go:263] external host was not specified, using 127.0.0.1
+I0910 01:20:12.927620      32 server.go:150] Version: v1.35.0
+I0910 01:20:12.927636      32 server.go:152] "Golang settings" GOGC="" GOMAXPROCS="" GOTRACEBACK=""
+W0910 01:20:13.048010      32 logging.go:55] [core] [Channel #2 SubChannel #3]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.048025      32 logging.go:55] [core] [Channel #1 SubChannel #5]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+I0910 01:20:13.052419      32 shared_informer.go:370] "Waiting for caches to sync"
+I0910 01:20:13.055053      32 plugins.go:157] Loaded 13 mutating admission controller(s) successfully in the following order: NamespaceLifecycle,LimitRanger,ServiceAccount,TaintNodesByCondition,Priority,DefaultTolerationSeconds,DefaultStorageClass,StorageObjectInUseProtection,RuntimeClass,DefaultIngressClass,PodTopologyLabels,MutatingAdmissionPolicy,MutatingAdmissionWebhook.
+I0910 01:20:13.055116      32 plugins.go:160] Loaded 14 validating admission controller(s) successfully in the following order: LimitRanger,ServiceAccount,PodSecurity,Priority,PersistentVolumeClaimResize,RuntimeClass,CertificateApproval,CertificateSigning,ClusterTrustBundleAttest,CertificateSubjectRestriction,NodeDeclaredFeatureValidator,ValidatingAdmissionPolicy,ValidatingAdmissionWebhook,ResourceQuota.
+I0910 01:20:13.055352      32 instance.go:240] Using reconciler: lease
+W0910 01:20:13.055779      32 logging.go:55] [core] [Channel #9 SubChannel #10]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.315123      32 logging.go:55] [core] [Channel #13 SubChannel #14]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+E0910 01:20:13.316992      32 processstarttime.go:40] Could not get process start time, stat /proc/32: no such file or directory
+W0910 01:20:13.317675      32 logging.go:55] [core] [Channel #23 SubChannel #24]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+I0910 01:20:13.320737      32 handler.go:304] Adding GroupVersion apiextensions.k8s.io v1 to ResourceManager
+W0910 01:20:13.320751      32 genericapiserver.go:787] Skipping API apiextensions.k8s.io/v1beta1 because it has no resources.
+I0910 01:20:13.324502      32 cidrallocator.go:198] starting ServiceCIDR Allocator Controller
+W0910 01:20:13.325075      32 logging.go:55] [core] [Channel #27 SubChannel #28]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.326149      32 logging.go:55] [core] [Channel #31 SubChannel #32]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.326635      32 logging.go:55] [core] [Channel #35 SubChannel #36]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.327208      32 logging.go:55] [core] [Channel #39 SubChannel #40]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.327826      32 logging.go:55] [core] [Channel #43 SubChannel #44]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "error reading server preface: read tcp 127.0.0.1:43818->127.0.0.1:38677: use of closed network connection"
+W0910 01:20:13.331959      32 logging.go:55] [core] [Channel #48 SubChannel #49]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.333247      32 logging.go:55] [core] [Channel #52 SubChannel #53]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "error reading server preface: read tcp 127.0.0.1:43850->127.0.0.1:38677: use of closed network connection"
+W0910 01:20:13.334655      32 logging.go:55] [core] [Channel #57 SubChannel #58]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.335494      32 logging.go:55] [core] [Channel #61 SubChannel #62]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: write tcp 127.0.0.1:43888->127.0.0.1:38677: use of closed network connection
+W0910 01:20:13.336257      32 logging.go:55] [core] [Channel #66 SubChannel #67]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.337080      32 logging.go:55] [core] [Channel #70 SubChannel #71]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.337792      32 logging.go:55] [core] [Channel #74 SubChannel #75]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.338671      32 logging.go:55] [core] [Channel #78 SubChannel #79]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.340031      32 logging.go:55] [core] [Channel #82 SubChannel #83]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.341031      32 logging.go:55] [core] [Channel #86 SubChannel #87]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "error reading server preface: read tcp 127.0.0.1:44008->127.0.0.1:38677: use of closed network connection"
+W0910 01:20:13.342141      32 logging.go:55] [core] [Channel #91 SubChannel #92]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "error reading server preface: read tcp 127.0.0.1:44024->127.0.0.1:38677: use of closed network connection"
+W0910 01:20:13.343251      32 logging.go:55] [core] [Channel #96 SubChannel #97]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "error reading server preface: read tcp 127.0.0.1:44048->127.0.0.1:38677: use of closed network connection"
+I0910 01:20:13.359543      32 handler.go:304] Adding GroupVersion  v1 to ResourceManager
+I0910 01:20:13.359702      32 apis.go:112] API group "internal.apiserver.k8s.io" is not enabled, skipping.
+W0910 01:20:13.360384      32 logging.go:55] [core] [Channel #101 SubChannel #102]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.361326      32 logging.go:55] [core] [Channel #105 SubChannel #106]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.362424      32 logging.go:55] [core] [Channel #109 SubChannel #110]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "error reading server preface: read tcp 127.0.0.1:44106->127.0.0.1:38677: use of closed network connection"
+W0910 01:20:13.363186      32 logging.go:55] [core] [Channel #114 SubChannel #115]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.363758      32 logging.go:55] [core] [Channel #118 SubChannel #119]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.364539      32 logging.go:55] [core] [Channel #122 SubChannel #123]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.365252      32 logging.go:55] [core] [Channel #126 SubChannel #127]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "error reading server preface: read tcp 127.0.0.1:44176->127.0.0.1:38677: use of closed network connection"
+W0910 01:20:13.367350      32 logging.go:55] [core] [Channel #131 SubChannel #132]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.368258      32 logging.go:55] [core] [Channel #135 SubChannel #136]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.368984      32 logging.go:55] [core] [Channel #139 SubChannel #140]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.369499      32 logging.go:55] [core] [Channel #143 SubChannel #144]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.369978      32 logging.go:55] [core] [Channel #147 SubChannel #148]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.370834      32 logging.go:55] [core] [Channel #151 SubChannel #152]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "error reading server preface: read tcp 127.0.0.1:44264->127.0.0.1:38677: use of closed network connection"
+W0910 01:20:13.371344      32 logging.go:55] [core] [Channel #156 SubChannel #157]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.372023      32 logging.go:55] [core] [Channel #160 SubChannel #161]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.372722      32 logging.go:55] [core] [Channel #164 SubChannel #165]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "error reading server preface: read tcp 127.0.0.1:44322->127.0.0.1:38677: use of closed network connection"
+W0910 01:20:13.373646      32 logging.go:55] [core] [Channel #169 SubChannel #170]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.375582      32 logging.go:55] [core] [Channel #173 SubChannel #174]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.376274      32 logging.go:55] [core] [Channel #177 SubChannel #178]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.377488      32 logging.go:55] [core] [Channel #185 SubChannel #186]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "error reading server preface: read tcp 127.0.0.1:44420->127.0.0.1:38677: use of closed network connection"
+W0910 01:20:13.378186      32 logging.go:55] [core] [Channel #190 SubChannel #191]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "error reading server preface: read tcp 127.0.0.1:44442->127.0.0.1:38677: use of closed network connection"
+W0910 01:20:13.379145      32 logging.go:55] [core] [Channel #181 SubChannel #182]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.379155      32 logging.go:55] [core] [Channel #195 SubChannel #196]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.380129      32 logging.go:55] [core] [Channel #199 SubChannel #200]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+I0910 01:20:13.380489      32 apis.go:112] API group "storagemigration.k8s.io" is not enabled, skipping.
+W0910 01:20:13.380877      32 logging.go:55] [core] [Channel #203 SubChannel #204]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "error reading server preface: read tcp 127.0.0.1:44516->127.0.0.1:38677: use of closed network connection"
+W0910 01:20:13.382749      32 logging.go:55] [core] [Channel #208 SubChannel #209]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: write tcp 127.0.0.1:44532->127.0.0.1:38677: use of closed network connection
+W0910 01:20:13.383538      32 logging.go:55] [core] [Channel #213 SubChannel #214]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.384249      32 logging.go:55] [core] [Channel #217 SubChannel #218]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.385512      32 logging.go:55] [core] [Channel #225 SubChannel #226]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: write tcp 127.0.0.1:44564->127.0.0.1:38677: use of closed network connection
+W0910 01:20:13.410084      32 logging.go:55] [core] [Channel #235 SubChannel #236]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.410780      32 logging.go:55] [core] [Channel #239 SubChannel #240]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.411430      32 logging.go:55] [core] [Channel #243 SubChannel #244]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "error reading server preface: read tcp 127.0.0.1:44634->127.0.0.1:38677: use of closed network connection"
+W0910 01:20:13.412002      32 logging.go:55] [core] [Channel #248 SubChannel #249]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.412843      32 logging.go:55] [core] [Channel #252 SubChannel #253]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.429183      32 logging.go:55] [core] [Channel #256 SubChannel #257]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.429816      32 logging.go:55] [core] [Channel #260 SubChannel #261]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+W0910 01:20:13.430410      32 logging.go:55] [core] [Channel #264 SubChannel #265]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "error reading server preface: read tcp 127.0.0.1:44736->127.0.0.1:38677: use of closed network connection"
+W0910 01:20:13.431198      32 logging.go:55] [core] [Channel #269 SubChannel #270]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+I0910 01:20:13.440902      32 handler.go:304] Adding GroupVersion authentication.k8s.io v1 to ResourceManager
+W0910 01:20:13.440930      32 genericapiserver.go:787] Skipping API authentication.k8s.io/v1beta1 because it has no resources.
+W0910 01:20:13.440935      32 genericapiserver.go:787] Skipping API authentication.k8s.io/v1alpha1 because it has no resources.
+I0910 01:20:13.441354      32 handler.go:304] Adding GroupVersion authorization.k8s.io v1 to ResourceManager
+W0910 01:20:13.441362      32 genericapiserver.go:787] Skipping API authorization.k8s.io/v1beta1 because it has no resources.
+I0910 01:20:13.441762      32 handler.go:304] Adding GroupVersion autoscaling v2 to ResourceManager
+I0910 01:20:13.442132      32 handler.go:304] Adding GroupVersion autoscaling v1 to ResourceManager
+W0910 01:20:13.442140      32 genericapiserver.go:787] Skipping API autoscaling/v2beta1 because it has no resources.
+W0910 01:20:13.442142      32 genericapiserver.go:787] Skipping API autoscaling/v2beta2 because it has no resources.
+I0910 01:20:13.442758      32 handler.go:304] Adding GroupVersion batch v1 to ResourceManager
+W0910 01:20:13.442765      32 genericapiserver.go:787] Skipping API batch/v1beta1 because it has no resources.
+I0910 01:20:13.443179      32 handler.go:304] Adding GroupVersion certificates.k8s.io v1 to ResourceManager
+W0910 01:20:13.443185      32 genericapiserver.go:787] Skipping API certificates.k8s.io/v1beta1 because it has no resources.
+W0910 01:20:13.443188      32 genericapiserver.go:787] Skipping API certificates.k8s.io/v1alpha1 because it has no resources.
+I0910 01:20:13.443487      32 handler.go:304] Adding GroupVersion coordination.k8s.io v1 to ResourceManager
+W0910 01:20:13.443491      32 genericapiserver.go:787] Skipping API coordination.k8s.io/v1beta1 because it has no resources.
+W0910 01:20:13.443493      32 genericapiserver.go:787] Skipping API coordination.k8s.io/v1alpha2 because it has no resources.
+I0910 01:20:13.443776      32 handler.go:304] Adding GroupVersion discovery.k8s.io v1 to ResourceManager
+W0910 01:20:13.443781      32 genericapiserver.go:787] Skipping API discovery.k8s.io/v1beta1 because it has no resources.
+I0910 01:20:13.445319      32 handler.go:304] Adding GroupVersion networking.k8s.io v1 to ResourceManager
+W0910 01:20:13.445331      32 genericapiserver.go:787] Skipping API networking.k8s.io/v1beta1 because it has no resources.
+I0910 01:20:13.445548      32 handler.go:304] Adding GroupVersion node.k8s.io v1 to ResourceManager
+W0910 01:20:13.445560      32 genericapiserver.go:787] Skipping API node.k8s.io/v1beta1 because it has no resources.
+W0910 01:20:13.445563      32 genericapiserver.go:787] Skipping API node.k8s.io/v1alpha1 because it has no resources.
+I0910 01:20:13.446020      32 handler.go:304] Adding GroupVersion policy v1 to ResourceManager
+W0910 01:20:13.446031      32 genericapiserver.go:787] Skipping API policy/v1beta1 because it has no resources.
+I0910 01:20:13.447173      32 handler.go:304] Adding GroupVersion rbac.authorization.k8s.io v1 to ResourceManager
+W0910 01:20:13.447181      32 genericapiserver.go:787] Skipping API rbac.authorization.k8s.io/v1beta1 because it has no resources.
+W0910 01:20:13.447184      32 genericapiserver.go:787] Skipping API rbac.authorization.k8s.io/v1alpha1 because it has no resources.
+I0910 01:20:13.447423      32 handler.go:304] Adding GroupVersion scheduling.k8s.io v1 to ResourceManager
+W0910 01:20:13.447427      32 genericapiserver.go:787] Skipping API scheduling.k8s.io/v1beta1 because it has no resources.
+W0910 01:20:13.447429      32 genericapiserver.go:787] Skipping API scheduling.k8s.io/v1alpha1 because it has no resources.
+I0910 01:20:13.448850      32 handler.go:304] Adding GroupVersion storage.k8s.io v1 to ResourceManager
+W0910 01:20:13.448861      32 genericapiserver.go:787] Skipping API storage.k8s.io/v1beta1 because it has no resources.
+W0910 01:20:13.448864      32 genericapiserver.go:787] Skipping API storage.k8s.io/v1alpha1 because it has no resources.
+I0910 01:20:13.449640      32 handler.go:304] Adding GroupVersion flowcontrol.apiserver.k8s.io v1 to ResourceManager
+W0910 01:20:13.449647      32 genericapiserver.go:787] Skipping API flowcontrol.apiserver.k8s.io/v1beta3 because it has no resources.
+W0910 01:20:13.449650      32 genericapiserver.go:787] Skipping API flowcontrol.apiserver.k8s.io/v1beta2 because it has no resources.
+W0910 01:20:13.449652      32 genericapiserver.go:787] Skipping API flowcontrol.apiserver.k8s.io/v1beta1 because it has no resources.
+I0910 01:20:13.451749      32 handler.go:304] Adding GroupVersion apps v1 to ResourceManager
+W0910 01:20:13.451759      32 genericapiserver.go:787] Skipping API apps/v1beta2 because it has no resources.
+W0910 01:20:13.451761      32 genericapiserver.go:787] Skipping API apps/v1beta1 because it has no resources.
+I0910 01:20:13.452901      32 handler.go:304] Adding GroupVersion admissionregistration.k8s.io v1 to ResourceManager
+W0910 01:20:13.452912      32 genericapiserver.go:787] Skipping API admissionregistration.k8s.io/v1beta1 because it has no resources.
+W0910 01:20:13.452918      32 genericapiserver.go:787] Skipping API admissionregistration.k8s.io/v1alpha1 because it has no resources.
+I0910 01:20:13.453266      32 handler.go:304] Adding GroupVersion events.k8s.io v1 to ResourceManager
+W0910 01:20:13.453273      32 genericapiserver.go:787] Skipping API events.k8s.io/v1beta1 because it has no resources.
+I0910 01:20:13.454315      32 handler.go:304] Adding GroupVersion resource.k8s.io v1 to ResourceManager
+W0910 01:20:13.454323      32 genericapiserver.go:787] Skipping API resource.k8s.io/v1beta2 because it has no resources.
+W0910 01:20:13.454326      32 genericapiserver.go:787] Skipping API resource.k8s.io/v1beta1 because it has no resources.
+W0910 01:20:13.454328      32 genericapiserver.go:787] Skipping API resource.k8s.io/v1alpha3 because it has no resources.
+W0910 01:20:13.456032      32 logging.go:55] [core] [Channel #273 SubChannel #274]grpc: addrConn.createTransport failed to connect to {Addr: "127.0.0.1:38677", ServerName: "127.0.0.1:38677", BalancerAttributes: {"<%!p(pickfirstleaf.managedByPickfirstKeyType={})>": "<%!p(bool=true)>" }}. Err: connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:38677: operation was canceled"
+I0910 01:20:13.457218      32 handler.go:304] Adding GroupVersion apiregistration.k8s.io v1 to ResourceManager
+W0910 01:20:13.457298      32 genericapiserver.go:787] Skipping API apiregistration.k8s.io/v1beta1 because it has no resources.
+I0910 01:20:13.679333      32 dynamic_serving_content.go:135] "Starting controller" name="serving-cert::/tmp/kubeclaw-native-product-RXYYwi/cert.pem::/tmp/kubeclaw-native-product-RXYYwi/key.pem"
+I0910 01:20:13.679521      32 secure_serving.go:211] Serving securely on 127.0.0.1:34859
+I0910 01:20:13.679564      32 tlsconfig.go:243] "Starting DynamicServingCertificateController"
+I0910 01:20:13.679680      32 gc_controller.go:85] "Starting apiserver lease garbage collector"
+I0910 01:20:13.679699      32 system_namespaces_controller.go:66] Starting system namespaces controller
+I0910 01:20:13.679759      32 apiservice_controller.go:100] Starting APIServiceRegistrationController
+I0910 01:20:13.679765      32 controller.go:127] "Starting legacy_token_tracking_controller"
+I0910 01:20:13.679774      32 cache.go:32] Waiting for caches to sync for APIServiceRegistrationController controller
+I0910 01:20:13.679776      32 remote_available_controller.go:425] Starting RemoteAvailability controller
+I0910 01:20:13.679781      32 controller.go:142] Starting OpenAPI controller
+I0910 01:20:13.679764      32 controller.go:113] "Deleting old lease on startup" lease="kube-system/apiserver-l2yubf4cvcl5c7a3wrubrwqdve"
+I0910 01:20:13.679801      32 controller.go:78] Starting OpenAPI AggregationController
+I0910 01:20:13.679803      32 controller.go:90] Starting OpenAPI V3 controller
+I0910 01:20:13.679814      32 naming_controller.go:305] Starting NamingConditionController
+I0910 01:20:13.679838      32 nonstructuralschema_controller.go:202] Starting NonStructuralSchemaConditionController
+I0910 01:20:13.679845      32 default_servicecidr_controller.go:110] Starting kubernetes-service-cidr-controller
+I0910 01:20:13.679849      32 apiapproval_controller.go:196] Starting KubernetesAPIApprovalPolicyConformantConditionController
+I0910 01:20:13.679850      32 shared_informer.go:349] "Waiting for caches to sync" controller="kubernetes-service-cidr-controller"
+I0910 01:20:13.679860      32 crd_finalizer.go:273] Starting CRDFinalizer
+I0910 01:20:13.679779      32 shared_informer.go:370] "Waiting for caches to sync"
+I0910 01:20:13.679783      32 cache.go:32] Waiting for caches to sync for RemoteAvailability controller
+I0910 01:20:13.679883      32 aggregator.go:185] waiting for initial CRD sync...
+I0910 01:20:13.679766      32 customresource_discovery_controller.go:294] Starting DiscoveryController
+I0910 01:20:13.679964      32 controller.go:80] Starting OpenAPI V3 AggregationController
+I0910 01:20:13.679991      32 apf_controller.go:377] Starting API Priority and Fairness config controller
+I0910 01:20:13.680006      32 cluster_authentication_trust_controller.go:459] Starting cluster_authentication_trust_controller controller
+I0910 01:20:13.680015      32 shared_informer.go:370] "Waiting for caches to sync"
+I0910 01:20:13.680025      32 repairip.go:210] Starting ipallocator-repair-controller
+I0910 01:20:13.680031      32 shared_informer.go:349] "Waiting for caches to sync" controller="ipallocator-repair-controller"
+I0910 01:20:13.680074      32 local_available_controller.go:156] Starting LocalAvailability controller
+I0910 01:20:13.680080      32 cache.go:32] Waiting for caches to sync for LocalAvailability controller
+I0910 01:20:13.680123      32 crdregistration_controller.go:114] Starting crd-autoregister controller
+I0910 01:20:13.680129      32 shared_informer.go:349] "Waiting for caches to sync" controller="crd-autoregister"
+I0910 01:20:13.679699      32 shared_informer.go:370] "Waiting for caches to sync"
+E0910 01:20:13.749973      32 controller.go:201] "Failed to ensure lease exists, will retry" err="namespaces \"kube-system\" not found" interval="200ms"
+I0910 01:20:13.753196      32 shared_informer.go:377] "Caches are synced"
+I0910 01:20:13.753215      32 policy_source.go:248] refreshing policies
+I0910 01:20:13.780544      32 shared_informer.go:356] "Caches are synced" controller="ipallocator-repair-controller"
+I0910 01:20:13.780544      32 cache.go:39] Caches are synced for APIServiceRegistrationController controller
+I0910 01:20:13.780620      32 handler_discovery.go:451] Starting ResourceDiscoveryManager
+I0910 01:20:13.780636      32 shared_informer.go:377] "Caches are synced"
+I0910 01:20:13.780779      32 apf_controller.go:382] Running API Priority and Fairness config worker
+I0910 01:20:13.780783      32 apf_controller.go:385] Running API Priority and Fairness periodic rebalancing process
+I0910 01:20:13.780915      32 shared_informer.go:356] "Caches are synced" controller="crd-autoregister"
+I0910 01:20:13.781020      32 shared_informer.go:377] "Caches are synced"
+I0910 01:20:13.781140      32 cache.go:39] Caches are synced for RemoteAvailability controller
+I0910 01:20:13.781153      32 cache.go:39] Caches are synced for LocalAvailability controller
+I0910 01:20:13.781163      32 aggregator.go:187] initial CRD sync complete...
+I0910 01:20:13.781167      32 autoregister_controller.go:144] Starting autoregister controller
+I0910 01:20:13.781170      32 cache.go:32] Waiting for caches to sync for autoregister controller
+I0910 01:20:13.781173      32 cache.go:39] Caches are synced for autoregister controller
+I0910 01:20:13.782601      32 controller.go:667] quota admission added evaluator for: namespaces
+I0910 01:20:13.783526      32 shared_informer.go:356] "Caches are synced" controller="kubernetes-service-cidr-controller"
+I0910 01:20:13.783543      32 default_servicecidr_controller.go:169] Creating default ServiceCIDR with CIDRs: [10.0.0.0/24]
+I0910 01:20:13.783609      32 shared_informer.go:377] "Caches are synced"
+I0910 01:20:13.786575      32 cidrallocator.go:302] created ClusterIP allocator for Service CIDR 10.0.0.0/24
+I0910 01:20:13.787598      32 default_servicecidr_controller.go:231] Setting default ServiceCIDR condition Ready to True
+I0910 01:20:13.791692      32 cidrallocator.go:278] updated ClusterIP allocator for Service CIDR 10.0.0.0/24
+I0910 01:20:13.953610      32 controller.go:667] quota admission added evaluator for: leases.coordination.k8s.io
+I0910 01:20:14.685110      32 storage_scheduling.go:123] created PriorityClass system-node-critical with value 2000001000
+I0910 01:20:14.687187      32 storage_scheduling.go:123] created PriorityClass system-cluster-critical with value 2000000000
+I0910 01:20:14.687204      32 storage_scheduling.go:139] all system priority classes are created successfully or already exist.
+I0910 01:20:15.039182      32 controller.go:667] quota admission added evaluator for: roles.rbac.authorization.k8s.io
+I0910 01:20:15.062047      32 controller.go:667] quota admission added evaluator for: rolebindings.rbac.authorization.k8s.io
+I0910 01:20:15.200523      32 alloc.go:329] "allocated clusterIPs" service="default/kubernetes" clusterIPs={"IPv4":"10.0.0.1"}
+W0910 01:20:15.205434      32 lease.go:265] Resetting endpoints for master service "kubernetes" to [127.0.0.1]
+E0910 01:20:15.206686      32 controller.go:163] "Unhandled Error" err="unable to sync kubernetes service: Endpoints \"kubernetes\" is invalid: subsets[0].addresses[0].ip: Invalid value: \"127.0.0.1\": may not be in the loopback range (127.0.0.0/8, ::1/128)" logger="UnhandledError"
+I0910 01:20:15.598155      32 handler.go:304] Adding GroupVersion kubeclaw.forgestack.ai v1alpha1 to ResourceManager
+I0910 01:20:17.548668      32 controller.go:667] quota admission added evaluator for: serviceaccounts
+I0910 01:20:18.756799      32 policy_source.go:248] refreshing policies
+I0910 01:20:20.763123      32 policy_source.go:248] refreshing policies
+I0910 01:20:21.095692      32 controller.go:136] "Cleaning up lease on exit" lease="kube-system/apiserver-l2yubf4cvcl5c7a3wrubrwqdve"
+I0910 01:20:21.102223      32 controller.go:128] Shutting down kubernetes service endpoint reconciler
+I0910 01:20:21.111509      32 storage_flowcontrol.go:165] APF bootstrap ensurer is exiting
+I0910 01:20:21.111559      32 cluster_authentication_trust_controller.go:482] Shutting down cluster_authentication_trust_controller controller
+I0910 01:20:21.111577      32 autoregister_controller.go:168] Shutting down autoregister controller
+I0910 01:20:21.111591      32 local_available_contr

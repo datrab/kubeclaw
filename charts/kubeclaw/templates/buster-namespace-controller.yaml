@@ -232,6 +232,23 @@ spec:
             - name: BUSTER_READY_TLS_KEY
               value: /var/run/kubeclaw/ready-server/tls.key
             {{- end }}
+            {{- if .Values.busterNamespaceBroker.controller.productDecisions.enabled }}
+            {{- if not .Values.busterNamespaceBroker.controller.readiness.enabled }}
+            {{- fail "Product decisions require the Ready TLS listener" }}
+            {{- end }}
+            - name: BUSTER_PRODUCT_ENABLED
+              value: "true"
+            - name: BUSTER_PRODUCT_AUDIENCE
+              value: {{ required "Product audience is required" .Values.busterNamespaceBroker.controller.productDecisions.audience | quote }}
+            - name: BUSTER_PRODUCT_PRODUCER
+              value: {{ printf "system:serviceaccount:%s:%s" (required "Product producer namespace is required" .Values.busterNamespaceBroker.controller.productDecisions.producerNamespace) (required "Product producer ServiceAccount is required" .Values.busterNamespaceBroker.controller.productDecisions.producerServiceAccount) | quote }}
+            - name: BUSTER_PRODUCT_ISSUER
+              value: {{ required "Human product issuer is required" .Values.busterNamespaceBroker.controller.productDecisions.issuer | quote }}
+            - name: BUSTER_PRODUCT_VERIFY_KEY
+              value: {{ required "Human product issuer verify key is required" .Values.busterNamespaceBroker.controller.productDecisions.verifyKey | quote }}
+            - name: BUSTER_PRODUCT_ACTORS_JSON
+              value: {{ required "Human product actor allowlist is required" .Values.busterNamespaceBroker.controller.productDecisions.allowedActors | toJson | quote }}
+            {{- end }}
           resources:
             {{- toYaml .Values.busterNamespaceBroker.controller.resources | nindent 12 }}
           {{- if .Values.busterNamespaceBroker.controller.readiness.enabled }}
