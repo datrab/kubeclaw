@@ -329,6 +329,7 @@ spec:
                 echo "    openclaw_org.json created"
               fi
 
+              {{- if .Values.agent.git.enabled }}
               echo "==> 1. SSH Setup"
               mkdir -p "$INIT_SSH_HOME"
               if [ -f /secrets/ssh/id_rsa ]; then
@@ -406,6 +407,7 @@ spec:
               git -C "$REPO_DIR" config user.email "${CURRENT_AGENT}@kubeclaw.swarm"
               git -C "$REPO_DIR" config user.name "${AGENT_CAPITALIZED} Agent"
 
+              {{- end }}
               echo "==> 3. Workspace Sync"
               mkdir -p /workspace/memory
               mkdir -p /workspace/prism/designs
@@ -1105,11 +1107,16 @@ spec:
                   chown -R 1000:1000 /workspace
                   chmod -R g+rwX /workspace
                   find /workspace -type d -exec chmod g+s {} +
+                  {{- if .Values.agent.git.enabled }}
                   chown -R 0:1000 "$INIT_SSH_HOME"
                   find "$INIT_SSH_HOME" -type d -exec chmod 750 {} +
                   if [ -f "$INIT_SSH_HOME/id_rsa" ]; then chmod 640 "$INIT_SSH_HOME/id_rsa"; fi
+                  {{- end }}
                 else
-                  chown -R 0:0 /workspace "$INIT_SSH_HOME"
+                  chown -R 0:0 /workspace
+                  {{- if .Values.agent.git.enabled }}
+                  chown -R 0:0 "$INIT_SSH_HOME"
+                  {{- end }}
                 fi
               else
                 echo "    Non-root init selected; persistent volumes already use fsGroup 1000."
@@ -1126,14 +1133,18 @@ spec:
               value: "/tmp/.cache"
             - name: INIT_RUN_AS_ROOT
               value: {{ .Values.runAsRoot | quote }}
+            {{- if .Values.agent.git.enabled }}
             - name: INIT_SSH_HOME
               value: {{ ternary "/root/.ssh" "/home/node/.ssh" .Values.runAsRoot | quote }}
+            {{- end }}
             - name: AGENT_NAME
               value: {{ .Values.agentRole | default "default" | quote }}
             - name: AGENT_ROLE
               value: {{ .Values.agentRole | default "default" | quote }}
+            {{- if .Values.agent.git.enabled }}
             - name: GIT_REPO_URL
               value: {{ .Values.agent.git.repoUrl | quote }}
+            {{- end }}
             - name: OVERRIDE_WORKSPACE
               value: {{ .Values.workspace.overrideOnRestart | default false | quote }}
             - name: OVERRIDE_SWARM_CONFIG
@@ -1178,11 +1189,13 @@ spec:
           resources: {{- toYaml .Values.initSetup.resources | nindent 12 }}
 
           volumeMounts:
+            {{- if .Values.agent.git.enabled }}
             - name: ssh-secret-vol
               mountPath: /secrets/ssh
               readOnly: true
             - name: ssh-home-vol
               mountPath: {{ ternary "/root/.ssh" "/home/node/.ssh" .Values.runAsRoot | quote }}
+            {{- end }}
             - name: config
               mountPath: /config
             - name: config
@@ -1248,8 +1261,10 @@ spec:
               value: {{ .Values.codeBundle.contractVersion | default "v2" | quote }}
             - name: KUBECLAW_CODE_BUNDLE_MANIFEST
               value: "/runtime-config/code-bundle-manifest.json"
+            {{- if .Values.agent.git.enabled }}
             - name: GIT_REPO_URL
               value: {{ .Values.agent.git.repoUrl | quote }}
+            {{- end }}
             - name: REPO_ROOT
               value: "/home/node/.openclaw/workspace/git-repo"
             - name: REDIS_HOST
@@ -1395,8 +1410,10 @@ spec:
               mountPath: /home/node/.openclaw-persisted
             - name: workspace
               mountPath: /home/node/.openclaw/workspace
+            {{- if .Values.agent.git.enabled }}
             - name: ssh-home-vol
               mountPath: {{ ternary "/root/.ssh" "/home/node/.ssh" .Values.runAsRoot | quote }}
+            {{- end }}
             - name: skills-merged
               mountPath: /app/skills
             - name: tmp
@@ -1551,6 +1568,7 @@ spec:
           configMap:
             name: {{ include "kubeclaw.fullname" . }}-workspace
         {{- end }}
+        {{- if .Values.agent.git.enabled }}
         - name: ssh-secret-vol
           secret:
             secretName: {{ .Values.agent.git.secretName | default (printf "git-deploy-key-%s" (.Values.agentRole | default "default")) }}
@@ -1560,6 +1578,7 @@ spec:
             optional: false
         - name: ssh-home-vol
           emptyDir: {}
+        {{- end }}
         - name: init-skills
           configMap:
             name: {{ include "kubeclaw.fullname" . }}-skills

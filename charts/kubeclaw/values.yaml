@@ -196,8 +196,10 @@ agent:
     fallbacks:
       - "openai/gpt-5.5"
   git:
+    # Enables chart-managed repository sync and SSH credentials. Disabling keeps
+    # existing workspace data and removes Git init steps, mounts and Secret needs.
     enabled: true
-    # K8s secret containing the SSH deploy key
+    # Required only when enabled: K8s secret containing the SSH deploy key
     secretName: ""  # e.g. "git-deploy-key-nova"
     repoUrl: ""     # e.g. "git@github.com:your-org/your-project.git"
 
