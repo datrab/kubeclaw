@@ -119,17 +119,17 @@ export class AgentObserverRedisWriter {
     if (this.config.enabled) this.ensureRedisClient();
   }
 
-  enqueue(event: AgentObservabilityIngressEventV1): void {
+  enqueue(event: AgentObservabilityIngressEventV1): boolean {
     if (!this.config.enabled) {
       this.stats.droppedDisabled += 1;
-      return;
+      return false;
     }
 
     const size = checkAgentObservabilityPayloadSize(event, this.config.maxEventBytes);
     if (!size.ok) {
       this.stats.droppedOversize += 1;
       this.logOnce('oversize', `dropping oversized agent observability event (${size.bytes}/${size.max_bytes} bytes)`);
-      return;
+      return false;
     }
 
     const kind = selectAgentObservabilityStreamKind(event.type);
@@ -139,7 +139,7 @@ export class AgentObserverRedisWriter {
       if (kind === 'control') this.stats.droppedQueueFullControl += 1;
       else this.stats.droppedQueueFullPayload += 1;
       this.logOnce(`queue-full-${kind}`, `dropping agent observability ${kind} event because queue is full`);
-      return;
+      return false;
     }
 
     queue.push({
@@ -151,6 +151,7 @@ export class AgentObserverRedisWriter {
     if (kind === 'control') this.stats.enqueuedControl += 1;
     else this.stats.enqueuedPayload += 1;
     this.scheduleFlush();
+    return true;
   }
 
   private ensureRedisClient(): RedisClient | null {

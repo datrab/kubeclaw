@@ -1,3 +1,4 @@
+import { IngressQueue, ingressLimits } from './ingress-queue.ts';
 import { createRequire } from 'node:module';
 import type { AdapterActivationContext, AdapterInstance, EventIdentity } from '@kubeclaw/plugin-sdk';
 
@@ -73,9 +74,9 @@ export function activateWithSdk(context: AdapterActivationContext, sdk: OpenClaw
   });
   if (new Set(hooks).size !== hooks.length) throw new Error('AGENT_EVENT_HOOK_DUPLICATE');
   const subscriptions: Array<Subscription | (() => void)> = [];
-  let pending = Promise.resolve();
-  let failures = 0;
-  let emitted = 0;
+  const queue = new IngressQueue<{ hook: string; normalized: NonNullable<ReturnType<typeof normalizeAgentEvent>> }>(ingressLimits(context.config), async ({ hook, normalized }) => {
+    await context.emit(`plugin.kubeclaw.openclaw-agent-events.${hook.replaceAll('_', '-')}`, normalized.identity, normalized.payload);
+  });
   let shuttingDown = false;
   return {
     async ready() {
@@ -86,24 +87,13 @@ export function activateWithSdk(context: AdapterActivationContext, sdk: OpenClaw
             if (shuttingDown) return;
             const normalized = normalizeAgentEvent(raw);
             if (!normalized) return;
-            pending = pending.then(async () => {
-              try {
-                await context.emit(
-                  `plugin.kubeclaw.openclaw-agent-events.${hook.replaceAll('_', '-')}`,
-                  normalized.identity,
-                  normalized.payload,
-                );
-                emitted += 1;
-              } catch {
-                failures += 1;
-              }
-            });
+            queue.enqueue({ hook, normalized });
           }));
         }
       } catch (error) {
         shuttingDown = true;
         while (subscriptions.length > 0) release(subscriptions.pop()!);
-        await pending;
+        await queue.drain(new AbortController().signal);
         throw error;
       }
     },
@@ -113,13 +103,13 @@ export function activateWithSdk(context: AdapterActivationContext, sdk: OpenClaw
       if (request.capability !== 'agent.events.subscribe' || request.operation !== 'status') {
         throw new Error('AGENT_EVENT_SOURCE_OPERATION_UNSUPPORTED');
       }
-      await pending;
-      return { activeSubscriptions: subscriptions.length, emitted, failures, shuttingDown };
+      if (record(request.payload).waitForDrain !== false) await queue.drain(signal);
+      return { activeSubscriptions: subscriptions.length, ...queue.status(), shuttingDown };
     },
-    async shutdown() {
+    async shutdown(signal) {
       shuttingDown = true;
       while (subscriptions.length > 0) release(subscriptions.pop()!);
-      await pending;
+      await queue.drain(signal);
     },
   };
 }

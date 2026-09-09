@@ -61,7 +61,7 @@ function putIdentity(identity: AgentObservabilityIdentityV1, key: StringIdentity
 }
 
 export function extractPluginConfig(event: unknown, hookContext?: unknown): unknown {
-  return valueAt(contextOf(event, hookContext), 'pluginConfig') ?? valueAt(event, 'pluginConfig');
+  return valueAt(contextOf(toJsonValue(event), toJsonValue(hookContext)), 'pluginConfig') ?? valueAt(toJsonValue(event), 'pluginConfig');
 }
 
 function normalizeIdentity(event: unknown, hookContext?: unknown): AgentObservabilityIdentityV1 {
@@ -143,12 +143,15 @@ function normalizeIngressEvent(
 }
 
 export function normalizeHookEvent(hook: AgentObservabilityHook, event: unknown, now = new Date(), hookContext?: unknown): AgentObservabilityIngressEventV1 {
+  event = toJsonValue(event);
+  hookContext = toJsonValue(hookContext);
   const type = HOOK_TO_TYPE[hook];
   if (!type) throw new Error(`unsupported OpenClaw agent observability hook: ${hook}`);
   return normalizeIngressEvent(type, event, normalizePayload(hook, event), now, hookContext);
 }
 
 export function normalizeModelUsageDiagnosticEvent(event: unknown, now = new Date()): AgentObservabilityIngressEventV1 {
+  event = toJsonValue(event);
   if (valueAt(event, 'type') !== 'model.usage') {
     throw new Error('unsupported OpenClaw diagnostic event: expected model.usage');
   }
@@ -156,6 +159,7 @@ export function normalizeModelUsageDiagnosticEvent(event: unknown, now = new Dat
 }
 
 export function normalizeAgentEvent(event: unknown, now = new Date()): AgentObservabilityIngressEventV1 | null {
+  event = toJsonValue(event);
   const hook = normalizeAgentEventHook(event);
   if (!hook) return null;
   const normalizedEvent = unwrapAgentEventData(event);

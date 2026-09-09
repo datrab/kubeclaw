@@ -9,3 +9,15 @@ Run its verification with:
 ```bash
 npm test --prefix skills/common/plugins/openclaw-agent-observer
 ```
+
+Runtime duplicate detection uses source run/stream/sequence. Cross-hook LLM
+matching also requires model-call identity and complete normalized content;
+distinct outputs and runtime sequences remain distinct. Dedupe is recorded only
+after queue admission. Missing source identity does not justify suppression.
+
+Normalization marks cycles explicitly and rejects excessive depth, nodes or
+bytes before an unbounded traversal. Ordinary getters/proxies are rejected.
+Large valid diagnostic content is not silently shortened. These changes retain
+the existing raw-channel trust policy and do not add automatic log deletion.
+The package tests prove observer and queue behavior with a recording client;
+they do not prove deployment against OpenClaw or real Redis.

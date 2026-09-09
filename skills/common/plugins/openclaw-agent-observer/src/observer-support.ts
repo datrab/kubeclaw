@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import type { AgentObservabilityIngressEventV1 } from './generated/agent-observability/index.ts';
 import type { AgentEventUnsubscribe } from './plugin-api.ts';
 
@@ -30,29 +31,52 @@ export function mergeConfigInputs(...configs: unknown[]): Record<string, unknown
 
 export function agentEventDedupeKey(event: unknown): string | null {
   if (!isConfigRecord(event)) return null;
-  const data = isConfigRecord(event.data) ? event.data : {};
   const runId = typeof event.runId === 'string' ? event.runId : '';
   const stream = typeof event.stream === 'string' ? event.stream : '';
   const seq = typeof event.seq === 'number' || typeof event.seq === 'string' ? String(event.seq) : '';
-  const phase = typeof data.phase === 'string' ? data.phase : '';
-  if (runId && stream && seq) return `${runId}:${stream}:${seq}`;
-  if (!runId || !stream) return null;
-  const text = typeof data.text === 'string' ? data.text.slice(0, 128) : '';
-  return `${runId}:${stream}:${phase}:${text}`;
+  return runId && stream && seq ? createHash('sha256').update(JSON.stringify([runId, stream, seq])).digest('hex') : null;
+}
+
+function canonical(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(canonical);
+  if (!isConfigRecord(value)) return value;
+  return Object.fromEntries(Object.keys(value).sort().map((key) => [key, canonical(value[key])]));
 }
 
 export function ingressEventDedupeKey(event: AgentObservabilityIngressEventV1): string | null {
-  if (![
-    'openclaw.agent.ended',
-    'openclaw.llm.output',
-    'openclaw.session.started',
-    'openclaw.session.ended',
-  ].includes(event.type)) return null;
-  const runId = event.identity.run_id ?? '';
-  const sessionKey = event.identity.session_key ?? '';
-  const hook = isConfigRecord(event.payload) && typeof event.payload.hook === 'string' ? event.payload.hook : '';
-  if (!runId || !hook) return null;
-  return `${event.type}:${runId}:${sessionKey}:${hook}`;
+  // A run/type is not an event identity. Without a source call identity retain
+  // the event; runtime sequence dedupe is handled separately at its own boundary.
+  if (event.type !== 'openclaw.llm.output' || !event.identity.model_call_id) return null;
+  return createHash('sha256').update(JSON.stringify(canonical({
+    type: event.type, identity: event.identity, payload: event.payload,
+  }))).digest('hex');
+}
+
+interface IngressSeen { seenAt: number; hook: boolean; runtime: boolean; paired: boolean }
+export class IngressDedupe {
+  readonly #recent = new Map<string, IngressSeen>();
+
+  duplicate(key: string | null, runtime: boolean): boolean {
+    const now = Date.now();
+    for (const [candidate, entry] of this.#recent) if (now - entry.seenAt > 10_000) this.#recent.delete(candidate);
+    if (!key) return false;
+    const entry = this.#recent.get(key);
+    if (!entry) return false;
+    if (!runtime && entry.hook) return true;
+    const pair = runtime ? entry.hook && !entry.paired : entry.runtime;
+    if (!pair) return false;
+    entry.hook ||= !runtime;
+    entry.paired = true;
+    return true;
+  }
+
+  accepted(key: string | null, runtime: boolean): void {
+    if (!key) return;
+    const entry = this.#recent.get(key);
+    if (entry) { entry.runtime ||= runtime; entry.hook ||= !runtime; return; }
+    if (this.#recent.size >= 10_000) this.#recent.delete(this.#recent.keys().next().value!);
+    this.#recent.set(key, { seenAt: Date.now(), hook: !runtime, runtime, paired: false });
+  }
 }
 
 function globalAgentEventState(): AgentEventGlobalState {

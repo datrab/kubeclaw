@@ -1,3 +1,5 @@
+import { types } from 'node:util';
+import { AGENT_OBSERVABILITY_MAX_JSON_DEPTH, AGENT_OBSERVABILITY_MAX_JSON_NODES, AGENT_OBSERVABILITY_ABSOLUTE_MAX_EVENT_BYTES } from './generated/agent-observability/index.ts';
 import type {
   AgentObservabilityHistoryMessageV1,
   AgentObservabilityJsonValue,
@@ -51,20 +53,6 @@ function normalizeError(error: Error): Record<string, AgentObservabilityJsonValu
   return normalized;
 }
 
-function normalizeObject(
-  value: UnknownRecord,
-  seen: Set<object>,
-): Record<string, AgentObservabilityJsonValue> {
-  if (seen.has(value)) return { value: '[Circular]' };
-  seen.add(value);
-  const next: Record<string, AgentObservabilityJsonValue> = {};
-  for (const [key, item] of Object.entries(value)) {
-    if (item !== undefined) next[key] = toJsonValue(item, seen);
-  }
-  seen.delete(value);
-  return next;
-}
-
 function normalizeScalar(value: unknown): AgentObservabilityJsonValue | undefined {
   if (value === undefined) return null;
   if (value === null || typeof value === 'string' || typeof value === 'boolean') return value;
@@ -74,18 +62,47 @@ function normalizeScalar(value: unknown): AgentObservabilityJsonValue | undefine
   return undefined;
 }
 
-export function toJsonValue(
-  value: unknown,
-  seen = new Set<object>(),
-): AgentObservabilityJsonValue {
+interface Traversal { nodes: number; bytes: number; seen: Set<object> }
+
+function boundedValue(value: unknown, state: Traversal, depth: number): AgentObservabilityJsonValue {
+  if (++state.nodes > AGENT_OBSERVABILITY_MAX_JSON_NODES || depth > AGENT_OBSERVABILITY_MAX_JSON_DEPTH) throw new Error('OBSERVER_NORMALIZATION_COMPLEXITY_LIMIT');
+  if (types.isProxy(value)) throw new Error('OBSERVER_NORMALIZATION_PROXY_DENIED');
   const scalar = normalizeScalar(value);
-  if (scalar !== undefined) return scalar;
-  if (value instanceof Date) return value.toISOString();
-  if (value instanceof Error) return normalizeError(value);
-  if (Array.isArray(value)) return value.map((item) => toJsonValue(item, seen));
-  if (!isRecord(value)) return String(value);
-  if (seen.has(value)) return '[Circular]';
-  return normalizeObject(value, seen);
+  if (scalar !== undefined) {
+    if (typeof scalar === 'string') state.bytes += Buffer.byteLength(scalar);
+    if (state.bytes > AGENT_OBSERVABILITY_ABSOLUTE_MAX_EVENT_BYTES) throw new Error('OBSERVER_NORMALIZATION_BYTE_LIMIT');
+    return scalar;
+  }
+  if (value instanceof Date) return Date.prototype.toISOString.call(value);
+  if (value instanceof Error) return boundedValue(normalizeError(value), state, depth + 1);
+  if (!value || typeof value !== 'object') throw new Error('OBSERVER_NORMALIZATION_VALUE_INVALID');
+  if (state.seen.has(value)) return '[Circular]';
+  state.seen.add(value);
+  try { return boundedContainer(value, state, depth); }
+  finally { state.seen.delete(value); }
+}
+
+function boundedContainer(value: object, state: Traversal, depth: number): AgentObservabilityJsonValue {
+  const array = Array.isArray(value);
+  const keys = array ? undefined : Object.keys(value);
+  const length = array ? value.length : keys!.length;
+  if (length + state.nodes > AGENT_OBSERVABILITY_MAX_JSON_NODES) throw new Error('OBSERVER_NORMALIZATION_COMPLEXITY_LIMIT');
+  const result: Record<string, AgentObservabilityJsonValue> = Object.create(null);
+  const items: AgentObservabilityJsonValue[] = [];
+  for (let index = 0; index < length; index += 1) {
+    const key = array ? String(index) : keys![index]!;
+    const descriptor = Object.getOwnPropertyDescriptor(value, key);
+    if (descriptor && !('value' in descriptor)) throw new Error('OBSERVER_NORMALIZATION_ACCESSOR_DENIED');
+    state.bytes += Buffer.byteLength(key);
+    if (state.bytes > AGENT_OBSERVABILITY_ABSOLUTE_MAX_EVENT_BYTES) throw new Error('OBSERVER_NORMALIZATION_BYTE_LIMIT');
+    if (array) items.push(boundedValue(descriptor?.value, state, depth + 1));
+    else if (descriptor?.value !== undefined) result[key] = boundedValue(descriptor.value, state, depth + 1);
+  }
+  return array ? items : result;
+}
+
+export function toJsonValue(value: unknown, seen = new Set<object>()): AgentObservabilityJsonValue {
+  return boundedValue(value, { nodes: 0, bytes: 0, seen }, 0);
 }
 
 export function toJsonRecord(

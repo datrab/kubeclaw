@@ -20,6 +20,7 @@ import type {
 import {
   agentEventDedupeKey,
   ingressEventDedupeKey,
+  IngressDedupe,
   isConfigRecord,
   mergeConfigInputs,
   releaseGlobalAgentEventObserver,
@@ -48,7 +49,7 @@ export class OpenClawAgentObserver {
   private diagnosticsUnsubscribe: (() => void) | null = null;
   private readonly loggedFailures = new Set<string>();
   private readonly recentAgentEvents = new Map<string, number>();
-  private readonly recentIngressEvents = new Map<string, number>();
+  private readonly ingressDedupe = new IngressDedupe();
 
   constructor(options: AgentObserverOptions = {}) {
     this.env = options.env ?? agentObserverRuntimeEnvironment();
@@ -126,11 +127,12 @@ export class OpenClawAgentObserver {
     this.writer.updateConfig(config);
     if (!config.enabled) return;
     this.startDiagnostics();
-    if (this.shouldDropDuplicateAgentEvent(event)) return;
 
     try {
       const normalized = normalizeAgentEvent(event, new Date());
-      if (normalized) this.enqueueNormalizedEvent(normalized);
+      const key = agentEventDedupeKey(event);
+      if (key && this.seen(this.recentAgentEvents, key, 60_000)) return;
+      if (normalized && this.enqueueNormalizedEvent(normalized, true) && key) this.remember(this.recentAgentEvents, key);
     } catch (error) {
       this.logOnce('normalize-agent-event', `failed to normalize agent event: ${errorMessage(error)}`);
     }
@@ -171,21 +173,23 @@ export class OpenClawAgentObserver {
     };
   }
 
-  private enqueueNormalizedEvent(event: AgentObservabilityIngressEventV1): void {
-    if (this.shouldDropDuplicateIngressEvent(event)) return;
-    this.writer.enqueue(event);
+  private enqueueNormalizedEvent(event: AgentObservabilityIngressEventV1, runtime = false): boolean {
+    const key = ingressEventDedupeKey(event);
+    if (this.ingressDedupe.duplicate(key, runtime)) return true;
+    if (!this.writer.enqueue(event)) return false;
+    this.ingressDedupe.accepted(key, runtime);
+    return true;
   }
 
-  private shouldDropDuplicateIngressEvent(event: AgentObservabilityIngressEventV1): boolean {
-    const key = ingressEventDedupeKey(event);
-    if (!key) return false;
+  private seen(cache: Map<string, number>, key: string, ttl: number): boolean {
     const now = Date.now();
-    for (const [candidate, seenAt] of this.recentIngressEvents) {
-      if (now - seenAt > 10_000) this.recentIngressEvents.delete(candidate);
-    }
-    if (this.recentIngressEvents.has(key)) return true;
-    this.recentIngressEvents.set(key, now);
-    return false;
+    for (const [candidate, seenAt] of cache) if (now - seenAt > ttl) cache.delete(candidate);
+    return cache.has(key);
+  }
+
+  private remember(cache: Map<string, number>, key: string): void {
+    if (cache.size >= 10_000) cache.delete(cache.keys().next().value!);
+    cache.set(key, Date.now());
   }
 
   private resolveConfig(hookConfig?: unknown): AgentObserverConfig {
@@ -210,18 +214,6 @@ export class OpenClawAgentObserver {
 
   logRuntimeSubscriptionFailure(error: unknown): void {
     this.logOnce('agent-events-subscribe', `agent event runtime subscription unavailable: ${errorMessage(error)}`);
-  }
-
-  private shouldDropDuplicateAgentEvent(event: unknown): boolean {
-    const key = agentEventDedupeKey(event);
-    if (!key) return false;
-    const now = Date.now();
-    for (const [candidate, seenAt] of this.recentAgentEvents) {
-      if (now - seenAt > 60_000) this.recentAgentEvents.delete(candidate);
-    }
-    if (this.recentAgentEvents.has(key)) return true;
-    this.recentAgentEvents.set(key, now);
-    return false;
   }
 
   private stopDiagnostics(): void {
