@@ -1,0 +1,16 @@
+exit_code=0
+{"mode":"current","receiverCalls":1,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:json-utf16-v1:9ee384d2ceab898ca5df039537ef376d658beff4183f3d3737cbb84a1d781793:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity current across native locales (1993.48277ms)
+{"mode":"legacy-resume","receiverCalls":1,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:1ec0d8f6f3f861c48bd6126cd392110779283365d0acab2b5ada5d7f1128e490:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity legacy-resume across native locales (2415.444852ms)
+{"mode":"historical-countercheck","receiverCalls":2,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:2c25caf0b680713f5c75c10fdd9cd8e482434e46b793b796e0f705e93a231d23:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604","adapter:test.locale-dependency:consumer:network.http:ac6c8608f961e22efbf6792e439caa13e677d05ca63a708c9ff6482403554f64:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity historical-countercheck across native locales (2533.903045ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7036.622941
+

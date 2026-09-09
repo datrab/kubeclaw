@@ -1,0 +1,7 @@
+skills/nova/core/execution/adapter-startup.ts(109,132): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(store: AdapterInvocationOwner, callback: () => Promise<Readonly<Record<string, unknown>>>): Promise<Readonly<Record<string, unknown>>>', gave the following error.
+    Type 'boolean | undefined' is not assignable to type 'boolean'.
+      Type 'undefined' is not assignable to type 'boolean'.
+  Overload 2 of 2, '(store: AdapterInvocationOwner, callback: () => Promise<Readonly<Record<string, unknown>>>): Promise<Readonly<Record<string, unknown>>>', gave the following error.
+    Type 'boolean | undefined' is not assignable to type 'boolean'.
+      Type 'undefined' is not assignable to type 'boolean'.

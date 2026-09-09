@@ -17,6 +17,26 @@
       "type": "string",
       "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,191}$"
     },
+    "effectIdempotencyKey": {
+      "description": "Existing opaque keys, plus the exact historical adapter dependency producer grammar. Package/capability names retain their 160-character bounds and registration its 96-character bound. New dependency keys are compact opaque IDs.",
+      "anyOf": [
+        { "$ref": "#/$defs/opaqueId" },
+        {
+          "type": "string",
+          "pattern": "^adapter:(?=[^:]{1,160}:)[a-z0-9]+(?:[._-][a-z0-9]+)+:(?=[^:]{1,96}:)[a-z0-9]+(?:[._-][a-z0-9]+)*:(?=[^:]{1,160}:)[a-z0-9]+(?:[._-][a-z0-9]+)+:[a-f0-9]{64}(?::parent:[a-f0-9]{64})?$"
+        }
+      ]
+    },
+    "resourceIdentity": {
+      "description": "Capability-owned resource names include URLs, absolute paths, dot and catalog keys. Capability implementations retain their own URL, path and authorization constraints.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "canonicalId"],
+      "properties": {
+        "type": { "$ref": "#/$defs/namespacedId" },
+        "canonicalId": { "type": "string", "minLength": 1 }
+      }
+    },
     "relativeModulePath": {
       "type": "string",
       "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+\\.(?:mjs|mts|js|ts)$",
@@ -575,20 +595,12 @@
       "properties": {
         "schemaVersion": { "const": "effect-request.v2" },
         "effectId": { "$ref": "#/$defs/opaqueId" },
-        "idempotencyKey": { "$ref": "#/$defs/opaqueId" },
+        "idempotencyKey": { "$ref": "#/$defs/effectIdempotencyKey" },
         "deliveryId": { "$ref": "#/$defs/opaqueId" },
         "attempt": { "$ref": "#/$defs/attemptIdentity" },
         "capability": { "$ref": "#/$defs/namespacedId" },
         "operation": { "$ref": "#/$defs/localId" },
-        "resource": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["type", "canonicalId"],
-          "properties": {
-            "type": { "$ref": "#/$defs/namespacedId" },
-            "canonicalId": { "$ref": "#/$defs/opaqueId" }
-          }
-        },
+        "resource": { "$ref": "#/$defs/resourceIdentity" },
         "payload": { "$ref": "#/$defs/jsonObject" },
         "requestedAt": { "type": "string", "format": "date-time" }
       }
@@ -603,7 +615,7 @@
       "properties": {
         "schemaVersion": { "const": "effect-receipt.v2" },
         "effectId": { "$ref": "#/$defs/opaqueId" },
-        "idempotencyKey": { "$ref": "#/$defs/opaqueId" },
+        "idempotencyKey": { "$ref": "#/$defs/effectIdempotencyKey" },
         "adapter": { "$ref": "#/$defs/packageResolution" },
         "status": { "enum": ["accepted", "completed", "failed"] },
         "result": { "$ref": "#/$defs/jsonObject" },
@@ -1033,15 +1045,7 @@
       "properties": {
         "schemaVersion": { "const": "resource-lock.v2" },
         "lockId": { "$ref": "#/$defs/opaqueId" },
-        "resource": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["type", "canonicalId"],
-          "properties": {
-            "type": { "$ref": "#/$defs/namespacedId" },
-            "canonicalId": { "$ref": "#/$defs/opaqueId" }
-          }
-        },
+        "resource": { "$ref": "#/$defs/resourceIdentity" },
         "ownerLeaseId": { "$ref": "#/$defs/opaqueId" },
         "fencingToken": { "type": "integer", "minimum": 1 },
         "status": { "enum": ["active", "released", "expired"] },
