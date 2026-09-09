@@ -18,5 +18,12 @@ Cleanup verifies the same owner and uses a resource-version precondition. A
 superseded attempt leaves the replacement exposure intact. The controller also
 uses conditional ingress updates and UID/resource-version deletion preconditions.
 The deployment lease keeps final expiry and namespace cleanup authority; exposure
-does not reset its lifetime. Final demo handoff must keep normal fixture cleanup
-from releasing an exposure still needed by the operator.
+does not reset its lifetime.
+
+`retentionMode: await-readiness` transfers exposure ownership to a durable pending
+handoff after the controller observes the current exposure. It requires a retained
+deployment namespace and verified image/manifest identity. Replay adopts that
+record, and the original attempt's cleanup cannot delete its successor's exposure.
+The namespace and exposure keep their original expiry. This is not delivery
+readiness or seven-day retention: a later authoritative readiness/delivery
+transition must establish the D06 start time before granting that period.

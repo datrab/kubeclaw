@@ -7,12 +7,18 @@ function object(value, label) {
   return value;
 }
 
+function parseRetention(value = 'release') {
+  if (!['release','await-readiness'].includes(value)) throw new Error('TAILSCALE_EXPOSURE_RETENTION_INVALID');
+  return value;
+}
+
 function configuration(invocation) {
   const value = object(invocation.configuration.values, 'root');
   const endpointName = value.endpointName;
   const hostname = value.hostname;
   const path = value.path ?? '/';
   const readinessTimeoutSeconds = value.readinessTimeoutSeconds ?? 120;
+  const retentionMode = parseRetention(value.retentionMode);
   if (endpointName !== undefined && (typeof endpointName !== 'string' || !DNS_LABEL.test(endpointName))) throw new Error('TAILSCALE_EXPOSURE_ENDPOINT_NAME_INVALID');
   if (hostname !== undefined && (typeof hostname !== 'string' || !DNS_LABEL.test(hostname))) throw new Error('TAILSCALE_EXPOSURE_HOSTNAME_INVALID');
   if (typeof path !== 'string' || !path.startsWith('/') || path.startsWith('//') || path.length > 1024
@@ -20,7 +26,7 @@ function configuration(invocation) {
   if (!Number.isSafeInteger(readinessTimeoutSeconds) || readinessTimeoutSeconds < 1 || readinessTimeoutSeconds > 3600) {
     throw new Error('TAILSCALE_EXPOSURE_READINESS_TIMEOUT_INVALID');
   }
-  return { endpointName, hostname, path, readinessTimeoutSeconds };
+  return { endpointName, hostname, path, readinessTimeoutSeconds, retentionMode };
 }
 
 function deploymentInput(invocation, endpointName) {
@@ -67,6 +73,7 @@ export function provider() {
       const result = await context.invoke('kubernetes.exposure', {
         operation: 'prepare', resource: { type: 'kubernetes.exposure', canonicalId: `kubernetes-exposure:${invocation.attemptId}` },
         payload: { ...deployment, path: config.path, ...(config.hostname ? { hostname: config.hostname } : {}),
+          ...(config.retentionMode === 'await-readiness' ? {retentionMode:config.retentionMode} : {}),
           readinessTimeoutMs: Math.min(invocation.timeoutMs, config.readinessTimeoutSeconds * 1000) },
       });
       if (result.ok !== true || typeof result.url !== 'string' || typeof result.hostname !== 'string'
@@ -75,7 +82,9 @@ export function provider() {
       }
       const exposure = { schemaVersion: 'public-endpoint-fixture.v1', provider: 'tailscale-ingress',
         url: result.url, hostname: result.hostname, namespace: deployment.namespace, leaseName: deployment.leaseName,
-        createdAt: result.createdAt, expiresAt: result.expiresAt, releaseAction: result.releaseAction };
+        createdAt: result.createdAt, expiresAt: result.expiresAt, releaseAction: result.releaseAction,
+        ...(result.handoff ? {handoff:result.handoff} : {}) };
+      if(config.retentionMode==='await-readiness' && result.handoff?.phase!=='awaiting-readiness')throw new Error('TAILSCALE_EXPOSURE_HANDOFF_MISSING');
       context.log('stdout', `Prepared Tailscale exposure ${result.url}.\n`);
       return { schemaVersion: 'provider-result.v1', outcome: 'passed', summary: `Prepared Tailscale exposure ${result.hostname}.`,
         counts: { total: 1, passed: 1, failed: 0, skipped: 0 }, findings: [], metrics: [], evidenceFiles: [], reports: [],
@@ -88,7 +97,8 @@ export function provider() {
       const deployment = deploymentInput(invocation, config.endpointName);
       await context.invoke('kubernetes.exposure', { operation: 'release',
         resource: { type: 'kubernetes.exposure', canonicalId: `kubernetes-exposure:${invocation.attemptId}` },
-        payload: { ...deployment, path: config.path, ...(config.hostname ? { hostname: config.hostname } : {}) } });
+        payload: { ...deployment, path: config.path, ...(config.hostname ? { hostname: config.hostname } : {}),
+          ...(config.retentionMode === 'await-readiness' ? {retentionMode:config.retentionMode} : {}) } });
     },
   };
 }

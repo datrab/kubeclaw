@@ -1,4 +1,5 @@
 import crypto from 'node:crypto';
+import { assertGeneratedCredentialLease,generatedDemoCredentials } from './generated-demo-credentials.ts';
 import { runProcessInput } from './process-input.ts';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -622,6 +623,17 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     }
   }
 
+  async #generatedCredentials(expected:Parameters<typeof generatedDemoCredentials>[2],signal:AbortSignal) {
+    const resource=`busternamespaceleases.${this.#apiGroup}`;
+    const freshLease=JSON.parse(await this.#kubectlRun(['get',resource,expected.leaseName,'-n',this.#controllerNamespace,'-o','json'],null,signal,15_000));
+    assertGeneratedCredentialLease(freshLease,expected);
+    let secret;
+    // Until UID and bytes are verified, subprocess diagnostics must not expose Secret content.
+    try { secret=JSON.parse(await this.#kubectlRun(['get','secret',expected.secretName,'-n',expected.namespace,'-o','json'],null,signal,15_000)); }
+    catch { throw new Error('DEMO_CREDENTIAL_SECRET_READ_FAILED'); }
+    return generatedDemoCredentials(freshLease,secret,expected);
+  }
+
   async #prepare(request: TestProviderCapabilityRequest, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
     const payload = object(request.payload, 'payload');
     const leaseName = text(payload.leaseName, 'leaseName', 63);
@@ -709,11 +721,14 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       const createdAt = text(status.createdAt, 'status.createdAt', 64);
       if (!Number.isFinite(Date.parse(createdAt))) throw new Error('KUBERNETES_FIXTURE_CREATED_AT_INVALID');
       const expiresAt = typeof status.expiresAt === 'string' ? status.expiresAt : new Date(Date.parse(createdAt) + retentionSeconds * 1_000).toISOString();
+      const generatedCredentials = testCredentials ? await this.#generatedCredentials({leaseName, namespace:namespaceName,
+        secretName:String(testCredentials.secretName), immutableImage, manifestDigest},signal) : undefined;
       return Object.freeze({ ok: true, leaseName, namespace: namespaceName, createdAt, expiresAt,
         endpoint: `http://${serviceName}.${namespaceName}.svc.cluster.local:${servicePort}`,
         releaseAction: `kubectl delete busternamespacelease ${leaseName} -n ${this.#controllerNamespace}`,
         manifestDigest, immutableImage, secretReferences,
         ...(testCredentials ? { credentialsRef: testCredentials.secretName } : {}),
+        ...(generatedCredentials ? { generatedCredentials } : {}),
         resourceCount: facts.resources, workloadCount: facts.workloads, podCount });
     } catch (error) {
       await this.#releaseAfterPrepareFailure(leaseName).catch(() => undefined);

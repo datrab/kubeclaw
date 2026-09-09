@@ -3,11 +3,9 @@ package main
 import (
 	"bytes"
 	"context"
-	"crypto/rand"
 	"crypto/sha256"
 	"crypto/tls"
 	"crypto/x509"
-	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
@@ -1163,104 +1161,6 @@ func (c *controller) credentialRequest(item *lease) (*testCredentialRequest, err
 	return &testCredentialRequest{Mode: mode, SecretName: secretName, Readers: readers, Writers: writers, Keys: keys}, nil
 }
 
-func (c *controller) ensureTestCredentials(ctx context.Context, item *lease, namespaceName string) (map[string]interface{}, error) {
-	request, err := c.credentialRequest(item)
-	if err != nil {
-		return nil, err
-	}
-	if request == nil {
-		return map[string]interface{}{"credentialsRef": nil, "credentialsAvailable": false}, nil
-	}
-	if err := c.ensureCredentialAccess(ctx, namespaceName, request); err != nil {
-		return nil, err
-	}
-	path := "/api/v1/namespaces/" + namespaceName + "/secrets/" + request.SecretName
-	var secret map[string]interface{}
-	err = c.kube(ctx, http.MethodGet, path, nil, "application/json", &secret)
-	if err != nil {
-		var apiErr *apiError
-		if !errors.As(err, &apiErr) || apiErr.statusCode != http.StatusNotFound {
-			return nil, err
-		}
-		if request.Mode == "existing" {
-			placeholder := map[string]interface{}{
-				"apiVersion": "v1", "kind": "Secret", "type": "Opaque",
-				"metadata": map[string]interface{}{
-					"name": request.SecretName, "namespace": namespaceName,
-					"labels": mergeStringMaps(ownerLabels(item, namespaceName), map[string]string{"kubeclaw/user-deliverable": "true"}),
-				},
-			}
-			if err := c.kube(ctx, http.MethodPost, "/api/v1/namespaces/"+namespaceName+"/secrets", placeholder, "application/json", nil); err != nil {
-				return nil, err
-			}
-			return map[string]interface{}{"credentialsRef": "secret/" + request.SecretName, "credentialsAvailable": false}, nil
-		}
-		password := make([]byte, 24)
-		if _, err := rand.Read(password); err != nil {
-			return nil, fmt.Errorf("generate preview credential: %w", err)
-		}
-		manifest := map[string]interface{}{
-			"apiVersion": "v1", "kind": "Secret", "type": "Opaque",
-			"metadata": map[string]interface{}{
-				"name": request.SecretName, "namespace": namespaceName,
-				"labels": mergeStringMaps(ownerLabels(item, namespaceName), map[string]string{"kubeclaw/user-deliverable": "true"}),
-			},
-			"stringData": map[string]interface{}{
-				"username": "preview", "password": base64.RawURLEncoding.EncodeToString(password),
-			},
-		}
-		if err := c.kube(ctx, http.MethodPost, "/api/v1/namespaces/"+namespaceName+"/secrets", manifest, "application/json", &secret); err != nil {
-			return nil, err
-		}
-	}
-	available, err := deliverableCredentialAvailable(secret, request)
-	if err != nil {
-		return nil, err
-	}
-	if !available {
-		if request.Mode == "existing" {
-			return map[string]interface{}{"credentialsRef": "secret/" + request.SecretName, "credentialsAvailable": false}, nil
-		}
-		return nil, fmt.Errorf("generated test credential Secret %s is incomplete", request.SecretName)
-	}
-	return map[string]interface{}{"credentialsRef": "secret/" + request.SecretName, "credentialsAvailable": true}, nil
-}
-
-func validateDeliverableCredentialSecret(secret map[string]interface{}, request *testCredentialRequest) error {
-	available, err := deliverableCredentialAvailable(secret, request)
-	if err != nil {
-		return err
-	}
-	if !available {
-		return fmt.Errorf("test credential Secret %s is missing a declared key", request.SecretName)
-	}
-	return nil
-}
-
-func deliverableCredentialAvailable(secret map[string]interface{}, request *testCredentialRequest) (bool, error) {
-	allowed := map[string]bool{}
-	for _, key := range request.Keys {
-		allowed[key] = true
-	}
-	found := map[string]bool{}
-	for _, field := range []string{"data", "stringData"} {
-		for key, value := range objectValue(secret[field]) {
-			if !allowed[key] {
-				return false, fmt.Errorf("test credential Secret %s contains undeclared key %s", request.SecretName, key)
-			}
-			if stringValue(value) != "" {
-				found[key] = true
-			}
-		}
-	}
-	for _, key := range request.Keys {
-		if !found[key] {
-			return false, nil
-		}
-	}
-	return true, nil
-}
-
 func (c *controller) ensureCredentialAccess(ctx context.Context, namespaceName string, request *testCredentialRequest) error {
 	for _, manifest := range c.credentialAccessObjects(namespaceName, request) {
 		resource := "rolebindings"
@@ -1867,6 +1767,9 @@ func leaseLabelValue(item *lease) string {
 }
 
 func exposureChanged(status map[string]interface{}, exposure map[string]interface{}) bool {
+	if fullLeaseSpecDigest(objectValue(status["generatedCredentials"])) != fullLeaseSpecDigest(objectValue(exposure["generatedCredentials"])) {
+		return true
+	}
 	for _, key := range []string{"exposurePhase", "previewUrl", "exposureHostname", "exposureOwner", "exposureGeneration", "message", "credentialsRef"} {
 		if stringValue(status[key]) != stringValue(exposure[key]) {
 			return true

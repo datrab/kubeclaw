@@ -1,4 +1,5 @@
 import { runProcessInput } from './process-input.ts';
+import { assertHandoffSourceRequest,existingExposureHandoff,exposureHandoffPatch } from './exposure-handoff.ts';
 import { EXPOSURE_OWNER_ANNOTATION, EXPOSURE_REQUEST_ANNOTATION, EXPOSURE_PREDECESSORS_ANNOTATION, exposurePredecessors, exposureIdentity, generationObserved, assertExposureRequest, assertRequestedExposure, ownedReleaseAction } from './exposure-generation.ts';
 import fs from 'node:fs';
 import type { TestProviderCapabilityRequest } from '@kubeclaw/plugin-sdk';
@@ -176,13 +177,18 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
       clearTimeout(timer);
     }
   }
-  async #prepare(payload: JsonObject, resourceId: string, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
+  #prepareInput(payload:JsonObject) {
+    if(payload.retentionMode!==undefined&&payload.retentionMode!=='await-readiness')throw new Error('EXPOSURE_RETENTION_MODE_INVALID');
     const leaseName = text(payload.leaseName, 'leaseName', 63); if (!DNS_LABEL.test(leaseName)) throw new Error('TAILSCALE_EXPOSURE_LEASE_NAME_INVALID');
     const namespace = this.#namespace(payload.namespace); const timeoutMs = integer(payload.readinessTimeoutMs, 'readinessTimeoutMs', 1, this.#maximumExecutionMs);
     const path = text(payload.path, 'path', 1024);
     if (!path.startsWith('/') || path.startsWith('//') || /[\r\n?#]/u.test(path)) throw new Error('TAILSCALE_EXPOSURE_PATH_INVALID');
     const hostname = payload.hostname === undefined ? undefined : text(payload.hostname, 'hostname', 63);
     if (hostname !== undefined && !DNS_LABEL.test(hostname)) throw new Error('TAILSCALE_EXPOSURE_HOSTNAME_INVALID');
+    return {leaseName,namespace,timeoutMs,path,hostname};
+  }
+  async #prepare(payload: JsonObject, resourceId: string, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
+    const {leaseName,namespace,timeoutMs,path,hostname}=this.#prepareInput(payload);
     const resource = `busternamespaceleases.${this.#apiGroup}`;
     for (const verb of ['get', 'patch']) {
       const allowed = (await this.#run(['auth', 'can-i', verb, resource, '-n', this.#controllerNamespace], null, signal, 15_000)).trim();
@@ -190,6 +196,16 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
     }
     const before = await this.#lease(leaseName, signal); const verified = this.#verifyLease(before, payload, namespace);
     const identity = exposureIdentity(resourceId, payload); const { owner } = identity;
+    assertHandoffSourceRequest(before,identity);
+    const pending = payload.retentionMode === 'await-readiness' ? existingExposureHandoff(before,identity) : undefined;
+    if(pending){
+      assertRequestedExposure(before,payload);
+      const ready=await this.#wait(leaseName,'Ready',pending.owner,signal,timeoutMs);
+      this.#verifyLease(ready,payload,namespace);
+      const {urlText,publicHost}=this.#publicURL(object(ready.status,'lease.status'),path,hostname);
+      return {ok:true,leaseName,namespace,url:urlText,hostname:publicHost,createdAt:object(ready.status,'lease.status').createdAt,expiresAt:verified.expiresAt,
+        releaseAction:ownedReleaseAction(leaseName,this.#controllerNamespace,pending.owner),handoff:pending};
+    }
     assertExposureRequest(before, identity);
     const metadata = object(before.metadata, 'lease.metadata');
     const resourceVersion = text(metadata.resourceVersion, 'lease.resourceVersion', 64);
@@ -207,9 +223,17 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
       this.#verifyLease(ready, payload, namespace);
       const status = object(ready.status, 'lease.status');
       const { urlText, publicHost } = this.#publicURL(status, path, hostname);
+      let handoff;
+      if(payload.retentionMode==='await-readiness'){
+        const transfer=exposureHandoffPatch(ready,identity);
+        await this.#run(['patch','busternamespacelease',leaseName,'-n',this.#controllerNamespace,'--type=merge','-p',JSON.stringify(transfer.patch)],null,signal,15_000);
+        const transferred=await this.#wait(leaseName,'Ready',transfer.handoff.owner,signal,timeoutMs);
+        this.#verifyLease(transferred,payload,namespace);assertRequestedExposure(transferred,payload);
+        handoff=existingExposureHandoff(transferred,identity);
+      }
       return Object.freeze({ ok: true, leaseName, namespace, url: urlText, hostname: publicHost,
         createdAt: text(status.createdAt, 'createdAt', 64), expiresAt: verified.expiresAt,
-        releaseAction: ownedReleaseAction(leaseName, this.#controllerNamespace, owner) });
+        releaseAction: ownedReleaseAction(leaseName, this.#controllerNamespace, handoff?.owner ?? owner),...(handoff?{handoff}:{}) });
     } catch (error) {
       await this.#rollbackFailedPrepare(leaseName, owner, error);
       throw error;

@@ -29,6 +29,12 @@
       ],
       "outputs": [
         {
+          "name": "demo-credentials",
+          "kind": "value",
+          "required": false,
+          "schemaId": "kubeclaw.generated-demo-credentials@1"
+        },
+        {
           "name": "deployment",
           "kind": "value",
           "required": true,

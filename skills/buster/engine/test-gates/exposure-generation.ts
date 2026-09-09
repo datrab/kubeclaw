@@ -9,7 +9,8 @@ export function exposureIdentity(resource: string, payload: JsonObject): { owner
   const target = { resource, leaseName: payload.leaseName, namespace: payload.namespace };
   return { owner: sha256Text(canonicalJson(target)), request: sha256Text(canonicalJson({ ...target,
     serviceName: payload.serviceName, servicePort: payload.servicePort, expiresAt: payload.expiresAt,
-    path: payload.path, hostname: payload.hostname ?? null })) };
+    path: payload.path, hostname: payload.hostname ?? null,
+    ...(payload.retentionMode === undefined ? {} : {retentionMode:payload.retentionMode}) })) };
 }
 
 export function generationObserved(lease: JsonObject, owner: string, phase: string): boolean {

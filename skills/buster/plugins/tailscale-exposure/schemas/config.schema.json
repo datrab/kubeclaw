@@ -3,6 +3,7 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "retentionMode": { "enum": ["release", "await-readiness"] },
     "endpointName": { "$ref": "#/$defs/dnsLabel" },
     "hostname": { "$ref": "#/$defs/dnsLabel" },
     "path": { "type": "string", "pattern": "^/(?:[^/?#\\r\\n][^?#\\r\\n]*)?$", "maxLength": 1024 },

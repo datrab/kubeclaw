@@ -9,7 +9,7 @@ const invocation: any = {
   } }],
 };
 assert.deepEqual(testContract.configuration(invocation), {
-  endpointName: undefined, hostname: undefined, path: '/preview', readinessTimeoutSeconds: 90,
+  endpointName: undefined, hostname: undefined, path: '/preview', readinessTimeoutSeconds: 90, retentionMode:'release',
 });
 assert.deepEqual(testContract.deploymentInput(invocation, undefined), {
   leaseName: 'test-123', namespace: 'test-123', expiresAt: '2030-01-01T00:00:00.000Z',

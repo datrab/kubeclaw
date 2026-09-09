@@ -109,6 +109,7 @@ export function provider() {
       const manifest = manifestInput(invocation);
       const result = await context.invoke('kubernetes.fixture', capabilityRequest(invocation, config, manifest));
       if (result.ok !== true) throw new Error('KUBERNETES_FIXTURE_PREPARATION_FAILED');
+      if (config.testCredentials && !result.generatedCredentials) throw new Error('KUBERNETES_FIXTURE_CREDENTIAL_PROVENANCE_MISSING');
       const deployment = { schemaVersion: 'kubernetes-deployment-fixture.v1', leaseName: result.leaseName,
         namespace: result.namespace,
         createdAt: result.createdAt, expiresAt: result.expiresAt, endpoints: [{ name: config.serviceName, url: result.endpoint }],
@@ -121,6 +122,7 @@ export function provider() {
         metrics: [{ name: 'kubernetes_fixture_resources', value: Number(result.resourceCount ?? 0) },
           { name: 'kubernetes_fixture_pods', value: Number(result.podCount ?? 0) }], evidenceFiles: [], reports: [],
         outputs: [
+          ...(result.generatedCredentials ? [{ name: 'demo-credentials', kind: 'value', schemaId: 'kubeclaw.generated-demo-credentials@1', value: result.generatedCredentials }] : []),
           { name: 'deployment', kind: 'value', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1', value: deployment },
           { name: 'image', kind: 'value', schemaId: 'kubeclaw.container-image@1',
             value: { schemaVersion: 'container-image.v1', reference: config.immutableImage, digest: config.imageDigest } },
