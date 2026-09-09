@@ -1,0 +1,56 @@
+Reviewed source: 570f439281add4c42bfb85def7dee0398deae969
+Command: node --test tests/verification/reliability/repair-identity-independent.test.mjs
+Runtime: Node v24.19.0
+▶ independent original-producer recovery and semantically invalid repair projection matrix
+  ✔ old en-US producer is authorized unchanged by current sv-SE recovery (188.1296ms)
+  ✔ pending category (358.108987ms)
+  ✔ pending source facts (329.232185ms)
+  ✔ pending history removal (331.122477ms)
+  ✔ pending history order (368.395501ms)
+  ✔ pending history attempt (274.459583ms)
+  ✔ pending finding details (305.484376ms)
+  ✔ pending requester identity (305.939027ms)
+  ✔ pending extra field (291.362821ms)
+  ✔ order source facts (268.954989ms)
+  ✔ order requester attempt (326.201669ms)
+  ✔ order digest mismatch (294.39428ms)
+  ✔ order nested finding details (275.377311ms)
+  ✔ projection wrong stage (291.058122ms)
+  ✔ projection wrong causation (286.347041ms)
+  ✔ duplicate pending projection (273.942171ms)
+  ✔ duplicate order projection (306.26202ms)
+  ✔ unknown original completion encoding (313.874815ms)
+  ✖ order projection cannot attach to a successful non-requester completion (228.858347ms)
+  ✔ legacy same-locale completion-only prefix 17 preserves existing decision (325.396186ms)
+  ✔ legacy same-locale completion-only prefix 36 preserves existing decision (377.982869ms)
+  ✔ legacy same-locale completion-only prefix 55 preserves existing decision (466.115679ms)
+✖ independent original-producer recovery and semantically invalid repair projection matrix (9176.404771ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 21
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9355.619746
+
+✖ failing tests:
+
+test at tests/verification/reliability/repair-identity-independent.test.mjs:78:21
+✖ order projection cannot attach to a successful non-requester completion (228.858347ms)
+  AssertionError [ERR_ASSERTION]: {"states":[["lint",{"stageId":"lint","status":"waiting","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":1,"remediationTarget":"source"}],["review",{"stageId":"review","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}],["source",{"stageId":"source","status":"pending","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":1,"repairLedger":[{"id":"sha256:2717d6acc0f99e3c5b1d8ac4f1f567a66928f5a619591ab60da68f783b014b73","category":"lint","requesterStageId":"lint","requesterAttempt":1,"requestDigest":"sha256:2717d6acc0f99e3c5b1d8ac4f1f567a66928f5a619591ab60da68f783b014b73","request":{"schemaVersion":"repair-request.v1","requesterStageId":"lint","targetStageId":"source","generation":1,"requesterResult":{"schemaVersion":"stage-result.v2","outcome":"request_fix","artifacts":[{"artifactId":"evidence:lint:1","digest":"sha256:ecb353325f5a7b1425905ae0b08c9b9504da0670ff0657fda27111729c4e2b67","mediaType":"application/json","namespace":"test.repair-budget","producer":{"attemptId":"attempt:e45d68b9-b4b6-402a-b035-f3569d38d944","attemptNumber":1,"runId":"run:repair-authorization-locale","stageId":"lint"},"sizeBytes":107}],"reason":{"code":"test.request_fix","message":"lint at source 1","details":{"version":1,"revision":"9d46df97143b955d39db8ae46b9fbdccdd26c3e2","ä":2,"z":1}}},"invalidatedStageIds":["lint","review","test"]},"sourceFacts":{"test.source_revision":"9d46df97143b955d39db8ae46b9fbdccdd26c3e2","test.source_version":1}}],"remediationReturnTo":"lint","continuationGuidance":{"repairRequest":{"schemaVersion":"repair-request.v1","requesterStageId":"lint","targetStageId":"source","generation":1,"requesterResult":{"schemaVersion":"stage-result.v2","outcome":"request_fix","artifacts":[{"artifactId":"evidence:lint:1","digest":"sha256:ecb353325f5a7b1425905ae0b08c9b9504da0670ff0657fda27111729c4e2b67","mediaType":"application/json","namespace":"test.repair-budget","producer":{"attemptId":"attempt:e45d68b9-b4b6-402a-b035-f3569d38d944","attemptNumber":1,"runId":"run:repair-authorization-locale","stageId":"lint"},"sizeBytes":107}],"reason":{"code":"test.request_fix","message":"lint at source 1","details":{"version":1,"revision":"9d46df97143b955d39db8ae46b9fbdccdd26c3e2","ä":2,"z":1}}},"invalidatedStageIds":["lint","review","test"],"budgetOrder":{"id":"sha256:2717d6acc0f99e3c5b1d8ac4f1f567a66928f5a619591ab60da68f783b014b73","category":"lint","requesterStageId":"lint","requesterAttempt":1,"requestDigest":"sha256:2717d6acc0f99e3c5b1d8ac4f1f567a66928f5a619591ab60da68f783b014b73","request":{"schemaVersion":"repair-request.v1","requesterStageId":"lint","targetStageId":"source","generation":1,"requesterResult":{"schemaVersion":"stage-result.v2","outcome":"request_fix","artifacts":[{"artifactId":"evidence:lint:1","digest":"sha256:ecb353325f5a7b1425905ae0b08c9b9504da0670ff0657fda27111729c4e2b67","mediaType":"application/json","namespace":"test.repair-budget","producer":{"attemptId":"attempt:e45d68b9-b4b6-402a-b035-f3569d38d944","attemptNumber":1,"runId":"run:repair-authorization-locale","stageId":"lint"},"sizeBytes":107}],"reason":{"code":"test.request_fix","message":"lint at source 1","details":{"version":1,"revision":"9d46df97143b955d39db8ae46b9fbdccdd26c3e2","ä":2,"z":1}}},"invalidatedStageIds":["lint","review","test"]},"sourceFacts":{"test.source_revision":"9d46df97143b955d39db8ae46b9fbdccdd26c3e2","test.source_version":1}}}}}],["test",{"stageId":"test","status":"pending","attemptNumber":0,"attemptsUsed":0,"remediationCyclesUsed":0}]],"authorized":false}
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-sdk-review/tests/verification/reliability/repair-identity-independent.test.mjs:82:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at TestContext.test (node:internal/test_runner/test:394:20)
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-sdk-review/tests/verification/reliability/repair-identity-independent.test.mjs:78:21)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: /^REPAIR_PROJECTION/u,
+    operator: 'match',
+    diff: 'simple'
+  }

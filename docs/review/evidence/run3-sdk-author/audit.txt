@@ -1,0 +1,28 @@
+Source: 3b7f609
+Command: node docs/review/evidence/run2-sdk-remaining/repair-authorization-locale.mjs
+Exit: 0
+{
+  "repairIdentityRegressionPassed": true,
+  "producer": {
+    "locale": "en-US",
+    "state": "waiting",
+    "originalDigest": "sha256:902fb844f625080c09fd37d3aa5f22d6d750b362f40941cd789c3775c7700e6e",
+    "sourceAttempts": 3
+  },
+  "english": {
+    "locale": "en-US",
+    "originalDigest": "sha256:902fb844f625080c09fd37d3aa5f22d6d750b362f40941cd789c3775c7700e6e",
+    "recoveredDigest": "sha256:902fb844f625080c09fd37d3aa5f22d6d750b362f40941cd789c3775c7700e6e",
+    "originalWaitDigest": "sha256:902fb844f625080c09fd37d3aa5f22d6d750b362f40941cd789c3775c7700e6e",
+    "authorized": true
+  },
+  "swedish": {
+    "locale": "sv-SE",
+    "originalDigest": "sha256:902fb844f625080c09fd37d3aa5f22d6d750b362f40941cd789c3775c7700e6e",
+    "recoveredDigest": "sha256:902fb844f625080c09fd37d3aa5f22d6d750b362f40941cd789c3775c7700e6e",
+    "originalWaitDigest": "sha256:902fb844f625080c09fd37d3aa5f22d6d750b362f40941cd789c3775c7700e6e",
+    "authorized": true
+  },
+  "journalUnchanged": true,
+  "completePipelineOrNativeProof": false
+}

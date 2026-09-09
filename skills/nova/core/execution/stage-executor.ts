@@ -132,7 +132,8 @@ export class StageExecutor {
 
   #recordResult(runId: string, stageId: string, attemptId: string, result: StageResult): void {
     const type = result.outcome === 'timed_out' ? 'attempt.timed_out' : result.outcome === 'cancelled' ? 'attempt.cancelled' : 'attempt.completed';
-    this.#options.append(type, { runId, stageId, attemptId }, { outcome: result.outcome, ...(result.reason ? { reason: result.reason } : {}), result: structuredClone(result) });
+    this.#options.append(type, { runId, stageId, attemptId }, { repairIdentityEncoding: 'kubeclaw-json.utf16.v1',
+      outcome: result.outcome, ...(result.reason ? { reason: result.reason } : {}), result: structuredClone(result) });
   }
 
   #cleanup(runtime: AttemptRuntime): void {

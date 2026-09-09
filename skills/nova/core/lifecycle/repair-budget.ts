@@ -1,8 +1,10 @@
-import { canonicalJson, sha256Text, type StageDefinition, type StageResult } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, portableJson, sha256Text, type LifecycleEvent, type PORTABLE_JSON_ENCODING, type StageDefinition, type StageResult } from '@kubeclaw/plugin-sdk';
+import { reconcileRepairProjection, type RepairIdentityContext } from './repair-projection.ts';
 import { repairRequest, type RepairRequest } from './remediation.ts';
 import type { LifecycleDecision, StageRuntimeState } from './reducer.ts';
 
 export interface RepairOrder {
+  readonly repairIdentityEncoding?: typeof PORTABLE_JSON_ENCODING;
   readonly id: string;
   readonly category: string;
   readonly requesterStageId: string;
@@ -14,6 +16,7 @@ export interface RepairOrder {
 }
 
 export interface PendingRepair {
+  readonly repairIdentityEncoding?: typeof PORTABLE_JSON_ENCODING;
   readonly digest: string;
   readonly category: string;
   readonly request: RepairRequest;
@@ -22,20 +25,24 @@ export interface PendingRepair {
 }
 
 export function repairOrder(pending: PendingRepair, attempt: number): RepairOrder {
-  return { id: pending.digest, category: pending.category, requesterStageId: pending.request.requesterStageId,
+  return { ...(pending.repairIdentityEncoding ? { repairIdentityEncoding: pending.repairIdentityEncoding } : {}),
+    id: pending.digest, category: pending.category, requesterStageId: pending.request.requesterStageId,
     requesterAttempt: attempt, requestDigest: pending.digest, request: pending.request, sourceFacts: pending.sourceFacts };
 }
 
 export function pendingRepair(
   stages: readonly StageDefinition[], states: ReadonlyMap<string, StageRuntimeState>,
   requester: StageDefinition, state: StageRuntimeState, result: StageResult, runId: string,
+  repairIdentityEncoding?: typeof PORTABLE_JSON_ENCODING,
 ): PendingRepair {
   const target = requester.on!.request_fix!;
   const request = repairRequest(stages, requester.id, target, state.remediationCyclesUsed, result);
   const category = requester.execution.repairCategory!;
   const history = states.get(target)?.repairLedger ?? [];
   const sourceFacts = states.get(target)?.facts ?? {};
-  return { digest: sha256Text(canonicalJson({ runId, category, request, history, sourceFacts })), category, request, history, sourceFacts };
+  const identity = { ...(repairIdentityEncoding ? { repairIdentityEncoding } : {}), category, request, history, sourceFacts };
+  const serialize = repairIdentityEncoding ? portableJson : canonicalJson;
+  return { digest: sha256Text(serialize({ runId, ...identity })), ...identity };
 }
 
 export function repairDisposition(stages: readonly StageDefinition[], pending: PendingRepair): 'allowed' | 'authorize' | 'blocked' {
@@ -49,18 +56,26 @@ export function repairDisposition(stages: readonly StageDefinition[], pending: P
 }
 
 /** The same policy projects an original completion in live execution and replay. */
+function extraOrderUsed(states: ReadonlyMap<string, StageRuntimeState>, requester: StageDefinition): boolean {
+  const owner = requester.execution.repairBudget ? requester.id : requester.on?.request_fix;
+  return Boolean(owner && states.get(owner)?.repairLedger?.some(order => order.authorization));
+}
+
 export function budgetedRepairDecision(
   stages: readonly StageDefinition[], states: ReadonlyMap<string, StageRuntimeState>, requester: StageDefinition,
   decision: LifecycleDecision, result: StageResult, runId: string,
+  identity: RepairIdentityContext = {},
 ): LifecycleDecision {
-  const owner = requester.execution.repairBudget ? requester.id : requester.on?.request_fix;
-  if (decision.state.status === 'failed' && owner
-    && states.get(owner)?.repairLedger?.some(order => order.authorization)) {
+  if (identity.projection && (!requester.execution.repairCategory || decision.action.type !== 'schedule_remediation')) {
+    throw new Error('REPAIR_PROJECTION_DISPOSITION_INVALID');
+  }
+  if (decision.state.status === 'failed' && extraOrderUsed(states, requester)) {
     return { state: { ...decision.state, status: 'blocked' }, action: { type: 'stop' } };
   }
   if (!requester.execution.repairCategory || decision.action.type !== 'schedule_remediation') return decision;
-  const pending = pendingRepair(stages, states, requester, decision.state, result, runId);
-  const disposition = repairDisposition(stages, pending);
+  const calculated = pendingRepair(stages, states, requester, decision.state, result, runId, identity.encoding);
+  const disposition = repairDisposition(stages, calculated);
+  const pending = reconcileRepairProjection(calculated, identity, decision.state.attemptNumber, disposition);
   if (disposition === 'allowed') return { ...decision, action: { ...decision.action,
     repairRequest: { ...pending.request, budgetOrder: repairOrder(pending, decision.state.attemptNumber) } } };
   const { remediationTarget: _target, ...withoutTarget } = decision.state;
@@ -78,4 +93,22 @@ export function recordRepairOrder(states: Map<string, StageRuntimeState>, reques
     return;
   }
   states.set(request.targetStageId, { ...target, repairLedger: [...ledger, request.budgetOrder] });
+}
+
+/** Reconstruct an administrative order from the original completion and the
+ * replay prefix, before accepting its separately authorized projection. */
+export function validateAdministrativeRepairProjection(stages: readonly StageDefinition[], states: ReadonlyMap<string, StageRuntimeState>,
+  state: StageRuntimeState, event: LifecycleEvent, identity: RepairIdentityContext): void {
+  const completion = identity.administrativeCompletion;
+  if (!completion) return;
+  const requester = stages.find(stage => stage.id === state.stageId)!;
+  const result = completion.payload.result as StageResult;
+  const calculated = pendingRepair(stages, states, requester, { ...state, remediationCyclesUsed: state.remediationCyclesUsed + 1 },
+    result, event.identity.runId, identity.encoding);
+  const disposition = repairDisposition(stages, calculated);
+  if (disposition !== 'allowed') throw new Error('REPAIR_PROJECTION_ADMINISTRATIVE_BUDGET_EXHAUSTED');
+  const pending = reconcileRepairProjection(calculated, identity, state.attemptNumber, disposition);
+  const expected = { ...pending.request, budgetOrder: repairOrder(pending, state.attemptNumber) };
+  if (event.payload.remediationCyclesUsed !== state.remediationCyclesUsed + 1 || event.payload.attemptsUsed !== state.attemptsUsed
+    || portableJson(event.payload.repairRequest) !== portableJson(expected)) throw new Error('REPAIR_PROJECTION_ADMINISTRATIVE_SEMANTICS_INVALID');
 }

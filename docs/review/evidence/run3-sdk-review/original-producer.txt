@@ -1,0 +1,12 @@
+Command: node --test tests/verification/reliability/repair-identity-historical-producer.test.mjs
+Runtime: Node v24.19.0
+{"originalProducer":"a29a9df8cce605f393fa0bec413604a5ae426eeb","producer":{"locale":"en-US","state":"waiting","originalDigest":"sha256:bf5f0f66d318d7be79644a6c847e78cd8e8466093b4b753b613402f486577e3f","sourceAttempts":3},"english":{"locale":"en-US","originalDigest":"sha256:bf5f0f66d318d7be79644a6c847e78cd8e8466093b4b753b613402f486577e3f","recoveredDigest":"sha256:bf5f0f66d318d7be79644a6c847e78cd8e8466093b4b753b613402f486577e3f","originalWaitDigest":"sha256:bf5f0f66d318d7be79644a6c847e78cd8e8466093b4b753b613402f486577e3f","authorized":true},"swedish":{"locale":"sv-SE","originalDigest":"sha256:bf5f0f66d318d7be79644a6c847e78cd8e8466093b4b753b613402f486577e3f","recoveredDigest":"sha256:feb040094c9b7ef84c4f8a372522ff5a506775af4d6b6a4cd0b8b5fce8fc4aae","originalWaitDigest":"sha256:bf5f0f66d318d7be79644a6c847e78cd8e8466093b4b753b613402f486577e3f","authorized":false,"error":"REPAIR_AUTHORIZATION_INVALID"}}
+✔ archived original producer reproduces locale defect without historical Git objects (4028.812237ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4136.279902
