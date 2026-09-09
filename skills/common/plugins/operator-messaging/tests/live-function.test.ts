@@ -61,7 +61,7 @@ const server = http.createServer((request, response) => {
       return;
     }
     response.writeHead(202, { 'content-type': 'application/json' });
-    response.end(JSON.stringify({ messageId: `message-${deliveries.length}` }));
+    response.end(JSON.stringify(request.url.includes('discord') ? { id: '123456789012345678' } : { messageId: `message-${deliveries.length}` }));
   });
 });
 await new Promise((resolve, reject) => {
@@ -263,7 +263,7 @@ try {
     idempotencyKey: 'operator:confidential-discord-delivery',
   });
   assert.equal(confidentialAccepted.accepted, true);
-  assert.equal(deliveries.at(-1).url, '/confidential-discord');
+  assert.equal(deliveries.at(-1).url, '/confidential-discord?wait=true');
 
   const repeated = await publish('operators', payload, {
     idempotencyKey: 'operator:stable-delivery',

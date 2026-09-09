@@ -2,6 +2,7 @@ import crypto from 'node:crypto';
 import type { AdapterActivationContext, AdapterInstance, AdapterInvocation } from '@kubeclaw/plugin-sdk';
 import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
 import { completeDelivery, deliveryIdentity, deliveryReceipt, failDelivery, reserveDelivery, type Reservation } from './delivery-records.ts';
+import { discordEndpoint, discordReceipt, validateDiscordReceipt } from './discord-receipt.ts';
 import { receiverReceipt } from './receiver.ts';
 import { isTargetId, parseConfig, type TargetConfig } from './config.ts';
 import { assertRequest, parsePayload, responseMessageId, secretValue } from './payload.ts';
@@ -43,12 +44,19 @@ function resolveSecretEndpoint(secret: string, target: TargetConfig): string {
   return endpoint.href;
 }
 
+function transportReceipt(invocation: AdapterInvocation, target: TargetConfig, payload: Readonly<Record<string, unknown>>, response: Readonly<Record<string, unknown>>): Readonly<Record<string, unknown>> {
+  if (!Number.isSafeInteger(response.status) || Number(response.status) < 200 || Number(response.status) > 299) throw new Error('OPERATOR_DELIVERY_INVALID_RESPONSE');
+  if (target.format === 'discord_webhook') return discordReceipt(invocation.request, payload, response);
+  const messageId = responseMessageId(response);
+  return { accepted: true, target: invocation.request.resource.canonicalId, status: Number(response.status), ...(messageId ? { messageId } : {}) };
+}
+
 async function deliver(context: AdapterActivationContext, invocation: AdapterInvocation, target: TargetConfig, records: FileDurableRecordStore): Promise<Readonly<Record<string, unknown>>> {
   const { request, signal } = invocation;
   const payload = parsePayload(request.payload, target.maxPayloadBytes);
   const transportPayload = target.format === 'discord_webhook' ? discordWebhookPayload(payload) : payload;
-  const reserved = await reserveDelivery(records, request, transportPayload, Boolean(target.receiptEndpoint));
-  if ('accepted' in reserved) return reserved;
+  const reserved = await reserveDelivery(records, request, transportPayload, target.format === 'json' && Boolean(target.receiptEndpoint));
+  if ('accepted' in reserved) return target.format === 'discord_webhook' ? validateDiscordReceipt(reserved, request, transportPayload) : reserved;
   const reservation = reserved as Reservation;
   let sent = false;
   try {
@@ -57,8 +65,9 @@ async function deliver(context: AdapterActivationContext, invocation: AdapterInv
     const resolved = await context.invoke('secrets.read', { operation: 'resolve', resource: { type: 'secret.name', canonicalId: secretName }, payload: {} });
     if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
     const secret = secretValue(resolved), deliveryId = deliveryIdentity(request), body = JSON.stringify(transportPayload);
-    const endpoint = resolveSecretEndpoint(secret, target);
-    if (target.receiptEndpoint) {
+    const resolvedEndpoint = resolveSecretEndpoint(secret, target);
+    const endpoint = target.format === 'discord_webhook' ? discordEndpoint(resolvedEndpoint) : resolvedEndpoint;
+    if (target.format === 'json' && target.receiptEndpoint) {
       const accepted = await receiverReceipt(context, target.receiptEndpoint, deliveryId, body, secret);
       if (accepted) return completeDelivery(records, request, reservation, { accepted: true, target: request.resource.canonicalId, status: 200, ...accepted });
     }
@@ -69,9 +78,7 @@ async function deliver(context: AdapterActivationContext, invocation: AdapterInv
     sent = true;
     const response = target.endpointSecret ? await context.invokeConfidential('network.http', networkRequest) : await context.invoke('network.http', networkRequest);
     if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
-    if (!Number.isSafeInteger(response.status) || Number(response.status) < 200 || Number(response.status) > 299) throw new Error('OPERATOR_DELIVERY_INVALID_RESPONSE');
-    const messageId = responseMessageId(response);
-    return await completeDelivery(records, request, reservation, { accepted: true, target: request.resource.canonicalId, status: Number(response.status), ...(messageId ? { messageId } : {}) });
+    return await completeDelivery(records, request, reservation, transportReceipt(invocation, target, transportPayload, response));
   } catch (error) { return failDelivery(records, request, reservation, sent, error); }
 }
 
@@ -98,7 +105,11 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
     },
     async receipt(request) {
       assertRequest(request, isTargetId);
-      return deliveryReceipt(records, request);
+      const receipt = await deliveryReceipt(records, request);
+      const target = targets.get(request.resource.canonicalId);
+      if (!target) throw new Error(`OPERATOR_TARGET_DENIED:${request.resource.canonicalId}`);
+      return receipt && target.format === 'discord_webhook'
+        ? validateDiscordReceipt(receipt, request, discordWebhookPayload(parsePayload(request.payload, target.maxPayloadBytes))) : receipt;
     },
     async shutdown() { shuttingDown = true; },
   };
