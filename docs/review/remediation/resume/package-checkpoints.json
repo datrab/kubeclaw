@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "repository": "datrab/kubeclaw",
+  "remote_base": "670d4b3a5b70ffe098c4222aa6c84cddda5191fb",
+  "purpose": "Interrupted work preservation; backup does not establish acceptance or integration readiness.",
+  "packages": [
+    {
+      "base": "354ee88060c93e8a0482ac91b7786788eda76fe8",
+      "chars": 279562,
+      "files": 68,
+      "local_sha": "ba937fdcb5f110dcc55e45efb121f3a33adcdf5b",
+      "package": "sdk",
+      "remote_base": "670d4b3a5b70ffe098c4222aa6c84cddda5191fb",
+      "remote_branch": "fix/resume-47-sdk-ba937fd",
+      "remote_sha": "c6916545cc0f4f298e932bae4b3cde944e347720"
+    },
+    {
+      "base": "b2b7cd6fc9607fbd54167a2b5badddb059572924",
+      "chars": 75569,
+      "files": 22,
+      "local_sha": "43710de1bba3e33c530458b29c067ad649e0cb6c",
+      "package": "resources",
+      "remote_base": "670d4b3a5b70ffe098c4222aa6c84cddda5191fb",
+      "remote_branch": "fix/resume-47-resources-43710de",
+      "remote_sha": "9783be709ca93f3f8ee7f8d1ccd2408fafef978f"
+    },
+    {
+      "base": "3233ad55d9ed9e87842855504330ca418b4d4943",
+      "chars": 147850,
+      "files": 17,
+      "local_sha": "c7023c7a657c7d5f21371025e6b9289dc17cfe01",
+      "package": "storage",
+      "remote_base": "670d4b3a5b70ffe098c4222aa6c84cddda5191fb",
+      "remote_branch": "fix/resume-47-storage-c7023c7",
+      "remote_sha": "50019a44be0385abbc0d4ae7168050615d337f46"
+    },
+    {
+      "base": "ba999e2357c2162bbaeac48122105972bab72970",
+      "chars": 154234,
+      "files": 25,
+      "local_sha": "867b5538ce4969c135c72decbe213914e92defb2",
+      "package": "product",
+      "remote_base": "670d4b3a5b70ffe098c4222aa6c84cddda5191fb",
+      "remote_branch": "fix/resume-47-product-867b553",
+      "remote_sha": "74e0cc0f848269e7e6b163c82253952f638682d7"
+    },
+    {
+      "base": "d53947bedcab20e5b9d4806f9f3334ed311b911f",
+      "chars": 249420,
+      "files": 20,
+      "local_sha": "8ee5424101a97d9fac400cb1b9d3f618639b8b4b",
+      "package": "controller",
+      "remote_base": "670d4b3a5b70ffe098c4222aa6c84cddda5191fb",
+      "remote_branch": "fix/resume-47-controller-8ee5424",
+      "remote_sha": "e21a2998f8b0e39b60705dfd8bbd6855452a0395"
+    },
+    {
+      "base": "fb63a4c466b9112abbb4c548cad80a6ed9531423",
+      "chars": 42368,
+      "files": 10,
+      "local_sha": "282c5e1bed98fe688852257c9cc167e798062d37",
+      "package": "chart",
+      "remote_base": "670d4b3a5b70ffe098c4222aa6c84cddda5191fb",
+      "remote_branch": "fix/resume-47-chart-282c5e1",
+      "remote_sha": "47b392dc2aa36cb37fdbd8f63b1a6f10a1823973"
+    },
+    {
+      "base": "fb63a4c466b9112abbb4c548cad80a6ed9531423",
+      "files": 27,
+      "local_sha": "cff3fff327cfe2337a259ee9646d4735a8123212",
+      "package": "main",
+      "remote_base": "670d4b3a5b70ffe098c4222aa6c84cddda5191fb",
+      "remote_branch": "fix/resume-47-main-cff3fff",
+      "remote_sha": "99fb517a5cd1f368a4092a9fa24fd6714e173865"
+    }
+  ],
+  "integration_order": [
+    {
+      "package": "main",
+      "note": "Reviewed effect and attempt owner docs; sdk/resources duplicate some entries: reconcile by content."
+    },
+    {
+      "package": "sdk",
+      "note": "Source/snapshot/CLI identity work; pair with resources review."
+    },
+    {
+      "package": "resources",
+      "note": "Independent source/CLI evidence and entrypoint proof; no blanket native closure."
+    },
+    {
+      "package": "storage",
+      "note": "Run independent admission/replay verification before integration."
+    },
+    {
+      "package": "product,controller,chart",
+      "note": "Integrate as a coupled set only after native CRD/CEL install gate; backup branch is not deployable approval."
+    }
+  ],
+  "verification": "Each affected file was checked against the original local commit's Git blob SHA and mode in its resulting remote tree. Changes applied only to named delta paths over the existing remote tree; other remote files retained."
+}

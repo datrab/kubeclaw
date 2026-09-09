@@ -1,0 +1,33 @@
+✔ progress scaffold writes a fillable form and apply writes progress.json after gaps are filled (629.611682ms)
+✔ progress scaffold rejects all retired visual-reg configuration (224.182503ms)
+✔ progress scaffold rejects retired visual-reg configuration without a suite selector (216.699429ms)
+✔ progress scaffold rejects retired e2e selection (225.738055ms)
+✔ progress scaffold rejects retired e2e configuration without a suite selector (223.056239ms)
+✔ progress scaffold rejects retired security selection (206.678433ms)
+✔ progress scaffold rejects retired security configuration without a suite selector (182.305804ms)
+✔ progress scaffold migrates legacy health settings into provider plan nodes (570.043435ms)
+✔ progress scaffold resolves a legacy API spec inside serve.project_dir (247.427568ms)
+✔ progress scaffold orders a migrated API flow after its deployment fixture (224.453823ms)
+✔ progress scaffold rejects a legacy API spec symlink outside the repository (262.157746ms)
+✔ progress scaffold rejects legacy unit selection without an explicit provider node (312.996696ms)
+✔ progress scaffold accepts explicit direct-command replacement for legacy unit selection (399.211904ms)
+✔ progress scaffold migrates the legacy manifest suite into Nova lint inputs (703.070524ms)
+✔ progress scaffold rejects a legacy manifest selection without an explicit deployment input (402.260163ms)
+✔ progress scaffold links the migrated container image to a Kubernetes fixture (250.934019ms)
+✔ progress scaffold migrates the legacy bundle suite into an explicit size-budget plan (503.96662ms)
+✔ progress scaffold rejects a legacy bundle suite without an explicit output path (228.463717ms)
+✔ progress scaffold migrates a11y into an axe provider linked to the deployment (254.176306ms)
+✔ progress scaffold rejects retired a11y numeric thresholds (247.565197ms)
+✔ progress scaffold rejects an a11y timeout outside the provider contract (246.745761ms)
+✔ progress scaffold rejects retired a11y thresholds beside an existing Axe node (246.708526ms)
+✔ progress scaffold rejects a legacy perf suite without an explicit Lighthouse replacement (208.067953ms)
+✔ progress scaffold accepts an explicit Lighthouse replacement and removes the legacy selector (231.622336ms)
+✔ progress scaffold rejects retired perf configuration beside a Lighthouse replacement (227.028466ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7822.449559

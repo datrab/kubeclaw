@@ -50,7 +50,7 @@ export async function execute(input: Input, context: PluginInvocationContext): P
   });
   const stored = await context.invoke('artifacts.write', {
     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: `blueprint-sync:${input.blueprintId}` },
-    payload: { namespace: 'kubeclaw.blueprint-sync', mediaType: 'application/json', value: summary },
+    payload: { ...(approval?.subject.identityEncoding ? {encoding:approval.subject.identityEncoding} : {}), namespace: 'kubeclaw.blueprint-sync', mediaType: 'application/json', value: summary },
   });
   const artifacts = [stored.artifact as ArtifactRef];
   if (missing.length > 0) {

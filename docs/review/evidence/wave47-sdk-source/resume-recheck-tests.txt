@@ -1,0 +1,19 @@
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=false (1374.711602ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=true (1252.763344ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=false, Unicode policy=true (11353.639647ms)
+✔ persisted source approval graph sv_SE.UTF-8 -> en_US.UTF-8, legacy=false, Unicode policy=true (11488.524339ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=false (11343.496029ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=true (9741.445377ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=false (3425.366493ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=true (3449.595494ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1311.725087ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (604.027255ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (32.585982ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 51370.614561

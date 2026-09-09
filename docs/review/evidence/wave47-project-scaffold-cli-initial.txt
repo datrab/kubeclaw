@@ -1,0 +1,44 @@
+{"scope":"real-scaffold-command","args":[],"status":1,"stdout":"","stderr":"Repo root is not a git repository: /tmp/nova-project-proof-ZDr6WV/repository\n"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Repo root is not a git repository: /tmp/nova-project-proof-ZDr6WV/repository
+
+
+1 !== 0
+
+    at scaffoldRun (file:///workspace/scratch/0d8f8ddb55c3/wave47-cli-entry-review/tests/verification/contracts/.project-cli-execution-6.mts:37:12)
+    at file:///workspace/scratch/0d8f8ddb55c3/wave47-cli-entry-review/tests/verification/contracts/.project-cli-execution-6.mts:39:3
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+{"scope":"real-scaffold-command","args":[],"status":1,"stdout":"","stderr":"Cannot infer project name from --swarm; pass --project too.\n"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Cannot infer project name from --swarm; pass --project too.
+
+
+1 !== 0
+
+    at scaffoldRun (file:///workspace/scratch/0d8f8ddb55c3/wave47-cli-entry-review/tests/verification/contracts/.project-cli-execution-7.mts:38:12)
+    at file:///workspace/scratch/0d8f8ddb55c3/wave47-cli-entry-review/tests/verification/contracts/.project-cli-execution-7.mts:40:3
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

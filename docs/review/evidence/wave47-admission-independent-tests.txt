@@ -1,0 +1,32 @@
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (1395.783604ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (1023.366974ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (1095.345706ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (1179.357359ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (1333.759395ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (1389.646552ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (1043.802077ms)
+✔ fresh admission reads and duplicate ACK fail closed for persisted corruption (312.680968ms)
+✔ fresh attempt replay validates result, generation, evidence, intent and closure before recovery (558.525615ms)
+✔ standalone closure producer binding preserves staged-evidence expiry and partial completeness (97.614642ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (1012.801934ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (1128.129504ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (939.174377ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (982.460635ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (916.054462ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (897.787906ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1195.419859ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (851.217164ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.455706ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.661528ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.349987ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (342.295301ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2487.93107ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (351.28279ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11587.867131

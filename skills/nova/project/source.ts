@@ -1,5 +1,5 @@
 import type {Demo} from './demo.ts';
-import {canonicalJson, sha256Text, parseReviewSource, type StageDefinition} from '@kubeclaw/plugin-sdk';
+import {reviewIdentityDigest, PORTABLE_JSON_ENCODING, parseReviewSource, type StageDefinition} from '@kubeclaw/plugin-sdk';
 
 type ObjectValue = Record<string, any>;
 function object(value: unknown, fields: string[], label: string): ObjectValue {
@@ -26,19 +26,24 @@ function moduleSource(module: ObjectValue) {
   return {moduleId:module.id,modulePath,...(substeps ? {substeps}:{}),ownedPaths:module.ownedPaths,serveDockerfile,apiSpecFile};
 }
 
+function identityFields(identityEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING): {identityEncoding?: typeof PORTABLE_JSON_ENCODING} {
+  return identityEncoding === 'legacy' ? {} : {identityEncoding};
+}
+
 /** One source admission and one sync precede the entire sequential publication lane. */
-export function sourceStages(project: ObjectValue, ordered: ObjectValue[], demo?:Demo) {
+export function sourceStages(project: ObjectValue, ordered: ObjectValue[], demo?:Demo, identityEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING) {
   const architecture = object(project.architecture, ['ref','requiredFiles','review'], 'architecture');
   if (typeof architecture.ref !== 'string' || !architecture.ref.trim() || /[\x00-\x20]/u.test(architecture.ref)) throw new Error('PROJECT_ARCHITECTURE_REF_REQUIRED');
   const requiredFiles = paths(architecture.requiredFiles).sort();
   const modules = ordered.map(moduleSource);
   const controlPaths = [...new Set([...requiredFiles,...modules.flatMap(module => module.substeps
     ? module.substeps.map(substep => `${module.modulePath}/${substep}/FORGE.md`) : [`${module.modulePath}/FORGE.md`])])].sort();
-  const source = parseReviewSource({projectId:project.id,repositoryRoot:project.repositoryRoot,architectureRef:architecture.ref,paths:controlPaths});
+  const identity = identityFields(identityEncoding);
+  const source = parseReviewSource({...identity,projectId:project.id,repositoryRoot:project.repositoryRoot,architectureRef:architecture.ref,paths:controlPaths});
   const contract = {projectId:project.id,baseRevision:project.baseRevision,requiredFiles,modules,
     policy:{...(demo===undefined?{}:{demo}),modules:ordered.map(module => ({moduleId:module.id,task:module.task,dependsOn:module.dependsOn,requirements:module.requirements,requiredChecks:module.test.requiredChecks})),
       integrationRequirements:project.final.integrationRequirements,requiredChecks:project.final.test.requiredChecks}};
-  const binding = {stageId:'source-preflight',inputDigest:sha256Text(canonicalJson(contract)),
+  const binding = {stageId:'source-preflight',...identity,inputDigest:reviewIdentityDigest(contract,source),
     ...(architecture.review ? {reviewStageId:'architecture-review'}:{})};
   const execution = {maxAttempts:1,maxRemediationCycles:0,timeoutMs:120000};
   const stages: StageDefinition[] = [{id:'source-preflight',type:'kubeclaw.validate.source-preflight',dependsOn:[],config:{},

@@ -1,0 +1,13 @@
+✔ Discord original HTTP and durable store bind wire bytes and replay after reopen (3658.443428ms)
+✔ Discord dropped response remains uncertain after reopen without another POST (3199.462172ms)
+✔ Discord invalid actual ID cannot be replaced by generic messageId or blindly retried (3250.986242ms)
+✔ explicit Discord receipt contract vectors reject legacy acknowledgments and invalid IDs (1.076064ms)
+✔ original artifact/source consumers and reopened effect journal preserve byte authority across native locales (1850.86917ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10624.237293

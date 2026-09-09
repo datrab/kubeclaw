@@ -9,8 +9,9 @@ Use this guide to author architecture and module files. The progress/scaffold
 sections describe the legacy declaration editor; they do not produce a runnable
 `nova-project.v2` file. Before using the current Projectmode commands below, author
 the explicit source, requirement, coverage and final-gate fields in the
-[canonical project contract](../project/README.md). No automatic legacy import is
-implemented; missing intent must be supplied explicitly.
+[canonical project contract](../project/README.md). Use the explicit legacy
+authoring import in step 7 to combine scaffold output with those authored fields;
+missing intent is never inferred.
 
 ## Steps
 
@@ -225,8 +226,17 @@ modules/<dir>/
 ### 7. Verify
 
 This requires the explicitly authored v2 project and platform files described
-above. Compile validates the installed stage/config/grant contracts and writes a
-new graph; it does not execute agents/providers or prove delivery.
+above. For a scaffold-based project, create the authoring file according to the
+[explicit legacy import contract](../project/README.md#explicit-legacy-authoring-import),
+including every module mapping and gate replacement decision, then run:
+
+```bash
+node /app/skills/pipeline.ts --import-legacy /repo/Projects/<project>/src/.swarm/progress.json --authoring /path/import-authoring.json --platform /path/platform.json --output /path/project.json
+```
+
+The output path must be new. Import migrates declarations only; historical
+results and approvals never authorize execution. Compile validates the installed
+stage/config/grant contracts and writes a new graph; it does not execute agents/providers or prove delivery.
 
 ```bash
 node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json --compile /path/new-pipeline.json
@@ -300,7 +310,9 @@ preview configuration only while the preview suite remains unmigrated.
 - [ ] Review gates: `forge_model` set when they should differ from `defaults.models.forge` / platform `fallback_model`
 
 ### Verify
-- [ ] `--dry-run` passes
+- [ ] Explicit v2 project and platform are authored; scaffold declarations are imported with the command in step 7 when used
+- [ ] The step 7 `--compile` command succeeds and writes a new graph
+- [ ] The step 8 run reaches source admission and the first module with the intended configured providers; compile success alone is not execution
 - [ ] Backend `start_cmd` does not run `pip install`
 - [ ] Frontend `build_cmd` HAS `npm install`
 
@@ -318,4 +330,4 @@ preview configuration only while the preview suite remains unmigrated.
 
 - **progress.json complete reference**: [progress-json.md](progress-json.md)
 - **Writing FORGE.md, BUSTER.md, test-spec.json**: [module-files.md](module-files.md)
-- **Public docs overview**: `docs/developers/project-setup.md`
+- **Canonical Project contract and import**: [project/README.md](../project/README.md)

@@ -616,6 +616,10 @@
         {
           "report": "implementation/sdk-json-compatibility.md",
           "summary": "345 akzeptierte Originalbytes in drei nativen Locales verglichen; echter Artifactspeicher liest alte Bytes, schwedische Re-Serialisierung ergibt anderen Digest. Historienaudit ausdrücklich kein permanenter Produktgate; versionierter Consumer-Cutover bleibt offen."
+        },
+        {
+          "report": "implementation/wave47-sdk-subject-independent-review.md",
+          "summary": "Versionierter Source-/Snapshot-/CLI-Recovery-Teil unabhängig geprüft. Gemeinsame Retirementconsumer-Regression behoben; kein Gesamtabschluss."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/lib.sdk.md",
@@ -627,7 +631,7 @@
       "related_findings": [],
       "decision_notes": [],
       "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe.",
-      "remaining_work": "Portable Ordnung/versionierte Digestumstellung noch offen; aktuelle akzeptierte Bytes bewusst unverändert."
+      "remaining_work": "Artifact-, Effect-, Source-/Subject- und Snapshot-Versionierung integriert; weitere persistierte Canonical-Domains bleiben offen."
     },
     {
       "id": "PCR-SDK-002",
@@ -3224,7 +3228,9 @@
       "verification_evidence": [
         "docs/review/remediation/implementation/observability-retention.md",
         "docs/review/remediation/implementation/buster-job-compaction.md",
-        "docs/review/evidence/integration-eb1d7cc/manifest.json"
+        "docs/review/evidence/integration-eb1d7cc/manifest.json",
+        "docs/review/remediation/implementation/wave47-admission-independent-review.md",
+        "docs/review/remediation/implementation/wave47-retirement-snapshot-integration.md"
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.observability.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
@@ -4564,12 +4570,15 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP14",
-      "status": "implementiert",
-      "implementation_commit": "5b7f8c694dc3aa2c05edb45ad8d88483bcdc36b2",
-      "verification_status": "Pflicht-Sourcepreflight, optionaler gebundener Architekturreview/Freigabepfad und Sync vor Modullane integriert; neun echte lokale Sourceverbraucherfälle, Compiler, Builds/Typen/Lint und unabhängige Gegenprüfung bestanden. Legacyimport und vollständiger Demo-/Acceptance-Abschluss bleiben offen.",
+      "status": "verifiziert",
+      "implementation_commit": "48320e8",
+      "verification_status": "Originaler Scaffold-, Import-, Compile- und Execution-Einstieg unabhängig geprüft und auf integriertem SDK-Stand erneut bestanden; 13 Stages unverändert, Source/Sync passed, erste Modulattempt mit echtem Gitworkspace. Kein vollständiger Produktabschluss (T01-F02).",
       "verification_evidence": [
         "docs/review/remediation/implementation/project-source-v2.md",
-        "docs/review/evidence/integration-eb1d7cc/manifest.json"
+        "docs/review/evidence/integration-eb1d7cc/manifest.json",
+        "docs/review/remediation/implementation/wave47-project-cli-independent-review.md",
+        "docs/review/evidence/wave47-scaffold-root-integrated.txt",
+        "docs/review/remediation/resume/root-checkpoint.md"
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
@@ -4583,9 +4592,10 @@
       "unresolved_code_references": [
         "nova.scaffold.md"
       ],
-      "next_action": "Kanonischen expliziten Legacy-Autorierungsimport und nachgelagerte sourcegebundene Demo-/Delivery-/Ready-/Acceptance-Komposition vervollständigen; keine Annahme aus bloßem Graph-Erfolg.",
+      "next_action": "Abgeschlossen im Originalscope; vollständige Application-/Demo-/Acceptance-Nachweise separat unter T01-F02.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": ""
     },
     {
       "id": "T01-F02",
@@ -4656,8 +4666,8 @@
   "implementation_branch": "fix/remediation-foundations-20260909",
   "updated_at": "2026-09-09",
   "progress_counts": {
-    "verifiziert": 91,
-    "implementiert": 42,
+    "verifiziert": 92,
+    "implementiert": 41,
     "in Bearbeitung": 2,
     "offen": 19
   },

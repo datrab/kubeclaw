@@ -1,0 +1,11 @@
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1400.589459ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (580.061859ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (48.375141ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2351.78891

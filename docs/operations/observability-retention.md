@@ -98,11 +98,24 @@ history, artifacts, results and acceptance evidence. See the exact
 It performs no automatic log deletion and cannot retire historical unowned
 telemetry records, admission records, attempt evidence, shared artifacts or jobs.
 
+## Manual admission completion compaction
+
+`node scripts/retire-admission.mjs --apply /absolute/scope.json` now releases a
+redundant completion copy in a canonical Nova run's admission store. The original
+attempt completion, result, closure and evidence remain retained and readable.
+Permanent references preserve original cursor/ACK identity; all raw consumers
+resolve the verified original record. Missing sources fail before duplicate ACK.
+The command uses run, attempt and admission writer fences and refuses waiting
+runs or unbound external store paths. See the exact
+[scope and local verification](../review/remediation/implementation/wave47-admission-retirement.md).
+This does not release attempt-result or evidence capacity or delete log history.
+
 ## Required broader manual retirement contract — not yet implemented
 
 PCR-OBS-002 remains partially addressed: policy is decided, but a safe capacity
 release operation is missing for the remaining stores. Beyond the bounded
-telemetry projection command above, no supported command selectively deletes
+telemetry projection cleanup and redundant admission completion compaction above,
+no supported command selectively deletes
 confirmed history from these stores. Do not edit
 `store.json`, `admission.json`, `attempt-store.json`, journal prefixes or referenced
 blob files to make quota space. That would remove sequence, digest, result or

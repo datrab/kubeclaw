@@ -1,0 +1,17 @@
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=false, Unicode policy=true (14173.964749ms)
+✔ persisted source approval graph sv_SE.UTF-8 -> en_US.UTF-8, legacy=false, Unicode policy=true (14857.033529ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=false (12990.269994ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=true (10622.970156ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=false (3772.682883ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=true (3749.093507ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1322.188122ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (767.915285ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (42.693366ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 60866.334306

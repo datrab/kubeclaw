@@ -189,3 +189,15 @@ emitted by Node assertion diagnostics and npm. Consequently an unscoped
 `git diff --check` including these evidence files reports whitespace diagnostics.
 The source/test/documentation-only check excludes the raw evidence directory and
 passes; no raw failure output was edited to make a whitespace gate appear green.
+
+The next implemented semantic boundary is documented separately in
+[sdk-effect-identity.md](sdk-effect-identity.md): new actual durable effect IDs
+use an explicit portable version; original requests/receipts, replay,
+per-effect runtime locks and ReadRunEvidence select and preserve recognized
+historical identity versions. Real original journal fixtures and native
+cross-locale replay tests passed, including rejection of unverifiable legacy
+identity before actions. Source/Subject, report/cache and other listed semantic
+contracts remain separate remaining work; the global legacy serializer has not
+been silently switched.
+
+The next implemented boundary is documented in [sdk-source-identity.md](sdk-source-identity.md): explicit ReviewSource/Subject/SourceBinding codecs plus the necessarily coupled run/graph snapshot versions and original-version Runner recovery. Real native-locale paused approval graphs and historical snapshot bytes are covered; the global finding remains partial.

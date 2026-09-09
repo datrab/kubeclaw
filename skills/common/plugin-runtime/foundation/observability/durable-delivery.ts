@@ -1,3 +1,4 @@
+import { resolveAdmissionRetiredEntries, resolveAdmissionRetiredEntry, type AdmissionCompletionReference, type AdmissionRetiredEntry } from "./admission-retirement.ts";
 import { assertAdmissionReplay, readBoundedSnapshot } from "./replay-validation.ts";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -50,7 +51,8 @@ interface QuarantineOverflow {
   lastRawBytes: number;
 }
 export interface AdmissionState {
-  schemaVersion: "observability-admission-store.v1";
+  schemaVersion: "observability-admission-store.v1" | "observability-admission-store.v2";
+  retiredEntries?: AdmissionRetiredEntry[];
   nextCursor: number;
   entries: AdmissionEntry[];
   quarantine: QuarantineEntry[];
@@ -558,6 +560,16 @@ export class FileObservabilityAdmissionStore {
     });
     throw new Error("OBSERVABILITY_INGRESS_TOO_LARGE");
   }
+  async #retiredAcknowledgement(state:AdmissionState,key:string,recordDigest:string,bytes:Buffer):Promise<AdmissionAcknowledgementV1|null> {
+    const retired=state.retiredEntries?.find(entry=>entry.key===key);
+    if(!retired)return null;
+    if(retired.acknowledgement.recordDigest!==recordDigest) {
+      await this.#quarantine(state,bytes,"OBSERVABILITY_ADMISSION_IDENTITY_CONFLICT");
+      throw new Error("OBSERVABILITY_ADMISSION_IDENTITY_CONFLICT");
+    }
+    await resolveAdmissionRetiredEntry(retired);
+    return structuredClone(retired.acknowledgement);
+  }
   async #admitUnlocked(
     state: AdmissionState,
     bytes: Buffer,
@@ -580,6 +592,8 @@ export class FileObservabilityAdmissionStore {
       throw error;
     }
     const key = keyOf(record);
+    const retired = await this.#retiredAcknowledgement(state,key,record.recordDigest,bytes);
+    if(retired)return {acknowledgement:retired,state};
     const existing = state.entries.find((entry) => entry.key === key);
     if (existing) {
       if (existing.record.recordDigest !== record.recordDigest) {
@@ -622,12 +636,39 @@ export class FileObservabilityAdmissionStore {
       state: candidate,
     };
   }
-  #recordViews(state: AdmissionState): ReadonlyArray<AdmittedRecordView> {
-    return state.entries.map((entry) => ({
-      record: structuredClone(entry.record),
-      canonicalCursor: entry.canonicalCursor,
-      admittedAt: entry.admittedAt,
-    }));
+  async #recordViews(state: AdmissionState): Promise<ReadonlyArray<AdmittedRecordView>> {
+    const retired = await resolveAdmissionRetiredEntries(state.retiredEntries ?? []);
+    return [...state.entries.map((entry) => ({
+      record: structuredClone(entry.record), canonicalCursor: entry.canonicalCursor, admittedAt: entry.admittedAt,
+    })),...retired].sort((left,right)=>left.canonicalCursor-right.canonicalCursor);
+  }
+  /** Caller holds the original attempt-store fence before acquiring this fence. */
+  async retireCompletion(input: {operationId:string;actor:string;source:AdmissionCompletionReference;recordDigest:string;authority:AdmissionRetiredEntry['authority']}, authorize:()=>Promise<void>): Promise<{newlyRetired:boolean;releasedBytes:number}> {
+    const scope=structuredClone(input);
+    return this.#serial(async()=>{
+      const state=await readAdmissionState(this.#file,this.#limits);
+      const prior=state.retiredEntries?.find(item=>item.operationId===scope.operationId);
+      if(prior) {
+        if(canonicalJson(prior.authority)!==canonicalJson(scope.authority) || prior.actor!==scope.actor || canonicalJson(prior.source)!==canonicalJson(scope.source) || prior.acknowledgement.recordDigest!==scope.recordDigest)throw new Error("OBSERVABILITY_RETIREMENT_OPERATION_CONFLICT");
+        await resolveAdmissionRetiredEntry(prior); await authorize();
+        return {newlyRetired:false,releasedBytes:0};
+      }
+      const entry=state.entries.find(item=>item.record.recordDigest===scope.recordDigest && item.record.correlation.pipelineRunId===scope.source.pipelineRunId);
+      if(!entry)throw new Error("OBSERVABILITY_RETIREMENT_RECORD_MISSING");
+      const retired:AdmissionRetiredEntry={key:entry.key,acknowledgement:this.#ack(entry,"duplicate"),source:scope.source,operationId:scope.operationId,actor:scope.actor,authority:scope.authority};
+      const views=await this.#recordViews(state);
+      if(views.filter(item=>item.record.correlation.pipelineRunId===scope.source.pipelineRunId && canonicalJson(item.record.producer)===canonicalJson(entry.record.producer)).length!==1)throw new Error("OBSERVABILITY_RETIREMENT_PRODUCER_NOT_CLOSED");
+      if([...state.gaps.filter(item=>item.pipelineRunId===scope.source.pipelineRunId && item.state!=="restored"),...state.unresolvedItems.filter(item=>item.pipelineRunId===scope.source.pipelineRunId),...state.overflowUnresolvedItems.filter(item=>item.pipelineRunId===scope.source.pipelineRunId)].length)throw new Error("OBSERVABILITY_RETIREMENT_INCOMPLETE");
+      const resolved=await resolveAdmissionRetiredEntry(retired);
+      if(canonicalJson(resolved.record)!==canonicalJson(entry.record))throw new Error("OBSERVABILITY_RETIREMENT_RECORD_CHANGED");
+      const candidate:AdmissionState={...state,schemaVersion:"observability-admission-store.v2",entries:state.entries.filter(item=>item!==entry),retiredEntries:[...(state.retiredEntries??[]),retired]};
+      assertAdmissionReplay(candidate,this.#limits);
+      const after=Buffer.byteLength(canonicalJson(candidate)),releasedBytes=Buffer.byteLength(canonicalJson(state))-after;
+      if(releasedBytes<=0 || after>this.#limits.maximumBytes)throw new Error("OBSERVABILITY_RETIREMENT_NO_CAPACITY_GAIN");
+      await authorize();
+      await writeDurableState(this.#file,candidate);
+      return {newlyRetired:true,releasedBytes};
+    });
   }
   async admit(raw: Uint8Array | string): Promise<AdmissionResult> {
     await this.#rejectOversizedIngress(raw);
@@ -651,7 +692,7 @@ export class FileObservabilityAdmissionStore {
       );
       return {
         acknowledgement: admitted.acknowledgement,
-        records: this.#recordViews(admitted.state),
+        records: await this.#recordViews(admitted.state),
       };
     });
   }
@@ -693,7 +734,7 @@ export class FileObservabilityAdmissionStore {
       throw new Error("OBSERVABILITY_CURSOR_INVALID");
     return this.#serial(async () => {
       const state = await readAdmissionState(this.#file, this.#limits);
-      const records = state.entries
+      const records = (await this.#recordViews(state))
         .filter(
           (entry) =>
             entry.canonicalCursor >= fromCursor &&
@@ -728,7 +769,7 @@ export class FileObservabilityAdmissionStore {
           throw new Error("OBSERVABILITY_GAP_RESTORATION_UNDECLARED");
         const expectedCount = snapshot.toSequence - snapshot.fromSequence + 1;
         const admitted = new Set(
-          state.entries
+          (await this.#recordViews(state))
             .filter(
               (entry) =>
                 entry.record.correlation.pipelineRunId ===

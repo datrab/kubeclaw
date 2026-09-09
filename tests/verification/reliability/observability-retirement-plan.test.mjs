@@ -246,3 +246,29 @@ test('actual CLI preserves bounded legacy scan cause in report without printing 
   assert.equal(report.executable, false); assert.equal(report.releaseBytes, 0);
   assert.ok(!result.stdout.includes(canary)); assert.deepEqual(snapshot(root), before);
 });
+
+
+test('retirement inventory validates original current and captured legacy snapshots with the shared Core codec', async t => {
+  const f = await fixture(t), file = path.join(f.target, 'run-snapshot.json');
+  const original = fs.readFileSync(file), current = JSON.parse(original);
+  assert.equal(current.schemaVersion, 'run-snapshot.v2');
+  assert.equal(inspect(f).run.snapshot.digest, current.digest);
+  // Captured old-writer bytes exercise the inventory's snapshot codec only;
+  // they do not represent a replay of this fixture's graph.
+  const legacy = fs.readFileSync(new URL('./fixtures/legacy-source-snapshots/ascii/run-snapshot.json', import.meta.url));
+  fs.writeFileSync(file, legacy);
+  assert.equal(inspect(f).run.snapshot.digest, JSON.parse(legacy).digest);
+  assert.deepEqual(fs.readFileSync(file), legacy);
+  for (const changed of [
+    {...current, schemaVersion:'run-snapshot.v99'},
+    {...current, registry:{...current.registry, corrupted:true}},
+    {...current, graph:{...current.graph, schemaVersion:'execution-graph-snapshot.v99'}},
+  ]) {
+    fs.writeFileSync(file, JSON.stringify(changed));
+    const rejected = inspect(f);
+    assert.equal(rejected.run, null);
+    assert.ok(codes(rejected).has('RUN_SNAPSHOT_INTEGRITY_INVALID'));
+  }
+  fs.writeFileSync(file, original);
+  assert.equal(inspect(f).run.snapshot.digest, current.digest);
+});

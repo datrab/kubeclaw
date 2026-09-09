@@ -1,0 +1,16 @@
+{
+  "sourceCommit": "b6b2b1bf0579ac92b2e9f565bbc44bc79252a33d",
+  "captureLocale": "en_US.UTF-8",
+  "historicalCoreFiles": {
+    "engine-run.ts": "f1486b634310f543f8bd152c673ac660c2c79ff5d6c01d3720a292ffc2af4762",
+    "engine-snapshots.ts": "12fc2f012477e71bc59420452d086e208d685bced9e7aa05182f9c1833359ed0",
+    "graph.ts": "c11f9c7e2c19c357ba7d7320af2a87f49497d8bf03c4e80685bf5a15090c6dea",
+    "runner.ts": "ae9e2646fec756b577988d39d44df87d2d89d53354660a5bb49c413d6cfaedcb"
+  },
+  "fixtureSha256": {
+    "tests/verification/reliability/fixtures/legacy-source-snapshots/ascii/definition.json": "6acef673024baffc2af4dad03ab0403c47137bb44957514ccf75fc68b7c70f37",
+    "tests/verification/reliability/fixtures/legacy-source-snapshots/ascii/run-snapshot.json": "b25ca1c50b92f368bb1bd2dd3eb0b1c737f6cb343b9fded81b49c75343470f38",
+    "tests/verification/reliability/fixtures/legacy-source-snapshots/unicode/definition.json": "678d8b2ab9cf315901cf27478de7cc5dc6f4e74bb631450eaef25f48f81d990b",
+    "tests/verification/reliability/fixtures/legacy-source-snapshots/unicode/run-snapshot.json": "12d5c52b2a6e66c169a26df716a8f479a90a2af22c2dcf91f814b44bac3e4b41"
+  }
+}

@@ -1,3 +1,4 @@
+import { completionRetirementSource, type AdmissionRetiredEntry } from './admission-retirement.ts';
 import { assertAttemptReplay, assertCompletionIntent } from "./attempt-replay.ts";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -515,6 +516,22 @@ export class FileDurableAttemptStore {
         stored.completionIntent.closure,
         admitted,
       );
+    });
+  }
+  /** Manual compaction of the redundant admission copy; result/evidence stay authoritative. */
+  async retireAdmissionCompletion(
+    admission: FileObservabilityAdmissionStore,
+    input: {pipelineRunId:string;attemptId:string;claimGeneration:number;recordDigest:string;operationId:string;actor:string;authority:AdmissionRetiredEntry['authority']},
+    authorize:()=>Promise<void>,
+  ): Promise<{newlyRetired:boolean;releasedBytes:number}> {
+    const scope=structuredClone(input);
+    if(path.resolve(admission.storageDirectory())===path.resolve(this.#root))throw new Error('OBSERVABILITY_RETIREMENT_STORE_OVERLAP');
+    return this.#serial(async()=>{
+      const state=await this.#readState();
+      const source=await completionRetirementSource(state,scope,this.#file,this.#limits.maximumMetadataBytes);
+      const issues=await admission.observabilityIssues(scope.pipelineRunId);
+      if(issues.missingRanges.length || issues.unresolvedItems.length)throw new Error('OBSERVABILITY_RETIREMENT_INCOMPLETE');
+      return admission.retireCompletion({authority:scope.authority,operationId:scope.operationId,actor:scope.actor,recordDigest:scope.recordDigest,source},authorize);
     });
   }
   async #storeClosureUnlocked(

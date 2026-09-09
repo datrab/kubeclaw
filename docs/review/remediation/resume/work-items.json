@@ -1,0 +1,292 @@
+{
+  "schema_version": 1,
+  "baseline": "c38779c71bb92bc15c3fcb89930348e5417aa475",
+  "integration_branch": "fix/remediation-foundations-20260909",
+  "completion_rule": "Alle 47 behoben, unabhängig geprüft und geforderte echte Tests bestanden. Keine Umdeutung von teilweise/blockiert/skipped/static.",
+  "verified_count_at_checkpoint": 6,
+  "overall_complete": false,
+  "findings": [
+    {
+      "id": "PCR-SDK-001",
+      "status_at_checkpoint": "in Bearbeitung",
+      "evidence": "implementation/wave47-sdk-independent-review.md",
+      "next_action": "Inventar verbleibender persistierter Digestconsumer gegen SDKkompatibilitätsdoku abgleichen; je Domain explizite Version und Originalconsumer-Replay, keine globale stille Umstellung."
+    },
+    {
+      "id": "PCR-BUSTER-ENGINE-004",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/worker-terminal-resource-measurement.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Bestätigte terminale Arbeit bereinigt; Recovery-/Orphanbesitz und native completed/failed/cancelled Neustartabnahme bleiben offen. Sequenzielle Providerressourcen nun erhalten."
+    },
+    {
+      "id": "PCR-ISOLATION-002",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/worker-terminal-resource-measurement.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Echte Native-Prozessbaum-/SIGKILL-Abnahme scheitert an fehlendem proc-task-children/delegierter Cgroup; keine Kernelabnahme bestanden."
+    },
+    {
+      "id": "PCR-ISOLATION-004",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/worker-terminal-resource-measurement.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Kernel-Speicher-/OOM-Gate nicht bestanden: kein delegierter beschreibbarer Cgroup2-Kontext. Lokale Rundungs-/Policytests ersetzen den Gate nicht."
+    },
+    {
+      "id": "PCR-NOVA-GATE-005",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/worker-terminal-resource-measurement.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Originaler voller Buster/Provider-Prozessrestart wurde erneut gestartet und scheitert im Sandboxprozess vor der geforderten Assertion."
+    },
+    {
+      "id": "PCR-RUNTIME-001",
+      "status_at_checkpoint": "verifiziert",
+      "evidence": "implementation/wave47-root-review.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. 22 echte Core/HTTP-Cleanupregressionen unabhängig bestanden, einschließlich Timeout, Elternabbruch, später Identität und persistierter Ungewissheit."
+    },
+    {
+      "id": "PATH-T11-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-product-gates.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original real Node JUnit → original parser/finalizer → real HTTP Nova import and durable reconstruction passes again. | Required original provider/adapter/runner chain still fails through actual supervised native adapter after building its helper (`REPORT_ADAPTER_STDIN_FAILED`, EPIPE). No local finalizer-only result is labelled full runner evidence."
+    },
+    {
+      "id": "PATH-T11-002",
+      "status_at_checkpoint": "verifiziert",
+      "evidence": "implementation/wave47-root-review.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Originaler Resolver und reale Nova/Buster HTTP/Store/Git-Entscheidung unabhängig geprüft: unvollständige Pflichtabdeckung blockiert, optionale Skips erhalten."
+    },
+    {
+      "id": "PATH-T13-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-product-gates.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original independent cumulative-policy and source/decision contracts retained and passing; importer cannot reduce authored coverage. | Original same-revision earlier-module interaction defect through complete native cumulative provider chain remains unproved; no synthetic pass report replaces it."
+    },
+    {
+      "id": "PCR-CONTAINER-BUILD-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-product-gates.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original real-file output validator/resolver covers failed omission, mandatory success output, invalid supplied outputs; passes. | Original failed Dockerfile build through original runner cannot run: no native BuildKit/configuration. Failed-vs-errored full provider disposition is not claimed."
+    },
+    {
+      "id": "PCR-CONTAINER-BUILD-002",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-product-gates.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Actual local HTTP delayed/stalled body, full deadline, cancellation and diagnostic preservation regressions pass. | Original real prepared build followed by Registryverify deadline remains unexecuted because BuildKit is unavailable."
+    },
+    {
+      "id": "PCR-DIRECT-COMMAND-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-product-gates.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. All eight output positions × six media types pass the original resolver/production validator with actual file copies/hashes. | The original native two-artifact command/provider/runner regression was run after genuine sandbox build and fails (`errored`/EPIPE before command), so the exact original requested native proof remains open. No cluster/BuildKit requirement was added to this finding."
+    },
+    {
+      "id": "PCR-VISUAL-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-prism-reverification.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Old manifest version versus actual new capture rejects; accepted newly captured/reviewed baseline succeeds. | Code present: v2 manifest captures actual browser version, provider rejects mismatch before comparison, old manifests require recapture. Three original local identity/preflight tests pass. | Actual browser capture versus obsolete manifest and approved newly captured baseline; native provider gate fails for missing Chromium. No baseline was fabricated or approved."
+    },
+    {
+      "id": "PATH-T02-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-prism-reverification.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original services + real DB, save event, capture agent request and demonstrate the persisted snapshot in a new session. | Code present: trusted subject resolution → persisted consent/policy/event-bound preference generation → original prompt/tool generation identity. SQL snapshot and producer/prompt tests pass across projects, with override/disable and subject exclusion. | Original Control/database request admission and captured new-session agent input remain unexercised. No actual model generation or design-quality requirement is added to this finding."
+    },
+    {
+      "id": "PATH-T02-002",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-prism-reverification.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original Control/agent tool + real DB; overlap A1/A2 and reverse results without A1 mutating A2. | Code present: round binds request, architecture digest/revision and source revision; repository checks before mutations. Reversed architecture-result order, rejection and exact replay tests pass on original repositories/PGlite. | Original Control/agent-tool HTTP flow with DB and reversed A1/A2 delivery remains unexercised. A model call or browser is not required for this original gate."
+    },
+    {
+      "id": "PATH-T02-003",
+      "status_at_checkpoint": "verifiziert",
+      "evidence": "implementation/wave47-root-review.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Originale SQL-Persistenz und HTTP-Retry unabhängig bestanden: zwei Runden, sechs Dokumente, drei historische Ablehnungen; keine zusätzliche native Pool-/Browseranforderung im Originalbefund."
+    },
+    {
+      "id": "PCR-PRISM-AGENT-BRIDGE-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-prism-reverification.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original bridge/agent/Control; actual aborts after 202, before spawn and after tool commit; restart without duplicate revision. | Code present: durable accepted/running/terminal job, fenced callback transaction, uncertain running outcome becomes NeedsNova without restart. Real database reopen, local process/HTTP and callback rollback tests pass. | Native DB pool, real OpenClaw/gateway accepted/spawn/tool-commit crash prefixes and session reconciliation; Node child tests do not establish gateway cancellation."
+    },
+    {
+      "id": "PCR-PRISM-AGENT-BRIDGE-002",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-prism-reverification.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original requests with long common prefixes and punctuation; separate sessions/history with correct project binding. | Code present: SHA-256 over complete trusted namespace/project tuple, preserved mapping; punctuation, long-prefix and namespace separation tests pass. | Actual OpenClaw session/history isolation for separate real project requests."
+    },
+    {
+      "id": "PCR-PRISM-CONTROL-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-prism-reverification.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original Control handler + native Postgres and authenticated transport; another real attempt rejected before persistence, valid path accepted. | Code present: original receiver validates full attempt/claim/worker/result/schema binding before evidence import and DB commit; bound cache replay also validates. Wrong real attempt and altered binding tests pass through original worker/artifact components. | Full original Control + Worker + native PostgreSQL commit/rollback observation, including an authenticated foreign result and valid result."
+    },
+    {
+      "id": "PCR-PRISM-CONTROL-002",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-prism-reverification.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original Control + native temporary Postgres; selection/four feedback actions, real DB error rollback and lost-ACK replay. | Code present: internal UUID separate from wire identity; direction change and preference/receipt share reserved transaction. Original SQL trigger failures, rollback, four feedback actions and exact replay pass. | Native pooled Control HTTP/session flow, SQL failure before event, lost acknowledgement."
+    },
+    {
+      "id": "PCR-PRISM-CORPUS-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-prism-reverification.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Native Postgres pool ≥2 connections, competing requests and insert failures; no partial rows/open transaction. | Code present: entire lookup/advisory lock/write scope uses the reserved `inTransaction` connection. Original corpus SQL regressions pass. | Genuine pg.Pool with two backend PIDs, real pgvector, competing barriers and insert failures; existing native gate cannot start without a dedicated DB."
+    },
+    {
+      "id": "PCR-PRISM-WORKER-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-prism-reverification.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original Control/Worker + temporary Postgres/artifact store; readable correct full log and store failure remains errored. | Code present: required full log uses the original authenticated/digest-bound artifact path; original Executor/Engine/HTTP/CAS regression yields readable matching bytes; corrupt store still errors and budget rejects oversized log. | Complete original Control + Worker with native DB and artifact storage, confirming completion/rollback at the actual service boundary."
+    },
+    {
+      "id": "PCR-PRISM-WORKER-002",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/worker-terminal-resource-measurement.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Terminale Core-Messung nach Cleanup/Evidence/Finalize und monotone verfügbare Beobachtungen behoben; vollständige Child-/Capability-/Browserownership bleibt Codearbeit."
+    },
+    {
+      "id": "PCR-PRISM-WORKER-003",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/worker-terminal-resource-measurement.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Zusätzliche Completionmessphase vorhanden; tatsächliche Cancel-/Browsernacharbeit und gesamtes Attempt-CPUfenster nicht vollständig nachgewiesen."
+    },
+    {
+      "id": "PCR-PRISM-ENGINE-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-prism-reverification.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Many actual captures in a long-lived worker, retained cache/heap budget, coalesced same-key work and Control-backed restart. | Code present: bounded active ownership and completed LRU entry/byte budgets with immutable serialized retention. Original repeated-render/cache/coalescing and durable artifact reopen tests pass. | Long-lived genuine capture/retained-heap acceptance and Control-backed restart replay; prepared capture gate fails because Chromium is absent."
+    },
+    {
+      "id": "PCR-PRISM-RENDERER-002",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-prism-reverification.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Actual iframe Previous/Next clicks cause the original App transitions in both directions. | Code present: distinct declarative previous/next actions reach original preview flow protocol; renderer tests pass. | Actual sandbox iframe clicks changing original App state in both directions; prepared Studio gate fails at browser launch."
+    },
+    {
+      "id": "PCR-PRISM-STUDIO-002",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-prism-reverification.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Real canonical image preview/browser rendering with load/size/integrity denials and retained sandbox/CSP. | Code present: same-origin bounded digest-verified asset loading, cancellation, separate resolved sources and data-image CSP retain sandbox. Original asset HTTP/store and projection tests pass. | Real browser image decode/naturalWidth, CSP/sandbox and denied/corrupt/oversized UI cases. Prepared tests did not reach those assertions."
+    },
+    {
+      "id": "PCR-OBS-002",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-telemetry-retirement.md",
+      "next_action": "Weitere Storequoten unter Original-Consumercheckpoint-/Evidence-/Idempotenzbedingungen bearbeiten; Originaldaten und Logs nicht automatisch löschen."
+    },
+    {
+      "id": "PCR-OPERATOR-001",
+      "status_at_checkpoint": "verifiziert",
+      "evidence": "implementation/wave47-root-review.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Fünf echte Core/HTTP/Disk-Reconciliationregressionen unabhängig bestanden: erneuter Send, genau eine Wirkung, begrenztes persistiertes Retrybudget."
+    },
+    {
+      "id": "F-T14-01",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-product-gates.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Corrected the missing production package for existing retained-demo ownership/Ready implementation. | Original requested end-to-end fixture plan, post-plan Tailnet reachability and exact-generation release/TTL proof unavailable. Human extension authorizer is actual missing code/integration, not merely an unrun test."
+    },
+    {
+      "id": "F-T14-02",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-product-gates.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Corrected owning role inclusion of both demo handoff and app-auth provider; actual bundled imports resolve their dependencies. | Real application login, private operator reception, other-user/old-generation denial and authenticated acceptance/extension remain unproved or unimplemented."
+    },
+    {
+      "id": "IFR-08-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-infrastructure.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Shared explicit client contract; uncached native CRI digest pull and real Pod; unauthorized clients rejected. | Five registry-client configuration/Helm tests pass. Actual pinned Trivy pulls an authenticated local HTTPS OCI image; wrong credentials/scope reject. BuildKit, CRI and Pod proof remains absent; these local clients do not establish node reachability."
+    },
+    {
+      "id": "IFR-08-002",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-telemetry-retirement.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Registry Producerreferenzen, persistenter Ownershiptransfer und gefenctes GC fehlen. Reale Leasezyklen, Digestpull nach GC und Podersatz nicht nachgewiesen."
+    },
+    {
+      "id": "IFR-09-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-infrastructure.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Actual BuildKit/node traffic through mirror; offline cache hit vs miss. | Original generated BuildKit/node mirror configuration assertions pass. No BuildKit daemon, CRI or native mirror cache exists here; traffic/offline gates remain open."
+    },
+    {
+      "id": "IFR-19-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-infrastructure.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Every documented entrypoint selects immutable receipt images; reject unselected overrides; compare actual Pod imageIDs. | New baseline bug fixed. Ten original Git/Shell/Helm release tests pass after a reproduced before-failure, and both configuration-binding tests passed in the combined run. Local release selection/render defect is verified; Pod imageIDs remain an additional explicitly unperformed operating check."
+    },
+    {
+      "id": "IFR-22-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-infrastructure.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Separate PR vs publication permissions; immutable actions; isolated internal/fork PR token checks. | Five original parsed workflow trust tests pass. No GitHub workflow or test PR was run; effective issued tokens/secret availability remain unobserved."
+    },
+    {
+      "id": "IFR-24-002",
+      "status_at_checkpoint": "verifiziert",
+      "evidence": "implementation/wave47-root-review.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Vier echte gepinnte Trivy-/DB-Regressionsfälle unabhängig bestanden; alte Advisorydaten sperren Erfolg trotz aktuellem Downloadzeitpunkt."
+    },
+    {
+      "id": "PCR-SCAFFOLD-OPS-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-product-gates.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Five real supervisor/status CLI regressions pass again. | Original adopted-live-process proof fails its actual process-identity prerequisite (`REAL_PROC_PROCESS_CMDLINE_REQUIRED`); no procfs replacement or successful start/recovery is claimed."
+    },
+    {
+      "id": "IFR-07-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-infrastructure.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Configuration-driven rollout and actual old-peer rejection after update. | Original actual Helm/config sensitivity gate passes after restoring required Buster fixture inputs; all relevant checksum changes asserted. No native Envoy peer rollout has run. New trust-readiness work is separate and is not this rollout proof."
+    },
+    {
+      "id": "IFR-18-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-infrastructure.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Alternate controller SA enforced by actual Kubernetes VAP admission. | Original Helm gate passes both namespaces/identities/prefixes and rejects Kubernetes 1.29. Original controller Go suite passes. Its local HTTP fixtures are not a Kubernetes API server; actual CEL/admission and installed-policy migration remain open."
+    },
+    {
+      "id": "IFR-14-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-infrastructure.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Config-only effective model route and process/DB-fault Ready/Unready behavior. | Actual plain-manifest and Helm sensitivity gate passes; probe separation remains asserted. Pinned LiteLLM native runtime with DB is not running, so effective route/fault behavior remains open."
+    },
+    {
+      "id": "IFR-20-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-infrastructure.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Explicit configured limits; original large/invalid ingestion inputs, measured limits/OOM recovery. | Three real Helm tests and two original native Node service tests pass; invalid TTL, actual cleanup failure/retry, pause and explicit sizing remain verified. There is no resource-isolated ingestion Pod or OOM/CPU/disk observation; these specific resource gates remain open."
+    },
+    {
+      "id": "IFR-20-002",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-infrastructure.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Singleton-control upgrade under writes, cross-node scheduling and failing replacement. | Helm verifies Recreate only for control and preserves worker/studio strategies. No cross-node cluster upgrade or write load was run."
+    },
+    {
+      "id": "IFR-25-001",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-infrastructure.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Functional dependency and expired-cert faults after startup; status plus alarm, independent liveness. | See the separately committed `worker-trust-operational-readiness.md`. New Envoy source/render work is explicitly native-unverified; it must not be counted as this acceptance."
+    },
+    {
+      "id": "T01-F01",
+      "status_at_checkpoint": "verifiziert",
+      "evidence": "implementation/wave47-project-cli-independent-review.md",
+      "next_action": "Keine weitere Reparatur im Originalscope; nach Integration verwandter Änderungen Scaffold-CLI-Regression erhalten."
+    },
+    {
+      "id": "T01-F02",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-product-gates.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Existing two-module full technical graph, source admission, cumulative gates and source-bound demo composition retained; role omissions now fixed. | Complete live product lifecycle and authenticated human acceptance remain incomplete; graph success is still correctly distinguished from Ready and Accepted."
+    },
+    {
+      "id": "T15-F01",
+      "status_at_checkpoint": "implementiert / unvollständig",
+      "evidence": "implementation/wave47-product-gates.md",
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original immutable report-source suite passes with actual journals/artifact stores, cross-run/stale/missing/tampered/FIFO negatives. | Original requested genuine configured Writer consumption/output remains unavailable. No local source assertion is called a successful Writer."
+    }
+  ]
+}

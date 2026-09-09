@@ -10,7 +10,7 @@
       "status": "in Bearbeitung",
       "baseline_status": "implementiert",
       "required_evidence": "Portable Ordnung/versionierte Digestumstellung noch offen; aktuelle akzeptierte Bytes bewusst unverändert.",
-      "result": "Versionierter tatsächlicher Artifact-Writer/Rawbyte-Reader mit voller Producerbindung umgesetzt und unabhängig geprüft. Semantische Effect/Subject/Input/Report/Repair-/Ownership-Digests benötigen gekoppelte Versionierung; Folgearbeit aktiv.",
+      "result": "Artifact-, Effect-, Source-/Subject- und Snapshot-Versionierung samt historischer CLI-Kompatibilität integriert. Weitere persistierte Canonical-Consumer bleiben zu prüfen.",
       "baseline_evidence_requirement": "Portable Ordnung/versionierte Digestumstellung noch offen; aktuelle akzeptierte Bytes bewusst unverändert.",
       "evidence": "implementation/wave47-sdk-independent-review.md"
     },
@@ -280,7 +280,7 @@
       "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
       "required_evidence": "Weitere Storequoten mit erhaltenen Idempotenz-/Continuation-/Resultbelegen und ausdrücklicher manueller Aufbewahrungspolitik bearbeiten; keine automatische Loglöschung.",
-      "result": "Neue ownergebundene Telemetryprojektionen manuell mit Tombstones/Fences freigebbar; unabhängig geprüft. Admission-/Attempt-/Artefakt-/Busterreferenzabschluss bleibt erforderlich.",
+      "result": "Manuelle Admission-Kompaktierung mit Originalsource-Referenz und unabhängigen lokalen Store-/Replaybelegen integriert; allgemeine Run-/History-/Quota-Freigabe bleibt unvollständig.",
       "baseline_evidence_requirement": "Weitere Storequoten mit erhaltenen Idempotenz-/Continuation-/Resultbelegen und ausdrücklicher manueller Aufbewahrungspolitik bearbeiten; keine automatische Loglöschung.",
       "evidence": "implementation/wave47-telemetry-retirement.md"
     },
@@ -447,12 +447,12 @@
     {
       "id": "T01-F01",
       "package": "product",
-      "status": "implementiert / unvollständig",
+      "status": "verifiziert",
       "baseline_status": "implementiert",
       "required_evidence": "Canonical explicit legacy import, reachable CLI documentation, source-launcher and extracted-launcher validation completed. Import/compile demonstrably produce accepted v2 inputs/graphs, never old execution authority. | Actual application execution is separately classified under T01-F02; compile is not a run. Legacy gate-dependent declarations require explicit restructuring, with a specific rejection rather than silent migration.",
-      "result": "Canonical explicit legacy import, reachable CLI documentation, source-launcher and extracted-launcher validation completed. Import/compile demonstrably produce accepted v2 inputs/graphs, never old execution authority. | Actual application execution is separately classified under T01-F02; compile is not a run. Legacy gate-dependent declarations require explicit restructuring, with a specific rejection rather than silent migration.",
+      "result": "Echter Scaffold→Import→Compile→Execution erreicht Source/Sync und erste Modulstage mit Gitworkspace; Originalscope unabhängig und auf integriertem SDK erneut bestätigt. T01-F02 bleibt offen.",
       "baseline_evidence_requirement": "Kanonischen expliziten Legacy-Autorierungsimport und nachgelagerte sourcegebundene Demo-/Delivery-/Ready-/Acceptance-Komposition vervollständigen; keine Annahme aus bloßem Graph-Erfolg.",
-      "evidence": "implementation/wave47-product-gates.md"
+      "evidence": "implementation/wave47-project-cli-independent-review.md"
     },
     {
       "id": "T01-F02",
@@ -475,8 +475,8 @@
       "evidence": "implementation/wave47-product-gates.md"
     }
   ],
-  "verified_count": 5,
-  "remaining_count": 42,
-  "integration_checkpoint": "0dc13a6",
+  "verified_count": 6,
+  "remaining_count": 41,
+  "integration_checkpoint": "48320e8",
   "overall_complete": false
 }

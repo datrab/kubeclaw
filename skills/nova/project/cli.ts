@@ -6,6 +6,7 @@ import { loadPlatformConfig } from '@kubeclaw/plugin-foundation/config/platform'
 import { runPipelineV2, recoverPipelineV2, resumePipelineV2, validatePipelineRuntimeV2 } from '@kubeclaw/nova-core';
 import { canonicalJson, sha256Text, type ResumeSignal } from '@kubeclaw/plugin-sdk';
 import { compileProject } from './compiler.ts';
+import { compileProjectRecovery } from './recovery.ts';
 
 // Explicit pipeline graphs retain the existing core command surface.
 if (process.argv.includes('--import-legacy')) {
@@ -26,8 +27,9 @@ if (process.argv.includes('--import-legacy')) {
     if (!args['--project'] || !args['--platform']) throw new Error('PROJECT_AND_PLATFORM_REQUIRED');
     if ([args['--compile'], args['--recover'], args['--signal']].filter(Boolean).length > 1) throw new Error('PROJECT_COMMAND_CONFLICT');
     const project = JSON.parse(fs.readFileSync(path.resolve(args['--project']), 'utf8'));
-    const { runId, definition } = compileProject(project);
     const platform = loadPlatformConfig(path.resolve(args['--platform']));
+    const { runId, definition } = args['--recover'] || args['--signal']
+      ? compileProjectRecovery(project, platform.storageRoot) : compileProject(project);
     // Validate every stage's input, registration and grants from the actual
     // installed role before writing a graph or starting any external operation.
     await validatePipelineRuntimeV2(platform, definition);

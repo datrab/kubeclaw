@@ -1,0 +1,22 @@
+Original report-evidence fixture plus independent unknown-version input case; all original assertions retained.
+Exit code: 0
+▶ historical report source authority rejects foreign, stale, missing and changed actual evidence
+  ✔ independent report projection rejects an unknown durable identity version without rewriting evidence (230.6704ms)
+  ✔ cross-run, duplicate, nonexistent and stale source selections reject (52.186175ms)
+  ✔ actual blob loss and changed bytes reject; preserved store reads original bytes after repair (63.890626ms)
+  ✔ incomplete and nonterminal real journal prefixes reject without repair (12.681215ms)
+  ✔ original requested-effect prefix cannot be mistaken for completed run evidence (4.796718ms)
+  ✔ empty and completed effect prefixes cannot satisfy the pinned lifecycle (20.274422ms)
+  ✔ ordinary effect cannot impersonate a policy-owned confidential audit triplet (631.001586ms)
+  ✔ ambiguous historical producer version and inconsistent claimed execution mode reject (357.563092ms)
+  ✔ source mutation during actual artifact read rejects the snapshot (46.311791ms)
+  ✔ bounded legacy FIFO cannot hang the original resolver (91.935194ms)
+✔ historical report source authority rejects foreign, stale, missing and changed actual evidence (10269.589508ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10717.597356

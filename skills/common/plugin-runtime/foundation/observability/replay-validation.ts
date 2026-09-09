@@ -1,3 +1,4 @@
+import { assertAdmissionRetiredEntry } from './admission-retirement.ts';
 import fs from 'node:fs/promises';
 import {
   canonicalJson,
@@ -56,9 +57,10 @@ function admissionGaps(state: AdmissionState): void {
     validatePipelineObservabilityContract('gapReport', gap);
     replayUnique(keys, canonicalJson([gap.producer, gap.pipelineRunId, gap.fromSequence, gap.toSequence]), 'admission-gap-duplicate');
     if (gap.state !== 'restored') continue;
-    const sequences = new Set(state.entries.filter(({ record }) => record.correlation.pipelineRunId === gap.pipelineRunId
+    const headers = [...state.entries.map(({record})=>record),...(state.retiredEntries??[]).map(({acknowledgement:a})=>({producer:a.producer,sequence:a.sequence,correlation:{pipelineRunId:a.pipelineRunId}}))];
+    const sequences = new Set(headers.filter(record => record.correlation.pipelineRunId === gap.pipelineRunId
       && canonicalJson(record.producer) === canonicalJson(gap.producer)
-      && record.sequence >= gap.fromSequence && record.sequence <= gap.toSequence).map(({ record }) => record.sequence));
+      && record.sequence >= gap.fromSequence && record.sequence <= gap.toSequence).map(record => record.sequence));
     replayAssert(sequences.size === gap.toSequence - gap.fromSequence + 1, 'admission-gap-restoration');
   }
 }
@@ -88,11 +90,20 @@ function admissionQuarantine(state: AdmissionState, limits: AdmissionStoreLimits
   replayAssert(typeof overflow.lastReason === 'string' && /^sha256:[a-f0-9]{64}$/.test(overflow.lastRawDigest) && Number.isSafeInteger(overflow.lastRawBytes) && overflow.lastRawBytes >= 0, 'admission-overflow-digest');
 }
 export function assertAdmissionReplay(state: AdmissionState, limits: AdmissionStoreLimits): void {
-  replayObject(state, ['schemaVersion', 'nextCursor', 'entries', 'quarantine', 'quarantineOverflow', 'gaps', 'unresolvedItems', 'overflowUnresolvedItems'], 'admission-envelope');
-  replayAssert(state.schemaVersion === 'observability-admission-store.v1', 'admission-version');
+  replayObject(state, ['schemaVersion', 'nextCursor', 'entries', 'quarantine', 'quarantineOverflow', 'gaps', 'unresolvedItems', 'overflowUnresolvedItems',...(state.schemaVersion === 'observability-admission-store.v2'?['retiredEntries']:[])], 'admission-envelope');
+  replayAssert(state.schemaVersion === 'observability-admission-store.v1' || state.schemaVersion === 'observability-admission-store.v2', 'admission-version');
   for (const field of ['entries', 'quarantine', 'gaps', 'unresolvedItems', 'overflowUnresolvedItems'] as const) replayAssert(Array.isArray(state[field]), `admission-${field}`);
-  replayAssert(state.entries.length <= limits.maximumRecords && state.nextCursor === state.entries.length + 1, 'admission-next-cursor');
+  replayAssert(state.schemaVersion !== 'observability-admission-store.v2' || Array.isArray(state.retiredEntries),'admission-retired-entries');
+  const retired=state.retiredEntries??[];
+  replayAssert(state.entries.length <= limits.maximumRecords && state.nextCursor === state.entries.length + retired.length + 1, 'admission-next-cursor');
   const keys = new Set<string>();
-  state.entries.forEach((entry, index) => admissionEntry(entry, index + 1, keys, limits.maximumIngressBytes));
+  state.entries.forEach((entry, index) => {
+    admissionEntry(entry, state.schemaVersion==='observability-admission-store.v1'?index+1:entry.canonicalCursor, keys, limits.maximumIngressBytes);
+    replayAssert(index===0 || entry.canonicalCursor>state.entries[index-1]!.canonicalCursor,'admission-active-order');
+  });
+  const operations=new Set<string>();
+  for(const entry of retired){assertAdmissionRetiredEntry(entry);replayUnique(keys,entry.key,'admission-duplicate-identity');replayUnique(operations,entry.operationId,'admission-retirement-operation');}
+  const cursors=[...state.entries.map(entry=>entry.canonicalCursor),...retired.map(entry=>entry.acknowledgement.canonicalCursor)].sort((a,b)=>a-b);
+  replayAssert(cursors.every((cursor,index)=>cursor===index+1),'admission-cursor-coverage');
   admissionQuarantine(state, limits); admissionIssues(state);
 }

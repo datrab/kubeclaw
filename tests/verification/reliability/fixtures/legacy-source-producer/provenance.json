@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "historical-source-producer.v1",
+  "sourceCommit": "b6b2b1bf0579ac92b2e9f565bbc44bc79252a33d",
+  "files": [
+    {
+      "sourcePath": "skills/nova/core/execution/engine-run.ts",
+      "archivePath": "core/execution/engine-run.ts.txt",
+      "gitBlobSha1": "99b865021bb31525d3583c054971a38861f8abac",
+      "sha256": "f1486b634310f543f8bd152c673ac660c2c79ff5d6c01d3720a292ffc2af4762",
+      "bytes": 10563
+    },
+    {
+      "sourcePath": "skills/nova/core/execution/engine-snapshots.ts",
+      "archivePath": "core/execution/engine-snapshots.ts.txt",
+      "gitBlobSha1": "a63c3f3961ebe8ca86328bf428d419307f539f0b",
+      "sha256": "12fc2f012477e71bc59420452d086e208d685bced9e7aa05182f9c1833359ed0",
+      "bytes": 10070
+    },
+    {
+      "sourcePath": "skills/nova/core/execution/graph.ts",
+      "archivePath": "core/execution/graph.ts.txt",
+      "gitBlobSha1": "b322a16aba2459c03feb2e6e70cc3d6069e09001",
+      "sha256": "c11f9c7e2c19c357ba7d7320af2a87f49497d8bf03c4e80685bf5a15090c6dea",
+      "bytes": 4370
+    },
+    {
+      "sourcePath": "skills/nova/core/execution/runner.ts",
+      "archivePath": "core/execution/runner.ts.txt",
+      "gitBlobSha1": "2f0801f5fab1aa601c14efe743cbe68456916fdb",
+      "sha256": "ae9e2646fec756b577988d39d44df87d2d89d53354660a5bb49c413d6cfaedcb",
+      "bytes": 5369
+    },
+    {
+      "sourcePath": "skills/nova/project/source.ts",
+      "archivePath": "project/source.ts.txt",
+      "gitBlobSha1": "bc31d5c1c499e1e2ddc3c7943383647e78a71f5c",
+      "sha256": "c6817af987740b406d5226b124ac3b7611a5c36128d2198ca3dd03c49a079762",
+      "bytes": 5188
+    },
+    {
+      "sourcePath": "skills/nova/project/compiler.ts",
+      "archivePath": "project/compiler.ts.txt",
+      "gitBlobSha1": "6312674dd5bf110365c5513818adc985f3c0b3e1",
+      "sha256": "6dfd903c5802f53d69d93aed8366ef1e774a05d8af72987df9170dd4b177f54d",
+      "bytes": 13373
+    },
+    {
+      "sourcePath": "skills/nova/project/cli.ts",
+      "archivePath": "project/cli.ts.txt",
+      "gitBlobSha1": "a24f69af5f0a5b937c7658f349d29acf75068e99",
+      "sha256": "d7d1d8a49fd4a46179cd10cb534efa8cd111ff2a0f2c706148b37e12d39d063a",
+      "bytes": 3716
+    }
+  ]
+}

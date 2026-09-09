@@ -1,3 +1,4 @@
+import {resolveAdmissionRetiredSnapshot} from '../../skills/common/plugin-runtime/foundation/observability/admission-retirement.ts';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assertDurableRecordReplay } from '../../skills/common/plugin-runtime/foundation/observability/durable-records.ts';
@@ -82,7 +83,17 @@ export function inspectAdmission(inventory, root, runId) {
     if (gap.pipelineRunId === runId && gap.state !== 'restored') inventory.block('PRODUCER_GAP_UNRESOLVED', identityHash([gap.producer.producerId, gap.fromSequence, gap.toSequence]));
   }
   if (state.quarantine.length || state.quarantineOverflow) inventory.block('QUARANTINE_OWNERSHIP_UNKNOWN', root);
-  return { root, nextCursor: state.nextCursor, records: state.entries.filter(item => item.record.correlation.pipelineRunId === runId).map(item => ({
+  const retired=(state.retiredEntries??[]).filter(item=>item.acknowledgement.pipelineRunId===runId);
+  for(const entry of retired) {
+    if(!inventory.files.has(entry.source.file)){inventory.block('ADMISSION_COMPLETION_REFERENCE_UNKNOWN',entry.source.file);continue;}
+    const source=inventory.json(entry.source.file);
+    assertAttemptReplay(source,path.dirname(entry.source.file),broadLimits);
+    resolveAdmissionRetiredSnapshot(entry,source);
+  }
+  return { root, nextCursor: state.nextCursor, retiredCompletions:retired.map(entry=>({
+    recordId:entry.acknowledgement.recordId,cursor:entry.acknowledgement.canonicalCursor,digest:entry.acknowledgement.recordDigest,
+    source:entry.source.file,resultDigest:entry.source.resultDigest,closureDigest:entry.source.closureDigest,disposition:'retain-completion-source-and-idempotency-reference',
+  })), records: state.entries.filter(item => item.record.correlation.pipelineRunId === runId).map(item => ({
     recordId: item.record.recordId, cursor: item.canonicalCursor, sequence: item.record.sequence, digest: item.record.recordDigest,
     producerId: item.record.producer.producerId, bytes: Buffer.byteLength(item.bytes), disposition: 'retain',
   })) };

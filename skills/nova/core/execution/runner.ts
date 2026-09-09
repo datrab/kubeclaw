@@ -20,6 +20,7 @@ export interface PipelineRunResult {
   readonly status: 'succeeded' | 'failed' | 'blocked' | 'waiting' | 'cancelled'; readonly stages: ReadonlyMap<string, StageRuntimeState>;
 }
 export interface PipelineRunnerOptions {
+  readonly graphSnapshotVersion?: ExecutionGraphSnapshot['schemaVersion'];
   readonly definition: PipelineDefinition; readonly registry: GrantedRegistry; readonly activated: ActivatedRegistry; readonly adapters: AdapterRuntime;
   readonly journal: FileJournal<LifecycleEvent | PluginDomainEvent>; readonly initialStates?: ReadonlyMap<string, StageRuntimeState>;
   readonly resumeGuidance?: ReadonlyMap<string, Readonly<Record<string, unknown>>>; readonly orchestratorIssuerId: string;
@@ -47,7 +48,7 @@ export class PipelineRunner {
   readonly #options: PipelineRunnerOptions; readonly #graph: ExecutionGraph; readonly #snapshot: ExecutionGraphSnapshot; readonly #now: () => Date;
   constructor(options: PipelineRunnerOptions) {
     this.#options = options; validatePipelineDefinitionAgainstRegistry(options.definition, options.registry);
-    this.#graph = ExecutionGraph.fromDefinition(options.definition); this.#snapshot = this.#graph.snapshot(options.definition.id, options.definition.maxConcurrency);
+    this.#graph = ExecutionGraph.fromDefinition(options.definition); this.#snapshot = this.#graph.snapshot(options.definition.id, options.definition.maxConcurrency, options.graphSnapshotVersion);
     this.#now = options.now ?? (() => new Date());
   }
   graphSnapshot(): ExecutionGraphSnapshot { return this.#snapshot; }

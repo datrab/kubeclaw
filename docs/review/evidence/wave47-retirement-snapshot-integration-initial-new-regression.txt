@@ -1,0 +1,57 @@
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (1951.278143ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (1364.407691ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (1296.249788ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (1296.106832ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (1553.307539ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (1800.804683ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (1127.679741ms)
+✔ fresh admission reads and duplicate ACK fail closed for persisted corruption (440.978197ms)
+✔ fresh attempt replay validates result, generation, evidence, intent and closure before recovery (947.811421ms)
+✔ standalone closure producer binding preserves staged-evidence expiry and partial completeness (114.691502ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (1463.555072ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (1409.860045ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (1048.883307ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (989.641807ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (975.93931ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (996.681821ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1401.186737ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (951.330751ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.316787ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.791914ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.97492ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (385.748512ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2406.287694ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (339.032702ms)
+✖ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (845.566904ms)
+✔ exact retirement byte accounting crosses decimal digit boundaries without a fixed point (287.631545ms)
+✔ original v1 stores reopen without rewriting and retain ordinary append/read/transition contracts (52.562836ms)
+✔ manual terminal-run cleanup releases actual bytes and record quota; duplicate replay never resurrects (1776.243273ms)
+✔ waiting run, foreign owner, stale source, reused operation and legacy records reject without release (2673.428639ms)
+✔ real run mutation fence rejects concurrent cleanup; immutable intent survives caller mutation (1083.802815ms)
+✔ SIGKILL after actual atomic store commit retains tombstones and one CLI release (2074.812454ms)
+✔ native competing store writer blocks retirement; SIGKILL before mutation leaves original bytes (1530.565771ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 31
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13894.482989
+
+✖ failing tests:
+
+test at tests/verification/reliability/observability-retirement-plan.test.mjs:251:1
+✖ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (845.566904ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/wave47-admission-integration/tests/verification/reliability/observability-retirement-plan.test.mjs:268:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /RUN_SNAPSHOT_INTEGRITY_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }

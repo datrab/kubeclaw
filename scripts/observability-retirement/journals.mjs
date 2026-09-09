@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { digest, identityHash } from './files.mjs';
-import { canonicalJson } from '../../skills/nova/core/execution/engine-snapshots.ts';
+import { assertRunSnapshot } from '../../skills/nova/core/execution/engine-snapshots.ts';
 
 export function journal(inventory, file) {
   const text = inventory.text(file);
@@ -56,9 +56,10 @@ function requireRunSnapshots(inventory, root) {
   const file = path.join(root, 'run-snapshot.json');
   if (!inventory.files.has(file)) { inventory.block('RUN_SNAPSHOT_MISSING', file); return null; }
   const snapshot = inventory.json(file);
-  const { digest: expected, ...unsigned } = snapshot;
-  if (snapshot.schemaVersion !== 'run-snapshot.v1' || expected !== digest(Buffer.from(canonicalJson(unsigned)))) throw new Error('RUN_SNAPSHOT_INTEGRITY_INVALID');
-  return { path: file, digest: expected };
+  // Inventory owns the bounded, no-follow read. Share the Core's explicit
+  // version dispatch and integrity validation without reopening this file.
+  assertRunSnapshot(snapshot);
+  return { path: file, digest: snapshot.digest };
 }
 
 export function inspectRun(inventory, root, runId) {

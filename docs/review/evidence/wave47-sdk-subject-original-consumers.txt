@@ -1,0 +1,23 @@
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (3939.523776ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (3892.166905ms)
+✔ native terminal decisions retain their distinct dispositions and reject altered evidence (27.146277ms)
+✔ snapshot publication survives process death as a complete set and rejects overwrite or corruption (445.354603ms)
+▶ historical report source authority rejects foreign, stale, missing and changed actual evidence
+  ✔ cross-run, duplicate, nonexistent and stale source selections reject (55.205668ms)
+  ✔ actual blob loss and changed bytes reject; preserved store reads original bytes after repair (93.055394ms)
+  ✔ incomplete and nonterminal real journal prefixes reject without repair (26.147313ms)
+  ✔ original requested-effect prefix cannot be mistaken for completed run evidence (16.626307ms)
+  ✔ empty and completed effect prefixes cannot satisfy the pinned lifecycle (23.089699ms)
+  ✔ ordinary effect cannot impersonate a policy-owned confidential audit triplet (786.173793ms)
+  ✔ ambiguous historical producer version and inconsistent claimed execution mode reject (424.488612ms)
+  ✔ source mutation during actual artifact read rejects the snapshot (89.156937ms)
+  ✔ bounded legacy FIFO cannot hang the original resolver (139.158579ms)
+✔ historical report source authority rejects foreign, stale, missing and changed actual evidence (14409.973647ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15385.627249

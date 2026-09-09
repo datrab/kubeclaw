@@ -1,0 +1,182 @@
+✖ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (1269.878248ms)
+✖ missing or changed original completion cannot appear as an empty successful raw tail (1071.006892ms)
+✖ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (950.779039ms)
+✖ actual waiting continuation remains protected and old v1 admission reopens unchanged (1091.729981ms)
+✖ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (1053.944172ms)
+✖ actual process SIGKILL after commit reopens with original cursor and no reinsertion (1182.170363ms)
+✖ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (904.091161ms)
+✔ fresh admission reads and duplicate ACK fail closed for persisted corruption (318.975774ms)
+✔ fresh attempt replay validates result, generation, evidence, intent and closure before recovery (693.975766ms)
+✔ standalone closure producer binding preserves staged-evidence expiry and partial completeness (117.861606ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=false (1315.174487ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=true (1236.786854ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=false, Unicode policy=true (11329.681563ms)
+✔ persisted source approval graph sv_SE.UTF-8 -> en_US.UTF-8, legacy=false, Unicode policy=true (10698.252825ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=false (10249.655314ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=true (9194.212772ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=false (3470.419178ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=true (3341.013306ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1180.288145ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (615.459452ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (48.457483ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 14
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48823.852214
+
+✖ failing tests:
+
+test at tests/verification/reliability/admission-retirement.test.mjs:79:1
+✖ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (1269.878248ms)
+  Error: RUN_SNAPSHOT_INTEGRITY_INVALID
+      at requireRunSnapshots (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:60:120)
+      at inspectRun (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:66:20)
+      at retainedRun (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:28:15)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:52:43
+      at withRunMutationLock (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/execution/run-mutation.ts:16:26)
+      at retireAdmission (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:51:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/admission-retirement.test.mjs:87:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/verification/reliability/admission-retirement.test.mjs:106:1
+✖ missing or changed original completion cannot appear as an empty successful raw tail (1071.006892ms)
+  Error: RUN_SNAPSHOT_INTEGRITY_INVALID
+      at requireRunSnapshots (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:60:120)
+      at inspectRun (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:66:20)
+      at retainedRun (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:28:15)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:52:43
+      at withRunMutationLock (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/execution/run-mutation.ts:16:26)
+      at retireAdmission (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:51:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/admission-retirement.test.mjs:107:34)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/verification/reliability/admission-retirement.test.mjs:119:1
+✖ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (950.779039ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /RUN_CHANGED/. Input:
+  
+  'Error: RUN_SNAPSHOT_INTEGRITY_INVALID'
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/admission-retirement.test.mjs:121:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: RUN_SNAPSHOT_INTEGRITY_INVALID
+        at requireRunSnapshots (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:60:120)
+        at inspectRun (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:66:20)
+        at retainedRun (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:28:15)
+        at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:52:43
+        at withRunMutationLock (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/execution/run-mutation.ts:16:26)
+        at retireAdmission (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:51:10)
+        at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/admission-retirement.test.mjs:121:24)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async Test.run (node:internal/test_runner/test:1389:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    expected: /RUN_CHANGED/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/admission-retirement.test.mjs:132:1
+✖ actual waiting continuation remains protected and old v1 admission reopens unchanged (1091.729981ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /RUN_ACTIVE_OR_WAITING/. Input:
+  
+  'Error: RUN_SNAPSHOT_INTEGRITY_INVALID'
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/admission-retirement.test.mjs:134:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: RUN_SNAPSHOT_INTEGRITY_INVALID
+        at requireRunSnapshots (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:60:120)
+        at inspectRun (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:66:20)
+        at retainedRun (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:28:15)
+        at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:52:43
+        at withRunMutationLock (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/execution/run-mutation.ts:16:26)
+        at retireAdmission (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:51:10)
+        at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/admission-retirement.test.mjs:134:24)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async Test.run (node:internal/test_runner/test:1389:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    expected: /RUN_ACTIVE_OR_WAITING/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/admission-retirement.test.mjs:138:1
+✖ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (1053.944172ms)
+  Error: RUN_SNAPSHOT_INTEGRITY_INVALID
+      at requireRunSnapshots (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:60:120)
+      at inspectRun (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:66:20)
+      at retainedRun (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:28:15)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:52:43
+      at withRunMutationLock (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/execution/run-mutation.ts:16:26)
+      at retireAdmission (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:51:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/admission-retirement.test.mjs:143:38)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/verification/reliability/admission-retirement.test.mjs:147:1
+✖ actual process SIGKILL after commit reopens with original cursor and no reinsertion (1182.170363ms)
+  Error: child 1: file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:60
+    if (snapshot.schemaVersion !== 'run-snapshot.v1' || expected !== digest(Buffer.from(canonicalJson(unsigned)))) throw new Error('RUN_SNAPSHOT_INTEGRITY_INVALID');
+                                                                                                                         ^
+  
+  Error: RUN_SNAPSHOT_INTEGRITY_INVALID
+      at requireRunSnapshots (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:60:120)
+      at inspectRun (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:66:20)
+      at retainedRun (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:28:15)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:52:43
+      at withRunMutationLock (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/execution/run-mutation.ts:16:26)
+      at retireAdmission (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:51:10)
+      at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/[eval1]:1:147
+      at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+      at async node:internal/modules/esm/loader:224:26
+      at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:221:20)
+  
+  Node.js v24.19.0
+  
+      at ChildProcess.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/admission-retirement.test.mjs:153:183)
+      at Object.onceWrapper (node:events:631:26)
+      at ChildProcess.emit (node:events:509:28)
+      at ChildProcess._handle.onexit (node:internal/child_process:295:12)
+
+test at tests/verification/reliability/admission-retirement.test.mjs:162:1
+✖ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (904.091161ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /NON_REGULAR_PATH/. Input:
+  
+  'Error: RUN_SNAPSHOT_INTEGRITY_INVALID'
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/admission-retirement.test.mjs:168:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: RUN_SNAPSHOT_INTEGRITY_INVALID
+        at requireRunSnapshots (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:60:120)
+        at inspectRun (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/observability-retirement/journals.mjs:66:20)
+        at retainedRun (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:28:15)
+        at file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:52:43
+        at withRunMutationLock (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/execution/run-mutation.ts:16:26)
+        at retireAdmission (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/scripts/retire-admission.mjs:51:10)
+        at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/admission-retirement.test.mjs:168:24)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async Test.run (node:internal/test_runner/test:1389:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    expected: /NON_REGULAR_PATH/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

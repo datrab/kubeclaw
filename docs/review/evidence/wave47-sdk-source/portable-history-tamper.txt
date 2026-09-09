@@ -1,0 +1,11 @@
+file:///tmp/sdk-source-portable-checkout/docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs:14
+ if(bytes.length!==entry.bytes||sha256!==entry.sha256||blob!==entry.gitBlobSha1)throw new Error(`HISTORICAL_SOURCE_INTEGRITY_INVALID:${entry.sourcePath}`);
+                                                                                      ^
+
+Error: HISTORICAL_SOURCE_INTEGRITY_INVALID:skills/nova/project/cli.ts
+    at file:///tmp/sdk-source-portable-checkout/docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs:14:87
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0

@@ -1,0 +1,14 @@
+
+/workspace/scratch/0d8f8ddb55c3/wave47-sdk/skills/nova/project/cli-baseline.ts
+  11:9  error  Dynamic module loading is allowed only in a declared loader boundary  discipline/no-dynamic-module-loading
+  19:7  error  Blocks are nested too deeply (4). Maximum allowed is 3                max-depth
+  35:7  error  Blocks are nested too deeply (4). Maximum allowed is 3                max-depth
+  36:7  error  Blocks are nested too deeply (4). Maximum allowed is 3                max-depth
+  38:9  error  Blocks are nested too deeply (5). Maximum allowed is 3                max-depth
+  40:9  error  Blocks are nested too deeply (5). Maximum allowed is 3                max-depth
+
+✖ 6 problems (6 errors, 0 warnings)
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+exit=1
