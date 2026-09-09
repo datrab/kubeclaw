@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "remote_head": "4627f01fe532d3dd890b7c8f93df40ae59547071",
+  "local_base": "143b0cf9d73572f61687f85c6c3c886bad8e7278",
+  "remote_tree_verified_blobs": 3354,
+  "frozen_scope_exact": 47,
+  "status": "independent native review pending frozen implementation; no acceptance claimed",
+  "source_refs": {
+    "controller": "e21a2998f8b0e39b60705dfd8bbd6855452a0395",
+    "chart": "47b392dc2aa36cb37fdbd8f63b1a6f10a1823973",
+    "product": "459eaf9779a6bf735a1420cc12b5d98f276f45b3"
+  },
+  "required_boundaries": [
+    "Original CRD native structural and CEL cost installation, unchanged rules",
+    "Native status append-only receipts, correlated immutable map items, field removal, maxima and CAS",
+    "Original signed controller transitions and exact durable receipts, separate from false fake HTTP Kubernetes fixtures",
+    "No deployment, workloads, existing kubeconfig, remote cluster or CI",
+    "IFR-18 alternate SA VAP CREATE/DELETE is a distinct gate; native CRD alone cannot close it",
+    "T01-F02 graph composition and F-T14 real Tailnet/app/operator TTL access remain separate requirements"
+  ]
+}
