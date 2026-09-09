@@ -1,0 +1,14 @@
+Command: PATH=/workspace/scratch/4e25cf57c177/toolchains/bin:$PATH node --test tests/verification/deployment/prism-product-decisions.test.mjs
+Checkout: run7-envoy, production source 608a33d68ac12573553e92c6a5161c349abc1e77; original fixture correction adb4934
+Exit code: 0
+✔ disabled product authority creates no key mount, audience token, environment or network access (57.776837ms)
+✔ explicit product authority belongs only to Control and uses separate signing and scoped transport (144.947796ms)
+✔ incomplete or ambiguous product authority fails actual Helm validation (476.86988ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 759.123124

@@ -39,6 +39,13 @@ Full untruncated output: run7-envoy-native-expiry-final.txt. Three real Helm tes
 original deployment-truth/SPIFFE checks and unchanged configured lint exit0;
 output run7-envoy-chart-final.txt. No fake TLS service or generated result used.
 
+Existing rollout sensitivity fixture follow-up `adb4934` adds only the actual
+dedicated ServiceAccount prerequisite to its SPIFFE-enabled kubeclaw renders.
+All original checksum, peer/config separation and LiteLLM assertions remain.
+The original check and configured lint pass; before preflight rejection and
+after raw evidence are preserved as run7-envoy-rollout-before/after.txt. This
+does not convert render sensitivity into a real Kubernetes rollout proof.
+
 Next: final independent native/chart review on this fresh baseline, then root
 combined reconciliation before any integration. Real SPIRE gRPC/UDS renewal,
 operator-delivered alarm and Kubernetes rollout/old-peer rejection are still
