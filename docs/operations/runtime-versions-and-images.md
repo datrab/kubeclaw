@@ -45,7 +45,7 @@ The regression test changes a version in a temporary repository copy and verifie
 
 Nova values now select `kubeclaw-nova`. Prism values select `kubeclaw-prism-agent` for both the gateway and its bridge. Rebuild and publish these image names before applying the changed values. Existing Pods continue using their existing images until rollout. No compatibility image is published under the retired name.
 
-The checked-in agent values still use the existing `latest` deployment convention. Pinning the upstream inputs does not make that output tag immutable. Operators must select the tested output digest for a controlled release; the Promote image release workflow now prepares the reviewed digest selection. No deployment or live cluster acceptance is performed by the image test workflow. The production workflow now publishes candidate tags only; the promotion workflow prepares digest-selected release values.
+The canonical chart and role values include development image defaults. Actual runtime deployment commands (`agents`, `agent`, `image`, `code`, `prism`, and `all`) require the selected `releases/runtime-images.json` and byte-matched generated values; they do not deploy those mutable defaults. The production workflow publishes candidate tags, and promotion prepares the reviewed digest selection. No deployment or live cluster acceptance is performed by local rendering tests.
 
 Preserve the previous release's image and code-bundle digests for rollback. Keep active runs on the runtime and protocol version that created their snapshots, or use an explicit verified migration. An image rollback alone does not undo changes to persistent data formats. Prism's application services retain their independent images and release responsibilities.
 
@@ -73,8 +73,60 @@ Role acceptance builds Nova, Prism and Buster images. Buster’s image test runs
 
 Production builds run only after reliability, role and update-policy checks. Nova/Prism/Buster gateway artifacts are then pulled by their just-published digest and re-exercised directly before their build receipts are uploaded. Other runtime images receive the build and applicable source gates; this is not full deployed service acceptance.
 
-Run **Promote image release** with a successful main-branch Build Runtime Images And Skill Bundles run ID. The workflow validates the source run, requires all ten runtime receipts from the same commit, and opens a PR containing `releases/runtime-images.json` plus generated `releases/values/*.yaml`. Promotion and PR acceptance require the current family chart and role-value files to match the preserved receipt source commit byte for byte, including the full file set. An unavailable source commit, symlink, or changed configuration fails before materialization; unrelated later documentation commits remain valid. Select a successful build made with the desired chart/values when configuration changed. The workflow fetches full Git history for this comparison. This binds deployment configuration to the tested source without asserting compatibility of untested newer schemas. The generated values preserve that source-matched role configuration and select every runtime image by digest, including bridge, runtime and architecture-viewer sidecars. Controller and gateway templates support digest references. Each selection records its source run ID and attempt. Successful builds preserve complete receipts as versioned GitHub Release assets, independent of expiring CI artifacts. PR acceptance checks that exact source attempt and requires the selected digests to match its preserved receipt; a manually substituted digest fails. Deleting source releases or workflow history removes required evidence and fails closed. Promotion scans the selected digests for high/critical findings before opening its PR. No image is rebuilt and no cluster is contacted. The operator reviews and merges the release-selection PR, then deploys the generated values. For ops, keep using `scripts/deploy-ops-pod.sh deploy` so live API-server CIDRs and namespaces are discovered; set `OPS_CODEX_IMAGE` and `OPS_MCP_IMAGE` from the selected ops manifest and optionally `OPS_POD_VALUES=releases/values/ops.yaml`. The ops overlay contains image choices, not guessed cluster networking. Previous selections remain in Git for rollback; data migrations still require their own rollback plan. Choose the `ops` family with a successful Build Ops Images run to select both ops digests into `releases/ops-images.json` and generate `releases/values/ops.yaml`. Each family requires its complete same-commit receipt set; the two families can advance independently. The ops workflow tests the exact published Codex and MCP containers before uploading receipts. MCP image acceptance checks actual health, missing-token rejection and authenticated protocol initialization without calling Kubernetes.
+Run **Promote image release** with a successful main-branch Build Runtime Images And Skill Bundles run ID. The workflow validates the source run, requires all ten runtime receipts from the same commit, and opens a PR containing `releases/runtime-images.json` plus generated `releases/values/*.yaml`. Promotion and PR acceptance require the current family chart and role-value files to match the preserved receipt source commit byte for byte, including the full file set. An unavailable source commit, symlink, or changed configuration fails before materialization; unrelated later documentation commits remain valid. Select a successful build made with the desired chart/values when configuration changed. The workflow fetches full Git history for this comparison. This binds deployment configuration to the tested source without asserting compatibility of untested newer schemas. The generated values preserve that source-matched role configuration and select every runtime image by digest, including bridge, runtime and architecture-viewer sidecars. Controller and gateway templates support digest references. Each selection records its source run ID and attempt. Successful builds preserve complete receipts as versioned GitHub Release assets, independent of expiring CI artifacts. PR acceptance checks that exact source attempt and requires the selected digests to match its preserved receipt; a manually substituted digest fails. Deleting source releases or workflow history removes required evidence and fails closed. Promotion scans the selected digests for high/critical findings before opening its PR. No image is rebuilt and no cluster is contacted. The operator reviews and merges the release-selection PR, then deploys the generated values. For ops, keep using `scripts/deploy-ops-pod.sh deploy` so live API-server CIDRs and namespaces are discovered; the script requires `releases/ops-images.json` and automatically consumes `releases/values/ops.yaml`. Optional `OPS_CODEX_IMAGE` and `OPS_MCP_IMAGE` must equal the selected images; `OPS_POD_VALUES` is an additional private overlay. The ops overlay contains image choices, not guessed cluster networking. Previous selections remain in Git for rollback; data migrations still require their own rollback plan. Choose the `ops` family with a successful Build Ops Images run to select both ops digests into `releases/ops-images.json` and generate `releases/values/ops.yaml`. Each family requires its complete same-commit receipt set; the two families can advance independently. The ops workflow tests the exact published Codex and MCP containers before uploading receipts. MCP image acceptance checks actual health, missing-token rejection and authenticated protocol initialization without calling Kubernetes.
 
 Daily Release security rescan scans selected runtime and ops digests and pinned bases/Envoy/updater images against current advisory data. High/critical findings, including unfixed findings, fail. Reports are preserved and a single open repository issue tracks a failing rescan. A scanner error and a missing initial release selection also fail and require inspection; they are not classified as known vulnerabilities. The issue is updated on subsequent failures and closed manually after resolution. Before the first successful build for each family is promoted, the rescan explicitly reports the missing release selection. It never scans `latest` and claims that proves a selected release.
 
 The initial dependency inventory still contains older pins. Enabling automation prepares reviewable upgrade candidates; it does not certify that every dependency is already current or vulnerability-free.
+
+
+## Deployment selection and private overlays
+
+After merging the selected family PR, keep the complete source Git history and
+install the repository Node dependencies. Run
+`node scripts/updates/materialize-release.mjs --family=runtime --check` (or
+`--family=ops --check`). If generated values are absent, materialize them without
+`--check` from that reviewed receipt, then inspect the output. Missing selections,
+invalid source run identities, incomplete image sets, changed source configuration
+and generated-value drift stop deployment. Select a successful build using the
+intended configuration instead of bypassing the source check.
+
+`deploy.sh` and `deploy-ops-pod.sh deploy` use those generated values automatically.
+Final Helm values are rendered before deployment mutations. Each selected image
+is bound to its workload and container slot: changing its repository/digest,
+substituting another image in the same receipt, or removing/renaming a required
+slot fails. Additional first-party images must match their receipt reference.
+Tag environment overrides fail explicitly. `all` checks its runtime plans before
+setup or infrastructure changes; `agent --with-code` checks the bundle plan before
+its first image upgrade.
+
+Private operational values remain separate from the source-bound canonical files:
+`NOVA_VALUES_FILE`, `BUSTER_VALUES_FILE`, `PRISM_VALUES_FILE`,
+`PRISM_AGENT_VALUES_FILE`, and `OPS_POD_VALUES` supply additional overlays.
+Existing non-image environment overrides remain available. Image environment
+values may repeat the selected digest/repository, but cannot choose another one.
+Each values overlay is checked before later overrides can conceal an incompatible
+image choice. Runtime slots remain required even when an overlay disables a
+workload. This validates image selection, not arbitrary operational settings or
+schema/data migrations introduced by private configuration.
+
+`code`, `agent --with-code`, and Prism use the runtime receipt's source commit for
+their published code bundle; a moving `main` or different explicit expected commit
+cannot select a second runtime revision. Bundle URL and existing-Secret/auth-key
+overrides remain supported, with the original runtime manifest/commit/contract
+validation. A custom URL's availability alone is not proof of bundle contents.
+
+For a local render of the actual deployment arguments, use
+`./scripts/deploy.sh render nova`, `render buster`, `render nova code`,
+`render buster code`, or `render prism`. Ops supports
+`KUBE_CONTEXT=render-only OPS_DISCOVERY_VALUES=/absolute/discovered.json ./scripts/deploy-ops-pod.sh render`.
+The explicit Ops render file supplies network policy discovery values; deployment
+continues to discover actual API-server CIDRs and namespaces itself. Render output
+may include private configuration, so handle it accordingly. These commands do
+not create namespaces, credentials or releases.
+
+The local checks validate the persisted selection and its configuration. The
+existing promotion and PR acceptance authenticate the preserved successful build
+receipt; local schema validation does not authenticate an invented receipt.
+Actual Pod `imageID` comparison, startup and migration acceptance still require
+a separately authorized live deployment. No such proof is claimed by these tests.

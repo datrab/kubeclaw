@@ -30,7 +30,17 @@ Expected result: the deployment truth command prints JSON with all checks passed
 
 ## Live Cluster Path
 
-The live operator path is implemented by `scripts/deploy.sh`:
+The live operator path is implemented by `scripts/deploy.sh`. First merge the
+reviewed **Promote image release** selection for the runtime family and run
+`node scripts/updates/materialize-release.mjs --family=runtime --check`.
+Deployment requires its complete receipt and generated values; missing selections
+fail with no `latest` fallback. Preview the actual deployment values without
+contacting the cluster using `./scripts/deploy.sh render nova` (or `buster`,
+`prism`; add `code` for a Nova/Buster bundle render). The earlier bare Helm
+examples are chart development renders, not controlled release deployment.
+See [release selection and overlays](docs/operations/runtime-versions-and-images.md).
+
+Then use the live operator path:
 
 ```bash
 ./scripts/deploy.sh setup

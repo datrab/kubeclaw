@@ -37,7 +37,8 @@
 #   AGENT_HELM_TIMEOUT   Helm wait timeout for agent upgrades (default: 45m)
 #   AGENT_ROLLOUT_TIMEOUT  Pod/deployment readiness timeout for agents (default: 45m)
 #   CODE_BUNDLE_GITHUB_REPOSITORY      owner/repo override for derived GitHub release bundle URLs
-#   CODE_BUNDLE_DEFAULT_REF            Git ref to resolve when code deploy omits an explicit expected commit (default: refs/heads/main)
+#   NOVA_VALUES_FILE / BUSTER_VALUES_FILE   Optional private overlay over selected release values
+#   PRISM_VALUES_FILE / PRISM_AGENT_VALUES_FILE Optional private overlays over selected Prism release values
 #   CODE_BUNDLE_RELEASE_TAG            GitHub release tag for published bundles (default: agent-code-bundles)
 #   CODE_BUNDLE_PREFLIGHT_SKIP         true|false to skip bundle URL existence checks before code deploy (default: false)
 #   NOVA_CODE_BUNDLE_ARCHIVE_URL       Resolved Nova bundle archive URL for code deploy
@@ -91,8 +92,10 @@ SPIRE_VALUES_FILE="${SPIRE_VALUES_FILE:-$INFRA_DIR/spire-values.yaml}"
 KUBECLAW_DEPLOY_PRISM="${KUBECLAW_DEPLOY_PRISM:-true}"
 PRISM_NAMESPACE="${PRISM_NAMESPACE:-$NAMESPACE}"
 PRISM_RELEASE="${PRISM_RELEASE:-prism}"
-PRISM_VALUES_FILE="${PRISM_VALUES_FILE:-$VALUES_DIR/prism-values.yaml}"
-PRISM_AGENT_VALUES_FILE="${PRISM_AGENT_VALUES_FILE:-$VALUES_DIR/prism-agent-values.yaml}"
+PRISM_VALUES_OVERLAY="${PRISM_VALUES_FILE:-}"
+PRISM_VALUES_FILE="$REPO_DIR/releases/values/prism.yaml"
+PRISM_AGENT_VALUES_OVERLAY="${PRISM_AGENT_VALUES_FILE:-}"
+PRISM_AGENT_VALUES_FILE="$REPO_DIR/releases/values/prism-agent.yaml"
 PRISM_HELM_TIMEOUT="${PRISM_HELM_TIMEOUT:-45m}"
 PRISM_ROLLOUT_TIMEOUT="${PRISM_ROLLOUT_TIMEOUT:-45m}"
 PRISM_CONTROL_IMAGE_REPOSITORY="${PRISM_CONTROL_IMAGE_REPOSITORY:-}"
@@ -109,7 +112,6 @@ PRISM_IMAGE_PULL_SECRET_NAME="${PRISM_IMAGE_PULL_SECRET_NAME:-ghcr-secret}"
 ALLOW_PARTIAL_INFRA="${ALLOW_PARTIAL_INFRA:-false}"
 AGENT_HELM_TIMEOUT="${AGENT_HELM_TIMEOUT:-45m}"
 AGENT_ROLLOUT_TIMEOUT="${AGENT_ROLLOUT_TIMEOUT:-45m}"
-CODE_BUNDLE_DEFAULT_REF="${CODE_BUNDLE_DEFAULT_REF:-refs/heads/main}"
 CODE_BUNDLE_RELEASE_TAG="${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}"
 CODE_BUNDLE_PREFLIGHT_SKIP="${CODE_BUNDLE_PREFLIGHT_SKIP:-false}"
 BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:rootless}"
@@ -538,27 +540,43 @@ default_bundle_archive_url() {
 }
 
 default_bundle_expected_commit() {
-  local ref="$CODE_BUNDLE_DEFAULT_REF"
-  local resolved=""
+  printf '%s\n' "$SELECTED_RUNTIME_COMMIT"
+}
 
-  if resolved="$(git -C "$REPO_DIR" ls-remote --exit-code origin "$ref" 2>/dev/null | awk 'NR==1 {print $1}')" && [[ -n $resolved ]]; then
-    echo "$resolved"
-    return 0
+bundle_values_field() {
+  local values="$1" overlay="$2" field="$3" key="${4:-}" result=""
+  if [[ -n $overlay ]]; then
+    if [[ -n $key ]]; then result="$(yaml_get_nested_section_key "$overlay" codeBundle "$field" "$key")";
+    else result="$(yaml_get_section_key "$overlay" codeBundle "$field")"; fi
   fi
-
-  if [[ $ref == "refs/heads/main" ]] || [[ $ref == "main" ]]; then
-    if resolved="$(git -C "$REPO_DIR" rev-parse --verify origin/main 2>/dev/null)" && [[ -n $resolved ]]; then
-      echo "$resolved"
-      return 0
-    fi
+  if [[ -z $result ]]; then
+    if [[ -n $key ]]; then result="$(yaml_get_nested_section_key "$values" codeBundle "$field" "$key")";
+    else result="$(yaml_get_section_key "$values" codeBundle "$field")"; fi
   fi
+  printf '%s\n' "$result"
+}
 
-  if resolved="$(git -C "$REPO_DIR" rev-parse --verify HEAD 2>/dev/null)" && [[ -n $resolved ]]; then
-    echo "$resolved"
-    return 0
+require_selected_runtime() {
+  SELECTED_RUNTIME_COMMIT="$(node "$REPO_DIR/scripts/updates/deployment-release.mjs" verify "$REPO_DIR" runtime)" || return 1
+  local role expected contract
+  for role in nova buster prism; do
+    expected="$(bundle_env_for_role "$role" expected_commit)"
+    contract="$(bundle_env_for_role "$role" contract_version)"
+    [[ -z $expected || $expected == "$SELECTED_RUNTIME_COMMIT" ]] || { err "${role} bundle must match selected runtime commit ${SELECTED_RUNTIME_COMMIT}"; return 1; }
+    [[ $contract == v2 ]] || { err "${role} bundle contract must be v2"; return 1; }
+  done
+}
+
+render_selected_role() {
+  local role="$1" release="$2" namespace="$3" mode="$4"
+  shift 4
+  local options=()
+  [[ $mode != code ]] || options+=(--bundle)
+  if [[ ${KUBECLAW_DEPLOY_RENDER_ONLY:-0} == 1 ]]; then
+    node "$REPO_DIR/scripts/updates/deployment-release.mjs" render "$REPO_DIR" runtime "$role" "$release" "$namespace" "${options[@]}" -- "$@"
+  else
+    node "$REPO_DIR/scripts/updates/deployment-release.mjs" render "$REPO_DIR" runtime "$role" "$release" "$namespace" "${options[@]}" -- "$@" >/dev/null
   fi
-
-  return 1
 }
 
 verify_bundle_archive_url() {
@@ -1257,7 +1275,10 @@ verify_buster_port_routing() {
 deploy_agent() {
   local role="$1"
   local mode="${2:-image}"
-  local values_file="$VALUES_DIR/${role}-values.yaml"
+  [[ $mode == image || $mode == code ]] || { err "Deployment mode must be image or code"; return 1; }
+  local values_file="$REPO_DIR/releases/values/${role}.yaml"
+  local private_values=""
+  case "$role" in nova) private_values="${NOVA_VALUES_FILE:-}" ;; buster) private_values="${BUSTER_VALUES_FILE:-}" ;; esac
   local image_repo=""
   local image_tag=""
   local controller_image_repo=""
@@ -1276,8 +1297,6 @@ deploy_agent() {
     return 1
   fi
 
-  require_agent_worker_trust_prerequisites
-  require_helm_release_idle "agent-${role}" "$NAMESPACE"
 
   case "$role" in
     nova)
@@ -1292,6 +1311,10 @@ deploy_agent() {
       ;;
   esac
 
+  if [[ -n $image_tag || -n $controller_image_tag ]]; then
+    err "Image tag overrides are not permitted for a selected digest release; select and materialize a release receipt"
+    return 1
+  fi
   if [[ -z $image_repo ]]; then
     image_repo="$(yaml_get_section_key "$values_file" image repository)"
   fi
@@ -1304,11 +1327,11 @@ deploy_agent() {
     bundle_archive_url="$(bundle_env_for_role "$role" archive_url)"
 
     if [[ -z $bundle_auth_secret ]]; then
-      bundle_auth_secret="$(yaml_get_nested_section_key "$values_file" codeBundle auth existingSecret)"
+      bundle_auth_secret="$(bundle_values_field "$values_file" "$private_values" auth existingSecret)"
     fi
     if [[ -z $bundle_auth_key || $bundle_auth_key == "token" ]]; then
       local values_auth_key=""
-      values_auth_key="$(yaml_get_nested_section_key "$values_file" codeBundle auth existingSecretKey)"
+      values_auth_key="$(bundle_values_field "$values_file" "$private_values" auth existingSecretKey)"
       if [[ -n $values_auth_key ]]; then
         bundle_auth_key="$values_auth_key"
       fi
@@ -1316,11 +1339,12 @@ deploy_agent() {
 
     if [[ -z $bundle_expected_commit ]]; then
       if ! bundle_expected_commit="$(default_bundle_expected_commit)"; then
-        err "${role} code deploy requires $(tr '[:lower:]' '[:upper:]' <<<"$role")_CODE_BUNDLE_EXPECTED_COMMIT or a resolvable ${CODE_BUNDLE_DEFAULT_REF}"
+        err "${role} code deploy requires $(tr '[:lower:]' '[:upper:]' <<<"$role")_CODE_BUNDLE_EXPECTED_COMMIT matching the selected runtime receipt"
         return 1
       fi
-      info "Resolved ${role} code bundle commit from ${CODE_BUNDLE_DEFAULT_REF}: ${bundle_expected_commit}"
+      info "Selected ${role} code bundle commit: ${bundle_expected_commit}" >&2
     fi
+    if [[ -z $bundle_archive_url ]]; then bundle_archive_url="$(bundle_values_field "$values_file" "$private_values" archiveUrl)"; fi
     if [[ -z $bundle_archive_url ]]; then
       if ! bundle_archive_url="$(default_bundle_archive_url "$role" "$bundle_expected_commit" "$image_repo")"; then
         bundle_archive_url=""
@@ -1330,7 +1354,9 @@ deploy_agent() {
       err "${role} code deploy requires $(tr '[:lower:]' '[:upper:]' <<<"$role")_CODE_BUNDLE_ARCHIVE_URL or a derivable GitHub repository"
       return 1
     fi
-    verify_bundle_archive_url "$role" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_auth_secret"
+    if [[ ${KUBECLAW_DEPLOY_RENDER_ONLY:-0} != 1 ]]; then
+      verify_bundle_archive_url "$role" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_auth_secret"
+    fi
   fi
 
   if [[ -n $image_repo || -n $image_tag || -n $controller_image_repo || -n $controller_image_tag || $disable_pull_secrets == "1" || $mode == "code" ]]; then
@@ -1346,20 +1372,8 @@ deploy_agent() {
     append_code_bundle_override_file "$override_file" "$bundle_archive_url" "$bundle_expected_commit" "$bundle_contract_version" "$bundle_auth_secret" "$bundle_auth_key"
   fi
 
-  if [[ $role == "nova" ]]; then
-    reconcile_nova_retired_trust_mount
-  elif [[ $role == "buster" ]]; then
-    reconcile_buster_runtime_ports
-  fi
-
-  helm_args=(
-    upgrade --install "agent-${role}" "$CHART_DIR"
-    --namespace "$NAMESPACE"
-    --reset-values
-    --values "$values_file"
-    --atomic --cleanup-on-fail --wait --timeout "$AGENT_HELM_TIMEOUT"
-  )
-
+  helm_args=(--values "$values_file")
+  if [[ -n $private_values ]]; then helm_args+=(--values "$private_values"); fi
   if ! component_enabled "$KUBECLAW_DEPLOY_LITELLM"; then
     helm_args+=(--set probes.dependencies.litellm.enabled=false)
   fi
@@ -1371,6 +1385,19 @@ deploy_agent() {
     helm_args+=(--values "$override_file")
   fi
 
+  if ! render_selected_role "$role" "agent-${role}" "$NAMESPACE" "$mode" "${helm_args[@]}"; then
+    [[ -z $override_file ]] || rm -f "$override_file"
+    return 1
+  fi
+  if [[ ${KUBECLAW_DEPLOY_RENDER_ONLY:-0} == 1 ]]; then
+    [[ -z $override_file ]] || rm -f "$override_file"
+    return 0
+  fi
+  require_agent_worker_trust_prerequisites
+  require_helm_release_idle "agent-${role}" "$NAMESPACE"
+  if [[ $role == nova ]]; then reconcile_nova_retired_trust_mount; else reconcile_buster_runtime_ports; fi
+  helm_args=(upgrade --install "agent-${role}" "$CHART_DIR" --namespace "$NAMESPACE"
+    --reset-values "${helm_args[@]}" --atomic --cleanup-on-fail --wait --timeout "$AGENT_HELM_TIMEOUT")
   info "Deploying agent-${role} (${mode})..."
   if ! helm "${helm_args[@]}"; then
     if [[ -n $override_file ]]; then
@@ -1468,6 +1495,9 @@ cmd_agent() {
       ;;
   esac
 
+  if [[ $with_code == 1 ]]; then
+    (export KUBECLAW_DEPLOY_RENDER_ONLY=1; deploy_agent "$role" code) >/dev/null || return 1
+  fi
   header "Agent Deploy: ${role}"
   deploy_agent "$role" image
 
@@ -1623,10 +1653,6 @@ cmd_prism_secrets() {
 cmd_prism() {
   component_enabled "$KUBECLAW_DEPLOY_PRISM" || { info "Prism deployment is disabled"; return 0; }
   require_command kubectl; require_command helm; prism_validate_values
-  require_helm_release_idle "$PRISM_RELEASE" "$PRISM_NAMESPACE"
-  require_helm_release_idle agent-prism "$PRISM_NAMESPACE"
-  require_spiffe_csi_driver
-  cmd_prism_secrets
   local prism_agent_image_repo prism_bundle_archive_url prism_bundle_expected_commit
   local prism_bundle_contract_version prism_bundle_auth_secret prism_bundle_auth_key
   local prism_bundle_override
@@ -1637,22 +1663,23 @@ cmd_prism() {
   prism_bundle_auth_key="$(bundle_env_for_role prism auth_key)"
   prism_bundle_archive_url="$(bundle_env_for_role prism archive_url)"
   if [[ -z $prism_bundle_auth_secret ]]; then
-    prism_bundle_auth_secret="$(yaml_get_nested_section_key "$PRISM_AGENT_VALUES_FILE" codeBundle auth existingSecret)"
+    prism_bundle_auth_secret="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" auth existingSecret)"
   fi
   if [[ -z $prism_bundle_auth_key || $prism_bundle_auth_key == "token" ]]; then
     local prism_values_auth_key=""
-    prism_values_auth_key="$(yaml_get_nested_section_key "$PRISM_AGENT_VALUES_FILE" codeBundle auth existingSecretKey)"
+    prism_values_auth_key="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" auth existingSecretKey)"
     if [[ -n $prism_values_auth_key ]]; then
       prism_bundle_auth_key="$prism_values_auth_key"
     fi
   fi
   if [[ -z $prism_bundle_expected_commit ]]; then
     if ! prism_bundle_expected_commit="$(default_bundle_expected_commit)"; then
-      err "Prism deploy requires PRISM_CODE_BUNDLE_EXPECTED_COMMIT or a resolvable ${CODE_BUNDLE_DEFAULT_REF}"
+      err "Prism deploy requires PRISM_CODE_BUNDLE_EXPECTED_COMMIT matching the selected runtime receipt"
       return 1
     fi
-    info "Resolved Prism code bundle commit from ${CODE_BUNDLE_DEFAULT_REF}: ${prism_bundle_expected_commit}"
+    info "Selected Prism code bundle commit: ${prism_bundle_expected_commit}" >&2
   fi
+  if [[ -z $prism_bundle_archive_url ]]; then prism_bundle_archive_url="$(bundle_values_field "$PRISM_AGENT_VALUES_FILE" "$PRISM_AGENT_VALUES_OVERLAY" archiveUrl)"; fi
   if [[ -z $prism_bundle_archive_url ]]; then
     prism_bundle_archive_url="$(default_bundle_archive_url prism "$prism_bundle_expected_commit" "$prism_agent_image_repo")" || true
   fi
@@ -1660,10 +1687,14 @@ cmd_prism() {
     err "Prism deploy requires PRISM_CODE_BUNDLE_ARCHIVE_URL or a derivable GitHub repository"
     return 1
   fi
-  verify_bundle_archive_url prism "$prism_bundle_archive_url" "$prism_bundle_expected_commit" "$prism_bundle_auth_secret"
+  if [[ ${KUBECLAW_DEPLOY_RENDER_ONLY:-0} != 1 ]]; then
+    verify_bundle_archive_url prism "$prism_bundle_archive_url" "$prism_bundle_expected_commit" "$prism_bundle_auth_secret"
+  fi
   local override_output
   override_output="$(prism_image_overrides)" || return 1
-  local overrides=(); while IFS= read -r item; do [[ -z $item ]] || overrides+=("$item"); done <<<"$override_output"
+  local overrides=(-f "$PRISM_VALUES_FILE");
+  [[ -z $PRISM_VALUES_OVERLAY ]] || overrides+=(-f "$PRISM_VALUES_OVERLAY")
+  while IFS= read -r item; do [[ -z $item ]] || overrides+=("$item"); done <<<"$override_output"
   overrides+=(--set-string "workerTrust.spiffe.novaNamespace=${NAMESPACE}")
   overrides+=(--set-string "workerTrust.spiffe.novaServiceAccount=agent-nova")
   overrides+=(--set-string "workerTrust.spiffe.agentNamespace=${PRISM_NAMESPACE}")
@@ -1672,13 +1703,30 @@ cmd_prism() {
   overrides+=(--set-string "secrets.database=${PRISM_DATABASE_SECRET_NAME}")
   overrides+=(--set-string "postgresql.existingSecret=${PRISM_DATABASE_SECRET_NAME}")
   overrides+=(--set-string "imagePullSecrets[0].name=${PRISM_IMAGE_PULL_SECRET_NAME}")
-  helm lint "$REPO_DIR/charts/prism" -f "$PRISM_VALUES_FILE" "${overrides[@]}"
+  prism_bundle_override="$(mktemp)"
+  append_code_bundle_override_file "$prism_bundle_override" \
+    "$prism_bundle_archive_url" "$prism_bundle_expected_commit" \
+    "$prism_bundle_contract_version" "$prism_bundle_auth_secret" "$prism_bundle_auth_key"
+  local agent_values=(-f "$PRISM_AGENT_VALUES_FILE")
+  [[ -z $PRISM_AGENT_VALUES_OVERLAY ]] || agent_values+=(-f "$PRISM_AGENT_VALUES_OVERLAY")
+  agent_values+=(-f "$prism_bundle_override" --set-string "litellm.endpoint=http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1")
+  if ! render_selected_role prism "$PRISM_RELEASE" "$PRISM_NAMESPACE" image "${overrides[@]}" \
+    || ! render_selected_role prism-agent agent-prism "$PRISM_NAMESPACE" code "${agent_values[@]}"; then
+    rm -f "$prism_bundle_override"
+    return 1
+  fi
+  if [[ ${KUBECLAW_DEPLOY_RENDER_ONLY:-0} == 1 ]]; then rm -f "$prism_bundle_override"; return 0; fi
+  require_helm_release_idle "$PRISM_RELEASE" "$PRISM_NAMESPACE"
+  require_helm_release_idle agent-prism "$PRISM_NAMESPACE"
+  require_spiffe_csi_driver
+  cmd_prism_secrets
+  helm lint "$REPO_DIR/charts/prism" "${overrides[@]}"
   local migration_log migration_log_pid prism_helm_result=0
   migration_log="$(mktemp)"
   capture_prism_migration_logs "$migration_log" &
   migration_log_pid=$!
   helm upgrade --install "$PRISM_RELEASE" "$REPO_DIR/charts/prism" -n "$PRISM_NAMESPACE" \
-    -f "$PRISM_VALUES_FILE" "${overrides[@]}" --atomic --wait --timeout "$PRISM_HELM_TIMEOUT" \
+    "${overrides[@]}" --atomic --wait --timeout "$PRISM_HELM_TIMEOUT" \
     || prism_helm_result=$?
   kill "$migration_log_pid" >/dev/null 2>&1 || true
   wait "$migration_log_pid" >/dev/null 2>&1 || true
@@ -1689,25 +1737,17 @@ cmd_prism() {
     else
       info "No prism-migrate container output was available before Helm cleanup"
     fi
-    rm -f "$migration_log"
+    rm -f "$migration_log" "$prism_bundle_override"
     return "$prism_helm_result"
   fi
   rm -f "$migration_log"
-  prism_bundle_override="$(mktemp)"
-  append_code_bundle_override_file "$prism_bundle_override" \
-    "$prism_bundle_archive_url" "$prism_bundle_expected_commit" \
-    "$prism_bundle_contract_version" "$prism_bundle_auth_secret" "$prism_bundle_auth_key"
-  if ! helm lint "$CHART_DIR" -f "$PRISM_AGENT_VALUES_FILE" -f "$prism_bundle_override" \
-    --set-string "litellm.endpoint=http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1"; then
+  if ! helm lint "$CHART_DIR" "${agent_values[@]}"; then
     rm -f "$prism_bundle_override"
     return 1
   fi
   local prism_agent_helm_result=0
   helm upgrade --install agent-prism "$CHART_DIR" -n "$PRISM_NAMESPACE" \
-    -f "$PRISM_AGENT_VALUES_FILE" \
-    -f "$prism_bundle_override" \
-    --set-string "litellm.endpoint=http://litellm.${NAMESPACE}.svc.cluster.local:4000/v1" \
-    --atomic --wait --timeout "$PRISM_HELM_TIMEOUT" || prism_agent_helm_result=$?
+    "${agent_values[@]}" --atomic --wait --timeout "$PRISM_HELM_TIMEOUT" || prism_agent_helm_result=$?
   rm -f "$prism_bundle_override"
   if [[ $prism_agent_helm_result -ne 0 ]]; then
     return "$prism_agent_helm_result"
@@ -2769,6 +2809,32 @@ cmd_teardown_all() {
 # ─── Main ────────────────────────────────────────────────────────────────
 
 case "${1:-}" in
+  agents|agent|image|code|all|prism|render) require_selected_runtime ;;
+esac
+case "${1:-}" in
+  agents|all)
+    (export KUBECLAW_DEPLOY_RENDER_ONLY=1
+      deploy_agent nova image
+      deploy_agent buster image
+      if [[ ${1:-} == all ]] && component_enabled "$KUBECLAW_DEPLOY_PRISM"; then cmd_prism; fi
+    ) >/dev/null
+    ;;
+  image|code)
+    (export KUBECLAW_DEPLOY_RENDER_ONLY=1
+      for role in $(resolve_deploy_targets "${2:-both}"); do deploy_agent "$role" "$1"; done
+    ) >/dev/null
+    ;;
+esac
+
+case "${1:-}" in
+  render)
+    export KUBECLAW_DEPLOY_RENDER_ONLY=1
+    case "${2:-}" in
+      nova|buster) deploy_agent "$2" "${3:-image}" ;;
+      prism) cmd_prism ;;
+      *) err "Usage: $0 render <nova|buster> [image|code], or render prism"; exit 1 ;;
+    esac
+    ;;
   setup)
     cmd_setup
     ;;

@@ -2,35 +2,37 @@
 
 ## Install
 
-1. Run `./scripts/deploy.sh setup`.
+1. Merge a reviewed runtime image release selection and verify it with `node scripts/updates/materialize-release.mjs --family=runtime --check`, then run `./scripts/deploy.sh setup`.
 2. Run `./scripts/deploy.sh secrets`.
 3. Run `./scripts/deploy.sh prism`.
 4. Run `./scripts/deploy.sh prism-status`.
 5. Run `./scripts/deploy.sh prism-smoke`.
 
 `deploy.sh prism` installs two Helm releases: the deterministic Prism services
-from `my-values/prism-values.yaml` and the single OpenClaw agent from
-`my-values/prism-agent-values.yaml`. The latter is the only Prism workload with
+from `releases/values/prism.yaml` and the single OpenClaw agent from
+`releases/values/prism-agent.yaml`. Both come from the same selected runtime receipt. The latter is the only Prism workload with
 an OpenAI model route and the LiteLLM credential used for memory-search
 embeddings. Control, Studio, worker, and ingestion use
 Node images and do not receive provider credentials. Any user authenticated
 through the trusted Tailscale ingress can approve a design. Helm uses atomic
 upgrades, so a failed upgrade keeps the last healthy release.
 
-Production Prism image digests are pinned in `my-values/prism-values.yaml`.
-`deploy.sh prism` reads those pins automatically; operators do not need to
-export digest variables for a normal deployment. A controlled override can set
-`PRISM_CONTROL_IMAGE_DIGEST`, `PRISM_STUDIO_IMAGE_DIGEST`,
-`PRISM_WORKER_IMAGE_DIGEST`, or `PRISM_INGESTION_IMAGE_DIGEST`. Both configured
-and overridden values must be immutable `sha256:` digests.
+Production Prism image digests come from the reviewed `releases/runtime-images.json`.
+`deploy.sh prism` verifies the complete receipt, source chart/value bytes and
+generated values before either release changes. Image environment overrides must
+repeat the selected slot's repository/digest. `PRISM_VALUES_FILE` and
+`PRISM_AGENT_VALUES_FILE` remain optional private overlays for operational values;
+they cannot replace or remove selected runtime image slots.
 
-The agent release always receives the published Prism runtime code bundle for
-the resolved `main` commit. That bundle contains the version-matched canonical
-schema and fixture under `/app/skills/packages/prism-contract`; Prism does not
-read those runtime contracts from the checked-out project repository. Private
-release assets use the existing `github-bundle-reader` Secret. Operators may
-pin or override the asset with `PRISM_CODE_BUNDLE_EXPECTED_COMMIT` and
-`PRISM_CODE_BUNDLE_ARCHIVE_URL`.
+The agent release receives the published Prism runtime code bundle for that same
+receipt source commit. That bundle contains the version-matched canonical schema
+and fixture under `/app/skills/packages/prism-contract`; Prism does not read those
+runtime contracts from the project checkout. Private release assets use the
+existing `github-bundle-reader` Secret or the configured auth override. Operators
+may override `PRISM_CODE_BUNDLE_ARCHIVE_URL`, but any explicit
+`PRISM_CODE_BUNDLE_EXPECTED_COMMIT` must equal the selected runtime commit.
+`./scripts/deploy.sh render prism` checks both actual Helm renders locally without
+changing cluster resources.
 
 The project checkout remains a separate concern. For now production values use
 the explicit SSH remote `git@github.com:datrab/kubeclaw.git` and
@@ -43,9 +45,8 @@ build-generated JSON Schema validators instead of compiling AJV schemas in the
 browser. A connected Tailscale page that remains black while the browser
 reports `unsafe-eval` or `Error compiling schema` is an outdated Studio image,
 not a relay-latency issue. Rebuild/redeploy Prism; do not add `unsafe-eval` to
-the policy. The deploy command restarts the Prism application Deployments after
-Helm succeeds so their mutable `latest` tags are pulled even when chart values
-did not change.
+the policy. A selected digest changes the Pod template during Helm upgrade; a mutable-tag
+restart is not the release selection mechanism.
 
 The desktop project chooser and fatal-error view use the always-visible
 `start-panel` layout. The separate `sheet` class is reserved for mobile

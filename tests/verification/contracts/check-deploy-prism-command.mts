@@ -16,6 +16,7 @@ const namespacePolicies=readFileSync(new URL("../../../my-values/infra/network-p
 const productionValues=readFileSync(new URL("../../../my-values/prism-values.yaml",import.meta.url),"utf8");
 const agentValues=readFileSync(new URL("../../../my-values/prism-agent-values.yaml",import.meta.url),"utf8");
 const agentBridge=readFileSync(new URL("../../../skills/prism/server/agent-bridge.mjs",import.meta.url),"utf8");
+const studioRequest=readFileSync(new URL("../../../skills/prism/server/studio-request.ts",import.meta.url),"utf8");
 const studioServer=readFileSync(new URL("../../../skills/prism/server/studio.ts",import.meta.url),"utf8");
 const control=readFileSync(new URL("../../../skills/prism/server/control.ts",import.meta.url),"utf8");
 const databaseBootstrap=readFileSync(new URL("../../../skills/prism/server/bootstrap-database.ts",import.meta.url),"utf8");
@@ -56,8 +57,18 @@ assert(source.includes("secretsToCopy: [prism-test-runtime, prism-test-postgresq
 assert(source.includes("[[ $lease_phase == Ready ]]"),"leased Prism acceptance must fail closed unless the broker reports Ready");
 assert(chartValues.includes("digest: \"\""),"Prism chart values must require image digests from deployment authority");
 assert(chartValues.includes("imagePullSecrets:"),"Prism chart defaults must configure GHCR authentication");
-assert(imageWorkflow.includes("type=raw,value=latest"),"Prism image workflow must publish the default chart tag");
-assert.match(studioServer,/prismProxyResponseHeaders\(upstream\.headers\)[\s\S]*setHeader\("set-cookie", forwarded\.setCookies\)/u,
+assert(imageWorkflow.includes("type=sha,prefix=candidate-,format=long") && !imageWorkflow.includes("type=raw,value=latest"),
+  "Prism image publication must use commit candidates, not a mutable default release");
+assert(source.includes('PRISM_VALUES_FILE="$REPO_DIR/releases/values/prism.yaml"')
+  && source.includes('PRISM_AGENT_VALUES_FILE="$REPO_DIR/releases/values/prism-agent.yaml"'),
+  "Both Prism releases must consume the generated selected release values");
+assert.match(source,/default_bundle_expected_commit\(\)[\s\S]*?SELECTED_RUNTIME_COMMIT/u,
+  "The Prism bundle must derive its default revision from the selected runtime receipt");
+assert.match(source,/cmd_prism\(\)[\s\S]*?render_selected_role prism [\s\S]*?render_selected_role prism-agent [\s\S]*?cmd_prism_secrets/u,
+  "Both final Prism image/bundle renders must pass before credential mutations");
+assert.match(studioServer,/import \{ handleStudioRequest, studioRequestFailed \} from '\.\/studio-request\.ts'[\s\S]*handleStudioRequest\(request, response, options\)/u,
+  "Prism Studio must use the canonical request handler");
+assert.match(studioRequest,/prismProxyResponseHeaders\(upstream\.headers\)[\s\S]*setHeader\(['"]set-cookie['"], forwarded\.setCookies\)/u,
   "Prism Studio must forward the session and CSRF Set-Cookie headers as separate values");
 for(const kind of ["control","studio","worker","ingestion"]){
   assert(chartValues.includes(`${kind}: { repository: ghcr.io/datrab/kubeclaw-prism-${kind}, digest: \"\"`),
