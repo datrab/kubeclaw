@@ -35,7 +35,7 @@ async function dispatchImplementation(
 ): Promise<ImplementationCompletion> {
   const response = await context.invoke('runtime.dispatch', {
     operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent },
-    payload: buildRequest(agent, input, [context.contract.guidance?.helperPrompt, evidence].filter(Boolean).join('\n\n')),
+    payload: withRuntimeDispatchProfile(buildRequest(agent, input, [context.contract.guidance?.helperPrompt, evidence].filter(Boolean).join('\n\n')), context.contract.runtimeDispatchProfile),
   });
   return parseCompletion(response.result, input);
 }
@@ -149,3 +149,4 @@ async function storeCompletion(
     : { schemaVersion: 'stage-result.v2', outcome: 'blocked',
         reason: { code: 'implementation.blocked', message: completion.summary }, artifacts };
 }
+import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';

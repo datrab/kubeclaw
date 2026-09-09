@@ -7,7 +7,7 @@ export async function execute(input:CaseStudyInput,context:PluginInvocationConte
   let study;
   try{const resolved=await context.invoke('report.evidence.read',{operation:'snapshot',resource:{type:'pipeline.run',canonicalId:input.source.runId},payload:{...input.source}});
     const bundle=validateBundle(resolved.bundle,input.source);
-    const response=await context.invoke('runtime.dispatch',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:agent},payload:buildRequest(agent,input,execution,bundle)});
+    const response=await context.invoke('runtime.dispatch',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:agent},payload:withRuntimeDispatchProfile(buildRequest(agent,input,execution,bundle),context.contract.runtimeDispatchProfile)});
     study=parseCaseStudy(response.result,input,execution,bundle);
   }catch(error){return{schemaVersion:'stage-result.v2',outcome:'blocked',reason:{code:'case_study.invalid_output',message:error instanceof Error?error.message:String(error)},artifacts:[]};}
   const artifactId=`case-study:${sha256Text(canonicalJson(execution)).slice(7)}`;
@@ -26,3 +26,4 @@ export function assertReportArtifact(value:unknown,artifactId:string,report:unkn
     || artifact.digest!==sha256Text(bytes) || artifact.sizeBytes!==Buffer.byteLength(bytes)
     || canonicalJson(artifact.producer)!==canonicalJson(execution))throw new Error('REPORT_ARTIFACT_BINDING_MISMATCH');
 }
+import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';

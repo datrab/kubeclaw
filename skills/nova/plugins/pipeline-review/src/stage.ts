@@ -9,7 +9,7 @@ export async function execute(input:ReviewInput,context:PluginInvocationContext)
   try{
     const resolved=await context.invoke('report.evidence.read',{operation:'snapshot',resource:{type:'pipeline.run',canonicalId:input.source.runId},payload:{...input.source}});
     const bundle=validateBundle(resolved.bundle,input.source);
-    const response=await context.invoke('runtime.dispatch',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:agent},payload:buildRequest(agent,input,execution,bundle)});
+    const response=await context.invoke('runtime.dispatch',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:agent},payload:withRuntimeDispatchProfile(buildRequest(agent,input,execution,bundle),context.contract.runtimeDispatchProfile)});
     report=parseReport(response.result,input,execution,bundle);
   }catch(error){
     return {schemaVersion:'stage-result.v2',outcome:'blocked',reason:{code:'pipeline_review.invalid_report',message:error instanceof Error?error.message:String(error)},artifacts:[]};
@@ -30,3 +30,4 @@ export function assertReportArtifact(value:unknown,artifactId:string,report:unkn
     || artifact.digest!==sha256Text(bytes) || artifact.sizeBytes!==Buffer.byteLength(bytes)
     || canonicalJson(artifact.producer)!==canonicalJson(execution))throw new Error('REPORT_ARTIFACT_BINDING_MISMATCH');
 }
+import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';

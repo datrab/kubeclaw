@@ -1,6 +1,10 @@
 // Generated from skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json. Do not edit.
 
 /**
+ * Explicit current runtime transport producer profile. Absence in historical contexts preserves the legacy producer; no profile is inferred from another digest version.
+ */
+export type RuntimeDispatchProfile = {schemaVersion: 'runtime-dispatch-profile.v1'; encoding: 'json-utf16-v1'};
+/**
  * Existing opaque keys, plus the exact historical adapter dependency producer grammar. Package/capability names retain their 160-character bounds and registration its 96-character bound. New dependency keys are compact opaque IDs.
  */
 export type EffectIdempotencyKey = OpaqueId;
@@ -201,6 +205,7 @@ export type AdapterLifecycle = {
 };
 
 export interface PluginSystemV2 {
+  runtimeDispatchProfile?: RuntimeDispatchProfile;
   effectIdempotencyKey?: EffectIdempotencyKey;
   resourceIdentity?: ResourceIdentity;
   effectDeliveryId?: EffectDeliveryId;
@@ -522,6 +527,7 @@ export interface CapabilityGrant {
 }
 export interface PluginContext {
   schemaVersion: 'plugin-context.v2';
+  runtimeDispatchProfile?: RuntimeDispatchProfile;
   lease: InvocationLease;
   config: JsonObject;
   input: JsonObject;
@@ -634,3 +640,5 @@ export interface PluginStateEntry {
   occurredAt: string;
   payload: JsonObject;
 }
+
+export const CURRENT_RUNTIME_DISPATCH_PROFILE = Object.freeze({"schemaVersion":"runtime-dispatch-profile.v1","encoding":"json-utf16-v1"} as const);

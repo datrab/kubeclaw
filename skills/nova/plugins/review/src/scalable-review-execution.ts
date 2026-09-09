@@ -32,7 +32,7 @@ async function dispatchReviewJob(value: ScalableReviewJob, runtime: ReviewDispat
     try {
       const basePayload = buildScalableReviewDispatchPayload(value);
       const prepared = beforeDispatch?.(basePayload) ?? basePayload;
-      const payload = Object.freeze({ ...prepared, runtimeDispatchAttempt: attempt });
+      const payload = withRuntimeDispatchProfile(Object.freeze({ ...prepared, runtimeDispatchAttempt: attempt }), context.contract.runtimeDispatchProfile);
       const response = await invokeBeforeReviewDeadline(() => context.invoke('runtime.dispatch', {
         operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent }, payload,
       }), deadlineEpochMs, 'scalable review');
@@ -75,3 +75,4 @@ export async function executeScalableReviewJobs(
   }
   return Object.freeze(jobs.map(({ id }) => output.get(id) as ScalableReviewJobResult));
 }
+import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';

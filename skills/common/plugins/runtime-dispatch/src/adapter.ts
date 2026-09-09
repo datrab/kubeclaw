@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import type { AdapterActivationContext, AdapterInstance, EffectRequest } from '@kubeclaw/plugin-sdk';
+import { extractRuntimeDispatchProfile, type AdapterActivationContext, type AdapterInstance, type EffectRequest } from '@kubeclaw/plugin-sdk';
 import { createDispatchAdapter } from './dispatch-adapter.ts';
 
 const ID = /^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$/;
@@ -109,7 +109,8 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
   // eslint-disable-next-line complexity -- Authentication, size, signature, and response checks share one dispatch boundary.
   return createDispatchAdapter(context, targets, assertRequest, async ({ request, signal, target }) => {
       json(request.payload);
-      const body = JSON.stringify(request.payload);
+      const { payload } = extractRuntimeDispatchProfile(request.payload);
+      const body = JSON.stringify(payload);
       if (Buffer.byteLength(body, 'utf8') > target.maxRequestBytes) throw new Error('RUNTIME_REQUEST_SIZE_EXCEEDED');
       const secret = target.authentication === 'hmac' ? await context.invokeConfidential('secrets.read', {
         operation: 'resolve', resource: { type: 'secret.name', canonicalId: target.tokenSecret! }, payload: {},
@@ -129,7 +130,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
             'idempotency-key': request.idempotencyKey,
             ...(signature ? { 'x-kubeclaw-signature': `v1=${signature}` } : {}),
           },
-          body: request.payload,
+          body: payload,
         },
       });
       if (signal.aborted) throw new Error('ADAPTER_CANCELLED');

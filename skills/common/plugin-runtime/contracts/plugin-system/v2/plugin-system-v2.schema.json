@@ -3,6 +3,10 @@
   "$id": "https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json",
   "title": "KubeClaw plugin system v2 contracts",
   "$defs": {
+    "runtimeDispatchProfile": {
+      "description": "Explicit current runtime transport producer profile. Absence in historical contexts preserves the legacy producer; no profile is inferred from another digest version.",
+      "const": { "schemaVersion": "runtime-dispatch-profile.v1", "encoding": "json-utf16-v1" }
+    },
     "namespacedId": {
       "type": "string",
       "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)+$",
@@ -919,6 +923,7 @@
       "required": ["schemaVersion", "lease", "config", "input", "artifacts"],
       "properties": {
         "schemaVersion": { "const": "plugin-context.v2" },
+        "runtimeDispatchProfile": { "$ref": "#/$defs/runtimeDispatchProfile" },
         "lease": { "$ref": "#/$defs/invocationLease" },
         "config": { "$ref": "#/$defs/jsonObject" },
         "input": { "$ref": "#/$defs/jsonObject" },

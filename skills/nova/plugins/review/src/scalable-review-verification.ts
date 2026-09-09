@@ -320,7 +320,7 @@ async function dispatchVerificationJob(
     try {
       const basePayload = buildScalableVerificationDispatchPayload(value);
       const prepared = beforeDispatch?.(basePayload) ?? basePayload;
-      const payload = Object.freeze({ ...prepared, runtimeDispatchAttempt: attempt });
+      const payload = withRuntimeDispatchProfile(Object.freeze({ ...prepared, runtimeDispatchAttempt: attempt }), context.contract.runtimeDispatchProfile);
       const response = await invokeBeforeReviewDeadline(() => context.invoke('runtime.dispatch', {
         operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent },
         payload,
@@ -386,3 +386,4 @@ export function reduceScalableReview(
   };
   return Object.freeze({ ...unsigned, digest: sha256Text(canonicalJson(unsigned)) });
 }
+import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';

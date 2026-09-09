@@ -197,7 +197,7 @@ async function dispatchOne(values: { readonly finding: BaselineFinding; readonly
         values.targetHead, values.sources, values.pathStates, values.relationshipCandidates), 'verification');
       const response = record(await values.context.invoke('runtime.dispatch', { operation: 'dispatch',
         resource: { type: 'runtime.agent', canonicalId: values.target },
-        payload: Object.freeze({ ...requestPayload, runtimeDispatchAttempt: attempt }) }), 'runtime dispatch response');
+        payload: withRuntimeDispatchProfile(Object.freeze({ ...requestPayload, runtimeDispatchAttempt: attempt }), values.context.contract.runtimeDispatchProfile) }), 'runtime dispatch response');
       return integrity(() => {
       const attestation = parseReviewRuntimeAttestation(response.runtimeEvidence);
       assertReviewRuntimeIdentity(attestation, values.expectedRuntime);
@@ -354,3 +354,4 @@ export async function executeRepositoryRevalidation(value: unknown, context: Plu
     return blockedReviewStage('kubeclaw.review.repository_revalidation_incomplete', error.message);
   }
 }
+import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';

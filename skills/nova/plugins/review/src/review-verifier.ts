@@ -31,7 +31,8 @@ export async function dispatchSemanticVerification(
   const response = await context.invoke('runtime.dispatch', {
     operation: 'dispatch',
     resource: { type: 'runtime.agent', canonicalId: agent },
-    payload: request,
+    payload: withRuntimeDispatchProfile(request, context.contract.runtimeDispatchProfile),
   });
   return parseEchoReviewVerificationDispatchResponse(response);
 }
+import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';

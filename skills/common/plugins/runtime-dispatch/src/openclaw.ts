@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 import path from 'node:path';
-import { buildRuntimeAgentTask, canonicalJson, RUNTIME_RESULT_FILE_MAX_BYTES, type AdapterActivationContext, type RuntimeWorkspaceReference } from '@kubeclaw/plugin-sdk';
+import { buildRuntimeAgentTask, canonicalJson, extractRuntimeDispatchProfile, portableJson, RUNTIME_RESULT_FILE_MAX_BYTES, type RuntimeDispatchProfile, type AdapterActivationContext, type RuntimeWorkspaceReference } from '@kubeclaw/plugin-sdk';
 import { reconcileOpenClawFailure, scopedOpenClawContext } from './openclaw-cleanup.ts';
 import { get_encoding } from 'tiktoken';
 import { readOpenClawResult } from './openclaw-result.ts';
@@ -70,10 +70,11 @@ function runtimePromptBudget(value: unknown): RuntimePromptBudget | undefined {
   }
   return value as unknown as RuntimePromptBudget;
 }
-function dispatchPayload(payload: JsonRecord): Readonly<{ modelPayload: JsonRecord; budget?: RuntimePromptBudget }> {
+function dispatchPayload(payload: JsonRecord): Readonly<{ modelPayload: JsonRecord; budget?: RuntimePromptBudget; profile?: RuntimeDispatchProfile }> {
   const budget = runtimePromptBudget(payload.runtimePromptBudget);
-  const { runtimePromptBudget: _control, runtimeDispatchAttempt: _attempt, workspaceReference: _workspace, ...modelPayload } = payload;
-  return { modelPayload, ...(budget ? { budget } : {}) };
+  const selected = extractRuntimeDispatchProfile(payload);
+  const { runtimePromptBudget: _control, runtimeDispatchAttempt: _attempt, workspaceReference: _workspace, ...modelPayload } = selected.payload;
+  return { modelPayload, ...(budget ? { budget } : {}), ...(selected.profile ? { profile: selected.profile } : {}) };
 }
 function runtimeDispatchAttempt(value: unknown): number {
   if (value === undefined) return 0;
@@ -250,6 +251,7 @@ export async function dispatchOpenClaw(
   context: AdapterActivationContext, targetId: string, target: OpenClawTarget, payload: JsonRecord,
   signal: AbortSignal, dispatchId: string,
 ): Promise<Readonly<{ result: unknown; runtimeEvidence: Readonly<Record<string, unknown>> }>> {
+  const prepared = dispatchPayload(payload);
   const deadlineEpochMs = runtimePromptBudget(payload.runtimePromptBudget)?.deadlineEpochMs;
   if (deadlineEpochMs !== undefined && Date.now() >= deadlineEpochMs) {
     throw new Error('OPENCLAW_DISPATCH_DEADLINE_EXPIRED');
@@ -269,9 +271,11 @@ export async function dispatchOpenClaw(
   // transport identity: valid review-cache entries remain reusable while poisoned OpenClaw
   // collector completions cannot be reattached after an authenticated package upgrade.
   const transport = target.collectorMode ? 'collector-v5' : 'session-v1';
+  const identityDomain = prepared.profile ? `${transport}:json-utf16-v1` : transport;
   const attempt = runtimeDispatchAttempt(payload.runtimeDispatchAttempt);
-  const stableDispatchId = `${transport}:attempt:${attempt}:payload:${crypto.createHash('sha256')
-    .update(canonicalJson({ dispatchId, payload: dispatchPayload(payload).modelPayload })).digest('hex')}`;
+  const serialize = prepared.profile ? portableJson : canonicalJson;
+  const stableDispatchId = `${identityDomain}:attempt:${attempt}:payload:${crypto.createHash('sha256')
+    .update(serialize({ dispatchId, payload: prepared.modelPayload })).digest('hex')}`;
   const result = resultLocation(target, stableDispatchId);
   assertDispatchActive(dispatchSignal);
   let identity: OpenClawSessionIdentity | undefined;

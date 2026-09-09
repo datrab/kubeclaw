@@ -75,7 +75,7 @@ async function dispatchEcho(
 ): Promise<ParsedEchoReviewOutput> {
   const response = await context.invoke('runtime.dispatch', {
     operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent },
-    payload: buildReviewDispatchRequest(agent, snapshot, context.contract.guidance?.helperPrompt, resolvedPolicy),
+    payload: withRuntimeDispatchProfile(buildReviewDispatchRequest(agent, snapshot, context.contract.guidance?.helperPrompt, resolvedPolicy), context.contract.runtimeDispatchProfile),
   });
   return parseEchoReviewDispatchResponse(response);
 }
@@ -265,3 +265,4 @@ export async function execute(input: unknown, context: PluginInvocationContext):
   if (!parsedInput.ok) return invalidInputResult(parsedInput.error, policy);
   return runReview(parsedInput.value, stageConfig, policy, wait, context);
 }
+import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';
