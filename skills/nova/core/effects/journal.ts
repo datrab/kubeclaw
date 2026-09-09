@@ -8,6 +8,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { FileJournal } from '../state/journal.ts';
 import { snapshotJson } from '../state/json-value.ts';
+import {DependencyRequestIndex, type DependencyQuery} from './dependency-journal.ts';
 
 const INLINE_RESULT_LIMIT_BYTES = 64 * 1024;
 
@@ -31,6 +32,7 @@ function acceptOnce(accepted: Set<string>, request: EffectRequest, persist?: () 
 }
 
 export class MemoryEffectJournal implements EffectJournal {
+  readonly #dependencies = new DependencyRequestIndex();
   readonly #requests: EffectRequest[] = [];
   readonly #requestByKey = new Map<string, EffectRequest>();
   readonly #accepted = new Set<string>();
@@ -43,12 +45,13 @@ export class MemoryEffectJournal implements EffectJournal {
       throw new Error(`EFFECT_REQUEST_CONFLICT:${request.idempotencyKey}`);
     }
     if (existing) return;
+    this.#dependencies.requested(request);
     this.#requests.push(Object.freeze(request));
     this.#requestByKey.set(request.idempotencyKey, Object.freeze(request));
   }
 
   async accepted(request: EffectRequest): Promise<boolean> {
-    return acceptOnce(this.#accepted, request);
+    return acceptOnce(this.#accepted, request, () => this.#dependencies.accepted(request));
   }
 
   async completed(receipt: EffectReceipt): Promise<void> {
@@ -57,6 +60,7 @@ export class MemoryEffectJournal implements EffectJournal {
     if (existing && JSON.stringify(existing) !== JSON.stringify(receipt)) {
       throw new Error(`EFFECT_RECEIPT_CONFLICT:${receipt.idempotencyKey}`);
     }
+    if (!existing) this.#dependencies.completed(receipt);
     this.#receipts.set(receipt.idempotencyKey, Object.freeze(receipt));
   }
 
@@ -71,9 +75,14 @@ export class MemoryEffectJournal implements EffectJournal {
   entries(): readonly EffectRequest[] {
     return Object.freeze([...this.#requests]);
   }
+
+  async dependencyRequests(query: DependencyQuery): Promise<readonly EffectRequest[]> {
+    return this.#dependencies.matches(query);
+  }
 }
 
 export class FileEffectJournal implements EffectJournal {
+  readonly #dependencies = new DependencyRequestIndex();
   readonly #journal: FileJournal<EffectJournalEntry>;
   readonly #resultRoot: string;
   readonly #receipts = new Map<string, EffectReceipt>();
@@ -90,13 +99,16 @@ export class FileEffectJournal implements EffectJournal {
   #replay(records: readonly { readonly entry: EffectJournalEntry }[]): void {
     for (const record of records.slice(this.#replayedRecords)) {
       if (record.entry.type === 'requested') {
+        this.#dependencies.requested(record.entry.request);
         this.#requests.set(record.entry.request.idempotencyKey, record.entry.request);
       } else if (record.entry.type === 'accepted') {
+        this.#dependencies.accepted(record.entry.request);
         this.#accepted.add(record.entry.request.idempotencyKey);
       } else {
         const receipt = record.entry.type === 'completed'
           ? record.entry.receipt
           : this.#hydrate(record.entry.receipt, record.entry.result);
+        this.#dependencies.completed(receipt);
         this.#receipts.set(receipt.idempotencyKey, receipt);
       }
       this.#replayedRecords += 1;
@@ -113,6 +125,7 @@ export class FileEffectJournal implements EffectJournal {
       }
       if (existing) return;
       append({ type: 'requested', request });
+      this.#dependencies.requested(request);
       this.#requests.set(request.idempotencyKey, request);
       this.#replayedRecords += 1;
     });
@@ -123,6 +136,7 @@ export class FileEffectJournal implements EffectJournal {
       this.#replay(records);
       if (this.#accepted.has(request.idempotencyKey)) return false;
       append({ type: 'accepted', request });
+      this.#dependencies.accepted(request);
       this.#accepted.add(request.idempotencyKey);
       this.#replayedRecords += 1;
       return true;
@@ -145,6 +159,7 @@ export class FileEffectJournal implements EffectJournal {
         const { result: _result, ...withoutResult } = receipt;
         append({ type: 'completed-reference', receipt: withoutResult as EffectReceipt, result: reference });
       } else append({ type: 'completed', receipt });
+      this.#dependencies.completed(receipt);
       this.#receipts.set(receipt.idempotencyKey, receipt);
       this.#replayedRecords += 1;
     });
@@ -200,6 +215,13 @@ export class FileEffectJournal implements EffectJournal {
         return { request: structuredClone(request), accepted: this.#accepted.has(request.idempotencyKey),
           ...(receipt ? { receiptStatus: receipt.status } : {}) };
       });
+    });
+  }
+
+  async dependencyRequests(query: DependencyQuery): Promise<readonly EffectRequest[]> {
+    return this.#journal.transact((records) => {
+      this.#replay(records);
+      return this.#dependencies.matches(query);
     });
   }
 

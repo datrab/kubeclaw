@@ -1,0 +1,38 @@
+{
+  "observations": [
+    {
+      "name": "same",
+      "resumeLocale": "en-US",
+      "receiverCalls": 1,
+      "requestBodies": [
+        {
+          "ä": 1,
+          "z": 2
+        }
+      ],
+      "dependencyKeys": [
+        "adapter:test.locale-dependency:consumer:network.http:e8315a466d9b5e11e16da791637e26d485e9e38b1921cf16e79f9da2e0f930da:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"
+      ]
+    },
+    {
+      "name": "cross",
+      "resumeLocale": "sv-SE",
+      "receiverCalls": 2,
+      "requestBodies": [
+        {
+          "ä": 1,
+          "z": 2
+        },
+        {
+          "ä": 1,
+          "z": 2
+        }
+      ],
+      "dependencyKeys": [
+        "adapter:test.locale-dependency:consumer:network.http:b2292188bd1084a485a2c736ca162398b7557182b3778d3bbdbdc820c41e40b6:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604",
+        "adapter:test.locale-dependency:consumer:network.http:d605b7768e0e9e49a0d3e8bc13f6bb02000d88f8caf534bce21ad4f9b811bc52:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"
+      ]
+    }
+  ],
+  "boundary": "Actual registered adapter via original AdapterRuntime; real SIGKILL after child HTTP completion before parent completion; original dependency receipt recovery and disk effect journal; local HTTP receiver only, no gateway or production service"
+}
