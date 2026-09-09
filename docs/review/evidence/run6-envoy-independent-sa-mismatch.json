@@ -1,0 +1,15 @@
+{
+  "frozenSource": "70f3592bbac74d48d039e3c67b82b6db14191f24",
+  "command": "helm template review charts/kubeclaw --namespace alternative --set workerTrust.spiffe.enabled=true",
+  "helmExit": 0,
+  "serviceAccount": "default",
+  "expectedReadinessIdentity": [
+    {
+      "san_type": "URI",
+      "matcher": {
+        "exact": "spiffe://kubeclaw.internal/ns/alternative/sa/agent-nova"
+      }
+    }
+  ],
+  "approval": "blocked; report root before production correction"
+}

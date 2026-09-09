@@ -1,0 +1,47 @@
+[
+  {
+    "name": "chart",
+    "chunk_id": "cab720",
+    "cmd": "PATH=/workspace/scratch/4e25cf57c177/toolchains/bin:$PATH node --test tests/verification/deployment/worker-trust-readiness.test.mjs",
+    "exit_code": 0,
+    "original_token_count": 109,
+    "output": "✔ five original rendered Envoy consumers separate process probes from fresh self-mTLS readiness (259.097187ms)\n✔ both independent charts carry the same scoped readiness helper (0.38459ms)\n✔ SPIFFE cannot render with an unbound default ServiceAccount; disabled trust retains original default behavior (399.250674ms)\nℹ tests 3\nℹ suites 0\nℹ pass 3\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 748.169242\n",
+    "wall_time_seconds": 0.703829568
+  },
+  {
+    "name": "truth",
+    "chunk_id": "9f69f1",
+    "cmd": "node tests/verification/deployment/check-deployment-truth.mjs",
+    "exit_code": 0,
+    "original_token_count": 26,
+    "output": "{\"ok\":true,\"phase\":12,\"v2Deployment\":true,\"legacyWorkerAbsent\":true,\"deterministicSuiteRuntime\":true}\n",
+    "wall_time_seconds": 0.017497888
+  },
+  {
+    "name": "spiffe",
+    "chunk_id": "09c336",
+    "cmd": "node tests/verification/contracts/check-worker-trust-spiffe.mts",
+    "exit_code": 0,
+    "original_token_count": 12,
+    "output": "{\"ok\":true,\"contract\":\"worker-trust-spiffe\"}\n",
+    "wall_time_seconds": 0.000003044
+  },
+  {
+    "name": "lint",
+    "chunk_id": "bbb95b",
+    "cmd": "node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs tests/verification/deployment/check-worker-trust-envoy-native.mjs tests/verification/deployment/worker-trust-readiness.test.mjs",
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": "",
+    "wall_time_seconds": 0.74363311
+  },
+  {
+    "name": "product-chart-clean",
+    "chunk_id": "347730",
+    "cmd": "PATH=/workspace/scratch/4e25cf57c177/toolchains/bin:$PATH KUBECLAW_TEST_HELM=/workspace/scratch/4e25cf57c177/toolchains/bin/helm node --test tests/verification/deployment/prism-product-decisions.test.mjs",
+    "exit_code": 0,
+    "original_token_count": 109,
+    "output": "✔ disabled product authority creates no key mount, audience token, environment or network access (56.832288ms)\n✔ explicit product authority belongs only to Control and uses separate signing and scoped transport (160.841616ms)\n✔ incomplete or ambiguous product authority fails actual Helm validation (528.488123ms)\nℹ tests 3\nℹ suites 0\nℹ pass 3\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 837.892831\n",
+    "wall_time_seconds": 0.778351496
+  }
+]
