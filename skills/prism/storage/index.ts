@@ -1,13 +1,8 @@
 import { createHash, randomUUID } from "node:crypto";
 import {
-  mkdir,
   readFile,
   readdir,
-  rename,
-  stat,
-  writeFile,
 } from "node:fs/promises";
-import { dirname, join } from "node:path";
 import type { PrismDocument } from "@kubeclaw/prism-contracts-v1";
 import { applyOperation, type PrismOperation } from "../domain/index.ts";
 
@@ -77,42 +72,7 @@ export async function migrate(
   }
 }
 
-export class ContentAddressedArtifactStore {
-  private readonly root: string;
-  constructor(root: string) {
-    this.root = root;
-  }
-  async put(
-    content: Uint8Array,
-  ): Promise<{ artifactId: string; digest: string; sizeBytes: number }> {
-    const contentDigest = digest(content);
-    const hex = contentDigest.slice(7);
-    const path = join(this.root, hex.slice(0, 2), hex);
-    await mkdir(dirname(path), { recursive: true });
-    try {
-      await stat(path);
-    } catch {
-      const pending = `${path}.${randomUUID()}.pending`;
-      await writeFile(pending, content, { flag: "wx" });
-      await rename(pending, path);
-    }
-    return {
-      artifactId: `artifact:${contentDigest}`,
-      digest: contentDigest,
-      sizeBytes: content.byteLength,
-    };
-  }
-  async get(artifactId: string): Promise<Uint8Array> {
-    const match = /^artifact:sha256:([a-f0-9]{64})$/.exec(artifactId);
-    if (!match) throw new Error("invalid artifact ID");
-    const content = await readFile(
-      join(this.root, match[1]!.slice(0, 2), match[1]!),
-    );
-    if (`artifact:${digest(content)}` !== artifactId)
-      throw new Error("artifact digest mismatch");
-    return content;
-  }
-}
+export { ContentAddressedArtifactStore } from "./artifacts.ts";
 
 type Database = Queryable & { connect?: () => Promise<Queryable & { release(): void }> };
 
