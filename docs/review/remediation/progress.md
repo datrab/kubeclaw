@@ -4,7 +4,7 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**70/154 lokal verifiziert und unabhängig gegengeprüft; 11 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 15 in Bearbeitung; 58 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
+**78/154 lokal verifiziert und unabhängig gegengeprüft; 18 Findings teilweise implementiert / durch fehlende Betriebsnachweise blockiert; 11 in Bearbeitung; 47 noch offen.** Zusätzlich vier bei der Integration gefundene Probleme behoben (separat von154). Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
 
 | Bereich | Remote-Commit | Stand / Nachweis |
 |---|---|---|
@@ -130,3 +130,21 @@ Fortschritt nach drei abgeschlossenen Findings oder spätestens zehn Minuten.
 
 - Übergreifender Gate auf lokal `d3c20536210c918e32dce24dce09254198fac8a0` / remote `e3ae22ba92c533fbbadd6ec744f9db32051234a0`: sauberer Observerbuild, SDKprüfung, Pluginbuilds, Sandboxbuild, Runtime-Typecheck, Verträge, Agentoutput, Boundaries, Plattformkonfiguration, Registry, Importsicherheit, Lifecycle, Phase6 und Phase7 bestanden. Phase11 stoppt mit `ISOLATION_CGROUP_REQUIRED`, da das originale npm-Prüfkommando keinen erforderlichen Cgroup-Pfad übergibt. Spätere Gates liefen nicht. Log-SHA256: `05e076100064965666f9cfc0d360c1bf76a0f155b0745cd951e0eb81ad79a0a9`. Keine Gateabschwächung.
 - Aktuelle Quellenbindung: PATH-T04-001 in Umsetzung; Präferenzweitergabe PATH-T02-001/PCR-PRISM-PREFERENCES-001 ebenfalls aufgenommen.
+
+## Weitere geprüfte Integrationen
+
+- `5323654a94d8818aabf88e61db133ca7a182f438`: Build-/Registrydeadline und Outputverträge korrigiert, echte HTTP- und Produktionsvalidatorprüfungen bestanden. BuildKit-/Native-Runner-Nachweise weiterhin blockiert.
+- `0ba923525b62faedd78bef3958af50c9e0286d47`: Benachrichtigungstexte korrigiert, stabile Zustellkennung von technischen Versuchen getrennt. Tatsächliche localhost-Quittung und Retrygrenzen geprüft; vorgesehenes externes Empfangsprotokoll noch zu integrieren.
+- `9a566c7c884561f1cb17af500fdc842f22bac5fb`: Broker liest Token bei jeder Anfrage, prüft kanonische Leasekennung und genaue konfigurierte RBAC. Parserbudgets und konfigurationsgebundener Admissionzaun vorhanden. Lokale Go-/HTTP-/Parser-/Helmtests bestanden; Liveadmission/Upgrade offen.
+- `924d108add632baca37b5b669bf493b29d789ffc`: Originalprüfkette übergibt erforderlichen delegierten Cgroup-Pfad an Phase11, Isolation und External-Engine. Fehlende/ungültige Konfiguration bleibt sichtbarer Fehler; keine Kerneltests übersprungen.
+- Budget-Typecheck und12Tests zusätzlich auf sauberem exaktem Commit bestanden, siehe [Integrationsnachweis](implementation/integration-resume.md).
+
+## Fortsetzung: Supervisor, Präferenzen und Telemetriespeicher
+
+- PCR-SCAFFOLD-OPS-001: implementiert; Remote `1002eb732484f32ae5b5fbd17f402575afc721b8`. [Nachweis](implementation/review-supervisor.md). Five genuine supervisor/status CLI regressions and independent source review pass; native adoption gate fails visibly because actual child procfs cmdline is unavailable. Complete real pipeline start/recovery remains unexecuted.
+- PCR-PRISM-PREFERENCES-001: verifiziert; Remote `9a3eff16529032b8a166f09894b3490ccebfc590`. [Nachweis](implementation/prism-preferences.md). Original reducer and SQL regressions verify collision-free user/project/scope identity, scoped retraction, explicit consent and project overrides; trusted platform subject checked before query. Independent review and targeted builds pass.
+- PATH-T02-001: implementiert; Remote `9a3eff16529032b8a166f09894b3490ccebfc590`. [Nachweis](implementation/prism-preferences.md). Persisted generation snapshot reaches original bridge prompt with generation identity. SQL, configuration and bridge process boundary pass; native PostgreSQL/full Control plus real OpenClaw generation and result callback remain unexecuted. Active architecture/round binding tracked separately in PATH-T02-002/003.
+- PCR-TSTORE-001: verifiziert; Remote `b0301205076b7914b732f2af42e9fac7895ece4a`. [Nachweis](implementation/telemetry-store.md). Original adapter and real durable file store regressions, original engine integration, package build/tests and canonical lint pass; independent review confirms protected-field policy. Full D01 trusted demo provenance remains separate work.
+- PCR-TSTORE-002: verifiziert; Remote `b0301205076b7914b732f2af42e9fac7895ece4a`. [Nachweis](implementation/telemetry-store.md). Real adapter/store rejects malicious and over-budget graphs before persistence; exact depth/node/byte bounds, shared references, descriptors and no partial write verified. Root reran tests and canonical lint after complexity refactor.
+
+Quellenbindung und Tailscale bleiben vor dem Commit in unabhängiger Nachprüfung: Ein externer Commit im Forge-Arbeitsbaum darf nicht als freigegebene Herkunft übernommen werden; Tailscale muss Besitzerwechsel im Status erkennen und abgebrochene Übernahmen ohne verwaiste Exposures auflösen. Die bestehenden grünen Tests deckten diese Gegenfälle nicht ab. Worker-Claim-Zeitgrenzen und Prism-Generationsrunden werden parallel bearbeitet.

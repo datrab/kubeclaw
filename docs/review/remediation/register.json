@@ -345,7 +345,7 @@
       "root_fix": "Konsistente Restoregruppe statt DB-only-Backup; Upgrade-/Passwortrollbackgrenzen, Funktionshealth und Kapazitätsbudget dokumentieren/implementieren. Bestehendes Paperless schützen; kein automatischer Cutover.",
       "acceptance": "Restore auf frischem Ziel mit DB und referenzierten Artefakten; fehlgeschlagenes Upgrade, Zertifikatsablauf, OOM/Diskdruck und CNI-/Hostausfall später kontrolliert prüfen. Unabhängigen Recoveryzugang tatsächlich belegen.",
       "verification_environment": "Host-/Clusterdaten und getrennte Betriebsabnahme fehlen; Planung/Code kann vorab erfolgen",
-      "status": "geplant",
+      "status": "in Bearbeitung",
       "owner": null,
       "finding_ids": [
         "IFR-01-001",
@@ -1428,7 +1428,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP03",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -1439,7 +1439,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/worker/core/worker/attempt-executor.ts#L249"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originalpfad ursächlich korrigieren; neue echte Regressionen und unabhängige Gegenprüfung vor Commit.",
       "related_findings": [
         "PCR-BUSTER-ENGINE-001",
         "PCR-NOVA-GATE-001",
@@ -1589,7 +1589,7 @@
       "verification_evidence": [
         {
           "report": "implementation/nova-repair-budget.md",
-          "summary": "Independent review plus12 genuine budget/recovery tests and13 original admin/evidence/Forge tests pass. Post-extra-order hard failure explicitly blocked. Final exact-commit typecheck runs separately after transient unrelated shared SDK edit."
+          "summary": "Independent review plus12 genuine budget/recovery tests and13 original admin/evidence/Forge tests pass. Exact committed source2f265ae Nova typecheck and12tests independently pass; post-extra-order hard failure explicitly blocked."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -1887,10 +1887,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "5323654a94d8818aabf88e61db133ca7a182f438",
+      "verification_status": "teilweise / blockiert",
+      "verification_evidence": [
+        {
+          "report": "implementation/build-command.md",
+          "summary": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.container-build.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## PCR-CONTAINER-BUILD-001 — Fachlicher Buildfehler wird durch erforderliches Imageoutput zum Ausführungsfehler\n\n**Mittel; nachgewiesener Sender-/Empfängerwiderspruch.** `container-build-runtime.ts:219–226` liefert bei Buildfehler ok=false; `plugins/container-build/src/provider.js:125–147` gibt outcome=failed und outputs=[] zurück. `plugin.json` deklariert image jedoch required=true. `runner.ts#validateAndMapOutputs:516–523` verlangt erforderliche Ausgaben auch bei failed, aufgerufen in collectEvidence; fehlendes Image erzeugt evidenceFault/errored. Damit ist der bewusst implementierte fachliche Buildfehlerpfad über den vollständigen Runner nicht als completed/failed darstellbar. Timeout/Registryfehler werden schon beim Invoker in dieselbe ok=false-Form reduziert und gehen ebenfalls durch diesen Widerspruch. **Ursache beheben:** Requiredoutputpflicht an erfolgreiche Disposition binden oder Imageoutput optional machen, Downstream nur passende Ergebnisse zulassen; Infrastrukturstate zusätzlich typisiert erhalten. **Regression:** unveränderter Originalrunner mit real fehlgeschlagenem Dockerfilebuild muss completed/failed mit keinem Image erzeugen, Erfolgsbuild ohne Image muss weiterhin errored sein; Registryausfall/Timeout müssen eigene Ausführungsdisposition behalten.",
@@ -1902,9 +1907,10 @@
         "plugin.json",
         "runner.ts#validateAndMapOutputs:516–523"
       ],
-      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
+      "next_action": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
     },
     {
       "id": "PCR-CONTAINER-BUILD-002",
@@ -1912,10 +1918,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "5323654a94d8818aabf88e61db133ca7a182f438",
+      "verification_status": "teilweise / blockiert",
+      "verification_evidence": [
+        {
+          "report": "implementation/build-command.md",
+          "summary": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.container-build.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## PCR-CONTAINER-BUILD-002 — Eigenes Zeitlimit endet vor Registryverify\n\n**Mittel; nachgewiesener Deadlinefehler im Invoker.** `container-build-runtime.ts:207–217` setzt maximumExecutionMs nur auf execFile; `#verify:125–152` benutzt ausschließlich das Aufrufersignal. Schneller Build plus offene Registryantwort kann die invokerseitige Operatorzeitgrenze überschreiten; ohne externen Abort unbegrenzt. Der Runner besitzt ein zusätzliches Nodebudget, ersetzt aber kein kleineres Operatorbudget. **Ursache beheben:** absolute Deadline ab Beginn aller Phasen und kombinierter Abbruch für Build+Verify; Restzeit an jede Operation. **Regression:** realer HTTPserver mit verzögertem Manifestbody, echter vorbereiteter Build; Verify muss spätestens mit Restbudget abbrechen und Reader/Client aufräumen.",
@@ -1923,9 +1934,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/buster/engine/test-gates/container-build-runtime.ts#L207"
       ],
       "unresolved_code_references": [],
-      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
+      "next_action": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
     },
     {
       "id": "PCR-DELIVERY-001",
@@ -1960,10 +1972,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "5323654a94d8818aabf88e61db133ca7a182f438",
+      "verification_status": "teilweise / blockiert",
+      "verification_evidence": [
+        {
+          "report": "implementation/build-command.md",
+          "summary": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.direct-command.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## PCR-DIRECT-COMMAND-001 — Deklarierbarer Mediatyp passt nur auf erste Ausgabe\n\n**Mittel; nachgewiesener Vertragswiderspruch.** `src/provider.js:59–61,212–217` akzeptiert checked-kubernetes-yaml und size-budget-baseline für jedes deklarierte Artefakt und nummeriert Ausgänge nach Arrayposition. `plugin.json` erlaubt diese Typen nur für artifact-1, für artifact-2…8 fehlen sie; Schema erlaubt sie ebenfalls für jeden Eintrag. Ein Buildoutput als erstes und checked manifest als zweites Artefakt sind gültige Config, führen nach ausgeführtem Command/Copies aber im Runner `validateAndMapOutputs` zu Mediatypfehler. **Ursache beheben:** gleiche Typmenge je generischer Artefaktslot oder positionsabhängige Configvalidierung mit verständlichem Fehler vor Ausführung. **Regression:** echten Resolver/Runner mit zwei kleinen vorhandenen Artefakten und zweitem checked-manifest bzw. size-baseline durchlaufen; gültige Konfiguration darf nicht erst nach Ausführung wegen Manifestdrift scheitern.",
@@ -1972,9 +1989,10 @@
         "src/provider.js:59–61,212–217",
         "plugin.json"
       ],
-      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
+      "next_action": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
     },
     {
       "id": "PCR-HTTP-001",
@@ -2392,10 +2410,15 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP07",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "9a3eff16529032b8a166f09894b3490ccebfc590",
+      "verification_status": "teilweise / blockiert",
+      "verification_evidence": [
+        {
+          "report": "implementation/prism-preferences.md",
+          "summary": "Persisted generation snapshot reaches original bridge prompt with generation identity. SQL, configuration and bridge process boundary pass; native PostgreSQL/full Control plus real OpenClaw generation and result callback remain unexecuted. Active architecture/round binding tracked separately in PATH-T02-002/003."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PATH-T02-001 — Gespeicherte Präferenzen beeinflussen den implementierten Generationspfad nicht\n\nEigentümertrace: [T02-design-feedback.md](T02-design-feedback.md); Codecommit wie oben.\n\n**Mittel; nachgewiesene Integrationslücke im untersuchten Pfad.** Selbst nach Behebung von PCR-PRISM-CONTROL-002 laden spätere Design-/Revisionsaufträge keine gespeicherten Events oder gewichtete Projektion. `control.ts:471–479,647–654` sendet Architektur beziehungsweise instruction+Dokument. `agent-bridge.mjs:67–74,84–90,98–103` konstruiert entsprechende Prompts ohne Nutzer-/Preferencekontext. `openclaw-plugin/index.mjs:22–75` registriert nur Create/Apply, keinen Preference-Leseweg; `control.ts:1124–1134` wird vom Studio zur Darstellung benutzt. Das ist kein Nachweis, dass ein LLM niemals aus seiner Chat-Session lernt; solches implizites Gedächtnis ist gerade keine nachvollziehbare Nutzung des persistierten Feedbacks.\n\nAuslöser: Operator markiert Designtrait, erwartet in neuer Sitzung/neuem Projekt personalisierte Vorschläge. Auswirkung: sichtbare learned-Werte suggerieren stärkere Anpassung, als die technische Übergabe trägt; keine reproduzierbare Gewichtungs-/Rankingentscheidung. Ursache: Eventprojektion wurde als UI-Endpunkt integriert, nicht als versionierter Input der Generationsgrenze. Behebung: authentisiert/projektgebundenen Preference-Snapshot mit Consent, Policyversion und Eventbelegen in Generationsauftrag aufnehmen und die verwendete Snapshotrevision im Ergebnis dokumentieren. Verifikation später: Originaldienste plus echte DB, Ereignis speichern, Agentauftrag erfassen, tatsächlichen Snapshotbezug bei neuer Sitzung nachweisen; Designqualität bleibt gesonderte fachliche Evaluation.",
@@ -2406,13 +2429,14 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/server/control.ts#L1124"
       ],
       "unresolved_code_references": [],
-      "next_action": "Originalpräferenz-/Generationspfad ursächlich korrigieren und unabhängig prüfen.",
+      "next_action": "Persisted generation snapshot reaches original bridge prompt with generation identity. SQL, configuration and bridge process boundary pass; native PostgreSQL/full Control plus real OpenClaw generation and result callback remain unexecuted. Active architecture/round binding tracked separately in PATH-T02-002/003.",
       "related_findings": [
         "PCR-PRISM-PREFERENCES-001"
       ],
       "decision_notes": [
         "D11: projektübergreifenden persönlichen Snapshot tatsächlich verwenden; Projektvorgaben haben Vorrang, Override/Disable unterstützen."
-      ]
+      ],
+      "remaining_work": "Persisted generation snapshot reaches original bridge prompt with generation identity. SQL, configuration and bridge process boundary pass; native PostgreSQL/full Control plus real OpenClaw generation and result callback remain unexecuted. Active architecture/round binding tracked separately in PATH-T02-002/003."
     },
     {
       "id": "PATH-T02-002",
@@ -2420,7 +2444,7 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -2434,7 +2458,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/server/control.ts#L330"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originalpfad ursächlich korrigieren; neue echte Regressionen und unabhängige Gegenprüfung vor Commit.",
       "related_findings": [
         "PATH-T02-003",
         "PCR-PRISM-CONTROL-001"
@@ -2447,7 +2471,7 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP07",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -2460,7 +2484,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/storage/index.ts#L199"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originalpfad ursächlich korrigieren; neue echte Regressionen und unabhängige Gegenprüfung vor Commit.",
       "related_findings": [
         "PATH-T02-002",
         "PCR-PRISM-CONTROL-001"
@@ -2621,10 +2645,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP07",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "9a3eff16529032b8a166f09894b3490ccebfc590",
+      "verification_status": "lokal verifiziert",
+      "verification_evidence": [
+        {
+          "report": "implementation/prism-preferences.md",
+          "summary": "Original reducer and SQL regressions verify collision-free user/project/scope identity, scoped retraction, explicit consent and project overrides; trusted platform subject checked before query. Independent review and targeted builds pass."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.preferences.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-PRISM-PREFERENCES-001 — Projektidentität fehlt im Aggregationsschlüssel\n\n**Mittel; Evidenzklasse: nachgewiesener Defekt durch Code-Trace.** index.ts:61–72 baut Key aus projection, learningScope, context und trait, ohne event.projectId. Control.ts:1119–1132 erlaubt GET ohne project, lädt dann sämtliche Ereignisse desselben Subjects und ruft diese Projektion auf. Zwei project-scoped Gegenpräferenzen zu gleichem Trait in getrennten Projekten neutralisieren sich oder verstärken sich projektübergreifend. Kein Cross-user-Datenleck behauptet. Ursache ist unvollständige Scopeidentität. Behebung: Projekt-ID im project-scoped Schlüssel/Output festhalten oder ausschließlich explizit projektgebundene Projektion erlauben; personal learning separat nach Consent aggregieren. Regression: OriginalprojectPreferences und Controlquery mit zwei Projekten und gegensätzlichen Events, jeweils getrenntes Ergebnis, Retraktion beeinflusst nur den zugeordneten Scope.\n\nZusätzlicher konkreter Dokumentabgleich: `docs/architecture/prism-preference-learning-v1.md:17,208–209` schließt automatische Zeitabnahme ausdrücklich aus; Originalfunktion :95–107 implementiert eine180-Tage-Halbwertszeit. Das ist eine bestätigte Dokument-/Implementierungsabweichung. **Offene Frage:** Welche versionierte Policy ist maßgeblich? Nicht als bloß fehlende Anforderung behandeln; ohne Entscheidung kein identisches zeitunabhängiges Ergebnis aus gleichen Events versprechen. Scopeforderung :133 bestätigt001. Originaltests belegen derzeit die Implementierungs-Decaypolicy, nicht Konformität zum Architekturtext.",
@@ -2632,13 +2661,14 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/docs/architecture/prism-preference-learning-v1.md#L17"
       ],
       "unresolved_code_references": [],
-      "next_action": "Originalpräferenz-/Generationspfad ursächlich korrigieren und unabhängig prüfen.",
+      "next_action": "Keine weitere lokale Prüfung für diesen abgegrenzten Befund offen; Gesamtintegration separat.",
       "related_findings": [
         "PATH-T02-001"
       ],
       "decision_notes": [
         "D11: persönliche Präferenzen dürfen absichtlich projektübergreifend aggregieren. Projekt-/Eventherkunft und Nutzeridentität trotzdem erhalten; Ereigniskollision ist nicht erlaubtes Lernen."
-      ]
+      ],
+      "remaining_work": ""
     },
     {
       "id": "PCR-PRISM-STORAGE-001",
@@ -3058,10 +3088,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP09",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "0ba923525b62faedd78bef3958af50c9e0286d47",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/operator-notification.md",
+          "summary": "Actual observer/operator/network HTTP path accepts multiline and boundary labels;13 combined independent original regressions pass."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.notification-observer.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## 12. PCR-NOTIFY-001 — Projektion erzeugt vom eigenen Provider abgelehnte Nachrichten\n\n**Mittel, nachgewiesener Defekt.** `src/observer.ts:58–61,82–89,117–142`\nbounded/reasonCode/lifecycleNotification; Empfänger\n`operator-messaging/src/payload.ts:16–22,80–93`. Eine gültige kanonische\nsummary mit Newline bleibt unverändert und wird OPERATOR_PAYLOAD_INVALID:summary.\nreasonCode mit 257 Zeichen wird auf 256 plus Ellipse gekürzt und dadurch\nOPERATOR_PAYLOAD_INVALID:reasonCode. Quellprobe führt beide Originalseiten aus.\nAuswirkung: Benachrichtigung fehlt, Folgebenachrichtigungen desselben Runs\nbleiben nach ausgeschöpften Versuchen zurück; fachlicher Run selbst bleibt intakt.\nUrsache ist getrennter, inkompatibler Darstellungs-/Empfängervertrag. Behebung:\nzulässige mehrzeilige Textfelder ausdrücklich gemeinsam definieren, sonst\nnormalisieren; Kürzungsmarker innerhalb des Limits zählen. Regression durch\noriginalen Observer→Operatorpfad mit Newlines, exakt256/257-Zeichenreason und\nmaximalen Labels, anschließend nachfolgendes Event erfolgreich zustellen.",
@@ -3071,7 +3106,7 @@
       "unresolved_code_references": [
         "src/observer.ts:58–61,82–89,117–142"
       ],
-      "next_action": "Zugewiesene Implementierung mit Originalregressionen abschließen und unabhängig gegenprüfen.",
+      "next_action": "Dokumentierte Betriebsnachweise und Gesamtintegration ausführen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3105,10 +3140,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP09",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "0ba923525b62faedd78bef3958af50c9e0286d47",
+      "verification_status": "teilweise / blockiert",
+      "verification_evidence": [
+        {
+          "report": "implementation/operator-notification.md",
+          "summary": "Five real durable HTTP receipt/retry cases and legacy identity tests pass independent review. Intended external receiver support for explicit reconciliation protocol unproven; other provider retry semantics unchanged."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.operator-messaging.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## 12. PCR-OPERATOR-001 — Transienter Sendefehler verbraucht Observer-Retries ohne neuen Send\n\n**Mittel, nachgewiesener Integrationsdefekt.**\nSender `skills/nova/core/telemetry/observer-delivery.ts:17–30` benutzt trotz\nsteigendem deliveryAttempt immer dieselbe Attemptidentität/Nummer1 und denselben\nEffectkey. `core/effects/durable-invocation.ts:46–49,119–126` liefert jedes\nbereits gespeicherte Receipt einschließlich failed zurück. Zusätzlich\n`operator-messaging/src/adapter.ts:103–108` cached failure pro Attempt.\nOriginalprobe: einmaliger HTTP503, anschließend gesunder localhost-Empfänger;\nalle fünf Observerversuche scheitern, Netzwerk sieht nur1 Request, Checkpoint\nbleibt0 und nächster Drain meldet ATTEMPTS_EXHAUSTED. Auswirkung: transienter\nSendausfall wird dauerhaft fehlende Nachricht und blockiert spätere Lifecycle-\nNachrichten desselben Runs. Telemetry-/Transportprovider unter derselben Core-\nRetrygrenze ebenfalls betroffen; Eigentümer hier, keine Doppelzählung.\nUrsachenbehebung: explizite retrybare Failure-/ungewisse Outcome-Disposition,\nstabile externe Delivery-ID getrennt von neuem Ausführungsattempt; Core- und\nSinkreceipts gemeinsam reconciliieren. Nur attemptNumber erhöhen verletzt\nbestehende Effectkeyidentität und repariert nichts. Regression: bestehende\nOriginalprobe nach Fix muss zweiten Send/Checkpoint zeigen, dauerhafte Ablehnung\nbleibt begrenzt, verlorenes Remote-ACK erzeugt bei deduplizierendem Empfänger\nkeine doppelte Wirkung, Restart darf Retrybudget nicht zurücksetzen.",
@@ -3118,9 +3158,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/common/plugins/operator-messaging/src/adapter.ts#L103"
       ],
       "unresolved_code_references": [],
-      "next_action": "Zugewiesene Implementierung mit Originalregressionen abschließen und unabhängig gegenprüfen.",
+      "next_action": "Five real durable HTTP receipt/retry cases and legacy identity tests pass independent review. Intended external receiver support for explicit reconciliation protocol unproven; other provider retry semantics unchanged.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Five real durable HTTP receipt/retry cases and legacy identity tests pass independent review. Intended external receiver support for explicit reconciliation protocol unproven; other provider retry semantics unchanged."
     },
     {
       "id": "PCR-REDISTRANSPORT-001",
@@ -3204,10 +3245,15 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP09",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "b0301205076b7914b732f2af42e9fac7895ece4a",
+      "verification_status": "lokal verifiziert",
+      "verification_evidence": [
+        {
+          "report": "implementation/telemetry-store.md",
+          "summary": "Original adapter and real durable file store regressions, original engine integration, package build/tests and canonical lint pass; independent review confirms protected-field policy. Full D01 trusted demo provenance remains separate work."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.telemetry-store.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-TSTORE-001 — Secretfeldpolitik des Sinks lässt API-Schlüssel durch\n\n**Hoch, nachgewiesener Defekt:** `src/adapter.ts:4–14,38–42` sanitize erkennt\nnur authorization/cookie/password/secret/token. Originalprobe schreibt\napi_key und credential im Klartext in den echten0600-Store, password wird\nredigiert. Trigger: autorisierter telemetry.emit-Caller verlässt sich auf die\nSinkredaction; bestehende redigierende Observer mindern ihren eigenen Pfad,\nbeheben aber die Providergrenze nicht. Auswirkung: dauerhaft gespeicherte\nCredentials statt zugesicherter Redaction. Ursache: abweichende Regexpolitik.\nBehebung: gemeinsamen begrenzten Redaktionsvertrag an allen Telemetriesinks;\nRegression über originale append-Persistenz mit api_key/apiKey/credential und\nverschachtelten Varianten plus harmlosem Kontrollfeld.",
@@ -3215,14 +3261,15 @@
       "unresolved_code_references": [
         "src/adapter.ts:4–14,38–42"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Keine weitere lokale Prüfung für diesen abgegrenzten Befund offen; Gesamtintegration separat.",
       "related_findings": [
         "PCR-OBS-002",
         "PCR-PRISM-WORKER-001"
       ],
       "decision_notes": [
         "D01: nur nachweislich pipelinegenerierte Demo-Zugangsdaten ungeschwärzt; API-/Plattformschlüssel weiterhin schützen. Generisches key-Feld darf die Ausnahme nicht auslösen."
-      ]
+      ],
+      "remaining_work": ""
     },
     {
       "id": "PCR-TSTORE-002",
@@ -3230,10 +3277,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP09",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "b0301205076b7914b732f2af42e9fac7895ece4a",
+      "verification_status": "lokal verifiziert",
+      "verification_evidence": [
+        {
+          "report": "implementation/telemetry-store.md",
+          "summary": "Real adapter/store rejects malicious and over-budget graphs before persistence; exact depth/node/byte bounds, shared references, descriptors and no partial write verified. Root reran tests and canonical lint after complexity refactor."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.telemetry-store.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-TSTORE-002 — Redaction rekursiert vor validiertem JSONbudget\n\n**Mittel, nachgewiesener Defekt:** `src/adapter.ts:6–13,42`. Zyklisches Objekt\nverursacht RangeError vor Storevalidator; tiefes gültiges JSON besitzt denselben\nunbeschränkten Rekursionspfad. Bytebudget greift zu spät. Direkte Probe ist\nAdapter-API-Evidenz; Corewire kann Zyklen zuvor ablehnen, keine Remoteexploit-\nbehauptung daraus. Auswirkung: unkontrollierte Ausnahme/CPU- und Stacklast\nstatt gezieltem Ablehnen. Ursache beheben durch globales Tiefen-/Knotenbudget,\nZyklus-/Getterprüfung bereits vor Traversal. Regression mit tiefem JSON, Zyklus,\ngeteilten nichtzyklischen Referenzen, Gettern und gültigem Grenzpayload am\nOriginaladapter; kontrollierter Fehler, keine Teilspeicherung.",
@@ -3241,9 +3293,10 @@
       "unresolved_code_references": [
         "src/adapter.ts:6–13,42"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Keine weitere lokale Prüfung für diesen abgegrenzten Befund offen; Gesamtintegration separat.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": ""
     },
     {
       "id": "F-T14-01",
@@ -3301,10 +3354,15 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP10",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "9a566c7c884561f1cb17af500fdc842f22bac5fb",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/namespace-broker.md",
+          "summary": "Uncached Go race suite with genuine HTTP token rotation/provisioning/expiry and actual bounded parser/invoker regressions; independent review. No live cluster claim."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.namespace-controller.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## PCR-BUSTER-NS-001 — Kubernetes-Token wird nicht erneut gelesen\n\n**Hoch; nachgewiesener Implementierungsdefekt unter rotierendem/ablaufendem ServiceAccount-Token.** `main.go:125–128,153–161,1647` lädt Token einmal in `controller.token`; `kube` setzt anschließend immer denselben Bearer. Chart `:10,167` mountet ServiceAccount-Token. Wird der gemountete Token ersetzt und der alte serverseitig ungültig, bleibt dieser Prozess bei 401; Polling liest keinen neuen Token. Provisioning und die einzige aktive TTLcleanupinstanz fallen dauerhaft bis zum Neustart aus. Exakter Ablaufzeitpunkt hängt am Cluster und wurde nicht live verifiziert. **Ursache beheben:** rotierendes Tokenfile pro Request oder validierte refreshende Transport-Credentials verwenden; keine unendlichen Retries mit unveränderlichen Credentials. **Regression:** Originalcontroller gegen authentisierenden Testserver, gemountetes Testfile zwischen Requests atomar ersetzen, alten Token ablehnen; zweiter Request und TTLreconciliation müssen mit neuem Token gelingen. Kein Secretmaterial in Evidenz speichern.",
@@ -3312,7 +3370,7 @@
       "unresolved_code_references": [
         "main.go:125–128,153–161,1647"
       ],
-      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
+      "next_action": "Dokumentierte Betriebsnachweise und Gesamtintegration ausführen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3322,10 +3380,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP10",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "9a566c7c884561f1cb17af500fdc842f22bac5fb",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/namespace-broker.md",
+          "summary": "Uncached Go race suite with genuine HTTP token rotation/provisioning/expiry and actual bounded parser/invoker regressions; independent review. No live cluster claim."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.namespace-controller.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## PCR-BUSTER-NS-002 — Ownership liest ungekürzte Leaseidentität\n\n**Mittel; nachgewiesener Codewiderspruch.** `ownerLabels`/`leaseLabelValue` (`main.go:1888–1908`) kürzen Namen auf 63 Zeichen; `verifyNamespaceLabels:787–796` und `deleteOwnedNamespace:1591–1594` vergleichen gegen vollständiges `item.Metadata.Name`. Kubernetes-CR-Namen können länger sein; CRD begrenzt metadata.name hier nicht zusätzlich. Lease mit über 63 Zeichen erzeugt Namespace mit gekürztem Label, verweigert danach seine eigene Ownership und TTLlöschung. Standard-Fixture-Invoker begrenzt LeaseName auf 63, daher kein allgemeiner Ausfall dieses Standardpfads; direkter CRD-Aufrufer/andere Sender sind betroffen. Bestehender Test prüft langes Label im Egressmanifest, keinen Ownershiproundtrip. **Ursache beheben:** einheitliche kanonische Labelidentität beim Schreiben und Prüfen, UID weiter vollständig berücksichtigen, gegebenenfalls zulässige Namen am CRD begrenzen. **Regression:** echter `ownerLabels`→`verifyNamespaceLabels`-Roundtrip für 63/64/253 Zeichen und TTLcleanup mit gleichem sowie anderem UID.",
@@ -3333,7 +3396,7 @@
       "unresolved_code_references": [
         "main.go:1888–1908"
       ],
-      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
+      "next_action": "Dokumentierte Betriebsnachweise und Gesamtintegration ausführen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3343,10 +3406,15 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP10",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "9a566c7c884561f1cb17af500fdc842f22bac5fb",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/namespace-broker.md",
+          "summary": "Uncached Go race suite with genuine HTTP token rotation/provisioning/expiry and actual bounded parser/invoker regressions; independent review. No live cluster claim."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.namespace-controller.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## PCR-BUSTER-NS-003 — Eigene konfigurierte RBAC wird als Angriff bewertet\n\n**Hoch; nachgewiesener Code-/Chartwiderspruch, Clusterlauf offen.** `inspectRuntimeSecurityState` (`main.go:521–531`) erlaubt nur `buster-controller-secrets`, `buster-namespace-deployer`, `buster-namespace-tester`. Chart `buster-namespace-controller.yaml:187–196` setzt alle drei Namen auf `<fullname>-…`; `ensureControllerSecretAccess` und `ensureNamespaceAccess` erstellen genau damit RoleBindings. Jeder andere fullname als `buster` erzeugt somit high-Findings über eigene autorisierte Bindings. Zusätzlich fehlen die absichtlich erzeugten `buster-preview-credentials-reader/writer` Roles/Bindings. Securityprovider empfängt diese als echte Findings und kann einen ansonsten sicheren Lauf durchfallen lassen. **Ursache beheben:** Inspektion erhält tatsächliche vom Controller erzeugte RBACverträge einschließlich Credentialmodus; nicht nur Namen freistellen, auch Rolle/Subjects/Regeln/Eigentum prüfen. **Regression:** Ressourcen aus echten Provisioningfunktionen mit alternativem Chartfullname und beiden Credentialmodi inventarisieren: keine Selbstbefunde, veränderte Subjects/RoleRefs bleiben auffällig. Bestehender sicherer Test verwendet leere RBAC-Listen und übersieht diese Gegenstelle.",
@@ -3356,7 +3424,7 @@
       "unresolved_code_references": [
         "main.go:521–531"
       ],
-      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
+      "next_action": "Dokumentierte Betriebsnachweise und Gesamtintegration ausführen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3366,10 +3434,15 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP10",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "9a566c7c884561f1cb17af500fdc842f22bac5fb",
+      "verification_status": "bestanden",
+      "verification_evidence": [
+        {
+          "report": "implementation/namespace-broker.md",
+          "summary": "Uncached Go race suite with genuine HTTP token rotation/provisioning/expiry and actual bounded parser/invoker regressions; independent review. No live cluster claim."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.kubernetes-fixture.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## PCR-KUBERNETES-FIXTURE-001 — Ressourcenlimit erst nach Aliasexpansion\n\n**Hoch; nachgewiesene fehlende Schranke, Schadensausmaß statisch begründet.** `kubernetes-fixture-runtime.ts:160–171,329–334` traversiert alle `List.items` rekursiv ohne Zyklus-, Tiefen-/Besuchszähler; erst nach vollständigem `flattenDocuments` wird maximumResources geprüft. YAML kann Listen als Aliase mehrfach referenzieren. Kleine verschachtelte DAGs erzeugen exponentiell viele Pushes in `out`, in der vertrauenswürdigen Buster-Parenteventloop; Bytebudget und Providerprozesslimit greifen dort nicht. Zyklen führen zumindest Stackoverflow, große DAGs können den Dienst vor Limitprüfung erschöpfen. **Ursache beheben:** bounded iterative Traversierung mit maximalen Knoten/Ressourcen/Tiefe und Zyklusprüfung vor jedem Besuch, YAMLaliasbudget; Parsing ebenfalls außerhalb unbegrenzter Parentarbeit. **Regression:** echte YAML-Dateien für Zyklus, tiefe Listen und geteilte Alias-DAG durch Originalinvoker, in separatem begrenztem Testprozess; früher definierter Fehler vor kubectl und unabhängig von exponentieller Expansion.",
@@ -3377,7 +3450,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts#L160"
       ],
       "unresolved_code_references": [],
-      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
+      "next_action": "Dokumentierte Betriebsnachweise und Gesamtintegration ausführen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3387,7 +3460,7 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP10",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3398,7 +3471,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/buster/plugins/tailscale-exposure/src/provider.js#L48"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Begonnene Ursachenbehebung mit Originalnachweisen und unabhängiger Gegenprüfung abschließen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3408,7 +3481,7 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP10",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3419,7 +3492,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts#L187"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Begonnene Ursachenbehebung mit Originalnachweisen und unabhängiger Gegenprüfung abschließen.",
       "related_findings": [
         "F-T14-01",
         "F-T14-02",
@@ -3673,10 +3746,15 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP11",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "1002eb732484f32ae5b5fbd17f402575afc721b8",
+      "verification_status": "teilweise / blockiert",
+      "verification_evidence": [
+        {
+          "report": "implementation/review-supervisor.md",
+          "summary": "Five genuine supervisor/status CLI regressions and independent source review pass; native adoption gate fails visibly because actual child procfs cmdline is unavailable. Complete real pipeline start/recovery remains unexecuted."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/operations-and-packaging.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## 12. PCR-SCAFFOLD-OPS-001 — Statusfehler beendet Supervisor scheinbar erfolgreich\n\n**Mittel; nachgewiesener Defekt.** `scripts/supervise-repository-review.mjs:79–85`\nnormalisiert gescheiterten Statuschild zu undefined; `:230–232` testet\n`initialStatus?.status !== 'running'` und liefert0. `observeExistingPipeline`\nverwendet dieselbe Verwechslung bei Statusverlust. Auslöser: fehlende/defekte\nPlattformdatei, kaputtes Artefakt oder anderer Statuslesefehler. Folge: ausdrücklich\nangeforderter Start bleibt aus bzw. Beobachtung endet, Exit0 und leere Ausgabe\nverbergen den Fehler. Originalprobe bestätigt fehlende Plattform, nicht jede\nDateifehlerklasse separat. Ursache beheben: fehlenden Status strikt als error/\nunknown behandeln und mit diagnostiziertem Nichtnullstatus beenden oder begrenzt\nwiederholen; nur bestätigten fachlichen Terminalzustand entsprechend melden.\nRegression: Original-CLI mit ungültiger Plattform und anschließend lesbarer\nPlattform; erster Lauf muss sichtbar scheitern und darf keinen Erfolg behaupten,\nzweiter muss korrekt starten. Adopted-Pipeline bei temporärem Statusfehler separat\nnachweisen. Keine funktionale Änderung in diesem Auftrag.",
@@ -3684,9 +3762,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/scripts/supervise-repository-review.mjs#L79"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Five genuine supervisor/status CLI regressions and independent source review pass; native adoption gate fails visibly because actual child procfs cmdline is unavailable. Complete real pipeline start/recovery remains unexecuted.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Five genuine supervisor/status CLI regressions and independent source review pass; native adoption gate fails visibly because actual child procfs cmdline is unavailable. Complete real pipeline start/recovery remains unexecuted."
     },
     {
       "id": "IFR-03-001",
@@ -3764,7 +3843,7 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP12",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -3775,7 +3854,7 @@
       "unresolved_code_references": [
         "deployment.yaml:23–35"
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Begonnene Ursachenbehebung mit Originalnachweisen und unabhängiger Gegenprüfung abschließen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3832,10 +3911,15 @@
       "family": "infrastructure",
       "severity": "hoch",
       "work_package": "WP12",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "9a566c7c884561f1cb17af500fdc842f22bac5fb",
+      "verification_status": "teilweise / blockiert",
+      "verification_evidence": [
+        {
+          "report": "implementation/namespace-broker.md",
+          "summary": "Config-bound Helm fence and version/identity/prefix checks pass independent review. Real API server CEL/admission and installed legacy-policy migration not run."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/namespace-broker.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-18-001\n**Hoch; nachgewiesener konfigurationsabhängiger Admission-Defekt.** Der Fence matcht nur fest codierte ServiceAccount-Identitäten im Namespace kubeclaw und nur Namespace CREATE/DELETE (`buster-namespace-fence.yaml:21–37`). Helm und `NAMESPACE` erlauben andere Namespaces; Controller-SA/ClusterRoleBinding werden dort dynamisch erzeugt. Auslöser: Installation in abweichendem Namespace. Der vom Chart erzeugte Rollenname ist fest an agentRole gebunden; die Namespace-Änderung allein verändert bereits die vollständige SA-Identität. Der clusterweite Controller darf weiter Namespaces verwalten, fällt aber nicht unter den Fence.\n\nUrsachenbehebung: Admission und Controller-Identität aus einer gemeinsamen Quelle rendern; alle Controllerinstanzen erfassen und nicht nur Namespaces im Hauptskript parametrisieren. Echter Regressionstest: realer API-Server mit VAP, erlaubtes Test-Namespace CREATE/DELETE und verbotene Aktion gegen Kontrollnamespace mit dem **alternativen** Controller-SA prüfen.",
@@ -3843,9 +3927,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/my-values/infra/buster-namespace-fence.yaml#L21"
       ],
       "unresolved_code_references": [],
-      "next_action": "Originalpfade prüfen, Ursachenbehebung implementieren und unabhängig gegenprüfen; reale Betriebsgrenzen dokumentieren.",
+      "next_action": "Config-bound Helm fence and version/identity/prefix checks pass independent review. Real API server CEL/admission and installed legacy-policy migration not run.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Config-bound Helm fence and version/identity/prefix checks pass independent review. Real API server CEL/admission and installed legacy-policy migration not run."
     },
     {
       "id": "IFR-27-001",
@@ -4013,7 +4098,7 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -4022,7 +4107,7 @@
       "source_finding_text": "## Befund IFR-14-001\n**Mittel; nachgewiesene Rollout-/Health-Lücke.** Auslöser: Konfigurationsänderung ohne Image-/PodTemplate-Änderung oder ein nach Prozessstart nicht funktionsfähiger Proxy. Manifest hat keinerlei Startup-/Readiness-/Liveness-Probe. Config wird mit subPath gemountet und erzeugt keinen Checksum-Rollout; `kubectl rollout status` allein erkennt den Bedarf nicht. Wirkung: als erfolgreich gemeldeter Rollout kann alte Konfiguration bzw. nicht funktionsfähigen HTTP-Dienst belassen.\n\nUrsachenbehebung: explizites ConfigMap-zu-Pod-Rollout und geeignete lokale/startup-/abhängigkeitsbewusste Readiness definieren. Echter Test: Configänderung ausrollen, effektive Modellroute prüfen; Prozess hängt/DB-Ausfall kontrolliert simulieren und Ready/Unready beobachten. Keine Liveness-Abhängigkeit bauen, die DB-Ausfälle zu Restart-Stürmen macht.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Begonnene Ursachenbehebung mit Originalnachweisen und unabhängiger Gegenprüfung abschließen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4095,7 +4180,7 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
       "verification_evidence": [],
@@ -4106,7 +4191,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/charts/prism/templates/workloads.yaml#L1"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Begonnene Ursachenbehebung mit Originalnachweisen und unabhängiger Gegenprüfung abschließen.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4330,10 +4415,10 @@
   "implementation_branch": "fix/remediation-foundations-20260909",
   "updated_at": "2026-09-09",
   "progress_counts": {
-    "verifiziert": 70,
-    "implementiert": 11,
-    "in Bearbeitung": 15,
-    "offen": 58
+    "verifiziert": 78,
+    "implementiert": 18,
+    "in Bearbeitung": 11,
+    "offen": 47
   },
   "additional_integration_findings": [
     {
