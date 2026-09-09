@@ -1,0 +1,37 @@
+✔ original bridge process refuses volatile payload admission when durable Control is unavailable (280.937877ms)
+✔ actual HTTP job routes authenticate before claim, persist one fence and reject stale completion (2427.094169ms)
+✔ session identities retain full project and namespace identity without lossy legacy adoption (1.194889ms)
+✔ accepted jobs survive a real database reopen; running uncertainty is never replayed (2421.946282ms)
+✔ actual design commit and agent receipt are atomic; stale fence and changed retry cannot mutate (1578.530431ms)
+✔ expired agent cannot commit and missing tool result is explicitly NeedsNova (1855.304052ms)
+✔ revision retries bind actor, source and input and replay the actual committed repository receipt (1526.951302ms)
+✔ provably unstarted superseded work is retired without taking over the new source session (1451.139735ms)
+✔ actual agent image COPY context imports the real bridge, prompt, WorkerCore and locked validators after relocation (571.778888ms)
+✔ original WorkerCore drains a real Node process through close and retains its real HTTP-uploaded log (200.597261ms)
+✔ original WorkerCore times out and terminates a real running process; no gateway success is inferred (124.106155ms)
+✔ real process failure and output overflow preserve diagnostics and fail the bounded attempt (142.897098ms)
+✔ real CPU-consuming child has explicit V2 unavailable observations and no parent resource claims (955.105963ms)
+✔ requested unsupported child budget fails before actual process launch (10.570247ms)
+✔ V2 requires explicit policy and correct units; V1 refuses the opt-in envelope (25.355468ms)
+✔ requested runtime measurement unavailable fails even when profile advertised measurement (61.364254ms)
+✔ original generic assessor rejects requested real observed overrun and V1 missing metrics (22.784568ms)
+✔ actual HTTP dropped admission response retains the same client key; SQL replay and NeedsNova remain explicit (2018.332412ms)
+✔ original agent prompt consumes the immutable preference snapshot and exact durable action fence (1.011483ms)
+✔ direct: actual optional phases require a complete claim reservation (57.457057ms)
+✔ runtime: actual optional phases require a complete claim reservation (2.817413ms)
+✔ real completion hooks and durable log finish successfully inside the reserved claim (69.83054ms)
+✔ direct: final claim fence rejects completion after a native blocking hook (560.49781ms)
+✔ runtime: final claim fence rejects completion after a native blocking hook (562.14666ms)
+✔ timed out log hook receives cancellation and settles before result, without a later write (210.091415ms)
+✔ uncooperative storage is reported unresolved rather than completed (159.846661ms)
+✔ original executor preserves each UTF-8 byte split and rejects malformed/incomplete byte logs (83.366526ms)
+✔ real Buster evidence I/O drains cancellation and does not publish a later artifact (25.62891ms)
+✔ stdout and stderr streaming decoders retain separate partial byte sequences (9.705776ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19377.596177

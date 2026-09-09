@@ -59,7 +59,7 @@ function errorText(errors: unknown[] | null | undefined): string[] {
   });
 }
 
-function relationErrors(definition: PipelineWorkerCoreDefinition, value: unknown): string[] {
+export function workerCoreRelationErrors(definition: PipelineWorkerCoreDefinition, value: unknown): string[] {
   if (definition === 'workerTrustEnvelope') {
     const envelope = value as WorkerTrustEnvelopeV1;
     return Date.parse(envelope.expiresAt) > Date.parse(envelope.issuedAt)
@@ -204,7 +204,7 @@ export function checkPipelineWorkerCoreContract(
   const validate = validator(definition);
   const ok = validate(value);
   if (!ok) return { ok: false, errors: errorText(validate.errors) };
-  const errors = relationErrors(definition, value);
+  const errors = workerCoreRelationErrors(definition, value);
   return { ok: errors.length === 0, errors };
 }
 

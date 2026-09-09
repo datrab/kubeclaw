@@ -9,6 +9,7 @@ export interface InternalArtifactOptions {
   readonly workerSecret: string;
   readonly trustedWorkerSpiffeId: string;
   readonly trustedControlSpiffeId: string;
+  readonly trustedPrismAgentSpiffeId?: string;
 }
 function json(response: ServerResponse, status: number, value: unknown): void {
   response.writeHead(status, { 'content-type': 'application/json' }); response.end(JSON.stringify(value));
@@ -17,7 +18,7 @@ function authorized(request: IncomingMessage, options: InternalArtifactOptions):
   if (options.spiffeEnabled) {
     try {
       authorizeProxiedSpiffePeer(request.headers, request.socket.remoteAddress,
-        new Set([options.trustedWorkerSpiffeId, options.trustedControlSpiffeId]));
+        new Set([options.trustedWorkerSpiffeId, options.trustedControlSpiffeId,...(options.trustedPrismAgentSpiffeId?[options.trustedPrismAgentSpiffeId]:[])]));
       return true;
     } catch { return false; }
   }

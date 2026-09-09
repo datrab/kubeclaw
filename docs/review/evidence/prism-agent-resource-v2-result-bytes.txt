@@ -1,0 +1,14 @@
+✔ actual HTTP job routes authenticate before claim, persist one fence and reject stale completion (2548.695715ms)
+✔ real CPU-consuming child has explicit V2 unavailable observations and no parent resource claims (1042.613644ms)
+✔ requested unsupported child budget fails before actual process launch (5.935188ms)
+✔ V2 requires explicit policy and correct units; V1 refuses the opt-in envelope (24.76592ms)
+✔ requested runtime measurement unavailable fails even when profile advertised measurement (66.196172ms)
+✔ original generic assessor rejects requested real observed overrun and V1 missing metrics (6.793193ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4330.318181

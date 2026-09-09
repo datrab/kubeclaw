@@ -1,0 +1,32 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @kubeclaw/prism@0.1.0 prebuild:studio
+> node ../../contracts/prism/v1/scripts/generate-validators.mjs
+
+
+> @kubeclaw/prism@0.1.0 build:studio
+> vite build --config studio/vite.config.ts
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 222 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist-studio/index.html                              0.35 kB │ gzip:   0.26 kB
+../dist-studio/assets/index-B_1ZNz_q.css              95.14 kB │ gzip:  14.96 kB
+../dist-studio/assets/loaded-36WRJPBT-BO7GbBuD.js      0.63 kB │ gzip:   0.39 kB
+../dist-studio/assets/loaded-JKA25A3T-C9r-dX9U.js      0.68 kB │ gzip:   0.43 kB
+../dist-studio/assets/loaded-SMPR6KZF-DKE1p0J5.js      0.70 kB │ gzip:   0.40 kB
+../dist-studio/assets/Render-DQXAYUBI-BdK-dGem.js      1.73 kB │ gzip:   0.79 kB
+../dist-studio/assets/full-7ZJV44EE-ha_42YOM.js        2.15 kB │ gzip:   0.85 kB
+../dist-studio/assets/Editor-44C53YAG-DFRAg9YL.js      2.26 kB │ gzip:   1.12 kB
+../dist-studio/assets/index-NZ4Ja0CC.js               16.72 kB │ gzip:   5.42 kB
+../dist-studio/assets/chunk-2CNEFIQP-B1pZ8Nld.js      68.36 kB │ gzip:  25.24 kB
+../dist-studio/assets/index-B__YPeq6.js              288.96 kB │ gzip:  89.69 kB
+../dist-studio/assets/index-DquDIAPd.js            1,002.86 kB │ gzip: 268.89 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 3.71s

@@ -1,3 +1,4 @@
+import { lockAgentResult, recordAgentResult, type AgentCompletion } from '../control/agent-jobs.ts';
 import { boundDesignRound } from "../control/design-generations.ts";
 import { createHash, randomUUID } from "node:crypto";
 import {
@@ -147,13 +148,14 @@ export class RevisionRepository {
     return inTransaction(this.db, connection => insertDocument(connection, projectId, key, document, user, designRequestId));
   }
 
-  async createDirectionSet(projectKey: string, generationId: string, designs: readonly { key: string; title: string; summary: string; document: PrismDocument; evidence?: Record<string, unknown> }[]) {
+  async createDirectionSet(projectKey: string, generationId: string, designs: readonly { key: string; title: string; summary: string; document: PrismDocument; evidence?: Record<string, unknown> }[], agent?:AgentCompletion) {
     if (designs.length !== 3 || new Set(designs.map(item => item.key)).size !== 3
       || designs.some(item => !item.key || !item.title || !item.summary || item.document.meta.projectId !== projectKey)) throw new Error("invalid Prism design set");
     return inTransaction(this.db, async connection => {
       const project = await connection.query<{ id: string }>("SELECT id FROM prism.project WHERE external_id=$1 FOR UPDATE", [projectKey]);
       if (!project.rows[0]) throw new Error("active Prism project not found");
       const projectId = project.rows[0].id;
+      if(agent){const replay=await lockAgentResult(connection,agent,generationId);if(replay)return replay as {status:string;projectId:string;documentId:string;directions:Array<{directionId:string;documentId:string;key:string}>};}
       const resultDigest = digest(JSON.stringify(designs));
       const bound = await boundDesignRound(connection,projectId,generationId,resultDigest);
       if (bound.replay) return bound.replay as {status: string; projectId: string; documentId: string; directions: Array<{directionId:string;documentId:string;key:string}>};
@@ -171,6 +173,7 @@ export class RevisionRepository {
       }
       const result = { status: 'created', generationId, projectId, documentId: directions[0]!.documentId, directions };
       await connection.query("UPDATE prism.design_round SET result_digest=$2,result=$3::jsonb WHERE id=$1",[generationId,resultDigest,JSON.stringify(result)]);
+      if(agent)await recordAgentResult(connection,agent,result);
       return result;
     });
   }
@@ -294,8 +297,10 @@ export class RevisionRepository {
     document: PrismDocument,
     operation: Record<string, unknown>,
     user: string,
+    agent?:AgentCompletion,
   ): Promise<PrismDocument> {
     return inTransaction(this.db, async (connection) => {
+      if(agent){const replay=await lockAgentResult(connection,agent,String(operation.generationId));if(replay)return replay as PrismDocument;}
       const current = await new RevisionRepository(connection).current(documentId);
       if (current.id !== expectedRevisionId)
         throw new Error("revision conflict");
@@ -320,6 +325,7 @@ export class RevisionRepository {
         [id, documentId, current.id],
       );
       if (!updated.rows[0]) throw new Error("revision conflict");
+      if(agent)await recordAgentResult(connection,agent,document);
       return document;
     });
   }

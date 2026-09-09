@@ -1,8 +1,12 @@
+import { assessWorkerResources, unsupportedWorkerBudget } from './resource-accounting.ts';
 import crypto from 'node:crypto';
 import { WorkerPhaseDeadline, settlesWithin, armWorkerClaimDeadline } from './phase-deadline.ts';
 import { WorkerLogDecoder } from './log-decoder.ts';
 import {
   validatePipelineWorkerCoreContract,
+  validateWorkerResourceContractV2, initialWorkerResourceAccounting,
+  type WorkerAttemptEnvelope, type WorkerAttemptEnvelopeV2, type WorkerAttemptResult, type WorkerResultFor,
+  type WorkerResourceObservations, type WorkerResourceAccounting,
   type AttemptProgressEventV1,
   type JsonValue,
   type WorkerAttemptEnvelopeV1,
@@ -11,7 +15,6 @@ import {
   type WorkerLogPartV1,
   type WorkerResourceUseV1,
   type WorkerSpecialistResultV1,
-  type WorkerAttemptLimitsV1,
 } from '@kubeclaw/pipeline-worker-core-contract';
 import { sha256Digest, sha256Text } from './digest.ts';
 
@@ -34,14 +37,14 @@ export interface WorkerAttemptEvidenceResult {
   readonly error?: string;
 }
 
-export interface WorkerAttemptEvidenceContext {
-  readonly attempt: WorkerAttemptEnvelopeV1;
+export interface WorkerAttemptEvidenceContext<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+  readonly attempt: E;
   readonly state: WorkerAttemptResultV1['state'];
   readonly signal: AbortSignal;
 }
 
-export interface WorkerAttemptResultFinalizationContext {
-  readonly attempt: WorkerAttemptEnvelopeV1;
+export interface WorkerAttemptResultFinalizationContext<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+  readonly attempt: E;
   readonly evidence: readonly WorkerEvidenceRefV1[];
   readonly specialistResult: WorkerSpecialistResultV1;
   readonly signal: AbortSignal;
@@ -53,27 +56,27 @@ export interface WorkerAttemptOperationResources {
   readonly maximumProcesses: number;
 }
 
-export interface WorkerAttemptContext {
-  readonly attempt: WorkerAttemptEnvelopeV1;
+export interface WorkerAttemptContext<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+  readonly attempt: E;
   readonly signal: AbortSignal;
   readonly log: (stream: 'stdout' | 'stderr' | 'system', text: string | Uint8Array) => void;
 }
 
-export interface WorkerAttemptOperation {
+export interface WorkerAttemptOperation<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
   /** Apply limits synchronously. Do not start specialist work here. */
-  prepare(limits: WorkerAttemptLimitsV1): undefined;
-  execute(context: WorkerAttemptContext): Promise<WorkerAttemptOperationResult>;
+  prepare(limits: E['limits']): undefined;
+  execute(context: WorkerAttemptContext<E>): Promise<WorkerAttemptOperationResult>;
   terminate(): Promise<void>;
-  measure(context: { readonly signal: AbortSignal }): Promise<WorkerAttemptOperationResources>;
-  cleanup?(context: WorkerAttemptContext): Promise<void>;
-  collectEvidence?(context: WorkerAttemptEvidenceContext): Promise<WorkerAttemptEvidenceResult>;
+  measure(context: { readonly signal: AbortSignal }): Promise<E extends WorkerAttemptEnvelopeV2 ? WorkerResourceObservations : WorkerAttemptOperationResources>;
+  cleanup?(context: WorkerAttemptContext<E>): Promise<void>;
+  collectEvidence?(context: WorkerAttemptEvidenceContext<E>): Promise<WorkerAttemptEvidenceResult>;
   /** Add evidence-derived facts before the terminal result becomes durable. */
-  finalizeResult?(context: WorkerAttemptResultFinalizationContext): Promise<WorkerSpecialistResultV1>;
+  finalizeResult?(context: WorkerAttemptResultFinalizationContext<E>): Promise<WorkerSpecialistResultV1>;
 }
 
-export interface WorkerAttemptExecutorOptions {
-  readonly envelope: WorkerAttemptEnvelopeV1;
-  readonly operation: WorkerAttemptOperation;
+export interface WorkerAttemptExecutorOptions<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+  readonly envelope: E;
+  readonly operation: WorkerAttemptOperation<E>;
   readonly signal?: AbortSignal;
   readonly onProgress?: (event: AttemptProgressEventV1) => void | Promise<void>;
   readonly onLogPart?: (part: WorkerLogPartV1) => void | Promise<void>;
@@ -177,8 +180,9 @@ function preflightJson(value: unknown, byteLimit: number, prefix: string): void 
   }
 }
 
-function validateEnvelopeDigests(envelope: WorkerAttemptEnvelopeV1): void {
-  validatePipelineWorkerCoreContract('workerAttemptEnvelope', envelope);
+function validateEnvelopeDigests(envelope: WorkerAttemptEnvelope): void {
+  if(envelope.schemaVersion==='worker-attempt-envelope.v2')validateWorkerResourceContractV2('workerAttemptEnvelope',envelope);
+  else validatePipelineWorkerCoreContract('workerAttemptEnvelope', envelope);
 }
 
 function receipt(namespace: string, nonce: string, resultDigest: string) {
@@ -186,7 +190,7 @@ function receipt(namespace: string, nonce: string, resultDigest: string) {
   return { receiptId, receiptDigest: sha256Digest({ namespace, receiptId, resultDigest }) };
 }
 
-function checkEvidence(evidence: readonly WorkerEvidenceRefV1[], envelope: WorkerAttemptEnvelopeV1): void {
+function checkEvidence(evidence: readonly WorkerEvidenceRefV1[], envelope: WorkerAttemptEnvelope): void {
   if (evidence.length > envelope.limits.evidenceFiles) throw new AttemptFault('errored', 'WORKER_EVIDENCE_FILE_LIMIT');
   const ids = new Set<string>();
   let total = 0;
@@ -199,15 +203,16 @@ function checkEvidence(evidence: readonly WorkerEvidenceRefV1[], envelope: Worke
   }
 }
 
-export class WorkerAttemptExecutor {
-  readonly #options: WorkerAttemptExecutorOptions;
+export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
+  readonly #options: WorkerAttemptExecutorOptions<E>;
+  readonly #accounting: WorkerResourceAccounting | undefined;
   readonly #now: () => Date;
   readonly #id: () => string;
   #progressSequence = 0;
   #logSequence = 0;
-  #execution: Promise<WorkerAttemptResultV1> | null = null;
+  #execution: Promise<WorkerAttemptResult> | null = null;
 
-  constructor(options: WorkerAttemptExecutorOptions) {
+  constructor(options: WorkerAttemptExecutorOptions<E>) {
     preflightJson(options.envelope, MAX_ATTEMPT_ENVELOPE_BYTES, 'WORKER_ATTEMPT_INPUT');
     const envelope = freeze(structuredClone(options.envelope));
     validateEnvelopeDigests(envelope);
@@ -218,16 +223,17 @@ export class WorkerAttemptExecutor {
       throw new Error('WORKER_RECEIPT_NAMESPACE_INVALID');
     }
     this.#options = { ...options, envelope };
+    this.#accounting=envelope.schemaVersion==='worker-attempt-envelope.v2'?initialWorkerResourceAccounting(envelope):undefined;
     this.#now = options.now ?? (() => new Date());
     this.#id = options.id ?? (() => crypto.randomUUID());
   }
 
-  async execute(): Promise<WorkerAttemptResultV1> {
+  async execute(): Promise<WorkerResultFor<E>> {
     this.#execution ??= this.#executeOnce();
-    return this.#execution;
+    return this.#execution as Promise<WorkerResultFor<E>>;
   }
 
-  async #executeOnce(): Promise<WorkerAttemptResultV1> {
+  async #executeOnce(): Promise<WorkerAttemptResult> {
     const { envelope, operation } = this.#options;
     const started = this.#now();
     if (started.getTime() >= Date.parse(envelope.queueDeadline)) {
@@ -259,6 +265,10 @@ export class WorkerAttemptExecutor {
       }, { state: 'not_required', summary: null });
     }
 
+    const unsupportedBudget = unsupportedWorkerBudget(envelope);
+    if (unsupportedBudget) return this.#result(started, started,
+      new AttemptFault('errored', 'WORKER_RESOURCE_MEASUREMENT_UNAVAILABLE', `Requested ${unsupportedBudget} has no declared measurement capability`),
+      null, [], {logBytes: 0, resultBytes: 0, evidenceBytes: 0}, {state: 'not_required', summary: null});
     const controller = new AbortController();
     const logParts: WorkerLogPartV1[] = [];
     const decoder = new WorkerLogDecoder(envelope.limits.logBytes);
@@ -427,29 +437,11 @@ export class WorkerAttemptExecutor {
 
     if (executionUnresolved) phases.quarantine();
     const executionFault = fault;
-    let measured: WorkerAttemptOperationResources = { cpuTimeMs: 0, maximumMemoryBytes: 0, maximumProcesses: 0 };
-    let measurementsValid = false;
-    try {
-      measured = await phases.run('WORKER_RESOURCE_MEASUREMENT', signal => operation.measure({ signal }), Boolean(executionFault));
-      measurementsValid = measured !== null && typeof measured === 'object'
-        && Number.isSafeInteger(measured.cpuTimeMs) && Number.isSafeInteger(measured.maximumMemoryBytes)
-        && Number.isSafeInteger(measured.maximumProcesses) && measured.cpuTimeMs >= 0
-        && measured.maximumMemoryBytes >= 0 && measured.maximumProcesses >= 0;
-    } catch { measurementsValid = false; }
-    if (!measurementsValid) {
-      fault = new AttemptFault('errored', 'WORKER_RESOURCE_MEASUREMENT_INVALID');
-    } else {
-      measured = freeze(structuredClone(measured));
-    }
-    if (!fault && measured.cpuTimeMs > envelope.limits.cpuMillis) {
-      fault = new AttemptFault('errored', 'WORKER_CPU_LIMIT');
-    }
-    if (!fault && measured.maximumMemoryBytes > envelope.limits.memoryBytes) {
-      fault = new AttemptFault('errored', 'WORKER_MEMORY_LIMIT');
-    }
-    if (!fault && measured.maximumProcesses > envelope.limits.processes) {
-      fault = new AttemptFault('errored', 'WORKER_PROCESS_LIMIT');
-    }
+    let measured:unknown;
+    try {measured=await phases.run('WORKER_RESOURCE_MEASUREMENT',signal=>operation.measure({signal}),Boolean(executionFault));}
+    catch {measured=undefined;}
+    const assessment=assessWorkerResources(envelope,measured,this.#accounting);
+    if(assessment.error && (!fault || assessment.error.code==='WORKER_RESOURCE_MEASUREMENT_INVALID'))fault=new AttemptFault('errored',assessment.error.code,assessment.error.message);
 
     if (operation.cleanup) {
       if (claimExpired || this.#now().getTime() >= claimExpiresAt) await terminate();
@@ -569,7 +561,7 @@ export class WorkerAttemptExecutor {
     const completed = this.#now();
     const resultBytes = operationResult ? Buffer.byteLength(JSON.stringify(operationResult.specialistResult)) : 0;
     return this.#result(started, completed, fault, operationResult, evidence, {
-      ...(measurementsValid ? measured : {}),
+      ...assessment.resources,
       logBytes,
       resultBytes,
       evidenceBytes: evidence.reduce((sum, item) => sum + item.artifact.sizeBytes, 0),
@@ -601,7 +593,7 @@ export class WorkerAttemptExecutor {
     }
   }
 
-  async #terminate(operation: WorkerAttemptOperation, timeoutMs: number): Promise<string | null> {
+  async #terminate(operation: WorkerAttemptOperation<E>, timeoutMs: number): Promise<string | null> {
     let timer: NodeJS.Timeout | undefined;
     try {
       return await Promise.race([
@@ -617,11 +609,11 @@ export class WorkerAttemptExecutor {
 
   #result(started: Date, completed: Date, fault: AttemptFault | null, operationResult: WorkerAttemptOperationResult | null,
     evidence: readonly WorkerEvidenceRefV1[], resources: WorkerResourceUseV1,
-    cleanup: WorkerAttemptResultV1['cleanup']): WorkerAttemptResultV1 {
+    cleanup: WorkerAttemptResultV1['cleanup']): WorkerAttemptResult {
     const { envelope } = this.#options;
     const finalCompleted = completed.getTime() < started.getTime() ? started : completed;
     const unsigned = {
-      schemaVersion: 'worker-attempt-result.v1' as const,
+      ...(envelope.schemaVersion==='worker-attempt-envelope.v2'?{schemaVersion:'worker-attempt-result.v2' as const,profileDigest:envelope.profile.profileDigest,attemptSpecDigest:envelope.attemptSpecDigest,resourceAccounting:structuredClone(this.#accounting!)}:{schemaVersion:'worker-attempt-result.v1' as const}),
       protocolVersion: envelope.protocolVersion,
       attemptId: envelope.attemptId,
       claimId: envelope.claim.claimId,
@@ -653,6 +645,7 @@ export class WorkerAttemptExecutor {
         new AttemptFault('errored', 'WORKER_OPERATION_RESULT_INVALID',
           'Specialist operation returned a result that cannot be canonically hashed.'),
         null, [], {
+          ...resources,
           logBytes: resources.logBytes,
           resultBytes: 0,
           evidenceBytes: 0,
@@ -661,13 +654,14 @@ export class WorkerAttemptExecutor {
     // This local receipt detects accidental duplication or mutation. The
     // authenticated Nova-worker transport required by D-103 binds identity.
     const namespace = this.#options.receiptNamespace ?? `worker:${envelope.claim.workerId}`;
-    const result: WorkerAttemptResultV1 = {
+    const result: WorkerAttemptResult = {
       ...unsigned,
       resultDigest,
       receipt: receipt(namespace, this.#id(), resultDigest),
     };
     try {
-      validatePipelineWorkerCoreContract('workerAttemptResult', result);
+      if(result.schemaVersion==='worker-attempt-result.v2')validateWorkerResourceContractV2('workerAttemptResult',result);
+      else validatePipelineWorkerCoreContract('workerAttemptResult', result);
       const frozenResult = freeze(result);
       if (!fault && this.#now().getTime() >= Date.parse(envelope.claim.expiresAt)) {
         return this.#result(started, this.#now(), new AttemptFault('interrupted', 'WORKER_CLAIM_EXPIRED'), null, evidence, resources, cleanup);
@@ -678,6 +672,7 @@ export class WorkerAttemptExecutor {
       return this.#result(started, completed,
         new AttemptFault('errored', 'WORKER_OPERATION_RESULT_INVALID', 'Specialist operation returned an invalid result.'),
         null, [], {
+          ...resources,
           logBytes: resources.logBytes,
           resultBytes: 0,
           evidenceBytes: 0,

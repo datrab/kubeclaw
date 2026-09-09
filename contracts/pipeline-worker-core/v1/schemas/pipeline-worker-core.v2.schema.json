@@ -1,0 +1,1209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.dev/contracts/pipeline-worker-core/v2/schema.json",
+  "title": "KubeClaw explicit resource-aware worker attempts v2 (generated from V1 common protocol)",
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "stableId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$",
+      "maxLength": 256
+    },
+    "contractId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._/-]*@[1-9][0-9]*$",
+      "maxLength": 256
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "protocolVersion": {
+      "const": "worker-protocol.v1"
+    },
+    "jsonValue": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "maxItems": 1024,
+          "items": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "maxProperties": 256,
+          "additionalProperties": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        }
+      ]
+    },
+    "jsonObject": {
+      "type": "object",
+      "maxProperties": 256,
+      "additionalProperties": {
+        "$ref": "#/$defs/jsonValue"
+      }
+    },
+    "workerAttemptState": {
+      "enum": [
+        "completed",
+        "errored",
+        "cancelled",
+        "timed_out",
+        "interrupted"
+      ]
+    },
+    "frozenPackageRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "packageId",
+        "packageVersion",
+        "contentDigest"
+      ],
+      "properties": {
+        "packageId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "packageVersion": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "workerEngineRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "engineId",
+        "contractId",
+        "engineVersion",
+        "contentDigest"
+      ],
+      "properties": {
+        "engineId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "contractId": {
+          "$ref": "#/$defs/contractId"
+        },
+        "engineVersion": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "workerProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "profileId",
+        "profileDigest",
+        "workerType",
+        "coreContractId",
+        "engine",
+        "capabilities",
+        "resourceCapabilities"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "worker-profile.v2"
+        },
+        "profileId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "profileDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "workerType": {
+          "$ref": "#/$defs/stableId"
+        },
+        "coreContractId": {
+          "$ref": "#/$defs/contractId"
+        },
+        "engine": {
+          "$ref": "#/$defs/workerEngineRef"
+        },
+        "capabilities": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {
+            "$ref": "#/$defs/stableId"
+          },
+          "uniqueItems": true
+        },
+        "resourceCapabilities": {
+          "$ref": "#/$defs/resourceCapabilities"
+        }
+      }
+    },
+    "attemptClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "claimId",
+        "attemptId",
+        "generation",
+        "workerId",
+        "claimedAt",
+        "expiresAt"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "attempt-claim.v1"
+        },
+        "claimId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "workerId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "claimedAt": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expiresAt": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "workerArtifactRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "type",
+        "mediaType",
+        "contentDigest",
+        "sizeBytes",
+        "storageUrl"
+      ],
+      "properties": {
+        "artifactId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "type": {
+          "$ref": "#/$defs/stableId"
+        },
+        "mediaType": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "contentDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "sizeBytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "storageUrl": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 4096
+        }
+      }
+    },
+    "workerInput": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "kind",
+            "schemaId",
+            "schemaDigest",
+            "value"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/stableId"
+            },
+            "kind": {
+              "const": "value"
+            },
+            "schemaId": {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            "schemaDigest": {
+              "$ref": "#/$defs/digest"
+            },
+            "value": {
+              "$ref": "#/$defs/jsonValue"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "kind",
+            "artifact"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/stableId"
+            },
+            "kind": {
+              "const": "artifact"
+            },
+            "artifact": {
+              "$ref": "#/$defs/workerArtifactRef"
+            }
+          }
+        }
+      ]
+    },
+    "workerAttemptLimits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "timeoutMs",
+        "cleanupTimeoutMs",
+        "logBytes",
+        "resultBytes",
+        "evidenceBytes",
+        "evidenceFiles"
+      ],
+      "properties": {
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "cleanupTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "logBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16777216
+        },
+        "resultBytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "evidenceBytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "evidenceFiles": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "specialistOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contractId",
+        "inputSchemaId",
+        "inputSchemaDigest",
+        "values"
+      ],
+      "properties": {
+        "contractId": {
+          "$ref": "#/$defs/contractId"
+        },
+        "inputSchemaId": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "inputSchemaDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "values": {
+          "$ref": "#/$defs/jsonObject"
+        }
+      }
+    },
+    "workerAttemptEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "protocolVersion",
+        "pipelineRunId",
+        "moduleId",
+        "gateId",
+        "planId",
+        "nodeId",
+        "executionId",
+        "attemptId",
+        "attemptNumber",
+        "attemptSpecDigest",
+        "claim",
+        "profile",
+        "packages",
+        "grantedCapabilities",
+        "limits",
+        "inputs",
+        "operation",
+        "cancellationId",
+        "issuedAt",
+        "queueDeadline",
+        "resourceBudgets"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "worker-attempt-envelope.v2"
+        },
+        "protocolVersion": {
+          "$ref": "#/$defs/protocolVersion"
+        },
+        "pipelineRunId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "moduleId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stableId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "gateId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stableId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "planId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "nodeId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "executionId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "attemptNumber": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attemptSpecDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "claim": {
+          "$ref": "#/$defs/attemptClaim"
+        },
+        "profile": {
+          "$ref": "#/$defs/workerProfile"
+        },
+        "packages": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {
+            "$ref": "#/$defs/frozenPackageRef"
+          }
+        },
+        "grantedCapabilities": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {
+            "$ref": "#/$defs/stableId"
+          },
+          "uniqueItems": true
+        },
+        "limits": {
+          "$ref": "#/$defs/workerAttemptLimits"
+        },
+        "inputs": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {
+            "$ref": "#/$defs/workerInput"
+          }
+        },
+        "operation": {
+          "$ref": "#/$defs/specialistOperation"
+        },
+        "cancellationId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "issuedAt": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "queueDeadline": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "resourceBudgets": {
+          "$ref": "#/$defs/resourceBudgets"
+        }
+      }
+    },
+    "workerSpecialistResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaId",
+        "schemaDigest",
+        "values"
+      ],
+      "properties": {
+        "schemaId": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "schemaDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "values": {
+          "$ref": "#/$defs/jsonObject"
+        }
+      }
+    },
+    "workerEvidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidenceId",
+        "type",
+        "artifact"
+      ],
+      "properties": {
+        "evidenceId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "type": {
+          "$ref": "#/$defs/stableId"
+        },
+        "artifact": {
+          "$ref": "#/$defs/workerArtifactRef"
+        }
+      }
+    },
+    "workerResourceUse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "logBytes",
+        "resultBytes",
+        "evidenceBytes"
+      ],
+      "properties": {
+        "cpuTimeMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maximumMemoryBytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maximumProcesses": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "logBytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resultBytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "evidenceBytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "workerCleanupResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "summary"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "not_required",
+            "completed",
+            "failed"
+          ]
+        },
+        "summary": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "failed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "summary": {
+                "$ref": "#/$defs/nonEmptyString"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "workerError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/stableId"
+        },
+        "message": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "workerReceiptRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receiptId",
+        "receiptDigest"
+      ],
+      "properties": {
+        "receiptId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "receiptDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "workerAttemptResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "protocolVersion",
+        "attemptId",
+        "claimId",
+        "claimGeneration",
+        "workerId",
+        "state",
+        "startedAt",
+        "completedAt",
+        "durationMs",
+        "summary",
+        "specialistResult",
+        "error",
+        "evidence",
+        "resources",
+        "cleanup",
+        "exitCode",
+        "signal",
+        "resultDigest",
+        "receipt",
+        "profileDigest",
+        "attemptSpecDigest",
+        "resourceAccounting"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "worker-attempt-result.v2"
+        },
+        "protocolVersion": {
+          "$ref": "#/$defs/protocolVersion"
+        },
+        "attemptId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "claimId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "claimGeneration": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "workerId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "state": {
+          "$ref": "#/$defs/workerAttemptState"
+        },
+        "startedAt": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "completedAt": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "specialistResult": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/workerSpecialistResult"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/workerError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "maxItems": 4096,
+          "items": {
+            "$ref": "#/$defs/workerEvidenceRef"
+          }
+        },
+        "resources": {
+          "$ref": "#/$defs/workerResourceUse"
+        },
+        "cleanup": {
+          "$ref": "#/$defs/workerCleanupResult"
+        },
+        "exitCode": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signal": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resultDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "receipt": {
+          "$ref": "#/$defs/workerReceiptRef"
+        },
+        "profileDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "attemptSpecDigest": {
+          "$ref": "#/$defs/digest"
+        },
+        "resourceAccounting": {
+          "$ref": "#/$defs/resourceAccounting"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "specialistResult": {
+                "$ref": "#/$defs/workerSpecialistResult"
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "specialistResult": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "errored"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "$ref": "#/$defs/workerError"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "resourceObservation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "value"
+          ],
+          "properties": {
+            "status": {
+              "const": "observed"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "reason"
+          ],
+          "properties": {
+            "status": {
+              "const": "unavailable"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            }
+          }
+        }
+      ]
+    },
+    "resourceBudget": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "limit"
+          ],
+          "properties": {
+            "state": {
+              "const": "requested"
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state"
+          ],
+          "properties": {
+            "state": {
+              "const": "unrequested"
+            }
+          }
+        }
+      ]
+    },
+    "resourceCapabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "cpuTimeMs",
+        "maximumMemoryBytes",
+        "maximumProcesses"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "worker-resource-capabilities.v1"
+        },
+        "cpuTimeMs": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "scope",
+                "unit",
+                "measurement"
+              ],
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "unit": {
+                  "const": "milliseconds"
+                },
+                "measurement": {
+                  "const": "measured"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "scope",
+                "unit",
+                "measurement",
+                "sampleIntervalMs"
+              ],
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "unit": {
+                  "const": "milliseconds"
+                },
+                "measurement": {
+                  "const": "sampled"
+                },
+                "sampleIntervalMs": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "scope",
+                "unit",
+                "measurement",
+                "reason"
+              ],
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "unit": {
+                  "const": "milliseconds"
+                },
+                "measurement": {
+                  "const": "unavailable"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                }
+              }
+            }
+          ]
+        },
+        "maximumMemoryBytes": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "scope",
+                "unit",
+                "measurement"
+              ],
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "unit": {
+                  "const": "bytes"
+                },
+                "measurement": {
+                  "const": "measured"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "scope",
+                "unit",
+                "measurement",
+                "sampleIntervalMs"
+              ],
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "unit": {
+                  "const": "bytes"
+                },
+                "measurement": {
+                  "const": "sampled"
+                },
+                "sampleIntervalMs": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "scope",
+                "unit",
+                "measurement",
+                "reason"
+              ],
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "unit": {
+                  "const": "bytes"
+                },
+                "measurement": {
+                  "const": "unavailable"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                }
+              }
+            }
+          ]
+        },
+        "maximumProcesses": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "scope",
+                "unit",
+                "measurement"
+              ],
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "unit": {
+                  "const": "processes"
+                },
+                "measurement": {
+                  "const": "measured"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "scope",
+                "unit",
+                "measurement",
+                "sampleIntervalMs"
+              ],
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "unit": {
+                  "const": "processes"
+                },
+                "measurement": {
+                  "const": "sampled"
+                },
+                "sampleIntervalMs": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "scope",
+                "unit",
+                "measurement",
+                "reason"
+              ],
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "unit": {
+                  "const": "processes"
+                },
+                "measurement": {
+                  "const": "unavailable"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "resourceBudgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "cpuTimeMs",
+        "maximumMemoryBytes",
+        "maximumProcesses"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "worker-resource-budgets.v1"
+        },
+        "cpuTimeMs": {
+          "$ref": "#/$defs/resourceBudget"
+        },
+        "maximumMemoryBytes": {
+          "$ref": "#/$defs/resourceBudget"
+        },
+        "maximumProcesses": {
+          "$ref": "#/$defs/resourceBudget"
+        }
+      }
+    },
+    "resourceObservations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cpuTimeMs",
+        "maximumMemoryBytes",
+        "maximumProcesses"
+      ],
+      "properties": {
+        "cpuTimeMs": {
+          "$ref": "#/$defs/resourceObservation"
+        },
+        "maximumMemoryBytes": {
+          "$ref": "#/$defs/resourceObservation"
+        },
+        "maximumProcesses": {
+          "$ref": "#/$defs/resourceObservation"
+        }
+      }
+    },
+    "resourceAccounting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "capabilities",
+        "budgets",
+        "observations"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "worker-resource-accounting.v1"
+        },
+        "capabilities": {
+          "$ref": "#/$defs/resourceCapabilities"
+        },
+        "budgets": {
+          "$ref": "#/$defs/resourceBudgets"
+        },
+        "observations": {
+          "$ref": "#/$defs/resourceObservations"
+        }
+      }
+    }
+  }
+}

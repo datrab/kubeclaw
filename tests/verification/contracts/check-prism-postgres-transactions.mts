@@ -1,3 +1,4 @@
+import {enqueueAgentJob,claimAgentJob,agentJob} from '../../../skills/prism/control/agent-jobs.ts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { Pool } from 'pg';
@@ -21,6 +22,7 @@ try {
   await pool.query(fs.readFileSync(migrations + '012_preference_generation.sql', 'utf8'));
   // This regression checks pooled transactions, not deployment role grants.
   await pool.query(fs.readFileSync(migrations + '013_design_round.sql', 'utf8').split('GRANT SELECT')[0]);
+  await pool.query(fs.readFileSync(migrations + '014_agent_jobs.sql', 'utf8').split('GRANT SELECT')[0]);
   const repository = new RevisionRepository(pool);
   const projectId = await repository.createProject('transaction-regression', 'Transaction regression');
   const document = JSON.parse(fs.readFileSync('contracts/prism/v1/fixtures/minimal-web.json', 'utf8'));
@@ -61,6 +63,15 @@ try {
   const deliveries=await Promise.all([repository.createDirectionSet('transaction-regression',winner.value.generationId,revised),repository.createDirectionSet('transaction-regression',winner.value.generationId,revised)]);
   assert.deepEqual(deliveries[0],deliveries[1]);
   assert.equal((await pool.query('SELECT id FROM prism.direction')).rows.length,6);
+  const next=await startDesignRound(pool,{...parent,startKey:'agent-job-round',parentRoundId:winner.value.generationId,documentId:deliveries[0]!.documentId});
+  const queued=await enqueueAgentJob(pool,'spiffe://test/control/main/v2','transaction-regression','design-set',{projectId:'transaction-regression',preferences:next});
+  const claims=await Promise.all(['bridge-one','bridge-two'].map(owner=>claimAgentJob(pool,owner)));
+  assert.equal(claims.filter(Boolean).length,1,'native pooled claims cannot launch the same session twice');
+  const claim=claims.find(Boolean)!;
+  assert.equal(claim.id,queued.id);assert.ok(claim.fence);
+  const identity={jobId:claim.id,fence:claim.fence!,payload:revised};
+  const committed=await Promise.all([repository.createDirectionSet('transaction-regression',queued.id,revised,identity),repository.createDirectionSet('transaction-regression',queued.id,revised,identity)]);
+  assert.deepEqual(committed[0],committed[1]);assert.deepEqual((await agentJob(pool,queued.id)).result,committed[0]);
   // Every reserved connection is released after both commit and rollback.
   const probes = await Promise.all(Array.from({ length: 4 }, () => pool.query('SELECT 1 AS healthy')));
   assert.ok(probes.every(probe => probe.rows[0].healthy === 1));

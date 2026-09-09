@@ -26,8 +26,10 @@ export default function register(api) {
     parameters: {
       type: "object",
       additionalProperties: false,
-      required: ["generationId", "projectId", "designs"],
+      required: ["jobId", "fence", "generationId", "projectId", "designs"],
       properties: {
+        jobId: { type: "string", format: "uuid" },
+        fence: { type: "string", format: "uuid" },
         generationId: { type: "string", minLength: 1 },
         projectId: { type: "string", minLength: 1 },
         designs: {
@@ -60,8 +62,10 @@ export default function register(api) {
     parameters: {
       type: "object",
       additionalProperties: false,
-      required: ["generationId", "projectId", "documentId", "expectedRevision", "instruction", "document"],
+      required: ["jobId", "fence", "generationId", "projectId", "documentId", "expectedRevision", "instruction", "document"],
       properties: {
+        jobId: { type: "string", format: "uuid" },
+        fence: { type: "string", format: "uuid" },
         generationId: { type: "string", minLength: 1 },
         projectId: { type: "string", minLength: 1 },
         documentId: { type: "string", minLength: 1 },

@@ -1,0 +1,690 @@
+[
+  {
+    "path": "skills/prism/server/control.ts",
+    "HEAD": {
+      "errors": 55,
+      "warnings": 0,
+      "messages": [
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "max-lines-per-function",
+          "message": "Async function 'runWorker' has too many lines (73). Maximum allowed is 60."
+        },
+        {
+          "rule": "@typescript-eslint/no-misused-promises",
+          "message": "Promise returned in function argument where a void return was expected."
+        },
+        {
+          "rule": "max-lines-per-function",
+          "message": "Async arrow function has too many lines (810). Maximum allowed is 60."
+        },
+        {
+          "rule": "complexity",
+          "message": "Async arrow function has a complexity of 208. Maximum allowed is 15."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-lines",
+          "message": "File has too many lines (1027). Maximum allowed is 300."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "no-console",
+          "message": "Unexpected console statement."
+        },
+        {
+          "rule": "@typescript-eslint/no-misused-promises",
+          "message": "Promise returned in function argument where a void return was expected."
+        }
+      ]
+    },
+    "current": {
+      "errors": 53,
+      "warnings": 0,
+      "messages": [
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "max-lines-per-function",
+          "message": "Async function 'runWorker' has too many lines (73). Maximum allowed is 60."
+        },
+        {
+          "rule": "@typescript-eslint/no-misused-promises",
+          "message": "Promise returned in function argument where a void return was expected."
+        },
+        {
+          "rule": "max-lines-per-function",
+          "message": "Async arrow function has too many lines (815). Maximum allowed is 60."
+        },
+        {
+          "rule": "complexity",
+          "message": "Async arrow function has a complexity of 208. Maximum allowed is 15."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-lines",
+          "message": "File has too many lines (1034). Maximum allowed is 300."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "no-console",
+          "message": "Unexpected console statement."
+        },
+        {
+          "rule": "@typescript-eslint/no-misused-promises",
+          "message": "Promise returned in function argument where a void return was expected."
+        }
+      ]
+    }
+  },
+  {
+    "path": "skills/prism/storage/index.ts",
+    "HEAD": {
+      "errors": 4,
+      "warnings": 0,
+      "messages": [
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-lines",
+          "message": "File has too many lines (318). Maximum allowed is 300."
+        }
+      ]
+    },
+    "current": {
+      "errors": 4,
+      "warnings": 0,
+      "messages": [
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+        },
+        {
+          "rule": "max-lines",
+          "message": "File has too many lines (324). Maximum allowed is 300."
+        }
+      ]
+    }
+  },
+  {
+    "path": "skills/prism/server/internal-artifacts.ts",
+    "HEAD": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    },
+    "current": {
+      "errors": 0,
+      "warnings": 0,
+      "messages": []
+    }
+  },
+  {
+    "path": "skills/prism/server/agent-bridge.mjs",
+    "HEAD": {
+      "errors": 12,
+      "warnings": 0,
+      "messages": [
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "max-lines-per-function",
+          "message": "Async arrow function has too many lines (71). Maximum allowed is 60."
+        },
+        {
+          "rule": "complexity",
+          "message": "Async arrow function has a complexity of 29. Maximum allowed is 15."
+        },
+        {
+          "rule": "no-console",
+          "message": "Unexpected console statement."
+        },
+        {
+          "rule": "no-console",
+          "message": "Unexpected console statement."
+        },
+        {
+          "rule": "no-console",
+          "message": "Unexpected console statement."
+        }
+      ]
+    },
+    "current": {
+      "errors": 6,
+      "warnings": 0,
+      "messages": [
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        },
+        {
+          "rule": "no-console",
+          "message": "Unexpected console statement."
+        },
+        {
+          "rule": "no-console",
+          "message": "Unexpected console statement."
+        }
+      ]
+    }
+  },
+  {
+    "path": "skills/prism/openclaw-plugin/index.mjs",
+    "HEAD": {
+      "errors": 3,
+      "warnings": 0,
+      "messages": [
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-fallback-chain",
+          "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        }
+      ]
+    },
+    "current": {
+      "errors": 3,
+      "warnings": 0,
+      "messages": [
+        {
+          "rule": "discipline/no-env-default",
+          "message": "Infrastructure environment variables must not hide hardcoded application defaults."
+        },
+        {
+          "rule": "discipline/no-fallback-chain",
+          "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority."
+        },
+        {
+          "rule": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter."
+        }
+      ]
+    }
+  },
+  {
+    "path": "skills/prism/studio/app.tsx",
+    "HEAD": {
+      "errors": 5,
+      "warnings": 0,
+      "messages": [
+        {
+          "rule": "max-lines-per-function",
+          "message": "Function 'App' has too many lines (885). Maximum allowed is 60."
+        },
+        {
+          "rule": "complexity",
+          "message": "Function 'App' has a complexity of 44. Maximum allowed is 15."
+        },
+        {
+          "rule": "discipline/no-dynamic-module-loading",
+          "message": "Dynamic module loading is allowed only in a declared loader boundary."
+        },
+        {
+          "rule": "max-lines",
+          "message": "File has too many lines (904). Maximum allowed is 300."
+        },
+        {
+          "rule": "discipline/no-fallback-chain",
+          "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority."
+        }
+      ]
+    },
+    "current": {
+      "errors": 5,
+      "warnings": 0,
+      "messages": [
+        {
+          "rule": "max-lines-per-function",
+          "message": "Function 'App' has too many lines (866). Maximum allowed is 60."
+        },
+        {
+          "rule": "complexity",
+          "message": "Function 'App' has a complexity of 48. Maximum allowed is 15."
+        },
+        {
+          "rule": "discipline/no-dynamic-module-loading",
+          "message": "Dynamic module loading is allowed only in a declared loader boundary."
+        },
+        {
+          "rule": "max-lines",
+          "message": "File has too many lines (886). Maximum allowed is 300."
+        },
+        {
+          "rule": "discipline/no-fallback-chain",
+          "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority."
+        }
+      ]
+    }
+  }
+]

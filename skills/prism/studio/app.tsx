@@ -1,3 +1,4 @@
+import {savedRevision,pendingRevision,submitRevision,waitForRevision,type RevisionClient} from './agent-revision-client.ts';
 import { savedRound, pendingRound, submitRound, currentDirections, loadRoundDocument, completeRound, waitForRound, type RoundClient, type StudioDirection } from "./design-round-client.ts";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
@@ -52,6 +53,7 @@ function App() {
   const [viewState, setViewState] = useState("default");
   const [instruction, setInstruction] = useState("");
   const [working, setWorking] = useState(false);
+  const [revisionPending,setRevisionPending]=useState(false);
   const [learned, setLearned] = useState<Record<string, unknown>>({});
   const [preferenceEvents, setPreferenceEvents] = useState<
     Array<{ eventId: string; action: string; retractsEventId?: string }>
@@ -119,6 +121,9 @@ function App() {
       setDocument(
         ((await loaded.json()) as { document: PrismDocument }).document,
       );
+      const revisionClient:RevisionClient={documentId:id,userId:sessionData.userId,csrf:sessionData.csrf,origin:location.origin,storage:sessionStorage};
+      const revision=savedRevision(revisionClient);
+      if(revision){setRevisionPending(true);setInstruction(revision.input.instruction);setFailure("An existing Prism revision request is retained. Reconcile it before proposing another change.");}
       const projectId = new URLSearchParams(location.search).get("project");
       if (projectId) {
         const client:RoundClient={projectId,userId:sessionData.userId,csrf:sessionData.csrf,origin:location.origin,storage:sessionStorage};
@@ -178,40 +183,17 @@ function App() {
     setAcceptedWarnings([]);
   };
   const propose = async () => {
-    if (!document || !instruction.trim()) return;
+    if (!document || (!instruction.trim() && !revisionPending)) return;
     const id = new URLSearchParams(location.search).get("document");
     if (!id) throw new Error("Document ID is missing");
+    const client:RevisionClient={documentId:id,userId,csrf,origin:location.origin,storage:sessionStorage};
+    const pending=pendingRevision(client,document,instruction.trim());setRevisionPending(true);
     setWorking(true);
     try {
-      const response = await fetch(
-        `/v1/documents/${encodeURIComponent(id)}/engine`,
-        {
-          method: "POST",
-          headers: { "content-type": "application/json", "x-prism-csrf": csrf },
-          body: JSON.stringify({
-            operation: "generate",
-            baseRevision: document.meta.revision,
-            input: { instruction: instruction.trim(), mode: "refine" },
-            idempotencyKey: `studio:${document.meta.revision}:${crypto.randomUUID()}`,
-          }),
-        },
-      );
-      const value = (await response.json()) as { error?: string; status?: string };
-      if (!response.ok) throw new Error(value.error ?? "Prism proposal failed");
-      for (let attempt = 0; attempt < 300; attempt++) {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        const loaded = await fetch(`/v1/documents/${encodeURIComponent(id)}`);
-        if (!loaded.ok) continue;
-        const next = ((await loaded.json()) as { document: PrismDocument }).document;
-        if (next.meta.revision > document.meta.revision) { setDocument(next); break; }
-        if (attempt === 299) throw new Error("Prism accepted the request, but the OpenClaw revision is still running");
-      }
-      setQuality(null);
-      setAcceptedWarnings([]);
-      setInstruction("");
-    } finally {
-      setWorking(false);
-    }
+      const accepted=await submitRevision(client,pending);
+      const next=await waitForRevision(client,accepted);
+      setDocument(next);setRevisionPending(false);setQuality(null);setAcceptedWarnings([]);setInstruction("");
+    } finally {setWorking(false);}
   };
   const loadLearned = async () => {
     const projectId = document?.meta.projectId;
@@ -789,12 +771,12 @@ function App() {
         />
         <button
           className="primary"
-          disabled={working || !instruction.trim()}
+          disabled={working || (!instruction.trim() && !revisionPending)}
           onClick={() =>
             void propose().catch((error) => setFailure(String(error)))
           }
         >
-          {working ? "Working…" : "Propose change"}
+          {working ? "Working…" : revisionPending ? "Reconcile existing change" : "Propose change"}
         </button>
         <button onClick={() => void loadLearned()}>What Prism learned</button>
         {Object.entries(learned).map(([key, value]) => (
@@ -890,12 +872,12 @@ function App() {
               />
               <button
                 className="primary"
-                disabled={working || !instruction.trim()}
+                disabled={working || (!instruction.trim() && !revisionPending)}
                 onClick={() =>
                   void propose().catch((error) => setFailure(String(error)))
                 }
               >
-                Propose change
+                {revisionPending ? "Reconcile existing change" : "Propose change"}
               </button>
             </>
           )}

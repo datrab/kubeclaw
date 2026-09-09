@@ -1,0 +1,17 @@
+✔ actual HTTP job routes authenticate before claim, persist one fence and reject stale completion (2174.426599ms)
+✔ original WorkerCore drains a real Node process through close and retains its real HTTP-uploaded log (220.11659ms)
+✔ original WorkerCore times out and terminates a real running process; no gateway success is inferred (123.584911ms)
+✔ real process failure and output overflow preserve diagnostics and fail the bounded attempt (136.142127ms)
+✔ real CPU-consuming child has explicit V2 unavailable observations and no parent resource claims (1147.447265ms)
+✔ requested unsupported child budget fails before actual process launch (10.196052ms)
+✔ V2 requires explicit policy and correct units; V1 refuses the opt-in envelope (23.290815ms)
+✔ requested runtime measurement unavailable fails even when profile advertised measurement (63.289111ms)
+✔ original generic assessor rejects requested real observed overrun and V1 missing metrics (6.924333ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4735.904743

@@ -1,0 +1,14 @@
+✔ session identities retain full project and namespace identity without lossy legacy adoption (1.215493ms)
+✔ accepted jobs survive a real database reopen; running uncertainty is never replayed (2645.358529ms)
+✔ actual design commit and agent receipt are atomic; stale fence and changed retry cannot mutate (1531.12767ms)
+✔ expired agent cannot commit and missing tool result is explicitly NeedsNova (1625.679835ms)
+✔ revision retries bind actor, source and input and replay the actual committed repository receipt (1345.398245ms)
+✔ provably unstarted superseded work is retired without taking over the new source session (1352.105587ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8808.482624

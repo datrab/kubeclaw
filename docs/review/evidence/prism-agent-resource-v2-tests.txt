@@ -1,0 +1,59 @@
+✔ original bridge process refuses volatile payload admission when durable Control is unavailable (491.929153ms)
+✔ actual HTTP job routes authenticate before claim, persist one fence and reject stale completion (3567.260049ms)
+✔ session identities retain full project and namespace identity without lossy legacy adoption (1.820297ms)
+✔ accepted jobs survive a real database reopen; running uncertainty is never replayed (4267.87376ms)
+✔ actual design commit and agent receipt are atomic; stale fence and changed retry cannot mutate (2065.810781ms)
+✔ expired agent cannot commit and missing tool result is explicitly NeedsNova (1821.80618ms)
+✔ revision retries bind actor, source and input and replay the actual committed repository receipt (1570.725149ms)
+✔ provably unstarted superseded work is retired without taking over the new source session (1784.217485ms)
+✔ actual agent image COPY context imports the real bridge, prompt, WorkerCore and locked validators after relocation (1167.60526ms)
+✔ original WorkerCore drains a real Node process through close and retains its real HTTP-uploaded log (329.233388ms)
+✔ original WorkerCore times out and terminates a real running process; no gateway success is inferred (110.798943ms)
+✔ real process failure and output overflow preserve diagnostics and fail the bounded attempt (244.996462ms)
+✔ real CPU-consuming child has explicit V2 unavailable observations and no parent resource claims (1458.140621ms)
+✔ requested unsupported child budget fails before actual process launch (22.864659ms)
+✔ V2 requires explicit policy and correct units; V1 refuses the opt-in envelope (80.95178ms)
+✔ requested runtime measurement unavailable fails even when profile advertised measurement (262.803118ms)
+✔ original generic assessor rejects requested real observed overrun and V1 missing metrics (30.309491ms)
+✔ actual HTTP dropped admission response retains the same client key; SQL replay and NeedsNova remain explicit (3649.25848ms)
+✔ original agent prompt consumes the immutable preference snapshot and exact durable action fence (1.471891ms)
+✔ direct: actual optional phases require a complete claim reservation (97.053075ms)
+✔ runtime: actual optional phases require a complete claim reservation (9.146941ms)
+✔ real completion hooks and durable log finish successfully inside the reserved claim (102.504258ms)
+✔ direct: final claim fence rejects completion after a native blocking hook (579.912227ms)
+✔ runtime: final claim fence rejects completion after a native blocking hook (590.170991ms)
+✔ timed out log hook receives cancellation and settles before result, without a later write (276.927188ms)
+✖ uncooperative storage is reported unresolved rather than completed (122.764563ms)
+✔ original executor preserves each UTF-8 byte split and rejects malformed/incomplete byte logs (262.004195ms)
+✔ real Buster evidence I/O drains cancellation and does not publish a later artifact (49.436183ms)
+✔ stdout and stderr streaming decoders retain separate partial byte sequences (24.265011ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 28
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12092.606462
+
+✖ failing tests:
+
+test at tests/verification/reliability/worker-deadline.test.mts:63:1
+✖ uncooperative storage is reported unresolved rather than completed (122.764563ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'WORKER_TERMINATION_FAILED'
+  - 'WORKER_PHASE_UNRESOLVED'
+            ^
+
+      at TestContext.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/tests/verification/reliability/worker-deadline.test.mts:70:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'WORKER_TERMINATION_FAILED',
+    expected: 'WORKER_PHASE_UNRESOLVED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

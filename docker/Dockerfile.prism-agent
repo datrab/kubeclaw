@@ -58,6 +58,15 @@ rm -rf /tmp/openclaw-plugin-home /tmp/openclaw-plugin-npm-cache
 
 USER node
 
+# Reuse the repository lock for the real shared WorkerCore runtime and validators.
+# hadolint ignore=DL3006
+FROM ${OPENCLAW_BASE} AS prism-bridge-dependencies
+USER root
+WORKDIR /build
+COPY . /build
+RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
+ && npm prune --omit=dev --ignore-scripts
+
 # hadolint ignore=DL3006
 FROM ${OPENCLAW_BASE}
 USER root
@@ -108,7 +117,10 @@ HOME=/home/node
 USER node
 
 COPY skills/prism/openclaw-plugin/ /app/dist/extensions/kubeclaw-prism/
-COPY skills/prism/server/agent-bridge.mjs /opt/kubeclaw-prism/agent-bridge.mjs
+COPY --from=prism-bridge-dependencies /build/node_modules /opt/kubeclaw-prism/node_modules
+COPY --from=prism-bridge-dependencies /build/contracts /opt/kubeclaw-prism/contracts
+COPY --from=prism-bridge-dependencies /build/skills/worker/core /opt/kubeclaw-prism/skills/worker/core
+COPY skills/prism/server/agent-bridge.mjs skills/prism/server/agent-job-runner.mjs skills/prism/server/agent-prompt.mjs skills/prism/server/preference-prompt.mjs skills/prism/server/agent-attempt.ts skills/prism/server/agent-process.ts skills/prism/server/worker-artifacts.ts /opt/kubeclaw-prism/
 
 LABEL org.opencontainers.image.title="KubeClaw Prism Agent"
 LABEL org.opencontainers.image.description="OpenClaw design agent and request bridge with Prism tools"

@@ -1,0 +1,3 @@
+{"ok":true,"contracts":12,"schema":"contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json"}
+{"ok":true,"phase":"5.5-B","progressEvents":5,"logParts":2}
+{"ok":true,"phase":"5.5-D","states":["starting","ready","draining","stopped","unhealthy"]}

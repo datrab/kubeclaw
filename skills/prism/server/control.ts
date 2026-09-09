@@ -1,7 +1,10 @@
+import { handleAgentJobs } from './agent-job-routes.ts';
+import { agentJob } from '../control/agent-jobs.ts';
+import { agentReceipt, startAgentRevision, admitDesignAgent } from '../control/agent-admission.ts';
 import { startDesignRound, assertArchitectureTransition, approvedRoundBaseline } from "../control/design-generations.ts";
 import { loadControlConfig } from "./control-config.ts";
 import { authorizePipelinePreferenceSubject } from "../control/pipeline-preference-subject.ts";
-import { createPreferenceGeneration, preferenceEvents, setPersonalPreferences, requirePreferenceGeneration } from "../control/preference-snapshot.ts";
+import { preferenceEvents, setPersonalPreferences, requirePreferenceGeneration } from "../control/preference-snapshot.ts";
 import { decideDirection, directionIdempotencyKey } from "../control/direction-decisions.ts";
 import { recordPreference } from "../control/preferences.ts";
 import {
@@ -69,7 +72,6 @@ if (spiffeEnabled && (!trustedNovaSpiffeId || !trustedWorkerSpiffeId || !trusted
 const ingestionSecret=required("PRISM_INGESTION_SECRET");
 const ingestionUrl=new URL(process.env.PRISM_INGESTION_URL??"http://prism-ingestion:8080");
 const controlInternalUrl=new URL(process.env.PRISM_CONTROL_INTERNAL_URL??"http://prism-control:8080");
-const prismAgentUrl=new URL(process.env.PRISM_AGENT_URL??"http://agent-prism:8080");
 function required(name: string): string {
   const value = process.env[name];
   if (!value) throw new Error(`${name} is required`);
@@ -226,7 +228,7 @@ const server = createServer(async (request, response) => {
       return json(response, 200, { status: "ready" });
     }
     if (await handleInternalArtifact(request, response, url, {
-      artifacts, spiffeEnabled, workerSecret, trustedWorkerSpiffeId, trustedControlSpiffeId,
+      artifacts, spiffeEnabled, workerSecret, trustedWorkerSpiffeId, trustedControlSpiffeId, trustedPrismAgentSpiffeId,
     })) return;
     if (url.pathname === "/v1/session" && request.method === "POST") {
       const headers = Object.fromEntries(
@@ -305,11 +307,11 @@ const server = createServer(async (request, response) => {
         await requestClient.query("INSERT INTO prism.design_request(id,project_id,architecture_artifact_id,architecture_digest,architecture_revision,request,status) VALUES($1,$2,$3,$4,$5,$6::jsonb,'active') ON CONFLICT(project_id,architecture_revision) DO UPDATE SET architecture_artifact_id=excluded.architecture_artifact_id,architecture_digest=excluded.architecture_digest,request=excluded.request,status='active'",[randomUUID(),project.rows[0]!.id,designRequest.architecture.artifactId,designRequest.architecture.contentDigest,designRequest.architecture.revision,JSON.stringify(designRequest)]);
         await requestClient.query("COMMIT");
       }catch(error){await requestClient.query("ROLLBACK");throw error;}finally{requestClient.release();}
-      if (!designRequest.approvalId)
-        return json(response, 202, {
-          result: { status: "waiting", projectId: project.rows[0]!.id },
-          preferences: await startDesignRound(pool,{projectId:projectKey,subjectId:preferenceSubjectId,startKey:`dispatch:${key}`,architectureDigest:designRequest.architecture.contentDigest,architectureRevision:designRequest.architecture.revision}),
-        });
+      if (!designRequest.approvalId){
+        const preferences=await startDesignRound(pool,{projectId:projectKey,subjectId:preferenceSubjectId,startKey:`dispatch:${key}`,architectureDigest:designRequest.architecture.contentDigest,architectureRevision:designRequest.architecture.revision});
+        const agent=await admitDesignAgent(pool,`${trustedControlSpiffeId}/prism/main/v2`,projectKey,preferences);
+        return json(response,202,{result:{status:'waiting',projectId:project.rows[0]!.id},preferences,agent});
+      }
       const baseline = await approvedRoundBaseline(pool,project.rows[0]!.id,designRequest.approvalId);
       if (!baseline.rows[0])
         throw new Error("approved Prism baseline not found");
@@ -321,12 +323,14 @@ const server = createServer(async (request, response) => {
         },
       });
     }
+    if(await handleAgentJobs(request,response,url,{db:pool,spiffeEnabled,trustedAgentId:trustedPrismAgentSpiffeId,readBody:body}))return;
     if (url.pathname === "/v1/agent/design-sets" && request.method === "POST") {
       if (!spiffeEnabled) throw new Error("Prism agent tools require SPIFFE worker trust");
       authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedPrismAgentSpiffeId]));
       const input = (await body(request)) as {
         projectId?: string;
         generationId?: string;
+        jobId:string; fence:string;
         designs?: Array<{key?:string;title?:string;summary?:string;document?:PrismDocument;evidence?:Record<string,unknown>}>;
       };
       if (!input.projectId || input.designs?.length !== 3) throw new Error("exactly three Prism designs are required");
@@ -338,25 +342,27 @@ const server = createServer(async (request, response) => {
         if (!item.key || !item.title || !item.summary) throw new Error("each Prism design requires key, title, and summary");
         return { key: item.key, title: item.title, summary: item.summary, document: documents[index]!, evidence: {...item.evidence, ...generation} };
       });
-      const result = await repository.createDirectionSet(input.projectId, input.generationId!, designs);
+      const result = await repository.createDirectionSet(input.projectId, input.generationId!, designs,{jobId:input.jobId,fence:input.fence,payload:input});
       return json(response, result.status === 'created' ? 201 : 200, { ...result,
         studioUrl: `${process.env.PRISM_STUDIO_PUBLIC_URL ?? "https://prism-studio"}?project=${result.projectId}&document=${result.documentId}` });
     }
     if (url.pathname === "/v1/agent/revisions" && request.method === "POST") {
       if (!spiffeEnabled) throw new Error("Prism agent tools require SPIFFE worker trust");
       authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedPrismAgentSpiffeId]));
-      const input=(await body(request)) as {generationId?:string;projectId?:string;documentId?:string;expectedRevision?:number;instruction?:string;document?:PrismDocument};
+      const input=(await body(request)) as {jobId:string;fence:string;generationId?:string;projectId?:string;documentId?:string;expectedRevision?:number;instruction?:string;document?:PrismDocument};
       if(!input.projectId||!input.documentId||!input.instruction||!Number.isSafeInteger(input.expectedRevision))throw new Error("complete Prism revision input is required");
       const owner=await pool.query<{external_id:string}>("SELECT p.external_id FROM prism.design_document d JOIN prism.project p ON p.id=d.project_id WHERE d.id=$1",[input.documentId]);
       if(owner.rows[0]?.external_id!==input.projectId)throw new Error("document does not belong to the Prism project");
       const generation = await requirePreferenceGeneration(pool,input.generationId,input.projectId,{operation:"revise",documentId:input.documentId,expectedRevision:input.expectedRevision});
-      const current=await repository.current(input.documentId);if(current.document.meta.revision!==input.expectedRevision)throw new Error("revision conflict");
+      const current=await repository.revision(input.documentId,input.expectedRevision!);
       const document=validatePrism<PrismDocument>("designDocument",input.document);
-      if(document.meta.revision!==input.expectedRevision+1)throw new Error("Prism agent must increment the document revision exactly once");
-      const updated=await repository.replace(input.documentId,current.id,document,{type:"agent.revision",instruction:input.instruction,...generation},"agent:prism");
+      if(document.meta.revision!==input.expectedRevision!+1)throw new Error("Prism agent must increment the document revision exactly once");
+      const updated=await repository.replace(input.documentId,current.id,document,{type:"agent.revision",instruction:input.instruction,...generation},"agent:prism",{jobId:input.jobId,fence:input.fence,payload:input});
       return json(response,200,{status:"updated",document:updated});
     }
     const actor = authenticated(request);
+    const agentStatus=/^\/v1\/agent-jobs\/([0-9a-f-]+)$/.exec(url.pathname);
+    if(agentStatus && request.method==='GET')return json(response,200,agentReceipt(await agentJob(pool,agentStatus[1]!)));
     if (url.pathname === "/v1/projects" && request.method === "GET") {
       const result=await pool.query<{id:string;external_id:string;name:string;document_id:string|null;direction_count:number}>("SELECT p.id,p.external_id,p.name,(SELECT d.source_document_id FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id JOIN prism.design_request r ON r.id=doc.design_request_id AND r.status='active' AND doc.design_round_id IS NOT DISTINCT FROM r.current_round_id WHERE d.project_id=p.id ORDER BY d.created_at,d.id LIMIT 1) AS document_id,(SELECT count(*)::int FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id JOIN prism.design_request r ON r.id=doc.design_request_id AND r.status='active' AND doc.design_round_id IS NOT DISTINCT FROM r.current_round_id WHERE d.project_id=p.id) AS direction_count FROM prism.project p ORDER BY p.updated_at DESC,p.id");
       return json(response,200,{items:result.rows});
@@ -427,6 +433,8 @@ const server = createServer(async (request, response) => {
       url.pathname,
     );
     if (directions && request.method === "GET") {
+      const activeJob=await pool.query<{id:string}>("SELECT j.id FROM prism.agent_job j JOIN prism.design_request r ON r.current_round_id=j.id WHERE r.project_id=$1 AND r.status='active'",[directions[1]]);
+      if(activeJob.rows[0])agentReceipt(await agentJob(pool,activeJob.rows[0].id));
       const result = await pool.query(
         "SELECT d.id,doc.design_round_id AS generation_id,d.source_document_id,d.direction_key,d.title,d.summary,d.proposal,d.state,d.content_digest,d.evidence FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id JOIN prism.design_request r ON r.id=doc.design_request_id AND r.status='active' AND doc.design_round_id IS NOT DISTINCT FROM r.current_round_id WHERE d.project_id=$1 ORDER BY d.created_at,d.id",
         [directions[1]],
@@ -439,9 +447,8 @@ const server = createServer(async (request, response) => {
       const project=await pool.query<{external_id:string}>("SELECT external_id FROM prism.project WHERE id=$1",[directions[1]]);
       const requestResult=await pool.query<{request:Record<string,unknown>;architecture_digest:string;architecture_revision:number}>("SELECT request,architecture_digest,architecture_revision FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY created_at DESC LIMIT 1",[directions[1]]);
       if(!project.rows[0]||!requestResult.rows[0])throw new Error("active Prism project not found");
-      const agentResponse=await fetch(new URL("/v1/design-set",prismAgentUrl),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({preferences:await startDesignRound(pool,{projectId:project.rows[0].external_id,subjectId:userKey(actor.user),startKey:`studio:${userKey(actor.user)}:${input.idempotencyKey}`,architectureDigest:requestResult.rows[0].architecture_digest,architectureRevision:Number(requestResult.rows[0].architecture_revision),parentRoundId:input.parentRoundId,documentId:input.documentId,expectedRevision:input.expectedRevision}),projectId:project.rows[0].external_id,request:requestResult.rows[0].request})});
-      const accepted=await agentResponse.json();if(!agentResponse.ok)throw new Error(accepted.error??"Prism OpenClaw agent rejected the design request");
-      return json(response,202,accepted);
+      const preferences=await startDesignRound(pool,{projectId:project.rows[0].external_id,subjectId:userKey(actor.user),startKey:`studio:${userKey(actor.user)}:${input.idempotencyKey}`,architectureDigest:requestResult.rows[0].architecture_digest,architectureRevision:Number(requestResult.rows[0].architecture_revision),parentRoundId:input.parentRoundId,documentId:input.documentId,expectedRevision:input.expectedRevision});
+      return json(response,202,await admitDesignAgent(pool,`${trustedControlSpiffeId}/prism/main/v2`,project.rows[0].external_id,preferences));
     }
     const directionFeedback = /^\/v1\/directions\/([0-9a-f-]+)\/feedback$/.exec(
       url.pathname,
@@ -532,9 +539,9 @@ const server = createServer(async (request, response) => {
         if(!owner.rows[0])throw new Error("Prism project not found");
         const instruction=String(input.input?.instruction??"").trim();
         if(!instruction)throw new Error("Prism revision instruction is required");
-        const agentResponse=await fetch(new URL("/v1/revise",prismAgentUrl),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({preferences:await createPreferenceGeneration(pool,userKey(actor.user),owner.rows[0].external_id,Date.now(),{operation:"revise",documentId:execute[1],expectedRevision:input.baseRevision}),projectId:owner.rows[0].external_id,documentId:execute[1],expectedRevision:input.baseRevision,instruction,document:requestDocument.document})});
-        const accepted=await agentResponse.json();if(!agentResponse.ok)throw new Error(accepted.error??"Prism OpenClaw agent rejected the revision");
-        return json(response,202,accepted);
+        if(!input.idempotencyKey)throw new Error('agent revision idempotency key is required');
+        const job=await startAgentRevision(pool,`${trustedControlSpiffeId}/prism/main/v2`,userKey(actor.user),input.idempotencyKey,{projectId:owner.rows[0].external_id,documentId:execute[1]!,expectedRevision:Number(input.baseRevision),instruction,document:requestDocument.document});
+        return json(response,202,agentReceipt(job));
       }
       const defaults =
         operation === "render"
