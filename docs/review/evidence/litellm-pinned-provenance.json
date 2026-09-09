@@ -1,0 +1,70 @@
+{
+  "indexDigest": "sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+  "indexHashVerified": true,
+  "platforms": [
+    {
+      "subject": [
+        {
+          "name": "pkg:docker/ghcr.io/berriai/litellm@latest?platform=linux%2Famd64",
+          "digest": {
+            "sha256": "63edff769d60019a62856f880181f23e209d0f03d2ac41b2ece729f1363ec351"
+          }
+        }
+      ],
+      "attestationManifestDigest": "sha256:faff156ca00efbbddceb696c59ec91d39781d925b6eddefdfdd70c42368fcea7",
+      "attestationBlobDigest": "sha256:c0a445e2ea43b77bf6932eed6e4628b528f025506604900ff9b87467bf127dec",
+      "source": "https://github.com/BerriAI/litellm",
+      "revision": "7d5b6456baaf8be6ac1a60db2b710566b5344adf"
+    },
+    {
+      "subject": [
+        {
+          "name": "pkg:docker/ghcr.io/berriai/litellm@latest?platform=linux%2Farm64",
+          "digest": {
+            "sha256": "c81da31234e87f79136beb68d728e08fb3d439a1b0aa95de5e15726e3ad662d4"
+          }
+        }
+      ],
+      "attestationManifestDigest": "sha256:e1d69762aca1dd9f41e338e3ec3cb6dfa59fe9fbad76192acf0bdc1f51349b68",
+      "attestationBlobDigest": "sha256:674a6bc9256b07223d5d687c473bbd9bc61c884fff06f49fa17a6d41d4531618",
+      "source": "https://github.com/BerriAI/litellm",
+      "revision": "7d5b6456baaf8be6ac1a60db2b710566b5344adf"
+    }
+  ],
+  "observedOn": "2026-09-09",
+  "repository": "ghcr.io/berriai/litellm",
+  "method": "Read-only anonymous GHCR registry GETs; SHA256 of raw index, platform manifests, configs, attestation manifests and in-toto blobs checked against requested digests. Exact-revision source then read through authenticated GitHub. No image layers downloaded or executed.",
+  "pinIntroduction": "https://github.com/datrab/kubeclaw/commit/bfb6894c04e719fbebac1a3de6bd5cc002e4a49f",
+  "priorTag": "main-latest",
+  "sourceVersion": "1.101.0",
+  "sourceFiles": [
+    {
+      "url": "https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/pyproject.toml",
+      "gitBlobSha": "d3038a60c4283a98fcace61bed4e2bc96a4bf657"
+    },
+    {
+      "url": "https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/health_endpoints/_health_endpoints.py",
+      "gitBlobSha": "8b57bdca2fe4521818a0f67847f74c85e97ec904"
+    },
+    {
+      "url": "https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/db/exception_handler.py",
+      "gitBlobSha": "ef1c4a66203ca8a36fcca9cf9eaa4f83c907fa98"
+    },
+    {
+      "url": "https://github.com/BerriAI/litellm/blob/7d5b6456baaf8be6ac1a60db2b710566b5344adf/litellm/proxy/proxy_server.py",
+      "gitBlobSha": "c43cc510990f53ae47f87911d48a2bf9f7decca5"
+    }
+  ],
+  "healthContract": {
+    "liveness": "/health/liveliness; unauthenticated; process/graceful-shutdown state; no database or model request",
+    "readiness": "/health/readiness; unauthenticated; configured DB disconnected returns 503 unless explicit allow_requests_on_db_unavailable (default false)",
+    "successfulDbCacheSeconds": 15,
+    "internalDbDeadlineSeconds": 4,
+    "configuredReadinessTimeoutSeconds": 3,
+    "timeoutInterpretation": "Readiness may fail before internal DB check completes; conservative unready, not a liveness DB dependency."
+  },
+  "limitations": [
+    "Registry content provenance and source inspection, not independent publisher signature verification.",
+    "No pinned image execution, real database-failure test, kubelet probe, config-only rollout or paid model request."
+  ]
+}

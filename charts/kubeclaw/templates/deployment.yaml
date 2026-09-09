@@ -22,6 +22,9 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap-gateway.yaml") . | sha256sum }}
         checksum/swarm-config: {{ include (print $.Template.BasePath "/configmap-swarm-config.yaml") . | sha256sum }}
+        {{- if .Values.workerTrust.spiffe.enabled }}
+        checksum/worker-trust: {{ index ((include (print $.Template.BasePath "/configmap-worker-trust.yaml") .) | fromYaml).data "envoy.yaml" | sha256sum }}
+        {{- end }}
         {{- if .Values.customSkills }}
         checksum/skills: {{ include (print $.Template.BasePath "/configmap-skills.yaml") . | sha256sum }}
         {{- end }}

@@ -8,6 +8,9 @@ kind: Deployment
 metadata: { name: prism-{{ $name }} }
 spec:
   replicas: {{ (index $.Values $name).replicas }}
+  {{- if eq $name "control" }}
+  strategy: { type: Recreate }
+  {{- end }}
   selector: { matchLabels: { app: prism-{{ $name }} } }
   template:
     metadata:
@@ -16,6 +19,10 @@ spec:
         {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
         kubeclaw.dev/worker-trust: "true"
         {{- end }}
+      {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
+      annotations:
+        checksum/worker-trust: {{ index ((include (print $.Template.BasePath "/configmap-worker-trust.yaml") $) | fromYaml).data (printf "%s.yaml" $name) | sha256sum }}
+      {{- end }}
     spec:
       serviceAccountName: prism-{{ $name }}
       imagePullSecrets: {{ toYaml $.Values.imagePullSecrets | nindent 8 }}

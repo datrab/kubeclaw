@@ -1141,14 +1141,11 @@ cmd_infra() {
       err "LITELLM_NODE_PORT must be an integer in the Kubernetes NodePort range 30000-32767."
       return 1
     fi
-    # LiteLLM config as ConfigMap
-    kubectl create configmap litellm-config \
-      --namespace "$NAMESPACE" \
-      --from-file=config.yaml="$INFRA_DIR/litellm-config.yaml" \
-      --dry-run=client -o yaml | kubectl apply -f -
-
-    # LiteLLM Deployment + Service (no Helm chart — plain manifest)
-    kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/litellm-deployment.yaml"
+    # Render ConfigMap and PodTemplate from the same bytes before any apply.
+    local litellm_manifests
+    litellm_manifests="$(node "$SCRIPT_DIR/render-litellm-deployment.mjs" \
+      "$INFRA_DIR/litellm-config.yaml" "$INFRA_DIR/litellm-deployment.yaml")" || return 1
+    printf '%s\n' "$litellm_manifests" | kubectl apply -n "$NAMESPACE" -f -
     kubectl patch service litellm -n "$NAMESPACE" --type=merge \
       -p "{\"spec\":{\"ports\":[{\"name\":\"http\",\"port\":4000,\"targetPort\":4000,\"nodePort\":$LITELLM_NODE_PORT,\"protocol\":\"TCP\"}]}}"
     info "Waiting for LiteLLM to be ready..."

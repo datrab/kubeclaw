@@ -1,7 +1,7 @@
 # =============================================================================
 # LiteLLM Proxy — Deployment + Service
 # =============================================================================
-# Deployed via kubectl apply (no Helm chart).
+# Render with scripts/render-litellm-deployment.mjs before kubectl apply.
 # Requires: litellm-config (ConfigMap), litellm-secrets (Secret), google-sa-key (Secret)
 # =============================================================================
 apiVersion: apps/v1
@@ -43,6 +43,21 @@ spec:
             - name: http
               containerPort: 4000
               protocol: TCP
+          startupProbe:
+            httpGet: { path: /health/liveliness, port: http }
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 24
+          readinessProbe:
+            httpGet: { path: /health/readiness, port: http }
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 2
+          livenessProbe:
+            httpGet: { path: /health/liveliness, port: http }
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
           volumeMounts:
             - name: config
               mountPath: /app/config.yaml
