@@ -1,0 +1,23 @@
+$ node --test tests/verification/reliability/observability-retirement-plan.test.mjs
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (782.200148ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (975.009735ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (751.103203ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (851.116779ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (730.696417ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (785.645475ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (997.837401ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (698.673495ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.432351ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (1.264668ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.958955ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (325.962873ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2281.115609ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (302.086194ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9870.537264

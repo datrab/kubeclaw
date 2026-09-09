@@ -3180,17 +3180,19 @@
       "severity": "mittel",
       "work_package": "WP09",
       "status": "implementiert",
-      "implementation_commit": "dee2ab5ea3c9e99c8f8eb82b501eba124cd2d12c",
-      "verification_status": "D01/D07 Aufbewahrung und tatsächliche Storequoten/codebelegte Bereinigungsgrenzen dokumentiert; keine Laufzeitänderung und kein bestandener Quotafreigabenachweis.",
+      "implementation_commit": "27315faad862f71df940ed32bc4e5a98eca72e0d",
+      "verification_status": "Read-only Retentionsplan und manuelle Kompaktierung abgeschlossener Buster-Archivkopien implementiert; zwölf echte lokale Git/HTTP/Store/CLI-Regressionen sowie Originalruntime und Planner bestehen. Freigabe von Metadatenbytes nachgewiesen; Recordanzahl-, Ergebnis- und allgemeine Run-/Logbereinigung nicht gelöst.",
       "verification_evidence": [
-        "docs/review/remediation/implementation/observability-retention.md"
+        "docs/review/remediation/implementation/observability-retention.md",
+        "docs/review/remediation/implementation/buster-job-compaction.md",
+        "docs/review/evidence/integration-eb1d7cc/manifest.json"
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.observability.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-OBS-002 — Aufbewahrungsstrategie für bestätigte Historie fehlt\n\n- **Mittel, offene Architekturfrage:** endliche Quoten verhindern unbeschränktes\n  Wachstum, nach Ausschöpfung steht aber kein sicherer Freigabeweg bereit.\n- **Beleg:** RecordStore hat append/read/transition ohne Delete; Admission ohne\n  Compaction; AttemptStore reclaimExpiredEvidence entfernt nur ohne Result\n  referenzierte Evidence. README benennt fehlende Admissioncompaction, W6 ebenso.\n- **Auslöser/Auswirkung:** fortlaufende Runs füllen globale Stores; weitere\n  notwendige Belege/Writes scheitern, keine automatische Wiederherstellung der\n  Kapazität. Manuelles Löschen könnte Idempotenz/Beweisketten verlieren.\n- **Ursache lösen:** explizite runbezogene Retention mit Consumercheckpoint,\n  referenziertem Evidenceabschluss und nötigen Idempotenz-Tombstones; erst danach\n  zusammenhängend freigeben. Größere Quoten allein verschieben das Problem.\n- **Verifikation:** mit kleinen echten Quoten abgeschlossene und aktive Runs\n  mischen; Retention gibt nur bestätigte Historie frei, Replay von alten\n  Zustellungen führt zu keiner erneuten externen Aktion. Policyentscheidung\n  und Umsetzung gehören zum späteren Reparatur-/Betriebsauftrag.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Rein lesender Planer mit 17 bestandenen Originaltests vorhanden; tatsächliche quota-freigebende, replay-sichere Bereinigung bleibt unimplementiert. Keine automatische Loglöschung.",
+      "next_action": "Weitere Storequoten mit erhaltenen Idempotenz-/Continuation-/Resultbelegen und ausdrücklicher manueller Aufbewahrungspolitik bearbeiten; keine automatische Loglöschung.",
       "related_findings": [
         "PCR-PRISM-WORKER-001",
         "PCR-TSTORE-001"
@@ -4475,10 +4477,13 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP14",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "5b7f8c694dc3aa2c05edb45ad8d88483bcdc36b2",
+      "verification_status": "Pflicht-Sourcepreflight, optionaler gebundener Architekturreview/Freigabepfad und Sync vor Modullane integriert; neun echte lokale Sourceverbraucherfälle, Compiler, Builds/Typen/Lint und unabhängige Gegenprüfung bestanden. Legacyimport und vollständiger Demo-/Acceptance-Abschluss bleiben offen.",
+      "verification_evidence": [
+        "docs/review/remediation/implementation/project-source-v2.md",
+        "docs/review/evidence/integration-eb1d7cc/manifest.json"
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### T01-F01 — Setupanleitung und Scaffold bilden keinen ausführbaren Einstieg in den aktuellen Projectmodus\n\nEigentümertrace: [T01-happy-path.md](T01-happy-path.md); Codecommit wie oben.\n\n**Mittel; nachgewiesene Vertrags-/Dokumentationsabweichung, keine Laufzeitreproduktion in T01.** Auslöser: neues Projekt nach `project_setup/SKILL.md` erzeugen und mit dortigen Flags starten. Der geschlossene aktuelle Parser weist diese Flags ab; die vom Scaffold geschriebenen Formate entsprechen auch nach Korrektur der Flags nicht dem Compilereingang. Folge: Operator/Nova erreichen die erste Modulstage über den beschriebenen Setupweg nicht. Belege: `project/cli.ts:16–29`; `compiler.ts:47–58`; `progress-scaffold-validation.ts:236–263` und `project_setup/SKILL.md` Abschnitte 7/8. Vorreview `nova.scaffold.md` beschreibt die Abweichung bereits ohne eigene Kennung; `PCR-SCAFFOLD-001` ist ein **anderer** Defekt (Verlust editierter Pläne bei Regeneration), hier nicht umbenannt.\n\nUrsachenbehebung: einen kanonischen Projekt-/Graphautorierungsweg und expliziten Legacyimport festlegen; Anleitung und Scaffold daran angleichen. Verifikation später: frisch erzeugte echte Projektdateien durch Original-CLIvalidierung führen, alle dokumentierten Befehle prüfen, dabei Compile und Execution getrennt nachweisen.",
@@ -4491,7 +4496,7 @@
       "unresolved_code_references": [
         "nova.scaffold.md"
       ],
-      "next_action": "Aktiver Änderungssatz: ursprüngliche Source-/Consumerpfade integrieren, unabhängige Gegenprüfung vor Commit; keine CI-Ausführung oder Deployment.",
+      "next_action": "Kanonischen expliziten Legacy-Autorierungsimport und nachgelagerte sourcegebundene Demo-/Delivery-/Ready-/Acceptance-Komposition vervollständigen; keine Annahme aus bloßem Graph-Erfolg.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4501,10 +4506,13 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP14",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "implementiert",
+      "implementation_commit": "5b7f8c694dc3aa2c05edb45ad8d88483bcdc36b2",
+      "verification_status": "Pflicht-Sourcepreflight, optionaler gebundener Architekturreview/Freigabepfad und Sync vor Modullane integriert; neun echte lokale Sourceverbraucherfälle, Compiler, Builds/Typen/Lint und unabhängige Gegenprüfung bestanden. Legacyimport und vollständiger Demo-/Acceptance-Abschluss bleiben offen.",
+      "verification_evidence": [
+        "docs/review/remediation/implementation/project-source-v2.md",
+        "docs/review/evidence/integration-eb1d7cc/manifest.json"
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### T01-F02 — Projectcompiler deckt nur die Modullane ab, kann aber danach einen erfolgreichen Run melden\n\nEigentümertrace: [T01-happy-path.md](T01-happy-path.md); Codecommit wie oben.\n\n**Hoch bezogen auf den angefragten Produktlebenszyklus; nachgewiesene Integrationslücke, kein isolierter Fehler des generischen Core.** Auslöser: `nova-project.v1` als Umsetzung des hier erwarteten Gesamtprojekts benutzen. Geschlossener Compilerinput und vollständige Stageerzeugung liefern nur 4N Stages. Architektur/Prism/Acceptance, eigenständige kumulative Gates, Summary und Operatorübergabe sind nicht zusammengesetzt. Nach den definierten Modulstages meldet Core zutreffend Graph-Erfolg; dieser erfüllt jedoch nicht die gewünschten Liefer-/Abnahmekriterien. Belege: `compiler.ts:47–58,103–137`; `pipeline-loop.ts:137–144`; Summary ist vorhanden (`project-summary/src/stage.ts:3–11`), wird aber nicht erzeugt. Vorreview `nova.entry.md` bestätigt exakt vier Stages/Modul; dies ist kein Widerspruch dazu.\n\nUrsachenbehebung: Produktzustände und explizite Artefaktbindungen über Vorphase, manuelle Planfreigabe, Modullane, kumulative Gates und Operatorübergabe definieren; der generische Core bleibt stagenamenunabhängig. Falls der Compiler absichtlich nur eine Teilpipeline bleibt, muss die übergeordnete Komposition den vollständigen Abschluss erzwingen und Teilabschluss entsprechend kennzeichnen. Spätere Verifikation: echter Graph aus zwei Modulen zeigt alle erforderlichen Kanten und finale Kandidatenbindung; keine Delivery vor fehlender Acceptance, finalen Gates oder Access-Handoff. Ein zusätzlicher bloßer Summaryknoten ersetzt keinen kumulativen Review: dessen Scope/Baseline sind gesondert zu belegen.\n\n**Zusammengeführte Ausprägung F-T03-01 (T03):** Architektur-/Acceptancepflicht fehlt im Projectablauf.\n\n**Hoch; statisch bestätigte Zielbild-/Integrationslücke.** Auslöser: Start eines regulären nova-project.v1 mit manueller Architektur, erwarteter Reviewer-/Acceptancepflicht. Compiler erzeugt sofort Implementierung ohne diese Stages (`compiler.ts#compileProject:103–136`). Auswirkung: Die gewünschte Vorbedingung ist dort nicht technisch erzwungen; kein behaupteter Umgehungsangriff gegen eine bestehende Autorisierungsgrenze. Rootfix: Produktgraph aus expliziter Architektur-/Planreviewpolicy kompilieren oder den bewusst externen Approvalvertrag als signierte/digestgebundene zwingende Eingabe verlangen. Verifikation: Originalproject mit offenen Findings darf Forge nicht dispatchen; clean, repair und bewusst akzeptierte Findings jeweils getrennt durch echten Graph nachweisen. Bestehende Architektur-/Approvalreviews nennen die fehlende Compilernutzung, vergeben hierfür aber keine PCR-ID.\n\n**Zusammengeführte Ausprägung F-T10-01 (T10):** Optionale Echo-/Testagentabschaltung fehlt im Projectmodell.\n\n**Mittel; statisch bestätigte Produkt-/Zielbildabweichung.** Trigger: gewünschte konfigurierte Lint-only- oder Echo-off-/Test-Agent-off-Projektvariante. Compiler 60,78–89 weist die Konfiguration zurück bzw. erzeugt die Stages stets (120–131). Folge: Nur ein manuell autorisierter expliziter Graph kann die gewünschte Variante ausdrücken; keine Behauptung eines unsicheren stillen Bypasses. Rootfix: Optionalität explizit im kanonischen Projektvertrag modellieren und Graphdependencies konsistent kompilieren, wobei Lint unverändert nach jedem Modul erzwungen bleibt. Verifikation: reale Compiler-/Graphprüfung für Echo on/off und Testagent on/off, Lintfehlresultat muss in jeder Variante nachgelagerte Freigabe/Abschluss verhindern. Deduplizierung mit Compileroptionalitätsbefunden anderer Traces erforderlich.\n\n| Bestehende Kennung | Relevanz und hier nachgelesener Code |\n|---|---|\n| PCR-IMPLEMENTATION-001 | Vorgelagerter fehlender Workspace im Forgepayload; keine Heilung durch nachfolgendes Lint |\n| PCR-LINT-001 | Generische Scope-/Targetsymlinkgrenze; Originalkomponentenreview gelesen, hier keine neue eigene Reproduktion |\n| PCR-LINT-002 | Adapter reicht laufenden Abort nicht an Engine/Candidate weiter; adapter.ts 65–81, candidate.ts 7–19, execution.ts 83–113 |\n| PCR-LINT-003 | Native Timeouterkennung nur error.killed; execution.ts 75–77,106–126; Diagnosefehler trotz geschlossenem Gate |\n| PCR-DELIVERY-001 | Dockerfile-JSON-COPY wird durch einfachen Parser falsch interpretiert; delivery-lint/stage.ts 33–38 |\n| PCR-EXEC-002 | Resultartefaktprojektion nach durable Attemptresult; relevant für Lintreport-/Reparaturevidenz |\n\nOriginale Eigentümerberichte: [kubeclaw.lint](../components/kubeclaw.lint.md), [delivery-lint](../components/kubeclaw.delivery-lint.md), [implementation-agent](../components/kubeclaw.implementation-agent.md), [nova.execution](../components/nova.execution.md). Der Lintkomponentenbericht am Reviewcommit `a9e080ab1e1981ec5713e9b742f94280835fd347` wurde gelesen. Historische fehlende shellcheck/shfmt/helm/kubeconform-Tools werden nicht als aktuelle Messung übernommen.",
@@ -4517,7 +4525,7 @@
       "unresolved_code_references": [
         "nova.entry.md"
       ],
-      "next_action": "Aktiver Änderungssatz: ursprüngliche Source-/Consumerpfade integrieren, unabhängige Gegenprüfung vor Commit; keine CI-Ausführung oder Deployment.",
+      "next_action": "Kanonischen expliziten Legacy-Autorierungsimport und nachgelagerte sourcegebundene Demo-/Delivery-/Ready-/Acceptance-Komposition vervollständigen; keine Annahme aus bloßem Graph-Erfolg.",
       "related_findings": [
         "PATH-T04-002",
         "PATH-T13-001",

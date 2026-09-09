@@ -1,0 +1,161 @@
+{
+  "commit": "eb1d7ccd163b361f748470adc455daf70bddfc51",
+  "worktree": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9",
+  "trackedCleanBefore": true,
+  "workspaceLinks": {
+    "node_modules/@kubeclaw/plugin-axe": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/axe",
+    "node_modules/@kubeclaw/plugin-test-agent": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/test-agent",
+    "node_modules/@kubeclaw/plugin-case-study": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/case-study",
+    "node_modules/@kubeclaw/plugin-http-test-provider": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/http",
+    "node_modules/@kubeclaw/plugin-pipeline-review": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/pipeline-review",
+    "node_modules/@kubeclaw/plugin-openapi-test-provider": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/openapi",
+    "node_modules/@kubeclaw/plugin-telemetry-store": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/telemetry-store",
+    "node_modules/@kubeclaw/plugin-human-approval": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/human-approval",
+    "node_modules/@kubeclaw/plugin-foundation": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugin-runtime/foundation",
+    "node_modules/@kubeclaw/plugin-runtime-dispatch": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/runtime-dispatch",
+    "node_modules/@kubeclaw/plugin-openclaw-agent-events": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/openclaw-agent-events",
+    "node_modules/@kubeclaw/plugin-container-build-test-provider": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/container-build",
+    "node_modules/@kubeclaw/plugin-kubernetes-fixture-provider": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/kubernetes-fixture",
+    "node_modules/@kubeclaw/plugin-delivery-lint": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/delivery-lint",
+    "node_modules/@kubeclaw/plugin-remote-test-gate": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/remote-test-gate",
+    "node_modules/@kubeclaw/plugin-visual": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/visual",
+    "node_modules/@kubeclaw/plugin-architecture-validator": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/architecture-validator",
+    "node_modules/@kubeclaw/plugin-lint": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/lint",
+    "node_modules/@kubeclaw/plugin-sdk": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugin-runtime/sdk",
+    "node_modules/@kubeclaw/plugin-prism-design": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/prism-design",
+    "node_modules/@kubeclaw/plugin-git-workspace": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/git-workspace",
+    "node_modules/@kubeclaw/plugin-junit-report-adapter": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/junit-report-adapter",
+    "node_modules/@kubeclaw/prompt-contract": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/prompt-contract",
+    "node_modules/@kubeclaw/plugin-transport-publisher": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/transport-publisher",
+    "node_modules/@kubeclaw/plugin-buster-quality-gate": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/buster-quality-gate",
+    "node_modules/@kubeclaw/plugin-state-store": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/state-store",
+    "node_modules/@kubeclaw/plugin-redis-transport": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/redis-transport",
+    "node_modules/@kubeclaw/plugin-coverage-budget-test-provider": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/coverage-budget",
+    "node_modules/@kubeclaw/plugin-direct-command-test-provider": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/direct-command",
+    "node_modules/@kubeclaw/worker-core": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/worker/core",
+    "node_modules/@kubeclaw/nova-core": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/core",
+    "node_modules/@kubeclaw/pipeline-worker-core-contract": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/contracts/pipeline-worker-core/v1",
+    "node_modules/@kubeclaw/plugin-api-flow-test-provider": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/api-flow",
+    "node_modules/@kubeclaw/nova-project": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/project",
+    "node_modules/@kubeclaw/plugin-agent-observability": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/agent-observability",
+    "node_modules/@kubeclaw/plugin-network-http": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/network-http",
+    "node_modules/@kubeclaw/plugin-lighthouse": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/lighthouse",
+    "node_modules/@kubeclaw/pipeline-observability-contract": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/contracts/pipeline-observability/v1",
+    "node_modules/@kubeclaw/openclaw-agent-observer": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/openclaw-agent-observer",
+    "node_modules/@kubeclaw/plugin-review": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/review",
+    "node_modules/@kubeclaw/plugin-implementation-agent": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/implementation-agent",
+    "node_modules/@kubeclaw/plugin-tailscale-exposure-provider": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/tailscale-exposure",
+    "node_modules/@kubeclaw/plugin-size-budget-test-provider": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/size-budget",
+    "node_modules/@kubeclaw/plugin-wait-store": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/wait-store",
+    "node_modules/@kubeclaw/agent-observability-contract": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/contracts/agent-observability/v1",
+    "node_modules/@kubeclaw/plugin-project-summary": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/project-summary",
+    "node_modules/@kubeclaw/plugin-command-runner": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/command-runner",
+    "node_modules/@kubeclaw/plugin-preflight-contract": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/preflight-contract",
+    "node_modules/@kubeclaw/plugin-artifact-store": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/artifact-store",
+    "node_modules/@kubeclaw/plugin-playwright": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/playwright",
+    "node_modules/@kubeclaw/plugin-operator-messaging": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/operator-messaging",
+    "node_modules/@kubeclaw/plugin-secret-resolver": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/secret-resolver",
+    "node_modules/@kubeclaw/plugin-security-providers": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/plugins/security-providers",
+    "node_modules/@kubeclaw/pipeline-test-gate-contract": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/contracts/pipeline-test-gate/v1",
+    "node_modules/@kubeclaw/plugin-repository-adapter": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/repository-adapter",
+    "node_modules/@kubeclaw/plugin-telemetry-observer": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/telemetry-observer",
+    "node_modules/@kubeclaw/prism-contracts-v1": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/contracts/prism/v1",
+    "node_modules/@kubeclaw/plugin-notification-observer": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/common/plugins/notification-observer",
+    "node_modules/@kubeclaw/plugin-blueprint-sync": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/nova/plugins/blueprint-sync",
+    "node_modules/@kubeclaw/buster-engine": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/buster/engine",
+    "node_modules/@kubeclaw/prism": "/workspace/scratch/4e25cf57c177/kubeclaw-integration-ab79ad9/skills/prism"
+  },
+  "commands": [
+    {
+      "name": "compiler",
+      "command": [
+        "node",
+        "tests/verification/contracts/check-project-compiler.mts"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 6.352,
+      "log": "/workspace/scratch/4e25cf57c177/integration-eb1d7cc-evidence/compiler.txt"
+    },
+    {
+      "name": "project-source",
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/reliability/project-source.test.mjs"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 41.365,
+      "log": "/workspace/scratch/4e25cf57c177/integration-eb1d7cc-evidence/project-source.txt"
+    },
+    {
+      "name": "nova-typecheck",
+      "command": [
+        "node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "skills/nova/tsconfig.json"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 2.574,
+      "log": "/workspace/scratch/4e25cf57c177/integration-eb1d7cc-evidence/nova-typecheck.txt"
+    },
+    {
+      "name": "shared-typecheck",
+      "command": [
+        "node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "skills/common/plugin-runtime/tsconfig.json"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 3.575,
+      "log": "/workspace/scratch/4e25cf57c177/integration-eb1d7cc-evidence/shared-typecheck.txt"
+    },
+    {
+      "name": "buster-typecheck",
+      "command": [
+        "node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "skills/buster/engine/tsconfig.json"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 3.177,
+      "log": "/workspace/scratch/4e25cf57c177/integration-eb1d7cc-evidence/buster-typecheck.txt"
+    },
+    {
+      "name": "compaction",
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/reliability/buster-job-compaction.test.mts"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 14.633,
+      "log": "/workspace/scratch/4e25cf57c177/integration-eb1d7cc-evidence/compaction.txt"
+    },
+    {
+      "name": "remote-runtime",
+      "command": [
+        "node",
+        "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 18.695,
+      "log": "/workspace/scratch/4e25cf57c177/integration-eb1d7cc-evidence/remote-runtime.txt"
+    },
+    {
+      "name": "planner",
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/reliability/observability-retirement-plan.test.mjs"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 9.963,
+      "log": "/workspace/scratch/4e25cf57c177/integration-eb1d7cc-evidence/planner.txt"
+    }
+  ],
+  "trackedStatusAfter": "",
+  "headAfter": "eb1d7ccd163b361f748470adc455daf70bddfc51"
+}

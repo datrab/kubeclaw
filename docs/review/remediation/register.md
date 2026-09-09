@@ -1,6 +1,6 @@
 # Vollständiges Behebungsregister
 
-154 historische Kennungen: 103 Pipeline, 34 Infrastruktur, 17 neue Tracebefunde. Aktueller Umsetzungsstand: **85 lokal verifiziert, 38 teilweise implementiert / blockiert, 6 in Bearbeitung, 25 offen**. Lokale Verifikation ist keine Deployment- oder Gesamt-E2E-Freigabe. Details und offene Gates: [Fortschritt](progress.md).
+154 historische Kennungen: 103 Pipeline, 34 Infrastruktur, 17 neue Tracebefunde. Aktueller Umsetzungsstand: **85 lokal verifiziert, 40 teilweise implementiert / blockiert, 4 in Bearbeitung, 25 offen**. Lokale Verifikation ist keine Deployment- oder Gesamt-E2E-Freigabe. Details und offene Gates: [Fortschritt](progress.md).
 
 Die commitfesten Eigentümerberichte enthalten Evidenzklasse, Auslöser, Ursachenbehebung und vorgeschlagene Regression. [register.json](register.json) bewahrt zusätzlich den vollständigen jeweiligen Findingabschnitt, auflösbare Codeverweise, ungeklärte Kurzreferenzen, Beziehungen sowie Felder für Implementierungscommit und tatsächliche Prüfergebnisse. Unklare Kurzpfade werden nicht als eindeutige Codebelege erfunden.
 
@@ -157,8 +157,8 @@ Die commitfesten Eigentümerberichte enthalten Evidenzklasse, Auslöser, Ursache
 | PCR-PREFLIGHT-001 | mittel | Dateinennung wird als Lieferdeklaration akzeptiert | [WP14](work-packages.md#wp14) | verifiziert | [Belege](https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.preflight-contract.md) |
 | PCR-PREPORT-001 | niedrig | Calleridentität statt aktiver Run-/Attemptbindung | [WP14](work-packages.md#wp14) | verifiziert | [Belege](https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.pipeline-review.md) |
 | PCR-SCAFFOLD-001 | mittel | Regeneration verwirft ausgefüllten Providerplan | [WP14](work-packages.md#wp14) | implementiert | [Belege](https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/nova.scaffold.md) |
-| T01-F01 | mittel | Setupanleitung und Scaffold bilden keinen ausführbaren Einstieg in den aktuellen Projectmodus | [WP14](work-packages.md#wp14) | in Bearbeitung | [Belege](https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md) |
-| T01-F02 | hoch | Projectcompiler deckt nur die Modullane ab, kann aber danach einen erfolgreichen Run melden | [WP14](work-packages.md#wp14) | in Bearbeitung | [Belege](https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md) |
+| T01-F01 | mittel | Setupanleitung und Scaffold bilden keinen ausführbaren Einstieg in den aktuellen Projectmodus | [WP14](work-packages.md#wp14) | implementiert | [Belege](https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md) |
+| T01-F02 | hoch | Projectcompiler deckt nur die Modullane ab, kann aber danach einen erfolgreichen Run melden | [WP14](work-packages.md#wp14) | implementiert | [Belege](https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md) |
 | T15-F01 | mittel | Pipeline Review verarbeitet unbelegte Digestlisten statt geprüfter Run-Evidenz | [WP14](work-packages.md#wp14) | offen | [Belege](https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md) |
 
 ## Zielentscheidungen mit Auswirkungen auf historische Lösungsvorschläge
