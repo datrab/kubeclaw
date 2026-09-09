@@ -45,6 +45,15 @@ function runAgent(sessionKey, prompt) {
   return task;
 }
 
+const generationRuns = new Map();
+function runGeneration(sessionKey,prompt,generationId) {
+  if (generationRuns.has(generationId)) return generationRuns.get(generationId);
+  const task=runAgent(sessionKey,prompt);
+  generationRuns.set(generationId,task);
+  void task.finally(()=>{if(generationRuns.get(generationId)===task)generationRuns.delete(generationId);}).catch(()=>undefined);
+  return task;
+}
+
 const server = createServer(async (request, response) => {
   try {
     if (request.url === "/health" || request.url === "/ready") return send(response, 200, { status: "ready" });
@@ -61,7 +70,9 @@ const server = createServer(async (request, response) => {
       });
       const result = await persisted.json();
       if (!persisted.ok || persisted.status !== 202) return send(response, persisted.status, result);
-      const designRequest = payload.request;
+      const designRequest = result.preferences?.request;
+      if (!designRequest) throw new Error("persisted design round request is required");
+      if (result.preferences.result) return send(response,202,result);
       const externalProjectId = String(designRequest?.projectId || "");
       if (!externalProjectId) throw new Error("Prism projectId is required");
       const sessionKey = `prism-${externalProjectId.replace(/[^a-zA-Z0-9_-]/g, "-").slice(0, 96)}`;
@@ -74,7 +85,7 @@ const server = createServer(async (request, response) => {
         `Design request: ${JSON.stringify(designRequest)}`,
         preferencePrompt(result.preferences)
       ].join("\n\n");
-      void runAgent(sessionKey, prompt).catch((error) => console.error("Prism OpenClaw generation failed", error));
+      void runGeneration(sessionKey, prompt, result.preferences.generationId).catch((error) => console.error("Prism OpenClaw generation failed", error));
       return send(response, 202, result);
     }
     if (request.url === "/v1/revise") {
@@ -96,16 +107,17 @@ const server = createServer(async (request, response) => {
     }
     if (request.url === "/v1/design-set") {
       const externalProjectId = String(payload.projectId || "");
-      if (!externalProjectId || !payload.request) throw new Error("projectId and request are required");
+      if (!externalProjectId || !payload.preferences?.request) throw new Error("projectId and persisted round request are required");
+      if (payload.preferences.result) return send(response,202,{status:"already-created",generationId:payload.preferences.generationId,snapshotDigest:payload.preferences.snapshotDigest,result:payload.preferences.result});
       const sessionKey = `prism-${externalProjectId.replace(/[^a-zA-Z0-9_-]/g, "-").slice(0, 96)}`;
       const prompt = [
         "Create exactly three materially different, complete Prism design documents for this project.",
         "Read /app/skills/packages/prism-contract/schemas/prism-v1.schema.json and /app/skills/packages/prism-contract/fixtures/minimal-web.json from the versioned Prism code bundle before drafting.",
         "You MUST call prism_create_design_set exactly once. Do not return a prose-only result.",
-        `Design request: ${JSON.stringify(payload.request)}`,
+        `Design request: ${JSON.stringify(payload.preferences.request)}`,
         preferencePrompt(payload.preferences)
       ].join("\n\n");
-      void runAgent(sessionKey, prompt).catch((error) => console.error("Prism OpenClaw design-set generation failed", error));
+      void runGeneration(sessionKey, prompt, payload.preferences.generationId).catch((error) => console.error("Prism OpenClaw design-set generation failed", error));
       return send(response, 202, { status: "accepted", sessionKey, generationId: payload.preferences.generationId, snapshotDigest: payload.preferences.snapshotDigest });
     }
     return send(response, 404, { error: "not found" });

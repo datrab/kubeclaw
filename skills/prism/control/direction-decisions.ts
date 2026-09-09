@@ -31,9 +31,11 @@ async function applyDecision(connection: Queryable, direction: Direction, id: st
   }
   if (direction.state !== "proposed") throw new Error("direction is not available");
   await connection.query("SELECT id FROM prism.design_document WHERE id=$1 FOR UPDATE", [direction.source_document_id]);
+  const currentRound = await connection.query("SELECT d.id FROM prism.design_document d JOIN prism.design_request r ON r.id=d.design_request_id AND r.status='active' WHERE d.id=$1 AND d.design_round_id IS NOT DISTINCT FROM r.current_round_id",[direction.source_document_id]);
+  if (!currentRound.rows[0]) throw new Error("direction is not part of the current design round");
   const current = await new RevisionRepository(connection).current(direction.source_document_id);
   if (direction.source_revision_id !== current.id) throw new Error("direction is stale; generate new directions from the current revision");
-  const updated = await connection.query<{id: string}>("UPDATE prism.direction SET state=CASE WHEN id=$1 THEN 'selected' ELSE 'rejected' END WHERE project_id=$2 AND source_document_id IN (SELECT d.id FROM prism.design_document d JOIN prism.design_request r ON r.id=d.design_request_id AND r.status='active' WHERE d.project_id=$2) AND state IN ('proposed','selected') RETURNING id", [id, direction.project_id]);
+  const updated = await connection.query<{id: string}>("UPDATE prism.direction SET state=CASE WHEN id=$1 THEN 'selected' ELSE 'rejected' END WHERE project_id=$2 AND source_document_id IN (SELECT d.id FROM prism.design_document d JOIN prism.design_request r ON r.id=d.design_request_id AND r.status='active' AND d.design_round_id IS NOT DISTINCT FROM r.current_round_id WHERE d.project_id=$2) AND state IN ('proposed','selected') RETURNING id", [id, direction.project_id]);
   if (!updated.rows.some((row) => row.id === id)) throw new Error("direction is not part of the active design request");
   return { document: current.document, documentId: direction.source_document_id, directionKey: direction.direction_key };
 }

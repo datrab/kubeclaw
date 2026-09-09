@@ -1,0 +1,9 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+skills/prism/studio/app.tsx(61,12): error TS2604: JSX element type 'Content' does not have any construct or call signatures.
+skills/prism/studio/app.tsx(61,12): error TS2786: 'Content' cannot be used as a JSX component.
+  Its type 'unknown' is not a valid JSX element type.
+skills/prism/studio/app.tsx(118,12): error TS2604: JSX element type 'Content' does not have any construct or call signatures.
+skills/prism/studio/app.tsx(118,12): error TS2786: 'Content' cannot be used as a JSX component.
+  Its type 'unknown' is not a valid JSX element type.
+skills/prism/studio/app.tsx(192,70): error TS18046: 'flow' is of type 'unknown'.
+skills/prism/studio/app.tsx(804,35): error TS2339: Property 'initialState' does not exist on type '{ title: string; surface: string; root: PrismNode; states: Record<string, { patches: Record<string, Record<string, unknown>>; }>; responsive: Record<string, { ...; }>; mockData?: Record<...> | undefined; }'.

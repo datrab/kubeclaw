@@ -1,0 +1,30 @@
+✔ Prism OpenClaw plugin enforces one exact three-design commit tool (1.929834ms)
+✔ direction selection rolls back on actual SQL insert failure and replays a committed response (5045.264149ms)
+✔ all feedback actions persist valid wire IDs, explicit retries deduplicate and fresh actions remain distinct (2814.908002ms)
+✔ failed rejection retains proposed state; stale and historical partial selections do not invent receipts (2173.30341ms)
+✔ wire preference IDs replay only exact owner and content while preserving internal UUIDs (1843.101058ms)
+✔ wire ID migration preserves legacy UUID/content and refuses ambiguous historical wire identities (1707.033212ms)
+✔ original round client retains a lost-response request across reload and pending retry over real HTTP (157.178707ms)
+✔ late architecture generation cannot mutate its successor; exact delivery retry is distinct from a new round (5731.092257ms)
+✔ three rejections feed a successor round while predecessor documents and decisions remain immutable history (2639.758412ms)
+✔ source revision mutation after dispatch rejects result before creating new documents (2178.749515ms)
+✔ real insertion failure rolls back the whole round and leaves its delivery retry usable (1948.974021ms)
+✔ final Nova baseline consumption rejects an approved predecessor after a new round starts (1667.626188ms)
+✔ same architecture revision cannot substitute content under a replayed dispatch (1.52292ms)
+✔ legacy unbound documents can start a first explicit round without invented predecessor identity (1808.659097ms)
+✔ installed pg int8 parser strings cannot bypass the original architecture transition guard (1443.629536ms)
+✔ original bridge forwards persisted preference identities to the OpenClaw process boundary (441.923063ms)
+✔ SQL preference history crosses sessions with consent, isolated scopes, overrides and persisted prompt identity (4999.498985ms)
+✔ projection deduplicates evidence and refuses cross-project or cross-user retractions (1.648299ms)
+✔ migration lock is acquired before schema metadata is touched (19.566214ms)
+✔ managed migrations require the preprovisioned schema without database-wide DDL (38.081262ms)
+✔ direction uniqueness migration archives existing unsourced duplicates (5367.738065ms)
+✔ PostgreSQL migrations, immutable revisions, and artifacts work (2475.926116ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17757.680212

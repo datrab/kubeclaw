@@ -1,0 +1,66 @@
+{
+  "previous": [
+    {
+      "file": "skills/prism/studio/app.tsx",
+      "code": 2604,
+      "message": "JSX element type 'Content' does not have any construct or call signatures."
+    },
+    {
+      "file": "skills/prism/studio/app.tsx",
+      "code": 2786,
+      "message": "'Content' cannot be used as a JSX component.   Its type 'unknown' is not a valid JSX element type."
+    },
+    {
+      "file": "skills/prism/studio/app.tsx",
+      "code": 2604,
+      "message": "JSX element type 'Content' does not have any construct or call signatures."
+    },
+    {
+      "file": "skills/prism/studio/app.tsx",
+      "code": 2786,
+      "message": "'Content' cannot be used as a JSX component.   Its type 'unknown' is not a valid JSX element type."
+    },
+    {
+      "file": "skills/prism/studio/app.tsx",
+      "code": 18046,
+      "message": "'flow' is of type 'unknown'."
+    },
+    {
+      "file": "skills/prism/studio/app.tsx",
+      "code": 2339,
+      "message": "Property 'initialState' does not exist on type '{ title: string; surface: string; root: PrismNode; states: Record<string, { patches: Record<string, Record<string, unknown>>; }>; responsive: Record<string, { ...; }>; mockData?: Record<...> | undefined; }'."
+    }
+  ],
+  "current": [
+    {
+      "file": "skills/prism/studio/app.tsx",
+      "code": 2604,
+      "message": "JSX element type 'Content' does not have any construct or call signatures."
+    },
+    {
+      "file": "skills/prism/studio/app.tsx",
+      "code": 2786,
+      "message": "'Content' cannot be used as a JSX component.   Its type 'unknown' is not a valid JSX element type."
+    },
+    {
+      "file": "skills/prism/studio/app.tsx",
+      "code": 2604,
+      "message": "JSX element type 'Content' does not have any construct or call signatures."
+    },
+    {
+      "file": "skills/prism/studio/app.tsx",
+      "code": 2786,
+      "message": "'Content' cannot be used as a JSX component.   Its type 'unknown' is not a valid JSX element type."
+    },
+    {
+      "file": "skills/prism/studio/app.tsx",
+      "code": 18046,
+      "message": "'flow' is of type 'unknown'."
+    },
+    {
+      "file": "skills/prism/studio/app.tsx",
+      "code": 2339,
+      "message": "Property 'initialState' does not exist on type '{ title: string; surface: string; root: PrismNode; states: Record<string, { patches: Record<string, Record<string, unknown>>; }>; responsive: Record<string, { ...; }>; mockData?: Record<...> | undefined; }'."
+    }
+  ]
+}

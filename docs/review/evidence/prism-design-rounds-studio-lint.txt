@@ -1,0 +1,10 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+/workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/prism/studio/app.tsx
+  126:1   error  Function 'App' has too many lines (886). Maximum allowed is 60                          max-lines-per-function
+  126:1   error  Function 'App' has a complexity of 44. Maximum allowed is 15                            complexity
+  198:12  error  Dynamic module loading is allowed only in a declared loader boundary                    discipline/no-dynamic-module-loading
+  303:1   error  File has too many lines (1010). Maximum allowed is 300                                  max-lines
+  871:15  error  Use one explicit value and at most one fallback; longer fallback chains hide authority  discipline/no-fallback-chain
+
+✖ 5 problems (5 errors, 0 warnings)

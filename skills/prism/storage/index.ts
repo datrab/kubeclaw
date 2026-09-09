@@ -1,3 +1,4 @@
+import { boundDesignRound } from "../control/design-generations.ts";
 import { createHash, randomUUID } from "node:crypto";
 import {
   readFile,
@@ -146,28 +147,21 @@ export class RevisionRepository {
     return inTransaction(this.db, connection => insertDocument(connection, projectId, key, document, user, designRequestId));
   }
 
-  async createDirectionSet(projectKey: string, designs: readonly { key: string; title: string; summary: string; document: PrismDocument; evidence?: Record<string, unknown> }[]) {
+  async createDirectionSet(projectKey: string, generationId: string, designs: readonly { key: string; title: string; summary: string; document: PrismDocument; evidence?: Record<string, unknown> }[]) {
     if (designs.length !== 3 || new Set(designs.map(item => item.key)).size !== 3
       || designs.some(item => !item.key || !item.title || !item.summary || item.document.meta.projectId !== projectKey)) throw new Error("invalid Prism design set");
     return inTransaction(this.db, async connection => {
       const project = await connection.query<{ id: string }>("SELECT id FROM prism.project WHERE external_id=$1 FOR UPDATE", [projectKey]);
       if (!project.rows[0]) throw new Error("active Prism project not found");
       const projectId = project.rows[0].id;
-      const active = await connection.query<{ id: string }>("SELECT id FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY created_at DESC LIMIT 1", [projectId]);
-      if (!active.rows[0]) throw new Error("active Prism design request not found");
-      const requestId = active.rows[0].id;
-      const existing = await connection.query<{ id: string; source_document_id: string; direction_key: string; content_digest: string }>("SELECT d.id,d.source_document_id,d.direction_key,d.content_digest FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id WHERE d.project_id=$1 AND doc.design_request_id=$2 ORDER BY d.direction_key", [projectId, requestId]);
-      if (existing.rows.length) {
-        if (existing.rows.length !== 3 || existing.rows.some(row => {
-          const design = designs.find(item => item.key === row.direction_key);
-          return !design || row.content_digest !== digest(JSON.stringify(design.document));
-        })) throw new Error("Prism design set conflicts with existing generation");
-        return { status: 'already-created', projectId, documentId: existing.rows[0]!.source_document_id,
-          directions: existing.rows.map(row => ({ directionId: row.id, documentId: row.source_document_id, key: row.direction_key })) };
-      }
+      const resultDigest = digest(JSON.stringify(designs));
+      const bound = await boundDesignRound(connection,projectId,generationId,resultDigest);
+      if (bound.replay) return bound.replay as {status: string; projectId: string; documentId: string; directions: Array<{directionId:string;documentId:string;key:string}>};
+      const requestId = bound.requestId;
       const directions = [];
       for (const item of designs) {
-        const documentId = await insertDocument(connection, projectId, `direction-${item.key}`, item.document, 'agent:prism', requestId);
+        const documentId = await insertDocument(connection, projectId, `direction-${generationId}-${item.key}`, item.document, 'agent:prism', requestId);
+        await connection.query("UPDATE prism.design_document SET design_round_id=$2 WHERE id=$1",[documentId,generationId]);
         const current = await new RevisionRepository(connection).current(documentId);
         const directionId = randomUUID();
         const content = JSON.stringify(item.document);
@@ -175,7 +169,9 @@ export class RevisionRepository {
           [directionId, projectId, documentId, current.id, item.key, item.title, item.summary, content, digest(content), JSON.stringify(item.evidence ?? {})]);
         directions.push({ directionId, documentId, key: item.key });
       }
-      return { status: 'created', projectId, documentId: directions[0]!.documentId, directions };
+      const result = { status: 'created', generationId, projectId, documentId: directions[0]!.documentId, directions };
+      await connection.query("UPDATE prism.design_round SET result_digest=$2,result=$3::jsonb WHERE id=$1",[generationId,resultDigest,JSON.stringify(result)]);
+      return result;
     });
   }
   async current(

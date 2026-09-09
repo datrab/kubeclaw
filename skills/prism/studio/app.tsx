@@ -1,3 +1,4 @@
+import { savedRound, pendingRound, submitRound, currentDirections, loadRoundDocument, completeRound, waitForRound, type RoundClient, type StudioDirection } from "./design-round-client.ts";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Puck, type Config } from "@puckeditor/core";
@@ -159,9 +160,10 @@ function App() {
   const [preferenceEvents, setPreferenceEvents] = useState<
     Array<{ eventId: string; action: string; retractsEventId?: string }>
   >([]);
-  const [directions, setDirections] = useState<
-    Array<{ id: string; title: string; summary: string; state: string; evidence?:{thesis?:string;tradeoffs?:string[];references?:Array<{id?:string;summary?:string}>} }>
-  >([]);
+  const [directions,setDirections]=useState<StudioDirection[]>([]);
+  const [roundMessage,setRoundMessage]=useState("");
+  const [roundBusy,setRoundBusy]=useState(false);
+  const [roundPending,setRoundPending]=useState(false);
   const [brief,setBrief]=useState<Record<string,unknown>|null>(null);
   const [projects,setProjects]=useState<Array<{id:string;external_id:string;name:string;document_id:string|null;direction_count:number}>>([]);
   const [revisions, setRevisions] = useState<
@@ -220,12 +222,21 @@ function App() {
       );
       const projectId = new URLSearchParams(location.search).get("project");
       if (projectId) {
+        const client:RoundClient={projectId,userId:sessionData.userId,csrf:sessionData.csrf,origin:location.origin,storage:sessionStorage};
+        const pending=savedRound(client);
+        if(pending){setRoundPending(true);setRoundMessage("Reconnecting to the same design round…");await submitRound(client,pending);}
         const briefResponse=await fetch(`/v1/projects/${encodeURIComponent(projectId)}/brief`);
         if(briefResponse.ok)setBrief(((await briefResponse.json()) as {request?:Record<string,unknown>}).request??null);
         for(let attempt=0;attempt<300;attempt++){
-          const result=await fetch(`/v1/projects/${encodeURIComponent(projectId)}/directions`);
-          if(result.ok){const items=((await result.json()) as {items:Array<{id:string;title:string;summary:string;state:string;evidence?:{thesis?:string;tradeoffs?:string[];references?:Array<{id?:string;summary?:string}>}}>}).items;if(items.length){setDirections(items);break;}}
-          await new Promise((resolve)=>setTimeout(resolve,2000));
+          const items=await currentDirections(client);
+          if(items.length){
+            const loadedRound=await loadRoundDocument(client,items,id);setDirections(items);setDocument(loadedRound.document);
+            const currentQuery=new URLSearchParams(location.search);currentQuery.set("document",loadedRound.documentId);history.replaceState(null,"",`?${currentQuery.toString()}`);
+            const completed=completeRound(client,items);setRoundPending(Boolean(savedRound(client)));
+            setRoundMessage(completed ? "New design round ready." : pending ? "Current round loaded; the previous request remains available for retry." : "");
+            break;
+          }
+          await new Promise(resolve=>setTimeout(resolve,2000));
         }
       }
     })().catch((error) =>
@@ -436,6 +447,24 @@ function App() {
         ),
       );
     await loadLearned();
+  };
+  const requestNewRound = async () => {
+    const query=new URLSearchParams(location.search);
+    const projectId=query.get("project");const documentId=query.get("document");
+    if (!projectId || !documentId || !document) throw new Error("Current design identity is missing");
+    const client:RoundClient={projectId,userId,csrf,origin:location.origin,storage:sessionStorage};
+    const pending=pendingRound(client,{documentId,expectedRevision:document.meta.revision,parentRoundId:directions[0]?.generation_id});
+    setRoundPending(true);setRoundBusy(true);setRoundMessage("Requesting the design round…");
+    try {
+      const accepted=await submitRound(client,pending);
+      setRoundMessage("Design round pending. Checking for the three proposals…");
+      const ready=await waitForRound(client,accepted);
+      if(!ready){setRoundMessage("Still pending. Retry the same round to reconnect without creating another request.");return;}
+      setDirections(ready.directions);setDocument(ready.document);setQuality(null);setAcceptedWarnings([]);setApprovalMessage("");setRoundPending(false);setRoundMessage("New design round ready.");
+      query.set("document",ready.documentId);history.replaceState(null,"",`?${query.toString()}`);
+    } catch(error) {
+      setRoundMessage(`Round pending or conflicted: ${error instanceof Error ? error.message : String(error)} The request key is retained; retry does not create a new round.`);
+    } finally {setRoundBusy(false);}
   };
   const approve = async () => {
     if (!document) return;
@@ -696,9 +725,12 @@ function App() {
       )}
       <aside className="navigator">
         <p className="eyebrow">Experience</p>
+        {roundMessage && <p role="status">{roundMessage}</p>}
+        {(roundPending || (directions.length===3 && directions.every(direction=>direction.state==="rejected"))) && <button disabled={roundBusy} onClick={()=>void requestNewRound().catch(error=>setRoundMessage(String(error)))}>{roundBusy ? "Waiting for new round…" : roundPending ? "Retry the same design round" : "Request new design round"}</button>}
         {directions.length > 0 && (
           <>
             <h2>Directions</h2>
+
             {directions.map((direction) => (
               <article key={direction.id} className="direction">
                 <strong>{direction.title}</strong>

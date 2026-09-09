@@ -1,3 +1,4 @@
+import { startDesignRound, assertArchitectureTransition, approvedRoundBaseline } from "../control/design-generations.ts";
 import { loadControlConfig } from "./control-config.ts";
 import { authorizePipelinePreferenceSubject } from "../control/pipeline-preference-subject.ts";
 import { createPreferenceGeneration, preferenceEvents, setPersonalPreferences, requirePreferenceGeneration } from "../control/preference-snapshot.ts";
@@ -298,13 +299,8 @@ const server = createServer(async (request, response) => {
       try{
         await requestClient.query("BEGIN");
         await requestClient.query("SELECT id FROM prism.project WHERE id=$1 FOR UPDATE",[project.rows[0]!.id]);
-        const active=await requestClient.query<{architecture_digest:string;architecture_revision:number}>("SELECT architecture_digest,architecture_revision FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY architecture_revision DESC LIMIT 1",[project.rows[0]!.id]);
-        if(active.rows[0]){
-          const current=active.rows[0];
-          if(designRequest.architecture.revision<current.architecture_revision)throw new Error("stale architecture revision");
-          if(designRequest.architecture.revision===current.architecture_revision&&designRequest.architecture.contentDigest!==current.architecture_digest)throw new Error("architecture revision digest conflict");
-          if(designRequest.approvalId&&designRequest.architecture.contentDigest!==current.architecture_digest)throw new Error("approval cannot activate a different architecture");
-        }
+        const active=await requestClient.query<{architecture_digest:string;architecture_revision:number|string;request:Record<string,unknown>}>("SELECT architecture_digest,architecture_revision,request FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY architecture_revision DESC LIMIT 1",[project.rows[0]!.id]);
+        if(active.rows[0])assertArchitectureTransition(active.rows[0],designRequest);
         await requestClient.query("UPDATE prism.design_request SET status='superseded' WHERE project_id=$1 AND architecture_revision<$2 AND status='active'",[project.rows[0]!.id,designRequest.architecture.revision]);
         await requestClient.query("INSERT INTO prism.design_request(id,project_id,architecture_artifact_id,architecture_digest,architecture_revision,request,status) VALUES($1,$2,$3,$4,$5,$6::jsonb,'active') ON CONFLICT(project_id,architecture_revision) DO UPDATE SET architecture_artifact_id=excluded.architecture_artifact_id,architecture_digest=excluded.architecture_digest,request=excluded.request,status='active'",[randomUUID(),project.rows[0]!.id,designRequest.architecture.artifactId,designRequest.architecture.contentDigest,designRequest.architecture.revision,JSON.stringify(designRequest)]);
         await requestClient.query("COMMIT");
@@ -312,15 +308,9 @@ const server = createServer(async (request, response) => {
       if (!designRequest.approvalId)
         return json(response, 202, {
           result: { status: "waiting", projectId: project.rows[0]!.id },
-          preferences: await createPreferenceGeneration(pool, preferenceSubjectId, projectKey, Date.now(), {operation:"design-set",architectureDigest:designRequest.architecture.contentDigest}),
+          preferences: await startDesignRound(pool,{projectId:projectKey,subjectId:preferenceSubjectId,startKey:`dispatch:${key}`,architectureDigest:designRequest.architecture.contentDigest,architectureRevision:designRequest.architecture.revision}),
         });
-      const baseline = await pool.query<{
-        bundle_digest: string;
-        bundle_artifact_id: string;
-      }>(
-        "SELECT b.bundle_digest,b.bundle_artifact_id FROM prism.baseline b JOIN prism.approval a ON a.id=b.approval_id JOIN prism.design_request r ON r.project_id=b.project_id AND r.status='active' WHERE b.project_id=$1 AND b.approval_id=$2 AND a.architecture_digest=r.architecture_digest",
-        [project.rows[0]!.id, designRequest.approvalId],
-      );
+      const baseline = await approvedRoundBaseline(pool,project.rows[0]!.id,designRequest.approvalId);
       if (!baseline.rows[0])
         throw new Error("approved Prism baseline not found");
       return json(response, 200, {
@@ -348,7 +338,7 @@ const server = createServer(async (request, response) => {
         if (!item.key || !item.title || !item.summary) throw new Error("each Prism design requires key, title, and summary");
         return { key: item.key, title: item.title, summary: item.summary, document: documents[index]!, evidence: {...item.evidence, ...generation} };
       });
-      const result = await repository.createDirectionSet(input.projectId, designs);
+      const result = await repository.createDirectionSet(input.projectId, input.generationId!, designs);
       return json(response, result.status === 'created' ? 201 : 200, { ...result,
         studioUrl: `${process.env.PRISM_STUDIO_PUBLIC_URL ?? "https://prism-studio"}?project=${result.projectId}&document=${result.documentId}` });
     }
@@ -368,7 +358,7 @@ const server = createServer(async (request, response) => {
     }
     const actor = authenticated(request);
     if (url.pathname === "/v1/projects" && request.method === "GET") {
-      const result=await pool.query<{id:string;external_id:string;name:string;document_id:string|null;direction_count:number}>("SELECT p.id,p.external_id,p.name,(SELECT d.source_document_id FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id JOIN prism.design_request r ON r.id=doc.design_request_id AND r.status='active' WHERE d.project_id=p.id ORDER BY d.created_at,d.id LIMIT 1) AS document_id,(SELECT count(*)::int FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id JOIN prism.design_request r ON r.id=doc.design_request_id AND r.status='active' WHERE d.project_id=p.id) AS direction_count FROM prism.project p ORDER BY p.updated_at DESC,p.id");
+      const result=await pool.query<{id:string;external_id:string;name:string;document_id:string|null;direction_count:number}>("SELECT p.id,p.external_id,p.name,(SELECT d.source_document_id FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id JOIN prism.design_request r ON r.id=doc.design_request_id AND r.status='active' AND doc.design_round_id IS NOT DISTINCT FROM r.current_round_id WHERE d.project_id=p.id ORDER BY d.created_at,d.id LIMIT 1) AS document_id,(SELECT count(*)::int FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id JOIN prism.design_request r ON r.id=doc.design_request_id AND r.status='active' AND doc.design_round_id IS NOT DISTINCT FROM r.current_round_id WHERE d.project_id=p.id) AS direction_count FROM prism.project p ORDER BY p.updated_at DESC,p.id");
       return json(response,200,{items:result.rows});
     }
     const projectBrief=/^\/v1\/projects\/([0-9a-f-]+)\/brief$/.exec(url.pathname);
@@ -438,18 +428,18 @@ const server = createServer(async (request, response) => {
     );
     if (directions && request.method === "GET") {
       const result = await pool.query(
-        "SELECT d.id,d.source_document_id,d.direction_key,d.title,d.summary,d.proposal,d.state,d.content_digest,d.evidence FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id JOIN prism.design_request r ON r.id=doc.design_request_id AND r.status='active' WHERE d.project_id=$1 ORDER BY d.created_at,d.id",
+        "SELECT d.id,doc.design_round_id AS generation_id,d.source_document_id,d.direction_key,d.title,d.summary,d.proposal,d.state,d.content_digest,d.evidence FROM prism.direction d JOIN prism.design_document doc ON doc.id=d.source_document_id JOIN prism.design_request r ON r.id=doc.design_request_id AND r.status='active' AND doc.design_round_id IS NOT DISTINCT FROM r.current_round_id WHERE d.project_id=$1 ORDER BY d.created_at,d.id",
         [directions[1]],
       );
       return json(response, 200, { items: result.rows });
     }
     if (directions && request.method === "POST") {
-      const input = (await body(request)) as { documentId?: string };
-      if (!input.documentId) throw new Error("documentId is required");
+      const input = (await body(request)) as { documentId?: string; expectedRevision?: number; parentRoundId?: string; idempotencyKey?: string };
+      if (!input.documentId || !Number.isSafeInteger(input.expectedRevision) || !input.idempotencyKey) throw new Error("documentId, expectedRevision and idempotencyKey are required");
       const project=await pool.query<{external_id:string}>("SELECT external_id FROM prism.project WHERE id=$1",[directions[1]]);
-      const requestResult=await pool.query<{request:Record<string,unknown>}>("SELECT request FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY created_at DESC LIMIT 1",[directions[1]]);
+      const requestResult=await pool.query<{request:Record<string,unknown>;architecture_digest:string;architecture_revision:number}>("SELECT request,architecture_digest,architecture_revision FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY created_at DESC LIMIT 1",[directions[1]]);
       if(!project.rows[0]||!requestResult.rows[0])throw new Error("active Prism project not found");
-      const agentResponse=await fetch(new URL("/v1/design-set",prismAgentUrl),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({preferences:await createPreferenceGeneration(pool,userKey(actor.user),project.rows[0].external_id,Date.now(),{operation:"design-set"}),projectId:project.rows[0].external_id,request:requestResult.rows[0].request})});
+      const agentResponse=await fetch(new URL("/v1/design-set",prismAgentUrl),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({preferences:await startDesignRound(pool,{projectId:project.rows[0].external_id,subjectId:userKey(actor.user),startKey:`studio:${userKey(actor.user)}:${input.idempotencyKey}`,architectureDigest:requestResult.rows[0].architecture_digest,architectureRevision:Number(requestResult.rows[0].architecture_revision),parentRoundId:input.parentRoundId,documentId:input.documentId,expectedRevision:input.expectedRevision}),projectId:project.rows[0].external_id,request:requestResult.rows[0].request})});
       const accepted=await agentResponse.json();if(!agentResponse.ok)throw new Error(accepted.error??"Prism OpenClaw agent rejected the design request");
       return json(response,202,accepted);
     }
@@ -637,7 +627,7 @@ const server = createServer(async (request, response) => {
       const accepted = [...(input.acceptedWarningIds ?? [])].sort();
       if (JSON.stringify(requiredWarnings) !== JSON.stringify(accepted))
         throw new Error("all design warnings must be accepted explicitly");
-      const activeRequest=await pool.query<{architecture_digest:string}>("SELECT r.architecture_digest FROM prism.design_request r JOIN prism.design_document d ON d.design_request_id=r.id WHERE r.project_id=$1 AND r.status='active' AND d.id=$2 ORDER BY r.created_at DESC LIMIT 1",[input.projectId,input.documentId]);
+      const activeRequest=await pool.query<{architecture_digest:string}>("SELECT r.architecture_digest FROM prism.design_request r JOIN prism.design_document d ON d.design_request_id=r.id WHERE r.project_id=$1 AND r.status='active' AND d.design_round_id IS NOT DISTINCT FROM r.current_round_id AND d.id=$2 ORDER BY r.created_at DESC LIMIT 1",[input.projectId,input.documentId]);
       if(!activeRequest.rows[0])throw new Error("active Prism design request is required for approval");
       await pool.query(
         "INSERT INTO prism.approval(id,project_id,design_revision_id,design_digest,approved_by,accepted_warning_ids,architecture_digest) VALUES($1,$2,$3,$4,$5,$6::jsonb,$7)",
@@ -689,7 +679,7 @@ const server = createServer(async (request, response) => {
         approved_at: string;
         accepted_warning_ids: string[];
       }>(
-        "SELECT a.design_digest,a.approved_at::text,a.accepted_warning_ids FROM prism.approval a JOIN prism.design_revision rev ON rev.id=a.design_revision_id JOIN prism.design_document d ON d.id=rev.document_id JOIN prism.design_request req ON req.id=d.design_request_id AND req.status='active' WHERE a.id=$1 AND a.project_id=$2 AND a.design_revision_id=$3 AND a.architecture_digest=req.architecture_digest",
+        "SELECT a.design_digest,a.approved_at::text,a.accepted_warning_ids FROM prism.approval a JOIN prism.design_revision rev ON rev.id=a.design_revision_id JOIN prism.design_document d ON d.id=rev.document_id JOIN prism.design_request req ON req.id=d.design_request_id AND req.status='active' AND d.design_round_id IS NOT DISTINCT FROM req.current_round_id WHERE a.id=$1 AND a.project_id=$2 AND a.design_revision_id=$3 AND a.architecture_digest=req.architecture_digest",
         [input.approvalId, input.projectId, currentDocument.id],
       );
       if (!approval.rows[0])
@@ -714,7 +704,7 @@ const server = createServer(async (request, response) => {
         throw new Error("design warnings changed after approval");
       const requestRow=await pool.query<{request:Record<string,unknown>}>("SELECT request FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY created_at DESC LIMIT 1",[input.projectId]);
       const approvedRequest=requestRow.rows[0]?.request??{};
-      const selectedDirection=await pool.query<{title:string;summary:string;evidence:Record<string,unknown>}>("SELECT dir.title,dir.summary,dir.evidence FROM prism.direction dir JOIN prism.design_document d ON d.id=dir.source_document_id JOIN prism.design_request req ON req.id=d.design_request_id AND req.status='active' WHERE dir.project_id=$1 AND dir.source_document_id=$2 AND dir.state='selected' ORDER BY dir.created_at DESC LIMIT 1",[input.projectId,input.documentId]);
+      const selectedDirection=await pool.query<{title:string;summary:string;evidence:Record<string,unknown>}>("SELECT dir.title,dir.summary,dir.evidence FROM prism.direction dir JOIN prism.design_document d ON d.id=dir.source_document_id JOIN prism.design_request req ON req.id=d.design_request_id AND req.status='active' AND d.design_round_id IS NOT DISTINCT FROM req.current_round_id WHERE dir.project_id=$1 AND dir.source_document_id=$2 AND dir.state='selected' ORDER BY dir.created_at DESC LIMIT 1",[input.projectId,input.documentId]);
       if(!selectedDirection.rows[0])throw new Error("an active design direction must be selected before publication");
       const specification = `# Design specification\n\n## Experience goal\n${currentDocument.document.meta.title}\n\n## Approved architecture and users\n${JSON.stringify(approvedRequest.architectureContent??approvedRequest,null,2)}\n\n## Approved direction\n${selectedDirection.rows[0]?.title??"Approved Design Document direction"}: ${selectedDirection.rows[0]?.summary??""}\n\n## Reference evidence and trade-offs\n${JSON.stringify(selectedDirection.rows[0]?.evidence??{},null,2)}\n\n## Screen, state, and flow inventory\n${Object.entries(currentDocument.document.views).map(([id,view])=>`${id}: ${Object.keys(view.states).join(", ")}`).join("\n")}\n${Object.entries(currentDocument.document.flows).map(([id,flow])=>`${id}: ${(flow as {goal?:string}).goal??"user journey"}`).join("\n")}\n\n## Responsive behavior\nCompact, regular, and wide behavior is defined for every view.\n\n## Accessibility requirements\nUse semantic controls, visible keyboard focus, sufficient contrast, reduced motion, accessible names, and complete keyboard operation.\n\n## Content guidance\nUse clear task language from the approved architecture. Do not invent production facts.\n\n## Important design rules\n${(currentDocument.document.theme.rules as Array<{ instruction?: string }>).map((rule) => `- ${rule.instruction ?? ""}`).join("\n")}\n\n## Implementation notes\nPreserve Prism IDs and implement every required state and flow.\n\n## Known limits\nAll prototype data is synthetic. Production behavior remains owned by the implementation pipeline.\n`;
       const criteria = {

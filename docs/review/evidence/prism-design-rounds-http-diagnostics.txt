@@ -1,0 +1,10 @@
+✔ original round client retains a lost-response request across reload and pending retry over real HTTP (69.474653ms)
+✔ original round HTTP calls preserve 400, 500 and text diagnostics and identify broken success contracts (19.837379ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 241.288297

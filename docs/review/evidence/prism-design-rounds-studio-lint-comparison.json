@@ -1,0 +1,19 @@
+{
+  "previousErrorCount": 6,
+  "currentErrorCount": 5,
+  "previousRules": [
+    "max-lines-per-function",
+    "complexity",
+    "discipline/no-dynamic-module-loading",
+    "max-depth",
+    "max-lines",
+    "discipline/no-fallback-chain"
+  ],
+  "currentRules": [
+    "max-lines-per-function",
+    "complexity",
+    "discipline/no-dynamic-module-loading",
+    "max-lines",
+    "discipline/no-fallback-chain"
+  ]
+}

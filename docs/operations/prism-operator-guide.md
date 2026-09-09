@@ -136,3 +136,20 @@ the authenticated Studio session's subject. The recorded generation snapshot
 shows which subject and events were actually used. Changing this platform value
 requires access to the deployment configuration; do not populate it from a
 project-authored value or an untrusted request header.
+
+### Requesting another design round
+
+A new three-design round is separate from retrying delivery of an existing
+round. The authenticated `POST /v1/projects/{internalProjectId}/directions`
+request supplies `documentId`, its current `expectedRevision`,
+`parentRoundId` (the current direction's `generation_id`) and a new
+`idempotencyKey`. Retry that same request with the same key after an uncertain
+response. Reusing the key with changed input is rejected. The current parent
+and active architecture are checked under the project transaction lock.
+
+The round retains its original architecture request, preference snapshot,
+parent document revision and recorded direction feedback. Old documents and
+rejections remain stored; current direction lists move to the new round.
+Late results from superseded architecture or rounds cannot create documents.
+The Prism agent must return the assigned `generationId`; it cannot select a
+new architecture or round by supplying only the project ID.
