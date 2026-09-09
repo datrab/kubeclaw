@@ -1,0 +1,28 @@
+=== RUN   TestNativeProductControllerTransitions
+=== RUN   TestNativeProductControllerTransitions/foreign-sa
+    demo-product-native_test.go:212: native foreign-sa rejected HTTP 401 DEMO_PRODUCT_UNAUTHORIZED
+=== RUN   TestNativeProductControllerTransitions/wrong-signature
+    demo-product-native_test.go:212: native wrong-signature rejected HTTP 409 DEMO_PRODUCT_SIGNATURE_INVALID
+=== RUN   TestNativeProductControllerTransitions/wrong-source
+    demo-product-native_test.go:212: native wrong-source rejected HTTP 409 DEMO_PRODUCT_SUBJECT_CHANGED
+=== RUN   TestNativeProductControllerTransitions/wrong-generation
+    demo-product-native_test.go:212: native wrong-generation rejected HTTP 409 DEMO_PRODUCT_SUBJECT_CHANGED
+=== RUN   TestNativeProductControllerTransitions/wrong-revision
+    demo-product-native_test.go:212: native wrong-revision rejected HTTP 409 DEMO_PRODUCT_SUBJECT_CHANGED
+=== RUN   TestNativeProductControllerTransitions/wrong-actor
+    demo-product-native_test.go:212: native wrong-actor rejected HTTP 409 DEMO_PRODUCT_REQUEST_INVALID
+=== RUN   TestNativeProductControllerTransitions/expired
+    demo-product-native_test.go:212: native expired rejected HTTP 409 DEMO_PRODUCT_DECISION_EXPIRED
+=== NAME  TestNativeProductControllerTransitions
+    demo-product-native_test.go:339: Actual native API successful status PATCH acknowledgement dropped; original controller uncertain -> recreated handler replay, exact revision 251 retained
+    demo-product-native_test.go:340: Original native controller: accept, restart exact replay, changed replay reject, extend +60s, immutable Ready, stale cleanup denied; API revision 248 -> 250; no external delivery claim
+--- PASS: TestNativeProductControllerTransitions (0.32s)
+    --- PASS: TestNativeProductControllerTransitions/foreign-sa (0.00s)
+    --- PASS: TestNativeProductControllerTransitions/wrong-signature (0.00s)
+    --- PASS: TestNativeProductControllerTransitions/wrong-source (0.01s)
+    --- PASS: TestNativeProductControllerTransitions/wrong-generation (0.01s)
+    --- PASS: TestNativeProductControllerTransitions/wrong-revision (0.01s)
+    --- PASS: TestNativeProductControllerTransitions/wrong-actor (0.00s)
+    --- PASS: TestNativeProductControllerTransitions/expired (0.00s)
+PASS
+ok  	github.com/datrab/kubeclaw/cmd/buster-namespace-controller	0.337s

@@ -1,0 +1,16 @@
+{
+  "sourceCandidate": "78ef08eaae0c8fcbfc6412d4c0f0f93113caec81",
+  "freshRemoteBase": "b06c06dce3364c482a1da5637c36bc2b14ba8c72",
+  "packageLockGitBlob": "96cdba80650e16fb5699df314516b14d08931b95",
+  "cacheSource": "/workspace/scratch/15fb596e6560/run6-root/node_modules",
+  "rootAndReviewerLockBytesEqual": true,
+  "externalDependencies": "Immutable hardlinked files from the current root dependency cache; physical bytes are shared, not independently copied.",
+  "externalCachedVersionMismatches": 0,
+  "workspaceLinks": 62,
+  "workspaceSourceTargetsAllInsideReviewerCheckout": true,
+  "workspaceLinksRebuiltFromCurrentLock": true,
+  "inheritedScratchTestAgentLinkExcluded": true,
+  "noPostLinkInstallOrDependencyMutation": true,
+  "reason": "Fresh npm ci encountered actual shared-disk ENOSPC. Only own previous and failed dependency copies were removed; source and evidence retained. Root authorized immutable hardlink cache to avoid another 418MB duplicate.",
+  "nativeAssets": "Official checksum and member-byte-verified run5 envtest assets used read-only; no duplicate extraction."
+}

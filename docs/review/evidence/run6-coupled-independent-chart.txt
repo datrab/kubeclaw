@@ -1,0 +1,28 @@
+Source: 78ef08eaae0c8fcbfc6412d4c0f0f93113caec81
+Fresh remote base: b06c06dce3364c482a1da5637c36bc2b14ba8c72
+Command: PATH=/workspace/scratch/4e25cf57c177/toolchains/bin:$PATH TMPDIR=/workspace/scratch/15fb596e6560/run6-coupled-review-tmp KUBECLAW_TEST_HELM=/workspace/scratch/4e25cf57c177/toolchains/bin/helm node --test tests/verification/contracts/check-demo-ready-controller.mts tests/verification/deployment/prism-product-decisions.test.mjs
+Exit: 0
+Error: execution error at (kubeclaw/templates/buster-namespace-controller.yaml:229:181): Ready producer ServiceAccount is required
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/buster-namespace-controller.yaml:237:16): Product decisions require the Ready TLS listener
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/buster-namespace-controller.yaml:246:24): Human product issuer is required
+
+Use --debug flag to render out invalid YAML
+✔ original Helm renders internal Ready TLS server and exact TokenReview authority (178.941168ms)
+✔ original chart mounts opt-in audience token only into actual Nova runtime container (150.362574ms)
+✔ product decisions are disabled by default and require separate explicit human authority (400.898843ms)
+✔ disabled product authority creates no key mount, audience token, environment or network access (72.981551ms)
+✔ explicit product authority belongs only to Control and uses separate signing and scoped transport (181.232159ms)
+✔ incomplete or ambiguous product authority fails actual Helm validation (600.274474ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 952.428008
+

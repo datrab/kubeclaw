@@ -1,0 +1,20 @@
+Source: 78ef08eaae0c8fcbfc6412d4c0f0f93113caec81
+Fresh remote base: b06c06dce3364c482a1da5637c36bc2b14ba8c72
+Command: TMPDIR=/workspace/scratch/15fb596e6560/run6-coupled-review-tmp node --test tests/verification/reliability/blob-read-boundary.test.mjs tests/verification/reliability/blob-read-independent.test.mjs
+Exit: 0
+✔ original get rejects genuine content-addressed bytes over its configured maximum before allocation (14.46988ms)
+✔ original bounded reader preserves zero, exact maximum and unchanged quota/digest behavior (58.86795ms)
+✔ final symlink, parent symlink and FIFO cannot become blob bytes (17.567412ms)
+✔ corrupt and truncated content reject repeatedly without losing the original valid reader (75.116593ms)
+✔ actual concurrent parent replacement is rejected or returns only the exact originally addressed bytes (277.00098ms)
+{"maximumBytes":16,"storedBytes":33,"oversizedReadsRejected":160,"exactBoundaryReadsSucceeded":160,"descriptorSoftLimit":64}
+✔ independent real low-descriptor process rejects oversized reads repeatedly and still reads exact-boundary bytes (489.644658ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 835.629224
+
