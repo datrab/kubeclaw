@@ -1,0 +1,87 @@
+✖ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (543.372238ms)
+✖ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (804.111118ms)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Missing expected rejection.
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async worker (file:///workspace/scratch/0d8f8ddb55c3/run3-adapter-identity/tests/verification/reliability/effect-identity-version.test.mts:61:7)
+    at async file:///workspace/scratch/0d8f8ddb55c3/run3-adapter-identity/tests/verification/reliability/effect-identity-version.test.mts:90:39 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: /EFFECT_IDENTITY_CHANGED_DURING_ADMISSION/,
+  operator: 'rejects',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+✖ original recorded legacy journal prefixes recover without identity migration across native locales (11809.511111ms)
+✔ new original durable producers and completed replay use the same explicit portable identity in both locale directions (2965.846354ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15216.15942
+
+✖ failing tests:
+
+test at tests/verification/reliability/adapter-dependency-identity.test.mts:27:1
+✖ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (543.372238ms)
+  Error: EFFECT_OUTCOME_UNRESOLVED:effect:json-utf16-v1:445d4aefca5bd1e4a6cc935179071a11a2f92f9cb0fd60bc034c75704924e8ca:Value failed canonical contract effectRequest
+      at AdapterRuntime.invoke (file:///workspace/scratch/0d8f8ddb55c3/run3-adapter-identity/skills/nova/core/execution/adapters.ts:60:13)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-adapter-identity/tests/verification/reliability/adapter-dependency-identity.test.mts:59:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/verification/reliability/adapter-dependency-identity.test.mts:109:1
+✖ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (804.111118ms)
+  Error: EFFECT_OUTCOME_UNRESOLVED:effect:json-utf16-v1:9c05cf6af9a2bc07b5c3392572ccd31efbfe20f4089d7b6232ea520a80cb2e05:Value failed canonical contract effectRequest
+      at AdapterRuntime.invoke (file:///workspace/scratch/0d8f8ddb55c3/run3-adapter-identity/skills/nova/core/execution/adapters.ts:60:13)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-adapter-identity/tests/verification/reliability/adapter-dependency-identity.test.mts:151:17)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/verification/reliability/effect-identity-version.test.mts:92:3
+✖ original recorded legacy journal prefixes recover without identity migration across native locales (11809.511111ms)
+  Error: Command failed: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/scratch/0d8f8ddb55c3/run3-adapter-identity/tests/verification/reliability/effect-identity-version.test.mts --worker admission-race dispatch /tmp/effect-identity-legacy-qDWjzt/admission-race
+  node:internal/modules/run_main:107
+      triggerUncaughtException(
+      ^
+  
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async worker (file:///workspace/scratch/0d8f8ddb55c3/run3-adapter-identity/tests/verification/reliability/effect-identity-version.test.mts:61:7)
+      at async file:///workspace/scratch/0d8f8ddb55c3/run3-adapter-identity/tests/verification/reliability/effect-identity-version.test.mts:90:39 {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /EFFECT_IDENTITY_CHANGED_DURING_ADMISSION/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+  
+  Node.js v24.19.0
+  
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/0d8f8ddb55c3/run3-adapter-identity/tests/verification/reliability/effect-identity-version.test.mts:101:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    status: 1,
+    signal: null,
+    output: [ null, <Buffer >, <Buffer 6e 6f 64 65 3a 69 6e 74 65 72 6e 61 6c 2f 6d 6f 64 75 6c 65 73 2f 72 75 6e 5f 6d 61 69 6e 3a 31 30 37 0a 20 20 20 20 74 72 69 67 67 65 72 55 6e 63 61 ... 652 more bytes> ],
+    pid: 783,
+    stdout: <Buffer >,
+    stderr: <Buffer 6e 6f 64 65 3a 69 6e 74 65 72 6e 61 6c 2f 6d 6f 64 75 6c 65 73 2f 72 75 6e 5f 6d 61 69 6e 3a 31 30 37 0a 20 20 20 20 74 72 69 67 67 65 72 55 6e 63 61 ... 652 more bytes>
+  }

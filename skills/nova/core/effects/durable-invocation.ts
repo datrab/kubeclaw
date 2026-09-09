@@ -2,6 +2,9 @@ import type { AdapterInstance, EffectJournal, EffectReceipt, EffectRequest, Pack
 import type { EffectAuditSink, EffectInvocation, EffectLockManager } from './contracts.ts';
 import { assertMatchingRequest, stableEffectId } from './identity.ts';
 import { acquireResource } from './resource-acquisition.ts';
+import { resolveDependencyInvocation } from './dependency-identity.ts';
+import {portableJson} from '@kubeclaw/plugin-sdk';
+import {validateContractValue} from '@kubeclaw/plugin-foundation/registry/schema';
 
 interface Dependencies {
   readonly journal: EffectJournal;
@@ -28,12 +31,13 @@ export async function invokeDurableEffect(
 
 class DurableInvocation {
   readonly #dependencies: Dependencies; readonly #adapter: AdapterInstance; readonly #adapterOwner: PackageResolution;
-  readonly #invocation: EffectInvocation; readonly #signal: AbortSignal; #lock: ResourceLock | undefined;
+  #invocation: EffectInvocation; readonly #signal: AbortSignal; #lock: ResourceLock | undefined;
   constructor(dependencies: Dependencies, adapter: AdapterInstance, adapterOwner: PackageResolution, invocation: EffectInvocation, signal: AbortSignal) {
     this.#dependencies = dependencies; this.#adapter = adapter; this.#adapterOwner = adapterOwner; this.#invocation = invocation; this.#signal = signal;
   }
 
   async execute(): Promise<EffectReceipt> {
+    if (this.#invocation.dependencyIdentity) this.#invocation = await resolveDependencyInvocation(this.#dependencies.journal, this.#invocation);
     let prior = await this.#dependencies.journal.request(this.#invocation.idempotencyKey);
     assertMatchingRequest(prior, this.#invocation);
     const existing = await this.#existingReceipt(prior);
@@ -42,6 +46,7 @@ class DurableInvocation {
     let failed = false;
     let failure: unknown;
     try {
+      if (this.#invocation.dependencyIdentity) this.#invocation = await resolveDependencyInvocation(this.#dependencies.journal, this.#invocation);
       prior = await this.#dependencies.journal.request(this.#invocation.idempotencyKey);
       assertMatchingRequest(prior, this.#invocation);
       const lockedExisting = await this.#existingReceipt(prior);
@@ -64,6 +69,10 @@ class DurableInvocation {
   async #existingReceipt(prior: EffectRequest | undefined): Promise<EffectReceipt | undefined> {
     const receipt = await this.#dependencies.journal.receipt(this.#invocation.idempotencyKey);
     if (receipt && (!prior || receipt.effectId !== prior.effectId)) throw new Error(`EFFECT_RECEIPT_ORPHANED:${this.#invocation.idempotencyKey}`);
+    if (receipt && this.#invocation.dependencyIdentity) {
+      validateContractValue('effectReceipt', receipt);
+      if (portableJson(receipt.adapter) !== portableJson(this.#adapterOwner)) throw new Error('ADAPTER_DEPENDENCY_RECEIPT_OWNER_MISMATCH');
+    }
     return receipt;
   }
 
@@ -78,6 +87,7 @@ class DurableInvocation {
 
   async #executeLocked(prior: EffectRequest | undefined): Promise<EffectReceipt> {
     const request = this.#request(prior);
+    if (this.#invocation.dependencyIdentity) validateContractValue('effectRequest', request);
     const controller = new AbortController();
     const timer = this.#renew(controller);
     try {
@@ -134,11 +144,16 @@ class DurableInvocation {
     return this.#dependencies.locks.assertCurrent(this.#lock!.lockId, this.#invocation.attempt.attemptId);
   }
 
-  async #complete(request: EffectRequest, outcome: Pick<EffectReceipt, 'status' | 'result' | 'error'>): Promise<EffectReceipt> {
+  #complete(request: EffectRequest, outcome: Pick<EffectReceipt, 'status' | 'result' | 'error'>): Promise<EffectReceipt> {
     const receipt: EffectReceipt = {
       schemaVersion: 'effect-receipt.v2', effectId: request.effectId, idempotencyKey: this.#invocation.idempotencyKey,
       adapter: this.#adapterOwner, ...outcome, recordedAt: this.#dependencies.now().toISOString(),
     };
+    if (this.#invocation.dependencyIdentity) {portableJson(receipt); validateContractValue('effectReceipt', receipt);}
+    return this.#persistReceipt(request, receipt);
+  }
+
+  async #persistReceipt(request: EffectRequest, receipt: EffectReceipt): Promise<EffectReceipt> {
     await this.#dependencies.journal.completed(receipt); this.#dependencies.audit?.completed(request, receipt); return receipt;
   }
 

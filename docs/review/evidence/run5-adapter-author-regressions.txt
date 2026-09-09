@@ -1,0 +1,37 @@
+Source 53640e08b6214909aa495fec48036048a4bd4c2c
+Command: node --test tests/verification/reliability/{adapter-dependency-contract.test.mjs,adapter-dependency-locale.test.mjs,adapter-dependency-identity.test.mts,effect-identity-version.test.mts,effect-lock-lifetime.test.mts,effect-journal-ownership.test.mts,external-effect-recovery.test.mts}
+✔ canonical effect keys retain opaque bounds and exactly bounded historical producer grammar (26.312916ms)
+✔ new complete subject and owner identity has explicit version and compact bounded key (1.234833ms)
+✔ canonical resource owner admits real resource namespaces without relaxing other request fields (3.543846ms)
+✔ original activation IDs and public delivery tokens propagate only to owning effect and lock fields (4.995707ms)
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (3273.117829ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (4178.288959ms)
+{"mode":"current","receiverCalls":1,"dependencyKeys":["adapter-dep:utf16-v1:51311a52c9e74ceb2629dbc7a912ad980ca0f99c11ebf4c7f6c697ca55e08462:7592e089ae1353e3e1082dbab228c9e0e996ac840b66693524c8d4a2b1d4b9a7"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity current across native locales (2353.09837ms)
+{"mode":"legacy-resume","receiverCalls":1,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:af1c50553ee6092eac588d8b5341b04280db2558f9fc8477403add04392796cb:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity legacy-resume across native locales (2664.711212ms)
+{"mode":"historical-countercheck","receiverCalls":2,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:ba376847c80a9a4d93fc62e36c5a28d975dcd51721909fb6caba6f08d210d70b:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604","adapter:test.locale-dependency:consumer:network.http:af2eb007d8b84e33b8cc2a22f1031dc620c4dc19ec71bfc8fb0a9297b46c8e4e:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity historical-countercheck across native locales (2613.570728ms)
+✔ original recorded legacy journal prefixes recover without identity migration across native locales (13075.004468ms)
+✔ new original durable producers and completed replay use the same explicit portable identity in both locale directions (3479.292974ms)
+✔ effect journal owns request and receipt payloads: memory (55.3415ms)
+✔ effect journal owns request and receipt payloads: file (52.304007ms)
+✔ effect journal owns request and receipt payloads: file-sidecar (50.541614ms)
+✔ effect releases resource after locked recheck rejects conflicting-request (74.412837ms)
+✔ effect releases resource after locked recheck rejects orphaned-receipt (68.88037ms)
+✔ effect releases resource after locked recheck rejects corrupt-journal (48.821149ms)
+✔ real artifact completion and receipt replay release once without repeating the effect (136.398149ms)
+✔ before-receipt cannot silently repeat a real external mutation (2309.070738ms)
+✔ after-receipt cannot silently repeat a real external mutation (2150.691731ms)
+✔ lost-response cannot silently repeat a real external mutation (2227.608454ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17259.120349
+
+Exit 0.
+

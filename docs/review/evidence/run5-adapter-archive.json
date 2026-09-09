@@ -1,0 +1,17 @@
+{
+  "remoteCommit": "9628872976da8d43c3a17faa89962f9e32d88979",
+  "freshRemoteUntruncated": true,
+  "files": [
+    {
+      "gitBlob": "feab5c6fed20926a18c981b475a234f8656818a3",
+      "match": true,
+      "path": "skills/nova/core/execution/adapter-startup.ts"
+    },
+    {
+      "gitBlob": "752b9246a6331fe2b31d5cc00a859a15aa0ce910",
+      "match": true,
+      "path": "skills/nova/core/execution/adapter-support.ts"
+    }
+  ]
+}
+

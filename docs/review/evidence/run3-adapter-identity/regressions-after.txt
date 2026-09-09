@@ -1,0 +1,12 @@
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (2838.309349ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (4101.630956ms)
+✔ original recorded legacy journal prefixes recover without identity migration across native locales (12733.436224ms)
+✔ new original durable producers and completed replay use the same explicit portable identity in both locale directions (3040.942516ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16210.794117

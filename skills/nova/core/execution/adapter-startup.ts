@@ -1,4 +1,5 @@
 import type { AsyncLocalStorage } from 'node:async_hooks';
+import {portableJson} from '@kubeclaw/plugin-sdk';
 import fs from 'node:fs';
 import path from 'node:path';
 import type { AdapterActivationContext, AdapterCleanupContext, AdapterDependencyOptions, AdapterFactory, AdapterInstance, CapabilityInvocation, EventIdentity } from '@kubeclaw/plugin-sdk';
@@ -8,6 +9,7 @@ import { authorizeCapabilityInvocation } from './authorization.ts';
 import type { AdapterRuntimeOptions } from './adapters.ts';
 import { AdapterInvocationPhase, type AdapterInvocationOwner } from './adapter-invocation-phase.ts';
 import { adapterOwner, requestDigest, shutdownLateAdapter, withAdapterStartupTimeout } from './adapter-support.ts';
+import {portableDependencyKey} from '../effects/dependency-identity.ts';
 
 interface StartupOptions {
   readonly runtime: AdapterRuntimeOptions; readonly invocationContext: AsyncLocalStorage<AdapterInvocationOwner>;
@@ -71,6 +73,8 @@ export class AdapterStarter {
   }
 
   async #invokeDependency(adapterId: string, lifecycle: AbortController, active: () => void, capability: string, request: CapabilityInvocation, confidential: boolean, options?: AdapterDependencyOptions): Promise<Readonly<Record<string, unknown>>> {
+    portableJson(request);
+    request = structuredClone(request);
     active(); const parent = this.#options.invocationContext.getStore();
     parent?.phase.assertActive();
     const deliveryId = dependencyDeliveryId(options, parent);
@@ -102,16 +106,18 @@ export class AdapterStarter {
     return { ready: () => raw.ready(), invoke: async (invocation) => {
       const signal = AbortSignal.any([invocation.signal, lifecycle.signal]);
       const phase = new AdapterInvocationPhase(lifecycle.signal, this.#options.runtime.shutdownTimeoutMs);
+      const request = structuredClone(invocation.request);
       try {
-        return await this.#options.invocationContext.run({ adapterId, phase, signal, attempt: invocation.request.attempt, executionKey: invocation.request.idempotencyKey },
+        return await this.#options.invocationContext.run({ adapterId, phase, signal, request, confidential: invocation.confidential === true, attempt: request.attempt, executionKey: request.idempotencyKey },
         () => raw.invoke({ ...invocation, signal }));
       } finally { phase.close(); }
     }, ...(raw.receipt ? { receipt: async (request) => {
+      request = structuredClone(request);
       const phase = new AdapterInvocationPhase(lifecycle.signal, this.#options.runtime.shutdownTimeoutMs);
       try {
         phase.assertActive();
-        const result = await this.#options.invocationContext.run({ adapterId, phase, signal: lifecycle.signal, attempt: request.attempt, executionKey: request.idempotencyKey },
-          () => raw.receipt!(request));
+        const result = await this.#options.invocationContext.run({ adapterId, phase, signal: lifecycle.signal, request, confidential: false, attempt: request.attempt, executionKey: request.idempotencyKey },
+          () => raw.receipt!(structuredClone(request)));
         phase.assertActive();return result;
       } finally { phase.close(); }
     } } : {}), shutdown: (signal) => raw.shutdown(signal) };
@@ -168,6 +174,9 @@ function dependencyDeliveryId(options: AdapterDependencyOptions | undefined, par
 function dependencyInvocation(adapterId: string, capability: string, request: CapabilityInvocation, parent: AdapterInvocationOwner | undefined, deliveryId: string | undefined) {
   const attempt = parent?.attempt ?? { runId: `adapter:${adapterId}`, stageId: 'adapter-activation', attemptId: `adapter:${adapterId}`, attemptNumber: 1 };
   const owner = parent ? `:parent:${requestDigest({ operation: 'owner', resource: { type: 'effect.key', canonicalId: parent.executionKey }, payload: { attempt: parent.attempt } })}` : '';
-  return { idempotencyKey: `adapter:${adapterId}:${capability}:${requestDigest(request)}${owner}`, attempt, capability,
+  const dependencyParent = parent ? {request: parent.request, confidential: parent.confidential} : undefined;
+  const {key: idempotencyKey, scope} = portableDependencyKey(adapterId, capability, request, dependencyParent, deliveryId);
+  return { idempotencyKey, dependencyIdentity: {prefix: `adapter:${adapterId}:${capability}:`, suffix: owner, scope, currentKey: idempotencyKey,
+    ...(dependencyParent ? {parent: dependencyParent} : {})}, attempt, capability,
     operation: request.operation, resource: request.resource, payload: request.payload, ...(deliveryId === undefined ? {} : { deliveryId }) };
 }
