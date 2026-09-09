@@ -1,0 +1,19 @@
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:7e59266a2d9c3b2dafe535421045c802e1a692e649afdb79a9898907c2d4203e"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /RECOVERY_GRAPH_DIGEST_MISMATCH/. Input:
+
+'{"status":"error","error":"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked"}\n'
+
+    at file:///workspace/scratch/0d8f8ddb55c3/wave47-sdk/tests/verification/contracts/.legacy-resume-cutover-5.mts:197:10 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '{"status":"error","error":"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked"}\n',
+  expected: /RECOVERY_GRAPH_DIGEST_MISMATCH/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

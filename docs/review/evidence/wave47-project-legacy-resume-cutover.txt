@@ -1,0 +1,3 @@
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:1d7b0d1ab28331864086ec3e71f07f72758e952478487bacdfd5766d282d9980:sha256:32568e54533d41a2548eabc8a242324586c99395eac4828a138aefa3168e2d72\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:1d7b0d1ab28331864086ec3e71f07f72758e952478487bacdfd5766d282d9980"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}

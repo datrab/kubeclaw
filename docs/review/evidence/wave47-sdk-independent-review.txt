@@ -1,0 +1,42 @@
+Independent review of frozen SDK WIP on354ee88; production file SHA256:
+a890ab5ddbaee544ca990b43a458e4f3e442a8e621f0fd17a26c385d10b22875 skills/nova/core/effects/identity.ts
+04e7a8e31dcf411603e4dcc9c99a8987a191e57758b13c0702f9219e020d24aa skills/nova/core/effects/durable-invocation.ts
+bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065 skills/nova/core/state/read-run-evidence.ts
+$ node --test tests/verification/reliability/effect-identity-version.test.mts
+Exit code: 0
+✔ original recorded legacy journal prefixes recover without identity migration across native locales (8192.59625ms)
+✔ new original durable producers and completed replay use the same explicit portable identity in both locale directions (2003.071952ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10425.112025
+
+$ node --test tests/verification/reliability/effect-journal-ownership.test.mts tests/verification/reliability/effect-lock-lifetime.test.mts tests/verification/reliability/external-effect-recovery.test.mts
+Exit code: 0
+✔ effect journal owns request and receipt payloads: memory (2.545231ms)
+✔ effect journal owns request and receipt payloads: file (88.51739ms)
+✔ effect journal owns request and receipt payloads: file-sidecar (32.335631ms)
+✔ effect releases resource after locked recheck rejects conflicting-request (53.499691ms)
+✔ effect releases resource after locked recheck rejects orphaned-receipt (43.644318ms)
+✔ effect releases resource after locked recheck rejects corrupt-journal (39.086884ms)
+✔ real artifact completion and receipt replay release once without repeating the effect (87.379562ms)
+✔ before-receipt cannot silently repeat a real external mutation (1800.162994ms)
+✔ after-receipt cannot silently repeat a real external mutation (1804.648419ms)
+✔ lost-response cannot silently repeat a real external mutation (1792.801278ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5873.931349
+
+$ node tests/verification/contracts/check-plugin-system-v2-phase7.mjs
+Exit code: 0
+{"ok":true,"contract":"plugin-system-v2-phase7"}
+

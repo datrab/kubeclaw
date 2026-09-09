@@ -1,0 +1,10 @@
+{"historicalIdentity":{"runId":"run:project-source","pipelineId":"project:source","graphDigest":"sha256:8d7b0999cd2a2159e586d1a576d681980b7d4d0958d7ad2851d7c7f50957fb68"},"resumedIdentity":{"runId":"run:project-source","pipelineId":"project:source","graphDigest":"sha256:8d7b0999cd2a2159e586d1a576d681980b7d4d0958d7ad2851d7c7f50957fb68"},"snapshotBytesUnchanged":true}
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=false (11625.383652ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12037.568678
