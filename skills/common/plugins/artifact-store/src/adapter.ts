@@ -93,7 +93,7 @@ async function invokeArtifact(
     const digest = digestValue(request.payload.digest);
     const namespace = requiredText(request.payload.namespace, 'NAMESPACE');
     const stored = await findArtifact(records, blobs, artifactId, namespace, (entry) => entry.digest === digest);
-    return { value: stored.value, digest: stored.digest, sizeBytes: stored.sizeBytes };
+    return { value: stored.value, digest: stored.digest, sizeBytes: stored.sizeBytes, artifact: stored.artifact };
   }
   if (request.capability === 'artifacts.read' && request.operation === 'get_latest_json') {
     const namespace = requiredText(request.payload.namespace, 'NAMESPACE');

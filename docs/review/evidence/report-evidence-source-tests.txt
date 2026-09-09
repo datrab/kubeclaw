@@ -1,0 +1,19 @@
+▶ historical report source authority rejects foreign, stale, missing and changed actual evidence
+  ✔ cross-run, duplicate, nonexistent and stale source selections reject (72.245759ms)
+  ✔ actual blob loss and changed bytes reject; preserved store reads original bytes after repair (89.936294ms)
+  ✔ incomplete and nonterminal real journal prefixes reject without repair (16.766866ms)
+  ✔ original requested-effect prefix cannot be mistaken for completed run evidence (7.927918ms)
+  ✔ empty and completed effect prefixes cannot satisfy the pinned lifecycle (29.156344ms)
+  ✔ ordinary effect cannot impersonate a policy-owned confidential audit triplet (544.527528ms)
+  ✔ ambiguous historical producer version and inconsistent claimed execution mode reject (331.374687ms)
+  ✔ source mutation during actual artifact read rejects the snapshot (69.047029ms)
+  ✔ bounded legacy FIFO cannot hang the original resolver (96.262331ms)
+✔ historical report source authority rejects foreign, stale, missing and changed actual evidence (12670.068377ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13272.946923

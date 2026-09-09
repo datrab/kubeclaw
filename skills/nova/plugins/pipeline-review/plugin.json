@@ -10,7 +10,8 @@
       "export": "execute",
       "requiredCapabilities": [
         "runtime.dispatch",
-        "artifacts.write"
+        "artifacts.write",
+        "report.evidence.read"
       ],
       "configSchema": "schemas/config.schema.json",
       "inputSchema": "schemas/input.schema.json",
@@ -18,5 +19,18 @@
     }
   ],
   "observers": [],
-  "adapters": []
+  "adapters": [
+    {
+      "id": "evidence",
+      "module": "src/evidence-adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "report.evidence.read"
+      ],
+      "requiredCapabilities": [
+        "artifacts.read"
+      ],
+      "configSchema": "schemas/evidence-config.schema.json"
+    }
+  ]
 }

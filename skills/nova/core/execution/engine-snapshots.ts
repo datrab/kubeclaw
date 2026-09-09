@@ -72,12 +72,15 @@ export function verifyPinnedGraph(runRoot: string, definition: PipelineDefinitio
   if (stored.digest !== current.digest) throw new Error(`RECOVERY_GRAPH_DIGEST_MISMATCH:${stored.digest}:${current.digest}`); return current;
 }
 
-interface RunSnapshot { readonly schemaVersion: 'run-snapshot.v1'; readonly graph: ExecutionGraphSnapshot; readonly registry: Readonly<Record<string, unknown>>; readonly digest: string }
+export interface RunSnapshot { readonly schemaVersion: 'run-snapshot.v1'; readonly graph: ExecutionGraphSnapshot; readonly registry: Readonly<Record<string, unknown>>; readonly digest: string }
 function snapshotDigest(value: unknown): string { return `sha256:${crypto.createHash('sha256').update(canonicalJson(value)).digest('hex')}`; }
-export function readRunSnapshot(runRoot: string): RunSnapshot {
-  const snapshot = JSON.parse(fs.readFileSync(path.join(runRoot, 'run-snapshot.json'), 'utf8')) as RunSnapshot;
+export function assertRunSnapshot(snapshot: RunSnapshot): void {
   const { digest, ...unsigned } = snapshot;
   if (snapshot.schemaVersion !== 'run-snapshot.v1' || digest !== snapshotDigest(unsigned)) throw new Error('RUN_SNAPSHOT_INTEGRITY_INVALID');
+}
+export function readRunSnapshot(runRoot: string): RunSnapshot {
+  const snapshot = JSON.parse(fs.readFileSync(path.join(runRoot, 'run-snapshot.json'), 'utf8')) as RunSnapshot;
+  assertRunSnapshot(snapshot);
   return snapshot;
 }
 export function writeRunSnapshots(runRoot: string, graph: ExecutionGraphSnapshot, registry: Readonly<Record<string, unknown>>): void {
@@ -102,7 +105,7 @@ export function frozenRegistryRecord(runtime: PreparedRuntime, definition: Pipel
     observers: [...runtime.snapshot.observers].map(([registrationId, entry]) => ({ registrationId, registration: entry.registration, provenance: entry.provenance })),
     adapters: [...runtime.snapshot.adapters].map(([registrationId, entry]) => ({ registrationId, registration: entry.registration, provenance: entry.provenance })),
   };
-  return Object.freeze({ dependencyIdentityVersion: 'parent-invocation.v1', configuration: runtime.configuration, apiVersion: runtime.snapshot.apiVersion, packages: [...runtime.snapshot.packages].map(([id, pkg]) => [id, pkg.provenance]), registrations,
+  return Object.freeze({ effectAuditVersion: 'coordinator-mode.v1', dependencyIdentityVersion: 'parent-invocation.v1', configuration: runtime.configuration, apiVersion: runtime.snapshot.apiVersion, packages: [...runtime.snapshot.packages].map(([id, pkg]) => [id, pkg.provenance]), registrations,
     enabledRegistrations: [...runtime.granted.enabledRegistrations].sort(), grants: [...runtime.granted.grants],
     selectedProviders: [...runtime.granted.selectedProviders].map(([capability, entry]) => ({ capability, provider: entry.provenance })),
     executionGraph: { pipelineId: graph.pipelineId, digest: graph.digest }, configuredStages: definition.stages.map((stage) => {

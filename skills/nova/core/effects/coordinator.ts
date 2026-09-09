@@ -1,16 +1,16 @@
 import crypto from 'node:crypto';
 import type { AdapterInstance, EffectJournal, EffectReceipt, EffectRequest, PackageResolution } from '@kubeclaw/plugin-sdk';
-import type { EffectAuditSink, EffectInvocation, EffectLockManager } from './contracts.ts';
+import type { EffectModeAuditSink, EffectInvocation, EffectLockManager } from './contracts.ts';
 import { invokeDurableEffect } from './durable-invocation.ts';
 
-export type { EffectAuditSink, EffectInvocation, EffectLockManager } from './contracts.ts';
+export type { EffectModeAuditSink, EffectInvocation, EffectLockManager } from './contracts.ts';
 export { MemoryResourceLockManager } from './memory-locks.ts';
 
 export class EffectCoordinator {
-  readonly #journal: EffectJournal; readonly #now: () => Date; readonly #audit: EffectAuditSink | undefined;
+  readonly #journal: EffectJournal; readonly #now: () => Date; readonly #audit: EffectModeAuditSink | undefined;
   readonly #locks: EffectLockManager; readonly #lockTtlMs: number;
 
-  constructor(journal: EffectJournal, now: () => Date = () => new Date(), audit?: EffectAuditSink, locks?: EffectLockManager, lockTtlMs = 300_000) {
+  constructor(journal: EffectJournal, now: () => Date = () => new Date(), audit?: EffectModeAuditSink, locks?: EffectLockManager, lockTtlMs = 300_000) {
     if (!locks) throw new Error('EFFECT_RESOURCE_LOCK_MANAGER_REQUIRED');
     this.#journal = journal; this.#now = now; this.#audit = audit; this.#locks = locks; this.#lockTtlMs = lockTtlMs;
   }
@@ -19,7 +19,11 @@ export class EffectCoordinator {
     return invokeDurableEffect({
       journal: this.#journal,
       now: this.#now,
-      ...(this.#audit ? { audit: this.#audit } : {}),
+      ...(this.#audit ? { audit: {
+        requested: (request: EffectRequest) => this.#audit!.requested(request, 'durable'),
+        accepted: (request: EffectRequest) => this.#audit!.accepted(request, 'durable'),
+        completed: (request: EffectRequest, receipt: EffectReceipt) => this.#audit!.completed(request, receipt, 'durable'),
+      } } : {}),
       locks: this.#locks,
       lockTtlMs: this.#lockTtlMs,
     }, adapter, adapterOwner, invocation, signal);
@@ -34,13 +38,13 @@ export class EffectCoordinator {
     if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
     const request = this.#confidentialRequest(invocation);
     const auditRequest: EffectRequest = { ...request, resource: { type: request.resource.type, canonicalId: '[confidential]' }, payload: { confidential: true } };
-    this.#audit?.requested(auditRequest); this.#audit?.accepted(auditRequest);
+    this.#audit?.requested(auditRequest, 'confidential'); this.#audit?.accepted(auditRequest, 'confidential');
     try {
       const result = await adapter.invoke({ request, signal, confidential: true });
-      this.#audit?.completed(auditRequest, this.#confidentialReceipt(request, adapterOwner, 'completed'));
+      this.#audit?.completed(auditRequest, this.#confidentialReceipt(request, adapterOwner, 'completed'), 'confidential');
       return result;
     } catch (error) {
-      this.#audit?.completed(auditRequest, this.#confidentialReceipt(request, adapterOwner, 'failed'));
+      this.#audit?.completed(auditRequest, this.#confidentialReceipt(request, adapterOwner, 'failed'), 'confidential');
       throw error;
     }
   }

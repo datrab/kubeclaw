@@ -8,7 +8,7 @@ assert.match(source, /context\.invoke\('runtime\.dispatch'/);
 assert.match(source, /context\.invoke\('artifacts\.write'/);
 
 const manifest = JSON.parse(fs.readFileSync('plugin.json', 'utf8'));
-assert.deepEqual(manifest.stages[0].requiredCapabilities, ['runtime.dispatch', 'artifacts.write']);
+assert.deepEqual(manifest.stages[0].requiredCapabilities, ['runtime.dispatch', 'artifacts.write', 'report.evidence.read']);
 assert.equal(manifest.stages[0].module, 'src/stage.ts');
 
 console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.pipeline-review', suite: 'package-boundary' }));

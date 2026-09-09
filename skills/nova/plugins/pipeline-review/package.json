@@ -7,6 +7,8 @@
     "test": "node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
   },
   "dependencies": {
-    "@kubeclaw/plugin-sdk": "*"
+    "@kubeclaw/plugin-sdk": "*",
+    "@kubeclaw/nova-core": "*",
+    "@kubeclaw/pipeline-test-gate-contract": "*"
   }
 }

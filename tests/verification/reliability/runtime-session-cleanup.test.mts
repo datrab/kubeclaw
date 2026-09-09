@@ -83,8 +83,8 @@ async function fixture(mode: Mode) {
     allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'test:runtime-cleanup'}}));
   const runtimeId='kubeclaw.runtime-dispatch:openclaw';
   const granted=core.resolveCapabilityGrants(snapshot,{enabledRegistrations:new Set(['kubeclaw.case-study:case-study']),
-    providers:new Map([['artifacts.write','kubeclaw.artifact-store:artifact-store'],['runtime.dispatch',runtimeId],['network.http','kubeclaw.network-http:http'],['secrets.read','kubeclaw.secret-resolver:secrets'],['git.repository.read','kubeclaw.repository-adapter:repository']]),
-    grants:new Map([['kubeclaw.case-study:case-study',new Map([['runtime.dispatch',{allowedAgents:['agent']}],['artifacts.write',{allowedNamespaces:['kubeclaw.case-study']}]])],[runtimeId,new Map([['network.http',{allowedOrigins:[origin]}],['secrets.read',{allowedNames:['runtime.token']}],['git.repository.read',{allowedPrefixes:['.']}]])]])});
+    providers:new Map([['report.evidence.read','kubeclaw.pipeline-review:evidence'],['artifacts.read','kubeclaw.artifact-store:artifact-store'],['artifacts.write','kubeclaw.artifact-store:artifact-store'],['runtime.dispatch',runtimeId],['network.http','kubeclaw.network-http:http'],['secrets.read','kubeclaw.secret-resolver:secrets'],['git.repository.read','kubeclaw.repository-adapter:repository']]),
+    grants:new Map([['kubeclaw.pipeline-review:evidence',new Map([['artifacts.read',{allowedNamespaces:['kubeclaw.implementation-agent']}]])],['kubeclaw.case-study:case-study',new Map([['report.evidence.read',{allowedRunIds:['run:cleanup']}],['runtime.dispatch',{allowedAgents:['agent']}],['artifacts.write',{allowedNamespaces:['kubeclaw.case-study']}]])],[runtimeId,new Map([['network.http',{allowedOrigins:[origin]}],['secrets.read',{allowedNames:['runtime.token']}],['git.repository.read',{allowedPrefixes:['.']}]])]])});
   const activated=await core.activateRegistry(granted.snapshot,new Set(granted.grants.keys()));
   const secretName=`RUNTIME_CLEANUP_TOKEN_${process.pid}`;process.env[secretName]='local-cleanup-token';
   const configs=new Map<string,Record<string,unknown>>([
@@ -95,6 +95,7 @@ async function fixture(mode: Mode) {
     ['kubeclaw.secret-resolver:secrets',{environment:{'runtime.token':secretName}}],
     ['kubeclaw.repository-adapter:repository',{repositoryRoot:root}],
     ['kubeclaw.artifact-store:artifact-store',{artifactRoot:path.join(root,'artifacts')}],
+    ['kubeclaw.pipeline-review:evidence',{storageRoot:root,orchestratorIssuerId:'nova',maximumJournalBytes:1048576,maximumArtifactBytes:1048576,maximumBundleBytes:1048576}],
   ]);
   const journalPath=path.join(root,'effects.jsonl');
   const create=()=>new core.AdapterRuntime({granted,activated,configs,

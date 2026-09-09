@@ -35,6 +35,7 @@ function definition(
 }
 
 export const CAPABILITY_DEFINITIONS = Object.freeze({
+  'report.evidence.read': definition(['snapshot'], ['pipeline.run'], ['allowedRunIds']),
   'state.read': definition(['read'], ['state.namespace'], ['allowedNamespaces']),
   'state.append': definition(['append'], ['state.namespace'], ['allowedNamespaces']),
   'artifacts.read': definition(['get_json', 'get_latest_json'], ['artifact.object'], ['allowedNamespaces']),

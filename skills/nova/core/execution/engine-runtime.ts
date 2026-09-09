@@ -75,10 +75,10 @@ function auditResult(result: Readonly<Record<string, unknown>>): Readonly<Record
 export function createAdapterRuntime(platform: PlatformConfig, runRoot: string, runtime: PreparedRuntime, events: FileJournal<LifecycleEvent | PluginDomainEvent>): AdapterRuntime {
   const append = effectAppender(events);
   const effects = new EffectCoordinator(new FileEffectJournal(path.join(runRoot, 'effects.jsonl')), () => new Date(), {
-    requested: (request) => append('effect.requested', request, { capability: request.capability, operation: request.operation, resource: request.resource }),
-    accepted: (request) => append('effect.accepted', request, {}),
-    completed: (request, receipt) => append(receipt.status === 'completed' ? 'effect.completed' : 'effect.failed', request,
-      receipt.status === 'completed' ? { adapter: receipt.adapter, result: auditResult(receipt.result ?? {}) } : { adapter: receipt.adapter, error: receipt.error ?? {} }),
+    requested: (request, executionMode) => append('effect.requested', request, { executionMode, capability: request.capability, operation: request.operation, resource: request.resource }),
+    accepted: (request, executionMode) => append('effect.accepted', request, { executionMode }),
+    completed: (request, receipt, executionMode) => append(receipt.status === 'completed' ? 'effect.completed' : 'effect.failed', request,
+      receipt.status === 'completed' ? { executionMode, adapter: receipt.adapter, result: auditResult(receipt.result ?? {}) } : { executionMode, adapter: receipt.adapter, error: receipt.error ?? {} }),
   }, new FileResourceLockManager(path.join(platform.storageRoot, 'resource-locks')), platform.effectLockTtlMs ?? 300_000);
   return new AdapterRuntime({ granted: runtime.granted, activated: runtime.activated, configs: objectMap(platform.adapters), effects,
     shutdownTimeoutMs: platform.shutdownTimeoutMs, emitDomainEvent: async (registration, type, identity, payload) => { events.appendSequenced((sequence) => ({

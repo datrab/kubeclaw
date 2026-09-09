@@ -61,12 +61,12 @@ for(const mode of ['success','origin','capability','method','timeout','lifecycle
         allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'test:cleanup-api'}}));
       const id='test.cleanup-consumer:consumer';
       const granted=core.resolveCapabilityGrants(snapshot,{enabledRegistrations:new Set(['kubeclaw.case-study:case-study']),
-        providers:new Map([['runtime.dispatch',id],['network.http','kubeclaw.network-http:http'],['artifacts.write','kubeclaw.artifact-store:artifact-store']]),
-        grants:new Map([['kubeclaw.case-study:case-study',new Map([['runtime.dispatch',{allowedAgents:['probe']}],['artifacts.write',{allowedNamespaces:['kubeclaw.case-study']}]])],
+        providers:new Map([['report.evidence.read','kubeclaw.pipeline-review:evidence'],['artifacts.read','kubeclaw.artifact-store:artifact-store'],['runtime.dispatch',id],['network.http','kubeclaw.network-http:http'],['artifacts.write','kubeclaw.artifact-store:artifact-store']]),
+        grants:new Map([['kubeclaw.pipeline-review:evidence',new Map([['artifacts.read',{allowedNamespaces:['kubeclaw.implementation-agent']}]])],['kubeclaw.case-study:case-study',new Map([['report.evidence.read',{allowedRunIds:['run:cleanup']}],['runtime.dispatch',{allowedAgents:['probe']}],['artifacts.write',{allowedNamespaces:['kubeclaw.case-study']}]])],
           [id,new Map([['network.http',{allowedOrigins:[origin]}]])]])});
       const activated=await core.activateRegistry(granted.snapshot,new Set(granted.grants.keys()));
       const configs=new Map<string,Record<string,unknown>>([[id,{origin}],['kubeclaw.network-http:http',{allowedOrigins:[origin],allowedMethods:['POST'],timeoutMs:1000}],
-        ['kubeclaw.artifact-store:artifact-store',{artifactRoot:path.join(root,'artifacts')}] ]);
+        ['kubeclaw.artifact-store:artifact-store',{artifactRoot:path.join(root,'artifacts')}],['kubeclaw.pipeline-review:evidence',{storageRoot:root,orchestratorIssuerId:'nova',maximumJournalBytes:1048576,maximumArtifactBytes:1048576,maximumBundleBytes:1048576}] ]);
       const observed: Array<Record<string,unknown>>=[];
       runtime=new core.AdapterRuntime({granted,activated,configs,shutdownTimeoutMs:1000,async emitDomainEvent(){},
         effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl')),undefined,

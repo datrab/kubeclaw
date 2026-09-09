@@ -1,1 +1,58 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["projectId","runId","task","facts"],"properties":{"projectId":{"type":"string","minLength":1,"maxLength":128},"runId":{"type":"string","minLength":1,"maxLength":128},"task":{"type":"string","minLength":1,"maxLength":32768},"facts":{"type":"array","minItems":1,"maxItems":256,"items":{"type":"object","additionalProperties":false,"required":["label","value"],"properties":{"label":{"type":"string","minLength":1,"maxLength":256},"value":{"type":"string","minLength":1,"maxLength":8192}}}}}}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task",
+    "source"
+  ],
+  "properties": {
+    "task": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32768
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runId",
+        "journalHead",
+        "snapshotDigest",
+        "sourceStageId",
+        "sourceRevision",
+        "artifacts"
+      ],
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "journalHead": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "snapshotDigest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "sourceStageId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRevision": {
+          "type": "string",
+          "pattern": "^([a-f0-9]{40}|[a-f0-9]{64})$"
+        },
+        "artifacts": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": {
+            "$ref": "https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/artifactRef"
+          }
+        }
+      }
+    }
+  }
+}

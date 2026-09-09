@@ -120,3 +120,6 @@ export function createEmptyCoreKernel(): CoreKernel {
 }
 
 export { readPipelineAudit } from '../telemetry/audit.ts';
+
+export { readRunEvidence } from '../state/read-run-evidence.ts';
+export type { RunEvidenceSelection, RunEvidenceProjection } from '../state/read-run-evidence.ts';

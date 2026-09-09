@@ -1,0 +1,37 @@
+✔ real registry/Core cleanup scope preserves authorization: success (2270.997644ms)
+✔ real registry/Core cleanup scope preserves authorization: origin (2007.95801ms)
+✔ real registry/Core cleanup scope preserves authorization: capability (1998.291443ms)
+✔ real registry/Core cleanup scope preserves authorization: method (1881.107982ms)
+✔ real registry/Core cleanup scope preserves authorization: timeout (3269.253876ms)
+✔ real registry/Core cleanup scope preserves authorization: lifecycle (2201.159982ms)
+✔ real registry/Core cleanup scope preserves authorization: blocking (2954.963636ms)
+✔ actual Core/HTTP session cleanup: max-polls (2973.582538ms)
+✔ actual Core/HTTP session cleanup: poll-body (2674.673174ms)
+✔ actual Core/HTTP session cleanup: parent-abort (2813.693973ms)
+✔ actual Core/HTTP session cleanup: late-spawn (2750.965965ms)
+✔ actual Core/HTTP session cleanup: cancel-rejected (2671.089727ms)
+✔ actual Core/HTTP session cleanup: cancel-body (3257.678153ms)
+✔ actual Core/HTTP session cleanup: acp-ack (3221.826133ms)
+✔ actual Core/HTTP session cleanup: acp-terminal (2126.899891ms)
+✔ actual Core/HTTP session cleanup: wrong-terminal (2964.318733ms)
+✔ actual Core/HTTP session cleanup: lost-spawn (3417.908432ms)
+✔ actual Core/HTTP session cleanup: acp-lost (3385.724274ms)
+✔ actual Core/HTTP session cleanup: wrong-poll-terminal (2135.7442ms)
+✔ actual Core/HTTP session cleanup: ambiguous-spawn (2460.373889ms)
+✔ actual Core/HTTP session cleanup: acp-wrong-terminal (3245.80792ms)
+✔ actual Core/HTTP session cleanup: contradictory-terminal (3000.542965ms)
+✔ actual Core/HTTP session cleanup: missing-task-alias (2352.845243ms)
+✔ actual Core/HTTP session cleanup: missing-task-snake (2393.73512ms)
+✔ actual Core/HTTP session cleanup: missing-task-records (2604.068054ms)
+✔ actual Core/HTTP session cleanup: missing-task-transitive (2428.588263ms)
+✔ full dispatch digest separates actual legacy-prefix collisions through Core/HTTP (2514.41827ms)
+✔ legacy colliding label never authorizes adoption, cancellation or respawn (3706.422801ms)
+✔ original registry parser rejects conflicting identifier aliases (0.613686ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59671.6731

@@ -6,7 +6,7 @@ const RUN_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$/u;
 const MAX_LEGACY_EVENT_BYTES = 256 * 1024;
 
 function journalContainsRunId(events: string, runId: string, maximumBytes?: number): boolean {
-  const descriptor = fs.openSync(events, maximumBytes === undefined ? 'r' : fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW);
+  const descriptor = fs.openSync(events, maximumBytes === undefined ? 'r' : fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
   try {
     if (maximumBytes !== undefined) {
       const stat = fs.fstatSync(descriptor);

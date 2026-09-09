@@ -1,12 +1,14 @@
 import { canonicalJson, sha256Text, type AttemptIdentity } from '@kubeclaw/plugin-sdk';
 import type{ArtifactRef,PluginInvocationContext,StageResult}from'@kubeclaw/plugin-sdk';
-import{buildRequest,parseCaseStudy,type CaseStudyInput}from'./protocol.ts';
+import{buildRequest,parseCaseStudy,validateBundle,type CaseStudyInput}from'./protocol.ts';
 export async function execute(input:CaseStudyInput,context:PluginInvocationContext):Promise<StageResult>{
   const agent=context.contract.config.agent;if(typeof agent!=='string'||!agent.trim())throw new Error('case study agent is not configured');
   const execution={...context.contract.lease.attempt};
   let study;
-  try{const response=await context.invoke('runtime.dispatch',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:agent},payload:buildRequest(agent,input,execution)});
-    study=parseCaseStudy(response.result,input,execution);
+  try{const resolved=await context.invoke('report.evidence.read',{operation:'snapshot',resource:{type:'pipeline.run',canonicalId:input.source.runId},payload:{...input.source}});
+    const bundle=validateBundle(resolved.bundle,input.source);
+    const response=await context.invoke('runtime.dispatch',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:agent},payload:buildRequest(agent,input,execution,bundle)});
+    study=parseCaseStudy(response.result,input,execution,bundle);
   }catch(error){return{schemaVersion:'stage-result.v2',outcome:'blocked',reason:{code:'case_study.invalid_output',message:error instanceof Error?error.message:String(error)},artifacts:[]};}
   const artifactId=`case-study:${sha256Text(canonicalJson(execution)).slice(7)}`;
   const stored=await context.invoke('artifacts.write',{operation:'put_json',resource:{type:'artifact.object',canonicalId:artifactId},

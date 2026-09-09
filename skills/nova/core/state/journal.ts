@@ -19,6 +19,27 @@ function recordHash(sequence: number, previousHash: string | null, entry: unknow
   })).digest('hex')}`;
 }
 
+export function parseJournalRecords<T>(buffer: Buffer, records: JournalRecord<T>[], file: string): void {
+    if (buffer.length === 0) return;
+    const text = buffer.toString('utf8');
+    if (!text.endsWith('\n')) throw new Error(`JOURNAL_RECORD_INCOMPLETE:${file}`);
+    const lines = text.slice(0, -1).split('\n');
+    for (const line of lines) {
+      if (line.length === 0) throw new Error(`JOURNAL_RECORD_EMPTY:${file}:${records.length + 1}`);
+      const record = JSON.parse(line) as JournalRecord<T>;
+      const expectedSequence = records.length + 1;
+      const previousHash = records.at(-1)?.hash ?? null;
+      if (record.sequence !== expectedSequence || record.previousHash !== previousHash) {
+        throw new Error(`JOURNAL_CHAIN_INVALID:${file}:${expectedSequence}`);
+      }
+      if (record.hash !== recordHash(record.sequence, record.previousHash, record.entry)) {
+        throw new Error(`JOURNAL_HASH_INVALID:${file}:${expectedSequence}`);
+      }
+      records.push(snapshotJson(record));
+    }
+  }
+
+
 export class FileJournal<T> {
   readonly #file: string;
   readonly #mutex: FileMutex;
@@ -54,23 +75,7 @@ export class FileJournal<T> {
   }
 
   #parse(buffer: Buffer, records: JournalRecord<T>[]): void {
-    if (buffer.length === 0) return;
-    const text = buffer.toString('utf8');
-    if (!text.endsWith('\n')) throw new Error(`JOURNAL_RECORD_INCOMPLETE:${this.#file}`);
-    const lines = text.slice(0, -1).split('\n');
-    for (const line of lines) {
-      if (line.length === 0) throw new Error(`JOURNAL_RECORD_EMPTY:${this.#file}:${records.length + 1}`);
-      const record = JSON.parse(line) as JournalRecord<T>;
-      const expectedSequence = records.length + 1;
-      const previousHash = records.at(-1)?.hash ?? null;
-      if (record.sequence !== expectedSequence || record.previousHash !== previousHash) {
-        throw new Error(`JOURNAL_CHAIN_INVALID:${this.#file}:${expectedSequence}`);
-      }
-      if (record.hash !== recordHash(record.sequence, record.previousHash, record.entry)) {
-        throw new Error(`JOURNAL_HASH_INVALID:${this.#file}:${expectedSequence}`);
-      }
-      records.push(snapshotJson(record));
-    }
+    parseJournalRecords(buffer, records, this.#file);
   }
 
   #recoverIncompleteTail(buffer: Buffer): Buffer {

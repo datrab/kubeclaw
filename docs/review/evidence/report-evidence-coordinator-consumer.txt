@@ -1,0 +1,10 @@
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (2647.045861ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (2807.173102ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5975.314748

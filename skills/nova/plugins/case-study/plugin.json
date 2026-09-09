@@ -10,7 +10,8 @@
       "export": "execute",
       "requiredCapabilities": [
         "runtime.dispatch",
-        "artifacts.write"
+        "artifacts.write",
+        "report.evidence.read"
       ],
       "configSchema": "schemas/config.schema.json",
       "inputSchema": "schemas/input.schema.json",

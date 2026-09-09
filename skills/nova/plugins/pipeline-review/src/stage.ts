@@ -1,14 +1,16 @@
 import { canonicalJson, sha256Text, type AttemptIdentity } from '@kubeclaw/plugin-sdk';
 import type { ArtifactRef,PluginInvocationContext,StageResult } from '@kubeclaw/plugin-sdk';
-import {buildRequest,parseReport,type ReviewInput} from './protocol.ts';
+import {buildRequest,parseReport,validateBundle,type ReviewInput} from './protocol.ts';
 export async function execute(input:ReviewInput,context:PluginInvocationContext):Promise<StageResult>{
   const agent=context.contract.config.agent;
   if(typeof agent!=='string'||!agent.trim()) throw new Error('pipeline review agent is not configured');
   const execution={...context.contract.lease.attempt};
   let report;
   try{
-    const response=await context.invoke('runtime.dispatch',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:agent},payload:buildRequest(agent,input,execution)});
-    report=parseReport(response.result,input,execution);
+    const resolved=await context.invoke('report.evidence.read',{operation:'snapshot',resource:{type:'pipeline.run',canonicalId:input.source.runId},payload:{...input.source}});
+    const bundle=validateBundle(resolved.bundle,input.source);
+    const response=await context.invoke('runtime.dispatch',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:agent},payload:buildRequest(agent,input,execution,bundle)});
+    report=parseReport(response.result,input,execution,bundle);
   }catch(error){
     return {schemaVersion:'stage-result.v2',outcome:'blocked',reason:{code:'pipeline_review.invalid_report',message:error instanceof Error?error.message:String(error)},artifacts:[]};
   }
