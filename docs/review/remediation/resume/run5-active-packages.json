@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "run_id": "20260909t223837",
+  "fresh_remote_base": "4627f01fe532d3dd890b7c8f93df40ae59547071",
+  "last_source_integration": "84688686127cfcc0f8940381006d0b6ab9035095",
+  "frozen_baseline": "c38779c71bb92bc15c3fcb89930348e5417aa475",
+  "frozen_count": 47,
+  "verified_count": 7,
+  "overall_complete": false,
+  "integrated_review_codec": {
+    "commit": "84688686127cfcc0f8940381006d0b6ab9035095",
+    "independent_review": "c100f1b85a7d92c88f4c98ce2b57afa356c1f368",
+    "fresh_checkout_tests": 14,
+    "evidence": "docs/review/evidence/run5-publisher-review-rerun.txt"
+  },
+  "incomplete_packages": [
+    {
+      "package": "adapter-dependency-identity",
+      "branch": "fix/resume-47-run5-adapter-466be67",
+      "commit": "2eb9d1020ea3eab6cb681dc12df7c6f8d35dca0b",
+      "review_branch": "fix/resume-47-run5-adapter-review-f36ef19",
+      "review_commit": "89b2fdd55c8a77155ef1781b1c875193ef61c2c0",
+      "status": "incomplete-canonical-contract-correction-in-progress",
+      "next_action": "Replace shadow validator with owning canonical request/receipt/resource definitions and bounded genuine historical keys. Verify actual producer edge cases, genuine SIGKILL/HTTP replay and historical recovery independently. Review backup is tests only and requires the separately saved source."
+    },
+    {
+      "package": "native-product-controller-chart-gate",
+      "branch": "fix/resume-47-run5-native-62e68a9",
+      "commit": "4c54d647499c98f20dfd99cfb780f4a850cbc8eb",
+      "status": "incomplete-native-crd-install-only",
+      "next_action": "Complete real API status/CEL/signed transitions and alternate-controller-SA VAP Namespace CREATE/DELETE denials; independently rerun. No workload deployment. Coupled Product459e/controllere21/chart47b remain unintegrated."
+    },
+    {
+      "package": "nova-dispatch-archive-projection",
+      "status": "design-approved-implementation-and-review-pending",
+      "design_local_commit": "a0f6c44e5915d97df75d4aafeba7db23ec952db0",
+      "next_action": "Save design remotely, implement original import-authority verification under run/import/dispatch fences and exact immutable archive projection; reject root aliases and unconfirmed work; prove unchanged quotas and genuine replay before review."
+    }
+  ],
+  "rule": "Backup is not acceptance. Restore only verified frozen commits into a new checkout, never another writer's checkout or dirty work based on an old heartbeat. Exact-parent ff-only integration after review/tests; no CI/deployment."
+}
