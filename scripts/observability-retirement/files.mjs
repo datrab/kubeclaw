@@ -88,7 +88,7 @@ export class Inventory {
   }
   hashFile(file, before) {
     this.checkParents(file);
-    const fd = fs.openSync(file, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW);
+    const fd = fs.openSync(file, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
     try {
       if (stableStat(fs.fstatSync(fd)) !== stableStat(before)) throw new Error('SNAPSHOT_CHANGED');
       const hash = crypto.createHash('sha256');
@@ -110,7 +110,7 @@ export class Inventory {
     const item = this.files.get(file);
     if (!item?.hash) throw new Error('UNINVENTORIED_REFERENCE');
     if (item.bytes > this.limits.maximumSnapshotBytes) throw new Error('SNAPSHOT_BYTE_LIMIT');
-    const fd = fs.openSync(file, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW);
+    const fd = fs.openSync(file, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
     try {
       if (stableStat(fs.fstatSync(fd)) !== item.stamp) throw new Error('SNAPSHOT_CHANGED');
       const bytes = Buffer.alloc(item.bytes);

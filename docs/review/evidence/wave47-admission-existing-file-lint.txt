@@ -1,0 +1,21 @@
+
+/workspace/scratch/0d8f8ddb55c3/wave47-storage/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts
+  171:17  error  `import()` type annotations are forbidden                                            @typescript-eslint/consistent-type-imports
+  268:3   error  Async method 'storeEvidence' has too many lines (89). Maximum allowed is 60          max-lines-per-function
+  304:1   error  File has too many lines (757). Maximum allowed is 300                                max-lines
+  357:3   error  Async method 'storeResult' has too many lines (126). Maximum allowed is 60           max-lines-per-function
+  373:34  error  Async arrow function has too many lines (109). Maximum allowed is 60                 max-lines-per-function
+  373:34  error  Async arrow function has a complexity of 24. Maximum allowed is 15                   complexity
+  599:3   error  Async method 'evaluateCompleteness' has too many lines (140). Maximum allowed is 60  max-lines-per-function
+  626:34  error  Async arrow function has too many lines (112). Maximum allowed is 60                 max-lines-per-function
+  668:13  error  Blocks are nested too deeply (4). Maximum allowed is 3                               max-depth
+  672:15  error  Blocks are nested too deeply (5). Maximum allowed is 3                               max-depth
+
+/workspace/scratch/0d8f8ddb55c3/wave47-storage/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts
+  151:9  error  Blocks are nested too deeply (4). Maximum allowed is 3                              max-depth
+  304:1  error  File has too many lines (833). Maximum allowed is 300                               max-lines
+  328:5  error  Handle the error intentionally or rethrow it with context                           discipline/no-swallowed-error
+  573:3  error  Private async method #admitUnlocked has too many lines (66). Maximum allowed is 60  max-lines-per-function
+
+✖ 14 problems (14 errors, 0 warnings)
+

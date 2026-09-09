@@ -1,0 +1,27 @@
+Baseline commit: 3233ad5
+
+/workspace/scratch/0d8f8ddb55c3/wave47-storage/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts
+  149:9  error  Blocks are nested too deeply (4). Maximum allowed is 3                              max-depth
+  304:1  error  File has too many lines (793). Maximum allowed is 300                               max-lines
+  326:5  error  Handle the error intentionally or rethrow it with context                           discipline/no-swallowed-error
+  561:3  error  Private async method #admitUnlocked has too many lines (64). Maximum allowed is 60  max-lines-per-function
+
+✖ 4 problems (4 errors, 0 warnings)
+
+exitCode: 1
+
+/workspace/scratch/0d8f8ddb55c3/wave47-storage/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts
+  170:17  error  `import()` type annotations are forbidden                                            @typescript-eslint/consistent-type-imports
+  267:3   error  Async method 'storeEvidence' has too many lines (89). Maximum allowed is 60          max-lines-per-function
+  304:1   error  File has too many lines (741). Maximum allowed is 300                                max-lines
+  356:3   error  Async method 'storeResult' has too many lines (126). Maximum allowed is 60           max-lines-per-function
+  372:34  error  Async arrow function has too many lines (109). Maximum allowed is 60                 max-lines-per-function
+  372:34  error  Async arrow function has a complexity of 24. Maximum allowed is 15                   complexity
+  582:3   error  Async method 'evaluateCompleteness' has too many lines (140). Maximum allowed is 60  max-lines-per-function
+  609:34  error  Async arrow function has too many lines (112). Maximum allowed is 60                 max-lines-per-function
+  651:13  error  Blocks are nested too deeply (4). Maximum allowed is 3                               max-depth
+  655:15  error  Blocks are nested too deeply (5). Maximum allowed is 3                               max-depth
+
+✖ 10 problems (10 errors, 0 warnings)
+
+exitCode: 1
