@@ -4,6 +4,7 @@ import { repairRequest, type RepairRequest } from '../lifecycle/remediation.ts';
 import type { FileJournal } from '../state/journal.ts';
 import type { StageRuntimeState } from '../lifecycle/reducer.ts';
 import { pendingRepair, repairDisposition, repairOrder } from '../lifecycle/repair-budget.ts';
+import { repairIdentityEncoding } from '../lifecycle/repair-projection.ts';
 
 /** The authorized repair carries the original durable findings, not a synthetic pass. */
 export function administrativeRepairRequest(definition: PipelineDefinition, decision: AdministrativeReopenDecision,
@@ -19,7 +20,8 @@ export function administrativeRepairRequest(definition: PipelineDefinition, deci
   if (stage.execution.repairCategory) {
     const current = states?.get(stage.id);
     if (!current) throw new Error('ADMIN_REPAIR_STATE_REQUIRED');
-    const pending = pendingRepair(definition.stages, states!, stage, { ...current, remediationCyclesUsed: generation }, result as StageResult, decision.runId);
+    const pending = pendingRepair(definition.stages, states!, stage, { ...current, remediationCyclesUsed: generation }, result as StageResult, decision.runId,
+      repairIdentityEncoding(completion!.entry.payload.repairIdentityEncoding));
     if (repairDisposition(definition.stages, pending) !== 'allowed') throw new Error('ADMIN_REPAIR_BUDGET_EXHAUSTED');
     return { ...pending.request, budgetOrder: repairOrder(pending, current.attemptNumber) };
   }
