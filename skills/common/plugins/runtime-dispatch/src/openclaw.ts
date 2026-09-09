@@ -1,11 +1,12 @@
 import crypto from 'node:crypto';
 import path from 'node:path';
 import { buildRuntimeAgentTask, canonicalJson, RUNTIME_RESULT_FILE_MAX_BYTES, type AdapterActivationContext, type RuntimeWorkspaceReference } from '@kubeclaw/plugin-sdk';
+import { reconcileOpenClawFailure, scopedOpenClawContext } from './openclaw-cleanup.ts';
 import { get_encoding } from 'tiktoken';
 import { readOpenClawResult } from './openclaw-result.ts';
 export { attachRuntimeEvidence } from './openclaw-result.ts';
 import { openClawToolDetails, record } from './openclaw-response.ts';
-import { cancelSession, findRegisteredSession, gateway, pollSession, type OpenClawSessionIdentity, type OpenClawSessionState } from './openclaw-session.ts';
+import { findRegisteredSession, gateway, pollSession, type OpenClawSessionIdentity, type OpenClawSessionState } from './openclaw-session.ts';
 
 export interface OpenClawTarget {
   readonly endpoint: string; readonly tokenSecret: string; readonly runtime: 'acp' | 'subagent';
@@ -206,13 +207,26 @@ async function pacedSpawn<T>(
   return queued;
 }
 
+function sessionLabel(target: OpenClawTarget, payload: JsonRecord, dispatchId: string): string {
+  const identity = record(payload.identity) ? first(payload.identity.moduleId, payload.identity.gateId) : undefined;
+  const prefix = `${target.agentRole}-${String(first(identity, payload.protocol) ?? 'dispatch')}`;
+  return `${prefix.replace(/[^A-Za-z0-9_-]/gu, '_').slice(0, 16)}-${crypto.createHash('sha256').update(dispatchId).digest('base64url')}`;
+}
+
 async function spawnSession(context: AdapterActivationContext, target: OpenClawTarget, token: string, payload: JsonRecord,
   resultFile: string, dispatchId: string, signal: AbortSignal): Promise<OpenClawSessionIdentity> {
-  const identity = record(payload.identity) ? first(payload.identity.moduleId, payload.identity.gateId) : undefined;
   const task = prepareOpenClawTask(payload, resultFile, target);
-  const label = `${target.agentRole}-${String(first(identity, payload.protocol) ?? 'dispatch')}-${crypto.createHash('sha256').update(dispatchId).digest('hex').slice(0, 8)}`;
+  const label = sessionLabel(target, payload, dispatchId);
   const existing = await findRegisteredSession(context, target, token, label);
   if (existing) return existing;
+  const identity = record(payload.identity) ? first(payload.identity.moduleId, payload.identity.gateId) : undefined;
+  const legacyLabel = `${target.agentRole}-${String(first(identity, payload.protocol) ?? 'dispatch')}-${crypto.createHash('sha256').update(dispatchId).digest('hex').slice(0, 8)}`;
+  // A legacy 32-bit label cannot establish dispatch ownership. Do not adopt it or respawn.
+  try {
+    if (await findRegisteredSession(context, target, token, legacyLabel)) throw new Error('legacy session exists');
+  } catch (error) {
+    throw new Error('OPENCLAW_LEGACY_SESSION_BINDING_UNRESOLVED', { cause: error });
+  }
   const spawned = await pacedSpawn(context, target, signal, () => gateway(context, target, token, 'sessions_spawn', {
     runtime: target.runtime, mode: 'run', cleanup: 'keep', thread: false,
     ...(target.collectorMode ? { collect: true,
@@ -243,6 +257,8 @@ export async function dispatchOpenClaw(
   const deadlineSignal = deadlineEpochMs === undefined ? undefined
     : AbortSignal.timeout(Math.max(1, deadlineEpochMs - Date.now()));
   const dispatchSignal = deadlineSignal ? AbortSignal.any([signal, deadlineSignal]) : signal;
+  const cleanupContext = context;
+  context = scopedOpenClawContext(context, dispatchSignal);
   const secret = await beforeAbort(() => context.invokeConfidential('secrets.read', {
     operation: 'resolve', resource: { type: 'secret.name', canonicalId: target.tokenSecret }, payload: {},
   }), dispatchSignal);
@@ -258,31 +274,26 @@ export async function dispatchOpenClaw(
     .update(canonicalJson({ dispatchId, payload: dispatchPayload(payload).modelPayload })).digest('hex')}`;
   const result = resultLocation(target, stableDispatchId);
   assertDispatchActive(dispatchSignal);
+  let identity: OpenClawSessionIdentity | undefined;
+  let terminal = false;
+  const label = sessionLabel(target, payload, stableDispatchId);
   const spawning = spawnSession(context, target, token, payload, result.file, stableDispatchId, dispatchSignal);
-  let identity: OpenClawSessionIdentity;
-  try { identity = await beforeAbort(() => spawning, dispatchSignal); }
-  catch (error) {
-    void spawning.then((lateIdentity) => cancelSession(context, target, token, lateIdentity)).catch(() => undefined);
-    throw error;
-  }
-  if (identity.model && identity.model !== target.model) {
-    await cancelSession(context, target, token, identity);
-    throw new Error('OPENCLAW_SESSION_MODEL_MISMATCH');
-  }
-  const abort = (): void => { void cancelSession(context, target, token, identity); };
-  dispatchSignal.addEventListener('abort', abort, { once: true });
-  if (dispatchSignal.aborted) {
-    await cancelSession(context, target, token, identity);
-    throw new Error('OPENCLAW_DISPATCH_DEADLINE_EXPIRED');
-  }
   try {
+    identity = await beforeAbort(() => spawning, dispatchSignal);
+    if (identity.model && identity.model !== target.model) throw new Error('OPENCLAW_SESSION_MODEL_MISMATCH');
+    assertDispatchActive(dispatchSignal);
     const state = await pollSession(context, target, token, identity, dispatchSignal);
+    terminal = state.terminal;
     assertOpenClawSessionCompleted(state, target.model);
+    const sessionKey = identity.sessionKey;
     const resolved = await beforeAbort(() => readOpenClawResult(context, target,
-      { payload, relative: result.relative, key: identity.sessionKey, startedAt, state, token }), dispatchSignal);
+      { payload, relative: result.relative, key: sessionKey, startedAt, state, token }), dispatchSignal);
     assertDispatchActive(dispatchSignal);
     assertOpenClawOutputBudget(resolved.outputText, target,
       runtimePromptBudget(payload.runtimePromptBudget)?.maxOutputTokens);
     return Object.freeze({ result: resolved.result, runtimeEvidence: runtimeAttestation(targetId, target) });
-  } finally { dispatchSignal.removeEventListener('abort', abort); }
+  } catch (error) {
+    if (terminal) throw error;
+    return reconcileOpenClawFailure(cleanupContext, target, token, { identity, label, spawning }, error);
+  }
 }

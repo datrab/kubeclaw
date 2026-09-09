@@ -2,6 +2,8 @@ import type { AdapterActivationContext } from '@kubeclaw/plugin-sdk';
 import type { OpenClawTarget } from './openclaw.ts';
 import { assertOpenClawToolAccepted, openClawToolDetails, record } from './openclaw-response.ts';
 
+export type OpenClawGatewayContext = Pick<AdapterActivationContext, 'invokeConfidential'>;
+
 type JsonRecord = Record<string, unknown>;
 function first(...values: readonly unknown[]): unknown { return values.find((value) => value !== undefined && value !== null); }
 export interface OpenClawSessionState {
@@ -27,7 +29,7 @@ interface SessionListCacheEntry {
   readonly response: Promise<unknown>;
 }
 
-const SESSION_LIST_CACHE = new WeakMap<AdapterActivationContext, Map<string, SessionListCacheEntry>>();
+const SESSION_LIST_CACHE = new WeakMap<OpenClawGatewayContext, Map<string, SessionListCacheEntry>>();
 
 function optionalText(value: unknown): string | undefined {
   return typeof value === 'string' && value.trim() ? value.trim() : undefined;
@@ -53,7 +55,6 @@ function includeIdentifiers(target: Set<string>, values: readonly string[]): boo
 }
 
 /** Resolve one previously accepted deterministic task, failing closed if its label is ambiguous or incomplete. */
-// eslint-disable-next-line complexity -- Registry normalization joins current task, active, and recent projections.
 export function registeredSessionIdentity(
   value: unknown, label: string, expectedModel: string,
 ): OpenClawSessionIdentity | undefined {
@@ -72,42 +73,66 @@ export function registeredSessionIdentity(
   }
   const related = entries.filter((entry) => optionalText(entry.label) === label
     || entryIdentifiers(entry).some((id) => identifiers.has(id)));
-  const runIds = new Set(related.map((entry) => optionalText(first(entry.runId, entry.run_id)))
+  const identifiersFor = (...fields: string[]): Set<string> => new Set(related.flatMap(entry => fields.map(field => optionalText(entry[field])))
     .filter((value): value is string => value !== undefined));
-  if (runIds.size > 1) throw new Error(`OPENCLAW_SESSION_REATTACHMENT_AMBIGUOUS:${label}`);
+  const runIds = identifiersFor('runId', 'run_id');
+  const sessionKeys = identifiersFor('sessionKey', 'session_key');
+  const taskIds = identifiersFor('taskId', 'task_id');
+  if ([runIds, sessionKeys, taskIds].some(values => values.size > 1)) throw new Error(`OPENCLAW_SESSION_REATTACHMENT_AMBIGUOUS:${label}`);
   const runId = [...runIds][0];
-  const sessionKey = related.map((entry) => optionalText(first(entry.sessionKey, entry.session_key)))
-    .find((value): value is string => value !== undefined);
+  const sessionKey = [...sessionKeys][0];
   if (!runId || !sessionKey) throw new Error(`OPENCLAW_SESSION_REATTACHMENT_INCOMPLETE:${label}`);
-  const taskId = related.map((entry) => optionalText(first(entry.taskId, entry.task_id)))
-    .find((value): value is string => value !== undefined);
+  const taskId = [...taskIds][0];
   const models = new Set(related.map((entry) => optionalText(entry.model))
     .filter((value): value is string => value !== undefined));
   if ([...models].some((model) => model !== expectedModel)) throw new Error('OPENCLAW_SESSION_MODEL_MISMATCH');
   return Object.freeze({ sessionKey, runId, label, model: expectedModel, ...(taskId ? { taskId } : {}) });
 }
 
+function exactSessionEntry(entry: JsonRecord, identity: OpenClawSessionIdentity): boolean {
+  if ([[entry.runId, entry.run_id], [entry.sessionKey, entry.session_key], [entry.taskId, entry.task_id]]
+    .some(([camel, snake]) => camel !== undefined && snake !== undefined && camel !== snake)) return false;
+  const pairs = [[entry.runId, identity.runId], [entry.run_id, identity.runId],
+    [entry.sessionKey, identity.sessionKey], [entry.session_key, identity.sessionKey],
+    [entry.taskId, identity.taskId], [entry.task_id, identity.taskId]];
+  return pairs.some(([actual, expected]) => expected !== undefined && actual === expected)
+    && pairs.every(([actual, expected]) => actual === undefined || expected === undefined || actual === expected);
+}
+
 // eslint-disable-next-line complexity -- Current and legacy session lists expose several equivalent identity/state fields.
-function terminal(value: unknown, identity: OpenClawSessionIdentity, subagent: boolean): OpenClawSessionState {
+function terminal(value: unknown, identity: OpenClawSessionIdentity, subagent: boolean, exactIdentity = false): OpenClawSessionState {
   const source = openClawToolDetails(value);
   if (!record(source)) return { terminal: false, state: 'unknown' };
   if (subagent) {
     const expected = new Set([identity.taskId, identity.runId, identity.sessionKey, identity.label]
       .filter((candidate): candidate is string => typeof candidate === 'string' && candidate.length > 0));
+    if (exactIdentity) {
+      const strong = new Set([identity.taskId, identity.runId, identity.sessionKey].filter((value): value is string => typeof value === 'string'));
+      const related = sessionListEntries(value).filter(entry => entryIdentifiers(entry).some(id => strong.has(id)));
+      const ambiguous = [['runId', 'run_id'], ['sessionKey', 'session_key'], ['taskId', 'task_id']]
+        .some(fields => new Set(related.flatMap(entry => fields.map(field => optionalText(entry[field]))).filter(value => value !== undefined)).size > 1);
+      if (ambiguous || related.some(entry => !exactSessionEntry(entry, identity))) return { terminal: false, state: 'unknown' };
+    }
     for (const collection of [source.tasks, source.active, source.recent]) {
       if (!Array.isArray(collection)) continue;
-      const match = collection.find((entry) => record(entry) && [
+      const match = collection.find((entry) => record(entry) && (exactIdentity ? exactSessionEntry(entry, identity) : [
         entry.taskId, entry.task_id, entry.runId, entry.run_id, entry.sessionKey, entry.session_key,
         entry.label,
-      ].some((candidate) => typeof candidate === 'string' && expected.has(candidate)));
+      ].some((candidate) => typeof candidate === 'string' && expected.has(candidate))));
       if (record(match)) {
         const state = String(first(match.status, match.state) ?? 'unknown').toLowerCase();
         const model = typeof match.model === 'string' ? match.model : identity.model;
-        const taskId = typeof match.taskId === 'string' ? match.taskId : identity.taskId;
+        const taskId = optionalText(first(match.taskId, match.task_id)) ?? identity.taskId;
         return { terminal: ['completed', 'complete', 'done', 'succeeded', 'ended', 'failed', 'cancelled', 'canceled', 'error'].includes(state), state,
           ...(model ? { model } : {}), ...(taskId ? { taskId } : {}) };
       }
     }
+    return { terminal: false, state: 'unknown' };
+  }
+  if (exactIdentity && [source, ...(record(source.session) ? [source.session] : [])].some(entry =>
+    [['runId', identity.runId], ['run_id', identity.runId], ['sessionKey', identity.sessionKey],
+      ['session_key', identity.sessionKey], ['taskId', identity.taskId], ['task_id', identity.taskId]].some(([field, expected]) =>
+      field !== undefined && expected !== undefined && entry[field] !== undefined && entry[field] !== expected))) {
     return { terminal: false, state: 'unknown' };
   }
   const nested = record(source.session) ? first(source.session.state, source.session.status) : undefined;
@@ -135,8 +160,7 @@ function collectorTerminal(value: unknown, identity: OpenClawSessionIdentity): O
   };
 }
 
-// eslint-disable-next-line max-params -- Capability context, authenticated target, tool, args, and idempotency are separate trust inputs.
-export async function gateway(context: AdapterActivationContext, target: OpenClawTarget, token: string, tool: string,
+export async function gateway(context: OpenClawGatewayContext, target: OpenClawTarget, token: string, tool: string,
   args: JsonRecord, idempotencyKey?: string): Promise<unknown> {
   const resource = new URL(target.endpoint);
   if (idempotencyKey) resource.hash = `kubeclaw=${encodeURIComponent(idempotencyKey)}`;
@@ -147,7 +171,7 @@ export async function gateway(context: AdapterActivationContext, target: OpenCla
 }
 
 async function cachedSessionList(
-  context: AdapterActivationContext, target: OpenClawTarget, token: string,
+  context: OpenClawGatewayContext, target: OpenClawTarget, token: string,
 ): Promise<unknown> {
   let cache = SESSION_LIST_CACHE.get(context);
   if (!cache) { cache = new Map(); SESSION_LIST_CACHE.set(context, cache); }
@@ -162,7 +186,7 @@ async function cachedSessionList(
 }
 
 export async function findRegisteredSession(
-  context: AdapterActivationContext, target: OpenClawTarget, token: string, label: string,
+  context: OpenClawGatewayContext, target: OpenClawTarget, token: string, label: string,
 ): Promise<OpenClawSessionIdentity | undefined> {
   if (target.runtime !== 'subagent') return undefined;
   return registeredSessionIdentity(await cachedSessionList(context, target, token), label, target.model);
@@ -177,44 +201,56 @@ async function wait(ms: number, signal: AbortSignal): Promise<void> {
   });
 }
 
-export async function pollSession(context: AdapterActivationContext, target: OpenClawTarget, token: string, identity: OpenClawSessionIdentity, signal: AbortSignal): Promise<OpenClawSessionState> {
-  const deadline = Date.now() + target.sessionTimeoutMs;
-  for (let poll = 0; poll < target.maxPolls; poll += 1) {
-    if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
-    if (Date.now() >= deadline) throw new Error('OPENCLAW_SESSION_TIMEOUT');
-    const status = target.runtime === 'subagent'
+export async function readSessionState(context: OpenClawGatewayContext, target: OpenClawTarget,
+  token: string, identity: OpenClawSessionIdentity, exactIdentity = false): Promise<OpenClawSessionState> {
+  const status = target.runtime === 'subagent'
       ? target.collectorMode
         ? await gateway(context, target, token, 'agents_wait', { ids: [identity.runId], timeoutSeconds: 15 })
         : await gateway(context, target, token, 'subagents', { action: 'list', recentMinutes: Math.max(10, Math.ceil(target.sessionTimeoutMs / 60_000) + 5) })
       : await gateway(context, target, token, 'session_status', { sessionKey: identity.sessionKey });
-    const result = target.collectorMode ? collectorTerminal(status, identity)
-      : terminal(status, identity, target.runtime === 'subagent');
-    if (result.terminal) return result;
-    if (poll + 1 === target.maxPolls) throw new Error('OPENCLAW_SESSION_TIMEOUT');
-    const delay = Math.min(target.maxPollMs, target.pollMs * (2 ** Math.min(poll, 8)));
-    await wait(Math.min(delay, Math.max(1, deadline - Date.now())), signal);
-  }
-  throw new Error('OPENCLAW_SESSION_TIMEOUT');
+  return target.collectorMode ? collectorTerminal(status, identity)
+      : terminal(status, identity, target.runtime === 'subagent', exactIdentity);
 }
 
-export async function cancelSession(context: AdapterActivationContext, target: OpenClawTarget, token: string, identity: OpenClawSessionIdentity): Promise<void> {
+export async function pollSession(context: OpenClawGatewayContext, target: OpenClawTarget, token: string, identity: OpenClawSessionIdentity, signal: AbortSignal): Promise<OpenClawSessionState> {
+  const deadline = Date.now() + target.sessionTimeoutMs;
+  const timeout = AbortSignal.timeout(target.sessionTimeoutMs);
+  const pollingSignal = AbortSignal.any([signal, timeout]);
+  const parent = context;
+  context = { invokeConfidential: (capability, request) => parent.invokeConfidential(capability, request, { signal: pollingSignal }) };
+  signal = pollingSignal;
   try {
-    if (target.runtime === 'subagent') {
-      const taskId = identity.taskId ?? (await pollSessionIdentity(context, target, token, identity));
-      if (!taskId) throw new Error('OPENCLAW_TASK_ID_UNRESOLVED');
-      await gateway(context, target, token, 'subagents', { action: 'cancel', taskId }, `cancel:${identity.runId}`);
+    for (let poll = 0; poll < target.maxPolls; poll += 1) {
+      if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+      if (Date.now() >= deadline) throw new Error('OPENCLAW_SESSION_TIMEOUT');
+      const result = await readSessionState(context, target, token, identity, true);
+      if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+      if (Date.now() >= deadline) throw new Error('OPENCLAW_SESSION_TIMEOUT');
+      if (result.terminal) return result;
+      if (poll + 1 === target.maxPolls) throw new Error('OPENCLAW_SESSION_TIMEOUT');
+      const delay = Math.min(target.maxPollMs, target.pollMs * (2 ** Math.min(poll, 8)));
+      await wait(Math.min(delay, Math.max(1, deadline - Date.now())), signal);
     }
-    else await gateway(context, target, token, 'sessions_send', { sessionKey: identity.sessionKey, message: 'Stop immediately. The owning pipeline invocation was cancelled.' }, `cancel:${identity.runId}`);
-  } catch (_error) {
-    /* INTENTIONAL_NONCRITICAL(session_cancel_failed): Cancellation cleanup is best effort. */
-    void _error;
+    throw new Error('OPENCLAW_SESSION_TIMEOUT');
+  } catch (error) {
+    if (timeout.aborted && pollingSignal.reason === timeout.reason) throw new Error('OPENCLAW_SESSION_TIMEOUT', { cause: error });
+    throw error;
   }
 }
 
-async function pollSessionIdentity(context: AdapterActivationContext, target: OpenClawTarget, token: string,
+export async function cancelSession(context: OpenClawGatewayContext, target: OpenClawTarget, token: string, identity: OpenClawSessionIdentity): Promise<void> {
+  if (target.runtime === 'subagent') {
+    const taskId = identity.taskId ?? (await pollSessionIdentity(context, target, token, identity));
+    if (!taskId) throw new Error('OPENCLAW_TASK_ID_UNRESOLVED');
+    await gateway(context, target, token, 'subagents', { action: 'cancel', taskId }, `cancel:${identity.runId}`);
+  }
+  else await gateway(context, target, token, 'sessions_send', { sessionKey: identity.sessionKey, message: 'Stop immediately. The owning pipeline invocation was cancelled.' }, `cancel:${identity.runId}`);
+}
+
+async function pollSessionIdentity(context: OpenClawGatewayContext, target: OpenClawTarget, token: string,
   identity: OpenClawSessionIdentity): Promise<string | undefined> {
   const raw = await gateway(context, target, token, 'subagents', {
     action: 'list', recentMinutes: Math.max(10, Math.ceil(target.sessionTimeoutMs / 60_000) + 5),
   });
-  return terminal(raw, identity, true).taskId;
+  return terminal(raw, identity, true, true).taskId;
 }

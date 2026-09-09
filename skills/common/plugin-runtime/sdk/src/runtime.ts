@@ -70,17 +70,28 @@ export interface AdapterInstance {
   shutdown(signal: AbortSignal): Promise<void>;
 }
 
+export interface AdapterDependencyOptions { readonly signal?: AbortSignal }
+export interface AdapterCleanupContext {
+  readonly signal: AbortSignal;
+  invoke(capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions): Promise<Readonly<Record<string, unknown>>>;
+  invokeConfidential(capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions): Promise<Readonly<Record<string, unknown>>>;
+}
+
 export interface AdapterActivationContext {
   readonly registration: RegistrationProvenance;
   readonly config: Readonly<Record<string, unknown>>;
   invoke(
     capability: string,
     request: CapabilityInvocation,
+    options?: AdapterDependencyOptions,
   ): Promise<Readonly<Record<string, unknown>>>;
   invokeConfidential(
     capability: string,
     request: CapabilityInvocation,
+    options?: AdapterDependencyOptions,
   ): Promise<Readonly<Record<string, unknown>>>;
+  /** Core bounds one cleanup phase; this never grants additional capabilities. */
+  withCleanup?<T>(operation: (context: AdapterCleanupContext) => Promise<T>): Promise<T>;
   emit(
     type: string,
     identity: EventIdentity,

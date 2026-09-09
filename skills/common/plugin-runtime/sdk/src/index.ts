@@ -4,6 +4,8 @@ export * from './runtime-agent-task.ts';
 export type {
   CapabilityInvocation,
   AdapterActivationContext,
+  AdapterCleanupContext,
+  AdapterDependencyOptions,
   AdapterFactory,
   AdapterInstance,
   AdapterInvocation,

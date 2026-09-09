@@ -7,6 +7,7 @@ import { FrozenMap } from '@kubeclaw/plugin-foundation/registry/frozen-map';
 import type { EffectCoordinator } from '../effects/coordinator.ts';
 import { requiresExternalContinuation } from './effect-recovery.ts';
 import { AdapterStarter } from './adapter-startup.ts';
+import type { AdapterInvocationOwner } from './adapter-invocation-phase.ts';
 import { adapterOwner } from './adapter-support.ts';
 
 export interface AdapterRuntimeOptions {
@@ -16,7 +17,7 @@ export interface AdapterRuntimeOptions {
 }
 
 export class AdapterRuntime {
-  readonly #options: AdapterRuntimeOptions; readonly #invocations = new AsyncLocalStorage<Readonly<{ signal: AbortSignal; attempt: AttemptIdentity; executionKey?: string }>>();
+  readonly #options: AdapterRuntimeOptions; readonly #invocations = new AsyncLocalStorage<AdapterInvocationOwner>();
   #instances: ReadonlyMap<string, AdapterInstance> = new FrozenMap([]); #controllers: ReadonlyMap<string, AbortController> = new FrozenMap([]);
   readonly #pendingControllers = new Map<string, AbortController>(); readonly #pendingInstances = new Map<string, AdapterInstance>();
   readonly #teardowns = new WeakMap<AdapterInstance, Promise<void>>(); #startPromise: Promise<void> | undefined; #shutdownPromise: Promise<void> | undefined;

@@ -1,0 +1,124 @@
+$ node --test tests/verification/reliability/runtime-session-cleanup.test.mts tests/verification/reliability/adapter-cleanup-scope.test.mts
+✔ real registry/Core cleanup scope preserves authorization: success (1096.697966ms)
+✔ real registry/Core cleanup scope preserves authorization: origin (1038.343821ms)
+✔ real registry/Core cleanup scope preserves authorization: capability (1016.658566ms)
+✔ real registry/Core cleanup scope preserves authorization: method (1030.15603ms)
+✔ real registry/Core cleanup scope preserves authorization: timeout (2008.126597ms)
+✔ real registry/Core cleanup scope preserves authorization: lifecycle (1120.033992ms)
+✔ real registry/Core cleanup scope preserves authorization: blocking (2411.830508ms)
+✔ actual Core/HTTP session cleanup: max-polls (1821.053189ms)
+✔ actual Core/HTTP session cleanup: poll-body (1595.392368ms)
+✔ actual Core/HTTP session cleanup: parent-abort (1535.15229ms)
+✔ actual Core/HTTP session cleanup: late-spawn (1530.551729ms)
+✔ actual Core/HTTP session cleanup: cancel-rejected (1799.629667ms)
+✔ actual Core/HTTP session cleanup: cancel-body (2611.185095ms)
+✔ actual Core/HTTP session cleanup: acp-ack (2487.2135ms)
+✔ actual Core/HTTP session cleanup: acp-terminal (1503.675965ms)
+✔ actual Core/HTTP session cleanup: wrong-terminal (2720.451097ms)
+✔ actual Core/HTTP session cleanup: lost-spawn (2918.786716ms)
+✔ actual Core/HTTP session cleanup: acp-lost (2607.986731ms)
+✔ actual Core/HTTP session cleanup: wrong-poll-terminal (1388.798753ms)
+✔ actual Core/HTTP session cleanup: ambiguous-spawn (1461.19287ms)
+✔ actual Core/HTTP session cleanup: acp-wrong-terminal (2371.301387ms)
+✔ actual Core/HTTP session cleanup: contradictory-terminal (2368.744528ms)
+✔ full dispatch digest separates actual legacy-prefix collisions through Core/HTTP (1486.771345ms)
+✔ legacy colliding label never authorizes adoption, cancellation or respawn (2565.495435ms)
+✔ original registry parser rejects conflicting identifier aliases (0.493765ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35260.731928
+exit: 0
+
+$ npm test --prefix skills/common/plugins/runtime-dispatch
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node ../../../../tests/verification/reliability/repository-result-paths.test.mjs
+
+file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/execution/adapters.ts:60
+      throw new Error(requiresExternalContinuation(capability) ? `EFFECT_OUTCOME_UNRESOLVED:${receipt.effectId}:${message}` : message);
+            ^
+
+Error: EFFECT_OUTCOME_UNRESOLVED:effect:6a9a020d65b0267a7d83054278e98dfae3e79dfbc07dd8c3b6ae5585d575a0bf:OPENCLAW_SESSION_TIMEOUT; OPENCLAW_SESSION_TERMINAL_CONFIRMED:run:gateway-test
+    at AdapterRuntime.invoke (file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/nova/core/execution/adapters.ts:60:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///workspace/scratch/4e25cf57c177/kubeclaw-fixes/skills/common/plugins/runtime-dispatch/tests/live-function.test.ts:451:30
+
+Node.js v24.19.0
+exit: 1
+
+$ npm run build --prefix skills/common/plugins/runtime-dispatch
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> build
+> tsc --noEmit -p tsconfig.json
+
+exit: 0
+
+$ node tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs
+{"ok":true,"contract":"plugin-system-v2-capability-runtime"}
+exit: 0
+
+$ node_modules/.bin/tsc --noEmit -p skills/nova/tsconfig.json
+exit: 0
+
+$ node_modules/.bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+exit: 0
+
+$ node_modules/.bin/eslint --config charts/kubeclaw/files/config/eslint.config.mjs skills/common/plugin-runtime/sdk/src/runtime.ts skills/common/plugin-runtime/sdk/src/index.ts skills/nova/core/execution/adapters.ts skills/nova/core/execution/adapter-startup.ts skills/nova/core/execution/adapter-invocation-phase.ts skills/common/plugins/runtime-dispatch/src/openclaw.ts skills/common/plugins/runtime-dispatch/src/openclaw-session.ts skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts tests/verification/reliability/runtime-session-cleanup.test.mts tests/verification/reliability/adapter-cleanup-scope.test.mts
+exit: 0
+
+$ npm test --prefix skills/common/plugins/runtime-dispatch # serial rerun after parallel test load
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node ../../../../tests/verification/reliability/repository-result-paths.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.runtime-dispatch","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.runtime-dispatch","suite":"package-boundary"}
+{"ok":true,"missingSymlink":true,"directWriter":true,"rootSymlink":true,"idempotency":true,"concurrentAttempts":300,"allowed":54,"denied":246,"outsideWrites":0}
+exit: 0
+
+$ git diff --check -- skills/common/plugin-runtime/sdk/src/runtime.ts skills/common/plugin-runtime/sdk/src/index.ts skills/nova/core/execution/adapters.ts skills/nova/core/execution/adapter-startup.ts skills/nova/core/execution/adapter-invocation-phase.ts skills/common/plugins/runtime-dispatch/src/openclaw.ts skills/common/plugins/runtime-dispatch/src/openclaw-session.ts skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts tests/verification/reliability/runtime-session-cleanup.test.mts tests/verification/reliability/adapter-cleanup-scope.test.mts docs/review/remediation/implementation/runtime-session-cleanup.md docs/review/evidence/runtime-session-cleanup.txt
+exit: 0
+
+Final optional-task identity correction; prior25 suite retained, only affected regressions rerun.
+$ node --test --test-name-pattern=missing-task tests/verification/reliability/runtime-session-cleanup.test.mts
+✔ actual Core/HTTP session cleanup: missing-task-alias (1916.462975ms)
+✔ actual Core/HTTP session cleanup: missing-task-snake (1335.782979ms)
+✔ actual Core/HTTP session cleanup: missing-task-records (1306.2987ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5039.679822
+exit: 0
+
+$ npm test --prefix skills/common/plugins/runtime-dispatch
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node ../../../../tests/verification/reliability/repository-result-paths.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.runtime-dispatch","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.runtime-dispatch","suite":"package-boundary"}
+{"ok":true,"missingSymlink":true,"directWriter":true,"rootSymlink":true,"idempotency":true,"concurrentAttempts":300,"allowed":108,"denied":192,"outsideWrites":0}
+exit: 0
+
+$ npm run build --prefix skills/common/plugins/runtime-dispatch
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> build
+> tsc --noEmit -p tsconfig.json
+exit: 0
+
+$ node_modules/.bin/eslint --config charts/kubeclaw/files/config/eslint.config.mjs skills/common/plugins/runtime-dispatch/src/openclaw-session.ts tests/verification/reliability/runtime-session-cleanup.test.mts
+exit: 0

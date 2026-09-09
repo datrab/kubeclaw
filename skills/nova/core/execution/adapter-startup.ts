@@ -1,15 +1,16 @@
 import type { AsyncLocalStorage } from 'node:async_hooks';
 import fs from 'node:fs';
 import path from 'node:path';
-import type { AdapterActivationContext, AdapterFactory, AdapterInstance, AttemptIdentity, CapabilityInvocation, EventIdentity } from '@kubeclaw/plugin-sdk';
+import type { AdapterActivationContext, AdapterCleanupContext, AdapterDependencyOptions, AdapterFactory, AdapterInstance, CapabilityInvocation, EventIdentity } from '@kubeclaw/plugin-sdk';
 import { validateReferencedValue } from '@kubeclaw/plugin-foundation/registry/schema';
 import { isConfidentialCapability } from '@kubeclaw/plugin-foundation/registry/capabilities';
 import { authorizeCapabilityInvocation } from './authorization.ts';
 import type { AdapterRuntimeOptions } from './adapters.ts';
+import { AdapterInvocationPhase, type AdapterInvocationOwner } from './adapter-invocation-phase.ts';
 import { adapterOwner, requestDigest, shutdownLateAdapter, withAdapterStartupTimeout } from './adapter-support.ts';
 
 interface StartupOptions {
-  readonly runtime: AdapterRuntimeOptions; readonly invocationContext: AsyncLocalStorage<Readonly<{ signal: AbortSignal; attempt: AttemptIdentity; executionKey?: string }>>;
+  readonly runtime: AdapterRuntimeOptions; readonly invocationContext: AsyncLocalStorage<AdapterInvocationOwner>;
   readonly stopping: () => boolean; readonly pendingControllers: Map<string, AbortController>; readonly pendingInstances: Map<string, AdapterInstance>;
   readonly shutdown: (instance: AdapterInstance, signal: AbortSignal) => Promise<void>;
 }
@@ -40,7 +41,7 @@ export class AdapterStarter {
       await this.#dependencies(adapterId, entry.registration.requiredCapabilities);
       const context = this.#context(adapterId, lifecycle, entry.provenance, entry.package.manifest.id, config);
       const raw = await this.#activate(adapterId, lifecycle, activated.execute as AdapterFactory, context);
-      const instance = this.#wrap(raw, lifecycle); this.#instances.set(adapterId, instance); this.#options.pendingInstances.set(adapterId, instance);
+      const instance = this.#wrap(raw, lifecycle, adapterId); this.#instances.set(adapterId, instance); this.#options.pendingInstances.set(adapterId, instance);
       await this.#ready(adapterId, instance, lifecycle); return instance;
     } finally { this.#starting.delete(adapterId); }
   }
@@ -63,13 +64,16 @@ export class AdapterStarter {
     return Object.freeze({ registration, config,
       emit: async (type: string, identity: EventIdentity, payload: Readonly<Record<string, unknown>>) => { active(); if (!type.startsWith(`plugin.${pluginId}.`)) throw new Error(`PLUGIN_EVENT_NAMESPACE_DENIED:${type}`);
         await this.#options.runtime.emitDomainEvent(registration, type, identity, payload); active(); },
-      invoke: (capability: string, request: CapabilityInvocation) => this.#invokeDependency(adapterId, lifecycle, active, capability, request, false),
-      invokeConfidential: (capability: string, request: CapabilityInvocation) => this.#invokeDependency(adapterId, lifecycle, active, capability, request, true),
+      invoke: (capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions) => this.#invokeDependency(adapterId, lifecycle, active, capability, request, false, options),
+      invokeConfidential: (capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions) => this.#invokeDependency(adapterId, lifecycle, active, capability, request, true, options),
+      withCleanup: <T>(operation: (context: AdapterCleanupContext) => Promise<T>) => this.#cleanup(adapterId, lifecycle, active, operation),
     });
   }
 
-  async #invokeDependency(adapterId: string, lifecycle: AbortController, active: () => void, capability: string, request: CapabilityInvocation, confidential: boolean): Promise<Readonly<Record<string, unknown>>> {
-    active(); const parent = this.#options.invocationContext.getStore(); const signal = parent ? AbortSignal.any([parent.signal, lifecycle.signal]) : lifecycle.signal;
+  async #invokeDependency(adapterId: string, lifecycle: AbortController, active: () => void, capability: string, request: CapabilityInvocation, confidential: boolean, options?: AdapterDependencyOptions): Promise<Readonly<Record<string, unknown>>> {
+    active(); const parent = this.#options.invocationContext.getStore();
+    parent?.phase.assertActive();
+    const signal = AbortSignal.any([lifecycle.signal, ...(parent ? [parent.signal] : []), ...(options?.signal ? [options.signal] : [])]);
     if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
     const grant = this.#options.runtime.granted.grants.get(adapterId)?.find((candidate) => candidate.capability === capability);
     if (!grant) throw new Error(`ADAPTER_CAPABILITY_DENIED:${adapterId}:${capability}`); authorizeCapabilityInvocation(grant, request);
@@ -94,10 +98,33 @@ export class AdapterStarter {
     catch (error) { if (timedOut) void operation.then((late) => shutdownLateAdapter(late, this.#options.runtime.shutdownTimeoutMs), () => undefined); throw error; }
   }
 
-  #wrap(raw: AdapterInstance, lifecycle: AbortController): AdapterInstance {
-    return { ready: () => raw.ready(), invoke: (invocation) => { const signal = AbortSignal.any([invocation.signal, lifecycle.signal]);
-      return this.#options.invocationContext.run({ signal, attempt: invocation.request.attempt, ...(invocation.request.deliveryId === undefined ? {} : { executionKey: invocation.request.idempotencyKey }) }, () => raw.invoke({ ...invocation, signal })); },
-      ...(raw.receipt ? { receipt: (request) => raw.receipt!(request) } : {}), shutdown: (signal) => raw.shutdown(signal) };
+  #wrap(raw: AdapterInstance, lifecycle: AbortController, adapterId: string): AdapterInstance {
+    return { ready: () => raw.ready(), invoke: async (invocation) => {
+      const signal = AbortSignal.any([invocation.signal, lifecycle.signal]);
+      const phase = new AdapterInvocationPhase(lifecycle.signal, this.#options.runtime.shutdownTimeoutMs);
+      try {
+        return await this.#options.invocationContext.run({ adapterId, phase, signal, attempt: invocation.request.attempt,
+          ...(invocation.request.deliveryId === undefined ? {} : { executionKey: invocation.request.idempotencyKey }) },
+        () => raw.invoke({ ...invocation, signal }));
+      } finally { phase.close(); }
+    }, ...(raw.receipt ? { receipt: (request) => raw.receipt!(request) } : {}), shutdown: (signal) => raw.shutdown(signal) };
+  }
+
+  async #cleanup<T>(adapterId: string, lifecycle: AbortController, active: () => void,
+    operation: (context: AdapterCleanupContext) => Promise<T>): Promise<T> {
+    active();
+    const parent = this.#options.invocationContext.getStore();
+    if (!parent || parent.adapterId !== adapterId) throw new Error('ADAPTER_CLEANUP_INVOCATION_REQUIRED');
+    return parent.phase.cleanup(signal => {
+      const owner = { ...parent, signal };
+      const invoke = (capability: string, request: CapabilityInvocation, confidential: boolean, options?: AdapterDependencyOptions) =>
+        this.#options.invocationContext.run(owner, () => this.#invokeDependency(adapterId, lifecycle, active, capability, request, confidential, options));
+      const context: AdapterCleanupContext = Object.freeze({ signal,
+        invoke: (capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions) => invoke(capability, request, false, options),
+        invokeConfidential: (capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions) => invoke(capability, request, true, options),
+      });
+      return this.#options.invocationContext.run(owner, () => operation(context));
+    });
   }
 
   async #ready(adapterId: string, instance: AdapterInstance, lifecycle: AbortController): Promise<void> {
