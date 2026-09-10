@@ -1,0 +1,55 @@
+{
+  "command": "node --test tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+  "expectedOverallExit": 0,
+  "expectedBoundary": "real missing import after manifest integrity",
+  "phases": [
+    {
+      "phase": "produce",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"produce\",\"locale\":\"en-US\",\"status\":\"succeeded\",\"manifestDigest\":\"sha256:cb903f1f70a3fe55c294e814477a396ff8b10e8f6da8483965cb5eb952f1a4d8\",\"artifactDigest\":\"sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314\",\"manifestBytes\":6608,\"summaryWriteKey\":\"run:delivery-manifest-stage-boundary:project-summary:1:10\"}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-en",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-en\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-cs",
+      "locale": "cs_CZ.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-cs\",\"locale\":\"cs-CZ\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-da",
+      "locale": "da_DK.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-da\",\"locale\":\"da-DK\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-tr",
+      "locale": "tr_TR.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-tr\",\"locale\":\"tr-TR\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-sv",
+      "locale": "sv_SE.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-sv\",\"locale\":\"sv-SE\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    }
+  ]
+}

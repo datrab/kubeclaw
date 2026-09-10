@@ -4,9 +4,12 @@ import { summaryReviewSemanticEncoding, summaryReviewBundleDigest,
 import { assertCoverageDecision, coveragePassed, coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import { parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
 import { canonicalJson, sha256Text, resolveSourceRevision, type ArtifactRef, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
+import { createDeliveryManifestV3, DELIVERY_MANIFEST_ENCODING,
+  type DeliveryManifestEncoding } from '@kubeclaw/delivery-manifest-contract';
 
 export interface GateBinding {
   readonly reviewSemanticEncoding?: SummaryReviewSemanticEncoding;
+  readonly reviewArtifactEncoding?: typeof PORTABLE_JSON_ENCODING;
   readonly sourceStageId: string;
   readonly lintStageId: string;
   readonly reviewStageId?: string;
@@ -62,7 +65,11 @@ async function verifyFinalReview(input: SummaryInput, sourceRevision: string, re
 }
 
 /** Delivery is derived from core-supplied, immutable evidence, never caller-owned counts. */
-export async function buildSummary(input: SummaryInput, context: PluginInvocationContext) {
+export async function buildSummary(input: SummaryInput, context: PluginInvocationContext,
+  deliveryManifestEncoding?: DeliveryManifestEncoding) {
+  if (deliveryManifestEncoding !== undefined && deliveryManifestEncoding !== DELIVERY_MANIFEST_ENCODING) {
+    throw new Error('DELIVERY_MANIFEST_ENCODING_INVALID');
+  }
   validateCoverageInput(input);
   const runId = context.contract.lease.attempt.runId;
   let totalBytes = 0;
@@ -87,7 +94,8 @@ export async function buildSummary(input: SummaryInput, context: PluginInvocatio
     if (!response.value || typeof response.value !== 'object' || Array.isArray(response.value)) throw new Error('DELIVERY_EVIDENCE_INVALID');
     return response.value as Record<string, any>;
   }
-  async function verify(binding: { readonly sourceStageId: string; readonly testStageId: string; readonly expectedCoverage: GateCoverageV1 }) {
+  async function verify<T extends { readonly sourceStageId: string; readonly testStageId: string;
+    readonly expectedCoverage: GateCoverageV1 }>(binding: T) {
     const revision = await resolveSourceRevision({ sourceStageId: binding.sourceStageId }, context);
     await read(binding.sourceStageId, 'kubeclaw.implementation-agent', ref => ref.artifactId.startsWith('implementation:'));
     const decision = parseGateDecision(await read(binding.testStageId, 'kubeclaw.buster-quality-gate', ref => ref.artifactId.includes(':decision:')));
@@ -98,12 +106,13 @@ export async function buildSummary(input: SummaryInput, context: PluginInvocatio
     assertCoverageDecision(decision, binding.expectedCoverage, revision, binding.testStageId);
     const qualityPassed = quality.testAgent?.enabled === false ? quality.nativeOutcome === 'passed' : quality.verdict?.outcome === 'passed';
     if (decision.state !== 'passed' || !coveragePassed(decision.coverage!) || decision.runId !== runId || !qualityPassed
-      || quality.decisionDigest !== decision.decisionDigest) throw new Error(`DELIVERY_GATE_NOT_PASSED:${binding.sourceStageId}`);
-    const { decisionDigest } = decision;
-    return { ...binding, sourceRevision: revision, decisionDigest, resultDigest: decision.resultDigest, coverage: decision.coverage };
+      || quality.decisionDigest !== decision.decisionDigest || typeof decision.resultDigest !== 'string'
+      || decision.coverage === undefined) throw new Error(`DELIVERY_GATE_NOT_PASSED:${binding.sourceStageId}`);
+    const { decisionDigest, resultDigest, coverage } = decision;
+    return { ...binding, sourceRevision: revision, decisionDigest, resultDigest, coverage };
   }
   const modules = [];
-  for (const module of input.modules) modules.push({ moduleId: module.moduleId, ...await verify(module) });
+  for (const module of input.modules) modules.push(await verify(module));
   const final = await verify(input.final);
   const lint = await read(input.final.lintStageId, 'kubeclaw.lint');
   if (lint.sourceRevision !== final.sourceRevision) throw new Error('DELIVERY_FINAL_CANDIDATE_MISMATCH');
@@ -111,5 +120,6 @@ export async function buildSummary(input: SummaryInput, context: PluginInvocatio
   await verifyFinalReview(input, final.sourceRevision, read);
   const manifest = { schemaVersion: 'delivery-manifest.v2', projectId: input.projectId, runId,
     sourceRevision: final.sourceRevision, modules, final, evidence };
-  return { ...manifest, digest: sha256Text(canonicalJson(manifest)) };
+  if (deliveryManifestEncoding === undefined) return { ...manifest, digest: sha256Text(canonicalJson(manifest)) };
+  return createDeliveryManifestV3({ ...manifest, schemaVersion: 'delivery-manifest.v3' });
 }
