@@ -1,0 +1,35 @@
+Source author4685/2981, own069adaa before context-selector correction.
+Command: node --test tests/verification/reliability/review-cache-independent.test.mjs
+✔ independent v2 record version selection does not execute getter or proxy traps (7.69591ms)
+✖ independent context selector rejects absent/present Proxy and getter contexts before legacy inference (0.731153ms)
+✔ independent writer rejects getter/proxy record before version inspection or provider admission (0.655489ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 174.267896
+
+✖ failing tests:
+
+test at tests/verification/reliability/review-cache-independent.test.mjs:30:1
+✖ independent context selector rejects absent/present Proxy and getter contexts before legacy inference (0.731153ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: a Proxy is invalid even when the profile is absent
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run8-sdk-cache-review/tests/verification/reliability/review-cache-independent.test.mjs:42:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+Exit 1, two prior parser/writer regressions pass. Root's newly identified absent-profile Proxy hole reproduced independently; no native acceptance claimed.

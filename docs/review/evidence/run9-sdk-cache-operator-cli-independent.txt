@@ -1,0 +1,9 @@
+Source fc9c52f, author production 04ccca1 / remote947b3e7 on operator MAIN9c5bdcb.
+Command: node docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs /workspace/scratch/15fb596e6560/run8-sdk-cache-review
+Exit: 0
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:f34cb1a66e484ab25dd715bba3b5f7dbea177ce14feed39d16a6e67314c1d41b:sha256:f11a020b0fd1c4ab793a73c66cc445e0f67b0a1c351fec492faba6ab857138ca\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:f34cb1a66e484ab25dd715bba3b5f7dbea177ce14feed39d16a6e67314c1d41b"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+
+Original archived source and dependencies resolve from this current checkout. Unfixed CLI graph mismatch is the expected red control; repaired current CLI preserves the original 13-stage graph then refuses the original terminal run. No successful model/native Product acceptance claimed.

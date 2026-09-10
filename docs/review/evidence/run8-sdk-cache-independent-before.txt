@@ -1,0 +1,34 @@
+Source a376253cc4b543cba0e3f8f9dcd89380f3e0b7ce, reviewer 384bff463a7d2c3607dd13d60bc610fd92055fa1. All remote 3872c37f3f239bea40f643e03dcfdc43abf0a4b0 blobs/modes matched.
+Command: node --test tests/verification/reliability/review-cache-independent.test.mjs
+✖ independent v2 record version selection does not execute getter or proxy traps (8.544734ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 159.332527
+
+✖ failing tests:
+
+test at tests/verification/reliability/review-cache-independent.test.mjs:11:1
+✖ independent v2 record version selection does not execute getter or proxy traps (8.544734ms)
+  AssertionError [ERR_ASSERTION]: version selection must not execute the untrusted getter before strict JSON validation
+
+  1 !== 0
+
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run8-sdk-cache-review/tests/verification/reliability/review-cache-independent.test.mjs:17:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+Exit 1. Actual untrusted schemaVersion getter was executed before strict JSON validation. Test source is preserved for unchanged retest.

@@ -1,0 +1,6 @@
+Independent reviewer source 3b1866bd9c13d55fa9e45cbefddb74f775d9db82; author production 89c4fa44bb3ec2e946a1b5f55665d467eb3f3514. Base 28909f62; not yet reconciled to operator 9c5bdcb. Exit 0.
+Commands (each exit 0, no output):
+node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json
+node scripts/generate-plugin-sdk-types.mjs --check
+git diff --check
