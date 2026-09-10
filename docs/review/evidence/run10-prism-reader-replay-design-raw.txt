@@ -1,0 +1,6 @@
+Command: node docs/review/evidence/run10-prism-reader-replay-design-probe.mjs
+Exit code: 0
+Bounded design diagnostic against saved real original requests/receipts; no executed recovery or production fix claimed.
+Initial diagnostic asserted the fixed-case run ID in both cases; corrected only that harness assertion to the actual mixed-case run ID before this successful run.
+{"mixed":false,"originalEffectId":"effect:json-utf16-v1:b7a4077d35e99a05ec6fa34bf3ba3a90c1c76e186052c5eeb580da0faca51cf7","sameOperationAndPayload":"matches original request","bytesOperation":"EFFECT_IDEMPOTENCY_CONFLICT","referencePayloadOnly":"EFFECT_IDEMPOTENCY_CONFLICT","existingCompletedReceiptPortableBytes":"exact original CAS bytes/ref/digest/size","changedProductionFiles":0,"recoveryExecutionClaimed":false}
+{"mixed":true,"originalEffectId":"effect:json-utf16-v1:a4a4687789178689b0b82448f42ecee4d3d3ac732495434f53eea740503a788d","sameOperationAndPayload":"matches original request","bytesOperation":"EFFECT_IDEMPOTENCY_CONFLICT","referencePayloadOnly":"EFFECT_IDEMPOTENCY_CONFLICT","existingCompletedReceiptPortableBytes":"exact original CAS bytes/ref/digest/size","changedProductionFiles":0,"recoveryExecutionClaimed":false}

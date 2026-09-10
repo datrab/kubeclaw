@@ -54,21 +54,64 @@ service acceptance. Both test cases exercise the same original admitted stage
 boundary before any downstream schema/renderer is relevant. No full handoff,
 operator message, browser, deployment, CI or native renderer proof is claimed.
 
-## Narrow proposed cause fix (not implemented)
+## Revised narrow proposal: preserve the original read effect
 
-After independent reproduction, change only the registered reader in
-`skills/nova/plugins/prism-design/src/stage.ts` to request original
-`artifacts.read/get_json_bytes`, including the exact selected `reference` in the
-payload, then verify original `verifiedArtifactJsonText(response, architectureRef)`.
-Retain current same-run/ref/media-type/size/input digest checks and current error
-semantics. Hash/measure verified returned bytes, not reader-local serialization.
-The existing owning helper already validates value ↔ bytes, complete ArtifactRef,
-producer identity, digest/size and known encoding. No new fallback, legacy
-recanonicalization, duplicated shadow validator or global serializer change.
+The initial `get_json_bytes` plus payload `reference` proposal is **superseded
+before implementation**: it would break existing durable invocation identity.
+Original `stage-executor.ts` assigns the read its stable ordinal key
+`<run>:design:<attemptNumber>:1`. `effects/identity.ts` binds the operation in the
+effect ID and separately compares payloads. `DurableInvocation.execute` checks
+that identity **before** returning an existing completed receipt. Merely adding
+`reference` to the old `get_json` payload also conflicts. An artifact encoding
+tag specifies bytes, not permission to change a persisted invocation contract.
+
+The replacement proposal changes only post-read verification in `stage.ts`:
+
+- Preserve the exact original `artifacts.read/get_json`, resource, namespace/digest
+  payload, call order and key; no extra capability invocation.
+- Retain same-run, media-type, size and input digest checks. Require full returned
+  `response.artifact` to equal the expected Core-issued ArtifactRef, including its
+  producer, namespace, ID and optional encoding, using the existing portable JSON
+  value comparison. This compares metadata, not historical bytes or a new ID.
+- If the expected ref explicitly owns `encoding: kubeclaw-json.utf16.v1`, use
+  the owning `portableJson(response.value)` serializer. Its deterministic output
+  reconstructs exactly the producer's defined bytes. Compare those bytes' SHA256
+  and byte length plus the response digest/size with the expected ref.
+- If the expected ref has no encoding property, retain original `canonicalJson`
+  verification unchanged and fail closed on mismatch. Do not guess historical
+  collators, infer a tag, or silently retry another codec. Unknown tags and an
+  explicitly present invalid/undefined tag must fail under the owning ref contract.
+- Keep current blocked-error semantics and all independently changed SDK transport
+  wrapper behavior. Transport/cache/run profiles do not select this reader codec.
+
+`run10-prism-reader-replay-design-probe.mjs` reads both real requests and completed
+receipts from the original registered-stage raw evidence. It invokes the actual
+original `assertMatchingRequest`: unchanged requests pass; changing operation or
+only adding a payload reference both fail. On both existing receipts the explicit
+portable codec reconstructs exact original CAS bytes/ref/digest/size, including
+the original mixed-case counterexample. Its saved raw is a bounded design
+diagnostic, **not** an implemented repair or a newly executed crash/recovery test.
+
+Original recovery states remain distinct. A requested but not accepted operation
+can retain its original request and acceptance path. A completed receipt remains
+reusable without a new adapter call. An accepted operation without a completed
+receipt follows original recovery: the ArtifactStore adapter has no `receipt`
+method, so `EFFECT_RECOVERY_RECEIPT_UNAVAILABLE` remains fail-closed. This proposal
+does not invent retry safety, a new key, or successful recovery for that state.
+
+Old `get_json` selects the latest matching logical ID/digest, not an exact expected
+reference; a duplicate with a different producer can therefore return the wrong
+owner. Full-reference verification must reject that ambiguity rather than alter
+the persisted payload to fetch a different record. Historical same-codec bytes
+remain checked exactly; legacy cross-locale mismatches are deliberately not
+repaired by guessing. A future full-bytes operation would need a separately
+specified reader invocation version frozen when the run starts and exact legacy
+branching. It is unnecessary for this bounded portable-artifact defect.
 
 Required bounded follow-up: actual registered-stage success past this reader for
 portable mixed-case/Unicode and legacy bytes, exact reference/owner/codec/digest/
-size/value corruption denials, original EffectJournal behavior preserved, and
+size/value corruption denials, original EffectJournal behavior preserved (including
+completed receipt replay and accepted-without-receipt uncertainty), and
 independent review. The native transport author is modifying runtime.dispatch
 producer bindings including this stage: reconcile its fresh reviewed integration
 before applying any reader fix, never overwrite those independent changes.
