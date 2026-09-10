@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "exports": { ".": "./src/index.ts", "./digest": "./src/digest.ts" },
+  "exports": { ".": "./src/index.ts", "./digest": "./src/digest.ts", "./baseline-archive": "./src/baseline-archive.ts" },
   "scripts": {
     "generate:validators": "node scripts/generate-validators.mjs",
     "pretest": "node scripts/generate-validators.mjs",
-    "test": "node tests/contracts.test.mts && node tests/remediation.test.mts",
+    "test": "node tests/contracts.test.mts && node tests/remediation.test.mts && node --test tests/baseline-archive.test.mts",
     "pretypecheck": "node scripts/generate-validators.mjs",
     "typecheck": "tsc --noEmit"
   },

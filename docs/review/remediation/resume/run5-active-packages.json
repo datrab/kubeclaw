@@ -2,7 +2,7 @@
   "schema_version": 1,
   "run_id": "20260910t004317",
   "fresh_remote_base": "a43aa256bdce35d7f9c44d5d661e59c4055e562e",
-  "last_source_integration": "a43aa256bdce35d7f9c44d5d661e59c4055e562e",
+  "last_source_integration": "28909f62da68f70d94e0672ce7ae12ced8d7b3d9",
   "frozen_baseline": "c38779c71bb92bc15c3fcb89930348e5417aa475",
   "frozen_count": 47,
   "verified_count": 8,
@@ -79,7 +79,8 @@
       "native_matrix_wip": "feee269863086c3ea4e46363b10178afa405d4bf",
       "final_author_backup": "bade491d2c20e0efc5b33816d447bcb187f790d0",
       "final_review_backup": "898fada24b84fddb6eff8c5f9a434731a8054583",
-      "root_report": "implementation/run9-sdk-root-review.md"
+      "root_report": "implementation/run9-sdk-root-review.md",
+      "integration_commit": "28909f62da68f70d94e0672ce7ae12ced8d7b3d9"
     },
     {
       "package": "worker-trust-native-envoy",
@@ -127,15 +128,16 @@
       "package": "prism-baseline-v2",
       "commit": "1ca9a7236bc8bec40ce403b21b6f5b53dad275f3",
       "review_commit": "4d09c0a9c4e925eba73c5656508e38f4d067a22d",
-      "status": "independently-approved-not-integrated",
-      "next_action": "Root inspect exact source and rerun original assembler/CAS/import matrix after SDK integration; v1 and existing approval bytes unchanged; no full Control DB/browser claim."
+      "status": "bounded-package-independently-approved-root-tested-in-this-integration",
+      "next_action": "Bounded explicit paired baseline-v2 complete in this integration. Preserve v1 approvals and full original gates; registered-stage reader fix is separately owned and incomplete.",
+      "root_report": "implementation/run9-prism-baseline-root-review.md"
     },
     {
       "package": "review-cache-v4-v2",
-      "commit": "3872c37f3f239bea40f643e03dcfdc43abf0a4b0",
+      "commit": "75aca9244fdf72ba3c90bf250ec9573d2dbffbef",
       "review_commit": "fabe2c7f573deb04069066af680bde392db8e880",
       "status": "incomplete-implementation-independent-review-active",
-      "next_action": "Correct demonstrated getter execution, complete genuine archived/current StageExecutor cache and phase-SIGKILL matrix and strict storage negatives. Check newer owned branch checkpoints; WIP includes SDK dependency, do not overwrite integrated source."
+      "next_action": "Both demonstrated getter selectors corrected. Independent31 native and full original Review pass; final current-head source/recovery/types and new-writer version assertion remain under verification. No approval/integration yet."
     },
     {
       "package": "review-report-hex-key-cutover",
@@ -147,7 +149,8 @@
       "package": "prism-registered-reader",
       "commit": "49211bfba8d506d2045d36fe47fbd74a46f85383",
       "status": "corrected-design-independently-reproduced-implementation-authorized",
-      "next_action": "Preserve exact get_json operation/payload/ordinal and bind full expected ref; select codec only from its explicit encoding. Independent actual requested/completed and accepted-no-receipt histories required; no bytes-operation swap in old effects."
+      "next_action": "Preserve exact get_json operation/payload/ordinal and bind full expected ref; select codec only from its explicit encoding. Independent actual requested/completed and accepted-no-receipt histories required; no bytes-operation swap in old effects.",
+      "review_commit": "4f498a936a09a6446e0000fdd579affafbd0bf5c"
     },
     {
       "package": "supervisor-original-cli-start",

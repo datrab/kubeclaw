@@ -645,6 +645,10 @@
         {
           "report": "implementation/run9-sdk-root-review.md",
           "summary": "Unabhängig geprüfter run-frozen Transport: Root64/64 und volle ursprüngliche Review-Suite, Foundation/Nova-Types, Generator und archivierte CLI bestanden. Weitere Cache-/Report-/Prism-Domains bleiben offen."
+        },
+        {
+          "report": "implementation/run9-prism-baseline-root-review.md",
+          "summary": "Explizite Prism-Baseline-v2 unabhängig geprüft; Root alle16 Locale/CAS-Importkombinationen,5Matrixfälle,25Originaltests,3Types und begrenzter Lint bestanden. Historische Freigaben/v1 erhalten; kein Browser-/DB-Gesamtabschluss."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/lib.sdk.md",
@@ -652,11 +656,11 @@
       "source_finding_text": "### PCR-SDK-001 — Serialisierung erzeugt ungültige oder kollidierende Daten\n\n- **Mittel, nachgewiesener Defekt:** Funktion in aktiven Artefakt-/Effektpfaden;\n  kein bisheriger Produktionsvorfall mit normalen JSON-Eingaben behauptet.\n- **Beleg:** src/values.ts:42–51: map/join, undefined→null, localeCompare;\n  ArtifactStore.adapter.ts:108–135 speichert diese Bytes als application/json,\n  Core.effects/identity.ts:5–24 vergleicht so Payloads. unknown ohne JSON-Prüfung.\n- **Auslöser/Ablauf:** in-process Array(2) ergibt ungültiges `[,]`;\n  `{x:undefined}` und `{x:null}` identische Bytes. Originalfunktion tatsächlich\n  ausgeführt: [Reproduktion](../evidence/plugin-contract-sdk-repro.mjs).\n- **Auswirkung:** ungültige JSON-Artefakte bzw. verschiedene Nicht-JSON-Payloads\n  bei Idempotenz gleichgesetzt. Voller Adapterfehlerpfad ist Code-Trace, kein\n  hier gelaufener E2E-Test. Localeordnung zusätzliches Portabilitätsrisiko,\n  noch nicht durch mehrere Umgebungen gemessen.\n- **Ursachenbehebung:** akzeptierten JSON-Datenbereich validieren, Sparsearrays,\n  nichtendliche Zahlen, Getter, exotische Objekte/Zyklen ablehnen und\n  sprachunabhängig ordnen. Persistierte Digestversionen kontrolliert umstellen;\n  kein stiller Fallbackserializer.\n- **Regression:** Originalserializer-Negativ-/Localevektoren; echter\n  ArtifactStore put/get und EffectJournal-Replay dürfen weder ungültige Bytes\n  quittieren noch verschiedene akzeptierte Payloads gleichsetzen.\n  [PCR-PROMPT-001](lib.prompt-contract.md) betrifft getrennten ungenutzten Code,\n  nicht denselben Laufzeitpfad.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Separat versionierte Review-Cache-v4/v2-, Review-Report-Hexkey- und Prism-Reader-/Baseline-Pakete gegen integrierten Transport prüfen; keine stille Umstellung alter Effekte oder erfundenen nativen Gates.",
+      "next_action": "Review-Cache-v4/v2 und registrierten Prism-Reader nach echter History-/Native-Prüfung integrieren; separat kontrollierten Review-Report-Cutover entwerfen. Alte Effekte/Graphen nicht still umdeuten.",
       "related_findings": [],
       "decision_notes": [],
       "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe.",
-      "remaining_work": "Review-Cache, Review-Report und Prism-Domains bleiben offen; Details und Rohbelege in implementation/run9-sdk-root-review.md."
+      "remaining_work": "Review-Cache, Review-Report und registrierter Prism-Reader bleiben offen. Transport und Prism-Baseline-Versionierung unabhängig geprüft und Root auf gemeinsamem Stand nachgewiesen."
     },
     {
       "id": "PCR-SDK-002",

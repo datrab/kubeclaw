@@ -1,0 +1,50 @@
+const sha256 = (value: string | Uint8Array) =>
+  `sha256:${createHash("sha256").update(value).digest("hex")}`;
+const stableRecord = (record: Record<string, string>) =>
+  JSON.stringify(
+    Object.fromEntries(
+      Object.entries(record).sort(([a], [b]) => a.localeCompare(b)),
+    ),
+  );
+
+      const checksums: Record<string, string> = {};
+      for (const [path, value] of Object.entries(textFiles))
+        checksums[path] = sha256(value);
+      for (const [path, value] of Object.entries(binaryFiles))
+        checksums[path] = sha256(Buffer.from(value, "base64"));
+      textFiles["checksums.json"] = JSON.stringify({
+        algorithm: "sha256",
+        files: Object.fromEntries(
+          Object.entries(checksums).sort(([a], [b]) => a.localeCompare(b)),
+        ),
+      });
+      const bundleDigest = sha256(stableRecord(checksums));
+      const manifest = {
+        schema: "prism.baseline-bundle.v1",
+        bundleId: `${currentDocument.document.meta.projectId.slice(0, 71)}-baseline`,
+        projectId: currentDocument.document.meta.projectId,
+        revision: currentDocument.document.meta.revision,
+        designDocument: {
+          path: "design-document.json",
+          schema: "prism.design-document.v1",
+          revision: currentDocument.document.meta.revision,
+        },
+        designSpecification: { path: "design-specification.md" },
+        acceptanceCriteria: { path: "acceptance-criteria.json" },
+        assets: manifestAssets,
+        previews: { path: "previews/index.json" },
+        createdAt: new Date(approval.rows[0].approved_at).toISOString(),
+        digest: bundleDigest,
+      };
+      validatePrism("baselineManifest", manifest);
+      textFiles["manifest.json"] = JSON.stringify(manifest);
+      const bundle = await artifacts.put(
+        Buffer.from(
+          JSON.stringify({
+            schema: "prism.baseline-archive.v1",
+            manifest,
+            textFiles,
+            binaryFiles,
+          }),
+        ),
+      );

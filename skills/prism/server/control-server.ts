@@ -1,4 +1,5 @@
 import { productAuthorityHandler } from './product-decisions.ts';
+import { assembleBaselineArchive, BASELINE_V2 } from '@kubeclaw/prism-contracts-v1/baseline-archive';
 import { handleAgentJobs } from './agent-job-routes.ts';
 import { agentJob } from '../control/agent-jobs.ts';
 import { agentReceipt, startAgentRevision, admitDesignAgent } from '../control/agent-admission.ts';
@@ -91,12 +92,6 @@ function cookies(request: IncomingMessage): Record<string, string> {
 }
 const sha256 = (value: string | Uint8Array) =>
   `sha256:${createHash("sha256").update(value).digest("hex")}`;
-const stableRecord = (record: Record<string, string>) =>
-  JSON.stringify(
-    Object.fromEntries(
-      Object.entries(record).sort(([a], [b]) => a.localeCompare(b)),
-    ),
-  );
 const userKey = (identity: string) =>
   `user-${createHash("sha256").update(identity).digest("hex").slice(0, 24)}`;
 
@@ -818,20 +813,13 @@ private async runWorker(
       };
       validatePrism("previewIndex",previewIndex);
       textFiles["previews/index.json"] = JSON.stringify(previewIndex);
-      const checksums: Record<string, string> = {};
-      for (const [path, value] of Object.entries(textFiles))
-        checksums[path] = sha256(value);
-      for (const [path, value] of Object.entries(binaryFiles))
-        checksums[path] = sha256(Buffer.from(value, "base64"));
-      textFiles["checksums.json"] = JSON.stringify({
-        algorithm: "sha256",
-        files: Object.fromEntries(
-          Object.entries(checksums).sort(([a], [b]) => a.localeCompare(b)),
-        ),
-      });
-      const bundleDigest = sha256(stableRecord(checksums));
-      const manifest = {
-        schema: "prism.baseline-bundle.v1",
+      const assembled = assembleBaselineArchive({
+        // Select the new format only for a genuinely new publication. The
+        // existing-baseline early return above keeps saved approvals/CAS bytes.
+        profile: BASELINE_V2,
+        textFiles,
+        binaryFiles,
+        manifest: {
         bundleId: `${currentDocument.document.meta.projectId.slice(0, 71)}-baseline`,
         projectId: currentDocument.document.meta.projectId,
         revision: currentDocument.document.meta.revision,
@@ -845,20 +833,10 @@ private async runWorker(
         assets: manifestAssets,
         previews: { path: "previews/index.json" },
         createdAt: new Date(approval.rows[0].approved_at).toISOString(),
-        digest: bundleDigest,
-      };
-      validatePrism("baselineManifest", manifest);
-      textFiles["manifest.json"] = JSON.stringify(manifest);
-      const bundle = await artifacts.put(
-        Buffer.from(
-          JSON.stringify({
-            schema: "prism.baseline-archive.v1",
-            manifest,
-            textFiles,
-            binaryFiles,
-          }),
-        ),
-      );
+        },
+      });
+      const { manifest, checksums, bundleDigest } = assembled;
+      const bundle = await artifacts.put(assembled.bytes);
       await pool.query(
         "INSERT INTO prism.baseline(id,project_id,design_revision_id,bundle_key,bundle_revision,bundle_digest,bundle_artifact_id,approval_id,specification_digest,criteria_digest,preview_index_digest) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
         [
