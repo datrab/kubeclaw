@@ -1,0 +1,96 @@
+Independent source f505eedacada7e7168740aa27272530f62c9f47f / remote9488fdf264ee26c9987f56a659722981e8da5835, verified whole tree618034c70ba1aeda832c23a0216209f2aba6d388. Own review checkout74b4398 + test-only810a598 on fresh9c5/e98. Original dependency/confidential/history/SDK + independent Proxy oracle; 42/42 zero skips.
+[fix/resume-47-run9-transport-proxy-review 810a598] test(sdk): independently reject transport proxy admission and preserve legacy metadata [skip ci]
+ 2 files changed, 80 insertions(+)
+ create mode 100644 docs/review/evidence/run9-sdk-transport-proxy-audit.mjs
+ create mode 100644 tests/verification/reliability/runtime-profile-proxy-independent.test.mjs
+{"mode":"delivery","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":true,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"delivery","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":false,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original delivery boundary survives real cross-locale restart (9276.713291ms)
+{"mode":"activation","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":true,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"activation","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":false,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original activation boundary survives real cross-locale restart (7278.397988ms)
+✔ independent legacy actual HTTP receipt must remain canonically valid after rehashed disk corruption (22125.985672ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ independent current actual HTTP receipt must remain canonically valid after rehashed disk corruption (13456.131355ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ independent unknown portable dependency version cannot hide behind another valid request subject (3727.041267ms)
+✔ canonical effect keys retain opaque bounds and exactly bounded historical producer grammar (67.420181ms)
+✔ new complete subject and owner identity has explicit version and compact bounded key (1.522006ms)
+✔ canonical resource owner admits real resource namespaces without relaxing other request fields (6.321837ms)
+✔ original activation IDs and public delivery tokens propagate only to owning effect and lock fields (3.780614ms)
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (6861.868121ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (8429.893931ms)
+✔ independent genuine legacy child history cannot hide corruption behind an absent or changed requested subject (19871.408002ms)
+ℹ orphan accepted: rejected before another HTTP request
+ℹ orphan completed: rejected before another HTTP request
+ℹ requested subject differs from accepted: rejected before another HTTP request
+ℹ duplicate child request: rejected before another HTTP request
+ℹ child request before original parent: rejected before another HTTP request
+ℹ child request before parent accepted: rejected before another HTTP request
+ℹ unknown original request version: rejected before another HTTP request
+ℹ valid foreign attempt hidden behind known legacy owner key: rejected before another HTTP request
+✔ independent genuine two-locale historical ambiguity rejects rather than selecting either recorded child alias (5656.672775ms)
+✔ independent actual failed legacy HTTP child remains failed across locale recovery without retransmission (2757.553779ms)
+✔ independent SIGKILL after the receiver observed a legacy POST but before its response keeps the child unresolved (2977.847693ms)
+✔ independent concurrent current producer processes in different locales retain one actual child action and replay (2582.462542ms)
+{"mode":"current","receiverCalls":1,"dependencyKeys":["adapter-dep:utf16-v1:51311a52c9e74ceb2629dbc7a912ad980ca0f99c11ebf4c7f6c697ca55e08462:f841e7bd43506d26d397535b51fd3f4245e30f7cd2526df0e84a24176470f5e6"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity current across native locales (4395.201974ms)
+{"mode":"legacy-resume","receiverCalls":1,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:0bd29ba24e7eeab635d881d1f70be2d9de3b54d2aa402f8b96517fd8c4774ce5:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity legacy-resume across native locales (5133.936613ms)
+{"mode":"historical-countercheck","receiverCalls":2,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:1b86d75ae357055c4923631dbebf1e8497ef41fcff01cef54ae735b8ea250184:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604","adapter:test.locale-dependency:consumer:network.http:b4c0698ac5e0066254b31b21d41bb0ca419c7ad904325c78b01bd924bbf45bb1:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity historical-countercheck across native locales (4165.345036ms)
+✔ original registered adapter rejects malformed dependency result [] (4401.221279ms)
+✔ original registered adapter rejects malformed dependency result null (4655.88198ms)
+✔ original registered adapter rejects malformed dependency result Array(2) (3416.683296ms)
+✔ original registered adapter rejects malformed dependency result ({value:NaN}) (3780.445027ms)
+✔ original registered adapter rejects malformed dependency result Object.defineProperty({},"value",{enumerable:true,get(){throw new Error("GETTER_MUST_NOT_RUN");}}) (3827.407532ms)
+✔ effect journal owns request and receipt payloads: memory (45.651766ms)
+✔ effect journal owns request and receipt payloads: file (87.4875ms)
+✔ effect journal owns request and receipt payloads: file-sidecar (79.858912ms)
+✔ before-receipt cannot silently repeat a real external mutation (5476.310838ms)
+✔ after-receipt cannot silently repeat a real external mutation (4087.770115ms)
+✔ lost-response cannot silently repeat a real external mutation (4367.288337ms)
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (1315.482887ms)
+✔ finite canonical profile: SDK and original Foundation validator agree without executing getters (6.341116ms)
+✔ new original snapshot writes bind required profile; rehashed malformed/future/downgraded contracts reject (13.375739ms)
+✔ profile is bound after budget reservation and excluded from actual model task without changing accounting (1831.436177ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (10666.288583ms)
+✔ runtime profile selector preserves legitimate JSON metadata and original codec bytes (2.652061ms)
+✔ runtime profile selector refuses absent/present Proxies and getters without executing traps (0.334625ms)
+ℹ [{"kind":"proxy","present":false,"calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED"},{"kind":"proxy","present":true,"calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED"},{"kind":"getter","field":"runtimeDispatchProfile","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID"},{"kind":"getter","field":"payload","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID"}]
+✔ original plugin context and registered AdapterRuntime reject Proxy/getter input before real HTTP or effect writes (4404.579854ms)
+ℹ [{"entry":"context","kind":"proxy","calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED","newPosts":0,"unchangedJournal":true},{"entry":"context","kind":"getter","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID","newPosts":0,"unchangedJournal":true},{"entry":"adapter","kind":"proxy","calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED","newPosts":0,"unchangedJournal":true},{"entry":"adapter","kind":"getter","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID","newPosts":0,"unchangedJournal":true}]
+✔ independent pre-fix original registered transport/context HTTP oracle now rejects before trap or admission (4081.794079ms)
+✔ independent selector preserves original legacy request bytes and nested owning dependency metadata (21.497861ms)
+Real ArtifactStore and FileEffectJournal replay JSON regressions passed
+✔ tests/verification/reliability/sdk-json-contract.test.mts (1282.867319ms)
+✔ original artifact/source consumers and reopened effect journal preserve byte authority across native locales (5970.035732ms)
+ℹ tests 42
+ℹ suites 0
+ℹ pass 42
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 39599.874687

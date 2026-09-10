@@ -1,0 +1,124 @@
+Fresh remote21b cache+reader; frozen author source c9a19ebb5ef7d2e8f490db71ce801478c3105fe3. Final 86/86 zero skips, exit0. First tool output chunk truncated634tokens inside dependency diagnostics; warning preserved, not claimed complete raw for that chunk. All affected dependency files rerun unchanged with complete raw in reconciled-dependencies.txt.
+node --test tests/verification/reliability/runtime-profile-no-trap.test.mjs tests/verification/reliability/runtime-dispatch-profile.test.mjs tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs tests/verification/reliability/runtime-dispatch-native-profile.test.mjs tests/verification/reliability/adapter-dependency-boundary.test.mjs tests/verification/reliability/adapter-dependency-canonical-independent.test.mjs tests/verification/reliability/adapter-dependency-contract.test.mjs tests/verification/reliability/adapter-dependency-independent.test.mjs tests/verification/reliability/adapter-dependency-locale.test.mjs tests/verification/reliability/adapter-dependency-result.test.mjs tests/verification/reliability/adapter-dependency-identity.test.mts tests/verification/reliability/review-cache-profile.test.mjs tests/verification/reliability/review-cache-native-profile.test.mjs tests/verification/reliability/review-cache-independent.test.mjs tests/verification/reliability/review-cache-legacy-prefix.test.mjs tests/verification/reliability/review-cache-storage-negative.test.mjs
+Warning: truncated output (original token count: 2134)
+Total output lines: 73
+
+{"mode":"delivery","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":true,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"delivery","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":false,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original delivery boundary survives real cross-locale restart (7559.076859ms)
+{"mode":"activation","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":true,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"activation","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":false,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original activation boundary survives real cross-locale restart (5463.715237ms)
+✔ independent legacy actual HTTP receipt must remain canonically valid after rehashed disk corruption (16295.858012ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ independent current actual HTTP receipt must remain canonically valid after rehashed disk corruption (12492.080176ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or …634 tokens truncated…ca55e08462:6792fb8459c957b5cc4e555086ecdd615059762bdd26ef8ad6aa6965d11af334"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity current across native locales (3885.114821ms)
+{"mode":"legacy-resume","receiverCalls":1,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:c2c7f29096b73ae367601c3d43c738712afdfa13dc9216d54e0cca15078d6f50:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity legacy-resume across native locales (4100.037727ms)
+{"mode":"historical-countercheck","receiverCalls":2,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:277bb73167cd07ecb0095bdd13ecac0712af5cc5e9e5fd23c189f9d026bcf824:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604","adapter:test.locale-dependency:consumer:network.http:1f79f8e672e0aa8c24536616632cc7767c65534404fda20b5aa049aa6773d8d5:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity historical-countercheck across native locales (2971.15229ms)
+✔ original registered adapter rejects malformed dependency result [] (3329.684042ms)
+✔ original registered adapter rejects malformed dependency result null (3434.823371ms)
+✔ original registered adapter rejects malformed dependency result Array(2) (2627.809949ms)
+✔ original registered adapter rejects malformed dependency result ({value:NaN}) (2409.950827ms)
+✔ original registered adapter rejects malformed dependency result Object.defineProperty({},"value",{enumerable:true,get(){throw new Error("GETTER_MUST_NOT_RUN");}}) (2901.075695ms)
+✔ independent v2 record version selection does not execute getter or proxy traps (7.660928ms)
+✔ independent context selector rejects absent/present Proxy and getter contexts before legacy inference (0.409588ms)
+✔ independent writer rejects getter/proxy record before version inspection or provider admission (0.927088ms)
+✔ v1 original cache write requested SIGKILL preserves exact pending operation and authority (4858.178077ms)
+✔ v1 original cache write accepted SIGKILL preserves exact pending operation and authority (3914.522692ms)
+✔ v1 original cache write completed SIGKILL preserves exact pending operation and authority (3759.21944ms)
+✔ v1 original cache read requested SIGKILL preserves exact pending operation and authority (4823.198366ms)
+✔ v1 original cache read accepted SIGKILL preserves exact pending operation and authority (4150.542359ms)
+✔ v1 original cache read completed SIGKILL preserves exact pending operation and authority (6266.962387ms)
+✔ v2 original cache write requested SIGKILL preserves exact pending operation and authority (2975.671201ms)
+✔ v2 original cache write accepted SIGKILL preserves exact pending operation and authority (2594.213844ms)
+✔ v2 original cache write completed SIGKILL preserves exact pending operation and authority (2477.540562ms)
+✔ v2 original cache read requested SIGKILL preserves exact pending operation and authority (8066.052225ms)
+✔ v2 original cache read accepted SIGKILL preserves exact pending operation and authority (9049.246216ms)
+✔ v2 original cache read completed SIGKILL preserves exact pending operation and authority (11683.714385ms)
+✔ v3 original cache write requested SIGKILL preserves exact pending operation and authority (5490.878458ms)
+✔ v3 original cache write accepted SIGKILL preserves exact pending operation and authority (5556.372163ms)
+✔ v3 original cache write completed SIGKILL preserves exact pending operation and authority (4941.244862ms)
+✔ v3 original cache read requested SIGKILL preserves exact pending operation and authority (11620.190977ms)
+✔ v3 original cache read accepted SIGKILL preserves exact pending operation and authority (11934.904566ms)
+✔ v3 original cache read completed SIGKILL preserves exact pending operation and authority (12356.458808ms)
+✔ v4 original cache write requested SIGKILL preserves exact pending operation and authority (6145.377228ms)
+✔ v4 original cache write accepted SIGKILL preserves exact pending operation and authority (4413.4337ms)
+✔ v4 original cache write completed SIGKILL preserves exact pending operation and authority (5283.510093ms)
+✔ v4 original cache read requested SIGKILL preserves exact pending operation and authority (5964.774823ms)
+✔ v4 original cache read accepted SIGKILL preserves exact pending operation and authority (7000.719623ms)
+✔ v4 original cache read completed SIGKILL preserves exact pending operation and authority (7321.718268ms)
+✔ genuine v4 StageExecutor checkpoints and retains same-key v2 refs through en/tr/sv interrupted attempts (5751.692358ms)
+ℹ {"nativeModel":false,"registeredTestStage":true,"attempts":3,"seedExecutions":1,"retainedRefs":2,"digest":"sha256:e64985630cf3fa44a2d2012de6710d53a9838395f3d37adf194b60a04877e1b7"}
+✔ separate finite cache profile has canonical SDK/Foundation parity and never invokes getters (3.367369ms)
+✔ context profile selection rejects absent/present Proxy and getters before any trap or field access (0.381957ms)
+✔ genuine v4 writer requires both profiles; legacy version/profile combinations reject after rehash (31.575285ms)
+✔ v2 owns strict JSON and both inner digests; profile mismatch is an error, never a miss (2.111445ms)
+✔ actual Core/FileJournal/ArtifactStore retains exact same-byte owners and rejects all corrupt/mixed cache candidates (2247.494948ms)
+ℹ {"nativeArtifactStore":true,"mocks":false,"racingWrites":2,"foreignSameBytes":true,"executedMisses":0}
+✔ actual v1 run creation carries frozen transport choice; terminal reopen preserves prefix (6036.430249ms)
+ℹ {"version":"v1","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v2 run creation carries frozen transport choice; terminal reopen preserves prefix (6030.756543ms)
+ℹ {"version":"v2","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v3 run creation carries frozen transport choice; terminal reopen preserves prefix (6137.252669ms)
+ℹ {"version":"v3","nativeGateway":false,"actualPostCount":1,"requestProfile":{"schemaVersion":"runtime-dispatch-profile.v1","encoding":"json-utf16-v1"},"reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v4 run creation carries frozen transport choice; terminal reopen preserves prefix (4920.889653ms)
+ℹ {"version":"v4","nativeGateway":false,"actualPostCount":1,"requestProfile":{"schemaVersion":"runtime-dispatch-profile.v1","encoding":"json-utf16-v1"},"reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ original v1 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (9138.500682ms)
+✔ original v1 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (10474.800406ms)
+✔ original v1 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (9725.352084ms)
+✔ original v2 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (9899.283951ms)
+✔ original v2 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (9402.230713ms)
+✔ original v2 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (13414.612348ms)
+✔ original v3 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (11291.798321ms)
+✔ original v3 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (10326.951044ms)
+✔ original v3 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (9119.750613ms)
+✔ original v4 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (7602.806662ms)
+✔ original v4 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (7344.683344ms)
+✔ original v4 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (8189.036262ms)
+✔ declared v2 ACP transport profile owns locale selection without claiming a Gateway (12826.335489ms)
+ℹ {"version":"v2","nativeGateway":false,"localeStable":false,"transportKeys":["spawn:session-v1:attempt:0:payload:e6e964796faea9d043007231e949d244eca67210ff0c920cec81c6e69f52132b","spawn:session-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ declared v3 ACP transport profile owns locale selection without claiming a Gateway (12757.391752ms)
+ℹ {"version":"v3","nativeGateway":false,"localeStable":true,"transportKeys":["spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d","spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ declared v4 ACP transport profile owns locale selection without claiming a Gateway (13779.205776ms)
+ℹ {"version":"v4","nativeGateway":false,"localeStable":true,"transportKeys":["spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d","spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ original helper-review preserves invoke-only API and rejects invalid present profile before real HTTP (4628.763023ms)
+✔ original helper-verification preserves invoke-only API and rejects invalid present profile before real HTTP (4963.245934ms)
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (699.55454ms)
+✔ finite canonical profile: SDK and original Foundation validator agree without executing getters (2.508024ms)
+✔ new original snapshot writes bind required profile; rehashed malformed/future/downgraded contracts reject (17.420281ms)
+✔ profile is bound after budget reservation and excluded from actual model task without changing accounting (912.876744ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (7627.042064ms)
+✔ runtime profile selector preserves legitimate JSON metadata and original codec bytes (1.7831ms)
+✔ runtime profile selector refuses absent/present Proxies and getters without executing traps (0.41758ms)
+ℹ [{"kind":"proxy","present":false,"calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED"},{"kind":"proxy","present":true,"calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED"},{"kind":"getter","field":"runtimeDispatchProfile","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID"},{"kind":"getter","field":"payload","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID"}]
+✔ original plugin context and registered AdapterRuntime reject Proxy/getter input before real HTTP or effect writes (4505.816324ms)
+ℹ [{"entry":"context","kind":"proxy","calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED","newPosts":0,"unchangedJournal":true},{"entry":"context","kind":"getter","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID","newPosts":0,"unchangedJournal":true},{"entry":"adapter","kind":"proxy","calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED","newPosts":0,"unchangedJournal":true},{"entry":"adapter","kind":"getter","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID","newPosts":0,"unchangedJournal":true}]
+ℹ tests 86
+ℹ suites 0
+ℹ pass 86
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 201699.609615

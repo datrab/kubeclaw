@@ -653,6 +653,10 @@
         {
           "report": "implementation/run9-cache-reader-root-review.md",
           "summary": "Cache-v4/v2 und registrierter Prism-Reader unabhängig geprüft; Root gemeinsam71/71 Native-/Replay-/Operatorfälle,16 registrierte Readerfälle,24 Replayphasen,32 Localeconsumer und8 echte Eigentümerkonflikte bestanden. Volle Original-Review-Suite, archivierte CLI, Types/Generator bestanden; begrenzter Lint mit einer Warnung. Report-Cutover und separater Transport-No-Trap-Selektor bleiben offen."
+        },
+        {
+          "report": "implementation/run10-runtime-admission-root-review.md",
+          "summary": "Transport-Selektor validiert nun vor Reflektion. Unabhängige echte HTTP-/Journal-No-Trap-Prüfung; Root91/91 Original-/Cache-/Transportfälle plus16/24/32/8 Reader-Matrix und neue eigenständige Wiederherstellung6/6 bestanden. Types/SDK/Generator/Lint sowie volle unabhängige und Autoren-Review-Suite bestanden; ursprüngliche unveränderte Timingfehler mit vollständigen Wiederholungen erhalten. Report-Cutover und endlicher Consumerabschluss bleiben offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/lib.sdk.md",
@@ -660,11 +664,11 @@
       "source_finding_text": "### PCR-SDK-001 — Serialisierung erzeugt ungültige oder kollidierende Daten\n\n- **Mittel, nachgewiesener Defekt:** Funktion in aktiven Artefakt-/Effektpfaden;\n  kein bisheriger Produktionsvorfall mit normalen JSON-Eingaben behauptet.\n- **Beleg:** src/values.ts:42–51: map/join, undefined→null, localeCompare;\n  ArtifactStore.adapter.ts:108–135 speichert diese Bytes als application/json,\n  Core.effects/identity.ts:5–24 vergleicht so Payloads. unknown ohne JSON-Prüfung.\n- **Auslöser/Ablauf:** in-process Array(2) ergibt ungültiges `[,]`;\n  `{x:undefined}` und `{x:null}` identische Bytes. Originalfunktion tatsächlich\n  ausgeführt: [Reproduktion](../evidence/plugin-contract-sdk-repro.mjs).\n- **Auswirkung:** ungültige JSON-Artefakte bzw. verschiedene Nicht-JSON-Payloads\n  bei Idempotenz gleichgesetzt. Voller Adapterfehlerpfad ist Code-Trace, kein\n  hier gelaufener E2E-Test. Localeordnung zusätzliches Portabilitätsrisiko,\n  noch nicht durch mehrere Umgebungen gemessen.\n- **Ursachenbehebung:** akzeptierten JSON-Datenbereich validieren, Sparsearrays,\n  nichtendliche Zahlen, Getter, exotische Objekte/Zyklen ablehnen und\n  sprachunabhängig ordnen. Persistierte Digestversionen kontrolliert umstellen;\n  kein stiller Fallbackserializer.\n- **Regression:** Originalserializer-Negativ-/Localevektoren; echter\n  ArtifactStore put/get und EffectJournal-Replay dürfen weder ungültige Bytes\n  quittieren noch verschiedene akzeptierte Payloads gleichsetzen.\n  [PCR-PROMPT-001](lib.prompt-contract.md) betrifft getrennten ungenutzten Code,\n  nicht denselben Laufzeitpfad.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Separat gesicherte Report-Cutover-Implementierung und Transport-No-Trap-Korrektur unabhängig abschließen, gegen integrierten Cache/Reader-Head abgleichen und echte Gates wiederholen. Alte Effekte/Graphen nicht still umdeuten.",
+      "next_action": "Unabhängig geprüften Report-Cutover gegen den frisch integrierten Transport-Selektor abgleichen und echte Report-/Compiler-/Recovery-Gates wiederholen; endliches Original-SDK-Consumerinventar abschließen. Historische Effekte/Graphen nicht still umdeuten.",
       "related_findings": [],
       "decision_notes": [],
       "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe.",
-      "remaining_work": "Review-Report-Cutover und Transport-No-Trap-Selektor noch nicht integriert. Cache-v4/v2, registrierter Prism-Reader, Transport und Prism-Baseline unabhängig geprüft und Root auf gemeinsamem Stand nachgewiesen; Gesamtfinding bleibt offen."
+      "remaining_work": "Review-Report-Cutover noch nicht integriert; endlicher Original-Consumerabschluss offen. Nativer Originaltest en→cs belegt weiterhin falschen semantischen Review-Bundle-Digest (23e14883ace8868ab5ff0267b086253d43f4af35); separate Bundle-/Governor-/Graph-/Reader-Migration benötigt eigene Designprüfung und echte Tests. Transport-No-Trap-Selektor, Cache-v4/v2, registrierter Prism-Reader, Transport und Prism-Baseline unabhängig geprüft und Root auf gemeinsamem Stand nachgewiesen; Gesamtfinding bleibt offen."
     },
     {
       "id": "PCR-SDK-002",

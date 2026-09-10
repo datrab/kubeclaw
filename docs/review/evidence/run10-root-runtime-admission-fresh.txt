@@ -1,0 +1,24 @@
+Source: 87c79fa4d2226cff155f514b61e88a9b323dc82a
+Fresh remote: 21b05129691b6c932fdf7fd2d12f906cb2736aad
+Own standalone checkout, all4031 source blobs matched fresh MAIN+author snapshot; 64 workspace links resolve own source.
+Command: node --test --test-concurrency=1 tests/verification/reliability/runtime-profile-no-trap.test.mjs tests/verification/reliability/runtime-profile-proxy-independent.test.mjs && node skills/common/plugin-runtime/sdk/tests/values.test.ts
+Exit code: 0
+
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (6741.002335ms)
+✔ runtime profile selector preserves legitimate JSON metadata and original codec bytes (1.762509ms)
+✔ runtime profile selector refuses absent/present Proxies and getters without executing traps (0.500225ms)
+ℹ [{"kind":"proxy","present":false,"calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED"},{"kind":"proxy","present":true,"calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED"},{"kind":"getter","field":"runtimeDispatchProfile","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID"},{"kind":"getter","field":"payload","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID"}]
+✔ original plugin context and registered AdapterRuntime reject Proxy/getter input before real HTTP or effect writes (3436.190784ms)
+ℹ [{"entry":"context","kind":"proxy","calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED","newPosts":0,"unchangedJournal":true},{"entry":"context","kind":"getter","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID","newPosts":0,"unchangedJournal":true},{"entry":"adapter","kind":"proxy","calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED","newPosts":0,"unchangedJournal":true},{"entry":"adapter","kind":"getter","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID","newPosts":0,"unchangedJournal":true}]
+✔ independent pre-fix original registered transport/context HTTP oracle now rejects before trap or admission (2118.080097ms)
+✔ independent selector preserves original legacy request bytes and nested owning dependency metadata (8.22577ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13099.089675
+SDK JSON domain and accepted-byte regressions passed

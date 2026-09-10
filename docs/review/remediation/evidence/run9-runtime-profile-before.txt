@@ -1,0 +1,51 @@
+✖ runtime profile selector refuses absent/present Proxies and getters without executing traps (5.319256ms)
+ℹ [{"kind":"proxy","present":false,"calls":1,"error":null},{"kind":"proxy","present":true,"calls":1,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED"},{"kind":"getter","field":"runtimeDispatchProfile","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID"},{"kind":"getter","field":"payload","calls":0,"error":null}]
+✖ original plugin context and registered AdapterRuntime reject Proxy/getter input before real HTTP or effect writes (3838.118979ms)
+ℹ [{"entry":"context","kind":"proxy","calls":1,"error":null,"newPosts":1,"unchangedJournal":false},{"entry":"context","kind":"getter","calls":1,"error":null,"newPosts":1,"unchangedJournal":false},{"entry":"adapter","kind":"proxy","calls":1,"error":null,"newPosts":1,"unchangedJournal":false},{"entry":"adapter","kind":"getter","calls":1,"error":null,"newPosts":1,"unchangedJournal":false}]
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4271.333329
+
+✖ failing tests:
+
+test at tests/verification/reliability/runtime-profile-no-trap.test.mjs:12:1
+✖ runtime profile selector refuses absent/present Proxies and getters without executing traps (5.319256ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(observed.every(row => row.calls === 0 && row.error?.startsWith('CANONICAL_JSON_')))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/runtime-profile-no-trap.test.mjs:31:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/runtime-profile-no-trap.test.mjs:34:1
+✖ original plugin context and registered AdapterRuntime reject Proxy/getter input before real HTTP or effect writes (3838.118979ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(observations.every(row => row.calls === 0 && row.error?.startsWith('CANONICAL_JSON_') && row.newPosts === 0 && row.unchangedJournal))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/runtime-profile-no-trap.test.mjs:67:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -97,9 +97,9 @@
       "status": "counterexample-preserved-repair-in-reviewed-v4-v2-package"
     },
     {
-      "next_action": "Original accepted asset IDs aa/az create checksum paths with different en-US/da-DK ordering. Verify real original archive/CAS/import producer boundary, persist exact probe/raw; extracted source reproduction is not full rendered producer proof. Audit dynamic-ID assumptions before source changes.",
+      "next_action": "Do not restart duplicate baseline work; see prism-baseline-v2 at9c8dde and registered reader at21b051.",
       "package": "prism-baseline-lowercase-locale-audit",
-      "status": "schema-admitted-lowercase-path-order-counterexample-under-original-consumer-test"
+      "status": "historical-counterexample-superseded-by-reviewed-integrated-baseline-v2"
     },
     {
       "next_action": "Five original status CLI regressions pass; genuine adopted live-child test fails REAL_PROC_PROCESS_CMDLINE_REQUIRED. Prove finite original readable-platform startup where possible without fabricated commandline/status/provider; adoption remains open.",
@@ -134,16 +134,20 @@
       "root_report": "implementation/run9-cache-reader-root-review.md",
       "status": "bounded-package-independently-approved-root71-and-reader-matrix-tested-in-this-integration",
       "withdrawn_review": "c76f6775edb8fbbb8914562a50827958cea03774",
-      "root_combined_tests": 71
+      "root_combined_tests": 71,
+      "integration_commit": "21b05129691b6c932fdf7fd2d12f906cb2736aad"
     },
     {
       "commit": "4ac681dd400fd8dd2c0310c7fe696571005d290f",
       "design_commit": "95880cc1f724d0fac5bb13ab10b31c52811c4b50",
       "design_review": "13a5649423061ba53cd4f572618577e82e6ee89b",
       "implementation_wip": "023a255586362379e956a807027661c6dc230e83",
-      "next_action": "Continue isolated source WIP: finite report-only config, explicit new compiler nodes, independent legacy source/report modes and expected node set; current coverage omitted arg remains legacy. Initial6 compiler/config and owning types pass, but actual CAS/replay/strict summary/governor and archived CLI gates plus independent review remain required. No whole SDK closure.",
+      "next_action": "Reconcile exact report source on integrated runtime head and repeat affected original report/compiler/recovery gates; retain author and independent full raw including failed performance runs. Report codec does not change semantic Review bundle/governor identities; original Czech bundle digest failure remains open.",
       "package": "review-report-hex-key-cutover",
-      "status": "design-independently-approved-implementation-incomplete-native-matrix-pending"
+      "status": "independently-approved-native-tested-awaiting-runtime-head-root-reconciliation",
+      "final_author_backup": "d4df6bfd6e84ac23d3e7095d1d8cfb609bc50d8c",
+      "final_review_backup": "a7300ab76b71a5209236a72b61704e34b8405663",
+      "tested_remote_parent": "21b05129691b6c932fdf7fd2d12f906cb2736aad"
     },
     {
       "commit": "711de7d86b5fb581ed0b82077771c9169df4170a",
@@ -153,7 +157,8 @@
       "review_commit": "fc746693ebb525d3007f6b6634bae7008f99cb65",
       "root_report": "implementation/run9-cache-reader-root-review.md",
       "status": "bounded-package-independently-approved-root71-and-reader-matrix-tested-in-this-integration",
-      "root_combined_tests": 71
+      "root_combined_tests": 71,
+      "integration_commit": "21b05129691b6c932fdf7fd2d12f906cb2736aad"
     },
     {
       "commit": "47de98daaeabc527d3304462f05f24b7bca57747",
@@ -164,11 +169,20 @@
     {
       "counterexample": "755d4e1e12bf99421c0d2aa638c990aeed127822",
       "independent_counterexample": "890797782ad99becd03532baacb2e87a462ef992",
-      "next_action": "Existing portableJson(request) now precedes hasOwn in runtimeDispatchProfileFields, rejecting actual Proxy/getter before traps, original HTTP POST or journal admission. Author48 actual original/history/confidential/dependency cases pass. Independent final review and cache/reader-head reconciliation still required; valid legacy JSON codec bytes must remain exact.",
+      "next_action": "Bounded helper complete. Preserve failed original timing/startup runs and unchanged complete passing repeats. Reconcile report-only cutover on resulting head; separate semantic Review bundle Czech defect remains open.",
       "package": "runtime-profile-no-trap-admission",
-      "source_backup": "81a0e90f1626d32f207c718ff26debd2f30889a6",
+      "source_backup": "a980bcef895776e7aaecd14dd8041c613dc4d07b",
       "source_commit": "f505eedacada7e7168740aa27272530f62c9f47f",
-      "status": "bounded-source-native-tested-independent-review-in-progress-not-integrated"
+      "status": "bounded-package-independently-approved-root91-full-prism-and-fresh6-tested-in-this-integration",
+      "review_commit": "d8a8a162a0507fef211c758b69c205188b5ebef1",
+      "root_report": "implementation/run10-runtime-admission-root-review.md"
+    },
+    {
+      "package": "semantic-review-bundle-czech-identity",
+      "counterexample": "23e14883ace8868ab5ff0267b086253d43f4af35",
+      "branch": "fix/resume-47-run13-sdk-bundle-czech-20260910t020224",
+      "status": "native-original-czech-reader-failure-preserved-design-not-implemented",
+      "next_action": "Existing original review-evidence-encoding-independent test: en producer/read pass, cs read fails snapshot digest. Preserve original source hashes and native store raw. Draft separately reviewed explicit bundle semantic/schema/graph/recovery/governor/report/summary compatibility design before production changes; outer report codec does not authorize semantic migration."
     }
   ],
   "integrated_review_codec": {
@@ -177,10 +191,10 @@
     "fresh_checkout_tests": 14,
     "independent_review": "c100f1b85a7d92c88f4c98ce2b57afa356c1f368"
   },
-  "last_source_integration": "9c5bdcb21c8fcd50fb38d2a1c4988213db2b3ecb",
+  "last_source_integration": "21b05129691b6c932fdf7fd2d12f906cb2736aad",
   "overall_complete": false,
   "rule": "Backup is not acceptance. Restore only verified frozen commits into a new checkout, never another writer's checkout or dirty work based on an old heartbeat. Exact-parent ff-only integration after review/tests; no CI/deployment.",
-  "run_id": "20260910t004317",
+  "run_id": "20260910t015007",
   "schema_version": 1,
   "verified_count": 8
 }

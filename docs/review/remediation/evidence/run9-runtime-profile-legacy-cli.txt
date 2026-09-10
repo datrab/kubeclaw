@@ -1,0 +1,7 @@
+Source f505eedacada7e7168740aa27272530f62c9f47f; current checkout sources/dependencies, archived historical producer without old local Git lookup.
+node docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs /workspace/scratch/15fb596e6560/run9-runtime-profile-audit
+exit=0
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:981d3ae64326d1d1c86f63e0a8d2548687d7aa8ddac03da96add9e8d686f31cc:sha256:009487b682b80d0e9dbf2453d661ee90e656ca80fbd693a4fca6100661ef566b\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:981d3ae64326d1d1c86f63e0a8d2548687d7aa8ddac03da96add9e8d686f31cc"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
