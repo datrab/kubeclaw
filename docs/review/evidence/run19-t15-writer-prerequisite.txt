@@ -1,0 +1,126 @@
+T15-F01 configured writer prerequisite check
+run_id=20260910t042633
+source_commit=e644a79fddd4d4d686fbd351b6edaec5575caf57
+source_tree=64df9214237107c027b27caf4d5f75f27a222f51
+frozen_implemented_ids_at_c387=47
+partial_47_scope_exact_match=true
+T15-F01_source_finding_text_sha256=eeee165794cbae32952dc20eef3a7658cbb468b3e3718c7ba8dc26a3542c90b1
+
+Safe local prerequisite inspection (no network request, provider call, deployment or CI):
+
+$ command -v openclaw
+exit=1
+stdout=<empty>
+
+$ test -f /home/node/.openclaw/openclaw.json
+exit=1
+
+$ test -n "${OPENCLAW_GATEWAY_TOKEN:-}"
+exit=1
+
+$ test -n "${OPENCLAW_GATEWAY_TOOLS_URL:-}"
+exit=1
+
+$ ss -ltn | rg ':18789\\b'
+exit=1
+stdout=<empty>
+
+Result: this checkout has no OpenClaw CLI, OpenClaw configuration, gateway token,
+configured tools URL, or listener on the repository's documented local Gateway
+port. Therefore the real configured OpenClaw/ACP report writer cannot be started
+or reached safely in this environment. The broad real-E2E capability probe was
+not run: by design it also attempts configured Codex spawn, Redis/Git roundtrips,
+Discord delivery, Kubernetes/BuildKit and Tailscale checks. Those actions exceed
+this package's authorization and do not become acceptable just to obtain a green
+T15 result.
+
+Current bounded source-authority regression:
+
+$ node --test tests/verification/reliability/report-evidence.test.mts
+exit=0
+tests=10
+pass=10
+fail=0
+skipped=0
+duration_ms=11237.287461
+
+This executed two distinct native Git/source histories, Nova Core lifecycle and
+effect journals, original ArtifactStore reads, immutable run/head/snapshot/source/
+attempt binding, and the required foreign/stale/duplicate/missing/corrupt/blob/
+incomplete/effect/FIFO counterexamples. It does not execute a model writer.
+
+$ npm test --prefix skills/nova/plugins/pipeline-review
+exit=0
+{"ok":true,"plugin":"kubeclaw.pipeline-review","suite":"protocol"}
+{"ok":true,"plugin":"kubeclaw.pipeline-review","suite":"live-function","modelExecution":false}
+{"ok":true,"plugin":"kubeclaw.pipeline-review","suite":"package-boundary"}
+
+$ npm test --prefix skills/nova/plugins/case-study
+exit=0
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"protocol"}
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"live-function","modelExecution":false}
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"package-boundary"}
+
+The live-function tests execute actual Core, EffectCoordinator, FileJournal,
+ArtifactStore, configured grants/providers, authenticated local HTTP transport,
+retry/reopen/replay, and persisted reports. Their HTTP responder is deliberately
+a transport fixture. It is not a configured OpenClaw/ACP writer and is not used
+as evidence that generated prose is true.
+
+Owned source hashes at the tested commit:
+477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c  skills/nova/plugins/pipeline-review/src/evidence-adapter.ts
+ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd  skills/nova/plugins/pipeline-review/src/evidence-bundle.ts
+e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a  skills/nova/plugins/pipeline-review/src/stage.ts
+a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9  skills/nova/plugins/case-study/src/stage.ts
+4812b34581fa391cdfe56605d3d26cb06a873be906d73e0fcd0f5b217ee2d057  tests/verification/reliability/report-evidence.test.mts
+eb24cfba0a936e7ba9c2dfef35fe2e29d8fd57c4d8b59e4bcfb178c726ff2501  tests/verification/reliability/report-identity-fixture.mjs
+
+Disposition: INCOMPLETE. No production/source change is justified by this
+environmental absence. Keep T15-F01 open until an authorized environment can run
+the existing kubeclaw.runtime-dispatch:openclaw path against a configured writer,
+using actual immutable source histories and persisted report artifacts. Preserve
+narrativeStatus=draft-not-entailment-verified and do not migrate older ambiguous
+history by inventing a mode marker.
+
+--- raw command output ---
+
+$ node --test tests/verification/reliability/report-evidence.test.mts
+▶ historical report source authority rejects foreign, stale, missing and changed actual evidence
+  ✔ cross-run, duplicate, nonexistent and stale source selections reject (48.56156ms)
+  ✔ actual blob loss and changed bytes reject; preserved store reads original bytes after repair (76.722042ms)
+  ✔ incomplete and nonterminal real journal prefixes reject without repair (16.682657ms)
+  ✔ original requested-effect prefix cannot be mistaken for completed run evidence (5.44871ms)
+  ✔ empty and completed effect prefixes cannot satisfy the pinned lifecycle (19.870937ms)
+  ✔ ordinary effect cannot impersonate a policy-owned confidential audit triplet (560.249105ms)
+  ✔ ambiguous historical producer version and inconsistent claimed execution mode reject (309.147399ms)
+  ✔ source mutation during actual artifact read rejects the snapshot (49.009405ms)
+  ✔ bounded legacy FIFO cannot hang the original resolver (84.432114ms)
+✔ historical report source authority rejects foreign, stale, missing and changed actual evidence (10785.082324ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11237.287461
+
+$ npm test --prefix skills/nova/plugins/pipeline-review
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.pipeline-review","suite":"protocol"}
+{"ok":true,"plugin":"kubeclaw.pipeline-review","suite":"live-function","modelExecution":false}
+{"ok":true,"plugin":"kubeclaw.pipeline-review","suite":"package-boundary"}
+
+$ npm test --prefix skills/nova/plugins/case-study
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"protocol"}
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"live-function","modelExecution":false}
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"package-boundary"}
