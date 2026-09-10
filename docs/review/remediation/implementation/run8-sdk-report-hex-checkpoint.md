@@ -1,0 +1,15 @@
+# Original Review report digest-key locale counterexample
+
+Status: OPEN, no implementation. Separate from the approved transport package and active cache-only v4 package; PCR-SDK-001 remains open.
+
+Fresh remote main a43aa256bdce35d7f9c44d5d661e59c4055e562e equals local b3d2f7ba3ee35d121f26f67f737a400b3d034fb4; all 3838 blob/mode/type entries verified. Mandatory remote resume documents/register/original SDK requirement reread. The original c38779c baseline again yielded exactly 47 implemented IDs, identical to partial-47-scope.json. Own run8-sdk-cache-review checkout; no other checkout modified.
+
+The original buildReviewReport generates valid report.items keys sha256:aa3fe48bd406ec7dad0b3f144ae666d1e4740bd1d4570c55a464839bcb2b8338 and sha256:afcf7946bbadc1b0ab511cd97ead8a878f3a1121d8fbf696d82f684baa98fc89 from ordinary typed finding fingerprints. Both original isReviewReport and unchanged strict Ajv report schema accept the full report. No manually invented map keys replace the builder output.
+
+Original storeReviewReport invokes actual Core EffectCoordinator/FileEffectJournal/FileResourceLockManager and original ArtifactStore. First native en-US write and completed en-US replay succeed. Identical completed replay under native da-DK returns the original durable result, then the owning storeReviewReport rejects its own locale-dependent reserialization: `artifact adapter returned a report reference that does not match the stored report`. The original journal remains byte-identical across both replays. Report digest is sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226 in en-US and sha256:ec218d30a371e663b9d89f010d6b9ec1c60ebabc5749433b851d843d7ed48858 in da-DK. Danish aa collation changes even legal lowercase HEX map ordering; hexadecimal keys are not a blanket portability proof.
+
+Evidence: run8-sdk-report-hex-locale-probe.mjs and .txt under docs/review/evidence. Exit zero confirms the counterexample, not a repaired gate. Findings and governor are typed admission fixtures based on original tests; this does not certify real project defects, actual verifier/model execution or full Review stage acceptance. The actual original builder, validators, store producer, Core journal and ArtifactStore are exercised without substituting their implementations.
+
+Next action: separately authorize/design a replay-safe report producer/reader cutover. Preserve genuine old pending/completed artifacts.write shapes and legacy profile authority; never silently relabel old bytes or turn an integrity error into a repeat dispatch. The active Review cache profile currently owns cache records only and is not a report fix. Any broader run-owned profile must explicitly document all coupled consumers before implementation.
+
+Dependencies are immutable hardlinks to the existing current root cache, with all 64 workspace links resolving this own checkout. No install or linked dependency edits; no CI, deployment, production, paid resources or messages to third parties.

@@ -1,0 +1,8 @@
+Source exact fresh main a43aa256bdce35d7f9c44d5d661e59c4055e562e / local b3d2f7ba3ee35d121f26f67f737a400b3d034fb4; all 3838 blobs/modes/types verified. No production changes.
+Command: node docs/review/evidence/run8-sdk-report-hex-locale-probe.mjs
+{"locale":"en-US","builder":true,"strictSchema":true,"itemIds":["sha256:aa3fe48bd406ec7dad0b3f144ae666d1e4740bd1d4570c55a464839bcb2b8338","sha256:afcf7946bbadc1b0ab511cd97ead8a878f3a1121d8fbf696d82f684baa98fc89"],"valueDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","artifactDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","error":null}
+{"locale":"en-US","builder":true,"strictSchema":true,"itemIds":["sha256:aa3fe48bd406ec7dad0b3f144ae666d1e4740bd1d4570c55a464839bcb2b8338","sha256:afcf7946bbadc1b0ab511cd97ead8a878f3a1121d8fbf696d82f684baa98fc89"],"valueDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","artifactDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","error":null}
+{"locale":"da-DK","builder":true,"strictSchema":true,"itemIds":["sha256:aa3fe48bd406ec7dad0b3f144ae666d1e4740bd1d4570c55a464839bcb2b8338","sha256:afcf7946bbadc1b0ab511cd97ead8a878f3a1121d8fbf696d82f684baa98fc89"],"valueDigest":"sha256:ec218d30a371e663b9d89f010d6b9ec1c60ebabc5749433b851d843d7ed48858","artifactDigest":null,"error":"artifact adapter returned a report reference that does not match the stored report"}
+{"counterexampleConfirmed":true,"originalCompletedJournalUnchanged":true,"fullReviewAcceptance":false}
+
+Exit 0 means original counterexample confirmed, not repair acceptance.

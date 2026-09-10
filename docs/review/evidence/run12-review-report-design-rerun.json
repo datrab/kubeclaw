@@ -1,0 +1,23 @@
+{
+  "initialEnvironmentFailure": {
+    "chunk_id": "f57c7d",
+    "exit_code": 1,
+    "original_token_count": 273,
+    "output": "node:internal/modules/package_json_reader:301\n  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);\n        ^\n\nError [ERR_MODULE_NOT_FOUND]: Cannot find package 'ajv' imported from /workspace/scratch/15fb596e6560/run12-review-report-design/docs/review/evidence/run8-sdk-report-hex-locale-probe.mjs\n    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)\n    at packageResolve (node:internal/modules/esm/resolve:768:81)\n    at moduleResolve (node:internal/modules/esm/resolve:859:18)\n    at defaultResolve (node:internal/modules/esm/resolve:992:11)\n    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)\n    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)\n    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)\n    at #resolve (node:internal/modules/esm/loader:683:17)\n    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)\n    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {\n  code: 'ERR_MODULE_NOT_FOUND'\n}\n\nNode.js v24.19.0\n",
+    "wall_time_seconds": 0.000002443
+  },
+  "start": {
+    "chunk_id": "6bef56",
+    "original_token_count": 102,
+    "output": "{\"locale\":\"en-US\",\"builder\":true,\"strictSchema\":true,\"itemIds\":[\"sha256:aa3fe48bd406ec7dad0b3f144ae666d1e4740bd1d4570c55a464839bcb2b8338\",\"sha256:afcf7946bbadc1b0ab511cd97ead8a878f3a1121d8fbf696d82f684baa98fc89\"],\"valueDigest\":\"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226\",\"artifactDigest\":\"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226\",\"error\":null}\n",
+    "session_id": 14362,
+    "wall_time_seconds": 1.001112528
+  },
+  "end": {
+    "chunk_id": "358a9d",
+    "exit_code": 0,
+    "original_token_count": 232,
+    "output": "{\"locale\":\"en-US\",\"builder\":true,\"strictSchema\":true,\"itemIds\":[\"sha256:aa3fe48bd406ec7dad0b3f144ae666d1e4740bd1d4570c55a464839bcb2b8338\",\"sha256:afcf7946bbadc1b0ab511cd97ead8a878f3a1121d8fbf696d82f684baa98fc89\"],\"valueDigest\":\"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226\",\"artifactDigest\":\"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226\",\"error\":null}\n{\"locale\":\"da-DK\",\"builder\":true,\"strictSchema\":true,\"itemIds\":[\"sha256:aa3fe48bd406ec7dad0b3f144ae666d1e4740bd1d4570c55a464839bcb2b8338\",\"sha256:afcf7946bbadc1b0ab511cd97ead8a878f3a1121d8fbf696d82f684baa98fc89\"],\"valueDigest\":\"sha256:ec218d30a371e663b9d89f010d6b9ec1c60ebabc5749433b851d843d7ed48858\",\"artifactDigest\":null,\"error\":\"artifact adapter returned a report reference that does not match the stored report\"}\n{\"counterexampleConfirmed\":true,\"originalCompletedJournalUnchanged\":true,\"fullReviewAcceptance\":false}\n",
+    "wall_time_seconds": 0.000002714
+  }
+}
