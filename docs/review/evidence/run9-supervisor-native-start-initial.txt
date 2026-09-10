@@ -1,0 +1,29 @@
+{"phase":"missing-platform","status":1,"stdout":"","stderr":"file:///workspace/scratch/15fb596e6560/run9-supervisor/scripts/supervise-repository-review.mjs:90\n    throw new Error(`REVIEW_SUPERVISOR_STATUS_FAILED: run=${runId}; exit=${result.status}; signal=${result.signal}; ${result.error?.message ?? ''}\\n${result.stderr ?? ''}`, { cause: result.error });\n          ^\n\nError: REVIEW_SUPERVISOR_STATUS_FAILED: run=supervisor-native-start; exit=1; signal=null; \nnode:fs:484\n    return binding.readFileUtf8(path, stringToFlags(options.flag));\n                   ^\n\nError: ENOENT: no such file or directory, open '/tmp/supervisor-native-start-7jS0i1/platform.json'\n    at Object.readFileSync (node:fs:484:20)\n    at jsonFile (file:///workspace/scratch/15fb596e6560/run9-supervisor/scripts/repository-review-status.mjs:16:48)\n    at status (file:///workspace/scratch/15fb596e6560/run9-supervisor/scripts/repository-review-status.mjs:89:18)\n    at file:///workspace/scratch/15fb596e6560/run9-supervisor/scripts/repository-review-status.mjs:184:40\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  errno: -2,\n  code: 'ENOENT',\n  syscall: 'open',\n  path: '/tmp/supervisor-native-start-7jS0i1/platform.json'\n}\n\nNode.js v24.19.0\n\n    at reviewStatus (file:///workspace/scratch/15fb596e6560/run9-supervisor/scripts/supervise-repository-review.mjs:90:11)\n    at main (file:///workspace/scratch/15fb596e6560/run9-supervisor/scripts/supervise-repository-review.mjs:248:27)\n    at file:///workspace/scratch/15fb596e6560/run9-supervisor/scripts/supervise-repository-review.mjs:273:26\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  [cause]: undefined\n}\n\nNode.js v24.19.0\n"}
+{"phase":"readable-platform","status":0,"stdout":"{\"schemaVersion\":\"repository-review-status.v1\",\"runId\":\"supervisor-native-start\",\"status\":\"succeeded\",\"terminalAt\":\"2026-09-10T00:13:31.997Z\",\"stages\":{\"original-preflight\":\"succeeded\"},\"liveness\":\"terminal\",\"lastEventAt\":\"2026-09-10T00:13:31.997Z\",\"heartbeatAt\":\"2026-09-10T00:13:32.055Z\",\"heartbeatAgeSeconds\":0.053,\"pipelinePid\":51,\"supervisorPid\":35,\"attempt\":1,\"recoveryMode\":\"start\",\"health\":\"terminal\",\"activeDispatches\":0,\"requestedDispatches\":0,\"recentResourceLockExpired\":0,\"resources\":{\"observedAt\":\"2026-09-10T00:13:32.055Z\",\"ageSeconds\":0.053,\"currentCpuPercent\":213.1175463623395,\"peakCpuPercent\":213.1175463623395,\"currentRamBytes\":18685399040,\"peakRamBytes\":18685399040,\"cgroupLifetimePeakRamBytes\":21475033088,\"gateway\":{\"healthy\":false,\"error\":\"TypeError\"},\"oomEvents\":0,\"oomKillEvents\":0},\"plannedPrimary\":0,\"completedReviewCheckpoints\":0,\"remainingPrimary\":0,\"completedContextExpansionCheckpoints\":0,\"completedVerificationCheckpoints\":0,\"estimatedInputTokens\":0,\"actualTokenUsage\":\"unavailable_until_imported_results_expose_usage\",\"planReport\":false,\"finalReport\":false,\"artifactRecords\":1}\n","stderr":"","pipelineOutput":"npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> pipeline\n> node skills/nova/pipeline.ts --platform /tmp/supervisor-native-start-7jS0i1/platform.json --pipeline /tmp/supervisor-native-start-7jS0i1/pipeline.json --run-id supervisor-native-start\n\n{\"runId\":\"supervisor-native-start\",\"status\":\"succeeded\",\"stages\":{\"original-preflight\":{\"stageId\":\"original-preflight\",\"status\":\"succeeded\",\"attemptNumber\":1,\"attemptsUsed\":1,\"remediationCyclesUsed\":0}}}\n"}
+✖ original supervisor visibly rejects missing platform, then starts a genuine finite original pipeline (2412.829246ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2497.479319
+
+✖ failing tests:
+
+test at scripts/tests/integration/repository-review-supervisor-start.mjs:11:1
+✖ original supervisor visibly rejects missing platform, then starts a genuine finite original pipeline (2412.829246ms)
+  AssertionError [ERR_ASSERTION]: attempt.started
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run9-supervisor/scripts/tests/integration/repository-review-supervisor-start.mjs:54:134)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

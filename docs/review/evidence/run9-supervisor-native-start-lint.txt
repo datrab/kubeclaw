@@ -1,0 +1,2 @@
+Command: node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs scripts/tests/integration/repository-review-supervisor-start.mjs
+Exit:0

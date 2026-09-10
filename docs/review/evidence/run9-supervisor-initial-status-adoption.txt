@@ -1,0 +1,33 @@
+96cdba80650e16fb5699df314516b14d08931b95
+96cdba80650e16fb5699df314516b14d08931b95
+✖ adopted live process remains alive when its original status reader fails (6.984258ms)
+✔ original supervisor fails visibly on unreadable status and accepts a later readable success (361.033731ms)
+✔ original supervisor preserves artifact read failure despite a terminal journal (119.333759ms)
+✔ original supervisor reports confirmed failed without claiming success (116.893401ms)
+✔ original supervisor reports confirmed blocked without claiming success (118.705705ms)
+✔ original supervisor reports confirmed cancelled without claiming success (124.355641ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 923.050028
+
+✖ failing tests:
+
+test at scripts/tests/integration/repository-review-supervisor-adoption.mjs:9:1
+✖ adopted live process remains alive when its original status reader fails (6.984258ms)
+  AssertionError [ERR_ASSERTION]: REAL_PROC_PROCESS_CMDLINE_REQUIRED: live child 45 is not visible through procfs
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run9-supervisor/scripts/tests/integration/repository-review-supervisor-adoption.mjs:19:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
