@@ -1,0 +1,90 @@
+Independent review target
+candidate=357a0f8daaaae5afd1f65b37118b303227c04687
+tree=3a4864f9aab6617e9da41f4f637a1da102552303
+parent=15f6a808ed1666c3b7a2a3909749e3d4ee377904
+changed_paths=45
+fresh_main=1ba445125fbacfa4f0344f8bf38e68f8f0686eff
+
+The author index tree and the frozen review checkout tree both matched the
+remote candidate tree exactly before tests. GitHub compare reported the
+candidate exactly one commit ahead of its semantic parent with 45 paths.
+
+$ KUBECLAW_REVIEW_SOURCE_ROOT=<frozen357> node --test tests/verification/reliability/delivery-manifest-v3-contract-independent.test.mjs
+pass=13 fail=0 skipped=0 todo=0 exit=0
+Covered valid/deep-frozen public v3, caller digest rejection, external schema
+coverage and coverage-result parity, media type, finite Review conditionals,
+safe attempt integers, four Review arms, ordering/attempt/duplicate negatives,
+128/129 cardinality, complete serialized 8 MiB bound, Proxy/accessor no-trap,
+valid public reader and run/stage/ref/bytes/digest/size reader negatives.
+
+$ KUBECLAW_REVIEW_SOURCE_ROOT=<frozen357> KUBECLAW_REVIEW_BASELINE_ROOT=<semantic15f6> node --test tests/verification/reliability/delivery-manifest-v3-compiler-recovery-independent.test.mjs
+pass=4 fail=0 skipped=0 todo=0 exit=0
+Covered exact legacy graph parity, 48 four-dimensional source/report/Review/
+delivery graph and recovery combinations, missing/unknown/duplicate/foreign
+selector negatives without stored-byte mutation, and the registered Summary
+input schema for a valid v3 Review graph.
+
+$ KUBECLAW_REVIEW_SOURCE_ROOT=<frozen357> KUBECLAW_REVIEW_V2_PROOF_ROOT=<registered-red-corpus> node --test tests/verification/reliability/delivery-manifest-v2-reader-corpus-independent.test.mjs
+pass=1 fail=0 skipped=0 todo=0 exit=0
+English untagged and portable-tagged original v2 are byte-identical accepted;
+the original Czech corpus continues to fail closed.
+
+$ KUBECLAW_REVIEW_SOURCE_ROOT=<frozen357> node --test tests/verification/reliability/delivery-manifest-v3-public-types-independent.test.mjs
+pass=1 fail=0 skipped=0 todo=0 exit=0
+The public unsigned final binding rejects impossible Review optional-field
+combinations at compile time.
+
+$ KUBECLAW_REVIEW_SOURCE_ROOT=<frozen357> node --test tests/verification/reliability/delivery-manifest-v3-summary-mode-independent.test.mjs
+pass=2 fail=0 skipped=0 todo=0 exit=0
+Using the actual disk ArtifactStore, legacy plus the v3-only Review artifact
+selector and invalid v3 Review conditionals both reject before any evidence read.
+
+$ npm test --workspace @kubeclaw/delivery-manifest-contract
+pass=6 fail=0 skipped=0 todo=0 exit=0
+$ node --test tests/verification/reliability/delivery-manifest-v3-compiler.test.mjs
+pass=2 fail=0 skipped=0 todo=0 exit=0
+$ node --test tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs
+pass=1 fail=0 skipped=0 todo=0 exit=0
+The registered test used PipelineRunner, AdapterRuntime, Core, disk ArtifactStore,
+FileEffectJournal and FileNovaGateImportStore. Producer succeeded. Consumers
+en/cs/da/tr/sv reopened and imported successfully. A separate phase removed the
+import records and reached the exact original
+NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED failure only after manifest integrity.
+providerExecution=false; this is not provider or deployment execution.
+
+$ npm run plugin-system:inventory:check && npm run plugin-system:sdk:check
+exit=0; inventory=49 roots/67 registrations
+$ npm run knip:config:check
+exit=0; generated config=50 plugins
+$ npm test --workspace @kubeclaw/plugin-project-summary
+exit=0
+$ node tests/verification/contracts/check-project-compiler.mts
+exit=0; legacy-authoring-import and source-launcher, executedStages=0
+$ npm run typecheck --workspace @kubeclaw/delivery-manifest-contract
+$ npm run build --workspace @kubeclaw/plugin-project-summary
+$ npm run build --workspace @kubeclaw/plugin-remote-test-gate
+$ npx --no-install tsc --noEmit -p skills/nova/tsconfig.json
+all exit=0
+$ node scripts/check-action-pins.mjs
+exit=0; files=10 external=68 local=5
+$ npm run plugin-system:sandbox:build
+exit=0
+
+$ npm run knip:check
+exit=1 after successful generated-config check:
+npx canceled due to missing packages and no YES option: ["knip@6.35.1"]
+No download was attempted; full Knip remains an environment prerequisite.
+
+$ npm run verify:migration:package-boundaries
+exit=1 on the pre-existing non-Delivery dependency:
+skills/common/plugins/telemetry-store/tests/projection.test.mts (shared) ->
+../../../../nova/core/effects/locks.ts (nova)
+
+$ npm run docs:inventory:check
+exit=1; pre-existing generated docs inventory is stale for deploy-script.json,
+helm-values.json and workflows.json. None is in the 45-path Delivery delta.
+
+The original remote-test-gate package suite remains blocked by absent Go, and
+the aggregate plugin-package run remains blocked by absent pinned Playwright
+Chromium. No dependency/browser download, provider, deployment or CI ran.
+
