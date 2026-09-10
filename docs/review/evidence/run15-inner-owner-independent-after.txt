@@ -1,0 +1,21 @@
+Exact corrected source 6cb67a0372ff516377c91124c6d1c8d0310b113f; unchanged original 11-case oracle plus original preflight. Exit 0.
+✔ independent policy selected/all provenance modes and precedence remain privately bound (21.95591ms)
+✔ independent generated evidence preserves logical values, candidate IDs and authentic certificates (6.060584ms)
+✔ independent facts-context/proxy rejects without trap execution (0.256217ms)
+✔ independent facts-context/getter rejects without trap execution (0.203467ms)
+✔ independent facts-revision/proxy rejects without trap execution (0.151649ms)
+✔ independent facts-revision/getter rejects without trap execution (0.19206ms)
+✔ independent manifest-input/proxy rejects without trap execution (1.667551ms)
+✔ independent manifest-input/getter rejects without trap execution (0.687988ms)
+✔ independent miner-input/proxy rejects without trap execution (0.655809ms)
+✔ independent miner-input/getter rejects without trap execution (0.640786ms)
+✔ independent original generated facts cannot certify a candidate using a substituted source digest (0.717443ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 209.761931
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-proposal-preflight"}
