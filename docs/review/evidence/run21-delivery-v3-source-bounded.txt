@@ -1,0 +1,35 @@
+$ npm test --workspace @kubeclaw/delivery-manifest-contract
+tests 6; pass 6; fail 0; skipped 0; exit=0
+
+The fifth contract test compiles the public schema with the exact external
+pipeline-test-gate schema and proves schema/runtime parity for valid evidence,
+non-JSON media types and the overlong-media-type boundary. The sixth constructs
+a semantically valid unsigned value at the 8 MiB edge and proves the creator
+rejects when adding the digest makes the complete serialized artifact exceed
+the limit.
+
+$ npx tsc --noEmit -p contracts/delivery-manifest/v3/tsconfig.json
+exit=0
+
+$ npm run build --workspace @kubeclaw/plugin-project-summary
+exit=0
+
+$ npm run build --workspace @kubeclaw/plugin-remote-test-gate
+exit=0
+
+$ npm run typecheck --prefix skills/nova
+exit=0
+
+$ npm test --workspace @kubeclaw/plugin-project-summary
+delivery-artifact-contract: ok (providerExecution=false, agentExecution=false)
+live-function: ok
+package-boundary: ok
+exit=0
+
+$ node tests/verification/contracts/check-project-compiler.mts
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+exit=0
+
+All commands ran from the exact run21 source checkout. These bounded checks are
+not provider, native durability or all-suite acceptance.

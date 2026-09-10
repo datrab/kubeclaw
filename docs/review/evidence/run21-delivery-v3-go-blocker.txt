@@ -1,0 +1,14 @@
+$ npm test --workspace @kubeclaw/plugin-remote-test-gate
+live-function: ok
+evidence-projection.test.ts: failed before the evidence projection assertion
+because its unchanged prerequisite command could not start `go`.
+
+$ node --test skills/buster/plugins/demo-auth-smoke/tests/live-function.test.ts
+tests 3; pass 2; fail 1; skipped 0
+failure: Error: spawnSync go ENOENT
+failing prerequisite: go test -count=1 -run ^TestDemoAuthenticationCredentialProducer$ ./cmd/buster-namespace-controller
+exit=1
+
+This is an environment prerequisite blocker, not a product assertion failure
+and not a passed remote-test-gate suite. No substitute or weakened probe ran.
+

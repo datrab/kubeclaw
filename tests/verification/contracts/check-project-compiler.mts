@@ -7,7 +7,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
-import { buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
+import { buildRegistry, discoverPackages, resolveTestPlan, validatePipelineRuntimeV2 } from '@kubeclaw/nova-core';
 
 const root = path.resolve('.');
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'nova-project-proof-'));
@@ -175,8 +175,18 @@ try {
   const result = launch(); assert.equal(result.status, 0, result.stderr);
   // The exported compiler's old one/two/three-argument APIs remain legacy.
   // Genuine new CLI compilation selects its independent semantic owner explicitly.
-  const cliCompiled = compileProject(project, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING, 'review-semantics.utf16-v1');
+  const cliCompiled = compileProject(project, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING,
+    'review-semantics.utf16-v1', 'delivery-manifest.utf16-v1');
   assert.deepEqual(JSON.parse(fs.readFileSync(output, 'utf8')), cliCompiled.definition);
+  assert.deepEqual(compiled.definition.stages.find((stage: any) => stage.id === 'project-summary').config, {});
+  assert.deepEqual(cliCompiled.definition.stages.find((stage: any) => stage.id === 'project-summary').config,
+    { deliveryManifestEncoding: 'delivery-manifest.utf16-v1' });
+  const v3Runtime = await validatePipelineRuntimeV2(platform, cliCompiled.definition);
+  assert.equal(v3Runtime.stageCount > 0, true, 'registered runtime must accept v3 Summary input/config');
+  const legacySemantic = compileProject(project, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING,
+    'review-semantics.utf16-v1', 'legacy');
+  const legacyRuntime = await validatePipelineRuntimeV2(platform, legacySemantic.definition);
+  assert.equal(legacyRuntime.stageCount, v3Runtime.stageCount, 'registered runtime must retain legacy semantic graph validity');
   assert(compiled.definition.stages.filter((stage: any) => stage.type === 'kubeclaw.decision.review')
     .every((stage: any) => !Object.hasOwn(stage.config, 'reviewSemanticEncoding')));
   // A real unsupported stage config must fail before the compiler publishes output.

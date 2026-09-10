@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.dev/contracts/delivery-manifest.v3.schema.json",
+  "title": "KubeClaw delivery manifest v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "projectId", "runId", "sourceRevision", "modules", "final", "evidence", "digest"],
+  "properties": {
+    "schemaVersion": {"const": "delivery-manifest.v3"},
+    "projectId": {"type": "string", "minLength": 1, "maxLength": 128},
+    "runId": {"$ref": "#/$defs/opaqueId"},
+    "sourceRevision": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "modules": {"type": "array", "minItems": 1, "maxItems": 128, "items": {"$ref": "#/$defs/module"}},
+    "final": {"$ref": "#/$defs/final"},
+    "evidence": {"type": "array", "minItems": 7, "maxItems": 390, "items": {"$ref": "#/$defs/artifactRef"}},
+    "digest": {"$ref": "#/$defs/digest"}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "stageId": {"type": "string", "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$", "maxLength": 96},
+    "opaqueId": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,191}$"},
+    "namespacedId": {"type": "string", "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)+$", "maxLength": 160},
+    "producer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["runId", "stageId", "attemptId", "attemptNumber"],
+      "properties": {"runId": {"$ref": "#/$defs/opaqueId"}, "stageId": {"$ref": "#/$defs/stageId"}, "attemptId": {"$ref": "#/$defs/opaqueId"}, "attemptNumber": {"type": "integer", "minimum": 1, "maximum": 9007199254740991}}
+    },
+    "artifactRef": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifactId", "namespace", "mediaType", "digest", "sizeBytes", "producer"],
+      "properties": {"encoding": {"const": "kubeclaw-json.utf16.v1"}, "artifactId": {"$ref": "#/$defs/opaqueId"}, "namespace": {"$ref": "#/$defs/namespacedId"}, "mediaType": {"const": "application/json"}, "digest": {"$ref": "#/$defs/digest"}, "sizeBytes": {"type": "integer", "minimum": 1, "maximum": 8388608}, "producer": {"$ref": "#/$defs/producer"}}
+    },
+    "coverage": {"$ref": "https://kubeclaw.dev/contracts/pipeline-test-gate/v1/schema.json#/$defs/gateCoverage"},
+    "coverageResult": {"$ref": "https://kubeclaw.dev/contracts/pipeline-test-gate/v1/schema.json#/$defs/gateCoverageResult"},
+    "module": {
+      "type": "object", "additionalProperties": false,
+      "required": ["moduleId", "sourceStageId", "testStageId", "expectedCoverage", "sourceRevision", "decisionDigest", "resultDigest", "coverage"],
+      "properties": {"moduleId": {"type": "string", "minLength": 1, "maxLength": 128}, "sourceStageId": {"$ref": "#/$defs/stageId"}, "testStageId": {"$ref": "#/$defs/stageId"}, "expectedCoverage": {"$ref": "#/$defs/coverage"}, "sourceRevision": {"type": "string", "pattern": "^[a-f0-9]{40}$"}, "decisionDigest": {"$ref": "#/$defs/digest"}, "resultDigest": {"$ref": "#/$defs/digest"}, "coverage": {"$ref": "#/$defs/coverageResult"}}
+    },
+    "final": {
+      "type": "object", "additionalProperties": false,
+      "required": ["sourceStageId", "lintStageId", "testStageId", "expectedCoverage", "sourceRevision", "decisionDigest", "resultDigest", "coverage"],
+      "properties": {"sourceStageId": {"$ref": "#/$defs/stageId"}, "lintStageId": {"$ref": "#/$defs/stageId"}, "testStageId": {"$ref": "#/$defs/stageId"}, "reviewStageId": {"$ref": "#/$defs/stageId"}, "reviewArtifactEncoding": {"const": "kubeclaw-json.utf16.v1"}, "reviewSemanticEncoding": {"const": "review-semantics.utf16-v1"}, "expectedCoverage": {"$ref": "#/$defs/coverage"}, "sourceRevision": {"type": "string", "pattern": "^[a-f0-9]{40}$"}, "decisionDigest": {"$ref": "#/$defs/digest"}, "resultDigest": {"$ref": "#/$defs/digest"}, "coverage": {"$ref": "#/$defs/coverageResult"}},
+      "dependentRequired": {"reviewArtifactEncoding": ["reviewStageId"], "reviewSemanticEncoding": ["reviewStageId", "reviewArtifactEncoding"]}
+    }
+  }
+}
