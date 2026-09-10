@@ -1,0 +1,298 @@
+Independent review run 20260910t074500
+Target: 798619142267434fdedc63d491d2bb4d8044272c
+Target tree: 437d4fd08311c78a6dae44f5c9db4052f077eae3
+Target sole parent / remote MAIN at review start: 1ba445125fbacfa4f0344f8bf38e68f8f0686eff
+Parent tree: 692a57a387d823d4b6636062e90dfbbeb07d28cd
+
+$ node --test --test-reporter=spec skills/prism/integration/worker-concurrent-resource-attribution.mts
+✖ one small original Prism attempt does not inherit concurrent service CPU (300.083021ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 845.943522
+
+✖ failing tests:
+
+test at skills/prism/integration/worker-concurrent-resource-attribution.mts:20:7
+✖ one small original Prism attempt does not inherit concurrent service CPU (300.083021ms)
+  AssertionError [ERR_ASSERTION]: attempt receipt included concurrent service CPU: measured=293 ms, unrelated=266.329 ms
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run24-prism-worker-resource-review-20260910t074500/skills/prism/integration/worker-concurrent-resource-attribution.mts:74:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      at async file:///workspace/scratch/15fb596e6560/run24-prism-worker-resource-review-20260910t074500/skills/prism/integration/worker-concurrent-resource-attribution.mts:20:1 {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+exit=1
+
+
+$ repeat unchanged RED three further times
+--- repeat 1 ---
+✖ one small original Prism attempt does not inherit concurrent service CPU (294.404811ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 745.581641
+
+✖ failing tests:
+
+test at skills/prism/integration/worker-concurrent-resource-attribution.mts:20:7
+✖ one small original Prism attempt does not inherit concurrent service CPU (294.404811ms)
+  AssertionError [ERR_ASSERTION]: attempt receipt included concurrent service CPU: measured=287 ms, unrelated=260.855 ms
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run24-prism-worker-resource-review-20260910t074500/skills/prism/integration/worker-concurrent-resource-attribution.mts:74:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      at async file:///workspace/scratch/15fb596e6560/run24-prism-worker-resource-review-20260910t074500/skills/prism/integration/worker-concurrent-resource-attribution.mts:20:1 {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+exit=1
+--- repeat 2 ---
+✖ one small original Prism attempt does not inherit concurrent service CPU (314.978823ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 826.797143
+
+✖ failing tests:
+
+test at skills/prism/integration/worker-concurrent-resource-attribution.mts:20:7
+✖ one small original Prism attempt does not inherit concurrent service CPU (314.978823ms)
+  AssertionError [ERR_ASSERTION]: attempt receipt included concurrent service CPU: measured=308 ms, unrelated=281.069 ms
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run24-prism-worker-resource-review-20260910t074500/skills/prism/integration/worker-concurrent-resource-attribution.mts:74:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      at async file:///workspace/scratch/15fb596e6560/run24-prism-worker-resource-review-20260910t074500/skills/prism/integration/worker-concurrent-resource-attribution.mts:20:1 {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+exit=1
+--- repeat 3 ---
+✖ one small original Prism attempt does not inherit concurrent service CPU (314.241066ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 783.518229
+
+✖ failing tests:
+
+test at skills/prism/integration/worker-concurrent-resource-attribution.mts:20:7
+✖ one small original Prism attempt does not inherit concurrent service CPU (314.241066ms)
+  AssertionError [ERR_ASSERTION]: attempt receipt included concurrent service CPU: measured=307 ms, unrelated=280.901 ms
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run24-prism-worker-resource-review-20260910t074500/skills/prism/integration/worker-concurrent-resource-attribution.mts:74:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      at async file:///workspace/scratch/15fb596e6560/run24-prism-worker-resource-review-20260910t074500/skills/prism/integration/worker-concurrent-resource-attribution.mts:20:1 {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+exit=1
+
+
+$ node --test --test-reporter=spec skills/prism/tests/engine.test.mts skills/prism/tests/engine-cache.test.mts skills/prism/tests/worker-service.test.mts tests/verification/reliability/worker-deadline.test.mts skills/prism/tests/worker-cancellation.test.mts skills/prism/tests/provider-cancellation.test.mts
+✔ many original renders bound retained entries and bytes without changing returned output (64.519861ms)
+✔ byte pressure and oversized successful renders do not retain their large payloads (1.57739ms)
+✔ accumulated render bytes evict completed entries before the count ceiling (4.305986ms)
+✔ active duplicates share one original operation and admission never evicts active ownership (2.176163ms)
+✔ retained replay snapshots cannot be enlarged or corrupted through caller mutation (0.931305ms)
+✔ failure releases admission and invalid cache limits cannot disable its bounds (0.883042ms)
+✔ real render evidence survives RAM eviction and artifact-store reconstruction (15.673714ms)
+✔ deferred original rendering uses the request snapshot bound to its fingerprint (0.954019ms)
+✔ engine generates, renders, evaluates and publishes idempotently (10.916649ms)
+✔ the generic worker carries an opaque Prism operation (1.820016ms)
+✔ the worker binding rejects unknown operations (0.2116ms)
+✔ concurrent retries share one provider execution (0.633425ms)
+✔ the live provider accepts internal LiteLLM without requiring embeddings (0.421225ms)
+✔ an idempotency key cannot identify different requests (0.607256ms)
+✔ Prism creates a valid neutral worker envelope (27.798676ms)
+✔ original ingest provider cancels an actual TLS response body after headers (259.17031ms)
+✔ original propose provider cancels an actual TLS response body after headers (231.01732ms)
+✔ only the admitted owner can cancel a pending original render; legacy callers still coalesce (7.68943ms)
+✔ actual attempt CPU excludes prior process work and stays fixed after execution (179.630971ms)
+✔ real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back (151.047232ms)
+✔ terminate aborts and drains the original artifact read before any engine operation starts (19.557694ms)
+✔ owner cancellation before retention rejects every coalesced original-render caller (1.933256ms)
+✔ original worker operation reproduces missing log store; actual service executor persists the complete log (151.826336ms)
+✔ real durable log store corruption keeps an otherwise successful engine operation errored (22.667605ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (46.142954ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (10.411952ms)
+✔ full log participates in the real neutral evidence budget before upload (7.872611ms)
+✔ direct: actual optional phases require a complete claim reservation (82.242747ms)
+✔ runtime: actual optional phases require a complete claim reservation (5.259975ms)
+✔ real completion hooks and durable log finish successfully inside the reserved claim (102.466586ms)
+✔ direct: final claim fence rejects completion after a native blocking hook (563.935066ms)
+✔ runtime: final claim fence rejects completion after a native blocking hook (559.520993ms)
+✔ timed out log hook receives cancellation and settles before result, without a later write (214.657253ms)
+✔ uncooperative storage is reported unresolved rather than completed (161.070593ms)
+✔ original executor preserves each UTF-8 byte split and rejects malformed/incomplete byte logs (101.01227ms)
+✔ real Buster evidence I/O drains cancellation and does not publish a later artifact (27.876872ms)
+✔ stdout and stderr streaming decoders retain separate partial byte sequences (11.350124ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2180.62213
+exit=0
+
+
+$ npm run --silent typecheck --workspace @kubeclaw/prism
+exit=0
+
+
+$ node_modules/.bin/eslint -c charts/kubeclaw/files/config/eslint.config.mjs skills/prism/integration/worker-concurrent-resource-attribution.mts
+exit=0
+
+
+$ native cgroup and browser cache inspection
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { createServer } from 'node:http';
+import { once } from 'node:events';
+import { openOwnedBrowser } from '../engine/browser-capture.ts';
+import { PrismEngine, DeterministicDesignProvider } from '../engine/index.ts';
+import fixture from '../../../contracts/prism/v1/fixtures/minimal-web.json' with { type: 'json' };
+
+// Native gate: absent Chromium must fail, never silently skip or replace launch.
+await test('owned original Chromium closes and settles a real page load on cancellation', async t => {
+  let contacted!: () => void;
+  const contact = new Promise<void>(resolve => { contacted = resolve; });
+  const server = createServer((_req, _res) => { contacted(); });
+  server.listen(0, '127.0.0.1'); await once(server, 'listening');
+  t.after(async () => { server.closeAllConnections(); await new Promise<void>(resolve => server.close(() => resolve())); });
+  const address = server.address(); assert(address && typeof address !== 'string');
+  const owner = new AbortController();
+  const owned = await openOwnedBrowser(owner.signal);
+  t.after(async () => { if (owned.browser.isConnected()) await owned.close(); });
+  const page = await owned.browser.newPage();
+  const capture = page.goto(`http://127.0.0.1:${address.port}`, { waitUntil: 'load' });
+  await Promise.race([contact, capture]);
+  assert(owned.browser.isConnected());
+  const rejected = assert.rejects(capture, /closed|cancel|abort/u);
+  owner.abort(new Error('cancel owned browser'));
+  await assert.rejects(owned.close(), /cancel owned browser/u);
+  await rejected;
+  assert.equal(owned.browser.isConnected(), false);
+});
+
+await test('original engine capture cancellation near launch drains before rejecting and releases ownership', async () => {
+  // Establish the genuine prerequisite before the cancellation timing exercise.
+  const prerequisite = await openOwnedBrowser(undefined);
+  assert(prerequisite.browser.isConnected());
+  await prerequisite.close();
+  const engine = new PrismEngine(new DeterministicDesignProvider());
+  const owner = new AbortController();
+  const capture = engine.execute({ contract: 'kubeclaw.prism-design-engine@1', operation: 'render',
+    input: { document: structuredClone(fixture), view: 'home', state: 'default', viewport: 'wide', capture: true },
+    idempotencyKey: 'native-owner' }, { signal: owner.signal });
+  const abort = setTimeout(() => owner.abort(new Error('cancel capture')), 1);
+  try { await assert.rejects(capture, /cancel|closed|abort/u); }
+  finally { clearTimeout(abort); }
+  assert.deepEqual(engine.cacheUsage(), { inFlight: 0, completedEntries: 0, completedBytes: 0, totalEntries: 0 });
+});
+
+CGROUP
+0::/
+cgroup2 /sys/fs/cgroup cgroup2 ro,nosuid,nodev,noexec,relatime,nsdelegate 0 0
+not-writable
+
+CONTROLLERS
+cpuset cpu io memory hugetlb pids
+
+PLAYWRIGHT CACHE
+/root/.cache/ms-playwright/.links/5e094d57348b1a7537389e7b71fa2158d1c91dd7
+/root/.cache/ms-playwright/.links/f55ba91a879b567b9d76b6ae2bf8c81e30ac3c3a
+
+
+$ chromium executablePath/exists and unchanged native browser gate
+/root/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome
+false
+path-exit=0
+✖ owned original Chromium closes and settles a real page load on cancellation (17.538358ms)
+✖ original engine capture cancellation near launch drains before rejecting and releases ownership (3.587902ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 388.261152
+
+✖ failing tests:
+
+test at skills/prism/integration/worker-browser-cancellation.mts:10:7
+✖ owned original Chromium closes and settles a real page load on cancellation (17.538358ms)
+  browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+  ╔════════════════════════════════════════════════════════════╗
+  ║ Looks like Playwright was just installed or updated.       ║
+  ║ Please run the following command to download new browsers: ║
+  ║                                                            ║
+  ║     npx playwright install                                 ║
+  ║                                                            ║
+  ║ <3 Playwright Team                                         ║
+  ╚════════════════════════════════════════════════════════════╝
+      at openOwnedBrowser (/workspace/scratch/15fb596e6560/run24-prism-worker-resource-review-20260910t074500/skills/prism/engine/browser-capture.ts:17:34)
+      at TestContext.<anonymous> (/workspace/scratch/15fb596e6560/run24-prism-worker-resource-review-20260910t074500/skills/prism/integration/worker-browser-cancellation.mts:18:23)
+      at async file:///workspace/scratch/15fb596e6560/run24-prism-worker-resource-review-20260910t074500/skills/prism/integration/worker-browser-cancellation.mts:10:1 {
+    name: 'Error',
+    log: []
+  }
+
+test at skills/prism/integration/worker-browser-cancellation.mts:31:7
+✖ original engine capture cancellation near launch drains before rejecting and releases ownership (3.587902ms)
+  browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+  ╔════════════════════════════════════════════════════════════╗
+  ║ Looks like Playwright was just installed or updated.       ║
+  ║ Please run the following command to download new browsers: ║
+  ║                                                            ║
+  ║     npx playwright install                                 ║
+  ║                                                            ║
+  ║ <3 Playwright Team                                         ║
+  ╚════════════════════════════════════════════════════════════╝
+      at openOwnedBrowser (/workspace/scratch/15fb596e6560/run24-prism-worker-resource-review-20260910t074500/skills/prism/engine/browser-capture.ts:17:34)
+      at TestContext.<anonymous> (/workspace/scratch/15fb596e6560/run24-prism-worker-resource-review-20260910t074500/skills/prism/integration/worker-browser-cancellation.mts:33:30)
+      at /workspace/scratch/15fb596e6560/run24-prism-worker-resource-review-20260910t074500/skills/prism/integration/worker-browser-cancellation.mts:31:7 {
+    name: 'Error',
+    log: []
+  }
+test-exit=1
+
