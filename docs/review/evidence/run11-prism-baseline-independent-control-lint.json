@@ -1,0 +1,370 @@
+[
+  {
+    "label": "baseline",
+    "status": 1,
+    "errorCount": 25,
+    "warningCount": 0,
+    "messages": [
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "line": 134,
+        "column": 1,
+        "message": "Async method 'runWorker' has too many lines (66). Maximum allowed is 60."
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "line": 201,
+        "column": 3,
+        "message": "Async method 'handle' has too many lines (816). Maximum allowed is 60."
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "line": 201,
+        "column": 3,
+        "message": "Async method 'handle' has a complexity of 204. Maximum allowed is 15."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 244,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 258,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 268,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-lines",
+        "severity": 2,
+        "line": 309,
+        "column": 1,
+        "message": "File has too many lines (1016). Maximum allowed is 300."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 521,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 523,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 524,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 540,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 544,
+        "column": 11,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 548,
+        "column": 11,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 560,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 561,
+        "column": 11,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 570,
+        "column": 13,
+        "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 735,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 739,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 765,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 766,
+        "column": 11,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 781,
+        "column": 13,
+        "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 786,
+        "column": 13,
+        "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 790,
+        "column": 13,
+        "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 908,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "line": 1009,
+        "column": 5,
+        "message": "Unexpected console statement."
+      }
+    ],
+    "stderr": ""
+  },
+  {
+    "label": "candidate",
+    "status": 1,
+    "errorCount": 25,
+    "warningCount": 0,
+    "messages": [
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "line": 129,
+        "column": 1,
+        "message": "Async method 'runWorker' has too many lines (66). Maximum allowed is 60."
+      },
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "line": 196,
+        "column": 3,
+        "message": "Async method 'handle' has too many lines (797). Maximum allowed is 60."
+      },
+      {
+        "ruleId": "complexity",
+        "severity": 2,
+        "line": 196,
+        "column": 3,
+        "message": "Async method 'handle' has a complexity of 202. Maximum allowed is 15."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 239,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 253,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 263,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-lines",
+        "severity": 2,
+        "line": 309,
+        "column": 1,
+        "message": "File has too many lines (992). Maximum allowed is 300."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 516,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 518,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 519,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 535,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 539,
+        "column": 11,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 543,
+        "column": 11,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 555,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 556,
+        "column": 11,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 565,
+        "column": 13,
+        "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 730,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 734,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 760,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 761,
+        "column": 11,
+        "message": "Blocks are nested too deeply (5). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 776,
+        "column": 13,
+        "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 781,
+        "column": 13,
+        "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 785,
+        "column": 13,
+        "message": "Blocks are nested too deeply (6). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "max-depth",
+        "severity": 2,
+        "line": 886,
+        "column": 9,
+        "message": "Blocks are nested too deeply (4). Maximum allowed is 3."
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "line": 987,
+        "column": 5,
+        "message": "Unexpected console statement."
+      }
+    ],
+    "stderr": ""
+  }
+]

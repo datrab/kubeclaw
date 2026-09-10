@@ -1,0 +1,11 @@
+Commands and exact individual exits:
+{"command":["node","contracts/prism/v1/tests/contracts.test.mts"],"status":0,"stdout":"Prism v1 contract fixtures passed\n","stderr":""}
+{"command":["node","contracts/prism/v1/tests/remediation.test.mts"],"status":0,"stdout":"Prism patch/complexity regressions and real renderer passed\n","stderr":""}
+{"command":["node","tests/verification/integration/prism-archive.test.mts"],"status":0,"stdout":"{\"ok\":true,\"suite\":\"prism-real-archive-integrity\",\"designGeneration\":false}\n","stderr":""}
+{"command":["node","node_modules/typescript/bin/tsc","--noEmit","-p","contracts/prism/v1/tsconfig.json"],"status":0,"stdout":"","stderr":""}
+{"command":["node","node_modules/typescript/bin/tsc","--noEmit","-p","skills/prism/tsconfig.json"],"status":0,"stdout":"","stderr":""}
+{"command":["node","node_modules/typescript/bin/tsc","--noEmit","-p","skills/nova/plugins/prism-design/tsconfig.json"],"status":0,"stdout":"","stderr":""}
+
+Configured lint exit 0, command: node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs contracts/prism/v1/src/baseline-archive.ts contracts/prism/v1/src/index.ts contracts/prism/v1/scripts/generate-validators.mjs contracts/prism/v1/tests/baseline-archive.test.mts contracts/prism/v1/tests/fixtures/baseline-input.mts contracts/prism/v1/tests/fixtures/baseline-locale.mts skills/nova/plugins/prism-design/src/archive.ts
+Initial invocation without --config could not locate repository policy; corrected invocation uses unchanged canonical configuration, not new rules.
+Generator regeneration + exact git diff exit 0.

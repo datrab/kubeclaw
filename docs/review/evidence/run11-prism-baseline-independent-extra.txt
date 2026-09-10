@@ -1,0 +1,5 @@
+Command: node docs/review/evidence/run11-prism-baseline-independent.mjs
+Exit code: 0
+{"originalV1Schema":"byte-identical","originalControlPriorRowApprovalWorkerAssemblyInputs":"byte-identical","EnginePublishBusterAndStage":"unchanged source"}
+{"originalProfile":"prism.baseline-archive.v1","coherentPairedRetag":"denied without changing approval digest","originalCasUnchanged":true,"fullControlEndpointClaimed":false}
+{"originalProfile":"prism.baseline-archive.v2","coherentPairedRetag":"denied without changing approval digest","originalCasUnchanged":true,"fullControlEndpointClaimed":false}
