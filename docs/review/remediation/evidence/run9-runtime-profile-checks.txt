@@ -1,0 +1,48 @@
+Source f505eedacada7e7168740aa27272530f62c9f47f.
+Initial non-authoritative command chain used missing npm .bin/incorrect workspace selector and nonexistent shared tsconfig; final shell exit0 was only final SDK test, NOT a typecheck pass. Preserve its raw diagnostics:
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+
+sh: 1: tsc: not found
+npm error Lifecycle script `typecheck` failed with error:
+npm error code 127
+npm error path /workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/nova
+npm error workspace kubeclaw-nova-pipeline
+npm error location /workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/nova
+npm error command failed
+npm error command sh -c tsc --noEmit -p tsconfig.json
+
+npm error Lifecycle script `typecheck` failed with error:
+npm error workspace @kubeclaw/nova-core
+npm error location /workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/nova/core
+npm error Missing script: "typecheck"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run --workspace=@kubeclaw/nova-core
+
+npm error Lifecycle script `typecheck` failed with error:
+npm error workspace @kubeclaw/nova-project
+npm error location /workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/nova/project
+npm error Missing script: "typecheck"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run --workspace=@kubeclaw/nova-project
+error TS5058: The specified path does not exist: 'skills/common/tsconfig.json'.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/values.test.ts
+
+SDK JSON domain and accepted-byte regressions passed
+
+Correct direct commands, independently completed:
+node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts tests/verification/reliability/runtime-profile-no-trap.test.mjs
+exit=0
+node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json
+exit=0
+node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+exit=0
+node scripts/generate-plugin-sdk-types.mjs --check
+exit=0

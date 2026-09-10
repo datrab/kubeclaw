@@ -23,8 +23,8 @@ export function withRuntimeDispatchProfile(
 
 /** Only closed invocation metadata is control. An identically named model key is ordinary data. */
 export function runtimeDispatchProfileFields(request: object, capability?: string): Readonly<{ runtimeDispatchProfile?: RuntimeDispatchProfile }> {
-  if (!Object.hasOwn(request, 'runtimeDispatchProfile')) return {};
   portableJson(request);
+  if (!Object.hasOwn(request, 'runtimeDispatchProfile')) return {};
   if (capability !== undefined && capability !== 'runtime.dispatch') throw new Error('RUNTIME_DISPATCH_PROFILE_CAPABILITY_INVALID');
   return { runtimeDispatchProfile: parseRuntimeDispatchProfile((request as CapabilityInvocation).runtimeDispatchProfile) };
 }
