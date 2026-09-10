@@ -1,0 +1,105 @@
+Source f505eedacada7e7168740aa27272530f62c9f47f; original current-source workspace links corrected to relative, all64 own checkout. No source/test assertion changes after first matrix. Command:
+node --test tests/verification/reliability/runtime-profile-no-trap.test.mjs tests/verification/reliability/runtime-dispatch-profile.test.mjs tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs tests/verification/reliability/runtime-dispatch-native-profile.test.mjs tests/verification/reliability/adapter-dependency-boundary.test.mjs tests/verification/reliability/adapter-dependency-canonical-independent.test.mjs tests/verification/reliability/adapter-dependency-contract.test.mjs tests/verification/reliability/adapter-dependency-independent.test.mjs tests/verification/reliability/adapter-dependency-locale.test.mjs tests/verification/reliability/adapter-dependency-result.test.mjs tests/verification/reliability/adapter-dependency-identity.test.mts
+Exit 0.
+
+{"mode":"delivery","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":true,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"delivery","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":false,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original delivery boundary survives real cross-locale restart (6790.916058ms)
+{"mode":"activation","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":true,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"activation","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":false,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original activation boundary survives real cross-locale restart (5380.614359ms)
+✔ independent legacy actual HTTP receipt must remain canonically valid after rehashed disk corruption (14967.73809ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ independent current actual HTTP receipt must remain canonically valid after rehashed disk corruption (10732.816953ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ independent unknown portable dependency version cannot hide behind another valid request subject (3887.498162ms)
+✔ canonical effect keys retain opaque bounds and exactly bounded historical producer grammar (33.839121ms)
+✔ new complete subject and owner identity has explicit version and compact bounded key (1.580254ms)
+✔ canonical resource owner admits real resource namespaces without relaxing other request fields (4.006785ms)
+✔ original activation IDs and public delivery tokens propagate only to owning effect and lock fields (5.744997ms)
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (4796.413002ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (5678.639525ms)
+✔ independent genuine legacy child history cannot hide corruption behind an absent or changed requested subject (13530.968385ms)
+ℹ orphan accepted: rejected before another HTTP request
+ℹ orphan completed: rejected before another HTTP request
+ℹ requested subject differs from accepted: rejected before another HTTP request
+ℹ duplicate child request: rejected before another HTTP request
+ℹ child request before original parent: rejected before another HTTP request
+ℹ child request before parent accepted: rejected before another HTTP request
+ℹ unknown original request version: rejected before another HTTP request
+ℹ valid foreign attempt hidden behind known legacy owner key: rejected before another HTTP request
+✔ independent genuine two-locale historical ambiguity rejects rather than selecting either recorded child alias (3291.380177ms)
+✔ independent actual failed legacy HTTP child remains failed across locale recovery without retransmission (2394.866698ms)
+✔ independent SIGKILL after the receiver observed a legacy POST but before its response keeps the child unresolved (2435.27912ms)
+✔ independent concurrent current producer processes in different locales retain one actual child action and replay (2040.372649ms)
+{"mode":"current","receiverCalls":1,"dependencyKeys":["adapter-dep:utf16-v1:51311a52c9e74ceb2629dbc7a912ad980ca0f99c11ebf4c7f6c697ca55e08462:98685f75a24f26fecca429b5e9694c6ef3684c6aa90f21cdbc967c905962ece9"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity current across native locales (3292.557662ms)
+{"mode":"legacy-resume","receiverCalls":1,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:a18bfc61790381d367d35039d67845f31f3773b727db7a6e2373b6c65a303cfc:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity legacy-resume across native locales (3173.606034ms)
+{"mode":"historical-countercheck","receiverCalls":2,"dependencyKeys":["adapter:test.locale-dependency:consumer:network.http:1f357f6171bcda96c5bb8ee63af2f8e58a7494b3e8dc97673e13090a9473b9d7:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604","adapter:test.locale-dependency:consumer:network.http:6ee93188f11f32085e1add47c5e5ec2740bfccf158dcc7f60aa004fa9babcab9:parent:cdf682756dcdf849da93a2b74ccb34e4522ea5a6fde198f9e1e928167ded4604"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity historical-countercheck across native locales (2981.58694ms)
+✔ original registered adapter rejects malformed dependency result [] (3109.101496ms)
+✔ original registered adapter rejects malformed dependency result null (2983.799282ms)
+✔ original registered adapter rejects malformed dependency result Array(2) (2184.299036ms)
+✔ original registered adapter rejects malformed dependency result ({value:NaN}) (2344.393949ms)
+✔ original registered adapter rejects malformed dependency result Object.defineProperty({},"value",{enumerable:true,get(){throw new Error("GETTER_MUST_NOT_RUN");}}) (2453.061261ms)
+✔ actual v1 run creation carries frozen transport choice; terminal reopen preserves prefix (7162.045526ms)
+ℹ {"version":"v1","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v2 run creation carries frozen transport choice; terminal reopen preserves prefix (6422.534853ms)
+ℹ {"version":"v2","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v3 run creation carries frozen transport choice; terminal reopen preserves prefix (5069.722083ms)
+ℹ {"version":"v3","nativeGateway":false,"actualPostCount":1,"requestProfile":{"schemaVersion":"runtime-dispatch-profile.v1","encoding":"json-utf16-v1"},"reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ original v1 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (4753.870698ms)
+✔ original v1 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (5463.061253ms)
+✔ original v1 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (4717.400292ms)
+✔ original v2 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (4506.839828ms)
+✔ original v2 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (4367.797886ms)
+✔ original v2 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (4408.704884ms)
+✔ original v3 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (7073.283063ms)
+✔ original v3 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (8091.158446ms)
+✔ original v3 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (8395.939447ms)
+✔ declared v2 ACP transport profile owns locale selection without claiming a Gateway (10216.221276ms)
+ℹ {"version":"v2","nativeGateway":false,"localeStable":false,"transportKeys":["spawn:session-v1:attempt:0:payload:e6e964796faea9d043007231e949d244eca67210ff0c920cec81c6e69f52132b","spawn:session-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ declared v3 ACP transport profile owns locale selection without claiming a Gateway (8747.528065ms)
+ℹ {"version":"v3","nativeGateway":false,"localeStable":true,"transportKeys":["spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d","spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ original helper-review preserves invoke-only API and rejects invalid present profile before real HTTP (2680.48475ms)
+✔ original helper-verification preserves invoke-only API and rejects invalid present profile before real HTTP (2762.473466ms)
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (774.046649ms)
+✔ finite canonical profile: SDK and original Foundation validator agree without executing getters (4.074748ms)
+✔ new original snapshot writes bind required profile; rehashed malformed/future/downgraded contracts reject (10.955288ms)
+✔ profile is bound after budget reservation and excluded from actual model task without changing accounting (954.237143ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (7174.655941ms)
+✔ runtime profile selector preserves legitimate JSON metadata and original codec bytes (3.323374ms)
+✔ runtime profile selector refuses absent/present Proxies and getters without executing traps (0.341485ms)
+ℹ [{"kind":"proxy","present":false,"calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED"},{"kind":"proxy","present":true,"calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED"},{"kind":"getter","field":"runtimeDispatchProfile","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID"},{"kind":"getter","field":"payload","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID"}]
+✔ original plugin context and registered AdapterRuntime reject Proxy/getter input before real HTTP or effect writes (3359.251938ms)
+ℹ [{"entry":"context","kind":"proxy","calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED","newPosts":0,"unchangedJournal":true},{"entry":"context","kind":"getter","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID","newPosts":0,"unchangedJournal":true},{"entry":"adapter","kind":"proxy","calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED","newPosts":0,"unchangedJournal":true},{"entry":"adapter","kind":"getter","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID","newPosts":0,"unchangedJournal":true}]
+ℹ tests 48
+ℹ suites 0
+ℹ pass 48
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 95526.63494
