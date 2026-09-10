@@ -1,0 +1,12 @@
+✔ independent legacy Review and Summary version/digest parity (106.455975ms)
+✔ independent new Review and Summary version/digest parity (53.829763ms)
+✔ independent Summary retains only exact historical both-unversioned branch (0.275055ms)
+✔ independent Summary selectors reject Proxy/getter before reflection (1.415776ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 362.596419
