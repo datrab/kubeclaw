@@ -1,0 +1,30 @@
+Fresh exact MAIN21b report candidate, no product edits by independent reviewer.
+Fail-fast original Shared-runtime/Nova/Review typechecks and all affected canonical configured lint:
+set -e; original Shared-runtime, Nova, Review typechecks then exact configured lint of all changed report source and tests
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+Exit: 0
+
+Final actual blob negatives, with exact persisted original adapter failure cause asserted:
+{"mode":"legacy","fault":"missing","actualBlobFault":true,"originalWritePrefixUnchanged":true,"readerRejected":true}
+{"mode":"legacy","fault":"corrupt","actualBlobFault":true,"originalWritePrefixUnchanged":true,"readerRejected":true}
+{"mode":"portable","fault":"missing","actualBlobFault":true,"originalWritePrefixUnchanged":true,"readerRejected":true}
+{"mode":"portable","fault":"corrupt","actualBlobFault":true,"originalWritePrefixUnchanged":true,"readerRejected":true}
+✔ original governor rejects actual legacy report blob missing (1030.525548ms)
+✔ original governor rejects actual legacy report blob corrupt (1032.405559ms)
+✔ original governor rejects actual portable report blob missing (1038.245324ms)
+✔ original governor rejects actual portable report blob corrupt (1019.561262ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4211.881652
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+Exit: 0

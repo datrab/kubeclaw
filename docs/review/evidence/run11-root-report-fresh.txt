@@ -1,0 +1,26 @@
+Command: node --test --test-concurrency=1 skills/nova/plugins/review/tests/review-report-encoding.test.mjs tests/verification/reliability/review-report-compiler-recovery.test.mjs tests/verification/reliability/review-report-storage-boundary.test.mjs tests/verification/reliability/runtime-profile-no-trap.test.mjs tests/verification/reliability/runtime-profile-proxy-independent.test.mjs
+NEW standalone run11 snapshot f510bf0 exact remote backupb2394; 4081 entries and62 ownworkspace links verified. Full original suites ran against same source in run10; this is the new-checkout continuation gate.
+Exit: 0
+
+✔ own finite report mode has an exact legacy absence and rejects non-JSON before getters (1.048722ms)
+✔ stored source/report modes are independent and all generated Review nodes agree (257.764066ms)
+✔ archived compiler with current coverage helper preserves portable-source and legacy module/final reports (465.400854ms)
+✔ saved Review node set, uniform mode, and the entire pinned graph remain authoritative (175.879691ms)
+✔ report writer binds real CAS result mode and complete owner; invalid JSON never runs getters (86.915941ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (6014.623361ms)
+✔ runtime profile selector preserves legitimate JSON metadata and original codec bytes (1.001891ms)
+✔ runtime profile selector refuses absent/present Proxies and getters without executing traps (0.349437ms)
+ℹ [{"kind":"proxy","present":false,"calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED"},{"kind":"proxy","present":true,"calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED"},{"kind":"getter","field":"runtimeDispatchProfile","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID"},{"kind":"getter","field":"payload","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID"}]
+✔ original plugin context and registered AdapterRuntime reject Proxy/getter input before real HTTP or effect writes (2995.889133ms)
+ℹ [{"entry":"context","kind":"proxy","calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED","newPosts":0,"unchangedJournal":true},{"entry":"context","kind":"getter","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID","newPosts":0,"unchangedJournal":true},{"entry":"adapter","kind":"proxy","calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED","newPosts":0,"unchangedJournal":true},{"entry":"adapter","kind":"getter","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID","newPosts":0,"unchangedJournal":true}]
+✔ independent pre-fix original registered transport/context HTTP oracle now rejects before trap or admission (1936.458317ms)
+✔ independent selector preserves original legacy request bytes and nested owning dependency metadata (10.02222ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13322.218464

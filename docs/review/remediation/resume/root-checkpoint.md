@@ -2,7 +2,7 @@
 
 Frozen scope remains exactly 47 IDs. Eight now satisfy their original finding
 requirements; 39 remain incomplete. Overall completion is false. The latest
-continuation is in `run-20260910t015007.md`; current remote package refs are
+continuation is in `run-20260910t021800.md`; current remote package refs are
 listed in `run5-active-packages.json`. Reviewed integration and evidence
 remain in `run-20260909t2146.md` and `run-20260909t2114.md`.
 
@@ -12,10 +12,12 @@ the complete16/24/32/8 real reader matrix, original Review and historical CLI
 passed. It preserves integrated transport, Prism baseline and Operator changes.
 Transport-selector no-trap correction is independently approved and root-tested
 for this integration: `implementation/run10-runtime-admission-root-review.md`.
-Report-only cutover is independently approved on21b051, awaiting reconciliation
-on the resulting runtime head. Native original Czech semantic bundle digest
-failure remains open, remotely preserved at23e14883; a separate design is being
-independently reviewed before production changes. Resume immutable refs from
+Report-only cutover is independently approved on680d15 and root-tested for this
+integration: `implementation/run11-report-root-review.md`, full Review plus25
+native and fresh-restoration11 cases, genuine archived CLI/phase6/types passed.
+Native original Czech semantic bundle digest failure remains open, remotely
+preserved at23e14883. Separate design e07c5c and independent be25cf are approved;
+isolated implementation and its native tests remain outstanding. Resume refs from
 the current inventory; no global SDK closure.
 
 ## Independently integrated work

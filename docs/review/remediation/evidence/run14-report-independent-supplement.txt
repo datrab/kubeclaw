@@ -1,0 +1,46 @@
+Fresh21b additional independent/source recovery cases6/6, then genuine archived CLI. Command:
+independent extras + current compiler recovery + original archived CLI
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=false (2825.968355ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=true (2571.581469ms)
+✔ original compiler module-review graph remains recoverable under its existing source version (1398.630978ms)
+✔ own project review authoring domain rejects report selector before compiler-owned selection (604.820274ms)
+{"mode":"legacy","actualSigkill":true,"journalUnchanged":true,"noArtifactWritten":true,"uncertaintyPreserved":true}
+✔ actual legacy report writer SIGKILL after original accepted event preserves uncertainty (2250.001712ms)
+{"mode":"portable","actualSigkill":true,"journalUnchanged":true,"noArtifactWritten":true,"uncertaintyPreserved":true}
+✔ actual portable report writer SIGKILL after original accepted event preserves uncertainty (2233.988074ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6434.580665
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:5359aaa3320c822155978fe634f109a9354202b4ef113d69100b74f396179a06:sha256:a17ceaaf3d2bad5e753e92a78cf43498ae28aa18a1281895d79945da887fbea7\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:5359aaa3320c822155978fe634f109a9354202b4ef113d69100b74f396179a06"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+
+Exit: 0
+
+Actual original governor reader missing/corrupt blob negatives4/4 and canonical configured additive lint:
+{"mode":"legacy","fault":"missing","actualBlobFault":true,"originalWritePrefixUnchanged":true,"readerRejected":true}
+{"mode":"legacy","fault":"corrupt","actualBlobFault":true,"originalWritePrefixUnchanged":true,"readerRejected":true}
+{"mode":"portable","fault":"missing","actualBlobFault":true,"originalWritePrefixUnchanged":true,"readerRejected":true}
+{"mode":"portable","fault":"corrupt","actualBlobFault":true,"originalWritePrefixUnchanged":true,"readerRejected":true}
+✔ original governor rejects actual legacy report blob missing (984.909066ms)
+✔ original governor rejects actual legacy report blob corrupt (953.660654ms)
+✔ original governor rejects actual portable report blob missing (903.650868ms)
+✔ original governor rejects actual portable report blob corrupt (944.889528ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3863.060198
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+Exit: 0
+These are actual artifact-store/journal/reader boundaries. Other gate evidence in summary fixtures is explicitly contract data, not native provider/model execution.

@@ -1,0 +1,11 @@
+Command: node docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs . && node tests/verification/contracts/check-plugin-system-v2-phase6.mjs && npx --no-install tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && npx --no-install tsc --noEmit -p skills/nova/tsconfig.json && npx --no-install tsc --noEmit -p skills/nova/plugins/review/tsconfig.json && node skills/nova/plugins/review/scripts/generate-policy-schema.mjs --check
+Exit0. Correct original archived probe, phase6, all owningtypes+generator. No product/assertion change.
+
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:b8a64035016bcec1ac6ef4fe1224cb3b4d8ad25d6b0eff38b5a21b8b0ac0fd0d:sha256:a3459a703be8b21644991fe7f0cb0b8fa664df2dc41a5904834d2452a694e866\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:b8a64035016bcec1ac6ef4fe1224cb3b4d8ad25d6b0eff38b5a21b8b0ac0fd0d"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+{"ok":true,"contract":"plugin-system-v2-phase6"}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
