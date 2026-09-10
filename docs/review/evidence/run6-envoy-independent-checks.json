@@ -1,0 +1,47 @@
+[
+  {
+    "check": "chart",
+    "chunk_id": "8c8943",
+    "cmd": "PATH=/workspace/scratch/4e25cf57c177/toolchains/bin:$PATH node --test tests/verification/deployment/worker-trust-readiness.test.mjs",
+    "exit_code": 0,
+    "original_token_count": 77,
+    "output": "✔ five original rendered Envoy consumers separate process probes from fresh self-mTLS readiness (327.326445ms)\n✔ both independent charts carry the same scoped readiness helper (0.255365ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 425.099593\n",
+    "wall_time_seconds": 0.384270046
+  },
+  {
+    "check": "truth",
+    "chunk_id": "f8a6fd",
+    "cmd": "node tests/verification/deployment/check-deployment-truth.mjs",
+    "exit_code": 0,
+    "original_token_count": 26,
+    "output": "{\"ok\":true,\"phase\":12,\"v2Deployment\":true,\"legacyWorkerAbsent\":true,\"deterministicSuiteRuntime\":true}\n",
+    "wall_time_seconds": 0.054408727
+  },
+  {
+    "check": "spiffe",
+    "chunk_id": "1ee31a",
+    "cmd": "node tests/verification/contracts/check-worker-trust-spiffe.mts",
+    "exit_code": 0,
+    "original_token_count": 12,
+    "output": "{\"ok\":true,\"contract\":\"worker-trust-spiffe\"}\n",
+    "wall_time_seconds": 0.006008345
+  },
+  {
+    "check": "lint",
+    "chunk_id": "a420fd",
+    "cmd": "node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs tests/verification/deployment/check-worker-trust-envoy-native.mjs tests/verification/deployment/worker-trust-readiness.test.mjs",
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": "",
+    "wall_time_seconds": 0.824267763
+  },
+  {
+    "check": "patch",
+    "chunk_id": "9e1a08",
+    "cmd": "git apply --reverse --check --include='charts/**' docs/review/remediation/candidates/worker-trust-native-unverified.patch",
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": "",
+    "wall_time_seconds": 0.022859394
+  }
+]
