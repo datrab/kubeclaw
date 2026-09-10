@@ -1,0 +1,83 @@
+$ KUBECLAW_REVIEW_SOURCE_ROOT=/workspace/scratch/15fb596e6560/run20-contract-review-frozen84 node --test tests/verification/reliability/delivery-manifest-v3-contract-independent.test.mjs
+✔ valid public v3 vector is accepted and deeply frozen (33.706264ms)
+✔ creator rejects caller-supplied digest rather than overwriting it (2.997753ms)
+✖ published JSON schema matches runtime rejection of invalid expectedCoverage (24.169392ms)
+✖ published JSON schema matches runtime rejection of invalid coverage result (21.289247ms)
+✖ published JSON schema matches runtime ArtifactRef media-type bounds (16.867887ms)
+✔ creator rejects Proxy and accessor input without invoking caller traps (0.809822ms)
+✔ shared reader accepts a valid exact v3 ref and rejects a missing portable tag (6.26397ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 4
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 408.658691
+
+✖ failing tests:
+
+test at tests/verification/reliability/delivery-manifest-v3-contract-independent.test.mjs:135:1
+✖ published JSON schema matches runtime rejection of invalid expectedCoverage (24.169392ms)
+  AssertionError [ERR_ASSERTION]: expectedCoverage parity: null
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run20-delivery-impl-review-20260910t050054/tests/verification/reliability/delivery-manifest-v3-contract-independent.test.mjs:143:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/delivery-manifest-v3-contract-independent.test.mjs:146:1
+✖ published JSON schema matches runtime rejection of invalid coverage result (21.289247ms)
+  AssertionError [ERR_ASSERTION]: coverage parity: null
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run20-delivery-impl-review-20260910t050054/tests/verification/reliability/delivery-manifest-v3-contract-independent.test.mjs:154:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/delivery-manifest-v3-contract-independent.test.mjs:157:1
+✖ published JSON schema matches runtime ArtifactRef media-type bounds (16.867887ms)
+  AssertionError [ERR_ASSERTION]: ArtifactRef mediaType parity: null
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run20-delivery-impl-review-20260910t050054/tests/verification/reliability/delivery-manifest-v3-contract-independent.test.mjs:166:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+exit=1
