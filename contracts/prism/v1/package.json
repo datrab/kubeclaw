@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "exports": { ".": "./src/index.ts", "./digest": "./src/digest.ts" },
+  "exports": { ".": "./src/index.ts", "./digest": "./src/digest.ts", "./baseline-archive": "./src/baseline-archive.ts" },
   "scripts": {
     "generate:validators": "node scripts/generate-validators.mjs",
     "pretest": "node scripts/generate-validators.mjs",
