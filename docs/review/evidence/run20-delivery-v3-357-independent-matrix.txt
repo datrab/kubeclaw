@@ -84,7 +84,11 @@ $ npm run docs:inventory:check
 exit=1; pre-existing generated docs inventory is stale for deploy-script.json,
 helm-values.json and workflows.json. None is in the 45-path Delivery delta.
 
+$ npm run plugin-system:plugins:build
+exit=1 in a pre-existing non-Delivery package:
+skills/common/plugins/operator-messaging/src/delivery-projection.ts:76-77
+`terminal` is possibly undefined and its returned union includes undefined.
+
 The original remote-test-gate package suite remains blocked by absent Go, and
 the aggregate plugin-package run remains blocked by absent pinned Playwright
 Chromium. No dependency/browser download, provider, deployment or CI ran.
-
