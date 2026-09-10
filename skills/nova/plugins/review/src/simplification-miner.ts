@@ -12,7 +12,9 @@ import type { ReviewBundleEvidence } from './review-bundle-contract.ts';
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
 import { compareCodeUnits } from './review-ordering.ts';
 import type { ResolvedReviewPolicy } from './review-policy-resolver.ts';
-import { isResolvedReviewPolicy } from './review-policy-resolver.ts';
+import { assertVerifiedReviewPolicy } from './review-policy-resolver.ts';
+import type { ReviewSemanticEncoding } from './review-semantics.ts';
+import { reviewEvidenceJson } from './review-evidence-encoding.ts';
 
 export interface SimplificationMiningInput {
   readonly revision: SimplificationRevisionIdentity;
@@ -52,7 +54,11 @@ function diagnostic(
 ): SimplificationSourceDiagnostic { return { sourceDigest, code, message }; }
 
 function parseSource(evidence: ReviewBundleEvidence) {
-  try { return parseSimplificationFacts(JSON.parse(evidence.content)); } catch (error) {
+  try {
+    const value: unknown = JSON.parse(evidence.content);
+    if (reviewEvidenceJson(value, evidence.encoding) !== evidence.content) throw new Error('Simplification facts encoding does not match its bytes');
+    return parseSimplificationFacts(value);
+  } catch (error) {
     return { ok: false as const, error: error instanceof Error ? error.message : String(error) };
   }
 }
@@ -110,8 +116,8 @@ function sourceCandidates(
   };
 }
 
-export function mineSimplificationCandidates(input: SimplificationMiningInput): SimplificationMiningResult {
-  if (!isResolvedReviewPolicy(input.policy)) throw new Error('Simplification mining requires a resolver-owned review policy');
+export function mineSimplificationCandidates(input: SimplificationMiningInput, encoding?: ReviewSemanticEncoding): SimplificationMiningResult {
+  assertVerifiedReviewPolicy(input.policy, encoding);
   if (!input.policy.policy.simplification.enabled) return { candidates: [], diagnostics: [] };
   const results = input.evidence.filter(({ kind }) => kind === SIMPLIFICATION_FACTS_EVIDENCE_KIND)
     .map((evidence) => sourceCandidates(evidence, input));

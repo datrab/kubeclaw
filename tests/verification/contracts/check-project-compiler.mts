@@ -1,5 +1,6 @@
 import { checkLegacyProjectImport } from './project-legacy-import-cases.mts';
 import { gateCoverageDigest } from '@kubeclaw/pipeline-test-gate-contract';
+import { PORTABLE_JSON_ENCODING } from '@kubeclaw/plugin-sdk';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -171,7 +172,13 @@ try {
   const output = path.join(temporary, 'compiled.json');
   fs.writeFileSync(projectFile, JSON.stringify(project)); fs.writeFileSync(platformFile, JSON.stringify(platform));
   const launch = () => spawnSync(process.execPath, [path.join(runtime, 'pipeline.ts'), '--platform', platformFile, '--project', projectFile, '--compile', output], { cwd: temporary, encoding: 'utf8', timeout: 30000 });
-  const result = launch(); assert.equal(result.status, 0, result.stderr); assert.deepEqual(JSON.parse(fs.readFileSync(output, 'utf8')), compiled.definition);
+  const result = launch(); assert.equal(result.status, 0, result.stderr);
+  // The exported compiler's old one/two/three-argument APIs remain legacy.
+  // Genuine new CLI compilation selects its independent semantic owner explicitly.
+  const cliCompiled = compileProject(project, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING, 'review-semantics.utf16-v1');
+  assert.deepEqual(JSON.parse(fs.readFileSync(output, 'utf8')), cliCompiled.definition);
+  assert(compiled.definition.stages.filter((stage: any) => stage.type === 'kubeclaw.decision.review')
+    .every((stage: any) => !Object.hasOwn(stage.config, 'reviewSemanticEncoding')));
   // A real unsupported stage config must fail before the compiler publishes output.
   fs.rmSync(output); const invalid = structuredClone(project); invalid.modules[0].review.agent = '';
   fs.writeFileSync(projectFile, JSON.stringify(invalid)); const rejected = launch(); assert.notEqual(rejected.status, 0); assert.equal(fs.existsSync(output), false);

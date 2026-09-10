@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 
 import { reviewPolicySchema } from '../src/review-policy-contract.ts';
+import { REVIEW_SEMANTIC_ENCODING } from '../src/review-semantics.ts';
 
 const policyTarget = new URL('../schemas/review-policy.v2.schema.json', import.meta.url);
 const configTarget = new URL('../schemas/config.schema.json', import.meta.url);
@@ -16,11 +17,16 @@ const configSource = `${JSON.stringify({
   additionalProperties: false,
   required: ['agent'],
   properties: {
+    reviewSemanticEncoding: { const: REVIEW_SEMANTIC_ENCODING },
     reportArtifactEncoding: { const: 'kubeclaw-json.utf16.v1' },
     agent: { type: 'string', minLength: 1 },
     profile: { enum: ['gate', 'lean', 'audit'], default: 'gate' },
     policy: reviewPolicySchema,
   },
+  allOf: [{
+    if: { properties: { reviewSemanticEncoding: { const: REVIEW_SEMANTIC_ENCODING } }, required: ['reviewSemanticEncoding'] },
+    then: { properties: { reportArtifactEncoding: { const: 'kubeclaw-json.utf16.v1' } }, required: ['reportArtifactEncoding'] },
+  }],
 }, null, 2)}\n`;
 const repositoryAuditConfigSource = `${JSON.stringify({
   $schema: 'https://json-schema.org/draft/2020-12/schema',
