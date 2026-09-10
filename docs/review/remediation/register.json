@@ -3497,6 +3497,10 @@
         {
           "report": "implementation/run6-coupled-root-review.md",
           "summary": "Gekoppelte Product-/Controller-/Chart-Implementierung nach unabhängiger Prüfung und echten nativen CRD/CEL/CAS-/signierten Controller-Tests integriert; Root wiederholt Native, Product21(17verschiedene), Chart6 und Typprüfung erfolgreich. Echte Anwendung/Tailnet/Empfängerzustellung und menschliche Gesamtacceptance bleiben offen."
+        },
+        {
+          "report": "implementation/run14-human-extension-reconciliation.md",
+          "summary": "Veraltete Ledger-Aussage korrigiert: endlicher authentifizierter Accept/Extend-Writer ist in der originalen Control-Komposition integriert. Aktuell 16/16 lokale Originalkomponenten-Tests, Typprüfung und fokussierter Lint bestanden; keine Produktionsänderung. Echter Tailnet-/App-/Empfänger-/Human-/Release-Nachweis bleibt offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -3541,6 +3545,10 @@
         {
           "report": "implementation/run6-coupled-root-review.md",
           "summary": "Gekoppelte Product-/Controller-/Chart-Implementierung nach unabhängiger Prüfung und echten nativen CRD/CEL/CAS-/signierten Controller-Tests integriert; Root wiederholt Native, Product21(17verschiedene), Chart6 und Typprüfung erfolgreich. Echte Anwendung/Tailnet/Empfängerzustellung und menschliche Gesamtacceptance bleiben offen."
+        },
+        {
+          "report": "implementation/run14-human-extension-reconciliation.md",
+          "summary": "Veraltete Ledger-Aussage korrigiert: App-Auth-gebundener Accept/Extend-Writer ist in der originalen Control-Komposition integriert. Aktuell 16/16 lokale Originalkomponenten-Tests, Typprüfung und fokussierter Lint bestanden; keine Produktionsänderung. Echter Login, Tailnet-Isolation, private Zustellung und Humanfeedback bleiben offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",

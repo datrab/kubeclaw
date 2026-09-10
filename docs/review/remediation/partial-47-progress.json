@@ -299,20 +299,20 @@
       "package": "product",
       "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Corrected the missing production package for existing retained-demo ownership/Ready implementation. | Original requested end-to-end fixture plan, post-plan Tailnet reachability and exact-generation release/TTL proof unavailable. Human extension authorizer is actual missing code/integration, not merely an unrun test.",
-      "result": "Corrected the missing production package for existing retained-demo ownership/Ready implementation. | Original requested end-to-end fixture plan, post-plan Tailnet reachability and exact-generation release/TTL proof unavailable. Human extension authorizer is actual missing code/integration, not merely an unrun test.",
+      "required_evidence": "Original full pipeline with a real application/login, allowed Tailnet operator access and authenticated feedback, denial of another Tailnet user and old generation, actual private recipient delivery, and exact-generation release/TTL. The integrated finite human acceptance/extension writer is no longer the missing code item.",
+      "result": "Current original Control composition locally passes session, explicit operator, Origin/CSRF, Ed25519, durable intent/recovery and bounded HTTPS transport gates. Previously integrated native Kubernetes evidence covers signed accept/extend, exact +60s expiry, immutable Ready and stale-cleanup rejection. No real Tailnet, application, recipient or human event was produced; finding remains incomplete.",
       "baseline_evidence_requirement": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen.",
-      "evidence": "implementation/wave47-product-gates.md"
+      "evidence": "implementation/run14-human-extension-reconciliation.md"
     },
     {
       "id": "F-T14-02",
       "package": "product",
       "status": "implementiert / unvollständig",
       "baseline_status": "implementiert",
-      "required_evidence": "Corrected owning role inclusion of both demo handoff and app-auth provider; actual bundled imports resolve their dependencies. | Real application login, private operator reception, other-user/old-generation denial and authenticated acceptance/extension remain unproved or unimplemented.",
-      "result": "Corrected owning role inclusion of both demo handoff and app-auth provider; actual bundled imports resolve their dependencies. | Real application login, private operator reception, other-user/old-generation denial and authenticated acceptance/extension remain unproved or unimplemented.",
+      "required_evidence": "Original full pipeline with real app-secret integration and login, private operator reception, allowed Tailnet feedback, other-user and old-generation rejection, and exact-generation lifecycle behavior. Local identity headers and admission fixtures cannot establish these events.",
+      "result": "The integrated original Control runtime already contains the finite authenticated acceptance/extension writer; current local original-component gates pass without production changes. Actual application login, Tailnet isolation, recipient delivery and a human acceptance/extension event remain unproved, so the finding remains incomplete.",
       "baseline_evidence_requirement": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen.",
-      "evidence": "implementation/wave47-product-gates.md"
+      "evidence": "implementation/run14-human-extension-reconciliation.md"
     },
     {
       "id": "IFR-08-001",
