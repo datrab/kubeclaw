@@ -1,4 +1,6 @@
-import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, PORTABLE_JSON_ENCODING, sha256Text } from '@kubeclaw/plugin-sdk';
+import { reviewEvidenceJson } from './review-evidence-encoding.ts';
+import { PORTABLE_REVIEW_BUNDLE_VERSION } from './review-semantics.ts';
 
 import type {
   ChangeRelation,
@@ -8,7 +10,7 @@ import type {
 import type { ParsedEchoReviewOutput } from './echo-review-parser.ts';
 import type { ReviewBundle } from './review-bundle-contract.ts';
 import type { ResolvedReviewPolicy } from './review-policy-resolver.ts';
-import { isResolvedReviewPolicy } from './review-policy-resolver.ts';
+import { isResolvedReviewPolicy, assertReviewPolicyBundle } from './review-policy-resolver.ts';
 import type { ReviewChangedLineRange } from './review-repository.ts';
 import {
   SIMPLIFICATION_CANDIDATES_EVIDENCE_KIND,
@@ -226,6 +228,13 @@ function simplificationManifest(bundle: ReviewBundle): {
   if (!source) return { issues: ['Simplification candidate manifest is missing'] };
   let value: unknown;
   try { value = JSON.parse(source.content); } catch { return { issues: ['Simplification candidate manifest is not JSON'] }; }
+  try {
+    if (sha256Text(source.content) !== source.digest
+      || (bundle.schemaVersion === PORTABLE_REVIEW_BUNDLE_VERSION && source.encoding !== PORTABLE_JSON_ENCODING)
+      || reviewEvidenceJson(value, source.encoding) !== source.content) {
+      return { issues: ['Simplification candidate manifest digest or encoding is invalid'] };
+    }
+  } catch { return { issues: ['Simplification candidate manifest encoding is invalid'] }; }
   const parsed = parseSimplificationCandidateManifest(value);
   if (!parsed.ok) return { issues: [`invalid Simplification candidate manifest: ${parsed.error}`] };
   const revision = parsed.value.revision;
@@ -272,6 +281,7 @@ export function preflightEchoReviewProposals(
   policy: ResolvedReviewPolicy,
   rangesByPath: ReadonlyMap<string, readonly ReviewChangedLineRange[]>,
 ): ReviewProposalPreflight {
+  assertReviewPolicyBundle(policy, bundle);
   if (!isResolvedReviewPolicy(policy)) {
     throw new Error('proposal preflight requires a resolver-owned review policy');
   }

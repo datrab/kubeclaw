@@ -1,10 +1,12 @@
-import { canonicalJson, sha256Text, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, portableJson, sha256Text, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
 
 import type { ReviewBundleSnapshot } from './review-bundle-snapshot.ts';
-import type { ResolvedReviewPolicy } from './review-policy-resolver.ts';
+import { assertReviewPolicyBundle, assertVerifiedReviewPolicy, type ResolvedReviewPolicy } from './review-policy-resolver.ts';
 import { readChangedLineRanges, type FrozenReviewRevision } from './review-repository.ts';
 import type { ReviewStageInput } from './review-stage-input.ts';
 import { compareCodeUnits } from './review-ordering.ts';
+import { assertReviewSemanticBundle, PORTABLE_REVIEW_GOVERNOR_VERSION, reviewSemanticJson,
+  type ReviewSemanticEncoding } from './review-semantics.ts';
 
 export const REVIEW_GOVERNOR_SCHEMA_VERSION = 'review-governor.v1' as const;
 export const REVIEW_GOVERNOR_DECISIONS = [
@@ -38,7 +40,7 @@ export interface ReviewGovernorCurrent {
 }
 
 export interface ReviewGovernorSnapshot {
-  readonly schemaVersion: typeof REVIEW_GOVERNOR_SCHEMA_VERSION;
+  readonly schemaVersion: typeof REVIEW_GOVERNOR_SCHEMA_VERSION | typeof PORTABLE_REVIEW_GOVERNOR_VERSION;
   readonly baselineId: `sha256:${string}`;
   readonly baseline: ReviewGovernorBaseline;
   readonly current: ReviewGovernorCurrent;
@@ -109,6 +111,7 @@ function requiredLifecycle(context: PluginInvocationContext) {
 }
 
 export async function buildReviewGovernorSnapshot(values: {
+  readonly reviewSemanticEncoding?: ReviewSemanticEncoding;
   readonly input: ReviewStageInput;
   readonly snapshot: ReviewBundleSnapshot;
   readonly revision: FrozenReviewRevision;
@@ -116,6 +119,11 @@ export async function buildReviewGovernorSnapshot(values: {
   readonly context: PluginInvocationContext;
   readonly baseline?: ReviewGovernorBaseline;
 }): Promise<ReviewGovernorSnapshot> {
+  portableJson(values.snapshot);
+  assertReviewSemanticBundle(values.snapshot.bundle, values.reviewSemanticEncoding);
+  assertVerifiedReviewPolicy(values.policy, values.reviewSemanticEncoding);
+  assertReviewPolicyBundle(values.policy, values.snapshot.bundle);
+  const schemaVersion = values.reviewSemanticEncoding === undefined ? REVIEW_GOVERNOR_SCHEMA_VERSION : PORTABLE_REVIEW_GOVERNOR_VERSION;
   const lifecycle = requiredLifecycle(values.context);
   const measured = await metrics(values.input, values.snapshot, values.revision, values.context);
   const baseline = values.baseline ?? Object.freeze({
@@ -143,18 +151,24 @@ export async function buildReviewGovernorSnapshot(values: {
       values.policy.policy.governor.absoluteNonTestLocAllowance),
   });
   return Object.freeze({
-    schemaVersion: REVIEW_GOVERNOR_SCHEMA_VERSION,
-    baselineId: sha256Text(canonicalJson({ schemaVersion: REVIEW_GOVERNOR_SCHEMA_VERSION, baseline })),
+    schemaVersion,
+    baselineId: sha256Text(reviewSemanticJson({ schemaVersion, baseline }, values.reviewSemanticEncoding)),
     baseline, current, decision: decision(baseline, currentWithoutLimits, values.policy),
   });
 }
 
 export function buildInvalidReviewGovernorSnapshot(values: {
+  readonly reviewSemanticEncoding?: ReviewSemanticEncoding;
   readonly input: ReviewStageInput;
   readonly snapshot: ReviewBundleSnapshot;
   readonly policy: ResolvedReviewPolicy;
   readonly context: PluginInvocationContext;
 }): ReviewGovernorSnapshot {
+  portableJson(values.snapshot);
+  assertReviewSemanticBundle(values.snapshot.bundle, values.reviewSemanticEncoding);
+  assertVerifiedReviewPolicy(values.policy, values.reviewSemanticEncoding);
+  assertReviewPolicyBundle(values.policy, values.snapshot.bundle);
+  const schemaVersion = values.reviewSemanticEncoding === undefined ? REVIEW_GOVERNOR_SCHEMA_VERSION : PORTABLE_REVIEW_GOVERNOR_VERSION;
   const lifecycle = values.context.contract.stageLifecycle;
   const paths = values.snapshot.bundle.scope.changedPaths.map(({ path }) => path).sort();
   const owners = paths.map((path) => owner(path, values.input.scope.ownershipPrefixes));
@@ -167,8 +181,8 @@ export function buildInvalidReviewGovernorSnapshot(values: {
     nonTestLoc: 0, ownerKeys,
   });
   return Object.freeze({
-    schemaVersion: REVIEW_GOVERNOR_SCHEMA_VERSION,
-    baselineId: sha256Text(canonicalJson({ schemaVersion: REVIEW_GOVERNOR_SCHEMA_VERSION, baseline })),
+    schemaVersion,
+    baselineId: sha256Text(reviewSemanticJson({ schemaVersion, baseline }, values.reviewSemanticEncoding)),
     baseline,
     current: Object.freeze({
       head: values.snapshot.bundle.revisions.head,

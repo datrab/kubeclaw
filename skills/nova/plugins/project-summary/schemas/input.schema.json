@@ -51,6 +51,9 @@
     "final": {
       "type": "object",
       "additionalProperties": false,
+      "dependentRequired": {
+        "reviewSemanticEncoding": ["reviewStageId"]
+      },
       "required": [
         "sourceStageId",
         "lintStageId",
@@ -72,6 +75,9 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 128
+        },
+        "reviewSemanticEncoding": {
+          "const": "review-semantics.utf16-v1"
         },
         "testStageId": {
           "type": "string",

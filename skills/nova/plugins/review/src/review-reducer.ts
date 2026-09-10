@@ -3,11 +3,11 @@ import type { StageResult } from '@kubeclaw/plugin-sdk';
 import type { ReviewPolicy } from './review-policy-contract.ts';
 import { buildReviewEvaluationFacts } from './review-evaluation-metadata.ts';
 import {
-  digestReviewPolicy,
   isResolvedReviewPolicy,
 } from './review-policy-resolver.ts';
 import {
   isCertifiedReviewReductionInput,
+  isCertifiedReductionPolicy,
   validReviewWait,
   type ReviewReductionInput,
   type VerifiedReviewFinding,
@@ -167,7 +167,7 @@ function invalidPolicyResult(input: ReviewReductionInput): StageResult | undefin
     !isResolvedReviewPolicy(input.resolvedPolicy)
     || !Object.isFrozen(input.resolvedPolicy)
     || !Object.isFrozen(policy)
-    || digestReviewPolicy(policy) !== digest
+    || !isCertifiedReductionPolicy(input)
   );
   return invalid ? reasonResult(
       'blocked',

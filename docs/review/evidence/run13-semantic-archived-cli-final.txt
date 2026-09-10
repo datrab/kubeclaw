@@ -1,0 +1,4 @@
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:b794f69d4ae197c19cf5511917f3bf28bfbdfc2dd57e81ff5ace5f304698450b:sha256:1506fda4c3a75f818d459fe372abf3a03fd233a11fad9d2242ad4bb2c825e095\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:b794f69d4ae197c19cf5511917f3bf28bfbdfc2dd57e81ff5ace5f304698450b"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
