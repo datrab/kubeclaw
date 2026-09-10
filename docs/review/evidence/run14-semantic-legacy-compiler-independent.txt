@@ -1,0 +1,16 @@
+Frozen author source: fa91b98d5ea6397f11669172db2b5f3be5cfd782
+Remote source: fc56f1957d042b7d057769c26c5907995c42ef90
+Command: LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 node --test tests/verification/reliability/review-report-compiler-recovery.test.mjs tests/verification/reliability/review-evidence-compiler-recovery.test.mjs
+✔ original compiler module-review graph remains recoverable under its existing source version (661.477687ms)
+✔ stored source/report modes are independent and all generated Review nodes agree (299.332507ms)
+✔ archived compiler with current coverage helper preserves portable-source and legacy module/final reports (508.227139ms)
+✔ saved Review node set, uniform mode, and the entire pinned graph remain authoritative (156.63265ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1547.279776
+Exit: 0

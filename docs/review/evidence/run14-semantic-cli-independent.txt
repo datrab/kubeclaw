@@ -1,0 +1,7 @@
+Frozen author source: fa91b98d5ea6397f11669172db2b5f3be5cfd782
+Remote source: fc56f1957d042b7d057769c26c5907995c42ef90
+Command: LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 node tests/verification/contracts/check-project-compiler.mts
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+Exit: 0
+Preserved complete graph equality and original authoring-import assertions. No stage or provider execution.

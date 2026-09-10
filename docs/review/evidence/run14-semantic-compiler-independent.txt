@@ -1,0 +1,17 @@
+Frozen author source: fa91b98d5ea6397f11669172db2b5f3be5cfd782
+Remote source: fc56f1957d042b7d057769c26c5907995c42ef90
+Independent own source: 078a247
+All 2166 non-doc source/test blob modes and IDs matched exact remote source.
+Command: LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 node --test tests/verification/reliability/review-semantic-compiler.test.mjs tests/verification/reliability/review-report-author-domain-independent.test.mjs
+✔ own project review authoring domain rejects report selector before compiler-owned selection (187.871218ms)
+✔ independent semantic authority covers module-only, final-only, both and neither graph roundtrips (377.055787ms)
+✔ new semantic graph rejects mixed, unsupported, partial and stray Summary mode without changing stored bytes (135.020082ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1034.585953
+Exit: 0

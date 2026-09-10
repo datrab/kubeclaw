@@ -1,0 +1,27 @@
+From /workspace/scratch/15fb596e6560/run14-sdk-bundle-author
+ * branch            1595f98002fa0d0217c1d107810d177c688a31a0 -> FETCH_HEAD
+[fix/resume-47-run14-semantic-bundle-review 89c59d5] [skip ci] Bind explicit new CLI and Summary semantics while preserving legacy compile APIs (incomplete)
+ Author: Codex <codex@openai.com>
+ Date: Thu Sep 10 04:42:37 2026 +0200
+ 9 files changed, 132 insertions(+), 22 deletions(-)
+ create mode 100644 skills/nova/plugins/project-summary/src/review-semantics.ts
+ create mode 100644 skills/nova/project/review-semantics.ts
+✔ independent original archived bundle and original report shape retain accepted legacy bytes (10.38005ms)
+✔ independent bundle proxy admission rejects before every trap (0.296087ms)
+✔ independent bundle schemaGetter admission rejects before every trap (0.269907ms)
+✔ independent bundle nestedProxy admission rejects before every trap (0.140862ms)
+✔ independent report proxy admission rejects before every trap (0.166421ms)
+✔ independent report schemaGetter admission rejects before every trap (0.23861ms)
+✔ independent report nestedProxy admission rejects before every trap (0.13278ms)
+✔ independent actual owned legacy snapshot remains accepted by original report builder (1.648507ms)
+✔ independent report builder proxy must not silently select legacy semantics (0.882572ms)
+✔ independent report builder schemaGetter must not silently select legacy semantics (0.837925ms)
+✔ independent report builder unknownVersion must not silently select legacy semantics (0.789281ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 193.995654
