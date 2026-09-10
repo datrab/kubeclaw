@@ -122,13 +122,18 @@ spec:
           image: "{{ $.Values.workerTrust.spiffe.envoy.repository }}:{{ $.Values.workerTrust.spiffe.envoy.tag }}@{{ $.Values.workerTrust.spiffe.envoy.digest }}"
           imagePullPolicy: {{ $.Values.workerTrust.spiffe.envoy.pullPolicy }}
           args: ["-c", {{ printf "/etc/kubeclaw-worker-trust/%s.yaml" $name | quote }}, "--service-cluster", {{ printf "prism-%s" $name | quote }}]
-          ports: [{ name: worker-trust, containerPort: 8443, protocol: TCP }]
+          ports: [{ name: worker-trust, containerPort: 8443, protocol: TCP }, { name: envoy-health, containerPort: 19000, protocol: TCP }]
+          startupProbe:
+            httpGet: { path: /bootstrap, port: envoy-health }
+            periodSeconds: 2
+            failureThreshold: 30
+            timeoutSeconds: 3
           readinessProbe:
-            tcpSocket: { port: worker-trust }
+            httpGet: { path: /ready, port: envoy-health }
             initialDelaySeconds: 3
             timeoutSeconds: 3
           livenessProbe:
-            tcpSocket: { port: worker-trust }
+            httpGet: { path: /health, port: envoy-health }
             initialDelaySeconds: 10
             timeoutSeconds: 3
           securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }

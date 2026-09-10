@@ -1,0 +1,15 @@
+Source b980da6.
+Commands: PATH=.../toolchains/bin:$PATH node --test tests/verification/deployment/worker-trust-readiness.test.mjs && node tests/verification/deployment/check-deployment-truth.mjs && node tests/verification/contracts/check-worker-trust-spiffe.mts && node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs tests/verification/deployment/check-worker-trust-envoy-native.mjs tests/verification/deployment/worker-trust-readiness.test.mjs
+✔ five original rendered Envoy consumers separate process probes from fresh self-mTLS readiness (287.049411ms)
+✔ both independent charts carry the same scoped readiness helper (0.255626ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 384.137826
+{"ok":true,"phase":12,"v2Deployment":true,"legacyWorkerAbsent":true,"deterministicSuiteRuntime":true}
+{"ok":true,"contract":"worker-trust-spiffe"}
+Exit 0.
