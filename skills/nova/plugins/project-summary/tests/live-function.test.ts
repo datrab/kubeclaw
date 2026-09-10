@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import {pathToFileURL} from 'node:url';
 const repository=path.resolve('../../../..');const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'kubeclaw-project-summary-'));
 const core=await import(pathToFileURL(path.join(repository,'skills/nova/core/src/index.ts')).href);
+const {buildSummary}=await import(pathToFileURL(path.join(repository,'skills/nova/plugins/project-summary/src/summary.ts')).href);
 const roots=['common','nova','buster'].map((role)=>path.join(repository,`skills/${role}/plugins`));
 function coverage(kind: 'module' | 'cumulative') {
   const value = { schemaVersion: 'gate-coverage.v1' as const, projectId: 'api', kind, baseRevision: 'a'.repeat(40),
@@ -11,6 +12,17 @@ function coverage(kind: 'module' | 'cumulative') {
   return { ...value, policyDigest: gateCoverageDigest(value) };
 }
 try{
+  let legacyReads=0;
+  const base={projectId:'api',modules:[{moduleId:'api',sourceStageId:'forge',testStageId:'test',expectedCoverage:coverage('module')}],
+    final:{sourceStageId:'forge',testStageId:'test',lintStageId:'lint',expectedCoverage:coverage('cumulative')}};
+  const noReadContext={contract:{lease:{attempt:{runId:'run:review-artifact-mode'}}},async invoke(){legacyReads+=1;throw new Error('unexpected read');}} as any;
+  await assert.rejects(buildSummary({...base,final:{...base.final,reviewStageId:'review',reviewArtifactEncoding:'kubeclaw-json.utf16.v1'}} as any,
+    noReadContext),/DELIVERY_REVIEW_ARTIFACT_MODE_INVALID/);
+  await assert.rejects(buildSummary({...base,final:{...base.final,reviewArtifactEncoding:'kubeclaw-json.utf16.v1'}} as any,
+    noReadContext,'delivery-manifest.utf16-v1'),/DELIVERY_REVIEW_ARTIFACT_MODE_INVALID/);
+  await assert.rejects(buildSummary({...base,final:{...base.final,reviewStageId:'review',reviewSemanticEncoding:'review-semantics.utf16-v1'}} as any,
+    noReadContext,'delivery-manifest.utf16-v1'),/DELIVERY_REVIEW_ARTIFACT_MODE_INVALID/);
+  assert.equal(legacyReads,0,'delivery review mode conditionals must reject before reads');
   const snapshot=core.buildRegistry(core.discoverPackages({installationRoots:roots,trustPolicy:{trustedBuiltinRoots:roots,allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'test:project-summary'},now:()=>new Date('2026-07-26T00:00:00Z')}));
   const enabled=new Set(['kubeclaw.project-summary:summary']);
   const granted=core.resolveCapabilityGrants(snapshot,{enabledRegistrations:enabled,providers:new Map([['artifacts.read','kubeclaw.artifact-store:artifact-store'],['artifacts.write','kubeclaw.artifact-store:artifact-store']]),

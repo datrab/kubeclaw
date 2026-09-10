@@ -1,0 +1,207 @@
+{
+  "command": "node --test tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+  "expectedOverallExit": 0,
+  "expectedBoundary": "real FileNovaGateImportStore verified import and original evidence adapter success",
+  "phases": [
+    {
+      "phase": "produce",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"produce\",\"locale\":\"en-US\",\"status\":\"succeeded\",\"manifestDigest\":\"sha256:4f6fd3d923441079dcf481804d41e743d3b61562a6c9658f83630251e0cbe4d0\",\"artifactDigest\":\"sha256:b80c715fb36ec7aacf309985b35a9ee736a4b66cb22c691b2bfe670bba85d973\",\"manifestBytes\":7616,\"summaryWriteKey\":\"run:delivery-manifest-stage-boundary:project-summary:1:12\"}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-en",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-en\",\"locale\":\"en-US\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-cs",
+      "locale": "cs_CZ.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-cs\",\"locale\":\"cs-CZ\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-da",
+      "locale": "da_DK.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-da\",\"locale\":\"da-DK\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-tr",
+      "locale": "tr_TR.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-tr\",\"locale\":\"tr-TR\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-sv",
+      "locale": "sv_SE.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-sv\",\"locale\":\"sv-SE\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-missing",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-missing\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-wrong-digest",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-wrong-digest\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-wrong-missing-digest",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-wrong-missing-digest\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-wrong-size",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-wrong-size\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-wrong-tag",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-wrong-tag\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-wrong-missing-tag",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-wrong-missing-tag\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-wrong-id",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-wrong-id\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-wrong-run",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-wrong-run\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-wrong-stage",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-wrong-stage\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-wrong-namespace",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-wrong-namespace\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-body-missing-inner-digest",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-body-missing-inner-digest\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-body-wrong-inner-digest",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-body-wrong-inner-digest\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-body-unknown-key",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-body-unknown-key\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-body-oversize",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-body-oversize\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-body-gate",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-body-gate\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-body-coverage",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-body-coverage\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":false,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-body-source",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-body-source\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-body-review",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-body-review\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-body-competing",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-body-competing\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    }
+  ]
+}

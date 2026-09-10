@@ -6,6 +6,7 @@ import { loadPlatformConfig } from '@kubeclaw/plugin-foundation/config/platform'
 import { runPipelineV2, recoverPipelineV2, resumePipelineV2, validatePipelineRuntimeV2 } from '@kubeclaw/nova-core';
 import { canonicalJson, PORTABLE_JSON_ENCODING, sha256Text, type ResumeSignal } from '@kubeclaw/plugin-sdk';
 import { PROJECT_REVIEW_SEMANTIC_ENCODING } from './review-semantics.ts';
+import { DELIVERY_MANIFEST_ENCODING } from './delivery-manifest.ts';
 import { compileProject } from './compiler.ts';
 import { compileProjectRecovery } from './recovery.ts';
 
@@ -31,7 +32,8 @@ if (process.argv.includes('--import-legacy')) {
     const platform = loadPlatformConfig(path.resolve(args['--platform']));
     const { runId, definition } = args['--recover'] || args['--signal']
       ? compileProjectRecovery(project, platform.storageRoot)
-      : compileProject(project, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING, PROJECT_REVIEW_SEMANTIC_ENCODING);
+      : compileProject(project, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING, PROJECT_REVIEW_SEMANTIC_ENCODING,
+        DELIVERY_MANIFEST_ENCODING);
     // Validate every stage's input, registration and grants from the actual
     // installed role before writing a graph or starting any external operation.
     await validatePipelineRuntimeV2(platform, definition);
