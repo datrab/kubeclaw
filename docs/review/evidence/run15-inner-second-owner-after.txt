@@ -1,0 +1,30 @@
+Exact author source: 639d3d34ebd24b4f54e509ade99cd7ce30d7fbe5
+Independent source: a1528b4 (empty production diff against frozen author commit)
+Command: LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 node --test tests/verification/reliability/review-inner-owner-independent.test.mjs && node skills/nova/plugins/review/tests/review-proposal-preflight.unit.test.mjs
+✔ independent policy selected/all provenance modes and precedence remain privately bound (20.422742ms)
+✔ independent generated evidence preserves logical values, candidate IDs and authentic certificates (5.539768ms)
+✔ independent facts-context/proxy rejects without trap execution (0.24501ms)
+✔ independent facts-context/getter rejects without trap execution (0.190998ms)
+✔ independent facts-revision/proxy rejects without trap execution (0.1458ms)
+✔ independent facts-revision/getter rejects without trap execution (0.110456ms)
+✔ independent manifest-input/proxy rejects without trap execution (0.763221ms)
+✔ independent manifest-input/getter rejects without trap execution (0.691774ms)
+✔ independent miner-input/proxy rejects without trap execution (0.658133ms)
+✔ independent miner-input/getter rejects without trap execution (0.574607ms)
+✔ independent original generated facts cannot certify a candidate using a substituted source digest (0.785234ms)
+✔ independent new bundle and reduction authority reject substitution but preserve old helper domain (4.537566ms)
+✔ independent actual candidate-reader functions validate decoded bytes without a producer certificate (8.426824ms)
+✔ independent candidate-reader snapshot proxy rejects without trap execution (1.501716ms)
+✔ independent candidate-reader snapshot getter rejects without trap execution (1.380613ms)
+✔ independent valid governor rejects authentic same-mode wrong policy before consulting context (2.899605ms)
+✔ independent invalid governor rejects authentic same-mode wrong policy before consulting context (1.964443ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 229.529047
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-proposal-preflight"}
+Exit: 0
