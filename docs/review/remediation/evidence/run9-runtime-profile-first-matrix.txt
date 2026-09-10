@@ -1,0 +1,285 @@
+Initial full command at source f505eed; exit 1. Nine historical materialization assertions fail because own workspace symlinks were absolute. Native/current 39 tests pass. Corrected only own 64 node_modules workspace links to relative target paths; no production or test assertion change. Full repeat follows separately.
+
+✖ original delivery boundary survives real cross-locale restart (525.161383ms)
+✖ original activation boundary survives real cross-locale restart (221.721272ms)
+✖ independent legacy actual HTTP receipt must remain canonically valid after rehashed disk corruption (466.344815ms)
+✔ independent current actual HTTP receipt must remain canonically valid after rehashed disk corruption (12433.509063ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ independent unknown portable dependency version cannot hide behind another valid request subject (2938.343142ms)
+✔ canonical effect keys retain opaque bounds and exactly bounded historical producer grammar (35.711175ms)
+✔ new complete subject and owner identity has explicit version and compact bounded key (1.308974ms)
+✔ canonical resource owner admits real resource namespaces without relaxing other request fields (4.93139ms)
+✔ original activation IDs and public delivery tokens propagate only to owning effect and lock fields (4.02339ms)
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (4435.048548ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (4785.970741ms)
+✖ independent genuine legacy child history cannot hide corruption behind an absent or changed requested subject (577.642683ms)
+✖ independent genuine two-locale historical ambiguity rejects rather than selecting either recorded child alias (294.845966ms)
+✖ independent actual failed legacy HTTP child remains failed across locale recovery without retransmission (338.161232ms)
+✖ independent SIGKILL after the receiver observed a legacy POST but before its response keeps the child unresolved (262.849214ms)
+✔ independent concurrent current producer processes in different locales retain one actual child action and replay (2867.151215ms)
+{"mode":"current","receiverCalls":1,"dependencyKeys":["adapter-dep:utf16-v1:51311a52c9e74ceb2629dbc7a912ad980ca0f99c11ebf4c7f6c697ca55e08462:376af51e5282175bc426b773c9fd7b021b3ff09dcd489888eb42dc44725e15d6"],"resumeLocale":"sv-SE"}
+✔ original SIGKILL dependency identity current across native locales (3170.526729ms)
+✖ original SIGKILL dependency identity legacy-resume across native locales (553.659477ms)
+✖ original SIGKILL dependency identity historical-countercheck across native locales (302.5048ms)
+✔ original registered adapter rejects malformed dependency result [] (3216.489802ms)
+✔ original registered adapter rejects malformed dependency result null (2013.767294ms)
+✔ original registered adapter rejects malformed dependency result Array(2) (2116.580737ms)
+✔ original registered adapter rejects malformed dependency result ({value:NaN}) (2157.885445ms)
+✔ original registered adapter rejects malformed dependency result Object.defineProperty({},"value",{enumerable:true,get(){throw new Error("GETTER_MUST_NOT_RUN");}}) (2087.442465ms)
+✔ actual v1 run creation carries frozen transport choice; terminal reopen preserves prefix (6360.265477ms)
+ℹ {"version":"v1","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v2 run creation carries frozen transport choice; terminal reopen preserves prefix (5478.353506ms)
+ℹ {"version":"v2","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v3 run creation carries frozen transport choice; terminal reopen preserves prefix (4868.769068ms)
+ℹ {"version":"v3","nativeGateway":false,"actualPostCount":1,"requestProfile":{"schemaVersion":"runtime-dispatch-profile.v1","encoding":"json-utf16-v1"},"reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ original v1 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (3877.498316ms)
+✔ original v1 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (4214.406066ms)
+✔ original v1 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (4047.231808ms)
+✔ original v2 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (4102.731657ms)
+✔ original v2 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (3999.040013ms)
+✔ original v2 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (3885.641788ms)
+✔ original v3 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (3811.159269ms)
+✔ original v3 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (3828.805335ms)
+✔ original v3 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (3874.52056ms)
+✔ declared v2 ACP transport profile owns locale selection without claiming a Gateway (6579.912753ms)
+ℹ {"version":"v2","nativeGateway":false,"localeStable":false,"transportKeys":["spawn:session-v1:attempt:0:payload:e6e964796faea9d043007231e949d244eca67210ff0c920cec81c6e69f52132b","spawn:session-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ declared v3 ACP transport profile owns locale selection without claiming a Gateway (6343.494507ms)
+ℹ {"version":"v3","nativeGateway":false,"localeStable":true,"transportKeys":["spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d","spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ original helper-review preserves invoke-only API and rejects invalid present profile before real HTTP (2132.505265ms)
+✔ original helper-verification preserves invoke-only API and rejects invalid present profile before real HTTP (2277.999779ms)
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (954.407495ms)
+✔ finite canonical profile: SDK and original Foundation validator agree without executing getters (3.166467ms)
+✔ new original snapshot writes bind required profile; rehashed malformed/future/downgraded contracts reject (15.322216ms)
+✔ profile is bound after budget reservation and excluded from actual model task without changing accounting (1044.515118ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (7788.004334ms)
+✔ runtime profile selector preserves legitimate JSON metadata and original codec bytes (0.955642ms)
+✔ runtime profile selector refuses absent/present Proxies and getters without executing traps (0.326163ms)
+ℹ [{"kind":"proxy","present":false,"calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED"},{"kind":"proxy","present":true,"calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED"},{"kind":"getter","field":"runtimeDispatchProfile","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID"},{"kind":"getter","field":"payload","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID"}]
+✔ original plugin context and registered AdapterRuntime reject Proxy/getter input before real HTTP or effect writes (3301.410254ms)
+ℹ [{"entry":"context","kind":"proxy","calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED","newPosts":0,"unchangedJournal":true},{"entry":"context","kind":"getter","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID","newPosts":0,"unchangedJournal":true},{"entry":"adapter","kind":"proxy","calls":0,"error":"CANONICAL_JSON_PROXY_UNSUPPORTED","newPosts":0,"unchangedJournal":true},{"entry":"adapter","kind":"getter","calls":0,"error":"CANONICAL_JSON_PROPERTY_INVALID","newPosts":0,"unchangedJournal":true}]
+ℹ tests 48
+ℹ suites 0
+ℹ pass 39
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 70279.634332
+
+✖ failing tests:
+
+test at tests/verification/reliability/adapter-dependency-boundary.test.mjs:8:48
+✖ original delivery boundary survives real cross-locale restart (525.161383ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk'
+  - '/tmp/adapter-locale-U1y3Ks/legacy-delivery/skills/common/plugin-runtime/sdk'
+  
+      at materializeCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:43:10)
+      at materializeCurrentCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:48:62)
+      at materializeLegacyDependencyCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-historical.mjs:9:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-boundary.test.mjs:29:36)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk',
+    expected: '/tmp/adapter-locale-U1y3Ks/legacy-delivery/skills/common/plugin-runtime/sdk',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/adapter-dependency-boundary.test.mjs:8:48
+✖ original activation boundary survives real cross-locale restart (221.721272ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk'
+  - '/tmp/adapter-locale-6d84EL/legacy-activation/skills/common/plugin-runtime/sdk'
+  
+      at materializeCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:43:10)
+      at materializeCurrentCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:48:62)
+      at materializeLegacyDependencyCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-historical.mjs:9:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-boundary.test.mjs:29:36)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk',
+    expected: '/tmp/adapter-locale-6d84EL/legacy-activation/skills/common/plugin-runtime/sdk',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/adapter-dependency-canonical-independent.test.mjs:19:47
+✖ independent legacy actual HTTP receipt must remain canonically valid after rehashed disk corruption (466.344815ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk'
+  - '/tmp/adapter-locale-XtRmUz/historical/skills/common/plugin-runtime/sdk'
+  
+      at materializeCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:43:10)
+      at materializeCurrentCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:48:62)
+      at materializeLegacyDependencyCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-historical.mjs:9:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-canonical-independent.test.mjs:23:44)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk',
+    expected: '/tmp/adapter-locale-XtRmUz/historical/skills/common/plugin-runtime/sdk',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/adapter-dependency-independent.test.mjs:21:1
+✖ independent genuine legacy child history cannot hide corruption behind an absent or changed requested subject (577.642683ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk'
+  - '/tmp/adapter-locale-FEqb87/historical/skills/common/plugin-runtime/sdk'
+  
+      at materializeCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:43:10)
+      at materializeCurrentCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:48:62)
+      at materializeLegacyDependencyCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-historical.mjs:9:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-independent.test.mjs:25:22)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk',
+    expected: '/tmp/adapter-locale-FEqb87/historical/skills/common/plugin-runtime/sdk',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/adapter-dependency-independent.test.mjs:61:1
+✖ independent genuine two-locale historical ambiguity rejects rather than selecting either recorded child alias (294.845966ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk'
+  - '/tmp/adapter-locale-5uXKoH/historical/skills/common/plugin-runtime/sdk'
+  
+      at materializeCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:43:10)
+      at materializeCurrentCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:48:62)
+      at materializeLegacyDependencyCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-historical.mjs:9:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-independent.test.mjs:67:22)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk',
+    expected: '/tmp/adapter-locale-5uXKoH/historical/skills/common/plugin-runtime/sdk',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/adapter-dependency-independent.test.mjs:80:1
+✖ independent actual failed legacy HTTP child remains failed across locale recovery without retransmission (338.161232ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk'
+  - '/tmp/adapter-locale-n2f5zi/historical/skills/common/plugin-runtime/sdk'
+  
+      at materializeCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:43:10)
+      at materializeCurrentCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:48:62)
+      at materializeLegacyDependencyCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-historical.mjs:9:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-independent.test.mjs:91:22)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk',
+    expected: '/tmp/adapter-locale-n2f5zi/historical/skills/common/plugin-runtime/sdk',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/adapter-dependency-independent.test.mjs:102:1
+✖ independent SIGKILL after the receiver observed a legacy POST but before its response keeps the child unresolved (262.849214ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk'
+  - '/tmp/adapter-locale-dxeqhg/historical/skills/common/plugin-runtime/sdk'
+  
+      at materializeCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:43:10)
+      at materializeCurrentCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:48:62)
+      at materializeLegacyDependencyCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-historical.mjs:9:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-independent.test.mjs:118:22)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk',
+    expected: '/tmp/adapter-locale-dxeqhg/historical/skills/common/plugin-runtime/sdk',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/adapter-dependency-locale.test.mjs:8:77
+✖ original SIGKILL dependency identity legacy-resume across native locales (553.659477ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk'
+  - '/tmp/adapter-locale-uA8F8M/historical/skills/common/plugin-runtime/sdk'
+  
+      at materializeCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:43:10)
+      at materializeCurrentCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:48:62)
+      at materializeLegacyDependencyCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-historical.mjs:9:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-locale.test.mjs:12:50)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk',
+    expected: '/tmp/adapter-locale-uA8F8M/historical/skills/common/plugin-runtime/sdk',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/adapter-dependency-locale.test.mjs:8:77
+✖ original SIGKILL dependency identity historical-countercheck across native locales (302.5048ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk'
+  - '/tmp/adapter-locale-hzo8iL/historical/skills/common/plugin-runtime/sdk'
+  
+      at materializeCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:43:10)
+      at materializeCurrentCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/repair-identity-historical.mjs:48:62)
+      at materializeLegacyDependencyCore (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-historical.mjs:9:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run9-runtime-profile-audit/tests/verification/reliability/adapter-dependency-locale.test.mjs:12:50)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/workspace/scratch/15fb596e6560/run9-runtime-profile-audit/skills/common/plugin-runtime/sdk',
+    expected: '/tmp/adapter-locale-hzo8iL/historical/skills/common/plugin-runtime/sdk',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,28 @@
+Fresh source c9a19eb.
+node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts tests/verification/reliability/runtime-profile-no-trap.test.mjs
+exit=0
+
+node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json
+exit=0
+
+node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+exit=0
+
+npm test --workspace @kubeclaw/plugin-sdk
+exit=0
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/values.test.ts
+
+SDK JSON domain and accepted-byte regressions passed
+
+node scripts/generate-plugin-sdk-types.mjs --check
+exit=0
+
+node docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs /workspace/scratch/15fb596e6560/run9-runtime-profile-final
+exit=0
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:fdca32dc079b986de67870b90a0266bc84e0ee9c5d7828e1df00345dd3a74581:sha256:c36411c69e396f85c36404f0444aa4daf15e5e42bece77a4fae75cad45af28cb\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:fdca32dc079b986de67870b90a0266bc84e0ee9c5d7828e1df00345dd3a74581"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}

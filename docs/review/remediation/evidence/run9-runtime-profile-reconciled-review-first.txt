@@ -1,0 +1,65 @@
+Fresh remote21b cache+reader; source c9a19ebb5ef7d2e8f490db71ce801478c3105fe3. Full original Review executed concurrently with native matrix. Exit1: original unchanged million-line compile threshold exceeded at72736ms. Not an acceptance pass; retain assertion, rerun without simultaneous local heavy tests.
+npm test --workspace @kubeclaw/plugin-review
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> pretest
+> node tests/repository-audit-stage.unit.test.mjs && node tests/repository-revalidation.unit.test.mjs
+
+{"ok":true,"suite":"repository-audit-stage"}
+{"ok":true,"suite":"repository-revalidation"}
+
+> test
+> npm run test:cluster && npm run schema:check && node tests/repository-review-profile.unit.test.mjs && node tests/review-prompt-budget.unit.test.mjs && node tests/review-quality-corpus.unit.test.mjs && node tests/review-snapshot-inventory.unit.test.mjs && node tests/review-map-artifacts.unit.test.mjs && node tests/review-fact-extractors.unit.test.mjs && node tests/review-graph.unit.test.mjs && node tests/review-scale-slicing.unit.test.mjs && node tests/scalable-review-topology.unit.test.mjs && node tests/scalable-review-jobs.unit.test.mjs && node tests/scalable-review-verification.unit.test.mjs && node tests/review-content-cache.unit.test.mjs && node tests/scalable-review-compiler.unit.test.mjs && node tests/review-governor.unit.test.mjs && node tests/review-report-contract.unit.test.mjs && node tests/review-report-builder.unit.test.mjs && node tests/simplification-contract.unit.test.mjs && node tests/simplification-miner.unit.test.mjs && node tests/simplification-manifest.unit.test.mjs && node tests/review-bundle-contract.unit.test.mjs && node tests/review-bundle-snapshot.unit.test.mjs && node tests/review-context-selection.unit.test.mjs && node tests/review-context-production.unit.test.mjs && node tests/review-slicing.unit.test.mjs && node tests/echo-review-output.unit.test.mjs && node tests/echo-review-verification.unit.test.mjs && node tests/review-proposal-preflight.unit.test.mjs && node tests/review-verification-reconciliation.unit.test.mjs && node tests/review-verdict-policy.unit.test.mjs && node tests/review-verified-findings.unit.test.mjs && node tests/review-policy-contract.unit.test.mjs && node tests/review-invariants.unit.test.mjs && node tests/review-policy-resolver.unit.test.mjs && node tests/review-policy-profiles.unit.test.mjs && node tests/review-reducer.unit.test.mjs && node tests/review-decision-matrix.unit.test.mjs && node tests/review-contract-parity.unit.test.mjs && node tests/review-evaluation-metadata.unit.test.mjs && node tests/review-stage-input.unit.test.mjs && node tests/review-stage-verification.unit.test.mjs && node tests/protocol.unit.test.mjs && node tests/stage.unit.test.mjs && node tests/live-function.test.ts && node --test tests/review-evidence-encoding-independent.test.mjs tests/review-evidence-live-locales.test.mjs tests/review-evidence-schema-independent.test.mjs && node tests/package-boundary.test.mjs && node tests/remediation.test.mjs && node tests/repository-review-io.test.ts && npm run test:coverage
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:cluster
+> node tests/review-cluster-contract.unit.test.mjs && node tests/review-cluster-identity.unit.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-cluster-contract"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-cluster-identity"}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> schema:check
+> node scripts/generate-policy-schema.mjs --check && node scripts/generate-bundle-schema.mjs --check && node scripts/generate-verification-schema.mjs --check
+
+{"ok":true,"suite":"repository-review-profile"}
+{"ok":true,"suite":"review-prompt-budget"}
+{"ok":true,"suite":"review-quality-corpus"}
+{"ok":true,"suite":"review-snapshot-inventory"}
+{"ok":true,"suite":"review-map-artifacts"}
+{"ok":true,"suite":"review-fact-extractors"}
+{"ok":true,"suite":"review-graph"}
+{"ok":true,"suite":"review-scale-slicing"}
+{"ok":true,"suite":"scalable-review-topology"}
+{"ok":true,"suite":"scalable-review-jobs"}
+{"ok":true,"suite":"scalable-review-verification"}
+{"ok":true,"suite":"review-content-cache"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: million-line compile took 72736.101238ms
+
+false !== true
+
+    at file:///workspace/scratch/15fb596e6560/run9-runtime-profile-final/skills/nova/plugins/review/tests/scalable-review-compiler.unit.test.mjs:91:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path /workspace/scratch/15fb596e6560/run9-runtime-profile-final/skills/nova/plugins/review
+npm error workspace @kubeclaw/plugin-review
+npm error location /workspace/scratch/15fb596e6560/run9-runtime-profile-final/skills/nova/plugins/review
+npm error command failed
+npm error command sh -c npm run test:cluster && npm run schema:check && node tests/repository-review-profile.unit.test.mjs && node tests/review-prompt-budget.unit.test.mjs && node tests/review-quality-corpus.unit.test.mjs && node tests/review-snapshot-inventory.unit.test.mjs && node tests/review-map-artifacts.unit.test.mjs && node tests/review-fact-extractors.unit.test.mjs && node tests/review-graph.unit.test.mjs && node tests/review-scale-slicing.unit.test.mjs && node tests/scalable-review-topology.unit.test.mjs && node tests/scalable-review-jobs.unit.test.mjs && node tests/scalable-review-verification.unit.test.mjs && node tests/review-content-cache.unit.test.mjs && node tests/scalable-review-compiler.unit.test.mjs && node tests/review-governor.unit.test.mjs && node tests/review-report-contract.unit.test.mjs && node tests/review-report-builder.unit.test.mjs && node tests/simplification-contract.unit.test.mjs && node tests/simplification-miner.unit.test.mjs && node tests/simplification-manifest.unit.test.mjs && node tests/review-bundle-contract.unit.test.mjs && node tests/review-bundle-snapshot.unit.test.mjs && node tests/review-context-selection.unit.test.mjs && node tests/review-context-production.unit.test.mjs && node tests/review-slicing.unit.test.mjs && node tests/echo-review-output.unit.test.mjs && node tests/echo-review-verification.unit.test.mjs && node tests/review-proposal-preflight.unit.test.mjs && node tests/review-verification-reconciliation.unit.test.mjs && node tests/review-verdict-policy.unit.test.mjs && node tests/review-verified-findings.unit.test.mjs && node tests/review-policy-contract.unit.test.mjs && node tests/review-invariants.unit.test.mjs && node tests/review-policy-resolver.unit.test.mjs && node tests/review-policy-profiles.unit.test.mjs && node tests/review-reducer.unit.test.mjs && node tests/review-decision-matrix.unit.test.mjs && node tests/review-contract-parity.unit.test.mjs && node tests/review-evaluation-metadata.unit.test.mjs && node tests/review-stage-input.unit.test.mjs && node tests/review-stage-verification.unit.test.mjs && node tests/protocol.unit.test.mjs && node tests/stage.unit.test.mjs && node tests/live-function.test.ts && node --test tests/review-evidence-encoding-independent.test.mjs tests/review-evidence-live-locales.test.mjs tests/review-evidence-schema-independent.test.mjs && node tests/package-boundary.test.mjs && node tests/remediation.test.mjs && node tests/repository-review-io.test.ts && npm run test:coverage
