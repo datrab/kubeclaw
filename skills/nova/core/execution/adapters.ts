@@ -1,4 +1,6 @@
 import { AsyncLocalStorage } from 'node:async_hooks';
+import { runtimeDispatchProfileFields } from '@kubeclaw/plugin-sdk';
+import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
 import type { AdapterInstance, AttemptIdentity, CapabilityInvocation, EventIdentity, RegistrationProvenance } from '@kubeclaw/plugin-sdk';
 import type { ActivatedRegistry } from '@kubeclaw/plugin-foundation/registry/activation';
 import type { GrantedRegistry } from '@kubeclaw/plugin-foundation/registry/capabilities';
@@ -48,11 +50,13 @@ export class AdapterRuntime {
   }
 
   async invoke(capability: string, attempt: AttemptIdentity, idempotencyKey: string, request: CapabilityInvocation, signal: AbortSignal, deliveryId?: string): Promise<Readonly<Record<string, unknown>>> {
+    const profile = runtimeDispatchProfileFields(request, capability);
+    if (profile.runtimeDispatchProfile) validateContractValue('capabilityInvocation', request);
     if (this.#stopping) throw new Error('ADAPTER_RUNTIME_STOPPING');
     const provider = this.#options.granted.selectedProviders.get(capability); if (!provider) throw new Error(`CAPABILITY_PROVIDER_MISSING:${capability}`);
     const adapterId = `${provider.package.manifest.id}:${provider.registration.id}`; const adapter = this.#instances.get(adapterId);
     if (!adapter) throw new Error(`ADAPTER_NOT_READY:${adapterId}`);
-    const invocation = { idempotencyKey, ...(deliveryId === undefined ? {} : { deliveryId }), attempt, capability, operation: request.operation, resource: request.resource, payload: request.payload };
+    const invocation = { idempotencyKey, ...(deliveryId === undefined ? {} : { deliveryId }), attempt, capability, operation: request.operation, resource: request.resource, payload: request.payload, ...profile };
     if (isConfidentialCapability(capability)) return this.#options.effects.invokeConfidential(adapter, adapterOwner(this.#options, adapterId), invocation, signal);
     const receipt = await this.#options.effects.invoke(adapter, adapterOwner(this.#options, adapterId), invocation, signal);
     if (receipt.status !== 'completed') {

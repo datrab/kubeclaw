@@ -11,21 +11,25 @@ import { FileJournal } from '../state/journal.ts';
 import type { PipelineRunResult, PipelineRunnerOptions } from './runner.ts';
 import { PipelineRunner } from './runner.ts';
 import { createAdapterRuntime, prepareRuntime, serializedObserverDrainer, type PreparedRuntime } from './engine-runtime.ts';
-import { canonicalJson, deepFreeze, frozenRegistryRecord, graphSnapshot, recordedPackageUpgrades, validateSignal, verifyPinnedGraph, verifyPinnedPackages, writeRunSnapshots } from './engine-snapshots.ts';
+import { canonicalJson, deepFreeze, frozenRegistryRecord, graphSnapshot, readRunSnapshot, recordedPackageUpgrades, validateSignal, verifyPinnedGraph, verifyPinnedPackages, writeRunSnapshots } from './engine-snapshots.ts';
 import { withRunMutationLock } from './run-mutation.ts';
 import { runRoot as resolveRunRoot } from './run-root.ts';
 import { reconcileNovaObservabilityOnRecovery } from '../observability/reconciler.ts';
 
 export interface ExecutionContext { readonly platform: PlatformConfig; readonly definition: PipelineDefinition; readonly runtime: PreparedRuntime; readonly runId: string; readonly runRoot: string; readonly leaseSignal: AbortSignal; readonly events: FileJournal<LifecycleEvent | PluginDomainEvent> }
 
-export async function executePrepared(context: ExecutionContext, options: Omit<PipelineRunnerOptions, 'definition' | 'registry' | 'activated' | 'adapters' | 'journal' | 'orchestratorIssuerId' | 'signal' | 'onEventsCommitted'>): Promise<PipelineRunResult> {
+export async function executePrepared(context: ExecutionContext, options: Omit<PipelineRunnerOptions, 'definition' | 'registry' | 'activated' | 'adapters' | 'journal' | 'orchestratorIssuerId' | 'signal' | 'onEventsCommitted' | 'runtimeDispatchProfile' | 'reviewCacheProfile'>): Promise<PipelineRunResult> {
   const pinnedGraph = verifyPinnedGraph(context.runRoot, context.definition);
+  const snapshot = readRunSnapshot(context.runRoot);
+  const runtimeDispatchProfile = snapshot.schemaVersion === 'run-snapshot.v3' || snapshot.schemaVersion === 'run-snapshot.v4' ? snapshot.runtimeDispatchProfile : undefined;
+  const reviewCacheProfile = snapshot.schemaVersion === 'run-snapshot.v4' ? snapshot.reviewCacheProfile : undefined;
   await assertEffectRecoverySafe(context.runRoot, context.runId, context.definition, context.events);
   const adapters = createAdapterRuntime(context.platform, context.runRoot, context.runtime, context.events); await adapters.start();
   const flush = serializedObserverDrainer(context.platform, context.runRoot, context.runtime, adapters, context.events);
   try { return await new PipelineRunner({ definition: context.definition, registry: context.runtime.granted, activated: context.runtime.activated,
     adapters, journal: context.events, orchestratorIssuerId: context.platform.orchestratorIssuerId, signal: context.leaseSignal,
-    onEventsCommitted: flush, ...options, graphSnapshotVersion: pinnedGraph.schemaVersion }).run(context.runId); }
+    onEventsCommitted: flush, ...options, graphSnapshotVersion: pinnedGraph.schemaVersion,
+    runtimeDispatchProfile, reviewCacheProfile }).run(context.runId); }
   finally { try { await flush(); } finally { await adapters.shutdown(); } }
 }
 

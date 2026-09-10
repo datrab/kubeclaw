@@ -1,5 +1,5 @@
 /* eslint-disable max-lines -- Preflight and independent verification share one evidence-integrity authority. */
-import { canonicalJson, sha256Text, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, sha256Text, runtimeDispatchProfileFields } from '@kubeclaw/plugin-sdk';
 
 import type { ProposedFinding } from './echo-review-contract.ts';
 import { echoReviewVerificationOutputSchema } from './echo-review-verification-contract.ts';
@@ -9,7 +9,7 @@ import { scalableReviewSourceExcerpt, type ScalableReviewJob, type ScalableRevie
 import { compareCodeUnits } from './review-ordering.ts';
 import { reserveReviewRuntimePrompt, type ReviewTokenizerEncoding } from './review-prompt-budget.ts';
 import { assertReviewDeadline, invokeBeforeReviewDeadline, resolveReviewExecutionSettings,
-  type ReviewExecutionSettings } from './review-execution-settings.ts';
+  type ReviewExecutionSettings, type ReviewDispatchInvocationContext } from './review-execution-settings.ts';
 import { verifierEvidenceMatchesSource } from './scalable-review-verification-evidence.ts';
 import { assertReviewRuntimeIdentity, parseReviewRuntimeAttestation,
   type ReviewRuntimeAttestation, type ReviewRuntimeIdentity } from './review-runtime-attestation.ts';
@@ -303,7 +303,7 @@ export function buildScalableVerificationDispatchPayload(
 }
 
 interface VerificationDispatchContext {
-  readonly agent: string; readonly context: PluginInvocationContext; readonly maxRetries: number;
+  readonly agent: string; readonly context: ReviewDispatchInvocationContext; readonly maxRetries: number;
   readonly deadlineEpochMs: number | undefined;
   readonly beforeDispatch: ReviewExecutionSettings['beforeDispatch'] | undefined;
   readonly beforeRetry: ReviewExecutionSettings['beforeRetry'] | undefined;
@@ -321,10 +321,10 @@ async function dispatchVerificationJob(
       const basePayload = buildScalableVerificationDispatchPayload(value);
       const prepared = beforeDispatch?.(basePayload) ?? basePayload;
       const payload = Object.freeze({ ...prepared, runtimeDispatchAttempt: attempt });
-      const response = await invokeBeforeReviewDeadline(() => context.invoke('runtime.dispatch', {
+      const response = await invokeBeforeReviewDeadline(() => context.invoke('runtime.dispatch', withRuntimeDispatchProfile({
         operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent },
         payload,
-      }), deadlineEpochMs, 'verification');
+      }, runtimeDispatchProfileFields(context.contract ?? {}).runtimeDispatchProfile)), deadlineEpochMs, 'verification');
       const attestation = parseReviewRuntimeAttestation(response.runtimeEvidence);
       assertReviewRuntimeIdentity(attestation, runtime.expectedRuntime);
       const parsed = parseEchoReviewVerificationDispatchResponse(response);
@@ -341,7 +341,7 @@ async function dispatchVerificationJob(
 
 // eslint-disable-next-line max-params -- The optional checkpoint callback is separate from immutable execution settings.
 export async function executeScalableVerificationJobs(
-  jobs: readonly ScalableVerificationJob[], agent: string, context: PluginInvocationContext,
+  jobs: readonly ScalableVerificationJob[], agent: string, context: ReviewDispatchInvocationContext,
   execution: number | ReviewExecutionSettings = 4, expectedRuntime?: ReviewRuntimeIdentity,
   checkpoint?: (result: ScalableVerificationJobResult) => Promise<void>,
 ): Promise<readonly ScalableVerificationJobResult[]> {
@@ -386,3 +386,4 @@ export function reduceScalableReview(
   };
   return Object.freeze({ ...unsigned, digest: sha256Text(canonicalJson(unsigned)) });
 }
+import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';

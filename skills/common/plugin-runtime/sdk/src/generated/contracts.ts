@@ -1,11 +1,31 @@
 // Generated from skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json. Do not edit.
 
 /**
+ * Explicit immutable run-owned review cache producer profile. Historical absence preserves review-content-cache.v1 and its original effect operations.
+ */
+export type ReviewCacheProfile = {
+  schemaVersion: 'review-cache-profile.v1';
+  recordVersion: 'review-content-cache.v2';
+  encoding: 'json-utf16-v1';
+};
+/**
+ * Explicit current runtime transport producer profile. Absence in historical contexts preserves the legacy producer; no profile is inferred from another digest version.
+ */
+export type RuntimeDispatchProfile = {schemaVersion: 'runtime-dispatch-profile.v1'; encoding: 'json-utf16-v1'};
+export type CapabilityInvocation = {
+  [k: string]: any;
+} & {
+  operation: string;
+  resource: ResourceIdentity;
+  payload: JsonObject;
+  runtimeDispatchProfile?: RuntimeDispatchProfile;
+};
+export type NamespacedId = string;
+export type OpaqueId = string;
+/**
  * Existing opaque keys, plus the exact historical adapter dependency producer grammar. Package/capability names retain their 160-character bounds and registration its 96-character bound. New dependency keys are compact opaque IDs.
  */
 export type EffectIdempotencyKey = OpaqueId;
-export type OpaqueId = string;
-export type NamespacedId = string;
 /**
  * The original public adapter dependency delivery token: nonblank and at most 512 characters. Observer delivery contracts remain opaque IDs.
  */
@@ -114,6 +134,21 @@ export type StageResult =
       artifacts: ArtifactRef[];
       retryAt: string;
     });
+export type EffectRequest = {
+  [k: string]: any;
+} & {
+  runtimeDispatchProfile?: RuntimeDispatchProfile;
+  schemaVersion: 'effect-request.v2';
+  effectId: OpaqueId;
+  idempotencyKey: EffectIdempotencyKey;
+  deliveryId?: EffectDeliveryId;
+  attempt: EffectAttemptIdentity;
+  capability: NamespacedId;
+  operation: LocalId;
+  resource: ResourceIdentity;
+  payload: JsonObject;
+  requestedAt: string;
+};
 export type EffectReceipt = {
   [k: string]: any;
 } & {
@@ -201,6 +236,13 @@ export type AdapterLifecycle = {
 };
 
 export interface PluginSystemV2 {
+  reviewCacheProfile?: ReviewCacheProfile;
+  runtimeDispatchProfile?: RuntimeDispatchProfile;
+  capabilityInvocation?: CapabilityInvocation;
+  runtimeRunGraph?: RuntimeRunGraph;
+  runtimeRunEdge?: RuntimeRunEdge;
+  runtimeRunSnapshot?: RuntimeRunSnapshot;
+  runtimeRunSnapshotV4?: RuntimeRunSnapshotV4;
   effectIdempotencyKey?: EffectIdempotencyKey;
   resourceIdentity?: ResourceIdentity;
   effectDeliveryId?: EffectDeliveryId;
@@ -249,6 +291,37 @@ export interface PluginSystemV2 {
 export interface ResourceIdentity {
   type: NamespacedId;
   canonicalId: string;
+}
+export interface JsonObject {
+  [k: string]: any;
+}
+export interface RuntimeRunGraph {
+  schemaVersion: 'execution-graph-snapshot.v2' | 'execution-graph-snapshot.v3';
+  pipelineId: OpaqueId;
+  maxConcurrency: number;
+  nodes: JsonObject[];
+  ordinaryEdges: RuntimeRunEdge[];
+  remediationEdges: RuntimeRunEdge[];
+  digest: string;
+}
+export interface RuntimeRunEdge {
+  from: string;
+  to: string;
+}
+export interface RuntimeRunSnapshot {
+  schemaVersion: 'run-snapshot.v3';
+  graph: RuntimeRunGraph;
+  registry: JsonObject;
+  digest: string;
+  runtimeDispatchProfile: RuntimeDispatchProfile;
+}
+export interface RuntimeRunSnapshotV4 {
+  schemaVersion: 'run-snapshot.v4';
+  graph: RuntimeRunGraph;
+  registry: JsonObject;
+  digest: string;
+  runtimeDispatchProfile: RuntimeDispatchProfile;
+  reviewCacheProfile: ReviewCacheProfile;
 }
 export interface AttemptIdentity {
   runId: OpaqueId;
@@ -399,9 +472,6 @@ export interface StageDefinition {
     request_fix?: LocalId;
   };
 }
-export interface JsonObject {
-  [k: string]: any;
-}
 export interface PipelineDefinition {
   schemaVersion: 'pipeline-definition.v2';
   id: OpaqueId;
@@ -470,18 +540,6 @@ export interface WaitRequest {
   expiresAt: string | null;
   request?: JsonObject;
 }
-export interface EffectRequest {
-  schemaVersion: 'effect-request.v2';
-  effectId: OpaqueId;
-  idempotencyKey: EffectIdempotencyKey;
-  deliveryId?: EffectDeliveryId;
-  attempt: EffectAttemptIdentity;
-  capability: NamespacedId;
-  operation: LocalId;
-  resource: ResourceIdentity;
-  payload: JsonObject;
-  requestedAt: string;
-}
 export interface ResumeSignal {
   schemaVersion: 'resume-signal.v2';
   signalId: OpaqueId;
@@ -522,7 +580,9 @@ export interface CapabilityGrant {
 }
 export interface PluginContext {
   schemaVersion: 'plugin-context.v2';
+  runtimeDispatchProfile?: RuntimeDispatchProfile;
   lease: InvocationLease;
+  reviewCacheProfile?: ReviewCacheProfile;
   config: JsonObject;
   input: JsonObject;
   guidance?: JsonObject;
@@ -634,3 +694,6 @@ export interface PluginStateEntry {
   occurredAt: string;
   payload: JsonObject;
 }
+
+export const CURRENT_RUNTIME_DISPATCH_PROFILE = Object.freeze({"schemaVersion":"runtime-dispatch-profile.v1","encoding":"json-utf16-v1"} as const);
+export const CURRENT_REVIEW_CACHE_PROFILE = Object.freeze({"schemaVersion":"review-cache-profile.v1","recordVersion":"review-content-cache.v2","encoding":"json-utf16-v1"} as const);

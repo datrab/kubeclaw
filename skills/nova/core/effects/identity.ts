@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { canonicalJson, portableJson, type EffectRequest } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, portableJson, runtimeDispatchProfileFields, type EffectRequest } from '@kubeclaw/plugin-sdk';
 import type { EffectInvocation } from './contracts.ts';
 
 // Other legacy callers keep their existing semantic contract.
@@ -14,6 +14,7 @@ function subject(invocation: EffectInvocation) {
     capability: invocation.capability,
     operation: invocation.operation,
     resource: invocation.resource,
+    ...runtimeDispatchProfileFields(invocation, invocation.capability),
   };
 }
 function hash(bytes: string): string { return crypto.createHash('sha256').update(bytes).digest('hex'); }

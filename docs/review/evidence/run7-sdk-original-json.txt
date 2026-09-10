@@ -1,0 +1,25 @@
+Command: npm test --workspace @kubeclaw/plugin-sdk && node --test tests/verification/reliability/sdk-json-contract.test.mts tests/verification/reliability/sdk-json-portable.test.mts tests/verification/reliability/artifact-checkpoint-encoding.test.mjs && npm test --prefix skills/common/plugins/artifact-store
+Initial SDK output: SDK JSON domain and accepted-byte regressions passed
+✔ real portable ArtifactStore write checkpoints and reopens unchanged across actual locales (637.364281ms)
+✔ legacy checkpoints retain their exact original reference and journal bytes (44.654073ms)
+✔ checkpoint codec binding rejects unknown encodings and authenticated same-byte relabels (20.177524ms)
+✔ recorder does not collapse same-byte references carrying different codec identities (31.534626ms)
+Real ArtifactStore and FileEffectJournal replay JSON regressions passed
+✔ tests/verification/reliability/sdk-json-contract.test.mts (514.96535ms)
+✔ original artifact/source consumers and reopened effect journal preserve byte authority across native locales (2517.653776ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2955.511685
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/package-boundary.test.mjs && node tests/live-function.test.ts
+
+{"ok":true,"plugin":"kubeclaw.artifact-store","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.artifact-store","suite":"live-function"}
+Complete command exit 0.

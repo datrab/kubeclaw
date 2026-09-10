@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import type { LifecycleEvent, PipelineDefinition, PluginDomainEvent } from '@kubeclaw/plugin-sdk';
+import { parseRuntimeDispatchProfile, parseReviewCacheProfile, type RuntimeDispatchProfile, type ReviewCacheProfile, type LifecycleEvent, type PipelineDefinition, type PluginDomainEvent } from '@kubeclaw/plugin-sdk';
 import type { ActivatedRegistry } from '@kubeclaw/plugin-foundation/registry/activation';
 import type { GrantedRegistry } from '@kubeclaw/plugin-foundation/registry/capabilities';
 import { validateReferencedValue } from '@kubeclaw/plugin-foundation/registry/schema';
@@ -20,6 +20,8 @@ export interface PipelineRunResult {
   readonly status: 'succeeded' | 'failed' | 'blocked' | 'waiting' | 'cancelled'; readonly stages: ReadonlyMap<string, StageRuntimeState>;
 }
 export interface PipelineRunnerOptions {
+  readonly runtimeDispatchProfile?: RuntimeDispatchProfile | undefined;
+  readonly reviewCacheProfile?: ReviewCacheProfile | undefined;
   readonly graphSnapshotVersion?: ExecutionGraphSnapshot['schemaVersion'];
   readonly definition: PipelineDefinition; readonly registry: GrantedRegistry; readonly activated: ActivatedRegistry; readonly adapters: AdapterRuntime;
   readonly journal: FileJournal<LifecycleEvent | PluginDomainEvent>; readonly initialStates?: ReadonlyMap<string, StageRuntimeState>;
@@ -47,7 +49,10 @@ export function validatePipelineDefinitionAgainstRegistry(definition: PipelineDe
 export class PipelineRunner {
   readonly #options: PipelineRunnerOptions; readonly #graph: ExecutionGraph; readonly #snapshot: ExecutionGraphSnapshot; readonly #now: () => Date;
   constructor(options: PipelineRunnerOptions) {
-    this.#options = options; validatePipelineDefinitionAgainstRegistry(options.definition, options.registry);
+    this.#options = {
+      ...options, ...(options.runtimeDispatchProfile === undefined ? {} : {runtimeDispatchProfile: parseRuntimeDispatchProfile(options.runtimeDispatchProfile)}),
+      ...(options.reviewCacheProfile === undefined ? {} : {reviewCacheProfile: parseReviewCacheProfile(options.reviewCacheProfile)}),
+    }; validatePipelineDefinitionAgainstRegistry(options.definition, options.registry);
     this.#graph = ExecutionGraph.fromDefinition(options.definition); this.#snapshot = this.#graph.snapshot(options.definition.id, options.definition.maxConcurrency, options.graphSnapshotVersion);
     this.#now = options.now ?? (() => new Date());
   }
@@ -61,6 +66,8 @@ export class PipelineRunner {
     const checkpoints = new ArtifactCheckpointRecorder(this.#options.journal, append);
     const executor = new StageExecutor({ graph: this.#graph, registry: this.#options.registry, activated: this.#options.activated,
       adapters: this.#options.adapters, journal: this.#options.journal, checkpoints,
+      ...(this.#options.runtimeDispatchProfile ? { runtimeDispatchProfile: this.#options.runtimeDispatchProfile } : {}),
+      ...(this.#options.reviewCacheProfile ? { reviewCacheProfile: this.#options.reviewCacheProfile } : {}),
       ...(this.#options.signal ? { signal: this.#options.signal } : {}), now: this.#now, append });
     const loop = new PipelineLoop({ options: this.#options, graph: this.#graph, maxConcurrency: this.#options.definition.maxConcurrency,
       overrides: new Set(this.#options.administrativeAttemptOverrides), append, checkpoints,
