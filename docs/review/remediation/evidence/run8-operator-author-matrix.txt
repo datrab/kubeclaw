@@ -1,0 +1,44 @@
+# Original operator projection author matrix
+Source: ff684c5 plus selected expiry source refinement c02566a (separate positive rerun recorded below).
+$ node --test tests/verification/reliability/operator-request-projection.test.mjs tests/verification/reliability/operator-projection-independent.test.mjs tests/verification/reliability/record-transition-authority-independent.test.mjs
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (6289.42161ms)
+✔ independent conflicting original signal idempotency key cannot authorize projection even under another waitId (3110.754984ms)
+✔ independent original wait fence preserves immutable operator scope despite caller mutation across await (3134.176483ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (6297.454335ms)
+{"proof":"original-Core-approved-request-projection","releasedBytes":7358,"records":2,"posts":1}
+✔ genuine original terminal human approval projects only duplicate request bytes and keeps exact original stale receipt replay (3294.761537ms)
+✔ actual persisted authority corruption refuses selected request, wait and signal mismatches without changing metadata (3611.893594ms)
+✔ actual separate-process run and wait fences block retention; SIGKILL releases owner and stale producers preserve accepted receipt (4914.284926ms)
+{"realByteQuota":23000,"realRecordQuota":5,"releasedBytes":7358,"firstQuotaResult":"blocked","admitted":"waiting","recordQuotaResult":"blocked","posts":2}
+✔ real small byte quota admits later original Core notification after net savings but unchanged record count still bounds new work (7537.852034ms)
+✔ real missing/conflicting receipts, unsupported v2 records, alias roots and foreign Core owner remain unprojected (6695.207359ms)
+✔ small genuine original request cannot fund projection overhead and stays atomically unchanged (3317.443066ms)
+✔ independent transition authorization sees original locked records but cannot mutate committed state through its clone (52.97213ms)
+✔ independent async authorization and stale CAS fail before write, preserving bytes and releasing original fence (52.550675ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36137.312472
+
+$ canonical focused ESLint on all changed source/tests; shared-runtime tsc; Nova typecheck; original operator npm test
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"live-function","deliveries":5}
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"package-boundary"}
+
+Historical first fence-test assumption failed RESOURCE_LOCKED: original run mutation locks refuse contending owners, not wait. Test corrected to assert original exact refusal and unchanged metadata. Wait/delivery writer fences still prove actual blocking and wait-owner SIGKILL release. No production lock changes.

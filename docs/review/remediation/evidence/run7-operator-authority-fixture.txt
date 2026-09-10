@@ -1,0 +1,67 @@
+Base remote 1d7e6f8834b6e3f3f477a5af48832f74f5321757
+Local exact base 6c5678985782eeebd6157b5438ec64b345eaaad0
+No production source changes. Local original installed producers only.
+
+Fresh remote changed to a43aa256bdce35d7f9c44d5d661e59c4055e562e before
+backup. Full recursive tree compared: changes are unrelated Envoy/chart source,
+tests and ledger/evidence only; original operator/Core/shared source, canonical
+ESLint policy and type dependencies unchanged. Reconciled exact root local
+b3d2f7ba3ee35d121f26f67f737a400b3d034fb4 (tree ee96baf145fa19235f170571791e904b35203ba9)
+and repeated the actual original fixture before publication:
+
+$ node --test tests/verification/reliability/operator-retention-authority-fixture.test.mjs
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (7330.286237ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7931.249967
+exit_code=0
+
+All ten fresh remote workflow trigger sections read before backup: push triggers
+are main-only; remaining triggers PR, dispatch, workflow_call or schedule.
+No matching repair-branch push workflow. Backup-only commit uses [skip ci].
+
+$ node --test tests/verification/reliability/operator-retention-authority-fixture.test.mjs
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (6942.220878ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7390.579248
+exit_code=0
+
+$ npx --no-install eslint --config charts/kubeclaw/files/config/eslint.config.mjs tests/verification/reliability/operator-retention-authority-fixture.test.mjs
+$ npx --no-install tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+$ npm run typecheck --prefix skills/nova
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+
+all three commands exit_code=0
+
+Fixture/tool corrections before final pass (not production defects):
+- First HMAC assertion omitted ORIGINAL wire header prefix v1=. Real digest
+  matched; corrected expected wire format to v1=<actual HMAC>. No source change.
+- Added separate wait.created assertion failed 0 !== 1 (test 0/1, zero skips).
+  Original recoverWaitCreation uses committed attempt.completed as creation
+  authority. Changed assertion to owning original reducer and exact original
+  first attempt record; no event inserted and no production change.
+- ESLint without the explicit repository canonical config exited 2 because no
+  root eslint.config exists. Correct canonical config invocation above passes.
+
+This is prerequisite proof only: projectionImplemented=false. No retention,
+byte release, external operator authentication, native provider gate or finding
+completion is claimed. Synthetic local approval prose/secrets are not copied
+to the evidence report. The local receiver is a real HTTP boundary, not a mock.

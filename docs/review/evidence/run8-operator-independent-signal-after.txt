@@ -1,0 +1,22 @@
+Independent exact correction dd683268848864c8001028a7b563d9a936144933; source mapped to own 3ae7d8c.
+Command: node --test --test-name-pattern='independent' tests/verification/reliability/operator-projection-independent.test.mjs tests/verification/reliability/record-transition-authority-independent.test.mjs
+From /workspace/scratch/15fb596e6560/run7-operator-fixture
+ * branch            dd683268848864c8001028a7b563d9a936144933 -> FETCH_HEAD
+[fix/resume-47-run7-operator-review 3ae7d8c] fix(storage): reject duplicate original single-use signal keys [skip ci]
+ Date: Thu Sep 10 02:27:29 2026 +0200
+ 1 file changed, 1 insertion(+)
+
+✔ independent conflicting original signal idempotency key cannot authorize projection even under another waitId (3358.922566ms)
+✔ independent original wait fence preserves immutable operator scope despite caller mutation across await (3127.946284ms)
+✔ independent transition authorization sees original locked records but cannot mutate committed state through its clone (44.045528ms)
+✔ independent async authorization and stale CAS fail before write, preserving bytes and releasing original fence (33.837987ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6923.896258
+
+Exit: 0. Four genuine original-store checks passed, zero skips. This is not approval of the unfinished full projection package.

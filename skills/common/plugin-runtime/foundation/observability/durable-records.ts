@@ -178,7 +178,7 @@ export class FileDurableRecordStore implements DurableRecordStore {
     idempotencyKey: string,
     expectedPayloadDigest: string,
     payload: T,
-    authorize?: () => void,
+    authorize?: (records: ReadonlyArray<DurableRecord>) => void,
   ): Promise<DurableRecord<T>> {
     identity(stream, "DURABLE_RECORD_STREAM_INVALID");
     identity(idempotencyKey, "DURABLE_RECORD_IDEMPOTENCY_KEY_INVALID");
@@ -214,7 +214,7 @@ export class FileDurableRecordStore implements DurableRecordStore {
         throw new Error("DURABLE_RECORD_STORE_FULL");
       // The domain fence is already held; the final check must not yield or
       // reenter this store between its CAS comparison and durable write.
-      if (authorize?.() !== undefined) throw new Error('DURABLE_RECORD_AUTHORIZATION_NOT_SYNCHRONOUS');
+      if (authorize?.(structuredClone(state.records)) !== undefined) throw new Error('DURABLE_RECORD_AUTHORIZATION_NOT_SYNCHRONOUS');
       await writeDurableState(this.#file, candidate);
       return structuredClone(record);
     });
