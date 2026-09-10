@@ -1,0 +1,8 @@
+Candidate source b76cf2e0d3791554c731577278d4dba508397a9f over fresh main1d7e6f8834b6e3f3f477a5af48832f74f5321757; cache source is unchanged from main.
+node docs/review/evidence/run7-sdk-cache-context-case-probe.mjs
+This probes actual Echo parser/context-request/reusability admission, original cache and real ArtifactStore/EffectJournal. It is not a model, Gateway, or whole pipeline success claim. An extra non-owning schema compile diagnostic failed separately and is not claimed as evidence of acceptance.
+{"locale":"en-US","parserAccepted":true,"actualReusableCacheGate":true,"artifactWritten":"sha256:09ed48dfd48c929ffdc38bba43db7543ecafb6a25fcfeb6ad6056045e9745efe","assessmentKeys":["I","component.correctness","component.lifecycle","component.security","i"]}
+{"locale":"en-US","error":null}
+{"locale":"tr-TR","error":"repository review cache proof is invalid: repository-review-cache:e6371b66b8cc771f343b48c03c8f1c8eb952dd91c9b7c616fd155e08b00867b2"}
+
+exit=0; probe confirms unresolved cross-locale rejection, NOT a fix pass.

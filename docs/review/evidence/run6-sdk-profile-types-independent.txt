@@ -1,0 +1,15 @@
+Frozen author source bc015b141a8e123659924ec656a016f390204882
+npm run plugin-system:sdk:check && npm run typecheck -w kubeclaw-nova-pipeline && git diff --check
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> plugin-system:sdk:check
+> node scripts/generate-plugin-sdk-types.mjs --check
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+exit=0
+
