@@ -1,0 +1,23 @@
+Independent read-only operator retention prerequisite audit
+Author design/fixture: bc8e889a9b8e2551e88fbfde6e94943910ddf1d8
+Review execution: 18cc5a003881a4f46f6da1bbf7064f56eaea9724
+Fresh remote base a43aa256bdce35d7f9c44d5d661e59c4055e562e, exact tree ee96baf145fa19235f170571791e904b35203ba9 verified against local b3d2f7ba3ee35d121f26f67f737a400b3d034fb4.
+Owned lightweight checkout: run7-operator-review. External dependencies linked from own inactive review cache; package-lock SHA25679d572d3c3b2be5c1e4ac1ba12d03401276147489a776f4dabc733aa0fc4ec48 identical; all64 workspace resolutions checked to own current source. No node_modules copy.
+Command: node --test tests/verification/reliability/operator-retention-authority-fixture.test.mjs
+From /workspace/scratch/15fb596e6560/run7-root
+ * branch            b3d2f7ba3ee35d121f26f67f737a400b3d034fb4 -> FETCH_HEAD
+Merge made by the 'ort' strategy.
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (8231.960975ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8711.275536
+
+Exit0. Canonical ESLint config charts/kubeclaw/files/config/eslint.config.mjs on exact fixture, shared-runtime tsc --noEmit and Nova tsc --noEmit all exit0 with empty output.
+No production source changes, projection, retention execution, main update, CI or deployment. No proof of external operator authentication, remote receiver durable deduplication/restart, or byte/count quota release. The local receiver receives a real signed POST; the fixture checks its HMAC afterward. It does not enforce an external authentication service.
+
