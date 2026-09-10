@@ -16,10 +16,11 @@ export function verifiedArchitectureValue(response: unknown, expected: ArtifactR
   portableJson(response);
   if (!response || typeof response !== 'object' || Array.isArray(response)) throw new Error('PRISM_DESIGN_VALUE_INVALID');
   const result = response as Record<string, unknown>;
+  if (['artifact', 'digest', 'sizeBytes', 'value'].some(key => !Object.hasOwn(result, key))) throw new Error('PRISM_DESIGN_ARCHITECTURE_PROOF_INVALID');
   if (portableJson(result.artifact) !== reference) throw new Error('PRISM_DESIGN_ARCHITECTURE_REFERENCE_INVALID');
   // Untagged historical values retain precisely the old verifier and fail closed
   // on cross-locale mismatch. Never guess a collator or infer a run profile.
-  const bytes = expected.encoding === PORTABLE_JSON_ENCODING ? portableJson(result.value) : canonicalJson(result.value);
+  const bytes = Object.hasOwn(expected, 'encoding') ? portableJson(result.value) : canonicalJson(result.value);
   if (result.digest !== expected.digest || result.sizeBytes !== expected.sizeBytes
     || sha256Text(bytes) !== expected.digest || Buffer.byteLength(bytes) !== expected.sizeBytes) {
     throw new Error('PRISM_DESIGN_ARCHITECTURE_PROOF_INVALID');

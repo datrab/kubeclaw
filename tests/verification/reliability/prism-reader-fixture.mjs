@@ -30,7 +30,7 @@ async function scenario(mixed, legacy, original) {
   for(const source of [...['prism-design','preflight-contract','repository-adapter'].map(name=>`skills/nova/plugins/${name}`),...['artifact-store','wait-store','operator-messaging','network-http','secret-resolver','runtime-dispatch'].map(name=>`skills/common/plugins/${name}`)]) {
     fs.cpSync(path.join(checkout,source),path.join(installed,path.basename(source)),{recursive:true,filter:file=>path.basename(file)!=='node_modules'});
   }
-  if(original)fs.copyFileSync(new URL('./fixtures/prism-reader-stage-original.ts.txt',import.meta.url),path.join(installed,'prism-design/src/stage.ts'));
+  if(original){const fixture=new URL('./fixtures/prism-reader-stage-original.ts.txt',import.meta.url);assert.equal(sha256Text(fs.readFileSync(fixture)), 'sha256:8720b7e3d5e1a7726d76fe9b37a3f58f71566b193b35d6a5f017fbae0b243483');fs.copyFileSync(fixture,path.join(installed,'prism-design/src/stage.ts'));}
   fs.symlinkSync(path.join(checkout,'node_modules'),path.join(directory,'node_modules'),'dir');
   const requests=[];
   const server=http.createServer((request,response)=>{const chunks=[];request.on('data',c=>chunks.push(c));request.on('end',()=>{requests.push({url:request.url,body:Buffer.concat(chunks).toString('utf8')});response.writeHead(503,{'content-type':'text/plain'});response.end('Diagnostic receiver refuses work; no Prism service, approval, or rendering is simulated.');});});

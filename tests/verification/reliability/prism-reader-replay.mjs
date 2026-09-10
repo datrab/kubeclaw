@@ -1,12 +1,30 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import {execFileSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
 import {prepareRuntime, createAdapterRuntime} from '../../../skills/nova/core/execution/engine-runtime.ts';
 import {assertEffectRecoverySafe} from '../../../skills/nova/core/execution/effect-recovery.ts';
 import {FileJournal} from '../../../skills/nova/core/state/journal.ts';
 import {FileEffectJournal} from '../../../skills/nova/core/effects/journal.ts';
 import {verifiedArchitectureValue} from '../../../skills/nova/plugins/prism-design/src/architecture.ts';
 import {sha256Text} from '@kubeclaw/plugin-sdk';
+
+function crossLocaleCompletedRead(file,runDirectory,read,ref,expected) {
+  const producerLocale=new Intl.Collator().resolvedOptions().locale;
+  for(const [locale,resolved] of [['en_US.UTF-8','en-US'],['sv_SE.UTF-8','sv-SE'],['da_DK.UTF-8','da-DK'],['tr_TR.UTF-8','tr-TR']]) {
+    const output=execFileSync(process.execPath,[fileURLToPath(new URL('./prism-reader-consumer.mjs',import.meta.url)),file,runDirectory,read.idempotencyKey],{env:{...process.env,LANG:locale,LC_ALL:locale},encoding:'utf8'});
+    const consumed=JSON.parse(output);assert.equal(consumed.locale,resolved);
+    if(ref.encoding)assert.equal(consumed.accepted,true,output);
+    else {
+      assert.equal(consumed.accepted,consumed.originalLegacyVerifierMatches,output);
+      if(Object.hasOwn(expected.contract.policy,'å')&&['en-US','sv-SE'].includes(resolved)&&resolved!==producerLocale) {
+        assert.equal(consumed.accepted,false,output);assert.equal(consumed.error,'PRISM_DESIGN_ARCHITECTURE_PROOF_INVALID');
+      }
+    }
+    assert.equal(consumed.originalJournalUnchanged,true);console.log(JSON.stringify({crossLocaleOriginalCompletedRead:consumed,producerLocale}));
+  }
+}
 
 /** Byte-exact genuine journal prefixes, original coordinator and registered adapters.
  * This proves original effect recovery, not administrative package-upgrade approval.
@@ -44,6 +62,7 @@ export async function replayOriginalRead({platform,definition,runId,directory,ru
         else assert(fs.readFileSync(file,'utf8').startsWith(prefix));
         const snapshot=fs.readFileSync(file,'utf8');assert.deepEqual(await invoke(),result);
         assert.equal(fs.readFileSync(file,'utf8'),snapshot);
+        if(phase==='completed')crossLocaleCompletedRead(file,runDirectory,read,ref,expected);
       }
       console.log(JSON.stringify({originalReadReplay:phase,effectId:read.effectId,originalPrefixDigest:sha256Text(prefix),sameOperation:read.operation,samePayload:read.payload,
         sameAttemptAndKey:true,acceptedUncertaintyPreserved:phase==='accepted',completedReadNoNewJournalRecord:phase==='completed',realRegisteredArtifactStore:true,fullPipelinePackageUpgradeClaimed:false}));
