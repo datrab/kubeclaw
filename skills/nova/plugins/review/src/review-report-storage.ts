@@ -1,5 +1,6 @@
 import { isReviewBundleSnapshot, type ReviewBundleSnapshot } from './review-bundle-snapshot.ts';
-import { canonicalJson, portableJson, sha256Text, type ArtifactRef, type PluginInvocationContext, type StageResult } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, portableJson, PORTABLE_JSON_ENCODING, sha256Text, type ArtifactRef, type PluginInvocationContext, type StageResult } from '@kubeclaw/plugin-sdk';
+import { PORTABLE_REVIEW_BUNDLE_VERSION, PORTABLE_REVIEW_REPORT_VERSION, reviewBundleJson } from './review-semantics.ts';
 import { assertReportArtifactEncoding, type ReportArtifactEncoding } from './review-report-encoding.ts';
 
 import { isReviewReport, type ReviewReport, type ReviewReportDisposition } from './review-report-contract.ts';
@@ -67,6 +68,9 @@ export async function storeReviewReport(
   assertReportArtifactEncoding(encoding);
   portableJson(report);
   if (!isReviewReport(report)) throw new Error('cannot store an invalid review report');
+  if (report.schemaVersion === PORTABLE_REVIEW_REPORT_VERSION && encoding !== PORTABLE_JSON_ENCODING) {
+    throw new Error('REVIEW_SEMANTIC_REPORT_ENCODING_REQUIRED');
+  }
   const serialized = encoding === undefined ? canonicalJson(report) : portableJson(report);
   const identity = sha256Text(canonicalJson({ attemptId: report.attemptId, bundleDigest: report.bundleDigest }))
     .slice('sha256:'.length);
@@ -91,12 +95,17 @@ export async function storeReviewReport(
 export async function storeReviewBundle(snapshot: ReviewBundleSnapshot, context: PluginInvocationContext): Promise<ArtifactRef> {
   if (!isReviewBundleSnapshot(snapshot)) throw new Error('REVIEW_BUNDLE_SNAPSHOT_REQUIRED');
   const artifactId = `review-bundle:${snapshot.digest.slice(7)}`;
-  const serialized = canonicalJson(snapshot.bundle);
+  const serialized = reviewBundleJson(snapshot.bundle);
+  const encoding = snapshot.bundle.schemaVersion === PORTABLE_REVIEW_BUNDLE_VERSION ? PORTABLE_JSON_ENCODING : undefined;
   const stored = await context.invoke('artifacts.write', {
     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: artifactId },
-    payload: { namespace: 'kubeclaw.review', mediaType: 'application/json', value: snapshot.bundle },
+    payload: { namespace: 'kubeclaw.review', mediaType: 'application/json', value: snapshot.bundle,
+      ...(encoding === undefined ? {} : { encoding }) },
   });
+  portableJson(stored);
   const artifact = artifactRef(stored);
+  if (encoding !== undefined && artifact.encoding !== encoding) throw new Error('REVIEW_BUNDLE_STORED_ENCODING_MISMATCH');
+  if (encoding === undefined && Object.hasOwn(artifact, 'encoding')) throw new Error('REVIEW_BUNDLE_STORED_ENCODING_MISMATCH');
   if (!matchesReport(artifact, artifactId, serialized, context)) throw new Error('REVIEW_BUNDLE_STORED_IDENTITY_MISMATCH');
   return artifact;
 }

@@ -1,0 +1,797 @@
+Command: node tests/verification/contracts/check-project-compiler.mts
+Source: 1595f98, original assertion unchanged at execution time.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+... Skipped lines
+
+  {
+    id: 'project:proof',
+    maxConcurrency: 1,
+    schemaVersion: 'pipeline-definition.v2',
+    stages: [
+...
+          reportArtifactEncoding: 'kubeclaw-json.utf16.v1',
++         reviewSemanticEncoding: 'review-semantics.utf16-v1'
+        },
+        dependsOn: [
+          'lint-library'
+        ],
+        execution: {
+...
+          reportArtifactEncoding: 'kubeclaw-json.utf16.v1',
++         reviewSemanticEncoding: 'review-semantics.utf16-v1'
+        },
+        dependsOn: [
+          'lint-app'
+        ],
+        execution: {
+
+    at file:///workspace/scratch/15fb596e6560/run14-sdk-bundle-author/tests/verification/contracts/check-project-compiler.mts:174:82
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: {
+    id: 'project:proof',
+    maxConcurrency: 1,
+    schemaVersion: 'pipeline-definition.v2',
+    stages: [
+      {
+        config: {},
+        dependsOn: [],
+        execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 120000 },
+        id: 'source-preflight',
+        input: {
+          contract: {
+            baseRevision: 'f71469bf67c6cb4da88f54d64dac9a07f554ddd2',
+            modules: [Array],
+            policy: [Object],
+            projectId: 'proof',
+            requiredFiles: [Array]
+          },
+          source: {
+            architectureRef: 'HEAD',
+            identityEncoding: 'kubeclaw-json.utf16.v1',
+            paths: [Array],
+            projectId: 'proof',
+            repositoryRoot: '/tmp/nova-project-proof-MHuauc/repository'
+          }
+        },
+        type: 'kubeclaw.validate.source-preflight'
+      },
+      {
+        config: {},
+        dependsOn: [ 'source-preflight' ],
+        execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 120000 },
+        id: 'blueprint-sync',
+        input: {
+          blueprintId: 'proof',
+          branchRef: 'HEAD',
+          controlPaths: [
+            'README.md',
+            'modules/app/FORGE.md',
+            'modules/library/FORGE.md'
+          ],
+          repositoryRoot: '/tmp/nova-project-proof-MHuauc/repository',
+          sourceBinding: {
+            identityEncoding: 'kubeclaw-json.utf16.v1',
+            inputDigest: 'sha256:769386751f6b3ac3446083d37852bccfe1c6adf823bedf95ef799cfb74b16578',
+            stageId: 'source-preflight'
+          }
+        },
+        type: 'kubeclaw.generate.blueprint-sync'
+      },
+      {
+        config: { agent: 'forge' },
+        dependsOn: [ 'blueprint-sync' ],
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          repairBudget: { categories: [Object], maximumOrchestratorOrders: 1 },
+          timeoutMs: 1800000
+        },
+        id: 'implement-library',
+        input: {
+          attempt: 1,
+          headBefore: 'f71469bf67c6cb4da88f54d64dac9a07f554ddd2',
+          moduleId: 'library',
+          runId: 'run:project-proof',
+          sourceBinding: {
+            identityEncoding: 'kubeclaw-json.utf16.v1',
+            inputDigest: 'sha256:769386751f6b3ac3446083d37852bccfe1c6adf823bedf95ef799cfb74b16578',
+            stageId: 'source-preflight'
+          },
+          task: 'Implement library.\n' +
+            '\n' +
+            'Read the source-bound Forge blueprint(s) under modules/library.\n' +
+            'Owned paths: library\n' +
+            'Requirements:\n' +
+            '[{"id":"library-works","statement":"library must satisfy its source assertions."}]',
+          workspace: {
+            baseRef: 'HEAD',
+            branch: 'nova/proof/eea2127a5d4bf097/library',
+            commitMessage: '[forge:library] proof',
+            mergeTarget: '/tmp/nova-project-proof-MHuauc/repository',
+            repositoryRoot: '/tmp/nova-project-proof-MHuauc/repository',
+            workspacePath: '/tmp/nova-project-proof-MHuauc/workspaces/eea2127a5d4bf097/library'
+          }
+        },
+        type: 'kubeclaw.agent.implementation'
+      },
+      {
+        config: {
+          policyPath: '/tmp/nova-project-proof-MHuauc/lint.json',
+          policyProject: 'proof'
+        },
+        dependsOn: [ 'implement-library' ],
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          repairCategory: 'lint',
+          timeoutMs: 1800000
+        },
+        id: 'lint-library',
+        input: {
+          project: 'proof',
+          sourceStageId: 'implement-library',
+          workingDirectory: '/tmp/nova-project-proof-MHuauc/repository'
+        },
+        on: { request_fix: 'implement-library' },
+        type: 'kubeclaw.lint.full'
+      },
+      {
+        config: {
+          agent: 'echo',
+          reportArtifactEncoding: 'kubeclaw-json.utf16.v1',
+          reviewSemanticEncoding: 'review-semantics.utf16-v1'
+        },
+        dependsOn: [ 'lint-library' ],
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          repairCategory: 'review',
+          timeoutMs: 1800000
+        },
+        id: 'review-library',
+        input: {
+          contextCandidates: [],
+          evidence: [ [Object], [Object] ],
+          requirements: [ [Object] ],
+          revisions: { sourceStageId: 'implement-library' },
+          scope: { allowedPrefixes: [Array], ownershipPrefixes: [Array] },
+          task: { id: 'library', statement: 'Implement library.' }
+        },
+        on: { request_fix: 'implement-library' },
+        type: 'kubeclaw.decision.review'
+      },
+      {
+        config: { agent: 'buster', testAgentEnabled: true },
+        dependsOn: [ 'review-library' ],
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          repairCategory: 'test',
+          timeoutMs: 1800000
+        },
+        id: 'test-library',
+        input: {
+          expectedCoverage: {
+            baseRevision: 'f71469bf67c6cb4da88f54d64dac9a07f554ddd2',
+            integrationRequirements: [],
+            kind: 'module',
+            modules: [Array],
+            policyDigest: 'sha256:8526d2b2b8882d72646c4b74730f385a5960172af832cf16eb0507f1317d59aa',
+            projectId: 'proof',
+            requiredChecks: [Array],
+            schemaVersion: 'gate-coverage.v1'
+          },
+          gateId: 'test-library',
+          providerPlan: {
+            grants: [Object],
+            maximumConcurrency: 1,
+            plan: [Object],
+            repositoryId: 'proof',
+            repositoryRoot: '/tmp/nova-project-proof-MHuauc/repository',
+            sourceStageId: 'implement-library',
+            submittedAt: '2026-09-06T00:00:00Z',
+            timeoutMs: 60000
+          },
+          task: 'Implement library.'
+        },
+        on: { request_fix: 'implement-library' },
+        type: 'kubeclaw.test.quality-evaluation'
+      },
+      {
+        config: { agent: 'forge' },
+        dependsOn: [ 'test-library' ],
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          repairBudget: { categories: [Object], maximumOrchestratorOrders: 1 },
+          timeoutMs: 1800000
+        },
+        id: 'implement-app',
+        input: {
+          attempt: 1,
+          headBefore: 'f71469bf67c6cb4da88f54d64dac9a07f554ddd2',
+          moduleId: 'app',
+          runId: 'run:project-proof',
+          sourceBinding: {
+            identityEncoding: 'kubeclaw-json.utf16.v1',
+            inputDigest: 'sha256:769386751f6b3ac3446083d37852bccfe1c6adf823bedf95ef799cfb74b16578',
+            stageId: 'source-preflight'
+          },
+          task: 'Implement app.\n' +
+            '\n' +
+            'Read the source-bound Forge blueprint(s) under modules/app.\n' +
+            'Owned paths: app\n' +
+            'Requirements:\n' +
+            '[{"id":"app-works","statement":"app must satisfy its source assertions."}]',
+          workspace: {
+            baseRef: 'HEAD',
+            branch: 'nova/proof/eea2127a5d4bf097/app',
+            commitMessage: '[forge:app] proof',
+            mergeTarget: '/tmp/nova-project-proof-MHuauc/repository',
+            repositoryRoot: '/tmp/nova-project-proof-MHuauc/repository',
+            workspacePath: '/tmp/nova-project-proof-MHuauc/workspaces/eea2127a5d4bf097/app'
+          }
+        },
+        type: 'kubeclaw.agent.implementation'
+      },
+      {
+        config: {
+          policyPath: '/tmp/nova-project-proof-MHuauc/lint.json',
+          policyProject: 'proof'
+        },
+        dependsOn: [ 'implement-app' ],
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          repairCategory: 'lint',
+          timeoutMs: 1800000
+        },
+        id: 'lint-app',
+        input: {
+          project: 'proof',
+          sourceStageId: 'implement-app',
+          workingDirectory: '/tmp/nova-project-proof-MHuauc/repository'
+        },
+        on: { request_fix: 'implement-app' },
+        type: 'kubeclaw.lint.full'
+      },
+      {
+        config: {
+          agent: 'echo',
+          reportArtifactEncoding: 'kubeclaw-json.utf16.v1',
+          reviewSemanticEncoding: 'review-semantics.utf16-v1'
+        },
+        dependsOn: [ 'lint-app' ],
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          repairCategory: 'review',
+          timeoutMs: 1800000
+        },
+        id: 'review-app',
+        input: {
+          contextCandidates: [],
+          evidence: [ [Object], [Object] ],
+          requirements: [ [Object] ],
+          revisions: { sourceStageId: 'implement-app' },
+          scope: { allowedPrefixes: [Array], ownershipPrefixes: [Array] },
+          task: { id: 'app', statement: 'Implement app.' }
+        },
+        on: { request_fix: 'implement-app' },
+        type: 'kubeclaw.decision.review'
+      },
+      {
+        config: { agent: 'buster', testAgentEnabled: true },
+        dependsOn: [ 'review-app' ],
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          repairCategory: 'test',
+          timeoutMs: 1800000
+        },
+        id: 'test-app',
+        input: {
+          expectedCoverage: {
+            baseRevision: 'f71469bf67c6cb4da88f54d64dac9a07f554ddd2',
+            integrationRequirements: [],
+            kind: 'module',
+            modules: [Array],
+            policyDigest: 'sha256:d2c2d237015f9212148df2e5a3511101bc584cd9e8badb0bdc1bfe02ed19dbd3',
+            projectId: 'proof',
+            requiredChecks: [Array],
+            schemaVersion: 'gate-coverage.v1'
+          },
+          gateId: 'test-app',
+          providerPlan: {
+            grants: [Object],
+            maximumConcurrency: 1,
+            plan: [Object],
+            repositoryId: 'proof',
+            repositoryRoot: '/tmp/nova-project-proof-MHuauc/repository',
+            sourceStageId: 'implement-app',
+            submittedAt: '2026-09-06T00:00:00Z',
+            timeoutMs: 60000
+          },
+          task: 'Implement app.'
+        },
+        on: { request_fix: 'implement-app' },
+        type: 'kubeclaw.test.quality-evaluation'
+      },
+      {
+        config: {
+          policyPath: '/tmp/nova-project-proof-MHuauc/lint.json',
+          policyProject: 'proof'
+        },
+        dependsOn: [ 'test-library', 'test-app' ],
+        execution: {
+          maxAttempts: 2,
+          maxRemediationCycles: 0,
+          maxTechnicalRetries: 1,
+          timeoutMs: 1800000
+        },
+        id: 'final-lint',
+        input: {
+          project: 'proof',
+          sourceStageId: 'implement-app',
+          workingDirectory: '/tmp/nova-project-proof-MHuauc/repository'
+        },
+        type: 'kubeclaw.lint.full'
+      },
+      {
+        config: { agent: 'buster', testAgentEnabled: true },
+        dependsOn: [ 'final-lint' ],
+        execution: {
+          maxAttempts: 2,
+          maxRemediationCycles: 0,
+          maxTechnicalRetries: 1,
+          timeoutMs: 1800000
+        },
+        id: 'final-test',
+        input: {
+          expectedCoverage: {
+            baseRevision: 'f71469bf67c6cb4da88f54d64dac9a07f554ddd2',
+            integrationRequirements: [Array],
+            kind: 'cumulative',
+            modules: [Array],
+            policyDigest: 'sha256:9472c9c50fffd2064d656e49ed3f2fe26660ae9717f5aa6a05f84661cbe2efde',
+            projectId: 'proof',
+            requiredChecks: [Array],
+            schemaVersion: 'gate-coverage.v1'
+          },
+          gateId: 'final-test',
+          providerPlan: {
+            grants: [Object],
+            maximumConcurrency: 1,
+            plan: [Object],
+            repositoryId: 'proof',
+            repositoryRoot: '/tmp/nova-project-proof-MHuauc/repository',
+            sourceStageId: 'implement-app',
+            submittedAt: '2026-09-06T00:00:00Z',
+            timeoutMs: 60000
+          },
+          task: 'Test the complete integrated project, including declared interactions.'
+        },
+        type: 'kubeclaw.test.quality-evaluation'
+      },
+      {
+        config: {},
+        dependsOn: [ 'final-test' ],
+        execution: {
+          maxAttempts: 2,
+          maxRemediationCycles: 0,
+          maxTechnicalRetries: 1,
+          timeoutMs: 1800000
+        },
+        id: 'project-summary',
+        input: {
+          final: {
+            expectedCoverage: [Object],
+            lintStageId: 'final-lint',
+            sourceStageId: 'implement-app',
+            testStageId: 'final-test'
+          },
+          modules: [ [Object], [Object] ],
+          projectId: 'proof'
+        },
+        type: 'kubeclaw.report.project-summary'
+      }
+    ]
+  },
+  expected: {
+    schemaVersion: 'pipeline-definition.v2',
+    id: 'project:proof',
+    maxConcurrency: 1,
+    stages: [
+      {
+        id: 'source-preflight',
+        type: 'kubeclaw.validate.source-preflight',
+        dependsOn: [],
+        config: {},
+        input: {
+          source: {
+            identityEncoding: 'kubeclaw-json.utf16.v1',
+            projectId: 'proof',
+            repositoryRoot: '/tmp/nova-project-proof-MHuauc/repository',
+            architectureRef: 'HEAD',
+            paths: [Array]
+          },
+          contract: {
+            projectId: 'proof',
+            baseRevision: 'f71469bf67c6cb4da88f54d64dac9a07f554ddd2',
+            requiredFiles: [Array],
+            modules: [Array],
+            policy: [Object]
+          }
+        },
+        execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 120000 }
+      },
+      {
+        id: 'blueprint-sync',
+        type: 'kubeclaw.generate.blueprint-sync',
+        dependsOn: [ 'source-preflight' ],
+        config: {},
+        input: {
+          blueprintId: 'proof',
+          repositoryRoot: '/tmp/nova-project-proof-MHuauc/repository',
+          branchRef: 'HEAD',
+          controlPaths: [
+            'README.md',
+            'modules/app/FORGE.md',
+            'modules/library/FORGE.md'
+          ],
+          sourceBinding: {
+            stageId: 'source-preflight',
+            identityEncoding: 'kubeclaw-json.utf16.v1',
+            inputDigest: 'sha256:769386751f6b3ac3446083d37852bccfe1c6adf823bedf95ef799cfb74b16578'
+          }
+        },
+        execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 120000 }
+      },
+      {
+        id: 'implement-library',
+        type: 'kubeclaw.agent.implementation',
+        dependsOn: [ 'blueprint-sync' ],
+        config: { agent: 'forge' },
+        input: {
+          runId: 'run:project-proof',
+          moduleId: 'library',
+          attempt: 1,
+          headBefore: 'f71469bf67c6cb4da88f54d64dac9a07f554ddd2',
+          sourceBinding: {
+            stageId: 'source-preflight',
+            identityEncoding: 'kubeclaw-json.utf16.v1',
+            inputDigest: 'sha256:769386751f6b3ac3446083d37852bccfe1c6adf823bedf95ef799cfb74b16578'
+          },
+          task: 'Implement library.\n' +
+            '\n' +
+            'Read the source-bound Forge blueprint(s) under modules/library.\n' +
+            'Owned paths: library\n' +
+            'Requirements:\n' +
+            '[{"id":"library-works","statement":"library must satisfy its source assertions."}]',
+          workspace: {
+            repositoryRoot: '/tmp/nova-project-proof-MHuauc/repository',
+            workspacePath: '/tmp/nova-project-proof-MHuauc/workspaces/eea2127a5d4bf097/library',
+            branch: 'nova/proof/eea2127a5d4bf097/library',
+            baseRef: 'HEAD',
+            mergeTarget: '/tmp/nova-project-proof-MHuauc/repository',
+            commitMessage: '[forge:library] proof'
+          }
+        },
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          timeoutMs: 1800000,
+          repairBudget: { categories: [Object], maximumOrchestratorOrders: 1 }
+        }
+      },
+      {
+        id: 'lint-library',
+        type: 'kubeclaw.lint.full',
+        dependsOn: [ 'implement-library' ],
+        config: {
+          policyPath: '/tmp/nova-project-proof-MHuauc/lint.json',
+          policyProject: 'proof'
+        },
+        input: {
+          workingDirectory: '/tmp/nova-project-proof-MHuauc/repository',
+          project: 'proof',
+          sourceStageId: 'implement-library'
+        },
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          timeoutMs: 1800000,
+          repairCategory: 'lint'
+        },
+        on: { request_fix: 'implement-library' }
+      },
+      {
+        id: 'review-library',
+        type: 'kubeclaw.decision.review',
+        dependsOn: [ 'lint-library' ],
+        config: {
+          agent: 'echo',
+          reportArtifactEncoding: 'kubeclaw-json.utf16.v1'
+        },
+        input: {
+          task: { id: 'library', statement: 'Implement library.' },
+          revisions: { sourceStageId: 'implement-library' },
+          scope: { allowedPrefixes: [Array], ownershipPrefixes: [Array] },
+          requirements: [ [Object] ],
+          evidence: [ [Object], [Object] ],
+          contextCandidates: []
+        },
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          timeoutMs: 1800000,
+          repairCategory: 'review'
+        },
+        on: { request_fix: 'implement-library' }
+      },
+      {
+        id: 'test-library',
+        type: 'kubeclaw.test.quality-evaluation',
+        dependsOn: [ 'review-library' ],
+        config: { agent: 'buster', testAgentEnabled: true },
+        input: {
+          gateId: 'test-library',
+          task: 'Implement library.',
+          expectedCoverage: {
+            schemaVersion: 'gate-coverage.v1',
+            projectId: 'proof',
+            kind: 'module',
+            baseRevision: 'f71469bf67c6cb4da88f54d64dac9a07f554ddd2',
+            modules: [Array],
+            integrationRequirements: [],
+            requiredChecks: [Array],
+            policyDigest: 'sha256:8526d2b2b8882d72646c4b74730f385a5960172af832cf16eb0507f1317d59aa'
+          },
+          providerPlan: {
+            repositoryId: 'proof',
+            plan: [Object],
+            grants: [Object],
+            maximumConcurrency: 1,
+            submittedAt: '2026-09-06T00:00:00Z',
+            timeoutMs: 60000,
+            repositoryRoot: '/tmp/nova-project-proof-MHuauc/repository',
+            sourceStageId: 'implement-library'
+          }
+        },
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          timeoutMs: 1800000,
+          repairCategory: 'test'
+        },
+        on: { request_fix: 'implement-library' }
+      },
+      {
+        id: 'implement-app',
+        type: 'kubeclaw.agent.implementation',
+        dependsOn: [ 'test-library' ],
+        config: { agent: 'forge' },
+        input: {
+          runId: 'run:project-proof',
+          moduleId: 'app',
+          attempt: 1,
+          headBefore: 'f71469bf67c6cb4da88f54d64dac9a07f554ddd2',
+          sourceBinding: {
+            stageId: 'source-preflight',
+            identityEncoding: 'kubeclaw-json.utf16.v1',
+            inputDigest: 'sha256:769386751f6b3ac3446083d37852bccfe1c6adf823bedf95ef799cfb74b16578'
+          },
+          task: 'Implement app.\n' +
+            '\n' +
+            'Read the source-bound Forge blueprint(s) under modules/app.\n' +
+            'Owned paths: app\n' +
+            'Requirements:\n' +
+            '[{"id":"app-works","statement":"app must satisfy its source assertions."}]',
+          workspace: {
+            repositoryRoot: '/tmp/nova-project-proof-MHuauc/repository',
+            workspacePath: '/tmp/nova-project-proof-MHuauc/workspaces/eea2127a5d4bf097/app',
+            branch: 'nova/proof/eea2127a5d4bf097/app',
+            baseRef: 'HEAD',
+            mergeTarget: '/tmp/nova-project-proof-MHuauc/repository',
+            commitMessage: '[forge:app] proof'
+          }
+        },
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          timeoutMs: 1800000,
+          repairBudget: { categories: [Object], maximumOrchestratorOrders: 1 }
+        }
+      },
+      {
+        id: 'lint-app',
+        type: 'kubeclaw.lint.full',
+        dependsOn: [ 'implement-app' ],
+        config: {
+          policyPath: '/tmp/nova-project-proof-MHuauc/lint.json',
+          policyProject: 'proof'
+        },
+        input: {
+          workingDirectory: '/tmp/nova-project-proof-MHuauc/repository',
+          project: 'proof',
+          sourceStageId: 'implement-app'
+        },
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          timeoutMs: 1800000,
+          repairCategory: 'lint'
+        },
+        on: { request_fix: 'implement-app' }
+      },
+      {
+        id: 'review-app',
+        type: 'kubeclaw.decision.review',
+        dependsOn: [ 'lint-app' ],
+        config: {
+          agent: 'echo',
+          reportArtifactEncoding: 'kubeclaw-json.utf16.v1'
+        },
+        input: {
+          task: { id: 'app', statement: 'Implement app.' },
+          revisions: { sourceStageId: 'implement-app' },
+          scope: { allowedPrefixes: [Array], ownershipPrefixes: [Array] },
+          requirements: [ [Object] ],
+          evidence: [ [Object], [Object] ],
+          contextCandidates: []
+        },
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          timeoutMs: 1800000,
+          repairCategory: 'review'
+        },
+        on: { request_fix: 'implement-app' }
+      },
+      {
+        id: 'test-app',
+        type: 'kubeclaw.test.quality-evaluation',
+        dependsOn: [ 'review-app' ],
+        config: { agent: 'buster', testAgentEnabled: true },
+        input: {
+          gateId: 'test-app',
+          task: 'Implement app.',
+          expectedCoverage: {
+            schemaVersion: 'gate-coverage.v1',
+            projectId: 'proof',
+            kind: 'module',
+            baseRevision: 'f71469bf67c6cb4da88f54d64dac9a07f554ddd2',
+            modules: [Array],
+            integrationRequirements: [],
+            requiredChecks: [Array],
+            policyDigest: 'sha256:d2c2d237015f9212148df2e5a3511101bc584cd9e8badb0bdc1bfe02ed19dbd3'
+          },
+          providerPlan: {
+            repositoryId: 'proof',
+            plan: [Object],
+            grants: [Object],
+            maximumConcurrency: 1,
+            submittedAt: '2026-09-06T00:00:00Z',
+            timeoutMs: 60000,
+            repositoryRoot: '/tmp/nova-project-proof-MHuauc/repository',
+            sourceStageId: 'implement-app'
+          }
+        },
+        execution: {
+          maxAttempts: 9,
+          maxRemediationCycles: 7,
+          maxTechnicalRetries: 1,
+          timeoutMs: 1800000,
+          repairCategory: 'test'
+        },
+        on: { request_fix: 'implement-app' }
+      },
+      {
+        id: 'final-lint',
+        type: 'kubeclaw.lint.full',
+        dependsOn: [ 'test-library', 'test-app' ],
+        config: {
+          policyPath: '/tmp/nova-project-proof-MHuauc/lint.json',
+          policyProject: 'proof'
+        },
+        input: {
+          workingDirectory: '/tmp/nova-project-proof-MHuauc/repository',
+          project: 'proof',
+          sourceStageId: 'implement-app'
+        },
+        execution: {
+          maxAttempts: 2,
+          maxRemediationCycles: 0,
+          maxTechnicalRetries: 1,
+          timeoutMs: 1800000
+        }
+      },
+      {
+        id: 'final-test',
+        type: 'kubeclaw.test.quality-evaluation',
+        dependsOn: [ 'final-lint' ],
+        config: { agent: 'buster', testAgentEnabled: true },
+        input: {
+          gateId: 'final-test',
+          task: 'Test the complete integrated project, including declared interactions.',
+          expectedCoverage: {
+            schemaVersion: 'gate-coverage.v1',
+            projectId: 'proof',
+            kind: 'cumulative',
+            baseRevision: 'f71469bf67c6cb4da88f54d64dac9a07f554ddd2',
+            modules: [Array],
+            integrationRequirements: [Array],
+            requiredChecks: [Array],
+            policyDigest: 'sha256:9472c9c50fffd2064d656e49ed3f2fe26660ae9717f5aa6a05f84661cbe2efde'
+          },
+          providerPlan: {
+            repositoryId: 'proof',
+            plan: [Object],
+            grants: [Object],
+            maximumConcurrency: 1,
+            submittedAt: '2026-09-06T00:00:00Z',
+            timeoutMs: 60000,
+            repositoryRoot: '/tmp/nova-project-proof-MHuauc/repository',
+            sourceStageId: 'implement-app'
+          }
+        },
+        execution: {
+          maxAttempts: 2,
+          maxRemediationCycles: 0,
+          maxTechnicalRetries: 1,
+          timeoutMs: 1800000
+        }
+      },
+      {
+        id: 'project-summary',
+        type: 'kubeclaw.report.project-summary',
+        dependsOn: [ 'final-test' ],
+        config: {},
+        input: {
+          projectId: 'proof',
+          modules: [ [Object], [Object] ],
+          final: {
+            sourceStageId: 'implement-app',
+            lintStageId: 'final-lint',
+            testStageId: 'final-test',
+            expectedCoverage: [Object]
+          }
+        },
+        execution: {
+          maxAttempts: 2,
+          maxRemediationCycles: 0,
+          maxTechnicalRetries: 1,
+          timeoutMs: 1800000
+        }
+      }
+    ]
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+EXIT: 1

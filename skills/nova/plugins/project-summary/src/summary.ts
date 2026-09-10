@@ -1,9 +1,12 @@
-import {verifiedArtifactJsonText} from '@kubeclaw/plugin-sdk';
+import {verifiedArtifactJsonText, portableJson, PORTABLE_JSON_ENCODING} from '@kubeclaw/plugin-sdk';
+import { summaryReviewSemanticEncoding, summaryReviewBundleDigest,
+  type SummaryReviewSemanticEncoding } from './review-semantics.ts';
 import { assertCoverageDecision, coveragePassed, coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import { parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
 import { canonicalJson, sha256Text, resolveSourceRevision, type ArtifactRef, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
 
 export interface GateBinding {
+  readonly reviewSemanticEncoding?: SummaryReviewSemanticEncoding;
   readonly sourceStageId: string;
   readonly lintStageId: string;
   readonly reviewStageId?: string;
@@ -17,6 +20,8 @@ export interface SummaryInput {
 }
 
 function validateCoverageInput(input: SummaryInput): void {
+  portableJson(input);
+  summaryReviewSemanticEncoding(input.final as unknown as Record<string, unknown>);
   if (!input.projectId?.trim() || !Array.isArray(input.modules) || input.modules.length < 1
     || input.modules.length > 128 || new Set(input.modules.map(module => module.moduleId)).size !== input.modules.length
     || new Set(input.modules.map(module => module.sourceStageId)).size !== input.modules.length
@@ -35,17 +40,21 @@ function validateCoverageInput(input: SummaryInput): void {
   if (canonicalJson(expectedModules) !== canonicalJson(input.final.expectedCoverage.modules)) throw new Error('DELIVERY_CUMULATIVE_MODULES_MISMATCH');
 }
 
-type ReadEvidence = (stageId: string, namespace: string, select?: (ref: ArtifactRef) => boolean) => Promise<Record<string, any>>;
+type ReadEvidence = (stageId: string, namespace: string, select?: (ref: ArtifactRef) => boolean,
+  encoding?: typeof PORTABLE_JSON_ENCODING) => Promise<Record<string, any>>;
 
 async function verifyFinalReview(input: SummaryInput, sourceRevision: string, read: ReadEvidence): Promise<void> {
+  const semantic = summaryReviewSemanticEncoding(input.final as unknown as Record<string, unknown>);
   if (input.final.reviewStageId) {
-    const review = await read(input.final.reviewStageId, 'kubeclaw.review', ref => ref.artifactId.startsWith('review-report:'));
-    const bundle = await read(input.final.reviewStageId, 'kubeclaw.review', ref => ref.artifactId.startsWith('review-bundle:'));
+    const encoding = semantic === undefined ? undefined : PORTABLE_JSON_ENCODING;
+    const review = await read(input.final.reviewStageId, 'kubeclaw.review', ref => ref.artifactId.startsWith('review-report:'), encoding);
+    const bundle = await read(input.final.reviewStageId, 'kubeclaw.review', ref => ref.artifactId.startsWith('review-bundle:'), encoding);
+    const bundleDigest = summaryReviewBundleDigest(review, bundle, semantic);
     const policy = input.final.expectedCoverage;
     const coverageEvidence = Array.isArray(bundle.evidence) ? bundle.evidence.filter((item: any) => item.kind === 'gate-coverage') : [];
     if (review.revision?.head !== sourceRevision || review.revision?.base !== policy.baseRevision
       || canonicalJson(review.revision) !== canonicalJson(bundle.revisions)
-      || review.outcome !== 'passed' || review.bundleDigest !== sha256Text(canonicalJson(bundle))
+      || review.outcome !== 'passed' || review.bundleDigest !== bundleDigest
       || coverageEvidence.length !== 1 || coverageEvidence[0].content !== canonicalJson(policy)
       || canonicalJson(bundle.requirements) !== canonicalJson(coverageReviewRequirements(policy))
       || canonicalJson(bundle.scope?.allowedPrefixes) !== canonicalJson(coverageReviewPrefixes(policy))) throw new Error('DELIVERY_FINAL_REVIEW_COVERAGE_MISMATCH');
@@ -58,13 +67,15 @@ export async function buildSummary(input: SummaryInput, context: PluginInvocatio
   const runId = context.contract.lease.attempt.runId;
   let totalBytes = 0;
   const evidence: ArtifactRef[] = [];
-  async function read(stageId: string, namespace: string, select: (ref: ArtifactRef) => boolean = () => true) {
+  async function read(stageId: string, namespace: string, select: (ref: ArtifactRef) => boolean = () => true,
+    encoding?: typeof PORTABLE_JSON_ENCODING) {
     const candidates = context.contract.artifacts.filter(ref => ref.producer.runId === runId
       && ref.producer.stageId === stageId && ref.namespace === namespace);
     const attempt = Math.max(...candidates.map(ref => ref.producer.attemptNumber));
     const latest = candidates.filter(ref => ref.producer.attemptNumber === attempt && select(ref));
     if (latest.length !== 1) throw new Error(`DELIVERY_EVIDENCE_MISSING_OR_AMBIGUOUS:${stageId}`);
     const ref = latest[0]!;
+    if (encoding !== undefined && ref.encoding !== encoding) throw new Error('DELIVERY_REVIEW_ARTIFACT_ENCODING_REQUIRED');
     if (ref.mediaType !== 'application/json' || !Number.isSafeInteger(ref.sizeBytes) || ref.sizeBytes < 1
       || (totalBytes += ref.sizeBytes) > 8 * 1024 * 1024) throw new Error('DELIVERY_EVIDENCE_LIMIT_EXCEEDED');
     const response = await context.invoke('artifacts.read', { operation: 'get_json_bytes',

@@ -1,8 +1,9 @@
-import { canonicalJson, sha256Text, type StageResult } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, portableJson, sha256Text, type StageResult } from '@kubeclaw/plugin-sdk';
 
 import type { ParsedEchoReviewOutput } from './echo-review-parser.ts';
 import type { ProposedFinding } from './echo-review-contract.ts';
 import type { ReviewBundleSnapshot } from './review-bundle-snapshot.ts';
+import { PORTABLE_REVIEW_BUNDLE_VERSION, PORTABLE_REVIEW_REPORT_VERSION } from './review-semantics.ts';
 import { classifyVerifiedReviewFinding } from './review-reducer.ts';
 import type { ReviewFindingGovernance } from './review-finding-governance.ts';
 import type { ReviewGovernorSnapshot } from './review-governor.ts';
@@ -166,13 +167,20 @@ function boundedItems(
 }
 
 export function buildReviewReport(input: BuildReviewReportInput): ReviewReport {
+  // Snapshot data is JSON; the surrounding input contains method-bearing owner
+  // objects and is deliberately not treated as an arbitrary JSON document.
+  portableJson(input.snapshot);
+  const bundleVersion = input.snapshot.bundle.schemaVersion;
+  if (Object.hasOwn(input.snapshot.bundle, 'schemaVersion') && bundleVersion !== 'review-bundle.v1'
+    && bundleVersion !== PORTABLE_REVIEW_BUNDLE_VERSION) throw new Error('REVIEW_BUNDLE_VERSION_INVALID');
   if (!['passed', 'request_fix', 'blocked', 'orchestrator_required'].includes(input.result.outcome)) {
     throw new Error(`review report cannot represent stage outcome ${input.result.outcome}`);
   }
   const bounded = boundedItems([...verifiedItems(input), ...proposalItems(input)], input);
   const items = Object.fromEntries(bounded.included.map(({ itemId: id, value }) => [id, value]));
   const report = Object.freeze({
-    schemaVersion: REVIEW_REPORT_SCHEMA_VERSION,
+    schemaVersion: bundleVersion === PORTABLE_REVIEW_BUNDLE_VERSION
+      ? PORTABLE_REVIEW_REPORT_VERSION : REVIEW_REPORT_SCHEMA_VERSION,
     attemptId: input.attemptId,
     taskId: input.snapshot.bundle.task.id,
     profile: input.policy.policy.profile,
