@@ -7,6 +7,7 @@ import type {
   PluginContext,
   RegistrationProvenance,
   ResourceLock,
+  RuntimeDispatchProfile,
 } from './generated/contracts.ts';
 import type {
   ProviderInvocationV1,
@@ -18,6 +19,7 @@ import type {
 } from '@kubeclaw/pipeline-test-gate-contract';
 
 export interface CapabilityInvocation {
+  readonly runtimeDispatchProfile?: RuntimeDispatchProfile;
   readonly operation: string;
   readonly resource: {
     readonly type: string;

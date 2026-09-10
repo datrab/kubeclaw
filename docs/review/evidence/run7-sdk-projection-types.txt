@@ -1,0 +1,31 @@
+Source b76cf2e on exact main1d7e6f/local6c567898.
+Command: node --test tests/verification/reliability/nova-dispatch-projection.test.mjs && node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json && node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && node scripts/generate-plugin-sdk-types.mjs --check
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original completed import projects duplicate bytes with real quotas and exact HTTP replay (6661.62494ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input (5856.812411ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner (6146.37662ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId (7097.562392ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent canonical-invalid original selected request cannot authorize retention after honest hash-chain recomputation (5689.909154ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release (6569.919603ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"blocked","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual blocked original Core with a completed import cannot authorize retention before cancellation (3853.241233ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ honestly rehashed sourceStageId or missing-source snapshot cannot bypass explicit-revision-only eligibility (6433.611677ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job (7193.469085ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery (7546.678108ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 64289.125682
+Exit 0 for the complete command. Both typechecks and generator emitted no additional output.

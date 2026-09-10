@@ -1,0 +1,19 @@
+Frozen author source bc015b141a8e123659924ec656a016f390204882 (review localeb49a59)
+node --test tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs
+From /workspace/scratch/15fb596e6560/run6-sdk-transport
+ * branch            bc015b141a8e123659924ec656a016f390204882 -> FETCH_HEAD
+[fix/resume-47-run6-sdk-transport-review eb49a59] fix(schema): compile profile envelope with strict canonical Ajv [skip ci]
+ Date: Thu Sep 10 01:52:05 2026 +0200
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (404.240302ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 673.85209
+
+exit=0
+

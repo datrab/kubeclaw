@@ -1,0 +1,30 @@
+Frozen author source: ec994b1e8565cf61c1112d8c89c1f9f165c3fca6; independent local source5302d6a
+node --test tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs
+Genuine strict canonical effectRequest schema compilation failure, not a skipped test or inferred static failure.
+✖ independent closed profile never consumes historical model keys on actual HMAC wire or replay (160.620204ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 441.102021
+
+✖ failing tests:
+
+test at tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs:20:1
+✖ independent closed profile never consumes historical model keys on actual HMAC wire or replay (160.620204ms)
+  Error: strict mode: required property "runtimeDispatchProfile" is not defined at "https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/allOf/0/if" (strictRequired)
+      at checkStrictMode (/workspace/scratch/15fb596e6560/run6-sdk-transport-review/node_modules/ajv/dist/compile/util.js:174:15)
+      at Object.code (/workspace/scratch/15fb596e6560/run6-sdk-transport-review/node_modules/ajv/dist/vocabularies/validation/required.js:33:48)
+      at keywordCode (/workspace/scratch/15fb596e6560/run6-sdk-transport-review/node_modules/ajv/dist/compile/validate/index.js:464:13)
+      at /workspace/scratch/15fb596e6560/run6-sdk-transport-review/node_modules/ajv/dist/compile/validate/index.js:222:17
+      at CodeGen.code (/workspace/scratch/15fb596e6560/run6-sdk-transport-review/node_modules/ajv/dist/compile/codegen/index.js:439:13)
+      at CodeGen.block (/workspace/scratch/15fb596e6560/run6-sdk-transport-review/node_modules/ajv/dist/compile/codegen/index.js:568:18)
+      at iterateKeywords (/workspace/scratch/15fb596e6560/run6-sdk-transport-review/node_modules/ajv/dist/compile/validate/index.js:219:9)
+      at groupKeywords (/workspace/scratch/15fb596e6560/run6-sdk-transport-review/node_modules/ajv/dist/compile/validate/index.js:200:13)
+      at /workspace/scratch/15fb596e6560/run6-sdk-transport-review/node_modules/ajv/dist/compile/validate/index.js:192:13
+      at CodeGen.code (/workspace/scratch/15fb596e6560/run6-sdk-transport-review/node_modules/ajv/dist/compile/codegen/index.js:439:13)
+
+exit=1

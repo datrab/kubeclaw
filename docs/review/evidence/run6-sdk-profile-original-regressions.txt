@@ -1,0 +1,80 @@
+Frozen author source bc015b141a8e123659924ec656a016f390204882
+node --test --test-concurrency=1 tests/verification/reliability/runtime-dispatch-profile.test.mjs tests/verification/reliability/source-snapshot-version.test.mjs tests/verification/reliability/sdk-json-contract.test.mts tests/verification/reliability/sdk-json-portable.test.mts tests/verification/reliability/effect-identity-version.test.mts tests/verification/reliability/adapter-dependency-contract.test.mjs tests/verification/reliability/adapter-dependency-identity.test.mts tests/verification/reliability/adapter-dependency-canonical-independent.test.mjs tests/verification/reliability/adapter-dependency-boundary.test.mjs tests/verification/reliability/adapter-dependency-result.test.mjs tests/verification/reliability/observability-retirement-plan.test.mjs
+{"mode":"delivery","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":true,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"delivery","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"delivery","historical":false,"resumed":{"code":0,"signal":null,"out":"{\"locale\":\"sv-SE\",\"result\":{\"status\":200,\"headers\":{\"content-type\":\"application/json\",\"docker-content-digest\":null},\"body\":{\"accepted\":true}}}","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original delivery boundary survives real cross-locale restart (3942.379864ms)
+{"mode":"activation","historical":true,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":true,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+{"mode":"activation","historical":false,"receiverCalls":1,"code":null,"signal":"SIGKILL","out":"","err":""}
+{"mode":"activation","historical":false,"resumed":{"code":null,"signal":"SIGKILL","out":"","err":""},"receiverCalls":1,"exactPrefix":true}
+✔ original activation boundary survives real cross-locale restart (3594.520117ms)
+✔ independent legacy actual HTTP receipt must remain canonically valid after rehashed disk corruption (9172.838959ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ independent current actual HTTP receipt must remain canonically valid after rehashed disk corruption (9281.881469ms)
+ℹ unknown schema version: denied without a second HTTP operation or journal mutation
+ℹ unexpected property: denied without a second HTTP operation or journal mutation
+ℹ invalid adapter package: denied without a second HTTP operation or journal mutation
+ℹ valid but foreign adapter owner: denied without a second HTTP operation or journal mutation
+ℹ invalid status: denied without a second HTTP operation or journal mutation
+ℹ invalid timestamp: denied without a second HTTP operation or journal mutation
+ℹ failed with success result and no error: denied without a second HTTP operation or journal mutation
+ℹ accepted with forbidden success result: denied without a second HTTP operation or journal mutation
+ℹ wrong effect binding: denied without a second HTTP operation or journal mutation
+✔ independent unknown portable dependency version cannot hide behind another valid request subject (2547.125721ms)
+✔ canonical effect keys retain opaque bounds and exactly bounded historical producer grammar (19.378923ms)
+✔ new complete subject and owner identity has explicit version and compact bounded key (1.466162ms)
+✔ canonical resource owner admits real resource namespaces without relaxing other request fields (3.846354ms)
+✔ original activation IDs and public delivery tokens propagate only to owning effect and lock fields (3.135261ms)
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (2613.032383ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (3298.870467ms)
+✔ original registered adapter rejects malformed dependency result [] (1686.058987ms)
+✔ original registered adapter rejects malformed dependency result null (1504.769424ms)
+✔ original registered adapter rejects malformed dependency result Array(2) (1520.289791ms)
+✔ original registered adapter rejects malformed dependency result ({value:NaN}) (1570.423866ms)
+✔ original registered adapter rejects malformed dependency result Object.defineProperty({},"value",{enumerable:true,get(){throw new Error("GETTER_MUST_NOT_RUN");}}) (1589.2863ms)
+✔ original recorded legacy journal prefixes recover without identity migration across native locales (12437.510694ms)
+✔ new original durable producers and completed replay use the same explicit portable identity in both locale directions (3061.013665ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (863.213293ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (972.268648ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (751.347954ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (930.897476ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (850.663645ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (848.889692ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1140.767789ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (745.986723ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.459983ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.685394ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.434054ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (334.385341ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2327.550364ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (309.968882ms)
+✔ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (798.486423ms)
+✔ finite canonical profile: SDK and original Foundation validator agree without executing getters (2.611908ms)
+✔ new original snapshot writes bind required profile; rehashed malformed/future/downgraded contracts reject (9.212971ms)
+✔ profile is bound after budget reservation and excluded from actual model task without changing accounting (594.668321ms)
+Real ArtifactStore and FileEffectJournal replay JSON regressions passed
+✔ tests/verification/reliability/sdk-json-contract.test.mts (381.526235ms)
+✔ original artifact/source consumers and reopened effect journal preserve byte authority across native locales (2392.503153ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1014.386741ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (500.458107ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (22.641429ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 41
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 76286.017345
+
+exit=0

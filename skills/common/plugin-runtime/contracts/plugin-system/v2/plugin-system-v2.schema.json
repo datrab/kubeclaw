@@ -3,6 +3,52 @@
   "$id": "https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json",
   "title": "KubeClaw plugin system v2 contracts",
   "$defs": {
+    "runtimeDispatchProfile": {
+      "description": "Explicit current runtime transport producer profile. Absence in historical contexts preserves the legacy producer; no profile is inferred from another digest version.",
+      "const": { "schemaVersion": "runtime-dispatch-profile.v1", "encoding": "json-utf16-v1" }
+    },
+    "capabilityInvocation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["operation", "resource", "payload"],
+      "properties": {
+        "operation": { "type": "string", "minLength": 1 },
+        "resource": { "$ref": "#/$defs/resourceIdentity" },
+        "payload": { "$ref": "#/$defs/jsonObject" },
+        "runtimeDispatchProfile": { "$ref": "#/$defs/runtimeDispatchProfile" }
+      },
+      "allOf": [{
+        "if": { "properties": { "runtimeDispatchProfile": true }, "required": ["runtimeDispatchProfile"] },
+        "then": { "properties": { "operation": { "const": "dispatch" }, "resource": { "type": "object", "properties": { "type": { "const": "runtime.agent" } } } } }
+      }]
+    },
+    "runtimeRunGraph": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schemaVersion", "pipelineId", "maxConcurrency", "nodes", "ordinaryEdges", "remediationEdges", "digest"],
+      "properties": {
+        "schemaVersion": { "enum": ["execution-graph-snapshot.v2", "execution-graph-snapshot.v3"] },
+        "pipelineId": { "$ref": "#/$defs/opaqueId" },
+        "maxConcurrency": { "type": "integer", "minimum": 1 },
+        "nodes": { "type": "array", "items": { "$ref": "#/$defs/jsonObject" } },
+        "ordinaryEdges": { "type": "array", "items": { "$ref": "#/$defs/runtimeRunEdge" } },
+        "remediationEdges": { "type": "array", "items": { "$ref": "#/$defs/runtimeRunEdge" } },
+        "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+      }
+    },
+    "runtimeRunEdge": {
+      "type": "object", "additionalProperties": false, "required": ["from", "to"],
+      "properties": { "from": { "type": "string" }, "to": { "type": "string" } }
+    },
+    "runtimeRunSnapshot": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schemaVersion", "graph", "registry", "digest", "runtimeDispatchProfile"],
+      "properties": {
+        "schemaVersion": { "const": "run-snapshot.v3" },
+        "graph": { "$ref": "#/$defs/runtimeRunGraph" },
+        "registry": { "$ref": "#/$defs/jsonObject" },
+        "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "runtimeDispatchProfile": { "$ref": "#/$defs/runtimeDispatchProfile" }
+      }
+    },
     "namespacedId": {
       "type": "string",
       "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)+$",
@@ -622,6 +668,7 @@
         "capability", "operation", "resource", "payload", "requestedAt"
       ],
       "properties": {
+        "runtimeDispatchProfile": { "$ref": "#/$defs/runtimeDispatchProfile" },
         "schemaVersion": { "const": "effect-request.v2" },
         "effectId": { "$ref": "#/$defs/opaqueId" },
         "idempotencyKey": { "$ref": "#/$defs/effectIdempotencyKey" },
@@ -632,7 +679,11 @@
         "resource": { "$ref": "#/$defs/resourceIdentity" },
         "payload": { "$ref": "#/$defs/jsonObject" },
         "requestedAt": { "type": "string", "format": "date-time" }
-      }
+      },
+      "allOf": [{
+        "if": { "properties": { "runtimeDispatchProfile": true }, "required": ["runtimeDispatchProfile"] },
+        "then": { "properties": { "capability": { "const": "runtime.dispatch" }, "operation": { "const": "dispatch" }, "resource": { "type": "object", "properties": { "type": { "const": "runtime.agent" } } } } }
+      }]
     },
     "effectReceipt": {
       "type": "object",
@@ -919,6 +970,7 @@
       "required": ["schemaVersion", "lease", "config", "input", "artifacts"],
       "properties": {
         "schemaVersion": { "const": "plugin-context.v2" },
+        "runtimeDispatchProfile": { "$ref": "#/$defs/runtimeDispatchProfile" },
         "lease": { "$ref": "#/$defs/invocationLease" },
         "config": { "$ref": "#/$defs/jsonObject" },
         "input": { "$ref": "#/$defs/jsonObject" },

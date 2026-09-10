@@ -1,14 +1,14 @@
-import {portableJson, sha256Text, type EffectJournal, type EffectReceipt, type EffectRequest} from '@kubeclaw/plugin-sdk';
+import {portableJson, runtimeDispatchProfileFields, sha256Text, type EffectJournal, type EffectReceipt, type EffectRequest} from '@kubeclaw/plugin-sdk';
 import {validateContractValue} from '@kubeclaw/plugin-foundation/registry/schema';
 
-export type DependencySubject = Pick<EffectRequest, 'attempt' | 'capability' | 'operation' | 'resource' | 'payload' | 'deliveryId'>;
+export type DependencySubject = Pick<EffectRequest, 'attempt' | 'capability' | 'operation' | 'resource' | 'payload' | 'deliveryId' | 'runtimeDispatchProfile'>;
 export interface DependencyQuery { readonly subject: DependencySubject; readonly prefix: string; readonly suffix: string; readonly scope: string; readonly parent?: EffectRequest }
 export interface DependencyJournal extends EffectJournal { dependencyRequests(query: DependencyQuery): Promise<readonly EffectRequest[]> }
 type Facts = {request?: EffectRequest; position?: number; acceptedPosition?: number; accepted: boolean; completed: boolean; invalid: boolean};
 
 export function dependencySubject(request: DependencySubject) {
   return {attempt: request.attempt, capability: request.capability, operation: request.operation,
-    resource: request.resource, payload: request.payload, ...(request.deliveryId === undefined ? {} : {deliveryId: request.deliveryId})};
+    resource: request.resource, payload: request.payload, ...runtimeDispatchProfileFields(request), ...(request.deliveryId === undefined ? {} : {deliveryId: request.deliveryId})};
 }
 const digest = (request: DependencySubject) => sha256Text(portableJson(dependencySubject(request)));
 const same = (left: unknown, right: unknown) => portableJson(left) === portableJson(right);

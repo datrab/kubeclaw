@@ -1,0 +1,26 @@
+Frozen source bc015b141a8e123659924ec656a016f390204882 (review eb49a59), no old local Git objects used.
+node docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs /workspace/scratch/15fb596e6560/run6-sdk-transport-review && node --test --test-concurrency=1 tests/verification/reliability/source-identity-version.test.mjs tests/verification/reliability/project-recovery-version.test.mjs
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:777f34824b86fbea5c0cb9918deca1d0c12041b182787792179b40947d0a2106:sha256:f7606edb558ae66b65759848e9ab94c4d68095b64bbef58aae766334a668670b\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:777f34824b86fbea5c0cb9918deca1d0c12041b182787792179b40947d0a2106"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=false (1177.141107ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=true (1120.941756ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=false, Unicode policy=true (11979.632201ms)
+✔ persisted source approval graph sv_SE.UTF-8 -> en_US.UTF-8, legacy=false, Unicode policy=true (11975.09355ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=false (11104.433216ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=true (9979.285366ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=false (4376.261544ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=true (4734.736959ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57263.173806
+
+exit=0
+After completion, removed only own generated archived-negative-control CLI file; its blob exactly matched current archive a24f69af5f0a5b937c7658f349d29acf75068e99. Original current source unchanged.
+

@@ -49,10 +49,10 @@ export async function execute(input: GateInput, context: PluginInvocationContext
     suiteEvidence: gateDecisionEvidence(decision),
   };
   // Invocation failures retain the core's external-effect reconciliation policy.
-  const response = await context.invoke('runtime.dispatch', {
+  const response = await context.invoke('runtime.dispatch', withRuntimeDispatchProfile({
     operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent as string },
     payload: buildRequest(agent as string, judgedInput),
-  });
+  }, context.contract.runtimeDispatchProfile));
   let verdict;
   try { verdict = parseVerdict(response.result, judgedInput); }
   catch (error) {
@@ -68,3 +68,4 @@ export async function execute(input: GateInput, context: PluginInvocationContext
   return { schemaVersion: 'stage-result.v2', outcome: verdict.outcome, artifacts,
     reason: { code: `buster_quality.${verdict.failureClass}`, message: verdict.summary, details: { findings: verdict.findings, decisionDigest: decision.decisionDigest } } };
 }
+import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';

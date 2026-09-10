@@ -1,0 +1,8 @@
+Source f1d60a8. Cwd skills/nova/plugins/review.
+Command: node tests/scalable-review-jobs.unit.test.mjs && node tests/scalable-review-verification.unit.test.mjs && node tests/repository-audit-stage.unit.test.mjs && node tests/repository-revalidation.unit.test.mjs
+{"ok":true,"suite":"scalable-review-jobs"}
+{"ok":true,"suite":"scalable-review-verification"}
+{"ok":true,"suite":"repository-audit-stage"}
+{"ok":true,"suite":"repository-revalidation"}
+
+Exit 0. Original tests unchanged.

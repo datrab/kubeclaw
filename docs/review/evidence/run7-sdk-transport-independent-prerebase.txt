@@ -1,0 +1,32 @@
+Source b76cf2e on exact main 1d7e6f; prior independent test, not final helper-corrected approval.
+Command: node --test --test-concurrency=1 tests/verification/reliability/runtime-dispatch-native-profile.test.mjs tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs
+✔ actual v1 run creation carries frozen transport choice; terminal reopen preserves prefix (4972.151586ms)
+ℹ {"version":"v1","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v2 run creation carries frozen transport choice; terminal reopen preserves prefix (4817.210034ms)
+ℹ {"version":"v2","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v3 run creation carries frozen transport choice; terminal reopen preserves prefix (5056.602568ms)
+ℹ {"version":"v3","nativeGateway":false,"actualPostCount":1,"requestProfile":{"schemaVersion":"runtime-dispatch-profile.v1","encoding":"json-utf16-v1"},"reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ original v1 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (4631.243684ms)
+✔ original v1 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (4390.999251ms)
+✔ original v1 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (4045.679877ms)
+✔ original v2 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (4019.622749ms)
+✔ original v2 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (3856.970671ms)
+✔ original v2 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (3869.568814ms)
+✔ original v3 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (3927.304545ms)
+✔ original v3 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (3789.166054ms)
+✔ original v3 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (4142.842888ms)
+✔ declared v2 ACP transport profile owns locale selection without claiming a Gateway (6623.113649ms)
+ℹ {"version":"v2","nativeGateway":false,"localeStable":false,"transportKeys":["spawn:session-v1:attempt:0:payload:e6e964796faea9d043007231e949d244eca67210ff0c920cec81c6e69f52132b","spawn:session-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ declared v3 ACP transport profile owns locale selection without claiming a Gateway (6655.337838ms)
+ℹ {"version":"v3","nativeGateway":false,"localeStable":true,"transportKeys":["spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d","spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (400.989096ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 65551.631029
+
+Exit 0.

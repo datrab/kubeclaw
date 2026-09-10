@@ -1,0 +1,13 @@
+Command: node --test --test-name-pattern='original helper-' tests/verification/reliability/runtime-dispatch-native-profile.test.mjs && node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json
+Both original public helpers use actual registered generic HTTP adapter, no model success. Six context cases each. No original unit assertion changed.
+✔ original helper-review preserves invoke-only API and rejects invalid present profile before real HTTP (2416.313628ms)
+✔ original helper-verification preserves invoke-only API and rejects invalid present profile before real HTTP (2269.772665ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4778.996862
+Complete command exit 0; Nova typecheck emitted no output.

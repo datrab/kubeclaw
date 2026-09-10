@@ -607,7 +607,7 @@
       "work_package": "WP01",
       "status": "implementiert",
       "implementation_commit": "b85b4c18fedcfb5a509295c082d59aab631b0617",
-      "verification_status": "bestanden",
+      "verification_status": "teilweise / weitere Consumer offen",
       "verification_evidence": [
         {
           "report": "implementation/contracts.md",
@@ -641,18 +641,22 @@
           "summary": "Adapter-Identitätscutover unabhängig 28/28 geprüft. Root mit bereits integriertem Reader/Review/Retirement 87/87 ohne Skips, historische Original-CLI erneut erfolgreich; Generator, volle Types und unveränderter Lint grün. Kanonische Ownerverträge und alte Producergrenzen erhalten; Persistenz-Ungewissheit nicht in terminales Versagen umgedeutet. Gesamtfinding bleibt bis verbleibender Consumerprüfung offen."
         },
         "docs/review/evidence/run6-root-adapter-integrated.txt",
-        "docs/review/evidence/run6-root-adapter-historical-cli.txt"
+        "docs/review/evidence/run6-root-adapter-historical-cli.txt",
+        {
+          "report": "implementation/run9-sdk-root-review.md",
+          "summary": "Unabhängig geprüfter run-frozen Transport: Root64/64 und volle ursprüngliche Review-Suite, Foundation/Nova-Types, Generator und archivierte CLI bestanden. Weitere Cache-/Report-/Prism-Domains bleiben offen."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/lib.sdk.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-SDK-001 — Serialisierung erzeugt ungültige oder kollidierende Daten\n\n- **Mittel, nachgewiesener Defekt:** Funktion in aktiven Artefakt-/Effektpfaden;\n  kein bisheriger Produktionsvorfall mit normalen JSON-Eingaben behauptet.\n- **Beleg:** src/values.ts:42–51: map/join, undefined→null, localeCompare;\n  ArtifactStore.adapter.ts:108–135 speichert diese Bytes als application/json,\n  Core.effects/identity.ts:5–24 vergleicht so Payloads. unknown ohne JSON-Prüfung.\n- **Auslöser/Ablauf:** in-process Array(2) ergibt ungültiges `[,]`;\n  `{x:undefined}` und `{x:null}` identische Bytes. Originalfunktion tatsächlich\n  ausgeführt: [Reproduktion](../evidence/plugin-contract-sdk-repro.mjs).\n- **Auswirkung:** ungültige JSON-Artefakte bzw. verschiedene Nicht-JSON-Payloads\n  bei Idempotenz gleichgesetzt. Voller Adapterfehlerpfad ist Code-Trace, kein\n  hier gelaufener E2E-Test. Localeordnung zusätzliches Portabilitätsrisiko,\n  noch nicht durch mehrere Umgebungen gemessen.\n- **Ursachenbehebung:** akzeptierten JSON-Datenbereich validieren, Sparsearrays,\n  nichtendliche Zahlen, Getter, exotische Objekte/Zyklen ablehnen und\n  sprachunabhängig ordnen. Persistierte Digestversionen kontrolliert umstellen;\n  kein stiller Fallbackserializer.\n- **Regression:** Originalserializer-Negativ-/Localevektoren; echter\n  ArtifactStore put/get und EffectJournal-Replay dürfen weder ungültige Bytes\n  quittieren noch verschiedene akzeptierte Payloads gleichsetzen.\n  [PCR-PROMPT-001](lib.prompt-contract.md) betrifft getrennten ungenutzten Code,\n  nicht denselben Laufzeitpfad.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Verbleibende tatsächliche persistierte Digestconsumer nach ihren Eingabeschemas prüfen; insbesondere Review-Evidence-/Cache-Verträge anhand gültiger Unicode-Keys untersuchen. Explizite gekoppelte Producer-/Reader-Versionierung, keine stille Comparatorumstellung oder pauschal erfundenen nativen Gates.",
+      "next_action": "Separat versionierte Review-Cache-v4/v2-, Review-Report-Hexkey- und Prism-Reader-/Baseline-Pakete gegen integrierten Transport prüfen; keine stille Umstellung alter Effekte oder erfundenen nativen Gates.",
       "related_findings": [],
       "decision_notes": [],
       "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe.",
-      "remaining_work": "Artifact-, Effect-, Source-/Subject- und Snapshot-Versionierung integriert; weitere persistierte Canonical-Domains bleiben offen."
+      "remaining_work": "Review-Cache, Review-Report und Prism-Domains bleiben offen; Details und Rohbelege in implementation/run9-sdk-root-review.md."
     },
     {
       "id": "PCR-SDK-002",
@@ -3985,6 +3989,10 @@
         {
           "report": "implementation/review-supervisor.md",
           "summary": "Five genuine supervisor/status CLI regressions and independent source review pass; native adoption gate fails visibly because actual child procfs cmdline is unavailable. Complete real pipeline start/recovery remains unexecuted."
+        },
+        {
+          "report": "implementation/run8-supervisor-root-review.md",
+          "summary": "Originaler Plattformfehler und anschließend tatsächlicher CLI/Core/ArtifactStore-Start unabhängig und Root bestanden; getrennte echte Prozessadoption bleibt offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/operations-and-packaging.md",
@@ -3994,10 +4002,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/scripts/supervise-repository-review.mjs#L79"
       ],
       "unresolved_code_references": [],
-      "next_action": "Five genuine supervisor/status CLI regressions and independent source review pass; native adoption gate fails visibly because actual child procfs cmdline is unavailable. Complete real pipeline start/recovery remains unexecuted.",
+      "next_action": "Separate tatsächliche Adopted-Pipeline mit temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität oder volle Modell-/Provideranforderung.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Five genuine supervisor/status CLI regressions and independent source review pass; native adoption gate fails visibly because actual child procfs cmdline is unavailable. Complete real pipeline start/recovery remains unexecuted."
+      "remaining_work": "Originaler lesbarer Plattformstart jetzt nachgewiesen. Nur getrennte native Prozessadoption mit temporärem Statusfehler bleibt blockiert."
     },
     {
       "id": "IFR-03-001",

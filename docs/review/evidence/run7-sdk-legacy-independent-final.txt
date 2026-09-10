@@ -1,0 +1,29 @@
+Source f1d60a8, final author source bade491d on fresh main a43.
+Command: node docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs /workspace/scratch/15fb596e6560/run7-sdk-transport-review && node --test --test-concurrency=1 tests/verification/reliability/sdk-json-contract.test.mts tests/verification/reliability/sdk-json-portable.test.mts tests/verification/reliability/effect-identity-version.test.mts tests/verification/reliability/source-identity-version.test.mjs tests/verification/reliability/project-recovery-version.test.mjs
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:851b555fbeaaa522824fc69c36ead731b207de507e7bf5cc1c30823b6e5f76e3:sha256:d1f4e78e4f36bd8c7444c023df0010a56e24e9a83c316bfc21bc22ecc3038f86\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:851b555fbeaaa522824fc69c36ead731b207de507e7bf5cc1c30823b6e5f76e3"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+✔ original recorded legacy journal prefixes recover without identity migration across native locales (12063.332287ms)
+✔ new original durable producers and completed replay use the same explicit portable identity in both locale directions (3189.638364ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=false (1141.244726ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=true (1551.116654ms)
+Real ArtifactStore and FileEffectJournal replay JSON regressions passed
+✔ tests/verification/reliability/sdk-json-contract.test.mts (412.819168ms)
+✔ original artifact/source consumers and reopened effect journal preserve byte authority across native locales (2370.325435ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=false, Unicode policy=true (11489.557351ms)
+✔ persisted source approval graph sv_SE.UTF-8 -> en_US.UTF-8, legacy=false, Unicode policy=true (11348.985787ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=false (11241.104406ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=true (9539.328257ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=false (3500.174172ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=true (3496.274279ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72901.92372
+
+Exit 0. The historical CLI's expected terminal refusal is explicitly not a full pipeline success.

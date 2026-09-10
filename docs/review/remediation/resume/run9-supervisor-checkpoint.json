@@ -1,0 +1,11 @@
+{
+  "runId": "20260910t000837-supervisor",
+  "baseRemote": "a43aa256bdce35d7f9c44d5d661e59c4055e562e",
+  "finding": "PCR-SCAFFOLD-OPS-001",
+  "status": "incomplete; genuine original finite CLI start passed; independent review pending; native adoption blocked",
+  "productionChanges": [],
+  "test": "scripts/tests/integration/repository-review-supervisor-start.mjs",
+  "evidence": "docs/review/evidence/run9-supervisor-native-start-final.txt",
+  "blocker": "Actual child procfs cmdline unavailable; original adoption gate fails REAL_PROC_PROCESS_CMDLINE_REQUIRED",
+  "nextAction": "Independently review/reproduce original finite start, then run genuine adopted original pipeline transient status-loss proof on host with actual procfs. No mock/status/provider or procfs substitute."
+}

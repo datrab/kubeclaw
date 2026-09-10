@@ -1,0 +1,4 @@
+Source f1d60a8; final author bade491d non-doc source matched.
+Command: node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json && node scripts/generate-plugin-sdk-types.mjs --check && git diff --check
+
+Exit 0. All commands emitted no diagnostic. Earlier wrong reviewer package script invocation retained separately; no code change between attempts.

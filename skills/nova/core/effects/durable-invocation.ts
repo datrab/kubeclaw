@@ -81,13 +81,13 @@ class DurableInvocation {
       schemaVersion: 'effect-request.v2', effectId: stableEffectId(this.#invocation), idempotencyKey: this.#invocation.idempotencyKey,
       ...(this.#invocation.deliveryId === undefined ? {} : { deliveryId: this.#invocation.deliveryId }),
       attempt: this.#invocation.attempt, capability: this.#invocation.capability, operation: this.#invocation.operation,
-      resource: this.#invocation.resource, payload: this.#invocation.payload, requestedAt: this.#dependencies.now().toISOString(),
+      resource: this.#invocation.resource, payload: this.#invocation.payload, ...runtimeDispatchProfileFields(this.#invocation), requestedAt: this.#dependencies.now().toISOString(),
     };
   }
 
   async #executeLocked(prior: EffectRequest | undefined): Promise<EffectReceipt> {
     const request = this.#request(prior);
-    if (this.#invocation.dependencyIdentity) validateContractValue('effectRequest', request);
+    if (this.#invocation.dependencyIdentity || Object.hasOwn(request, 'runtimeDispatchProfile')) validateContractValue('effectRequest', request);
     const controller = new AbortController();
     const timer = this.#renew(controller);
     try {
@@ -162,3 +162,4 @@ class DurableInvocation {
     this.#dependencies.locks.release(this.#lock.lockId, this.#invocation.attempt.attemptId); this.#lock = undefined;
   }
 }
+import { runtimeDispatchProfileFields } from '@kubeclaw/plugin-sdk';

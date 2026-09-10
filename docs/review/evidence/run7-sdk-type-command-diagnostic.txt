@@ -1,0 +1,14 @@
+Reviewer initial command: node scripts/generate-plugin-sdk-types.mjs --check && npm run typecheck --prefix skills/nova && npm run typecheck --prefix skills/common/plugin-runtime/foundation && git diff --check
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm error Missing script: "typecheck"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /root/.npm/_logs/2026-09-10T00_17_56_695Z-debug-0.log
+
+Exit 1. Incorrect reviewer package-script assumption; Foundation has no typecheck script. No source/test change; rerun actual owning skills/common/plugin-runtime/tsconfig.json below in final type evidence.

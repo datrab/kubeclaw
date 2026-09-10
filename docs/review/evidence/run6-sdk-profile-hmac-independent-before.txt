@@ -1,0 +1,36 @@
+Frozen source: d545d30f988c3a05011c4fca1221d41222ca4ecb
+node --test tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs
+Expected red phase before author envelope correction; genuine old model key is rejected.
+✖ independent closed profile never consumes historical model keys on actual HMAC wire or replay (96.741869ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 407.652149
+
+✖ failing tests:
+
+test at tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs:20:1
+✖ independent closed profile never consumes historical model keys on actual HMAC wire or replay (96.741869ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'failed'
+  - 'completed'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run6-sdk-transport-review/tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs:61:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'failed',
+    expected: 'completed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+exit=1
