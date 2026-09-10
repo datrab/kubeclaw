@@ -1,0 +1,20 @@
+command: KUBECLAW_DELIVERY_MANIFEST_PROOF_OUTPUT=docs/review/evidence/run21-delivery-manifest-v3-stage node --test tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs
+exit: 0
+tests: 1
+pass: 1
+fail: 0
+cancelled: 0
+skipped: 0
+todo: 0
+
+The exact child-process argv, locale, exit/signal, stdout and stderr for the
+producer and all five consumers are retained without transcription in
+phase-transcript.json. producer-proof.json and consume-{en,cs,da,tr,sv}-proof.json
+retain the complete values, refs, bytes, requests, receipts and disk journals.
+The producer used the original registered Summary stage with portable Review
+report/bundle evidence and both independent Review expectation fields. Every
+consumer used the original registered evidence adapter and a freshly reopened
+FileNovaGateImportStore. The exact job, run, stage, source revision, decision
+and result binding was accepted and projected successfully in en/cs/da/tr/sv.
+The imported remote result is an explicit contract vector; provider execution
+and deployment are not claimed.

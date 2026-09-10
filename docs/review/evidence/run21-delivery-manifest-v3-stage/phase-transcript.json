@@ -1,0 +1,55 @@
+{
+  "command": "node --test tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+  "expectedOverallExit": 0,
+  "expectedBoundary": "real FileNovaGateImportStore verified import and original evidence adapter success",
+  "phases": [
+    {
+      "phase": "produce",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"produce\",\"locale\":\"en-US\",\"status\":\"succeeded\",\"manifestDigest\":\"sha256:ff73c7a0d4a6d6e62d969cc6d18234d803961267c882767102690951169578c1\",\"artifactDigest\":\"sha256:d00d0e725f830e5daf7024aac6ef511b189ba07d636fd6a745a18cf476afac6b\",\"manifestBytes\":7616,\"summaryWriteKey\":\"run:delivery-manifest-stage-boundary:project-summary:1:12\"}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-en",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-en\",\"locale\":\"en-US\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-cs",
+      "locale": "cs_CZ.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-cs\",\"locale\":\"cs-CZ\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-da",
+      "locale": "da_DK.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-da\",\"locale\":\"da-DK\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-tr",
+      "locale": "tr_TR.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-tr\",\"locale\":\"tr-TR\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-sv",
+      "locale": "sv_SE.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-sv\",\"locale\":\"sv-SE\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    }
+  ]
+}

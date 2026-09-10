@@ -6,6 +6,7 @@ import path from 'node:path';
 import { PORTABLE_JSON_ENCODING, canonicalJson, sha256Text, type SourceBinding, type PipelineDefinition, type StageDefinition } from '@kubeclaw/plugin-sdk';
 import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
 import { coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, resolvedTestPlanDigest, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
+import { assertProjectDeliveryManifestMode, type ProjectDeliveryManifestMode } from './delivery-manifest.ts';
 
 type ObjectValue = Record<string, any>;
 function object(value: unknown, fields: string[], label: string): ObjectValue {
@@ -154,8 +155,10 @@ function orderedModules(modules: ReadonlyMap<string, ObjectValue>): ObjectValue[
  */
 export function compileProject(value: unknown, sourceIdentity: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING,
   reportArtifactEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING,
-  reviewSemanticMode: ProjectReviewSemanticMode = 'legacy'): { runId: string; definition: PipelineDefinition } {
+  reviewSemanticMode: ProjectReviewSemanticMode = 'legacy',
+  deliveryManifestEncoding: ProjectDeliveryManifestMode = 'legacy'): { runId: string; definition: PipelineDefinition } {
   assertProjectReviewModes(reportArtifactEncoding, reviewSemanticMode);
+  assertProjectDeliveryManifestMode(deliveryManifestEncoding);
   const project = object(value, ['schemaVersion', 'id', 'runId', 'repositoryRoot', 'workspaceRoot', 'baseRevision', 'modules', 'final', 'architecture', 'demo'], 'project');
   if (project.schemaVersion !== 'nova-project.v2') throw new Error('PROJECT_SCHEMA_UNSUPPORTED:nova-project.v2 requires explicit architecture and module blueprint declarations; legacy inputs need authored migration');
   const projectId = id(project.id);
@@ -181,7 +184,8 @@ export function compileProject(value: unknown, sourceIdentity: 'legacy' | typeof
     stages.push(...moduleStages(module, { projectId, runId, repository, workspaces, baseline, previousGate, sourceBinding: source.binding, reportArtifactEncoding, reviewSemanticMode }));
     previousGate = `test-${module.id}`;
   }
-  stages.push(...cumulativeStages(project, ordered, `implement-${ordered.at(-1)!.id}`, reportArtifactEncoding, reviewSemanticMode));
+  stages.push(...cumulativeStages(project, ordered, `implement-${ordered.at(-1)!.id}`, reportArtifactEncoding,
+    reviewSemanticMode, deliveryManifestEncoding));
   stages.push(...demoStages(demo,final.test.providerPlan.plan));
   const definition = { schemaVersion: 'pipeline-definition.v2', id: `project:${projectId}`, maxConcurrency: 1, stages } as PipelineDefinition;
   validateContractValue('pipelineDefinition', definition);

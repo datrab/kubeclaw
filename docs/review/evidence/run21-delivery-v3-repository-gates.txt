@@ -1,0 +1,18 @@
+$ npm run plugin-system:inventory
+generated plugin-system inventory (49 roots, 67 registrations)
+exit=0
+
+$ npm run plugin-system:inventory:check
+verified plugin-system inventory (49 roots, 67 registrations)
+exit=0
+
+$ npm run plugin-system:sandbox:build
+exit=0
+
+$ npm run verify:plugin-packages
+api-flow live-function and remediation passed. The next package stopped at the
+original Playwright launcher because the pinned Chromium executable is absent:
+/root/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+exit=1 (native environment prerequisite; no browser download was attempted)
+
+No CI, provider, deployment, paid-resource or third-party action ran.
