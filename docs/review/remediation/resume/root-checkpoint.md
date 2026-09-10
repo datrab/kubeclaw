@@ -2,7 +2,7 @@
 
 Frozen scope remains exactly 47 IDs. Eight now satisfy their original finding
 requirements; 39 remain incomplete. Overall completion is false. The latest
-continuation is in `run-20260910t025258.md`; current remote package refs are
+continuation is in `run-20260910t050054.md`; current remote package refs are
 listed in `run5-active-packages.json`. Reviewed integration and evidence
 remain in `run-20260909t2146.md` and `run-20260909t2114.md`.
 
@@ -17,9 +17,11 @@ integration: `implementation/run11-report-root-review.md`, full Review plus25
 native and fresh-restoration11 cases, genuine archived CLI/phase6/types passed.
 Native original Czech semantic bundle digest failure remains open, remotely
 preserved at23e14883. Separate design e07c5c and independent be25cf are approved;
-isolated implementation fc56 and independent partial review aad6 are saved;
-approved inner extension bbb072/8ee1 and complete native acceptance remain open.
-Separate delivery-manifest design13f0aa has no source authorization. Resume refs from
+final semantic source15f6 and corrected independent bounded review5380 are saved;
+source integration remains held for genuine native semantic phases. Registered
+delivery RED f3d was independently reproduced45fff; final v3 design569454 was
+independently approved90dd and its coupled implementation is in progress.
+Configured T15 Writer proof remains blocked by missing real configuration. Resume refs from
 the current inventory; no global SDK closure.
 
 ## Independently integrated work

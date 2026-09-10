@@ -9,7 +9,7 @@
     "source": "96236ba725bc4d57f0543f1fc0e76afa97f25de7",
     "status": "independently-reviewed-root-tested-in-this-integration"
   },
-  "fresh_remote_base": "ef5399be16c58eb6b8cf0398e2e183c1226d27c9",
+  "fresh_remote_base": "e644a79fddd4d4d686fbd351b6edaec5575caf57",
   "frozen_baseline": "c38779c71bb92bc15c3fcb89930348e5417aa475",
   "frozen_count": 47,
   "incomplete_packages": [
@@ -186,8 +186,8 @@
       "package": "semantic-review-bundle-czech-identity",
       "counterexample": "23e14883ace8868ab5ff0267b086253d43f4af35",
       "branch": "fix/resume-47-run13-sdk-bundle-czech-20260910t020224",
-      "status": "isolated-implementation-and-independent-native-fixture-work-in-progress-not-accepted",
-      "next_action": "Resume exacteba514 (source639) and independent8ea539: unchanged expanded17/17 and originalpreflight0 now pass. Prior13/17 failures retained as corrected chronology. Author focused26+protocol7 pass; complete fullReview raw belongs to earlier6cb, NOT final639. Run required unchanged full regression on exact finalsource, independent verification and native/history/phase/Summary gates remain required. No source integration or whole-package acceptance yet; no flagged helper reroute. Preserve olddomains and separate delivery98d8 proof boundary.",
+      "status": "bounded-source-and-regressions-independently-accepted-integration-held-for-native-and-delivery",
+      "next_action": "Do not integrate semantic source alone. Author15f6 complete unchanged Review/archived CLI/phase6/types/focused27; independent corrected review5380 adds3/3 compiler,9/9 existing Core/report and1/1 semantic history reader. Genuine registered semantic producer en/cs gate/lean/audit and full persisted old/new history/recovery/Summary remain open; flagged helper may not be retried/rerouted. Couple only with independently accepted delivery-v3 implementation and all required native gates.",
       "design": "e07c5c0730e71bed3519ad5a51730e6d7a4dafaf",
       "design_review": "be25cf15b8e5305e66e680d65cd77163e4867182",
       "independent_early_red": "c477d124a004100a8a0e7f86fcc7a7a70ac86aa0",
@@ -198,20 +198,34 @@
       "inner_extension_design": "bbb07254936e59ad972e8525bbc4dda1a8df32dc",
       "inner_extension_design_review": "8ee1f958057177b656d6bbd1f4f07ad395b0328e",
       "original_native_producer_red": "cf45e370564dea42879c76cb83cfed3ffec03ea1",
-      "inner_owner_extension": "Atomic semantic+inner extension and cause corrections savedeba514 (solef92d3parent,4116entries58delta), independently bounded17/17 reviewed8ea539. Full final-source original/native/phase gates remain open, no source acceptance or full finding closure.",
-      "separate_delivery_manifest_boundary": "fc56 preserves original buildSummary returned digest divergence using explicit artifact-contract fixtures and real EffectCoordinator/ArtifactStore/FileJournal, NOT registered Summary stage lifecycle. Saved full manifest/refs were not retained. Registered stage persistence and downstream adapter are source-traced only, not executed. Separate read-only owner/design13f0aa was independently reviewed as preparatory-only98d8, not implementation-ready; no manifest source authorization or Review selector widening.",
+      "inner_owner_extension": "Final semantic source15f6, exact productioneba514, passes complete author regression and bounded independent review5380. Integration held: required genuine semantic producer and complete native/history/Summary acceptance unavailable/open.",
+      "separate_delivery_manifest_boundary": "Registered Summary/Core/disk store/original adapter RED f3d independently reproduced45fff: en and valid portable-v2 reach genuine missing-import boundary; cs same stored ref/bytes fails manifest integrity. Full value/bytes/ref/journal retained. Final v3 design569454 independently approved90dd; coupled implementation in progress, no source acceptance yet.",
       "helper_limit": "After durable original red proof, helper turn ended with a platform safety flag; no later candidate validation completed. Do not retry, rephrase or reroute the flagged action. Keep unexecuted gates open.",
       "previous_coherent_source_backup": "51b37e66aa93a91b237fa7e5939a38a4ec540aef",
       "independent_inner_owner_red": "e9e2b124812d88d389b09642db1bcb845804b73a",
-      "independent_inner_owner_review": "8ea539d74381c53791762400aa73609eb61ae51b"
+      "independent_inner_owner_review": "8ea539d74381c53791762400aa73609eb61ae51b",
+      "final_source_checkpoint": "15f6a808ed1666c3b7a2a3909749e3d4ee377904",
+      "final_source_branch": "fix/resume-47-20260910t035412-semantic-author",
+      "final_independent_review": "5380f0e1640d59ca1bfb0646a87ed96dbb57ffb1"
     },
     {
       "package": "delivery-manifest-identity-design",
-      "status": "independently-reviewed-preparatory-boundary-not-source-ready",
+      "status": "registered-red-independently-reproduced-final-v3-design-approved-implementation-in-progress",
       "design": "13f0aa8262a20c31aac25a62b63e3aa018155768",
       "branch": "fix/resume-47-run17-delivery-design-f33bf39",
-      "next_action": "Before any source authorization, freeze exact v3 contract/public-owner/default choices and obtain missing genuine writer/stored/downstream proof. Preserve old v2 reader acceptance of valid portable outer refs; old untagged producer is not a mandatory untagged-reader rule.",
-      "design_review": "98d8f41abf0d822d94f1d854326a252e5dfa25ac"
+      "next_action": "Implement approved R3 as one public-contract/Summary/compiler/recovery/reader package on semantic source15f6; preserve v2 reader portable-tag domain and exact old effects. Independent exact-source tests required. Registered v3 en/cs/da/tr/sv, real import-store boundary, disk replay/SIGKILL, package/discovery/pin/full regressions remain open. No provider/deployment claim.",
+      "design_review": "98d8f41abf0d822d94f1d854326a252e5dfa25ac",
+      "registered_red": "f3ddec16b5a1c2787e956b5bc9d1556281660831",
+      "registered_red_review": "45fff05281c253dd27ffc52cca207c73104ae36d",
+      "final_design": "569454a94ef4e3d77cde1628e868a2fd15b22ba7",
+      "final_design_review": "90dd3b25c9c30a6a487600bc60ba844f200cefb6"
+    },
+    {
+      "package": "t15-configured-writer-prerequisite",
+      "status": "independently-confirmed-environment-prerequisite-missing-finding-open",
+      "author": "6e91619dda17204d571de4b013b6d28aa09f0abc",
+      "review": "60835cbed8683b699ab82de979eb3179c1cb1e88",
+      "next_action": "Existing report-evidence10/10 and original pipeline-review/case-study suites pass but live suites report modelExecution:false. No OpenClaw CLI/config/token/tools URL is available; socket status is unknown because inspection EPERM. Do not repeat unchanged local fixtures or infer no listener. Run a genuine configured immutable-source Writer only when a real authorized endpoint/config exists; T15-F01 stays open."
     }
   ],
   "integrated_review_codec": {
@@ -223,7 +237,7 @@
   "last_source_integration": "ff55ab962d16dc0eba5ee6aafa2150abaa723fb5",
   "overall_complete": false,
   "rule": "Backup is not acceptance. Restore only verified frozen commits into a new checkout, never another writer's checkout or dirty work based on an old heartbeat. Exact-parent ff-only integration after review/tests; no CI/deployment.",
-  "run_id": "20260910t025258",
+  "run_id": "20260910t050054",
   "schema_version": 1,
   "verified_count": 8
 }
