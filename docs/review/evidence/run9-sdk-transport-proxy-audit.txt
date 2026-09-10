@@ -1,0 +1,7 @@
+Read-only source audit; no production edits.
+Fresh base9c5bdcb21c8fcd50fb38d2a1c4988213db2b3ecb. Original runtime helper blob a6ad5d64eaec61103b15c575f43791b693e3d8fa, AdapterRuntime bff298de0453beb8fe5ffe2913940f4a9080bfc0, invocation context c204e00de9c6dbd012259b7e551e6b7cb3be420d match freshly read main.
+Command: node docs/review/evidence/run9-sdk-transport-proxy-audit.mjs <current-checkout>
+Actual original registered generic runtime-dispatch, secret-resolver and network-http adapters plus original createPluginInvocationContext. Receiver is real loopback HTTP, NOT Gateway or model acceptance. No fabricated journal or provider receipt. Both unsupported Proxy envelopes execute a descriptor trap, admit a real EffectRequest and reach HTTP.
+{"nativeGateway":false,"originalRegisteredAdapters":true,"originalContext":true,"results":[{"mode":"adapter","traps":1,"httpPosts":1,"error":null,"result":{"actualHttp":true},"requestAdmitted":true},{"mode":"context","traps":1,"httpPosts":1,"error":null,"result":{"actualHttp":true},"requestAdmitted":true}]}
+
+Proposed bounded separate correction: perform the existing strict no-trap portableJson precondition before Object.hasOwn in runtimeDispatchProfileFields. Do not change legacy JSON bytes/absence, profile identity, public confidential mode or model payload control. Internal EffectInvocation metadata requires audit before applying the full-record precondition. Parent design approval and original boundary/regression tests required; not mixed into the cache package.
