@@ -1,0 +1,22 @@
+Author initial checks, isolated run8-sdk-cache on approved transport d2/bade.
+node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json
+exit 0; no output
+node scripts/generate-plugin-sdk-types.mjs --check
+exit 0; no output
+node skills/nova/plugins/review/tests/review-content-cache.unit.test.mjs
+{"ok":true,"suite":"review-content-cache"}
+node skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs
+{"ok":true,"suite":"repository-audit-stage"}
+node --test tests/verification/reliability/review-cache-profile.test.mjs
+✔ separate finite cache profile has canonical SDK/Foundation parity and never invokes getters (2.24029ms)
+✔ genuine v4 writer requires both profiles; legacy version/profile combinations reject after rehash (18.532668ms)
+✔ v2 owns strict JSON and both inner digests; profile mismatch is an error, never a miss (2.075551ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 294.2286
+Incomplete: no native StageExecutor restart/crash acceptance yet, no independent approval.

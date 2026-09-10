@@ -1,6 +1,14 @@
 // Generated from skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json. Do not edit.
 
 /**
+ * Explicit immutable run-owned review cache producer profile. Historical absence preserves review-content-cache.v1 and its original effect operations.
+ */
+export type ReviewCacheProfile = {
+  schemaVersion: 'review-cache-profile.v1';
+  recordVersion: 'review-content-cache.v2';
+  encoding: 'json-utf16-v1';
+};
+/**
  * Explicit current runtime transport producer profile. Absence in historical contexts preserves the legacy producer; no profile is inferred from another digest version.
  */
 export type RuntimeDispatchProfile = {schemaVersion: 'runtime-dispatch-profile.v1'; encoding: 'json-utf16-v1'};
@@ -228,11 +236,13 @@ export type AdapterLifecycle = {
 };
 
 export interface PluginSystemV2 {
+  reviewCacheProfile?: ReviewCacheProfile;
   runtimeDispatchProfile?: RuntimeDispatchProfile;
   capabilityInvocation?: CapabilityInvocation;
   runtimeRunGraph?: RuntimeRunGraph;
   runtimeRunEdge?: RuntimeRunEdge;
   runtimeRunSnapshot?: RuntimeRunSnapshot;
+  runtimeRunSnapshotV4?: RuntimeRunSnapshotV4;
   effectIdempotencyKey?: EffectIdempotencyKey;
   resourceIdentity?: ResourceIdentity;
   effectDeliveryId?: EffectDeliveryId;
@@ -304,6 +314,14 @@ export interface RuntimeRunSnapshot {
   registry: JsonObject;
   digest: string;
   runtimeDispatchProfile: RuntimeDispatchProfile;
+}
+export interface RuntimeRunSnapshotV4 {
+  schemaVersion: 'run-snapshot.v4';
+  graph: RuntimeRunGraph;
+  registry: JsonObject;
+  digest: string;
+  runtimeDispatchProfile: RuntimeDispatchProfile;
+  reviewCacheProfile: ReviewCacheProfile;
 }
 export interface AttemptIdentity {
   runId: OpaqueId;
@@ -564,6 +582,7 @@ export interface PluginContext {
   schemaVersion: 'plugin-context.v2';
   runtimeDispatchProfile?: RuntimeDispatchProfile;
   lease: InvocationLease;
+  reviewCacheProfile?: ReviewCacheProfile;
   config: JsonObject;
   input: JsonObject;
   guidance?: JsonObject;
@@ -677,3 +696,4 @@ export interface PluginStateEntry {
 }
 
 export const CURRENT_RUNTIME_DISPATCH_PROFILE = Object.freeze({"schemaVersion":"runtime-dispatch-profile.v1","encoding":"json-utf16-v1"} as const);
+export const CURRENT_REVIEW_CACHE_PROFILE = Object.freeze({"schemaVersion":"review-cache-profile.v1","recordVersion":"review-content-cache.v2","encoding":"json-utf16-v1"} as const);

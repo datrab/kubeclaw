@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import type { RuntimeDispatchProfile, ArtifactRef, AttemptIdentity, InvocationLease, LifecycleEvent, PluginContext, PluginDomainEvent, StageResult } from '@kubeclaw/plugin-sdk';
+import type { RuntimeDispatchProfile, ReviewCacheProfile, ArtifactRef, AttemptIdentity, InvocationLease, LifecycleEvent, PluginContext, PluginDomainEvent, StageResult } from '@kubeclaw/plugin-sdk';
 import type { ActivatedRegistry } from '@kubeclaw/plugin-foundation/registry/activation';
 import type { GrantedRegistry } from '@kubeclaw/plugin-foundation/registry/capabilities';
 import { validateReferencedValue } from '@kubeclaw/plugin-foundation/registry/schema';
@@ -17,6 +17,7 @@ export type AppendLifecycleEvent = (type: LifecycleEvent['type'], identity: Life
 
 interface ExecutorOptions {
   readonly runtimeDispatchProfile?: RuntimeDispatchProfile;
+  readonly reviewCacheProfile?: ReviewCacheProfile;
   readonly graph: ExecutionGraph; readonly registry: GrantedRegistry; readonly activated: ActivatedRegistry; readonly adapters: AdapterRuntime;
   readonly journal: FileJournal<LifecycleEvent | PluginDomainEvent>; readonly signal?: AbortSignal; readonly now: () => Date; readonly append: AppendLifecycleEvent;
   readonly checkpoints: ArtifactCheckpointRecorder;
@@ -69,6 +70,7 @@ export class StageExecutor {
     const context = this.#context({
       schemaVersion: 'plugin-context.v2', lease: leaseContract, config: definition.config, input: definition.input,
       ...(this.#options.runtimeDispatchProfile ? { runtimeDispatchProfile: this.#options.runtimeDispatchProfile } : {}),
+      ...(this.#options.reviewCacheProfile ? { reviewCacheProfile: this.#options.reviewCacheProfile } : {}),
       ...(guidance === undefined ? {} : { guidance }),
       stageLifecycle: Object.freeze({ attemptsUsed: state.attemptsUsed, remediationCyclesUsed: state.remediationCyclesUsed,
         maxAttempts: definition.execution.maxAttempts, maxRemediationCycles: definition.execution.maxRemediationCycles }),
