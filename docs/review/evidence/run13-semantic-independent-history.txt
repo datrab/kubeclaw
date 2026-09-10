@@ -1,0 +1,16 @@
+source_commit=eba514b72993e4d4d686fbd351b6edaec5575caf57
+source_tree=ffa0439473012775eca2fc267fa906886be7c44c
+author_final_commit=15f6a808ed1666c3b7a2a3909749e3d4ee377904
+command=node --test tests/verification/reliability/review-semantic-history-independent.test.mjs
+exit=0
+wall_seconds=3.035412339
+{"producer":{"phase":"produce","locale":"en-US","summaryDigest":"sha256:adee836993c1cd9c9ff09d496bdba1dffb285088fb4fd0caa3fe9dee0dc11830","bundleDigest":"sha256:8d926ce67fd4bc06a6265e40fd13bee868cccdb0db7581ba0ffc71a8133ca436","actualCore":true,"actualArtifactStore":true,"artifactContractFixture":true,"freshPolicyProduction":false},"english":{"phase":"read-en","locale":"en-US","baseline":{"allowedPrefixes":["src"],"base":"1111111111111111111111111111111111111111","changedFileCount":1,"changedManifestDigest":"sha256:95effa790165d4170de6dd4aef41026f4f1cb6e7386011da6c678d33ba432ede","head":"2222222222222222222222222222222222222222","nonTestLoc":1,"ownerKeys":["src"],"ownershipPrefixes":["src"],"policyDigest":"sha256:e58c442ab02479f06dfc781dfed26a392c3ef44bbe4aba956d110f67ca7d0b37"},"operation":"get_json_bytes","actualCore":true,"actualArtifactStore":true,"artifactContractFixture":true,"freshReviewProducer":false},"czech":{"phase":"read-cs","locale":"cs-CZ","baseline":{"allowedPrefixes":["src"],"base":"1111111111111111111111111111111111111111","changedFileCount":1,"changedManifestDigest":"sha256:95effa790165d4170de6dd4aef41026f4f1cb6e7386011da6c678d33ba432ede","head":"2222222222222222222222222222222222222222","nonTestLoc":1,"ownerKeys":["src"],"ownershipPrefixes":["src"],"policyDigest":"sha256:e58c442ab02479f06dfc781dfed26a392c3ef44bbe4aba956d110f67ca7d0b37"},"operation":"get_json_bytes","actualCore":true,"actualArtifactStore":true,"artifactContractFixture":true,"freshReviewProducer":false},"scope":"semantic v3 history reader with transformed artifact-contract fixture; no fresh Review lifecycle/provider execution"}
+✔ new semantic governor history uses portable bytes through actual Core and ArtifactStore across locales (2995.79793ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3074.986997

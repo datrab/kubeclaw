@@ -1,0 +1,17 @@
+source_commit=eba514b72993e4d4d686fbd351b6edaec5575caf57
+source_tree=ffa0439473012775eca2fc267fa906886be7c44c
+author_final_commit=15f6a808ed1666c3b7a2a3909749e3d4ee377904
+command=node --test tests/verification/reliability/review-semantic-compiler.test.mjs tests/verification/reliability/review-report-author-domain-independent.test.mjs
+exit=0
+wall_seconds=1.059188877
+✔ own project review authoring domain rejects report selector before compiler-owned selection (222.898363ms)
+✔ independent semantic authority covers module-only, final-only, both and neither graph roundtrips (416.31611ms)
+✔ new semantic graph rejects mixed, unsupported, partial and stray Summary mode without changing stored bytes (150.980008ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1105.030815
