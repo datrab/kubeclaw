@@ -11,8 +11,10 @@ import type { ReviewGovernorSnapshot } from './review-governor.ts';
 import { applyReviewGovernor } from './review-governor-decision.ts';
 import { verifyEchoReviewForReduction } from './review-stage-verification.ts';
 import { blockedReviewStage } from './review-stage-result.ts';
+import type { ReportArtifactEncoding } from './review-report-encoding.ts';
 
 export interface FinalizeReviewInput {
+  readonly reportArtifactEncoding?: ReportArtifactEncoding;
   readonly semantic: ReviewSemanticFlowResult;
   readonly parsed: ParsedEchoReviewOutput;
   readonly snapshot: ReviewBundleSnapshot;
@@ -57,7 +59,7 @@ export async function persistReviewOutcome(values: PersistReviewOutcomeInput): P
     });
     const bundle = snapshot.bundle.evidence.some(item => item.kind === 'gate-coverage') ? await storeReviewBundle(snapshot, context) : undefined;
     const resultWithBundle = bundle ? { ...governedResult, artifacts: [...governedResult.artifacts, bundle] } : governedResult;
-    return attachReviewReport(resultWithBundle, report, await storeReviewReport(report, context));
+    return attachReviewReport(resultWithBundle, report, await storeReviewReport(report, context, values.reportArtifactEncoding));
   } catch (error) {
     return blockedReviewStage(
       'kubeclaw.review.report_write_failed',

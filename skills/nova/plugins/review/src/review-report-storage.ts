@@ -1,5 +1,6 @@
 import { isReviewBundleSnapshot, type ReviewBundleSnapshot } from './review-bundle-snapshot.ts';
-import { canonicalJson, sha256Text, type ArtifactRef, type PluginInvocationContext, type StageResult } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, portableJson, sha256Text, type ArtifactRef, type PluginInvocationContext, type StageResult } from '@kubeclaw/plugin-sdk';
+import { assertReportArtifactEncoding, type ReportArtifactEncoding } from './review-report-encoding.ts';
 
 import { isReviewReport, type ReviewReport, type ReviewReportDisposition } from './review-report-contract.ts';
 
@@ -61,20 +62,26 @@ function matchesReport(
 }
 
 export async function storeReviewReport(
-  report: ReviewReport, context: PluginInvocationContext,
+  report: ReviewReport, context: PluginInvocationContext, encoding?: ReportArtifactEncoding,
 ): Promise<ArtifactRef> {
+  assertReportArtifactEncoding(encoding);
+  portableJson(report);
   if (!isReviewReport(report)) throw new Error('cannot store an invalid review report');
-  const serialized = canonicalJson(report);
+  const serialized = encoding === undefined ? canonicalJson(report) : portableJson(report);
   const identity = sha256Text(canonicalJson({ attemptId: report.attemptId, bundleDigest: report.bundleDigest }))
     .slice('sha256:'.length);
   const artifactId = `review-report:${identity}`;
   const stored = await context.invoke('artifacts.write', {
     operation: 'put_json',
     resource: { type: 'artifact.object', canonicalId: artifactId },
-    payload: { namespace: 'kubeclaw.review', mediaType: 'application/json', value: report },
+    payload: { namespace: 'kubeclaw.review', mediaType: 'application/json', value: report,
+      ...(encoding === undefined ? {} : { encoding }) },
   });
+  portableJson(stored);
   const artifact = artifactRef(stored);
-  if (!matchesReport(artifact, artifactId, serialized, context)) {
+  const matchingEncoding = encoding === undefined ? !Object.hasOwn(artifact, 'encoding')
+    : Object.hasOwn(artifact, 'encoding') && artifact.encoding === encoding;
+  if (!matchingEncoding || !matchesReport(artifact, artifactId, serialized, context)) {
     throw new Error('artifact adapter returned a report reference that does not match the stored report');
   }
   return artifact;
