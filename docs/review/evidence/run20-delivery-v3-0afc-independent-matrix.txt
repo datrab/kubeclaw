@@ -1,0 +1,63 @@
+Independent review target
+candidate=0afc7c5133224c8d341015cc02697a7c594f0c21
+tree=273f01549ace6c214805cb964307f85f8b9f4461
+parent=15f6a808ed1666c3b7a2a3909749e3d4ee377904
+changed_paths=65
+fresh_main=1ba445125fbacfa4f0344f8bf38e68f8f0686eff
+
+The remote candidate is one commit ahead of the semantic parent. The author's
+complete staged tree, the reported remote tree and a separate review checkout
+all matched exactly before tests.
+
+Independent tests against the frozen candidate:
+
+- public v3 contract/schema/runtime/no-trap/bounds/reader: 13/13 passed;
+- exact legacy compiler plus four-dimensional graph/recovery: 4/4 passed;
+- exact registered v2 corpus en untagged/portable plus Czech fail-closed: 1/1;
+- finite public Review type arms: 1/1 passed;
+- real disk ArtifactStore legacy/v3 conditional rejection before reads: 2/2.
+
+Unchanged/author tests rerun against the same frozen candidate:
+
+- delivery contract: 6/6 passed;
+- delivery compiler/recovery: 2/2 passed;
+- registered Summary/Core/disk consumer matrix: 1/1 passed in 65 seconds;
+- archived CLI reproducibility regression: 1/1 passed in 50 seconds;
+- project-summary package, contract/project-summary/remote-test-gate builds,
+  Nova typecheck, plugin inventory and SDK check, Knip generated-config check:
+  all exit 0 with zero skips.
+
+The registered matrix used PipelineRunner, AdapterRuntime, EffectCoordinator,
+disk FileEffectJournal and ArtifactStore, the registered Summary and original
+registered evidence adapter. It reopened a genuine FileNovaGateImportStore.
+Producer and en/cs/da/tr/sv imported-result consumers succeeded. The separate
+missing-import phase reached exact NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED after
+manifest integrity. Nine outer-ref negatives and nine stored-body/competing
+negatives all blocked before import success. The coverage mutation rejected at
+the gate-binding boundary; the other mutations rejected at artifact/manifest
+integrity boundaries. The oversize phase executed a >8 MiB payload and retained
+the raw journal byte count and SHA-256 without checking the 16 MiB journal into
+the tree. Provider/deployment execution is false.
+
+The archived CLI change was independently inspected. It moves only the
+diagnostic injection marker from after `checkLegacyProjectImport` to immediately
+before that harness call. The historical clean-source check is unchanged. The
+new regression runs the actual archived diagnostic, observes source-preflight
+succeeded, the expected unfixed graph mismatch, corrected terminal recovery,
+legacy authoring import, and no REVIEW_SOURCE_DIRTY.
+
+Still missing from the approved matrix:
+
+- actual OS SIGKILL with recorded signal and exact old/new requested, accepted,
+  completed and uncertain disk prefixes;
+- cancellation and replay/no-duplicate assertions;
+- the rest of the consumer-negative set, including wrong media type, ambiguous
+  decision and a real import-store failure distinct from missing import;
+- full Knip (local knip@6.35.1 absent), Go-dependent original package suite,
+  Playwright Chromium package gate, full repository regression;
+- pre-existing package-boundary, docs-inventory and operator-messaging plugin
+  build failures outside the Delivery delta.
+
+No download, CI, provider, deployment, production mutation or third-party
+message ran. The bounded source is accepted only as a partial checkpoint.
+
