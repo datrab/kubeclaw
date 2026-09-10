@@ -1,0 +1,15 @@
+Independent original locked-record authority view tests, author source e2e5199db687bf912b7436cda087ad0e60db0a5d, reviewlocal62fbaa8, base a43aa256.
+Command: node --test tests/verification/reliability/record-transition-authority-independent.test.mjs
+✔ independent transition authorization sees original locked records but cannot mutate committed state through its clone (40.764678ms)
+✔ independent async authorization and stale CAS fail before write, preserving bytes and releasing original fence (42.862246ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 339.288767
+
+Exit0;2/2zero skips. Canonical fixture ESLint exit0. These are actual generic FileDurableRecordStore contract tests (clone ownership, synchronous callback enforcement, stale CAS, unchanged bytes and fence release), not operator projection policy or original consumer closure acceptance.
+
