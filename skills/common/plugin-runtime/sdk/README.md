@@ -42,3 +42,10 @@ Missing original-byte proof rejects. Existing caller run/stage/namespace and
 expected digest checks remain mandatory. The versioned read response includes
 both original JSON text and parsed value; caller artifact-size limits still
 apply, and transport/storage envelopes must budget both representations.
+
+`CURRENT_REVIEW_CACHE_PROFILE` is generated from its separate canonical finite
+contract. `parseReviewCacheProfile` returns that frozen value after strict JSON
+and exact profile comparison; `reviewCacheProfileFromContext` distinguishes an
+absent historical field from malformed present metadata. Genuine new run v4
+snapshots freeze it alongside the separately owned runtime transport profile.
+Old v1/v2/v3 runs never infer cache encoding from transport or evidence versions.

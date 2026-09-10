@@ -1,0 +1,19 @@
+✔ genuine v4 StageExecutor checkpoints and retains same-key v2 refs through en/tr/sv interrupted attempts (3455.320962ms)
+ℹ {"nativeModel":false,"registeredTestStage":true,"attempts":3,"seedExecutions":1,"retainedRefs":2,"digest":"sha256:e64985630cf3fa44a2d2012de6710d53a9838395f3d37adf194b60a04877e1b7"}
+✔ separate finite cache profile has canonical SDK/Foundation parity and never invokes getters (2.12131ms)
+✔ genuine v4 writer requires both profiles; legacy version/profile combinations reject after rehash (21.972968ms)
+✔ v2 owns strict JSON and both inner digests; profile mismatch is an error, never a miss (1.997023ms)
+✔ actual Core/FileJournal/ArtifactStore retains exact same-byte owners and rejects all corrupt/mixed cache candidates (1087.604428ms)
+ℹ {"nativeArtifactStore":true,"mocks":false,"racingWrites":2,"foreignSameBytes":true,"executedMisses":0}
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3887.047284
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:34d342ded5cf5c415a7a32c7ab9f1b895859b5ed3a08e3bbcbd2639a37c0b975:sha256:b2f484f086a1e9857f2ac1ce4ffa7f68fb05af0ac38bdb822bc9f6e169058552\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:34d342ded5cf5c415a7a32c7ab9f1b895859b5ed3a08e3bbcbd2639a37c0b975"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}

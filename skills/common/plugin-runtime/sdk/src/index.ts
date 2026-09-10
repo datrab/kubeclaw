@@ -2,6 +2,7 @@ export * from './generated/contracts.ts';
 export * from './values.ts';
 export * from './runtime-agent-task.ts';
 export * from './runtime-dispatch-profile.ts';
+export * from './review-cache-profile.ts';
 export type {
   CapabilityInvocation,
   AdapterActivationContext,
