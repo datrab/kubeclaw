@@ -1,0 +1,9 @@
+Independent design review, no implementation; exact original probe from remote 4ac681dd400fd8dd2c0310c7fe696571005d290f.
+Source: own c477cca7d8610e9314cee6a9dddb052db68d5703, exact approved SDK 28909f62 plus independently approved disjoint operator package. Review/compiler/report source unchanged from SDK base.
+Command: node docs/review/evidence/run8-sdk-report-hex-locale-probe.mjs
+{"locale":"en-US","builder":true,"strictSchema":true,"itemIds":["sha256:aa3fe48bd406ec7dad0b3f144ae666d1e4740bd1d4570c55a464839bcb2b8338","sha256:afcf7946bbadc1b0ab511cd97ead8a878f3a1121d8fbf696d82f684baa98fc89"],"valueDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","artifactDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","error":null}
+{"locale":"en-US","builder":true,"strictSchema":true,"itemIds":["sha256:aa3fe48bd406ec7dad0b3f144ae666d1e4740bd1d4570c55a464839bcb2b8338","sha256:afcf7946bbadc1b0ab511cd97ead8a878f3a1121d8fbf696d82f684baa98fc89"],"valueDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","artifactDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","error":null}
+{"locale":"da-DK","builder":true,"strictSchema":true,"itemIds":["sha256:aa3fe48bd406ec7dad0b3f144ae666d1e4740bd1d4570c55a464839bcb2b8338","sha256:afcf7946bbadc1b0ab511cd97ead8a878f3a1121d8fbf696d82f684baa98fc89"],"valueDigest":"sha256:ec218d30a371e663b9d89f010d6b9ec1c60ebabc5749433b851d843d7ed48858","artifactDigest":null,"error":"artifact adapter returned a report reference that does not match the stored report"}
+{"counterexampleConfirmed":true,"originalCompletedJournalUnchanged":true,"fullReviewAcceptance":false}
+
+Exit 0 confirms the existing defect, not a repaired gate. No product edits.
