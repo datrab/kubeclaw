@@ -1,0 +1,28 @@
+command:
+sha256sum -c docs/review/evidence/run-20260910t080401-human-extension/source-hashes.txt
+exit=0
+
+output:
+skills/prism/control/product-decisions.ts: OK
+skills/prism/server/product-decisions.ts: OK
+skills/prism/server/control-server.ts: OK
+skills/prism/server/studio-request.ts: OK
+skills/prism/storage/product-decisions.ts: OK
+skills/prism/storage/migrations/015_product_decisions.sql: OK
+skills/prism/tests/control-product-composition.test.mts: OK
+skills/prism/tests/product-decisions.test.mts: OK
+skills/prism/tests/control-product-independent.test.mts: OK
+skills/prism/tests/product-controller.test.mts: OK
+cmd/buster-namespace-controller/demo-product.go: OK
+cmd/buster-namespace-controller/demo-product-native_test.go: OK
+cmd/buster-namespace-controller/demo-product_test.go: OK
+charts/kubeclaw/templates/buster-namespace-lease-crd.yaml: OK
+charts/kubeclaw/templates/buster-namespace-controller.yaml: OK
+charts/prism/templates/_product-decisions.tpl: OK
+charts/prism/templates/product-decisions-networkpolicy.yaml: OK
+charts/prism/templates/workloads.yaml: OK
+tests/verification/deployment/prism-product-decisions.test.mjs: OK
+docs/review/evidence/run6-root-coupled-native.txt: OK
+docs/review/evidence/run6-root-coupled-product.txt: OK
+docs/review/evidence/run6-root-coupled-chart.txt: OK
+docs/review/evidence/run6-root-coupled-types.txt: OK
