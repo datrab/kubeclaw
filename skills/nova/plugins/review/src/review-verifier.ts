@@ -28,10 +28,11 @@ export async function dispatchSemanticVerification(
   if (bytes > REVIEW_HARD_LIMITS.verificationRequestBytes) {
     throw new ReviewVerificationRequestLimitError(`semantic verifier request is ${bytes} bytes`);
   }
-  const response = await context.invoke('runtime.dispatch', {
+  const response = await context.invoke('runtime.dispatch', withRuntimeDispatchProfile({
     operation: 'dispatch',
     resource: { type: 'runtime.agent', canonicalId: agent },
     payload: request,
-  });
+  }, context.contract.runtimeDispatchProfile));
   return parseEchoReviewVerificationDispatchResponse(response);
 }
+import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';

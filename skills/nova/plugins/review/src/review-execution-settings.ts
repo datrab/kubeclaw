@@ -1,3 +1,11 @@
+import type { PluginInvocationContext } from '@kubeclaw/plugin-sdk';
+
+/** Public scalable helpers historically accept the invocation port alone. */
+export interface ReviewDispatchInvocationContext {
+  readonly invoke: PluginInvocationContext['invoke'];
+  readonly contract?: Pick<PluginInvocationContext['contract'], 'runtimeDispatchProfile'>;
+}
+
 export interface ReviewExecutionSettings {
   readonly concurrency: number;
   readonly maxRetries: number;

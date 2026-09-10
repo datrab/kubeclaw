@@ -1,4 +1,6 @@
 import crypto from 'node:crypto';
+import { runtimeDispatchProfileFields } from '@kubeclaw/plugin-sdk';
+import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
 import type { AdapterInstance, EffectJournal, EffectReceipt, EffectRequest, PackageResolution } from '@kubeclaw/plugin-sdk';
 import type { EffectModeAuditSink, EffectInvocation, EffectLockManager } from './contracts.ts';
 import { invokeDurableEffect } from './durable-invocation.ts';
@@ -37,6 +39,7 @@ export class EffectCoordinator {
   ): Promise<Readonly<Record<string, unknown>>> {
     if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
     const request = this.#confidentialRequest(invocation);
+    if (Object.hasOwn(request, 'runtimeDispatchProfile')) validateContractValue('effectRequest', request);
     const auditRequest: EffectRequest = { ...request, resource: { type: request.resource.type, canonicalId: '[confidential]' }, payload: { confidential: true } };
     this.#audit?.requested(auditRequest, 'confidential'); this.#audit?.accepted(auditRequest, 'confidential');
     try {
@@ -54,7 +57,7 @@ export class EffectCoordinator {
       schemaVersion: 'effect-request.v2', effectId: `effect:${crypto.randomUUID()}`, idempotencyKey: invocation.idempotencyKey,
       ...(invocation.deliveryId === undefined ? {} : { deliveryId: invocation.deliveryId }),
       attempt: invocation.attempt, capability: invocation.capability, operation: invocation.operation, resource: invocation.resource,
-      payload: invocation.payload, requestedAt: this.#now().toISOString(),
+      payload: invocation.payload, ...runtimeDispatchProfileFields(invocation, invocation.capability), requestedAt: this.#now().toISOString(),
     };
   }
 
