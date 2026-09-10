@@ -1,0 +1,50 @@
+Fresh remote680d15eb0ab7344e87b0ab0595d9855acc1f97c9; exact localbase21deec371cbab92fb76b53e22030b6da4e262129/tree7ed13906c5c2db6d6ea5035e3269192970dbd8c5; sourceacebcb772205148162c5d0f3234e891e7b63338a.
+
+Fail-fast command: node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json && node node_modules/typescript/bin/tsc --noEmit -p skills/nova/plugins/review/tsconfig.json && node skills/nova/plugins/review/scripts/generate-policy-schema.mjs --check && configured ESLint of changed source/tests
+{
+  "chunk_id": "c18fee",
+  "exit_code": 0,
+  "original_token_count": 0,
+  "output": "",
+  "wall_time_seconds": 0.000001712
+}
+
+Original archived CLI command: node docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs /workspace/scratch/15fb596e6560/run15-review-report
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:5b7c770f039618fc7f49be13c350d9f9909f47b4a033dac9b392221a59ba0c16:sha256:5510f893af621bde17e25cafa78d8a0195102c603ed552cfb9960df595a26a5b\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:5b7c770f039618fc7f49be13c350d9f9909f47b4a033dac9b392221a59ba0c16"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+
+CLI final exit: 0
+
+Focused command: node --test skills/nova/plugins/review/tests/review-report-encoding.test.mjs tests/verification/reliability/review-report-compiler-recovery.test.mjs tests/verification/reliability/review-report-storage-boundary.test.mjs tests/verification/reliability/review-report-author-domain-independent.test.mjs
+✔ own finite report mode has an exact legacy absence and rejects non-JSON before getters (1.176125ms)
+✔ own project review authoring domain rejects report selector before compiler-owned selection (275.182381ms)
+✔ stored source/report modes are independent and all generated Review nodes agree (313.79322ms)
+✔ archived compiler with current coverage helper preserves portable-source and legacy module/final reports (756.092617ms)
+✔ saved Review node set, uniform mode, and the entire pinned graph remain authoritative (164.871875ms)
+✔ report writer binds real CAS result mode and complete owner; invalid JSON never runs getters (133.107205ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1911.03383
+
+Focused final exit: 0
+
+Final full changed-file configured lint including unchanged reviewer tests; git fsck and status before residual fixture cleanup:
+{
+  "chunk_id": "cc1b1e",
+  "exit_code": 0,
+  "original_token_count": 13,
+  "output": "?? skills/nova/project/.review-unfixed-cli-12.ts\n",
+  "wall_time_seconds": 2.952771732
+}
+
+Exact configured lint command:
+node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/nova/project/compiler.ts skills/nova/project/coverage.ts skills/nova/project/recovery.ts skills/nova/plugins/review/src/review-report-encoding.ts skills/nova/plugins/review/src/review-report-flow.ts skills/nova/plugins/review/src/review-report-storage.ts skills/nova/plugins/review/src/stage.ts skills/nova/plugins/review/scripts/generate-policy-schema.mjs skills/nova/plugins/review/tests/live-function.test.ts tests/verification/reliability/review-report-*.mjs skills/nova/plugins/review/tests/review-report-encoding.test.mjs
+
+After all test processes completed, the residual untracked .review-unfixed-cli-12.ts exactly matched its checked-in historical cli.ts.txt (cmp exit0). That temporary copy was removed; final git status --short exited0 with empty output. It was never included in the frozen source tree.

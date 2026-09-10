@@ -33,6 +33,8 @@ execFileSync('git', ['add', '.'], { cwd: sourceRepository });
 execFileSync('git', ['commit', '-qm', 'head'], { cwd: sourceRepository });
 const headRevision = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: sourceRepository, encoding: 'utf8' }).trim();
 const portableEvidence = process.argv.includes('--portable-evidence');
+const portableReports = process.argv.includes('--portable-reports');
+const reportConfig = portableReports ? { reportArtifactEncoding: PORTABLE_JSON_ENCODING } : {};
 const evidenceContent = portableEvidence ? { tests: 'passed', ä: 1, z: 2 } : { tests: 'passed' };
 const evidenceDigest = sha256Text(portableEvidence ? portableJson(evidenceContent) : canonicalJson(evidenceContent));
 const inputEvidence = { kind: 'test', digest: evidenceDigest, content: evidenceContent,
@@ -278,7 +280,7 @@ try {
           id: 'review',
           type: 'kubeclaw.decision.review',
           dependsOn: [],
-          config: { agent: 'reviewer', profile: 'gate' },
+          config: { agent: 'reviewer', profile: 'gate', ...reportConfig },
           input: {
             task: { id: 'TASK-1', statement: 'Review the implementation.' },
             revisions: { base: baseRevision },
@@ -343,7 +345,7 @@ try {
           schemaVersion: 'pipeline-definition.v2', id: `pipeline:review-live-${profile}`, maxConcurrency: 1,
           stages: [{
             id: 'review', type: 'kubeclaw.decision.review', dependsOn: [],
-            config: { agent: 'reviewer', profile },
+            config: { agent: 'reviewer', profile, ...reportConfig },
             input: {
               task: { id: `TASK-${profile.toUpperCase()}`, statement: `Run the ${profile} profile.` },
               revisions: { base: baseRevision }, scope: { allowedPrefixes: ['src'] },
@@ -380,7 +382,7 @@ try {
     const gatePolicy = getReviewPolicyProfile('gate');
     const blockerStage = {
       id: 'review', type: 'kubeclaw.decision.review', dependsOn: [],
-      config: { agent: 'reviewer', profile: 'gate', policy: {
+      config: { agent: 'reviewer', profile: 'gate', ...reportConfig, policy: {
         ...gatePolicy,
         limits: { ...gatePolicy.limits, maxRootCauses: 1, maxInstancesPerCluster: 1 },
       } },
@@ -454,6 +456,22 @@ try {
     assert.equal(governedJournal.records().filter(({ entry }) => (
       entry.type === 'stage.retrying' && entry.identity.stageId === 'review'
     )).length, 0, 'ordinary retries are not used as repair cycles');
+    const catalog = (await artifactRecords.read<{artifactId: string; digest: string; encoding?: string}>(
+      'artifacts/kubeclaw.review',
+    )).map(({payload}) => payload);
+    assert.ok(catalog.filter(ref => ref.artifactId.startsWith('review-report:')).length >= 7);
+    for (const ref of catalog) {
+      if (ref.artifactId.startsWith('review-report:')) {
+        assert.equal(Object.hasOwn(ref, 'encoding'), portableReports);
+        if (portableReports) {
+          assert.equal(ref.encoding, PORTABLE_JSON_ENCODING);
+          const bytes = (await artifactBlobs.get(ref.digest)).toString('utf8');
+          assert.equal(bytes, portableJson(JSON.parse(bytes)));
+        }
+      } else if (ref.artifactId.startsWith('review-bundle:')) {
+        assert.equal(Object.hasOwn(ref, 'encoding'), false, 'report selection does not retag bundle writes');
+      }
+    }
   } finally {
     await adapters.shutdown();
   }
@@ -462,5 +480,5 @@ try {
   await new Promise((resolve) => server.close(resolve));
   fs.rmSync(temporary, { recursive: true, force: true });
 }
-console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.review', suite: 'live-function', portableEvidence,
+console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.review', suite: 'live-function', portableEvidence, portableReports,
   locale: Intl.DateTimeFormat().resolvedOptions().locale, nativeGatewayOrModelProof: false }));

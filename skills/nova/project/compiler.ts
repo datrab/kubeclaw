@@ -42,7 +42,7 @@ function agent(value: unknown): ObjectValue {
   return config;
 }
 
-interface ModuleContext { readonly sourceBinding: SourceBinding; readonly projectId: string; readonly runId: string; readonly repository: string; readonly workspaces: string; readonly baseline: string; readonly previousGate: string | undefined; }
+interface ModuleContext { readonly reportArtifactEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING; readonly sourceBinding: SourceBinding; readonly projectId: string; readonly runId: string; readonly repository: string; readonly workspaces: string; readonly baseline: string; readonly previousGate: string | undefined; }
 function moduleStages(module: ObjectValue, context: ModuleContext): StageDefinition[] {
   const { projectId, runId, repository, workspaces, baseline, previousGate } = context;
   const runNamespace = sha256Text(runId).slice(7, 23);
@@ -70,7 +70,8 @@ function moduleStages(module: ObjectValue, context: ModuleContext): StageDefinit
         commitMessage: `[forge:${module.id}] ${projectId}` } }, execution: { ...execution, repairBudget } });
   stages.push({ id: lintId, type: 'kubeclaw.lint.full', dependsOn: [implementationId], config: module.lint,
     input: { workingDirectory: repository, project: projectId, sourceStageId: implementationId }, execution: { ...execution, repairCategory: 'lint' }, on: { request_fix: implementationId } });
-  if (module.review) stages.push({ id: reviewId, type: 'kubeclaw.decision.review', dependsOn: [lintId], config: module.review,
+  if (module.review) stages.push({ id: reviewId, type: 'kubeclaw.decision.review', dependsOn: [lintId],
+    config: context.reportArtifactEncoding === 'legacy' ? module.review : { ...module.review, reportArtifactEncoding: context.reportArtifactEncoding },
     input: { task: { id: module.id, statement: module.task }, revisions: { sourceStageId: implementationId },
       scope: { allowedPrefixes: coverageReviewPrefixes(expectedCoverage), ownershipPrefixes: coverageReviewPrefixes(expectedCoverage) }, requirements: coverageReviewRequirements(expectedCoverage),
       evidence: [{ kind: 'project-requirements', digest: sha256Text(canonicalJson(evidence)), content: evidence }, { kind: 'gate-coverage', digest: sha256Text(canonicalJson(expectedCoverage)), content: expectedCoverage }], contextCandidates: [] },
@@ -150,7 +151,9 @@ function orderedModules(modules: ReadonlyMap<string, ObjectValue>): ObjectValue[
  * A project is a single repository publication lane. Explicit pipeline graphs
  * retain their existing concurrency semantics.
  */
-export function compileProject(value: unknown, sourceIdentity: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING): { runId: string; definition: PipelineDefinition } {
+export function compileProject(value: unknown, sourceIdentity: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING,
+  reportArtifactEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING = PORTABLE_JSON_ENCODING): { runId: string; definition: PipelineDefinition } {
+  if (reportArtifactEncoding !== 'legacy' && reportArtifactEncoding !== PORTABLE_JSON_ENCODING) throw new Error('PROJECT_REPORT_ENCODING_INVALID');
   const project = object(value, ['schemaVersion', 'id', 'runId', 'repositoryRoot', 'workspaceRoot', 'baseRevision', 'modules', 'final', 'architecture', 'demo'], 'project');
   if (project.schemaVersion !== 'nova-project.v2') throw new Error('PROJECT_SCHEMA_UNSUPPORTED:nova-project.v2 requires explicit architecture and module blueprint declarations; legacy inputs need authored migration');
   const projectId = id(project.id);
@@ -173,10 +176,10 @@ export function compileProject(value: unknown, sourceIdentity: 'legacy' | typeof
   const stages: StageDefinition[] = [...source.stages];
   let previousGate: string | undefined = 'blueprint-sync';
   for (const module of ordered) {
-    stages.push(...moduleStages(module, { projectId, runId, repository, workspaces, baseline, previousGate, sourceBinding: source.binding }));
+    stages.push(...moduleStages(module, { projectId, runId, repository, workspaces, baseline, previousGate, sourceBinding: source.binding, reportArtifactEncoding }));
     previousGate = `test-${module.id}`;
   }
-  stages.push(...cumulativeStages(project, ordered, `implement-${ordered.at(-1)!.id}`));
+  stages.push(...cumulativeStages(project, ordered, `implement-${ordered.at(-1)!.id}`, reportArtifactEncoding));
   stages.push(...demoStages(demo,final.test.providerPlan.plan));
   const definition = { schemaVersion: 'pipeline-definition.v2', id: `project:${projectId}`, maxConcurrency: 1, stages } as PipelineDefinition;
   validateContractValue('pipelineDefinition', definition);
