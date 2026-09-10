@@ -1,17 +1,36 @@
-import {parseReviewSource} from '@kubeclaw/plugin-sdk';
+import {parseReviewSource, portableJson, PORTABLE_JSON_ENCODING, type StageDefinition} from '@kubeclaw/plugin-sdk';
 import {readRunSnapshot,verifyPinnedGraph} from '@kubeclaw/nova-core/run-snapshots';
 import {runRoot} from '@kubeclaw/nova-core/run-root';
 import {compileProject} from './compiler.ts';
 
-/** Recompile user input using its recorded source contract, then verify the whole graph. */
+function storedReportMode(expected: readonly StageDefinition[], stored: readonly StageDefinition[]): 'legacy' | typeof PORTABLE_JSON_ENCODING {
+  const reviewType = 'kubeclaw.decision.review';
+  const expectedIds = expected.filter(stage => stage.type === reviewType).map(stage => stage.id).sort();
+  const actual = stored.filter(stage => stage.type === reviewType);
+  const actualIds = actual.map(stage => stage.id).sort();
+  if (portableJson(actualIds) !== portableJson(expectedIds)) throw new Error('PROJECT_RECOVERY_REVIEW_NODES_MISMATCH');
+  const modes = new Set(actual.map(stage => {
+    portableJson(stage.config);
+    if (!Object.hasOwn(stage.config, 'reportArtifactEncoding')) return 'legacy' as const;
+    if (stage.config.reportArtifactEncoding !== PORTABLE_JSON_ENCODING) throw new Error('PROJECT_RECOVERY_REPORT_ENCODING_INVALID');
+    return PORTABLE_JSON_ENCODING;
+  }));
+  if (modes.size > 1) throw new Error('PROJECT_RECOVERY_REPORT_ENCODING_MIXED');
+  return modes.values().next().value ?? 'legacy';
+}
+
+/** Reconstruct source and report modes independently, then verify the WHOLE graph. */
 export function compileProjectRecovery(project: unknown, storageRoot: string): ReturnType<typeof compileProject> {
-  const current=compileProject(project);
-  const root=runRoot(storageRoot,current.runId);
+  // This validated legacy skeleton obtains identity and generated Review node set;
+  // it is never substituted for the stored graph or used to authorize defaults.
+  const skeleton=compileProject(project,'legacy','legacy');
+  const root=runRoot(storageRoot,skeleton.runId);
   const snapshot=readRunSnapshot(root);
   const sources=snapshot.graph.nodes.filter(stage=>stage.id==='source-preflight' && stage.type==='kubeclaw.validate.source-preflight');
   if(sources.length!==1)throw new Error('PROJECT_RECOVERY_SOURCE_INVALID');
   const source=parseReviewSource(sources[0]!.input.source);
-  const compiled=source.identityEncoding ? current : compileProject(project,'legacy');
+  const reportMode=storedReportMode(skeleton.definition.stages,snapshot.graph.nodes);
+  const compiled=compileProject(project,source.identityEncoding ?? 'legacy',reportMode);
   verifyPinnedGraph(root,compiled.definition);
   return compiled;
 }
