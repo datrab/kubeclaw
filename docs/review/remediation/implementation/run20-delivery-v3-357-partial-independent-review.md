@@ -50,7 +50,9 @@ Summary histories, cancellation, the full original consumer-negative matrix and
 replay remain missing. Full Knip cannot start because local `knip@6.35.1` is
 absent. The original Go and Playwright Chromium prerequisites remain absent.
 The package-boundary gate still finds the pre-existing shared telemetry-store to
-Nova lock import, and docs inventory is stale outside the Delivery delta. No
+Nova lock import, docs inventory is stale outside the Delivery delta, and the
+full plugin build stops in pre-existing operator-messaging source because its
+`terminal` result may be undefined. No
 missing prerequisite or partial test is acceptance.
 
 Correct the archived diagnostic without weakening source cleanliness, freeze a
