@@ -187,27 +187,29 @@
       "counterexample": "23e14883ace8868ab5ff0267b086253d43f4af35",
       "branch": "fix/resume-47-run13-sdk-bundle-czech-20260910t020224",
       "status": "isolated-implementation-and-independent-native-fixture-work-in-progress-not-accepted",
-      "next_action": "Resume author fc56 and independent aad6 backups into new isolated checkouts after fresh MAIN reconciliation. Implement the approved bbb072/8ee1 inner owner extension atomically with the first semantic cutover; independently review exact frozen source. Direct11/11, Summary4, compiler3/3, archived compiler4/4 and CLI/import0 are bounded partial evidence only. Original native producer red cf45 remains unresolved; no flagged helper execution reroute. All required full native and original gates remain open.",
+      "next_action": "Independently review exact8ae8 inner-owner source againstbbb072/8ee1 in new own checkout, then bounded direct provenance/mixed-mode tests. Author owns source; separate reviewer owns tests/review. Prior aad6 source review applies only to earlierfc56, not this new extension. No native gate substitution or flagged helper reroute. Separate manifest98d8 is preparatory-only.",
       "design": "e07c5c0730e71bed3519ad5a51730e6d7a4dafaf",
       "design_review": "be25cf15b8e5305e66e680d65cd77163e4867182",
       "independent_early_red": "c477d124a004100a8a0e7f86fcc7a7a70ac86aa0",
       "independent_partial_admission_review": "aad6bb8bd709eb2e2ee22ebb5d789b06aa2b5d3f",
       "first_incomplete_source_backup": "c6ef941d0c330e74466bb7351d7760b53cb2575c",
-      "incomplete_source_backup": "fc56f1957d042b7d057769c26c5907995c42ef90",
-      "incomplete_source_branch": "fix/resume-47-run14-semantic-coupled-fa91b98",
+      "incomplete_source_backup": "8ae8a0859e6111683fb87e810039488f3f9b0d52",
+      "incomplete_source_branch": "fix/resume-47-run14-inner-owners-d8f77ff",
       "inner_extension_design": "bbb07254936e59ad972e8525bbc4dda1a8df32dc",
       "inner_extension_design_review": "8ee1f958057177b656d6bbd1f4f07ad395b0328e",
       "original_native_producer_red": "cf45e370564dea42879c76cb83cfed3ffec03ea1",
-      "inner_owner_extension": "Policy/provenance and generated fact/candidate evidence owner extension bbb072 independently approved8ee1 and root-authorized; implementation and genuine gates incomplete. Keep stable candidateId and old APIs, require expected graph semantic mode/private certificates, integrate atomically with FIRST semantic selector publication. Never precompute replacement inner hashes.",
-      "separate_delivery_manifest_boundary": "fc56 preserves original buildSummary returned digest divergence using explicit artifact-contract fixtures and real EffectCoordinator/ArtifactStore/FileJournal, NOT registered Summary stage lifecycle. Saved full manifest/refs were not retained. Registered stage persistence and downstream adapter are source-traced only, not executed. Separate read-only owner/design13f0aa is awaiting independent review; no manifest source authorization or Review selector widening.",
-      "helper_limit": "After durable original red proof, helper turn ended with a platform safety flag; no later candidate validation completed. Do not retry, rephrase or reroute the flagged action. Keep unexecuted gates open."
+      "inner_owner_extension": "Approved source extension is now saved in8ae8, solec8b3 parent,49delta4107entries. Preliminary Nova types and six unchanged original owner suites pass; bounded new owner proof, independent implementation review and native phases remain outstanding. First semantic cutover must stay atomic; no source integration approval.",
+      "separate_delivery_manifest_boundary": "fc56 preserves original buildSummary returned digest divergence using explicit artifact-contract fixtures and real EffectCoordinator/ArtifactStore/FileJournal, NOT registered Summary stage lifecycle. Saved full manifest/refs were not retained. Registered stage persistence and downstream adapter are source-traced only, not executed. Separate read-only owner/design13f0aa was independently reviewed as preparatory-only98d8, not implementation-ready; no manifest source authorization or Review selector widening.",
+      "helper_limit": "After durable original red proof, helper turn ended with a platform safety flag; no later candidate validation completed. Do not retry, rephrase or reroute the flagged action. Keep unexecuted gates open.",
+      "previous_coherent_source_backup": "fc56f1957d042b7d057769c26c5907995c42ef90"
     },
     {
       "package": "delivery-manifest-identity-design",
-      "status": "read-only-preparatory-design-not-approved-for-source",
+      "status": "independently-reviewed-preparatory-boundary-not-source-ready",
       "design": "13f0aa8262a20c31aac25a62b63e3aa018155768",
       "branch": "fix/resume-47-run17-delivery-design-f33bf39",
-      "next_action": "Independent read-only owner/design review; missing registered producer/stored-manifest/downstream evidence remains open. No source/test execution authorized by design alone; preserve separate owner and historical effects/graphs."
+      "next_action": "Before any source authorization, freeze exact v3 contract/public-owner/default choices and obtain missing genuine writer/stored/downstream proof. Preserve old v2 reader acceptance of valid portable outer refs; old untagged producer is not a mandatory untagged-reader rule.",
+      "design_review": "98d8f41abf0d822d94f1d854326a252e5dfa25ac"
     }
   ],
   "integrated_review_codec": {
