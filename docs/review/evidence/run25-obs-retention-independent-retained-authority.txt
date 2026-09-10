@@ -1,0 +1,12 @@
+✔ retained import verifies every evidence, output and report blob with actual missing/corrupt files (240.326721ms)
+✔ retained import rejects pending, null-result, incomplete decision and result identity despite valid record CAS (82.836094ms)
+✔ bounded original record fenced read refuses oversized snapshot before callback and releases fence (27.529832ms)
+✔ genuine original decision calculation retains review_required as incomplete authority (25.631609ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 673.672033
