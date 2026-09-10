@@ -114,6 +114,18 @@
         "tests/**/*.{ts,mts,mjs}"
       ]
     },
+    "skills/buster/plugins/demo-auth-smoke": {
+      "entry": [
+        "src/provider.js",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
     "skills/buster/plugins/direct-command": {
       "entry": [
         "src/provider.js",
@@ -229,18 +241,6 @@
     "skills/buster/plugins/tailscale-exposure": {
       "entry": [
         "src/provider.js",
-        "tests/**/*.{mjs,mts,ts}"
-      ],
-      "project": [
-        "src/**/*.{ts,mjs}",
-        "common/**/*.{ts,mjs}",
-        "contracts/**/*.{ts,mjs}",
-        "tests/**/*.{ts,mts,mjs}"
-      ]
-    },
-    "skills/buster/plugins/test-agent": {
-      "entry": [
-        "src/stage.ts",
         "tests/**/*.{mjs,mts,ts}"
       ],
       "project": [
@@ -566,6 +566,21 @@
         "tests/**/*.{ts,mts,mjs}"
       ]
     },
+    "skills/nova/plugins/demo-handoff": {
+      "entry": [
+        "src/adapter.ts",
+        "src/candidate.ts",
+        "src/delivery.ts",
+        "src/ready.ts",
+        "tests/**/*.{mjs,mts,ts}"
+      ],
+      "project": [
+        "src/**/*.{ts,mjs}",
+        "common/**/*.{ts,mjs}",
+        "contracts/**/*.{ts,mjs}",
+        "tests/**/*.{ts,mts,mjs}"
+      ]
+    },
     "skills/nova/plugins/human-approval": {
       "entry": [
         "src/architecture-approval.ts",
@@ -606,6 +621,7 @@
     },
     "skills/nova/plugins/pipeline-review": {
       "entry": [
+        "src/evidence-adapter.ts",
         "src/stage.ts",
         "tests/**/*.{mjs,mts,ts}"
       ],
@@ -618,6 +634,7 @@
     },
     "skills/nova/plugins/preflight-contract": {
       "entry": [
+        "src/source-stage.ts",
         "src/stage.ts",
         "tests/**/*.{mjs,mts,ts}"
       ],
@@ -655,6 +672,7 @@
     "skills/nova/plugins/remote-test-gate": {
       "entry": [
         "src/adapter.ts",
+        "src/evidence-adapter.ts",
         "tests/**/*.{mjs,mts,ts}"
       ],
       "project": [
@@ -679,6 +697,7 @@
     "skills/nova/plugins/review": {
       "entry": [
         "src/repository-audit-stage.ts",
+        "src/repository-revalidation-stage.ts",
         "src/stage.ts",
         "tests/**/*.{mjs,mts,ts}"
       ],

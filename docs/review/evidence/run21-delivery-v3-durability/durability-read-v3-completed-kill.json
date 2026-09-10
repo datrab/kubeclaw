@@ -1,0 +1,42 @@
+{
+  "phase": "kill-read-v3-completed",
+  "target": "read",
+  "boundary": "completed",
+  "request": {
+    "schemaVersion": "effect-request.v2",
+    "effectId": "effect:json-utf16-v1:113137b217f9eff346e69b05abcf1d135f080d15d35f1d6443deec8a924de86f",
+    "idempotencyKey": "run:delivery-manifest-stage-boundary:consume:1:1",
+    "attempt": {
+      "runId": "run:delivery-manifest-stage-boundary",
+      "stageId": "consume",
+      "attemptId": "attempt:5a9c9fed-b72b-444a-97b4-e987e9ad1c00",
+      "attemptNumber": 1
+    },
+    "capability": "test.plan.evidence",
+    "operation": "demo",
+    "resource": {
+      "type": "test.plan.evidence",
+      "canonicalId": "project-summary:run:delivery-manifest-stage-boundary"
+    },
+    "payload": {
+      "manifest": {
+        "artifactId": "project-summary:run:delivery-manifest-stage-boundary",
+        "digest": "sha256:1628286825728fd2d483627fbae7d5ca29a7cb4ef4c3f9e1a1f4f366ad09eb3b",
+        "encoding": "kubeclaw-json.utf16.v1",
+        "mediaType": "application/json",
+        "namespace": "kubeclaw.project-summary",
+        "producer": {
+          "attemptId": "attempt:49be2e6c-82d0-4c10-ac81-68a05a6939b0",
+          "attemptNumber": 1,
+          "runId": "run:delivery-manifest-stage-boundary",
+          "stageId": "project-summary"
+        },
+        "sizeBytes": 7616
+      },
+      "namespace": "kubeclaw.project-summary",
+      "authNodeId": "auth"
+    },
+    "requestedAt": "2026-09-10T07:25:47.773Z"
+  },
+  "signal": "SIGKILL"
+}

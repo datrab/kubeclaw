@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "delivery-manifest-durability-replay.v1",
+  "phase": "replay-write-v3-requested",
+  "target": "write",
+  "mode": "v3",
+  "boundary": "requested",
+  "killedSignal": "SIGKILL",
+  "outcome": "completed",
+  "exactRequestRetained": true,
+  "sourceBaseCommit": "15f6a808ed1666c3b7a2a3909749e3d4ee377904",
+  "productionSourceDigest": "sha256:21910cc1b7aad2995143743ebd588f8f6e76125c80e95b7fc7c8a40ef11b7d15",
+  "durabilityChildDigest": "sha256:5fbd9c9384e4b68219f4b34d6636f159a34cbd0d989b2a091d81d5b7ffe17da7",
+  "requestDigest": "sha256:29f70e21128a602051b9a1efa39ba90ed614f98e8f7143929decc417719c6ad1",
+  "requestSchemaVersion": "delivery-manifest.v3",
+  "requestEncoding": "kubeclaw-json.utf16.v1",
+  "manifestArtifactEncoding": "kubeclaw-json.utf16.v1",
+  "adapterAcceptedCount": 1,
+  "totalNewAuditRecords": 2,
+  "journalRecordsBefore": 20,
+  "journalRecordsAfter": 20,
+  "journalRecordsAppended": 0
+}

@@ -1,0 +1,24 @@
+command: KUBECLAW_DELIVERY_DURABILITY_PROOF_OUTPUT=docs/review/evidence/run21-delivery-v3-durability node --test tests/verification/reliability/delivery-manifest-v3-durability.test.mjs
+exit: 0
+tests: 1
+pass: 1
+fail: 0
+cancelled: 0
+skipped: 0
+todo: 0
+duration_ms: 71714
+
+Twelve independent child histories cover v2/v3, registered Summary write and
+original downstream evidence read, and requested/accepted/completed durable
+prefixes. Every initial process records its exact target request and is then
+terminated by actual OS SIGKILL. Reconstructed real AdapterRuntime,
+EffectCoordinator, FileEffectJournal, FileResourceLockManager and disk
+ArtifactStore preserve the prefix bytes and identical request. Requested-only
+replay invokes exactly once; accepted-without-receipt remains uncertain with no
+replacement invocation or append; completed replay returns the receipt with no
+invocation or append. V2 never gains an encoding and v3 never loses its exact
+portable encoding. The downstream reader retains get_latest_json_bytes.
+
+The JSON files in this directory preserve each kill request, signal, replay
+result, adapter-accept count and before/after journal byte count. This test does
+not claim cancellation, provider execution or deployment.

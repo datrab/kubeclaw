@@ -4,9 +4,12 @@ import { summaryReviewSemanticEncoding, summaryReviewBundleDigest,
 import { assertCoverageDecision, coveragePassed, coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import { parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
 import { canonicalJson, sha256Text, resolveSourceRevision, type ArtifactRef, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
+import { createDeliveryManifestV3, DELIVERY_MANIFEST_ENCODING,
+  type DeliveryManifestEncoding } from '@kubeclaw/delivery-manifest-contract';
 
 export interface GateBinding {
   readonly reviewSemanticEncoding?: SummaryReviewSemanticEncoding;
+  readonly reviewArtifactEncoding?: typeof PORTABLE_JSON_ENCODING;
   readonly sourceStageId: string;
   readonly lintStageId: string;
   readonly reviewStageId?: string;
@@ -42,11 +45,18 @@ function validateCoverageInput(input: SummaryInput): void {
 
 type ReadEvidence = (stageId: string, namespace: string, select?: (ref: ArtifactRef) => boolean,
   encoding?: typeof PORTABLE_JSON_ENCODING) => Promise<Record<string, any>>;
+type JsonArtifactRef = ArtifactRef & { readonly mediaType: 'application/json' };
 
-async function verifyFinalReview(input: SummaryInput, sourceRevision: string, read: ReadEvidence): Promise<void> {
+async function verifyFinalReview(input: SummaryInput, sourceRevision: string, read: ReadEvidence,
+  deliveryManifestEncoding?: DeliveryManifestEncoding): Promise<void> {
   const semantic = summaryReviewSemanticEncoding(input.final as unknown as Record<string, unknown>);
+  const artifactEncoding = input.final.reviewArtifactEncoding;
   if (input.final.reviewStageId) {
-    const encoding = semantic === undefined ? undefined : PORTABLE_JSON_ENCODING;
+    // Preserve the historical v2 semantic-mode implication. V3 carries the
+    // independently compiled outer-artifact expectation explicitly.
+    const encoding = deliveryManifestEncoding === undefined
+      ? (semantic === undefined ? undefined : PORTABLE_JSON_ENCODING)
+      : artifactEncoding;
     const review = await read(input.final.reviewStageId, 'kubeclaw.review', ref => ref.artifactId.startsWith('review-report:'), encoding);
     const bundle = await read(input.final.reviewStageId, 'kubeclaw.review', ref => ref.artifactId.startsWith('review-bundle:'), encoding);
     const bundleDigest = summaryReviewBundleDigest(review, bundle, semantic);
@@ -61,12 +71,29 @@ async function verifyFinalReview(input: SummaryInput, sourceRevision: string, re
   }
 }
 
+function validateReviewMode(input: SummaryInput, deliveryManifestEncoding?: DeliveryManifestEncoding): void {
+  const hasReview = input.final.reviewStageId !== undefined;
+  const hasArtifactEncoding = Object.hasOwn(input.final, 'reviewArtifactEncoding');
+  const hasSemanticEncoding = Object.hasOwn(input.final, 'reviewSemanticEncoding');
+  if (deliveryManifestEncoding === undefined) {
+    if (hasArtifactEncoding) throw new Error('DELIVERY_REVIEW_ARTIFACT_MODE_INVALID');
+    return;
+  }
+  if ((hasArtifactEncoding && (!hasReview || input.final.reviewArtifactEncoding !== PORTABLE_JSON_ENCODING))
+    || (hasSemanticEncoding && !hasArtifactEncoding)) throw new Error('DELIVERY_REVIEW_ARTIFACT_MODE_INVALID');
+}
+
 /** Delivery is derived from core-supplied, immutable evidence, never caller-owned counts. */
-export async function buildSummary(input: SummaryInput, context: PluginInvocationContext) {
+export async function buildSummary(input: SummaryInput, context: PluginInvocationContext,
+  deliveryManifestEncoding?: DeliveryManifestEncoding) {
+  if (deliveryManifestEncoding !== undefined && deliveryManifestEncoding !== DELIVERY_MANIFEST_ENCODING) {
+    throw new Error('DELIVERY_MANIFEST_ENCODING_INVALID');
+  }
   validateCoverageInput(input);
+  validateReviewMode(input, deliveryManifestEncoding);
   const runId = context.contract.lease.attempt.runId;
   let totalBytes = 0;
-  const evidence: ArtifactRef[] = [];
+  const evidence: JsonArtifactRef[] = [];
   async function read(stageId: string, namespace: string, select: (ref: ArtifactRef) => boolean = () => true,
     encoding?: typeof PORTABLE_JSON_ENCODING) {
     const candidates = context.contract.artifacts.filter(ref => ref.producer.runId === runId
@@ -83,11 +110,12 @@ export async function buildSummary(input: SummaryInput, context: PluginInvocatio
     const bytes = verifiedArtifactJsonText(response, ref);
     if (response.digest !== ref.digest || response.sizeBytes !== ref.sizeBytes || sha256Text(bytes) !== ref.digest
       || Buffer.byteLength(bytes) !== ref.sizeBytes) throw new Error('DELIVERY_EVIDENCE_CORRUPT');
-    evidence.push(ref);
+    evidence.push(ref as JsonArtifactRef);
     if (!response.value || typeof response.value !== 'object' || Array.isArray(response.value)) throw new Error('DELIVERY_EVIDENCE_INVALID');
     return response.value as Record<string, any>;
   }
-  async function verify(binding: { readonly sourceStageId: string; readonly testStageId: string; readonly expectedCoverage: GateCoverageV1 }) {
+  async function verify<T extends { readonly sourceStageId: string; readonly testStageId: string;
+    readonly expectedCoverage: GateCoverageV1 }>(binding: T) {
     const revision = await resolveSourceRevision({ sourceStageId: binding.sourceStageId }, context);
     await read(binding.sourceStageId, 'kubeclaw.implementation-agent', ref => ref.artifactId.startsWith('implementation:'));
     const decision = parseGateDecision(await read(binding.testStageId, 'kubeclaw.buster-quality-gate', ref => ref.artifactId.includes(':decision:')));
@@ -98,18 +126,25 @@ export async function buildSummary(input: SummaryInput, context: PluginInvocatio
     assertCoverageDecision(decision, binding.expectedCoverage, revision, binding.testStageId);
     const qualityPassed = quality.testAgent?.enabled === false ? quality.nativeOutcome === 'passed' : quality.verdict?.outcome === 'passed';
     if (decision.state !== 'passed' || !coveragePassed(decision.coverage!) || decision.runId !== runId || !qualityPassed
-      || quality.decisionDigest !== decision.decisionDigest) throw new Error(`DELIVERY_GATE_NOT_PASSED:${binding.sourceStageId}`);
-    const { decisionDigest } = decision;
-    return { ...binding, sourceRevision: revision, decisionDigest, resultDigest: decision.resultDigest, coverage: decision.coverage };
+      || quality.decisionDigest !== decision.decisionDigest || typeof decision.resultDigest !== 'string'
+      || decision.coverage === undefined) throw new Error(`DELIVERY_GATE_NOT_PASSED:${binding.sourceStageId}`);
+    const { decisionDigest, resultDigest, coverage } = decision;
+    return { ...binding, sourceRevision: revision, decisionDigest, resultDigest, coverage };
   }
   const modules = [];
-  for (const module of input.modules) modules.push({ moduleId: module.moduleId, ...await verify(module) });
+  for (const module of input.modules) modules.push(await verify(module));
   const final = await verify(input.final);
   const lint = await read(input.final.lintStageId, 'kubeclaw.lint');
   if (lint.sourceRevision !== final.sourceRevision) throw new Error('DELIVERY_FINAL_CANDIDATE_MISMATCH');
   if (lint.summary?.tools_failed !== 0 || lint.summary?.total_blocking !== 0) throw new Error('DELIVERY_FINAL_GATE_NOT_PASSED');
-  await verifyFinalReview(input, final.sourceRevision, read);
+  await verifyFinalReview(input, final.sourceRevision, read, deliveryManifestEncoding);
   const manifest = { schemaVersion: 'delivery-manifest.v2', projectId: input.projectId, runId,
     sourceRevision: final.sourceRevision, modules, final, evidence };
-  return { ...manifest, digest: sha256Text(canonicalJson(manifest)) };
+  if (deliveryManifestEncoding === undefined) return { ...manifest, digest: sha256Text(canonicalJson(manifest)) };
+  const { reviewStageId, reviewArtifactEncoding, reviewSemanticEncoding, ...finalBase } = final;
+  const v3Final = reviewStageId === undefined ? finalBase
+    : reviewArtifactEncoding === undefined ? { ...finalBase, reviewStageId }
+      : reviewSemanticEncoding === undefined ? { ...finalBase, reviewStageId, reviewArtifactEncoding }
+        : { ...finalBase, reviewStageId, reviewArtifactEncoding, reviewSemanticEncoding };
+  return createDeliveryManifestV3({ ...manifest, schemaVersion: 'delivery-manifest.v3', final: v3Final });
 }

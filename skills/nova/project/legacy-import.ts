@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, PORTABLE_JSON_ENCODING, sha256Text } from '@kubeclaw/plugin-sdk';
 import { compileProject } from './compiler.ts';
 
 type RecordValue = Record<string, any>;
@@ -63,7 +63,7 @@ export function importLegacyProject(legacyValue: unknown, authoringValue: unknow
     }
     return { ...module, dependsOn, blueprint: { ...blueprint, modulePath, ...(substeps === undefined ? {} : { substeps }) } };
   });
-  const compiled = compileProject(project);
+  const compiled = compileProject(project, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING, 'legacy', 'legacy');
   return { project, definition: compiled.definition, report: {
     schemaVersion: 'nova-project-legacy-import-report.v1', legacyDigest: sha256Text(canonicalJson(legacy)),
     authoringDigest: sha256Text(canonicalJson(authoring)), projectDigest: sha256Text(canonicalJson(project)),

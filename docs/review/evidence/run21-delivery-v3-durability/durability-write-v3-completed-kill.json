@@ -1,0 +1,356 @@
+{
+  "phase": "kill-write-v3-completed",
+  "target": "write",
+  "boundary": "completed",
+  "request": {
+    "schemaVersion": "effect-request.v2",
+    "effectId": "effect:json-utf16-v1:f887393c3133f4f774121ffe25b983c63288ac55068fa25db6e141073cce1b17",
+    "idempotencyKey": "run:delivery-manifest-stage-boundary:project-summary:1:12",
+    "attempt": {
+      "runId": "run:delivery-manifest-stage-boundary",
+      "stageId": "project-summary",
+      "attemptId": "attempt:8af3aab6-78c3-4655-987f-74dacd68c0e3",
+      "attemptNumber": 1
+    },
+    "capability": "artifacts.write",
+    "operation": "put_json",
+    "resource": {
+      "type": "artifact.object",
+      "canonicalId": "project-summary:run:delivery-manifest-stage-boundary"
+    },
+    "payload": {
+      "namespace": "kubeclaw.project-summary",
+      "mediaType": "application/json",
+      "value": {
+        "digest": "sha256:ca2acbe24b2f69647a200cabf52a1c3d339d2e84d3b843c015f467a0b1614f33",
+        "evidence": [
+          {
+            "artifactId": "implementation:app",
+            "digest": "sha256:b1aee0b491f2b435ccafd8fe263d459391124a558d666c1b6a37f6baeb6e2788",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.implementation-agent",
+            "producer": {
+              "attemptId": "attempt:813cc37e-791e-4c47-b7ae-59f54a6324bc",
+              "attemptNumber": 1,
+              "runId": "run:delivery-manifest-stage-boundary",
+              "stageId": "forge"
+            },
+            "sizeBytes": 90
+          },
+          {
+            "artifactId": "quality:test:decision:1",
+            "digest": "sha256:d82477a8957ef07ee2171484320f36c900417032415fe6224e2deca31626ae85",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.buster-quality-gate",
+            "producer": {
+              "attemptId": "attempt:af100887-0d16-406f-abf1-c2a8c5703782",
+              "attemptNumber": 1,
+              "runId": "run:delivery-manifest-stage-boundary",
+              "stageId": "test"
+            },
+            "sizeBytes": 1537
+          },
+          {
+            "artifactId": "quality:test:1",
+            "digest": "sha256:8f24039310be28fe4fcbd01a582f5ba24afd5d29a0d5d0ff6ac66156fc36a858",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.buster-quality-gate",
+            "producer": {
+              "attemptId": "attempt:af100887-0d16-406f-abf1-c2a8c5703782",
+              "attemptNumber": 1,
+              "runId": "run:delivery-manifest-stage-boundary",
+              "stageId": "test"
+            },
+            "sizeBytes": 207
+          },
+          {
+            "artifactId": "implementation:app",
+            "digest": "sha256:b1aee0b491f2b435ccafd8fe263d459391124a558d666c1b6a37f6baeb6e2788",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.implementation-agent",
+            "producer": {
+              "attemptId": "attempt:813cc37e-791e-4c47-b7ae-59f54a6324bc",
+              "attemptNumber": 1,
+              "runId": "run:delivery-manifest-stage-boundary",
+              "stageId": "forge"
+            },
+            "sizeBytes": 90
+          },
+          {
+            "artifactId": "quality:final-test:decision:1",
+            "digest": "sha256:64b83bcfca6f03788ac27d85fc86d2d493a6ce3ea3c3b9ad3c18195b728e5a50",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.buster-quality-gate",
+            "producer": {
+              "attemptId": "attempt:7641e294-1fc3-406b-bc53-6c1cf1caeda1",
+              "attemptNumber": 1,
+              "runId": "run:delivery-manifest-stage-boundary",
+              "stageId": "final-test"
+            },
+            "sizeBytes": 2072
+          },
+          {
+            "artifactId": "quality:final-test:1",
+            "digest": "sha256:93cc5faaf7255a5e5fc1b6f7ba1ba65c5be35b4cdce231d0a64d1c85f16337d0",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.buster-quality-gate",
+            "producer": {
+              "attemptId": "attempt:7641e294-1fc3-406b-bc53-6c1cf1caeda1",
+              "attemptNumber": 1,
+              "runId": "run:delivery-manifest-stage-boundary",
+              "stageId": "final-test"
+            },
+            "sizeBytes": 207
+          },
+          {
+            "artifactId": "lint:full:app",
+            "digest": "sha256:ca26c4db9a18a1a3a1b45b7aef0e0aa2d41244ca79ed573fa3487a47c6e4ffb4",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.lint",
+            "producer": {
+              "attemptId": "attempt:cb823686-47d5-44f8-aef3-91674f2ec840",
+              "attemptNumber": 1,
+              "runId": "run:delivery-manifest-stage-boundary",
+              "stageId": "lint"
+            },
+            "sizeBytes": 109
+          },
+          {
+            "artifactId": "review-report:contract",
+            "digest": "sha256:b9c3520f0aa5e03659009b35b519ce45c03ac073327323ec135a76a18313732d",
+            "encoding": "kubeclaw-json.utf16.v1",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.review",
+            "producer": {
+              "attemptId": "attempt:7e21a220-1d49-497f-ab3c-1f385feb03bd",
+              "attemptNumber": 1,
+              "runId": "run:delivery-manifest-stage-boundary",
+              "stageId": "review"
+            },
+            "sizeBytes": 991
+          },
+          {
+            "artifactId": "review-bundle:contract",
+            "digest": "sha256:639801b67f1bae6d3c9ea62caec3516a49311dba5aff8fd023934f4e43bae7e3",
+            "encoding": "kubeclaw-json.utf16.v1",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.review",
+            "producer": {
+              "attemptId": "attempt:7e21a220-1d49-497f-ab3c-1f385feb03bd",
+              "attemptNumber": 1,
+              "runId": "run:delivery-manifest-stage-boundary",
+              "stageId": "review"
+            },
+            "sizeBytes": 1096
+          }
+        ],
+        "final": {
+          "coverage": {
+            "archiveContentDigest": "sha256:be4f92defb1a3800f350b8de351166d52aa6b57dad438d8dc230559f453fc266",
+            "checks": [
+              {
+                "checkId": "auth",
+                "declarationId": "auth",
+                "nodeId": "auth",
+                "state": "passed"
+              }
+            ],
+            "coverageDigest": "sha256:a08fbf98612d377d3d494843cc55e24dc41d72f7057f5b0936c3b98811da277c",
+            "pipelineStageId": "final-test",
+            "planDigest": "sha256:ae8786916192e1f97aa6daa3efe9bff9e30f5f859ef0d4f09fbb836e9c5a8964",
+            "policy": {
+              "baseRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "integrationRequirements": [],
+              "kind": "cumulative",
+              "modules": [
+                {
+                  "moduleId": "app",
+                  "ownedPaths": [
+                    "src"
+                  ],
+                  "requirements": [
+                    {
+                      "id": "demo-auth",
+                      "statement": "Demo authenticated workspace is usable"
+                    }
+                  ]
+                }
+              ],
+              "policyDigest": "sha256:f244657cb6149fd487668fc6e3a30854168c489dd37e14c3fe67ce54f08bf272",
+              "projectId": "demo",
+              "requiredChecks": [
+                {
+                  "checkId": "auth",
+                  "nodeIds": [
+                    "auth"
+                  ],
+                  "requirementRefs": [
+                    {
+                      "moduleId": "app",
+                      "requirementId": "demo-auth"
+                    }
+                  ]
+                }
+              ],
+              "schemaVersion": "gate-coverage.v1"
+            },
+            "schemaVersion": "gate-coverage-result.v1",
+            "sourceRevision": "git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sourceTree": "git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "decisionDigest": "sha256:fb94d2996dae6a646afd55caa0a1c32fd382f1accff855890b0d93a02f77e4fb",
+          "expectedCoverage": {
+            "baseRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "integrationRequirements": [],
+            "kind": "cumulative",
+            "modules": [
+              {
+                "moduleId": "app",
+                "ownedPaths": [
+                  "src"
+                ],
+                "requirements": [
+                  {
+                    "id": "demo-auth",
+                    "statement": "Demo authenticated workspace is usable"
+                  }
+                ]
+              }
+            ],
+            "policyDigest": "sha256:f244657cb6149fd487668fc6e3a30854168c489dd37e14c3fe67ce54f08bf272",
+            "projectId": "demo",
+            "requiredChecks": [
+              {
+                "checkId": "auth",
+                "nodeIds": [
+                  "auth"
+                ],
+                "requirementRefs": [
+                  {
+                    "moduleId": "app",
+                    "requirementId": "demo-auth"
+                  }
+                ]
+              }
+            ],
+            "schemaVersion": "gate-coverage.v1"
+          },
+          "lintStageId": "lint",
+          "resultDigest": "sha256:68e39beb95cb32ebad2e332a68ae972f6f2b9d99441284d00ef7e908c61acd42",
+          "reviewArtifactEncoding": "kubeclaw-json.utf16.v1",
+          "reviewSemanticEncoding": "review-semantics.utf16-v1",
+          "reviewStageId": "review",
+          "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sourceStageId": "forge",
+          "testStageId": "final-test"
+        },
+        "modules": [
+          {
+            "coverage": {
+              "archiveContentDigest": "sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d",
+              "checks": [
+                {
+                  "checkId": "auth",
+                  "declarationId": "auth",
+                  "nodeId": "auth",
+                  "state": "passed"
+                }
+              ],
+              "coverageDigest": "sha256:af1a60b0d56a938d1e08f4be5f3e5507c42474868ebdaabcdcc07c835503ca28",
+              "pipelineStageId": "test",
+              "planDigest": "sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac",
+              "policy": {
+                "baseRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "integrationRequirements": [],
+                "kind": "module",
+                "modules": [
+                  {
+                    "moduleId": "app",
+                    "ownedPaths": [
+                      "src"
+                    ],
+                    "requirements": [
+                      {
+                        "id": "demo-auth",
+                        "statement": "Demo authenticated workspace is usable"
+                      }
+                    ]
+                  }
+                ],
+                "policyDigest": "sha256:6740dd1fd008194a98690af651247de5eb9d00860d9c4d33cd611aac456cb70a",
+                "projectId": "demo",
+                "requiredChecks": [
+                  {
+                    "checkId": "auth",
+                    "nodeIds": [
+                      "auth"
+                    ],
+                    "requirementRefs": [
+                      {
+                        "moduleId": "app",
+                        "requirementId": "demo-auth"
+                      }
+                    ]
+                  }
+                ],
+                "schemaVersion": "gate-coverage.v1"
+              },
+              "schemaVersion": "gate-coverage-result.v1",
+              "sourceRevision": "git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "sourceTree": "git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            "decisionDigest": "sha256:66fe35e0dcc8a7c20b8192d96eebdc4cf66639b787880ea8f82b4ca03ac1e0fb",
+            "expectedCoverage": {
+              "baseRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "integrationRequirements": [],
+              "kind": "module",
+              "modules": [
+                {
+                  "moduleId": "app",
+                  "ownedPaths": [
+                    "src"
+                  ],
+                  "requirements": [
+                    {
+                      "id": "demo-auth",
+                      "statement": "Demo authenticated workspace is usable"
+                    }
+                  ]
+                }
+              ],
+              "policyDigest": "sha256:6740dd1fd008194a98690af651247de5eb9d00860d9c4d33cd611aac456cb70a",
+              "projectId": "demo",
+              "requiredChecks": [
+                {
+                  "checkId": "auth",
+                  "nodeIds": [
+                    "auth"
+                  ],
+                  "requirementRefs": [
+                    {
+                      "moduleId": "app",
+                      "requirementId": "demo-auth"
+                    }
+                  ]
+                }
+              ],
+              "schemaVersion": "gate-coverage.v1"
+            },
+            "moduleId": "app",
+            "resultDigest": "sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d",
+            "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sourceStageId": "forge",
+            "testStageId": "test"
+          }
+        ],
+        "projectId": "demo",
+        "runId": "run:delivery-manifest-stage-boundary",
+        "schemaVersion": "delivery-manifest.v3",
+        "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "encoding": "kubeclaw-json.utf16.v1"
+    },
+    "requestedAt": "2026-09-10T07:25:03.180Z"
+  },
+  "signal": "SIGKILL"
+}

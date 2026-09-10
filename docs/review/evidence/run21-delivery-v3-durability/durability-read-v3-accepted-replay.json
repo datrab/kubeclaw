@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "delivery-manifest-durability-replay.v1",
+  "phase": "replay-read-v3-accepted",
+  "target": "read",
+  "mode": "v3",
+  "boundary": "accepted",
+  "killedSignal": "SIGKILL",
+  "outcome": "rejected",
+  "error": "EFFECT_RECOVERY_RECEIPT_UNAVAILABLE:effect:json-utf16-v1:a264bcba06637818103336e797d36b762aec0a973e282900ca9a58a4bd62eb69",
+  "exactRequestRetained": true,
+  "sourceBaseCommit": "15f6a808ed1666c3b7a2a3909749e3d4ee377904",
+  "productionSourceDigest": "sha256:21910cc1b7aad2995143743ebd588f8f6e76125c80e95b7fc7c8a40ef11b7d15",
+  "durabilityChildDigest": "sha256:5fbd9c9384e4b68219f4b34d6636f159a34cbd0d989b2a091d81d5b7ffe17da7",
+  "requestDigest": "sha256:1adb7bc10941f8127cac1cefcdb1055cde8212d502aea8f0f4b6de4a752d4cd7",
+  "requestSchemaVersion": "delivery-manifest.v3",
+  "requestEncoding": null,
+  "manifestArtifactEncoding": "kubeclaw-json.utf16.v1",
+  "adapterAcceptedCount": 0,
+  "totalNewAuditRecords": 0,
+  "journalRecordsBefore": 1,
+  "journalRecordsAfter": 1,
+  "journalRecordsAppended": 0
+}
