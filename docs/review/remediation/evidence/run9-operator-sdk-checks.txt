@@ -1,0 +1,19 @@
+Fresh remote 28909f62da68f70d94e0672ce7ae12ced8d7b3d9; exact reconciled source37c43ff6bdd0706f7548841cb0bc63c199a6194c.
+All approved Operator source identical650e6c9; all published SDK source preserved.
+$ npx --no-install eslint --config charts/kubeclaw/files/config/eslint.config.mjs skills/common/plugin-runtime/foundation/observability/durable-records.ts skills/common/plugins/operator-messaging/src/delivery-records.ts skills/common/plugins/operator-messaging/src/delivery-projection.ts skills/common/plugins/operator-messaging/tests/live-function.test.ts scripts/observability-retirement/operator-authority.mjs scripts/retire-operator-request.mjs tests/verification/reliability/operator-request-projection.test.mjs tests/verification/reliability/operator-retention-authority-fixture.test.mjs tests/verification/reliability/fixtures/operator-retention-worker.mjs && npx --no-install tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && npm run typecheck --prefix skills/nova && npm test --prefix skills/common/plugins/operator-messaging
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"live-function","deliveries":5}
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"package-boundary"}
+
+exit_code=0

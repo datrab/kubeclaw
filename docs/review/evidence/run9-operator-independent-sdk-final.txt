@@ -1,0 +1,44 @@
+Source f0602482d8ff32f78ccf0f9239e8fa01a2519744; exact author c477cca7d8610e9314cee6a9dddb052db68d5703 operator delta over freshly integrated root5754e251/remote9c8dde882cdb1299902ed3a82d0b3d67d20c945d.
+Command: node --test tests/verification/reliability/operator-request-projection.test.mjs tests/verification/reliability/operator-projection-independent.test.mjs tests/verification/reliability/record-transition-authority-independent.test.mjs tests/verification/reliability/record-fenced-read-independent.test.mjs tests/verification/reliability/runtime-dispatch-profile.test.mjs tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (7470.686039ms)
+✔ independent conflicting original signal idempotency key cannot authorize projection even under another waitId (4052.96544ms)
+✔ independent original wait fence preserves immutable operator scope despite caller mutation across await (3874.296835ms)
+{"proof":"genuine-historical-approval-retained-after-original-expiry","timeoutMinutes":1,"originalHistoryUnchanged":true,"posts":1}
+✔ independent genuinely resolved historical wait remains eligible after original one-minute expiry without clock replacement (61836.719467ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (7346.058735ms)
+{"proof":"original-Core-approved-request-projection","releasedBytes":7358,"records":2,"posts":1}
+✔ genuine original terminal human approval projects only duplicate request bytes and keeps exact original stale receipt replay (4270.502742ms)
+✔ actual persisted authority corruption refuses selected request, wait and signal mismatches without changing metadata (4157.651832ms)
+✔ actual separate-process run and wait fences block retention; SIGKILL releases owner and stale producers preserve accepted receipt (5496.242117ms)
+{"realByteQuota":23000,"realRecordQuota":5,"releasedBytes":7358,"firstQuotaResult":"blocked","admitted":"waiting","recordQuotaResult":"blocked","posts":2}
+✔ real small byte quota admits later original Core notification after net savings but unchanged record count still bounds new work (8197.807422ms)
+✔ real missing/conflicting receipts, unsupported v2 records, alias roots and foreign Core owner remain unprojected (6482.602142ms)
+✔ small genuine original request cannot fund projection overhead and stays atomically unchanged (3158.214512ms)
+✔ independent actual competing process waits for original read fence, and callback receives owned records (585.925485ms)
+✔ independent actual SIGKILL of read-fence owner releases original kernel lock without partial write (578.223621ms)
+✔ independent transition authorization sees original locked records but cannot mutate committed state through its clone (95.649276ms)
+✔ independent async authorization and stale CAS fail before write, preserving bytes and releasing original fence (103.580965ms)
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (886.527979ms)
+✔ finite canonical profile: SDK and original Foundation validator agree without executing getters (2.758371ms)
+✔ new original snapshot writes bind required profile; rehashed malformed/future/downgraded contracts reject (16.501293ms)
+✔ profile is bound after budget reservation and excluded from actual model task without changing accounting (976.624073ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 77952.930338
+
+Exit0.
+
+Command: npm test --prefix skills/common/plugins/operator-messaging && owning shared/Nova tsc --noEmit && canonical ESLint all11 affected production/test files && source/test diff --check.
+Original lock unchanged; third-party cache immutable, all64 current workspace links verified. Initial workspace verification found one missing demo-auth-smoke link and stopped before matrix execution; only current local link setup repaired, no product source edits.
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"live-function","deliveries":5}
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"package-boundary"}
+
+Exit0.
+All five production blobs are byte-identical to initial independent approval09bfc5a; all11 non-documentation delta blobs equal authorc477cca. Current SDK/Prism source and register/ledger remain exact root5754e251. Merge conflict only author fixture raw supplemental a43 repeat; full original and supplemental evidence preserved.

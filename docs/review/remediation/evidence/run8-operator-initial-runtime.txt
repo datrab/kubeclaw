@@ -1,0 +1,51 @@
+INCOMPLETE initial consumer/operator matrix on exact a43aa256 source base.
+No approval, finding closure or completed full race/negative matrix claim.
+
+$ node --test tests/verification/reliability/operator-request-projection.test.mjs
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (6251.291967ms)
+{"proof":"original-Core-approved-request-projection","releasedBytes":7358,"records":2,"posts":1}
+✔ genuine original terminal human approval projects only duplicate request bytes and keeps exact original stale receipt replay (3019.472772ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9774.704255
+exit_code=0
+
+Original plugin unchanged-baseline reproduction:
+NEW owned checkout run8-operator-baseline exact local b3d2f7ba3ee35d121f26f67f737a400b3d034fb4,
+tree ee96baf145fa19235f170571791e904b35203ba9 = freshly read remote a43aa256.
+$ npm test --prefix skills/common/plugins/operator-messaging
+> test
+> node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+file:///workspace/scratch/15fb596e6560/run8-operator-baseline/skills/nova/core/execution/adapters.ts:60
+      throw new Error(requiresExternalContinuation(capability) ? `EFFECT_OUTCOME_UNRESOLVED:${receipt.effectId}:${message}` : message);
+            ^
+Error: EFFECT_OUTCOME_UNRESOLVED:effect:json-utf16-v1:3a1fec03d6913f18cdd5061a1103f7f9c2ccb0ba33c558cb0940f0ce0fc7d429:Value failed canonical contract effectRequest
+    at AdapterRuntime.invoke (file:///workspace/scratch/15fb596e6560/run8-operator-baseline/skills/nova/core/execution/adapters.ts:60:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///workspace/scratch/15fb596e6560/run8-operator-baseline/skills/common/plugins/operator-messaging/tests/live-function.test.ts:213:20
+Node.js v24.19.0
+exit_code=1
+
+Owning validateContractValue('effectRequest', original fixture shape) reports
+/attempt/stageId, #/$defs/localId/pattern, ^[a-z0-9]+(?:[._-][a-z0-9]+)*$.
+Original fixture stage:operator-test violates localId; operator-test passes.
+Root explicitly approved this one existing fixture field correction only.
+No assertions, validators, contract schemas or expected errors were relaxed.
+
+$ npm test --prefix skills/common/plugins/operator-messaging
+> test
+> node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"live-function","deliveries":5}
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"package-boundary"}
+exit_code=0
+
+Native original path covers genuine two-attempt approval and unchanged complete
+delivery receipt after synchronous late completeDelivery/failDelivery fallbacks.
+The separate-process interleaving/race/negative/real quota admission matrix is
+still pending. This does not claim it already passed.

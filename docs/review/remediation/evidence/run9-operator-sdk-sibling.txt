@@ -1,0 +1,74 @@
+Fresh remote 28909f62da68f70d94e0672ce7ae12ced8d7b3d9; exact reconciled source37c43ff6bdd0706f7548841cb0bc63c199a6194c.
+All approved Operator source identical650e6c9; all published SDK source preserved.
+$ node --test tests/verification/reliability/record-fenced-read-independent.test.mjs tests/verification/reliability/telemetry-retirement.test.mjs tests/verification/reliability/nova-dispatch-projection.test.mjs tests/verification/reliability/nova-dispatch-retained-authority.test.mjs tests/verification/reliability/runtime-dispatch-profile.test.mjs tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs tests/verification/reliability/runtime-dispatch-native-profile.test.mjs tests/verification/reliability/source-snapshot-version.test.mjs
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original completed import projects duplicate bytes with real quotas and exact HTTP replay (11952.50981ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input (9552.730252ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner (7791.971579ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId (14825.019052ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent canonical-invalid original selected request cannot authorize retention after honest hash-chain recomputation (8735.811348ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release (9041.639492ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"blocked","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual blocked original Core with a completed import cannot authorize retention before cancellation (4628.390027ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ honestly rehashed sourceStageId or missing-source snapshot cannot bypass explicit-revision-only eligibility (8095.957399ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job (9309.328087ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery (8832.031795ms)
+✔ retained import verifies every evidence, output and report blob with actual missing/corrupt files (1003.523723ms)
+✔ retained import rejects pending, null-result, incomplete decision and result identity despite valid record CAS (270.745292ms)
+✔ bounded original record fenced read refuses oversized snapshot before callback and releases fence (123.062931ms)
+✔ genuine original decision calculation retains review_required as incomplete authority (163.129771ms)
+✔ independent actual competing process waits for original read fence, and callback receives owned records (1164.436255ms)
+✔ independent actual SIGKILL of read-fence owner releases original kernel lock without partial write (893.990704ms)
+✔ actual v1 run creation carries frozen transport choice; terminal reopen preserves prefix (9055.463459ms)
+ℹ {"version":"v1","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v2 run creation carries frozen transport choice; terminal reopen preserves prefix (7761.581066ms)
+ℹ {"version":"v2","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v3 run creation carries frozen transport choice; terminal reopen preserves prefix (7035.666351ms)
+ℹ {"version":"v3","nativeGateway":false,"actualPostCount":1,"requestProfile":{"schemaVersion":"runtime-dispatch-profile.v1","encoding":"json-utf16-v1"},"reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ original v1 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (5232.507372ms)
+✔ original v1 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (7284.113286ms)
+✔ original v1 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (7723.337544ms)
+✔ original v2 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (6705.37873ms)
+✔ original v2 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (5707.24431ms)
+✔ original v2 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (5944.349552ms)
+✔ original v3 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (5171.887013ms)
+✔ original v3 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (4834.359443ms)
+✔ original v3 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (5274.86807ms)
+✔ declared v2 ACP transport profile owns locale selection without claiming a Gateway (8878.757283ms)
+ℹ {"version":"v2","nativeGateway":false,"localeStable":false,"transportKeys":["spawn:session-v1:attempt:0:payload:e6e964796faea9d043007231e949d244eca67210ff0c920cec81c6e69f52132b","spawn:session-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ declared v3 ACP transport profile owns locale selection without claiming a Gateway (8287.63662ms)
+ℹ {"version":"v3","nativeGateway":false,"localeStable":true,"transportKeys":["spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d","spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ original helper-review preserves invoke-only API and rejects invalid present profile before real HTTP (2606.937021ms)
+✔ original helper-verification preserves invoke-only API and rejects invalid present profile before real HTTP (2679.560059ms)
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (1274.381265ms)
+✔ finite canonical profile: SDK and original Foundation validator agree without executing getters (3.270895ms)
+✔ new original snapshot writes bind required profile; rehashed malformed/future/downgraded contracts reject (50.187123ms)
+✔ profile is bound after budget reservation and excluded from actual model task without changing accounting (1837.278114ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (2649.41707ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (1096.534777ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (80.958005ms)
+✔ exact retirement byte accounting crosses decimal digit boundaries without a fixed point (502.961429ms)
+✔ original v1 stores reopen without rewriting and retain ordinary append/read/transition contracts (154.180625ms)
+✔ manual terminal-run cleanup releases actual bytes and record quota; duplicate replay never resurrects (2433.432991ms)
+✔ waiting run, foreign owner, stale source, reused operation and legacy records reject without release (4596.456056ms)
+✔ real run mutation fence rejects concurrent cleanup; immutable intent survives caller mutation (2001.931281ms)
+✔ SIGKILL after actual atomic store commit retains tombstones and one CLI release (3709.581217ms)
+✔ native competing store writer blocks retirement; SIGKILL before mutation leaves original bytes (2706.149724ms)
+ℹ tests 46
+ℹ suites 0
+ℹ pass 46
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 100454.599877
+
+exit_code=0

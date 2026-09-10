@@ -3273,6 +3273,10 @@
         {
           "report": "implementation/run7-dispatch-root-review.md",
           "summary": "Kausal gebundene Nova-Dispatch-Projektion unabhängig geprüft (27 Fälle) und Root kombiniert73/73 plus Originalimport/-runtime/Typen/Lint bestanden. Nur redundante Archiveinbettung wird entfernt; Originalblob/Job/Receipt/Evidence bleiben. Reale fehlgeschlagene Arbeit mit vollständigem Import und Original-Cancel, kein erfolgreicher nativer Provider."
+        },
+        {
+          "report": "implementation/run9-operator-root-review.md",
+          "summary": "Originale kausale JSON-v1-Operatorprojektion unabhängig geprüft und mit SDK/Prism Root27/27 getestet; echte Quotenfreigabe7358Bytes, unveränderte Recordzahl, Replay/Prozessfences/SIGKILL/historischer Ablauf. Andere Retention bleibt offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.observability.md",
@@ -3280,14 +3284,15 @@
       "source_finding_text": "### PCR-OBS-002 — Aufbewahrungsstrategie für bestätigte Historie fehlt\n\n- **Mittel, offene Architekturfrage:** endliche Quoten verhindern unbeschränktes\n  Wachstum, nach Ausschöpfung steht aber kein sicherer Freigabeweg bereit.\n- **Beleg:** RecordStore hat append/read/transition ohne Delete; Admission ohne\n  Compaction; AttemptStore reclaimExpiredEvidence entfernt nur ohne Result\n  referenzierte Evidence. README benennt fehlende Admissioncompaction, W6 ebenso.\n- **Auslöser/Auswirkung:** fortlaufende Runs füllen globale Stores; weitere\n  notwendige Belege/Writes scheitern, keine automatische Wiederherstellung der\n  Kapazität. Manuelles Löschen könnte Idempotenz/Beweisketten verlieren.\n- **Ursache lösen:** explizite runbezogene Retention mit Consumercheckpoint,\n  referenziertem Evidenceabschluss und nötigen Idempotenz-Tombstones; erst danach\n  zusammenhängend freigeben. Größere Quoten allein verschieben das Problem.\n- **Verifikation:** mit kleinen echten Quoten abgeschlossene und aktive Runs\n  mischen; Retention gibt nur bestätigte Historie frei, Replay von alten\n  Zustellungen führt zu keiner erneuten externen Aktion. Policyentscheidung\n  und Umsetzung gehören zum späteren Reparatur-/Betriebsauftrag.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Explizite Revisionen: begrenzte Dispatch-Projektion integriert. Derived-sourceStageId bis echtem ursprünglichem Source-Artefakt-/Read-/Commit→Merge-Nachweis ablehnen. Weitere ursprüngliche Consumer-/Blob-/Buster-Retention und native Langlaufnachweise bearbeiten; keine automatische Loglöschung, keine Quotenlockerung oder globale Closure aus Teiltests.",
+      "next_action": "Weitere ursprüngliche Retention-Consumer und Quotenpolitik bearbeiten; Buster/derived-source/v2/Discord/externalisierte oder ungewisse Historien nicht aus begrenzten Projektionen ableiten. Originalbelege und Native-Gates erhalten.",
       "related_findings": [
         "PCR-PRISM-WORKER-001",
         "PCR-TSTORE-001"
       ],
       "decision_notes": [
         "D01/D07: keine automatische 30-Tage-Löschung für Logs auf Disk/Git. Manuelle Bereinigung, Kapazitätsdiagnose und geschützte aktive Recoverydaten definieren; Clawdeck sammelt Logs."
-      ]
+      ],
+      "remaining_work": "Bounded Admission-/Attempt-/Dispatch-/JSON-v1-Operatorprojektion geprüft; breitere Store-/Blob-/History-Lebensdauer und ursprüngliche native Anforderungen bleiben offen."
     },
     {
       "id": "PCR-OPERATOR-001",

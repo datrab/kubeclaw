@@ -1,0 +1,62 @@
+Command:
+npm run plugin-system:sandbox:build && node --test --test-concurrency=1 tests/verification/reliability/operator-retention-authority-fixture.test.mjs tests/verification/reliability/operator-request-projection.test.mjs tests/verification/reliability/operator-projection-independent.test.mjs tests/verification/reliability/record-transition-authority-independent.test.mjs tests/verification/reliability/record-fenced-read-independent.test.mjs tests/verification/reliability/nova-dispatch-projection.test.mjs tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original completed import projects duplicate bytes with real quotas and exact HTTP replay (6761.65803ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input (5897.845334ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner (6015.447403ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId (7796.759911ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent canonical-invalid original selected request cannot authorize retention after honest hash-chain recomputation (6615.653084ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release (6514.630911ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"blocked","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual blocked original Core with a completed import cannot authorize retention before cancellation (3980.484258ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ honestly rehashed sourceStageId or missing-source snapshot cannot bypass explicit-revision-only eligibility (7087.768325ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job (7588.394429ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery (7222.415757ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (7542.611946ms)
+✔ independent conflicting original signal idempotency key cannot authorize projection even under another waitId (4049.777164ms)
+✔ independent original wait fence preserves immutable operator scope despite caller mutation across await (3686.897791ms)
+{"proof":"genuine-historical-approval-retained-after-original-expiry","timeoutMinutes":1,"originalHistoryUnchanged":true,"posts":1}
+✔ independent genuinely resolved historical wait remains eligible after original one-minute expiry without clock replacement (61844.268929ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (6205.548837ms)
+{"proof":"original-Core-approved-request-projection","releasedBytes":7358,"records":2,"posts":1}
+✔ genuine original terminal human approval projects only duplicate request bytes and keeps exact original stale receipt replay (3056.748437ms)
+✔ actual persisted authority corruption refuses selected request, wait and signal mismatches without changing metadata (3223.110218ms)
+✔ actual separate-process run and wait fences block retention; SIGKILL releases owner and stale producers preserve accepted receipt (4852.588709ms)
+{"realByteQuota":23000,"realRecordQuota":5,"releasedBytes":7358,"firstQuotaResult":"blocked","admitted":"waiting","recordQuotaResult":"blocked","posts":2}
+✔ real small byte quota admits later original Core notification after net savings but unchanged record count still bounds new work (8152.294448ms)
+✔ real missing/conflicting receipts, unsupported v2 records, alias roots and foreign Core owner remain unprojected (6599.276617ms)
+✔ small genuine original request cannot fund projection overhead and stays atomically unchanged (3069.353025ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (6330.392758ms)
+✔ independent actual competing process waits for original read fence, and callback receives owned records (484.587576ms)
+✔ independent actual SIGKILL of read-fence owner releases original kernel lock without partial write (447.972675ms)
+✔ independent transition authorization sees original locked records but cannot mutate committed state through its clone (67.116079ms)
+✔ independent async authorization and stale CAS fail before write, preserving bytes and releasing original fence (54.680635ms)
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (501.271861ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 189388.216425
+
+Exit code: 0
+

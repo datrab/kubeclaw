@@ -171,8 +171,8 @@
     {
       "id": "PCR-OBS-002",
       "status_at_checkpoint": "implementiert / unvollständig",
-      "evidence": "implementation/run7-dispatch-root-review.md",
-      "next_action": "Gemeinsamer Reader und kausal gefencete Nova-Dispatch-Projektion unabhängig geprüft und integriert (1d7e6f8); Root73/73 und Originalimport/-runtime bestanden. Derived-source bleibt ohne echten ursprünglichen Implementierungsartefakt-Nachweis abgelehnt. Nächstes Paket: ursprüngliche Operator-Delivery-Consumer und echter Core/HTTP/Signal-Fixture prüfen; noch keine Produktionsprojektion freigegeben. Weitere Retention offen."
+      "evidence": "implementation/run9-operator-root-review.md",
+      "next_action": "Gemeinsamer Reader und begrenzte Dispatch-/Operatorprojektion unabhängig geprüft; Root27/27 auf SDK/Prism. Weitere Retention bleibt offen, insbesondere unsupported derived-source/v2/Discord und native Consumerbelege."
     },
     {
       "id": "PCR-OPERATOR-001",

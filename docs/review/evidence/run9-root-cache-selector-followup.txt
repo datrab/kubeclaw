@@ -1,0 +1,8 @@
+Read-only follow-up after author began correcting the 4685b4e candidate; this working-tree rerun is not an immutable-source acceptance proof. The original earlier tool execution returned calls:1 / legacy-accepted; independent red/green evidence is owned by the assigned reviewer. Subsequent source inspection found author HEAD89c4fa44bb3ec2e946a1b5f55665d467eb3f3514 and selector blob0c74d5adc3cc30eace8e9fe78a86a3800b8d2997.
+Command:
+node --input-type=module -e 'import {reviewCacheProfileFromContext} from "./skills/common/plugin-runtime/sdk/src/review-cache-profile.ts";let calls=0;const contract=new Proxy({}, {getOwnPropertyDescriptor(){calls++;return undefined;}});let outcome;try{outcome=reviewCacheProfileFromContext(contract)??"legacy-accepted";}catch(e){outcome=e.message;}console.log({calls,outcome});'
+
+{ calls: 0, outcome: 'CANONICAL_JSON_PROXY_UNSUPPORTED' }
+
+Exit code: 0
+This follow-up now rejects the Proxy without executing its trap. The author was editing their own checkout between initial observation and this rerun. Final source pinning and independent tests are still required; no cache approval from this mutable-checkout result.

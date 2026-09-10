@@ -2,7 +2,7 @@
   "schema_version": 1,
   "run_id": "20260910t004317",
   "fresh_remote_base": "a43aa256bdce35d7f9c44d5d661e59c4055e562e",
-  "last_source_integration": "28909f62da68f70d94e0672ce7ae12ced8d7b3d9",
+  "last_source_integration": "9c8dde882cdb1299902ed3a82d0b3d67d20c945d",
   "frozen_baseline": "c38779c71bb92bc15c3fcb89930348e5417aa475",
   "frozen_count": 47,
   "verified_count": 8,
@@ -121,8 +121,11 @@
       "package": "operator-delivery-request-projection-reviewed",
       "commit": "d6ce4510c85ac0d0884f92001044c0bd333f8c05",
       "review_commit": "ba13e9924fd20e95f0e8219b0a45f1d22454654a",
-      "status": "independently-approved-not-integrated",
-      "next_action": "Reconcile SDK integration and repeat affected original Core/operator/retention gates before exact-parent integration. Broad OBS stays open; 7358 net bytes is not record-count release."
+      "status": "bounded-package-independently-approved-root27-tested-in-this-integration",
+      "next_action": "Bounded JSON-v1 projection complete; original receipts and record counts retained. Other OBS producers and native requirements remain incomplete.",
+      "sdk_reconciled_author": "1aeaf57815292e7f8c6a827e33e766c366222cea",
+      "current_head_review_source": "4d88d32290a878e5a22da21a1c8bc9a78454b304",
+      "root_report": "implementation/run9-operator-root-review.md"
     },
     {
       "package": "prism-baseline-v2",
@@ -130,27 +133,30 @@
       "review_commit": "4d09c0a9c4e925eba73c5656508e38f4d067a22d",
       "status": "bounded-package-independently-approved-root-tested-in-this-integration",
       "next_action": "Bounded explicit paired baseline-v2 complete in this integration. Preserve v1 approvals and full original gates; registered-stage reader fix is separately owned and incomplete.",
-      "root_report": "implementation/run9-prism-baseline-root-review.md"
+      "root_report": "implementation/run9-prism-baseline-root-review.md",
+      "integration_commit": "9c8dde882cdb1299902ed3a82d0b3d67d20c945d"
     },
     {
       "package": "review-cache-v4-v2",
-      "commit": "75aca9244fdf72ba3c90bf250ec9573d2dbffbef",
-      "review_commit": "fabe2c7f573deb04069066af680bde392db8e880",
-      "status": "incomplete-implementation-independent-review-active",
-      "next_action": "Both demonstrated getter selectors corrected. Independent31 native and full original Review pass; final current-head source/recovery/types and new-writer version assertion remain under verification. No approval/integration yet."
+      "commit": "2981a33217ec204a661dfc367cd5672f18928492",
+      "review_commit": "c76f6775edb8fbbb8914562a50827958cea03774",
+      "status": "final-candidate-additional-root-selector-defect-correction-pending",
+      "next_action": "Root demonstrated Proxy context selector trap/legacy acceptance after initial review. Author89c4fa4 corrects validation-before-hasOwn; independent unchanged red/green and current-head cache/source/operator interactions required before integration. Raw follow-up explicitly distinguishes mutable source."
     },
     {
       "package": "review-report-hex-key-cutover",
       "commit": "4ac681dd400fd8dd2c0310c7fe696571005d290f",
       "status": "counterexample-only-no-production-change",
-      "next_action": "Read actual original report builder/strict schema/Core/completed ArtifactStore replay en-to-da failure. Design separately owned controlled report cutover, not silent serializer/default change or inferred unrelated cache profile."
+      "next_action": "Independent design review: finite report-only immutable config, all genuine new compiler Review nodes select it; historical source/report modes independent, exact expected node set/pinned packages preserved. Current coverage helper omitted mode must stay legacy because archived CLI resolves it. No production approval until final design refinements.",
+      "design_commit": "95880cc1f724d0fac5bb13ab10b31c52811c4b50"
     },
     {
       "package": "prism-registered-reader",
       "commit": "49211bfba8d506d2045d36fe47fbd74a46f85383",
-      "status": "corrected-design-independently-reproduced-implementation-authorized",
+      "status": "implementation-wip-genuine-replay-matrix-pending-final-review",
       "next_action": "Preserve exact get_json operation/payload/ordinal and bind full expected ref; select codec only from its explicit encoding. Independent actual requested/completed and accepted-no-receipt histories required; no bytes-operation swap in old effects.",
-      "review_commit": "4f498a936a09a6446e0000fdd579affafbd0bf5c"
+      "review_commit": "4f498a936a09a6446e0000fdd579affafbd0bf5c",
+      "implementation_wip": "95f31ce470e6e1545ec49686e7ffbe5a0d456096"
     },
     {
       "package": "supervisor-original-cli-start",

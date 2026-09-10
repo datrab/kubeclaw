@@ -1,0 +1,13 @@
+Command:
+node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/common/plugin-runtime/foundation/observability/durable-records.ts skills/common/plugins/operator-messaging/src/delivery-records.ts skills/common/plugins/operator-messaging/src/delivery-projection.ts skills/common/plugins/operator-messaging/tests/live-function.test.ts scripts/observability-retirement/operator-authority.mjs scripts/retire-operator-request.mjs tests/verification/reliability/operator-request-projection.test.mjs tests/verification/reliability/operator-retention-authority-fixture.test.mjs tests/verification/reliability/fixtures/operator-retention-worker.mjs && node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json && npm test --prefix skills/common/plugins/operator-messaging
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"live-function","deliveries":5}
+{"ok":true,"plugin":"kubeclaw.operator-messaging","suite":"package-boundary"}
+
+Exit code: 0
+
