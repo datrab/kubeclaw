@@ -1,0 +1,147 @@
+Fresh authoritative MAINff55ab962d16dc0eba5ee6aafa2150abaa723fb5; no semantic implementation applied.
+Command: LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 node --test tests/verification/reliability/review-semantic-selector-independent.test.mjs
+Exit1: original accepted legacy value positive1 passes; six independent original owner no-trap negatives fail. Direct parser/validator scope only; no native Core/provider success claimed.
+
+✔ independent original archived bundle and original report shape retain accepted legacy bytes (10.473035ms)
+✖ independent bundle proxy admission rejects before every trap (1.111748ms)
+✖ independent bundle schemaGetter admission rejects before every trap (0.431081ms)
+✖ independent bundle nestedProxy admission rejects before every trap (0.317719ms)
+✖ independent report proxy admission rejects before every trap (0.369157ms)
+✖ independent report schemaGetter admission rejects before every trap (0.231519ms)
+✖ independent report nestedProxy admission rejects before every trap (0.210688ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 1
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 160.874169
+
+✖ failing tests:
+
+test at tests/verification/reliability/review-semantic-selector-independent.test.mjs:43:3
+✖ independent bundle proxy admission rejects before every trap (1.111748ms)
+  AssertionError [ERR_ASSERTION]: bundle/proxy executed 32 trap(s)
+  
+  32 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run14-semantic-bundle-review/tests/verification/reliability/review-semantic-selector-independent.test.mjs:54:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 32,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-semantic-selector-independent.test.mjs:43:3
+✖ independent bundle schemaGetter admission rejects before every trap (0.431081ms)
+  AssertionError [ERR_ASSERTION]: bundle/schemaGetter executed 1 trap(s)
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run14-semantic-bundle-review/tests/verification/reliability/review-semantic-selector-independent.test.mjs:54:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-semantic-selector-independent.test.mjs:43:3
+✖ independent bundle nestedProxy admission rejects before every trap (0.317719ms)
+  AssertionError [ERR_ASSERTION]: bundle/nestedProxy executed 10 trap(s)
+  
+  10 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run14-semantic-bundle-review/tests/verification/reliability/review-semantic-selector-independent.test.mjs:54:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 10,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-semantic-selector-independent.test.mjs:43:3
+✖ independent report proxy admission rejects before every trap (0.369157ms)
+  AssertionError [ERR_ASSERTION]: report/proxy executed 30 trap(s)
+  
+  30 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run14-semantic-bundle-review/tests/verification/reliability/review-semantic-selector-independent.test.mjs:54:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 30,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-semantic-selector-independent.test.mjs:43:3
+✖ independent report schemaGetter admission rejects before every trap (0.231519ms)
+  AssertionError [ERR_ASSERTION]: report/schemaGetter executed 1 trap(s)
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run14-semantic-bundle-review/tests/verification/reliability/review-semantic-selector-independent.test.mjs:54:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-semantic-selector-independent.test.mjs:43:3
+✖ independent report nestedProxy admission rejects before every trap (0.210688ms)
+  AssertionError [ERR_ASSERTION]: report/nestedProxy executed 12 trap(s)
+  
+  12 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run14-semantic-bundle-review/tests/verification/reliability/review-semantic-selector-independent.test.mjs:54:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 12,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

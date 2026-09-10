@@ -1,0 +1,84 @@
+✔ independent original archived bundle and original report shape retain accepted legacy bytes (9.913757ms)
+✔ independent bundle proxy admission rejects before every trap (0.261094ms)
+✔ independent bundle schemaGetter admission rejects before every trap (0.305501ms)
+✔ independent bundle nestedProxy admission rejects before every trap (0.140962ms)
+✔ independent report proxy admission rejects before every trap (0.191509ms)
+✔ independent report schemaGetter admission rejects before every trap (0.206191ms)
+✔ independent report nestedProxy admission rejects before every trap (0.136536ms)
+✔ independent actual owned legacy snapshot remains accepted by original report builder (1.699614ms)
+✖ independent report builder proxy must not silently select legacy semantics (1.558141ms)
+✖ independent report builder schemaGetter must not silently select legacy semantics (1.027771ms)
+✖ independent report builder unknownVersion must not silently select legacy semantics (1.079378ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 8
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 191.803253
+
+✖ failing tests:
+
+test at tests/verification/reliability/review-semantic-selector-independent.test.mjs:78:3
+✖ independent report builder proxy must not silently select legacy semantics (1.558141ms)
+  AssertionError [ERR_ASSERTION]: proxy executed 3 trap(s)
+  
+  3 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run14-semantic-bundle-review/tests/verification/reliability/review-semantic-selector-independent.test.mjs:86:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-semantic-selector-independent.test.mjs:78:3
+✖ independent report builder schemaGetter must not silently select legacy semantics (1.027771ms)
+  AssertionError [ERR_ASSERTION]: schemaGetter executed 1 trap(s)
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run14-semantic-bundle-review/tests/verification/reliability/review-semantic-selector-independent.test.mjs:86:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-semantic-selector-independent.test.mjs:78:3
+✖ independent report builder unknownVersion must not silently select legacy semantics (1.079378ms)
+  AssertionError [ERR_ASSERTION]: unsupported owner produced review-report.v2
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run14-semantic-bundle-review/tests/verification/reliability/review-semantic-selector-independent.test.mjs:87:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

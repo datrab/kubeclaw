@@ -1,0 +1,25 @@
+error: Could not read 24eceae833ac08acee94e759ddc130e663da20cf
+From /workspace/scratch/15fb596e6560/run14-sdk-bundle-author
+ * branch            534eb4fa7321b0879de7774f4aa91370097de910 -> FETCH_HEAD
+[fix/resume-47-run14-semantic-bundle-review 739c704] [skip ci] Begin explicit Review bundle/governor semantic owner cutover (incomplete)
+ Author: Codex <codex@openai.com>
+ Date: Thu Sep 10 04:35:31 2026 +0200
+ 17 files changed, 1108 insertions(+), 44 deletions(-)
+ create mode 100644 skills/nova/plugins/review/schemas/review-bundle.v2.schema.json
+ create mode 100644 skills/nova/plugins/review/schemas/review-report.v3.schema.json
+ create mode 100644 skills/nova/plugins/review/src/review-semantics.ts
+✔ independent original archived bundle and original report shape retain accepted legacy bytes (9.68405ms)
+✔ independent bundle proxy admission rejects before every trap (0.288425ms)
+✔ independent bundle schemaGetter admission rejects before every trap (0.286572ms)
+✔ independent bundle nestedProxy admission rejects before every trap (0.133301ms)
+✔ independent report proxy admission rejects before every trap (0.127983ms)
+✔ independent report schemaGetter admission rejects before every trap (0.184548ms)
+✔ independent report nestedProxy admission rejects before every trap (0.188204ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 165.700387
