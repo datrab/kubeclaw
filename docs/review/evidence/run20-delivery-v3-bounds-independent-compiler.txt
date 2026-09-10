@@ -1,0 +1,17 @@
+Candidate commit: a7b3bdbd7859c0ab1e293723c41edfe9dacf4a8a
+Candidate tree: c31213558537c4be28b6d274ce36657040a2ef8f
+Frozen source root: /workspace/scratch/15fb596e6560/run20-source-review-frozena7b3
+Exact semantic-source compiler blob: 98b79bcc33997fec2b74166fdd2ef7328c2ee979
+Baseline root containing that exact blob: /workspace/scratch/15fb596e6560/run20-contract-review-frozen84
+Command:
+  KUBECLAW_REVIEW_SOURCE_ROOT=<frozen-source> KUBECLAW_REVIEW_BASELINE_ROOT=<baseline> node --test tests/verification/reliability/delivery-manifest-v3-compiler-recovery-independent.test.mjs
+Exit: 1
+
+PASS legacy delivery defaults preserve the exact pre-v3 compiler graph for every prior identity tuple
+PASS delivery identity composes with all prior identities and recovery reconstructs the exact graph
+PASS delivery recovery rejects absent, unknown, duplicate and foreign selectors without changing stored bytes
+FAIL registered project-summary input schema admits the valid final-Review v3 compiler graph
+  /final additionalProperties: reviewArtifactEncoding must NOT have additional properties
+
+tests 4; pass 3; fail 1; skipped 0; todo 0
+

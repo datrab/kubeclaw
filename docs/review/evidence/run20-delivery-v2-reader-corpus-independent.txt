@@ -1,0 +1,15 @@
+Candidate commit: a7b3bdbd7859c0ab1e293723c41edfe9dacf4a8a
+Candidate tree: c31213558537c4be28b6d274ce36657040a2ef8f
+Frozen source root: /workspace/scratch/15fb596e6560/run20-source-review-frozena7b3
+Registered v2 proof corpus: docs/review/evidence/run13-delivery-manifest-stage-boundary
+Command:
+  KUBECLAW_REVIEW_SOURCE_ROOT=<frozen-source> KUBECLAW_REVIEW_V2_PROOF_ROOT=<proof-root> node --test tests/verification/reliability/delivery-manifest-v2-reader-corpus-independent.test.mjs
+Exit: 0
+
+PASS exact registered v2 corpus preserves both English outer-ref domains and Czech fail-closed behavior
+  English untagged accepted and byte-identical
+  English portable-tagged accepted and byte-identical
+  Czech untagged rejected with DELIVERY_MANIFEST_INVALID
+
+tests 1; pass 1; fail 0; skipped 0; todo 0
+

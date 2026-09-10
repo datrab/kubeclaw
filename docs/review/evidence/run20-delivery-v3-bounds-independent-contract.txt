@@ -1,0 +1,22 @@
+Candidate commit: a7b3bdbd7859c0ab1e293723c41edfe9dacf4a8a
+Candidate tree: c31213558537c4be28b6d274ce36657040a2ef8f
+Frozen source root: /workspace/scratch/15fb596e6560/run20-source-review-frozena7b3
+Command:
+  KUBECLAW_REVIEW_SOURCE_ROOT=<frozen-source> node --test tests/verification/reliability/delivery-manifest-v3-contract-independent.test.mjs
+Exit: 1
+
+PASS valid public v3 vector is accepted and deeply frozen
+PASS creator rejects caller-supplied digest rather than overwriting it
+PASS published JSON schema matches runtime rejection of invalid expectedCoverage
+PASS published JSON schema matches runtime rejection of invalid coverage result
+PASS published JSON schema matches runtime ArtifactRef media-type bounds
+FAIL published schema rejects impossible Review optional-field combinations admitted by neither runtime nor type contract
+  runtime=false; schema=true; AJV errors=null
+FAIL published schema matches runtime safe-integer producer attempts
+  runtime=false; schema=true; AJV errors=null
+PASS creator rejects a complete serialized v3 artifact above eight MiB
+PASS creator rejects Proxy and accessor input without invoking caller traps
+PASS shared reader accepts a valid exact v3 ref and rejects a missing portable tag
+
+tests 10; pass 8; fail 2; skipped 0; todo 0
+
