@@ -1,0 +1,39 @@
+Source tree: e644a79fddd4d4d686fbd351b6edaec5575caf57 (local exact tree 64df9214237107c027b27caf4d5f75f27a222f51)
+Command: KUBECLAW_DELIVERY_MANIFEST_PROOF_OUTPUT=docs/review/evidence/run13-delivery-manifest-stage-boundary node --test tests/verification/reliability/delivery-manifest-stage-boundary.test.mjs
+Expected status: RED / exit 1
+Actual exit: 1
+
+{"phase":"produce","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"produce\",\"locale\":\"en-US\",\"status\":\"succeeded\",\"manifestDigest\":\"sha256:5b033483ae8a3debdeda748e2b7d1a2c40cbb790c570a529cac90835f65a382b\",\"artifactDigest\":\"sha256:4b024bdf2fb6d908e3522ffa3d9e4b7f2aa01a87b54ef067d1dfcf4aeeba9f4a\",\"manifestBytes\":6608,\"summaryWriteKey\":\"run:delivery-manifest-stage-boundary:project-summary:1:10\"}\n","stderr":""}
+{"phase":"consume-en","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-en\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-portable-en","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-portable-en\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-cs","locale":"cs_CZ.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-cs\",\"locale\":\"cs-CZ\",\"outcome\":\"blocked\",\"error\":\"DEMO_EVIDENCE_MANIFEST_INVALID\",\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+✖ registered Summary v2 stored output is accepted by the original downstream manifest reader across locales (9903.541905ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10029.791528
+
+✖ failing tests:
+
+test at tests/verification/reliability/delivery-manifest-stage-boundary.test.mjs:12:1
+✖ registered Summary v2 stored output is accepted by the original downstream manifest reader across locales (9903.541905ms)
+  AssertionError [ERR_ASSERTION]: the identical stored v2 manifest must cross the original downstream manifest-integrity boundary in another locale
+
+  true !== false
+
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run13-delivery-author/tests/verification/reliability/delivery-manifest-stage-boundary.test.mjs:47:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

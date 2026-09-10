@@ -1,0 +1,39 @@
+{
+  "command": "node --test tests/verification/reliability/delivery-manifest-stage-boundary.test.mjs",
+  "expectedOverallExit": 1,
+  "expectedFailure": "cross-locale original v2 manifest integrity",
+  "phases": [
+    {
+      "phase": "produce",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"produce\",\"locale\":\"en-US\",\"status\":\"succeeded\",\"manifestDigest\":\"sha256:5b033483ae8a3debdeda748e2b7d1a2c40cbb790c570a529cac90835f65a382b\",\"artifactDigest\":\"sha256:4b024bdf2fb6d908e3522ffa3d9e4b7f2aa01a87b54ef067d1dfcf4aeeba9f4a\",\"manifestBytes\":6608,\"summaryWriteKey\":\"run:delivery-manifest-stage-boundary:project-summary:1:10\"}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-en",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-en\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-portable-en",
+      "locale": "en_US.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-portable-en\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n",
+      "stderr": ""
+    },
+    {
+      "phase": "consume-cs",
+      "locale": "cs_CZ.UTF-8",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"phase\":\"consume-cs\",\"locale\":\"cs-CZ\",\"outcome\":\"blocked\",\"error\":\"DEMO_EVIDENCE_MANIFEST_INVALID\",\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n",
+      "stderr": ""
+    }
+  ]
+}
