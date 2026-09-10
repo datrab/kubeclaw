@@ -1,0 +1,101 @@
+Attempted extra diagnostic compilation of the original Echo output schema with Foundation strict Ajv; this is NOT the actual cache admission path, which uses the original Echo parser.
+The original schema has a pre-existing strictRequired compilation issue. No validator option or original contract is weakened. Further probes must report actual parser admission, not claim this extra schema compile passed.
+file:///workspace/scratch/15fb596e6560/run7-sdk-transport-review/skills/common/plugin-runtime/foundation/registry/schema.ts:113
+    throw new RegistryError('REGISTRY_MANIFEST_INVALID', `Invalid JSON Schema in ${schemaPath}`, {
+          ^
+
+RegistryError: Invalid JSON Schema in independent-original-echo-schema
+    at validateReferencedSchema (file:///workspace/scratch/15fb596e6560/run7-sdk-transport-review/skills/common/plugin-runtime/foundation/registry/schema.ts:113:11)
+    at file:///workspace/scratch/15fb596e6560/run7-sdk-transport-review/docs/review/evidence/run7-sdk-cache-context-case-probe.mjs:38:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  code: 'REGISTRY_MANIFEST_INVALID',
+  details: {
+    schemaPath: 'independent-original-echo-schema',
+    cause: 'strict mode: required property "contextRequest" is not defined at "#/allOf/0/if" (strictRequired)'
+  }
+}
+
+Node.js v24.19.0
+node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/scratch/15fb596e6560/run7-sdk-transport-review/docs/review/evidence/run7-sdk-cache-context-case-probe.mjs --child /tmp/sdk-cache-context-case-rkTFxz write
+file:///workspace/scratch/15fb596e6560/run7-sdk-transport-review/skills/common/plugin-runtime/foundation/registry/schema.ts:113
+    throw new RegistryError('REGISTRY_MANIFEST_INVALID', `Invalid JSON Schema in ${schemaPath}`, {
+          ^
+
+RegistryError: Invalid JSON Schema in independent-original-echo-schema
+    at validateReferencedSchema (file:///workspace/scratch/15fb596e6560/run7-sdk-transport-review/skills/common/plugin-runtime/foundation/registry/schema.ts:113:11)
+    at file:///workspace/scratch/15fb596e6560/run7-sdk-transport-review/docs/review/evidence/run7-sdk-cache-context-case-probe.mjs:38:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  code: 'REGISTRY_MANIFEST_INVALID',
+  details: {
+    schemaPath: 'independent-original-echo-schema',
+    cause: 'strict mode: required property "contextRequest" is not defined at "#/allOf/0/if" (strictRequired)'
+  }
+}
+
+Node.js v24.19.0
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:942:11)
+    at execFileSync (node:child_process:978:15)
+    at file:///workspace/scratch/15fb596e6560/run7-sdk-transport-review/docs/review/evidence/run7-sdk-cache-context-case-probe.mjs:75:28
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  status: 1,
+  signal: null,
+  output: [
+    null,
+    '',
+    'file:///workspace/scratch/15fb596e6560/run7-sdk-transport-review/skills/common/plugin-runtime/foundation/registry/schema.ts:113\n' +
+      "    throw new RegistryError('REGISTRY_MANIFEST_INVALID', `Invalid JSON Schema in ${schemaPath}`, {\n" +
+      '          ^\n' +
+      '\n' +
+      'RegistryError: Invalid JSON Schema in independent-original-echo-schema\n' +
+      '    at validateReferencedSchema (file:///workspace/scratch/15fb596e6560/run7-sdk-transport-review/skills/common/plugin-runtime/foundation/registry/schema.ts:113:11)\n' +
+      '    at file:///workspace/scratch/15fb596e6560/run7-sdk-transport-review/docs/review/evidence/run7-sdk-cache-context-case-probe.mjs:38:3\n' +
+      '    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n' +
+      '    at async node:internal/modules/esm/loader:643:26\n' +
+      '    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n' +
+      "  code: 'REGISTRY_MANIFEST_INVALID',\n" +
+      '  details: {\n' +
+      "    schemaPath: 'independent-original-echo-schema',\n" +
+      `    cause: 'strict mode: required property "contextRequest" is not defined at "#/allOf/0/if" (strictRequired)'\n` +
+      '  }\n' +
+      '}\n' +
+      '\n' +
+      'Node.js v24.19.0\n'
+  ],
+  pid: 12,
+  stdout: '',
+  stderr: 'file:///workspace/scratch/15fb596e6560/run7-sdk-transport-review/skills/common/plugin-runtime/foundation/registry/schema.ts:113\n' +
+    "    throw new RegistryError('REGISTRY_MANIFEST_INVALID', `Invalid JSON Schema in ${schemaPath}`, {\n" +
+    '          ^\n' +
+    '\n' +
+    'RegistryError: Invalid JSON Schema in independent-original-echo-schema\n' +
+    '    at validateReferencedSchema (file:///workspace/scratch/15fb596e6560/run7-sdk-transport-review/skills/common/plugin-runtime/foundation/registry/schema.ts:113:11)\n' +
+    '    at file:///workspace/scratch/15fb596e6560/run7-sdk-transport-review/docs/review/evidence/run7-sdk-cache-context-case-probe.mjs:38:3\n' +
+    '    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n' +
+    '    at async node:internal/modules/esm/loader:643:26\n' +
+    '    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n' +
+    "  code: 'REGISTRY_MANIFEST_INVALID',\n" +
+    '  details: {\n' +
+    "    schemaPath: 'independent-original-echo-schema',\n" +
+    `    cause: 'strict mode: required property "contextRequest" is not defined at "#/allOf/0/if" (strictRequired)'\n` +
+    '  }\n' +
+    '}\n' +
+    '\n' +
+    'Node.js v24.19.0\n'
+}
+
+Node.js v24.19.0
+
+exit=1
