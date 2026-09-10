@@ -16,6 +16,7 @@ const configSource = `${JSON.stringify({
   additionalProperties: false,
   required: ['agent'],
   properties: {
+    reportArtifactEncoding: { const: 'kubeclaw-json.utf16.v1' },
     agent: { type: 'string', minLength: 1 },
     profile: { enum: ['gate', 'lean', 'audit'], default: 'gate' },
     policy: reviewPolicySchema,
