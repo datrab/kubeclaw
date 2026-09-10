@@ -1,0 +1,36 @@
+Fresh MAIN21b051; unchanged candidate0a4bf95 and original fixture (including100ms ready timeout).
+Command: node --test tests/verification/reliability/review-cache-legacy-prefix.test.mjs
+Coordinated quiet slot; no other own process. Exit0,24pass/0fail/0skip. First genuine startup failure is preserved separately, not erased or called a pass.
+
+✔ v1 original cache write requested SIGKILL preserves exact pending operation and authority (2119.059605ms)
+✔ v1 original cache write accepted SIGKILL preserves exact pending operation and authority (2039.99013ms)
+✔ v1 original cache write completed SIGKILL preserves exact pending operation and authority (2123.926083ms)
+✔ v1 original cache read requested SIGKILL preserves exact pending operation and authority (3187.361504ms)
+✔ v1 original cache read accepted SIGKILL preserves exact pending operation and authority (3268.942743ms)
+✔ v1 original cache read completed SIGKILL preserves exact pending operation and authority (4578.104077ms)
+✔ v2 original cache write requested SIGKILL preserves exact pending operation and authority (2148.141964ms)
+✔ v2 original cache write accepted SIGKILL preserves exact pending operation and authority (2099.469805ms)
+✔ v2 original cache write completed SIGKILL preserves exact pending operation and authority (2096.08015ms)
+✔ v2 original cache read requested SIGKILL preserves exact pending operation and authority (3753.022008ms)
+✔ v2 original cache read accepted SIGKILL preserves exact pending operation and authority (3223.630478ms)
+✔ v2 original cache read completed SIGKILL preserves exact pending operation and authority (4277.48337ms)
+✔ v3 original cache write requested SIGKILL preserves exact pending operation and authority (2117.069099ms)
+✔ v3 original cache write accepted SIGKILL preserves exact pending operation and authority (2131.313356ms)
+✔ v3 original cache write completed SIGKILL preserves exact pending operation and authority (2121.427464ms)
+✔ v3 original cache read requested SIGKILL preserves exact pending operation and authority (3272.495337ms)
+✔ v3 original cache read accepted SIGKILL preserves exact pending operation and authority (3157.882935ms)
+✔ v3 original cache read completed SIGKILL preserves exact pending operation and authority (4266.283497ms)
+✔ v4 original cache write requested SIGKILL preserves exact pending operation and authority (2141.205094ms)
+✔ v4 original cache write accepted SIGKILL preserves exact pending operation and authority (2118.628803ms)
+✔ v4 original cache write completed SIGKILL preserves exact pending operation and authority (2181.099104ms)
+✔ v4 original cache read requested SIGKILL preserves exact pending operation and authority (3247.433022ms)
+✔ v4 original cache read accepted SIGKILL preserves exact pending operation and authority (3090.119845ms)
+✔ v4 original cache read completed SIGKILL preserves exact pending operation and authority (3112.069657ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 68362.326217
