@@ -1,0 +1,992 @@
+{
+  "schemaVersion": "delivery-manifest-stage-consumer-boundary.v1",
+  "phase": "consume-sv",
+  "locale": "sv-SE",
+  "runId": "run:delivery-manifest-stage-boundary",
+  "sameStoredArtifactRef": {
+    "artifactId": "project-summary:run:delivery-manifest-stage-boundary",
+    "digest": "sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314",
+    "encoding": "kubeclaw-json.utf16.v1",
+    "mediaType": "application/json",
+    "namespace": "kubeclaw.project-summary",
+    "producer": {
+      "attemptId": "attempt:e2ecb71e-9b8a-4fb2-9b81-ecfd32d8db43",
+      "attemptNumber": 1,
+      "runId": "run:delivery-manifest-stage-boundary",
+      "stageId": "project-summary"
+    },
+    "sizeBytes": 6608
+  },
+  "originalEvidenceAdapter": "kubeclaw.remote-test-gate:evidence",
+  "outcome": "blocked",
+  "error": {
+    "code": "adapter.effect_failed",
+    "message": "NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED"
+  },
+  "storedSemanticDigest": "sha256:cb903f1f70a3fe55c294e814477a396ff8b10e8f6da8483965cb5eb952f1a4d8",
+  "recomputedSemanticDigest": "sha256:cb903f1f70a3fe55c294e814477a396ff8b10e8f6da8483965cb5eb952f1a4d8",
+  "parsedManifestMatchesProducer": true,
+  "boundary": {
+    "manifestIntegrityRejected": false,
+    "importStoreReached": true,
+    "providerExecution": false,
+    "importedResultSuccess": false
+  },
+  "evidenceRequest": {
+    "schemaVersion": "effect-request.v2",
+    "effectId": "effect:json-utf16-v1:9a5b44cc30f8413632b09daba2dbfd12dc73ccac2d47e137adff065549ee5ee9",
+    "idempotencyKey": "run:delivery-manifest-stage-boundary:consume:1:1",
+    "attempt": {
+      "runId": "run:delivery-manifest-stage-boundary",
+      "stageId": "consume",
+      "attemptId": "attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e",
+      "attemptNumber": 1
+    },
+    "capability": "test.plan.evidence",
+    "operation": "demo",
+    "resource": {
+      "type": "test.plan.evidence",
+      "canonicalId": "project-summary:run:delivery-manifest-stage-boundary"
+    },
+    "payload": {
+      "manifest": {
+        "artifactId": "project-summary:run:delivery-manifest-stage-boundary",
+        "digest": "sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314",
+        "encoding": "kubeclaw-json.utf16.v1",
+        "mediaType": "application/json",
+        "namespace": "kubeclaw.project-summary",
+        "producer": {
+          "attemptId": "attempt:e2ecb71e-9b8a-4fb2-9b81-ecfd32d8db43",
+          "attemptNumber": 1,
+          "runId": "run:delivery-manifest-stage-boundary",
+          "stageId": "project-summary"
+        },
+        "sizeBytes": 6608
+      },
+      "namespace": "kubeclaw.project-summary",
+      "authNodeId": "auth"
+    },
+    "requestedAt": "2026-09-10T05:33:45.723Z"
+  },
+  "evidenceReceipt": {
+    "schemaVersion": "effect-receipt.v2",
+    "effectId": "effect:json-utf16-v1:9a5b44cc30f8413632b09daba2dbfd12dc73ccac2d47e137adff065549ee5ee9",
+    "idempotencyKey": "run:delivery-manifest-stage-boundary:consume:1:1",
+    "adapter": {
+      "pluginId": "kubeclaw.remote-test-gate",
+      "apiVersion": "pipeline-plugin-v2",
+      "packageVersion": "1.0.0",
+      "contentDigest": "sha256:017d344c8416537b6c43b6f79816a962c7c2208a1403aa1a5b1092b06df1c3d3",
+      "registrationId": "evidence"
+    },
+    "status": "failed",
+    "error": {
+      "code": "adapter.effect_failed",
+      "message": "NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED"
+    },
+    "recordedAt": "2026-09-10T05:33:45.904Z"
+  },
+  "nestedArtifactRead": {
+    "request": {
+      "schemaVersion": "effect-request.v2",
+      "effectId": "effect:json-utf16-v1:273b268d4f1978d3504bea184d8cd001ef67415997560af2b3598e726c141ae1",
+      "idempotencyKey": "adapter-dep:utf16-v1:ce3abce1cbb1e26aeeea867d52c292c5b7b4ffb320abe461e54963532b74fc41:f41bb30c3dfa26e9bde4c08da3fe9cd185617ff8ec0a34ec61b84386330a1aed",
+      "attempt": {
+        "runId": "run:delivery-manifest-stage-boundary",
+        "stageId": "consume",
+        "attemptId": "attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e",
+        "attemptNumber": 1
+      },
+      "capability": "artifacts.read",
+      "operation": "get_latest_json_bytes",
+      "resource": {
+        "type": "artifact.object",
+        "canonicalId": "project-summary:run:delivery-manifest-stage-boundary"
+      },
+      "payload": {
+        "namespace": "kubeclaw.project-summary",
+        "digest": "sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314"
+      },
+      "requestedAt": "2026-09-10T05:33:45.781Z"
+    },
+    "receipt": {
+      "schemaVersion": "effect-receipt.v2",
+      "effectId": "effect:json-utf16-v1:273b268d4f1978d3504bea184d8cd001ef67415997560af2b3598e726c141ae1",
+      "idempotencyKey": "adapter-dep:utf16-v1:ce3abce1cbb1e26aeeea867d52c292c5b7b4ffb320abe461e54963532b74fc41:f41bb30c3dfa26e9bde4c08da3fe9cd185617ff8ec0a34ec61b84386330a1aed",
+      "adapter": {
+        "pluginId": "kubeclaw.artifact-store",
+        "apiVersion": "pipeline-plugin-v2",
+        "packageVersion": "1.0.0",
+        "contentDigest": "sha256:67df27eb32d0829b69b33e9e0310b62ae183e1d1517defbff2daadd901caf832",
+        "registrationId": "artifact-store"
+      },
+      "status": "completed",
+      "result": {
+        "schemaVersion": "artifact-json-bytes.v1",
+        "jsonBytes": "{\"digest\":\"sha256:cb903f1f70a3fe55c294e814477a396ff8b10e8f6da8483965cb5eb952f1a4d8\",\"evidence\":[{\"artifactId\":\"implementation:app\",\"digest\":\"sha256:b1aee0b491f2b435ccafd8fe263d459391124a558d666c1b6a37f6baeb6e2788\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.implementation-agent\",\"producer\":{\"attemptId\":\"attempt:6c336d5d-c1a9-4d7c-81ae-843395ef64f2\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"forge\"},\"sizeBytes\":90},{\"artifactId\":\"quality:test:decision:1\",\"digest\":\"sha256:0490359785004e6c6576edce51f49dd64c169550822768973935ad48db061782\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.buster-quality-gate\",\"producer\":{\"attemptId\":\"attempt:4d112071-6c31-456e-b04e-18fcf6c2e244\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"test\"},\"sizeBytes\":1514},{\"artifactId\":\"quality:test:1\",\"digest\":\"sha256:255d9599e14ec91bfe5956d5d8a38b3ed042a1b45e0f0c6b9a01f18fdc8284a6\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.buster-quality-gate\",\"producer\":{\"attemptId\":\"attempt:4d112071-6c31-456e-b04e-18fcf6c2e244\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"test\"},\"sizeBytes\":207},{\"artifactId\":\"implementation:app\",\"digest\":\"sha256:b1aee0b491f2b435ccafd8fe263d459391124a558d666c1b6a37f6baeb6e2788\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.implementation-agent\",\"producer\":{\"attemptId\":\"attempt:6c336d5d-c1a9-4d7c-81ae-843395ef64f2\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"forge\"},\"sizeBytes\":90},{\"artifactId\":\"quality:final-test:decision:1\",\"digest\":\"sha256:768a2212b5b48667a872c478f971b5096d1cf2d54d69808931210d9f853c0f24\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.buster-quality-gate\",\"producer\":{\"attemptId\":\"attempt:499f721a-d0b2-4f34-9fab-689dd1f2f435\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"final-test\"},\"sizeBytes\":1536},{\"artifactId\":\"quality:final-test:1\",\"digest\":\"sha256:4ff9a8e3aa03843768c3c54b165c1b075d1b7c059ea642358db624bb326a24b3\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.buster-quality-gate\",\"producer\":{\"attemptId\":\"attempt:499f721a-d0b2-4f34-9fab-689dd1f2f435\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"final-test\"},\"sizeBytes\":207},{\"artifactId\":\"lint:full:app\",\"digest\":\"sha256:ca26c4db9a18a1a3a1b45b7aef0e0aa2d41244ca79ed573fa3487a47c6e4ffb4\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.lint\",\"producer\":{\"attemptId\":\"attempt:a70dae42-b6df-49bc-ad59-fdcbbeaf5a05\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"lint\"},\"sizeBytes\":109}],\"final\":{\"coverage\":{\"archiveContentDigest\":\"sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d\",\"checks\":[{\"checkId\":\"works\",\"declarationId\":\"unit\",\"nodeId\":\"unit\",\"state\":\"passed\"}],\"coverageDigest\":\"sha256:bd2cfb62e2c831240a990ffa0421c1c2e6550788eeab420176d3b197876c9082\",\"pipelineStageId\":\"final-test\",\"planDigest\":\"sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac\",\"policy\":{\"baseRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"integrationRequirements\":[],\"kind\":\"cumulative\",\"modules\":[{\"moduleId\":\"app\",\"ownedPaths\":[\"app\"],\"requirements\":[{\"id\":\"works\",\"statement\":\"Contract fixture only.\"}]}],\"policyDigest\":\"sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5\",\"projectId\":\"app\",\"requiredChecks\":[{\"checkId\":\"works\",\"nodeIds\":[\"unit\"],\"requirementRefs\":[{\"moduleId\":\"app\",\"requirementId\":\"works\"}]}],\"schemaVersion\":\"gate-coverage.v1\"},\"schemaVersion\":\"gate-coverage-result.v1\",\"sourceRevision\":\"git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceTree\":\"git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"},\"decisionDigest\":\"sha256:b0f9a321ee098a2adde3f320c5a0b67fea7e371c170d59bccddb9d191d5c2181\",\"expectedCoverage\":{\"baseRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"integrationRequirements\":[],\"kind\":\"cumulative\",\"modules\":[{\"moduleId\":\"app\",\"ownedPaths\":[\"app\"],\"requirements\":[{\"id\":\"works\",\"statement\":\"Contract fixture only.\"}]}],\"policyDigest\":\"sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5\",\"projectId\":\"app\",\"requiredChecks\":[{\"checkId\":\"works\",\"nodeIds\":[\"unit\"],\"requirementRefs\":[{\"moduleId\":\"app\",\"requirementId\":\"works\"}]}],\"schemaVersion\":\"gate-coverage.v1\"},\"lintStageId\":\"lint\",\"resultDigest\":\"sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d\",\"sourceRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceStageId\":\"forge\",\"testStageId\":\"final-test\"},\"modules\":[{\"coverage\":{\"archiveContentDigest\":\"sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d\",\"checks\":[{\"checkId\":\"works\",\"declarationId\":\"unit\",\"nodeId\":\"unit\",\"state\":\"passed\"}],\"coverageDigest\":\"sha256:cd89e9d3a4d5553eb3ab3020a8f3251f6b3e8e4f4157446155f04c936df8decc\",\"pipelineStageId\":\"test\",\"planDigest\":\"sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac\",\"policy\":{\"baseRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"integrationRequirements\":[],\"kind\":\"module\",\"modules\":[{\"moduleId\":\"app\",\"ownedPaths\":[\"app\"],\"requirements\":[{\"id\":\"works\",\"statement\":\"Contract fixture only.\"}]}],\"policyDigest\":\"sha256:42b529ace13432e03e334022803618fe5534dd84163798daf0d4b7ebf896a9df\",\"projectId\":\"app\",\"requiredChecks\":[{\"checkId\":\"works\",\"nodeIds\":[\"unit\"],\"requirementRefs\":[{\"moduleId\":\"app\",\"requirementId\":\"works\"}]}],\"schemaVersion\":\"gate-coverage.v1\"},\"schemaVersion\":\"gate-coverage-result.v1\",\"sourceRevision\":\"git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceTree\":\"git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"},\"decisionDigest\":\"sha256:8bcc3fdd13d63ea20ac832d24a4575366f6505d2cd58c1c962028a5e245a29cc\",\"expectedCoverage\":{\"baseRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"integrationRequirements\":[],\"kind\":\"module\",\"modules\":[{\"moduleId\":\"app\",\"ownedPaths\":[\"app\"],\"requirements\":[{\"id\":\"works\",\"statement\":\"Contract fixture only.\"}]}],\"policyDigest\":\"sha256:42b529ace13432e03e334022803618fe5534dd84163798daf0d4b7ebf896a9df\",\"projectId\":\"app\",\"requiredChecks\":[{\"checkId\":\"works\",\"nodeIds\":[\"unit\"],\"requirementRefs\":[{\"moduleId\":\"app\",\"requirementId\":\"works\"}]}],\"schemaVersion\":\"gate-coverage.v1\"},\"moduleId\":\"app\",\"resultDigest\":\"sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d\",\"sourceRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceStageId\":\"forge\",\"testStageId\":\"test\"}],\"projectId\":\"app\",\"runId\":\"run:delivery-manifest-stage-boundary\",\"schemaVersion\":\"delivery-manifest.v3\",\"sourceRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+        "value": {
+          "digest": "sha256:cb903f1f70a3fe55c294e814477a396ff8b10e8f6da8483965cb5eb952f1a4d8",
+          "evidence": [
+            {
+              "artifactId": "implementation:app",
+              "digest": "sha256:b1aee0b491f2b435ccafd8fe263d459391124a558d666c1b6a37f6baeb6e2788",
+              "mediaType": "application/json",
+              "namespace": "kubeclaw.implementation-agent",
+              "producer": {
+                "attemptId": "attempt:6c336d5d-c1a9-4d7c-81ae-843395ef64f2",
+                "attemptNumber": 1,
+                "runId": "run:delivery-manifest-stage-boundary",
+                "stageId": "forge"
+              },
+              "sizeBytes": 90
+            },
+            {
+              "artifactId": "quality:test:decision:1",
+              "digest": "sha256:0490359785004e6c6576edce51f49dd64c169550822768973935ad48db061782",
+              "mediaType": "application/json",
+              "namespace": "kubeclaw.buster-quality-gate",
+              "producer": {
+                "attemptId": "attempt:4d112071-6c31-456e-b04e-18fcf6c2e244",
+                "attemptNumber": 1,
+                "runId": "run:delivery-manifest-stage-boundary",
+                "stageId": "test"
+              },
+              "sizeBytes": 1514
+            },
+            {
+              "artifactId": "quality:test:1",
+              "digest": "sha256:255d9599e14ec91bfe5956d5d8a38b3ed042a1b45e0f0c6b9a01f18fdc8284a6",
+              "mediaType": "application/json",
+              "namespace": "kubeclaw.buster-quality-gate",
+              "producer": {
+                "attemptId": "attempt:4d112071-6c31-456e-b04e-18fcf6c2e244",
+                "attemptNumber": 1,
+                "runId": "run:delivery-manifest-stage-boundary",
+                "stageId": "test"
+              },
+              "sizeBytes": 207
+            },
+            {
+              "artifactId": "implementation:app",
+              "digest": "sha256:b1aee0b491f2b435ccafd8fe263d459391124a558d666c1b6a37f6baeb6e2788",
+              "mediaType": "application/json",
+              "namespace": "kubeclaw.implementation-agent",
+              "producer": {
+                "attemptId": "attempt:6c336d5d-c1a9-4d7c-81ae-843395ef64f2",
+                "attemptNumber": 1,
+                "runId": "run:delivery-manifest-stage-boundary",
+                "stageId": "forge"
+              },
+              "sizeBytes": 90
+            },
+            {
+              "artifactId": "quality:final-test:decision:1",
+              "digest": "sha256:768a2212b5b48667a872c478f971b5096d1cf2d54d69808931210d9f853c0f24",
+              "mediaType": "application/json",
+              "namespace": "kubeclaw.buster-quality-gate",
+              "producer": {
+                "attemptId": "attempt:499f721a-d0b2-4f34-9fab-689dd1f2f435",
+                "attemptNumber": 1,
+                "runId": "run:delivery-manifest-stage-boundary",
+                "stageId": "final-test"
+              },
+              "sizeBytes": 1536
+            },
+            {
+              "artifactId": "quality:final-test:1",
+              "digest": "sha256:4ff9a8e3aa03843768c3c54b165c1b075d1b7c059ea642358db624bb326a24b3",
+              "mediaType": "application/json",
+              "namespace": "kubeclaw.buster-quality-gate",
+              "producer": {
+                "attemptId": "attempt:499f721a-d0b2-4f34-9fab-689dd1f2f435",
+                "attemptNumber": 1,
+                "runId": "run:delivery-manifest-stage-boundary",
+                "stageId": "final-test"
+              },
+              "sizeBytes": 207
+            },
+            {
+              "artifactId": "lint:full:app",
+              "digest": "sha256:ca26c4db9a18a1a3a1b45b7aef0e0aa2d41244ca79ed573fa3487a47c6e4ffb4",
+              "mediaType": "application/json",
+              "namespace": "kubeclaw.lint",
+              "producer": {
+                "attemptId": "attempt:a70dae42-b6df-49bc-ad59-fdcbbeaf5a05",
+                "attemptNumber": 1,
+                "runId": "run:delivery-manifest-stage-boundary",
+                "stageId": "lint"
+              },
+              "sizeBytes": 109
+            }
+          ],
+          "final": {
+            "coverage": {
+              "archiveContentDigest": "sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d",
+              "checks": [
+                {
+                  "checkId": "works",
+                  "declarationId": "unit",
+                  "nodeId": "unit",
+                  "state": "passed"
+                }
+              ],
+              "coverageDigest": "sha256:bd2cfb62e2c831240a990ffa0421c1c2e6550788eeab420176d3b197876c9082",
+              "pipelineStageId": "final-test",
+              "planDigest": "sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac",
+              "policy": {
+                "baseRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "integrationRequirements": [],
+                "kind": "cumulative",
+                "modules": [
+                  {
+                    "moduleId": "app",
+                    "ownedPaths": [
+                      "app"
+                    ],
+                    "requirements": [
+                      {
+                        "id": "works",
+                        "statement": "Contract fixture only."
+                      }
+                    ]
+                  }
+                ],
+                "policyDigest": "sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5",
+                "projectId": "app",
+                "requiredChecks": [
+                  {
+                    "checkId": "works",
+                    "nodeIds": [
+                      "unit"
+                    ],
+                    "requirementRefs": [
+                      {
+                        "moduleId": "app",
+                        "requirementId": "works"
+                      }
+                    ]
+                  }
+                ],
+                "schemaVersion": "gate-coverage.v1"
+              },
+              "schemaVersion": "gate-coverage-result.v1",
+              "sourceRevision": "git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "sourceTree": "git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            "decisionDigest": "sha256:b0f9a321ee098a2adde3f320c5a0b67fea7e371c170d59bccddb9d191d5c2181",
+            "expectedCoverage": {
+              "baseRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "integrationRequirements": [],
+              "kind": "cumulative",
+              "modules": [
+                {
+                  "moduleId": "app",
+                  "ownedPaths": [
+                    "app"
+                  ],
+                  "requirements": [
+                    {
+                      "id": "works",
+                      "statement": "Contract fixture only."
+                    }
+                  ]
+                }
+              ],
+              "policyDigest": "sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5",
+              "projectId": "app",
+              "requiredChecks": [
+                {
+                  "checkId": "works",
+                  "nodeIds": [
+                    "unit"
+                  ],
+                  "requirementRefs": [
+                    {
+                      "moduleId": "app",
+                      "requirementId": "works"
+                    }
+                  ]
+                }
+              ],
+              "schemaVersion": "gate-coverage.v1"
+            },
+            "lintStageId": "lint",
+            "resultDigest": "sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d",
+            "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sourceStageId": "forge",
+            "testStageId": "final-test"
+          },
+          "modules": [
+            {
+              "coverage": {
+                "archiveContentDigest": "sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d",
+                "checks": [
+                  {
+                    "checkId": "works",
+                    "declarationId": "unit",
+                    "nodeId": "unit",
+                    "state": "passed"
+                  }
+                ],
+                "coverageDigest": "sha256:cd89e9d3a4d5553eb3ab3020a8f3251f6b3e8e4f4157446155f04c936df8decc",
+                "pipelineStageId": "test",
+                "planDigest": "sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac",
+                "policy": {
+                  "baseRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "integrationRequirements": [],
+                  "kind": "module",
+                  "modules": [
+                    {
+                      "moduleId": "app",
+                      "ownedPaths": [
+                        "app"
+                      ],
+                      "requirements": [
+                        {
+                          "id": "works",
+                          "statement": "Contract fixture only."
+                        }
+                      ]
+                    }
+                  ],
+                  "policyDigest": "sha256:42b529ace13432e03e334022803618fe5534dd84163798daf0d4b7ebf896a9df",
+                  "projectId": "app",
+                  "requiredChecks": [
+                    {
+                      "checkId": "works",
+                      "nodeIds": [
+                        "unit"
+                      ],
+                      "requirementRefs": [
+                        {
+                          "moduleId": "app",
+                          "requirementId": "works"
+                        }
+                      ]
+                    }
+                  ],
+                  "schemaVersion": "gate-coverage.v1"
+                },
+                "schemaVersion": "gate-coverage-result.v1",
+                "sourceRevision": "git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "sourceTree": "git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              },
+              "decisionDigest": "sha256:8bcc3fdd13d63ea20ac832d24a4575366f6505d2cd58c1c962028a5e245a29cc",
+              "expectedCoverage": {
+                "baseRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "integrationRequirements": [],
+                "kind": "module",
+                "modules": [
+                  {
+                    "moduleId": "app",
+                    "ownedPaths": [
+                      "app"
+                    ],
+                    "requirements": [
+                      {
+                        "id": "works",
+                        "statement": "Contract fixture only."
+                      }
+                    ]
+                  }
+                ],
+                "policyDigest": "sha256:42b529ace13432e03e334022803618fe5534dd84163798daf0d4b7ebf896a9df",
+                "projectId": "app",
+                "requiredChecks": [
+                  {
+                    "checkId": "works",
+                    "nodeIds": [
+                      "unit"
+                    ],
+                    "requirementRefs": [
+                      {
+                        "moduleId": "app",
+                        "requirementId": "works"
+                      }
+                    ]
+                  }
+                ],
+                "schemaVersion": "gate-coverage.v1"
+              },
+              "moduleId": "app",
+              "resultDigest": "sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d",
+              "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "sourceStageId": "forge",
+              "testStageId": "test"
+            }
+          ],
+          "projectId": "app",
+          "runId": "run:delivery-manifest-stage-boundary",
+          "schemaVersion": "delivery-manifest.v3",
+          "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "digest": "sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314",
+        "sizeBytes": 6608,
+        "artifact": {
+          "artifactId": "project-summary:run:delivery-manifest-stage-boundary",
+          "digest": "sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314",
+          "encoding": "kubeclaw-json.utf16.v1",
+          "mediaType": "application/json",
+          "namespace": "kubeclaw.project-summary",
+          "producer": {
+            "attemptId": "attempt:e2ecb71e-9b8a-4fb2-9b81-ecfd32d8db43",
+            "attemptNumber": 1,
+            "runId": "run:delivery-manifest-stage-boundary",
+            "stageId": "project-summary"
+          },
+          "sizeBytes": 6608
+        }
+      },
+      "recordedAt": "2026-09-10T05:33:45.812Z"
+    }
+  },
+  "allConsumerEffects": [
+    {
+      "request": {
+        "schemaVersion": "effect-request.v2",
+        "effectId": "effect:json-utf16-v1:9a5b44cc30f8413632b09daba2dbfd12dc73ccac2d47e137adff065549ee5ee9",
+        "idempotencyKey": "run:delivery-manifest-stage-boundary:consume:1:1",
+        "attempt": {
+          "runId": "run:delivery-manifest-stage-boundary",
+          "stageId": "consume",
+          "attemptId": "attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e",
+          "attemptNumber": 1
+        },
+        "capability": "test.plan.evidence",
+        "operation": "demo",
+        "resource": {
+          "type": "test.plan.evidence",
+          "canonicalId": "project-summary:run:delivery-manifest-stage-boundary"
+        },
+        "payload": {
+          "manifest": {
+            "artifactId": "project-summary:run:delivery-manifest-stage-boundary",
+            "digest": "sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314",
+            "encoding": "kubeclaw-json.utf16.v1",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.project-summary",
+            "producer": {
+              "attemptId": "attempt:e2ecb71e-9b8a-4fb2-9b81-ecfd32d8db43",
+              "attemptNumber": 1,
+              "runId": "run:delivery-manifest-stage-boundary",
+              "stageId": "project-summary"
+            },
+            "sizeBytes": 6608
+          },
+          "namespace": "kubeclaw.project-summary",
+          "authNodeId": "auth"
+        },
+        "requestedAt": "2026-09-10T05:33:45.723Z"
+      },
+      "accepted": true,
+      "receiptStatus": "failed",
+      "receipt": {
+        "schemaVersion": "effect-receipt.v2",
+        "effectId": "effect:json-utf16-v1:9a5b44cc30f8413632b09daba2dbfd12dc73ccac2d47e137adff065549ee5ee9",
+        "idempotencyKey": "run:delivery-manifest-stage-boundary:consume:1:1",
+        "adapter": {
+          "pluginId": "kubeclaw.remote-test-gate",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:017d344c8416537b6c43b6f79816a962c7c2208a1403aa1a5b1092b06df1c3d3",
+          "registrationId": "evidence"
+        },
+        "status": "failed",
+        "error": {
+          "code": "adapter.effect_failed",
+          "message": "NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED"
+        },
+        "recordedAt": "2026-09-10T05:33:45.904Z"
+      }
+    },
+    {
+      "request": {
+        "schemaVersion": "effect-request.v2",
+        "effectId": "effect:json-utf16-v1:273b268d4f1978d3504bea184d8cd001ef67415997560af2b3598e726c141ae1",
+        "idempotencyKey": "adapter-dep:utf16-v1:ce3abce1cbb1e26aeeea867d52c292c5b7b4ffb320abe461e54963532b74fc41:f41bb30c3dfa26e9bde4c08da3fe9cd185617ff8ec0a34ec61b84386330a1aed",
+        "attempt": {
+          "runId": "run:delivery-manifest-stage-boundary",
+          "stageId": "consume",
+          "attemptId": "attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e",
+          "attemptNumber": 1
+        },
+        "capability": "artifacts.read",
+        "operation": "get_latest_json_bytes",
+        "resource": {
+          "type": "artifact.object",
+          "canonicalId": "project-summary:run:delivery-manifest-stage-boundary"
+        },
+        "payload": {
+          "namespace": "kubeclaw.project-summary",
+          "digest": "sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314"
+        },
+        "requestedAt": "2026-09-10T05:33:45.781Z"
+      },
+      "accepted": true,
+      "receiptStatus": "completed",
+      "receipt": {
+        "schemaVersion": "effect-receipt.v2",
+        "effectId": "effect:json-utf16-v1:273b268d4f1978d3504bea184d8cd001ef67415997560af2b3598e726c141ae1",
+        "idempotencyKey": "adapter-dep:utf16-v1:ce3abce1cbb1e26aeeea867d52c292c5b7b4ffb320abe461e54963532b74fc41:f41bb30c3dfa26e9bde4c08da3fe9cd185617ff8ec0a34ec61b84386330a1aed",
+        "adapter": {
+          "pluginId": "kubeclaw.artifact-store",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:67df27eb32d0829b69b33e9e0310b62ae183e1d1517defbff2daadd901caf832",
+          "registrationId": "artifact-store"
+        },
+        "status": "completed",
+        "result": {
+          "schemaVersion": "artifact-json-bytes.v1",
+          "jsonBytes": "{\"digest\":\"sha256:cb903f1f70a3fe55c294e814477a396ff8b10e8f6da8483965cb5eb952f1a4d8\",\"evidence\":[{\"artifactId\":\"implementation:app\",\"digest\":\"sha256:b1aee0b491f2b435ccafd8fe263d459391124a558d666c1b6a37f6baeb6e2788\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.implementation-agent\",\"producer\":{\"attemptId\":\"attempt:6c336d5d-c1a9-4d7c-81ae-843395ef64f2\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"forge\"},\"sizeBytes\":90},{\"artifactId\":\"quality:test:decision:1\",\"digest\":\"sha256:0490359785004e6c6576edce51f49dd64c169550822768973935ad48db061782\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.buster-quality-gate\",\"producer\":{\"attemptId\":\"attempt:4d112071-6c31-456e-b04e-18fcf6c2e244\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"test\"},\"sizeBytes\":1514},{\"artifactId\":\"quality:test:1\",\"digest\":\"sha256:255d9599e14ec91bfe5956d5d8a38b3ed042a1b45e0f0c6b9a01f18fdc8284a6\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.buster-quality-gate\",\"producer\":{\"attemptId\":\"attempt:4d112071-6c31-456e-b04e-18fcf6c2e244\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"test\"},\"sizeBytes\":207},{\"artifactId\":\"implementation:app\",\"digest\":\"sha256:b1aee0b491f2b435ccafd8fe263d459391124a558d666c1b6a37f6baeb6e2788\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.implementation-agent\",\"producer\":{\"attemptId\":\"attempt:6c336d5d-c1a9-4d7c-81ae-843395ef64f2\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"forge\"},\"sizeBytes\":90},{\"artifactId\":\"quality:final-test:decision:1\",\"digest\":\"sha256:768a2212b5b48667a872c478f971b5096d1cf2d54d69808931210d9f853c0f24\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.buster-quality-gate\",\"producer\":{\"attemptId\":\"attempt:499f721a-d0b2-4f34-9fab-689dd1f2f435\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"final-test\"},\"sizeBytes\":1536},{\"artifactId\":\"quality:final-test:1\",\"digest\":\"sha256:4ff9a8e3aa03843768c3c54b165c1b075d1b7c059ea642358db624bb326a24b3\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.buster-quality-gate\",\"producer\":{\"attemptId\":\"attempt:499f721a-d0b2-4f34-9fab-689dd1f2f435\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"final-test\"},\"sizeBytes\":207},{\"artifactId\":\"lint:full:app\",\"digest\":\"sha256:ca26c4db9a18a1a3a1b45b7aef0e0aa2d41244ca79ed573fa3487a47c6e4ffb4\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.lint\",\"producer\":{\"attemptId\":\"attempt:a70dae42-b6df-49bc-ad59-fdcbbeaf5a05\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"lint\"},\"sizeBytes\":109}],\"final\":{\"coverage\":{\"archiveContentDigest\":\"sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d\",\"checks\":[{\"checkId\":\"works\",\"declarationId\":\"unit\",\"nodeId\":\"unit\",\"state\":\"passed\"}],\"coverageDigest\":\"sha256:bd2cfb62e2c831240a990ffa0421c1c2e6550788eeab420176d3b197876c9082\",\"pipelineStageId\":\"final-test\",\"planDigest\":\"sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac\",\"policy\":{\"baseRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"integrationRequirements\":[],\"kind\":\"cumulative\",\"modules\":[{\"moduleId\":\"app\",\"ownedPaths\":[\"app\"],\"requirements\":[{\"id\":\"works\",\"statement\":\"Contract fixture only.\"}]}],\"policyDigest\":\"sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5\",\"projectId\":\"app\",\"requiredChecks\":[{\"checkId\":\"works\",\"nodeIds\":[\"unit\"],\"requirementRefs\":[{\"moduleId\":\"app\",\"requirementId\":\"works\"}]}],\"schemaVersion\":\"gate-coverage.v1\"},\"schemaVersion\":\"gate-coverage-result.v1\",\"sourceRevision\":\"git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceTree\":\"git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"},\"decisionDigest\":\"sha256:b0f9a321ee098a2adde3f320c5a0b67fea7e371c170d59bccddb9d191d5c2181\",\"expectedCoverage\":{\"baseRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"integrationRequirements\":[],\"kind\":\"cumulative\",\"modules\":[{\"moduleId\":\"app\",\"ownedPaths\":[\"app\"],\"requirements\":[{\"id\":\"works\",\"statement\":\"Contract fixture only.\"}]}],\"policyDigest\":\"sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5\",\"projectId\":\"app\",\"requiredChecks\":[{\"checkId\":\"works\",\"nodeIds\":[\"unit\"],\"requirementRefs\":[{\"moduleId\":\"app\",\"requirementId\":\"works\"}]}],\"schemaVersion\":\"gate-coverage.v1\"},\"lintStageId\":\"lint\",\"resultDigest\":\"sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d\",\"sourceRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceStageId\":\"forge\",\"testStageId\":\"final-test\"},\"modules\":[{\"coverage\":{\"archiveContentDigest\":\"sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d\",\"checks\":[{\"checkId\":\"works\",\"declarationId\":\"unit\",\"nodeId\":\"unit\",\"state\":\"passed\"}],\"coverageDigest\":\"sha256:cd89e9d3a4d5553eb3ab3020a8f3251f6b3e8e4f4157446155f04c936df8decc\",\"pipelineStageId\":\"test\",\"planDigest\":\"sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac\",\"policy\":{\"baseRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"integrationRequirements\":[],\"kind\":\"module\",\"modules\":[{\"moduleId\":\"app\",\"ownedPaths\":[\"app\"],\"requirements\":[{\"id\":\"works\",\"statement\":\"Contract fixture only.\"}]}],\"policyDigest\":\"sha256:42b529ace13432e03e334022803618fe5534dd84163798daf0d4b7ebf896a9df\",\"projectId\":\"app\",\"requiredChecks\":[{\"checkId\":\"works\",\"nodeIds\":[\"unit\"],\"requirementRefs\":[{\"moduleId\":\"app\",\"requirementId\":\"works\"}]}],\"schemaVersion\":\"gate-coverage.v1\"},\"schemaVersion\":\"gate-coverage-result.v1\",\"sourceRevision\":\"git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceTree\":\"git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"},\"decisionDigest\":\"sha256:8bcc3fdd13d63ea20ac832d24a4575366f6505d2cd58c1c962028a5e245a29cc\",\"expectedCoverage\":{\"baseRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"integrationRequirements\":[],\"kind\":\"module\",\"modules\":[{\"moduleId\":\"app\",\"ownedPaths\":[\"app\"],\"requirements\":[{\"id\":\"works\",\"statement\":\"Contract fixture only.\"}]}],\"policyDigest\":\"sha256:42b529ace13432e03e334022803618fe5534dd84163798daf0d4b7ebf896a9df\",\"projectId\":\"app\",\"requiredChecks\":[{\"checkId\":\"works\",\"nodeIds\":[\"unit\"],\"requirementRefs\":[{\"moduleId\":\"app\",\"requirementId\":\"works\"}]}],\"schemaVersion\":\"gate-coverage.v1\"},\"moduleId\":\"app\",\"resultDigest\":\"sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d\",\"sourceRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceStageId\":\"forge\",\"testStageId\":\"test\"}],\"projectId\":\"app\",\"runId\":\"run:delivery-manifest-stage-boundary\",\"schemaVersion\":\"delivery-manifest.v3\",\"sourceRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
+          "value": {
+            "digest": "sha256:cb903f1f70a3fe55c294e814477a396ff8b10e8f6da8483965cb5eb952f1a4d8",
+            "evidence": [
+              {
+                "artifactId": "implementation:app",
+                "digest": "sha256:b1aee0b491f2b435ccafd8fe263d459391124a558d666c1b6a37f6baeb6e2788",
+                "mediaType": "application/json",
+                "namespace": "kubeclaw.implementation-agent",
+                "producer": {
+                  "attemptId": "attempt:6c336d5d-c1a9-4d7c-81ae-843395ef64f2",
+                  "attemptNumber": 1,
+                  "runId": "run:delivery-manifest-stage-boundary",
+                  "stageId": "forge"
+                },
+                "sizeBytes": 90
+              },
+              {
+                "artifactId": "quality:test:decision:1",
+                "digest": "sha256:0490359785004e6c6576edce51f49dd64c169550822768973935ad48db061782",
+                "mediaType": "application/json",
+                "namespace": "kubeclaw.buster-quality-gate",
+                "producer": {
+                  "attemptId": "attempt:4d112071-6c31-456e-b04e-18fcf6c2e244",
+                  "attemptNumber": 1,
+                  "runId": "run:delivery-manifest-stage-boundary",
+                  "stageId": "test"
+                },
+                "sizeBytes": 1514
+              },
+              {
+                "artifactId": "quality:test:1",
+                "digest": "sha256:255d9599e14ec91bfe5956d5d8a38b3ed042a1b45e0f0c6b9a01f18fdc8284a6",
+                "mediaType": "application/json",
+                "namespace": "kubeclaw.buster-quality-gate",
+                "producer": {
+                  "attemptId": "attempt:4d112071-6c31-456e-b04e-18fcf6c2e244",
+                  "attemptNumber": 1,
+                  "runId": "run:delivery-manifest-stage-boundary",
+                  "stageId": "test"
+                },
+                "sizeBytes": 207
+              },
+              {
+                "artifactId": "implementation:app",
+                "digest": "sha256:b1aee0b491f2b435ccafd8fe263d459391124a558d666c1b6a37f6baeb6e2788",
+                "mediaType": "application/json",
+                "namespace": "kubeclaw.implementation-agent",
+                "producer": {
+                  "attemptId": "attempt:6c336d5d-c1a9-4d7c-81ae-843395ef64f2",
+                  "attemptNumber": 1,
+                  "runId": "run:delivery-manifest-stage-boundary",
+                  "stageId": "forge"
+                },
+                "sizeBytes": 90
+              },
+              {
+                "artifactId": "quality:final-test:decision:1",
+                "digest": "sha256:768a2212b5b48667a872c478f971b5096d1cf2d54d69808931210d9f853c0f24",
+                "mediaType": "application/json",
+                "namespace": "kubeclaw.buster-quality-gate",
+                "producer": {
+                  "attemptId": "attempt:499f721a-d0b2-4f34-9fab-689dd1f2f435",
+                  "attemptNumber": 1,
+                  "runId": "run:delivery-manifest-stage-boundary",
+                  "stageId": "final-test"
+                },
+                "sizeBytes": 1536
+              },
+              {
+                "artifactId": "quality:final-test:1",
+                "digest": "sha256:4ff9a8e3aa03843768c3c54b165c1b075d1b7c059ea642358db624bb326a24b3",
+                "mediaType": "application/json",
+                "namespace": "kubeclaw.buster-quality-gate",
+                "producer": {
+                  "attemptId": "attempt:499f721a-d0b2-4f34-9fab-689dd1f2f435",
+                  "attemptNumber": 1,
+                  "runId": "run:delivery-manifest-stage-boundary",
+                  "stageId": "final-test"
+                },
+                "sizeBytes": 207
+              },
+              {
+                "artifactId": "lint:full:app",
+                "digest": "sha256:ca26c4db9a18a1a3a1b45b7aef0e0aa2d41244ca79ed573fa3487a47c6e4ffb4",
+                "mediaType": "application/json",
+                "namespace": "kubeclaw.lint",
+                "producer": {
+                  "attemptId": "attempt:a70dae42-b6df-49bc-ad59-fdcbbeaf5a05",
+                  "attemptNumber": 1,
+                  "runId": "run:delivery-manifest-stage-boundary",
+                  "stageId": "lint"
+                },
+                "sizeBytes": 109
+              }
+            ],
+            "final": {
+              "coverage": {
+                "archiveContentDigest": "sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d",
+                "checks": [
+                  {
+                    "checkId": "works",
+                    "declarationId": "unit",
+                    "nodeId": "unit",
+                    "state": "passed"
+                  }
+                ],
+                "coverageDigest": "sha256:bd2cfb62e2c831240a990ffa0421c1c2e6550788eeab420176d3b197876c9082",
+                "pipelineStageId": "final-test",
+                "planDigest": "sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac",
+                "policy": {
+                  "baseRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "integrationRequirements": [],
+                  "kind": "cumulative",
+                  "modules": [
+                    {
+                      "moduleId": "app",
+                      "ownedPaths": [
+                        "app"
+                      ],
+                      "requirements": [
+                        {
+                          "id": "works",
+                          "statement": "Contract fixture only."
+                        }
+                      ]
+                    }
+                  ],
+                  "policyDigest": "sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5",
+                  "projectId": "app",
+                  "requiredChecks": [
+                    {
+                      "checkId": "works",
+                      "nodeIds": [
+                        "unit"
+                      ],
+                      "requirementRefs": [
+                        {
+                          "moduleId": "app",
+                          "requirementId": "works"
+                        }
+                      ]
+                    }
+                  ],
+                  "schemaVersion": "gate-coverage.v1"
+                },
+                "schemaVersion": "gate-coverage-result.v1",
+                "sourceRevision": "git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "sourceTree": "git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              },
+              "decisionDigest": "sha256:b0f9a321ee098a2adde3f320c5a0b67fea7e371c170d59bccddb9d191d5c2181",
+              "expectedCoverage": {
+                "baseRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "integrationRequirements": [],
+                "kind": "cumulative",
+                "modules": [
+                  {
+                    "moduleId": "app",
+                    "ownedPaths": [
+                      "app"
+                    ],
+                    "requirements": [
+                      {
+                        "id": "works",
+                        "statement": "Contract fixture only."
+                      }
+                    ]
+                  }
+                ],
+                "policyDigest": "sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5",
+                "projectId": "app",
+                "requiredChecks": [
+                  {
+                    "checkId": "works",
+                    "nodeIds": [
+                      "unit"
+                    ],
+                    "requirementRefs": [
+                      {
+                        "moduleId": "app",
+                        "requirementId": "works"
+                      }
+                    ]
+                  }
+                ],
+                "schemaVersion": "gate-coverage.v1"
+              },
+              "lintStageId": "lint",
+              "resultDigest": "sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d",
+              "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "sourceStageId": "forge",
+              "testStageId": "final-test"
+            },
+            "modules": [
+              {
+                "coverage": {
+                  "archiveContentDigest": "sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d",
+                  "checks": [
+                    {
+                      "checkId": "works",
+                      "declarationId": "unit",
+                      "nodeId": "unit",
+                      "state": "passed"
+                    }
+                  ],
+                  "coverageDigest": "sha256:cd89e9d3a4d5553eb3ab3020a8f3251f6b3e8e4f4157446155f04c936df8decc",
+                  "pipelineStageId": "test",
+                  "planDigest": "sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac",
+                  "policy": {
+                    "baseRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "integrationRequirements": [],
+                    "kind": "module",
+                    "modules": [
+                      {
+                        "moduleId": "app",
+                        "ownedPaths": [
+                          "app"
+                        ],
+                        "requirements": [
+                          {
+                            "id": "works",
+                            "statement": "Contract fixture only."
+                          }
+                        ]
+                      }
+                    ],
+                    "policyDigest": "sha256:42b529ace13432e03e334022803618fe5534dd84163798daf0d4b7ebf896a9df",
+                    "projectId": "app",
+                    "requiredChecks": [
+                      {
+                        "checkId": "works",
+                        "nodeIds": [
+                          "unit"
+                        ],
+                        "requirementRefs": [
+                          {
+                            "moduleId": "app",
+                            "requirementId": "works"
+                          }
+                        ]
+                      }
+                    ],
+                    "schemaVersion": "gate-coverage.v1"
+                  },
+                  "schemaVersion": "gate-coverage-result.v1",
+                  "sourceRevision": "git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "sourceTree": "git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                },
+                "decisionDigest": "sha256:8bcc3fdd13d63ea20ac832d24a4575366f6505d2cd58c1c962028a5e245a29cc",
+                "expectedCoverage": {
+                  "baseRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "integrationRequirements": [],
+                  "kind": "module",
+                  "modules": [
+                    {
+                      "moduleId": "app",
+                      "ownedPaths": [
+                        "app"
+                      ],
+                      "requirements": [
+                        {
+                          "id": "works",
+                          "statement": "Contract fixture only."
+                        }
+                      ]
+                    }
+                  ],
+                  "policyDigest": "sha256:42b529ace13432e03e334022803618fe5534dd84163798daf0d4b7ebf896a9df",
+                  "projectId": "app",
+                  "requiredChecks": [
+                    {
+                      "checkId": "works",
+                      "nodeIds": [
+                        "unit"
+                      ],
+                      "requirementRefs": [
+                        {
+                          "moduleId": "app",
+                          "requirementId": "works"
+                        }
+                      ]
+                    }
+                  ],
+                  "schemaVersion": "gate-coverage.v1"
+                },
+                "moduleId": "app",
+                "resultDigest": "sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d",
+                "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "sourceStageId": "forge",
+                "testStageId": "test"
+              }
+            ],
+            "projectId": "app",
+            "runId": "run:delivery-manifest-stage-boundary",
+            "schemaVersion": "delivery-manifest.v3",
+            "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "digest": "sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314",
+          "sizeBytes": 6608,
+          "artifact": {
+            "artifactId": "project-summary:run:delivery-manifest-stage-boundary",
+            "digest": "sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314",
+            "encoding": "kubeclaw-json.utf16.v1",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.project-summary",
+            "producer": {
+              "attemptId": "attempt:e2ecb71e-9b8a-4fb2-9b81-ecfd32d8db43",
+              "attemptNumber": 1,
+              "runId": "run:delivery-manifest-stage-boundary",
+              "stageId": "project-summary"
+            },
+            "sizeBytes": 6608
+          }
+        },
+        "recordedAt": "2026-09-10T05:33:45.812Z"
+      }
+    },
+    {
+      "request": {
+        "schemaVersion": "effect-request.v2",
+        "effectId": "effect:json-utf16-v1:700dc36607dd10fc89e390053fa72f6a4813ef990557fd4916b8334307128092",
+        "idempotencyKey": "adapter-dep:utf16-v1:ce3abce1cbb1e26aeeea867d52c292c5b7b4ffb320abe461e54963532b74fc41:f5b6515f2b6c879824cbeae3c338a4cc8ca3720e6524f75ccc33318655c7b910",
+        "attempt": {
+          "runId": "run:delivery-manifest-stage-boundary",
+          "stageId": "consume",
+          "attemptId": "attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e",
+          "attemptNumber": 1
+        },
+        "capability": "artifacts.read",
+        "operation": "get_latest_json_bytes",
+        "resource": {
+          "type": "artifact.object",
+          "canonicalId": "quality:final-test:decision:1"
+        },
+        "payload": {
+          "namespace": "kubeclaw.buster-quality-gate",
+          "digest": "sha256:768a2212b5b48667a872c478f971b5096d1cf2d54d69808931210d9f853c0f24"
+        },
+        "requestedAt": "2026-09-10T05:33:45.864Z"
+      },
+      "accepted": true,
+      "receiptStatus": "completed",
+      "receipt": {
+        "schemaVersion": "effect-receipt.v2",
+        "effectId": "effect:json-utf16-v1:700dc36607dd10fc89e390053fa72f6a4813ef990557fd4916b8334307128092",
+        "idempotencyKey": "adapter-dep:utf16-v1:ce3abce1cbb1e26aeeea867d52c292c5b7b4ffb320abe461e54963532b74fc41:f5b6515f2b6c879824cbeae3c338a4cc8ca3720e6524f75ccc33318655c7b910",
+        "adapter": {
+          "pluginId": "kubeclaw.artifact-store",
+          "apiVersion": "pipeline-plugin-v2",
+          "packageVersion": "1.0.0",
+          "contentDigest": "sha256:67df27eb32d0829b69b33e9e0310b62ae183e1d1517defbff2daadd901caf832",
+          "registrationId": "artifact-store"
+        },
+        "status": "completed",
+        "result": {
+          "schemaVersion": "artifact-json-bytes.v1",
+          "jsonBytes": "{\"coverage\":{\"archiveContentDigest\":\"sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d\",\"checks\":[{\"checkId\":\"works\",\"declarationId\":\"unit\",\"nodeId\":\"unit\",\"state\":\"passed\"}],\"coverageDigest\":\"sha256:bd2cfb62e2c831240a990ffa0421c1c2e6550788eeab420176d3b197876c9082\",\"pipelineStageId\":\"final-test\",\"planDigest\":\"sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac\",\"policy\":{\"baseRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"integrationRequirements\":[],\"kind\":\"cumulative\",\"modules\":[{\"moduleId\":\"app\",\"ownedPaths\":[\"app\"],\"requirements\":[{\"id\":\"works\",\"statement\":\"Contract fixture only.\"}]}],\"policyDigest\":\"sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5\",\"projectId\":\"app\",\"requiredChecks\":[{\"checkId\":\"works\",\"nodeIds\":[\"unit\"],\"requirementRefs\":[{\"moduleId\":\"app\",\"requirementId\":\"works\"}]}],\"schemaVersion\":\"gate-coverage.v1\"},\"schemaVersion\":\"gate-coverage-result.v1\",\"sourceRevision\":\"git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceTree\":\"git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"},\"decisionDigest\":\"sha256:b0f9a321ee098a2adde3f320c5a0b67fea7e371c170d59bccddb9d191d5c2181\",\"jobId\":\"job:final-test\",\"nodes\":[{\"effect\":\"passed\",\"kind\":\"test\",\"mode\":\"blocking\",\"nodeId\":\"unit\",\"reason\":\"Contract fixture only.\"}],\"planId\":\"plan:final-test\",\"resultDigest\":\"sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d\",\"reviews\":[],\"runId\":\"run:delivery-manifest-stage-boundary\",\"schemaVersion\":\"test-gate-decision.v2\",\"state\":\"passed\"}",
+          "value": {
+            "coverage": {
+              "archiveContentDigest": "sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d",
+              "checks": [
+                {
+                  "checkId": "works",
+                  "declarationId": "unit",
+                  "nodeId": "unit",
+                  "state": "passed"
+                }
+              ],
+              "coverageDigest": "sha256:bd2cfb62e2c831240a990ffa0421c1c2e6550788eeab420176d3b197876c9082",
+              "pipelineStageId": "final-test",
+              "planDigest": "sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac",
+              "policy": {
+                "baseRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "integrationRequirements": [],
+                "kind": "cumulative",
+                "modules": [
+                  {
+                    "moduleId": "app",
+                    "ownedPaths": [
+                      "app"
+                    ],
+                    "requirements": [
+                      {
+                        "id": "works",
+                        "statement": "Contract fixture only."
+                      }
+                    ]
+                  }
+                ],
+                "policyDigest": "sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5",
+                "projectId": "app",
+                "requiredChecks": [
+                  {
+                    "checkId": "works",
+                    "nodeIds": [
+                      "unit"
+                    ],
+                    "requirementRefs": [
+                      {
+                        "moduleId": "app",
+                        "requirementId": "works"
+                      }
+                    ]
+                  }
+                ],
+                "schemaVersion": "gate-coverage.v1"
+              },
+              "schemaVersion": "gate-coverage-result.v1",
+              "sourceRevision": "git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "sourceTree": "git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            "decisionDigest": "sha256:b0f9a321ee098a2adde3f320c5a0b67fea7e371c170d59bccddb9d191d5c2181",
+            "jobId": "job:final-test",
+            "nodes": [
+              {
+                "effect": "passed",
+                "kind": "test",
+                "mode": "blocking",
+                "nodeId": "unit",
+                "reason": "Contract fixture only."
+              }
+            ],
+            "planId": "plan:final-test",
+            "resultDigest": "sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d",
+            "reviews": [],
+            "runId": "run:delivery-manifest-stage-boundary",
+            "schemaVersion": "test-gate-decision.v2",
+            "state": "passed"
+          },
+          "digest": "sha256:768a2212b5b48667a872c478f971b5096d1cf2d54d69808931210d9f853c0f24",
+          "sizeBytes": 1536,
+          "artifact": {
+            "artifactId": "quality:final-test:decision:1",
+            "digest": "sha256:768a2212b5b48667a872c478f971b5096d1cf2d54d69808931210d9f853c0f24",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.buster-quality-gate",
+            "producer": {
+              "attemptId": "attempt:499f721a-d0b2-4f34-9fab-689dd1f2f435",
+              "attemptNumber": 1,
+              "runId": "run:delivery-manifest-stage-boundary",
+              "stageId": "final-test"
+            },
+            "sizeBytes": 1536
+          }
+        },
+        "recordedAt": "2026-09-10T05:33:45.890Z"
+      }
+    }
+  ],
+  "exactConsumerEffectJournalJsonl": "{\"sequence\":1,\"previousHash\":null,\"hash\":\"sha256:52693b28cb6f01e79b3378227a8dc5b10158438337e3f0cdc05b073185ef692c\",\"entry\":{\"type\":\"requested\",\"request\":{\"schemaVersion\":\"effect-request.v2\",\"effectId\":\"effect:json-utf16-v1:9a5b44cc30f8413632b09daba2dbfd12dc73ccac2d47e137adff065549ee5ee9\",\"idempotencyKey\":\"run:delivery-manifest-stage-boundary:consume:1:1\",\"attempt\":{\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"consume\",\"attemptId\":\"attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e\",\"attemptNumber\":1},\"capability\":\"test.plan.evidence\",\"operation\":\"demo\",\"resource\":{\"type\":\"test.plan.evidence\",\"canonicalId\":\"project-summary:run:delivery-manifest-stage-boundary\"},\"payload\":{\"manifest\":{\"artifactId\":\"project-summary:run:delivery-manifest-stage-boundary\",\"digest\":\"sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314\",\"encoding\":\"kubeclaw-json.utf16.v1\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.project-summary\",\"producer\":{\"attemptId\":\"attempt:e2ecb71e-9b8a-4fb2-9b81-ecfd32d8db43\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"project-summary\"},\"sizeBytes\":6608},\"namespace\":\"kubeclaw.project-summary\",\"authNodeId\":\"auth\"},\"requestedAt\":\"2026-09-10T05:33:45.723Z\"}}}\n{\"sequence\":2,\"previousHash\":\"sha256:52693b28cb6f01e79b3378227a8dc5b10158438337e3f0cdc05b073185ef692c\",\"hash\":\"sha256:a5a93190f8e0f5983efdb53f63db6ae6184ac084d521abcc2ab4c05860cb4c3c\",\"entry\":{\"type\":\"accepted\",\"request\":{\"schemaVersion\":\"effect-request.v2\",\"effectId\":\"effect:json-utf16-v1:9a5b44cc30f8413632b09daba2dbfd12dc73ccac2d47e137adff065549ee5ee9\",\"idempotencyKey\":\"run:delivery-manifest-stage-boundary:consume:1:1\",\"attempt\":{\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"consume\",\"attemptId\":\"attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e\",\"attemptNumber\":1},\"capability\":\"test.plan.evidence\",\"operation\":\"demo\",\"resource\":{\"type\":\"test.plan.evidence\",\"canonicalId\":\"project-summary:run:delivery-manifest-stage-boundary\"},\"payload\":{\"manifest\":{\"artifactId\":\"project-summary:run:delivery-manifest-stage-boundary\",\"digest\":\"sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314\",\"encoding\":\"kubeclaw-json.utf16.v1\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.project-summary\",\"producer\":{\"attemptId\":\"attempt:e2ecb71e-9b8a-4fb2-9b81-ecfd32d8db43\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"project-summary\"},\"sizeBytes\":6608},\"namespace\":\"kubeclaw.project-summary\",\"authNodeId\":\"auth\"},\"requestedAt\":\"2026-09-10T05:33:45.723Z\"}}}\n{\"sequence\":3,\"previousHash\":\"sha256:a5a93190f8e0f5983efdb53f63db6ae6184ac084d521abcc2ab4c05860cb4c3c\",\"hash\":\"sha256:cf9edf67b133914577e7bc670ad8e01a6e2d141f187fa3105b707918a060860e\",\"entry\":{\"type\":\"requested\",\"request\":{\"schemaVersion\":\"effect-request.v2\",\"effectId\":\"effect:json-utf16-v1:273b268d4f1978d3504bea184d8cd001ef67415997560af2b3598e726c141ae1\",\"idempotencyKey\":\"adapter-dep:utf16-v1:ce3abce1cbb1e26aeeea867d52c292c5b7b4ffb320abe461e54963532b74fc41:f41bb30c3dfa26e9bde4c08da3fe9cd185617ff8ec0a34ec61b84386330a1aed\",\"attempt\":{\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"consume\",\"attemptId\":\"attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e\",\"attemptNumber\":1},\"capability\":\"artifacts.read\",\"operation\":\"get_latest_json_bytes\",\"resource\":{\"type\":\"artifact.object\",\"canonicalId\":\"project-summary:run:delivery-manifest-stage-boundary\"},\"payload\":{\"namespace\":\"kubeclaw.project-summary\",\"digest\":\"sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314\"},\"requestedAt\":\"2026-09-10T05:33:45.781Z\"}}}\n{\"sequence\":4,\"previousHash\":\"sha256:cf9edf67b133914577e7bc670ad8e01a6e2d141f187fa3105b707918a060860e\",\"hash\":\"sha256:07b315b54c89d3d181f87f287bf879f9fab2553302b41994d9467d485405a30e\",\"entry\":{\"type\":\"accepted\",\"request\":{\"schemaVersion\":\"effect-request.v2\",\"effectId\":\"effect:json-utf16-v1:273b268d4f1978d3504bea184d8cd001ef67415997560af2b3598e726c141ae1\",\"idempotencyKey\":\"adapter-dep:utf16-v1:ce3abce1cbb1e26aeeea867d52c292c5b7b4ffb320abe461e54963532b74fc41:f41bb30c3dfa26e9bde4c08da3fe9cd185617ff8ec0a34ec61b84386330a1aed\",\"attempt\":{\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"consume\",\"attemptId\":\"attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e\",\"attemptNumber\":1},\"capability\":\"artifacts.read\",\"operation\":\"get_latest_json_bytes\",\"resource\":{\"type\":\"artifact.object\",\"canonicalId\":\"project-summary:run:delivery-manifest-stage-boundary\"},\"payload\":{\"namespace\":\"kubeclaw.project-summary\",\"digest\":\"sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314\"},\"requestedAt\":\"2026-09-10T05:33:45.781Z\"}}}\n{\"sequence\":5,\"previousHash\":\"sha256:07b315b54c89d3d181f87f287bf879f9fab2553302b41994d9467d485405a30e\",\"hash\":\"sha256:fbc7afb4199d4604fb7220c23894cfda1d80ca045cbe835cae870eec9bc71037\",\"entry\":{\"type\":\"completed\",\"receipt\":{\"schemaVersion\":\"effect-receipt.v2\",\"effectId\":\"effect:json-utf16-v1:273b268d4f1978d3504bea184d8cd001ef67415997560af2b3598e726c141ae1\",\"idempotencyKey\":\"adapter-dep:utf16-v1:ce3abce1cbb1e26aeeea867d52c292c5b7b4ffb320abe461e54963532b74fc41:f41bb30c3dfa26e9bde4c08da3fe9cd185617ff8ec0a34ec61b84386330a1aed\",\"adapter\":{\"pluginId\":\"kubeclaw.artifact-store\",\"apiVersion\":\"pipeline-plugin-v2\",\"packageVersion\":\"1.0.0\",\"contentDigest\":\"sha256:67df27eb32d0829b69b33e9e0310b62ae183e1d1517defbff2daadd901caf832\",\"registrationId\":\"artifact-store\"},\"status\":\"completed\",\"result\":{\"schemaVersion\":\"artifact-json-bytes.v1\",\"jsonBytes\":\"{\\\"digest\\\":\\\"sha256:cb903f1f70a3fe55c294e814477a396ff8b10e8f6da8483965cb5eb952f1a4d8\\\",\\\"evidence\\\":[{\\\"artifactId\\\":\\\"implementation:app\\\",\\\"digest\\\":\\\"sha256:b1aee0b491f2b435ccafd8fe263d459391124a558d666c1b6a37f6baeb6e2788\\\",\\\"mediaType\\\":\\\"application/json\\\",\\\"namespace\\\":\\\"kubeclaw.implementation-agent\\\",\\\"producer\\\":{\\\"attemptId\\\":\\\"attempt:6c336d5d-c1a9-4d7c-81ae-843395ef64f2\\\",\\\"attemptNumber\\\":1,\\\"runId\\\":\\\"run:delivery-manifest-stage-boundary\\\",\\\"stageId\\\":\\\"forge\\\"},\\\"sizeBytes\\\":90},{\\\"artifactId\\\":\\\"quality:test:decision:1\\\",\\\"digest\\\":\\\"sha256:0490359785004e6c6576edce51f49dd64c169550822768973935ad48db061782\\\",\\\"mediaType\\\":\\\"application/json\\\",\\\"namespace\\\":\\\"kubeclaw.buster-quality-gate\\\",\\\"producer\\\":{\\\"attemptId\\\":\\\"attempt:4d112071-6c31-456e-b04e-18fcf6c2e244\\\",\\\"attemptNumber\\\":1,\\\"runId\\\":\\\"run:delivery-manifest-stage-boundary\\\",\\\"stageId\\\":\\\"test\\\"},\\\"sizeBytes\\\":1514},{\\\"artifactId\\\":\\\"quality:test:1\\\",\\\"digest\\\":\\\"sha256:255d9599e14ec91bfe5956d5d8a38b3ed042a1b45e0f0c6b9a01f18fdc8284a6\\\",\\\"mediaType\\\":\\\"application/json\\\",\\\"namespace\\\":\\\"kubeclaw.buster-quality-gate\\\",\\\"producer\\\":{\\\"attemptId\\\":\\\"attempt:4d112071-6c31-456e-b04e-18fcf6c2e244\\\",\\\"attemptNumber\\\":1,\\\"runId\\\":\\\"run:delivery-manifest-stage-boundary\\\",\\\"stageId\\\":\\\"test\\\"},\\\"sizeBytes\\\":207},{\\\"artifactId\\\":\\\"implementation:app\\\",\\\"digest\\\":\\\"sha256:b1aee0b491f2b435ccafd8fe263d459391124a558d666c1b6a37f6baeb6e2788\\\",\\\"mediaType\\\":\\\"application/json\\\",\\\"namespace\\\":\\\"kubeclaw.implementation-agent\\\",\\\"producer\\\":{\\\"attemptId\\\":\\\"attempt:6c336d5d-c1a9-4d7c-81ae-843395ef64f2\\\",\\\"attemptNumber\\\":1,\\\"runId\\\":\\\"run:delivery-manifest-stage-boundary\\\",\\\"stageId\\\":\\\"forge\\\"},\\\"sizeBytes\\\":90},{\\\"artifactId\\\":\\\"quality:final-test:decision:1\\\",\\\"digest\\\":\\\"sha256:768a2212b5b48667a872c478f971b5096d1cf2d54d69808931210d9f853c0f24\\\",\\\"mediaType\\\":\\\"application/json\\\",\\\"namespace\\\":\\\"kubeclaw.buster-quality-gate\\\",\\\"producer\\\":{\\\"attemptId\\\":\\\"attempt:499f721a-d0b2-4f34-9fab-689dd1f2f435\\\",\\\"attemptNumber\\\":1,\\\"runId\\\":\\\"run:delivery-manifest-stage-boundary\\\",\\\"stageId\\\":\\\"final-test\\\"},\\\"sizeBytes\\\":1536},{\\\"artifactId\\\":\\\"quality:final-test:1\\\",\\\"digest\\\":\\\"sha256:4ff9a8e3aa03843768c3c54b165c1b075d1b7c059ea642358db624bb326a24b3\\\",\\\"mediaType\\\":\\\"application/json\\\",\\\"namespace\\\":\\\"kubeclaw.buster-quality-gate\\\",\\\"producer\\\":{\\\"attemptId\\\":\\\"attempt:499f721a-d0b2-4f34-9fab-689dd1f2f435\\\",\\\"attemptNumber\\\":1,\\\"runId\\\":\\\"run:delivery-manifest-stage-boundary\\\",\\\"stageId\\\":\\\"final-test\\\"},\\\"sizeBytes\\\":207},{\\\"artifactId\\\":\\\"lint:full:app\\\",\\\"digest\\\":\\\"sha256:ca26c4db9a18a1a3a1b45b7aef0e0aa2d41244ca79ed573fa3487a47c6e4ffb4\\\",\\\"mediaType\\\":\\\"application/json\\\",\\\"namespace\\\":\\\"kubeclaw.lint\\\",\\\"producer\\\":{\\\"attemptId\\\":\\\"attempt:a70dae42-b6df-49bc-ad59-fdcbbeaf5a05\\\",\\\"attemptNumber\\\":1,\\\"runId\\\":\\\"run:delivery-manifest-stage-boundary\\\",\\\"stageId\\\":\\\"lint\\\"},\\\"sizeBytes\\\":109}],\\\"final\\\":{\\\"coverage\\\":{\\\"archiveContentDigest\\\":\\\"sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d\\\",\\\"checks\\\":[{\\\"checkId\\\":\\\"works\\\",\\\"declarationId\\\":\\\"unit\\\",\\\"nodeId\\\":\\\"unit\\\",\\\"state\\\":\\\"passed\\\"}],\\\"coverageDigest\\\":\\\"sha256:bd2cfb62e2c831240a990ffa0421c1c2e6550788eeab420176d3b197876c9082\\\",\\\"pipelineStageId\\\":\\\"final-test\\\",\\\"planDigest\\\":\\\"sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac\\\",\\\"policy\\\":{\\\"baseRevision\\\":\\\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\",\\\"integrationRequirements\\\":[],\\\"kind\\\":\\\"cumulative\\\",\\\"modules\\\":[{\\\"moduleId\\\":\\\"app\\\",\\\"ownedPaths\\\":[\\\"app\\\"],\\\"requirements\\\":[{\\\"id\\\":\\\"works\\\",\\\"statement\\\":\\\"Contract fixture only.\\\"}]}],\\\"policyDigest\\\":\\\"sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5\\\",\\\"projectId\\\":\\\"app\\\",\\\"requiredChecks\\\":[{\\\"checkId\\\":\\\"works\\\",\\\"nodeIds\\\":[\\\"unit\\\"],\\\"requirementRefs\\\":[{\\\"moduleId\\\":\\\"app\\\",\\\"requirementId\\\":\\\"works\\\"}]}],\\\"schemaVersion\\\":\\\"gate-coverage.v1\\\"},\\\"schemaVersion\\\":\\\"gate-coverage-result.v1\\\",\\\"sourceRevision\\\":\\\"git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\",\\\"sourceTree\\\":\\\"git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\\\"},\\\"decisionDigest\\\":\\\"sha256:b0f9a321ee098a2adde3f320c5a0b67fea7e371c170d59bccddb9d191d5c2181\\\",\\\"expectedCoverage\\\":{\\\"baseRevision\\\":\\\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\",\\\"integrationRequirements\\\":[],\\\"kind\\\":\\\"cumulative\\\",\\\"modules\\\":[{\\\"moduleId\\\":\\\"app\\\",\\\"ownedPaths\\\":[\\\"app\\\"],\\\"requirements\\\":[{\\\"id\\\":\\\"works\\\",\\\"statement\\\":\\\"Contract fixture only.\\\"}]}],\\\"policyDigest\\\":\\\"sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5\\\",\\\"projectId\\\":\\\"app\\\",\\\"requiredChecks\\\":[{\\\"checkId\\\":\\\"works\\\",\\\"nodeIds\\\":[\\\"unit\\\"],\\\"requirementRefs\\\":[{\\\"moduleId\\\":\\\"app\\\",\\\"requirementId\\\":\\\"works\\\"}]}],\\\"schemaVersion\\\":\\\"gate-coverage.v1\\\"},\\\"lintStageId\\\":\\\"lint\\\",\\\"resultDigest\\\":\\\"sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d\\\",\\\"sourceRevision\\\":\\\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\",\\\"sourceStageId\\\":\\\"forge\\\",\\\"testStageId\\\":\\\"final-test\\\"},\\\"modules\\\":[{\\\"coverage\\\":{\\\"archiveContentDigest\\\":\\\"sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d\\\",\\\"checks\\\":[{\\\"checkId\\\":\\\"works\\\",\\\"declarationId\\\":\\\"unit\\\",\\\"nodeId\\\":\\\"unit\\\",\\\"state\\\":\\\"passed\\\"}],\\\"coverageDigest\\\":\\\"sha256:cd89e9d3a4d5553eb3ab3020a8f3251f6b3e8e4f4157446155f04c936df8decc\\\",\\\"pipelineStageId\\\":\\\"test\\\",\\\"planDigest\\\":\\\"sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac\\\",\\\"policy\\\":{\\\"baseRevision\\\":\\\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\",\\\"integrationRequirements\\\":[],\\\"kind\\\":\\\"module\\\",\\\"modules\\\":[{\\\"moduleId\\\":\\\"app\\\",\\\"ownedPaths\\\":[\\\"app\\\"],\\\"requirements\\\":[{\\\"id\\\":\\\"works\\\",\\\"statement\\\":\\\"Contract fixture only.\\\"}]}],\\\"policyDigest\\\":\\\"sha256:42b529ace13432e03e334022803618fe5534dd84163798daf0d4b7ebf896a9df\\\",\\\"projectId\\\":\\\"app\\\",\\\"requiredChecks\\\":[{\\\"checkId\\\":\\\"works\\\",\\\"nodeIds\\\":[\\\"unit\\\"],\\\"requirementRefs\\\":[{\\\"moduleId\\\":\\\"app\\\",\\\"requirementId\\\":\\\"works\\\"}]}],\\\"schemaVersion\\\":\\\"gate-coverage.v1\\\"},\\\"schemaVersion\\\":\\\"gate-coverage-result.v1\\\",\\\"sourceRevision\\\":\\\"git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\",\\\"sourceTree\\\":\\\"git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\\\"},\\\"decisionDigest\\\":\\\"sha256:8bcc3fdd13d63ea20ac832d24a4575366f6505d2cd58c1c962028a5e245a29cc\\\",\\\"expectedCoverage\\\":{\\\"baseRevision\\\":\\\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\",\\\"integrationRequirements\\\":[],\\\"kind\\\":\\\"module\\\",\\\"modules\\\":[{\\\"moduleId\\\":\\\"app\\\",\\\"ownedPaths\\\":[\\\"app\\\"],\\\"requirements\\\":[{\\\"id\\\":\\\"works\\\",\\\"statement\\\":\\\"Contract fixture only.\\\"}]}],\\\"policyDigest\\\":\\\"sha256:42b529ace13432e03e334022803618fe5534dd84163798daf0d4b7ebf896a9df\\\",\\\"projectId\\\":\\\"app\\\",\\\"requiredChecks\\\":[{\\\"checkId\\\":\\\"works\\\",\\\"nodeIds\\\":[\\\"unit\\\"],\\\"requirementRefs\\\":[{\\\"moduleId\\\":\\\"app\\\",\\\"requirementId\\\":\\\"works\\\"}]}],\\\"schemaVersion\\\":\\\"gate-coverage.v1\\\"},\\\"moduleId\\\":\\\"app\\\",\\\"resultDigest\\\":\\\"sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d\\\",\\\"sourceRevision\\\":\\\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\",\\\"sourceStageId\\\":\\\"forge\\\",\\\"testStageId\\\":\\\"test\\\"}],\\\"projectId\\\":\\\"app\\\",\\\"runId\\\":\\\"run:delivery-manifest-stage-boundary\\\",\\\"schemaVersion\\\":\\\"delivery-manifest.v3\\\",\\\"sourceRevision\\\":\\\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\"}\",\"value\":{\"digest\":\"sha256:cb903f1f70a3fe55c294e814477a396ff8b10e8f6da8483965cb5eb952f1a4d8\",\"evidence\":[{\"artifactId\":\"implementation:app\",\"digest\":\"sha256:b1aee0b491f2b435ccafd8fe263d459391124a558d666c1b6a37f6baeb6e2788\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.implementation-agent\",\"producer\":{\"attemptId\":\"attempt:6c336d5d-c1a9-4d7c-81ae-843395ef64f2\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"forge\"},\"sizeBytes\":90},{\"artifactId\":\"quality:test:decision:1\",\"digest\":\"sha256:0490359785004e6c6576edce51f49dd64c169550822768973935ad48db061782\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.buster-quality-gate\",\"producer\":{\"attemptId\":\"attempt:4d112071-6c31-456e-b04e-18fcf6c2e244\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"test\"},\"sizeBytes\":1514},{\"artifactId\":\"quality:test:1\",\"digest\":\"sha256:255d9599e14ec91bfe5956d5d8a38b3ed042a1b45e0f0c6b9a01f18fdc8284a6\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.buster-quality-gate\",\"producer\":{\"attemptId\":\"attempt:4d112071-6c31-456e-b04e-18fcf6c2e244\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"test\"},\"sizeBytes\":207},{\"artifactId\":\"implementation:app\",\"digest\":\"sha256:b1aee0b491f2b435ccafd8fe263d459391124a558d666c1b6a37f6baeb6e2788\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.implementation-agent\",\"producer\":{\"attemptId\":\"attempt:6c336d5d-c1a9-4d7c-81ae-843395ef64f2\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"forge\"},\"sizeBytes\":90},{\"artifactId\":\"quality:final-test:decision:1\",\"digest\":\"sha256:768a2212b5b48667a872c478f971b5096d1cf2d54d69808931210d9f853c0f24\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.buster-quality-gate\",\"producer\":{\"attemptId\":\"attempt:499f721a-d0b2-4f34-9fab-689dd1f2f435\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"final-test\"},\"sizeBytes\":1536},{\"artifactId\":\"quality:final-test:1\",\"digest\":\"sha256:4ff9a8e3aa03843768c3c54b165c1b075d1b7c059ea642358db624bb326a24b3\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.buster-quality-gate\",\"producer\":{\"attemptId\":\"attempt:499f721a-d0b2-4f34-9fab-689dd1f2f435\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"final-test\"},\"sizeBytes\":207},{\"artifactId\":\"lint:full:app\",\"digest\":\"sha256:ca26c4db9a18a1a3a1b45b7aef0e0aa2d41244ca79ed573fa3487a47c6e4ffb4\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.lint\",\"producer\":{\"attemptId\":\"attempt:a70dae42-b6df-49bc-ad59-fdcbbeaf5a05\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"lint\"},\"sizeBytes\":109}],\"final\":{\"coverage\":{\"archiveContentDigest\":\"sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d\",\"checks\":[{\"checkId\":\"works\",\"declarationId\":\"unit\",\"nodeId\":\"unit\",\"state\":\"passed\"}],\"coverageDigest\":\"sha256:bd2cfb62e2c831240a990ffa0421c1c2e6550788eeab420176d3b197876c9082\",\"pipelineStageId\":\"final-test\",\"planDigest\":\"sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac\",\"policy\":{\"baseRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"integrationRequirements\":[],\"kind\":\"cumulative\",\"modules\":[{\"moduleId\":\"app\",\"ownedPaths\":[\"app\"],\"requirements\":[{\"id\":\"works\",\"statement\":\"Contract fixture only.\"}]}],\"policyDigest\":\"sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5\",\"projectId\":\"app\",\"requiredChecks\":[{\"checkId\":\"works\",\"nodeIds\":[\"unit\"],\"requirementRefs\":[{\"moduleId\":\"app\",\"requirementId\":\"works\"}]}],\"schemaVersion\":\"gate-coverage.v1\"},\"schemaVersion\":\"gate-coverage-result.v1\",\"sourceRevision\":\"git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceTree\":\"git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"},\"decisionDigest\":\"sha256:b0f9a321ee098a2adde3f320c5a0b67fea7e371c170d59bccddb9d191d5c2181\",\"expectedCoverage\":{\"baseRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"integrationRequirements\":[],\"kind\":\"cumulative\",\"modules\":[{\"moduleId\":\"app\",\"ownedPaths\":[\"app\"],\"requirements\":[{\"id\":\"works\",\"statement\":\"Contract fixture only.\"}]}],\"policyDigest\":\"sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5\",\"projectId\":\"app\",\"requiredChecks\":[{\"checkId\":\"works\",\"nodeIds\":[\"unit\"],\"requirementRefs\":[{\"moduleId\":\"app\",\"requirementId\":\"works\"}]}],\"schemaVersion\":\"gate-coverage.v1\"},\"lintStageId\":\"lint\",\"resultDigest\":\"sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d\",\"sourceRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceStageId\":\"forge\",\"testStageId\":\"final-test\"},\"modules\":[{\"coverage\":{\"archiveContentDigest\":\"sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d\",\"checks\":[{\"checkId\":\"works\",\"declarationId\":\"unit\",\"nodeId\":\"unit\",\"state\":\"passed\"}],\"coverageDigest\":\"sha256:cd89e9d3a4d5553eb3ab3020a8f3251f6b3e8e4f4157446155f04c936df8decc\",\"pipelineStageId\":\"test\",\"planDigest\":\"sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac\",\"policy\":{\"baseRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"integrationRequirements\":[],\"kind\":\"module\",\"modules\":[{\"moduleId\":\"app\",\"ownedPaths\":[\"app\"],\"requirements\":[{\"id\":\"works\",\"statement\":\"Contract fixture only.\"}]}],\"policyDigest\":\"sha256:42b529ace13432e03e334022803618fe5534dd84163798daf0d4b7ebf896a9df\",\"projectId\":\"app\",\"requiredChecks\":[{\"checkId\":\"works\",\"nodeIds\":[\"unit\"],\"requirementRefs\":[{\"moduleId\":\"app\",\"requirementId\":\"works\"}]}],\"schemaVersion\":\"gate-coverage.v1\"},\"schemaVersion\":\"gate-coverage-result.v1\",\"sourceRevision\":\"git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceTree\":\"git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"},\"decisionDigest\":\"sha256:8bcc3fdd13d63ea20ac832d24a4575366f6505d2cd58c1c962028a5e245a29cc\",\"expectedCoverage\":{\"baseRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"integrationRequirements\":[],\"kind\":\"module\",\"modules\":[{\"moduleId\":\"app\",\"ownedPaths\":[\"app\"],\"requirements\":[{\"id\":\"works\",\"statement\":\"Contract fixture only.\"}]}],\"policyDigest\":\"sha256:42b529ace13432e03e334022803618fe5534dd84163798daf0d4b7ebf896a9df\",\"projectId\":\"app\",\"requiredChecks\":[{\"checkId\":\"works\",\"nodeIds\":[\"unit\"],\"requirementRefs\":[{\"moduleId\":\"app\",\"requirementId\":\"works\"}]}],\"schemaVersion\":\"gate-coverage.v1\"},\"moduleId\":\"app\",\"resultDigest\":\"sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d\",\"sourceRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceStageId\":\"forge\",\"testStageId\":\"test\"}],\"projectId\":\"app\",\"runId\":\"run:delivery-manifest-stage-boundary\",\"schemaVersion\":\"delivery-manifest.v3\",\"sourceRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"},\"digest\":\"sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314\",\"sizeBytes\":6608,\"artifact\":{\"artifactId\":\"project-summary:run:delivery-manifest-stage-boundary\",\"digest\":\"sha256:02173315e9607e9a1f7fbef1d0db1b07ec1afae7361529eba8bfdd76fc0ac314\",\"encoding\":\"kubeclaw-json.utf16.v1\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.project-summary\",\"producer\":{\"attemptId\":\"attempt:e2ecb71e-9b8a-4fb2-9b81-ecfd32d8db43\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"project-summary\"},\"sizeBytes\":6608}},\"recordedAt\":\"2026-09-10T05:33:45.812Z\"}}}\n{\"sequence\":6,\"previousHash\":\"sha256:fbc7afb4199d4604fb7220c23894cfda1d80ca045cbe835cae870eec9bc71037\",\"hash\":\"sha256:288e35e97b9b26859eb42f9ca4cd3fde150601c9890c28acce4710e39058fd18\",\"entry\":{\"type\":\"requested\",\"request\":{\"schemaVersion\":\"effect-request.v2\",\"effectId\":\"effect:json-utf16-v1:700dc36607dd10fc89e390053fa72f6a4813ef990557fd4916b8334307128092\",\"idempotencyKey\":\"adapter-dep:utf16-v1:ce3abce1cbb1e26aeeea867d52c292c5b7b4ffb320abe461e54963532b74fc41:f5b6515f2b6c879824cbeae3c338a4cc8ca3720e6524f75ccc33318655c7b910\",\"attempt\":{\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"consume\",\"attemptId\":\"attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e\",\"attemptNumber\":1},\"capability\":\"artifacts.read\",\"operation\":\"get_latest_json_bytes\",\"resource\":{\"type\":\"artifact.object\",\"canonicalId\":\"quality:final-test:decision:1\"},\"payload\":{\"namespace\":\"kubeclaw.buster-quality-gate\",\"digest\":\"sha256:768a2212b5b48667a872c478f971b5096d1cf2d54d69808931210d9f853c0f24\"},\"requestedAt\":\"2026-09-10T05:33:45.864Z\"}}}\n{\"sequence\":7,\"previousHash\":\"sha256:288e35e97b9b26859eb42f9ca4cd3fde150601c9890c28acce4710e39058fd18\",\"hash\":\"sha256:63d64f74374ab665538c65efa9a8156c30c4e5381f9426fd1ff74cf2ccb2c357\",\"entry\":{\"type\":\"accepted\",\"request\":{\"schemaVersion\":\"effect-request.v2\",\"effectId\":\"effect:json-utf16-v1:700dc36607dd10fc89e390053fa72f6a4813ef990557fd4916b8334307128092\",\"idempotencyKey\":\"adapter-dep:utf16-v1:ce3abce1cbb1e26aeeea867d52c292c5b7b4ffb320abe461e54963532b74fc41:f5b6515f2b6c879824cbeae3c338a4cc8ca3720e6524f75ccc33318655c7b910\",\"attempt\":{\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"consume\",\"attemptId\":\"attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e\",\"attemptNumber\":1},\"capability\":\"artifacts.read\",\"operation\":\"get_latest_json_bytes\",\"resource\":{\"type\":\"artifact.object\",\"canonicalId\":\"quality:final-test:decision:1\"},\"payload\":{\"namespace\":\"kubeclaw.buster-quality-gate\",\"digest\":\"sha256:768a2212b5b48667a872c478f971b5096d1cf2d54d69808931210d9f853c0f24\"},\"requestedAt\":\"2026-09-10T05:33:45.864Z\"}}}\n{\"sequence\":8,\"previousHash\":\"sha256:63d64f74374ab665538c65efa9a8156c30c4e5381f9426fd1ff74cf2ccb2c357\",\"hash\":\"sha256:237adbacddec3d5d2c65c888de2780a853e8e685901f87237cf420cd5c944192\",\"entry\":{\"type\":\"completed\",\"receipt\":{\"schemaVersion\":\"effect-receipt.v2\",\"effectId\":\"effect:json-utf16-v1:700dc36607dd10fc89e390053fa72f6a4813ef990557fd4916b8334307128092\",\"idempotencyKey\":\"adapter-dep:utf16-v1:ce3abce1cbb1e26aeeea867d52c292c5b7b4ffb320abe461e54963532b74fc41:f5b6515f2b6c879824cbeae3c338a4cc8ca3720e6524f75ccc33318655c7b910\",\"adapter\":{\"pluginId\":\"kubeclaw.artifact-store\",\"apiVersion\":\"pipeline-plugin-v2\",\"packageVersion\":\"1.0.0\",\"contentDigest\":\"sha256:67df27eb32d0829b69b33e9e0310b62ae183e1d1517defbff2daadd901caf832\",\"registrationId\":\"artifact-store\"},\"status\":\"completed\",\"result\":{\"schemaVersion\":\"artifact-json-bytes.v1\",\"jsonBytes\":\"{\\\"coverage\\\":{\\\"archiveContentDigest\\\":\\\"sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d\\\",\\\"checks\\\":[{\\\"checkId\\\":\\\"works\\\",\\\"declarationId\\\":\\\"unit\\\",\\\"nodeId\\\":\\\"unit\\\",\\\"state\\\":\\\"passed\\\"}],\\\"coverageDigest\\\":\\\"sha256:bd2cfb62e2c831240a990ffa0421c1c2e6550788eeab420176d3b197876c9082\\\",\\\"pipelineStageId\\\":\\\"final-test\\\",\\\"planDigest\\\":\\\"sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac\\\",\\\"policy\\\":{\\\"baseRevision\\\":\\\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\",\\\"integrationRequirements\\\":[],\\\"kind\\\":\\\"cumulative\\\",\\\"modules\\\":[{\\\"moduleId\\\":\\\"app\\\",\\\"ownedPaths\\\":[\\\"app\\\"],\\\"requirements\\\":[{\\\"id\\\":\\\"works\\\",\\\"statement\\\":\\\"Contract fixture only.\\\"}]}],\\\"policyDigest\\\":\\\"sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5\\\",\\\"projectId\\\":\\\"app\\\",\\\"requiredChecks\\\":[{\\\"checkId\\\":\\\"works\\\",\\\"nodeIds\\\":[\\\"unit\\\"],\\\"requirementRefs\\\":[{\\\"moduleId\\\":\\\"app\\\",\\\"requirementId\\\":\\\"works\\\"}]}],\\\"schemaVersion\\\":\\\"gate-coverage.v1\\\"},\\\"schemaVersion\\\":\\\"gate-coverage-result.v1\\\",\\\"sourceRevision\\\":\\\"git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\\",\\\"sourceTree\\\":\\\"git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\\\"},\\\"decisionDigest\\\":\\\"sha256:b0f9a321ee098a2adde3f320c5a0b67fea7e371c170d59bccddb9d191d5c2181\\\",\\\"jobId\\\":\\\"job:final-test\\\",\\\"nodes\\\":[{\\\"effect\\\":\\\"passed\\\",\\\"kind\\\":\\\"test\\\",\\\"mode\\\":\\\"blocking\\\",\\\"nodeId\\\":\\\"unit\\\",\\\"reason\\\":\\\"Contract fixture only.\\\"}],\\\"planId\\\":\\\"plan:final-test\\\",\\\"resultDigest\\\":\\\"sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d\\\",\\\"reviews\\\":[],\\\"runId\\\":\\\"run:delivery-manifest-stage-boundary\\\",\\\"schemaVersion\\\":\\\"test-gate-decision.v2\\\",\\\"state\\\":\\\"passed\\\"}\",\"value\":{\"coverage\":{\"archiveContentDigest\":\"sha256:d55cba9aa5cbc32620cffb1ad0742a1dd11a72a5683066acd8ec0a7d12bc7e5d\",\"checks\":[{\"checkId\":\"works\",\"declarationId\":\"unit\",\"nodeId\":\"unit\",\"state\":\"passed\"}],\"coverageDigest\":\"sha256:bd2cfb62e2c831240a990ffa0421c1c2e6550788eeab420176d3b197876c9082\",\"pipelineStageId\":\"final-test\",\"planDigest\":\"sha256:f4b8b4c7b8fb98b6d1eaff7f59590edd414dc2358be08b2f666eafb9f9582cac\",\"policy\":{\"baseRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"integrationRequirements\":[],\"kind\":\"cumulative\",\"modules\":[{\"moduleId\":\"app\",\"ownedPaths\":[\"app\"],\"requirements\":[{\"id\":\"works\",\"statement\":\"Contract fixture only.\"}]}],\"policyDigest\":\"sha256:4ac45e3d0897f72f267cd429c2aae77d6144c00321937e358ba0a796e809ade5\",\"projectId\":\"app\",\"requiredChecks\":[{\"checkId\":\"works\",\"nodeIds\":[\"unit\"],\"requirementRefs\":[{\"moduleId\":\"app\",\"requirementId\":\"works\"}]}],\"schemaVersion\":\"gate-coverage.v1\"},\"schemaVersion\":\"gate-coverage-result.v1\",\"sourceRevision\":\"git:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceTree\":\"git:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"},\"decisionDigest\":\"sha256:b0f9a321ee098a2adde3f320c5a0b67fea7e371c170d59bccddb9d191d5c2181\",\"jobId\":\"job:final-test\",\"nodes\":[{\"effect\":\"passed\",\"kind\":\"test\",\"mode\":\"blocking\",\"nodeId\":\"unit\",\"reason\":\"Contract fixture only.\"}],\"planId\":\"plan:final-test\",\"resultDigest\":\"sha256:fcd3e3343b315eb9d1b9741a9b00a3dd0985c341e374d9394e5ab6236eae0c8d\",\"reviews\":[],\"runId\":\"run:delivery-manifest-stage-boundary\",\"schemaVersion\":\"test-gate-decision.v2\",\"state\":\"passed\"},\"digest\":\"sha256:768a2212b5b48667a872c478f971b5096d1cf2d54d69808931210d9f853c0f24\",\"sizeBytes\":1536,\"artifact\":{\"artifactId\":\"quality:final-test:decision:1\",\"digest\":\"sha256:768a2212b5b48667a872c478f971b5096d1cf2d54d69808931210d9f853c0f24\",\"mediaType\":\"application/json\",\"namespace\":\"kubeclaw.buster-quality-gate\",\"producer\":{\"attemptId\":\"attempt:499f721a-d0b2-4f34-9fab-689dd1f2f435\",\"attemptNumber\":1,\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"final-test\"},\"sizeBytes\":1536}},\"recordedAt\":\"2026-09-10T05:33:45.890Z\"}}}\n{\"sequence\":9,\"previousHash\":\"sha256:237adbacddec3d5d2c65c888de2780a853e8e685901f87237cf420cd5c944192\",\"hash\":\"sha256:b394bc4216c3a01296151a7c17d505db497dd11c435d226712b867e59ef5cc5d\",\"entry\":{\"type\":\"completed\",\"receipt\":{\"schemaVersion\":\"effect-receipt.v2\",\"effectId\":\"effect:json-utf16-v1:9a5b44cc30f8413632b09daba2dbfd12dc73ccac2d47e137adff065549ee5ee9\",\"idempotencyKey\":\"run:delivery-manifest-stage-boundary:consume:1:1\",\"adapter\":{\"pluginId\":\"kubeclaw.remote-test-gate\",\"apiVersion\":\"pipeline-plugin-v2\",\"packageVersion\":\"1.0.0\",\"contentDigest\":\"sha256:017d344c8416537b6c43b6f79816a962c7c2208a1403aa1a5b1092b06df1c3d3\",\"registrationId\":\"evidence\"},\"status\":\"failed\",\"error\":{\"code\":\"adapter.effect_failed\",\"message\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\"},\"recordedAt\":\"2026-09-10T05:33:45.904Z\"}}}\n",
+  "exactConsumerLifecycleJournalJsonl": "{\"sequence\":1,\"previousHash\":null,\"hash\":\"sha256:2434ad22b3779ff91c0d6e3f22e6b5ef89cada3b5e5a6f2506fb936432d91bc9\",\"entry\":{\"schemaVersion\":\"lifecycle-event.v2\",\"eventId\":\"event:110cf144-387d-41da-9c4e-6cfa25615a34\",\"sequence\":1,\"type\":\"run.created\",\"identity\":{\"runId\":\"run:delivery-manifest-stage-boundary\"},\"occurredAt\":\"2026-09-10T05:33:45.695Z\",\"causationId\":null,\"payload\":{\"runIdentity\":{\"runId\":\"run:delivery-manifest-stage-boundary\",\"pipelineId\":\"delivery-manifest-stage-boundary-consume-sv\",\"graphDigest\":\"sha256:5afbea6dc686f8bfc7a7895246b28f5fbdfcea55a9b9156379215551d5f0b8f3\"}}}}\n{\"sequence\":2,\"previousHash\":\"sha256:2434ad22b3779ff91c0d6e3f22e6b5ef89cada3b5e5a6f2506fb936432d91bc9\",\"hash\":\"sha256:fbca068111cc8b739792260129b958aefbe8eb93436bb0d9e3b0d981c414a4d2\",\"entry\":{\"schemaVersion\":\"lifecycle-event.v2\",\"eventId\":\"event:623b619d-abd4-4532-986a-bc1b8187f39b\",\"sequence\":2,\"type\":\"run.started\",\"identity\":{\"runId\":\"run:delivery-manifest-stage-boundary\"},\"occurredAt\":\"2026-09-10T05:33:45.698Z\",\"causationId\":null,\"payload\":{}}}\n{\"sequence\":3,\"previousHash\":\"sha256:fbca068111cc8b739792260129b958aefbe8eb93436bb0d9e3b0d981c414a4d2\",\"hash\":\"sha256:3c8b8f5e738874fbbd8073af5b7e222f001b4080cd08ffab8754dca1be186473\",\"entry\":{\"schemaVersion\":\"lifecycle-event.v2\",\"eventId\":\"event:e082d4d7-3d0d-499c-9b2e-312d2a2bd7a8\",\"sequence\":3,\"type\":\"stage.started\",\"identity\":{\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"consume\"},\"occurredAt\":\"2026-09-10T05:33:45.700Z\",\"causationId\":null,\"payload\":{\"stageType\":\"test.delivery-consumer\"}}}\n{\"sequence\":4,\"previousHash\":\"sha256:3c8b8f5e738874fbbd8073af5b7e222f001b4080cd08ffab8754dca1be186473\",\"hash\":\"sha256:e2fa647ed8e3acd3945ed65d8e6a6d944dfc1f50fedd7e8b62ce3e238b3dc9d3\",\"entry\":{\"schemaVersion\":\"lifecycle-event.v2\",\"eventId\":\"event:15f953a1-c61d-45fe-8239-dfacb0d3e9ea\",\"sequence\":4,\"type\":\"attempt.created\",\"identity\":{\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"consume\",\"attemptId\":\"attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e\"},\"occurredAt\":\"2026-09-10T05:33:45.703Z\",\"causationId\":null,\"payload\":{\"attempt\":{\"schemaVersion\":\"stage-attempt.v2\",\"identity\":{\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"consume\",\"attemptId\":\"attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e\",\"attemptNumber\":1},\"owner\":{\"pluginId\":\"test.delivery-consumer\",\"apiVersion\":\"pipeline-plugin-v2\",\"packageVersion\":\"1.0.0\",\"contentDigest\":\"sha256:742b4ac1c8db8b565b55dc3932f8419e62ab28da6f61c743a609fcb773aea83c\",\"registrationId\":\"consume\"},\"stageType\":\"test.delivery-consumer\",\"leaseId\":\"lease:efb4a478-227d-4f4e-a3ad-a0479bff1009\",\"status\":\"created\",\"retryBudgetUsed\":0,\"remediationBudgetUsed\":0,\"createdAt\":\"2026-09-10T05:33:45.701Z\"},\"attemptNumber\":1}}}\n{\"sequence\":5,\"previousHash\":\"sha256:e2fa647ed8e3acd3945ed65d8e6a6d944dfc1f50fedd7e8b62ce3e238b3dc9d3\",\"hash\":\"sha256:5c7290cab58cc558f9cca8a2bdcec3e70e836fbddbdd27a8eae91b107616eaab\",\"entry\":{\"schemaVersion\":\"lifecycle-event.v2\",\"eventId\":\"event:d47b1fda-8365-489c-a422-c4af4a815f2a\",\"sequence\":5,\"type\":\"attempt.dispatched\",\"identity\":{\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"consume\",\"attemptId\":\"attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e\"},\"occurredAt\":\"2026-09-10T05:33:45.706Z\",\"causationId\":null,\"payload\":{}}}\n{\"sequence\":6,\"previousHash\":\"sha256:5c7290cab58cc558f9cca8a2bdcec3e70e836fbddbdd27a8eae91b107616eaab\",\"hash\":\"sha256:003aaaaad2157463ed896743492c8f165fc0c06b377e9ebfcc8a3a4279bf0edb\",\"entry\":{\"schemaVersion\":\"lifecycle-event.v2\",\"eventId\":\"event:dc197a92-9799-4753-93f1-640b0f00d111\",\"sequence\":6,\"type\":\"attempt.completed\",\"identity\":{\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"consume\",\"attemptId\":\"attempt:56f48da8-47ba-4ada-88a8-2c8dfe99993e\"},\"occurredAt\":\"2026-09-10T05:33:45.913Z\",\"causationId\":null,\"payload\":{\"repairIdentityEncoding\":\"kubeclaw-json.utf16.v1\",\"outcome\":\"blocked\",\"reason\":{\"code\":\"core.effect_reconciliation_required\",\"message\":\"EFFECT_OUTCOME_UNRESOLVED:effect:json-utf16-v1:9a5b44cc30f8413632b09daba2dbfd12dc73ccac2d47e137adff065549ee5ee9:NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\"},\"result\":{\"schemaVersion\":\"stage-result.v2\",\"outcome\":\"blocked\",\"reason\":{\"code\":\"core.effect_reconciliation_required\",\"message\":\"EFFECT_OUTCOME_UNRESOLVED:effect:json-utf16-v1:9a5b44cc30f8413632b09daba2dbfd12dc73ccac2d47e137adff065549ee5ee9:NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\"},\"artifacts\":[]}}}}\n{\"sequence\":7,\"previousHash\":\"sha256:003aaaaad2157463ed896743492c8f165fc0c06b377e9ebfcc8a3a4279bf0edb\",\"hash\":\"sha256:c06e8df9f9bd1501c5000a00e6c93b3af3f7cfc2c3d5c1fe24051d8f8317ac4a\",\"entry\":{\"schemaVersion\":\"lifecycle-event.v2\",\"eventId\":\"event:0e1d6b76-4654-4d75-9cdc-7325e9d9beca\",\"sequence\":7,\"type\":\"stage.blocked\",\"identity\":{\"runId\":\"run:delivery-manifest-stage-boundary\",\"stageId\":\"consume\"},\"occurredAt\":\"2026-09-10T05:33:45.924Z\",\"causationId\":null,\"payload\":{\"stageType\":\"test.delivery-consumer\",\"outcome\":\"blocked\",\"reason\":{\"code\":\"core.effect_reconciliation_required\",\"message\":\"EFFECT_OUTCOME_UNRESOLVED:effect:json-utf16-v1:9a5b44cc30f8413632b09daba2dbfd12dc73ccac2d47e137adff065549ee5ee9:NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\"},\"attemptsUsed\":1,\"remediationCyclesUsed\":0}}}\n{\"sequence\":8,\"previousHash\":\"sha256:c06e8df9f9bd1501c5000a00e6c93b3af3f7cfc2c3d5c1fe24051d8f8317ac4a\",\"hash\":\"sha256:f83288f2f3a1c80307ac67fb27c40c29fe5cf5c05c2b8eb7d139ea13bdb19ad0\",\"entry\":{\"schemaVersion\":\"lifecycle-event.v2\",\"eventId\":\"event:35268509-8976-4936-aaf4-1d13e58c39ab\",\"sequence\":8,\"type\":\"run.blocked\",\"identity\":{\"runId\":\"run:delivery-manifest-stage-boundary\"},\"occurredAt\":\"2026-09-10T05:33:45.927Z\",\"causationId\":null,\"payload\":{}}}\n"
+}

@@ -175,8 +175,12 @@ try {
   const result = launch(); assert.equal(result.status, 0, result.stderr);
   // The exported compiler's old one/two/three-argument APIs remain legacy.
   // Genuine new CLI compilation selects its independent semantic owner explicitly.
-  const cliCompiled = compileProject(project, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING, 'review-semantics.utf16-v1');
+  const cliCompiled = compileProject(project, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING,
+    'review-semantics.utf16-v1', 'delivery-manifest.utf16-v1');
   assert.deepEqual(JSON.parse(fs.readFileSync(output, 'utf8')), cliCompiled.definition);
+  assert.deepEqual(compiled.definition.stages.find((stage: any) => stage.id === 'project-summary').config, {});
+  assert.deepEqual(cliCompiled.definition.stages.find((stage: any) => stage.id === 'project-summary').config,
+    { deliveryManifestEncoding: 'delivery-manifest.utf16-v1' });
   assert(compiled.definition.stages.filter((stage: any) => stage.type === 'kubeclaw.decision.review')
     .every((stage: any) => !Object.hasOwn(stage.config, 'reviewSemanticEncoding')));
   // A real unsupported stage config must fail before the compiler publishes output.

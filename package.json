@@ -4,6 +4,7 @@
   "type": "module",
   "workspaces": [
     "contracts/agent-observability/v1",
+    "contracts/delivery-manifest/v3",
     "contracts/pipeline-test-gate/v1",
     "contracts/pipeline-worker-core/v1",
     "contracts/pipeline-observability/v1",

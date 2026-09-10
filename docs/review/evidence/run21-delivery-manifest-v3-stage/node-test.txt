@@ -1,0 +1,17 @@
+{"phase":"produce","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"produce\",\"locale\":\"en-US\",\"status\":\"succeeded\",\"manifestDigest\":\"sha256:62759145828d7277bbe5fe20025c20763816216cd3ef089294b32625e4245e83\",\"artifactDigest\":\"sha256:21f746a4f3ea210f9e09fbb96f771db0ccd3f0456d690b575bfc945bc90cd0b1\",\"manifestBytes\":6608,\"summaryWriteKey\":\"run:delivery-manifest-stage-boundary:project-summary:1:10\"}\n","stderr":""}
+{"phase":"consume-en","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-en\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-cs","locale":"cs_CZ.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-cs\",\"locale\":\"cs-CZ\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-da","locale":"da_DK.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-da\",\"locale\":\"da-DK\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-tr","locale":"tr_TR.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-tr\",\"locale\":\"tr-TR\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-sv","locale":"sv_SE.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-sv\",\"locale\":\"sv-SE\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+✔ registered Summary v3 stored output reaches the original downstream import boundary across locales (15119.557989ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15291.450652
+
+exit=0
