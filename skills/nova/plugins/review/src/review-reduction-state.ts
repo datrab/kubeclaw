@@ -14,9 +14,11 @@ import {
 } from './echo-review-contract.ts';
 import {
   isResolvedReviewPolicy,
+  isVerifiedReviewPolicy,
   type ResolvedReviewPolicy,
 } from './review-policy-resolver.ts';
 import type { SemanticVerifierMode } from './review-policy-contract.ts';
+import type { ReviewSemanticEncoding } from './review-semantics.ts';
 import type { VerifiedRootCause } from './review-cluster-contract.ts';
 import { isCertifiedVerifiedRootCause } from './review-verified-findings.ts';
 import {
@@ -71,6 +73,7 @@ export interface ReviewReductionInput {
 }
 
 const VERIFIED_REDUCTION_STATES = new WeakSet<object>();
+const REDUCTION_POLICY_MODES = new WeakMap<object, ReviewSemanticEncoding | undefined>();
 export const REVIEW_ORCHESTRATOR_ISSUER_ID = 'orchestrator:kubeclaw.review' as const;
 const OPAQUE_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,191}$/u;
 const REVIEW_WAIT_FIELDS = [
@@ -237,8 +240,9 @@ function deepFreeze<T>(value: T): T {
 }
 
 /** Called only by the trusted plugin verification boundary after verification. */
-export function certifyReviewReductionInput(value: unknown): ReviewReductionInput {
+export function certifyReviewReductionInput(value: unknown, encoding?: ReviewSemanticEncoding): ReviewReductionInput {
   if (!validReductionInput(value)) throw new Error('review reduction input cannot be certified');
+  if (!isVerifiedReviewPolicy(value.resolvedPolicy, encoding)) throw new Error('review reduction policy owner mode cannot be certified');
   // Governance is certified against the exact immutable finding set. Preserve that
   // reference; cloning it would sever the private proof before reduction.
   const findings = value.governance === undefined
@@ -263,7 +267,13 @@ export function certifyReviewReductionInput(value: unknown): ReviewReductionInpu
     }),
   });
   VERIFIED_REDUCTION_STATES.add(certified);
+  REDUCTION_POLICY_MODES.set(certified, encoding);
   return certified;
+}
+
+export function isCertifiedReductionPolicy(value: ReviewReductionInput): boolean {
+  return VERIFIED_REDUCTION_STATES.has(value) && REDUCTION_POLICY_MODES.has(value)
+    && isVerifiedReviewPolicy(value.resolvedPolicy, REDUCTION_POLICY_MODES.get(value));
 }
 
 export function isCertifiedReviewReductionInput(value: unknown): value is ReviewReductionInput {

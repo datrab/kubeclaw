@@ -1,5 +1,5 @@
 import { echoReviewOutputSchema } from './echo-review-contract.ts';
-import type { ResolvedReviewPolicy } from './review-policy-resolver.ts';
+import { assertReviewPolicyBundle, type ResolvedReviewPolicy } from './review-policy-resolver.ts';
 import type { ReviewBundleSnapshot } from './review-bundle-snapshot.ts';
 import { REVIEWED_SOURCE_EVIDENCE_KIND } from './review-evidence-authority.ts';
 
@@ -23,6 +23,7 @@ export function buildReviewTask(
   helperPrompt: unknown,
   resolved: ResolvedReviewPolicy,
 ): string {
+  assertReviewPolicyBundle(resolved, snapshot.bundle);
   const guidance = typeof helperPrompt === 'string' && helperPrompt.trim()
     ? helperPrompt.trim() : 'No additional reviewer guidance was supplied.';
   return [

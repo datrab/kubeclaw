@@ -1,4 +1,4 @@
-import { canonicalJson } from '@kubeclaw/plugin-sdk';
+import { reviewBundleJson } from './review-semantics.ts';
 
 import type { ReviewBundle } from './review-bundle-contract.ts';
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
@@ -86,7 +86,7 @@ export function assertReviewBundleResourceBounds(
 
 export function assertReviewBundleSerializedBounds(bundle: ReviewBundle): void {
   assertUtf8Bytes(
-    canonicalJson(bundle),
+    reviewBundleJson(bundle),
     REVIEW_HARD_LIMITS.bundleBytes,
     'review bundle',
   );

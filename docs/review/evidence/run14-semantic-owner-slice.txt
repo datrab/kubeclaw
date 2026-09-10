@@ -1,0 +1,24 @@
+Source: 534eb4f (incomplete)
+Command: npm run schema:check && node tests/review-governor.unit.test.mjs && node tests/review-report-contract.unit.test.mjs && node tests/review-report-builder.unit.test.mjs && node tests/review-bundle-contract.unit.test.mjs && node tests/review-bundle-snapshot.unit.test.mjs && node tests/protocol.unit.test.mjs
+CWD: skills/nova/plugins/review
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> schema:check
+> node scripts/generate-policy-schema.mjs --check && node scripts/generate-bundle-schema.mjs --check && node scripts/generate-verification-schema.mjs --check
+
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-governor"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-evidence-authority"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-context-production"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-slicing"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-fact-producer"}
+review report contract unit tests passed
+review report builder unit tests passed
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-bundle-contract"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-bundle-snapshot"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"protocol-unit"}
+
+EXIT: 0
+
+Separate command: node node_modules/typescript/bin/tsc -p skills/nova/tsconfig.json --noEmit
+Output: (empty)
+EXIT: 0

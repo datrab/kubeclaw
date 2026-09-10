@@ -8,7 +8,7 @@ import {
 import type { ProposedFinding } from './echo-review-contract.ts';
 import type { ReviewBundleSnapshot } from './review-bundle-snapshot.ts';
 import type { ReviewProposalPreflight } from './review-proposal-preflight.ts';
-import type { ResolvedReviewPolicy } from './review-policy-resolver.ts';
+import { assertReviewPolicyBundle, type ResolvedReviewPolicy } from './review-policy-resolver.ts';
 import { REVIEWED_SOURCE_EVIDENCE_KIND } from './review-evidence-authority.ts';
 
 function verificationTask(
@@ -43,6 +43,7 @@ export function buildVerificationDispatchRequest(
   preflight: ReviewProposalPreflight,
   policy: ResolvedReviewPolicy,
 ): EchoReviewVerificationRequest {
+  assertReviewPolicyBundle(policy, snapshot.bundle);
   const proposals: Record<string, ProposedFinding> = {};
   for (const proposalId of preflight.eligibleProposalIds) {
     const proposal = preflight.proposals[proposalId];
