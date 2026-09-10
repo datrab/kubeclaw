@@ -1,0 +1,14 @@
+Source/test freeze: f8e7989df97aaaa17be53e6aef46c2fa1f33e72c
+Every individual command has exit0:
+{"command":["node","--test","tests/verification/reliability/prism-reader-value.test.mjs"],"status":0,"stdout":"✔ owning verifier accepts the actual portable original completed receipt (2.013999ms)\n✔ expected codec rejects missing-value/unknown tags without executing getters (0.617311ms)\n✔ complete returned ref binding rejects all original ownership/codec mismatches (4.714673ms)\n✔ real receipt digest/length/value corruption fails, JSON-domain rejection precedes getters (2.510477ms)\n✔ only own expected encoding selects a codec; inherited accessors are never consulted (8.114733ms)\nℹ tests 5\nℹ suites 0\nℹ pass 5\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 205.254908\n","stderr":""}
+{"command":["node","skills/nova/plugins/prism-design/tests/live-function.test.ts"],"status":0,"stdout":"{\"ok\":true,\"plugin\":\"kubeclaw.prism-design\",\"path\":\"design-not-required\",\"mocks\":0}\n","stderr":""}
+{"command":["node","tests/verification/integration/prism-wait.test.mts"],"status":0,"stdout":"{\"ok\":true,\"suite\":\"prism-real-wait-store\"}\n","stderr":""}
+{"command":["node","tests/verification/integration/prism-archive.test.mts"],"status":0,"stdout":"{\"ok\":true,\"suite\":\"prism-real-archive-integrity\",\"designGeneration\":false}\n","stderr":""}
+{"command":["node","node_modules/typescript/bin/tsc","--noEmit","-p","skills/nova/plugins/prism-design/tsconfig.json"],"status":0,"stdout":"","stderr":""}
+{"command":["node","node_modules/eslint/bin/eslint.js","--config","charts/kubeclaw/files/config/eslint.config.mjs","skills/nova/plugins/prism-design/src/stage.ts","skills/nova/plugins/prism-design/src/architecture.ts","tests/verification/reliability/prism-reader-fixture.mjs","tests/verification/reliability/prism-reader-replay.mjs","tests/verification/reliability/prism-reader-consumer.mjs","tests/verification/reliability/prism-reader-value.test.mjs"],"status":0,"stdout":"","stderr":""}
+
+TypeScript AST inspection of original and current registered stage call arguments:
+{"capability":"artifacts.read","originalInvocationArgument":"byte-identical","arguments":["{operation:\"get_json\",resource:{type:\"artifact.object\",canonicalId:architectureRef.artifactId},payload:{namespace:architectureRef.namespace,digest:architectureRef.digest}}"]}
+{"capability":"runtime.dispatch","originalInvocationArgument":"byte-identical","arguments":["withRuntimeDispatchProfile({operation:\"dispatch\",resource:{type:\"runtime.agent\",canonicalId:settings.agent},payload:{request,idempotencyKey:`${input.runId}:prism:${input.architectureArtifact.contentDigest}:${phase}`}},context.contract.runtimeDispatchProfile)"]}
+
+Initial test-only max-depth lint finding: replay consumer assertions nested7 versus canonical maximum6; extracted unchanged assertions into crossLocaleCompletedRead, no rule changes. Final configured lint exit0.
