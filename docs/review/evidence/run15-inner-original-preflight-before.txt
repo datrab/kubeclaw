@@ -1,0 +1,15 @@
+Source: 8ae8a0859e6111683fb87e810039488f3f9b0d52 / local author d8f77ff08e351cdada12835015a593db6d25e59b
+file:///workspace/scratch/15fb596e6560/run15-semantic-inner-review/skills/nova/plugins/review/src/review-policy-resolver.ts:124
+    throw new Error('REVIEW_BUNDLE_POLICY_DIGEST_MISMATCH');
+          ^
+
+Error: REVIEW_BUNDLE_POLICY_DIGEST_MISMATCH
+    at assertReviewPolicyBundle (file:///workspace/scratch/15fb596e6560/run15-semantic-inner-review/skills/nova/plugins/review/src/review-policy-resolver.ts:124:11)
+    at preflightEchoReviewProposals (file:///workspace/scratch/15fb596e6560/run15-semantic-inner-review/skills/nova/plugins/review/src/review-proposal-preflight.ts:284:3)
+    at file:///workspace/scratch/15fb596e6560/run15-semantic-inner-review/skills/nova/plugins/review/tests/review-proposal-preflight.unit.test.mjs:38:19
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0
+Exit: 1

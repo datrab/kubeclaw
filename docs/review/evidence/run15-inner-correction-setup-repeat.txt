@@ -1,0 +1,211 @@
+SETUP-ONLY repeat while intermediate cherry-pick was unresolved; corrected6cb had NOT been applied. NOT a failure of corrected6cb. Exit 1.
+✔ independent policy selected/all provenance modes and precedence remain privately bound (19.65268ms)
+✔ independent generated evidence preserves logical values, candidate IDs and authentic certificates (5.009537ms)
+✖ independent facts-context/proxy rejects without trap execution (0.997114ms)
+✖ independent facts-context/getter rejects without trap execution (0.389889ms)
+✖ independent facts-revision/proxy rejects without trap execution (0.366543ms)
+✖ independent facts-revision/getter rejects without trap execution (0.822391ms)
+✖ independent manifest-input/proxy rejects without trap execution (1.608998ms)
+✖ independent manifest-input/getter rejects without trap execution (0.987129ms)
+✖ independent miner-input/proxy rejects without trap execution (1.16685ms)
+✖ independent miner-input/getter rejects without trap execution (0.837674ms)
+✖ independent original generated facts cannot certify a candidate using a substituted source digest (0.75559ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 2
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 211.468644
+
+✖ failing tests:
+
+test at tests/verification/reliability/review-inner-owner-independent.test.mjs:56:3
+✖ independent facts-context/proxy rejects without trap execution (0.997114ms)
+  AssertionError [ERR_ASSERTION]: facts-context/proxy executed 8 traps
+  
+  8 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run15-semantic-inner-review/tests/verification/reliability/review-inner-owner-independent.test.mjs:69:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 8,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-inner-owner-independent.test.mjs:56:3
+✖ independent facts-context/getter rejects without trap execution (0.389889ms)
+  AssertionError [ERR_ASSERTION]: facts-context/getter executed 1 traps
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run15-semantic-inner-review/tests/verification/reliability/review-inner-owner-independent.test.mjs:69:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-inner-owner-independent.test.mjs:56:3
+✖ independent facts-revision/proxy rejects without trap execution (0.366543ms)
+  AssertionError [ERR_ASSERTION]: facts-revision/proxy executed 10 traps
+  
+  10 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run15-semantic-inner-review/tests/verification/reliability/review-inner-owner-independent.test.mjs:69:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 10,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-inner-owner-independent.test.mjs:56:3
+✖ independent facts-revision/getter rejects without trap execution (0.822391ms)
+  AssertionError [ERR_ASSERTION]: facts-revision/getter executed 1 traps
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run15-semantic-inner-review/tests/verification/reliability/review-inner-owner-independent.test.mjs:69:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-inner-owner-independent.test.mjs:56:3
+✖ independent manifest-input/proxy rejects without trap execution (1.608998ms)
+  AssertionError [ERR_ASSERTION]: manifest-input/proxy executed 12 traps
+  
+  12 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run15-semantic-inner-review/tests/verification/reliability/review-inner-owner-independent.test.mjs:69:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 12,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-inner-owner-independent.test.mjs:56:3
+✖ independent manifest-input/getter rejects without trap execution (0.987129ms)
+  AssertionError [ERR_ASSERTION]: manifest-input/getter executed 7 traps
+  
+  7 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run15-semantic-inner-review/tests/verification/reliability/review-inner-owner-independent.test.mjs:69:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 7,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-inner-owner-independent.test.mjs:56:3
+✖ independent miner-input/proxy rejects without trap execution (1.16685ms)
+  AssertionError [ERR_ASSERTION]: miner-input/proxy executed 7 traps
+  
+  7 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run15-semantic-inner-review/tests/verification/reliability/review-inner-owner-independent.test.mjs:69:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 7,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-inner-owner-independent.test.mjs:56:3
+✖ independent miner-input/getter rejects without trap execution (0.837674ms)
+  AssertionError [ERR_ASSERTION]: miner-input/getter executed 4 traps
+  
+  4 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run15-semantic-inner-review/tests/verification/reliability/review-inner-owner-independent.test.mjs:69:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 4,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-inner-owner-independent.test.mjs:73:1
+✖ independent original generated facts cannot certify a candidate using a substituted source digest (0.75559ms)
+  AssertionError [ERR_ASSERTION]: mining admitted a source digest that does not identify its actual content
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run15-semantic-inner-review/tests/verification/reliability/review-inner-owner-independent.test.mjs:76:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
