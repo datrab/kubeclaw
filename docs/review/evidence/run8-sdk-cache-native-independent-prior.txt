@@ -1,0 +1,63 @@
+Source e1a276a12805bc3210fe2db4ccbc773f66b9fec0 / own e0171db. This command ran the original one-test independent parser regression before the separate writer regression was added.
+Command: node --test --test-concurrency=1 tests/verification/reliability/review-cache-independent.test.mjs tests/verification/reliability/review-cache-profile.test.mjs tests/verification/reliability/review-cache-legacy-prefix.test.mjs tests/verification/reliability/review-cache-native-profile.test.mjs tests/verification/reliability/review-cache-storage-negative.test.mjs
+From /workspace/scratch/15fb596e6560/run8-sdk-cache
+ * branch            e1a276a12805bc3210fe2db4ccbc773f66b9fec0 -> FETCH_HEAD
+[fix/resume-47-run8-sdk-cache-review e0171db] test(review): exercise native cache checkpoints and archived effect crash boundaries [skip ci]
+ Date: Thu Sep 10 02:51:31 2026 +0200
+ 19 files changed, 739 insertions(+), 17 deletions(-)
+ create mode 100644 tests/fixtures/review-cache-stage/plugin/config.schema.json
+ create mode 100644 tests/fixtures/review-cache-stage/plugin/input.schema.json
+ create mode 100644 tests/fixtures/review-cache-stage/plugin/plugin.json
+ create mode 100644 tests/fixtures/review-cache-stage/plugin/result.schema.json
+ create mode 100644 tests/fixtures/review-cache-stage/plugin/stage.mjs
+ create mode 100644 tests/fixtures/review-cache-stage/value.mjs
+ create mode 100644 tests/verification/reliability/fixtures/legacy-review-cache/engine-snapshots.ts.txt
+ create mode 100644 tests/verification/reliability/fixtures/legacy-review-cache/provenance.json
+ create mode 100644 tests/verification/reliability/fixtures/legacy-review-cache/repository-audit-cache.ts.txt
+ create mode 100644 tests/verification/reliability/fixtures/legacy-review-cache/review-content-cache.ts.txt
+ create mode 100644 tests/verification/reliability/review-cache-legacy-prefix.test.mjs
+ create mode 100644 tests/verification/reliability/review-cache-native-profile.test.mjs
+ create mode 100644 tests/verification/reliability/review-cache-storage-negative.test.mjs
+e0171db883a73af711b9ec1f295dc403b817a9e0
+✔ independent v2 record version selection does not execute getter or proxy traps (8.640205ms)
+✔ v1 original cache write requested SIGKILL preserves exact pending operation and authority (2439.225372ms)
+✔ v1 original cache write accepted SIGKILL preserves exact pending operation and authority (2316.746886ms)
+✔ v1 original cache write completed SIGKILL preserves exact pending operation and authority (2417.688071ms)
+✔ v1 original cache read requested SIGKILL preserves exact pending operation and authority (3582.06544ms)
+✔ v1 original cache read accepted SIGKILL preserves exact pending operation and authority (3542.852871ms)
+✔ v1 original cache read completed SIGKILL preserves exact pending operation and authority (4667.738989ms)
+✔ v2 original cache write requested SIGKILL preserves exact pending operation and authority (2488.196147ms)
+✔ v2 original cache write accepted SIGKILL preserves exact pending operation and authority (2274.873078ms)
+✔ v2 original cache write completed SIGKILL preserves exact pending operation and authority (2557.596812ms)
+✔ v2 original cache read requested SIGKILL preserves exact pending operation and authority (3828.958258ms)
+✔ v2 original cache read accepted SIGKILL preserves exact pending operation and authority (3655.569588ms)
+✔ v2 original cache read completed SIGKILL preserves exact pending operation and authority (4695.303686ms)
+✔ v3 original cache write requested SIGKILL preserves exact pending operation and authority (2497.678412ms)
+✔ v3 original cache write accepted SIGKILL preserves exact pending operation and authority (2337.567587ms)
+✔ v3 original cache write completed SIGKILL preserves exact pending operation and authority (2256.189549ms)
+✔ v3 original cache read requested SIGKILL preserves exact pending operation and authority (3243.851528ms)
+✔ v3 original cache read accepted SIGKILL preserves exact pending operation and authority (3315.737319ms)
+✔ v3 original cache read completed SIGKILL preserves exact pending operation and authority (4444.210142ms)
+✔ v4 original cache write requested SIGKILL preserves exact pending operation and authority (2246.85964ms)
+✔ v4 original cache write accepted SIGKILL preserves exact pending operation and authority (2266.680902ms)
+✔ v4 original cache write completed SIGKILL preserves exact pending operation and authority (2267.648989ms)
+✔ v4 original cache read requested SIGKILL preserves exact pending operation and authority (3277.877535ms)
+✔ v4 original cache read accepted SIGKILL preserves exact pending operation and authority (3348.998158ms)
+✔ v4 original cache read completed SIGKILL preserves exact pending operation and authority (3512.172359ms)
+✔ genuine v4 StageExecutor checkpoints and retains same-key v2 refs through en/tr/sv interrupted attempts (3878.813673ms)
+ℹ {"nativeModel":false,"registeredTestStage":true,"attempts":3,"seedExecutions":1,"retainedRefs":2,"digest":"sha256:e64985630cf3fa44a2d2012de6710d53a9838395f3d37adf194b60a04877e1b7"}
+✔ separate finite cache profile has canonical SDK/Foundation parity and never invokes getters (3.422333ms)
+✔ genuine v4 writer requires both profiles; legacy version/profile combinations reject after rehash (15.798614ms)
+✔ v2 owns strict JSON and both inner digests; profile mismatch is an error, never a miss (2.006457ms)
+✔ actual Core/FileJournal/ArtifactStore retains exact same-byte owners and rejects all corrupt/mixed cache candidates (1023.173026ms)
+ℹ {"nativeArtifactStore":true,"mocks":false,"racingWrites":2,"foreignSameBytes":true,"executedMisses":0}
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 80235.161548
+
+Exit 0, 30/30. Native success does not erase the independently found writer preflight defect; not final approval.

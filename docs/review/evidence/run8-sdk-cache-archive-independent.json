@@ -1,0 +1,27 @@
+{
+  "remote": "bade491d2c20e0efc5b33816d447bcb187f790d0",
+  "verified_against_fresh_remote_tree": true,
+  "files": [
+    {
+      "actual": "6f5301c0a9d93b4444fd9131021491b2e0a05a64",
+      "archivePath": "engine-snapshots.ts.txt",
+      "bytes": 11380,
+      "gitBlobSha1": "6f5301c0a9d93b4444fd9131021491b2e0a05a64",
+      "sourcePath": "skills/nova/core/execution/engine-snapshots.ts"
+    },
+    {
+      "actual": "cde3f6efe3e823305f7927ae92eab0720caf1562",
+      "archivePath": "repository-audit-cache.ts.txt",
+      "bytes": 5170,
+      "gitBlobSha1": "cde3f6efe3e823305f7927ae92eab0720caf1562",
+      "sourcePath": "skills/nova/plugins/review/src/repository-audit-cache.ts"
+    },
+    {
+      "actual": "dea59ce9706260194672f6bb26b8806344912174",
+      "archivePath": "review-content-cache.ts.txt",
+      "bytes": 7482,
+      "gitBlobSha1": "dea59ce9706260194672f6bb26b8806344912174",
+      "sourcePath": "skills/nova/plugins/review/src/review-content-cache.ts"
+    }
+  ]
+}
