@@ -150,7 +150,8 @@
       "tested_remote_parent": "21b05129691b6c932fdf7fd2d12f906cb2736aad",
       "fresh_author_backup": "163ccdd8d791fe9bf889a1f9eae3ae21172d9590",
       "fresh_review_backup": "40411e1473180b6c34c3717d501c44bd54902840",
-      "root_report": "implementation/run11-report-root-review.md"
+      "root_report": "implementation/run11-report-root-review.md",
+      "integration_commit": "ff55ab962d16dc0eba5ee6aafa2150abaa723fb5"
     },
     {
       "commit": "711de7d86b5fb581ed0b82077771c9169df4170a",
@@ -185,10 +186,17 @@
       "package": "semantic-review-bundle-czech-identity",
       "counterexample": "23e14883ace8868ab5ff0267b086253d43f4af35",
       "branch": "fix/resume-47-run13-sdk-bundle-czech-20260910t020224",
-      "status": "independently-approved-design-root-authorized-isolated-implementation-not-yet-tested",
-      "next_action": "After report integration create new author/reviewer checkouts from fresh MAIN. Implement only explicit graph-owned bundle.v2/governor.v2/report.v3 and coupled Summary/history; oldabsence/effects/pins unchanged. Genuine prepareReview+governor en/cs, actual archived/new Core/read/write SIGKILL, full refs/schema/no-trap and original suites required. No precomputed inner-digest shortcut.",
+      "status": "isolated-implementation-and-independent-native-fixture-work-in-progress-not-accepted",
+      "next_action": "After report integration create new author/reviewer checkouts from fresh MAIN. Implement only explicit graph-owned bundle.v2/governor.v2/report.v3 and coupled Summary/history; oldabsence/effects/pins unchanged. Genuine prepareReview+governor en/cs, actual archived/new Core/read/write SIGKILL, full refs/schema/no-trap and original suites required. No precomputed inner-digest shortcut. Source author owns production; independent reviewer owns new parser/validator red oracle (6 actual no-trap failures, archived legacy positive). Separate helper owns unique native prepare/governor producer fixture only. Fresh report integration ff55ab is baseline; no old heartbeat ownership transfer.",
       "design": "e07c5c0730e71bed3519ad5a51730e6d7a4dafaf",
-      "design_review": "be25cf15b8e5305e66e680d65cd77163e4867182"
+      "design_review": "be25cf15b8e5305e66e680d65cd77163e4867182",
+      "independent_early_red": "c477d124a004100a8a0e7f86fcc7a7a70ac86aa0",
+      "independent_partial_admission_review": "fc034be202325b40a9d2ffb59bd4655a124ad754",
+      "incomplete_source_backup": "c6ef941d0c330e74466bb7351d7760b53cb2575c",
+      "incomplete_source_branch": "fix/resume-47-run14-semantic-slice-13b16f9",
+      "original_native_producer_red": "cf45e370564dea42879c76cb83cfed3ffec03ea1",
+      "inner_owner_extension": "Policy digest differs for all three actual en/cs profiles; generated simplification-fact bytes/digests differ for lean/audit and propagate into candidate source.digest. Same actual source revisions, changed manifest and selection. Separate smallest owner design/review pending; never precompute replacement inner hashes.",
+      "helper_limit": "After durable original red proof, helper turn ended with a platform safety flag; no later candidate validation completed. Do not retry, rephrase or reroute the flagged action. Keep unexecuted gates open."
     }
   ],
   "integrated_review_codec": {
@@ -197,7 +205,7 @@
     "fresh_checkout_tests": 14,
     "independent_review": "c100f1b85a7d92c88f4c98ce2b57afa356c1f368"
   },
-  "last_source_integration": "680d15eb0ab7344e87b0ab0595d9855acc1f97c9",
+  "last_source_integration": "ff55ab962d16dc0eba5ee6aafa2150abaa723fb5",
   "overall_complete": false,
   "rule": "Backup is not acceptance. Restore only verified frozen commits into a new checkout, never another writer's checkout or dirty work based on an old heartbeat. Exact-parent ff-only integration after review/tests; no CI/deployment.",
   "run_id": "20260910t021800",
