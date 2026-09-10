@@ -1,0 +1,16 @@
+Command: node --test tests/verification/reliability/runtime-dispatch-profile.test.mjs tests/verification/reliability/source-snapshot-version.test.mjs
+Exit: 0
+✔ finite canonical profile: SDK and original Foundation validator agree without executing getters (2.176241ms)
+✔ new original snapshot writes bind required profile; rehashed malformed/future/downgraded contracts reject (3.374102ms)
+✔ profile is bound after budget reservation and excluded from actual model task without changing accounting (785.316045ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1195.232269ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (610.545682ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (32.552025ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2133.044996

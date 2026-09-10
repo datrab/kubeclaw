@@ -1,9 +1,9 @@
 import type { AsyncLocalStorage } from 'node:async_hooks';
-import {portableJson} from '@kubeclaw/plugin-sdk';
+import {portableJson, runtimeDispatchProfileFields} from '@kubeclaw/plugin-sdk';
 import fs from 'node:fs';
 import path from 'node:path';
 import type { AdapterActivationContext, AdapterCleanupContext, AdapterDependencyOptions, AdapterFactory, AdapterInstance, CapabilityInvocation, EventIdentity } from '@kubeclaw/plugin-sdk';
-import { validateReferencedValue } from '@kubeclaw/plugin-foundation/registry/schema';
+import { validateContractValue, validateReferencedValue } from '@kubeclaw/plugin-foundation/registry/schema';
 import { isConfidentialCapability } from '@kubeclaw/plugin-foundation/registry/capabilities';
 import { authorizeCapabilityInvocation } from './authorization.ts';
 import type { AdapterRuntimeOptions } from './adapters.ts';
@@ -75,6 +75,7 @@ export class AdapterStarter {
   async #invokeDependency(adapterId: string, lifecycle: AbortController, active: () => void, capability: string, request: CapabilityInvocation, confidential: boolean, options?: AdapterDependencyOptions): Promise<Readonly<Record<string, unknown>>> {
     portableJson(request);
     request = structuredClone(request);
+    if (runtimeDispatchProfileFields(request, capability).runtimeDispatchProfile) validateContractValue('capabilityInvocation', request);
     active(); const parent = this.#options.invocationContext.getStore();
     parent?.phase.assertActive();
     const deliveryId = dependencyDeliveryId(options, parent);
@@ -178,5 +179,5 @@ function dependencyInvocation(adapterId: string, capability: string, request: Ca
   const {key: idempotencyKey, scope} = portableDependencyKey(adapterId, capability, request, dependencyParent, deliveryId);
   return { idempotencyKey, dependencyIdentity: {prefix: `adapter:${adapterId}:${capability}:`, suffix: owner, scope, currentKey: idempotencyKey,
     ...(dependencyParent ? {parent: dependencyParent} : {})}, attempt, capability,
-    operation: request.operation, resource: request.resource, payload: request.payload, ...(deliveryId === undefined ? {} : { deliveryId }) };
+    operation: request.operation, resource: request.resource, payload: request.payload, ...runtimeDispatchProfileFields(request), ...(deliveryId === undefined ? {} : { deliveryId }) };
 }

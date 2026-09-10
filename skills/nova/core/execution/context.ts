@@ -1,9 +1,12 @@
+import { runtimeDispatchProfileFields } from '@kubeclaw/plugin-sdk';
+import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
 import type {
   ArtifactRef,
   CapabilityInvocation,
   EventIdentity,
   PluginContext,
   PluginInvocationContext,
+  RuntimeDispatchProfile,
 } from '@kubeclaw/plugin-sdk';
 import type { RevocableLease } from './lease.ts';
 import { authorizeCapabilityInvocation } from './authorization.ts';
@@ -15,6 +18,7 @@ export interface CapabilityInvoker {
     operation: string,
     resource: { readonly type: string; readonly canonicalId: string },
     payload: Readonly<Record<string, unknown>>,
+    runtimeDispatchProfile?: RuntimeDispatchProfile,
   ): Promise<Readonly<Record<string, unknown>>>;
 }
 
@@ -39,6 +43,8 @@ export function createPluginInvocationContext(
     contract: Object.freeze(contract),
     async invoke(capability: string, request: CapabilityInvocation) {
       lease.assertActive();
+      const profile = runtimeDispatchProfileFields(request, capability);
+      if (profile.runtimeDispatchProfile) validateContractValue('capabilityInvocation', request);
       const grant = grants.get(capability);
       if (!grant) throw new Error(`PLUGIN_CAPABILITY_DENIED:${capability}`);
       authorizeCapabilityInvocation(grant, request);
@@ -48,6 +54,7 @@ export function createPluginInvocationContext(
         request.operation,
         request.resource,
         request.payload,
+        profile.runtimeDispatchProfile,
       );
     },
     async emit(

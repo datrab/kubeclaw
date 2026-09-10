@@ -1,0 +1,86 @@
+# PCR-SDK-001: run-frozen runtime transport profile (incomplete)
+
+Own branch `fix/resume-47-run6-sdk-transport`, initial local
+`ca00dc72893deaae21d66f1b302962f97638f7ae`, exact fresh remote
+`b06c06dce3364c482a1da5637c36bc2b14ba8c72`; full tree
+`78f4ce6ebccc20f5dd00817d7349d68bb64ece60` verified. Fresh mandatory resume
+files/register and baseline commit were read; the exact 47 baseline IDs match
+partial-47-scope.json. No Product/Controller/Chart package was imported.
+
+Root approved a required explicit transport profile at genuine run creation,
+not retagging existing runs. Canonical schema owns its finite const; the normal
+generator emits its SDK type/value. Strict SDK portable JSON equality validates
+that generated const, and Foundation adds the same non-JSON precondition before
+its canonical Ajv validation. No SDK-to-Foundation dependency or second schema.
+
+Original run creation now writes run-snapshot.v3 with required profile under the
+existing no-replace snapshot publication. Original v1/v2 readers remain exact
+legacy and reject an injected profile. Snapshot v3 validates its profile and
+portable digest. executePrepared reads the persisted selection on new/recover/
+resume/admin paths and threads it through Runner, StageExecutor and the closed
+PluginContext. Pipeline/graph/configuration digests and parent-invocation.v1 are
+unchanged. The eleven actual stage runtime.dispatch producer sites attach the
+profile after model/budget/retry preparation and before effect admission; absent
+historical context returns the original invocation unchanged.
+
+OpenClaw selects explicit session-v1:json-utf16-v1 or collector-v5:json-utf16-v1
+identity only for a declared current request. Untagged transport bytes remain
+legacy; no locale guessing or old-session adoption fallback. The profile is
+closed CapabilityInvocation/EffectRequest metadata, never a reserved model
+payload key. Model task construction and generic HTTP body/HMAC receive the
+original payload byte-for-byte, including any historical model property named
+runtimeDispatchProfile. Parent effect identity, matching and dependency subject
+bind the optional envelope field; absent metadata preserves legacy bytes. Confidential
+callers can explicitly select the current profile; their API, redaction and
+absence of a durable journal are not changed. No confidential exactly-once or
+native Gateway acceptance claim is added.
+
+Initial checks: six finite-profile, canonical parity, model budget/task and
+original source-snapshot tests passed with zero skips; generator check and full
+Nova typecheck passed. Raw: `docs/review/evidence/run6-sdk-transport-initial.txt`.
+The existing current-snapshot test now asserts v3 AND its required profile;
+historical fixture assertions are unchanged.
+
+Independent review rejected initial d545d30 because its payload marker collided
+with legal historical open model data (actual HTTP reproduction preserved on
+review branch fix/resume-47-run6-sdk-review-dda0c19). The corrected closed
+envelope relocates this control through normal/confidential Core and dependency
+invocations. New v3 snapshot readers validate closed outer/graph shapes while
+normal pipeline entry and verifyPinnedGraph retain graph semantic ownership.
+Reusing pipeline stage ID restrictions in the generic graph snapshot shape
+initially rejected the original Unicode graph vector; that genuine failure and
+the unchanged test's successful rerun are retained. Original retirement suite
+passed 15/15 after updating only the genuine new writer expectation to v3.
+
+**Still incomplete; do not integrate or close the finding.** Next action:
+fresh-main reconciliation, all original affected plugin suites, projection and
+retirement regression against that exact head, full types/generator/lint and
+final independent review. Partial tests, static paths
+or a controlled 503 receiver are not native Gateway/model/termination evidence.
+
+Native author matrix now passes 14/14, zero skips (run7-sdk-native-profile.txt):
+actual original runPipelineV2 and architecture stage produce v1/v2/v3 snapshots
+using byte-verified archived v1 writer/graph or freshly archived b06 v2 writer.
+Current terminal recovery preserves each real effects prefix with no HTTP.
+All nine original snapshot-profile x requested/accepted/completed audit-callback
+SIGKILL cases use registered generic adapter, actual HTTP and verified HMAC.
+Requested resumes once, accepted remains uncertain without receipt/repetition,
+completed replays without repetition. These use original native Core APIs;
+no journal is fabricated. Two original registered ACP locale cases preserve
+explicit legacy v2 differences and prove declared v3 identical en/sv transport
+key/label/model task; failed replay preserves the journal and sends no HTTP.
+The HTTP 503 endpoint is NOT a Gateway and proves no accepted Gateway session.
+
+Independent reviewer has passed unchanged actual HTTP/HMAC model-field collision
+and confidential/admission/replay negatives, 41 original regressions and eight
+source/historical CLI cases on bc015b1. Final review on reconciled source is
+pending. Runner now retains the canonical frozen profile reference instead of
+the caller's mutable parse object. Full Nova/Foundation typechecks and generator
+passed after this change. Focused lint reports a pre-existing Prism execute
+complexity 16 (limit15), reproduced identically from exact ca00dc7 source, plus
+four pre-existing unused-directive warnings; no lint setting was weakened.
+
+Dependency setup uses immutable third-party cache hardlinks only, no install or
+modification of linked package files; all 62 lock-backed @kubeclaw symlinks were
+rebuilt locally and resolve inside this checkout. Stale unrelated cache links
+are not proof of a current workspace package. No copied 418MB dependency tree.

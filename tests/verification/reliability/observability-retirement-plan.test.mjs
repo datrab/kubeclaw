@@ -251,7 +251,8 @@ test('actual CLI preserves bounded legacy scan cause in report without printing 
 test('retirement inventory validates original current and captured legacy snapshots with the shared Core codec', async t => {
   const f = await fixture(t), file = path.join(f.target, 'run-snapshot.json');
   const original = fs.readFileSync(file), current = JSON.parse(original);
-  assert.equal(current.schemaVersion, 'run-snapshot.v2');
+  assert.equal(current.schemaVersion, 'run-snapshot.v3');
+  assert.deepEqual(current.runtimeDispatchProfile, {schemaVersion:'runtime-dispatch-profile.v1',encoding:'json-utf16-v1'});
   assert.equal(inspect(f).run.snapshot.digest, current.digest);
   // Captured old-writer bytes exercise the inventory's snapshot codec only;
   // they do not represent a replay of this fixture's graph.
