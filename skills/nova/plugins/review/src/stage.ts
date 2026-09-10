@@ -25,8 +25,10 @@ import { buildReviewSnapshot, prepareReview, ReviewPreparationIntegrityError,
   ReviewPreparationLimitError, type PreparedReview } from './review-preparation.ts';
 import { blockedReviewStage } from './review-stage-result.ts';
 import { reportArtifactEncoding, type ReportArtifactEncoding } from './review-report-encoding.ts';
+import { reviewSemanticEncoding, type ReviewSemanticEncoding } from './review-semantics.ts';
 
-interface ReviewStageConfig { readonly agent: string; readonly profile: string; readonly policy?: unknown; readonly reportArtifactEncoding?: ReportArtifactEncoding }
+interface ReviewStageConfig { readonly agent: string; readonly profile: string; readonly policy?: unknown;
+  readonly reportArtifactEncoding?: ReportArtifactEncoding; readonly reviewSemanticEncoding?: ReviewSemanticEncoding }
 class ReviewStageIntegrityError extends Error {
   readonly snapshot: ReviewBundleSnapshot | undefined;
   constructor(message: string, snapshot?: ReviewBundleSnapshot) {
@@ -37,11 +39,13 @@ class ReviewStageIntegrityError extends Error {
 function config(context: PluginInvocationContext): ReviewStageConfig {
   const value = context.contract.config;
   const encoding = reportArtifactEncoding(value);
+  const semanticEncoding = reviewSemanticEncoding(value);
   const agent = typeof value.agent === 'string' ? value.agent.trim() : '';
   if (!agent) throw new Error('review agent is not configured');
   const profile = value.profile === undefined ? 'gate' : value.profile;
   if (typeof profile !== 'string' || !profile.trim()) throw new Error('review profile is invalid');
   return { agent, profile, ...(value.policy === undefined ? {} : { policy: value.policy }),
+    ...(semanticEncoding === undefined ? {} : { reviewSemanticEncoding: semanticEncoding }),
     ...(encoding === undefined ? {} : { reportArtifactEncoding: encoding }) };
 }
 
@@ -84,6 +88,7 @@ async function dispatchEcho(
 }
 
 interface ExpansionDispatchInput {
+  readonly reviewSemanticEncoding?: ReviewSemanticEncoding;
   readonly first: Extract<ParsedEchoReviewOutput, { readonly ok: true }>;
   readonly input: ReviewStageInput;
   readonly scope: PreparedReview['repository']['scope'];
@@ -111,7 +116,8 @@ async function expandedDispatch(
   }
   const remaining = request.paths.filter((path) => !expanded.selected.some((item) => item.path === path));
   if (remaining.length > 0) throw new ReviewStageIntegrityError(`requested context exceeds policy limits: ${remaining.join(', ')}`);
-  const snapshot = buildReviewSnapshot({ input, scope, manifestDigest, revision, selection: expanded, policy });
+  const snapshot = buildReviewSnapshot({ input, scope, manifestDigest, revision, selection: expanded, policy,
+    ...(values.reviewSemanticEncoding === undefined ? {} : { reviewSemanticEncoding: values.reviewSemanticEncoding }) });
   const parsed = await dispatchEcho(agent, snapshot, policy, context);
   if (parsed.ok && parsed.value.contextRequest) {
     throw new ReviewStageIntegrityError('Echo requested more than one context expansion', snapshot);
@@ -133,16 +139,19 @@ function resolvedStagePolicy(stageConfig: ReviewStageConfig): ResolvedReviewPoli
 async function reviewGovernor(
   prepared: PreparedReview, input: ReviewStageInput, snapshot: ReviewBundleSnapshot,
   policy: ResolvedReviewPolicy, context: PluginInvocationContext,
+  semanticEncoding?: ReviewSemanticEncoding,
 ): Promise<ReviewGovernorSnapshot> {
+  const mode = semanticEncoding === undefined ? {} : { reviewSemanticEncoding: semanticEncoding };
   try {
-    const baseline = await readReviewGovernorBaseline(context);
+    const baseline = await readReviewGovernorBaseline(context, semanticEncoding);
     return await buildReviewGovernorSnapshot({
+      ...mode,
       input, snapshot, revision: prepared.revision, policy, context,
       ...(baseline === undefined ? {} : { baseline }),
     });
   } catch (error) {
     if (error instanceof ReviewGovernorIntegrityError || error instanceof ReviewRepositoryProofError) {
-      return buildInvalidReviewGovernorSnapshot({ input, snapshot, policy, context });
+      return buildInvalidReviewGovernorSnapshot({ input, snapshot, policy, context, ...mode });
     }
     throw error;
   }
@@ -178,6 +187,7 @@ async function dispatchWithOptionalExpansion(
   const expanded = await expandedDispatch({
     first, input, scope: prepared.repository.scope, initial: prepared.initial,
     candidates: prepared.candidates, revision: prepared.revision,
+    ...(stageConfig.reviewSemanticEncoding === undefined ? {} : { reviewSemanticEncoding: stageConfig.reviewSemanticEncoding }),
     manifestDigest: prepared.repository.manifestDigest, policy, agent: stageConfig.agent, context,
   });
   return { echo: expanded.parsed, snapshot: expanded.snapshot };
@@ -217,7 +227,7 @@ async function runReview(
   parsedInput: ReviewStageInput, stageConfig: ReviewStageConfig, policy: ResolvedReviewPolicy,
   wait: WaitRequest | undefined, context: PluginInvocationContext,
 ): Promise<StageResult> {
-  const preparation = await guardKnownFailure(() => prepareReview(parsedInput, policy, context), policy, wait);
+  const preparation = await guardKnownFailure(() => prepareReview(parsedInput, policy, context, stageConfig.reviewSemanticEncoding), policy, wait);
   if ('result' in preparation) return preparation.result;
   const prepared = preparation.value;
   const dispatch = await guardKnownFailure(
@@ -226,7 +236,7 @@ async function runReview(
   if ('result' in dispatch) {
     const snapshot = dispatch.error instanceof ReviewStageIntegrityError && dispatch.error.snapshot
       ? dispatch.error.snapshot : prepared.snapshot;
-    const governor = await reviewGovernor(prepared, parsedInput, snapshot, policy, context);
+    const governor = await reviewGovernor(prepared, parsedInput, snapshot, policy, context, stageConfig.reviewSemanticEncoding);
     return persistDispatchFailure({ failure: dispatch, snapshot, policy, wait, context, governor,
       ...(stageConfig.reportArtifactEncoding === undefined ? {} : { reportArtifactEncoding: stageConfig.reportArtifactEncoding }) });
   }
@@ -240,7 +250,7 @@ async function runReview(
   if ('result' in semantic) {
     const state = semantic.error instanceof ReviewSemanticFlowIntegrityError
       ? semantic.error.state : { findings: [] };
-    const governor = await reviewGovernor(prepared, parsedInput, dispatched.snapshot, policy, context);
+    const governor = await reviewGovernor(prepared, parsedInput, dispatched.snapshot, policy, context, stageConfig.reviewSemanticEncoding);
     return persistReviewOutcome({
       ...(stageConfig.reportArtifactEncoding === undefined ? {} : { reportArtifactEncoding: stageConfig.reportArtifactEncoding }),
       semantic: state, parsed: dispatched.echo, snapshot: dispatched.snapshot,
@@ -248,7 +258,7 @@ async function runReview(
       governor,
     });
   }
-  const governor = await reviewGovernor(prepared, parsedInput, dispatched.snapshot, policy, context);
+  const governor = await reviewGovernor(prepared, parsedInput, dispatched.snapshot, policy, context, stageConfig.reviewSemanticEncoding);
   return finalizeReview({
     ...(stageConfig.reportArtifactEncoding === undefined ? {} : { reportArtifactEncoding: stageConfig.reportArtifactEncoding }),
     semantic: semantic.value, parsed: dispatched.echo, snapshot: dispatched.snapshot, policy,

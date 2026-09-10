@@ -3,6 +3,7 @@ import { canonicalJson, sha256Text, type StageResult } from '@kubeclaw/plugin-sd
 import type { ParsedEchoReviewOutput } from './echo-review-parser.ts';
 import type { ProposedFinding } from './echo-review-contract.ts';
 import type { ReviewBundleSnapshot } from './review-bundle-snapshot.ts';
+import { PORTABLE_REVIEW_BUNDLE_VERSION, PORTABLE_REVIEW_REPORT_VERSION } from './review-semantics.ts';
 import { classifyVerifiedReviewFinding } from './review-reducer.ts';
 import type { ReviewFindingGovernance } from './review-finding-governance.ts';
 import type { ReviewGovernorSnapshot } from './review-governor.ts';
@@ -172,7 +173,8 @@ export function buildReviewReport(input: BuildReviewReportInput): ReviewReport {
   const bounded = boundedItems([...verifiedItems(input), ...proposalItems(input)], input);
   const items = Object.fromEntries(bounded.included.map(({ itemId: id, value }) => [id, value]));
   const report = Object.freeze({
-    schemaVersion: REVIEW_REPORT_SCHEMA_VERSION,
+    schemaVersion: input.snapshot.bundle.schemaVersion === PORTABLE_REVIEW_BUNDLE_VERSION
+      ? PORTABLE_REVIEW_REPORT_VERSION : REVIEW_REPORT_SCHEMA_VERSION,
     attemptId: input.attemptId,
     taskId: input.snapshot.bundle.task.id,
     profile: input.policy.policy.profile,

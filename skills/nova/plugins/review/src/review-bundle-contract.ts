@@ -1,5 +1,6 @@
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
 import { PORTABLE_JSON_ENCODING } from '@kubeclaw/plugin-sdk';
+import { PORTABLE_REVIEW_BUNDLE_VERSION } from './review-semantics.ts';
 
 export const REVIEW_BUNDLE_SCHEMA_VERSION = 'review-bundle.v1' as const;
 export const REVIEW_CONTEXT_SELECTION_VERSION = 'focused-context.v1' as const;
@@ -52,7 +53,7 @@ export interface ReviewBundleSelection {
   readonly expansionRound: 0 | 1;
 }
 export interface ReviewBundle {
-  readonly schemaVersion: typeof REVIEW_BUNDLE_SCHEMA_VERSION;
+  readonly schemaVersion: typeof REVIEW_BUNDLE_SCHEMA_VERSION | typeof PORTABLE_REVIEW_BUNDLE_VERSION;
   readonly task: ReviewBundleTask;
   readonly revisions: ReviewBundleRevisions;
   readonly scope: ReviewBundleScope;
@@ -67,6 +68,7 @@ const boundedText = (maximum: number) => ({
   type: 'string', minLength: 1, maxLength: maximum,
   pattern: '^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])',
 } as const);
+
 const identifier = {
   ...boundedText(REVIEW_HARD_LIMITS.identifierCharacters),
   pattern: '^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])',
@@ -161,3 +163,9 @@ export const reviewBundleSchema = closed([
   }),
   policyDigest: digest,
 } as const);
+
+/** The v1 schema remains byte-identical; this is a separately named contract. */
+export const portableReviewBundleSchema = {
+  ...reviewBundleSchema,
+  properties: { ...reviewBundleSchema.properties, schemaVersion: { const: PORTABLE_REVIEW_BUNDLE_VERSION } },
+} as const;
