@@ -1,0 +1,88 @@
+Second fixture setup: original real Core run succeeded, report stored, but test incorrectly assumed every Review stores bundle. Original persistReviewOutcome only persists bundle when original gate-coverage evidence is admitted. Add owning gate-coverage contract via original helper, same original live-function fixture pattern; do not alter production or synthesize artifact.
+✖ fresh original registered Review producers preserve actual semantic authority across en/cs (3074.401464ms)
+ℹ {"locale":"en-US","profile":"gate","mode":"legacy","source":{"repository":"/tmp/semantic-producer-Ltl4HU/repository","base":"f925f1542180eec5eb889a7d106239d243664547","head":"6d271f9168d6918157a85c9d90d3bc639ae4ee10","testOutput":"original disposable source behavior: passed\n"},"status":"succeeded","stages":[["review",{"stageId":"review","status":"succeeded","attemptNumber":1,"attemptsUsed":1,"remediationCyclesUsed":0,"facts":{"review.decision_model":"review-decision.v1","review.output_schema":"echo-review-output.v1","review.policy_schema":"review-policy.v2","review.policy_digest":"sha256:e58c442ab02479f06dfc781dfed26a392c3ef44bbe4aba956d110f67ca7d0b37","review.policy_profile":"gate","review.policy_source":"built_in","review.simplification_registry":"simplification-rules.v1","review.semantic_verifier":"p0-only","review.finding_count":0,"review.follow_up_count":0,"review.integrity_issue_count":0,"review.unverified_requirement_count":0,"review.limit_violation_count":0,"review.simplification_enabled":false,"review.simplification_enabled_rule_count":0,"review.simplification_minimum_confidence":"high","review.report_digest":"sha256:47473cdc1bab7294b96595764bc3f330a5a58faf0b203c7c4e4b3779b42b516a","review.report_blocker_count":0,"review.report_advisory_count":0,"review.report_follow_up_count":0,"review.report_ignored_count":0,"review.governor_decision":"within_scope","review.governor_remediation_cycles":0,"review.governor_changed_files":1,"review.governor_non_test_loc":2,"review.governor_file_limit":3,"review.governor_non_test_loc_limit":102,"review.governor_outside_ownership_count":0}}]],"actualCore":true,"nativeGatewayOrModelProof":false,"lifecycle":[{"sequence":1,"previousHash":null,"hash":"sha256:d2899599a31a2ab3bb95f80eb4c27039f1fd1c2f0c0a461901a0f31a91e8bdaf","entry":{"schemaVersion":"lifecycle-event.v2","eventId":"event:0a9295de-7ac5-43b8-aa2c-e7020bec083a","sequence":1,"type":"run.created","identity":{"runId":"run:semantic-gate"},"occurredAt":"2026-09-10T02:32:57.764Z","causationId":null,"payload":{"runIdentity":{"runId":"run:semantic-gate","pipelineId":"pipeline:semantic-gate","graphDigest":"sha256:a597f305b360a7e6f53f02c117c1b464000c1a9f21fd00baaf82ea2d2f9d432c"}}}},{"sequence":2,"previousHash":"sha256:d2899599a31a2ab3bb95f80eb4c27039f1fd1c2f0c0a461901a0f31a91e8bdaf","hash":"sha256:5c25ecfea1ad5e933d3f72fa42602bc984eaed258d55881d7b544a555706a00e","entry":{"schemaVersion":"lifecycle-event.v2","eventId":"event:c75066a1-60cc-4cba-a9b7-76aad735a746","sequence":2,"type":"run.started","identity":{"runId":"run:semantic-gate"},"occurredAt":"2026-09-10T02:32:57.768Z","causationId":null,"payload":{}}},{"sequence":3,"previousHash":"sha256:5c25ecfea1ad5e933d3f72fa42602bc984eaed258d55881d7b544a555706a00e","hash":"sha256:d1d594371821f8236da92ffe54c37b315affe5d8f007a1b05198cfaae8a2e5a1","entry":{"schemaVersion":"lifecycle-event.v2","eventId":"event:f9cdcd0b-d0d3-41f6-b7a0-89d27dfae4af","sequence":3,"type":"stage.started","identity":{"runId":"run:semantic-gate","stageId":"review"},"occurredAt":"2026-09-10T02:32:57.770Z","causationId":null,"payload":{"stageType":"kubeclaw.decision.review"}}},{"sequence":4,"previousHash":"sha256:d1d594371821f8236da92ffe54c37b315affe5d8f007a1b05198cfaae8a2e5a1","hash":"sha256:cd928330e6ac5eac32b073bb8eec2d5d5cb2320c198343b64d2d88be9bef2c8a","entry":{"schemaVersion":"lifecycle-event.v2","eventId":"event:870700e5-5c92-4ecb-833b-319b8d88b974","sequence":4,"type":"attempt.created","identity":{"runId":"run:semantic-gate","stageId":"review","attemptId":"attempt:2fc23434-0bbc-4f3d-8786-001f32b5bfe4"},"occurredAt":"2026-09-10T02:32:57.773Z","causationId":null,"payload":{"attempt":{"schemaVersion":"stage-attempt.v2","identity":{"runId":"run:semantic-gate","stageId":"review","attemptId":"attempt:2fc23434-0bbc-4f3d-8786-001f32b5bfe4","attemptNumber":1},"owner":{"pluginId":"kubeclaw.review","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","contentDigest":"sha256:1d1e67a2f3a206a40c527de8af052cd5871bc00bd98ea2061f1f758c1ff717cb","registrationId":"review"},"stageType":"kubeclaw.decision.review","leaseId":"lease:92b0c334-ce86-4895-9c79-ba78f54d18c7","status":"created","retryBudgetUsed":0,"remediationBudgetUsed":0,"createdAt":"2026-09-10T02:32:57.771Z"},"attemptNumber":1}}},{"sequence":5,"previousHash":"sha256:cd928330e6ac5eac32b073bb8eec2d5d5cb2320c198343b64d2d88be9bef2c8a","hash":"sha256:d638a29a1875db78c0caf14e45749ba589d9e3fee2b964651489db5eb9efd058","entry":{"schemaVersion":"lifecycle-event.v2","eventId":"event:20e4a93d-182e-494f-af99-4e33288821f7","sequence":5,"type":"attempt.dispatched","identity":{"runId":"run:semantic-gate","stageId":"review","attemptId":"attempt:2fc23434-0bbc-4f3d-8786-001f32b5bfe4"},"occurredAt":"2026-09-10T02:32:57.775Z","causationId":null,"payload":{}}},{"sequence":6,"previousHash":"sha256:d638a29a1875db78c0caf14e45749ba589d9e3fee2b964651489db5eb9efd058","hash":"sha256:b3f53ce7c73d60a723729660cb75da1269f5bd223abc3f552ef02e10a2b4680f","entry":{"schemaVersion":"lifecycle-event.v2","eventId":"event:b50ab414-5800-4c7d-be97-c9b1f59dd01a","sequence":6,"type":"attempt.completed","identity":{"runId":"run:semantic-gate","stageId":"review","attemptId":"attempt:2fc23434-0bbc-4f3d-8786-001f32b5bfe4"},"occurredAt":"2026-09-10T02:32:58.071Z","causationId":null,"payload":{"repairIdentityEncoding":"kubeclaw-json.utf16.v1","outcome":"passed","result":{"schemaVersion":"stage-result.v2","outcome":"passed","artifacts":[{"artifactId":"review-report:75ae20cff49e102c059c40afb972f4de3852c826ee4351d4a8f19aba4432ec81","digest":"sha256:47473cdc1bab7294b96595764bc3f330a5a58faf0b203c7c4e4b3779b42b516a","encoding":"kubeclaw-json.utf16.v1","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt:2fc23434-0bbc-4f3d-8786-001f32b5bfe4","attemptNumber":1,"runId":"run:semantic-gate","stageId":"review"},"sizeBytes":1490}],"facts":{"review.decision_model":"review-decision.v1","review.output_schema":"echo-review-output.v1","review.policy_schema":"review-policy.v2","review.policy_digest":"sha256:e58c442ab02479f06dfc781dfed26a392c3ef44bbe4aba956d110f67ca7d0b37","review.policy_profile":"gate","review.policy_source":"built_in","review.simplification_registry":"simplification-rules.v1","review.semantic_verifier":"p0-only","review.finding_count":0,"review.follow_up_count":0,"review.integrity_issue_count":0,"review.unverified_requirement_count":0,"review.limit_violation_count":0,"review.simplification_enabled":false,"review.simplification_enabled_rule_count":0,"review.simplification_minimum_confidence":"high","review.report_digest":"sha256:47473cdc1bab7294b96595764bc3f330a5a58faf0b203c7c4e4b3779b42b516a","review.report_blocker_count":0,"review.report_advisory_count":0,"review.report_follow_up_count":0,"review.report_ignored_count":0,"review.governor_decision":"within_scope","review.governor_remediation_cycles":0,"review.governor_changed_files":1,"review.governor_non_test_loc":2,"review.governor_file_limit":3,"review.governor_non_test_loc_limit":102,"review.governor_outside_ownership_count":0}}}}},{"sequence":7,"previousHash":"sha256:b3f53ce7c73d60a723729660cb75da1269f5bd223abc3f552ef02e10a2b4680f","hash":"sha256:f15eacb3ab739b034a87603a87e6bf2ddab92e724d8a7a42a4fba5b1dfce0a4e","entry":{"schemaVersion":"lifecycle-event.v2","eventId":"event:2d1e575e-83e1-434d-ae5d-9682316cdb6f","sequence":7,"type":"artifact.created","identity":{"runId":"run:semantic-gate","stageId":"review","artifactId":"review-report:75ae20cff49e102c059c40afb972f4de3852c826ee4351d4a8f19aba4432ec81"},"occurredAt":"2026-09-10T02:32:58.084Z","causationId":"attempt:2fc23434-0bbc-4f3d-8786-001f32b5bfe4","payload":{"namespace":"kubeclaw.review","mediaType":"application/json","digest":"sha256:47473cdc1bab7294b96595764bc3f330a5a58faf0b203c7c4e4b3779b42b516a","sizeBytes":1490,"artifact":{"artifactId":"review-report:75ae20cff49e102c059c40afb972f4de3852c826ee4351d4a8f19aba4432ec81","digest":"sha256:47473cdc1bab7294b96595764bc3f330a5a58faf0b203c7c4e4b3779b42b516a","encoding":"kubeclaw-json.utf16.v1","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt:2fc23434-0bbc-4f3d-8786-001f32b5bfe4","attemptNumber":1,"runId":"run:semantic-gate","stageId":"review"},"sizeBytes":1490}}}},{"sequence":8,"previousHash":"sha256:f15eacb3ab739b034a87603a87e6bf2ddab92e724d8a7a42a4fba5b1dfce0a4e","hash":"sha256:f7c6a652dd6175afec46b520ccf3a305c00f3e60cf3c028e67e09c80f87f65ca","entry":{"schemaVersion":"lifecycle-event.v2","eventId":"event:8cf076d9-5634-46c1-9aa7-5ecb4bb9ae88","sequence":8,"type":"stage.succeeded","identity":{"runId":"run:semantic-gate","stageId":"review"},"occurredAt":"2026-09-10T02:32:58.086Z","causationId":null,"payload":{"stageType":"kubeclaw.decision.review","outcome":"passed","attemptsUsed":1,"remediationCyclesUsed":0,"facts":{"review.decision_model":"review-decision.v1","review.output_schema":"echo-review-output.v1","review.policy_schema":"review-policy.v2","review.policy_digest":"sha256:e58c442ab02479f06dfc781dfed26a392c3ef44bbe4aba956d110f67ca7d0b37","review.policy_profile":"gate","review.policy_source":"built_in","review.simplification_registry":"simplification-rules.v1","review.semantic_verifier":"p0-only","review.finding_count":0,"review.follow_up_count":0,"review.integrity_issue_count":0,"review.unverified_requirement_count":0,"review.limit_violation_count":0,"review.simplification_enabled":false,"review.simplification_enabled_rule_count":0,"review.simplification_minimum_confidence":"high","review.report_digest":"sha256:47473cdc1bab7294b96595764bc3f330a5a58faf0b203c7c4e4b3779b42b516a","review.report_blocker_count":0,"review.report_advisory_count":0,"review.report_follow_up_count":0,"review.report_ignored_count":0,"review.governor_decision":"within_scope","review.governor_remediation_cycles":0,"review.governor_changed_files":1,"review.governor_non_test_loc":2,"review.governor_file_limit":3,"review.governor_non_test_loc_limit":102,"review.governor_outside_ownership_count":0}}}},{"sequence":9,"previousHash":"sha256:f7c6a652dd6175afec46b520ccf3a305c00f3e60cf3c028e67e09c80f87f65ca","hash":"sha256:ef83b309a191ad7b86873006f2d7c841a36dd392182ca274608922c79fa7ac0b","entry":{"schemaVersion":"lifecycle-event.v2","eventId":"event:1e968ba2-da28-4caa-9d83-ef4260e303f7","sequence":9,"type":"run.succeeded","identity":{"runId":"run:semantic-gate"},"occurredAt":"2026-09-10T02:32:58.088Z","causationId":null,"payload":{}}}],"postCount":1,"dispatched":[{"schemaVersion":"review-bundle.v1","task":{"id":"TASK-1","statement":"Review the implementation."},"revisions":{"base":"f925f1542180eec5eb889a7d106239d243664547","head":"6d271f9168d6918157a85c9d90d3bc639ae4ee10","changedManifestDigest":"sha256:ac7ce6972d89b0ba32e08af9cf8821c9637584ae0785f9726dc5c84ea2f56611"},"scope":{"changedPaths":[{"path":"src/index.mjs","status":"modified"}],"allowedPrefixes":["src"]},"requirements":[{"id":"REQ-1","statement":"The tests pass."}],"evidence":[{"kind":"test","digest":"sha256:cb2afec2aa59ca1b42080b72db4532942331432c2cb065e6d8e572af53c07b3a","content":"\"original disposable source behavior: passed\\n\""}],"context":[{"path":"src/index.mjs","digest":"sha256:d41bb742005e9821e38e0bd6c8c3db0a6e7a799056015ac0cc387c9005bcc555","content":"export function implementation(value) { return value + 1; }\nexport function forwarded(value) { return implementation(value); }\n","reasons":[{"kind":"changed"}]}],"selection":{"version":"focused-context.v1","candidateManifestDigest":"sha256:a6cee58ef87d47f0d505065491033d6473e394bee2a0555a720a376001ca1785","expansionRound":0},"policyDigest":"sha256:e58c442ab02479f06dfc781dfed26a392c3ef44bbe4aba956d110f67ca7d0b37"}],"stored":[{"ref":{"artifactId":"review-report:75ae20cff49e102c059c40afb972f4de3852c826ee4351d4a8f19aba4432ec81","digest":"sha256:47473cdc1bab7294b96595764bc3f330a5a58faf0b203c7c4e4b3779b42b516a","encoding":"kubeclaw-json.utf16.v1","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt:2fc23434-0bbc-4f3d-8786-001f32b5bfe4","attemptNumber":1,"runId":"run:semantic-gate","stageId":"review"},"sizeBytes":1490},"value":{"attemptId":"attempt:2fc23434-0bbc-4f3d-8786-001f32b5bfe4","bundleDigest":"sha256:e9b0cc12ad6f8cc7b311e17513656ff1567c61a7d049c9a969cc2f41f0d477e1","governor":{"baseline":{"allowedPrefixes":["src"],"base":"f925f1542180eec5eb889a7d106239d243664547","changedFileCount":1,"changedManifestDigest":"sha256:ac7ce6972d89b0ba32e08af9cf8821c9637584ae0785f9726dc5c84ea2f56611","head":"6d271f9168d6918157a85c9d90d3bc639ae4ee10","nonTestLoc":2,"ownerKeys":["src"],"ownershipPrefixes":["src"],"policyDigest":"sha256:e58c442ab02479f06dfc781dfed26a392c3ef44bbe4aba956d110f67ca7d0b37"},"baselineId":"sha256:ff8603c297470725ea16072f81975642e4201b2ca9c32d6d6b631363d20e6ea3","current":{"changedFileCount":1,"changedManifestDigest":"sha256:ac7ce6972d89b0ba32e08af9cf8821c9637584ae0785f9726dc5c84ea2f56611","fileLimit":3,"head":"6d271f9168d6918157a85c9d90d3bc639ae4ee10","nonTestLoc":2,"nonTestLocLimit":102,"outsideOwnershipPaths":[],"ownerKeys":["src"],"remediationCyclesUsed":0},"decision":"within_scope","schemaVersion":"review-governor.v1"},"items":{},"omitted":{"advisory":0,"blocker":0,"follow_up":0,"ignored":0},"outcome":"passed","policyDigest":"sha256:e58c442ab02479f06dfc781dfed26a392c3ef44bbe4aba956d110f67ca7d0b37","profile":"gate","revision":{"base":"f925f1542180eec5eb889a7d106239d243664547","changedManifestDigest":"sha256:ac7ce6972d89b0ba32e08af9cf8821c9637584ae0785f9726dc5c84ea2f56611","head":"6d271f9168d6918157a85c9d90d3bc639ae4ee10"},"schemaVersion":"review-report.v2","taskId":"TASK-1"}}],"bundleDigest":null,"validReport":true}
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3206.272961
+
+✖ failing tests:
+
+test at tests/verification/reliability/run11-semantic-producer-locales.test.mjs:38:1
+✖ fresh original registered Review producers preserve actual semantic authority across en/cs (3074.401464ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   context: [
+  -     {
+  -       content: 'export function implementation(value) { return value + 1; }\n' +
+  -         'export function forwarded(value) { return implementation(value); }\n',
+  -       digest: 'sha256:d41bb742005e9821e38e0bd6c8c3db0a6e7a799056015ac0cc387c9005bcc555',
+  -       path: 'src/index.mjs',
+  -       reasons: [
+  -         {
+  -           kind: 'changed'
+  -         }
+  -       ]
+  -     }
+  -   ],
+  -   evidence: [
+  -     {
+  -       content: '"original disposable source behavior: passed\\n"',
+  -       digest: 'sha256:cb2afec2aa59ca1b42080b72db4532942331432c2cb065e6d8e572af53c07b3a',
+  -       kind: 'test'
+  -     }
+  -   ],
+  -   policyDigest: 'sha256:e58c442ab02479f06dfc781dfed26a392c3ef44bbe4aba956d110f67ca7d0b37',
+  -   requirements: [
+  -     {
+  -       id: 'REQ-1',
+  -       statement: 'The tests pass.'
+  -     }
+  -   ],
+  -   revisions: {
+  -     base: 'f925f1542180eec5eb889a7d106239d243664547',
+  -     changedManifestDigest: 'sha256:ac7ce6972d89b0ba32e08af9cf8821c9637584ae0785f9726dc5c84ea2f56611',
+  -     head: '6d271f9168d6918157a85c9d90d3bc639ae4ee10'
+  -   },
+  -   schemaVersion: 'review-bundle.v1',
+  -   scope: {
+  -     allowedPrefixes: [
+  -       'src'
+  -     ],
+  -     changedPaths: [
+  -       {
+  -         path: 'src/index.mjs',
+  -         status: 'modified'
+  -       }
+  -     ]
+  -   },
+  -   selection: {
+  -     candidateManifestDigest: 'sha256:a6cee58ef87d47f0d505065491033d6473e394bee2a0555a720a376001ca1785',
+  -     expansionRound: 0,
+  -     version: 'focused-context.v1'
+  -   },
+  -   task: {
+  -     id: 'TASK-1',
+  -     statement: 'Review the implementation.'
+  -   }
+  - }
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run11-semantic-producer/tests/verification/reliability/run11-semantic-producer-locales.test.mjs:50:62)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { schemaVersion: 'review-bundle.v1', task: { id: 'TASK-1', statement: 'Review the implementation.' }, revisions: { base: 'f925f1542180eec5eb889a7d106239d243664547', head: '6d271f9168d6918157a85c9d90d3bc639ae4ee10', changedManifestDigest: 'sha256:ac7ce6972d89b0ba32e08af9cf8821c9637584ae0785f9726dc5c84ea2f56611' }, scope: { changedPaths: [Array], allowedPrefixes: [Array] }, requirements: [ [Object] ], evidence: [ [Object] ], context: [ [Object] ], selection: { version: 'focused-context.v1', candidateManifestDigest: 'sha256:a6cee58ef87d47f0d505065491033d6473e394bee2a0555a720a376001ca1785', expansionRound: 0 }, policyDigest: 'sha256:e58c442ab02479f06dfc781dfed26a392c3ef44bbe4aba956d110f67ca7d0b37' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

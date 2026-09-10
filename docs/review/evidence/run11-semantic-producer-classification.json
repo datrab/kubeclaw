@@ -1,0 +1,138 @@
+[
+  {
+    "profile": "gate",
+    "source": {
+      "base": "5e4f8003a9860dc6e905f2391f19598b01a4888f",
+      "head": "bb1a5edb94d28250fc9e908422780094e155ffdc",
+      "repository": "/tmp/semantic-producer-VpkMGF/repository",
+      "testOutput": "original disposable source behavior: passed\n"
+    },
+    "policyDigest": {
+      "en": "sha256:e58c442ab02479f06dfc781dfed26a392c3ef44bbe4aba956d110f67ca7d0b37",
+      "cs": "sha256:d8c1c51837953e695a79c8362ba92e9a862fd4b6e723ab97058ee37597d3f8d3"
+    },
+    "bundleDigest": {
+      "en": "sha256:258aff96d40eafa1ff96bfa7fdde5945a98a7ad7152a815bfd7947c280bae7c6",
+      "cs": "sha256:959c383c339b2c3d1c5beb45cb1d8d9d11cba9924fab6f292857b1bf1179a062"
+    },
+    "revisionsEqual": true,
+    "contextEqual": true,
+    "selectionEqual": true,
+    "evidence": [
+      {
+        "kind": "gate-coverage",
+        "en": "sha256:baf48002aba2434dc6d4c05f98edeac5f65a5890f46f53be4847424ba1992e67",
+        "cs": "sha256:baf48002aba2434dc6d4c05f98edeac5f65a5890f46f53be4847424ba1992e67",
+        "bytesEqual": true,
+        "parsedValueEqual": true
+      },
+      {
+        "kind": "test",
+        "en": "sha256:cb2afec2aa59ca1b42080b72db4532942331432c2cb065e6d8e572af53c07b3a",
+        "cs": "sha256:cb2afec2aa59ca1b42080b72db4532942331432c2cb065e6d8e572af53c07b3a",
+        "bytesEqual": true,
+        "parsedValueEqual": true
+      }
+    ]
+  },
+  {
+    "profile": "lean",
+    "source": {
+      "base": "5e4f8003a9860dc6e905f2391f19598b01a4888f",
+      "head": "bb1a5edb94d28250fc9e908422780094e155ffdc",
+      "repository": "/tmp/semantic-producer-VpkMGF/repository",
+      "testOutput": "original disposable source behavior: passed\n"
+    },
+    "policyDigest": {
+      "en": "sha256:790c161d02be982701239fdf51ee7c754e56eba638cdf8718cfc94fd6c87d837",
+      "cs": "sha256:b3b39fba1aa057dda2917ead80f353f961ab904b0889ebc5a6884127d40d3b2e"
+    },
+    "bundleDigest": {
+      "en": "sha256:4946ac82c6a5ab3b8ca55f4196188fb87ae23d221184d0edaba238ede7c1a668",
+      "cs": "sha256:49de0020cae9875c3a21f58641a91bd8933ea6267f1409631364789e8e50c3bf"
+    },
+    "revisionsEqual": true,
+    "contextEqual": true,
+    "selectionEqual": true,
+    "evidence": [
+      {
+        "kind": "gate-coverage",
+        "en": "sha256:baf48002aba2434dc6d4c05f98edeac5f65a5890f46f53be4847424ba1992e67",
+        "cs": "sha256:baf48002aba2434dc6d4c05f98edeac5f65a5890f46f53be4847424ba1992e67",
+        "bytesEqual": true,
+        "parsedValueEqual": true
+      },
+      {
+        "kind": "simplification-candidates",
+        "en": "sha256:1430b72b0aa6db8f7682157932e5b9076802517e0d45813ce10683ada999d0db",
+        "cs": "sha256:ba957bb428cf48b675f9566178e04e8c4d32948ef23aaa83679fa0694f84438c",
+        "bytesEqual": false,
+        "parsedValueEqual": false
+      },
+      {
+        "kind": "simplification-facts",
+        "en": "sha256:e9c6d2eff9875992462771b9ad2e952f939ddf73e4415e3b67f3469e5bc5106c",
+        "cs": "sha256:0dc185a4f1c652d4dba1260a78a5e17f56755e0b95cfe05b0755acfc03d564e3",
+        "bytesEqual": false,
+        "parsedValueEqual": true
+      },
+      {
+        "kind": "test",
+        "en": "sha256:cb2afec2aa59ca1b42080b72db4532942331432c2cb065e6d8e572af53c07b3a",
+        "cs": "sha256:cb2afec2aa59ca1b42080b72db4532942331432c2cb065e6d8e572af53c07b3a",
+        "bytesEqual": true,
+        "parsedValueEqual": true
+      }
+    ]
+  },
+  {
+    "profile": "audit",
+    "source": {
+      "base": "5e4f8003a9860dc6e905f2391f19598b01a4888f",
+      "head": "bb1a5edb94d28250fc9e908422780094e155ffdc",
+      "repository": "/tmp/semantic-producer-VpkMGF/repository",
+      "testOutput": "original disposable source behavior: passed\n"
+    },
+    "policyDigest": {
+      "en": "sha256:6e5ebe5e2d895aeea96acf75b313e2e54efc18ef5d83771e9e13634f7acb34c1",
+      "cs": "sha256:f6b7f3ba351b0ae9169350d850b8dcd904869e8dcf8c7d76cea751e3fb00bbb3"
+    },
+    "bundleDigest": {
+      "en": "sha256:4869eee83f3f78b26c1b164546ca2f97cd809394e487d7c3b3c89abee52e69fb",
+      "cs": "sha256:00cdc6dcd4914769b096adb25435afbf1d63cd88260196bc925686d3e5b70870"
+    },
+    "revisionsEqual": true,
+    "contextEqual": true,
+    "selectionEqual": true,
+    "evidence": [
+      {
+        "kind": "gate-coverage",
+        "en": "sha256:baf48002aba2434dc6d4c05f98edeac5f65a5890f46f53be4847424ba1992e67",
+        "cs": "sha256:baf48002aba2434dc6d4c05f98edeac5f65a5890f46f53be4847424ba1992e67",
+        "bytesEqual": true,
+        "parsedValueEqual": true
+      },
+      {
+        "kind": "simplification-candidates",
+        "en": "sha256:1430b72b0aa6db8f7682157932e5b9076802517e0d45813ce10683ada999d0db",
+        "cs": "sha256:ba957bb428cf48b675f9566178e04e8c4d32948ef23aaa83679fa0694f84438c",
+        "bytesEqual": false,
+        "parsedValueEqual": false
+      },
+      {
+        "kind": "simplification-facts",
+        "en": "sha256:e9c6d2eff9875992462771b9ad2e952f939ddf73e4415e3b67f3469e5bc5106c",
+        "cs": "sha256:0dc185a4f1c652d4dba1260a78a5e17f56755e0b95cfe05b0755acfc03d564e3",
+        "bytesEqual": false,
+        "parsedValueEqual": true
+      },
+      {
+        "kind": "test",
+        "en": "sha256:cb2afec2aa59ca1b42080b72db4532942331432c2cb065e6d8e572af53c07b3a",
+        "cs": "sha256:cb2afec2aa59ca1b42080b72db4532942331432c2cb065e6d8e572af53c07b3a",
+        "bytesEqual": true,
+        "parsedValueEqual": true
+      }
+    ]
+  }
+]
