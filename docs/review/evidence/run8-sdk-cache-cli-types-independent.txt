@@ -1,0 +1,8 @@
+Source 1eac92f / own32b03f7.
+Command: node docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs /workspace/scratch/15fb596e6560/run8-sdk-cache-review && node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json && node scripts/generate-plugin-sdk-types.mjs --check
+{"scope":"original-unfixed-cli-with-new-compiler","status":1,"stderr":"{\"status\":\"error\",\"error\":\"RECOVERY_GRAPH_DIGEST_MISMATCH:sha256:3449ab0667471ac96b0a986526f4a7e143f823bbb3df55ccf4f5048ff8af28ba:sha256:5c5a917a66283b46a06d8b4f2926cb709b78ec183ab7e48fa26b03c093a1f322\"}\n"}
+{"scope":"original-project-legacy-cli-recovery","oldIdentity":{"runId":"run:project-proof","pipelineId":"project:proof","graphDigest":"sha256:3449ab0667471ac96b0a986526f4a7e143f823bbb3df55ccf4f5048ff8af28ba"},"stageCount":13,"resumeStatus":1,"resumeStdout":"","resumeStderr":"{\"status\":\"error\",\"error\":\"RECOVERY_RUN_TERMINAL:run:project-proof:run.blocked\"}\n"}
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+
+Exit 0. Actual archived original CLI correctly refuses original terminal run after preserving its 13-stage graph; no model acceptance. Both owning types and generator emitted no additional output.
