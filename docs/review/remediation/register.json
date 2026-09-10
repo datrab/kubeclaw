@@ -607,7 +607,7 @@
       "work_package": "WP01",
       "status": "implementiert",
       "implementation_commit": "b85b4c18fedcfb5a509295c082d59aab631b0617",
-      "verification_status": "teilweise / weitere Consumer offen",
+      "verification_status": "Teilweise: Semantic-Source und bounded Delivery-v3-Source0afc unabhängig akzeptiert; Gesamtimplementierung verworfen und weitere Consumer/native Gates offen",
       "verification_evidence": [
         {
           "report": "implementation/contracts.md",
@@ -661,6 +661,10 @@
         {
           "report": "implementation/run11-report-root-review.md",
           "summary": "Report-only Cutover unabhängig auf aktuellem Runtime-Head geprüft; Root volle Original-Review-Suite mit14 neuen Fällen/registriertem Livepfad,25 echte Native-/SIGKILL-/Replayfälle und frische Wiederherstellung11/11 bestanden. Archivierte Original-CLI/Phase6/Types/Generator bestanden; versehentlich ausgewählte historische Diagnosticfehlprobe ehrlich erhalten. Semantischer Czech-Bundle-/Governor-/Graph-/Summary-Defekt bleibt getrennt offen."
+        },
+        {
+          "report": "resume/run-20260910t080401.md",
+          "summary": "a7b3/6e6c, bfdc/1eaa und357a/c6b6 wurden verworfen. Source0afc behebt den CLI-Harness und erweitert9 Outer-/9 Bodynegative. Reviewa0ad akzeptiert den bounded Source nach grünen Contract-/Compiler-/v2-/No-read-/5-Locale-/Missing-Import-/Archived-CLI-Matrizen, verwirft aber die Gesamtimplementierung als unvollständig."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/lib.sdk.md",
@@ -668,11 +672,11 @@
       "source_finding_text": "### PCR-SDK-001 — Serialisierung erzeugt ungültige oder kollidierende Daten\n\n- **Mittel, nachgewiesener Defekt:** Funktion in aktiven Artefakt-/Effektpfaden;\n  kein bisheriger Produktionsvorfall mit normalen JSON-Eingaben behauptet.\n- **Beleg:** src/values.ts:42–51: map/join, undefined→null, localeCompare;\n  ArtifactStore.adapter.ts:108–135 speichert diese Bytes als application/json,\n  Core.effects/identity.ts:5–24 vergleicht so Payloads. unknown ohne JSON-Prüfung.\n- **Auslöser/Ablauf:** in-process Array(2) ergibt ungültiges `[,]`;\n  `{x:undefined}` und `{x:null}` identische Bytes. Originalfunktion tatsächlich\n  ausgeführt: [Reproduktion](../evidence/plugin-contract-sdk-repro.mjs).\n- **Auswirkung:** ungültige JSON-Artefakte bzw. verschiedene Nicht-JSON-Payloads\n  bei Idempotenz gleichgesetzt. Voller Adapterfehlerpfad ist Code-Trace, kein\n  hier gelaufener E2E-Test. Localeordnung zusätzliches Portabilitätsrisiko,\n  noch nicht durch mehrere Umgebungen gemessen.\n- **Ursachenbehebung:** akzeptierten JSON-Datenbereich validieren, Sparsearrays,\n  nichtendliche Zahlen, Getter, exotische Objekte/Zyklen ablehnen und\n  sprachunabhängig ordnen. Persistierte Digestversionen kontrolliert umstellen;\n  kein stiller Fallbackserializer.\n- **Regression:** Originalserializer-Negativ-/Localevektoren; echter\n  ArtifactStore put/get und EffectJournal-Replay dürfen weder ungültige Bytes\n  quittieren noch verschiedene akzeptierte Payloads gleichsetzen.\n  [PCR-PROMPT-001](lib.prompt-contract.md) betrifft getrennten ungenutzten Code,\n  nicht denselben Laufzeitpfad.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Atomare Delivery-v3-Implementierung gemäß Design569454/90dd auf Semantic-Source15f6 fortsetzen und unabhängig prüfen. Semantic-Source allein nicht integrieren. Echte registrierte Semantic-Producer-, vollständige History/Recovery/Summary-, Delivery-v3- und Import-Store-Gates bleiben offen; gesperrte Helperaktion nicht umleiten.",
+      "next_action": "Bounded Delivery-Source0afc/Reviewa0ad erhalten. Native SIGKILL/Prefix/Cancel/Replay und verbleibende Consumernegative einschließlich mediaType, ambiguous decision und real import-store failure ergänzen und exakt prüfen. Semantic15f6 allein nicht integrieren; Semantic-Producer-, History/Recovery/Summary-, Go/Chromium- und Full-Repo-Gates bleiben offen.",
       "related_findings": [],
       "decision_notes": [],
       "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe.",
-      "remaining_work": "Finaler Semantic-Source15f6: vollständige Original-Review-Suite, archivierte CLI, Phase6, Types und27 Ownerfälle bestanden; unabhängiger Review5380 ergänzt3/3 Compiler,9/9 echte Core/Journal/Store-Regression und1/1 Historyreader. Integration bleibt wegen fehlendem echten registrierten Semantic-Producer und vollständigen Phasen gesperrt. Registrierter Delivery-v2-Gegenbeleg f3d wurde unabhängig45fff reproduziert; finales Delivery-v3-Design569454 ist unabhängig90dd freigegeben, Implementierung/nativer Nachweis offen. Gesamtfinding offen."
+      "remaining_work": "Finaler Semantic-Source15f6: vollständige Original-Review-Suite, archivierte CLI, Phase6, Types und27 Ownerfälle bestanden; unabhängiger Review5380 ergänzt3/3 Compiler,9/9 echte Core/Journal/Store-Regression und1/1 Historyreader. Integration bleibt wegen fehlendem echten registrierten Semantic-Producer und vollständigen Phasen gesperrt. Delivery-v2-Gegenbeleg f3d/45fff und v3-Design569454/90dd stehen. a7b3/6e6c, bfdc/1eaa und357a/c6b6 wurden verworfen;0afc/a0ad ist bounded akzeptiert, aber Gesamtimplementierung, native SIGKILL/Consumer/Full-Repo offen. Gesamtfinding offen."
     },
     {
       "id": "PCR-SDK-002",
@@ -2870,12 +2874,16 @@
       "work_package": "WP07",
       "status": "implementiert",
       "implementation_commit": "91030cbc3a30882669b8af834102d368b50bd99d",
-      "verification_status": "37/37 echte lokale Tests unabhängig bestanden, inklusive Abbruch an der Cacheabschlussgrenze; Typprüfung und gezielter Lint bestanden. Native Browserprüfung blockiert, parallele CPU-/Kindprozessattribution offen.",
+      "verification_status": "37/37 positive Suite bestanden; echter Parallel-CPU-RED stabil 0/1 unabhängig reproduziert. Native Browserprüfung blockiert, Cgroup-/Kindprozessattribution offen.",
       "verification_evidence": [
         "docs/review/remediation/implementation/prism-worker-cancellation.md",
         {
           "report": "implementation/attempt-resource-accountability-boundary.md",
           "summary": "Aktuelle Parentmessung erfasst nicht den gesamten Attempt; generischer Executor misst zusätzlich vor Finalisierung/Reportadapter. Atomare Owner-/Containment-/Engineintegration sowie echte delegierte Cgroups erforderlich. Keine funktionale Behebung in diesem Slice."
+        },
+        {
+          "report": "resume/run-20260910t080401.md",
+          "summary": "Source798619 und Review00f0 bestätigen einen stabilen echten Parallel-CPU-Gegenbeleg bei unverändert grüner 37/37-Suite. Akzeptiert nur als RED/Design; schreibbare delegierte Cgroup v2 und gepinntes Chromium fehlen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-worker.md",
@@ -2887,9 +2895,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/worker/core/worker/attempt-executor.ts#L437"
       ],
       "unresolved_code_references": [],
-      "next_action": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
+      "next_action": "Echten RED798619/00f0 unverändert erhalten. Generischen Core-Attempt-Owner plus Prism-Ausführungshost atomar implementieren, sobald schreibbare delegierte Cgroup v2 und gepinntes Chromium verfügbar sind; Parallel-/Kindprozessattribution und native Browserbeendigung unabhängig prüfen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Source798619/Review00f0 beweisen den Shared-Process-Attributionsdefekt, aber keine Behebung. Delegierte schreibbare Cgroup v2, gepinntes Chromium, generischer Attempt-Owner/Prism-Host, Kindprozessattribution und native unveränderte Positiv-/Negativabnahme fehlen."
     },
     {
       "id": "PCR-PRISM-WORKER-003",
@@ -2899,12 +2908,16 @@
       "work_package": "WP07",
       "status": "implementiert",
       "implementation_commit": "91030cbc3a30882669b8af834102d368b50bd99d",
-      "verification_status": "37/37 echte lokale Tests unabhängig bestanden, inklusive Abbruch an der Cacheabschlussgrenze; Typprüfung und gezielter Lint bestanden. Native Browserprüfung blockiert, parallele CPU-/Kindprozessattribution offen.",
+      "verification_status": "37/37 positive Suite bestanden; RED-/Designcheckpoint unabhängig akzeptiert. Native Capture-/Upload-Cancellation und Reaping durch fehlendes Chromium/Cgroup nicht abgenommen.",
       "verification_evidence": [
         "docs/review/remediation/implementation/prism-worker-cancellation.md",
         {
           "report": "implementation/attempt-resource-accountability-boundary.md",
           "summary": "Aktuelle Parentmessung erfasst nicht den gesamten Attempt; generischer Executor misst zusätzlich vor Finalisierung/Reportadapter. Atomare Owner-/Containment-/Engineintegration sowie echte delegierte Cgroups erforderlich. Keine funktionale Behebung in diesem Slice."
+        },
+        {
+          "report": "resume/run-20260910t080401.md",
+          "summary": "Source798619 und Review00f0 akzeptieren nur den echten Ressourcen-RED und engen Ownerentwurf. Browsergate bleibt 0/2 vor den Assertions, weil gepinntes Chromium fehlt; Cgroup v2 ist read-only."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-worker.md",
@@ -2912,14 +2925,15 @@
       "source_finding_text": "### PCR-PRISM-WORKER-003 — Terminate beendet weder Browser noch Evidence-Upload\n\n- **Hoch; Evidenzklasse: nachgewiesener Defekt durch Code-Trace:** worker.ts:97–99 setzt nur terminated=true; Engine.execute (:79–84) und uploadEvidence (:37–40) erhalten kein AbortSignal. Chromium wird erst in Enginefinally geschlossen, Upload hat kein Timeout. Auslöser: laufender Browser/Upload überschreitet Deadline oder Controlclient trennt. Executor kann Ablauf als beendet behandeln, während externe Arbeit/Prozess weiterläuft; harte Claimabschluss-/Ressourcengrenze nicht gewährleistet. Keine tatsächlich beobachtete Prozessleckdauer behauptet.\n- **Behebung:** pro Attempt besitzbarer Browser-/Prozesshandle, Abort weitergeben, Upload/Log/Cleanup gemeinsam gegen absolute Claimdeadline begrenzen; terminate muss tatsächliche Beendigung/Reaping quittieren. Aggregierte Zulassung und messbare Ressourcen pro Versuch ergänzen, nicht nur Configzahlen vergleichen.\n- **Regression:** Originaldienste/echter Chromium, abbrechen während Capture und Upload; nach terminalem Result keine Kindprozesse, keine späteren Writes, alle Abschlussphasen innerhalb Claimdeadline. Disconnect zusätzlich auf bewusste Cancelpolicy prüfen.\n\nDokumentationsabgleich: Implementationplan Engineprofil/Bounded Worker wird nur teilweise umgesetzt; fehlende Logs und fehlende reale Terminierung widerlegen vollständigen neutralen Abschluss. Service-README fehlt; Querverweise Engine-/Storage-/Controlreviews behandeln Idempotenz, CAS und Empfangsbindung. Die drei Befunde ersetzen keine Cluster-/SPIFFE-Betriebsprüfung.\n\nAusführungsprotokoll der ersten Testgruppe: [prism-core-review-tests.txt](../evidence/prism-core-review-tests.txt) (aus Originalausgabe transkribierte Zusammenfassung, kein nachträglich erzeugtes TAP).",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
+      "next_action": "Generischen Core-Attempt-Owner plus Prism-Ausführungshost atomar implementieren, sobald schreibbare delegierte Cgroup v2 und gepinntes Chromium verfügbar sind; echte Capture-/Upload-Cancellation, Reaping, keine späten Writes und gesamtes Attempt-Ressourcenfenster unabhängig nachweisen.",
       "related_findings": [
         "PCR-BUSTER-ENGINE-001",
         "PCR-NOVA-GATE-001",
         "PCR-NOVA-GATE-002",
         "PCR-WORKER-001"
       ],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Source798619/Review00f0 sind nur RED/Design. Pinned Chromium und delegierte Cgroup fehlen; echte Capture-/Upload-Cancellation, Reaping, keine späteren Writes und gesamte Claimdeadline-/Attempt-Ressourcenabnahme sind nicht ausgeführt."
     },
     {
       "id": "PCR-PRISM-DOMAIN-001",
@@ -3289,6 +3303,10 @@
         {
           "report": "implementation/run9-operator-root-review.md",
           "summary": "Originale kausale JSON-v1-Operatorprojektion unabhängig geprüft und mit SDK/Prism Root27/27 getestet; echte Quotenfreigabe7358Bytes, unveränderte Recordzahl, Replay/Prozessfences/SIGKILL/historischer Ablauf. Andere Retention bleibt offen."
+        },
+        {
+          "report": "resume/run-20260910t080401.md",
+          "summary": "Derived-source Dispatch-Source588de8 wurde unabhängig7885 mit11/11 aktueller,10/10 unveränderter Parent-,1/1 fokussierter,4/4 Authority-Prüfung und Typecheck akzeptiert. Nur begrenztes Teilpaket; native Providerausführung fehlt und PCR-OBS-002 bleibt offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.observability.md",
@@ -3296,7 +3314,7 @@
       "source_finding_text": "### PCR-OBS-002 — Aufbewahrungsstrategie für bestätigte Historie fehlt\n\n- **Mittel, offene Architekturfrage:** endliche Quoten verhindern unbeschränktes\n  Wachstum, nach Ausschöpfung steht aber kein sicherer Freigabeweg bereit.\n- **Beleg:** RecordStore hat append/read/transition ohne Delete; Admission ohne\n  Compaction; AttemptStore reclaimExpiredEvidence entfernt nur ohne Result\n  referenzierte Evidence. README benennt fehlende Admissioncompaction, W6 ebenso.\n- **Auslöser/Auswirkung:** fortlaufende Runs füllen globale Stores; weitere\n  notwendige Belege/Writes scheitern, keine automatische Wiederherstellung der\n  Kapazität. Manuelles Löschen könnte Idempotenz/Beweisketten verlieren.\n- **Ursache lösen:** explizite runbezogene Retention mit Consumercheckpoint,\n  referenziertem Evidenceabschluss und nötigen Idempotenz-Tombstones; erst danach\n  zusammenhängend freigeben. Größere Quoten allein verschieben das Problem.\n- **Verifikation:** mit kleinen echten Quoten abgeschlossene und aktive Runs\n  mischen; Retention gibt nur bestätigte Historie frei, Replay von alten\n  Zustellungen führt zu keiner erneuten externen Aktion. Policyentscheidung\n  und Umsetzung gehören zum späteren Reparatur-/Betriebsauftrag.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Weitere ursprüngliche Retention-Consumer und Quotenpolitik bearbeiten; Buster/derived-source/v2/Discord/externalisierte oder ungewisse Historien nicht aus begrenzten Projektionen ableiten. Originalbelege und Native-Gates erhalten.",
+      "next_action": "Bounded derived-source Source588de8/Review7885 auf frischen MAIN-Head abgleichen und betroffene Tests wiederholen. Danach v2/Discord, externalisierte oder ungewisse Historien, Shared-Blob-/Historyownership, Record-Count-Freigabe und gemischte aktive/abgeschlossene Kleinquoten bearbeiten; native Providerbelege bleiben offen.",
       "related_findings": [
         "PCR-PRISM-WORKER-001",
         "PCR-TSTORE-001"
@@ -3304,7 +3322,7 @@
       "decision_notes": [
         "D01/D07: keine automatische 30-Tage-Löschung für Logs auf Disk/Git. Manuelle Bereinigung, Kapazitätsdiagnose und geschützte aktive Recoverydaten definieren; Clawdeck sammelt Logs."
       ],
-      "remaining_work": "Bounded Admission-/Attempt-/Dispatch-/JSON-v1-Operatorprojektion geprüft; breitere Store-/Blob-/History-Lebensdauer und ursprüngliche native Anforderungen bleiben offen."
+      "remaining_work": "Bounded Admission-/Attempt-/Dispatch-/JSON-v1-Operatorprojektion geprüft; zusätzlicher derived-source Slice588de8 ist unabhängig7885 akzeptiert, aber noch nicht integriert. Fixture endet ehrlich mit TEST_PROVIDER_SANDBOX_NOT_BUILT und nativeHttpRequests:0. Breitere v2/Discord-/Store-/Blob-/History-/Record-Lebensdauer, gemischte Kleinquoten und ursprüngliche native Anforderungen bleiben offen."
     },
     {
       "id": "PCR-OPERATOR-001",
@@ -3497,6 +3515,10 @@
         {
           "report": "implementation/run6-coupled-root-review.md",
           "summary": "Gekoppelte Product-/Controller-/Chart-Implementierung nach unabhängiger Prüfung und echten nativen CRD/CEL/CAS-/signierten Controller-Tests integriert; Root wiederholt Native, Product21(17verschiedene), Chart6 und Typprüfung erfolgreich. Echte Anwendung/Tailnet/Empfängerzustellung und menschliche Gesamtacceptance bleiben offen."
+        },
+        {
+          "report": "implementation/run27-human-extension-independent-review.md",
+          "summary": "Docs-only Source2c2/Reviewba67 korrigiert unabhängig die veraltete Ledger-Aussage: endlicher authentifizierter Accept/Extend-Writer ist in original Control integriert. Aktuell16/16 lokale Originalkomponenten, Typprüfung und fokussierter Lint bestanden. Realweltgates bleiben offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -3541,6 +3563,10 @@
         {
           "report": "implementation/run6-coupled-root-review.md",
           "summary": "Gekoppelte Product-/Controller-/Chart-Implementierung nach unabhängiger Prüfung und echten nativen CRD/CEL/CAS-/signierten Controller-Tests integriert; Root wiederholt Native, Product21(17verschiedene), Chart6 und Typprüfung erfolgreich. Echte Anwendung/Tailnet/Empfängerzustellung und menschliche Gesamtacceptance bleiben offen."
+        },
+        {
+          "report": "implementation/run27-human-extension-independent-review.md",
+          "summary": "Docs-only Source2c2/Reviewba67 korrigiert unabhängig die veraltete Ledger-Aussage: app-auth-gebundener Accept/Extend-Writer ist in original Control integriert. Aktuell16/16 lokale Originalkomponenten, Typprüfung und fokussierter Lint bestanden. Realer Login/Tailnet/Empfänger/Human bleibt offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",

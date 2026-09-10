@@ -9,8 +9,8 @@
     {
       "id": "PCR-SDK-001",
       "status_at_checkpoint": "in Bearbeitung",
-      "evidence": "resume/run-20260910t050054.md",
-      "next_action": "Atomare Delivery-v3-Implementierung gemäß unabhängig freigegebenem Design569454/90dd auf geprüftem Semantic-Source15f6 fortsetzen und separat prüfen. Semantic-Source allein nicht integrieren: echter registrierter Semantic-Producer, vollständige History/Recovery/Summary- und Delivery-Nativegates bleiben offen. Gesperrte Helperaktion nicht umleiten."
+      "evidence": "resume/run-20260910t080401.md",
+      "next_action": "Delivery-Source0afc behebt den 357a/C6b6-Harnessfehler; Reviewa0ad akzeptiert den bounded Source, verwirft aber die Gesamtimplementierung als unvollständig. Semantic15f6 allein nicht integrieren; native SIGKILL/Prefix/Cancel/Replay, verbleibende Consumernegative einschließlich mediaType/ambiguous decision/real import-store failure, echter Semantic-Producer, Go/Chromium, History/Recovery/Summary und Full-Repo-Gates bleiben offen."
     },
     {
       "id": "PCR-BUSTER-ENGINE-004",
@@ -141,14 +141,14 @@
     {
       "id": "PCR-PRISM-WORKER-002",
       "status_at_checkpoint": "implementiert / unvollständig",
-      "evidence": "implementation/worker-terminal-resource-measurement.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Terminale Core-Messung nach Cleanup/Evidence/Finalize und monotone verfügbare Beobachtungen behoben; vollständige Child-/Capability-/Browserownership bleibt Codearbeit."
+      "evidence": "resume/run-20260910t080401.md",
+      "next_action": "Unabhängig bestätigten echten Parallel-CPU-RED798619/00f0 erhalten. Generischen Core-Attempt-Owner plus Prism-Ausführungshost atomar implementieren, sobald delegierte schreibbare Cgroup v2 und gepinntes Chromium verfügbar sind; unveränderten RED, Parallel-/Kindprozessattribution und native Browserabnahme ausführen. Finding bleibt offen."
     },
     {
       "id": "PCR-PRISM-WORKER-003",
       "status_at_checkpoint": "implementiert / unvollständig",
-      "evidence": "implementation/worker-terminal-resource-measurement.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Zusätzliche Completionmessphase vorhanden; tatsächliche Cancel-/Browsernacharbeit und gesamtes Attempt-CPUfenster nicht vollständig nachgewiesen."
+      "evidence": "resume/run-20260910t080401.md",
+      "next_action": "Unabhängig bestätigten RED-/Designcheckpoint798619/00f0 erhalten. Generischen Core-Attempt-Owner plus Prism-Ausführungshost atomar implementieren, sobald delegierte schreibbare Cgroup v2 und gepinntes Chromium verfügbar sind; echte Capture-/Upload-Cancellation, Reaping, keine späten Writes und vollständige Attempt-Ressourcenattribution nachweisen. Finding bleibt offen."
     },
     {
       "id": "PCR-PRISM-ENGINE-001",
@@ -171,8 +171,8 @@
     {
       "id": "PCR-OBS-002",
       "status_at_checkpoint": "implementiert / unvollständig",
-      "evidence": "implementation/run9-operator-root-review.md",
-      "next_action": "Gemeinsamer Reader und begrenzte Dispatch-/Operatorprojektion unabhängig geprüft; Root27/27 auf SDK/Prism. Weitere Retention bleibt offen, insbesondere unsupported derived-source/v2/Discord und native Consumerbelege."
+      "evidence": "resume/run-20260910t080401.md",
+      "next_action": "Bounded derived-source Dispatch-Source588de8 wurde unabhängig7885 akzeptiert, ist aber nicht integriert und schließt PCR-OBS-002 nicht. Auf frischen MAIN-Head abgleichen und Tests wiederholen; danach verbleiben v2/Discord, externalisierte/ungewisse Historien, Shared-Blob-/Historyownership, Record-Count-Freigabe und gemischte aktive/abgeschlossene Kleinquoten. Buster bleibt TEST_PROVIDER_SANDBOX_NOT_BUILT mit nativeHttpRequests:0."
     },
     {
       "id": "PCR-OPERATOR-001",
@@ -183,14 +183,14 @@
     {
       "id": "F-T14-01",
       "status_at_checkpoint": "implementiert / unvollständig",
-      "evidence": "implementation/wave47-product-gates.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Corrected the missing production package for existing retained-demo ownership/Ready implementation. | Original requested end-to-end fixture plan, post-plan Tailnet reachability and exact-generation release/TTL proof unavailable. Human extension authorizer is actual missing code/integration, not merely an unrun test."
+      "evidence": "resume/run-20260910t080401.md",
+      "next_action": "Source2c2/Reviewba67 independently reconcile the stale human-extension-authorizer claim: original Control contains the finite authenticated acceptance/extension writer and current local original-component gates pass. Keep the finding open until the full pipeline proves real app login, allowed Tailnet operator access/feedback, denial of another user and old generation, actual private recipient delivery, and exact-generation release/TTL."
     },
     {
       "id": "F-T14-02",
       "status_at_checkpoint": "implementiert / unvollständig",
-      "evidence": "implementation/wave47-product-gates.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Corrected owning role inclusion of both demo handoff and app-auth provider; actual bundled imports resolve their dependencies. | Real application login, private operator reception, other-user/old-generation denial and authenticated acceptance/extension remain unproved or unimplemented."
+      "evidence": "resume/run-20260910t080401.md",
+      "next_action": "Source2c2/Reviewba67 independently reconcile the integrated original Control finite authenticated acceptance/extension writer; current session, allowlist, Origin/CSRF, signature, persistence, recovery and HTTPS-client gates pass. Keep the finding open until the full pipeline proves real app-secret login, private operator reception, allowed Tailnet feedback, other-user/old-generation rejection and exact-generation lifecycle behavior."
     },
     {
       "id": "IFR-08-001",

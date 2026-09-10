@@ -9,7 +9,7 @@
     "source": "96236ba725bc4d57f0543f1fc0e76afa97f25de7",
     "status": "independently-reviewed-root-tested-in-this-integration"
   },
-  "fresh_remote_base": "e644a79fddd4d4d686fbd351b6edaec5575caf57",
+  "fresh_remote_base": "1ba445125fbacfa4f0344f8bf38e68f8f0686eff",
   "frozen_baseline": "c38779c71bb92bc15c3fcb89930348e5417aa475",
   "frozen_count": 47,
   "incomplete_packages": [
@@ -210,15 +210,49 @@
     },
     {
       "package": "delivery-manifest-identity-design",
-      "status": "registered-red-independently-reproduced-final-v3-design-approved-implementation-in-progress",
+      "status": "registered-red-independently-reproduced-final-v3-design-approved-latest-bounded-source-accepted-overall-incomplete",
       "design": "13f0aa8262a20c31aac25a62b63e3aa018155768",
       "branch": "fix/resume-47-run17-delivery-design-f33bf39",
-      "next_action": "Implement approved R3 as one public-contract/Summary/compiler/recovery/reader package on semantic source15f6; preserve v2 reader portable-tag domain and exact old effects. Independent exact-source tests required. Registered v3 en/cs/da/tr/sv, real import-store boundary, disk replay/SIGKILL, package/discovery/pin/full regressions remain open. No provider/deployment claim.",
+      "next_action": "Bounded source0afc is independently accepted by reviewa0ad, but overall implementation is rejected as incomplete. Implement/review native SIGKILL/prefix/cancel/replay and remaining consumer negatives including mediaType, ambiguous decision and real import-store failure; full repo/Go/Chromium remain open. Reconcile only after the complete package passes exact-source review.",
       "design_review": "98d8f41abf0d822d94f1d854326a252e5dfa25ac",
       "registered_red": "f3ddec16b5a1c2787e956b5bc9d1556281660831",
       "registered_red_review": "45fff05281c253dd27ffc52cca207c73104ae36d",
       "final_design": "569454a94ef4e3d77cde1628e868a2fd15b22ba7",
-      "final_design_review": "90dd3b25c9c30a6a487600bc60ba844f200cefb6"
+      "final_design_review": "90dd3b25c9c30a6a487600bc60ba844f200cefb6",
+      "rejected_source_checkpoint": "a7b3bdbd7859c0ab1e293723c41edfe9dacf4a8a",
+      "rejected_source_review": "6e6c22f2fb8adc5d491f2fc4f735b69eebcdde0a",
+      "second_rejected_source_checkpoint": "bfdc9efd2c77211c37650c78ba223798e3607397",
+      "second_rejected_source_review": "1eaadbfa5014bd4849f75f3abf92ff72fd9059e6",
+      "third_source_checkpoint": "bf686cc73f6fe5f0d83cb4da34886736ca15c90b",
+      "fourth_rejected_source_checkpoint": "357a0f8daaaae5afd1f65b37118b303227c04687",
+      "fourth_rejected_source_review": "c6b6e0adcdd4bc436e8507805a95adbcf38d7ba0",
+      "current_source_checkpoint": "0afc7c5133224c8d341015cc02697a7c594f0c21",
+      "current_source_parent": "15f6a808ed1666c3b7a2a3909749e3d4ee377904",
+      "current_source_review": "a0ad748bb20599c2de7663aa49bdccc79b6ebbee"
+    },
+    {
+      "package": "prism-worker-resource-attribution-red",
+      "status": "genuine-red-and-bounded-design-independently-accepted-findings-open",
+      "source": "798619142267434fdedc63d491d2bb4d8044272c",
+      "review": "00f0a38b4946273cc2b5a6f08f5f4f2951b17123",
+      "source_parent": "1ba445125fbacfa4f0344f8bf38e68f8f0686eff",
+      "next_action": "Implement the documented generic Core attempt owner plus Prism execution host only when a writable delegated cgroup v2 scope and the repository-pinned Chromium are available. Preserve the stable 0/1 concurrent-attribution RED and unchanged 37/37 positive suite; run native concurrency, child accounting, browser cancellation/reaping and independent review. PCR-PRISM-WORKER-002/-003 remain open."
+    },
+    {
+      "package": "nova-dispatch-derived-source-projection",
+      "status": "bounded-source-slice-independently-accepted-integration-held-finding-open",
+      "source": "588de8d5764e54980069a19951e3d00171b34f44",
+      "review": "7885f0dc5f316a9603d7088c82cc26f925461801",
+      "source_parent": "1ba445125fbacfa4f0344f8bf38e68f8f0686eff",
+      "next_action": "Reconcile this bounded derived-source slice on a fresh MAIN head before integration and repeat affected tests. PCR-OBS-002 still requires v2/Discord delivery, externalized or uncertain histories, shared blob/history ownership, record-count release and mixed active/completed small-quota acceptance. The fixture reports TEST_PROVIDER_SANDBOX_NOT_BUILT and nativeHttpRequests:0; do not claim native provider success."
+    },
+    {
+      "package": "f-t14-human-extension-reconciliation",
+      "status": "docs-only-current-authority-reconciliation-independently-accepted-findings-open",
+      "source": "2c2ec2afa30696fa364f87efea91402c5bab99a7",
+      "source_parent": "1ba445125fbacfa4f0344f8bf38e68f8f0686eff",
+      "review": "ba670f9d64cec1060fc674d0f9867ea0e278127c",
+      "next_action": "Reviewed docs-only reconciliation proves the older ledger claim that the finite authenticated Accept/Extend writer is missing is stale. Current original Control Product components pass16/16, Prism typecheck and focused lint. F-T14-01/-02 remain open until an authorized full pipeline proves real app login, Tailnet operator/other-user/old-generation behavior, private recipient delivery, human feedback and exact-generation release/TTL."
     },
     {
       "package": "t15-configured-writer-prerequisite",
@@ -237,7 +271,7 @@
   "last_source_integration": "ff55ab962d16dc0eba5ee6aafa2150abaa723fb5",
   "overall_complete": false,
   "rule": "Backup is not acceptance. Restore only verified frozen commits into a new checkout, never another writer's checkout or dirty work based on an old heartbeat. Exact-parent ff-only integration after review/tests; no CI/deployment.",
-  "run_id": "20260910t050054",
+  "run_id": "20260910t080401",
   "schema_version": 1,
   "verified_count": 8
 }

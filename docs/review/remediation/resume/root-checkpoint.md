@@ -2,7 +2,7 @@
 
 Frozen scope remains exactly 47 IDs. Eight now satisfy their original finding
 requirements; 39 remain incomplete. Overall completion is false. The latest
-continuation is in `run-20260910t050054.md`; current remote package refs are
+continuation is in `run-20260910t080401.md`; current remote package refs are
 listed in `run5-active-packages.json`. Reviewed integration and evidence
 remain in `run-20260909t2146.md` and `run-20260909t2114.md`.
 
@@ -20,9 +20,43 @@ preserved at23e14883. Separate design e07c5c and independent be25cf are approved
 final semantic source15f6 and corrected independent bounded review5380 are saved;
 source integration remains held for genuine native semantic phases. Registered
 delivery RED f3d was independently reproduced45fff; final v3 design569454 was
-independently approved90dd and its coupled implementation is in progress.
-Configured T15 Writer proof remains blocked by missing real configuration. Resume refs from
-the current inventory; no global SDK closure.
+independently approved90dd. Delivery candidate a7b3 was rejected by review6e6c;
+expanded source bfdc was explicitly rejected by exact review1eaa. Latest source
+357a refreshes Inventory49/67 and Knip config50, rejects the legacy selector
+before reads, adds reopened FileNovaGateImportStore success across en/cs/da/tr/sv
+and preserves a separate honest missing-import phase. Exact review c6b6 rejects
+357a as incomplete because the archived CLI harness leaves `progress.json` and
+source-preflight fails `REVIEW_SOURCE_DIRTY`. Latest source0afc fixes that harness;
+its independent current contract/compiler/v2/no-read/5-locale/missing-import,
+9 outer-ref,9 body/competing and archived-CLI matrices are green. Reviewa0ad
+accepts the bounded source but rejects the overall implementation as incomplete.
+Native SIGKILL/prefix/cancel/replay, remaining consumer negatives, full repo,
+Go and Chromium stay open. Configured T15 Writer proof remains blocked
+by missing real configuration. Resume refs from the current inventory; no global
+SDK closure.
+
+The Prism resource package at798619 was independently reviewed at00f0 and is
+accepted only as a genuine RED plus bounded design. The unchanged positive suite
+passes37/37, while the concurrent-attribution RED is stable0/1. Native browser
+checks stop0/2 before their assertions because pinned Chromium is absent; cgroup
+v2 is read-only and not delegated. PCR-PRISM-WORKER-002/-003 remain open.
+
+The bounded derived-source dispatch-retention source588de8 is independently
+accepted by7885: current projection11/11, unchanged parent10/10, focused1/1,
+retained authority4/4 and Nova typecheck pass without skips. It is not integrated
+and does not close PCR-OBS-002. The fixture reports
+`TEST_PROVIDER_SANDBOX_NOT_BUILT` and `nativeHttpRequests:0`; v2/Discord,
+uncertain histories, shared blob/history ownership, record-count release and
+mixed-quota acceptance remain open.
+
+F-T14 reconciliation source2c2, independently accepted by reviewba67, changes
+documentation/evidence only and corrects
+the stale ledger claim that the human extension authorizer is missing. Current
+original Control Product components pass16/16 plus Prism typecheck and focused
+lint. F-T14-01/-02 stay open because
+real application login, Tailnet identities/routing, recipient delivery, human
+feedback and exact-generation release/TTL were not executed and are outside the
+authorized boundary.
 
 ## Independently integrated work
 

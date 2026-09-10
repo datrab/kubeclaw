@@ -1,0 +1,24 @@
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (1744.566874ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (254.22976ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (2411.155003ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (2190.411412ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (1562.336512ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (563.260871ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (2442.052129ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (1921.350862ms)
+✔ independent composed startup rejects a genuine wrong key type and disabled authority does not read its missing key (2109.451614ms)
+✔ independent original composed restart rejects prior session authority before recording and preserves fresh authorized intent (2161.176323ms)
+✔ original HTTPS client validates actual TLS, rereads rotated token, and rejects HTTP errors and oversized responses (1096.362038ms)
+✔ real session issuer, explicit operator policy, origin and CSRF bind the signer (3.470908ms)
+✔ real HTTP authorization persists signed intent before failed transport and recovers identical bytes after durable database reopen (2509.841656ms)
+✔ SQL receipt replay compares nested signature bytes and preserves append-only history (1489.719763ms)
+✔ receipt contract preserves Go nanosecond expiry and rejects changed nested envelope (1332.211136ms)
+✔ Studio preserves every Control Set-Cookie header (1.66353ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24832.175767
