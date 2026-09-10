@@ -1,0 +1,31 @@
+Required archived historical CLI diagnostic on exact candidate
+candidate=357a0f8daaaae5afd1f65b37118b303227c04687
+
+$ node docs/review/evidence/run5-adapter-legacy-cli-diagnostic.mjs <frozen357>
+exit=1
+
+Observed historical run state:
+source-preflight status=blocked
+error=REVIEW_SOURCE_DIRTY
+assertion expected=succeeded actual=blocked
+
+An independent PATH wrapper around the unchanged git executable captured the
+exact command result used by RevisionReader.freezeHead(requireClean=true):
+
+TRACE_GIT_STATUS_ROOT=<temporary>/repository
+?? progress.json
+
+Cause: current `check-project-compiler.mts` calls `checkLegacyProjectImport`
+before the archived diagnostic's injected historical run.
+`checkLegacyProjectImport` writes `<temporary>/repository/progress.json` and
+does not remove or commit it. The historical source-preflight then correctly
+rejects the dirty repository. The same failure reproduced on the frozen
+semantic baseline checkout, so this is not a Delivery production regression;
+it is a current-checkout reproducibility regression in the required archived
+probe/harness. The historical behavior was not weakened or bypassed.
+
+Required next action: correct the checked-in diagnostic boundary or clean only
+the harness-owned progress.json before the historical run, retain the original
+source-preflight clean check, and rerun the complete archived CLI diagnostic on
+the next exact frozen candidate.
+
