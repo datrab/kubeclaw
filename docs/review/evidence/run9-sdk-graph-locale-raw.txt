@@ -1,0 +1,7 @@
+Exit code: 0
+{"locale":"en-US","digest":"sha256:c92e9c7688f3351e6b17ba8e1da3a5feba9e9098e7a9add81bdc45fe612f0ae2","graphDigest":"sha256:49b9b17b2fd3ceba99ccd5d807163823287f6f836eac3961c79ae22769da1863","schema":"execution-graph-snapshot.v3"}
+{"locale":"da-DK","digest":"sha256:c92e9c7688f3351e6b17ba8e1da3a5feba9e9098e7a9add81bdc45fe612f0ae2","graphDigest":"sha256:49b9b17b2fd3ceba99ccd5d807163823287f6f836eac3961c79ae22769da1863","schema":"execution-graph-snapshot.v3"}
+{"locale":"en-US","digest":"sha256:376a2c0b9ad0f6039dc7545586c0236e7fef120c14076ed71f314211b1846cbf","nodes":["aa","az"]}
+{"locale":"da-DK","digest":"sha256:3bcd9ef63ceb8fd7c202d970246569c122c7934c995727f891cecf1c9368c028","nodes":["az","aa"]}
+{"originalContractAccepted":true,"currentVersionReopens":true,"legacyVersionLocaleDependent":true,"controlledVersioningAlreadyPresent":true,"allProviderExecution":false,"productionFix":false}
+
