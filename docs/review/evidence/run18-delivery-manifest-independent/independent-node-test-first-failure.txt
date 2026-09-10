@@ -1,0 +1,30 @@
+✖ independent registered Summary persistence and original downstream locale boundary (10276.134705ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10417.613167
+
+✖ failing tests:
+
+test at tests/verification/reliability/delivery-manifest-stage-boundary-independent.test.mjs:16:1
+✖ independent registered Summary persistence and original downstream locale boundary (10276.134705ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  4 !== 2
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run18-delivery-manifest-review/tests/verification/reliability/delivery-manifest-stage-boundary-independent.test.mjs:54:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 4,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

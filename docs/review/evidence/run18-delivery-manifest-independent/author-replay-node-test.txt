@@ -1,0 +1,34 @@
+{"phase":"produce","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"produce\",\"locale\":\"en-US\",\"status\":\"succeeded\",\"manifestDigest\":\"sha256:1f246742fbc7c1c1b14ea7590c992be4d9efb28273d666b8962b79641647556e\",\"artifactDigest\":\"sha256:d3c66a1e2b457931cd204c59afa4b545d18c4a58d99a14fa2302bb8f1850569c\",\"manifestBytes\":6608,\"summaryWriteKey\":\"run:delivery-manifest-stage-boundary:project-summary:1:10\"}\n","stderr":""}
+{"phase":"consume-en","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-en\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-portable-en","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-portable-en\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"error\":\"NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED\",\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-cs","locale":"cs_CZ.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-cs\",\"locale\":\"cs-CZ\",\"outcome\":\"blocked\",\"error\":\"DEMO_EVIDENCE_MANIFEST_INVALID\",\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+✖ registered Summary v2 stored output is accepted by the original downstream manifest reader across locales (10018.643909ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10160.29103
+
+✖ failing tests:
+
+test at tests/verification/reliability/delivery-manifest-stage-boundary.test.mjs:12:1
+✖ registered Summary v2 stored output is accepted by the original downstream manifest reader across locales (10018.643909ms)
+  AssertionError [ERR_ASSERTION]: the identical stored v2 manifest must cross the original downstream manifest-integrity boundary in another locale
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run18-delivery-manifest-review/tests/verification/reliability/delivery-manifest-stage-boundary.test.mjs:47:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
