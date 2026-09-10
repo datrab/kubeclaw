@@ -1,0 +1,8 @@
+Actual root-reported helper boundary independently reproduced by author on source4685b4e before editing.
+Command: node --input-type=module -e 'import {reviewCacheProfileFromContext} from "@kubeclaw/plugin-sdk";let calls=0;const value=new Proxy({}, {getOwnPropertyDescriptor(){calls++;return undefined;}});let outcome;try {outcome=reviewCacheProfileFromContext(value)??"legacy-accepted";}catch(e){outcome=e.message;}console.log(JSON.stringify({calls,outcome}));'
+{"calls":1,"outcome":"legacy-accepted"}
+
+This is a direct admission counterexample, not a native provider/model claim.
+Correction89c4fa4 moves original portableJson(contract) validation before any
+Object.hasOwn/field access. New absent/present Proxy/getter and genuine context
+tests must pass independently before approval transfers to the corrected source.

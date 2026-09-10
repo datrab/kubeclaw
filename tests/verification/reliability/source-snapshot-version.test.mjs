@@ -37,8 +37,9 @@ if(process.argv[2]==='--child'){
    const writer=JSON.parse(child('write',root,'en_US.UTF-8')),reader=JSON.parse(child('read',root,'sv_SE.UTF-8'));
    assert.equal(writer.digest,reader.digest);assert.equal(writer.graph,reader.graph);assert.notEqual(writer.locale,reader.locale);
    const saved=fs.readFileSync(path.join(root,'run-snapshot.json'),'utf8'),snapshot=JSON.parse(saved);
-   assert.equal(snapshot.schemaVersion,'run-snapshot.v3');assert.equal(snapshot.graph.schemaVersion,'execution-graph-snapshot.v3');
+   assert.equal(snapshot.schemaVersion,'run-snapshot.v4');assert.equal(snapshot.graph.schemaVersion,'execution-graph-snapshot.v3');
    assert.deepEqual(snapshot.runtimeDispatchProfile,{schemaVersion:'runtime-dispatch-profile.v1',encoding:'json-utf16-v1'});
+   assert.deepEqual(snapshot.reviewCacheProfile,{schemaVersion:'review-cache-profile.v1',recordVersion:'review-content-cache.v2',encoding:'json-utf16-v1'});
    for(const changed of [{...snapshot,schemaVersion:'run-snapshot.v99'},{...snapshot,graph:{...snapshot.graph,schemaVersion:'execution-graph-snapshot.v99'}}]){
     fs.writeFileSync(path.join(root,'run-snapshot.json'),JSON.stringify(changed));assert.throws(()=>readRunSnapshot(root),/INTEGRITY_INVALID/);
    }

@@ -1,0 +1,1 @@
+{"id":"test.review-cache","apiVersion":"pipeline-plugin-v2","packageVersion":"1.0.0","stages":[{"id":"cache","type":"test.review-cache","module":"stage.mjs","export":"execute","requiredCapabilities":["artifacts.write","artifacts.read"],"configSchema":"config.schema.json","inputSchema":"input.schema.json","resultSchema":"result.schema.json"}],"observers":[],"adapters":[]}

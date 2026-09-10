@@ -38,16 +38,19 @@ function platform(root,origin,kind){
     orchestratorIssuerId:'nova',administrativeDecisionIssuers:[]};
 }
 function archivedCore(root,version){
-  if(version==='v3')return path.join(source,'skills/nova/core');
+  if(version==='v4')return path.join(source,'skills/nova/core');
   const target=path.join(root,'archived-core');
   if(!fs.existsSync(target)){
     fs.cpSync(path.join(source,'skills/nova/core'),target,{recursive:true,filter:file=>!file.split(path.sep).includes('node_modules')});
     fs.symlinkSync(path.join(source,'node_modules'),path.join(target,'node_modules'),'dir');
     const old=version==='v1'?path.join(fixtures,'legacy-source-producer/core/execution/engine-snapshots.ts.txt'):
-      path.join(fixtures,'legacy-transport-profile/engine-snapshots-v2.ts.txt');
-    const manifest=JSON.parse(fs.readFileSync(path.join(fixtures,version==='v1'?'legacy-source-producer/provenance.json':'legacy-transport-profile/provenance.json'),'utf8'));
+      version==='v2'?path.join(fixtures,'legacy-transport-profile/engine-snapshots-v2.ts.txt'):
+      path.join(fixtures,'legacy-review-cache/engine-snapshots.ts.txt');
+    const manifest=JSON.parse(fs.readFileSync(path.join(fixtures,version==='v1'?'legacy-source-producer/provenance.json':
+      version==='v2'?'legacy-transport-profile/provenance.json':'legacy-review-cache/provenance.json'),'utf8'));
     const verify=(file,sha)=>{const bytes=fs.readFileSync(file);assert.equal(crypto.createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex'),sha);};
-    verify(old,version==='v1'?manifest.files.find(x=>x.archivePath==='core/execution/engine-snapshots.ts.txt').gitBlobSha1:manifest.gitBlobSha1);
+    verify(old,version==='v1'?manifest.files.find(x=>x.archivePath==='core/execution/engine-snapshots.ts.txt').gitBlobSha1:
+      version==='v2'?manifest.gitBlobSha1:manifest.files.find(x=>x.archivePath==='engine-snapshots.ts.txt').gitBlobSha1);
     fs.copyFileSync(old,path.join(target,'execution/engine-snapshots.ts'));
     if(version==='v1'){
       const graph=path.join(fixtures,'legacy-source-producer/core/execution/graph.ts.txt');
@@ -121,7 +124,7 @@ if(process.argv[2]==='--child'){
     const journal=new core.FileEffectJournal(path.join(location,'effects.jsonl'));
     const request=(await journal.recoveryEntries()).find(x=>x.request.capability==='runtime.dispatch')?.request;
     assert.ok(request,'actual original stage dispatched');
-    assert.equal(Object.hasOwn(request,'runtimeDispatchProfile'),version==='v3');
+    assert.equal(Object.hasOwn(request,'runtimeDispatchProfile'),['v3','v4'].includes(version));
     assert.equal(Object.hasOwn(request.payload,'runtimeDispatchProfile'),false);
     process.stdout.write(JSON.stringify({result,error,snapshotVersion:snapshot.schemaVersion,request,location}));
   }else{
@@ -133,7 +136,7 @@ if(process.argv[2]==='--child'){
       const ascii={...definition,stages:definition.stages.map(s=>({...s,input:{task:'Inspect.',architecture:{a:1,z:2}}}))};
       old.writeRunSnapshots(location,old.graphSnapshot(ascii),{});
     }
-    const snapshot=snapshots.readRunSnapshot(location),profile=snapshot.schemaVersion==='run-snapshot.v3'?snapshot.runtimeDispatchProfile:undefined;
+    const snapshot=snapshots.readRunSnapshot(location),profile=['run-snapshot.v3','run-snapshot.v4'].includes(snapshot.schemaVersion)?snapshot.runtimeDispatchProfile:undefined;
     const prepared=await prepareRuntime(p,definition),journalPath=path.join(root,localeJournal);
     const audit=Object.fromEntries(['requested','accepted','completed'].map(name=>[name,request=>{
       if(name===boundary&&request.capability==='runtime.dispatch'){
@@ -149,7 +152,7 @@ if(process.argv[2]==='--child'){
       {operation:'dispatch',resource:{type:'runtime.agent',canonicalId:'agent'},payload,...(profile?{runtimeDispatchProfile:profile}:{})},new AbortController().signal);}
     catch(e){error=e.message;}finally{await runtime.shutdown();}
     const journal=new core.FileEffectJournal(journalPath),request=await journal.request(key),receipt=await journal.receipt(key);
-    assert.equal(Object.hasOwn(request,'runtimeDispatchProfile'),version==='v3');
+    assert.equal(Object.hasOwn(request,'runtimeDispatchProfile'),['v3','v4'].includes(version));
     process.stdout.write(JSON.stringify({result,error,request,receipt,snapshotVersion:snapshot.schemaVersion}));
   }
 }else{
@@ -177,7 +180,7 @@ if(process.argv[2]==='--child'){
     }
     return {root,requests,child};
   }
-  for(const version of ['v1','v2','v3'])test(`actual ${version} run creation carries frozen transport choice; terminal reopen preserves prefix`,async t=>{
+  for(const version of ['v1','v2','v3','v4'])test(`actual ${version} run creation carries frozen transport choice; terminal reopen preserves prefix`,async t=>{
     const f=await fixture(t),directory=path.join(f.root,'pipeline');
     const first=await f.child(directory,version,'pipeline');assert.equal(first.result.status,'blocked');assert.equal(f.requests.length,1);
     assert.equal(first.snapshotVersion,`run-snapshot.${version}`);assert.equal(f.requests[0].body.tool,'sessions_spawn');
@@ -186,7 +189,7 @@ if(process.argv[2]==='--child'){
     assert.match(reopened.error,/RECOVERY_RUN_TERMINAL/);assert.equal(f.requests.length,1);assert.deepEqual(fs.readFileSync(file),prefix);
     t.diagnostic(JSON.stringify({version,nativeGateway:false,actualPostCount:f.requests.length,requestProfile:first.request.runtimeDispatchProfile??'legacy',reopen:reopened.error}));
   });
-  for(const version of ['v1','v2','v3'])for(const boundary of ['requested','accepted','completed'])test(`original ${version} snapshot + registered HTTP ${boundary} SIGKILL prefix resumes without retagging`,async t=>{
+  for(const version of ['v1','v2','v3','v4'])for(const boundary of ['requested','accepted','completed'])test(`original ${version} snapshot + registered HTTP ${boundary} SIGKILL prefix resumes without retagging`,async t=>{
     const f=await fixture(t),directory=path.join(f.root,'prefix');
     await f.child(directory,version,'prefix',boundary);assert.equal(f.requests.length,boundary==='completed'?1:0);
     const file=path.join(directory,'effects.jsonl'),prefix=fs.readFileSync(file);
@@ -201,14 +204,14 @@ if(process.argv[2]==='--child'){
     }else{assert.deepEqual(result.result,{received:true});assert.equal(f.requests.length,1);if(boundary==='completed')assert.deepEqual(fs.readFileSync(file),prefix);}
     assert.equal(result.snapshotVersion,`run-snapshot.${version}`);
   });
-  for(const version of ['v2','v3'])test(`declared ${version} ACP transport profile owns locale selection without claiming a Gateway`,async t=>{
+  for(const version of ['v2','v3','v4'])test(`declared ${version} ACP transport profile owns locale selection without claiming a Gateway`,async t=>{
     const f=await fixture(t),directory=path.join(f.root,'locale');
     const en=await f.child(directory,version,'transport','none','en_US.UTF-8','en.jsonl');
     const sv=await f.child(directory,version,'transport','none','sv_SE.UTF-8','sv.jsonl');
     assert.equal(f.requests.length,2);assert.equal(en.request.effectId,sv.request.effectId);
     const [left,right]=f.requests.map(x=>x.body);
     assert.equal(left.tool,'sessions_spawn');assert.equal(right.tool,'sessions_spawn');
-    if(version==='v3'){
+    if(['v3','v4'].includes(version)){
       assert.equal(left.idempotencyKey,right.idempotencyKey);assert.equal(left.args.label,right.args.label);assert.equal(left.args.task,right.args.task);
       assert.match(left.idempotencyKey,/json-utf16-v1/);
     }else{
@@ -217,7 +220,7 @@ if(process.argv[2]==='--child'){
     const file=path.join(directory,'en.jsonl'),prefix=fs.readFileSync(file);
     const replay=await f.child(directory,version,'transport','none','sv_SE.UTF-8','en.jsonl');
     assert.match(replay.error,/EFFECT_OUTCOME_UNRESOLVED/);assert.equal(f.requests.length,2);assert.deepEqual(fs.readFileSync(file),prefix);
-    t.diagnostic(JSON.stringify({version,nativeGateway:false,localeStable:version==='v3',transportKeys:[left.idempotencyKey,right.idempotencyKey],noRepeat:true}));
+    t.diagnostic(JSON.stringify({version,nativeGateway:false,localeStable:['v3','v4'].includes(version),transportKeys:[left.idempotencyKey,right.idempotencyKey],noRepeat:true}));
   });
   for(const helper of ['helper-review','helper-verification'])test(`original ${helper} preserves invoke-only API and rejects invalid present profile before real HTTP`,async t=>{
     const f=await fixture(t),result=await f.child(path.join(f.root,helper),'v3',helper);

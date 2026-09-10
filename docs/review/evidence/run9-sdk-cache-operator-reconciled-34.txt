@@ -1,0 +1,69 @@
+Source33d39dc332d102f130dc64be15382dd5e13b79db on fresh operator main9c5bdcb21c8fcd50fb38d2a1c4988213db2b3ecb/local e98d2bd9. Cache source unchanged from corrected89c4fa44. Native cache/archive/Storage/Core/HMAC/source snapshot suite; types/generator separately exit0.
+contracts/prism/v1/package.json
+contracts/prism/v1/schemas/baseline-v2.schema.json
+contracts/prism/v1/scripts/generate-validators.mjs
+contracts/prism/v1/src/baseline-archive.ts
+contracts/prism/v1/src/index.ts
+contracts/prism/v1/src/validators.generated.d.mts
+contracts/prism/v1/src/validators.generated.mjs
+contracts/prism/v1/tests/baseline-archive.test.mts
+contracts/prism/v1/tests/fixtures/baseline-input.mts
+contracts/prism/v1/tests/fixtures/baseline-locale.mts
+contracts/prism/v1/tests/fixtures/control-v1-assembly.txt
+scripts/observability-retirement/operator-authority.mjs
+scripts/retire-operator-request.mjs
+skills/common/plugin-runtime/foundation/observability/durable-records.ts
+skills/common/plugins/operator-messaging/src/delivery-projection.ts
+skills/common/plugins/operator-messaging/src/delivery-records.ts
+skills/common/plugins/operator-messaging/tests/live-function.test.ts
+skills/nova/plugins/prism-design/src/archive.ts
+skills/prism/server/control-server.ts
+tests/verification/reliability/fixtures/operator-retention-worker.mjs
+tests/verification/reliability/operator-projection-independent.test.mjs
+tests/verification/reliability/operator-request-projection.test.mjs
+tests/verification/reliability/operator-retention-authority-fixture.test.mjs
+tests/verification/reliability/record-transition-authority-independent.test.mjs
+✔ v1 original cache write requested SIGKILL preserves exact pending operation and authority (3386.109933ms)
+✔ v1 original cache write accepted SIGKILL preserves exact pending operation and authority (2339.336603ms)
+✔ v1 original cache write completed SIGKILL preserves exact pending operation and authority (2278.552915ms)
+✔ v1 original cache read requested SIGKILL preserves exact pending operation and authority (3986.368481ms)
+✔ v1 original cache read accepted SIGKILL preserves exact pending operation and authority (3440.088484ms)
+✔ v1 original cache read completed SIGKILL preserves exact pending operation and authority (4711.771122ms)
+✔ v2 original cache write requested SIGKILL preserves exact pending operation and authority (2497.573604ms)
+✔ v2 original cache write accepted SIGKILL preserves exact pending operation and authority (2343.269839ms)
+✔ v2 original cache write completed SIGKILL preserves exact pending operation and authority (2340.954299ms)
+✔ v2 original cache read requested SIGKILL preserves exact pending operation and authority (3523.089109ms)
+✔ v2 original cache read accepted SIGKILL preserves exact pending operation and authority (3354.137508ms)
+✔ v2 original cache read completed SIGKILL preserves exact pending operation and authority (4422.573563ms)
+✔ v3 original cache write requested SIGKILL preserves exact pending operation and authority (2319.519306ms)
+✔ v3 original cache write accepted SIGKILL preserves exact pending operation and authority (2283.677463ms)
+✔ v3 original cache write completed SIGKILL preserves exact pending operation and authority (2295.730657ms)
+✔ v3 original cache read requested SIGKILL preserves exact pending operation and authority (3542.277811ms)
+✔ v3 original cache read accepted SIGKILL preserves exact pending operation and authority (3748.719468ms)
+✔ v3 original cache read completed SIGKILL preserves exact pending operation and authority (4817.552279ms)
+✔ v4 original cache write requested SIGKILL preserves exact pending operation and authority (2399.106984ms)
+✔ v4 original cache write accepted SIGKILL preserves exact pending operation and authority (2316.643489ms)
+✔ v4 original cache write completed SIGKILL preserves exact pending operation and authority (2297.577416ms)
+✔ v4 original cache read requested SIGKILL preserves exact pending operation and authority (3665.809485ms)
+✔ v4 original cache read accepted SIGKILL preserves exact pending operation and authority (3493.097084ms)
+✔ v4 original cache read completed SIGKILL preserves exact pending operation and authority (3819.31201ms)
+✔ genuine v4 StageExecutor checkpoints and retains same-key v2 refs through en/tr/sv interrupted attempts (4909.341519ms)
+ℹ {"nativeModel":false,"registeredTestStage":true,"attempts":3,"seedExecutions":1,"retainedRefs":2,"digest":"sha256:e64985630cf3fa44a2d2012de6710d53a9838395f3d37adf194b60a04877e1b7"}
+✔ separate finite cache profile has canonical SDK/Foundation parity and never invokes getters (7.928618ms)
+✔ context profile selection rejects absent/present Proxy and getters before any trap or field access (10.390303ms)
+✔ genuine v4 writer requires both profiles; legacy version/profile combinations reject after rehash (30.505706ms)
+✔ v2 owns strict JSON and both inner digests; profile mismatch is an error, never a miss (2.894189ms)
+✔ actual Core/FileJournal/ArtifactStore retains exact same-byte owners and rejects all corrupt/mixed cache candidates (2054.727688ms)
+ℹ {"nativeArtifactStore":true,"mocks":false,"racingWrites":2,"foreignSameBytes":true,"executedMisses":0}
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (829.311784ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1793.987018ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (723.49945ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (37.787146ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 76584.293268

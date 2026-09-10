@@ -22,7 +22,7 @@ const generatedTypes = await compile(wrapper, 'PluginSystemV2', {
   style: { singleQuote: true },
 });
 // The finite transport profile has one canonical source for schema and SDK validation.
-const generated = `${generatedTypes}\nexport const CURRENT_RUNTIME_DISPATCH_PROFILE = Object.freeze(${JSON.stringify(schema.$defs.runtimeDispatchProfile.const)} as const);\n`;
+const generated = `${generatedTypes}\nexport const CURRENT_RUNTIME_DISPATCH_PROFILE = Object.freeze(${JSON.stringify(schema.$defs.runtimeDispatchProfile.const)} as const);\nexport const CURRENT_REVIEW_CACHE_PROFILE = Object.freeze(${JSON.stringify(schema.$defs.reviewCacheProfile.const)} as const);\n`;
 if (check) {
   if (!fs.existsSync(outputPath) || fs.readFileSync(outputPath, 'utf8') !== generated) {
     throw new Error(`${outputPath} is stale; run npm run plugin-system:sdk:generate`);

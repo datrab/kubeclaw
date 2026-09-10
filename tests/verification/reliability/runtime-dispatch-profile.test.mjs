@@ -30,7 +30,7 @@ test('new original snapshot writes bind required profile; rehashed malformed/fut
   try{
     const definition=JSON.parse(fs.readFileSync(new URL('./fixtures/legacy-source-snapshots/ascii/definition.json',import.meta.url),'utf8'));
     writeRunSnapshots(root,graphSnapshot(definition),{policy:{ä:1,z:2}});
-    const snapshot=readRunSnapshot(root);assert.equal(snapshot.schemaVersion,'run-snapshot.v3');
+    const snapshot=readRunSnapshot(root);assert.equal(snapshot.schemaVersion,'run-snapshot.v4');
     assert.deepEqual(snapshot.runtimeDispatchProfile,profile);
     assert.throws(()=>writeRunSnapshots(root,graphSnapshot(definition),{}),/RUN_ALREADY_EXISTS/);
     const {runtimeDispatchProfile:removed,...without}=snapshot;
