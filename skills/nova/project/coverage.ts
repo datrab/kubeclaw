@@ -1,4 +1,4 @@
-import { canonicalJson, sha256Text, type StageDefinition } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, PORTABLE_JSON_ENCODING, sha256Text, type StageDefinition } from '@kubeclaw/plugin-sdk';
 import { assertCoveragePlan, coverageReviewPrefixes, coverageReviewRequirements, gateCoverageDigest,
   validatePipelineTestGateContract, type GateCoverageV1, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
 
@@ -27,7 +27,10 @@ export function testConfiguration(test: ObjectValue) {
     ...(test.agentRole === undefined ? {} : { agentRole: test.agentRole }) };
 }
 
-export function cumulativeStages(project: ObjectValue, modules: readonly ObjectValue[], sourceStageId: string): StageDefinition[] {
+export function cumulativeStages(project: ObjectValue, modules: readonly ObjectValue[], sourceStageId: string,
+  reportArtifactEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING = 'legacy'): StageDefinition[] {
+  // Historical archived compilers call this current helper without a fourth arg.
+  if (reportArtifactEncoding !== 'legacy' && reportArtifactEncoding !== PORTABLE_JSON_ENCODING) throw new Error('PROJECT_REPORT_ENCODING_INVALID');
   const final = project.final;
   const coverage = projectCoverage(project.id, project.baseRevision, modules, final.test, final.integrationRequirements, 'cumulative');
   const plan = final.test.providerPlan.plan as ResolvedTestPlanV1;
@@ -36,7 +39,8 @@ export function cumulativeStages(project: ObjectValue, modules: readonly ObjectV
   const stages: StageDefinition[] = [{ id: 'final-lint', type: 'kubeclaw.lint.full',
     dependsOn: modules.map(module => `test-${module.id}`), config: final.lint,
     input: { workingDirectory: project.repositoryRoot, project: project.id, sourceStageId }, execution }];
-  if (final.review) stages.push({ id: 'final-review', type: 'kubeclaw.decision.review', dependsOn: ['final-lint'], config: final.review,
+  if (final.review) stages.push({ id: 'final-review', type: 'kubeclaw.decision.review', dependsOn: ['final-lint'],
+    config: reportArtifactEncoding === 'legacy' ? final.review : { ...final.review, reportArtifactEncoding },
     input: { task: { id: 'final', statement: 'Review the integrated project against every declared requirement.' },
       revisions: { sourceStageId, base: project.baseRevision },
       scope: { allowedPrefixes: coverageReviewPrefixes(coverage), ownershipPrefixes: coverageReviewPrefixes(coverage) },

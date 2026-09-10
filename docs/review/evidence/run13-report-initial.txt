@@ -1,0 +1,164 @@
+Initial compiler fixture failures
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=false (1368.058757ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=true (1176.805822ms)
+✔ original compiler module-review graph remains recoverable under its existing source version (925.2874ms)
+✖ stored source/report modes are independent and all generated Review nodes agree (319.039186ms)
+✖ saved Review node set, uniform mode, and the entire pinned graph remain authoritative (170.973413ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3143.549128
+
+✖ failing tests:
+
+test at tests/verification/reliability/review-report-compiler-recovery.test.mjs:14:1
+✖ stored source/report modes are independent and all generated Review nodes agree (319.039186ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-compiler-recovery.test.mjs:22:11)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/review-report-compiler-recovery.test.mjs:37:1
+✖ saved Review node set, uniform mode, and the entire pinned graph remain authoritative (170.973413ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: mixed
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-compiler-recovery.test.mjs:55:11)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /PROJECT_RECOVERY_REPORT_ENCODING_MIXED/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+
+Initial prefix error-name assertion (the original owner rejected with EFFECT_IDEMPOTENCY_CONFLICT)
+{"locale":"en-US","mode":"portable","phase":"writer","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","encoding":"kubeclaw-json.utf16.v1","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"da-DK","mode":"portable","phase":"writer","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","encoding":"kubeclaw-json.utf16.v1","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:ec218d30a371e663b9d89f010d6b9ec1c60ebabc5749433b851d843d7ed48858","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"tr-TR","mode":"portable","phase":"writer","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","encoding":"kubeclaw-json.utf16.v1","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"sv-SE","mode":"portable","phase":"writer","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","encoding":"kubeclaw-json.utf16.v1","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"en-US","mode":"original","phase":"writer","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"en-US","mode":"legacy","phase":"writer","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"da-DK","mode":"legacy","phase":"writer","error":"artifact adapter returned a report reference that does not match the stored report","artifact":null,"legacyDigest":"sha256:ec218d30a371e663b9d89f010d6b9ec1c60ebabc5749433b851d843d7ed48858","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"en-US","mode":"portable","phase":"writer","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","encoding":"kubeclaw-json.utf16.v1","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"da-DK","mode":"portable","phase":"readers","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","encoding":"kubeclaw-json.utf16.v1","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:ec218d30a371e663b9d89f010d6b9ec1c60ebabc5749433b851d843d7ed48858","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"en-US","mode":"original","phase":"writer","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"en-US","mode":"legacy","phase":"writer","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"en-US","mode":"original","phase":"writer","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"en-US","mode":"legacy","phase":"writer","error":"EFFECT_RECOVERY_RECEIPT_UNAVAILABLE:effect:json-utf16-v1:05fe7d48f425b792091e4e66d5197cf4796ac5a2970ca35ba0429a4afc58c8bf","artifact":null,"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"en-US","mode":"portable","phase":"writer","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","encoding":"kubeclaw-json.utf16.v1","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"en-US","mode":"portable","phase":"writer","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","encoding":"kubeclaw-json.utf16.v1","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"en-US","mode":"portable","phase":"writer","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","encoding":"kubeclaw-json.utf16.v1","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"en-US","mode":"portable","phase":"writer","error":"EFFECT_RECOVERY_RECEIPT_UNAVAILABLE:effect:json-utf16-v1:05fe7d48f425b792091e4e66d5197cf4796ac5a2970ca35ba0429a4afc58c8bf","artifact":null,"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"en-US","mode":"original","phase":"writer","error":null,"artifact":{"artifactId":"review-report:2fb9a84b6e0a8b406e15be5318b101a9dab7cd286b8585a41018df1c6e92d139","digest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","mediaType":"application/json","namespace":"kubeclaw.review","producer":{"attemptId":"attempt-hex","attemptNumber":1,"runId":"run:report-hex","stageId":"review"},"sizeBytes":2287},"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+{"locale":"en-US","mode":"portable","phase":"writer","error":"EFFECT_IDEMPOTENCY_CONFLICT:report:hex:1","artifact":null,"legacyDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","portableDigest":"sha256:45608d4c5b5921cb043a8bde3f990061580ba76bc6c558d1643a2284831be226","strictReport":true,"actualCore":true,"actualArtifactStore":true,"fullReviewExecution":false}
+✔ new report CAS identity and original completed receipt replay are native-locale independent (2629.730443ms)
+✔ archived untagged original reports preserve exact same-locale replay and old cross-locale fail closed (2269.398324ms)
+✔ actual governor reads the strict report through Core and ArtifactStore in another locale (1424.374591ms)
+✔ genuine original requested prefix retains identity and uncertainty (1225.677428ms)
+✔ genuine original accepted prefix retains identity and uncertainty (1142.985133ms)
+✔ genuine portable requested prefix retains identity and uncertainty (1236.546159ms)
+✔ genuine portable accepted prefix retains identity and uncertainty (1139.226915ms)
+✖ portable opt-in is not silently applied to an original pending request (1043.220619ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12211.519501
+
+✖ failing tests:
+
+test at tests/verification/reliability/review-report-locales.test.mjs:63:1
+✖ portable opt-in is not silently applied to an original pending request (1043.220619ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /EFFECT_REQUEST_CONFLICT/. Input:
+  
+  'EFFECT_IDEMPOTENCY_CONFLICT:report:hex:1'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-locales.test.mjs:68:58)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'EFFECT_IDEMPOTENCY_CONFLICT:report:hex:1',
+    expected: /EFFECT_REQUEST_CONFLICT/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+
+Initial strict summary fixture rejected mismatched governor revision
+✖ actual project-summary consumes a strict original-builder report across locales (1225.649776ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1349.227507
+
+✖ failing tests:
+
+test at tests/verification/reliability/review-report-locales.test.mjs:43:1
+✖ actual project-summary consumes a strict original-builder report across locales (1225.649776ms)
+  Error: Command failed: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-locale-child.mjs /tmp/report-summary-z3KX4I portable summary-produce
+  file:///workspace/scratch/15fb596e6560/run13-review-report/skills/nova/plugins/review/src/review-report-builder.ts:187
+    if (!isReviewReport(report)) throw new Error('built review report is invalid');
+                                       ^
+  
+  Error: built review report is invalid
+      at buildReviewReport (file:///workspace/scratch/15fb596e6560/run13-review-report/skills/nova/plugins/review/src/review-report-builder.ts:187:38)
+      at reportFixture (file:///workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-locale-fixture.mjs:37:15)
+      at strictReportSummary (file:///workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-summary-fixture.mjs:38:25)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async file:///workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-locale-child.mjs:55:11
+  
+  Node.js v24.19.0
+  
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at run (file:///workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-locales.test.mjs:10:12)
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-locales.test.mjs:46:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///workspace/scratch/15fb596e6560/run13-review-report/skills/nova/plugins/review/src/review-report-builder.ts:187\n  if (!isReviewReport(report)) throw new Error('built review report is invalid');\n                                     ^\n\nError: built review report is invalid\n    at buildReviewReport (file:///workspace/scratch/15fb596e6560/run13-review-report/skills/nova/plugins/review/src/review-report-builder.ts:187:38)\n    at reportFixture (file:///workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-locale-fixture.mjs:37:15)\n    at strictReportSummary (file:///workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-summary-fixture.mjs:38:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async file:///workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-locale-child.mjs:55:11\n\nNode.js v24.19.0\n" ],
+    pid: 19,
+    stdout: '',
+    stderr: "file:///workspace/scratch/15fb596e6560/run13-review-report/skills/nova/plugins/review/src/review-report-builder.ts:187\n  if (!isReviewReport(report)) throw new Error('built review report is invalid');\n                                     ^\n\nError: built review report is invalid\n    at buildReviewReport (file:///workspace/scratch/15fb596e6560/run13-review-report/skills/nova/plugins/review/src/review-report-builder.ts:187:38)\n    at reportFixture (file:///workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-locale-fixture.mjs:37:15)\n    at strictReportSummary (file:///workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-summary-fixture.mjs:38:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async file:///workspace/scratch/15fb596e6560/run13-review-report/tests/verification/reliability/review-report-locale-child.mjs:55:11\n\nNode.js v24.19.0\n"
+  }
+
+
+Initial npm wrapper result before fixing repository-fixture cwd; SIGTERM timeout is NOT completion
+{"command":"npm test -w @kubeclaw/plugin-review","status":null,"signal":"SIGTERM","stdout":"\n> pretest\n> node tests/repository-audit-stage.unit.test.mjs && node tests/repository-revalidation.unit.test.mjs\n\n{\"ok\":true,\"suite\":\"repository-audit-stage\"}\n{\"ok\":true,\"suite\":\"repository-revalidation\"}\n\n> test\n> npm run test:cluster && npm run schema:check && node tests/repository-review-profile.unit.test.mjs && node tests/review-prompt-budget.unit.test.mjs && node tests/review-quality-corpus.unit.test.mjs && node tests/review-snapshot-inventory.unit.test.mjs && node tests/review-map-artifacts.unit.test.mjs && node tests/review-fact-extractors.unit.test.mjs && node tests/review-graph.unit.test.mjs && node tests/review-scale-slicing.unit.test.mjs && node tests/scalable-review-topology.unit.test.mjs && node tests/scalable-review-jobs.unit.test.mjs && node tests/scalable-review-verification.unit.test.mjs && node tests/review-content-cache.unit.test.mjs && node tests/scalable-review-compiler.unit.test.mjs && node tests/review-governor.unit.test.mjs && node tests/review-report-contract.unit.test.mjs && node tests/review-report-builder.unit.test.mjs && node tests/simplification-contract.unit.test.mjs && node tests/simplification-miner.unit.test.mjs && node tests/simplification-manifest.unit.test.mjs && node tests/review-bundle-contract.unit.test.mjs && node tests/review-bundle-snapshot.unit.test.mjs && node tests/review-context-selection.unit.test.mjs && node tests/review-context-production.unit.test.mjs && node tests/review-slicing.unit.test.mjs && node tests/echo-review-output.unit.test.mjs && node tests/echo-review-verification.unit.test.mjs && node tests/review-proposal-preflight.unit.test.mjs && node tests/review-verification-reconciliation.unit.test.mjs && node tests/review-verdict-policy.unit.test.mjs && node tests/review-verified-findings.unit.test.mjs && node tests/review-policy-contract.unit.test.mjs && node tests/review-invariants.unit.test.mjs && node tests/review-policy-resolver.unit.test.mjs && node tests/review-policy-profiles.unit.test.mjs && node tests/review-reducer.unit.test.mjs && node tests/review-decision-matrix.unit.test.mjs && node tests/review-contract-parity.unit.test.mjs && node tests/review-evaluation-metadata.unit.test.mjs && node tests/review-stage-input.unit.test.mjs && node tests/review-stage-verification.unit.test.mjs && node tests/protocol.unit.test.mjs && node tests/stage.unit.test.mjs && node tests/live-function.test.ts && node --test tests/review-evidence-encoding-independent.test.mjs tests/review-evidence-live-locales.test.mjs tests/review-evidence-schema-independent.test.mjs && node tests/package-boundary.test.mjs && node tests/remediation.test.mjs && node tests/repository-review-io.test.ts && npm run test:coverage\n\n\n> test:cluster\n> node tests/review-cluster-contract.unit.test.mjs && node tests/review-cluster-identity.unit.test.mjs\n\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-cluster-contract\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-cluster-identity\"}\n\n> schema:check\n> node scripts/generate-policy-schema.mjs --check && node scripts/generate-bundle-schema.mjs --check && node scripts/generate-verification-schema.mjs --check\n\n{\"ok\":true,\"suite\":\"repository-review-profile\"}\n{\"ok\":true,\"suite\":\"review-prompt-budget\"}\n{\"ok\":true,\"suite\":\"review-quality-corpus\"}\n{\"ok\":true,\"suite\":\"review-snapshot-inventory\"}\n{\"ok\":true,\"suite\":\"review-map-artifacts\"}\n{\"ok\":true,\"suite\":\"review-fact-extractors\"}\n{\"ok\":true,\"suite\":\"review-graph\"}\n{\"ok\":true,\"suite\":\"review-scale-slicing\"}\n{\"ok\":true,\"suite\":\"scalable-review-topology\"}\n{\"ok\":true,\"suite\":\"scalable-review-jobs\"}\n{\"ok\":true,\"suite\":\"scalable-review-verification\"}\n{\"ok\":true,\"suite\":\"review-content-cache\"}\n{\"ok\":true,\"suite\":\"scalable-review-compiler\",\"millionLines\":1000000,\"files\":2000,\"slices\":100,\"boundaries\":197,\"elapsedMs\":38078}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-governor\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-evidence-authority\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-context-production\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-slicing\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"simplification-fact-producer\"}\nreview report contract unit tests passed\nreview report builder unit tests passed\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"simplification-contract\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"simplification-miner\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"simplification-manifest\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-bundle-contract\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-bundle-snapshot\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-context-selection\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-context-production\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-slicing\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"echo-review-output\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"echo-review-verification\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-proposal-preflight\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-verification-reconciliation\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-verdict-policy\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-verified-findings\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-policy-contract\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-invariants\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-policy-resolver\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-policy-profiles\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-reducer\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-decision-matrix\",\"cases\":34}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-contract-parity\",\"echoCases\":15,\"verificationCases\":9,\"policyCases\":8,\"stageResults\":4}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-evaluation-metadata\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-stage-input\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"review-stage-verification\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"protocol-unit\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"stage-unit\"}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"live-function\",\"portableEvidence\":false,\"portableReports\":false,\"locale\":\"en-US\",\"nativeGatewayOrModelProof\":false}\n{\"produced\":{\"locale\":\"en-US\",\"digest\":\"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9\"},\"english\":{\"locale\":\"en-US\",\"digest\":\"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9\",\"legacyUnicodeAccepted\":true,\"strippedAcceptedWithDifferentDigest\":false},\"swedish\":{\"locale\":\"sv-SE\",\"digest\":\"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9\",\"legacyUnicodeAccepted\":false,\"strippedAcceptedWithDifferentDigest\":true},\"boundary\":\"original parser, closed schemas, snapshot and disk ArtifactStore; no LLM/gateway completion\"}\n✔ independent original parser/bundle/schema/snapshot/ArtifactStore roundtrip across locales (1191.39508ms)\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"live-function\",\"portableEvidence\":true,\"portableReports\":false,\"locale\":\"en-US\",\"nativeGatewayOrModelProof\":false}\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"live-function\",\"portableEvidence\":true,\"portableReports\":false,\"locale\":\"sv-SE\",\"nativeGatewayOrModelProof\":false}\n✔ original compiler module-review graph remains recoverable under its existing source version (882.476897ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1349.814372\n✔ original review stage, Git, HTTP and persisted bundle preserve portable evidence under en-US (6463.56801ms)\n✔ original review stage, Git, HTTP and persisted bundle preserve portable evidence under sv-SE (5975.109221ms)\n✔ original review-enabled compiler snapshot recovers without changing graph identity (1411.28889ms)\n{\"strictCurrentSchema\":true,\"comparedOriginalDomainVectors\":384,\"extraFieldNegatives\":384}\n✔ strict changed-path schema preserves original accepted domain across conditional branches (78.002509ms)\nℹ tests 5\nℹ suites 0\nℹ pass 5\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 13952.975234\n{\"ok\":true,\"plugin\":\"kubeclaw.review\",\"suite\":\"package-boundary\"}\n{\"ok\":true,\"findings\":[\"AUDIT-001\",\"AUDIT-003\",\"POLICY-002\"],\"tokenizerParity\":true,\"mocks\":0}\n{\"ok\":true,\"boundary\":\"original-core-stage-repository-and-artifact-adapters\",\"scopeCases\":4,\"mocks\":0}\n\n> test:coverage\n> node --test tests/review-coverage.test.mts\n\n✔ original review parser validates cumulative policy and stores its actual immutable bundle (56.872123ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 384.72482\n\n> posttest\n> npm run test:report-encoding\n\n\n> test:report-encoding\n> node --test tests/review-report-encoding.test.mjs ../../../../tests/verification/reliability/review-report-locales.test.mjs ../../../../tests/verification/reliability/review-report-compiler-recovery.test.mjs ../../../../tests/verification/reliability/review-report-storage-boundary.test.mjs && node tests/live-function.test.ts --portable-evidence --portable-reports\n\n✖ stored source/report modes are independent and all generated Review nodes agree (61.826999ms)\n✖ archived compiler with current coverage helper preserves portable-source and legacy module/final reports (791.013677ms)\n✖ saved Review node set, uniform mode, and the entire pinned graph remain authoritative (68.131441ms)\n","stderr":"npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n"}
+
+

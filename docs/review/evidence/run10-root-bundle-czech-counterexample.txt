@@ -1,0 +1,7 @@
+Command: current-checkout original test modes via exact remote23e1488 wrapper
+Source: root21deec exact MAIN680d15; before report cutover
+Wrapper exit0 is NOT success: original en produce0/enread0/csread1
+
+{"mode":"--produce","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"locale\":\"en-US\",\"digest\":\"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9\"}","stderr":""}
+{"mode":"--read","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"locale\":\"en-US\",\"digest\":\"sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9\",\"legacyUnicodeAccepted\":true,\"strippedAcceptedWithDifferentDigest\":false}","stderr":""}
+{"mode":"--read","locale":"cs_CZ.UTF-8","status":1,"signal":null,"stdout":"","stderr":"node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:94f60f4c08a6a3706902e40fdf15effd73d968ccebaa8f6cdcef7d65836896d4'\n- 'sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9'\n\n    at file:///workspace/scratch/15fb596e6560/run10-root/skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs:70:12 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: 'sha256:94f60f4c08a6a3706902e40fdf15effd73d968ccebaa8f6cdcef7d65836896d4',\n  expected: 'sha256:332c701d9c2896b952cda3f88bfc072c98871cb01a39bbdd567fa940677882f9',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"}
