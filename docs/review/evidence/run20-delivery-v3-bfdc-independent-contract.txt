@@ -1,0 +1,17 @@
+Candidate: bfdc9efd2c77211c37650c78ba223798e3607397
+Tree: 26e2838d3026eba915b52fed0acdc4d02f3210b1
+Sole parent: 15f6a808ed1666c3b7a2a3909749e3d4ee377904
+Frozen source: /workspace/scratch/15fb596e6560/run20-source-review-frozenbfdc
+
+KUBECLAW_REVIEW_SOURCE_ROOT=<frozen> node --test tests/verification/reliability/delivery-manifest-v3-contract-independent.test.mjs
+exit 0; tests 10; pass 10; fail 0; skipped 0; todo 0
+
+KUBECLAW_REVIEW_SOURCE_ROOT=<frozen> node --test tests/verification/reliability/delivery-manifest-v3-public-types-independent.test.mjs
+exit 0; tests 1; pass 1; fail 0; skipped 0; todo 0
+
+KUBECLAW_REVIEW_SOURCE_ROOT=<frozen> KUBECLAW_REVIEW_V2_PROOF_ROOT=<registered-v2-proof> node --test tests/verification/reliability/delivery-manifest-v2-reader-corpus-independent.test.mjs
+exit 0; tests 1; pass 1; fail 0; skipped 0; todo 0
+
+npm test --workspace @kubeclaw/delivery-manifest-contract
+exit 0; tests 6; pass 6; fail 0; skipped 0; todo 0
+

@@ -1,0 +1,18 @@
+Candidate: bfdc9efd2c77211c37650c78ba223798e3607397
+Tree: 26e2838d3026eba915b52fed0acdc4d02f3210b1
+Command:
+  KUBECLAW_REVIEW_SOURCE_ROOT=<frozen> node --test tests/verification/reliability/delivery-manifest-v3-summary-mode-independent.test.mjs
+Exit: 1
+
+not ok 1 - v3-only Review artifact expectation is rejected in legacy delivery before evidence reads
+  AssertionError: Missing expected rejection.
+
+not ok 2 - invalid v3 Review conditionals are rejected before evidence reads
+  AssertionError: invalid v3 Review conditionals performed evidence reads
+  actual: 9
+  expected: 0
+
+tests 2; pass 0; fail 2; skipped 0; todo 0
+
+The test stores all otherwise-valid evidence through the real disk ArtifactStore. It does not use a mock store. The legacy call accepts the v3-only field and returns a widened v2 body. The invalid v3 conditional is rejected only after nine actual ArtifactStore reads.
+

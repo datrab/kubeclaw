@@ -1,0 +1,27 @@
+Candidate: bfdc9efd2c77211c37650c78ba223798e3607397
+Tree: 26e2838d3026eba915b52fed0acdc4d02f3210b1
+
+npm run plugin-system:inventory:check
+exit 1
+Plugin-system inventory is stale: docs/generated/inventory/plugin-system.json. Run: npm run plugin-system:inventory
+
+npm run plugin-system:sdk:check
+exit 0
+
+npm test --workspace @kubeclaw/plugin-project-summary
+exit 0
+delivery-artifact-contract, registered live-function and package-boundary pass.
+
+npm test --workspace @kubeclaw/plugin-remote-test-gate
+exit 1
+Original nested demo-auth-smoke requires `go`; direct reproduction fails `spawnSync go ENOENT`. This is an unchanged native prerequisite, not a delivery-source pass.
+
+npm run verify:plugin-packages
+exit 1 after earlier genuine package tests pass
+The next original Axe live test requires a Playwright Chromium executable that is absent from the environment. No browser download was attempted. This is an environment prerequisite and not a repository-gate pass.
+
+npm run typecheck --workspace @kubeclaw/delivery-manifest-contract
+npm run build --workspace @kubeclaw/plugin-project-summary
+npm run build --workspace @kubeclaw/plugin-remote-test-gate
+combined exit 0
+
