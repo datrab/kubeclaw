@@ -1,0 +1,21 @@
+Original actual Helm/chart/contract gates plus ESLint.
+Source: 25c6fda, baseline remote 1d7e6f8834b6e3f3f477a5af48832f74f5321757 = local 6c5678985782eeebd6157b5438ec64b345eaaad0
+Exit code: 0
+✔ disabled product authority creates no key mount, audience token, environment or network access (67.702036ms)
+✔ explicit product authority belongs only to Control and uses separate signing and scoped transport (193.264486ms)
+✔ incomplete or ambiguous product authority fails actual Helm validation (589.443036ms)
+✔ five original rendered Envoy consumers separate process probes from fresh self-mTLS readiness (355.945153ms)
+✔ both independent charts carry the same scoped readiness helper (0.376819ms)
+✔ SPIFFE cannot render with an unbound default ServiceAccount; disabled trust retains original default behavior (459.821893ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 935.83095
+{"ok":true,"phase":12,"v2Deployment":true,"legacyWorkerAbsent":true,"deterministicSuiteRuntime":true}
+{"ok":true,"contract":"worker-trust-spiffe"}
+{"ok":true,"scope":"actual-helm-and-config-render-sensitivity","liveRollout":false,"pinnedLiteLLMProbeExecution":false}
+

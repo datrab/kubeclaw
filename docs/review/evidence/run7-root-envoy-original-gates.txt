@@ -1,0 +1,23 @@
+Source: ca47fef
+Fresh remote parent: 1d7e6f8834b6e3f3f477a5af48832f74f5321757
+Command: PATH=/workspace/scratch/4e25cf57c177/toolchains/bin:$PATH KUBECLAW_TEST_HELM=/workspace/scratch/4e25cf57c177/toolchains/bin/helm node --test tests/verification/deployment/worker-trust-readiness.test.mjs tests/verification/deployment/prism-product-decisions.test.mjs && PATH=/workspace/scratch/4e25cf57c177/toolchains/bin:$PATH node tests/verification/contracts/check-rollout-health.mjs && node tests/verification/deployment/check-deployment-truth.mjs && node tests/verification/contracts/check-worker-trust-spiffe.mts && node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs tests/verification/deployment/check-worker-trust-envoy-native.mjs tests/verification/deployment/worker-trust-readiness.test.mjs tests/verification/contracts/check-rollout-health.mjs tests/verification/deployment/check-deployment-truth.mjs
+Exit: 0
+
+✔ disabled product authority creates no key mount, audience token, environment or network access (66.590976ms)
+✔ explicit product authority belongs only to Control and uses separate signing and scoped transport (180.941615ms)
+✔ incomplete or ambiguous product authority fails actual Helm validation (578.540255ms)
+✔ five original rendered Envoy consumers separate process probes from fresh self-mTLS readiness (320.550176ms)
+✔ both independent charts carry the same scoped readiness helper (0.290708ms)
+✔ SPIFFE cannot render with an unbound default ServiceAccount; disabled trust retains original default behavior (508.688731ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 922.866969
+{"ok":true,"scope":"actual-helm-and-config-render-sensitivity","liveRollout":false,"pinnedLiteLLMProbeExecution":false}
+{"ok":true,"phase":12,"v2Deployment":true,"legacyWorkerAbsent":true,"deterministicSuiteRuntime":true}
+{"ok":true,"contract":"worker-trust-spiffe"}
+

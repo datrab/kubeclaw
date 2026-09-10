@@ -1,0 +1,8 @@
+Sourceadb4934; production608a33d unchanged.
+Command: PATH=.../toolchains/bin:$PATH node tests/verification/contracts/check-rollout-health.mjs && node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs tests/verification/contracts/check-rollout-health.mjs
+[fix/resume-47-run7-envoy-corrected adb4934] test(trust): keep original rollout fixture bound to actual ServiceAccount [skip ci]
+ 1 file changed, 1 insertion(+)
+{"ok":true,"scope":"actual-helm-and-config-render-sensitivity","liveRollout":false,"pinnedLiteLLMProbeExecution":false}
+
+Exit0.
+

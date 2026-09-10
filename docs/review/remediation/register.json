@@ -4077,11 +4077,15 @@
       "work_package": "WP12",
       "status": "implementiert",
       "implementation_commit": "fc136fc8d1351f9ef6bccfafa9f63dd55addbce2",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "teilweise / native Envoy-Teilprüfung bestanden; Gesamtfinding offen",
       "verification_evidence": [
         {
           "report": "implementation/rollout-health.md",
           "summary": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment."
+        },
+        {
+          "report": "implementation/run7-envoy-root-review.md",
+          "summary": "Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/envoy.md",
@@ -4091,10 +4095,10 @@
       "unresolved_code_references": [
         "deployment.yaml:23–35"
       ],
-      "next_action": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
+      "next_action": "Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment."
+      "remaining_work": "Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment."
     },
     {
       "id": "IFR-10-001",
@@ -4461,11 +4465,15 @@
       "work_package": "WP13",
       "status": "implementiert",
       "implementation_commit": null,
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "teilweise / native Envoy-Teilprüfung bestanden; Gesamtfinding offen",
       "verification_evidence": [
         {
           "report": "implementation/readiness-independent-review.md",
           "summary": "Buster BuildKit-/Prism DB-Funktionsproben, getrennte Bootstrap/Liveness und abgebrochene/abgewartete Probe integriert und unabhängig lokal geprüft. Trust-sidecar/SDS-SVID-Funktionsprüfung und Alarmierung sowie native DB-/BuildKit-/Cluster-Abnahme bleiben offen."
+        },
+        {
+          "report": "implementation/run7-envoy-root-review.md",
+          "summary": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/observability.md",
@@ -4477,11 +4485,11 @@
       "unresolved_code_references": [
         "configmap-worker-trust.yaml:19–38"
       ],
-      "next_action": "Buster BuildKit-/Prism DB-Funktionsproben, getrennte Bootstrap/Liveness und abgebrochene/abgewartete Probe integriert und unabhängig lokal geprüft. Trust-sidecar/SDS-SVID-Funktionsprüfung und Alarmierung sowie native DB-/BuildKit-/Cluster-Abnahme bleiben offen.",
+      "next_action": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment.",
       "related_findings": [],
       "decision_notes": [],
       "implementation_local_commit": "6c171ba",
-      "remaining_work": "Buster BuildKit-/Prism DB-Funktionsproben, getrennte Bootstrap/Liveness und abgebrochene/abgewartete Probe integriert und unabhängig lokal geprüft. Trust-sidecar/SDS-SVID-Funktionsprüfung und Alarmierung sowie native DB-/BuildKit-/Cluster-Abnahme bleiben offen."
+      "remaining_work": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment."
     },
     {
       "id": "IFR-26-001",

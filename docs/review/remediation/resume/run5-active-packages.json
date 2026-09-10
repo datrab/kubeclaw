@@ -2,7 +2,7 @@
   "schema_version": 1,
   "run_id": "20260909t233622",
   "fresh_remote_base": "b06c06dce3364c482a1da5637c36bc2b14ba8c72",
-  "last_source_integration": "4f70d8f13e282e01d014fe82557d37c90d52cb71",
+  "last_source_integration": "1d7e6f8834b6e3f3f477a5af48832f74f5321757",
   "frozen_baseline": "c38779c71bb92bc15c3fcb89930348e5417aa475",
   "frozen_count": 47,
   "verified_count": 8,
@@ -15,7 +15,7 @@
     "integration_commit": "0c3ab36434020730b326bb2aa5c84ea0210f9d6d",
     "root_full_tests": 55,
     "fresh_checkout_repeat": 11,
-    "next_action": "Reader package is complete; retain original quotas and exact digest semantics. Dispatch projection remains separate and unapproved."
+    "next_action": "Reader and bounded explicit-revision dispatch projection are independently reviewed and integrated; retain quotas, original archives and unsupported derived-source refusal."
   },
   "integrated_review_codec": {
     "commit": "84688686127cfcc0f8940381006d0b6ab9035095",
@@ -63,24 +63,37 @@
       "final_author_backup": "ccdea8e3e57904202d73b92dade8a2f90a655df5",
       "final_review_backup": "5db3cedc8520d9d9c1be3aee27dcaae2c22a4a04",
       "root_combined_tests": 73,
-      "next_action": "Bounded explicit-revision projection complete; no original archive/evidence/log deletion or record-count release. Derived sourceStageId remains refused pending original pre-quality artifact selection/read/producer/commit-to-merge authority and a genuine implementation-session fixture; mocked Forge completion is not acceptance. Broader OBS retention/native requirements remain open."
+      "next_action": "Bounded explicit-revision projection complete; no original archive/evidence/log deletion or record-count release. Derived sourceStageId remains refused pending original pre-quality artifact selection/read/producer/commit-to-merge authority and a genuine implementation-session fixture; mocked Forge completion is not acceptance. Broader OBS retention/native requirements remain open.",
+      "integration_commit": "1d7e6f8834b6e3f3f477a5af48832f74f5321757",
+      "derived_source_design_backup": "b8de28505d65023da9f939712a210bd6c0729815"
     },
     {
       "package": "sdk-openclaw-run-frozen-transport-profile",
-      "status": "causal-counterexample-proven-versioned-design-approved-implementation-pending",
+      "status": "closed-envelope-and-original-native-matrix-tested-independent-final-review-pending",
       "audit_backup": "a79809da359452eaba2a4305b83a0dd564154730",
       "rejected_payload_marker_wip": "1db8e915d36ddea354a87896d66542a33295e514",
       "independent_collision_review": "482a97b49b19b48ce25d652f3b87ec505f08be12",
       "independent_hmac_red_phase_review": "3254ad65f412223f47f1e20d9686fc1ed8f1cf40",
-      "next_action": "Move explicit run-v3 transport profile OUTSIDE open model payload into canonical closed CapabilityInvocation/EffectRequest. Preserve historically valid model field runtimeDispatchProfile verbatim; independent real network regression proves the rejected WIP collision. Thread original Core matching/identity/dependency ownership and all eleven producers; v1/v2 exact legacy, new-run-only v3 selection. Complete original resume/transport/CLI/profile/retirement gates and fresh-main independent review."
+      "next_action": "Preserve genuine original v1/v2/v3 run producer and real audit-phase SIGKILL matrix; complete full original plugin scripts and independent fresh-head review. Review exported invoke-only scalable helpers need bounded legacy compatibility, without Core v3 fallback. Audit remaining admitted digest domains before SDK finding closure. WIP is not approval.",
+      "corrected_envelope_wip": "819699ff79818b33f5d862e67a2e3b647d632bb3",
+      "native_matrix_wip": "13393f7d958e15cd4ecb097f736e168ea3a0d8cc"
     },
     {
       "package": "worker-trust-native-envoy",
-      "status": "original-native-prerequisite-obtained-author-test-passed-independent-review-pending",
+      "status": "bounded-native-envoy-slice-independently-approved-root-tested-in-this-integration",
       "source_candidate": "docs/review/remediation/candidates/worker-trust-native-unverified.patch",
       "native_candidate_backup": "fe88490266175c91c0eb624a1c3a63b5f7d42462",
       "independent_pending_corrections_backup": "f3eb268f223090bb32d5bc3e89f9282b4008df5b",
-      "next_action": "Fix independently found accepted default-SA/expected-dedicated-SVID mismatch in owning Helm validation. Correct test expired certificate to a genuine previously valid past interval, not reversed dates. Reconcile new coupled charts at4f70 and rerun all native Envoy config/TLS/SDS/cert assertions and original charts independently. Actual SPIRE gRPC attestation and delivered operator alarm remain open. No deployment."
+      "next_action": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment. Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment.",
+      "final_author_backup": "72f8bb702da5dac79476e38b5f2d94f9c9877f5a",
+      "final_review_backup": "1fb7af3e3d52c9e860920bf72a7ce210f8f16d4c",
+      "tested_remote_parent": "1d7e6f8834b6e3f3f477a5af48832f74f5321757",
+      "root_report": "implementation/run7-envoy-root-review.md"
+    },
+    {
+      "package": "operator-delivery-retention-design",
+      "status": "design-and-genuine-original-fixture-only-not-production-approved",
+      "next_action": "Author and independent reviewer inspect exact legacy v1 request digest/receipt/Core causality and original trusted-caller signal authorization, not external identity authentication. No production projection until design and real fixture independently reviewed; uncertain/active/unsupported-v2 ownership remains protected."
     }
   ],
   "rule": "Backup is not acceptance. Restore only verified frozen commits into a new checkout, never another writer's checkout or dirty work based on an old heartbeat. Exact-parent ff-only integration after review/tests; no CI/deployment."

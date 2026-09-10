@@ -1,0 +1,16 @@
+Source608a33d68ac12573553e92c6a5161c349abc1e77.
+Commands: PATH=.../toolchains/bin:$PATH node --test tests/verification/deployment/worker-trust-readiness.test.mjs && node tests/verification/deployment/check-deployment-truth.mjs && node tests/verification/contracts/check-worker-trust-spiffe.mts && node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs tests/verification/deployment/check-worker-trust-envoy-native.mjs tests/verification/deployment/worker-trust-readiness.test.mjs
+✔ five original rendered Envoy consumers separate process probes from fresh self-mTLS readiness (316.063652ms)
+✔ both independent charts carry the same scoped readiness helper (0.243508ms)
+✔ SPIFFE cannot render with an unbound default ServiceAccount; disabled trust retains original default behavior (415.303843ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 858.444953
+{"ok":true,"phase":12,"v2Deployment":true,"legacyWorkerAbsent":true,"deterministicSuiteRuntime":true}
+{"ok":true,"contract":"worker-trust-spiffe"}
+Exit0.

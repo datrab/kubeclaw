@@ -1,0 +1,56 @@
+[
+  {
+    "name": "chart",
+    "chunk_id": "819879",
+    "cmd": "PATH=/workspace/scratch/4e25cf57c177/toolchains/bin:$PATH node --test tests/verification/deployment/worker-trust-readiness.test.mjs",
+    "exit_code": 0,
+    "original_token_count": 110,
+    "output": "✔ five original rendered Envoy consumers separate process probes from fresh self-mTLS readiness (254.699404ms)\n✔ both independent charts carry the same scoped readiness helper (0.241213ms)\n✔ SPIFFE cannot render with an unbound default ServiceAccount; disabled trust retains original default behavior (415.240826ms)\nℹ tests 3\nℹ suites 0\nℹ pass 3\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 772.349986\n",
+    "wall_time_seconds": 0.742326892
+  },
+  {
+    "name": "product-chart",
+    "chunk_id": "61433a",
+    "cmd": "PATH=/workspace/scratch/4e25cf57c177/toolchains/bin:$PATH KUBECLAW_TEST_HELM=/workspace/scratch/4e25cf57c177/toolchains/bin/helm node --test tests/verification/deployment/prism-product-decisions.test.mjs",
+    "exit_code": 0,
+    "original_token_count": 109,
+    "output": "✔ disabled product authority creates no key mount, audience token, environment or network access (51.494161ms)\n✔ explicit product authority belongs only to Control and uses separate signing and scoped transport (145.062947ms)\n✔ incomplete or ambiguous product authority fails actual Helm validation (492.125495ms)\nℹ tests 3\nℹ suites 0\nℹ pass 3\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 793.931694\n",
+    "wall_time_seconds": 0.750624205
+  },
+  {
+    "name": "truth",
+    "chunk_id": "de1cdc",
+    "cmd": "node tests/verification/deployment/check-deployment-truth.mjs",
+    "exit_code": 0,
+    "original_token_count": 26,
+    "output": "{\"ok\":true,\"phase\":12,\"v2Deployment\":true,\"legacyWorkerAbsent\":true,\"deterministicSuiteRuntime\":true}\n",
+    "wall_time_seconds": 0.02090719
+  },
+  {
+    "name": "spiffe",
+    "chunk_id": "2fdc5b",
+    "cmd": "node tests/verification/contracts/check-worker-trust-spiffe.mts",
+    "exit_code": 0,
+    "original_token_count": 12,
+    "output": "{\"ok\":true,\"contract\":\"worker-trust-spiffe\"}\n",
+    "wall_time_seconds": 0.000002974
+  },
+  {
+    "name": "rollout",
+    "chunk_id": "470dc0",
+    "cmd": "PATH=/workspace/scratch/4e25cf57c177/toolchains/bin:$PATH node tests/verification/contracts/check-rollout-health.mjs",
+    "exit_code": 0,
+    "original_token_count": 30,
+    "output": "{\"ok\":true,\"scope\":\"actual-helm-and-config-render-sensitivity\",\"liveRollout\":false,\"pinnedLiteLLMProbeExecution\":false}\n",
+    "wall_time_seconds": 0.960583816
+  },
+  {
+    "name": "lint",
+    "chunk_id": "aeee68",
+    "cmd": "node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs tests/verification/deployment/check-worker-trust-envoy-native.mjs tests/verification/deployment/worker-trust-readiness.test.mjs tests/verification/contracts/check-rollout-health.mjs",
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": "",
+    "wall_time_seconds": 0.804437197
+  }
+]
