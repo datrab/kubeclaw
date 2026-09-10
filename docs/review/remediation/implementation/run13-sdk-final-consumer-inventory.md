@@ -1,0 +1,41 @@
+# PCR-SDK-001: bounded completion inventory after cache, reader and transport
+
+Read-only inventory, 2026-09-10. Current authority: MAIN 680d15eb0ab7344e87b0ab0595d9855acc1f97c9 (parent 21b05129691b6c932fdf7fd2d12f906cb2736aad). Report-only candidate d4df6bfd6e84ac23d3e7095d1d8cfb609bc50d8c is assessed separately, not assumed integrated. The immutable original 47-ID scope and original PCR-SDK-001 text remain unchanged.
+
+## Outcome
+
+SDK closure is not justified: one additional ORIGINAL active persisted domain has a reproduced native failure after the exact report/helper packages are accounted for — the decision-Review semantic bundle. An unchanged original producer/store/reader produces 332c… in en-US but recalculates 94f6… in cs-CZ from the same real stored artifact. Proof and exact seven source blob hashes are durable at 23e14883ace8868ab5ff0267b086253d43f4af35; docs/review/evidence/run13-sdk-bundle-czech-probe.txt contains the original failing assertion, not a rewritten test.
+
+The report-only candidate leaves snapshotReviewBundle and storeReviewBundle unchanged (the latter's complete function body was independently compared). Report outer-byte authority cannot fix an upstream semantic digest. The one-line runtime no-trap correction changes a different selector and is now integrated at 680d15.
+
+## Finite owner inventory
+
+| Original owning domain / actual callpath | Present classification and required next action |
+| --- | --- |
+| SDK values → real ArtifactStore put/get and Core Effect identity/journal | Explicit portable codec/admissibility and versioned effect identities already have native store/journal and historical-prefix evidence in the register. Keep old explicit codec branches, reject unsupported JSON. Do not rewrite historical effects. |
+| Subject/source → graph/snapshot → original CLI recovery | Controlled versions already integrated; old graph/source bytes intentionally retained. Native archived CLI uses current-checkout sources. Existing explicit graph-v3 native en/da aa/az-ID reopen proof counters the prior unsafe ASCII rationale without altering graph-v2 history. |
+| Artifact refs → Core checkpoint and Repair completion | Explicit artifact/completion encoding owns bytes and dependent digest identity. Existing real Core, ArtifactStore, disk journal, SIGKILL and retained old producers are the relevant evidence; run-snapshot version is not a substitute owner. |
+| Adapter invocation/dependency keys; actual 11 runtime.dispatch producers | Adapter controlled identity and independent run-frozen transport profiles are integrated. Native original accepted/requested/completed histories plus real registered HTTP/HMAC/503 wires establish their bounded gate, not successful external model acceptance. The no-trap helper follow-up is integrated separately. |
+| Review evidence content → bundle evidence member | Explicit per-evidence encoding already integrated and independently tested. It does not select the entire bundle's semantic encoding. |
+| Review content cache → original stage checkpoint/recovery → real ArtifactStore | Run-frozen v4 cache profile / record-v2 and exact ref/bytes are integrated. Genuine stage and archived producer phase gates plus no-trap parser/writer/context corrections are already recorded. Do not replay these tests merely to fill inventory. |
+| Prism Control baseline archive → Nova verifyBaselineArchive | Native allowed aa/az checksum-map counterexample produced the separately integrated paired v2 baseline cutover. Historical v1 preserved; no browser/DB/full application claim. |
+| Registered Prism architecture reader → ArtifactStore bytes/full reference | The separately integrated reader owns exact encoded bytes and genuine original registered get/read history. No remaining blanket parsed-JSON rehash claim for that corrected reader. |
+| Review report outer Artifact storage → report/history readers | Exact candidate d4df is separately reviewed, awaiting root integration/reconciliation. It deliberately preserves old report-v2 semantics and legacy graph requests. Its native matrix cannot close the separate Czech bundle failure. |
+| **Review semantic snapshot → storeReviewBundle → later snapshot / Summary; governor/report binding** | **Confirmed remaining cutover.** Actual original en/en/cs storage proof fails. Both governor builders, report validator/history version retention, Project compiler/recovery and Summary are directly coupled readers/writers. Proposed design: design/run13-review-bundle-semantic-cutover.md. No implementation authorized by this inventory. |
+| Other typed Review persistent families: repository-audit prepared plan, scalable compiler graph/map/profile/accounting, repository revalidation and Review policy/context/proposal identities | Distinct owners, not automatically migrated with the bundle. Source census locates exact legacy hash/revalidation paths; no additional admitted persisted native failure was produced in this bounded run. Their fixed/hexadecimal keys are NOT a general portability proof. The bundle native path must expose any re-derived inner-identity mismatch; if one actually fails, extend only its documented owner after independent review. This is not blanket static closure of these domains. |
+| RuntimeWorkspace owner/generation; Exposure / Demo credentials; Product intent | Bounded producer schemas select typed field sets and keep dynamic identifiers as values. No additional native persisted counterexample found in the existing non-Review audit. This is a classification, not an assertion that all fixed ASCII keys are invariant. |
+| Provider plans, Worker Core, Foundation observability/test-gate contracts | Actual imports resolve to owning code-unit serializers, not the SDK legacy locale comparator. Raw Git/CAS hashes likewise have their own byte contracts. No SDK-wide rewrite is indicated by identically named imports. |
+| CLI compiled-file display hash, legacy-import report, Prism directionSignature | Locale-sensitive candidates exist, but no discovered active persisted replay/approval reader for those displayed/export-only hashes; directionSignature has only test callers in the prior census. Do not invent a runtime-provider gate from a textual serializer import. |
+
+## Evidence and limits
+
+This inventory consolidates existing owning-consumer evidence rather than expanding the original finding to successful browser, Gateway, sandbox or deployed acceptance. Original PCR-SDK-001 requires valid JSON admission, language-independent ordering and controlled persisted digest versions, with real ArtifactStore and EffectJournal regression.
+
+Prior navigation inventory: design/sdk-canonical-consumers.json and implementation/sdk-remaining-digest-matrix.md. Prior bounded non-Review audit and actual probes: fa35d4021d677eda46b3c091c6358f3970ea89b4 / docs/review/remediation/implementation/run9-sdk-remaining-consumer-audit.md. Those were read as evidence, not as authority to inherit stale source or declare every ASCII/hex map safe. The new Czech proof specifically disproves such a general rule for even closed schema keys.
+
+The direct Czech proof is actual parseReviewInput → snapshotReviewBundle → storeReviewBundle → disk ArtifactStore → original snapshot reader. It is not yet the complete journal/governor/Summary transition proof. Governor baselineId and Summary bundleDigest are inspected coupled source requirements; no separate native failure of each is claimed.
+
+The remaining known defect is finite and actionable under current permissions: independently review the separate semantic-owner design, then implement/test that coupled package locally with original stores/journals and archived producers. Do not require deployment or paid/native model services for this local serializer finding. Conversely, a successful partial bundle test cannot stand in for the actual coupled reader/old-prefix gates.
+
+Before any SDK closure, reconcile the exact report and semantic packages with the fresh MAIN head, complete their independent native gates and revisit the finite typed-owner classifications using actual admitted producer/reader inputs. Preserve all historical explicit versions, raw failures and unresolved scopes. No register status was changed by this inventory.
+
