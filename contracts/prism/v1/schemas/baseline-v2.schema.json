@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.dev/contracts/prism/baseline-v2.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "checksumEncoding", "bundleId", "projectId", "revision", "designDocument", "designSpecification", "acceptanceCriteria", "assets", "previews", "createdAt", "digest"],
+  "properties": {
+    "schema": { "const": "prism.baseline-bundle.v2" },
+    "checksumEncoding": { "const": "kubeclaw-json.utf16.v1" },
+    "bundleId": { "$ref": "https://kubeclaw.dev/contracts/prism/v1#/$defs/id" },
+    "projectId": { "$ref": "https://kubeclaw.dev/contracts/prism/v1#/$defs/id" },
+    "revision": { "type": "integer", "minimum": 1 },
+    "designDocument": { "type": "object", "required": ["path", "schema", "revision"] },
+    "designSpecification": { "type": "object", "required": ["path"] },
+    "acceptanceCriteria": { "type": "object", "required": ["path"] },
+    "assets": { "type": "object" },
+    "previews": { "type": "object", "required": ["path"] },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "digest": { "$ref": "https://kubeclaw.dev/contracts/prism/v1#/$defs/digest" }
+  }
+}

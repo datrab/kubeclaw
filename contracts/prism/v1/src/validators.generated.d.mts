@@ -6,6 +6,7 @@ export const validateDesignRequest: StandaloneValidator;
 export const validateDesignDocument: StandaloneValidator;
 export const validateOperation: StandaloneValidator;
 export const validateBaselineManifest: StandaloneValidator;
+export const validateBaselineManifestV2: StandaloneValidator;
 export const validateAcceptanceCriteria: StandaloneValidator;
 export const validatePreviewIndex: StandaloneValidator;
 export const validatePreferenceEvent: StandaloneValidator;

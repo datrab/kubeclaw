@@ -4,6 +4,7 @@ import schema from "../schemas/prism-v1.schema.json" with { type: "json" };
 import {
   validateAcceptanceCriteria,
   validateBaselineManifest,
+  validateBaselineManifestV2,
   validateDesignDocument,
   validateDesignRequest,
   validateEngineRequestEvaluate,
@@ -56,7 +57,8 @@ export function validatePrism<T>(
   value: unknown,
 ): T {
   assertPrismComplexity(value, `PRISM_INPUT_INVALID: ${name}`);
-  const validator = validators.get(name);
+  const validator = name === 'baselineManifest' && (value as {schema?: string})?.schema === 'prism.baseline-bundle.v2'
+    ? validateBaselineManifestV2 : validators.get(name);
   if (!validator || !validator(value)) {
     const details =
       validator?.errors
