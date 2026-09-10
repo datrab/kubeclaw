@@ -1,0 +1,16 @@
+Source a376253. Preliminary only; not native/final approval.
+Command: node --test tests/verification/reliability/review-cache-profile.test.mjs && node skills/nova/plugins/review/tests/review-content-cache.unit.test.mjs && node scripts/generate-plugin-sdk-types.mjs --check
+✔ separate finite cache profile has canonical SDK/Foundation parity and never invokes getters (4.272507ms)
+✔ genuine v4 writer requires both profiles; legacy version/profile combinations reject after rehash (17.125822ms)
+✔ v2 owns strict JSON and both inner digests; profile mismatch is an error, never a miss (1.904053ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 277.416844
+{"ok":true,"suite":"review-content-cache"}
+
+Exit 0.

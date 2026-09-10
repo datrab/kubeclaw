@@ -1,0 +1,33 @@
+Source e1a276a12805bc3210fe2db4ccbc773f66b9fec0 / own e0171db883a73af711b9ec1f295dc403b817a9e0.
+Command: node --test tests/verification/reliability/review-cache-independent.test.mjs
+✔ independent v2 record version selection does not execute getter or proxy traps (8.22578ms)
+✖ independent writer rejects getter/proxy record before version inspection or provider admission (1.373652ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 158.703914
+
+✖ failing tests:
+
+test at tests/verification/reliability/review-cache-independent.test.mjs:30:1
+✖ independent writer rejects getter/proxy record before version inspection or provider admission (1.373652ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  1 !== 0
+
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run8-sdk-cache-review/tests/verification/reliability/review-cache-independent.test.mjs:41:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+Exit 1. Parser correction passes; writer still executes schemaVersion getter before strict JSON validation. Provider admission guard was never reached. Blank diagnostic padding normalized only.
