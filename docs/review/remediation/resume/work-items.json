@@ -183,14 +183,14 @@
     {
       "id": "F-T14-01",
       "status_at_checkpoint": "implementiert / unvollständig",
-      "evidence": "implementation/wave47-product-gates.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Corrected the missing production package for existing retained-demo ownership/Ready implementation. | Original requested end-to-end fixture plan, post-plan Tailnet reachability and exact-generation release/TTL proof unavailable. Human extension authorizer is actual missing code/integration, not merely an unrun test."
+      "evidence": "implementation/run14-human-extension-reconciliation.md",
+      "next_action": "The stale human-extension-authorizer claim was reconciled against the integrated Product/controller/chart package: the original Control composition now contains the finite authenticated acceptance/extension writer, and current local original-component gates pass. Keep the finding open until the original full pipeline proves a real application login, allowed Tailnet operator access and feedback, denial of another Tailnet user and an old generation, actual private recipient delivery, and exact-generation release/TTL. Deployments and messages are not authorized by this run."
     },
     {
       "id": "F-T14-02",
       "status_at_checkpoint": "implementiert / unvollständig",
-      "evidence": "implementation/wave47-product-gates.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Corrected owning role inclusion of both demo handoff and app-auth provider; actual bundled imports resolve their dependencies. | Real application login, private operator reception, other-user/old-generation denial and authenticated acceptance/extension remain unproved or unimplemented."
+      "evidence": "implementation/run14-human-extension-reconciliation.md",
+      "next_action": "The integrated original Control runtime now has the finite authenticated acceptance/extension writer; current local session, allowlist, Origin/CSRF, signature, persistence, recovery and HTTPS-client gates pass. Keep the finding open until the original full pipeline proves real app-secret integration and login, private operator reception, allowed Tailnet feedback, other-user and old-generation rejection, and exact-generation lifecycle behavior. Local identity headers and admission fixtures are not that evidence."
     },
     {
       "id": "IFR-08-001",

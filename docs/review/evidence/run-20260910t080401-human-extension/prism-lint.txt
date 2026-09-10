@@ -1,0 +1,30 @@
+
+/workspace/scratch/15fb596e6560/run26-human-extension-author/skills/prism/server/control-server.ts
+  129:1   error  Async method 'runWorker' has too many lines (66). Maximum allowed is 60  max-lines-per-function
+  196:3   error  Async method 'handle' has too many lines (797). Maximum allowed is 60    max-lines-per-function
+  196:3   error  Async method 'handle' has a complexity of 202. Maximum allowed is 15     complexity
+  239:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                   max-depth
+  253:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                   max-depth
+  263:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                   max-depth
+  309:1   error  File has too many lines (992). Maximum allowed is 300                    max-lines
+  516:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                   max-depth
+  518:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                   max-depth
+  519:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                   max-depth
+  535:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                   max-depth
+  539:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                   max-depth
+  543:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                   max-depth
+  555:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                   max-depth
+  556:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                   max-depth
+  565:13  error  Blocks are nested too deeply (6). Maximum allowed is 3                   max-depth
+  730:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                   max-depth
+  734:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                   max-depth
+  760:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                   max-depth
+  761:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                   max-depth
+  776:13  error  Blocks are nested too deeply (6). Maximum allowed is 3                   max-depth
+  781:13  error  Blocks are nested too deeply (6). Maximum allowed is 3                   max-depth
+  785:13  error  Blocks are nested too deeply (6). Maximum allowed is 3                   max-depth
+  886:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                   max-depth
+  987:5   error  Unexpected console statement                                             no-console
+
+✖ 25 problems (25 errors, 0 warnings)
+
