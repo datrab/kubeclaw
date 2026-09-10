@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
-import type { PluginManifest } from '@kubeclaw/plugin-sdk';
+import { parseRuntimeDispatchProfile, type PluginManifest } from '@kubeclaw/plugin-sdk';
 import { RegistryError } from './errors.ts';
 
 interface AjvValidator {
@@ -131,6 +131,8 @@ export function validateReferencedValue(schemaPath: string, value: unknown, sche
 }
 
 export function validateContractValue(definition: string, value: unknown): void {
+  // JSON Schema's finite const comparison alone does not reject exotic JS objects/getters.
+  if (definition === 'runtimeDispatchProfile') parseRuntimeDispatchProfile(value);
   let validator = contractValidators.get(definition);
   if (!validator) {
     validator = ajv.compile({ $ref: `${contract.$id}#/$defs/${definition}` });

@@ -17,7 +17,7 @@ export async function execute(input:Input,context:PluginInvocationContext):Promi
     if(architectureResponse.digest!==architectureRef.digest||architectureResponse.sizeBytes!==architectureRef.sizeBytes||sha256Text(canonicalJson(architectureResponse.value))!==architectureRef.digest||Buffer.byteLength(canonicalJson(architectureResponse.value))!==architectureRef.sizeBytes)throw new Error("PRISM_DESIGN_ARCHITECTURE_PROOF_INVALID");
     const request={schema:"prism.design-request.v1",projectId:input.projectId,architecture:input.architectureArtifact,architectureContent:architectureResponse.value,...approved?{approvalId:approved.approvalId}:{}};
     const phase=approved?`approved:${approved.approvalId}:${input.architectureArtifact.contentDigest}`:"request";
-    const response=await context.invoke("runtime.dispatch",{operation:"dispatch",resource:{type:"runtime.agent",canonicalId:settings.agent},payload:{request,idempotencyKey:`${input.runId}:prism:${input.architectureArtifact.contentDigest}:${phase}`}});const result=response.result as Record<string,unknown>;
+    const response=await context.invoke("runtime.dispatch",withRuntimeDispatchProfile({operation:"dispatch",resource:{type:"runtime.agent",canonicalId:settings.agent},payload:{request,idempotencyKey:`${input.runId}:prism:${input.architectureArtifact.contentDigest}:${phase}`}},context.contract.runtimeDispatchProfile));const result=response.result as Record<string,unknown>;
     if(!approved){
       const waitId=`prism:${input.runId}:${input.projectId}`;const expiresAt=new Date(Date.now()+settings.timeoutMinutes*60_000).toISOString();
 
@@ -31,3 +31,4 @@ export async function execute(input:Input,context:PluginInvocationContext):Promi
     return {schemaVersion:"stage-result.v2",outcome:"passed",artifacts:[stored.artifact as ArtifactRef]};
   }catch(error){return {schemaVersion:"stage-result.v2",outcome:"blocked",reason:{code:"prism_design.dispatch_failed",message:error instanceof Error?error.message:String(error)},artifacts:[]};}
 }
+import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';

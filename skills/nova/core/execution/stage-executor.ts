@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import type { ArtifactRef, AttemptIdentity, InvocationLease, LifecycleEvent, PluginContext, PluginDomainEvent, StageResult } from '@kubeclaw/plugin-sdk';
+import type { RuntimeDispatchProfile, ArtifactRef, AttemptIdentity, InvocationLease, LifecycleEvent, PluginContext, PluginDomainEvent, StageResult } from '@kubeclaw/plugin-sdk';
 import type { ActivatedRegistry } from '@kubeclaw/plugin-foundation/registry/activation';
 import type { GrantedRegistry } from '@kubeclaw/plugin-foundation/registry/capabilities';
 import { validateReferencedValue } from '@kubeclaw/plugin-foundation/registry/schema';
@@ -16,6 +16,7 @@ import { RevocableLease } from './lease.ts';
 export type AppendLifecycleEvent = (type: LifecycleEvent['type'], identity: LifecycleEvent['identity'], payload?: Readonly<Record<string, unknown>>, causationId?: string | null) => LifecycleEvent;
 
 interface ExecutorOptions {
+  readonly runtimeDispatchProfile?: RuntimeDispatchProfile;
   readonly graph: ExecutionGraph; readonly registry: GrantedRegistry; readonly activated: ActivatedRegistry; readonly adapters: AdapterRuntime;
   readonly journal: FileJournal<LifecycleEvent | PluginDomainEvent>; readonly signal?: AbortSignal; readonly now: () => Date; readonly append: AppendLifecycleEvent;
   readonly checkpoints: ArtifactCheckpointRecorder;
@@ -67,6 +68,7 @@ export class StageExecutor {
     this.#options.signal?.addEventListener('abort', cancel, { once: true }); if (this.#options.signal?.aborted) cancel();
     const context = this.#context({
       schemaVersion: 'plugin-context.v2', lease: leaseContract, config: definition.config, input: definition.input,
+      ...(this.#options.runtimeDispatchProfile ? { runtimeDispatchProfile: this.#options.runtimeDispatchProfile } : {}),
       ...(guidance === undefined ? {} : { guidance }),
       stageLifecycle: Object.freeze({ attemptsUsed: state.attemptsUsed, remediationCyclesUsed: state.remediationCyclesUsed,
         maxAttempts: definition.execution.maxAttempts, maxRemediationCycles: definition.execution.maxRemediationCycles }),
@@ -77,9 +79,9 @@ export class StageExecutor {
 
   #context(contract: PluginContext, lease: RevocableLease, owner: NonNullable<ReturnType<GrantedRegistry['snapshot']['stages']['get']>>, attempt: AttemptIdentity, controller: AbortController): ReturnType<typeof createPluginInvocationContext> {
     let sequence = 0;
-    return createPluginInvocationContext(contract, lease, { invoke: async (_leaseId, capability, operation, resource, payload) => {
+    return createPluginInvocationContext(contract, lease, { invoke: async (_leaseId, capability, operation, resource, payload, runtimeDispatchProfile) => {
       sequence += 1;
-      const request = { operation, resource, payload };
+      const request = { operation, resource, payload, ...(runtimeDispatchProfile === undefined ? {} : { runtimeDispatchProfile }) };
       const response = await this.#options.adapters.invoke(capability, attempt,
         `${attempt.runId}:${attempt.stageId}:${attempt.attemptNumber}:${sequence}`, request, controller.signal);
       if (capability === 'artifacts.write') {

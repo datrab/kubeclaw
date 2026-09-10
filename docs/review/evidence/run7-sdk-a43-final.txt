@@ -1,0 +1,70 @@
+Exact source 1d987c3363f6afc76b598565c3cab350a6adaa74, base remote a43aa256bdce35d7f9c44d5d661e59c4055e562e / local b3d2f7ba3ee35d121f26f67f737a400b3d034fb4.
+Command: node --test tests/verification/reliability/runtime-dispatch-native-profile.test.mjs tests/verification/reliability/runtime-dispatch-profile.test.mjs tests/verification/reliability/observability-retirement-plan.test.mjs tests/verification/reliability/nova-dispatch-projection.test.mjs && node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json && node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && node scripts/generate-plugin-sdk-types.mjs --check
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original completed import projects duplicate bytes with real quotas and exact HTTP replay (8244.971978ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input (8032.249469ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner (7142.378657ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId (7698.916655ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent canonical-invalid original selected request cannot authorize retention after honest hash-chain recomputation (6830.270105ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release (8162.597135ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"blocked","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual blocked original Core with a completed import cannot authorize retention before cancellation (4123.216574ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ honestly rehashed sourceStageId or missing-source snapshot cannot bypass explicit-revision-only eligibility (6775.462081ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job (6954.841945ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery (7085.249536ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (1390.533356ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (1424.875317ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (1062.089241ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (1084.086855ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (1075.266489ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (1125.246642ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1635.238179ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (972.898234ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.462106ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.725345ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.646284ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (405.467679ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (3239.13878ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (463.788575ms)
+✔ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (1376.945972ms)
+✔ actual v1 run creation carries frozen transport choice; terminal reopen preserves prefix (5611.363307ms)
+ℹ {"version":"v1","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v2 run creation carries frozen transport choice; terminal reopen preserves prefix (5153.823249ms)
+ℹ {"version":"v2","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v3 run creation carries frozen transport choice; terminal reopen preserves prefix (5892.537381ms)
+ℹ {"version":"v3","nativeGateway":false,"actualPostCount":1,"requestProfile":{"schemaVersion":"runtime-dispatch-profile.v1","encoding":"json-utf16-v1"},"reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ original v1 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (4567.730311ms)
+✔ original v1 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (4504.045614ms)
+✔ original v1 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (4640.485795ms)
+✔ original v2 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (4464.204064ms)
+✔ original v2 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (4297.904231ms)
+✔ original v2 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (5017.805965ms)
+✔ original v3 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (4472.936888ms)
+✔ original v3 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (4333.942724ms)
+✔ original v3 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (4631.199348ms)
+✔ declared v2 ACP transport profile owns locale selection without claiming a Gateway (7036.112754ms)
+ℹ {"version":"v2","nativeGateway":false,"localeStable":false,"transportKeys":["spawn:session-v1:attempt:0:payload:e6e964796faea9d043007231e949d244eca67210ff0c920cec81c6e69f52132b","spawn:session-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ declared v3 ACP transport profile owns locale selection without claiming a Gateway (6865.828459ms)
+ℹ {"version":"v3","nativeGateway":false,"localeStable":true,"transportKeys":["spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d","spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ original helper-review preserves invoke-only API and rejects invalid present profile before real HTTP (2235.054653ms)
+✔ original helper-verification preserves invoke-only API and rejects invalid present profile before real HTTP (2129.317298ms)
+✔ finite canonical profile: SDK and original Foundation validator agree without executing getters (2.91582ms)
+✔ new original snapshot writes bind required profile; rehashed malformed/future/downgraded contracts reject (12.620043ms)
+✔ profile is bound after budget reservation and excluded from actual model task without changing accounting (913.925019ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 44
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 75965.538397
+Entire command exit0. Both full typechecks and generator emitted no further output.

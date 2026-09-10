@@ -1,0 +1,46 @@
+Source b76cf2e on exact main1d7e6f/local6c567898. Original native/profile/retirement tests.
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (1080.13141ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (1100.491541ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (865.26872ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (947.619521ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (863.113696ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (841.353743ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (1246.103715ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (816.148774ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.109974ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.654036ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.16607ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (326.717851ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (2527.203672ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (382.254015ms)
+✔ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (936.16054ms)
+✔ actual v1 run creation carries frozen transport choice; terminal reopen preserves prefix (4757.011961ms)
+ℹ {"version":"v1","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v2 run creation carries frozen transport choice; terminal reopen preserves prefix (4608.774646ms)
+ℹ {"version":"v2","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v3 run creation carries frozen transport choice; terminal reopen preserves prefix (4575.820423ms)
+ℹ {"version":"v3","nativeGateway":false,"actualPostCount":1,"requestProfile":{"schemaVersion":"runtime-dispatch-profile.v1","encoding":"json-utf16-v1"},"reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ original v1 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (4030.713259ms)
+✔ original v1 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (3903.942184ms)
+✔ original v1 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (3874.769464ms)
+✔ original v2 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (4181.068786ms)
+✔ original v2 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (3932.663902ms)
+✔ original v2 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (3813.837805ms)
+✔ original v3 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (3964.727998ms)
+✔ original v3 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (3734.530712ms)
+✔ original v3 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (4374.40147ms)
+✔ declared v2 ACP transport profile owns locale selection without claiming a Gateway (6748.287338ms)
+ℹ {"version":"v2","nativeGateway":false,"localeStable":false,"transportKeys":["spawn:session-v1:attempt:0:payload:e6e964796faea9d043007231e949d244eca67210ff0c920cec81c6e69f52132b","spawn:session-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ declared v3 ACP transport profile owns locale selection without claiming a Gateway (6732.853485ms)
+ℹ {"version":"v3","nativeGateway":false,"localeStable":true,"transportKeys":["spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d","spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ finite canonical profile: SDK and original Foundation validator agree without executing getters (2.559521ms)
+✔ new original snapshot writes bind required profile; rehashed malformed/future/downgraded contracts reject (9.751641ms)
+✔ profile is bound after budget reservation and excluded from actual model task without changing accounting (660.717648ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 63314.107962

@@ -1,8 +1,8 @@
-import type { PluginInvocationContext } from '@kubeclaw/plugin-sdk';
+import { runtimeDispatchProfileFields } from '@kubeclaw/plugin-sdk';
 
 import { parseEchoReviewDispatchResponse } from './echo-review-parser.ts';
 import { assertReviewDeadline, invokeBeforeReviewDeadline,
-  resolveReviewExecutionSettings, type ReviewExecutionSettings } from './review-execution-settings.ts';
+  resolveReviewExecutionSettings, type ReviewExecutionSettings, type ReviewDispatchInvocationContext } from './review-execution-settings.ts';
 import { buildScalableReviewDispatchPayload,
   type ScalableReviewJob, type ScalableReviewJobResult } from './scalable-review-jobs.ts';
 import { preflightScalableReviewResults } from './scalable-review-verification.ts';
@@ -10,7 +10,7 @@ import { assertReviewRuntimeIdentity, parseReviewRuntimeAttestation,
   type ReviewRuntimeIdentity } from './review-runtime-attestation.ts';
 
 interface ReviewDispatchContext {
-  readonly agent: string; readonly context: PluginInvocationContext; readonly maxRetries: number;
+  readonly agent: string; readonly context: ReviewDispatchInvocationContext; readonly maxRetries: number;
   readonly deadlineEpochMs: number | undefined;
   readonly beforeDispatch: ReviewExecutionSettings['beforeDispatch'] | undefined;
   readonly beforeRetry: ReviewExecutionSettings['beforeRetry'] | undefined;
@@ -33,9 +33,9 @@ async function dispatchReviewJob(value: ScalableReviewJob, runtime: ReviewDispat
       const basePayload = buildScalableReviewDispatchPayload(value);
       const prepared = beforeDispatch?.(basePayload) ?? basePayload;
       const payload = Object.freeze({ ...prepared, runtimeDispatchAttempt: attempt });
-      const response = await invokeBeforeReviewDeadline(() => context.invoke('runtime.dispatch', {
+      const response = await invokeBeforeReviewDeadline(() => context.invoke('runtime.dispatch', withRuntimeDispatchProfile({
         operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent }, payload,
-      }), deadlineEpochMs, 'scalable review');
+      }, runtimeDispatchProfileFields(context.contract ?? {}).runtimeDispatchProfile)), deadlineEpochMs, 'scalable review');
       const attestation = parseReviewRuntimeAttestation(response.runtimeEvidence);
       assertReviewRuntimeIdentity(attestation, runtime.expectedRuntime);
       const parsed = parseEchoReviewDispatchResponse(response);
@@ -53,7 +53,7 @@ async function dispatchReviewJob(value: ScalableReviewJob, runtime: ReviewDispat
 
 // eslint-disable-next-line max-params -- The optional checkpoint callback is separate from immutable execution settings.
 export async function executeScalableReviewJobs(
-  jobs: readonly ScalableReviewJob[], agent: string, context: PluginInvocationContext,
+  jobs: readonly ScalableReviewJob[], agent: string, context: ReviewDispatchInvocationContext,
   execution: number | ReviewExecutionSettings = 4, expectedRuntime?: ReviewRuntimeIdentity,
   checkpoint?: (result: ScalableReviewJobResult) => Promise<void>,
 ): Promise<readonly ScalableReviewJobResult[]> {
@@ -75,3 +75,4 @@ export async function executeScalableReviewJobs(
   }
   return Object.freeze(jobs.map(({ id }) => output.get(id) as ScalableReviewJobResult));
 }
+import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';
