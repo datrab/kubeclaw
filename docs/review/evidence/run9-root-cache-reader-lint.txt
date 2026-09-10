@@ -1,0 +1,11 @@
+Source: ae37989605f1c169f3e1dff6db7348871ff3ff07
+Command: node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/common/plugin-runtime/sdk/src/review-cache-profile.ts skills/nova/plugins/prism-design/src/architecture.ts skills/nova/plugins/review/src/review-content-cache.ts skills/nova/plugins/review/src/repository-audit-cache.ts && git diff --check e98d2bd9 -- skills scripts tests
+Exit code: 0
+
+
+/workspace/scratch/15fb596e6560/run9-root/skills/nova/plugins/review/src/review-content-cache.ts
+  140:1  warning  Unused eslint-disable directive (no problems were reported from 'max-lines-per-function')
+
+✖ 1 problem (0 errors, 1 warning)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+

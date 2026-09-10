@@ -1,169 +1,186 @@
 {
-  "schema_version": 1,
-  "run_id": "20260910t004317",
+  "bounded_blob_reader": {
+    "backup": "44b6aea8266e61efbb25a9f6be852dbb05e3756d",
+    "fresh_checkout_repeat": 11,
+    "integration_commit": "0c3ab36434020730b326bb2aa5c84ea0210f9d6d",
+    "next_action": "Reader and bounded explicit-revision dispatch projection are independently reviewed and integrated; retain quotas, original archives and unsupported derived-source refusal.",
+    "review": "359bf27ea83ea614a57e778f359935b283d56a5f",
+    "root_full_tests": 55,
+    "source": "96236ba725bc4d57f0543f1fc0e76afa97f25de7",
+    "status": "independently-reviewed-root-tested-in-this-integration"
+  },
   "fresh_remote_base": "a43aa256bdce35d7f9c44d5d661e59c4055e562e",
-  "last_source_integration": "9c8dde882cdb1299902ed3a82d0b3d67d20c945d",
   "frozen_baseline": "c38779c71bb92bc15c3fcb89930348e5417aa475",
   "frozen_count": 47,
-  "verified_count": 8,
-  "overall_complete": false,
-  "bounded_blob_reader": {
-    "status": "independently-reviewed-root-tested-in-this-integration",
-    "source": "96236ba725bc4d57f0543f1fc0e76afa97f25de7",
-    "review": "359bf27ea83ea614a57e778f359935b283d56a5f",
-    "backup": "44b6aea8266e61efbb25a9f6be852dbb05e3756d",
-    "integration_commit": "0c3ab36434020730b326bb2aa5c84ea0210f9d6d",
-    "root_full_tests": 55,
-    "fresh_checkout_repeat": 11,
-    "next_action": "Reader and bounded explicit-revision dispatch projection are independently reviewed and integrated; retain quotas, original archives and unsupported derived-source refusal."
-  },
-  "integrated_review_codec": {
-    "commit": "84688686127cfcc0f8940381006d0b6ab9035095",
-    "independent_review": "c100f1b85a7d92c88f4c98ce2b57afa356c1f368",
-    "fresh_checkout_tests": 14,
-    "evidence": "docs/review/evidence/run5-publisher-review-rerun.txt"
-  },
   "incomplete_packages": [
     {
-      "package": "adapter-dependency-identity",
       "branch": "fix/resume-47-run5-adapter-fca25ae",
       "commit": "ab59d84676eb3e04fc91bd106f023a5bcb4ffef3",
+      "integration_commit": "b06c06dce3364c482a1da5637c36bc2b14ba8c72",
+      "latest_review_local": "28ebe602122cda8c4c966f24d5ecf9f905a0144e",
+      "next_action": "Bounded Adapter package complete: independent28/28, rootcombined87/87 and originalhistoricalCLI passed. Continue originalSDK remainingconsumer audit; no global finding closure from this package.",
+      "package": "adapter-dependency-identity",
       "review_branch": "fix/resume-47-run6-adapter-review-28ebe60",
       "review_commit": "65609f74dfee274952c47e8808db147955e5a427",
-      "integration_commit": "b06c06dce3364c482a1da5637c36bc2b14ba8c72",
-      "status": "independently-reviewed-root-tested-in-this-integration",
-      "latest_review_local": "28ebe602122cda8c4c966f24d5ecf9f905a0144e",
-      "next_action": "Bounded Adapter package complete: independent28/28, rootcombined87/87 and originalhistoricalCLI passed. Continue originalSDK remainingconsumer audit; no global finding closure from this package."
+      "status": "independently-reviewed-root-tested-in-this-integration"
     },
     {
-      "package": "native-product-controller-chart-gate",
       "branch": "fix/resume-47-run5-native-c3ebfb7",
       "commit": "c4231af19851adacb75611698300a62ee7eb1604",
-      "native_review_backup": "c5fd31aa328577125c6d64770b0020ba566b3a27",
-      "full_candidate_backup": "7bfa6bbf467e56c2191a1dd4ed44c43cc80daa85",
-      "full_candidate_review_backup": "91697e0bde855efaccb750d29d078d5f29561b87",
-      "fresh_b06_candidate_backup": "7f9055c58d85e09cdece2ee2cb112689832f1845",
       "final_b06_candidate_backup": "d9b9a42d1ae3f2e3f3ea8795f93b5e81c03edfdf",
       "final_b06_review_backup": "6ff6061e08e371c1b92107496447d03dd190c079",
+      "fresh_b06_candidate_backup": "7f9055c58d85e09cdece2ee2cb112689832f1845",
+      "full_candidate_backup": "7bfa6bbf467e56c2191a1dd4ed44c43cc80daa85",
+      "full_candidate_review_backup": "91697e0bde855efaccb750d29d078d5f29561b87",
       "integration_commit": "4f70d8f13e282e01d014fe82557d37c90d52cb71",
-      "status": "independently-approved-root-integrated-and-native-retested",
-      "next_action": "Coupled source and native CRD/CEL/IFR18 gate are complete in this integration, preserving all Reader/Adapter changes. Root full native, Product21registered17distinct, Chart6 and Prismtypes passed. IFR18 verified; actual application login/Tailnet/recipient/human acceptance gates remain open. No workload deployment or full delivery claim."
+      "native_review_backup": "c5fd31aa328577125c6d64770b0020ba566b3a27",
+      "next_action": "Coupled source and native CRD/CEL/IFR18 gate are complete in this integration, preserving all Reader/Adapter changes. Root full native, Product21registered17distinct, Chart6 and Prismtypes passed. IFR18 verified; actual application login/Tailnet/recipient/human acceptance gates remain open. No workload deployment or full delivery claim.",
+      "package": "native-product-controller-chart-gate",
+      "status": "independently-approved-root-integrated-and-native-retested"
     },
     {
-      "package": "nova-dispatch-archive-projection",
-      "status": "bounded-explicit-revision-slice-independently-approved-root-tested-in-this-integration",
-      "design_local_commit": "a0f6c44e5915d97df75d4aafeba7db23ec952db0",
-      "design_branch": "fix/resume-47-run5-storage-design-a0f6c44",
-      "design_remote_commit": "1cd953bd689c08ada97b5cbf359bc92abb9ed4ae",
-      "incomplete_source_backup": "ad16dde796ef6ec7350cc257145a7064124bc2a9",
-      "failing_review_backup": "cebd19aa95ad7c949143cd15a6f068929a5f5c46",
-      "read_fence_review_backup": "776e966f01572bbaa4dc78af3ef537d7d96e1073",
-      "causal_correction_incomplete_backup": "1acf137c72b89b1d70d9aaacdb295f527670be31",
       "canonical_correction_and_races_review_backup": "2c96f13d5b23dc8217f41e661ea725e16bef0509",
+      "causal_correction_incomplete_backup": "1acf137c72b89b1d70d9aaacdb295f527670be31",
+      "derived_source_design_backup": "b8de28505d65023da9f939712a210bd6c0729815",
+      "design_branch": "fix/resume-47-run5-storage-design-a0f6c44",
+      "design_local_commit": "a0f6c44e5915d97df75d4aafeba7db23ec952db0",
+      "design_remote_commit": "1cd953bd689c08ada97b5cbf359bc92abb9ed4ae",
+      "failing_review_backup": "cebd19aa95ad7c949143cd15a6f068929a5f5c46",
       "final_author_backup": "ccdea8e3e57904202d73b92dade8a2f90a655df5",
       "final_review_backup": "5db3cedc8520d9d9c1be3aee27dcaae2c22a4a04",
-      "root_combined_tests": 73,
-      "next_action": "Bounded explicit-revision projection complete; no original archive/evidence/log deletion or record-count release. Derived sourceStageId remains refused pending original pre-quality artifact selection/read/producer/commit-to-merge authority and a genuine implementation-session fixture; mocked Forge completion is not acceptance. Broader OBS retention/native requirements remain open.",
+      "incomplete_source_backup": "ad16dde796ef6ec7350cc257145a7064124bc2a9",
       "integration_commit": "1d7e6f8834b6e3f3f477a5af48832f74f5321757",
-      "derived_source_design_backup": "b8de28505d65023da9f939712a210bd6c0729815"
+      "next_action": "Bounded explicit-revision projection complete; no original archive/evidence/log deletion or record-count release. Derived sourceStageId remains refused pending original pre-quality artifact selection/read/producer/commit-to-merge authority and a genuine implementation-session fixture; mocked Forge completion is not acceptance. Broader OBS retention/native requirements remain open.",
+      "package": "nova-dispatch-archive-projection",
+      "read_fence_review_backup": "776e966f01572bbaa4dc78af3ef537d7d96e1073",
+      "root_combined_tests": 73,
+      "status": "bounded-explicit-revision-slice-independently-approved-root-tested-in-this-integration"
     },
     {
-      "package": "sdk-openclaw-run-frozen-transport-profile",
-      "status": "bounded-package-independently-approved-root64-and-fresh5-tested-in-this-integration",
       "audit_backup": "a79809da359452eaba2a4305b83a0dd564154730",
-      "rejected_payload_marker_wip": "1db8e915d36ddea354a87896d66542a33295e514",
-      "independent_collision_review": "482a97b49b19b48ce25d652f3b87ec505f08be12",
-      "independent_hmac_red_phase_review": "3254ad65f412223f47f1e20d9686fc1ed8f1cf40",
-      "next_action": "Transport source complete in this integration; separate cache/report/Prism domains remain open. Root full original Review/types/generator/archived CLI pass; no successful Gateway/provider claim.",
       "corrected_envelope_wip": "819699ff79818b33f5d862e67a2e3b647d632bb3",
-      "native_matrix_wip": "feee269863086c3ea4e46363b10178afa405d4bf",
       "final_author_backup": "bade491d2c20e0efc5b33816d447bcb187f790d0",
       "final_review_backup": "898fada24b84fddb6eff8c5f9a434731a8054583",
+      "independent_collision_review": "482a97b49b19b48ce25d652f3b87ec505f08be12",
+      "independent_hmac_red_phase_review": "3254ad65f412223f47f1e20d9686fc1ed8f1cf40",
+      "integration_commit": "28909f62da68f70d94e0672ce7ae12ced8d7b3d9",
+      "native_matrix_wip": "feee269863086c3ea4e46363b10178afa405d4bf",
+      "next_action": "Transport source complete in this integration; separate cache/report/Prism domains remain open. Root full original Review/types/generator/archived CLI pass; no successful Gateway/provider claim.",
+      "package": "sdk-openclaw-run-frozen-transport-profile",
+      "rejected_payload_marker_wip": "1db8e915d36ddea354a87896d66542a33295e514",
       "root_report": "implementation/run9-sdk-root-review.md",
-      "integration_commit": "28909f62da68f70d94e0672ce7ae12ced8d7b3d9"
+      "status": "bounded-package-independently-approved-root64-and-fresh5-tested-in-this-integration"
     },
     {
-      "package": "worker-trust-native-envoy",
-      "status": "bounded-slice-independently-reviewed-root-tested-and-integrated",
-      "source_candidate": "docs/review/remediation/candidates/worker-trust-native-unverified.patch",
-      "native_candidate_backup": "fe88490266175c91c0eb624a1c3a63b5f7d42462",
-      "independent_pending_corrections_backup": "f3eb268f223090bb32d5bc3e89f9282b4008df5b",
-      "next_action": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment. Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment.",
       "final_author_backup": "72f8bb702da5dac79476e38b5f2d94f9c9877f5a",
       "final_review_backup": "1fb7af3e3d52c9e860920bf72a7ce210f8f16d4c",
-      "tested_remote_parent": "1d7e6f8834b6e3f3f477a5af48832f74f5321757",
+      "independent_pending_corrections_backup": "f3eb268f223090bb32d5bc3e89f9282b4008df5b",
+      "integration_commit": "a43aa256bdce35d7f9c44d5d661e59c4055e562e",
+      "native_candidate_backup": "fe88490266175c91c0eb624a1c3a63b5f7d42462",
+      "next_action": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment. Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment.",
+      "package": "worker-trust-native-envoy",
       "root_report": "implementation/run7-envoy-root-review.md",
-      "integration_commit": "a43aa256bdce35d7f9c44d5d661e59c4055e562e"
+      "source_candidate": "docs/review/remediation/candidates/worker-trust-native-unverified.patch",
+      "status": "bounded-slice-independently-reviewed-root-tested-and-integrated",
+      "tested_remote_parent": "1d7e6f8834b6e3f3f477a5af48832f74f5321757"
     },
     {
+      "design_backup": "04d5d2f3ad6cdc41c18438a03583b7763a1cdbf1",
+      "next_action": "See operator-delivery-request-projection-reviewed and integration9c5bdcb; do not restart the original design as unfinished source.",
       "package": "operator-delivery-retention-design",
-      "status": "original-fixture-independently-passed-bounded-production-implementation-authorized-not-reviewed",
-      "next_action": "Implement only original JSON human-approval request.v1 duplicate projection under run/wait/delivery fences and current locked receipt view. No-payload receipt fallback must remain bound, stale completion/failure must preserve exact accepted receipt, genuine quota/race/replay negatives and independent review required before integration. No authority/data deletion or global closure.",
-      "design_backup": "04d5d2f3ad6cdc41c18438a03583b7763a1cdbf1"
+      "status": "superseded-by-independently-reviewed-integrated-original-fixture-package"
     },
     {
-      "package": "review-cache-admitted-locale",
-      "status": "real-original-core-artifact-counterexample-proven-not-repaired",
       "backup": "05faa821ad473135654d64702170d7835f5fa661",
-      "next_action": "Admitted contextRequest I/i assessments are reusable but en-US persisted real cache fails tr-TR. Version genuine new inner value/record digests and bind original artifact bytes; preserve legacy semantics and lookup identity, no silent miss/reissue or ignored malformed history. Finalize separate design after transport approval."
+      "next_action": "Historical red retained. See review-cache-v4-v2 for all three selector corrections and actual archived/native tests; no separate duplicate implementation.",
+      "package": "review-cache-admitted-locale",
+      "status": "counterexample-preserved-repair-in-reviewed-v4-v2-package"
     },
     {
+      "next_action": "Original accepted asset IDs aa/az create checksum paths with different en-US/da-DK ordering. Verify real original archive/CAS/import producer boundary, persist exact probe/raw; extracted source reproduction is not full rendered producer proof. Audit dynamic-ID assumptions before source changes.",
       "package": "prism-baseline-lowercase-locale-audit",
-      "status": "schema-admitted-lowercase-path-order-counterexample-under-original-consumer-test",
-      "next_action": "Original accepted asset IDs aa/az create checksum paths with different en-US/da-DK ordering. Verify real original archive/CAS/import producer boundary, persist exact probe/raw; extracted source reproduction is not full rendered producer proof. Audit dynamic-ID assumptions before source changes."
+      "status": "schema-admitted-lowercase-path-order-counterexample-under-original-consumer-test"
     },
     {
+      "next_action": "Five original status CLI regressions pass; genuine adopted live-child test fails REAL_PROC_PROCESS_CMDLINE_REQUIRED. Prove finite original readable-platform startup where possible without fabricated commandline/status/provider; adoption remains open.",
       "package": "scaffold-supervisor-original-gates",
-      "status": "original-cli-status-cases-passed-adopted-native-proc-gate-blocked",
-      "next_action": "Five original status CLI regressions pass; genuine adopted live-child test fails REAL_PROC_PROCESS_CMDLINE_REQUIRED. Prove finite original readable-platform startup where possible without fabricated commandline/status/provider; adoption remains open."
+      "status": "original-cli-status-cases-passed-adopted-native-proc-gate-blocked"
     },
     {
-      "package": "operator-delivery-request-projection-reviewed",
       "commit": "d6ce4510c85ac0d0884f92001044c0bd333f8c05",
-      "review_commit": "ba13e9924fd20e95f0e8219b0a45f1d22454654a",
-      "status": "bounded-package-independently-approved-root27-tested-in-this-integration",
-      "next_action": "Bounded JSON-v1 projection complete; original receipts and record counts retained. Other OBS producers and native requirements remain incomplete.",
-      "sdk_reconciled_author": "1aeaf57815292e7f8c6a827e33e766c366222cea",
       "current_head_review_source": "4d88d32290a878e5a22da21a1c8bc9a78454b304",
-      "root_report": "implementation/run9-operator-root-review.md"
+      "integration_commit": "9c5bdcb21c8fcd50fb38d2a1c4988213db2b3ecb",
+      "next_action": "Bounded JSON-v1 projection complete; original receipts and record counts retained. Other OBS producers and native requirements remain incomplete.",
+      "package": "operator-delivery-request-projection-reviewed",
+      "review_commit": "ba13e9924fd20e95f0e8219b0a45f1d22454654a",
+      "root_report": "implementation/run9-operator-root-review.md",
+      "sdk_reconciled_author": "1aeaf57815292e7f8c6a827e33e766c366222cea",
+      "status": "bounded-package-independently-approved-root27-tested-in-this-integration"
     },
     {
-      "package": "prism-baseline-v2",
       "commit": "1ca9a7236bc8bec40ce403b21b6f5b53dad275f3",
-      "review_commit": "4d09c0a9c4e925eba73c5656508e38f4d067a22d",
-      "status": "bounded-package-independently-approved-root-tested-in-this-integration",
+      "integration_commit": "9c8dde882cdb1299902ed3a82d0b3d67d20c945d",
       "next_action": "Bounded explicit paired baseline-v2 complete in this integration. Preserve v1 approvals and full original gates; registered-stage reader fix is separately owned and incomplete.",
+      "package": "prism-baseline-v2",
+      "review_commit": "4d09c0a9c4e925eba73c5656508e38f4d067a22d",
       "root_report": "implementation/run9-prism-baseline-root-review.md",
-      "integration_commit": "9c8dde882cdb1299902ed3a82d0b3d67d20c945d"
+      "status": "bounded-package-independently-approved-root-tested-in-this-integration"
     },
     {
+      "commit": "947b3e79056cd0f09b97ac9401c19ef10c6ac70b",
+      "next_action": "Bounded cache package complete; all three selector defects independently corrected. Root71/71 combined original native tests, full Review, archived CLI and reader16/24/32/8 matrix pass. Preserve v1/v2/v3 legacy effects; report and transport sibling remain independently owned and incomplete.",
       "package": "review-cache-v4-v2",
-      "commit": "2981a33217ec204a661dfc367cd5672f18928492",
-      "review_commit": "c76f6775edb8fbbb8914562a50827958cea03774",
-      "status": "final-candidate-additional-root-selector-defect-correction-pending",
-      "next_action": "Root demonstrated Proxy context selector trap/legacy acceptance after initial review. Author89c4fa4 corrects validation-before-hasOwn; independent unchanged red/green and current-head cache/source/operator interactions required before integration. Raw follow-up explicitly distinguishes mutable source."
+      "review_commit": "01dbbc356b8ae3638641f686c925ba66c3b8d82c",
+      "root_report": "implementation/run9-cache-reader-root-review.md",
+      "status": "bounded-package-independently-approved-root71-and-reader-matrix-tested-in-this-integration",
+      "withdrawn_review": "c76f6775edb8fbbb8914562a50827958cea03774",
+      "root_combined_tests": 71
     },
     {
-      "package": "review-report-hex-key-cutover",
       "commit": "4ac681dd400fd8dd2c0310c7fe696571005d290f",
-      "status": "counterexample-only-no-production-change",
-      "next_action": "Independent design review: finite report-only immutable config, all genuine new compiler Review nodes select it; historical source/report modes independent, exact expected node set/pinned packages preserved. Current coverage helper omitted mode must stay legacy because archived CLI resolves it. No production approval until final design refinements.",
-      "design_commit": "95880cc1f724d0fac5bb13ab10b31c52811c4b50"
+      "design_commit": "95880cc1f724d0fac5bb13ab10b31c52811c4b50",
+      "design_review": "13a5649423061ba53cd4f572618577e82e6ee89b",
+      "implementation_wip": "023a255586362379e956a807027661c6dc230e83",
+      "next_action": "Continue isolated source WIP: finite report-only config, explicit new compiler nodes, independent legacy source/report modes and expected node set; current coverage omitted arg remains legacy. Initial6 compiler/config and owning types pass, but actual CAS/replay/strict summary/governor and archived CLI gates plus independent review remain required. No whole SDK closure.",
+      "package": "review-report-hex-key-cutover",
+      "status": "design-independently-approved-implementation-incomplete-native-matrix-pending"
     },
     {
+      "commit": "711de7d86b5fb581ed0b82077771c9169df4170a",
+      "implementation_wip": "95f31ce470e6e1545ec49686e7ffbe5a0d456096",
+      "next_action": "Bounded reader package complete; exact original get_json/ref ownership preserved. Root16 registered/24 replay/32 locale/8 owner and combined71 native tests pass with cachev4. No full downstream service/browser or automatic package-upgrade claim.",
       "package": "prism-registered-reader",
-      "commit": "49211bfba8d506d2045d36fe47fbd74a46f85383",
-      "status": "implementation-wip-genuine-replay-matrix-pending-final-review",
-      "next_action": "Preserve exact get_json operation/payload/ordinal and bind full expected ref; select codec only from its explicit encoding. Independent actual requested/completed and accepted-no-receipt histories required; no bytes-operation swap in old effects.",
-      "review_commit": "4f498a936a09a6446e0000fdd579affafbd0bf5c",
-      "implementation_wip": "95f31ce470e6e1545ec49686e7ffbe5a0d456096"
+      "review_commit": "fc746693ebb525d3007f6b6634bae7008f99cb65",
+      "root_report": "implementation/run9-cache-reader-root-review.md",
+      "status": "bounded-package-independently-approved-root71-and-reader-matrix-tested-in-this-integration",
+      "root_combined_tests": 71
     },
     {
-      "package": "supervisor-original-cli-start",
       "commit": "47de98daaeabc527d3304462f05f24b7bca57747",
-      "status": "bounded-start-proof-root-tested-in-this-integration",
-      "next_action": "Original restored-platform start proven; actual adopted-process temporary status failure still needs readable native child procfs cmdline. No fake identity or new model gate."
+      "next_action": "Original restored-platform start proven; actual adopted-process temporary status failure still needs readable native child procfs cmdline. No fake identity or new model gate.",
+      "package": "supervisor-original-cli-start",
+      "status": "bounded-start-proof-root-tested-in-this-integration"
+    },
+    {
+      "counterexample": "755d4e1e12bf99421c0d2aa638c990aeed127822",
+      "independent_counterexample": "890797782ad99becd03532baacb2e87a462ef992",
+      "next_action": "Existing portableJson(request) now precedes hasOwn in runtimeDispatchProfileFields, rejecting actual Proxy/getter before traps, original HTTP POST or journal admission. Author48 actual original/history/confidential/dependency cases pass. Independent final review and cache/reader-head reconciliation still required; valid legacy JSON codec bytes must remain exact.",
+      "package": "runtime-profile-no-trap-admission",
+      "source_backup": "81a0e90f1626d32f207c718ff26debd2f30889a6",
+      "source_commit": "f505eedacada7e7168740aa27272530f62c9f47f",
+      "status": "bounded-source-native-tested-independent-review-in-progress-not-integrated"
     }
   ],
-  "rule": "Backup is not acceptance. Restore only verified frozen commits into a new checkout, never another writer's checkout or dirty work based on an old heartbeat. Exact-parent ff-only integration after review/tests; no CI/deployment."
+  "integrated_review_codec": {
+    "commit": "84688686127cfcc0f8940381006d0b6ab9035095",
+    "evidence": "docs/review/evidence/run5-publisher-review-rerun.txt",
+    "fresh_checkout_tests": 14,
+    "independent_review": "c100f1b85a7d92c88f4c98ce2b57afa356c1f368"
+  },
+  "last_source_integration": "9c5bdcb21c8fcd50fb38d2a1c4988213db2b3ecb",
+  "overall_complete": false,
+  "rule": "Backup is not acceptance. Restore only verified frozen commits into a new checkout, never another writer's checkout or dirty work based on an old heartbeat. Exact-parent ff-only integration after review/tests; no CI/deployment.",
+  "run_id": "20260910t004317",
+  "schema_version": 1,
+  "verified_count": 8
 }

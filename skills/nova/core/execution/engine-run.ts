@@ -18,17 +18,18 @@ import { reconcileNovaObservabilityOnRecovery } from '../observability/reconcile
 
 export interface ExecutionContext { readonly platform: PlatformConfig; readonly definition: PipelineDefinition; readonly runtime: PreparedRuntime; readonly runId: string; readonly runRoot: string; readonly leaseSignal: AbortSignal; readonly events: FileJournal<LifecycleEvent | PluginDomainEvent> }
 
-export async function executePrepared(context: ExecutionContext, options: Omit<PipelineRunnerOptions, 'definition' | 'registry' | 'activated' | 'adapters' | 'journal' | 'orchestratorIssuerId' | 'signal' | 'onEventsCommitted' | 'runtimeDispatchProfile'>): Promise<PipelineRunResult> {
+export async function executePrepared(context: ExecutionContext, options: Omit<PipelineRunnerOptions, 'definition' | 'registry' | 'activated' | 'adapters' | 'journal' | 'orchestratorIssuerId' | 'signal' | 'onEventsCommitted' | 'runtimeDispatchProfile' | 'reviewCacheProfile'>): Promise<PipelineRunResult> {
   const pinnedGraph = verifyPinnedGraph(context.runRoot, context.definition);
   const snapshot = readRunSnapshot(context.runRoot);
-  const runtimeDispatchProfile = snapshot.schemaVersion === 'run-snapshot.v3' ? snapshot.runtimeDispatchProfile : undefined;
+  const runtimeDispatchProfile = snapshot.schemaVersion === 'run-snapshot.v3' || snapshot.schemaVersion === 'run-snapshot.v4' ? snapshot.runtimeDispatchProfile : undefined;
+  const reviewCacheProfile = snapshot.schemaVersion === 'run-snapshot.v4' ? snapshot.reviewCacheProfile : undefined;
   await assertEffectRecoverySafe(context.runRoot, context.runId, context.definition, context.events);
   const adapters = createAdapterRuntime(context.platform, context.runRoot, context.runtime, context.events); await adapters.start();
   const flush = serializedObserverDrainer(context.platform, context.runRoot, context.runtime, adapters, context.events);
   try { return await new PipelineRunner({ definition: context.definition, registry: context.runtime.granted, activated: context.runtime.activated,
     adapters, journal: context.events, orchestratorIssuerId: context.platform.orchestratorIssuerId, signal: context.leaseSignal,
     onEventsCommitted: flush, ...options, graphSnapshotVersion: pinnedGraph.schemaVersion,
-    runtimeDispatchProfile }).run(context.runId); }
+    runtimeDispatchProfile, reviewCacheProfile }).run(context.runId); }
   finally { try { await flush(); } finally { await adapters.shutdown(); } }
 }
 

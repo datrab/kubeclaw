@@ -1,0 +1,56 @@
+Independent source 36cacc8; exact author 04ccca1 / remote 947b3e79056cd0f09b97ac9401c19ef10c6ac70b production. Parent 9c5bdcb21c8fcd50fb38d2a1c4988213db2b3ecb. All 2136 author non-documentation blobs/modes/types matched; reviewer adds only tests/reports/evidence. All 64 workspace links resolve this checkout; immutable third-party bytes shared. Lock Git blob 96cdba80650e16fb5699df314516b14d08931b95.
+Command: node --test --test-concurrency=1 tests/verification/reliability/review-cache-independent.test.mjs tests/verification/reliability/review-cache-legacy-prefix.test.mjs tests/verification/reliability/review-cache-native-profile.test.mjs tests/verification/reliability/review-cache-profile.test.mjs tests/verification/reliability/review-cache-storage-negative.test.mjs tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs tests/verification/reliability/source-snapshot-version.test.mjs
+Exit: 0
+✔ independent v2 record version selection does not execute getter or proxy traps (7.53079ms)
+✔ independent context selector rejects absent/present Proxy and getter contexts before legacy inference (0.418171ms)
+✔ independent writer rejects getter/proxy record before version inspection or provider admission (0.638193ms)
+✔ v1 original cache write requested SIGKILL preserves exact pending operation and authority (2201.446472ms)
+✔ v1 original cache write accepted SIGKILL preserves exact pending operation and authority (2056.629874ms)
+✔ v1 original cache write completed SIGKILL preserves exact pending operation and authority (2097.059975ms)
+✔ v1 original cache read requested SIGKILL preserves exact pending operation and authority (3226.996119ms)
+✔ v1 original cache read accepted SIGKILL preserves exact pending operation and authority (3142.68376ms)
+✔ v1 original cache read completed SIGKILL preserves exact pending operation and authority (4335.358784ms)
+✔ v2 original cache write requested SIGKILL preserves exact pending operation and authority (2358.444523ms)
+✔ v2 original cache write accepted SIGKILL preserves exact pending operation and authority (2304.220402ms)
+✔ v2 original cache write completed SIGKILL preserves exact pending operation and authority (2262.436853ms)
+✔ v2 original cache read requested SIGKILL preserves exact pending operation and authority (3542.891545ms)
+✔ v2 original cache read accepted SIGKILL preserves exact pending operation and authority (3464.252241ms)
+✔ v2 original cache read completed SIGKILL preserves exact pending operation and authority (4388.292128ms)
+✔ v3 original cache write requested SIGKILL preserves exact pending operation and authority (2290.910321ms)
+✔ v3 original cache write accepted SIGKILL preserves exact pending operation and authority (2134.573497ms)
+✔ v3 original cache write completed SIGKILL preserves exact pending operation and authority (2295.157085ms)
+✔ v3 original cache read requested SIGKILL preserves exact pending operation and authority (3577.512579ms)
+✔ v3 original cache read accepted SIGKILL preserves exact pending operation and authority (3449.047031ms)
+✔ v3 original cache read completed SIGKILL preserves exact pending operation and authority (4815.822937ms)
+✔ v4 original cache write requested SIGKILL preserves exact pending operation and authority (2249.959837ms)
+✔ v4 original cache write accepted SIGKILL preserves exact pending operation and authority (2280.915102ms)
+✔ v4 original cache write completed SIGKILL preserves exact pending operation and authority (2560.959977ms)
+✔ v4 original cache read requested SIGKILL preserves exact pending operation and authority (3878.471983ms)
+✔ v4 original cache read accepted SIGKILL preserves exact pending operation and authority (3536.057936ms)
+✔ v4 original cache read completed SIGKILL preserves exact pending operation and authority (3519.107992ms)
+✔ genuine v4 StageExecutor checkpoints and retains same-key v2 refs through en/tr/sv interrupted attempts (3972.308409ms)
+ℹ {"nativeModel":false,"registeredTestStage":true,"attempts":3,"seedExecutions":1,"retainedRefs":2,"digest":"sha256:e64985630cf3fa44a2d2012de6710d53a9838395f3d37adf194b60a04877e1b7"}
+✔ separate finite cache profile has canonical SDK/Foundation parity and never invokes getters (2.023523ms)
+✔ context profile selection rejects absent/present Proxy and getters before any trap or field access (0.343609ms)
+✔ genuine v4 writer requires both profiles; legacy version/profile combinations reject after rehash (19.423235ms)
+✔ v2 owns strict JSON and both inner digests; profile mismatch is an error, never a miss (1.95545ms)
+✔ actual Core/FileJournal/ArtifactStore retains exact same-byte owners and rejects all corrupt/mixed cache candidates (1086.929343ms)
+ℹ {"nativeArtifactStore":true,"mocks":false,"racingWrites":2,"foreignSameBytes":true,"executedMisses":0}
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (509.183292ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1078.931117ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (549.884022ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (26.084796ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 81517.460843
+
+Owning checks each exit 0, no output:
+node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json
+node scripts/generate-plugin-sdk-types.mjs --check
+git diff --check

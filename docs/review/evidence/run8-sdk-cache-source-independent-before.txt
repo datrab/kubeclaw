@@ -1,0 +1,54 @@
+Source 1eac92f / own32b03f7.
+Command: node --test --test-concurrency=1 tests/verification/reliability/source-snapshot-version.test.mjs tests/verification/reliability/sdk-json-contract.test.mts tests/verification/reliability/sdk-json-portable.test.mts tests/verification/reliability/effect-identity-version.test.mts tests/verification/reliability/artifact-checkpoint-encoding.test.mjs tests/verification/reliability/artifact-checkpoint-review.test.mjs && node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json && node scripts/generate-plugin-sdk-types.mjs --check
+✔ real portable ArtifactStore write checkpoints and reopens unchanged across actual locales (651.631462ms)
+✔ legacy checkpoints retain their exact original reference and journal bytes (51.355444ms)
+✔ checkpoint codec binding rejects unknown encodings and authenticated same-byte relabels (24.670028ms)
+✔ recorder does not collapse same-byte references carrying different codec identities (32.455593ms)
+✔ independent genuine-store response still binds all owner and byte fields (43.089865ms)
+✔ independent completion-before-projection recovery preserves the portable original reference (71.452058ms)
+✔ independent unknown-codec disk record rejects without mutating journal bytes (38.913765ms)
+✔ independent unknown-codec recording rejects before journal append (29.266722ms)
+✔ original recorded legacy journal prefixes recover without identity migration across native locales (13586.917673ms)
+✔ new original durable producers and completed replay use the same explicit portable identity in both locale directions (3545.084647ms)
+Real ArtifactStore and FileEffectJournal replay JSON regressions passed
+✔ tests/verification/reliability/sdk-json-contract.test.mts (434.345764ms)
+✔ original artifact/source consumers and reopened effect journal preserve byte authority across native locales (2930.03913ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1141.566052ms)
+✖ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (632.640838ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (45.953165ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 14
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24920.690829
+
+✖ failing tests:
+
+test at tests/verification/reliability/source-snapshot-version.test.mjs:31:2
+✖ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (632.640838ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'run-snapshot.v4'
+  - 'run-snapshot.v3'
+                   ^
+
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run8-sdk-cache-review/tests/verification/reliability/source-snapshot-version.test.mjs:40:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'run-snapshot.v4',
+    expected: 'run-snapshot.v3',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+Exit 1, 14 passed / 1 failed. Only stale genuine-new-writer expectation v3 versus actual v4; original Unicode/legacy assertions retained. Types/generator did not run in this chained command. Diagnostic blank padding normalized.

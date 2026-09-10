@@ -1,0 +1,35 @@
+Fresh main 28909f62da68f70d94e0672ce7ae12ced8d7b3d9. Reviewer source716e020f5947feb71434452554c9b3edc37ed064 equals all2122 non-doc blobs/modes/types of final author remote2981a33217ec204a661dfc367cd5672f18928492 (local4685b4ec7de3f11868a75e0fd3f3c304b0b33e54), plus independent test/evidence only.
+Command: node --test --test-concurrency=1 tests/verification/reliability/review-cache-independent.test.mjs tests/verification/reliability/review-cache-native-profile.test.mjs tests/verification/reliability/review-cache-storage-negative.test.mjs tests/verification/reliability/source-snapshot-version.test.mjs tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs tests/verification/reliability/artifact-checkpoint-encoding.test.mjs tests/verification/reliability/artifact-checkpoint-review.test.mjs tests/verification/reliability/sdk-json-contract.test.mts tests/verification/reliability/sdk-json-portable.test.mts tests/verification/reliability/effect-identity-version.test.mts && node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json && node scripts/generate-plugin-sdk-types.mjs --check && git diff --check
+✔ real portable ArtifactStore write checkpoints and reopens unchanged across actual locales (746.734188ms)
+✔ legacy checkpoints retain their exact original reference and journal bytes (49.23111ms)
+✔ checkpoint codec binding rejects unknown encodings and authenticated same-byte relabels (21.923471ms)
+✔ recorder does not collapse same-byte references carrying different codec identities (31.93137ms)
+✔ independent genuine-store response still binds all owner and byte fields (29.912068ms)
+✔ independent completion-before-projection recovery preserves the portable original reference (50.968656ms)
+✔ independent unknown-codec disk record rejects without mutating journal bytes (25.078586ms)
+✔ independent unknown-codec recording rejects before journal append (23.31125ms)
+✔ original recorded legacy journal prefixes recover without identity migration across native locales (13169.5691ms)
+✔ new original durable producers and completed replay use the same explicit portable identity in both locale directions (3408.892573ms)
+✔ independent v2 record version selection does not execute getter or proxy traps (7.38987ms)
+✔ independent writer rejects getter/proxy record before version inspection or provider admission (0.667607ms)
+✔ genuine v4 StageExecutor checkpoints and retains same-key v2 refs through en/tr/sv interrupted attempts (3876.36728ms)
+ℹ {"nativeModel":false,"registeredTestStage":true,"attempts":3,"seedExecutions":1,"retainedRefs":2,"digest":"sha256:e64985630cf3fa44a2d2012de6710d53a9838395f3d37adf194b60a04877e1b7"}
+✔ actual Core/FileJournal/ArtifactStore retains exact same-byte owners and rejects all corrupt/mixed cache candidates (970.506561ms)
+ℹ {"nativeArtifactStore":true,"mocks":false,"racingWrites":2,"foreignSameBytes":true,"executedMisses":0}
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (449.664878ms)
+Real ArtifactStore and FileEffectJournal replay JSON regressions passed
+✔ tests/verification/reliability/sdk-json-contract.test.mts (384.611388ms)
+✔ original artifact/source consumers and reopened effect journal preserve byte authority across native locales (2611.92603ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1007.371502ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (530.936579ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (23.140376ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30846.725927
+
+Exit 0, 20/20, zero skips. Both owning TypeScript projects/generator/diff emitted no extra output.

@@ -92,6 +92,22 @@ checkpoints to the next attempt, which validates their source, policy, model,
 runtime, and evidence identities and dispatches only missing jobs. A container
 failure at batch 150 therefore preserves batches 1 through 149.
 
+New runs use `run-snapshot.v4` with a separately frozen `ReviewCacheProfile`.
+Its `review-content-cache.v2` records bind both inner digests and the outer
+artifact bytes to the explicit portable JSON encoding. Reads verify the entire
+selected artifact reference, including its producing attempt and encoding.
+All retained same-run/stage candidates must agree: mixed encodings, unknown
+record versions, conflicting content or invalid proofs are errors, never misses.
+The existing logical cache key and artifact ID are unchanged.
+
+Historical v1/v2/v3 run snapshots retain legacy cache records and exact original
+artifact invocation shapes. Portable transport in a v3 run does not select a new
+cache codec. Legacy hits are not rewritten, old locale authority is not guessed,
+and an unverifiable historical cache remains an explicit integrity failure.
+Generic `runWithReviewCache` callers select the canonical profile explicitly as
+the sixth argument; omission retains the historical producer. This cache profile
+does not version repository prepared plans, final reports, or other consumers.
+
 Compilation also writes a content-addressed `repository-review-prepared:*`
 checkpoint before the first runtime dispatch. A later attempt of the same stage,
 or an execute stage that depends on a plan stage in the same run, validates and

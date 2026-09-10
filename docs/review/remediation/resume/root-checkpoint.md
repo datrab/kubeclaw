@@ -6,6 +6,13 @@ continuation is in `run-20260910t004317.md`; current remote package refs are
 listed in `run5-active-packages.json`. Reviewed integration and evidence
 remain in `run-20260909t2146.md` and `run-20260909t2114.md`.
 
+Latest bounded cache/registered-reader root acceptance is in
+`implementation/run9-cache-reader-root-review.md`:71 native combined cases plus
+the complete16/24/32/8 real reader matrix, original Review and historical CLI
+passed. It preserves integrated transport, Prism baseline and Operator changes.
+Report-only cutover and separate transport-selector no-trap correction remain
+unintegrated; resume their immutable backups from the current inventory.
+
 ## Independently integrated work
 
 - Source/Subject, Effect and enclosing Snapshot identity versions preserve

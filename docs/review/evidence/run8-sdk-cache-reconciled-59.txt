@@ -1,0 +1,81 @@
+Reconciled source a3f67667869a66b36f416b82be6c1f2fedcbdec7 on exact fresh main28909f62/local69253f29. Node --test native cache/profile/archive/storage, source snapshot, original HMAC, retirement, dispatch projection and SDK artifact/journal suite.
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original completed import projects duplicate bytes with real quotas and exact HTTP replay (13220.409202ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input (9173.997626ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner (8629.498952ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId (8768.391515ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent canonical-invalid original selected request cannot authorize retention after honest hash-chain recomputation (8308.242791ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release (8658.075631ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"blocked","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual blocked original Core with a completed import cannot authorize retention before cancellation (4622.593132ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ honestly rehashed sourceStageId or missing-source snapshot cannot bypass explicit-revision-only eligibility (7463.009237ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job (7171.475487ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_SANDBOX_NOT_BUILT","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery (7638.207406ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (3215.199227ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (3454.109184ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (1844.844964ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (1923.319677ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (2112.12505ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (1800.222656ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (2041.390113ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (1408.803063ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (1.833847ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (0.842652ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (1.263687ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (411.198276ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (3653.878773ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (563.093986ms)
+✔ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (1806.126551ms)
+✔ v1 original cache write requested SIGKILL preserves exact pending operation and authority (6007.763263ms)
+✔ v1 original cache write accepted SIGKILL preserves exact pending operation and authority (3686.0393ms)
+✔ v1 original cache write completed SIGKILL preserves exact pending operation and authority (4478.390255ms)
+✔ v1 original cache read requested SIGKILL preserves exact pending operation and authority (5010.006768ms)
+✔ v1 original cache read accepted SIGKILL preserves exact pending operation and authority (5908.462151ms)
+✔ v1 original cache read completed SIGKILL preserves exact pending operation and authority (6272.79113ms)
+✔ v2 original cache write requested SIGKILL preserves exact pending operation and authority (2869.979851ms)
+✔ v2 original cache write accepted SIGKILL preserves exact pending operation and authority (2620.642946ms)
+✔ v2 original cache write completed SIGKILL preserves exact pending operation and authority (2754.896389ms)
+✔ v2 original cache read requested SIGKILL preserves exact pending operation and authority (4582.083282ms)
+✔ v2 original cache read accepted SIGKILL preserves exact pending operation and authority (4428.498077ms)
+✔ v2 original cache read completed SIGKILL preserves exact pending operation and authority (6371.957641ms)
+✔ v3 original cache write requested SIGKILL preserves exact pending operation and authority (2908.114216ms)
+✔ v3 original cache write accepted SIGKILL preserves exact pending operation and authority (2662.827296ms)
+✔ v3 original cache write completed SIGKILL preserves exact pending operation and authority (2707.682714ms)
+✔ v3 original cache read requested SIGKILL preserves exact pending operation and authority (3958.95605ms)
+✔ v3 original cache read accepted SIGKILL preserves exact pending operation and authority (4144.466052ms)
+✔ v3 original cache read completed SIGKILL preserves exact pending operation and authority (4761.634789ms)
+✔ v4 original cache write requested SIGKILL preserves exact pending operation and authority (2487.578075ms)
+✔ v4 original cache write accepted SIGKILL preserves exact pending operation and authority (2418.400158ms)
+✔ v4 original cache write completed SIGKILL preserves exact pending operation and authority (2531.516259ms)
+✔ v4 original cache read requested SIGKILL preserves exact pending operation and authority (4327.751592ms)
+✔ v4 original cache read accepted SIGKILL preserves exact pending operation and authority (3978.091766ms)
+✔ v4 original cache read completed SIGKILL preserves exact pending operation and authority (3396.288549ms)
+✔ genuine v4 StageExecutor checkpoints and retains same-key v2 refs through en/tr/sv interrupted attempts (9149.966075ms)
+ℹ {"nativeModel":false,"registeredTestStage":true,"attempts":3,"seedExecutions":1,"retainedRefs":2,"digest":"sha256:e64985630cf3fa44a2d2012de6710d53a9838395f3d37adf194b60a04877e1b7"}
+✔ separate finite cache profile has canonical SDK/Foundation parity and never invokes getters (12.510481ms)
+✔ genuine v4 writer requires both profiles; legacy version/profile combinations reject after rehash (38.61778ms)
+✔ v2 owns strict JSON and both inner digests; profile mismatch is an error, never a miss (12.365401ms)
+✔ actual Core/FileJournal/ArtifactStore retains exact same-byte owners and rejects all corrupt/mixed cache candidates (4252.320384ms)
+ℹ {"nativeArtifactStore":true,"mocks":false,"racingWrites":2,"foreignSameBytes":true,"executedMisses":0}
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (1534.38985ms)
+Real ArtifactStore and FileEffectJournal replay JSON regressions passed
+✔ tests/verification/reliability/sdk-json-contract.test.mts (1068.010716ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (2903.224741ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (1376.159698ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (47.376638ms)
+ℹ tests 59
+ℹ suites 0
+ℹ pass 59
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 96484.301683

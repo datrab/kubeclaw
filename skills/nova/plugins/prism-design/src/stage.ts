@@ -1,5 +1,6 @@
 import { verifyBaselineArchive } from './archive.ts';
-import { canonicalJson, sha256Text, type ArtifactRef, type PluginInvocationContext, type StageResult, type WaitRequest } from "@kubeclaw/plugin-sdk";
+import { assertArchitectureReferenceEncoding, verifiedArchitectureValue } from './architecture.ts';
+import { type ArtifactRef, type PluginInvocationContext, type StageResult, type WaitRequest } from "@kubeclaw/plugin-sdk";
 type Input={runId:string;projectId:string;architectureArtifact:{artifactId:string;contentDigest:string;revision:number};requiresDesign:boolean};
 type Config={agent:"prism";target:string;issuerId:string;timeoutMinutes:number};
 const record=(value:unknown):Record<string,unknown>=>{if(!value||typeof value!=="object"||Array.isArray(value))throw new Error("PRISM_DESIGN_VALUE_INVALID");return value as Record<string,unknown>;};
@@ -12,10 +13,11 @@ export async function execute(input:Input,context:PluginInvocationContext):Promi
   const settings=config(context.contract.config);const approved=approval(context.contract.guidance,settings.issuerId,input.architectureArtifact.contentDigest);
   try{
     const architectureRef=context.artifact(input.architectureArtifact.artifactId);
+    if(architectureRef)assertArchitectureReferenceEncoding(architectureRef);
     if(!architectureRef||architectureRef.producer.runId!==input.runId||architectureRef.mediaType!=="application/json"||architectureRef.sizeBytes>256*1024||architectureRef.digest!==input.architectureArtifact.contentDigest)throw new Error("PRISM_DESIGN_ARCHITECTURE_REFERENCE_INVALID");
-    const architectureResponse=record(await context.invoke("artifacts.read",{operation:"get_json",resource:{type:"artifact.object",canonicalId:architectureRef.artifactId},payload:{namespace:architectureRef.namespace,digest:architectureRef.digest}}));
-    if(architectureResponse.digest!==architectureRef.digest||architectureResponse.sizeBytes!==architectureRef.sizeBytes||sha256Text(canonicalJson(architectureResponse.value))!==architectureRef.digest||Buffer.byteLength(canonicalJson(architectureResponse.value))!==architectureRef.sizeBytes)throw new Error("PRISM_DESIGN_ARCHITECTURE_PROOF_INVALID");
-    const request={schema:"prism.design-request.v1",projectId:input.projectId,architecture:input.architectureArtifact,architectureContent:architectureResponse.value,...approved?{approvalId:approved.approvalId}:{}};
+    const architectureResponse=await context.invoke("artifacts.read",{operation:"get_json",resource:{type:"artifact.object",canonicalId:architectureRef.artifactId},payload:{namespace:architectureRef.namespace,digest:architectureRef.digest}});
+    const architectureContent=verifiedArchitectureValue(architectureResponse,architectureRef);
+    const request={schema:"prism.design-request.v1",projectId:input.projectId,architecture:input.architectureArtifact,architectureContent,...approved?{approvalId:approved.approvalId}:{}};
     const phase=approved?`approved:${approved.approvalId}:${input.architectureArtifact.contentDigest}`:"request";
     const response=await context.invoke("runtime.dispatch",withRuntimeDispatchProfile({operation:"dispatch",resource:{type:"runtime.agent",canonicalId:settings.agent},payload:{request,idempotencyKey:`${input.runId}:prism:${input.architectureArtifact.contentDigest}:${phase}`}},context.contract.runtimeDispatchProfile));const result=response.result as Record<string,unknown>;
     if(!approved){

@@ -1,0 +1,107 @@
+Source: ae37989605f1c169f3e1dff6db7348871ff3ff07
+Fresh remote parent: 9c5bdcb21c8fcd50fb38d2a1c4988213db2b3ecb
+Command: npm run plugin-system:sandbox:build && node --test --test-concurrency=1 tests/verification/reliability/review-cache-profile.test.mjs tests/verification/reliability/review-cache-native-profile.test.mjs tests/verification/reliability/review-cache-storage-negative.test.mjs tests/verification/reliability/review-cache-legacy-prefix.test.mjs tests/verification/reliability/review-cache-independent.test.mjs tests/verification/reliability/runtime-dispatch-profile.test.mjs tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs tests/verification/reliability/source-snapshot-version.test.mjs tests/verification/reliability/prism-reader-value.test.mjs tests/verification/reliability/operator-retention-authority-fixture.test.mjs tests/verification/reliability/operator-request-projection.test.mjs tests/verification/reliability/operator-projection-independent.test.mjs tests/verification/reliability/record-transition-authority-independent.test.mjs tests/verification/reliability/record-fenced-read-independent.test.mjs tests/verification/reliability/nova-dispatch-projection.test.mjs
+Exit code: 0
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original completed import projects duplicate bytes with real quotas and exact HTTP replay (7792.505642ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input (6948.978721ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner (10731.930561ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId (14550.777684ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent canonical-invalid original selected request cannot authorize retention after honest hash-chain recomputation (9378.017742ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release (9287.258865ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"blocked","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual blocked original Core with a completed import cannot authorize retention before cancellation (4503.350043ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ honestly rehashed sourceStageId or missing-source snapshot cannot bypass explicit-revision-only eligibility (8736.883782ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_INITIALIZE_EXITED:70:null","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job (8445.338738ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_INITIALIZE_EXITED:70:null","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery (9411.823368ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (7564.8932ms)
+✔ independent conflicting original signal idempotency key cannot authorize projection even under another waitId (3805.862603ms)
+✔ independent original wait fence preserves immutable operator scope despite caller mutation across await (4010.169976ms)
+{"proof":"genuine-historical-approval-retained-after-original-expiry","timeoutMinutes":1,"originalHistoryUnchanged":true,"posts":1}
+✔ independent genuinely resolved historical wait remains eligible after original one-minute expiry without clock replacement (61888.421783ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (7090.333449ms)
+{"proof":"original-Core-approved-request-projection","releasedBytes":7358,"records":2,"posts":1}
+✔ genuine original terminal human approval projects only duplicate request bytes and keeps exact original stale receipt replay (3896.453081ms)
+✔ actual persisted authority corruption refuses selected request, wait and signal mismatches without changing metadata (4161.117728ms)
+✔ actual separate-process run and wait fences block retention; SIGKILL releases owner and stale producers preserve accepted receipt (5172.369169ms)
+{"realByteQuota":23000,"realRecordQuota":5,"releasedBytes":7358,"firstQuotaResult":"blocked","admitted":"waiting","recordQuotaResult":"blocked","posts":2}
+✔ real small byte quota admits later original Core notification after net savings but unchanged record count still bounds new work (7909.663803ms)
+✔ real missing/conflicting receipts, unsupported v2 records, alias roots and foreign Core owner remain unprojected (6746.538996ms)
+✔ small genuine original request cannot fund projection overhead and stays atomically unchanged (3212.708307ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (6334.505397ms)
+✔ owning verifier accepts the actual portable original completed receipt (1.732183ms)
+✔ expected codec rejects missing-value/unknown tags without executing getters (0.469258ms)
+✔ complete returned ref binding rejects all original ownership/codec mismatches (2.475596ms)
+✔ real receipt digest/length/value corruption fails, JSON-domain rejection precedes getters (1.154512ms)
+✔ only own expected encoding selects a codec; inherited accessors are never consulted (8.160324ms)
+✔ independent actual competing process waits for original read fence, and callback receives owned records (437.790558ms)
+✔ independent actual SIGKILL of read-fence owner releases original kernel lock without partial write (422.129691ms)
+✔ independent transition authorization sees original locked records but cannot mutate committed state through its clone (51.495003ms)
+✔ independent async authorization and stale CAS fail before write, preserving bytes and releasing original fence (51.614028ms)
+✔ independent v2 record version selection does not execute getter or proxy traps (8.352653ms)
+✔ independent context selector rejects absent/present Proxy and getter contexts before legacy inference (0.41764ms)
+✔ independent writer rejects getter/proxy record before version inspection or provider admission (0.623691ms)
+✔ v1 original cache write requested SIGKILL preserves exact pending operation and authority (2346.074719ms)
+✔ v1 original cache write accepted SIGKILL preserves exact pending operation and authority (2250.341781ms)
+✔ v1 original cache write completed SIGKILL preserves exact pending operation and authority (2472.76088ms)
+✔ v1 original cache read requested SIGKILL preserves exact pending operation and authority (4036.203627ms)
+✔ v1 original cache read accepted SIGKILL preserves exact pending operation and authority (4489.343151ms)
+✔ v1 original cache read completed SIGKILL preserves exact pending operation and authority (5816.037543ms)
+✔ v2 original cache write requested SIGKILL preserves exact pending operation and authority (2900.676622ms)
+✔ v2 original cache write accepted SIGKILL preserves exact pending operation and authority (3016.645271ms)
+✔ v2 original cache write completed SIGKILL preserves exact pending operation and authority (2747.887875ms)
+✔ v2 original cache read requested SIGKILL preserves exact pending operation and authority (3917.690361ms)
+✔ v2 original cache read accepted SIGKILL preserves exact pending operation and authority (3772.196304ms)
+✔ v2 original cache read completed SIGKILL preserves exact pending operation and authority (5724.46876ms)
+✔ v3 original cache write requested SIGKILL preserves exact pending operation and authority (2223.289451ms)
+✔ v3 original cache write accepted SIGKILL preserves exact pending operation and authority (2290.901865ms)
+✔ v3 original cache write completed SIGKILL preserves exact pending operation and authority (2326.285389ms)
+✔ v3 original cache read requested SIGKILL preserves exact pending operation and authority (3732.913481ms)
+✔ v3 original cache read accepted SIGKILL preserves exact pending operation and authority (3864.35881ms)
+✔ v3 original cache read completed SIGKILL preserves exact pending operation and authority (4679.78376ms)
+✔ v4 original cache write requested SIGKILL preserves exact pending operation and authority (2304.950695ms)
+✔ v4 original cache write accepted SIGKILL preserves exact pending operation and authority (2172.529856ms)
+✔ v4 original cache write completed SIGKILL preserves exact pending operation and authority (2427.639129ms)
+✔ v4 original cache read requested SIGKILL preserves exact pending operation and authority (3226.521419ms)
+✔ v4 original cache read accepted SIGKILL preserves exact pending operation and authority (3665.784322ms)
+✔ v4 original cache read completed SIGKILL preserves exact pending operation and authority (4224.328411ms)
+✔ genuine v4 StageExecutor checkpoints and retains same-key v2 refs through en/tr/sv interrupted attempts (3922.688638ms)
+ℹ {"nativeModel":false,"registeredTestStage":true,"attempts":3,"seedExecutions":1,"retainedRefs":2,"digest":"sha256:e64985630cf3fa44a2d2012de6710d53a9838395f3d37adf194b60a04877e1b7"}
+✔ separate finite cache profile has canonical SDK/Foundation parity and never invokes getters (2.291765ms)
+✔ context profile selection rejects absent/present Proxy and getters before any trap or field access (0.325953ms)
+✔ genuine v4 writer requires both profiles; legacy version/profile combinations reject after rehash (17.066225ms)
+✔ v2 owns strict JSON and both inner digests; profile mismatch is an error, never a miss (1.938641ms)
+✔ actual Core/FileJournal/ArtifactStore retains exact same-byte owners and rejects all corrupt/mixed cache candidates (1201.91653ms)
+ℹ {"nativeArtifactStore":true,"mocks":false,"racingWrites":2,"foreignSameBytes":true,"executedMisses":0}
+✔ independent closed profile never consumes historical model keys on actual HMAC wire or replay (534.059404ms)
+✔ finite canonical profile: SDK and original Foundation validator agree without executing getters (3.11511ms)
+✔ new original snapshot writes bind required profile; rehashed malformed/future/downgraded contracts reject (15.034543ms)
+✔ profile is bound after budget reservation and excluded from actual model task without changing accounting (766.060326ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (958.280253ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (782.742659ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (56.053073ms)
+ℹ tests 71
+ℹ suites 0
+ℹ pass 71
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 308090.403486
