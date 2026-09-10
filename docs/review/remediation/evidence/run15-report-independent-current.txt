@@ -1,0 +1,41 @@
+Independent run15 report/runtime reconciliation
+Fresh remote MAIN:680d15eb0ab7344e87b0ab0595d9855acc1f97c9, tree7ed13906c5c2db6d6ea5035e3269192970dbd8c5; own initial21deec371cbab92fb76b53e22030b6da4e262129 exactly matches.
+Source tested:4fbaae3e3e21eefd62d0e9d03ab1e78600076fbd, tree d5457b7ac5a1703b2e1687fc7c36f5cf5eb2d2b6. All30 frozen a730 bodies restored byte-exactly from remote; runtime source untouched.61 current workspace links resolve this NEW standalone checkout. Fresh mandatory remote docs/register/original requirements read; original c387 status ID set exactly47 and unchanged.
+
+Command: timeout 120s node --test --test-concurrency=1 tests/verification/reliability/review-report-corruption-independent.test.mjs tests/verification/reliability/review-report-crash-independent.test.mjs tests/verification/reliability/review-report-author-domain-independent.test.mjs tests/verification/reliability/review-report-compiler-recovery.test.mjs tests/verification/reliability/project-recovery-version.test.mjs tests/verification/reliability/review-evidence-compiler-recovery.test.mjs
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=false (1333.201926ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=true (1282.326859ms)
+✔ original compiler module-review graph remains recoverable under its existing source version (815.223105ms)
+✔ own project review authoring domain rejects report selector before compiler-owned selection (275.324881ms)
+✔ stored source/report modes are independent and all generated Review nodes agree (319.519541ms)
+✔ archived compiler with current coverage helper preserves portable-source and legacy module/final reports (702.017386ms)
+✔ saved Review node set, uniform mode, and the entire pinned graph remain authoritative (167.627166ms)
+{"mode":"legacy","fault":"missing","actualBlobFault":true,"originalWritePrefixUnchanged":true,"readerRejected":true}
+{"mode":"legacy","fault":"corrupt","actualBlobFault":true,"originalWritePrefixUnchanged":true,"readerRejected":true}
+{"mode":"portable","fault":"missing","actualBlobFault":true,"originalWritePrefixUnchanged":true,"readerRejected":true}
+{"mode":"portable","fault":"corrupt","actualBlobFault":true,"originalWritePrefixUnchanged":true,"readerRejected":true}
+✔ original governor rejects actual legacy report blob missing (1080.071621ms)
+✔ original governor rejects actual legacy report blob corrupt (1049.447242ms)
+✔ original governor rejects actual portable report blob missing (1044.040795ms)
+✔ original governor rejects actual portable report blob corrupt (1087.905165ms)
+{"mode":"legacy","actualSigkill":true,"journalUnchanged":true,"noArtifactWritten":true,"uncertaintyPreserved":true}
+✔ actual legacy report writer SIGKILL after original accepted event preserves uncertainty (978.68172ms)
+{"mode":"portable","actualSigkill":true,"journalUnchanged":true,"noArtifactWritten":true,"uncertaintyPreserved":true}
+✔ actual portable report writer SIGKILL after original accepted event preserves uncertainty (1034.793532ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13551.774965
+
+Exit:0
+
+Phase6 ran only AFTER root's separate full original Review suite finished; original500ms cancellation assertion unchanged.
+Command:timeout 120s node tests/verification/contracts/check-plugin-system-v2-phase6.mjs
+{"ok":true,"contract":"plugin-system-v2-phase6"}
+
+Exit:0
+No complete Review suite duplicated by this reviewer in this invocation. Existing complete independent raw on21b remains in run14-report-independent-quiet.txt; root owns the fresh680 full-suite rerun.

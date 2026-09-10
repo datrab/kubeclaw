@@ -1,0 +1,39 @@
+[
+  [
+    "Initial author-domain assertion expected the wrong error spelling; corrected to original owning PROJECT_OBJECT_INVALID, no product change.",
+    {
+      "chunk_id": "f80e82",
+      "exit_code": 1,
+      "original_token_count": 593,
+      "output": "✖ own project review authoring domain rejects report selector before compiler-owned selection (234.105858ms)\nℹ tests 1\nℹ suites 0\nℹ pass 0\nℹ fail 1\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 663.173643\n\n✖ failing tests:\n\ntest at tests/verification/reliability/review-report-author-domain-independent.test.mjs:10:1\n✖ own project review authoring domain rejects report selector before compiler-owned selection (234.105858ms)\n  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /PROJECT_UNKNOWN_FIELD:review:reportArtifactEncoding/. Input:\n  \n  'Error: PROJECT_OBJECT_INVALID:review'\n  \n      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run7-operator-fixture/tests/verification/reliability/review-report-author-domain-independent.test.mjs:18:12)\n      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n      at async Test.run (node:internal/test_runner/test:1389:7)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: Error: PROJECT_OBJECT_INVALID:review\n        at object (file:///workspace/scratch/15fb596e6560/run7-operator-fixture/skills/nova/project/compiler.ts:12:69)\n        at validateModuleRuntime (file:///workspace/scratch/15fb596e6560/run7-operator-fixture/skills/nova/project/compiler.ts:100:38)\n        at projectModules (file:///workspace/scratch/15fb596e6560/run7-operator-fixture/skills/nova/project/compiler.ts:129:5)\n        at compileProject (file:///workspace/scratch/15fb596e6560/run7-operator-fixture/skills/nova/project/compiler.ts:166:34)\n        at file:///workspace/scratch/15fb596e6560/run7-operator-fixture/tests/verification/reliability/review-report-author-domain-independent.test.mjs:18:23\n        at getActual (node:assert:611:5)\n        at strict.throws (node:assert:759:24)\n        at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run7-operator-fixture/tests/verification/reliability/review-report-author-domain-independent.test.mjs:18:12)\n        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n        at async Test.run (node:internal/test_runner/test:1389:7),\n    expected: /PROJECT_UNKNOWN_FIELD:review:reportArtifactEncoding/,\n    operator: 'throws',\n    diff: 'simple'\n  }\n",
+      "wall_time_seconds": 0.629651869
+    }
+  ],
+  [
+    "Corrected original admitted-domain test",
+    {
+      "chunk_id": "b7b516",
+      "exit_code": 0,
+      "original_token_count": 57,
+      "output": "✔ own project review authoring domain rejects report selector before compiler-owned selection (230.265641ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 771.521184\n",
+      "wall_time_seconds": 0.766809431
+    }
+  ],
+  [
+    "Actual original accepted-boundary process SIGKILL",
+    {
+      "chunk_id": "c8ab7d",
+      "exit_code": 0,
+      "original_token_count": 142,
+      "output": "{\"mode\":\"legacy\",\"actualSigkill\":true,\"journalUnchanged\":true,\"noArtifactWritten\":true,\"uncertaintyPreserved\":true}\n✔ actual legacy report writer SIGKILL after original accepted event preserves uncertainty (1673.339919ms)\n{\"mode\":\"portable\",\"actualSigkill\":true,\"journalUnchanged\":true,\"noArtifactWritten\":true,\"uncertaintyPreserved\":true}\n✔ actual portable report writer SIGKILL after original accepted event preserves uncertainty (1549.778538ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 3653.724704\n",
+      "wall_time_seconds": 0.000002354
+    }
+  ],
+  [
+    "Canonical configured ESLint of additive tests passed (default config discovery previously failed, not a product defect).",
+    {
+      "exit_code": 0
+    }
+  ]
+]
+
