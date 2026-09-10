@@ -1,0 +1,18 @@
+Command: node docs/review/evidence/run9-sdk-prism-locale-probe.mjs
+96cdba80650e16fb5699df314516b14d08931b95
+96cdba80650e16fb5699df314516b14d08931b95
+{"auditedRemote":"a43aa256bdce35d7f9c44d5d661e59c4055e562e","producerPath":"skills/prism/server/control-server.ts","producerSourceDigest":"sha256:0a0e39ca3d47768b31e7199c8f78ad0d0e7038fa327fcb468d78d0ecf945a40d","extractedHelperDigest":"sha256:5d0a595a7fbff03f1fcc570597e84ce5ed6edf2ab0a5c459d099f210e9295e64","helperFirstLine":94,"producerBoundary":"verbatim extracted original helper, not full Control HTTP publisher","consumerBoundary":"actual original validator, file CAS, and Nova archive importer","rendering":false,"deployment":false}
+(node:14) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"phase":"producer-helper-and-real-cas","locale":"en-US","artifactId":"artifact:sha256:640854337c4be7df697e49d086d3920c818d5aa6df49e2d8daf3ee06443b86d3","bundleDigest":"sha256:42b9ceeaa90e2e86036f391e7df547e2588ead2c48f4b8a3bdf30fcf920204c2","checksumBytes":"{\"acceptance-criteria.json\":\"sha256:8640c3df02bcb6ee051090e65cc702bbc217368d53800b1611ecac21d24cc5b1\",\"assets/aa.png\":\"sha256:dc1ee8a784c37702b5b456b1657db9c8ce3fc98fd4e30c203b300aaf724eae2f\",\"assets/az.png\":\"sha256:dc1ee8a784c37702b5b456b1657db9c8ce3fc98fd4e30c203b300aaf724eae2f\",\"design-document.json\":\"sha256:4db415d49d21145fbd6e718115fc86afffb5c1e4a86340c7d9f7a404c73f58e7\",\"design-specification.md\":\"sha256:fa584b4314eca03a41883e0cc46520b9cb708abbf95f012ace9375a8bbecea45\",\"previews/home.aria.txt\":\"sha256:3a78695388b38b5cceefaf6796b0137877514593543b91af2752d5a17e3d736c\",\"previews/home.png\":\"sha256:dc1ee8a784c37702b5b456b1657db9c8ce3fc98fd4e30c203b300aaf724eae2f\",\"previews/index.json\":\"sha256:3b1e440ec1e6de33454a41c77787d1444d4e4a0a3824e9bffa5ea99815da4286\"}","documentValidated":true,"manifestValidated":true}
+(node:26) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"phase":"original-cas-reopen-and-nova-import","locale":"en-US","artifactDigestVerified":true,"documentValidated":true,"manifestValidated":true,"imported":true,"error":null}
+{"phase":"original-cas-reopen-and-nova-import","locale":"da-DK","artifactDigestVerified":true,"documentValidated":true,"manifestValidated":true,"imported":false,"error":"PRISM_ARCHIVE_BUNDLE_DIGEST_MISMATCH"}
+{"reproduced":true,"preservedRealArtifact":true,"sourceUnchanged":true,"productionFix":false,"completeFinding":false}
+(node:38) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Exit:0
