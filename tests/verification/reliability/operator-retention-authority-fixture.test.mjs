@@ -19,7 +19,7 @@ const limits = { maximumRecords: 100, maximumBytes: 1024 ** 2, maximumRecordByte
 
 // Original installed producers and File journals only. This proves an authority
 // prerequisite; no retention implementation or projection acceptance is claimed.
-async function fixture(t) {
+export async function fixture(t, options = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'operator-authority-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const received = [], token = crypto.randomBytes(32).toString('hex');
@@ -46,7 +46,7 @@ async function fixture(t) {
     grants: { 'kubeclaw.human-approval:approval': { 'operator.request': { allowedTargets: ['operators'] },
       'signal.wait': { allowedSignalTypes: ['approval.resolved'], allowedIssuerIds: ['operator:local'] } },
       [operator]: { 'network.http': { allowedOrigins: [origin] }, 'secrets.read': { allowedNames: ['operator.webhook'] } } },
-    adapters: { [operator]: { deliveryRoot, maximumDeliveryRecords: limits.maximumRecords, maximumDeliveryBytes: limits.maximumBytes,
+    adapters: { [operator]: { deliveryRoot, maximumDeliveryRecords: options.maximumRecords ?? limits.maximumRecords, maximumDeliveryBytes: options.maximumBytes ?? limits.maximumBytes,
       targets: { operators: { endpoint: `${origin}/messages`, tokenSecret: 'operator.webhook', maxPayloadBytes: 16384 } } },
       [waits]: { root: waitRoot }, [secrets]: { environment: { 'operator.webhook': env } },
       [network]: { allowedOrigins: [origin], allowedMethods: ['POST'],

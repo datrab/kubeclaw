@@ -115,6 +115,7 @@ export function projectedDeliveryReceipt(records: ReadonlyArray<DurableRecord>, 
 /** Caller must hold original Core/wait fences and provide synchronous full causal authorization. */
 export async function projectDeliveryRequest(records: FileDurableRecordStore, request: EffectRequest, intent: DeliveryProjectionIntent,
   authorityDigest: string, authorize: (records: ReadonlyArray<DurableRecord>) => void): Promise<{ newlyProjected: boolean; releasedBytes: number }> {
+  request = structuredClone(request); intent = structuredClone(intent);
   assertDeliveryProjectionIntent(intent);
   const candidate = originalJsonDeliveryCandidate(request), stream = `notifications/${request.resource.canonicalId}`;
   if (!digest(authorityDigest) || intent.runId !== request.attempt.runId || intent.effectKey !== request.idempotencyKey
@@ -135,7 +136,10 @@ export async function projectDeliveryRequest(records: FileDurableRecordStore, re
   const value: ProjectedRequest = { schemaVersion: 'notification-delivery-request-projected.v1', originalDigest: intent.expectedPayloadDigest,
     deliveryId: request.idempotencyKey, target: request.resource.canonicalId, attempt: request.attempt, effectId: request.effectId,
     terminalKey: terminal.idempotencyKey, terminalDigest: terminal.payloadDigest, projection };
-  const releasedBytes = Buffer.byteLength(canonicalJson(candidate)) - Buffer.byteLength(canonicalJson(value));
+  const original = observed.find(record => record.idempotencyKey === deliveryRequestKey(request));
+  if (!original || original.payloadDigest !== intent.expectedPayloadDigest) fail();
+  const replacement = { ...original, committedAt: '2000-01-01T00:00:00.000Z', payloadDigest: payloadDigest(value), payload: value };
+  const releasedBytes = Buffer.byteLength(canonicalJson(original)) - Buffer.byteLength(canonicalJson(replacement));
   if (releasedBytes < 1) throw new Error('OPERATOR_PROJECTION_NO_NET_SAVINGS');
   const retained = { ...value, projection: { ...projection, releasedBytesHex: releasedBytes.toString(16).padStart(16, '0') } };
   await records.transition(stream, deliveryRequestKey(request), intent.expectedPayloadDigest, retained, current => {

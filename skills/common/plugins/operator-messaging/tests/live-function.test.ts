@@ -172,7 +172,7 @@ const adapters = new core.AdapterRuntime({
 
 const attempt = {
   runId: 'run:operator-test',
-  stageId: 'stage:operator-test',
+  stageId: 'operator-test',
   attemptId: 'attempt:operator-test',
   attemptNumber: 1,
 };
