@@ -13,7 +13,7 @@ contains eight `verifiziert` plus 39 `implementiert` items in that set.
 ## Exact reviewed source and author evidence
 
 The independently fetched source checkpoint is
-`eba514b72993e4d4d686fbd351b6edaec5575caf57`, sole parent
+`eba514b72993e4d4a3ef1e1aca08a3d59afbbe65`, sole parent
 `f92d3f9f1bb68734d551c3196b02362bc682d5b9`, tree
 `ffa0439473012775eca2fc267fa906886be7c44c`. The tested checkout has that exact
 tree and is clean apart from the two review-only history tests added by this
