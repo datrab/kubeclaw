@@ -1,0 +1,34 @@
+Command: node --test --test-concurrency=1 skills/prism/tests/control.test.mts skills/prism/tests/storage.test.mts skills/prism/tests/engine.test.mts skills/prism/tests/renderer.test.mts skills/prism/tests/renderer-remediation.test.mts skills/prism/tests/pipeline-adapter.test.mts
+✔ Tailscale exchange requires the trusted ingress path (1.896902ms)
+✔ session signatures and expiry fail closed (0.351861ms)
+✔ engine generates, renders, evaluates and publishes idempotently (11.015291ms)
+✔ the generic worker carries an opaque Prism operation (1.771313ms)
+✔ the worker binding rejects unknown operations (0.517ms)
+✔ concurrent retries share one provider execution (0.600055ms)
+✔ the live provider accepts internal LiteLLM without requiring embeddings (0.460805ms)
+✔ an idempotency key cannot identify different requests (0.606345ms)
+✔ Prism creates a valid neutral worker envelope (25.847793ms)
+✔ approved Prism targets map to the visual provider declaration (1.27254ms)
+✔ invalid baseline digests fail closed (0.389387ms)
+✔ Forge receives read-only module-scoped targets (0.238219ms)
+✔ original Engine and Studio preserve disjoint component layers and targeted override precedence (9.870053ms)
+✔ each declared interactive control has its own escaped action (0.318831ms)
+✔ renderer escapes active content (1.434755ms)
+✔ renderer resolves collection data and reusable item components (0.485833ms)
+✔ renderer fails closed for unknown components (0.329897ms)
+✔ renderer resolves theme tokens and layout properties (0.426514ms)
+✔ renderer emits only declarative action identities (0.196176ms)
+✔ renderer applies semantic typography tokens (0.392873ms)
+✔ renderer uses semantic output for the full v1 catalogue (0.455217ms)
+✔ migration lock is acquired before schema metadata is touched (10.658432ms)
+✔ managed migrations require the preprovisioned schema without database-wide DDL (5.185846ms)
+✔ direction uniqueness migration archives existing unsourced duplicates (1652.251452ms)
+✔ PostgreSQL migrations, immutable revisions, and artifacts work (1301.345943ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4414.600366

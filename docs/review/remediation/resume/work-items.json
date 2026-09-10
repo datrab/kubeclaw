@@ -10,7 +10,7 @@
       "id": "PCR-SDK-001",
       "status_at_checkpoint": "in Bearbeitung",
       "evidence": "implementation/run9-sdk-root-review.md",
-      "next_action": "Separat versionierte Review-Cache-v4/v2-, Review-Report-Hexkey- und Prism-Reader-/Baseline-Pakete gegen integrierten Transport prüfen; keine stille Umstellung alter Effekte oder erfundenen nativen Gates."
+      "next_action": "Transport und Prism-Baseline-Versionierung unabhängig geprüft und Root gemeinsam getestet. Cache-v4/v2 und registrierten Reader nach echten History-/Native-Gates prüfen; Report-Cutover separat entwerfen, alte Effekt-/Graphidentität erhalten."
     },
     {
       "id": "PCR-BUSTER-ENGINE-004",

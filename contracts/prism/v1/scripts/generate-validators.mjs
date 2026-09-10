@@ -13,6 +13,7 @@ const readSchema = (name) =>
   JSON.parse(fs.readFileSync(path.join(schemasRoot, name), "utf8"));
 
 const prismSchema = readSchema("prism-v1.schema.json");
+const baselineV2 = readSchema("baseline-v2.schema.json");
 const engineRequests = readSchema("engine-requests.v1.json");
 const engineResults = readSchema("engine-results.v1.json");
 
@@ -24,6 +25,7 @@ const ajv = new Ajv2020({
 });
 addFormats(ajv);
 ajv.addSchema(prismSchema);
+ajv.addSchema(baselineV2);
 ajv.addSchema(engineRequests);
 ajv.addSchema(engineResults);
 
@@ -40,6 +42,7 @@ const prismNames = [
 const engineNames = ["generate", "render", "evaluate", "ingest", "publish"];
 const upperFirst = (value) => `${value[0].toUpperCase()}${value.slice(1)}`;
 const validators = {};
+validators.validateBaselineManifestV2 = baselineV2.$id;
 
 for (const name of prismNames) {
   validators[`validate${upperFirst(name)}`] =
@@ -52,8 +55,7 @@ for (const name of engineNames) {
     `${engineResults.$id}#/$defs/${name}`;
 }
 
-let generated = standaloneCode(ajv, validators);
-generated = generated
+const generated = standaloneCode(ajv, validators)
   .replace(
     /const (\w+) = require\("ajv\/dist\/runtime\/ucs2length"\)\.default;/u,
     'import ucs2LengthModule from "ajv/dist/runtime/ucs2length.js";const $1 = ucs2LengthModule.default;',

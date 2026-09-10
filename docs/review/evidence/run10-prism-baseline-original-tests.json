@@ -1,0 +1,16 @@
+{
+  "start": {
+    "chunk_id": "2183d4",
+    "original_token_count": 207,
+    "output": "✔ Tailscale exchange requires the trusted ingress path (1.916553ms)\n✔ session signatures and expiry fail closed (0.288054ms)\n✔ engine generates, renders, evaluates and publishes idempotently (12.218926ms)\n✔ the generic worker carries an opaque Prism operation (2.130926ms)\n✔ the worker binding rejects unknown operations (0.198189ms)\n✔ concurrent retries share one provider execution (0.68247ms)\n✔ the live provider accepts internal LiteLLM without requiring embeddings (0.419123ms)\n✔ an idempotency key cannot identify different requests (0.78158ms)\n✔ Prism creates a valid neutral worker envelope (30.012826ms)\n✔ approved Prism targets map to the visual provider declaration (1.243187ms)\n✔ invalid baseline digests fail closed (0.429759ms)\n✔ Forge receives read-only module-scoped targets (0.239712ms)\n",
+    "session_id": 51218,
+    "wall_time_seconds": 1.000626706
+  },
+  "end": {
+    "chunk_id": "fdbf49",
+    "exit_code": 0,
+    "original_token_count": 280,
+    "output": "✔ original Engine and Studio preserve disjoint component layers and targeted override precedence (10.085434ms)\n✔ each declared interactive control has its own escaped action (0.352032ms)\n✔ renderer escapes active content (1.331189ms)\n✔ renderer resolves collection data and reusable item components (0.468968ms)\n✔ renderer fails closed for unknown components (0.335496ms)\n✔ renderer resolves theme tokens and layout properties (0.434115ms)\n✔ renderer emits only declarative action identities (0.211579ms)\n✔ renderer applies semantic typography tokens (0.489809ms)\n✔ renderer uses semantic output for the full v1 catalogue (0.495038ms)\n✔ migration lock is acquired before schema metadata is touched (11.459328ms)\n✔ managed migrations require the preprovisioned schema without database-wide DDL (4.134051ms)\n✔ direction uniqueness migration archives existing unsourced duplicates (1710.251609ms)\n✔ PostgreSQL migrations, immutable revisions, and artifacts work (1429.242773ms)\nℹ tests 25\nℹ suites 0\nℹ pass 25\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 4722.297386\n",
+    "wall_time_seconds": 0.000002344
+  }
+}

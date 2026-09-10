@@ -1,0 +1,22 @@
+Source base: 0e12a0219b89a6ec103bda4e68f6a6d3920536c3.
+Independent publisher correction: remove only static local-Git prefix from executable; preserve complete original program as historical .mjs.txt.
+Byte checks: archived full original equals git-show bytes; native body starting const root = fs.mkdtempSync equals original body exactly.
+Original complete program SHA256: ada69e8858f322b1e86d2032a156472263dd34b701a4a777b916f2ffe30265dc
+All64 workspace links resolve in current publisher checkout; original package-lock unchanged; third-party cache not modified.
+
+Command: original Node spawnSync('git', ['--version'], {env:{...process.env,PATH:'/nonexistent-prism-native-path'}}) must produce ENOENT; then spawnSync(process.execPath, ['docs/review/evidence/run11-prism-baseline-independent.mjs'], same env) must exit0.
+gitUnavailable: ENOENT
+exit: 0
+stdout:
+{"originalProfile":"prism.baseline-archive.v1","coherentPairedRetag":"denied without changing approval digest","originalCasUnchanged":true,"fullControlEndpointClaimed":false}
+{"originalProfile":"prism.baseline-archive.v2","coherentPairedRetag":"denied without changing approval digest","originalCasUnchanged":true,"fullControlEndpointClaimed":false}
+stderr: empty
+Identical native run repeated with git still unavailable: exit0, same two passing rejection records.
+
+Command: canonical ESLint --config charts/kubeclaw/files/config/eslint.config.mjs docs/review/evidence/run11-prism-baseline-independent.mjs
+Exit1: line37:5 Unexpected console statement no-console (the unchanged native output).
+Exact original before source via git show | same ESLint --stdin --stdin-filename docs/review/evidence/run11-prism-baseline-independent.mjs:
+Exit1: line23:1 and line48:5 Unexpected console statement no-console.
+Historical script lint is not claimed passed; no policy edit and native body unchanged.
+Command: git diff --check
+Exit0.

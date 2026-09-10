@@ -1,0 +1,6 @@
+Command:
+node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs contracts/prism/v1/src/baseline-archive.ts contracts/prism/v1/src/index.ts contracts/prism/v1/scripts/generate-validators.mjs contracts/prism/v1/tests/baseline-archive.test.mts contracts/prism/v1/tests/fixtures/baseline-input.mts contracts/prism/v1/tests/fixtures/baseline-locale.mts skills/nova/plugins/prism-design/src/archive.ts && git diff --exit-code -- contracts/prism/v1/src/validators.generated.mjs contracts/prism/v1/src/validators.generated.d.mts && git diff --check -- contracts skills scripts tests
+
+
+Exit code: 0
+

@@ -1,0 +1,129 @@
+Command:
+npm test -w @kubeclaw/prism-contracts-v1 && node docs/review/evidence/run11-prism-baseline-independent.mjs && node tests/verification/integration/prism-archive.test.mts && node --test --test-concurrency=1 skills/prism/tests/control.test.mts skills/prism/tests/storage.test.mts skills/prism/tests/engine.test.mts skills/prism/tests/renderer.test.mts skills/prism/tests/renderer-remediation.test.mts skills/prism/tests/pipeline-adapter.test.mts && node node_modules/typescript/bin/tsc --noEmit -p contracts/prism/v1/tsconfig.json && node node_modules/typescript/bin/tsc --noEmit -p skills/prism/tsconfig.json && node node_modules/typescript/bin/tsc --noEmit -p skills/nova/plugins/prism-design/tsconfig.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @kubeclaw/prism-contracts-v1@1.0.0 pretest
+> node scripts/generate-validators.mjs
+
+
+> @kubeclaw/prism-contracts-v1@1.0.0 test
+> node tests/contracts.test.mts && node tests/remediation.test.mts && node --test tests/baseline-archive.test.mts
+
+Prism v1 contract fixtures passed
+Prism patch/complexity regressions and real renderer passed
+{"mode":"produce","locale":"en-US","profile":"prism.baseline-archive.v2","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","digest":"sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","sizeBytes":5455,"bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","historicalBytesIdentical":false}
+{"mode":"consume","locale":"en-US","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"da-DK","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"tr-TR","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"sv-SE","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"produce","locale":"da-DK","profile":"prism.baseline-archive.v2","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","digest":"sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","sizeBytes":5455,"bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","historicalBytesIdentical":false}
+{"mode":"consume","locale":"en-US","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"da-DK","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"tr-TR","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"sv-SE","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"produce","locale":"tr-TR","profile":"prism.baseline-archive.v2","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","digest":"sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","sizeBytes":5455,"bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","historicalBytesIdentical":false}
+{"mode":"consume","locale":"en-US","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"da-DK","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"tr-TR","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"sv-SE","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"produce","locale":"sv-SE","profile":"prism.baseline-archive.v2","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","digest":"sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","sizeBytes":5455,"bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","historicalBytesIdentical":false}
+{"mode":"consume","locale":"en-US","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"da-DK","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"tr-TR","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"sv-SE","artifactId":"artifact:sha256:4b4fb74d9d5b2f9a3b0dcc13662e3be7a6b484d9c1668c79c6942e17a3c5633a","bundleDigest":"sha256:4b4dbc9b57f7052243a0be4d38b5396a0be9e2d21388cbfad9b9ca102db08389","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"produce","locale":"en-US","profile":"prism.baseline-archive.v1","artifactId":"artifact:sha256:49ffe3fa46b07f0ec8a1b5e541fac9fe176202cfeea1c4428aae8223b97a33b5","digest":"sha256:49ffe3fa46b07f0ec8a1b5e541fac9fe176202cfeea1c4428aae8223b97a33b5","sizeBytes":5280,"bundleDigest":"sha256:5446301154d2d1428a09b1baf6373f809b4f0f9f1bb5b8e968970e008cea44c0","historicalBytesIdentical":true}
+(node:302) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"mode":"consume","locale":"en-US","artifactId":"artifact:sha256:49ffe3fa46b07f0ec8a1b5e541fac9fe176202cfeea1c4428aae8223b97a33b5","bundleDigest":"sha256:5446301154d2d1428a09b1baf6373f809b4f0f9f1bb5b8e968970e008cea44c0","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"da-DK","artifactId":"artifact:sha256:49ffe3fa46b07f0ec8a1b5e541fac9fe176202cfeea1c4428aae8223b97a33b5","bundleDigest":"sha256:5446301154d2d1428a09b1baf6373f809b4f0f9f1bb5b8e968970e008cea44c0","imported":false,"error":"PRISM_ARCHIVE_BUNDLE_DIGEST_MISMATCH","unchangedCasBytes":true}
+{"mode":"produce","locale":"da-DK","profile":"prism.baseline-archive.v1","artifactId":"artifact:sha256:e1384296123370270acbedeac9f2f620b40a1de3f5f99cd05cf76d6b7048d41d","digest":"sha256:e1384296123370270acbedeac9f2f620b40a1de3f5f99cd05cf76d6b7048d41d","sizeBytes":5280,"bundleDigest":"sha256:c79c6d15b13d478b1acba20f93a8cb86139af540273fc3114135cc77607f7845","historicalBytesIdentical":true}
+(node:338) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"mode":"consume","locale":"da-DK","artifactId":"artifact:sha256:e1384296123370270acbedeac9f2f620b40a1de3f5f99cd05cf76d6b7048d41d","bundleDigest":"sha256:c79c6d15b13d478b1acba20f93a8cb86139af540273fc3114135cc77607f7845","imported":true,"error":null,"unchangedCasBytes":true}
+{"mode":"consume","locale":"en-US","artifactId":"artifact:sha256:e1384296123370270acbedeac9f2f620b40a1de3f5f99cd05cf76d6b7048d41d","bundleDigest":"sha256:c79c6d15b13d478b1acba20f93a8cb86139af540273fc3114135cc77607f7845","imported":false,"error":"PRISM_ARCHIVE_BUNDLE_DIGEST_MISMATCH","unchangedCasBytes":true}
+✔ original production assembler and real CAS/import preserve v1 bytes and cross native locales with explicit v2 (3907.050796ms)
+✔ v2 closed checksum codec is exact UTF16 JSON and domain-bound, not legacy retagging or a generic fallback (7.263837ms)
+{"rejected":"unknown archive","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"mixed archive v1 manifest v2","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"mixed archive v2 manifest v1","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"missing manifest encoding","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"unknown manifest encoding","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"missing checksum encoding","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"unknown checksum encoding","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"missing checksum schema","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"unknown checksum schema","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"unknown checksum field","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"wrong algorithm","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"modified checksum","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"modified content","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"missing member","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"extra member","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"duplicate member","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"embedded manifest mismatch","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"unsafe path","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"binary encoding","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"file type","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"manifest assets","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"required file reference","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"rejected":"manifest revision","originalCasUnchanged":true,"mutatedCasUnchanged":true}
+{"reorderedChecksumMap":"same v2 identity","originalCasUnchanged":true}
+✔ original importer retains approval, member, metadata, tag and corruption gates against actual CAS bytes (148.32676ms)
+✔ original size/member gates reject before unsafe transport acceptance (9.923941ms)
+{"semanticRejected":"document project","realCasUnchanged":true}
+{"semanticRejected":"document revision","realCasUnchanged":true}
+{"semanticRejected":"preview image digest","realCasUnchanged":true}
+{"semanticRejected":"preview ARIA digest","realCasUnchanged":true}
+{"semanticRejected":"preview unknown state","realCasUnchanged":true}
+{"semanticRejected":"preview unknown view","realCasUnchanged":true}
+{"semanticRejected":"preview image member","realCasUnchanged":true}
+{"semanticRejected":"preview ARIA member","realCasUnchanged":true}
+✔ original semantic document and preview gates reject self-consistently hashed archives from the production assembler (46.48948ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4270.799723
+{"originalV1Schema":"byte-identical","originalControlPriorRowApprovalWorkerAssemblyInputs":"byte-identical","EnginePublishBusterAndStage":"unchanged source"}
+{"originalProfile":"prism.baseline-archive.v1","coherentPairedRetag":"denied without changing approval digest","originalCasUnchanged":true,"fullControlEndpointClaimed":false}
+{"originalProfile":"prism.baseline-archive.v2","coherentPairedRetag":"denied without changing approval digest","originalCasUnchanged":true,"fullControlEndpointClaimed":false}
+{"ok":true,"suite":"prism-real-archive-integrity","designGeneration":false}
+✔ Tailscale exchange requires the trusted ingress path (2.104595ms)
+✔ session signatures and expiry fail closed (0.312762ms)
+✔ engine generates, renders, evaluates and publishes idempotently (11.510505ms)
+✔ the generic worker carries an opaque Prism operation (1.835799ms)
+✔ the worker binding rejects unknown operations (0.251209ms)
+✔ concurrent retries share one provider execution (0.607716ms)
+✔ the live provider accepts internal LiteLLM without requiring embeddings (0.454115ms)
+✔ an idempotency key cannot identify different requests (0.651983ms)
+✔ Prism creates a valid neutral worker envelope (32.417696ms)
+✔ approved Prism targets map to the visual provider declaration (1.407744ms)
+✔ invalid baseline digests fail closed (0.472973ms)
+✔ Forge receives read-only module-scoped targets (0.246071ms)
+✔ original Engine and Studio preserve disjoint component layers and targeted override precedence (10.780078ms)
+✔ each declared interactive control has its own escaped action (0.366754ms)
+✔ renderer escapes active content (1.310197ms)
+✔ renderer resolves collection data and reusable item components (0.487075ms)
+✔ renderer fails closed for unknown components (0.333503ms)
+✔ renderer resolves theme tokens and layout properties (0.436138ms)
+✔ renderer emits only declarative action identities (0.210387ms)
+✔ renderer applies semantic typography tokens (0.501146ms)
+✔ renderer uses semantic output for the full v1 catalogue (0.435077ms)
+✔ migration lock is acquired before schema metadata is touched (13.776474ms)
+✔ managed migrations require the preprovisioned schema without database-wide DDL (6.121635ms)
+✔ direction uniqueness migration archives existing unsourced duplicates (1732.828702ms)
+✔ PostgreSQL migrations, immutable revisions, and artifacts work (1438.964858ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4826.180402
+
+Exit code: 0
+
