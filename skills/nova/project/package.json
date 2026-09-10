@@ -4,6 +4,7 @@
   "type": "module",
   "exports": { ".": "./compiler.ts", "./cli": "./cli.ts" },
   "dependencies": {
+    "@kubeclaw/delivery-manifest-contract": "*",
     "@kubeclaw/nova-core": "*",
     "@kubeclaw/plugin-sdk": "*",
     "@kubeclaw/plugin-foundation": "*",
