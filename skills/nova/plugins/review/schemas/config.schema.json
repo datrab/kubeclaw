@@ -6,6 +6,9 @@
     "agent"
   ],
   "properties": {
+    "reviewSemanticEncoding": {
+      "const": "review-semantics.utf16-v1"
+    },
     "reportArtifactEncoding": {
       "const": "kubeclaw-json.utf16.v1"
     },
@@ -579,5 +582,29 @@
         }
       ]
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "reviewSemanticEncoding": {
+            "const": "review-semantics.utf16-v1"
+          }
+        },
+        "required": [
+          "reviewSemanticEncoding"
+        ]
+      },
+      "then": {
+        "properties": {
+          "reportArtifactEncoding": {
+            "const": "kubeclaw-json.utf16.v1"
+          }
+        },
+        "required": [
+          "reportArtifactEncoding"
+        ]
+      }
+    }
+  ]
 }

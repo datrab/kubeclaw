@@ -1,0 +1,31 @@
+Source: 1595f98 plus explicit CLI expectation/additive original import and mode matrices.
+Original unchanged compiler/report API tests:
+✔ own project review authoring domain rejects report selector before compiler-owned selection (206.076078ms)
+✔ stored source/report modes are independent and all generated Review nodes agree (249.012268ms)
+✔ archived compiler with current coverage helper preserves portable-source and legacy module/final reports (448.473842ms)
+✔ saved Review node set, uniform mode, and the entire pinned graph remain authoritative (171.911663ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1370.323331
+
+EXIT: 0
+New mode matrix + actual original compiler CLI and legacy import:
+✔ independent semantic authority covers module-only, final-only, both and neither graph roundtrips (435.690731ms)
+✔ new semantic graph rejects mixed, unsupported, partial and stray Summary mode without changing stored bytes (169.541027ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1051.079052
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+
+EXIT: 0

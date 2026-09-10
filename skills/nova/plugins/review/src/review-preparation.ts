@@ -1,9 +1,10 @@
 import { assertReviewCoverage } from './review-coverage.ts';
-import { canonicalJson, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
+import { type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
+import { reviewBundleJson, reviewBundleVersion, type ReviewSemanticEncoding } from './review-semantics.ts';
 
 import { buildSimplificationCandidateManifest } from './simplification-manifest.ts';
 import { produceSimplificationFacts } from './simplification-fact-producer.ts';
-import { REVIEW_BUNDLE_SCHEMA_VERSION, REVIEW_CONTEXT_SELECTION_VERSION,
+import { REVIEW_CONTEXT_SELECTION_VERSION,
   type ReviewBundle } from './review-bundle-contract.ts';
 import { snapshotReviewBundle, type ReviewBundleSnapshot } from './review-bundle-snapshot.ts';
 import { selectReviewContext, selectReviewContextForSlicing,
@@ -12,7 +13,7 @@ import { hydrateReviewContextCandidates, mergeReviewContextDescriptors,
   ReviewContextHydrationLimitError } from './review-context-candidates.ts';
 import { produceReviewContextCandidates } from './review-context-production.ts';
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
-import type { ResolvedReviewPolicy } from './review-policy-resolver.ts';
+import { assertVerifiedReviewPolicy, type ResolvedReviewPolicy } from './review-policy-resolver.ts';
 import { freezeReviewRevision, readChangedScope, ReviewRepositoryProofError,
   type FrozenReviewRevision } from './review-repository.ts';
 import type { ReviewStageInput } from './review-stage-input.ts';
@@ -31,6 +32,7 @@ export interface PreparedReview {
 }
 
 interface SnapshotInput {
+  readonly reviewSemanticEncoding?: ReviewSemanticEncoding;
   readonly input: ReviewStageInput; readonly scope: ReviewBundle['scope'];
   readonly manifestDigest: `sha256:${string}`; readonly revision: FrozenReviewRevision;
   readonly selection: ReviewContextSelectionResult; readonly policy: ResolvedReviewPolicy;
@@ -39,25 +41,26 @@ interface SnapshotInput {
 
 export function buildReviewSnapshot(values: SnapshotInput): ReviewBundleSnapshot {
   const { input, scope, manifestDigest, revision, selection, policy } = values;
+  assertVerifiedReviewPolicy(policy, values.reviewSemanticEncoding);
   const evidenceSelection = values.evidenceSelection ?? selection;
   const identity = { base: input.revisions.base, head: revision.head, changedManifestDigest: manifestDigest };
   const generated = policy.policy.simplification.enabled
-    ? [produceSimplificationFacts(identity, evidenceSelection.selected)] : [];
+    ? [produceSimplificationFacts(identity, evidenceSelection.selected, values.reviewSemanticEncoding)] : [];
   const sourceEvidence = [...input.evidence, ...generated];
   const simplification = buildSimplificationCandidateManifest({ revision: identity, evidence: sourceEvidence,
-    reviewedPaths: evidenceSelection.selected.map(({ path }) => path), policy });
+    reviewedPaths: evidenceSelection.selected.map(({ path }) => path), policy }, values.reviewSemanticEncoding);
   const evidence = [...sourceEvidence, ...(simplification ? [simplification.evidence] : [])];
   if (evidence.length > REVIEW_HARD_LIMITS.inspectedEvidence) {
     throw new ReviewPreparationLimitError('Simplification candidate evidence exceeds the review evidence limit');
   }
   const snapshot = snapshotReviewBundle({
-    schemaVersion: REVIEW_BUNDLE_SCHEMA_VERSION, task: input.task,
+    schemaVersion: reviewBundleVersion(values.reviewSemanticEncoding), task: input.task,
     revisions: identity, scope, requirements: input.requirements, evidence, context: selection.selected,
     selection: { version: REVIEW_CONTEXT_SELECTION_VERSION,
       candidateManifestDigest: selection.candidateManifestDigest, expansionRound: selection.expansionRound },
     policyDigest: policy.digest,
   });
-  const bytes = Buffer.byteLength(canonicalJson(snapshot.bundle), 'utf8');
+  const bytes = Buffer.byteLength(reviewBundleJson(snapshot.bundle), 'utf8');
   if (bytes > policy.policy.limits.maxBundleBytes) {
     throw new ReviewPreparationLimitError(`review bundle is ${bytes} bytes`);
   }
@@ -110,7 +113,9 @@ function initialSelection(
 
 export async function prepareReview(
   input: ReviewStageInput, policy: ResolvedReviewPolicy, context: PluginInvocationContext,
+  reviewSemanticEncoding?: ReviewSemanticEncoding,
 ): Promise<PreparedReview> {
+  assertVerifiedReviewPolicy(policy, reviewSemanticEncoding);
   assertReviewCoverage(input);
   const revision = await freezeReviewRevision(context);
   if (input.revisions.head !== undefined && revision.head !== input.revisions.head) {
@@ -121,7 +126,8 @@ export async function prepareReview(
   const initial = initialSelection(candidates, repository.scope, policy);
   const missing = missingChangedPaths(repository.scope, initial);
   if (missing.length > 0) throw new ReviewPreparationLimitError(`changed context was not selected: ${missing.join(', ')}`);
-  const values = { input, scope: repository.scope, manifestDigest: repository.manifestDigest, revision, policy };
+  const values = { input, scope: repository.scope, manifestDigest: repository.manifestDigest, revision, policy,
+    ...(reviewSemanticEncoding === undefined ? {} : { reviewSemanticEncoding }) };
   const snapshot = buildReviewSnapshot({ ...values, selection: initial });
   let slices: ReturnType<typeof buildReviewSlices>;
   try { slices = buildReviewSlices(initial, policy); } catch (error) {

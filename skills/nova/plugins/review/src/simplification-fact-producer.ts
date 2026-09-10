@@ -1,4 +1,5 @@
-import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
+import { portableJson, PORTABLE_JSON_ENCODING, sha256Text } from '@kubeclaw/plugin-sdk';
+import { reviewSemanticJson, type ReviewSemanticEncoding } from './review-semantics.ts';
 
 import type { ReviewBundleContextItem, ReviewBundleEvidence } from './review-bundle-contract.ts';
 import {
@@ -46,7 +47,10 @@ function forwardingFacts(item: ReviewBundleContextItem): readonly Simplification
 export function produceSimplificationFacts(
   revision: SimplificationRevisionIdentity,
   context: readonly ReviewBundleContextItem[],
+  encoding?: ReviewSemanticEncoding,
 ): ReviewBundleEvidence & { readonly kind: typeof SIMPLIFICATION_FACTS_EVIDENCE_KIND } {
+  portableJson(revision);
+  portableJson(context);
   const produced = context.flatMap(forwardingFacts).sort((left, right) => compareCodeUnits(left.factId, right.factId));
   const facts = produced.slice(0, REVIEW_HARD_LIMITS.simplificationFacts);
   const omittedSourceCount = context.filter((item) => /\.[jt]sx$/u.test(item.path)).length;
@@ -55,6 +59,7 @@ export function produceSimplificationFacts(
     ...(omittedSourceCount ? { omittedSourceCount } : {}) };
   const parsed = parseSimplificationFacts(value);
   if (!parsed.ok) throw new Error(`produced simplification facts are invalid: ${parsed.error}`);
-  const content = canonicalJson(parsed.value);
-  return Object.freeze({ kind: SIMPLIFICATION_FACTS_EVIDENCE_KIND, digest: sha256Text(content), content });
+  const content = reviewSemanticJson(parsed.value, encoding);
+  return Object.freeze({ kind: SIMPLIFICATION_FACTS_EVIDENCE_KIND, digest: sha256Text(content), content,
+    ...(encoding === undefined ? {} : { encoding: PORTABLE_JSON_ENCODING }) });
 }

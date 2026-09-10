@@ -1,4 +1,5 @@
-import { sha256Text, type WaitRequest } from '@kubeclaw/plugin-sdk';
+import { portableJson, PORTABLE_JSON_ENCODING, sha256Text, type WaitRequest } from '@kubeclaw/plugin-sdk';
+import { reviewEvidenceJson } from './review-evidence-encoding.ts';
 
 import { ECHO_REVIEW_VERIFICATION_PROTOCOL } from './echo-review-verification-contract.ts';
 import type { ParsedEchoReviewOutput } from './echo-review-parser.ts';
@@ -6,7 +7,7 @@ import { SIMPLIFICATION_CANDIDATES_EVIDENCE_KIND } from './simplification-contra
 import { parseSimplificationCandidateManifest } from './simplification-parser.ts';
 import type { ReviewBundle } from './review-bundle-contract.ts';
 import type { ReviewBundleSnapshot } from './review-bundle-snapshot.ts';
-import type { ResolvedReviewPolicy } from './review-policy-resolver.ts';
+import { assertReviewPolicyBundle, type ResolvedReviewPolicy } from './review-policy-resolver.ts';
 import {
   isCertifiedReviewProposalPreflight,
   type ReviewProposalPreflight,
@@ -58,6 +59,8 @@ function selectedSimplificationEvidence(
 }
 
 function simplificationState(snapshot: ReviewBundleSnapshot, policy: ResolvedReviewPolicy): SimplificationState {
+  portableJson(snapshot);
+  const encoding = assertReviewPolicyBundle(policy, snapshot.bundle);
   const selected = selectedSimplificationEvidence(snapshot, policy);
   if ('integrityIssues' in selected) return selected;
   const item = selected;
@@ -68,6 +71,12 @@ function simplificationState(snapshot: ReviewBundleSnapshot, policy: ResolvedRev
   try { decoded = JSON.parse(item.content); } catch {
     return { integrityIssues: ['Simplification candidate manifest is not valid JSON'] };
   }
+  try {
+    if ((encoding !== undefined && item.encoding !== PORTABLE_JSON_ENCODING)
+      || reviewEvidenceJson(decoded, item.encoding) !== item.content) {
+      return { integrityIssues: ['Simplification candidate manifest encoding does not match its owner'] };
+    }
+  } catch { return { integrityIssues: ['Simplification candidate manifest encoding is invalid'] }; }
   const parsed = parseSimplificationCandidateManifest(decoded);
   if (!parsed.ok) return { integrityIssues: [`Simplification candidate manifest is invalid: ${parsed.error}`] };
   const { revision } = parsed.value;
@@ -250,7 +259,7 @@ function invalidEchoReduction(
     unverifiedRequirements: [], limitViolations: [], findings: [],
     orchestratorWait: values.orchestratorWait,
     ...(simplification.evaluation === undefined ? {} : { simplification: simplification.evaluation }),
-  });
+  }, assertReviewPolicyBundle(values.policy, values.snapshot.bundle));
 }
 
 function findingGovernance(
@@ -290,7 +299,7 @@ function verifiedEchoReduction(
     ...verificationFacts(values), orchestratorWait,
     ...(simplification.evaluation === undefined ? {} : { simplification: simplification.evaluation }),
     ...(governance === undefined ? {} : { governance }),
-  });
+  }, assertReviewPolicyBundle(policy, snapshot.bundle));
 }
 
 export function verifyEchoReviewForReduction(values: ReviewVerificationBoundaryInput): ReviewReductionInput {
