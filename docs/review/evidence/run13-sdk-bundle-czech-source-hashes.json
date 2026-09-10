@@ -1,0 +1,41 @@
+{
+  "main": "21b05129691b6c932fdf7fd2d12f906cb2736aad",
+  "sourceMatchesFreshRemote": [
+    {
+      "path": "skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs",
+      "sha": "fc8379b6ebd97b331f21f8f26c42a3547edaa133"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-snapshot.ts",
+      "sha": "8b9750f494bb1ef7e1168fa1e48b6623377bbc76"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-parser.ts",
+      "sha": "bbd8abce3b4b27ffb83ce922247b0c62f227d129"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-bounds.ts",
+      "sha": "973095e11677371bf8a5364a043a58eba2670569"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-report-storage.ts",
+      "sha": "d0f6184b60b521b5c82e22ff97896362935ecb67"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+      "sha": "8c929f75a7eb22830fffc39347f541ffc8d89eb6"
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "sha": "d04ece2de321114b7eb3d8f6f69e9e2377968730"
+    }
+  ],
+  "pendingReport": {
+    "candidate": "d4df6bfd6e84ac23d3e7095d1d8cfb609bc50d8c",
+    "functionIdentical": true,
+    "path": "skills/nova/plugins/review/src/review-report-storage.ts"
+  },
+  "node": "v24.19.0",
+  "frozenCount": 47,
+  "overallComplete": false
+}
