@@ -1,0 +1,49 @@
+Independent exact-source compiler and regression evidence
+candidate: 122cd5a4c518c07a778a985ca86e6f82397cfa49
+semantic comparison source: 15f6a808ed1666c3b7a2a3909749e3d4ee377904
+review source: tests/verification/reliability/delivery-manifest-v3-compiler-recovery-independent.test.mjs
+
+$ KUBECLAW_REVIEW_SOURCE_ROOT=<exact-122cd5-checkout> KUBECLAW_REVIEW_BASELINE_ROOT=<exact-15f6-checkout> node --test tests/verification/reliability/delivery-manifest-v3-compiler-recovery-independent.test.mjs
+tests 3; pass 2; fail 1; skipped 0; todo 0; exit=1
+
+FAIL legacy delivery defaults preserve the exact pre-v3 compiler graph for every prior identity tuple
+  The new legacy-delivery graph adds
+  final.reviewArtifactEncoding='kubeclaw-json.utf16.v1' when final Review and
+  portable report encoding are selected. Exact 15f6 has no such Summary input.
+PASS delivery identity composes with all prior identities and recovery reconstructs the exact graph
+PASS delivery recovery rejects missing, unknown, duplicate and foreign Summary/selector cases without changing stored bytes
+
+$ diff -u <exact-15f6>/package-lock.json <exact-122cd5>/package-lock.json
+exit=1 (expected differences only)
+The complete diff contains only: one workspace entry, the new workspace package,
+one node_modules workspace link and one dependency entry in each of
+project-summary, remote-test-gate and nova-project. No package pin or platform
+entry changed and the prior corrupted/truncated lock text is absent.
+
+$ npm run build --workspace @kubeclaw/plugin-project-summary
+exit=0
+$ npm run build --workspace @kubeclaw/plugin-remote-test-gate
+exit=0
+$ npm run typecheck --prefix skills/nova
+exit=0
+$ npm test --workspace @kubeclaw/plugin-project-summary
+delivery-artifact-contract: ok (providerExecution=false, agentExecution=false)
+live-function: ok
+package-boundary: ok
+exit=0
+$ node tests/verification/contracts/check-project-compiler.mts
+{"ok":true,"scope":"legacy-authoring-import","executedStages":0,"nativeAcceptance":false}
+{"ok":true,"scope":"source-launcher","modules":2,"executedStages":0}
+exit=0
+$ node --test tests/verification/reliability/review-semantic-compiler.test.mjs
+tests 2; pass 2; fail 0; skipped 0; todo 0; exit=0
+$ node --test tests/verification/reliability/review-evidence-compiler-recovery.test.mjs
+tests 1; pass 1; fail 0; skipped 0; todo 0; exit=0
+$ node --test tests/verification/reliability/project-recovery-version.test.mjs
+tests 2; pass 2; fail 0; skipped 0; todo 0; exit=0
+$ node --test tests/verification/reliability/review-report-locales.test.mjs
+tests 9; pass 9; fail 0; skipped 0; todo 0; exit=0
+
+These passing bounded regressions do not override the independent legacy graph
+parity failure and are not registered producer/consumer, native durability,
+import-store or whole-package acceptance.

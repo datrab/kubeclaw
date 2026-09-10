@@ -1,0 +1,35 @@
+Independent exact-source review evidence
+candidate: 122cd5a4c518c07a778a985ca86e6f82397cfa49
+candidate tree: 48ae13293c137c9acde46def3a0cc4f5db284661
+candidate parent: 15f6a808ed1666c3b7a2a3909749e3d4ee377904
+review source: tests/verification/reliability/delivery-manifest-v3-contract-independent.test.mjs
+
+$ KUBECLAW_REVIEW_SOURCE_ROOT=<exact-122cd5-checkout> node --test tests/verification/reliability/delivery-manifest-v3-contract-independent.test.mjs
+tests 8; pass 6; fail 2; skipped 0; todo 0; exit=1
+
+PASS valid public v3 vector is accepted and deeply frozen
+PASS creator rejects caller-supplied digest rather than overwriting it
+PASS published JSON schema matches runtime rejection of invalid expectedCoverage
+PASS published JSON schema matches runtime rejection of invalid coverage result
+FAIL published JSON schema matches runtime ArtifactRef media-type bounds
+  AssertionError: ArtifactRef mediaType parity: null
+  schema accepted an evidence ref with mediaType length 2049; runtime rejected it.
+FAIL creator rejects a complete serialized v3 artifact above eight MiB
+  AssertionError: Missing expected exception.
+  The vector uses 253 schema-valid and semantically mapped GateCoverage requirements.
+  The unsigned portable body is at most 8 MiB and the complete value after digest
+  is greater than 8 MiB. createDeliveryManifestV3 accepted it.
+PASS creator rejects Proxy and accessor input without invoking caller traps
+PASS shared reader accepts a valid exact v3 ref and rejects a missing portable tag
+
+The media-type mismatch is also a value-domain mismatch: the published schema
+and DeliveryManifestV3.evidence ArtifactRef type admit arbitrary nonempty media
+types while runtime evidence ownership requires application/json.
+
+$ npm test --workspace @kubeclaw/delivery-manifest-contract
+tests 4; pass 4; fail 0; skipped 0; todo 0; exit=0
+
+$ npm run typecheck --workspace @kubeclaw/delivery-manifest-contract
+exit=0
+
+The package's four tests do not exercise either failing independent vector.
