@@ -1,0 +1,19 @@
+$ cat /proc/self/cgroup
+0::/
+
+$ grep " /sys/fs/cgroup " /proc/mounts
+cgroup2 /sys/fs/cgroup cgroup2 ro,nosuid,nodev,noexec,relatime,nsdelegate 0 0
+
+$ test -w /sys/fs/cgroup
+not-writable
+
+$ cat /sys/fs/cgroup/cgroup.controllers
+cpuset cpu io memory hugetlb pids
+
+$ find /root/.cache/ms-playwright -maxdepth 4 -type f
+/root/.cache/ms-playwright/.links/5e094d57348b1a7537389e7b71fa2158d1c91dd7
+/root/.cache/ms-playwright/.links/f55ba91a879b567b9d76b6ae2bf8c81e30ac3c3a
+
+$ node chromium executablePath and exists
+/root/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome
+false

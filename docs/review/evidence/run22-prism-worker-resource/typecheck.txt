@@ -1,0 +1,2 @@
+$ npm run --silent typecheck --workspace @kubeclaw/prism
+exit=0

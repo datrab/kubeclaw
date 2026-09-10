@@ -1,0 +1,14 @@
+{
+  "remote_main": "1ba445125fbacfa4f0344f8bf38e68f8f0686eff",
+  "remote_main_tree": "692a57a387d823d4b6636062e90dfbbeb07d28cd",
+  "baseline": "c38779c71bb92bc15c3fcb89930348e5417aa475",
+  "baseline_implemented_count": 47,
+  "partial_scope_count": 47,
+  "work_items_count": 47,
+  "baseline_equals_partial_scope": true,
+  "baseline_equals_work_items": true,
+  "target_source_finding_text_unchanged": {
+    "PCR-PRISM-WORKER-002": true,
+    "PCR-PRISM-WORKER-003": true
+  }
+}

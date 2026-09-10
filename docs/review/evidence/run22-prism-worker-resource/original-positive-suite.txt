@@ -1,0 +1,47 @@
+$ node --test --test-reporter=spec skills/prism/tests/engine.test.mts skills/prism/tests/engine-cache.test.mts skills/prism/tests/worker-service.test.mts tests/verification/reliability/worker-deadline.test.mts skills/prism/tests/worker-cancellation.test.mts skills/prism/tests/provider-cancellation.test.mts
+✔ many original renders bound retained entries and bytes without changing returned output (60.754288ms)
+✔ byte pressure and oversized successful renders do not retain their large payloads (1.327062ms)
+✔ accumulated render bytes evict completed entries before the count ceiling (2.566322ms)
+✔ active duplicates share one original operation and admission never evicts active ownership (1.549087ms)
+✔ retained replay snapshots cannot be enlarged or corrupted through caller mutation (0.533365ms)
+✔ failure releases admission and invalid cache limits cannot disable its bounds (0.631031ms)
+✔ real render evidence survives RAM eviction and artifact-store reconstruction (12.909915ms)
+✔ deferred original rendering uses the request snapshot bound to its fingerprint (0.781189ms)
+✔ engine generates, renders, evaluates and publishes idempotently (13.464473ms)
+✔ the generic worker carries an opaque Prism operation (2.251237ms)
+✔ the worker binding rejects unknown operations (0.286202ms)
+✔ concurrent retries share one provider execution (0.567656ms)
+✔ the live provider accepts internal LiteLLM without requiring embeddings (0.472543ms)
+✔ an idempotency key cannot identify different requests (0.577872ms)
+✔ Prism creates a valid neutral worker envelope (28.85452ms)
+✔ original ingest provider cancels an actual TLS response body after headers (360.083048ms)
+✔ original propose provider cancels an actual TLS response body after headers (361.348946ms)
+✔ only the admitted owner can cancel a pending original render; legacy callers still coalesce (8.255885ms)
+✔ actual attempt CPU excludes prior process work and stays fixed after execution (204.871973ms)
+✔ real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back (179.210174ms)
+✔ terminate aborts and drains the original artifact read before any engine operation starts (14.877319ms)
+✔ owner cancellation before retention rejects every coalesced original-render caller (2.305127ms)
+✔ original worker operation reproduces missing log store; actual service executor persists the complete log (139.24946ms)
+✔ real durable log store corruption keeps an otherwise successful engine operation errored (19.181096ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (38.887716ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (7.358871ms)
+✔ full log participates in the real neutral evidence budget before upload (7.26553ms)
+✔ direct: actual optional phases require a complete claim reservation (90.208147ms)
+✔ runtime: actual optional phases require a complete claim reservation (8.826445ms)
+✔ real completion hooks and durable log finish successfully inside the reserved claim (118.517289ms)
+✔ direct: final claim fence rejects completion after a native blocking hook (565.541148ms)
+✔ runtime: final claim fence rejects completion after a native blocking hook (559.645185ms)
+✔ timed out log hook receives cancellation and settles before result, without a later write (210.379275ms)
+✔ uncooperative storage is reported unresolved rather than completed (158.22717ms)
+✔ original executor preserves each UTF-8 byte split and rejects malformed/incomplete byte logs (94.797345ms)
+✔ real Buster evidence I/O drains cancellation and does not publish a later artifact (28.484571ms)
+✔ stdout and stderr streaming decoders retain separate partial byte sequences (11.481641ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2245.307255
+exit=0

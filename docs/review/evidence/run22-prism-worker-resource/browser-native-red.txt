@@ -1,0 +1,50 @@
+$ node --test --test-reporter=spec skills/prism/integration/worker-browser-cancellation.mts
+✖ owned original Chromium closes and settles a real page load on cancellation (17.92409ms)
+✖ original engine capture cancellation near launch drains before rejecting and releases ownership (3.589034ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 400.428656
+
+✖ failing tests:
+
+test at skills/prism/integration/worker-browser-cancellation.mts:10:7
+✖ owned original Chromium closes and settles a real page load on cancellation (17.92409ms)
+  browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+  ╔════════════════════════════════════════════════════════════╗
+  ║ Looks like Playwright was just installed or updated.       ║
+  ║ Please run the following command to download new browsers: ║
+  ║                                                            ║
+  ║     npx playwright install                                 ║
+  ║                                                            ║
+  ║ <3 Playwright Team                                         ║
+  ╚════════════════════════════════════════════════════════════╝
+      at openOwnedBrowser (/workspace/scratch/15fb596e6560/run22-prism-worker-resource-20260910t062000/skills/prism/engine/browser-capture.ts:17:34)
+      at TestContext.<anonymous> (/workspace/scratch/15fb596e6560/run22-prism-worker-resource-20260910t062000/skills/prism/integration/worker-browser-cancellation.mts:18:23)
+      at async file:///workspace/scratch/15fb596e6560/run22-prism-worker-resource-20260910t062000/skills/prism/integration/worker-browser-cancellation.mts:10:1 {
+    name: 'Error',
+    log: []
+  }
+
+test at skills/prism/integration/worker-browser-cancellation.mts:31:7
+✖ original engine capture cancellation near launch drains before rejecting and releases ownership (3.589034ms)
+  browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+  ╔════════════════════════════════════════════════════════════╗
+  ║ Looks like Playwright was just installed or updated.       ║
+  ║ Please run the following command to download new browsers: ║
+  ║                                                            ║
+  ║     npx playwright install                                 ║
+  ║                                                            ║
+  ║ <3 Playwright Team                                         ║
+  ╚════════════════════════════════════════════════════════════╝
+      at openOwnedBrowser (/workspace/scratch/15fb596e6560/run22-prism-worker-resource-20260910t062000/skills/prism/engine/browser-capture.ts:17:34)
+      at TestContext.<anonymous> (/workspace/scratch/15fb596e6560/run22-prism-worker-resource-20260910t062000/skills/prism/integration/worker-browser-cancellation.mts:33:30)
+      at /workspace/scratch/15fb596e6560/run22-prism-worker-resource-20260910t062000/skills/prism/integration/worker-browser-cancellation.mts:31:7 {
+    name: 'Error',
+    log: []
+  }
+exit=1

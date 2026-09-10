@@ -1,0 +1,29 @@
+$ node --test --test-reporter=spec skills/prism/integration/worker-concurrent-resource-attribution.mts
+✖ one small original Prism attempt does not inherit concurrent service CPU (308.621292ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 830.738304
+
+✖ failing tests:
+
+test at skills/prism/integration/worker-concurrent-resource-attribution.mts:20:7
+✖ one small original Prism attempt does not inherit concurrent service CPU (308.621292ms)
+  AssertionError [ERR_ASSERTION]: attempt receipt included concurrent service CPU: measured=302 ms, unrelated=274.767 ms
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run22-prism-worker-resource-20260910t062000/skills/prism/integration/worker-concurrent-resource-attribution.mts:74:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      at async file:///workspace/scratch/15fb596e6560/run22-prism-worker-resource-20260910t062000/skills/prism/integration/worker-concurrent-resource-attribution.mts:20:1 {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+exit=1
