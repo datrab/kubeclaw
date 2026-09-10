@@ -1,4 +1,4 @@
-import { isResolvedReviewPolicy, type ResolvedReviewPolicy } from './review-policy-resolver.ts';
+import { isResolvedReviewPolicy, assertReviewPolicyBundle, type ResolvedReviewPolicy } from './review-policy-resolver.ts';
 import {
   isCertifiedReviewVerificationReconciliation,
   type ReconciledReviewVerification,
@@ -31,6 +31,7 @@ export function mapReviewVerificationVerdicts(
   reconciliation: ReconciledReviewVerification,
   policy: ResolvedReviewPolicy,
 ): ReviewVerdictPolicyMapping {
+  assertReviewPolicyBundle(policy, snapshot.bundle);
   if (!isResolvedReviewPolicy(policy)
     || !isCertifiedReviewVerificationReconciliation(reconciliation, snapshot, preflight, policy)) {
     throw new Error('verifier verdict policy mapping requires certified inputs');

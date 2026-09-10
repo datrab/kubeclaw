@@ -1,0 +1,29 @@
+Source: a065409 (own run14-sdk-bundle-author); freshly confirmed MAIN ef5399be16c58eb6b8cf0398e2e183c1226d27c9.
+Command: node node_modules/typescript/bin/tsc -p skills/nova/tsconfig.json --noEmit
+Exit: 0; stdout/stderr empty.
+Command: node --test skills/nova/plugins/review/tests/review-policy-resolver.unit.test.mjs skills/nova/plugins/review/tests/review-report-builder.unit.test.mjs skills/nova/plugins/review/tests/review-governor.unit.test.mjs skills/nova/plugins/review/tests/review-reducer.unit.test.mjs skills/nova/plugins/review/tests/simplification-manifest.unit.test.mjs skills/nova/plugins/review/tests/protocol.unit.test.mjs
+Exit: 0
+{"ok":true,"plugin":"kubeclaw.review","suite":"protocol-unit"}
+✔ skills/nova/plugins/review/tests/protocol.unit.test.mjs (230.808004ms)
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-governor"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-evidence-authority"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-context-production"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-slicing"}
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-fact-producer"}
+✔ skills/nova/plugins/review/tests/review-governor.unit.test.mjs (311.414105ms)
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-policy-resolver"}
+✔ skills/nova/plugins/review/tests/review-policy-resolver.unit.test.mjs (225.603241ms)
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-reducer"}
+✔ skills/nova/plugins/review/tests/review-reducer.unit.test.mjs (246.919181ms)
+review report builder unit tests passed
+✔ skills/nova/plugins/review/tests/review-report-builder.unit.test.mjs (364.559797ms)
+{"ok":true,"plugin":"kubeclaw.review","suite":"simplification-manifest"}
+✔ skills/nova/plugins/review/tests/simplification-manifest.unit.test.mjs (278.668802ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 384.493632

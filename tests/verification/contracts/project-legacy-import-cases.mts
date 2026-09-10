@@ -5,6 +5,7 @@ import { spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 
 export async function checkLegacyProjectImport({ project, platformFile, temporary, runtime, compilerFile }: any) {
+  const { compileProject } = await import(pathToFileURL(compilerFile).href);
   const { importLegacyProject } = await import(pathToFileURL(path.join(path.dirname(compilerFile), 'legacy-import.ts')).href);
   const legacyFile = path.join(project.repositoryRoot, 'progress.json');
   fs.mkdirSync(path.dirname(legacyFile), { recursive: true });
@@ -18,6 +19,10 @@ export async function checkLegacyProjectImport({ project, platformFile, temporar
     moduleIds: Object.fromEntries(project.modules.map((module: any) => [`old-${module.id}`, module.id])),
     gateDecisions: { 'old-final': 'Replaced by explicitly authored cumulative final-test coverage.' }, acknowledgeLegacyPolicy: true };
   const imported = importLegacyProject(legacy, authoring, legacyFile);
+  assert.deepEqual(imported.definition, compileProject(imported.project).definition,
+    'legacy authoring import preserves the exact old compiler API definition');
+  assert(imported.definition.stages.filter((stage: any) => stage.type === 'kubeclaw.decision.review')
+    .every((stage: any) => !Object.hasOwn(stage.config, 'reviewSemanticEncoding')));
   assert.equal(imported.project.runId, project.runId);
   assert.equal(imported.project.approved, undefined); assert.equal(imported.project.status, undefined);
   assert.equal(imported.report.completionScope, 'authoring-only');

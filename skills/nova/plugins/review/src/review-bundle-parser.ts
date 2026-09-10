@@ -1,4 +1,5 @@
-import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, portableJson, sha256Text } from '@kubeclaw/plugin-sdk';
+import { PORTABLE_REVIEW_BUNDLE_VERSION } from './review-semantics.ts';
 
 import {
   assertReviewBundleInputResourceBounds,
@@ -173,12 +174,15 @@ function parseSelection(value: unknown): ReviewBundleSelection {
 }
 
 function parseBundle(value: unknown): ReviewBundle {
+  portableJson(value);
   const input = bundleRecord(value, 'review bundle');
   bundleExact(input, [
     'schemaVersion', 'task', 'revisions', 'scope', 'requirements',
     'evidence', 'context', 'selection', 'policyDigest',
   ], [], 'review bundle');
-  if (input.schemaVersion !== REVIEW_BUNDLE_SCHEMA_VERSION) throw new Error('review bundle schemaVersion is invalid');
+  if (input.schemaVersion !== REVIEW_BUNDLE_SCHEMA_VERSION && input.schemaVersion !== PORTABLE_REVIEW_BUNDLE_VERSION) {
+    throw new Error('review bundle schemaVersion is invalid');
+  }
   assertReviewBundleInputResourceBounds(input);
   const task = bundleRecord(input.task, 'task');
   bundleExact(task, ['id', 'statement'], [], 'task');
@@ -193,7 +197,7 @@ function parseBundle(value: unknown): ReviewBundle {
   }
   const collections = parseCollections(input, scope);
   const bundle = {
-    schemaVersion: REVIEW_BUNDLE_SCHEMA_VERSION,
+    schemaVersion: input.schemaVersion,
     task: {
       id: bundleIdentifier(task.id, 'task.id'),
       statement: bundleText(task.statement, 'task.statement', 16_384),

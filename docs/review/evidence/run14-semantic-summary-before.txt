@@ -1,0 +1,58 @@
+Source: 1595f98 plus additive Summary child/test and early input validation (recorded next checkpoint).
+Command: node --test tests/verification/reliability/review-semantic-summary.test.mjs
+{"phase":"produce","locale":"en_US.UTF-8","status":0,"stdout":"{\"phase\":\"produce\",\"locale\":\"en-US\",\"summaryDigest\":\"sha256:adee836993c1cd9c9ff09d496bdba1dffb285088fb4fd0caa3fe9dee0dc11830\",\"bundleDigest\":\"sha256:8d926ce67fd4bc06a6265e40fd13bee868cccdb0db7581ba0ffc71a8133ca436\",\"actualCore\":true,\"actualArtifactStore\":true,\"artifactContractFixture\":true,\"freshPolicyProduction\":false}\n","stderr":""}
+{"phase":"read-en","locale":"en_US.UTF-8","status":0,"stdout":"{\"phase\":\"read-en\",\"locale\":\"en-US\",\"summaryDigest\":\"sha256:adee836993c1cd9c9ff09d496bdba1dffb285088fb4fd0caa3fe9dee0dc11830\",\"samePersistedDigest\":true,\"actualCore\":true,\"actualArtifactStore\":true,\"wrongModeAndEncodingRejected\":true,\"providerExecution\":false}\n","stderr":""}
+{"phase":"read-cs","locale":"cs_CZ.UTF-8","status":1,"stdout":"","stderr":"node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'sha256:7757bf621fed180598c3cb460d3016910dbc89cacef510924dd447dc0f6dd23e'\n- 'sha256:adee836993c1cd9c9ff09d496bdba1dffb285088fb4fd0caa3fe9dee0dc11830'\n\n    at file:///workspace/scratch/15fb596e6560/run14-sdk-bundle-author/tests/verification/reliability/review-semantic-summary-child.mjs:59:12 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: 'sha256:7757bf621fed180598c3cb460d3016910dbc89cacef510924dd447dc0f6dd23e',\n  expected: 'sha256:adee836993c1cd9c9ff09d496bdba1dffb285088fb4fd0caa3fe9dee0dc11830',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"}
+✖ original Summary consumes exact new semantic artifacts through Core/ArtifactStore in en and cs (4901.411183ms)
+✔ Summary semantic reader rejects proxy/getter, partial and unknown version pairs (7.261874ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5044.477694
+
+✖ failing tests:
+
+test at tests/verification/reliability/review-semantic-summary.test.mjs:11:1
+✖ original Summary consumes exact new semantic artifacts through Core/ArtifactStore in en and cs (4901.411183ms)
+  AssertionError [ERR_ASSERTION]: node:internal/modules/run_main:107
+      triggerUncaughtException(
+      ^
+  
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'sha256:7757bf621fed180598c3cb460d3016910dbc89cacef510924dd447dc0f6dd23e'
+  - 'sha256:adee836993c1cd9c9ff09d496bdba1dffb285088fb4fd0caa3fe9dee0dc11830'
+  
+      at file:///workspace/scratch/15fb596e6560/run14-sdk-bundle-author/tests/verification/reliability/review-semantic-summary-child.mjs:59:12 {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'sha256:7757bf621fed180598c3cb460d3016910dbc89cacef510924dd447dc0f6dd23e',
+    expected: 'sha256:adee836993c1cd9c9ff09d496bdba1dffb285088fb4fd0caa3fe9dee0dc11830',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+  
+  Node.js v24.19.0
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/15fb596e6560/run14-sdk-bundle-author/tests/verification/reliability/review-semantic-summary.test.mjs:18:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+EXIT: 1
