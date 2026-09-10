@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import crypto from 'node:crypto';
+import {pathToFileURL} from 'node:url';
 import test from 'node:test';
 import {PORTABLE_JSON_ENCODING} from '@kubeclaw/plugin-sdk';
 import {compileProject} from '../../../skills/nova/project/compiler.ts';
@@ -9,6 +11,7 @@ import {compileProjectRecovery} from '../../../skills/nova/project/recovery.ts';
 import {graphSnapshot,writeRunSnapshots} from '../../../skills/nova/core/execution/engine-snapshots.ts';
 import {runRoot} from '../../../skills/nova/core/execution/run-root.ts';
 import {projectSourceFixture} from './project-source-fixture.mjs';
+import {materializeCurrentCore} from './repair-identity-historical.mjs';
 
 const reviewType='kubeclaw.decision.review';
 test('stored source/report modes are independent and all generated Review nodes agree',async()=>{
@@ -32,7 +35,34 @@ test('stored source/report modes are independent and all generated Review nodes 
   const fresh=compileProject(fixture.project);
   assert(fresh.definition.stages.filter(stage=>stage.type===reviewType).every(stage=>stage.config.reportArtifactEncoding===PORTABLE_JSON_ENCODING));
   assert.throws(()=>compileProject(fixture.project,'legacy','future'),/PROJECT_REPORT_ENCODING_INVALID/);
+  const noReview=structuredClone(fixture.project);delete noReview.modules[0].review;delete noReview.final.review;
+  const without=compileProject(noReview),emptyStorage=path.join(root,'no-review'),emptyDirectory=runRoot(emptyStorage,without.runId);
+  assert.equal(without.definition.stages.filter(stage=>stage.type===reviewType).length,0);
+  fs.mkdirSync(emptyDirectory,{recursive:true});writeRunSnapshots(emptyDirectory,graphSnapshot(without.definition),{});
+  assert.deepEqual(compileProjectRecovery(noReview,emptyStorage),without);
  } finally {await fixture?.close();fs.rmSync(root,{recursive:true,force:true});}
+});
+
+test('archived compiler with current coverage helper preserves portable-source and legacy module/final reports',async()=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'report-archived-'));let fixture;
+ try{
+  const overlay=materializeCurrentCore(path.join(root,'original'));
+  const archive=JSON.parse(fs.readFileSync(new URL('../../fixtures/repair-budget/legacy-review-compiler.json',import.meta.url),'utf8'));
+  const bytes=Buffer.from(archive.content);
+  assert.equal(crypto.createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex'),archive.gitBlob);
+  const target=path.join(overlay.destination,archive.path);fs.writeFileSync(target,bytes);
+  const original=await import(pathToFileURL(target).href);
+  const fixtureRoot=path.join(root,'project');fs.mkdirSync(fixtureRoot);
+  fixture=await projectSourceFixture(fixtureRoot,{review:true,clean:false});
+  fixture.project.modules[0].review={agent:'echo'};fixture.project.final.review={agent:'echo'};
+  const compiled=original.compileProject(fixture.project);
+  assert.equal(compiled.definition.stages.find(stage=>stage.id==='source-preflight').input.source.identityEncoding,PORTABLE_JSON_ENCODING);
+  const reviews=compiled.definition.stages.filter(stage=>stage.type===reviewType);assert.equal(reviews.length,2);
+  assert(reviews.every(stage=>!Object.hasOwn(stage.config,'reportArtifactEncoding')));
+  const storageRoot=path.join(root,'stored'),directory=runRoot(storageRoot,compiled.runId);fs.mkdirSync(directory,{recursive:true});
+  writeRunSnapshots(directory,graphSnapshot(compiled.definition),{});
+  assert.deepEqual(compileProjectRecovery(fixture.project,storageRoot),compiled);
+ }finally{await fixture?.close();fs.rmSync(root,{recursive:true,force:true});}
 });
 
 test('saved Review node set, uniform mode, and the entire pinned graph remain authoritative',async()=>{
