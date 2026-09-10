@@ -1,0 +1,7 @@
+{
+  "chunk_id": "0932c4",
+  "exit_code": 0,
+  "original_token_count": 128,
+  "output": "{\"allCapabilityArgumentBytesUnchanged\":true,\"invocationOrder\":[\"artifacts.read\",\"runtime.dispatch\",\"signal.wait\",\"operator.request\",\"artifacts.write\"],\"originalStageDigest\":\"sha256:8720b7e3d5e1a7726d76fe9b37a3f58f71566b193b35d6a5f017fbae0b243483\",\"newStageDigest\":\"sha256:20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88\",\"historicalGitObjectsRequired\":false}\n{\"actualIndependentCompletedReceiptAccepted\":true,\"responseValueArtifactAndNestedProducerProxyRejected\":true,\"proxyTrapsExecuted\":0}\n",
+  "wall_time_seconds": 0.871063409
+}
