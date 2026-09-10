@@ -1,0 +1,10 @@
+# Run13 report artifact cutover — incomplete
+
+Base: remote `9c5bdcb21c8fcd50fb38d2a1c4988213db2b3ecb`, local exact-tree `e98d2bd9c64807a1d2ca0a031546ccdce7e5b8b6`.
+Scope: approved run12 report-cutover design, not Review cache or bundle encoding.
+
+Implemented owning finite `reportArtifactEncoding`, explicit fresh compiler selection for module and cumulative Review stages, independent stored source/report mode recovery, expected Review node-set/uniform-mode checks, and propagation through normal/dispatch-failure/semantic-failure report paths. Legacy omitted cumulative helper argument is intentionally legacy because archived compiler sources import the current helper. Original bundle writer, report semantic version/IDs, operation/resource, whole-graph verifier and package pin verifier remain unchanged.
+
+Initial Review and Nova full TypeScript checks pass. Six selected compiler/recovery/config tests pass with zero skips, including original archived compiler and source-version tests. New test fixture setup initially omitted final.review and used invalid duplicate/removal graph mutations; corrected fixtures now create genuine valid alternate graphs without weakening the recovery assertions. Initial tool setup errors (nonexistent project tsconfig and unavailable tsx) were corrected to the original direct Node24 / skills/nova/tsconfig.json commands.
+
+This is NOT approved for integration or Finding closure. Locale fixture and original writer archive are retained for the next real CAS/journal probe but that probe is not yet implemented or passed. Required next actions: real portable/legacy locale replay and requested/accepted/completed journal boundaries, strict report through actual governor and project-summary readers, original archived CLI cumulative final-review proof, invalid-input and result-binding cases, original Review tests/generator/types/lint, independent run5_storage review, then fresh-head reconciliation. No CI/deployment executed. Repair-branch push triggers were inspected: pushes are main-only; this backup uses [skip ci].

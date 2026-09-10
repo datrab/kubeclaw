@@ -24,8 +24,9 @@ import { mergeSlicedEchoOutputs } from './review-slicing.ts';
 import { buildReviewSnapshot, prepareReview, ReviewPreparationIntegrityError,
   ReviewPreparationLimitError, type PreparedReview } from './review-preparation.ts';
 import { blockedReviewStage } from './review-stage-result.ts';
+import { reportArtifactEncoding, type ReportArtifactEncoding } from './review-report-encoding.ts';
 
-interface ReviewStageConfig { readonly agent: string; readonly profile: string; readonly policy?: unknown }
+interface ReviewStageConfig { readonly agent: string; readonly profile: string; readonly policy?: unknown; readonly reportArtifactEncoding?: ReportArtifactEncoding }
 class ReviewStageIntegrityError extends Error {
   readonly snapshot: ReviewBundleSnapshot | undefined;
   constructor(message: string, snapshot?: ReviewBundleSnapshot) {
@@ -35,11 +36,13 @@ class ReviewStageIntegrityError extends Error {
 
 function config(context: PluginInvocationContext): ReviewStageConfig {
   const value = context.contract.config;
+  const encoding = reportArtifactEncoding(value);
   const agent = typeof value.agent === 'string' ? value.agent.trim() : '';
   if (!agent) throw new Error('review agent is not configured');
   const profile = value.profile === undefined ? 'gate' : value.profile;
   if (typeof profile !== 'string' || !profile.trim()) throw new Error('review profile is invalid');
-  return { agent, profile, ...(value.policy === undefined ? {} : { policy: value.policy }) };
+  return { agent, profile, ...(value.policy === undefined ? {} : { policy: value.policy }),
+    ...(encoding === undefined ? {} : { reportArtifactEncoding: encoding }) };
 }
 
 function reviewWait(context: PluginInvocationContext): WaitRequest | undefined {
@@ -193,6 +196,7 @@ async function guardKnownFailure<T>(
 }
 
 interface DispatchFailureInput {
+  readonly reportArtifactEncoding?: ReportArtifactEncoding;
   readonly failure: Extract<Guarded<never>, { readonly result: StageResult }>;
   readonly snapshot: ReviewBundleSnapshot; readonly policy: ResolvedReviewPolicy;
   readonly wait: WaitRequest | undefined; readonly context: PluginInvocationContext;
@@ -202,6 +206,7 @@ interface DispatchFailureInput {
 function persistDispatchFailure(values: DispatchFailureInput): Promise<StageResult> {
   const { failure, snapshot, policy, wait, context, governor } = values;
   return persistReviewOutcome({
+    ...(values.reportArtifactEncoding === undefined ? {} : { reportArtifactEncoding: values.reportArtifactEncoding }),
     semantic: { findings: [] },
     parsed: { ok: false, error: failure.error instanceof Error ? failure.error.message : String(failure.error) },
     snapshot, policy, ...(wait === undefined ? {} : { wait }), context, result: failure.result, governor,
@@ -222,7 +227,8 @@ async function runReview(
     const snapshot = dispatch.error instanceof ReviewStageIntegrityError && dispatch.error.snapshot
       ? dispatch.error.snapshot : prepared.snapshot;
     const governor = await reviewGovernor(prepared, parsedInput, snapshot, policy, context);
-    return persistDispatchFailure({ failure: dispatch, snapshot, policy, wait, context, governor });
+    return persistDispatchFailure({ failure: dispatch, snapshot, policy, wait, context, governor,
+      ...(stageConfig.reportArtifactEncoding === undefined ? {} : { reportArtifactEncoding: stageConfig.reportArtifactEncoding }) });
   }
   const dispatched = dispatch.value;
   const semantic = await guardKnownFailure(
@@ -236,6 +242,7 @@ async function runReview(
       ? semantic.error.state : { findings: [] };
     const governor = await reviewGovernor(prepared, parsedInput, dispatched.snapshot, policy, context);
     return persistReviewOutcome({
+      ...(stageConfig.reportArtifactEncoding === undefined ? {} : { reportArtifactEncoding: stageConfig.reportArtifactEncoding }),
       semantic: state, parsed: dispatched.echo, snapshot: dispatched.snapshot,
       policy, ...(wait === undefined ? {} : { wait }), context, result: semantic.result,
       governor,
@@ -243,6 +250,7 @@ async function runReview(
   }
   const governor = await reviewGovernor(prepared, parsedInput, dispatched.snapshot, policy, context);
   return finalizeReview({
+    ...(stageConfig.reportArtifactEncoding === undefined ? {} : { reportArtifactEncoding: stageConfig.reportArtifactEncoding }),
     semantic: semantic.value, parsed: dispatched.echo, snapshot: dispatched.snapshot, policy,
     ...(wait === undefined ? {} : { wait }), context, governor,
   });
