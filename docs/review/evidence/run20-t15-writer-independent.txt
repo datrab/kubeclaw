@@ -1,0 +1,92 @@
+T15-F01 independent configured-writer review
+run_id=20260910t042633
+source_commit=e644a79fddd4d4d686fbd351b6edaec5575caf57
+source_tree=64df9214237107c027b27caf4d5f75f27a222f51
+frozen_implemented_ids_at_c387=47
+partial_47_scope_exact_match=true
+source_finding_text_unchanged_for_all_47=true
+
+Remote corrected author checkpoint inspection:
+author_commit=6e91619dda17204d571de4b013b6d28aa09f0abc
+author_parent=e644a79fddd4d4d686fbd351b6edaec5575caf57
+author_tree=bd34644b3fce710849df70d3105b1b8391d738c3
+remote_non_tree_entries=4093
+remote_delta_from_source=2 review-only files
+
+The superseded checkpoint 675f3 incorrectly inferred that no listener existed.
+The independent command emitted EPERM, so listener state is uninspectable rather
+than absent. Corrected commit 6e916 documents that exact boundary and is accepted
+as an incomplete, review-only checkpoint. The old checkpoint is not accepted.
+
+$ command -v openclaw
+exit=1
+
+$ test -f /home/node/.openclaw/openclaw.json
+exit=1
+
+$ test -n OPENCLAW_GATEWAY_TOKEN
+exit=1
+
+$ test -n OPENCLAW_GATEWAY_TOOLS_URL
+exit=1
+
+$ ss -ltn | rg :18789
+Cannot open netlink socket: Operation not permitted
+exit=1
+
+$ node --test tests/verification/reliability/report-evidence.test.mts
+▶ historical report source authority rejects foreign, stale, missing and changed actual evidence
+  ✔ cross-run, duplicate, nonexistent and stale source selections reject (49.222748ms)
+  ✔ actual blob loss and changed bytes reject; preserved store reads original bytes after repair (351.647349ms)
+  ✔ incomplete and nonterminal real journal prefixes reject without repair (33.882526ms)
+  ✔ original requested-effect prefix cannot be mistaken for completed run evidence (7.032519ms)
+  ✔ empty and completed effect prefixes cannot satisfy the pinned lifecycle (24.831903ms)
+  ✔ ordinary effect cannot impersonate a policy-owned confidential audit triplet (525.516864ms)
+  ✔ ambiguous historical producer version and inconsistent claimed execution mode reject (300.115842ms)
+  ✔ source mutation during actual artifact read rejects the snapshot (62.340258ms)
+  ✔ bounded legacy FIFO cannot hang the original resolver (101.531893ms)
+✔ historical report source authority rejects foreign, stale, missing and changed actual evidence (11249.49348ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11738.833436
+exit=0
+
+$ npm test --prefix skills/nova/plugins/pipeline-review
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.pipeline-review","suite":"protocol"}
+{"ok":true,"plugin":"kubeclaw.pipeline-review","suite":"live-function","modelExecution":false}
+{"ok":true,"plugin":"kubeclaw.pipeline-review","suite":"package-boundary"}
+exit=0
+
+$ npm test --prefix skills/nova/plugins/case-study
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"protocol"}
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"live-function","modelExecution":false}
+{"ok":true,"plugin":"kubeclaw.case-study","suite":"package-boundary"}
+exit=0
+
+Independent source hashes at source_commit:
+477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c  skills/nova/plugins/pipeline-review/src/evidence-adapter.ts
+ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd  skills/nova/plugins/pipeline-review/src/evidence-bundle.ts
+e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a  skills/nova/plugins/pipeline-review/src/stage.ts
+a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9  skills/nova/plugins/case-study/src/stage.ts
+4812b34581fa391cdfe56605d3d26cb06a873be906d73e0fcd0f5b217ee2d057  tests/verification/reliability/report-evidence.test.mts
+eb24cfba0a936e7ba9c2dfef35fe2e29d8fd57c4d8b59e4bcfb178c726ff2501  tests/verification/reliability/report-identity-fixture.mjs
+
+Disposition: INCOMPLETE. Ten source-authority cases and both original plugin
+suites pass, but both live suites explicitly report modelExecution=false. No
+actual configured Writer/runtime was available or invoked. No production edit,
+provider call, CI, deployment, paid resource, or third-party message occurred.
