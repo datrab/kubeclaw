@@ -1,0 +1,15 @@
+Command: node --test tests/verification/reliability/nova-dispatch-projection.test.mjs
+Result: exit 0; 11 tests passed, 0 failed, 0 skipped; duration 74934 ms.
+New positive: registered implementation source authorizes dispatch projection through its committed artifact.
+New negatives: missing and digest-corrupt implementation artifact blobs, altered actual Git merge result, fabricated sourceStageId, missing source binding, foreign run/stage/attempt/source/plan/adapter, active run, stale CAS/import/run bindings and aliased stores all refuse release.
+Existing real interactions retained: original PipelineRunner, registered implementation and quality stages, real Git workspace commit/merge, real ArtifactStore read/write, real Nova dispatch/import stores, local HTTP dispatch, competing process store fence and actual SIGKILL recovery. Exact archived job reload/replay remains byte-equal after projection.
+Native limit retained: fixture's Buster-side provider result is execution_error (TEST_PROVIDER_SANDBOX_NOT_BUILT); no successful native provider execution is claimed.
+
+Command: node --test --test-name-pattern='registered implementation source' tests/verification/reliability/nova-dispatch-projection.test.mjs
+Result: exit 0; 1 test passed, 0 failed, 0 skipped; duration 9429 ms.
+
+Command: npm run typecheck --prefix skills/nova
+Result: exit 0; tsc --noEmit -p tsconfig.json.
+
+Command: node --test tests/verification/reliability/nova-dispatch-retained-authority.test.mjs
+Result: exit 0; 4 tests passed, 0 failed, 0 skipped; duration 691 ms.

@@ -10,6 +10,7 @@ import { recordSnapshot } from './stores.mjs';
 const same = (left, right) => portableJson(left) === portableJson(right);
 const fail = () => { throw new Error('NOVA_DISPATCH_RETENTION_CORE_AUTHORITY_REQUIRED'); };
 const resolution = provenance => ({ ...provenance.package.package, registrationId: provenance.registrationId });
+const select = (items, predicate) => { const selected = items.filter(predicate); if (selected.length !== 1) fail(); return selected[0]; };
 
 function pinnedProvider(selected, capability, pluginId, registrationId) {
   const provider = selected?.find(item => item.capability === capability)?.provider;
@@ -56,25 +57,92 @@ function boundStage(job, context) {
     || configured.owner?.package?.package?.pluginId !== 'kubeclaw.buster-quality-gate') fail();
   return { stage, configured };
 }
-function boundProviderPlan(job, payload, stage, context) {
-  // Derived source-stage authority needs its original producer artifact linkage.
-  // This bounded projection slice must not guess that missing ownership.
-  if (typeof stage.input.providerPlan?.revision !== 'string' || stage.input.providerPlan.sourceStageId !== undefined) fail();
+function sourceAttempt(events, identity, configured, artifact, revision, qualityIdentity) {
+  const own = events.filter(({ entry }) => entry.identity.attemptId === identity.attemptId);
+  const created = select(own, ({ entry }) => entry.type === 'attempt.created');
+  const dispatched = select(own, ({ entry }) => entry.type === 'attempt.dispatched');
+  const completed = select(own, ({ entry }) => entry.type === 'attempt.completed');
+  const qualityCreated = select(events, ({ entry }) => entry.type === 'attempt.created'
+    && same(entry.payload.attempt.identity, qualityIdentity));
+  const result = completed.entry.payload.result;
+  if (!same(created.entry.payload.attempt.identity, identity)
+    || !same(created.entry.payload.attempt.owner, resolution(configured.owner))
+    || created.sequence >= dispatched.sequence || dispatched.sequence >= completed.sequence || completed.sequence >= qualityCreated.sequence
+    || result?.outcome !== 'passed' || result.facts?.['implementation.source_revision'] !== revision
+    || !result.artifacts?.some(item => same(item, artifact))) fail();
+}
+function sourceOperation(effects, identity, capability) {
+  const requested = select(effects, ({ entry }) => entry.type === 'requested' && entry.request.capability === capability
+    && same(entry.request.attempt, identity));
+  return selectedEffect(effects, requested.entry.request.idempotencyKey);
+}
+function boundDerivedSource(inventory, scope, context, effects, events, quality, sourceStageId, revision) {
+  const stage = select(context.snapshot.graph.nodes, item => item.id === sourceStageId);
+  const configured = select(context.snapshot.registry.configuredStages, item => item.stageId === sourceStageId);
+  if (stage.type !== 'kubeclaw.agent.implementation' || configured.stageType !== stage.type
+    || configured.owner?.package?.package?.pluginId !== 'kubeclaw.implementation-agent') fail();
+  const evidence = readRunEvidence({ runId: scope.intent.runId, journalHead: scope.intent.runJournalHead,
+    snapshotDigest: scope.intent.snapshotDigest }, { storageRoot: scope.novaStorageRoot,
+    maximumBytes: scope.inventoryLimits.maximumTotalBytes, orchestratorIssuerId: scope.orchestratorIssuerId });
+  const candidates = evidence.artifacts.filter(ref => ref.producer.stageId === sourceStageId
+    && ref.namespace === 'kubeclaw.implementation-agent' && ref.artifactId.startsWith('implementation:'));
+  const latest = Math.max(...candidates.map(ref => ref.producer.attemptNumber));
+  const artifact = select(candidates, ref => ref.producer.attemptNumber === latest);
+  sourceAttempt(events, artifact.producer, configured, artifact, revision, quality.request.attempt);
+  const record = select(recordSnapshot(inventory, context.artifactRoot), item => item.stream === 'artifacts/kubeclaw.implementation-agent'
+    && same(item.payload, artifact));
+  const file = path.join(context.artifactRoot, 'blobs/sha256', artifact.digest.slice(7, 9), artifact.digest.slice(9));
+  const observed = inventory.files.get(file);
+  if (!record || observed?.hash !== artifact.digest || observed.bytes !== artifact.sizeBytes) fail();
+  const jsonBytes = inventory.text(file), value = JSON.parse(jsonBytes);
+  verifiedArtifactJsonText({ schemaVersion: 'artifact-json-bytes.v1', jsonBytes, value,
+    digest: artifact.digest, sizeBytes: observed.bytes, artifact }, artifact);
+  if (value?.status !== 'ready_for_testing' || value.sourceRevision !== revision) fail();
+  const read = sourceOperation(effects, quality.request.attempt, 'artifacts.read');
+  const consumed = read.completion.receipt.result;
+  verifiedArtifactJsonText(consumed, artifact);
+  const commit = sourceOperation(effects, artifact.producer, 'git.commit');
+  const merge = sourceOperation(effects, artifact.producer, 'git.merge');
+  const write = sourceOperation(effects, artifact.producer, 'artifacts.write');
+  const selected = context.snapshot.registry.selectedProviders;
+  if (!same(read.request.payload.reference, artifact) || read.request.payload.digest !== artifact.digest
+    || read.request.payload.namespace !== artifact.namespace || read.request.operation !== 'get_json_bytes'
+    || read.completion.receipt.status !== 'completed' || !same(read.completion.receipt.adapter, resolution(context.artifact))
+    || consumed.digest !== artifact.digest || consumed.sizeBytes !== artifact.sizeBytes || !same(consumed.value, value)
+    || read.end >= quality.start
+    || !same(commit.completion.receipt.adapter, resolution(pinnedProvider(selected, 'git.commit', 'kubeclaw.git-workspace', 'git')))
+    || !same(merge.completion.receipt.adapter, resolution(pinnedProvider(selected, 'git.merge', 'kubeclaw.git-workspace', 'git')))
+    || !same(write.completion.receipt.adapter, resolution(context.artifact))
+    || commit.completion.receipt.status !== 'completed' || merge.completion.receipt.status !== 'completed'
+    || write.completion.receipt.status !== 'completed'
+    || merge.request.payload.sourceRevision !== commit.completion.receipt.result?.sourceRevision
+    || merge.completion.receipt.result?.sourceRevision !== revision
+    || write.request.operation !== 'put_json' || write.request.payload.namespace !== 'kubeclaw.implementation-agent'
+    || !same(write.request.payload.value, value) || !same(effectResult(inventory, scope.intent.runRoot, write.completion)?.artifact, artifact)
+    || commit.end >= merge.start || merge.end >= write.start || write.end >= quality.start) fail();
+}
+function boundProviderPlan(job, payload, stage, context, inventory, scope, effects, events, quality) {
+  const configuredPlan = stage.input.providerPlan;
+  if (!configuredPlan || (typeof configuredPlan.revision === 'string') === (typeof configuredPlan.sourceStageId === 'string')) fail();
   for (const key of ['plan', 'repositoryRoot', 'repositoryId', 'grants', 'maximumConcurrency', 'submittedAt', 'timeoutMs']) {
-    if (!same(payload[key], stage.input.providerPlan?.[key])) fail();
+    if (!same(payload[key], configuredPlan[key])) fail();
   }
   if (payload.gateId !== stage.input.gateId || job.sourceSnapshot.revision !== `git:${payload.revision}`
     || job.sourceSnapshot.creatorAuthority !== context.config['kubeclaw.remote-test-gate:plan'].sourceAuthority
-    || (stage.input.providerPlan.revision !== undefined && payload.revision !== stage.input.providerPlan.revision)) fail();
+    || (configuredPlan.revision !== undefined && payload.revision !== configuredPlan.revision)) fail();
+  if (configuredPlan.sourceStageId !== undefined) {
+    if (payload.sourceStageId !== configuredPlan.sourceStageId) fail();
+    boundDerivedSource(inventory, scope, context, effects, events, quality, configuredPlan.sourceStageId, payload.revision);
+  }
 }
-function boundRequest(job, effect, context) {
+function boundRequest(job, effect, context, inventory, scope, effects, events) {
   const { request, completion } = effect, payload = request.payload;
   const { stage, configured } = boundStage(job, context);
   if (request.capability !== 'test.plan.execute' || request.operation !== 'run' || request.resource.type !== 'test.resolved-plan'
     || request.resource.canonicalId !== payload.repositoryRoot || request.attempt.runId !== job.plan.runId
     || request.attempt.stageId !== job.pipelineStageId || completion.receipt.status !== 'completed'
     || !same(completion.receipt.adapter, resolution(context.remote))) fail();
-  boundProviderPlan(job, payload, stage, context);
+  boundProviderPlan(job, payload, stage, context, inventory, scope, effects, events, effect);
   const reconstructed = createRemotePlanJob({ idempotencyKey: request.idempotencyKey, pipelineStageId: request.attempt.stageId,
     plan: payload.plan, repositoryArchive: repositoryArchiveBytes(job.repositoryArchive), sourceSnapshot: job.sourceSnapshot,
     grants: new Map(Object.entries(payload.grants)), maximumConcurrency: payload.maximumConcurrency, submittedAt: payload.submittedAt });
@@ -127,9 +195,9 @@ export function assertCoreDispatch(inventory, scope, job, decision) {
   const context = coreDispatchRoots(inventory, scope);
   const effects = journal(inventory, path.join(scope.intent.runRoot, 'effects.jsonl'));
   const effect = selectedEffect(effects, job.idempotencyKey);
-  const { configured } = boundRequest(job, effect, context);
-  if (!same(effectResult(inventory, scope.intent.runRoot, effect.completion), decision)) fail();
   const events = journal(inventory, path.join(scope.intent.runRoot, 'events.jsonl'));
+  const { configured } = boundRequest(job, effect, context, inventory, scope, effects, events);
+  if (!same(effectResult(inventory, scope.intent.runRoot, effect.completion), decision)) fail();
   const result = boundAttempt(events, effect.request, configured);
   boundDecisionArtifact(inventory, scope, context, effects, effect, result, decision);
 }

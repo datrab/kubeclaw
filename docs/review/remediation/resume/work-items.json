@@ -171,8 +171,8 @@
     {
       "id": "PCR-OBS-002",
       "status_at_checkpoint": "implementiert / unvollständig",
-      "evidence": "implementation/run9-operator-root-review.md",
-      "next_action": "Gemeinsamer Reader und begrenzte Dispatch-/Operatorprojektion unabhängig geprüft; Root27/27 auf SDK/Prism. Weitere Retention bleibt offen, insbesondere unsupported derived-source/v2/Discord und native Consumerbelege."
+      "evidence": "implementation/run23-dispatch-derived-source.md",
+      "next_action": "Derived-source Dispatch-Projektion ist als unvollständiger Autorencheckpoint implementiert und lokal 11/11 plus Retained-Authority4/4 und Nova-Typecheck geprüft; unabhängige Prüfung steht aus. Danach v2/Discord, externalisierte/ungewisse Historien, Shared-Blob-/Recordcount-Freigabe und native Consumerbelege bearbeiten."
     },
     {
       "id": "PCR-OPERATOR-001",

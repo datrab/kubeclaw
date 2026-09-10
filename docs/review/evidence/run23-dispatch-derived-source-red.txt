@@ -1,0 +1,5 @@
+Command: node --test --test-name-pattern='registered implementation source' tests/verification/reliability/nova-dispatch-projection.test.mjs
+Source state: production dispatch authority accepted only providerPlan.revision and rejected providerPlan.sourceStageId.
+Result: exit 0 for the RED assertion; 1 test passed, 0 failed, 0 skipped.
+Observed boundary: a registered implementation-agent stage used the real Git workspace adapter to create, commit and merge derived source, persisted its real ArtifactStore result, and the registered quality stage consumed that artifact before producing the real remote dispatch/import. The manual retention action rejected this completed causal chain with NOVA_DISPATCH_RETENTION_CORE_AUTHORITY_REQUIRED and left dispatch bytes unchanged.
+Native limit retained: the Buster-side provider result was execution_error (TEST_PROVIDER_SANDBOX_NOT_BUILT); this RED proves the retention authority gap, not a successful native provider run.
