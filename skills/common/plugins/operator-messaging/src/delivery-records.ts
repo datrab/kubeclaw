@@ -1,6 +1,7 @@
 import crypto from 'node:crypto';
 import type { EffectRequest } from '@kubeclaw/plugin-sdk';
 import type { FileDurableRecordStore, DurableRecord } from '@kubeclaw/plugin-foundation/observability/durable-records';
+import { projectedDeliveryReceipt } from './delivery-projection.ts';
 
 type Payload = Readonly<Record<string, unknown>>;
 export interface Reservation { readonly stream: string; readonly key: string; readonly digest: string; }
@@ -14,6 +15,8 @@ function completed(records: readonly DurableRecord<Payload>[], deliveryId: strin
 
 export async function deliveryReceipt(records: FileDurableRecordStore, request: EffectRequest, transportPayload?: Payload): Promise<Payload | undefined> {
   const entries = await records.read<Payload>(`notifications/${request.resource.canonicalId}`);
+  const projected = projectedDeliveryReceipt(entries, request, transportPayload);
+  if (projected) return projected;
   if (request.deliveryId !== undefined) {
     const original = entries.find(entry => entry.idempotencyKey === key(request.deliveryId!, 'request'))?.payload;
     if (!original) return undefined;
@@ -27,10 +30,18 @@ export async function deliveryReceipt(records: FileDurableRecordStore, request: 
 
 export async function reserveDelivery(records: FileDurableRecordStore, request: EffectRequest, payload: Payload, receiverSupported: boolean): Promise<Reservation | Payload> {
   const deliveryId = deliveryIdentity(request), stream = `notifications/${request.resource.canonicalId}`;
-  await records.append(stream, key(deliveryId, 'request'), request.deliveryId === undefined
+  const projected = projectedDeliveryReceipt(await records.read(stream), request, payload);
+  if (projected) return projected;
+  try { await records.append(stream, key(deliveryId, 'request'), request.deliveryId === undefined
     ? { schemaVersion: 'notification-delivery-request.v1', idempotencyKey: deliveryId, target: request.resource.canonicalId, payload }
     : { schemaVersion: 'notification-delivery-request.v2', idempotencyKey: deliveryId, target: request.resource.canonicalId,
-      owner: { runId: request.attempt.runId, stageId: request.attempt.stageId }, transportBody: JSON.stringify(payload) });
+      owner: { runId: request.attempt.runId, stageId: request.attempt.stageId }, transportBody: JSON.stringify(payload) }); }
+  catch (error) {
+    if (!(error instanceof Error) || error.message !== 'DURABLE_RECORD_IDEMPOTENCY_CONFLICT') throw error;
+    const raced = projectedDeliveryReceipt(await records.read(stream), request, payload);
+    if (raced) return raced;
+    throw error;
+  }
   const prior = await records.read<Payload>(stream), receipt = completed(prior, deliveryId);
   if (receipt) return receipt;
   const uncertain = prior.some(entry => entry.idempotencyKey.endsWith(`:${hash(deliveryId)}`)
@@ -51,7 +62,8 @@ export async function completeDelivery(records: FileDurableRecordStore, request:
   try { await records.transition(reservation.stream, reservation.key, reservation.digest, payload); }
   catch (error) {
     if (!(error instanceof Error) || error.message !== 'DURABLE_RECORD_TRANSITION_CONFLICT') throw error;
-    const current = await records.read<Payload>(reservation.stream), accepted = completed(current, deliveryIdentity(request));
+    const current = await records.read<Payload>(reservation.stream), accepted = projectedDeliveryReceipt(current, request)
+      ?? completed(current, deliveryIdentity(request));
     if (accepted) return accepted;
     const terminal = current.find(entry => entry.idempotencyKey === reservation.key);
     if (!terminal) throw error;

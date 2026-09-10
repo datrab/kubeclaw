@@ -1,0 +1,43 @@
+$ npm run plugin-system:sandbox:build && node --test tests/verification/reliability/record-fenced-read-independent.test.mjs tests/verification/reliability/telemetry-retirement.test.mjs tests/verification/reliability/nova-dispatch-projection.test.mjs tests/verification/reliability/nova-dispatch-retained-authority.test.mjs
+Original helper built once in own checkout. Actual provider outcomes below remain execution_error, not provider pass.
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original completed import projects duplicate bytes with real quotas and exact HTTP replay (6973.216363ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input (6599.58634ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner (6267.953775ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId (7486.523646ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent canonical-invalid original selected request cannot authorize retention after honest hash-chain recomputation (6463.737324ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_INITIALIZE_EXITED:70:null","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release (6484.963291ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"blocked","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual blocked original Core with a completed import cannot authorize retention before cancellation (3784.515286ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"write EPIPE","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ honestly rehashed sourceStageId or missing-source snapshot cannot bypass explicit-revision-only eligibility (6208.588707ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_INITIALIZE_EXITED:70:null","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job (6390.772242ms)
+{"storagePositive":"original-Core-quality-stage-complete-import","decision":"execution_error","coreStatus":"cancelled","originalAttempt":"TEST_PROVIDER_INITIALIZE_EXITED:70:null","nativeHttpRequests":0,"originalDispatchPosts":1}
+✔ actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery (6355.186612ms)
+✔ retained import verifies every evidence, output and report blob with actual missing/corrupt files (323.293065ms)
+✔ retained import rejects pending, null-result, incomplete decision and result identity despite valid record CAS (75.467345ms)
+✔ bounded original record fenced read refuses oversized snapshot before callback and releases fence (27.424741ms)
+✔ genuine original decision calculation retains review_required as incomplete authority (27.470365ms)
+✔ independent actual competing process waits for original read fence, and callback receives owned records (478.484207ms)
+✔ independent actual SIGKILL of read-fence owner releases original kernel lock without partial write (440.020801ms)
+✔ exact retirement byte accounting crosses decimal digit boundaries without a fixed point (170.144657ms)
+✔ original v1 stores reopen without rewriting and retain ordinary append/read/transition contracts (50.598084ms)
+✔ manual terminal-run cleanup releases actual bytes and record quota; duplicate replay never resurrects (1404.235283ms)
+✔ waiting run, foreign owner, stale source, reused operation and legacy records reject without release (2352.965098ms)
+✔ real run mutation fence rejects concurrent cleanup; immutable intent survives caller mutation (941.109383ms)
+✔ SIGKILL after actual atomic store commit retains tombstones and one CLI release (1787.764963ms)
+✔ native competing store writer blocks retirement; SIGKILL before mutation leaves original bytes (1288.539808ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 64430.728872
