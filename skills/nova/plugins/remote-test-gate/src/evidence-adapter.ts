@@ -5,6 +5,7 @@ import { canonicalJson,sha256Text,type AdapterActivationContext,type AdapterInst
 import { FileNovaGateImportStore } from '@kubeclaw/nova-core';
 import { assertCoverageDecision,coveragePassed,parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract';
 import { projectDemoEvidence } from './demo-evidence.ts';
+import {assertDeliveryManifestForRead} from '@kubeclaw/delivery-manifest-contract';
 
 type ObjectValue = Record<string,any>;
 function object(value: unknown): ObjectValue {
@@ -15,14 +16,17 @@ function text(value:unknown):string {
   if(typeof value!=='string'||!value||value.length>2048)throw new Error('DEMO_EVIDENCE_INVALID');
   return value;
 }
-async function read(context:AdapterActivationContext,ref:ArtifactRef,runId:string,stageId:string,namespace:string) {
+async function readArtifact(context:AdapterActivationContext,ref:ArtifactRef,runId:string,stageId:string,namespace:string) {
   if(ref.namespace!==namespace || ref.mediaType!=='application/json' || ref.producer?.runId!==runId || ref.producer.stageId!==stageId
     || !Number.isSafeInteger(ref.sizeBytes) || ref.sizeBytes<1 || ref.sizeBytes>8*1024*1024)throw new Error('DEMO_EVIDENCE_ARTIFACT_OWNER_INVALID');
   const response=await context.invoke('artifacts.read',{operation:'get_latest_json_bytes',resource:{type:'artifact.object',canonicalId:ref.artifactId},payload:{namespace,digest:ref.digest}});
   const bytes=verifiedArtifactJsonText(response, ref);
   if(canonicalJson(response.artifact)!==canonicalJson(ref) || response.digest!==ref.digest || sha256Text(bytes)!==ref.digest
     || response.sizeBytes!==ref.sizeBytes || Buffer.byteLength(bytes)!==ref.sizeBytes)throw new Error('DEMO_EVIDENCE_ARTIFACT_INTEGRITY_INVALID');
-  return object(response.value);
+  return {value:object(response.value),bytes};
+}
+async function read(context:AdapterActivationContext,ref:ArtifactRef,runId:string,stageId:string,namespace:string) {
+  return (await readArtifact(context,ref,runId,stageId,namespace)).value;
 }
 async function project(context:AdapterActivationContext,invocation:AdapterInvocation,store:FileNovaGateImportStore) {
   const {request}=invocation;
@@ -30,10 +34,10 @@ async function project(context:AdapterActivationContext,invocation:AdapterInvoca
   const runId=request.attempt.runId;
   const manifestRef=object(request.payload.manifest) as ArtifactRef;
   if(request.resource.canonicalId!==manifestRef.artifactId || request.payload.namespace!==manifestRef.namespace)throw new Error('DEMO_EVIDENCE_MANIFEST_INVALID');
-  const manifest=await read(context,manifestRef,runId,text(context.config.manifestStageId),'kubeclaw.project-summary');
-  const {digest,...unsigned}=manifest;
+  const manifestRead=await readArtifact(context,manifestRef,runId,text(context.config.manifestStageId),'kubeclaw.project-summary');
+  const manifest=assertDeliveryManifestForRead(manifestRead.value,{runId,manifestStageId:text(context.config.manifestStageId),
+    gateStageId:text(context.config.gateStageId),expectedRef:manifestRef,bytes:manifestRead.bytes}) as ObjectValue;
   const final=object(manifest.final);
-  assertManifest(manifest,final,runId,context.config.gateStageId,digest,unsigned);
   const refs=manifest.evidence.filter((ref:ArtifactRef)=>ref.namespace==='kubeclaw.buster-quality-gate'&&ref.producer?.stageId===context.config.gateStageId&&ref.artifactId.includes(':decision:'));
   if(refs.length!==1)throw new Error('DEMO_EVIDENCE_GATE_REFERENCE_INVALID');
   const decision=parseGateDecision(await read(context,refs[0],runId,text(context.config.gateStageId),'kubeclaw.buster-quality-gate'));
@@ -58,9 +62,4 @@ export function activate(context:AdapterActivationContext):AdapterInstance {
     if(fs.realpathSync(root)!==root)throw new Error('DEMO_EVIDENCE_STORE_INVALID');
     return project(context,invocation,store);
   },async shutdown(){stopping=true;}};
-}
-
-function assertManifest(manifest:ObjectValue,final:ObjectValue,runId:string,gateStageId:unknown,digest:unknown,unsigned:ObjectValue) {
-  if(manifest.schemaVersion!=='delivery-manifest.v2'||manifest.runId!==runId||digest!==sha256Text(canonicalJson(unsigned))
-    || manifest.sourceRevision!==final.sourceRevision || final.testStageId!==gateStageId || !Array.isArray(manifest.evidence))throw new Error('DEMO_EVIDENCE_MANIFEST_INVALID');
 }

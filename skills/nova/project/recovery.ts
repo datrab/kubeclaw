@@ -3,6 +3,7 @@ import {readRunSnapshot,verifyPinnedGraph} from '@kubeclaw/nova-core/run-snapsho
 import {runRoot} from '@kubeclaw/nova-core/run-root';
 import {compileProject} from './compiler.ts';
 import { PROJECT_REVIEW_SEMANTIC_ENCODING, type ProjectReviewSemanticMode } from './review-semantics.ts';
+import { storedDeliveryManifestMode } from './delivery-manifest.ts';
 
 function storedSemanticMode(stored: readonly StageDefinition[]): ProjectReviewSemanticMode {
   const modes = new Set(stored.filter(stage => stage.type === 'kubeclaw.decision.review').map(stage => {
@@ -36,7 +37,7 @@ function storedReportMode(expected: readonly StageDefinition[], stored: readonly
 export function compileProjectRecovery(project: unknown, storageRoot: string): ReturnType<typeof compileProject> {
   // This validated legacy skeleton obtains identity and generated Review node set;
   // it is never substituted for the stored graph or used to authorize defaults.
-  const skeleton=compileProject(project,'legacy','legacy','legacy');
+  const skeleton=compileProject(project,'legacy','legacy','legacy','legacy');
   const root=runRoot(storageRoot,skeleton.runId);
   const snapshot=readRunSnapshot(root);
   const sources=snapshot.graph.nodes.filter(stage=>stage.id==='source-preflight' && stage.type==='kubeclaw.validate.source-preflight');
@@ -44,7 +45,8 @@ export function compileProjectRecovery(project: unknown, storageRoot: string): R
   const source=parseReviewSource(sources[0]!.input.source);
   const reportMode=storedReportMode(skeleton.definition.stages,snapshot.graph.nodes);
   const semanticMode=storedSemanticMode(snapshot.graph.nodes);
-  const compiled=compileProject(project,source.identityEncoding ?? 'legacy',reportMode,semanticMode);
+  const deliveryManifestMode=storedDeliveryManifestMode(snapshot.graph.nodes);
+  const compiled=compileProject(project,source.identityEncoding ?? 'legacy',reportMode,semanticMode,deliveryManifestMode);
   verifyPinnedGraph(root,compiled.definition);
   return compiled;
 }
