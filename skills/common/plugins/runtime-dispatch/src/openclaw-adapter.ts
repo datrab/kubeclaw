@@ -1,4 +1,4 @@
-import type { AdapterActivationContext, AdapterInstance, EffectRequest } from '@kubeclaw/plugin-sdk';
+import { runtimeDispatchProfileFields, type AdapterActivationContext, type AdapterInstance, type EffectRequest } from '@kubeclaw/plugin-sdk';
 import { createDispatchAdapter } from './dispatch-adapter.ts';
 import { dispatchOpenClaw } from './openclaw.ts';
 import { targetsFrom, validTargetId } from './openclaw-config.ts';
@@ -19,6 +19,6 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
   const targets = targetsFrom(context.config);
   return createDispatchAdapter(context, targets, assertRequest, async ({ request, signal, target }) => (
     dispatchOpenClaw(context, request.resource.canonicalId, workspaceTarget(target, request),
-      request.payload as Record<string, unknown>, signal, request.idempotencyKey)
+      request.payload as Record<string, unknown>, signal, request.idempotencyKey, runtimeDispatchProfileFields(request, request.capability).runtimeDispatchProfile)
   ));
 }

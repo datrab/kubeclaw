@@ -16,11 +16,13 @@ const wrapper = {
   additionalProperties: false,
   properties: Object.fromEntries(names.map((name) => [name, { $ref: `#/$defs/${name}` }])),
 };
-const generated = await compile(wrapper, 'PluginSystemV2', {
+const generatedTypes = await compile(wrapper, 'PluginSystemV2', {
   bannerComment: '// Generated from skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json. Do not edit.\n',
   unknownAny: false,
   style: { singleQuote: true },
 });
+// The finite transport profile has one canonical source for schema and SDK validation.
+const generated = `${generatedTypes}\nexport const CURRENT_RUNTIME_DISPATCH_PROFILE = Object.freeze(${JSON.stringify(schema.$defs.runtimeDispatchProfile.const)} as const);\nexport const CURRENT_REVIEW_CACHE_PROFILE = Object.freeze(${JSON.stringify(schema.$defs.reviewCacheProfile.const)} as const);\n`;
 if (check) {
   if (!fs.existsSync(outputPath) || fs.readFileSync(outputPath, 'utf8') !== generated) {
     throw new Error(`${outputPath} is stale; run npm run plugin-system:sdk:generate`);

@@ -1,0 +1,31 @@
+Source c76c5bc; command node --test tests/verification/reliability/runtime-dispatch-native-profile.test.mjs
+✔ actual v1 run creation carries frozen transport choice; terminal reopen preserves prefix (4315.251039ms)
+ℹ {"version":"v1","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v2 run creation carries frozen transport choice; terminal reopen preserves prefix (4250.968797ms)
+ℹ {"version":"v2","nativeGateway":false,"actualPostCount":1,"requestProfile":"legacy","reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ actual v3 run creation carries frozen transport choice; terminal reopen preserves prefix (4340.012364ms)
+ℹ {"version":"v3","nativeGateway":false,"actualPostCount":1,"requestProfile":{"schemaVersion":"runtime-dispatch-profile.v1","encoding":"json-utf16-v1"},"reopen":"RECOVERY_RUN_TERMINAL:run:transport-profile:run.blocked"}
+✔ original v1 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (3852.368883ms)
+✔ original v1 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (3738.524984ms)
+✔ original v1 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (3944.715463ms)
+✔ original v2 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (3815.005888ms)
+✔ original v2 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (3983.020523ms)
+✔ original v2 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (3895.925001ms)
+✔ original v3 snapshot + registered HTTP requested SIGKILL prefix resumes without retagging (3892.957788ms)
+✔ original v3 snapshot + registered HTTP accepted SIGKILL prefix resumes without retagging (3819.605302ms)
+✔ original v3 snapshot + registered HTTP completed SIGKILL prefix resumes without retagging (3870.089339ms)
+✔ declared v2 ACP transport profile owns locale selection without claiming a Gateway (6378.939033ms)
+ℹ {"version":"v2","nativeGateway":false,"localeStable":false,"transportKeys":["spawn:session-v1:attempt:0:payload:e6e964796faea9d043007231e949d244eca67210ff0c920cec81c6e69f52132b","spawn:session-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ declared v3 ACP transport profile owns locale selection without claiming a Gateway (6740.689119ms)
+ℹ {"version":"v3","nativeGateway":false,"localeStable":true,"transportKeys":["spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d","spawn:session-v1:json-utf16-v1:attempt:0:payload:b414f1e1c3d9a061b45bf2bd7ff2f3209d9b784e8360817ee468bcdd62e30a0d"],"noRepeat":true}
+✔ original helper-review preserves invoke-only API and rejects invalid present profile before real HTTP (2175.579966ms)
+✔ original helper-verification preserves invoke-only API and rejects invalid present profile before real HTTP (2151.402433ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 65244.685183
+Exit 0.

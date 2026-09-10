@@ -1,0 +1,40 @@
+Source e1a276a; author checks, not independent approval.
+✔ v1 original cache write requested SIGKILL preserves exact pending operation and authority (2287.709001ms)
+✔ v1 original cache write accepted SIGKILL preserves exact pending operation and authority (2162.185442ms)
+✔ v1 original cache write completed SIGKILL preserves exact pending operation and authority (2045.965076ms)
+✔ v1 original cache read requested SIGKILL preserves exact pending operation and authority (3259.098595ms)
+✔ v1 original cache read accepted SIGKILL preserves exact pending operation and authority (3218.062949ms)
+✔ v1 original cache read completed SIGKILL preserves exact pending operation and authority (4346.12144ms)
+✔ v2 original cache write requested SIGKILL preserves exact pending operation and authority (2117.629073ms)
+✔ v2 original cache write accepted SIGKILL preserves exact pending operation and authority (2280.614862ms)
+✔ v2 original cache write completed SIGKILL preserves exact pending operation and authority (2434.99231ms)
+✔ v2 original cache read requested SIGKILL preserves exact pending operation and authority (3649.202064ms)
+✔ v2 original cache read accepted SIGKILL preserves exact pending operation and authority (3787.297517ms)
+✔ v2 original cache read completed SIGKILL preserves exact pending operation and authority (5033.514492ms)
+✔ v3 original cache write requested SIGKILL preserves exact pending operation and authority (2444.555433ms)
+✔ v3 original cache write accepted SIGKILL preserves exact pending operation and authority (2245.487006ms)
+✔ v3 original cache write completed SIGKILL preserves exact pending operation and authority (2454.41635ms)
+✔ v3 original cache read requested SIGKILL preserves exact pending operation and authority (3586.750796ms)
+✔ v3 original cache read accepted SIGKILL preserves exact pending operation and authority (3502.895021ms)
+✔ v3 original cache read completed SIGKILL preserves exact pending operation and authority (4871.669957ms)
+✔ v4 original cache write requested SIGKILL preserves exact pending operation and authority (2614.92072ms)
+✔ v4 original cache write accepted SIGKILL preserves exact pending operation and authority (2349.893271ms)
+✔ v4 original cache write completed SIGKILL preserves exact pending operation and authority (2423.935273ms)
+✔ v4 original cache read requested SIGKILL preserves exact pending operation and authority (3739.992611ms)
+✔ v4 original cache read accepted SIGKILL preserves exact pending operation and authority (3561.5973ms)
+✔ v4 original cache read completed SIGKILL preserves exact pending operation and authority (3502.825565ms)
+✔ genuine v4 StageExecutor checkpoints and retains same-key v2 refs through en/tr/sv interrupted attempts (3747.803692ms)
+ℹ {"nativeModel":false,"registeredTestStage":true,"attempts":3,"seedExecutions":1,"retainedRefs":2,"digest":"sha256:e64985630cf3fa44a2d2012de6710d53a9838395f3d37adf194b60a04877e1b7"}
+✔ separate finite cache profile has canonical SDK/Foundation parity and never invokes getters (6.027609ms)
+✔ genuine v4 writer requires both profiles; legacy version/profile combinations reject after rehash (18.516405ms)
+✔ v2 owns strict JSON and both inner digests; profile mismatch is an error, never a miss (2.151005ms)
+✔ actual Core/FileJournal/ArtifactStore retains exact same-byte owners and rejects all corrupt/mixed cache candidates (1320.26063ms)
+ℹ {"nativeArtifactStore":true,"mocks":false,"racingWrites":2,"foreignSameBytes":true,"executedMisses":0}
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 74476.065841

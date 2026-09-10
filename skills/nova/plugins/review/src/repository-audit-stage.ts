@@ -592,7 +592,7 @@ async function cachedReviewJobs(
   }, (unit, value) => {
     const job = jobs.find(({ id }) => id === unit.id);
     return job !== undefined && reusableReviewResult(job, value, allowContextRequest);
-  });
+  }, runtime.cache.profile);
   run.values.forEach((value) => assertReviewRuntimeIdentity(value.runtime, runtime.expectedRuntime));
   return run;
 }
@@ -612,7 +612,7 @@ async function cachedVerificationJobs(
   }, (unit, value) => {
     const job = jobs.find(({ id }) => id === unit.id);
     return job !== undefined && reduceScalableReview([job], [value]).incompleteJobs.length === 0;
-  });
+  }, runtime.cache.profile);
   run.values.forEach((value) => assertReviewRuntimeIdentity(value.runtime, runtime.expectedRuntime));
   return run;
 }
