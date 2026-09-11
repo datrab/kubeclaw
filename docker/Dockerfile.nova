@@ -4,7 +4,7 @@
 # KubeClaw Nova — Root Environment for Nova, Forge, Echo
 # =============================================================================
 
-ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.9.2@sha256:a8604855b76cd613cbaa45d6db093dc017b09a2faea5dc9cee023fb7ac262250
+ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.9.3@sha256:6cb72e1599b3b76e2ea3dcc2f4dd7f112247367fbecadfcdee8caa7423f4989b
 
 
 # hadolint ignore=DL3006
@@ -251,7 +251,7 @@ WORKDIR /app
 # Official plugins are pinned and baked into an OpenClaw home seed so startup
 # never requires a network install.
 
-ARG OPENCLAW_PLUGIN_VERSION=2026.9.2
+ARG OPENCLAW_PLUGIN_VERSION=2026.9.3
 
 RUN set -eux; \
 mkdir -p /tmp/openclaw-plugin-home /tmp/openclaw-plugin-npm-cache /opt/openclaw-plugin-home/packs; \
