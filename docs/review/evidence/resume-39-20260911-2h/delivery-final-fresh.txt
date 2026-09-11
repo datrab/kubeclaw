@@ -1,0 +1,46 @@
+✔ creates, parses and reads the closed portable v3 identity (65.182158ms)
+✔ creator rejects caller digest and no-trap inputs before property reflection (1.67106ms)
+✔ v3 refuses version/tag/owner/evidence disagreements (10.034022ms)
+✔ legacy reader retains untagged and portable-tagged v2 outer refs (0.46922ms)
+✔ closed schema and runtime both reject non-JSON and overlong evidence media types (143.841255ms)
+✔ creator rejects when adding the digest makes the complete artifact exceed 8 MiB (618.487038ms)
+✔ original consumer refuses ambiguous, absent and non-JSON gate references with a valid import present (67338.462656ms)
+✔ original v2/v3 consumer rejects media and durably stored import mismatches after reopening (111491.767505ms)
+✔ real cancelled v2/v3 Summary writes and nested evidence reads never publish a successful receipt (31468.112087ms)
+✔ delivery mode is independent across source, report, Review and topology and recovers the whole graph (920.264972ms)
+✔ recovery rejects missing, swapped, junk, unknown and foreign delivery selector authority (197.56719ms)
+✔ v2/v3 Summary write and downstream read retain exact real disk prefixes across actual SIGKILL and replay (95995.990997ms)
+{"phase":"produce","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"produce\",\"locale\":\"en-US\",\"status\":\"succeeded\",\"manifestDigest\":\"sha256:0dfd14c2803ad16680268762fb57e7e853714fbe617c7c4054caacecb8f3a423\",\"artifactDigest\":\"sha256:a4a6e5e9ae4c7422ecafb4205e3927fd366cd65cff248bc6408730472e6a8f29\",\"manifestBytes\":7616,\"summaryWriteKey\":\"run:delivery-manifest-stage-boundary:project-summary:1:12\"}\n","stderr":""}
+{"phase":"consume-en","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-en\",\"locale\":\"en-US\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-cs","locale":"cs_CZ.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-cs\",\"locale\":\"cs-CZ\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-da","locale":"da_DK.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-da\",\"locale\":\"da-DK\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-tr","locale":"tr_TR.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-tr\",\"locale\":\"tr-TR\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-sv","locale":"sv_SE.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-sv\",\"locale\":\"sv-SE\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-missing","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-missing\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-wrong-digest","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-digest\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-missing-digest","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-missing-digest\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-size","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-size\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-tag","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-tag\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-missing-tag","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-missing-tag\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-id","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-id\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-run","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-run\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-stage","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-stage\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-namespace","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-namespace\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-missing-inner-digest","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-missing-inner-digest\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-wrong-inner-digest","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-wrong-inner-digest\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-unknown-key","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-unknown-key\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-oversize","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-oversize\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-gate","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-gate\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-coverage","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-coverage\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":false,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-source","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-source\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-review","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-review\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-competing","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-competing\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+✔ registered Summary v3 stored output is accepted by the original durable import consumer across locales (86657.415917ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 111949.995671

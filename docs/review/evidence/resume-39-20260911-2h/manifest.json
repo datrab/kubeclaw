@@ -1,7 +1,7 @@
 {
   "schemaVersion": "remediation-evidence-checkpoint.v1",
-  "sourceParent": "c71134ab4c126a0c4744998a114f80dccdd87774",
-  "createdAt": "2026-09-11T14:47:53.455785+00:00",
+  "sourceParent": "c471313251070a0b176219c792b031267548e9f3",
+  "createdAt": "2026-09-11T14:51:34.261047+00:00",
   "files": [
     {
       "path": "docs/review/evidence/resume-39-20260911-2h/action-pins.txt",
@@ -27,6 +27,11 @@
       "path": "docs/review/evidence/resume-39-20260911-2h/delivery-after-refactor.txt",
       "sizeBytes": 10921,
       "sha256": "ac9885ca5855299192cd529990a51bcd8ff6fe2b977e75c2afcdfb09425bb95e"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/delivery-final-fresh.txt",
+      "sizeBytes": 8698,
+      "sha256": "e60b4d384de9c02d1e455b999fe889949257260e8b65128d29e65dad51a29390"
     },
     {
       "path": "docs/review/evidence/resume-39-20260911-2h/delivery-lint-final.txt",
@@ -112,6 +117,11 @@
       "path": "docs/review/evidence/resume-39-20260911-2h/import-boundary.txt",
       "sizeBytes": 229,
       "sha256": "aea98983d550e0149b29be46e65b0e0a1cf2eb2cfeb84a8a8be7376c9d054345"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/knip-cache.txt",
+      "sizeBytes": 99,
+      "sha256": "7125f194612fcff2f454c05d848e7cb71facc1967b4d5017e25b34fdee3ba74f"
     },
     {
       "path": "docs/review/evidence/resume-39-20260911-2h/knip-prerequisite.txt",
