@@ -1,0 +1,14 @@
+✔ creates, parses and reads the closed portable v3 identity (35.21397ms)
+✔ creator rejects caller digest and no-trap inputs before property reflection (1.179783ms)
+✔ v3 refuses version/tag/owner/evidence disagreements (5.507065ms)
+✔ legacy reader retains untagged and portable-tagged v2 outer refs (0.371642ms)
+✔ closed schema and runtime both reject non-JSON and overlong evidence media types (60.592693ms)
+✔ creator rejects when adding the digest makes the complete artifact exceed 8 MiB (401.057695ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 735.644862

@@ -2,7 +2,7 @@
 
 Frozen scope remains exactly 47 IDs. Eight now satisfy their original finding
 requirements; 39 remain incomplete. Overall completion is false. The latest
-continuation is in `run-20260910t050054.md`; current remote package refs are
+continuation is in `run-20260911-a51d.md`; current remote package refs are
 listed in `run5-active-packages.json`. Reviewed integration and evidence
 remain in `run-20260909t2146.md` and `run-20260909t2114.md`.
 
@@ -86,3 +86,11 @@ integration writes. No distributed exclusive agent lock is claimed.
 Next work: reconcile remaining SDK identity domains; continue original incomplete
 findings from `work-items.json`; satisfy actual native prerequisites where
 required. Preserve architecture, real-test gates and the no-deployment/CI rules.
+
+## 2026-09-11 independent Delivery continuation
+
+Newer source87d7114 was independently checked; source and four additional real
+cancellation cases are saved at4e7a12c2 on
+`fix/resume-39-20260911-a51d-delivery-verification`. See
+`run-20260911-a51d.md` for exact tests, read-back verification and remaining
+acceptance. No production source integrated; 39 remain incomplete.

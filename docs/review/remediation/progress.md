@@ -4,9 +4,9 @@
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
-**91/154 lokal verifiziert und unabhängig gegengeprüft; 42 Findings teilweise implementiert; 2 in Bearbeitung; 19 noch offen.** Zusätzliche Integrationsbefunde bleiben separat von den 154 historischen Kennungen dokumentiert. Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
+**94/154 lokal verifiziert und unabhängig gegengeprüft; 39 Findings teilweise implementiert; 2 in Bearbeitung; 19 noch offen.** Zusätzliche Integrationsbefunde bleiben separat von den 154 historischen Kennungen dokumentiert. Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
 
-Welle47: **5/47 ursprüngliche Abnahmen unabhängig bestanden, 42/47 noch nicht abgeschlossen**. [Einzelnachweis](implementation/wave47-root-review.md), [eingefrorene Menge](partial-47-scope.json), [ID-Fortschritt](partial-47-progress.json).
+Welle47: **8/47 ursprüngliche Abnahmen unabhängig bestanden, 39/47 noch nicht abgeschlossen**. [Einzelnachweis](implementation/wave47-root-review.md), [eingefrorene Menge](partial-47-scope.json), [ID-Fortschritt](partial-47-progress.json).
 
 Aktuelle Wiederaufnahme: [geprüfte Pakete, Integrationsnachweise und konkrete Restarbeit](implementation/resume-20260909.md). Die nachfolgenden chronologischen Zwischenstände bleiben historische Belege und sind keine Behauptung aktuell laufender Subagents.
 

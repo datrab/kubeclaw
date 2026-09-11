@@ -9,8 +9,8 @@
     {
       "id": "PCR-SDK-001",
       "status_at_checkpoint": "in Bearbeitung",
-      "evidence": "resume/run-20260910t050054.md",
-      "next_action": "Atomare Delivery-v3-Implementierung gemäß unabhängig freigegebenem Design569454/90dd auf geprüftem Semantic-Source15f6 fortsetzen und separat prüfen. Semantic-Source allein nicht integrieren: echter registrierter Semantic-Producer, vollständige History/Recovery/Summary- und Delivery-Nativegates bleiben offen. Gesperrte Helperaktion nicht umleiten."
+      "evidence": "resume/run-20260911-a51d.md",
+      "next_action": "Resume candidate4e7a12c2: independent original matrices and four new local cancellation cases pass. Separate cancellation-test review and remaining Delivery/semantic gates required; no source integration or broad closure."
     },
     {
       "id": "PCR-BUSTER-ENGINE-004",
