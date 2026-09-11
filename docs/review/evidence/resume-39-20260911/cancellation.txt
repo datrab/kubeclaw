@@ -1,0 +1,9 @@
+✔ real cancelled v2/v3 Summary writes and nested evidence reads never publish a successful receipt (22053.547822ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22523.553162

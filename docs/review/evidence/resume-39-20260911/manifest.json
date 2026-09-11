@@ -1,0 +1,51 @@
+{
+  "source_commit": "87d71140f0765d41432df4899f55d4de238e4ff1",
+  "integration_baseline": "1ba445125fbacfa4f0344f8bf38e68f8f0686eff",
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-39-20260911/cancellation.json",
+      "bytes": 265475,
+      "sha256": "bcbb6258d9abb45acc0abd706c4dc2939a2fd5c6b753c8c0a378d4ccb7f362fc"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911/cancellation.txt",
+      "bytes": 235,
+      "sha256": "a194b5a9a4841bfe84ac35ba547586c5004f0fcd298b3a703acce2f759039cd7"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911/chromium-install.txt",
+      "bytes": 1958,
+      "sha256": "d9a7001ae0e80ad59a910d16a30f3e5e06c593689faeb96bd3ff7c495b1ff0f3"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911/delivery-matrix.txt",
+      "bytes": 8346,
+      "sha256": "07e35dd7da3f2ef40d57ea0d1db46fa2760d2447df5bf64d1dd29ca8acf29ce2"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911/environment.json",
+      "bytes": 166,
+      "sha256": "78fd907633f82f6a949004a37c142f40e3f2bd13cab113a6dff84fd426a35ba1"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911/nova-types.txt",
+      "bytes": 145,
+      "sha256": "0ba3630c8c428d29a2bd44fa004a9be1052d9ffba1e308038d67e4287c9d3176"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911/remote-test-gate.txt",
+      "bytes": 724,
+      "sha256": "f746884d62dc71978e756db90a878fff4803380de7fb51dcb8773531cf87079b"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911/review-full-relative.txt",
+      "bytes": 38060,
+      "sha256": "40b63ed1b1522d1acde9f7b2e3ebaea22667bafb8304fba92eee754551a254e0"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911/review-full.txt",
+      "bytes": 13005,
+      "sha256": "c026b8d53338511f9ce821ebd87faf6dfbf777519588cd9c5e4fe6f9aadd3c24"
+    }
+  ]
+}
