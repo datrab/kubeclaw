@@ -1,0 +1,34 @@
+{
+  "source": "36e2027e917dc6d26794c58bcf3b5d6e02d6acf1",
+  "tree": "736c0e5d037ee2b486a671a59b4480ec8e9849ad",
+  "verification": {
+    "initialTests": 5,
+    "finalTests": 6,
+    "testExit": 0,
+    "typecheckExit": 0,
+    "lintExit": 1,
+    "existingLintErrors": 4
+  },
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-buster-independent/final-tests.txt",
+      "sha256": "23bb15dfd3b5d4496fc19c921d7b54da55ed77d0d23014ee7228e9f6b7f5d677"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-buster-independent/final-types.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-buster-independent/initial-tests.txt",
+      "sha256": "1d6a7e74f62a3b6fd13e8996d133f08471a16d87610d852d9e0a3b8f9cb6a0a6"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-buster-independent/lint.txt",
+      "sha256": "4355834a7996aa10c3a6ab4dd93f3a4ead7ee0d5b9d1e6709aa9ac4255bb2c8d"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-buster-independent/types.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

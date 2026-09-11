@@ -1,0 +1,24 @@
+✖ durable shutdown failure ownership: admission (338.435375ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1538.230563
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:13:86
+✖ durable shutdown failure ownership: admission (338.435375ms)
+  Error: ENOENT: no such file or directory, open '/proc/self/task/13/children'
+      at Object.readFileSync (node:fs:484:20)
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/release-gate-review-84/tests/verification/reliability/buster-shutdown-storage.test.mts:69:31)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/proc/self/task/13/children'
+  }

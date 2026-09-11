@@ -1,0 +1,13 @@
+✔ durable shutdown failure ownership: during (454.655815ms)
+✔ durable shutdown failure ownership: after (295.903635ms)
+✔ durable shutdown failure ownership: queued (297.84479ms)
+✔ durable shutdown failure ownership: healthy-terminal (273.990883ms)
+✔ result admission reserves capacity across competing processes and reconstruction (1760.091489ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3145.111313

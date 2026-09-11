@@ -1,0 +1,54 @@
+✖ durable shutdown failure ownership: during (363.026338ms)
+✖ durable shutdown failure ownership: after (229.940637ms)
+✖ durable shutdown failure ownership: healthy-terminal (212.7862ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3788.272485
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:12:63
+✖ durable shutdown failure ownership: during (363.026338ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/release-gate-review-84/tests/verification/reliability/buster-shutdown-storage.test.mts:65:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /DURABLE_RECORD_SIZE_EXCEEDED/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:12:63
+✖ durable shutdown failure ownership: after (229.940637ms)
+  Error: DURABLE_RECORD_SIZE_EXCEEDED
+      at FileDurableRecordStore.transition (file:///workspace/scratch/a51d993d444b/release-gate-review-84/skills/common/plugin-runtime/foundation/observability/durable-records.ts:189:13)
+      at FileBusterPlanJobStore.transition (file:///workspace/scratch/a51d993d444b/release-gate-review-84/skills/buster/engine/test-gates/remote-plan-service.ts:211:40)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async #execute (file:///workspace/scratch/a51d993d444b/release-gate-review-84/skills/buster/engine/test-gates/remote-plan-service.ts:792:7)
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:12:63
+✖ durable shutdown failure ownership: healthy-terminal (212.7862ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /ENOTDIR/u. Input:
+  
+  'OBSERVABILITY_STORE_PATH_NOT_DIRECTORY'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/release-gate-review-84/tests/verification/reliability/buster-shutdown-storage.test.mts:55:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'OBSERVABILITY_STORE_PATH_NOT_DIRECTORY',
+    expected: /ENOTDIR/u,
+    operator: 'match',
+    diff: 'simple'
+  }

@@ -1,0 +1,24 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> verify:test-gate:remote-plan
+> node tests/verification/contracts/check-pipeline-remote-plan-contracts.mts && tsc --noEmit -p contracts/pipeline-test-gate/v1/tsconfig.json && npm run typecheck --prefix skills/nova && node --test tests/verification/reliability/buster-shutdown-storage.test.mts
+
+{"ok":true,"phase":"7-B","contracts":3}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+
+✔ durable shutdown failure ownership: during (396.887637ms)
+✔ durable shutdown failure ownership: after (241.765653ms)
+✔ durable shutdown failure ownership: queued (257.069917ms)
+✔ durable shutdown failure ownership: admission (306.503671ms)
+✔ durable shutdown failure ownership: healthy-terminal (213.380937ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2798.120747

@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-09-11T18:08:50.681734+00:00",
+  "source_author": [
+    "daa2b37eb92fa2b811f04bf7f57e476c05a23a12",
+    "36e2027e917dc6d26794c58bcf3b5d6e02d6acf1"
+  ],
+  "source_local": "5c0f636",
+  "commands": [
+    {
+      "command": "npm run verify:test-gate:remote-plan",
+      "exit": 0,
+      "new_cases": 5,
+      "skips": 0
+    },
+    {
+      "command": "node node_modules/typescript/bin/tsc --noEmit -p tests/verification/reliability/tsconfig.buster-shutdown.json",
+      "exit": 0
+    },
+    {
+      "command": "npm run knip:config:check",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/check-runtime-package-ownership.mjs",
+      "exit": 0
+    }
+  ],
+  "full_knip_executed": false,
+  "native_provider_executed": false,
+  "finding_closed": false
+}

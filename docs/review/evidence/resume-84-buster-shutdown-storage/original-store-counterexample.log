@@ -1,0 +1,10 @@
+{"observation":"shutdown resolved while terminal status was not persisted","state":"running","maximumRecordBytes":3775,"nativeProviderExecuted":false}
+✔ diagnostic counterexample only: shutdown resolves while durable terminal transition exceeds quota (378.146011ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1567.624493

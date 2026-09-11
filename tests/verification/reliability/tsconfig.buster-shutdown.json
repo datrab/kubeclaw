@@ -1,0 +1,6 @@
+{
+  "extends": "../../../skills/buster/engine/tsconfig.json",
+  "include": [
+    "buster-shutdown-storage.test.mts"
+  ]
+}

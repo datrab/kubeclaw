@@ -464,6 +464,7 @@ export class BusterRemotePlanService {
   readonly #weights = new Map<string, number>();
   #submission: Promise<void> = Promise.resolve();
   #stopping = false;
+  #executionFailure: Error | null = null;
   #recovered = false;
   readonly #buildkitReadiness: BuildkitReadiness | undefined;
   readonly #maximumActiveJobs: number;
@@ -628,12 +629,16 @@ export class BusterRemotePlanService {
     const dependencyShutdown = this.#buildkitReadiness?.shutdown();
     let timer: NodeJS.Timeout | undefined;
     try {
-      await Promise.race([
-        Promise.allSettled([...this.#executions.values(), dependencyShutdown]),
+      const outcomes = await Promise.race([
+        Promise.allSettled([this.#submission, ...this.#executions.values(), dependencyShutdown]),
         new Promise<never>((_resolve, reject) => {
           timer = setTimeout(() => reject(new Error('BUSTER_REMOTE_SHUTDOWN_TIMEOUT')), timeoutMs);
         }),
       ]);
+      if (this.#executionFailure) throw this.#executionFailure;
+      for (const outcome of outcomes) {
+        if (outcome.status === 'rejected') throw outcome.reason;
+      }
     } finally {
       if (timer) clearTimeout(timer);
     }
@@ -651,7 +656,14 @@ export class BusterRemotePlanService {
       if (this.#active.size >= this.#maximumActiveJobs || used + job.maximumConcurrency > this.#maximumConcurrentAttempts) return;
       this.#queue.delete(id);
       const controller = new AbortController(); this.#active.set(id, controller); this.#weights.set(id, job.maximumConcurrency);
-      const execution = this.#execute(job, controller).finally(() => {
+      const execution = this.#execute(job, controller).catch((error: unknown) => {
+        // Normal execution failures are persisted by #execute. A rejection here
+        // means that durable failure recording failed; retain its ownership even
+        // after this execution leaves the active map.
+        this.#executionFailure ??= error instanceof Error ? error : new Error('BUSTER_REMOTE_EXECUTION_PERSISTENCE_FAILED', { cause: error });
+        this.#stopping = true;
+        this.#queue.clear();
+      }).finally(() => {
         this.#active.delete(id); this.#executions.delete(id); this.#weights.delete(id); this.#drain();
       });
       this.#executions.set(id, execution);

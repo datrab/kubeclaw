@@ -1,0 +1,28 @@
+✖ durable shutdown failure ownership: admission (459.606268ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1689.645145
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:13:86
+✖ durable shutdown failure ownership: admission (459.606268ms)
+  AssertionError [ERR_ASSERTION]: shutdown must await the already admitted original store write
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/release-gate-review-84/tests/verification/reliability/buster-shutdown-storage.test.mts:72:18)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
