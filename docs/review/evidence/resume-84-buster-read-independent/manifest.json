@@ -1,0 +1,16 @@
+{
+  "source": "6b49d130ecc9b29bd77cdaddb437e487073925a1",
+  "tests": 7,
+  "testExit": 0,
+  "typecheckExit": 0,
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-buster-read-independent/tests.txt",
+      "sha256": "0e7afb14eac45166f87bed94e1f55bd6f097c7fb656ddc43cfa2e1f330a96af6"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-buster-read-independent/types.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "36e2027e917dc6d26794c58bcf3b5d6e02d6acf1",
+  "sourcePath": "skills/buster/engine/test-gates/remote-plan-service.ts",
+  "sourceSha256": "a1c34bf0e494c0329bd07f0fe2d9a48eff8db9705d120af987a056db9f9140c4",
+  "command": "node --test docs/review/evidence/resume-84-buster-status-read/original-store-read-red.mts",
+  "runs": [
+    {
+      "log": "red-1.log",
+      "exit": 1,
+      "tests": 1,
+      "pass": 0,
+      "fail": 1
+    },
+    {
+      "log": "red-2.log",
+      "exit": 1,
+      "tests": 1,
+      "pass": 0,
+      "fail": 1
+    }
+  ],
+  "productionChanged": false,
+  "nativeAcceptance": false,
+  "findingClosed": false
+}

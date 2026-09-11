@@ -798,8 +798,10 @@ export class BusterRemotePlanService {
       validatePipelineTestGateContract('remotePlanResult', result);
       await this.#options.store.complete(job.jobId, result, this.#now().toISOString());
     } catch (error) {
-      const current = await this.status(job.jobId).catch(() => null);
-      if (!current || ['completed', 'failed', 'cancelled'].includes(current.state)) return;
+      const current = await this.status(job.jobId).catch((readError: unknown) => {
+        throw new AggregateError([error, readError], 'BUSTER_REMOTE_TERMINAL_STATUS_UNREADABLE');
+      });
+      if (['completed', 'failed', 'cancelled'].includes(current.state)) return;
       const cancelled = controller.signal.aborted || current.state === 'cancelling';
       await this.#options.store.transition(
         job.jobId,

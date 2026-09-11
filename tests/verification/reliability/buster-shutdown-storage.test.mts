@@ -10,7 +10,7 @@ import { buildCommittedSourceSnapshot } from '../../../skills/nova/core/test-gat
 import { withDurableStoreLock } from '../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';
 import { BusterRemotePlanService, FileBusterPlanJobStore } from '../../../skills/buster/engine/test-gates/remote-plan-service.ts';
 
-for (const timing of ['during', 'after', 'queued', 'admission', 'healthy-terminal']) test(`durable shutdown failure ownership: ${timing}`, { timeout: 30000 }, async () => {
+for (const timing of ['during', 'after', 'queued', 'admission', 'read-failure', 'healthy-terminal']) test(`durable shutdown failure ownership: ${timing}`, { timeout: 30000 }, async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'result-reservation-'));
   const repository = path.join(root, 'repository');
   const state = path.join(root, 'state');
@@ -53,6 +53,26 @@ for (const timing of ['during', 'after', 'queued', 'admission', 'healthy-termina
     }
     await service.recover();
     assert.equal(service.bootstrapReady(), true);
+    if (timing === 'read-failure') {
+      assert.equal((await service.submit(first)).state, 'accepted');
+      const recordFile = path.join(root, 'limited-state', 'records', 'store.json');
+      const fd = fs.openSync(recordFile, 'w');
+      try { fs.writeSync(fd, '{"broken":'); fs.fsyncSync(fd); } finally { fs.closeSync(fd); }
+      await assert.rejects(() => limited.get(first.jobId), SyntaxError);
+      const deadline = Date.now() + 2000;
+      while (service.bootstrapReady() && Date.now() < deadline) await new Promise(resolve => setTimeout(resolve, 5));
+      assert.equal((await service.readiness()).ready, false);
+      await assert.rejects(() => service.shutdown(3000), (error: unknown) => {
+        assert.ok(error instanceof AggregateError);
+        assert.equal(error.message, 'BUSTER_REMOTE_TERMINAL_STATUS_UNREADABLE');
+        assert.equal(error.errors.length, 2);
+        assert.ok(error.errors.every(cause => cause instanceof SyntaxError));
+        return true;
+      });
+      assert.equal(fs.readFileSync(recordFile, 'utf8'), '{"broken":');
+      assert.equal(fs.readFileSync(runtimeRoot, 'utf8'), 'original filesystem ENOTDIR; no provider can start');
+      return;
+    }
     if (timing === 'admission') {
       let release!: () => void;
       let entered!: () => void;

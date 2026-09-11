@@ -1,0 +1,27 @@
+{"originalStoreRead":"SyntaxError","readinessBeforeShutdown":{"schemaVersion":"buster-plan-readiness.v1","ready":true,"code":"BUSTER_READY"},"shutdown":"fulfilled","corruptBytesRetained":"{\"broken\":","nativeProviderExecuted":false}
+✖ RED residual: unreadable durable state must not permit successful drain (463.04277ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1889.745314
+
+✖ failing tests:
+
+test at docs/review/evidence/resume-84-buster-status-read/original-store-read-red.mts:12:1
+✖ RED residual: unreadable durable state must not permit successful drain (463.04277ms)
+  AssertionError [ERR_ASSERTION]: unknown durable state must not be silently treated as handled
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/release-gate-review-84/docs/review/evidence/resume-84-buster-status-read/original-store-read-red.mts:60:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'fulfilled',
+    expected: 'fulfilled',
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
