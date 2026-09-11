@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { validatePrism, validateNodeCatalog, validateEngineRequest, validateEngineResult, PrismContractError, PRISM_JSON_LIMITS } from '../src/index.ts';
-import { assertPrismComplexity } from '../src/complexity.ts';
-import { resolveView } from '../../../../skills/prism/domain/index.ts';
-import { PrismEngine, DeterministicDesignProvider } from '../../../../skills/prism/engine/index.ts';
-import { executePrismOperation } from '../../../../skills/prism/engine/worker-binding.ts';
-import { engineRequestSchema } from '../src/digest.ts';
-import { renderNode } from '../../../../skills/prism/renderer/index.ts';
-const fixture = JSON.parse(fs.readFileSync(new URL('../fixtures/minimal-web.json', import.meta.url), 'utf8'));
+import { validatePrism, validateNodeCatalog, validateEngineRequest, validateEngineResult, PrismContractError, PRISM_JSON_LIMITS } from '../../../contracts/prism/v1/src/index.ts';
+import { assertPrismComplexity } from '../../../contracts/prism/v1/src/complexity.ts';
+import { resolveView } from '../../../skills/prism/domain/index.ts';
+import { PrismEngine, DeterministicDesignProvider } from '../../../skills/prism/engine/index.ts';
+import { executePrismOperation } from '../../../skills/prism/engine/worker-binding.ts';
+import { engineRequestSchema } from '../../../contracts/prism/v1/src/digest.ts';
+import { renderNode } from '../../../skills/prism/renderer/index.ts';
+const fixture = JSON.parse(fs.readFileSync(new URL('../../../contracts/prism/v1/fixtures/minimal-web.json', import.meta.url), 'utf8'));
 const document = structuredClone(fixture);
 document.components = { 'card-item': { title: 'Card', root: { id: 'card-root', type: 'text', props: { content: 'Card' } },
   variants: { compact: { 'card-root': { content: 'Small card' } } } } };

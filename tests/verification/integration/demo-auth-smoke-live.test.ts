@@ -11,13 +11,13 @@ import { fileURLToPath } from 'node:url';
 import { validatePipelineTestGateContract } from '@kubeclaw/pipeline-test-gate-contract';
 import { canonicalJson,sha256Text } from '@kubeclaw/plugin-sdk';
 import { buildRegistry,discoverPackages } from '@kubeclaw/nova-core';
-import { NetworkHttpCapabilityInvoker } from '../../../engine/test-gates/network-http-runtime.ts';
-import { generatedDemoCredentials } from '../../../engine/test-gates/generated-demo-credentials.ts';
-import { pendingExposureHandoff } from '../../../engine/test-gates/exposure-handoff.ts';
-import { provider } from '../src/provider.js';
-import { protocol,sessionCookie } from '../src/protocol.js';
+import { NetworkHttpCapabilityInvoker } from '../../../skills/buster/engine/test-gates/network-http-runtime.ts';
+import { generatedDemoCredentials } from '../../../skills/buster/engine/test-gates/generated-demo-credentials.ts';
+import { pendingExposureHandoff } from '../../../skills/buster/engine/test-gates/exposure-handoff.ts';
+import { provider } from '../../../skills/buster/plugins/demo-auth-smoke/src/provider.js';
+import { protocol,sessionCookie } from '../../../skills/buster/plugins/demo-auth-smoke/src/protocol.js';
 
-const repository=fileURLToPath(new URL('../../../../../',import.meta.url));
+const repository=fileURLToPath(new URL('../../../',import.meta.url));
 const config={protocol:'json-session.v1',loginPath:'/api/login',usernameKey:'username',passwordKey:'password',cookieName:'demo_session',protectedPath:'/api/account',usernamePointer:'/username',assertions:[{pointer:'/projects/0/name',equals:'Demo workspace'}]};
 
 test('original controller credentials authenticate against a real local session application through original network runtime',async()=>{

@@ -3,12 +3,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { buildRegistry, discoverPackages, resolveTestPlan } from '../../../../skills/nova/core/src/index.ts';
-import { checkPipelineTestGateContract } from '../src/index.ts';
-const root = fileURLToPath(new URL('../../../../', import.meta.url));
-const compile = spawnSync(process.execPath, [path.join(root, 'node_modules/typescript/bin/tsc'), '--noEmit', '--strict', '--skipLibCheck', '--target', 'ESNext', '--module', 'NodeNext', '--allowImportingTsExtensions', path.join(import.meta.dirname, 'declarations-typecheck.ts')], { encoding: 'utf8' });
+import { buildRegistry, discoverPackages, resolveTestPlan } from '../../../skills/nova/core/src/index.ts';
+import { checkPipelineTestGateContract } from '../../../contracts/pipeline-test-gate/v1/src/index.ts';
+const root = fileURLToPath(new URL('../../../', import.meta.url));
+const compile = spawnSync(process.execPath, [path.join(root, 'node_modules/typescript/bin/tsc'), '--noEmit', '--strict', '--skipLibCheck', '--target', 'ESNext', '--module', 'NodeNext', '--allowImportingTsExtensions', path.join(import.meta.dirname, '../../../contracts/pipeline-test-gate/v1/tests/declarations-typecheck.ts')], { encoding: 'utf8' });
 assert.equal(compile.status, 0, compile.stdout + compile.stderr);
-const examples = path.join(import.meta.dirname, '../examples');
+const examples = path.join(import.meta.dirname, '../../../contracts/pipeline-test-gate/v1/examples');
 const read = (name: string) => JSON.parse(fs.readFileSync(path.join(examples, `${name}.json`), 'utf8'));
 const artifact = { artifactId: 'artifact:report', type: 'report', mediaType: 'application/json', contentDigest: `sha256:${'a'.repeat(64)}`, sizeBytes: 2, storageUrl: 'artifact://report' };
 const manifest = { schemaVersion: 'evidence-manifest.v1', planId: 'plan:test', runId: 'run:test', moduleId: 'api', gateId: null, suiteInstanceId: null,
@@ -17,7 +17,7 @@ assert.equal(checkPipelineTestGateContract('evidenceManifest', manifest).ok, tru
 assert.equal(checkPipelineTestGateContract('evidenceManifest', { ...manifest, files: [{ ...manifest.files[0], artifact }] }).ok, false);
 const pluginRoot = path.join(root, 'skills/buster/plugins');
 const registry = buildRegistry(discoverPackages({ installationRoots: [pluginRoot], trustPolicy: { trustedBuiltinRoots: [pluginRoot], allowedSourceDigests: new Map(), verifiedAttestations: new Map(), verifierId: 'contract-example-test' } }));
-const suiteRoot = path.join(import.meta.dirname, '../suites');
+const suiteRoot = path.join(import.meta.dirname, '../../../contracts/pipeline-test-gate/v1/suites');
 const suiteTemplates = fs.readdirSync(suiteRoot).filter((name) => name.endsWith('.json')).map((name) => JSON.parse(fs.readFileSync(path.join(suiteRoot, name), 'utf8')));
 const limits = { cpuMillis: 900000, memoryBytes: 4294967296, logBytes: 16777216, artifactBytes: 268435456, artifactFiles: 256, processes: 64 };
 const policy = { defaultTimeoutMs: 30000, maximumTimeoutMs: 900000, defaultLimits: limits, maximumLimits: limits, maximumRetryCount: 3, maximumMatrixSize: 16, maximumNodes: 100, defaultConcurrencyLimit: 4, maximumConcurrencyLimits: { http: 8, unit: 8, 'api-flow': 8, 'container-build': 8, 'size-budget': 8 } };

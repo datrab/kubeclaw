@@ -2,16 +2,16 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { test } from 'node:test';
-import { buildRegistry, discoverPackages, resolveTestPlan } from '../../../../skills/nova/core/src/index.ts';
+import { buildRegistry, discoverPackages, resolveTestPlan } from '../../../skills/nova/core/src/index.ts';
 import { coverageCheckStatuses, gateCoverageDigest, validatePipelineTestGateContract,
-  type GateCoverageV1 } from '../src/index.ts';
-import type { TestScopeDeclaration } from '../../../../skills/nova/core/test-gates/types.ts';
+  type GateCoverageV1 } from '../../../contracts/pipeline-test-gate/v1/src/index.ts';
+import type { TestScopeDeclaration } from '../../../skills/nova/core/test-gates/types.ts';
 
-const pluginRoot = path.resolve(import.meta.dirname, '../../../../skills/buster/plugins');
+const pluginRoot = path.resolve(import.meta.dirname, '../../../skills/buster/plugins');
 const registry = buildRegistry(discoverPackages({ installationRoots: [pluginRoot], trustPolicy: {
   trustedBuiltinRoots: [pluginRoot], allowedSourceDigests: new Map(), verifiedAttestations: new Map(), verifierId: 'coverage-contract-test',
 } }));
-const templateRoot = path.resolve(import.meta.dirname, '../suites');
+const templateRoot = path.resolve(import.meta.dirname, '../../../contracts/pipeline-test-gate/v1/suites');
 const suiteTemplates = fs.readdirSync(templateRoot).filter(name => name.endsWith('.json'))
   .map(name => JSON.parse(fs.readFileSync(path.join(templateRoot, name), 'utf8')));
 const limits = { cpuMillis: 30000, memoryBytes: 536870912, logBytes: 1048576, artifactBytes: 1048576, artifactFiles: 16, processes: 16 };

@@ -47,6 +47,17 @@ type ReadEvidence = (stageId: string, namespace: string, select?: (ref: Artifact
   encoding?: typeof PORTABLE_JSON_ENCODING) => Promise<Record<string, any>>;
 type JsonArtifactRef = ArtifactRef & { readonly mediaType: 'application/json' };
 
+function validateReviewCoverage(review: Record<string, any>, bundle: Record<string, any>,
+  bundleDigest: string, sourceRevision: string, policy: GateCoverageV1): void {
+  const coverageEvidence = Array.isArray(bundle.evidence) ? bundle.evidence.filter((item: any) => item.kind === 'gate-coverage') : [];
+  if (review.revision?.head !== sourceRevision || review.revision?.base !== policy.baseRevision
+    || canonicalJson(review.revision) !== canonicalJson(bundle.revisions)
+    || review.outcome !== 'passed' || review.bundleDigest !== bundleDigest
+    || coverageEvidence.length !== 1 || coverageEvidence[0].content !== canonicalJson(policy)
+    || canonicalJson(bundle.requirements) !== canonicalJson(coverageReviewRequirements(policy))
+    || canonicalJson(bundle.scope?.allowedPrefixes) !== canonicalJson(coverageReviewPrefixes(policy))) throw new Error('DELIVERY_FINAL_REVIEW_COVERAGE_MISMATCH');
+}
+
 async function verifyFinalReview(input: SummaryInput, sourceRevision: string, read: ReadEvidence,
   deliveryManifestEncoding?: DeliveryManifestEncoding): Promise<void> {
   const semantic = summaryReviewSemanticEncoding(input.final as unknown as Record<string, unknown>);
@@ -60,14 +71,7 @@ async function verifyFinalReview(input: SummaryInput, sourceRevision: string, re
     const review = await read(input.final.reviewStageId, 'kubeclaw.review', ref => ref.artifactId.startsWith('review-report:'), encoding);
     const bundle = await read(input.final.reviewStageId, 'kubeclaw.review', ref => ref.artifactId.startsWith('review-bundle:'), encoding);
     const bundleDigest = summaryReviewBundleDigest(review, bundle, semantic);
-    const policy = input.final.expectedCoverage;
-    const coverageEvidence = Array.isArray(bundle.evidence) ? bundle.evidence.filter((item: any) => item.kind === 'gate-coverage') : [];
-    if (review.revision?.head !== sourceRevision || review.revision?.base !== policy.baseRevision
-      || canonicalJson(review.revision) !== canonicalJson(bundle.revisions)
-      || review.outcome !== 'passed' || review.bundleDigest !== bundleDigest
-      || coverageEvidence.length !== 1 || coverageEvidence[0].content !== canonicalJson(policy)
-      || canonicalJson(bundle.requirements) !== canonicalJson(coverageReviewRequirements(policy))
-      || canonicalJson(bundle.scope?.allowedPrefixes) !== canonicalJson(coverageReviewPrefixes(policy))) throw new Error('DELIVERY_FINAL_REVIEW_COVERAGE_MISMATCH');
+    validateReviewCoverage(review, bundle, bundleDigest, sourceRevision, input.final.expectedCoverage);
   }
 }
 
@@ -83,17 +87,14 @@ function validateReviewMode(input: SummaryInput, deliveryManifestEncoding?: Deli
     || (hasSemanticEncoding && !hasArtifactEncoding)) throw new Error('DELIVERY_REVIEW_ARTIFACT_MODE_INVALID');
 }
 
-/** Delivery is derived from core-supplied, immutable evidence, never caller-owned counts. */
-export async function buildSummary(input: SummaryInput, context: PluginInvocationContext,
-  deliveryManifestEncoding?: DeliveryManifestEncoding) {
-  if (deliveryManifestEncoding !== undefined && deliveryManifestEncoding !== DELIVERY_MANIFEST_ENCODING) {
-    throw new Error('DELIVERY_MANIFEST_ENCODING_INVALID');
-  }
-  validateCoverageInput(input);
-  validateReviewMode(input, deliveryManifestEncoding);
+function validateReadBytes(response: Record<string, any>, ref: ArtifactRef, bytes: string): void {
+  if (response.digest !== ref.digest || response.sizeBytes !== ref.sizeBytes || sha256Text(bytes) !== ref.digest
+    || Buffer.byteLength(bytes) !== ref.sizeBytes) throw new Error('DELIVERY_EVIDENCE_CORRUPT');
+}
+
+function evidenceReader(context: PluginInvocationContext, evidence: JsonArtifactRef[]): ReadEvidence {
   const runId = context.contract.lease.attempt.runId;
   let totalBytes = 0;
-  const evidence: JsonArtifactRef[] = [];
   async function read(stageId: string, namespace: string, select: (ref: ArtifactRef) => boolean = () => true,
     encoding?: typeof PORTABLE_JSON_ENCODING) {
     const candidates = context.contract.artifacts.filter(ref => ref.producer.runId === runId
@@ -108,12 +109,25 @@ export async function buildSummary(input: SummaryInput, context: PluginInvocatio
     const response = await context.invoke('artifacts.read', { operation: 'get_json_bytes',
       resource: { type: 'artifact.object', canonicalId: ref.artifactId }, payload: { namespace, digest: ref.digest, reference: ref } });
     const bytes = verifiedArtifactJsonText(response, ref);
-    if (response.digest !== ref.digest || response.sizeBytes !== ref.sizeBytes || sha256Text(bytes) !== ref.digest
-      || Buffer.byteLength(bytes) !== ref.sizeBytes) throw new Error('DELIVERY_EVIDENCE_CORRUPT');
+    validateReadBytes(response, ref, bytes);
     evidence.push(ref as JsonArtifactRef);
     if (!response.value || typeof response.value !== 'object' || Array.isArray(response.value)) throw new Error('DELIVERY_EVIDENCE_INVALID');
     return response.value as Record<string, any>;
   }
+  return read;
+}
+
+/** Delivery is derived from core-supplied, immutable evidence, never caller-owned counts. */
+export async function buildSummary(input: SummaryInput, context: PluginInvocationContext,
+  deliveryManifestEncoding?: DeliveryManifestEncoding) {
+  if (deliveryManifestEncoding !== undefined && deliveryManifestEncoding !== DELIVERY_MANIFEST_ENCODING) {
+    throw new Error('DELIVERY_MANIFEST_ENCODING_INVALID');
+  }
+  validateCoverageInput(input);
+  validateReviewMode(input, deliveryManifestEncoding);
+  const runId = context.contract.lease.attempt.runId;
+  const evidence: JsonArtifactRef[] = [];
+  const read = evidenceReader(context, evidence);
   async function verify<T extends { readonly sourceStageId: string; readonly testStageId: string;
     readonly expectedCoverage: GateCoverageV1 }>(binding: T) {
     const revision = await resolveSourceRevision({ sourceStageId: binding.sourceStageId }, context);

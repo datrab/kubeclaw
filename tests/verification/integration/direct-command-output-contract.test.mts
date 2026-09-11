@@ -3,16 +3,16 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
-import { validateAndMapOutputs } from '../../../engine/test-gates/runner.ts';
-import { FileEvidenceStore } from '../../../engine/test-gates/artifacts.ts';
+import { validateAndMapOutputs } from '../../../skills/buster/engine/test-gates/runner.ts';
+import { FileEvidenceStore } from '../../../skills/buster/engine/test-gates/artifacts.ts';
 
-const plugins = path.resolve(import.meta.dirname, '../..');
+const plugins = path.resolve(import.meta.dirname, '../../../skills/buster/plugins');
 const registry = buildRegistry(discoverPackages({ installationRoots: [plugins], trustPolicy: {
   trustedBuiltinRoots: [plugins], allowedSourceDigests: new Map(), verifiedAttestations: new Map(), verifierId: 'output-contract-regression',
 } }));
 const entry = registry.testProviderContracts.get('kubeclaw.direct-command@1')!;
 const container = registry.testProviderContracts.get('kubeclaw.container-build@1')!;
-const schema = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../schemas/config.schema.json'), 'utf8'));
+const schema = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../../../skills/buster/plugins/direct-command/schemas/config.schema.json'), 'utf8'));
 const types: string[] = schema.$defs.artifact.properties.mediaType.enum;
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'output-contract-'));
 const limits = { cpuMillis: 5000, memoryBytes: 512 * 1024 * 1024, logBytes: 4096, artifactBytes: 4096, artifactFiles: 16, processes: 8 };

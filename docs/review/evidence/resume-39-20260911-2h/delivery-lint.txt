@@ -1,0 +1,16 @@
+
+/workspace/scratch/a51d993d444b/run-2h/contracts/delivery-manifest/v3/src/index.ts
+  126:1  error  Function 'validateUnsignedV3' has too many lines (75). Maximum allowed is 60            max-lines-per-function
+  126:1  error  Function 'validateUnsignedV3' has a complexity of 36. Maximum allowed is 15             complexity
+  239:8  error  Function 'assertDeliveryManifestForRead' has a complexity of 16. Maximum allowed is 15  complexity
+
+/workspace/scratch/a51d993d444b/run-2h/skills/nova/plugins/project-summary/src/review-semantics.ts
+  21:8  error  Function 'summaryReviewBundleDigest' has a complexity of 18. Maximum allowed is 15  complexity
+
+/workspace/scratch/a51d993d444b/run-2h/skills/nova/plugins/project-summary/src/summary.ts
+  50:1  error  Async function 'verifyFinalReview' has a complexity of 17. Maximum allowed is 15  complexity
+  87:8  error  Async function 'buildSummary' has too many lines (64). Maximum allowed is 60      max-lines-per-function
+  97:3  error  Async function 'read' has a complexity of 16. Maximum allowed is 15               complexity
+
+✖ 7 problems (7 errors, 0 warnings)
+

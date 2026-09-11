@@ -18,6 +18,16 @@ function record(value: unknown): Readonly<Record<string, unknown>> {
   return value as Readonly<Record<string, unknown>>;
 }
 
+function validateGovernor(report: Readonly<Record<string, unknown>>, governor: Readonly<Record<string, unknown>>,
+  serialize: typeof portableJson): void {
+  const baseline = record(governor.baseline), current = record(governor.current), revision = record(report.revision);
+  if (governor.baselineId !== sha256Text(serialize({ schemaVersion: governor.schemaVersion, baseline }))
+    || baseline.base !== revision.base || baseline.policyDigest !== report.policyDigest
+    || current.head !== revision.head || current.changedManifestDigest !== revision.changedManifestDigest) {
+    throw new Error('DELIVERY_REVIEW_GOVERNOR_IDENTITY_INVALID');
+  }
+}
+
 export function summaryReviewBundleDigest(reportValue: unknown, bundleValue: unknown,
   expected?: SummaryReviewSemanticEncoding): `sha256:${string}` {
   if (expected !== undefined && expected !== SUMMARY_REVIEW_SEMANTIC_ENCODING) throw new Error('DELIVERY_REVIEW_SEMANTIC_MODE_INVALID');
@@ -36,11 +46,6 @@ export function summaryReviewBundleDigest(reportValue: unknown, bundleValue: unk
     throw new Error('DELIVERY_REVIEW_SEMANTIC_PAIR_INVALID');
   }
   const serialize = portable ? portableJson : canonicalJson;
-  const baseline = record(governor.baseline), current = record(governor.current), revision = record(report.revision);
-  if (governor.baselineId !== sha256Text(serialize({ schemaVersion: governor.schemaVersion, baseline }))
-    || baseline.base !== revision.base || baseline.policyDigest !== report.policyDigest
-    || current.head !== revision.head || current.changedManifestDigest !== revision.changedManifestDigest) {
-    throw new Error('DELIVERY_REVIEW_GOVERNOR_IDENTITY_INVALID');
-  }
+  validateGovernor(report, governor, serialize);
   return sha256Text(serialize(bundle));
 }

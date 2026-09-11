@@ -1,0 +1,177 @@
+{
+  "schemaVersion": "remediation-evidence-checkpoint.v1",
+  "sourceParent": "4e7a12c2f24a841519373ff9c18110642d130521",
+  "createdAt": "2026-09-11T14:36:16.548952+00:00",
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/action-pins.txt",
+      "sizeBytes": 47,
+      "sha256": "afa5532b9e0022f12ba6021a6af33390b593a05800cf5fb7d3baff170e6bb001"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/contract-lint-refactor.txt",
+      "sizeBytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/contract-typecheck.txt",
+      "sizeBytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/delivery-after-refactor.txt",
+      "sizeBytes": 10921,
+      "sha256": "ac9885ca5855299192cd529990a51bcd8ff6fe2b977e75c2afcdfb09425bb95e"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/delivery-lint-final.txt",
+      "sizeBytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/delivery-lint-refactor.txt",
+      "sizeBytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/delivery-lint.txt",
+      "sizeBytes": 1118,
+      "sha256": "707cced0fa538764b9240c77ae3590d1f183b76b4d84f0ded7be705cde95b1e7"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/demo-auth-package.txt",
+      "sizeBytes": 652,
+      "sha256": "9b794cdc93bca17aef1fd0fea57c3d4e700acb108594816f28f4caec1015140d"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/direct-native-built.txt",
+      "sizeBytes": 2642,
+      "sha256": "14fa095065749a0897bbb08fcd62d07a8ca554d8797eb246c21bbcff019635d1"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/direct-native.txt",
+      "sizeBytes": 2071,
+      "sha256": "ac560ae8a860a96557bdbfb657fa0bd9db47bee23ab709984a7c2b287ce135cf"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/direct-output-contract.txt",
+      "sizeBytes": 111,
+      "sha256": "af55d1e6b40679ac7a5c6352570e46b7d69e26797c6c9b7a719f9f70aac7f60a"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/gate-contract-package.txt",
+      "sizeBytes": 1218,
+      "sha256": "31dc5d996c83d5046c1ad4f7d9fc359cd3c7f3d40979a84db54d75c87bc0c5bd"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/gate-coverage.txt",
+      "sizeBytes": 817,
+      "sha256": "77d9e63b73d662e78af1359f4aac318afdb523633b0b3b238738163eb7a24944"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/http-package.txt",
+      "sizeBytes": 274,
+      "sha256": "29d5d5e4d4532e3c7e1533e2cc5789cc4accfe58c2f35e2c5a77cbb7a1f9f595"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/import-boundary-after.txt",
+      "sizeBytes": 229,
+      "sha256": "27426ae9f2d2aa5b8adaef3276b012f974eda309dbb00fc7510a0760fb6530ca"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/import-boundary-proof.json.gz.base64",
+      "sizeBytes": 286989,
+      "sha256": "52668cc69844c7520242fdc4ab89c1aaf4b103c5b9fad638e440648b6da29aa1"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/import-boundary-summary.json",
+      "sizeBytes": 7617,
+      "sha256": "e7126a97968a225cae42a1e0cdf67c9c9cc0f531e6f850181f9dcaf14cfe9731"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/import-boundary.txt",
+      "sizeBytes": 229,
+      "sha256": "aea98983d550e0149b29be46e65b0e0a1cf2eb2cfeb84a8a8be7376c9d054345"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/knip-prerequisite.txt",
+      "sizeBytes": 215,
+      "sha256": "26f8c9026ce0bd03a24b98a42d1e7f3d9eb6b2b696d58cd77d5874c01838e7ad"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/package-ownership-after.txt",
+      "sizeBytes": 683,
+      "sha256": "807e5a22c034741b871e15b32fe0a621db1523399ba1b78c49f08ef11f22638c"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/package-ownership-checked.txt",
+      "sizeBytes": 685,
+      "sha256": "f8bcbd2818b104cae8305e31589c6d12c4f5395d386eaa1f22b817f17d842bb3"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/package-ownership-complete.txt",
+      "sizeBytes": 698,
+      "sha256": "9c8c9ee502e12e543fa556c2678a5eec5b461a6889969a6419464e6330f077b7"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/package-ownership-final.txt",
+      "sizeBytes": 695,
+      "sha256": "84154fb242ded22a9ba379a1fa06e765c61ad564dcc0933f0812aaea3c33f2e4"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/package-ownership-pass.txt",
+      "sizeBytes": 82,
+      "sha256": "fbebbbb23b6138a7ddd4d728cd761835a5ba6bcfe333f9cdbc998cc6452b5e9e"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/package-ownership.txt",
+      "sizeBytes": 700,
+      "sha256": "d320cb153e442938b82163481e7888a7a3be569014e6370bb55f24e2c17b8739"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/prism-baseline.txt",
+      "sizeBytes": 11680,
+      "sha256": "35c3c9244f4d4a28ee8ac52c328e727ba1b949eef2f0100f79bfd9d18e14b986"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/prism-contract-package.txt",
+      "sizeBytes": 12208,
+      "sha256": "1c0dcd62cbf81d4308590771df87332052962acb32eeec84193b5f6fb40a695e"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/prism-contract-remediation.txt",
+      "sizeBytes": 60,
+      "sha256": "85a661af550f143132c9a5ad30a2bd1575e8cc877b8345591dfdbb9d3d1fbb9f"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/remote-gate-after-moves.txt",
+      "sizeBytes": 511,
+      "sha256": "1440541b23911c67f3e8fe18db444881325df8920660503155fdbbcbbdac563d"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/sandbox-build.txt",
+      "sizeBytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/summary-package-after.txt",
+      "sizeBytes": 504,
+      "sha256": "c88cbe5e01f0493cd7605cfb92e74474e2fc722983d9380723050a11c3ac9c4a"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/summary-package.txt",
+      "sizeBytes": 504,
+      "sha256": "c88cbe5e01f0493cd7605cfb92e74474e2fc722983d9380723050a11c3ac9c4a"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/summary-typecheck.txt",
+      "sizeBytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/telemetry-package.txt",
+      "sizeBytes": 527,
+      "sha256": "1beddecdcdfd1733ae1138dde8bcb459db1dd53291a037ec362fe7be20d6a974"
+    }
+  ]
+}

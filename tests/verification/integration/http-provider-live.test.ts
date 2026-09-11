@@ -3,7 +3,7 @@ import http from 'node:http';
 import { fileURLToPath } from 'node:url';
 import { buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
 import { NetworkHttpCapabilityInvoker } from '@kubeclaw/buster-engine';
-import { provider } from '../src/provider.js';
+import { provider } from '../../../skills/buster/plugins/http/src/provider.js';
 
 let contacts = 0;
 const server = http.createServer((request, response) => {
@@ -70,7 +70,7 @@ try {
   const publicEndpoint = { name: 'endpoint', kind: 'value', schemaId: 'kubeclaw.public-endpoint-fixture@1',
     value: { schemaVersion: 'public-endpoint-fixture.v1', expiresAt: new Date(Date.now() + 60_000).toISOString(), provider: 'tailscale-ingress',
       url: `${origin}/ok`, hostname: 'preview.example.ts.net' } };
-  const pluginRoot = fileURLToPath(new URL('../../', import.meta.url));
+  const pluginRoot = fileURLToPath(new URL('../../../skills/buster/plugins/', import.meta.url));
   const registry = buildRegistry(discoverPackages({ installationRoots: [pluginRoot], trustPolicy: {
     trustedBuiltinRoots: [pluginRoot], allowedSourceDigests: new Map(), verifiedAttestations: new Map(),
     verifierId: 'http-endpoint-remediation',

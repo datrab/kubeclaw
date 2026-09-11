@@ -123,18 +123,7 @@ function sameAttempt(left: ArtifactRef, right: ArtifactRef): void {
     || left.producer.attemptId !== right.producer.attemptId || left.producer.attemptNumber !== right.producer.attemptNumber) fail();
 }
 
-function validateUnsignedV3(value: unknown): DeliveryManifestV3Unsigned {
-  // This is deliberately the first observation of caller-owned data.
-  const serialized = portableJson(value);
-  if (Buffer.byteLength(serialized) < 1 || Buffer.byteLength(serialized) > MAX_BYTES) fail();
-  const manifest = object(value);
-  exactKeys(manifest, ['schemaVersion', 'projectId', 'runId', 'sourceRevision', 'modules', 'final', 'evidence']);
-  if (manifest.schemaVersion !== DELIVERY_MANIFEST_V3) fail();
-  const projectId = text(manifest.projectId, 128);
-  const runId = opaqueId(manifest.runId);
-  const sourceRevision = text(manifest.sourceRevision, 40, GIT40);
-  if (!Array.isArray(manifest.modules) || manifest.modules.length < 1 || manifest.modules.length > 128
-    || !Array.isArray(manifest.evidence)) fail();
+function validateModules(manifest: ObjectValue, projectId: string, sourceRevision: string): void {
   const moduleIds = new Set<string>(), sourceIds = new Set<string>(), testIds = new Set<string>();
   for (const raw of manifest.modules) {
     const module = object(raw);
@@ -145,6 +134,9 @@ function validateUnsignedV3(value: unknown): DeliveryManifestV3Unsigned {
     coveragePair(module, projectId, sourceRevision, 'module', moduleId);
     moduleIds.add(moduleId); sourceIds.add(source); testIds.add(test);
   }
+}
+
+function validateFinal(manifest: ObjectValue, projectId: string, sourceRevision: string): { hasReview: boolean; hasArtifactEncoding: boolean } {
   const final = object(manifest.final);
   exactKeys(final, ['sourceStageId', 'lintStageId', 'testStageId', 'expectedCoverage', 'sourceRevision', 'decisionDigest', 'resultDigest', 'coverage'],
     ['reviewStageId', 'reviewArtifactEncoding', 'reviewSemanticEncoding']);
@@ -161,6 +153,29 @@ function validateUnsignedV3(value: unknown): DeliveryManifestV3Unsigned {
   if (hasReview) stageId(final.reviewStageId);
   if (hasArtifactEncoding && (!hasReview || final.reviewArtifactEncoding !== PORTABLE_JSON_ENCODING)) fail();
   if (hasSemanticEncoding && (!hasArtifactEncoding || final.reviewSemanticEncoding !== 'review-semantics.utf16-v1')) fail();
+  return { hasReview, hasArtifactEncoding };
+}
+
+function validateReviewRefs(refs: ArtifactRef[], finalStart: number, final: ObjectValue, runId: string,
+  hasReview: boolean, hasArtifactEncoding: boolean): void {
+  if (hasReview) {
+    const report = refs[finalStart + 4]!, bundle = refs[finalStart + 5]!;
+    assertOwnedRef(report, runId, final.reviewStageId, 'kubeclaw.review', id => id.startsWith('review-report:'));
+    assertOwnedRef(bundle, runId, final.reviewStageId, 'kubeclaw.review', id => id.startsWith('review-bundle:'));
+    sameAttempt(report, bundle);
+    if (hasArtifactEncoding && (report.encoding !== PORTABLE_JSON_ENCODING || bundle.encoding !== PORTABLE_JSON_ENCODING)) fail();
+  } else if (refs.some(ref => ref.namespace === 'kubeclaw.review')) fail();
+}
+
+function validateRefMultiplicity(refs: ArtifactRef[], finalImplementation: ArtifactRef): void {
+  const counts = new Map<string, number>();
+  refs.forEach(ref => counts.set(refKey(ref), (counts.get(refKey(ref)) ?? 0) + 1));
+  const duplicateKey = refKey(finalImplementation);
+  if ([...counts].some(([key, count]) => count > (key === duplicateKey ? 2 : 1)) || counts.get(duplicateKey) !== 2) fail();
+}
+
+function validateEvidence(manifest: ObjectValue, runId: string, hasReview: boolean, hasArtifactEncoding: boolean): void {
+  const final = manifest.final as ObjectValue;
   const refs = manifest.evidence.map(artifactRef);
   const n = manifest.modules.length;
   if (refs.length !== 3 * n + (hasReview ? 6 : 4)) fail();
@@ -186,17 +201,25 @@ function validateUnsignedV3(value: unknown): DeliveryManifestV3Unsigned {
   sameAttempt(finalDecision, finalQuality);
   const matchingModule = manifest.modules.findIndex((item: ObjectValue) => item.sourceStageId === final.sourceStageId);
   if (refKey(finalImplementation) !== refKey(refs[3 * matchingModule]!)) fail();
-  if (hasReview) {
-    const report = refs[finalStart + 4]!, bundle = refs[finalStart + 5]!;
-    assertOwnedRef(report, runId, final.reviewStageId, 'kubeclaw.review', id => id.startsWith('review-report:'));
-    assertOwnedRef(bundle, runId, final.reviewStageId, 'kubeclaw.review', id => id.startsWith('review-bundle:'));
-    sameAttempt(report, bundle);
-    if (hasArtifactEncoding && (report.encoding !== PORTABLE_JSON_ENCODING || bundle.encoding !== PORTABLE_JSON_ENCODING)) fail();
-  } else if (refs.some(ref => ref.namespace === 'kubeclaw.review')) fail();
-  const counts = new Map<string, number>();
-  refs.forEach(ref => counts.set(refKey(ref), (counts.get(refKey(ref)) ?? 0) + 1));
-  const duplicateKey = refKey(finalImplementation);
-  if ([...counts].some(([key, count]) => count > (key === duplicateKey ? 2 : 1)) || counts.get(duplicateKey) !== 2) fail();
+  validateReviewRefs(refs, finalStart, final, runId, hasReview, hasArtifactEncoding);
+  validateRefMultiplicity(refs, finalImplementation);
+}
+
+function validateUnsignedV3(value: unknown): DeliveryManifestV3Unsigned {
+  // This is deliberately the first observation of caller-owned data.
+  const serialized = portableJson(value);
+  if (Buffer.byteLength(serialized) < 1 || Buffer.byteLength(serialized) > MAX_BYTES) fail();
+  const manifest = object(value);
+  exactKeys(manifest, ['schemaVersion', 'projectId', 'runId', 'sourceRevision', 'modules', 'final', 'evidence']);
+  if (manifest.schemaVersion !== DELIVERY_MANIFEST_V3) fail();
+  const projectId = text(manifest.projectId, 128);
+  const runId = opaqueId(manifest.runId);
+  const sourceRevision = text(manifest.sourceRevision, 40, GIT40);
+  if (!Array.isArray(manifest.modules) || manifest.modules.length < 1 || manifest.modules.length > 128
+    || !Array.isArray(manifest.evidence)) fail();
+  validateModules(manifest, projectId, sourceRevision);
+  const { hasReview, hasArtifactEncoding } = validateFinal(manifest, projectId, sourceRevision);
+  validateEvidence(manifest, runId, hasReview, hasArtifactEncoding);
   return manifest as DeliveryManifestV3Unsigned;
 }
 
@@ -246,9 +269,9 @@ export function assertDeliveryManifestForRead(value: unknown, owner: {
   portableJson(value); portableJson(owner); // fail before reflection
   const manifest = object(value);
   const ref = artifactRef(owner.expectedRef);
-  if (manifest.runId !== owner.runId || ref.producer.runId !== owner.runId || ref.producer.stageId !== owner.manifestStageId
-    || ref.namespace !== 'kubeclaw.project-summary' || ref.mediaType !== 'application/json'
-    || sha256Text(owner.bytes) !== ref.digest || Buffer.byteLength(owner.bytes) !== ref.sizeBytes) fail();
+  assertOwnedRef(ref, owner.runId, owner.manifestStageId, 'kubeclaw.project-summary', () => true);
+  if (manifest.runId !== owner.runId || sha256Text(owner.bytes) !== ref.digest
+    || Buffer.byteLength(owner.bytes) !== ref.sizeBytes) fail();
   const final = object(manifest.final);
   if (final.testStageId !== owner.gateStageId || manifest.sourceRevision !== final.sourceRevision || !Array.isArray(manifest.evidence)) fail();
   if (manifest.schemaVersion === 'delivery-manifest.v2') {

@@ -3,14 +3,14 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
-import { TestPlanRunner } from '../../../engine/test-gates/runner.ts';
-import { DirectCommandCapabilityInvoker } from '../../../engine/test-gates/direct-command-runtime.ts';
+import { TestPlanRunner } from '../../../skills/buster/engine/test-gates/runner.ts';
+import { DirectCommandCapabilityInvoker } from '../../../skills/buster/engine/test-gates/direct-command-runtime.ts';
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'direct-command-runner-artifacts-'));
 const workspace = path.join(temporary, 'workspace');
 const repository = path.join(workspace, 'repository');
 fs.mkdirSync(repository, { recursive: true });
-const plugins = path.resolve(import.meta.dirname, '../..');
+const plugins = path.resolve(import.meta.dirname, '../../../skills/buster/plugins');
 const registry = buildRegistry(discoverPackages({ installationRoots: [plugins], trustPolicy: {
   trustedBuiltinRoots: [plugins], allowedSourceDigests: new Map(), verifiedAttestations: new Map(), verifierId: 'runner-artifacts',
 } }));

@@ -3,9 +3,9 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { activate } from '../src/adapter.ts';
-import { TELEMETRY_JSON_MAX_DEPTH, TELEMETRY_JSON_MAX_NODES } from '../src/projection.ts';
-import { FileResourceLockManager } from '../../../../nova/core/effects/locks.ts';
+import { activate } from '../../../skills/common/plugins/telemetry-store/src/adapter.ts';
+import { TELEMETRY_JSON_MAX_DEPTH, TELEMETRY_JSON_MAX_NODES } from '../../../skills/common/plugins/telemetry-store/src/projection.ts';
+import { FileResourceLockManager } from '../../../skills/nova/core/effects/locks.ts';
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'telemetry-projection-'));
 const root = path.join(temporary, 'telemetry');

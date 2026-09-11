@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { ContentAddressedArtifactStore } from '../../../../../skills/prism/storage/artifacts.ts';
-import { verifyBaselineArchive } from '../../../../../skills/nova/plugins/prism-design/src/archive.ts';
-import { assembleBaselineArchive, BASELINE_V1, BASELINE_V2 } from '../../src/baseline-archive.ts';
-import { baselineInput, originalV1, hash } from './baseline-input.mts';
+import { ContentAddressedArtifactStore } from '../../../../skills/prism/storage/artifacts.ts';
+import { verifyBaselineArchive } from '../../../../skills/nova/plugins/prism-design/src/archive.ts';
+import { assembleBaselineArchive, BASELINE_V1, BASELINE_V2 } from '../../../../contracts/prism/v1/src/baseline-archive.ts';
+import { baselineInput, originalV1, hash } from './prism-baseline-input.mts';
 
 const [mode, directory, selected] = process.argv.slice(2);
 assert(directory);

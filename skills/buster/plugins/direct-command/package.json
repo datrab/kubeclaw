@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc --noEmit -p tsconfig.json",
-    "test:native-artifacts": "node tests/runner-artifacts.test.mts",
-    "test": "node tests/output-contract.test.mts && node tests/live-function.test.ts"
+    "test:native-artifacts": "node ../../../../tests/verification/integration/direct-command-runner-artifacts.test.mts",
+    "test": "node ../../../../tests/verification/integration/direct-command-output-contract.test.mts && node tests/live-function.test.ts"
   }
 }

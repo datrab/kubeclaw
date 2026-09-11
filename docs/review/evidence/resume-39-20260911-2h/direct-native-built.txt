@@ -1,0 +1,28 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:native-artifacts
+> node ../../../../tests/verification/integration/direct-command-runner-artifacts.test.mts
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: [{"schemaVersion":"attempt-result.v1","planId":"plan:runner-artifacts:0","runId":"run:runner-artifacts:0","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"command","executionId":"plan:runner-artifacts:0:command","testIdentity":"test:16ec354d42100aa159c1efa3e2cc5d20d4b38f67c5a792857cdc0102b051fae8","nodeKind":"test","attemptId":"attempt:65ecadc3102d77f26084bee595d6d7561cc6848be25721fa36a3ee1367e792f0","attemptNumber":1,"provider":{"packageId":"kubeclaw.direct-command","packageVersion":"1.0.0","contentDigest":"sha256:93c17b306312317c8957380ab1ee5d9b3c3b53d5f2d4d7eeec0dfe8156c916fb","registrationId":"command","contractId":"kubeclaw.direct-command@1"},"mode":"blocking","executionState":"errored","outcome":null,"startedAt":"2026-09-11T14:34:35.507Z","completedAt":"2026-09-11T14:34:35.531Z","durationMs":24,"summary":"write EPIPE","counts":{"total":0,"passed":0,"failed":0,"skipped":0},"findings":[],"metrics":[],"reports":[],"evidence":[{"evidenceId":"runner-log","type":"log","artifact":{"artifactId":"artifact:a16b09c5c204efa3847a7359d0ccc65dab227fecc47fd7fbae7d3ad4b96d6b45","type":"log","mediaType":"text/plain; charset=utf-8","contentDigest":"sha256:a16b09c5c204efa3847a7359d0ccc65dab227fecc47fd7fbae7d3ad4b96d6b45","sizeBytes":110,"storageUrl":"file:///tmp/direct-command-runner-artifacts-rwTUMq/artifacts-0/observability/attempts/blobs/a1/a16b09c5c204efa3847a7359d0ccc65dab227fecc47fd7fbae7d3ad4b96d6b45"}}],"outputs":[],"resources":{"cpuTimeMs":0,"maximumMemoryBytes":0,"logBytes":110,"artifactBytes":110},"exitCode":null,"signal":null,"providerDetails":null,"resultDigest":"sha256:230a3ef9750ad7f3b388c397d3d6e0eb60fb3d3261a3ad2e539736315e78159d","receipt":{"receiptId":"receipt:d1a441dcf5cffe289bb064ca20ee97fe6883d993f79351fe060aebf5b22d0aa0","receiptDigest":"sha256:d5a4c40be8e27b79466ebff13e8039814fd1fe45dff7b3c7651232f85683e87f"}}]
+[stderr] open task children: No such file or directory
+[stderr] open task children: No such file or directory
+
++ actual - expected
+
++ 'errored'
+- 'completed'
+
+    at file:///workspace/scratch/a51d993d444b/run-2h/tests/verification/integration/direct-command-runner-artifacts.test.mts:39:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'errored',
+  expected: 'completed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

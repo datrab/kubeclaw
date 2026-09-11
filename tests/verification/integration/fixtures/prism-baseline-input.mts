@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import { createHash } from 'node:crypto';
 import { createRequire, stripTypeScriptTypes } from 'node:module';
-import { validatePrism } from '../../src/index.ts';
-import { ContentAddressedArtifactStore } from '../../../../../skills/prism/storage/artifacts.ts';
+import { validatePrism } from '../../../../contracts/prism/v1/src/index.ts';
+import { ContentAddressedArtifactStore } from '../../../../skills/prism/storage/artifacts.ts';
 
 export const hash = (value: string | Uint8Array) => `sha256:${createHash('sha256').update(value).digest('hex')}`;
 export async function baselineInput(store: ContentAddressedArtifactStore) {
@@ -10,7 +10,7 @@ export async function baselineInput(store: ContentAddressedArtifactStore) {
   const png = new PNG({ width: 1, height: 1 }); png.data.fill(255);
   const pngBytes = PNG.sync.write(png);
   const asset = await store.put(pngBytes);
-  const document = JSON.parse(fs.readFileSync(new URL('../../fixtures/minimal-web.json', import.meta.url), 'utf8'));
+  const document = JSON.parse(fs.readFileSync(new URL('../../../../contracts/prism/v1/fixtures/minimal-web.json', import.meta.url), 'utf8'));
   document.meta.projectId = 'project';
   for (const id of ['aa', 'az']) document.assets[id] = { kind: 'image', artifact: asset.artifactId, mediaType: 'image/png', role: 'illustration' };
   validatePrism('designDocument', document);
@@ -38,7 +38,7 @@ export async function baselineInput(store: ContentAddressedArtifactStore) {
 // plus its original sha256/stableRecord helpers. Exact immutable bytes checked.
 // This is historical byte compatibility, NOT a full DB/approval/render endpoint.
 export async function originalV1(input: Awaited<ReturnType<typeof baselineInput>>, artifacts: ContentAddressedArtifactStore) {
-  const source = fs.readFileSync(new URL('./control-v1-assembly.txt', import.meta.url), 'utf8');
+  const source = fs.readFileSync(new URL('../../../../contracts/prism/v1/tests/fixtures/control-v1-assembly.txt', import.meta.url), 'utf8');
   if (hash(source) !== 'sha256:c1890ec51f6825726d26f0b6614574254f69923ba28f746700f15c294fa1cd85') throw new Error('HISTORICAL_BASELINE_PRODUCER_CHANGED');
   const code = `export async function assemble(context) { const {createHash,validatePrism,textFiles,binaryFiles,currentDocument,approval,manifestAssets,artifacts}=context; ${source}\nreturn {bundle,bundleDigest,manifest,checksums}; }`;
   const legacy = await import(`data:text/javascript;base64,${Buffer.from(stripTypeScriptTypes(code)).toString('base64')}`);

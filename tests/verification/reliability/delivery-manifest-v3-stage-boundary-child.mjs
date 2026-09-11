@@ -278,6 +278,8 @@ async function produce() {
 
 async function consume() {
   const expectMissingImport = phase === 'consume-missing';
+  const importMutation = phase.startsWith('consume-import-') ? phase.slice('consume-import-'.length) : undefined;
+  const expectImportRejection = importMutation !== undefined;
   const refMutation = phase.startsWith('consume-wrong-') ? phase.slice('consume-wrong-'.length) : undefined;
   const bodyMutation = phase.startsWith('consume-body-') ? phase.slice('consume-body-'.length) : undefined;
   const expectManifestRejection = refMutation !== undefined || bodyMutation !== undefined;
@@ -316,6 +318,8 @@ async function consume() {
     else if (refMutation === 'run') ref.producer.runId = 'foreign-run';
     else if (refMutation === 'stage') ref.producer.stageId = 'foreign-stage';
     else if (refMutation === 'namespace') ref.namespace = 'foreign.namespace';
+    else if (refMutation === 'media') ref.mediaType = 'text/plain';
+    else if (refMutation === 'missing-media') delete ref.mediaType;
     if (bodyMutation) {
       const changed = structuredClone(producer.manifest);
       if (bodyMutation === 'missing-inner-digest') delete changed.digest;
@@ -342,14 +346,22 @@ async function consume() {
     const definition = { schemaVersion: 'pipeline-definition.v2', id: `delivery-manifest-stage-boundary-${phase}`, maxConcurrency: 1, stages: [{ id: 'consume', type: 'test.delivery-consumer', dependsOn: [], config: {}, input: request, execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 10000 } }] };
     const runner = new core.PipelineRunner({ definition, registry: granted, activated, adapters, journal: new core.FileJournal(path.join(root, `${phase}-lifecycle.jsonl`)), orchestratorIssuerId: 'test:delivery-stage-boundary' });
     const result = await runner.run(runId);
-    assert.equal(result.status, expectMissingImport || expectManifestRejection ? 'blocked' : 'succeeded');
+    assert.equal(result.status, expectMissingImport || expectManifestRejection || expectImportRejection ? 'blocked' : 'succeeded');
     const recovery = await effects.recoveryEntries();
     const top = recovery.map(item => item.request).find(item => item.capability === 'test.plan.evidence');
     assert(top, 'original evidence adapter request missing');
     const receipt = await effects.receipt(top.idempotencyKey);
-    assert.equal(receipt?.status, expectMissingImport || expectManifestRejection ? 'failed' : 'completed');
+    assert.equal(receipt?.status, expectMissingImport || expectManifestRejection || expectImportRejection ? 'failed' : 'completed');
     if (expectMissingImport) assert.equal(receipt?.error?.message, 'NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED');
     if (expectManifestRejection) assert.match(receipt?.error?.message ?? '', /ARTIFACT_|MANIFEST_INVALID|CANONICAL_JSON_|GATE_NOT_PASSED/);
+    if (expectImportRejection) {
+      const required = ['pending', 'missing-result', 'schema'].includes(importMutation);
+      assert.equal(receipt?.error?.message, required ? 'NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED' : 'NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH');
+      assert.equal(receipt.result, undefined);
+      const reads = recovery.filter(item => item.request.capability === 'artifacts.read');
+      assert.equal(reads.length, 2, 'import rejection must follow real manifest and decision reads');
+      for (const item of reads) assert.equal((await effects.receipt(item.request.idempotencyKey))?.status, 'completed');
+    }
     const nestedRead = recovery.map(item => item.request).find(item => item.capability === 'artifacts.read');
     const nestedReceipt = nestedRead ? await effects.receipt(nestedRead.idempotencyKey) : undefined;
     const allConsumerEffects = await Promise.all(recovery.map(async item => ({ ...item, receipt: await effects.receipt(item.request.idempotencyKey) })));
@@ -374,7 +386,8 @@ async function consume() {
       recomputedSemanticDigest: sha256Text(portableJson(producer.unsignedManifest)),
       parsedManifestMatchesProducer: portableJson(producer.manifest) === portableJson(JSON.parse(producer.storedJsonBytes)),
       boundary: { manifestIntegrityRejected: expectManifestRejection && !expectGateBindingRejection, gateBindingRejected: expectGateBindingRejection,
-        importStoreReached: !expectManifestRejection, providerExecution: false, importedResultSuccess: !expectMissingImport && !expectManifestRejection,
+        importStoreReached: !expectManifestRejection, providerExecution: false, importedResultSuccess: !expectMissingImport && !expectManifestRejection && !expectImportRejection,
+        importBindingRejected: expectImportRejection,
         missingImportRejected: expectMissingImport && receipt?.error?.message === 'NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED' },
       evidenceRequest: top, evidenceReceipt: receipt,
       nestedArtifactRead: nestedRead ? { request: nestedRead, receipt: nestedReceipt } : null,
@@ -488,7 +501,11 @@ else if (durabilityPhase?.[1] === 'replay') await replayDurableBoundary();
 else if (['consume-en', 'consume-cs', 'consume-da', 'consume-tr', 'consume-sv',
   'consume-wrong-digest', 'consume-wrong-size', 'consume-wrong-tag', 'consume-wrong-run', 'consume-wrong-stage',
   'consume-wrong-missing-digest', 'consume-wrong-missing-tag', 'consume-wrong-id', 'consume-wrong-namespace',
+  'consume-wrong-media', 'consume-wrong-missing-media',
   'consume-body-missing-inner-digest', 'consume-body-wrong-inner-digest', 'consume-body-unknown-key', 'consume-body-oversize',
   'consume-body-gate', 'consume-body-coverage', 'consume-body-source', 'consume-body-review', 'consume-body-competing',
-  'consume-missing'].includes(phase) || durabilityPhase?.[1] === 'kill' && durabilityPhase[2] === 'read') await consume();
+  'consume-missing', 'consume-import-pending', 'consume-import-missing-result', 'consume-import-schema',
+  'consume-import-job', 'consume-import-run', 'consume-import-stage', 'consume-import-source',
+  'consume-import-plan', 'consume-import-result', 'consume-import-receipt', 'consume-import-stored-digest',
+  'consume-import-result-job'].includes(phase) || durabilityPhase?.[1] === 'kill' && durabilityPhase[2] === 'read') await consume();
 else throw new Error(`unknown phase: ${phase}`);

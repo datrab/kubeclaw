@@ -1,0 +1,26 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:native-artifacts
+> node ../../../../tests/verification/integration/direct-command-runner-artifacts.test.mts
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: [{"schemaVersion":"attempt-result.v1","planId":"plan:runner-artifacts:0","runId":"run:runner-artifacts:0","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"command","executionId":"plan:runner-artifacts:0:command","testIdentity":"test:16ec354d42100aa159c1efa3e2cc5d20d4b38f67c5a792857cdc0102b051fae8","nodeKind":"test","attemptId":"attempt:cb980664adf3abf58e414be4de7c621a8c32e40e789fbccb76749dea8822c83b","attemptNumber":1,"provider":{"packageId":"kubeclaw.direct-command","packageVersion":"1.0.0","contentDigest":"sha256:93c17b306312317c8957380ab1ee5d9b3c3b53d5f2d4d7eeec0dfe8156c916fb","registrationId":"command","contractId":"kubeclaw.direct-command@1"},"mode":"blocking","executionState":"errored","outcome":null,"startedAt":"2026-09-11T14:33:56.354Z","completedAt":"2026-09-11T14:33:56.360Z","durationMs":6,"summary":"TEST_PROVIDER_SANDBOX_NOT_BUILT","counts":{"total":0,"passed":0,"failed":0,"skipped":0},"findings":[],"metrics":[],"reports":[],"evidence":[],"outputs":[],"resources":{"cpuTimeMs":0,"maximumMemoryBytes":0,"logBytes":0,"artifactBytes":0},"exitCode":null,"signal":null,"providerDetails":null,"resultDigest":"sha256:9d29eb740e32582ba850542ce97a52b3d41505de4ba39e3f39623bcb25cde554","receipt":{"receiptId":"receipt:acbd6682fdc6b8d5c2801fda3af1d2cf4746b6f566c1901760041c9dccb5dd1c","receiptDigest":"sha256:8f040945121f38e02b6a33844e27444ee18b3193771db85a739baaa854aaa784"}}]
+
++ actual - expected
+
++ 'errored'
+- 'completed'
+
+    at file:///workspace/scratch/a51d993d444b/run-2h/tests/verification/integration/direct-command-runner-artifacts.test.mts:39:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'errored',
+  expected: 'completed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

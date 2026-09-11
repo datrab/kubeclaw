@@ -6,15 +6,15 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import test from 'node:test';
 import { portableJson } from '@kubeclaw/plugin-sdk';
-import { ContentAddressedArtifactStore } from '../../../../skills/prism/storage/artifacts.ts';
-import { verifyBaselineArchive } from '../../../../skills/nova/plugins/prism-design/src/archive.ts';
-import { assembleBaselineArchive, baselineChecksumText, baselineChecksumDigest, BASELINE_V1, BASELINE_V2, BASELINE_CHECKSUM_ENCODING } from '../src/baseline-archive.ts';
-import { baselineInput, hash } from './fixtures/baseline-input.mts';
+import { ContentAddressedArtifactStore } from '../../../skills/prism/storage/artifacts.ts';
+import { verifyBaselineArchive } from '../../../skills/nova/plugins/prism-design/src/archive.ts';
+import { assembleBaselineArchive, baselineChecksumText, baselineChecksumDigest, BASELINE_V1, BASELINE_V2, BASELINE_CHECKSUM_ENCODING } from '../../../contracts/prism/v1/src/baseline-archive.ts';
+import { baselineInput, hash } from './fixtures/prism-baseline-input.mts';
 
 test('original production assembler and real CAS/import preserve v1 bytes and cross native locales with explicit v2', t => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-codec-locales-'));
   t.after(() => fs.rmSync(directory, {recursive: true, force: true}));
-  const fixture = fileURLToPath(new URL('./fixtures/baseline-locale.mts', import.meta.url));
+  const fixture = fileURLToPath(new URL('fixtures/prism-baseline-locale.mts', import.meta.url));
   const run = (mode: string, locale: string, root: string, selected?: string) => {
     const child = spawnSync(process.execPath, [fixture, mode, root, ...(selected ? [selected] : [])], {
       env: {...process.env, LANG: locale, LC_ALL: locale}, encoding: 'utf8', timeout: 15000,

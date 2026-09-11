@@ -7,7 +7,7 @@
   "scripts": {
     "generate:validators": "node scripts/generate-validators.mjs",
     "pretest": "node scripts/generate-validators.mjs",
-    "test": "node tests/contracts.test.mts && node tests/remediation.test.mts && node --test tests/baseline-archive.test.mts",
+    "test": "node tests/contracts.test.mts && node ../../../tests/verification/integration/prism-contract-remediation.test.mts && node --test ../../../tests/verification/integration/prism-baseline-archive.test.mts",
     "pretypecheck": "node scripts/generate-validators.mjs",
     "typecheck": "tsc --noEmit"
   },

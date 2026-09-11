@@ -1,0 +1,15 @@
+✔ all original suite templates selected with excluded tests do not cover a missing mandatory check (39.914551ms)
+✔ condition-skipped and advisory mandatory checks stay visibly unsatisfied (2.003417ms)
+✔ explicit exclusion retains the required declaration without silently reducing policy (1.1185ms)
+✔ all resolved matrix variations are mandatory, with no synthetic execution assertion (1.790185ms)
+✔ policy corruption, duplicate requirements and unmapped requirements fail validation (0.818957ms)
+✔ existing standalone plans retain execution semantics but carry no completeness policy (0.844096ms)
+✔ a literal matrix-shaped declaration cannot impersonate a missing base check (0.89281ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 671.831828

@@ -1,0 +1,303 @@
+{
+  "proofFile": "import-boundary-proof.json.gz.base64",
+  "decodedSizeBytes": 2909445,
+  "decodedSha256": "113df94c4a67db9100136094369ec82827fd4d60fe6dce3f59efb8bd88db7325",
+  "providerExecution": false,
+  "deploymentExecution": false,
+  "scenarios": [
+    {
+      "mode": "v2",
+      "scenario": "media",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "DEMO_EVIDENCE_ARTIFACT_OWNER_INVALID"
+      },
+      "originalImportReached": false
+    },
+    {
+      "mode": "v2",
+      "scenario": "missing-media",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "DEMO_EVIDENCE_ARTIFACT_OWNER_INVALID"
+      },
+      "originalImportReached": false
+    },
+    {
+      "mode": "v2",
+      "scenario": "pending",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v2",
+      "scenario": "missing-result",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v2",
+      "scenario": "schema",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v2",
+      "scenario": "job",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v2",
+      "scenario": "run",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v2",
+      "scenario": "stage",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v2",
+      "scenario": "source",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v2",
+      "scenario": "plan",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v2",
+      "scenario": "result",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v2",
+      "scenario": "receipt",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v2",
+      "scenario": "stored-digest",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v2",
+      "scenario": "result-job",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v2",
+      "scenario": "restored",
+      "outcome": "succeeded",
+      "error": null,
+      "originalImportReached": true
+    },
+    {
+      "mode": "v3",
+      "scenario": "media",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "DEMO_EVIDENCE_ARTIFACT_OWNER_INVALID"
+      },
+      "originalImportReached": false
+    },
+    {
+      "mode": "v3",
+      "scenario": "missing-media",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "DEMO_EVIDENCE_ARTIFACT_OWNER_INVALID"
+      },
+      "originalImportReached": false
+    },
+    {
+      "mode": "v3",
+      "scenario": "pending",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v3",
+      "scenario": "missing-result",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v3",
+      "scenario": "schema",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v3",
+      "scenario": "job",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v3",
+      "scenario": "run",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v3",
+      "scenario": "stage",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v3",
+      "scenario": "source",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v3",
+      "scenario": "plan",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v3",
+      "scenario": "result",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v3",
+      "scenario": "receipt",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v3",
+      "scenario": "stored-digest",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v3",
+      "scenario": "result-job",
+      "outcome": "blocked",
+      "error": {
+        "code": "adapter.effect_failed",
+        "message": "NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH"
+      },
+      "originalImportReached": true
+    },
+    {
+      "mode": "v3",
+      "scenario": "restored",
+      "outcome": "succeeded",
+      "error": null,
+      "originalImportReached": true
+    }
+  ]
+}
