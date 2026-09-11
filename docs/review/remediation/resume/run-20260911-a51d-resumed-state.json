@@ -5,10 +5,10 @@
   "work_minutes_to_make_up": 84,
   "paused_time_is_work": false,
   "run_state": "in_progress",
-  "updated_at": "2026-09-11T17:41:56.778858+00:00",
+  "updated_at": "2026-09-11T18:01:12.356434+00:00",
   "prior_run": "run-20260911-a51d-2h.md",
   "early_stop_correction": "Earlier stop was premature: executable review and root-cause repair remained. This continuation makes up84minutes.",
-  "source_checkpoint": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+  "source_checkpoint": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
   "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
   "source_integrated": true,
   "coupled_sdk_delivery_source_integrated": false,
@@ -168,8 +168,8 @@
       "id": "PCR-PRISM-WORKER-002",
       "status": "implementiert",
       "title": "CPU-Messung zählt die gesamte Prozesslebensdauer",
-      "progress_this_run": "Ursprüngliche Restabnahme und vorhandene Gate-/Quellreferenzen in native-followup-39-20260911.json geprüft; kein neuer vollständiger Abnahmenachweis.",
-      "remaining_gate": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
+      "progress_this_run": "Zwei überlappende Originaloperationen reproduzieren doppelte CPU-Zurechnung:341ms berichtete Summe bei172.468ms tatsächlicher Parent-CPU. Konkrete generische Host-/Containment-/Terminalmessungsintegration ausgearbeitet. Kein Produktionsfix und kein nativer Browser-/Cgroupnachweis.",
+      "remaining_gate": "Generischen versuchsgebundenen Prozess-/Containmentowner samt finaler Ressourcenversiegelung atomar mit Prism integrieren; gemeinsame Core-/Engineaufteilung erhalten. Echte parallele Hosts und Chromium-Kinder prüfen. Core misst bereits final; Prism friert den CPUwert noch vor Abschlussphasen ein.",
       "closed": false
     },
     {
@@ -256,8 +256,8 @@
       "id": "IFR-19-001",
       "status": "implementiert",
       "title": "role-workloads — Hoch; nachgewiesene inkonsistente Standard-Releaseauswahl",
-      "progress_this_run": "Ursprüngliche Restabnahme und vorhandene Gate-/Quellreferenzen in native-followup-39-20260911.json geprüft; kein neuer vollständiger Abnahmenachweis.",
-      "remaining_gate": "Ausgewählte Receipt mit tatsächlichen PodimageIDs und aktiven Bundlecommits im späteren autorisierten Clusterlauf vergleichen.",
+      "progress_this_run": "Widerspruch zwischen unveränderlicher Release-Receipt und signiertem Prism-Nachweis behoben: Digestreferenzen akzeptiert, mutable Tags abgewiesen. Unabhängige Rootprüfung7/7 einschließlich echter Helmrender; bestehender Prism-Images-Einstieg und Release-Workflow enthalten die Regression. Kein CI-Lauf.",
+      "remaining_gate": "Echte OCI-Descriptorbeziehung Index/Plattformmanifest/Config nachweisen und frische Pod-/Containeridentität samt aktivem Bundle an die ausgewählte Receipt binden. Kein einfacher Vergleich verschiedener Digestarten und kein Soll-Envwert als aktiver Bundlenachweis.",
       "closed": false
     },
     {
@@ -272,8 +272,8 @@
       "id": "PCR-SCAFFOLD-OPS-001",
       "status": "implementiert",
       "title": "Statusfehler beendet Supervisor scheinbar erfolgreich",
-      "progress_this_run": "Weiterer realer Defekt behoben: SIGTERM/SIGINT während Recoverypause startete bisher erneut die Originalpipeline. Originalrot, Fix 8/8 plus 5/5 Operationsfälle unabhängig bestanden und integriert.",
-      "remaining_gate": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität. Sechs bestehende Supervisor-Lintfehler bleiben dokumentiert.",
+      "progress_this_run": "Zusätzlich beschädigte Lease-/Heartbeat-Zustände und echten fehlgeschlagenen npm-Start korrigiert; Zustände bleiben erhalten, eigene Lease wird freigegeben. Ursprüngliche Stoppkorrektur bleibt erhalten. Unabhängiger Paketgate18/18, null Skips; alle sechs bisherigen Lintfehler behoben.",
+      "remaining_gate": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; dauerhafte Gesamtprozessidentität, konkurrierende Stale-Lease-Ersetzung und alle I/O-Faultpfade bleiben außerhalb dieser Teilabnahme.",
       "closed": false
     },
     {
@@ -337,5 +337,11 @@
     "worker_postgres": "test:worker-readiness-native",
     "chromium_retention": "test:engine:native-retention",
     "native_executed": false
-  }
+  },
+  "prepared_gate_source_checkpoint": "9af5dfb4b346d0f9629397158a5dc5e5d8a69030",
+  "source_checkpoints": [
+    "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+    "9af5dfb4b346d0f9629397158a5dc5e5d8a69030",
+    "56c205ef0b421f40a378dbe94f072f8c5e94aa91"
+  ]
 }

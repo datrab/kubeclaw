@@ -162,7 +162,12 @@
       "id": "PCR-PRISM-WORKER-002",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/worker-terminal-resource-measurement.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Terminale Core-Messung nach Cleanup/Evidence/Finalize und monotone verfügbare Beobachtungen behoben; vollständige Child-/Capability-/Browserownership bleibt Codearbeit."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Terminale Core-Messung nach Cleanup/Evidence/Finalize und monotone verfügbare Beobachtungen behoben; vollständige Child-/Capability-/Browserownership bleibt Codearbeit.",
+      "resume_20260911_evidence": {
+        "integration_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
+        "summary": "Zwei überlappende Originaloperationen reproduzieren doppelte CPU-Zurechnung:341ms berichtete Summe bei172.468ms tatsächlicher Parent-CPU. Konkrete generische Host-/Containment-/Terminalmessungsintegration ausgearbeitet. Kein Produktionsfix und kein nativer Browser-/Cgroupnachweis.",
+        "remaining_gate": "Generischen versuchsgebundenen Prozess-/Containmentowner samt finaler Ressourcenversiegelung atomar mit Prism integrieren; gemeinsame Core-/Engineaufteilung erhalten. Echte parallele Hosts und Chromium-Kinder prüfen. Core misst bereits final; Prism friert den CPUwert noch vor Abschlussphasen ein."
+      }
     },
     {
       "id": "PCR-PRISM-WORKER-003",
@@ -244,7 +249,12 @@
       "id": "IFR-19-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-infrastructure.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Every documented entrypoint selects immutable receipt images; reject unselected overrides; compare actual Pod imageIDs. | New baseline bug fixed. Ten original Git/Shell/Helm release tests pass after a reproduced before-failure, and both configuration-binding tests passed in the combined run. Local release selection/render defect is verified; Pod imageIDs remain an additional explicitly unperformed operating check."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Every documented entrypoint selects immutable receipt images; reject unselected overrides; compare actual Pod imageIDs. | New baseline bug fixed. Ten original Git/Shell/Helm release tests pass after a reproduced before-failure, and both configuration-binding tests passed in the combined run. Local release selection/render defect is verified; Pod imageIDs remain an additional explicitly unperformed operating check.",
+      "resume_20260911_evidence": {
+        "integration_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
+        "summary": "Widerspruch zwischen unveränderlicher Release-Receipt und signiertem Prism-Nachweis behoben: Digestreferenzen akzeptiert, mutable Tags abgewiesen. Unabhängige Rootprüfung7/7 einschließlich echter Helmrender; bestehender Prism-Images-Einstieg und Release-Workflow enthalten die Regression. Kein CI-Lauf.",
+        "remaining_gate": "Echte OCI-Descriptorbeziehung Index/Plattformmanifest/Config nachweisen und frische Pod-/Containeridentität samt aktivem Bundle an die ausgewählte Receipt binden. Kein einfacher Vergleich verschiedener Digestarten und kein Soll-Envwert als aktiver Bundlenachweis."
+      }
     },
     {
       "id": "IFR-22-001",
@@ -264,9 +274,9 @@
       "evidence": "implementation/run8-supervisor-root-review.md",
       "next_action": "Separate tatsächliche Adopted-Pipeline mit temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität oder volle Modell-/Provideranforderung.",
       "resume_20260911_evidence": {
-        "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
-        "summary": "Weiterer realer Defekt behoben: SIGTERM/SIGINT während Recoverypause startete bisher erneut die Originalpipeline. Originalrot, Fix 8/8 plus 5/5 Operationsfälle unabhängig bestanden und integriert.",
-        "remaining_gate": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität. Sechs bestehende Supervisor-Lintfehler bleiben dokumentiert."
+        "integration_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
+        "summary": "Zusätzlich beschädigte Lease-/Heartbeat-Zustände und echten fehlgeschlagenen npm-Start korrigiert; Zustände bleiben erhalten, eigene Lease wird freigegeben. Ursprüngliche Stoppkorrektur bleibt erhalten. Unabhängiger Paketgate18/18, null Skips; alle sechs bisherigen Lintfehler behoben.",
+        "remaining_gate": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; dauerhafte Gesamtprozessidentität, konkurrierende Stale-Lease-Ersetzung und alle I/O-Faultpfade bleiben außerhalb dieser Teilabnahme."
       }
     },
     {

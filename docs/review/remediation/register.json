@@ -2914,12 +2914,17 @@
       "work_package": "WP07",
       "status": "implementiert",
       "implementation_commit": "91030cbc3a30882669b8af834102d368b50bd99d",
-      "verification_status": "37/37 echte lokale Tests unabhängig bestanden, inklusive Abbruch an der Cacheabschlussgrenze; Typprüfung und gezielter Lint bestanden. Native Browserprüfung blockiert, parallele CPU-/Kindprozessattribution offen.",
+      "verification_status": "teilweise; Zwei überlappende Originaloperationen reproduzieren doppelte CPU-Zurechnung:341ms berichtete Summe bei172.468ms tatsächlicher Parent-CPU. Konkrete generische Host-/Containment-/Terminalmessungsintegration ausgearbeitet. Kein Produktionsfix und kein nativer Browser-/Cgroupnachweis.",
       "verification_evidence": [
         "docs/review/remediation/implementation/prism-worker-cancellation.md",
         {
           "report": "implementation/attempt-resource-accountability-boundary.md",
           "summary": "Aktuelle Parentmessung erfasst nicht den gesamten Attempt; generischer Executor misst zusätzlich vor Finalisierung/Reportadapter. Atomare Owner-/Containment-/Engineintegration sowie echte delegierte Cgroups erforderlich. Keine funktionale Behebung in diesem Slice."
+        },
+        {
+          "report": "implementation/resume-84-prism-cpu-ownership-direction.md",
+          "source_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
+          "summary": "Zwei überlappende Originaloperationen reproduzieren doppelte CPU-Zurechnung:341ms berichtete Summe bei172.468ms tatsächlicher Parent-CPU. Konkrete generische Host-/Containment-/Terminalmessungsintegration ausgearbeitet. Kein Produktionsfix und kein nativer Browser-/Cgroupnachweis."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-worker.md",
@@ -2931,7 +2936,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/worker/core/worker/attempt-executor.ts#L437"
       ],
       "unresolved_code_references": [],
-      "next_action": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
+      "next_action": "Generischen versuchsgebundenen Prozess-/Containmentowner samt finaler Ressourcenversiegelung atomar mit Prism integrieren; gemeinsame Core-/Engineaufteilung erhalten. Echte parallele Hosts und Chromium-Kinder prüfen. Core misst bereits final; Prism friert den CPUwert noch vor Abschlussphasen ein.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3862,10 +3867,15 @@
       "severity": "hoch",
       "work_package": "WP11",
       "status": "implementiert",
-      "implementation_commit": "4870483973cda017f8c2f0465d91b83f6706009b",
-      "verification_status": "13 echte Git-/Helm-/Shelltests und unabhängige Gegenprüfung bestanden; doppelte/indirekte Bundlevariablen abgewiesen. Laufende PodimageIDs nicht bestätigt.",
+      "implementation_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
+      "verification_status": "teilweise; Widerspruch zwischen unveränderlicher Release-Receipt und signiertem Prism-Nachweis behoben: Digestreferenzen akzeptiert, mutable Tags abgewiesen. Unabhängige Rootprüfung7/7 einschließlich echter Helmrender; bestehender Prism-Images-Einstieg und Release-Workflow enthalten die Regression. Kein CI-Lauf.",
       "verification_evidence": [
-        "docs/review/remediation/implementation/deployment-release-selection.md"
+        "docs/review/remediation/implementation/deployment-release-selection.md",
+        {
+          "report": "implementation/resume-84-release-root-review.md",
+          "source_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
+          "summary": "Widerspruch zwischen unveränderlicher Release-Receipt und signiertem Prism-Nachweis behoben: Digestreferenzen akzeptiert, mutable Tags abgewiesen. Unabhängige Rootprüfung7/7 einschließlich echter Helmrender; bestehender Prism-Images-Einstieg und Release-Workflow enthalten die Regression. Kein CI-Lauf."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/role-workloads.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
@@ -3875,7 +3885,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/.github/workflows/build-images.yaml#L119"
       ],
       "unresolved_code_references": [],
-      "next_action": "Ausgewählte Receipt mit tatsächlichen PodimageIDs und aktiven Bundlecommits im späteren autorisierten Clusterlauf vergleichen.",
+      "next_action": "Echte OCI-Descriptorbeziehung Index/Plattformmanifest/Config nachweisen und frische Pod-/Containeridentität samt aktivem Bundle an die ausgewählte Receipt binden. Kein einfacher Vergleich verschiedener Digestarten und kein Soll-Envwert als aktiver Bundlenachweis.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4064,8 +4074,8 @@
       "severity": "mittel",
       "work_package": "WP11",
       "status": "implementiert",
-      "implementation_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
-      "verification_status": "teilweise; lokale Ursachenbehebung unabhängig geprüft und integriert, originale native Gesamt-Abnahme offen",
+      "implementation_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
+      "verification_status": "teilweise; Zusätzlich beschädigte Lease-/Heartbeat-Zustände und echten fehlgeschlagenen npm-Start korrigiert; Zustände bleiben erhalten, eigene Lease wird freigegeben. Ursprüngliche Stoppkorrektur bleibt erhalten. Unabhängiger Paketgate18/18, null Skips; alle sechs bisherigen Lintfehler behoben.",
       "verification_evidence": [
         {
           "report": "implementation/review-supervisor.md",
@@ -4080,6 +4090,11 @@
           "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
           "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
           "summary": "Weiterer realer Defekt behoben: SIGTERM/SIGINT während Recoverypause startete bisher erneut die Originalpipeline. Originalrot, Fix 8/8 plus 5/5 Operationsfälle unabhängig bestanden und integriert."
+        },
+        {
+          "report": "implementation/resume-84-supervisor-launch-independent-review.md",
+          "source_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
+          "summary": "Zusätzlich beschädigte Lease-/Heartbeat-Zustände und echten fehlgeschlagenen npm-Start korrigiert; Zustände bleiben erhalten, eigene Lease wird freigegeben. Ursprüngliche Stoppkorrektur bleibt erhalten. Unabhängiger Paketgate18/18, null Skips; alle sechs bisherigen Lintfehler behoben."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/operations-and-packaging.md",
@@ -4089,7 +4104,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/scripts/supervise-repository-review.mjs#L79"
       ],
       "unresolved_code_references": [],
-      "next_action": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität. Sechs bestehende Supervisor-Lintfehler bleiben dokumentiert.",
+      "next_action": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; dauerhafte Gesamtprozessidentität, konkurrierende Stale-Lease-Ersetzung und alle I/O-Faultpfade bleiben außerhalb dieser Teilabnahme.",
       "related_findings": [],
       "decision_notes": [],
       "remaining_work": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität. Sechs bestehende Supervisor-Lintfehler bleiben dokumentiert."
@@ -4820,7 +4835,7 @@
     }
   ],
   "implementation_branch": "fix/remediation-foundations-20260909",
-  "updated_at": "2026-09-11T17:35:00.694875+00:00",
+  "updated_at": "2026-09-11T18:01:12.356434+00:00",
   "progress_counts": {
     "verifiziert": 94,
     "implementiert": 39,

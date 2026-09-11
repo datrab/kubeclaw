@@ -8,7 +8,7 @@ Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
 Welle47: **8/47 ursprüngliche Abnahmen unabhängig bestanden, 39/47 noch nicht abgeschlossen**. [Einzelnachweis](implementation/wave47-root-review.md), [eingefrorene Menge](partial-47-scope.json), [ID-Fortschritt](partial-47-progress.json).
 
-Aktueller gesicherter Lauf: [Fortsetzung nach vorzeitigem Stopp](resume/run-20260911-a51d-resumed.md). Geprüfte Worker-/Supervisor-Ursachenbehebungen, Prism-Refactor und vollständige Testzuordnung sind in `da02ba5a` integriert; 55 Prism-/Worker-Tests und 13 Supervisor-Tests bestanden, eine native PG-SQL-Prüfung ausdrücklich übersprungen. Die fehlenden 84 Minuten werden bis 18:18 UTC nachgeholt. Keine weitere Gesamtkennung abgeschlossen.
+Aktueller gesicherter Lauf: [Fortsetzung nach vorzeitigem Stopp](resume/run-20260911-a51d-resumed.md). Zusätzliche geprüfte Supervisor-Zustands-/Launchkorrekturen und unveränderliche Release-Nachweise sind in `56c205ef` integriert; Supervisor18/18 und Release/Helm7/7 bestanden, Supervisor-Lint0. Worker-/Prism-Quellen bleiben seit dem belegten55-Test-Lauf unverändert; native Abnahmen weiterhin offen. Die fehlenden84Minuten werden bis18:18:11UTC nachgeholt. Keine weitere Gesamtkennung abgeschlossen.
 
 Aktuelle Wiederaufnahme: [geprüfte Pakete, Integrationsnachweise und konkrete Restarbeit](implementation/resume-20260909.md). Die nachfolgenden chronologischen Zwischenstände bleiben historische Belege und sind keine Behauptung aktuell laufender Subagents.
 

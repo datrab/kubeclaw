@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-09-11T17:32:53.960052+00:00",
-  "integration_checkpoint": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+  "checked_at": "2026-09-11T18:01:12.356434+00:00",
+  "integration_checkpoint": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
   "original_matrix_source_checkpoint": "d22ee1d298aa63050673e075b363ae4c996008dc",
   "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
   "executed_gates": 0,
@@ -289,5 +289,19 @@
       "entry_sha256": "83e1cbdd48b997c5fd0d59f183bd6057d82e10df9ba25e2e7e7f4162a0eac74a"
     }
   },
-  "prepared_gate_source": "Included in this integration commit; native execution remains unperformed"
+  "prepared_gate_source": "Included in this integration commit; native execution remains unperformed",
+  "additional_local_corrections": {
+    "PCR-SCAFFOLD-OPS-001": {
+      "report": "implementation/resume-84-supervisor-launch-independent-review.md",
+      "native_acceptance_complete": false
+    },
+    "IFR-19-001": {
+      "report": "implementation/resume-84-release-root-review.md",
+      "native_acceptance_complete": false
+    },
+    "PCR-PRISM-WORKER-002": {
+      "report": "implementation/resume-84-prism-cpu-ownership-direction.md",
+      "native_acceptance_complete": false
+    }
+  }
 }
