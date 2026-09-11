@@ -1,0 +1,6 @@
+
+/workspace/scratch/a51d993d444b/run-2h/skills/prism/engine/index.ts
+  91:3  error  Async method 'executeOnce' has too many lines (68). Maximum allowed is 60  max-lines-per-function
+
+✖ 1 problem (1 error, 0 warnings)
+

@@ -1,0 +1,44 @@
+✔ many original renders bound retained entries and bytes without changing returned output (84.615322ms)
+✔ byte pressure and oversized successful renders do not retain their large payloads (1.21554ms)
+✔ accumulated render bytes evict completed entries before the count ceiling (2.792937ms)
+✔ active duplicates share one original operation and admission never evicts active ownership (1.745081ms)
+✔ retained replay snapshots cannot be enlarged or corrupted through caller mutation (0.559677ms)
+✔ failure releases admission and invalid cache limits cannot disable its bounds (1.626832ms)
+✔ real render evidence survives RAM eviction and artifact-store reconstruction (18.497445ms)
+✔ deferred original rendering uses the request snapshot bound to its fingerprint (1.06435ms)
+✔ engine generates, renders, evaluates and publishes idempotently (15.48083ms)
+✔ the generic worker carries an opaque Prism operation (3.597474ms)
+✔ the worker binding rejects unknown operations (0.523732ms)
+✔ concurrent retries share one provider execution (1.336172ms)
+✔ the live provider accepts internal LiteLLM without requiring embeddings (0.923588ms)
+✔ an idempotency key cannot identify different requests (1.258605ms)
+✔ Prism creates a valid neutral worker envelope (31.666566ms)
+✔ original ingest provider cancels an actual TLS response body after headers (370.613519ms)
+✔ original propose provider cancels an actual TLS response body after headers (246.868491ms)
+✔ original Engine and Studio preserve disjoint component layers and targeted override precedence (23.277354ms)
+✔ each declared interactive control has its own escaped action (0.69385ms)
+✔ renderer escapes active content (6.13737ms)
+✔ renderer resolves collection data and reusable item components (0.641191ms)
+✔ renderer fails closed for unknown components (0.440517ms)
+✔ renderer resolves theme tokens and layout properties (4.667134ms)
+✔ renderer emits only declarative action identities (0.296318ms)
+✔ renderer applies semantic typography tokens (0.566498ms)
+✔ renderer uses semantic output for the full v1 catalogue (0.574509ms)
+✔ only the admitted owner can cancel a pending original render; legacy callers still coalesce (8.811306ms)
+✔ actual attempt CPU excludes prior process work and stays fixed after execution (216.800617ms)
+✔ real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back (199.57507ms)
+✔ terminate aborts and drains the original artifact read before any engine operation starts (19.432278ms)
+✔ owner cancellation before retention rejects every coalesced original-render caller (2.869953ms)
+✔ original worker operation reproduces missing log store; actual service executor persists the complete log (171.388516ms)
+✔ real durable log store corruption keeps an otherwise successful engine operation errored (15.769815ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (45.647413ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (17.488546ms)
+✔ full log participates in the real neutral evidence budget before upload (9.497423ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1339.831957

@@ -1,0 +1,29 @@
+
+/workspace/scratch/a51d993d444b/run-2h/skills/prism/engine/index.ts
+   73:3   error  Async method 'executeOnce' has too many lines (210). Maximum allowed is 60              max-lines-per-function
+   73:3   error  Async method 'executeOnce' has a complexity of 37. Maximum allowed is 15                complexity
+  225:19  error  Use one explicit value and at most one fallback; longer fallback chains hide authority  discipline/no-fallback-chain
+  305:1   error  File has too many lines (420). Maximum allowed is 300                                   max-lines
+
+/workspace/scratch/a51d993d444b/run-2h/skills/prism/server/worker.ts
+   5:23  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+   6:22  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+   6:22  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+   8:32  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+   8:32  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  10:21  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+  10:21  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  16:26  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+  16:26  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  21:22  error  Infrastructure environment variables must not hide hardcoded application defaults      discipline/no-env-default
+  21:22  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+
+/workspace/scratch/a51d993d444b/run-2h/skills/prism/studio/app.tsx
+   22:1   error  Function 'App' has too many lines (866). Maximum allowed is 60                          max-lines-per-function
+   22:1   error  Function 'App' has a complexity of 48. Maximum allowed is 15                            complexity
+   99:12  error  Dynamic module loading is allowed only in a declared loader boundary                    discipline/no-dynamic-module-loading
+  303:1   error  File has too many lines (886). Maximum allowed is 300                                   max-lines
+  747:15  error  Use one explicit value and at most one fallback; longer fallback chains hide authority  discipline/no-fallback-chain
+
+✖ 20 problems (20 errors, 0 warnings)
+

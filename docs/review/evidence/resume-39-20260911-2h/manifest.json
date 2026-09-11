@@ -1,12 +1,17 @@
 {
   "schemaVersion": "remediation-evidence-checkpoint.v1",
-  "sourceParent": "4e7a12c2f24a841519373ff9c18110642d130521",
-  "createdAt": "2026-09-11T14:36:16.548952+00:00",
+  "sourceParent": "c71134ab4c126a0c4744998a114f80dccdd87774",
+  "createdAt": "2026-09-11T14:47:53.455785+00:00",
   "files": [
     {
       "path": "docs/review/evidence/resume-39-20260911-2h/action-pins.txt",
       "sizeBytes": 47,
       "sha256": "afa5532b9e0022f12ba6021a6af33390b593a05800cf5fb7d3baff170e6bb001"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/consumer-tests-lint.txt",
+      "sizeBytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "path": "docs/review/evidence/resume-39-20260911-2h/contract-lint-refactor.txt",
@@ -69,6 +74,21 @@
       "sha256": "77d9e63b73d662e78af1359f4aac318afdb523633b0b3b238738163eb7a24944"
     },
     {
+      "path": "docs/review/evidence/resume-39-20260911-2h/gate-reference-proof.json.gz.base64",
+      "sizeBytes": 71057,
+      "sha256": "b966aeb9972aba583ae541520b807ea15e69134d212461c39800a69d93d66344"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/gate-reference-summary.json",
+      "sizeBytes": 196,
+      "sha256": "1a1b7da62adbc7f6cf4a6f7a99f01f4c8a5a1d0fea1953818d68c6b911e4ef6f"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/gate-reference.txt",
+      "sizeBytes": 239,
+      "sha256": "362cbfa9cf44e120f5c81c81be979a29cf1c231af9fb98a18b5d0a96c60a568c"
+    },
+    {
       "path": "docs/review/evidence/resume-39-20260911-2h/http-package.txt",
       "sizeBytes": 274,
       "sha256": "29d5d5e4d4532e3c7e1533e2cc5789cc4accfe58c2f35e2c5a77cbb7a1f9f595"
@@ -124,6 +144,11 @@
       "sha256": "fbebbbb23b6138a7ddd4d728cd761835a5ba6bcfe333f9cdbc998cc6452b5e9e"
     },
     {
+      "path": "docs/review/evidence/resume-39-20260911-2h/package-ownership-prism.txt",
+      "sizeBytes": 82,
+      "sha256": "fbebbbb23b6138a7ddd4d728cd761835a5ba6bcfe333f9cdbc998cc6452b5e9e"
+    },
+    {
       "path": "docs/review/evidence/resume-39-20260911-2h/package-ownership.txt",
       "sizeBytes": 700,
       "sha256": "d320cb153e442938b82163481e7888a7a3be569014e6370bb55f24e2c17b8739"
@@ -144,12 +169,72 @@
       "sha256": "85a661af550f143132c9a5ad30a2bd1575e8cc877b8345591dfdbb9d3d1fbb9f"
     },
     {
+      "path": "docs/review/evidence/resume-39-20260911-2h/prism-engine-parity.mjs",
+      "sizeBytes": 3046,
+      "sha256": "b486cae775a68b39b4cf9741da78ef5c1ff25a3f65169f110c67a67ecbb62a0f"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/prism-engine-parity.txt",
+      "sizeBytes": 3063,
+      "sha256": "755a9cf2e1775a16ec1e0aab1a6361353ac3c8725ce5fa1940e308aa3c44cd78"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/prism-engine-refactor-lint-final.txt",
+      "sizeBytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/prism-engine-refactor-lint.txt",
+      "sizeBytes": 220,
+      "sha256": "00f5423f044f4500970768a0f141cc0285a355c26a225d9e0674b3da16e3d3f0"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/prism-engine-refactor-tests-final.txt",
+      "sizeBytes": 3333,
+      "sha256": "72ef9f948972f8be45397a23c5b1cc449b92bf3c7b23178b1ae0c60377d892d0"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/prism-engine-refactor-tests.txt",
+      "sizeBytes": 3330,
+      "sha256": "5cf72aadce6bc104cfd51c4692a64f315727fc57e9335f25ed23a421445b429a"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/prism-engine-refactor-types-final.txt",
+      "sizeBytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/prism-engine-refactor-types.txt",
+      "sizeBytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/prism-monolith-lint.txt",
+      "sizeBytes": 2832,
+      "sha256": "23b15f8f62c682480749321008dc9630340e79f84224e82ca78594b0c4cdc744"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/prism-typecheck-before.txt",
+      "sizeBytes": 150,
+      "sha256": "9ef3da2bddde5b894f09764c7bbffa99c0e300f47e2f7037c0b6fd7c88e7d8a8"
+    },
+    {
       "path": "docs/review/evidence/resume-39-20260911-2h/remote-gate-after-moves.txt",
       "sizeBytes": 511,
       "sha256": "1440541b23911c67f3e8fe18db444881325df8920660503155fdbbcbbdac563d"
     },
     {
       "path": "docs/review/evidence/resume-39-20260911-2h/sandbox-build.txt",
+      "sizeBytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/studio-typecheck.txt",
+      "sizeBytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-39-20260911-2h/studio-types-after-engine.txt",
       "sizeBytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },

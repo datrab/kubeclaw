@@ -285,6 +285,8 @@ async function consume() {
   const expectManifestRejection = refMutation !== undefined || bodyMutation !== undefined;
   const expectGateBindingRejection = bodyMutation === 'coverage';
   const producer = JSON.parse(fs.readFileSync(path.join(root, 'producer-proof.json'), 'utf8'));
+  const legacyGateRefRejection = producer.manifest.schemaVersion === 'delivery-manifest.v2'
+    && ['ambiguous-gate', 'missing-gate', 'gate-media'].includes(bodyMutation);
   const pluginRoot = path.join(root, `consumer-${phase}-plugins`);
   writeFixturePlugin(pluginRoot, 'consumer');
   writeFixturePlugin(pluginRoot, 'vectors');
@@ -333,9 +335,18 @@ async function consume() {
         changed.final.coverage.coverageDigest = sha256Text(canonicalJson(unsignedCoverage));
       } else if (bodyMutation === 'source') changed.final.sourceRevision = 'b'.repeat(40);
       else if (bodyMutation === 'review') changed.final.reviewStageId = 'foreign-review';
+      else if (['ambiguous-gate', 'missing-gate', 'gate-media'].includes(bodyMutation)) {
+        const isFinalDecision = ref => ref.namespace === 'kubeclaw.buster-quality-gate'
+          && ref.producer.stageId === 'final-test' && ref.artifactId.includes(':decision:');
+        const decisions = changed.evidence.filter(isFinalDecision);
+        assert.equal(decisions.length, 1);
+        if (bodyMutation === 'ambiguous-gate') changed.evidence.push(structuredClone(decisions[0]));
+        else if (bodyMutation === 'missing-gate') changed.evidence = changed.evidence.filter(ref => !isFinalDecision(ref));
+        else decisions[0].mediaType = 'text/plain';
+      }
       if (!['missing-inner-digest', 'wrong-inner-digest', 'competing'].includes(bodyMutation)) {
         const { digest: _digest, ...unsignedManifest } = changed;
-        changed.digest = sha256Text(portableJson(unsignedManifest));
+        changed.digest = sha256Text(changed.schemaVersion === 'delivery-manifest.v2' ? canonicalJson(unsignedManifest) : portableJson(unsignedManifest));
       }
       const saved = await adapters.invoke('artifacts.write', { runId, stageId: 'project-summary', attemptId: `mutation:${bodyMutation}`, attemptNumber: 2 },
         `mutation:${bodyMutation}`, { operation: 'put_json', resource: { type: 'artifact.object', canonicalId: ref.artifactId },
@@ -353,7 +364,9 @@ async function consume() {
     const receipt = await effects.receipt(top.idempotencyKey);
     assert.equal(receipt?.status, expectMissingImport || expectManifestRejection || expectImportRejection ? 'failed' : 'completed');
     if (expectMissingImport) assert.equal(receipt?.error?.message, 'NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED');
-    if (expectManifestRejection) assert.match(receipt?.error?.message ?? '', /ARTIFACT_|MANIFEST_INVALID|CANONICAL_JSON_|GATE_NOT_PASSED/);
+    if (legacyGateRefRejection) assert.equal(receipt?.error?.message, bodyMutation === 'gate-media'
+      ? 'DEMO_EVIDENCE_ARTIFACT_OWNER_INVALID' : 'DEMO_EVIDENCE_GATE_REFERENCE_INVALID');
+    else if (expectManifestRejection) assert.match(receipt?.error?.message ?? '', /ARTIFACT_|MANIFEST_INVALID|CANONICAL_JSON_|GATE_NOT_PASSED/);
     if (expectImportRejection) {
       const required = ['pending', 'missing-result', 'schema'].includes(importMutation);
       assert.equal(receipt?.error?.message, required ? 'NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED' : 'NOVA_VERIFIED_OUTPUT_BINDING_MISMATCH');
@@ -385,7 +398,8 @@ async function consume() {
       storedSemanticDigest: producer.semanticDigest,
       recomputedSemanticDigest: sha256Text(portableJson(producer.unsignedManifest)),
       parsedManifestMatchesProducer: portableJson(producer.manifest) === portableJson(JSON.parse(producer.storedJsonBytes)),
-      boundary: { manifestIntegrityRejected: expectManifestRejection && !expectGateBindingRejection, gateBindingRejected: expectGateBindingRejection,
+      boundary: { manifestIntegrityRejected: expectManifestRejection && !expectGateBindingRejection && !legacyGateRefRejection,
+        gateBindingRejected: expectGateBindingRejection || legacyGateRefRejection,
         importStoreReached: !expectManifestRejection, providerExecution: false, importedResultSuccess: !expectMissingImport && !expectManifestRejection && !expectImportRejection,
         importBindingRejected: expectImportRejection,
         missingImportRejected: expectMissingImport && receipt?.error?.message === 'NOVA_VERIFIED_OUTPUT_IMPORT_REQUIRED' },
@@ -504,6 +518,7 @@ else if (['consume-en', 'consume-cs', 'consume-da', 'consume-tr', 'consume-sv',
   'consume-wrong-media', 'consume-wrong-missing-media',
   'consume-body-missing-inner-digest', 'consume-body-wrong-inner-digest', 'consume-body-unknown-key', 'consume-body-oversize',
   'consume-body-gate', 'consume-body-coverage', 'consume-body-source', 'consume-body-review', 'consume-body-competing',
+  'consume-body-ambiguous-gate', 'consume-body-missing-gate', 'consume-body-gate-media',
   'consume-missing', 'consume-import-pending', 'consume-import-missing-result', 'consume-import-schema',
   'consume-import-job', 'consume-import-run', 'consume-import-stage', 'consume-import-source',
   'consume-import-plan', 'consume-import-result', 'consume-import-receipt', 'consume-import-stored-digest',
