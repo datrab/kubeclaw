@@ -5,7 +5,7 @@
   "work_minutes_to_make_up": 84,
   "paused_time_is_work": false,
   "run_state": "in_progress",
-  "updated_at": "2026-09-11T17:35:00.694875+00:00",
+  "updated_at": "2026-09-11T17:41:56.778858+00:00",
   "prior_run": "run-20260911-a51d-2h.md",
   "early_stop_correction": "Earlier stop was premature: executable review and root-cause repair remained. This continuation makes up84minutes.",
   "source_checkpoint": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
@@ -160,7 +160,7 @@
       "id": "PCR-PRISM-WORKER-001",
       "status": "implementiert",
       "title": "Pflicht-Logspeicher fehlt am Executor-Aufruf",
-      "progress_this_run": "Zusätzlich echte Request-/Shutdown-Lebensdauer mit ursprünglichem nonce pg.Pool integriert; Verbindungsaufbau, gesetzte Stoppfrist und nicht als Erfolg ausgegebener Cutoff geprüft.",
+      "progress_this_run": "Zusätzlich echte Request-/Shutdown-Lebensdauer mit ursprünglichem nonce pg.Pool integriert; Verbindungsaufbau, gesetzte Stoppfrist und nicht als Erfolg ausgegebener Cutoff geprüft. Strikter nativer SQL-Abnahmeeinstieg vorbereitet: fehlende Voraussetzung, echter Skip und null ausgewählte Tests werden als Fehler abgewiesen; kein PG-Dienstlauf erfolgt.",
       "remaining_gate": "Echter migrierter PostgreSQL-Dienst, SQL-/Lock-/Rollback-/Wiederanlaufnachweise der vollständigen Komposition fehlen; TCP-Peer ist kein PostgreSQL-Dienst.",
       "closed": false
     },
@@ -184,7 +184,7 @@
       "id": "PCR-PRISM-ENGINE-001",
       "status": "implementiert",
       "title": "Erfolgreiche Renderresultate bleiben unbegrenzt im Cache",
-      "progress_this_run": "Engineextraktion unabhängig mit 36 Originaltests, 12 Bytevergleichen und Callback-/Providerprüfung bestätigt und integriert. Frische Integrationssuite 55 bestanden, 1 expliziter nativer PG-Skip.",
+      "progress_this_run": "Engineextraktion unabhängig mit 36 Originaltests, 12 Bytevergleichen und Callback-/Providerprüfung bestätigt und integriert. Frische Integrationssuite 55 bestanden, 1 expliziter nativer PG-Skip. Zusätzlich striktes echtes Capture-/Retained-Memory-Gate vorbereitet und unabhängig quellengeprüft; native Ausführung nicht erfolgt.",
       "remaining_gate": "Echte langlebige Chromium-Captures mit Retained-Heap-Messung und vollständiger Neustart über Controlpersistenz bleiben offen; reiner Refactorreview ist abgeschlossen.",
       "closed": false
     },
@@ -332,5 +332,10 @@
       "remaining_gate": "Echten konfigurierten OpenClaw/ACP-Writer mit unveränderlichen Quellen erst bei real verfügbarer CLI/Config/Token/Tools-URL ausführen. Bestehende Original-/Source-Suites sind modelExecution:false; Socketstatus wegen EPERM unbekannt. Keine Wiederholung lokaler Fixtures als Writer-Nachweis.",
       "closed": false
     }
-  ]
+  ],
+  "prepared_native_gates": {
+    "worker_postgres": "test:worker-readiness-native",
+    "chromium_retention": "test:engine:native-retention",
+    "native_executed": false
+  }
 }

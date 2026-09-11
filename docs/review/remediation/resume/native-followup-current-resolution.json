@@ -257,5 +257,37 @@
       "integration_sha256": "eb56fbcf5a026359aad4351423c92ebfd1f76e72843f646bc7e50953cb6e60ef",
       "same_as_original_matrix": true
     }
-  ]
+  ],
+  "prepared_native_gates": {
+    "worker-pg": {
+      "finding_ids": [
+        "PCR-PRISM-WORKER-001"
+      ],
+      "command": "npm run test:worker-readiness-native --prefix skills/prism",
+      "entry": "skills/prism/tests/native/worker-readiness-gate.mts",
+      "original_test": "skills/prism/tests/worker-readiness.test.mts",
+      "required_environment": [
+        "KUBECLAW_PRISM_READINESS_TEST_DATABASE"
+      ],
+      "native_executed": false,
+      "local_preparation_proof": "real missing-prerequisite, skipped-native-case and zero-selected-tests are rejected; original SQL test unchanged",
+      "entry_sha256": "a0e66975e0c2141b68c13d2b2a8adbd8cdad7605efbd0101dd3f16f38d03abbd"
+    },
+    "prism-native-retention": {
+      "finding_ids": [
+        "PCR-PRISM-ENGINE-001"
+      ],
+      "command": "npm run test:engine:native-retention --prefix skills/prism -- --max-retained-growth-bytes=BYTES --captures-per-window=32",
+      "entry": "skills/prism/integration/engine-capture-retention.mts",
+      "required_prerequisites": [
+        "already installed repository-pinned native Chromium",
+        "predeclared justified retained-growth budget",
+        "explicit GC supplied by the package script"
+      ],
+      "native_executed": false,
+      "remaining_scope": "Control persistence/restart, whole worker service and browser child memory/reaping remain unproved",
+      "entry_sha256": "83e1cbdd48b997c5fd0d59f183bd6057d82e10df9ba25e2e7e7f4162a0eac74a"
+    }
+  },
+  "prepared_gate_source": "Included in this integration commit; native execution remains unperformed"
 }

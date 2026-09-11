@@ -1,0 +1,17 @@
+
+> @kubeclaw/prism@0.1.0 test:worker-readiness-native
+> node tests/native/worker-readiness-gate.mts
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+file:///workspace/scratch/a51d993d444b/integration-84/skills/prism/tests/native/worker-readiness-gate.mts:37
+    throw new Error('REAL_POSTGRES_DATABASE_REQUIRED: configure an isolated migrated native test database');
+          ^
+
+Error: REAL_POSTGRES_DATABASE_REQUIRED: configure an isolated migrated native test database
+    at main (file:///workspace/scratch/a51d993d444b/integration-84/skills/prism/tests/native/worker-readiness-gate.mts:37:11)
+    at file:///workspace/scratch/a51d993d444b/integration-84/skills/prism/tests/native/worker-readiness-gate.mts:43:83
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0

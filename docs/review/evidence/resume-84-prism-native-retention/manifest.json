@@ -1,0 +1,40 @@
+{
+  "nativeExecuted": false,
+  "prerequisiteAttempted": false,
+  "verification": {
+    "prismTypecheck": 0,
+    "configuredLint": 0
+  },
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-prism-native-retention/lint-backpressure.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-native-retention/lint-final.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-native-retention/lint.txt",
+      "sha256": "3960c10257018a1d7f4f0df2ec5fdc2cb30600b014f40e22b4c748ad960885fb",
+      "bytes": 276
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-native-retention/types-backpressure.txt",
+      "sha256": "9ef3da2bddde5b894f09764c7bbffa99c0e300f47e2f7037c0b6fd7c88e7d8a8",
+      "bytes": 150
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-native-retention/types-final.txt",
+      "sha256": "9ef3da2bddde5b894f09764c7bbffa99c0e300f47e2f7037c0b6fd7c88e7d8a8",
+      "bytes": 150
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-native-retention/types.txt",
+      "sha256": "9ef3da2bddde5b894f09764c7bbffa99c0e300f47e2f7037c0b6fd7c88e7d8a8",
+      "bytes": 150
+    }
+  ]
+}

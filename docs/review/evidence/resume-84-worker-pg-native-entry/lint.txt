@@ -1,0 +1,7 @@
+
+/workspace/scratch/a51d993d444b/worker-pg-entry-84/skills/prism/integration/worker-readiness-native.mts
+   9:8  error  Async function 'requireNativeReadinessPass' has a complexity of 21. Maximum allowed is 15  complexity
+  31:8  error  Read environment variables only in a declared configuration or infrastructure adapter      discipline/no-direct-env-access
+
+✖ 2 problems (2 errors, 0 warnings)
+

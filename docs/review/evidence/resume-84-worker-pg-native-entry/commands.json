@@ -1,0 +1,51 @@
+{
+  "commands": [
+    {
+      "name": "missing-prerequisite-final",
+      "args": [
+        "npm",
+        "run",
+        "test:worker-readiness-native",
+        "--prefix",
+        "skills/prism"
+      ],
+      "exitCode": 1,
+      "nativeDatabaseExecuted": false
+    },
+    {
+      "name": "routing-negative-final",
+      "args": [
+        "node",
+        "docs/review/evidence/resume-84-worker-pg-native-entry/routing-negative.mts"
+      ],
+      "exitCode": 0,
+      "nativeDatabaseExecuted": false
+    },
+    {
+      "name": "types-final",
+      "args": [
+        "npm",
+        "run",
+        "typecheck",
+        "--prefix",
+        "skills/prism"
+      ],
+      "exitCode": 0,
+      "nativeDatabaseExecuted": false
+    },
+    {
+      "name": "lint-final",
+      "args": [
+        "node",
+        "node_modules/eslint/bin/eslint.js",
+        "--config",
+        "charts/kubeclaw/files/config/eslint.config.mjs",
+        "skills/prism/tests/native/worker-readiness-gate.mts"
+      ],
+      "exitCode": 0,
+      "nativeDatabaseExecuted": false
+    }
+  ],
+  "originalTestUnchanged": true,
+  "originalTestSha256": "b4b4ab39156d45d0afe4495178df1b129c4d2d55f9d31086de0804b2322d2d0e"
+}

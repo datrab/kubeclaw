@@ -1,0 +1,31 @@
+{
+  "commands": [
+    {
+      "name": "missing-pg",
+      "command": [
+        "npm",
+        "run",
+        "test:worker-readiness-native",
+        "--prefix",
+        "skills/prism"
+      ],
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "name": "pg-routing",
+      "command": [
+        "node",
+        "docs/review/evidence/resume-84-worker-pg-native-entry/routing-negative.mts"
+      ],
+      "exit": 0,
+      "expected": 0
+    }
+  ],
+  "originalNativeSqlTestUnchanged": true,
+  "originalNativeSqlTestSha256": "b4b4ab39156d45d0afe4495178df1b129c4d2d55f9d31086de0804b2322d2d0e",
+  "nativePgExecuted": false,
+  "nativeBrowserExecuted": false,
+  "rootTypecheckExit": 0,
+  "rootConfiguredLintExit": 0
+}

@@ -1,0 +1,6 @@
+
+/workspace/scratch/a51d993d444b/prism-native-heap-gate/skills/prism/integration/engine-capture-retention.mts
+  129:33  error  Promise returned in function argument where a void return was expected  @typescript-eslint/no-misused-promises
+
+✖ 1 problem (1 error, 0 warnings)
+

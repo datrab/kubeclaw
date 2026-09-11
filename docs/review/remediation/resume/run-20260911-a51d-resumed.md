@@ -24,3 +24,7 @@ Weiterarbeit und Nachweise:
 - [Worker-Abbruch](../implementation/resume-84-worker-http-independent-review.md), [Worker-Stopp](../implementation/resume-84-prism-final-independent-review.md), [Supervisor](../implementation/resume-84-supervisor-independent-review.md)
 
 Die frühere Stoppbegründung in run-20260911-a51d-2h.md bleibt als historischer Verlauf erhalten; sie gilt nicht als Behauptung, dass alle lokal ausführbare Arbeit ausgeschöpft war.
+
+## Vorbereitete native Abnahmen
+
+Zwei explizite Kommandos schließen Lücken in der Fortsetzbarkeit: `npm run test:worker-readiness-native --prefix skills/prism` verlangt einen echten nativen SQL-Pass und verweigert Skips/Nulltests. `npm run test:engine:native-retention --prefix skills/prism -- --max-retained-growth-bytes=BYTES --captures-per-window=32` führt auf geeignetem Host echte Chromium-Captures und Retained-Memory-Messung aus. Die notwendige feste Speichergrenze ist vor dem Lauf zu begründen. Beide wurden hier nur vorbereitet und quellen-/typgeprüft; die PostgreSQL-Routing-Negativen wurden ohne Datenbankverbindung geprüft. Keine native positive Abnahme und keine weitere Finding-Schließung. [Root-Review](../implementation/resume-84-native-gates-root-review.md).

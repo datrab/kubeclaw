@@ -1,0 +1,4 @@
+{"event":"test:pass","name":"native PostgreSQL query cancellation settles and releases its actual pool client","skip":"REAL_POSTGRES_DATABASE_REQUIRED (isolated migrated test database)","todo":false}
+{"scenario":"original native case skipped for its actual missing prerequisite","rejectedAsUnverified":true,"nativeDatabaseExecution":false}
+{"event":"test:pass","name":"/workspace/scratch/a51d993d444b/integration-84/skills/prism/tests/worker-readiness.test.mts","skip":false,"todo":false}
+{"scenario":"zero selected tests despite Node file-level pass","rejectedAsUnverified":true,"nativeDatabaseExecution":false}
