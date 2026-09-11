@@ -1,36 +1,54 @@
 # Fortsetzung nach dem vorzeitigen Stopp
 
-Der vorherige Lauf wurde trotz noch ausführbarer Arbeit zu früh beendet. Dieser Fehler wird durch84Minuten tatsächliche Weiterarbeit korrigiert: Beginn2026-09-11T16:54:11Z, harter Stopp18:18:11Z. Die Pause zwischen den Turns wird nicht als Arbeit gezählt. Dieser Lauf ist derzeit aktiv.
+Der frühere Stopp war ein Fehler: Es gab noch ausführbare Ursachenarbeit. Für die fehlenden **84 Minuten** läuft diese Fortsetzung von **16:54:11 bis 18:18:11 UTC am 11. September 2026**. Die Pause zwischen den Turns zählt nicht als Arbeitszeit.
 
-Die geprüften Änderungen sind auf `fix/remediation-foundations-20260909` in **da02ba5ae6abe4b11c1addf992df308608eaed1f** integriert; der exakte Baum ist `0dc25543a3770cdc9970649ce3409c2548741273`.195 geschriebene Dateien wurden aus dem Commit bytegenau zurückgelesen;11 alte Testpfade wurden durch echte Verschiebungen entfernt. Unabhängige Gegenprüfung und Root-Prüfung gelten für genau diese Zusammensetzung.
+**Laufstatus: An der Zeitgrenze gestoppt. Die fehlenden 84 Minuten sind nachgeholt.** Arbeitsende: 2026-09-11T18:18:11.019598+00:00; anschließende Speicherung des Abschlussstands.
 
-- Verlorene statische Abdeckung nach Testverschiebungen behoben: alle sechs Dateien wieder erfasst, sechs echte Typfehler und drei Root-Negative unabhängig bestätigt.
-- Echte Worker-HTTP-Abbruchlücke behoben: das Signal reicht bis zum ursprünglichen Worker Core und beendet laufende Artefakt-I/O.
-- Geregelter Worker-Stopp bei SIGTERM/SIGINT: keine neue Admission, unvollständige Bodies unterbrochen, aktive Attempts abgebrochen, gemeinsamer begrenzter Drain und nonce-Poolabschluss. Unaufgelöste Arbeit führt zu Fehlerexit, nicht zu behaupteter Bereinigung.
-- Echter Supervisorfehler behoben: Stop während Recoverypause löst keinen weiteren Pipeline-Start aus; ursprünglicher Leaseabschluss bleibt erhalten.
-- Prism-Enginezerlegung unabhängig geprüft und integriert; Paketgrenzen und originale npm-Testeinstiegspunkte einschließlich statischer Prüfung erhalten.
+Der Stand bleibt **94 lokal verifiziert / 39 teilweise umgesetzt / 2 in Bearbeitung / 19 offen**. Alle 154 ursprünglichen Kennungen, Statuswerte und Findingtexte sind unverändert. Die eingefrorene Teilmenge enthält weiterhin 8 vollständig verifizierte und 39 unvollständige Findings. Keine Teilprüfung wurde zur vollständigen Abnahme umgedeutet.
 
-Auf dem integrierten Quellstand bestehen **55 Prism-/Worker-Tests**, **13 Supervisor-Tests** und sämtliche gezielt betroffenen Paket-/Typ-/Paketgrenzenprüfungen. **Eine echte PostgreSQL-SQL-Abnahme ist ausdrücklich übersprungen**, weil kein isolierter nativer Datenbankdienst bereitsteht. Die Knip-Konfiguration wurde deterministisch auf die tatsächlichen Plugin-Manifeste aktualisiert und geprüft; vollständiges Knip ist damit nicht ausgeführt. Die sechs damaligen Supervisor-Lintfehler wurden im späteren unten beschriebenen Paket vollständig behoben.
+## Geprüfte und integrierte Änderungen
 
-Stand aller154 bleibt **94 verifiziert /39 teilweise umgesetzt /2 in Bearbeitung /19 offen**. Keine der39 vollständigen ursprünglichen Abnahmen wird durch Teilnachweise geschlossen. Der SDK-/Delivery-Kandidat **0144df383250a1975d40b04746eac398ee77e747** bleibt separat; gemeinsame SDK-, WorkerCore-, NovaCore-, Delivery- und Summary-Quellen wurden durch diese Integration nicht verändert. Fehlende native Browser-/PG-/Host-/Cluster-/Empfängerabnahmen bleiben offen. Es gab keine Deployments oder CI-Ausführungen. Auf dem Integrationsbranch wurden auch keine vorhandenen CI-Läufe gefunden, die diese Abnahmen ersetzen könnten.
+- **Testzuordnung:** Die verschobenen Integrationstests sind wieder vollständig statisch erfasst. Sechs echte Typfehler und drei Root-Negative bestätigen die reparierte Abdeckung; ursprüngliche Paketeinstiege bleiben erhalten.
+- **Prism/Worker:** Die unabhängig geprüfte Enginezerlegung ist integriert. HTTP-Abbruch erreicht den ursprünglichen Worker Core und laufende Artefakt-I/O. SIGTERM/SIGINT stoppt neue Aufträge, unterbricht unvollständige Bodies, wartet begrenzt auf aktive Arbeit und schließt den ursprünglichen nonce-Pool. Unaufgelöste Arbeit führt zum Fehlerexit.
+- **Supervisor:** Stop während der Recoverypause startet keine weitere Pipeline. Beschädigte Lease-/Heartbeat-Zustände werden erhalten und sichtbar abgewiesen. Ein tatsächlicher npm-Startfehler wird aufgezeichnet und gibt die eigene Lease frei. Die sechs bisherigen Lintfehler sind behoben.
+- **Release-Nachweise:** Der signierte Prism-Prüfer akzeptiert jetzt die vom Releasevertrag vorgeschriebenen Digestreferenzen und weist mutable Tags ab. Signatur-, Commit-, Clean-Run- und Pflichtgateprüfungen bleiben erhalten.
+- **Buster:** Ein Fehler beim dauerhaften Speichern oder Lesen des Endstatus bleibt nach dem Entfernen des Vorgangs aus der aktiven Liste erhalten. Der Dienst stoppt neue Aufträge, erhält bereits gespeicherte Jobs und meldet den Shutdownfehler. Bereits laufende Annahmeschreibvorgänge werden vor dem Shutdown-Ende abgewartet.
 
-Weiterarbeit und Nachweise:
+Neue Regressionen sind in den bestehenden Paket-/Prüfeinstiegen und erforderlichen Typprüfungen verdrahtet. Die Release-Workflowänderung ergänzt nur den Testpfad; Trigger, Berechtigungen und Action-Pins bleiben unverändert. CI wurde nicht ausgeführt.
 
-- [Aktueller Zustand aller39 IDs](run-20260911-a51d-resumed-state.json)
-- [Originale Gate-/Voraussetzungsmatrix aller39](native-followup-39-20260911.json)
-- [Auflösung der Gatepfade gegen den integrierten Stand](native-followup-current-resolution.json); der Delivery-Kandidat hat eigene Quellen.
-- [Root-Integrationsprüfung](../implementation/resume-84-integration-root-review.md)
-- [Unabhängige Integrationsprüfung](../implementation/resume-84-integration-independent-review.md)
-- [Worker-Abbruch](../implementation/resume-84-worker-http-independent-review.md), [Worker-Stopp](../implementation/resume-84-prism-final-independent-review.md), [Supervisor](../implementation/resume-84-supervisor-independent-review.md)
+## Nachweise und Grenzen
 
-Die frühere Stoppbegründung in run-20260911-a51d-2h.md bleibt als historischer Verlauf erhalten; sie gilt nicht als Behauptung, dass alle lokal ausführbare Arbeit ausgeschöpft war.
+| Paket | Tatsächlicher Nachweis | Noch nicht damit belegt |
+|---|---|---|
+| Prism/Worker | 55 bestandene Fälle auf integrierter Quelle; unabhängige Prozess-/HTTP-Prüfungen | 1 ausdrücklich übersprungene native PG-SQL-Prüfung; Chromium-Kinder und vollständige Control-Recovery |
+| Supervisor | 18/18 unabhängig, null Skips; kanonischer Lint ohne Fehler | Native Prozessadoption, dauerhafte Identität und sämtliche weiteren I/O-Fehlerpfade |
+| Release | 7/7 einschließlich tatsächlicher Helmrender; originaler Images-Prüfeinstieg bestanden | Live-Pod-/OCI-Identität und aktiver Bundlecommit |
+| Buster | 7/7 unabhängig; Root sechs aktuelle Fälle sowie Remoteplan-Einstieg und Typprüfungen bestanden | Native Providerquieszenz und Restart-/Orphanbesitz |
 
-## Vorbereitete native Abnahmen
+Vier bestehende Buster-Lintbefunde bleiben offen. Knip-Konfiguration und Paketgrenzenprüfung bestehen; vollständiges Knip wurde nicht ausgeführt. Der erste Root-Helmlauf scheiterte am fehlenden PATH-Eintrag; nach Nutzung des bereits installierten Originalprogramms bestand die unveränderte Suite. Beide Ausgaben sind erhalten.
 
-Zwei explizite Kommandos schließen Lücken in der Fortsetzbarkeit: `npm run test:worker-readiness-native --prefix skills/prism` verlangt einen echten nativen SQL-Pass und verweigert Skips/Nulltests. `npm run test:engine:native-retention --prefix skills/prism -- --max-retained-growth-bytes=BYTES --captures-per-window=32` führt auf geeignetem Host echte Chromium-Captures und Retained-Memory-Messung aus. Die notwendige feste Speichergrenze ist vor dem Lauf zu begründen. Beide wurden hier nur vorbereitet und quellen-/typgeprüft; die PostgreSQL-Routing-Negativen wurden ohne Datenbankverbindung geprüft. Keine native positive Abnahme und keine weitere Finding-Schließung. [Root-Review](../implementation/resume-84-native-gates-root-review.md).
+Für die CPU-Zurechnung wurde ein weiterer echter Defekt konkretisiert: Zwei überlappende Originaloperationen berichteten zusammen 341 ms bei 172,468 ms tatsächlicher Parent-CPU. Der gespeicherte Folgeplan beschreibt den nötigen generischen Attempt-Host, Ressourcenbesitz und die abschließende Messung. Dafür wurde kein unvollständiger Produktionsfix integriert.
 
-## Weiterer gesicherter Stand um18:00UTC
+Zwei native Abnahmeeinstiege sind vorbereitet: `test:worker-readiness-native` verlangt einen echten SQL-Pass und weist Skips/Nulltests ab; `test:engine:native-retention` verlangt tatsächliche Chromium-Captures und eine vorab begründete feste Speichergrenze. Beide nativen Positivläufe stehen aus. Die PostgreSQL-Routing-Negativen liefen ohne Datenbankverbindung.
 
-Quellcheckpoint **56c205ef0b421f40a378dbe94f072f8c5e94aa91**, Baum `a9f885be8eecab227a028edd3789642b1a905db2`; alle45 geänderten Dateien bytegenau zurückgelesen. Weitere Supervisor-Ursachen (beschädigte Zustände und unbemerkter Launchfehler) behoben, unabhängig18/18 und Lint0. Release-Validator mit dem unveränderlichen Receiptvertrag in Einklang gebracht; Root7/7 einschließlich tatsächlicher Helmrender und ursprünglicher Prism-Images-Einstieg bestanden. Neue Regressionen sind an bestehende Paket-/Workfloweinstiege gebunden; CI wurde nicht ausgeführt.
+Es verbleiben sowohl Implementierungsarbeit als auch native Abnahmen. Es gab keine Deployments, Infrastrukturänderungen, CI-Ausführungen oder Nachrichten an Dritte. Fehlende native Nachweise wurden nicht durch Ersatzprogramme oder erfundene Erfolgsmeldungen ersetzt.
 
-[Supervisor-Zustand](../implementation/resume-84-supervisor-state-root.md), [unabhängiger Launchreview](../implementation/resume-84-supervisor-launch-independent-review.md), [Release-Rootreview](../implementation/resume-84-release-root-review.md). Die tatsächliche doppelte CPUzurechnung zweier Originaloperationen ist mit konkretem kohärentem [Folgepaket](../implementation/resume-84-prism-cpu-ownership-direction.md) dokumentiert; dafür wurde kein unvollständiger Produktionsfix integriert. Stand94/39/2/19 bleibt unverändert.
+## Gesicherte Quellen
+
+Aktueller geprüfter Quellcheckpoint: **550eb948ec8766b38e8c8d4ccb88a1fdab28e61a**, Baum `b328c9bce95cd999cb1c5b811f38e1e4040773fa`, Branch `fix/remediation-foundations-20260909`. Alle 15 Dateien des letzten Quellpakets wurden bytegenau zurückgelesen.
+
+Vorheriger Buster-Quellcheckpoint: `47c646d2` (40 Dateien). Weitere verifizierte Pakete: `da02ba5a` (erste Integration, 195 Dateien und 11 echte Testverschiebungen), `9af5dfb4` (native Abnahmeeinstiege, 30 Dateien), `56c205ef` (weitere Supervisor-/Releasekorrekturen, 45 Dateien). Die Quellpakete wurden jeweils vollständig zurückgelesen und gegen den lokalen Gitbaum verglichen.
+
+Der gekoppelte SDK-/Delivery-Kandidat bleibt separat bei **0144df383250a1975d40b04746eac398ee77e747**. Gemeinsame SDK-, WorkerCore-, NovaCore- und Summary-Quellen wurden durch diese Integration nicht verändert. Keine isolierte SDK-Übernahme ohne die ursprüngliche gekoppelte Abnahme.
+
+## Fortsetzung
+
+- [Aktueller Zustand aller 39 IDs](run-20260911-a51d-resumed-state.json)
+- [Ursprüngliche Gate-/Voraussetzungsmatrix](native-followup-39-20260911.json) und [aktuelle Pfadauflösung](native-followup-current-resolution.json)
+- [Root-Integration](../implementation/resume-84-integration-root-review.md) und [unabhängige Integration](../implementation/resume-84-integration-independent-review.md)
+- [Worker-Stopp](../implementation/resume-84-prism-final-independent-review.md), [Supervisor](../implementation/resume-84-supervisor-launch-independent-review.md), [Release](../implementation/resume-84-release-root-review.md), [Buster](../implementation/resume-84-buster-independent-review.md)
+- [Vorbereitete native Gates](../implementation/resume-84-native-gates-root-review.md), [konkretes CPU-Folgepaket](../implementation/resume-84-prism-cpu-ownership-direction.md)
+
+Der frühere Bericht `run-20260911-a51d-2h.md` bleibt als historischer Verlauf erhalten. Seine damalige Stoppbegründung gilt nicht als Aussage, dass alle lokal ausführbare Arbeit ausgeschöpft war.
+
+Die letzte echte Statusdatei-Korruption ist ebenfalls behoben: [unabhängiger Endreview](../implementation/resume-84-buster-read-independent-review.md). Der bestehende Dateiinhaltsfehler wird nicht mehr als erfolgreicher Shutdown verschluckt; beide tatsächlichen Ursachen bleiben erhalten.

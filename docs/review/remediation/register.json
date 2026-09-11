@@ -1078,8 +1078,8 @@
       "severity": "mittel",
       "work_package": "WP03",
       "status": "implementiert",
-      "implementation_commit": "aa10f3eb7fac33769f24fc3d41c628756e895d7a",
-      "verification_status": "teilweise / blockiert",
+      "implementation_commit": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a",
+      "verification_status": "teilweise; Buster hält jetzt sowohl fehlgeschlagene dauerhafte Endstatusschreibung als auch tatsächliche Statuslesefehler als fatalen Dienstfehler fest; beide Ursachen bleiben erhalten. Shutdown wartet laufende Admission. Echte Quoten-, Sperr- und Korruptionsfälle unabhängig7/7; Root6/6 und Typprüfung bestanden. Daten bleiben unverändert erhalten.",
       "verification_evidence": [
         {
           "report": "implementation/buster-engine.md",
@@ -1088,6 +1088,16 @@
         {
           "report": "implementation/buster-orphan-recovery-boundary.md",
           "summary": "Restart besitzt keinen dauerhaften Gesamtprozess-/Cgroup-Quieszenzbeleg. Terminalstatus oder tote Node-PID reichen nicht; unsichere automatische Löschung nicht eingeführt."
+        },
+        {
+          "report": "implementation/resume-84-buster-root-review.md",
+          "source_commit": "47c646d21f3c235520a55ec38ef5e0ef8612588f",
+          "summary": "Zusätzliche echte Buster-Shutdownursache behoben: fehlgeschlagene dauerhafte Endstatusschreibung bleibt als erster fataler Dienstfehler erhalten; neue Admission gestoppt, bereits gespeicherte Jobs bleiben erhalten. Shutdown wartet laufende Annahmeschreibvorgänge. Unabhängig6/6 und Root-Remoteplan-Einstieg samt5 neuen Fällen und Typprüfung bestanden."
+        },
+        {
+          "report": "implementation/resume-84-buster-read-independent-review.md",
+          "source_commit": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a",
+          "summary": "Buster hält jetzt sowohl fehlgeschlagene dauerhafte Endstatusschreibung als auch tatsächliche Statuslesefehler als fatalen Dienstfehler fest; beide Ursachen bleiben erhalten. Shutdown wartet laufende Admission. Echte Quoten-, Sperr- und Korruptionsfälle unabhängig7/7; Root6/6 und Typprüfung bestanden. Daten bleiben unverändert erhalten."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.engine.md",
@@ -1098,7 +1108,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/docs/architecture/buster-v2-runtime.md#L43"
       ],
       "unresolved_code_references": [],
-      "next_action": "Normale bestätigte Arbeit bereinigt; Restart-/Orphan-/unsichere Eingaben bleiben bis Besitz-/Terminierungsnachweis erhalten.",
+      "next_action": "Dauerhaften Gesamtprozess-/Containmentbesitz und Quieszenzbeleg vor Restartbereinigung implementieren und original native Provider-/Orphan-/Recoveryabnahme ausführen. Die separat reproduzierte Statuslesefehler-Unterdrückung ist nun behoben; kein Prozessbesitz aus terminalen Metadaten oder Parent-PID ableiten.",
       "related_findings": [],
       "decision_notes": [
         "D07 betrifft Logs, nicht pauschal alle entpackten Quellen, Caches und temporären Arbeitsverzeichnisse. Ressourcenklassen separat bereinigen; aktive/ungewisse Arbeit erhalten."
@@ -4835,7 +4845,7 @@
     }
   ],
   "implementation_branch": "fix/remediation-foundations-20260909",
-  "updated_at": "2026-09-11T18:01:12.356434+00:00",
+  "updated_at": "2026-09-11T18:18:11.019598+00:00",
   "progress_counts": {
     "verifiziert": 94,
     "implementiert": 39,

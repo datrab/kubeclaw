@@ -4,11 +4,11 @@
   "stop_deadline": "2026-09-11T18:18:11Z",
   "work_minutes_to_make_up": 84,
   "paused_time_is_work": false,
-  "run_state": "in_progress",
-  "updated_at": "2026-09-11T18:01:12.356434+00:00",
+  "run_state": "stopped_at_time_limit",
+  "updated_at": "2026-09-11T18:18:11.019598+00:00",
   "prior_run": "run-20260911-a51d-2h.md",
   "early_stop_correction": "Earlier stop was premature: executable review and root-cause repair remained. This continuation makes up84minutes.",
-  "source_checkpoint": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
+  "source_checkpoint": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a",
   "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
   "source_integrated": true,
   "coupled_sdk_delivery_source_integrated": false,
@@ -32,8 +32,8 @@
       "id": "PCR-BUSTER-ENGINE-004",
       "status": "implementiert",
       "title": "Terminale Jobs behalten vollständige Quellen und Arbeitsverzeichnisse",
-      "progress_this_run": "Ursprüngliche Restabnahme und vorhandene Gate-/Quellreferenzen in native-followup-39-20260911.json geprüft; kein neuer vollständiger Abnahmenachweis.",
-      "remaining_gate": "Normale bestätigte Arbeit bereinigt; Restart-/Orphan-/unsichere Eingaben bleiben bis Besitz-/Terminierungsnachweis erhalten.",
+      "progress_this_run": "Buster hält jetzt sowohl fehlgeschlagene dauerhafte Endstatusschreibung als auch tatsächliche Statuslesefehler als fatalen Dienstfehler fest; beide Ursachen bleiben erhalten. Shutdown wartet laufende Admission. Echte Quoten-, Sperr- und Korruptionsfälle unabhängig7/7; Root6/6 und Typprüfung bestanden. Daten bleiben unverändert erhalten.",
+      "remaining_gate": "Dauerhaften Gesamtprozess-/Containmentbesitz und Quieszenzbeleg vor Restartbereinigung implementieren und original native Provider-/Orphan-/Recoveryabnahme ausführen. Die separat reproduzierte Statuslesefehler-Unterdrückung ist nun behoben; kein Prozessbesitz aus terminalen Metadaten oder Parent-PID ableiten.",
       "closed": false
     },
     {
@@ -342,6 +342,34 @@
   "source_checkpoints": [
     "da02ba5ae6abe4b11c1addf992df308608eaed1f",
     "9af5dfb4b346d0f9629397158a5dc5e5d8a69030",
-    "56c205ef0b421f40a378dbe94f072f8c5e94aa91"
-  ]
+    "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
+    "47c646d21f3c235520a55ec38ef5e0ef8612588f",
+    "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a"
+  ],
+  "verified_local_packages": {
+    "prism_worker_composition": {
+      "passed": 55,
+      "native_sql_skips": 1,
+      "source": "da02ba5ae6abe4b11c1addf992df308608eaed1f"
+    },
+    "supervisor": {
+      "passed": 18,
+      "skips": 0,
+      "source": "56c205ef0b421f40a378dbe94f072f8c5e94aa91"
+    },
+    "release_contract_and_helm": {
+      "passed": 7,
+      "skips": 0,
+      "source": "56c205ef0b421f40a378dbe94f072f8c5e94aa91"
+    },
+    "buster_storage_and_reservation": {
+      "independent_passed": 7,
+      "root_new_cases_passed": 6,
+      "skips": 0,
+      "source": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a"
+    }
+  },
+  "work_stopped_at": "2026-09-11T18:18:11.019598+00:00",
+  "stop_reason": "user_two_hour_limit_after_making_up_84_minutes",
+  "elapsed_continuation_seconds": 5040.02
 }

@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-09-11T18:01:12.356434+00:00",
-  "integration_checkpoint": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
+  "checked_at": "2026-09-11T18:17:25.331128+00:00",
+  "integration_checkpoint": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a",
   "original_matrix_source_checkpoint": "d22ee1d298aa63050673e075b363ae4c996008dc",
   "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
   "executed_gates": 0,
@@ -302,6 +302,11 @@
     "PCR-PRISM-WORKER-002": {
       "report": "implementation/resume-84-prism-cpu-ownership-direction.md",
       "native_acceptance_complete": false
+    },
+    "PCR-BUSTER-ENGINE-004": {
+      "report": "implementation/resume-84-buster-root-review.md",
+      "native_acceptance_complete": false
     }
-  }
+  },
+  "execution_counter_scope": "Matrix preparation itself did not execute catalog gates; later partial local regression evidence is recorded separately and is not complete native finding acceptance."
 }

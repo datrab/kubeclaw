@@ -1,0 +1,39 @@
+{
+  "recorded_at": "2026-09-11T18:11:11.465930+00:00",
+  "checked_source_commit": "47c646d21f3c235520a55ec38ef5e0ef8612588f",
+  "counts": {
+    "verifiziert": 94,
+    "implementiert": 39,
+    "in Bearbeitung": 2,
+    "offen": 19
+  },
+  "original_id_status_text_rows_unchanged": 154,
+  "remaining_ids_exact": 39,
+  "frozen_work_items": 47,
+  "false_closures": 0,
+  "protected_paths_unchanged": [
+    "skills/common/plugin-runtime",
+    "skills/common/plugin-sdk",
+    "skills/worker/core",
+    "skills/nova/core",
+    "skills/nova/plugins/project-summary"
+  ],
+  "non_document_paths_since_initial_reviewed_integration": [
+    ".github/workflows/update-checks.yaml",
+    "package.json",
+    "scripts/supervise-repository-review.mjs",
+    "scripts/tests/fixtures/review-supervisor.mjs",
+    "scripts/tests/repository-review-supervisor-state.test.mjs",
+    "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "skills/prism/integration/engine-capture-retention.mts",
+    "skills/prism/package.json",
+    "skills/prism/tests/native/worker-readiness-gate.mts",
+    "tests/verification/deployment/prism-release-evidence.test.mjs",
+    "tests/verification/live/check-prism-release-evidence.mjs",
+    "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "tests/verification/reliability/tsconfig.buster-shutdown.json"
+  ],
+  "candidate_sdk_delivery_integrated": false,
+  "run_state": "final_checkpoint_in_progress",
+  "stop_deadline": "2026-09-11T18:18:11Z"
+}

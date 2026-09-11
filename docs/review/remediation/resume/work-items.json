@@ -21,7 +21,12 @@
       "id": "PCR-BUSTER-ENGINE-004",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/worker-terminal-resource-measurement.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Bestätigte terminale Arbeit bereinigt; Recovery-/Orphanbesitz und native completed/failed/cancelled Neustartabnahme bleiben offen. Sequenzielle Providerressourcen nun erhalten."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Bestätigte terminale Arbeit bereinigt; Recovery-/Orphanbesitz und native completed/failed/cancelled Neustartabnahme bleiben offen. Sequenzielle Providerressourcen nun erhalten.",
+      "resume_20260911_evidence": {
+        "integration_commit": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a",
+        "summary": "Buster hält jetzt sowohl fehlgeschlagene dauerhafte Endstatusschreibung als auch tatsächliche Statuslesefehler als fatalen Dienstfehler fest; beide Ursachen bleiben erhalten. Shutdown wartet laufende Admission. Echte Quoten-, Sperr- und Korruptionsfälle unabhängig7/7; Root6/6 und Typprüfung bestanden. Daten bleiben unverändert erhalten.",
+        "remaining_gate": "Dauerhaften Gesamtprozess-/Containmentbesitz und Quieszenzbeleg vor Restartbereinigung implementieren und original native Provider-/Orphan-/Recoveryabnahme ausführen. Die separat reproduzierte Statuslesefehler-Unterdrückung ist nun behoben; kein Prozessbesitz aus terminalen Metadaten oder Parent-PID ableiten."
+      }
     },
     {
       "id": "PCR-ISOLATION-002",

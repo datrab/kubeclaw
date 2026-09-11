@@ -1,0 +1,14 @@
+{
+  "work_stopped_at": "2026-09-11T18:18:11.019598+00:00",
+  "deadline": "2026-09-11T18:18:11+00:00",
+  "started_at": "2026-09-11T16:54:11+00:00",
+  "elapsed_seconds": 5040.02,
+  "source_checkpoint": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a",
+  "counts": {
+    "verifiziert": 94,
+    "implementiert": 39,
+    "in Bearbeitung": 2,
+    "offen": 19
+  },
+  "overall_complete": false
+}

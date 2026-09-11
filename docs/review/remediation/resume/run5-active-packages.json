@@ -253,18 +253,19 @@
     "fresh_checkout_tests": 14,
     "independent_review": "c100f1b85a7d92c88f4c98ce2b57afa356c1f368"
   },
-  "last_source_integration": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
+  "last_source_integration": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a",
   "overall_complete": false,
   "rule": "Backup is not acceptance. Restore only verified frozen commits into a new checkout, never another writer's checkout or dirty work based on an old heartbeat. Exact-parent ff-only integration after review/tests; no CI/deployment.",
   "run_id": "20260910t050054",
   "schema_version": 1,
   "verified_count": 8,
   "resume_20260911_continuation": {
-    "state": "in_progress",
+    "state": "stopped_at_time_limit",
     "deadline": "2026-09-11T18:18:11Z",
-    "integration_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
+    "integration_commit": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a",
     "candidate_commit": "0144df383250a1975d40b04746eac398ee77e747",
     "scope": "Reviewed Prism/Worker/Supervisor/test-ownership source integrated; coupled SDK/Delivery remains held.",
-    "overall_complete": false
+    "overall_complete": false,
+    "work_stopped_at": "2026-09-11T18:18:11.019598+00:00"
   }
 }

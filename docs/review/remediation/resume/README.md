@@ -4,6 +4,8 @@ Latest saved continuation: [2026-09-11 resumed work](run-20260911-a51d-resumed.m
 with the exact [39-ID current state](run-20260911-a51d-resumed-state.json) and
 [existence-checked native follow-up matrix](native-followup-39-20260911.json).
 
+Current run stopped at the user time limit after the84-minute continuation. Latest reviewed source: `550eb948ec8766b38e8c8d4ccb88a1fdab28e61a`. Exact remaining work is in the linked current state; no additional finding was closed.
+
 This is the durable entrypoint for a fresh repair orchestrator. Chat history and
 local worktree paths are hints, never the only copy of unfinished work.
 
