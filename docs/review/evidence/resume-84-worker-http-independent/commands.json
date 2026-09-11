@@ -1,0 +1,81 @@
+[
+  {
+    "name": "before",
+    "repo": "/workspace/scratch/a51d993d444b/review-delivery-types-84",
+    "args": [
+      "node",
+      "--test",
+      "skills/prism/tests/worker-http-cancellation.test.mts"
+    ],
+    "exitCode": 1
+  },
+  {
+    "name": "old-clean",
+    "repo": "/workspace/scratch/a51d993d444b/review-delivery-types-84",
+    "args": [
+      "git",
+      "status",
+      "--porcelain"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "fixed-regression",
+    "repo": "/workspace/scratch/a51d993d444b/review-worker-http-84",
+    "args": [
+      "node",
+      "--test",
+      "skills/prism/tests/worker-http-cancellation.test.mts",
+      "skills/prism/tests/worker-cancellation.test.mts",
+      "skills/prism/tests/worker-service.test.mts",
+      "skills/prism/tests/worker-readiness.test.mts",
+      "skills/prism/tests/provider-cancellation.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "types",
+    "repo": "/workspace/scratch/a51d993d444b/review-worker-http-84",
+    "args": [
+      "npm",
+      "run",
+      "typecheck",
+      "--prefix",
+      "skills/prism"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "lint",
+    "repo": "/workspace/scratch/a51d993d444b/review-worker-http-84",
+    "args": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/prism/server/worker-attempt.ts",
+      "skills/prism/server/worker-service.ts",
+      "skills/prism/tests/worker-http-cancellation.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "ownership",
+    "repo": "/workspace/scratch/a51d993d444b/review-worker-http-84",
+    "args": [
+      "node",
+      "scripts/check-runtime-package-ownership.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "fixed-clean",
+    "repo": "/workspace/scratch/a51d993d444b/review-worker-http-84",
+    "args": [
+      "git",
+      "status",
+      "--porcelain"
+    ],
+    "exitCode": 0
+  }
+]

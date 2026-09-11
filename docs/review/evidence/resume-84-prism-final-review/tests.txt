@@ -1,0 +1,20 @@
+✔ original worker process drains read on actual SIGTERM (693.468612ms)
+✔ original worker process drains failed-input full-log upload on actual SIGTERM (595.790053ms)
+✔ original worker process drains read on actual SIGINT (536.319908ms)
+✔ original worker process drains failed-input full-log upload on actual SIGINT (542.859846ms)
+✔ actual SIGTERM exits nonzero when native PostgreSQL startup exceeds the service drain deadline (566.580977ms)
+✔ actual SIGINT exits nonzero when native PostgreSQL startup exceeds the service drain deadline (584.502851ms)
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_CONNECT_TIMEOUT","durationMs":104,"active":1,"open":0,"pending":0}
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_UNKNOWN","durationMs":0,"active":1,"open":0,"pending":0}
+✔ shutdown waits for actual native pg acquisition settlement and closes the original pool (131.298177ms)
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_CONNECT_TIMEOUT","durationMs":354,"active":1,"open":0,"pending":0}
+✔ one service deadline fails explicitly while the real pg startup remains unresolved (368.681318ms)
+✔ invalid service deadline cannot stop a healthy listener; configuration owns a separate bounded default (26.199212ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3773.458731

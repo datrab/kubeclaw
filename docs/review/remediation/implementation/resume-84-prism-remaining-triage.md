@@ -76,3 +76,48 @@ are not browser image decode, CSP or human interaction proof.
 
 No source fixes, register promotions, native installation retries, fake provider
 proof, CI runs or deployments were performed by this triage.
+
+## Shutdown design review for the follow-up implementation
+
+The original Prism chart has **no explicit** `terminationGracePeriodSeconds`,
+`preStop` or service shutdown timeout in values/workloads. The 10,000 ms
+`cleanupTimeoutMs` in the envelope is a per-attempt phase limit, not a total
+service shutdown budget. Core can wait once for terminate, again for operation
+settlement, and subsequently for maintenance phases. It is therefore incorrect
+to infer a guaranteed total shutdown bound of 10 seconds from that field.
+
+Recommended shape: a once-only shutdown promise, synchronous stop-admission flag,
+request-owned controllers and settlement records, and one absolute service
+deadline shared by handler drain, HTTP closure and nonce-pool closure. An explicit
+service/chart budget needs to be configured coherently; this review does not
+invent an existing value or claim native pod termination timing.
+
+Specific source-derived risks:
+
+1. The request-body `for await` loop does not consume an AbortSignal. Aborting
+   its controller alone cannot drain a deliberately incomplete HTTP body. Bind
+   request destruction to shutdown for pending bodies; preserve cancellation
+   ownership once an actual attempt has been admitted.
+2. Stop-admission must become visible before awaiting `server.close`. Already
+   accepted/keepalive requests must receive not-ready/refusal; both `/ready` and
+   the chart's `/bootstrap` readiness path must stop claiming readiness. Idle
+   keepalive sockets should not keep the shutdown promise alive indefinitely.
+3. Pool acquisition only observes the provided signal after native connect
+   settlement; the existing private pool connection timeout is 750 ms. Close the
+   pool after cancelling/draining users, within the same service deadline rather
+   than starting another unbounded wait.
+4. **A fulfilled handler promise is not proof of settled inner work.** Core can
+   return a terminal result containing `WORKER_PHASE_UNRESOLVED` or
+   `WORKER_TERMINATION_FAILED` after its bounded wait, while the underlying work
+   remains uncertain. That result currently still produces HTTP 200 and handler
+   fulfillment. Shutdown needs to preserve that unresolved state and must not
+   report clean drain based solely on `Promise.all` of handlers.
+5. Force-closing network connections at the shared deadline is a cutoff action,
+   not evidence that browser/other owned work was reaped. Report unresolved work
+   explicitly and exit unsuccessfully rather than print a successful drain.
+6. Repeated SIGTERM/SIGINT invocations must share the same operation so that pool
+   shutdown, listener closure and diagnostics are not duplicated. A malformed
+   shutdown configuration should fail before listener startup, not after signal.
+
+Root received these findings while developing the actual HTTP disconnect fix.
+No proposed shutdown implementation has been reviewed or tested by this document.

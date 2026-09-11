@@ -1,0 +1,124 @@
+✖ original worker process drains read on actual SIGTERM (594.934322ms)
+✖ original worker process drains failed-input full-log upload on actual SIGTERM (577.735703ms)
+✖ original worker process drains read on actual SIGINT (563.239706ms)
+✖ original worker process drains failed-input full-log upload on actual SIGINT (667.107047ms)
+✖ actual SIGTERM exits nonzero when native PostgreSQL startup exceeds the service drain deadline (538.665594ms)
+✖ actual SIGINT exits nonzero when native PostgreSQL startup exceeds the service drain deadline (534.07929ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 0
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3696.7078
+
+✖ failing tests:
+
+test at ../worker-process-before-84/skills/prism/tests/worker-process-shutdown.test.mts:75:3
+✖ original worker process drains read on actual SIGTERM (594.934322ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/worker-process-before-84/skills/prism/tests/worker-process-shutdown.test.mts:84:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../worker-process-before-84/skills/prism/tests/worker-process-shutdown.test.mts:75:3
+✖ original worker process drains failed-input full-log upload on actual SIGTERM (577.735703ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/worker-process-before-84/skills/prism/tests/worker-process-shutdown.test.mts:84:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../worker-process-before-84/skills/prism/tests/worker-process-shutdown.test.mts:75:3
+✖ original worker process drains read on actual SIGINT (563.239706ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/worker-process-before-84/skills/prism/tests/worker-process-shutdown.test.mts:84:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../worker-process-before-84/skills/prism/tests/worker-process-shutdown.test.mts:75:3
+✖ original worker process drains failed-input full-log upload on actual SIGINT (667.107047ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/worker-process-before-84/skills/prism/tests/worker-process-shutdown.test.mts:84:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../worker-process-before-84/skills/prism/tests/worker-process-shutdown.test.mts:106:3
+✖ actual SIGTERM exits nonzero when native PostgreSQL startup exceeds the service drain deadline (538.665594ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/worker-process-before-84/skills/prism/tests/worker-process-shutdown.test.mts:128:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../worker-process-before-84/skills/prism/tests/worker-process-shutdown.test.mts:106:3
+✖ actual SIGINT exits nonzero when native PostgreSQL startup exceeds the service drain deadline (534.07929ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/worker-process-before-84/skills/prism/tests/worker-process-shutdown.test.mts:128:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

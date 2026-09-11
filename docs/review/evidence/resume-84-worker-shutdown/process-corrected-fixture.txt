@@ -1,0 +1,12 @@
+✔ original worker process drains read on actual SIGTERM (616.948035ms)
+✔ original worker process drains failed-input full-log upload on actual SIGTERM (567.521198ms)
+✔ original worker process drains read on actual SIGINT (577.00585ms)
+✔ original worker process drains failed-input full-log upload on actual SIGINT (593.741538ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2556.830358

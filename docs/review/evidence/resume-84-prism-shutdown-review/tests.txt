@@ -1,0 +1,32 @@
+✔ many original renders bound retained entries and bytes without changing returned output (64.308063ms)
+✔ byte pressure and oversized successful renders do not retain their large payloads (1.791512ms)
+✔ accumulated render bytes evict completed entries before the count ceiling (4.916773ms)
+✔ active duplicates share one original operation and admission never evicts active ownership (2.210587ms)
+✔ retained replay snapshots cannot be enlarged or corrupted through caller mutation (0.916888ms)
+✔ failure releases admission and invalid cache limits cannot disable its bounds (0.995898ms)
+✔ real render evidence survives RAM eviction and artifact-store reconstruction (23.824155ms)
+✔ deferred original rendering uses the request snapshot bound to its fingerprint (1.254039ms)
+✔ only the admitted owner can cancel a pending original render; legacy callers still coalesce (12.613597ms)
+✔ actual attempt CPU excludes prior process work and stays fixed after execution (244.784668ms)
+✔ real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back (199.042129ms)
+✔ terminate aborts and drains the original artifact read before any engine operation starts (17.082523ms)
+✔ owner cancellation before retention rejects every coalesced original-render caller (3.255499ms)
+✔ actual HTTP caller disconnect cancels and drains original artifact read (166.709762ms)
+✔ actual HTTP caller disconnect cancels and drains original artifact upload (47.116175ms)
+✔ normal HTTP completion keeps its bound result and original persisted full log (27.887502ms)
+✔ service shutdown drains the original read and returns a cancelled bound attempt (16.642908ms)
+✔ service shutdown drains the original upload and returns a cancelled bound attempt (46.001732ms)
+✔ shutdown interrupts a real incomplete request body before authentication or artifact I/O (15.720382ms)
+✔ original worker operation reproduces missing log store; actual service executor persists the complete log (211.647239ms)
+✔ real durable log store corruption keeps an otherwise successful engine operation errored (48.815352ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (61.682449ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (13.404565ms)
+✔ full log participates in the real neutral evidence budget before upload (16.447281ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1213.254957

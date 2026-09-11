@@ -1,0 +1,54 @@
+✔ original worker process drains read on actual SIGTERM (671.989357ms)
+✖ original worker process drains upload on actual SIGTERM (591.388025ms)
+✔ original worker process drains read on actual SIGINT (640.389504ms)
+✖ original worker process drains upload on actual SIGINT (613.580095ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2779.415026
+
+✖ failing tests:
+
+test at skills/prism/tests/worker-process-shutdown.test.mts:75:3
+✖ original worker process drains upload on actual SIGTERM (591.388025ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'errored'
+  - 'cancelled'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/resume-84/skills/prism/tests/worker-process-shutdown.test.mts:87:63)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'errored',
+    expected: 'cancelled',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/worker-process-shutdown.test.mts:75:3
+✖ original worker process drains upload on actual SIGINT (613.580095ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'errored'
+  - 'cancelled'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/resume-84/skills/prism/tests/worker-process-shutdown.test.mts:87:63)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'errored',
+    expected: 'cancelled',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

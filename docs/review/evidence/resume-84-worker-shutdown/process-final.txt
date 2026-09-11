@@ -1,0 +1,14 @@
+✔ original worker process drains read on actual SIGTERM (628.613596ms)
+✔ original worker process drains failed-input full-log upload on actual SIGTERM (615.8003ms)
+✔ original worker process drains read on actual SIGINT (652.476048ms)
+✔ original worker process drains failed-input full-log upload on actual SIGINT (589.138522ms)
+✔ actual SIGTERM exits nonzero when native PostgreSQL startup exceeds the service drain deadline (559.228337ms)
+✔ actual SIGINT exits nonzero when native PostgreSQL startup exceeds the service drain deadline (535.949858ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3823.413601

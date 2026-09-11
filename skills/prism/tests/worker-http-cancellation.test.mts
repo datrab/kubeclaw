@@ -58,7 +58,7 @@ async function setup(t: { after(callback: () => Promise<void>): void }, stall?: 
   const input = await store.put(Buffer.from(JSON.stringify({ document: fixture, view: 'home', state: 'default', viewport: 'wide' })));
   const envelope = prismAttempt('render', { artifactId: input.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
     contentDigest: input.digest, sizeBytes: input.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${input.digest}`, origin).href }, 'http-cancellation');
-  return { store, engine, envelope, workerOrigin, started, drained, contacts, storedUpload: () => storedUpload };
+  return { store, engine, envelope, worker, workerOrigin, started, drained, contacts, storedUpload: () => storedUpload };
 }
 const headers = { 'content-type': 'application/json', 'x-forwarded-client-cert': 'URI=spiffe://local/control' };
 
@@ -95,4 +95,32 @@ test('normal HTTP completion keeps its bound result and original persisted full 
   const log = result.evidence.find(value => value.evidenceId === 'prism-full-log'); assert(log);
   assert.equal(Buffer.from(await f.store.get(log.artifact.artifactId)).toString(), '[system] Prism render operation started');
   assert.equal(f.engine.cacheUsage().completedEntries, 1);
+});
+
+for (const phase of ['read', 'upload'] as const) {
+  test(`service shutdown drains the original ${phase} and returns a cancelled bound attempt`, { timeout: 10_000 }, async t => {
+    const f = await setup(t, phase);
+    const response = fetch(new URL('/v1/attempts', f.workerOrigin), { method: 'POST', headers, body: JSON.stringify(f.envelope) });
+    await f.started.promise;
+    const shutdown = f.worker.shutdown(1500);
+    assert.equal(f.worker.shutdown(1500), shutdown, 'repeated shutdown must share one drain');
+    const result = await (await response).json() as { state: string; attemptId: string; error?: { code: string } };
+    assert.equal(result.state, 'cancelled'); assert.equal(result.attemptId, f.envelope.attemptId);
+    assert.equal(result.error?.code, 'WORKER_ATTEMPT_CANCELLED');
+    await shutdown; await f.drained.promise;
+    assert.equal(f.engine.cacheUsage().inFlight, 0);
+    assert.equal(f.worker.listening, false);
+    await assert.rejects(fetch(new URL('/ready', f.workerOrigin)), /fetch failed/u);
+  });
+}
+
+test('shutdown interrupts a real incomplete request body before authentication or artifact I/O', { timeout: 10_000 }, async t => {
+  const f = await setup(t);
+  const admitted = once(f.worker, 'request');
+  const caller = request(new URL('/v1/attempts', f.workerOrigin), { method: 'POST', headers: { ...headers, 'content-length': '1000' } });
+  const disconnected = once(caller, 'error');
+  caller.write('{');
+  await admitted;
+  await f.worker.shutdown(1500); await disconnected;
+  assert.deepEqual(f.contacts, []); assert.equal(f.engine.cacheUsage().totalEntries, 0);
 });

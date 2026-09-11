@@ -1,0 +1,43 @@
+✔ original ingest provider cancels an actual TLS response body after headers (368.13502ms)
+✔ original propose provider cancels an actual TLS response body after headers (257.807392ms)
+✔ only the admitted owner can cancel a pending original render; legacy callers still coalesce (13.516096ms)
+✔ actual attempt CPU excludes prior process work and stays fixed after execution (230.97381ms)
+✔ real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back (194.755745ms)
+✔ terminate aborts and drains the original artifact read before any engine operation starts (16.27219ms)
+✔ owner cancellation before retention rejects every coalesced original-render caller (3.235318ms)
+✔ actual HTTP caller disconnect cancels and drains original artifact read (119.397367ms)
+✔ actual HTTP caller disconnect cancels and drains original artifact upload (37.849897ms)
+✔ normal HTTP completion keeps its bound result and original persisted full log (32.908891ms)
+✔ service shutdown drains the original read and returns a cancelled bound attempt (15.045092ms)
+✔ service shutdown drains the original upload and returns a cancelled bound attempt (40.861692ms)
+✔ shutdown interrupts a real incomplete request body before authentication or artifact I/O (14.00774ms)
+✔ original worker process drains read on actual SIGTERM (844.258422ms)
+✔ original worker process drains failed-input full-log upload on actual SIGTERM (684.894362ms)
+✔ original worker process drains read on actual SIGINT (856.801649ms)
+✔ original worker process drains failed-input full-log upload on actual SIGINT (710.123686ms)
+✔ actual SIGTERM exits nonzero when native PostgreSQL startup exceeds the service drain deadline (561.300708ms)
+✔ actual SIGINT exits nonzero when native PostgreSQL startup exceeds the service drain deadline (561.935539ms)
+✔ actual HMAC HTTP admission fails closed on native pg startup timeout; bootstrap remains available (172.822878ms)
+✔ native connection refusal retains its safe operator system code (13.865345ms)
+✔ SPIFFE operational readiness has no unused database dependency; actual admission still authenticates (49.67673ms)
+✔ original readiness SQL requires the migrated nonce table (PGlite SQL proof only) (2353.894738ms)
+﹣ native PostgreSQL query cancellation settles and releases its actual pool client (0.51498ms) # REAL_POSTGRES_DATABASE_REQUIRED (isolated migrated test database)
+✔ original worker operation reproduces missing log store; actual service executor persists the complete log (161.235213ms)
+✔ real durable log store corruption keeps an otherwise successful engine operation errored (28.958569ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (38.669924ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (18.143373ms)
+✔ full log participates in the real neutral evidence budget before upload (11.243445ms)
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_CONNECT_TIMEOUT","durationMs":103,"active":1,"open":0,"pending":0}
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_UNKNOWN","durationMs":0,"active":1,"open":0,"pending":0}
+✔ shutdown waits for actual native pg acquisition settlement and closes the original pool (154.583039ms)
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_CONNECT_TIMEOUT","durationMs":352,"active":1,"open":0,"pending":0}
+✔ one service deadline fails explicitly while the real pg startup remains unresolved (365.221439ms)
+✔ invalid service deadline cannot stop a healthy listener; configuration owns a separate bounded default (22.550866ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 4647.000072

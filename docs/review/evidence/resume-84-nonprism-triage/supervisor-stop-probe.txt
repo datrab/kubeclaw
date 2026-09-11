@@ -1,0 +1,15 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: first genuine CLI failure missing
+    at file:///workspace/scratch/a51d993d444b/review-delivery-84/docs/review/evidence/resume-84-nonprism-triage/supervisor-stop-probe.mjs:16:62 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
