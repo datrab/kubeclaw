@@ -1,0 +1,52 @@
+{
+  "reviewedLocalCommit": "7d172b6cee37d2f9e38165f81d06413b4a7cb935",
+  "tree": "54e71a20e2ee75289159f8533b62030a629967fb",
+  "createdAt": "2026-09-11T17:06:06.014078+00:00",
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-worker-http-independent/before.txt",
+      "bytes": 1396,
+      "sha256": "b09ff35771b8d59d30e98c801f5acd0eeada409cd764a8acc09e0680dafa6d9c"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-http-independent/commands.json",
+      "bytes": 1938,
+      "sha256": "3f398251287c401eeca5029e88a2a9026f4cacd977f339f30eae5d29d322d7a6"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-http-independent/fixed-clean.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-http-independent/fixed-regression.txt",
+      "bytes": 2252,
+      "sha256": "0ec55cf3233de0b700177f2b7ed44f4b2376490f1ac22d9f0e784d81c60da568"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-http-independent/lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-http-independent/old-clean.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-http-independent/ownership.txt",
+      "bytes": 82,
+      "sha256": "fbebbbb23b6138a7ddd4d728cd761835a5ba6bcfe333f9cdbc998cc6452b5e9e"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-http-independent/types.txt",
+      "bytes": 150,
+      "sha256": "9ef3da2bddde5b894f09764c7bbffa99c0e300f47e2f7037c0b6fd7c88e7d8a8"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-http-independent/verify.py",
+      "bytes": 1798,
+      "sha256": "deb299a89b3460b6ca96dee4d34d3f93262cc5f0b5eff0be8abb3d93288c4f53"
+    }
+  ]
+}

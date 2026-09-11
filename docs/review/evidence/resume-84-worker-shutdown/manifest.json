@@ -1,0 +1,66 @@
+{
+  "createdAt": "2026-09-11T17:17:46.277136+00:00",
+  "sourceBase": "58790e7ac6cf40d5416caada8347697115efcf47",
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-worker-shutdown/combined.txt",
+      "sizeBytes": 3854,
+      "sha256": "55817f23c5ef616a96a9933c4739f2dba80cf9fab4a5cacc2b25410615a7721f"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-shutdown/commands.json",
+      "sizeBytes": 1418,
+      "sha256": "b21c92ad75395098b663b94098b17c8bc63b4285fdb1c0d0911505a6b990a5fa"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-shutdown/knip-config.txt",
+      "sizeBytes": 75,
+      "sha256": "1d15ecf41a32b341d49801c70fa9aa6c42f7c288864ce70ad0bda42d498656e5"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-shutdown/lint-discipline.txt",
+      "sizeBytes": 46,
+      "sha256": "f2d6a510acc9b55e184b83c4b29e2173d24fd6151b839dc39de3311203cc4ee2"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-shutdown/lint.txt",
+      "sizeBytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-shutdown/native-pool-boundaries.txt",
+      "sizeBytes": 850,
+      "sha256": "ec528e3779b6e4a4a98cc6aa0c496c87366776b5e8cc01ccbc987a9ed273247f"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-shutdown/ownership.txt",
+      "sizeBytes": 82,
+      "sha256": "fbebbbb23b6138a7ddd4d728cd761835a5ba6bcfe333f9cdbc998cc6452b5e9e"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-shutdown/process-after.txt",
+      "sizeBytes": 2035,
+      "sha256": "227bcf225567c64f449fa6d4cdd01d79a46f935505d3a24322ed7adbf244120b"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-shutdown/process-before.txt",
+      "sizeBytes": 5570,
+      "sha256": "95d6e2bef8ea26d522e7168bfb0f9a73002f46a452eabc0f04f5dfb3d299d676"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-shutdown/process-corrected-fixture.txt",
+      "sizeBytes": 453,
+      "sha256": "416ccf163f4acfab78cd276452d419997cdf24d6163ae8e9928fb63606934ab6"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-shutdown/process-final.txt",
+      "sizeBytes": 679,
+      "sha256": "48356f8a0401937079b8f88aa2b12860bad9901b8e604529be5790531ea57eb8"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-worker-shutdown/typecheck.txt",
+      "sizeBytes": 150,
+      "sha256": "1eb2565d72416f5a9df946d81a47a1d2efd17fb6f4fddb81cd3860e01c8b79f1"
+    }
+  ]
+}

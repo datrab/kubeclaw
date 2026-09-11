@@ -1,0 +1,32 @@
+[
+  {
+    "path": "/workspace/scratch/a51d993d444b/review-delivery-types-84/tests/verification/integration/prism-contract-remediation.test.mts",
+    "included": true,
+    "restoredSha256": "13c7599559044c25913c6dbb72ab3a6303f49fdc4ac8c0906e4ab01b4ff2def1"
+  },
+  {
+    "path": "/workspace/scratch/a51d993d444b/review-delivery-types-84/tests/verification/integration/prism-baseline-archive.test.mts",
+    "included": true,
+    "restoredSha256": "4f3631e16c5d073f2eb9d2a844106f8edc5e1c376f2fa342951c967570aa4a13"
+  },
+  {
+    "path": "/workspace/scratch/a51d993d444b/review-delivery-types-84/tests/verification/integration/fixtures/prism-baseline-input.mts",
+    "included": true,
+    "restoredSha256": "6dad7f77ac48d83ac60b2159c94c67c46f280433699d7d1efb241d0ddd63c655"
+  },
+  {
+    "path": "/workspace/scratch/a51d993d444b/review-delivery-types-84/tests/verification/integration/fixtures/prism-baseline-locale.mts",
+    "included": true,
+    "restoredSha256": "78f32fb0d8cc8f3fce0fbee3dda336280c5913f98c7270b8ead841861343d28f"
+  },
+  {
+    "path": "/workspace/scratch/a51d993d444b/review-delivery-types-84/tests/verification/integration/http-provider-live.test.ts",
+    "included": true,
+    "restoredSha256": "51fbff1efd614e136c598eb603b2b54b18c9582cc212fbe4e3b9390967e82787"
+  },
+  {
+    "path": "/workspace/scratch/a51d993d444b/review-delivery-types-84/tests/verification/integration/demo-auth-smoke-live.test.ts",
+    "included": true,
+    "restoredSha256": "474d974cb4025ea77466102e60744446925bf7faf0cd885329773140bdc1788b"
+  }
+]

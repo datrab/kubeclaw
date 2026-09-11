@@ -6,9 +6,9 @@ import type { WorkerArtifactClient } from './worker-artifacts.ts';
 
 /** One service invocation, including the mandatory durable full-log callback. */
 export async function executeWorkerAttempt(envelope: WorkerAttemptEnvelopeV1, engine: PrismEngine,
-  artifacts: WorkerArtifactClient): Promise<WorkerAttemptResultV1> {
+  artifacts: WorkerArtifactClient, signal?: AbortSignal): Promise<WorkerAttemptResultV1> {
   return new WorkerAttemptExecutor({
-    envelope, operation: operationFor(envelope, engine, artifacts), receiptNamespace: 'prism-worker',
+    envelope, operation: operationFor(envelope, engine, artifacts), receiptNamespace: 'prism-worker', signal,
     storeFullLog(attemptId, content, { signal }) {
       if (attemptId !== envelope.attemptId) throw new Error('Prism log attempt identity mismatch');
       return artifacts.upload('prism-full-log', 'log', 'text/plain', Buffer.from(content),

@@ -1,0 +1,17 @@
+{
+  "source": "3480724df6c75d323ae56a0b4665ab61164874b5",
+  "tests": {
+    "operations": 5,
+    "integration": 8
+  },
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-supervisor-independent-review/integration-tests.txt",
+      "sha256": "44925d74e350b6e349f2bc6de9166e8b04934562e932a6560a1fa1185089b146"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-supervisor-independent-review/tests.txt",
+      "sha256": "dac46e10eae9378a3efae36078df34e9bcf6fab119e580af25f7ce47ca3460cb"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+
+/workspace/scratch/a51d993d444b/supervisor-fix-84/scripts/supervise-repository-review.mjs
+   42:61  error  Handle the error intentionally or rethrow it with context                              discipline/no-swallowed-error
+  117:5   error  Handle the error intentionally or rethrow it with context                              discipline/no-swallowed-error
+  124:5   error  Handle the error intentionally or rethrow it with context                              discipline/no-swallowed-error
+  131:5   error  Handle the error intentionally or rethrow it with context                              discipline/no-swallowed-error
+  188:86  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  253:1   error  Async function 'main' has a complexity of 17. Maximum allowed is 15                    complexity
+
+✖ 6 problems (6 errors, 0 warnings)
+

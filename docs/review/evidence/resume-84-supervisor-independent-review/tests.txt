@@ -1,0 +1,13 @@
+✔ compact status and formatter report live state without scanning source journals (224.235094ms)
+✔ compact status gives a durable terminal event priority over a stale heartbeat (85.324978ms)
+✔ compact status discovers a legacy identity after large and oversized records (85.067911ms)
+✔ supervisor preserves a single lease and records a terminal child attempt (288.066236ms)
+✔ supervisor start mode uses the current pipeline CLI flag (0.298091ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 838.359528

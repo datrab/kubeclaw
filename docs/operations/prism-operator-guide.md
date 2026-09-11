@@ -153,3 +153,34 @@ rejections remain stored; current direction lists move to the new round.
 Late results from superseded architecture or rounds cannot create documents.
 The Prism agent must return the assigned `generationId`; it cannot select a
 new architecture or round by supplying only the project ID.
+
+### Worker cancellation and shutdown
+
+A worker HTTP invocation owns its attempt. Disconnecting before the response
+finishes cancels that attempt through the shared Worker Core, including active
+artifact reads and uploads. A normal completed response does not cancel a
+retained engine result. Bytes already persisted by an artifact receiver are not
+rolled back by cancellation.
+
+On SIGTERM or SIGINT, the worker stops accepting requests, cancels its active
+invocations, interrupts incomplete request bodies, and waits for their Core
+termination/drain paths before closing its nonce database pool. Requests received
+on existing connections during shutdown return 503, including `/bootstrap` and
+`/ready`. Repeated signals share the same shutdown operation.
+
+`PRISM_WORKER_SHUTDOWN_TIMEOUT_MS` is a platform-owned positive integer, at most
+2147483647, defaulting to 20000 milliseconds. It is one total service drain
+budget, separate from each attempt's `cleanupTimeoutMs`; it does not multiply
+for requests or cleanup stages. Deployment owners must fit it within their
+actual workload termination grace. The chart currently does not expose a
+separate worker shutdown/grace value. This application change does not alter a
+running deployment.
+
+The worker logs `prism_worker_shutdown` with `requests_drained` after its tracked
+handlers and nonce pool finish. A known unresolved Core phase, failed cleanup,
+or service deadline causes nonzero process exit and a best-effort `unresolved`
+diagnostic. The failure exit does not wait for log-pipe flushing. That cutoff
+is not proof that external browser children or remote artifact work were reaped;
+those cases still require the native process/deployment recovery checks. A Core
+result reporting unresolved termination also prevents further request admission
+in that worker process.

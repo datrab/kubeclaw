@@ -1,0 +1,76 @@
+[
+  {
+    "name": "prism",
+    "command": [
+      "node",
+      "--test",
+      "skills/prism/tests/engine.test.mts",
+      "skills/prism/tests/engine-cache.test.mts",
+      "skills/prism/tests/renderer.test.mts",
+      "skills/prism/tests/renderer-remediation.test.mts",
+      "skills/prism/tests/worker-cancellation.test.mts",
+      "skills/prism/tests/provider-cancellation.test.mts",
+      "skills/prism/tests/worker-service.test.mts",
+      "skills/prism/tests/worker-http-cancellation.test.mts",
+      "skills/prism/tests/worker-process-shutdown.test.mts",
+      "skills/prism/tests/worker-shutdown-boundaries.test.mts",
+      "skills/prism/tests/worker-readiness.test.mts"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "supervisor",
+    "command": [
+      "node",
+      "--test",
+      "scripts/tests/integration/repository-review-supervisor-stop.test.mjs",
+      "scripts/tests/repository-review-supervisor-status.test.mjs",
+      "scripts/tests/integration/repository-review-supervisor-start.mjs",
+      "scripts/tests/repository-review-operations.test.mjs"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "types",
+    "command": [
+      "npm",
+      "run",
+      "typecheck",
+      "--prefix",
+      "skills/prism"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "lint",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/prism/engine/index.ts",
+      "skills/prism/engine/render-operation.ts",
+      "skills/prism/engine/capture-findings.ts",
+      "skills/prism/engine/design-providers.ts",
+      "skills/prism/server/worker.ts",
+      "skills/prism/server/worker-config.ts",
+      "skills/prism/server/worker-lifecycle.ts",
+      "skills/prism/server/worker-service.ts",
+      "skills/prism/server/worker-attempt.ts",
+      "skills/prism/tests/worker-http-cancellation.test.mts",
+      "skills/prism/tests/worker-process-shutdown.test.mts",
+      "skills/prism/tests/worker-shutdown-boundaries.test.mts",
+      "scripts/tests/integration/repository-review-supervisor-stop.test.mjs"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "knip-config",
+    "command": [
+      "node",
+      "scripts/generate-knip-config.mjs",
+      "--check"
+    ],
+    "exit": 1
+  }
+]

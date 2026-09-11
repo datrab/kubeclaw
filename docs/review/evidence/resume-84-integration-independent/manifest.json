@@ -1,0 +1,43 @@
+{
+  "source": "b039859d403751da4934d8db16bc143e30dfaa69",
+  "tree": "15b57fb629bc5cf65233720049d8f3e901cf5621",
+  "exits": {
+    "child-pool": 0,
+    "prism-types": 0,
+    "integration-types": 0,
+    "ownership": 0,
+    "knip-config": 0
+  },
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-integration-independent/child-pool.txt",
+      "bytes": 1414,
+      "sha256": "15d9d79742e7cbdbf1544d6d5b4e93cb5ccf8aa1628e00efae7f616f3c76330f"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration-independent/integration-types.txt",
+      "bytes": 343,
+      "sha256": "a60269719c42a6ebf9c862cde36109c9f2080d5b4e22ade24c748c8f78ac5e98"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration-independent/knip-config.txt",
+      "bytes": 75,
+      "sha256": "1d15ecf41a32b341d49801c70fa9aa6c42f7c288864ce70ad0bda42d498656e5"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration-independent/ownership.txt",
+      "bytes": 82,
+      "sha256": "fbebbbb23b6138a7ddd4d728cd761835a5ba6bcfe333f9cdbc998cc6452b5e9e"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration-independent/prism-types.txt",
+      "bytes": 150,
+      "sha256": "9ef3da2bddde5b894f09764c7bbffa99c0e300f47e2f7037c0b6fd7c88e7d8a8"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration-independent/source-comparison.json",
+      "bytes": 10206,
+      "sha256": "db1a7eed2debcf9bb37c9cf198b9e14e61dd6f879f12d0e5959029366e45ac09"
+    }
+  ]
+}

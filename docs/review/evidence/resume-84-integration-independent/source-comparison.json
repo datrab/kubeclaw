@@ -1,0 +1,313 @@
+{
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/eslint.config.mjs",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/package.json",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/tests/coverage.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": true
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/tests/remediation.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": true
+    },
+    {
+      "path": "contracts/prism/v1/package.json",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "contracts/prism/v1/tests/baseline-archive.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": true
+    },
+    {
+      "path": "contracts/prism/v1/tests/fixtures/baseline-input.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": true
+    },
+    {
+      "path": "contracts/prism/v1/tests/fixtures/baseline-locale.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": true
+    },
+    {
+      "path": "contracts/prism/v1/tests/remediation.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": true
+    },
+    {
+      "path": "package.json",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": false,
+      "deleted": false
+    },
+    {
+      "path": "scripts/supervise-repository-review.mjs",
+      "reviewedSource": "3480724df6c75d323ae56a0b4665ab61164874b5",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "scripts/tests/integration/repository-review-supervisor-stop.test.mjs",
+      "reviewedSource": "3480724df6c75d323ae56a0b4665ab61164874b5",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/package.json",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/tests/live-function.test.ts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": true
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/package.json",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/tests/output-contract.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": true
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/tests/runner-artifacts.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": true
+    },
+    {
+      "path": "skills/buster/plugins/http/package.json",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/buster/plugins/http/tests/live-function.test.ts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": true
+    },
+    {
+      "path": "skills/common/plugins/telemetry-store/package.json",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/common/plugins/telemetry-store/tests/projection.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": true
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/prism/engine/capture-findings.ts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/prism/engine/design-providers.ts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/prism/engine/index.ts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/prism/engine/render-operation.ts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/prism/server/worker-attempt.ts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/prism/server/worker-lifecycle.ts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/prism/server/worker-service.ts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/prism/server/worker.ts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/prism/tests/worker-http-cancellation.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/prism/tests/worker-process-shutdown.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "skills/prism/tests/worker-shutdown-boundaries.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "tests/verification/integration/demo-auth-smoke-live.test.ts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "tests/verification/integration/direct-command-output-contract.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "tests/verification/integration/direct-command-runner-artifacts.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "tests/verification/integration/fixtures/prism-baseline-input.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "tests/verification/integration/fixtures/prism-baseline-locale.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "tests/verification/integration/http-provider-live.test.ts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "tests/verification/integration/pipeline-gate-coverage.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "tests/verification/integration/pipeline-gate-remediation.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "tests/verification/integration/prism-baseline-archive.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "tests/verification/integration/prism-contract-remediation.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "tests/verification/integration/telemetry-store-projection.test.mts",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "tests/verification/integration/tsconfig.demo-auth-smoke.json",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "tests/verification/integration/tsconfig.http.json",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    },
+    {
+      "path": "tests/verification/integration/tsconfig.prism.json",
+      "reviewedSource": "69d7fa49167d6d70c6a8435c6a8e0cdf4aecbfe4",
+      "exactMatch": true,
+      "deleted": false
+    }
+  ],
+  "protectedSubtreesUnchanged": {
+    "skills/common/plugin-runtime": true,
+    "skills/worker/core": true,
+    "contracts/delivery-manifest": true,
+    "skills/nova/plugins/project-summary": true,
+    "skills/nova/core": true
+  },
+  "rootPackageScope": {
+    "verified": true,
+    "onlyReviewedScriptChanges": [
+      "verify:contracts",
+      "verify:test-gate:coverage",
+      "typecheck:integration"
+    ]
+  }
+}

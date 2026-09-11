@@ -1,0 +1,285 @@
+DeterministicDesignProvider: identical TypeScript AST printer output
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+... Skipped lines
+
+  'export class OpenAICompatibleDesignProvider implements DesignProvider {\n' +
+    '    readonly #endpoint: URL;\n' +
+    '    readonly #embeddingEndpoint: URL | null;\n' +
+    '    readonly #apiKey: string;\n' +
+    '    readonly #model: string;\n' +
+...
+    '            const url = new URL(value);\n' +
++   '            const internalHttp = url.protocol === "http:" &&\n' +
++   '                (url.hostname.endsWith(".svc.cluster.local") ||\n' +
++   '                    url.hostname.endsWith(".svc"));\n' +
+-   '            const internalHttp = url.protocol === "http:"\n' +
+-   '                && (url.hostname.endsWith(".svc.cluster.local") || url.hostname.endsWith(".svc"));\n' +
+    '            if (url.protocol !== "https:" && !internalHttp)\n' +
+    '                throw new Error(`${label} requires HTTPS or an internal Kubernetes Service`);\n' +
+    '            return url;\n' +
+    '        };\n' +
+    '        this.#endpoint = providerUrl(options.endpoint, "design provider");\n' +
+...
+    '            method: "POST",\n' +
++   '            signal: signal\n' +
++   '                ? AbortSignal.any([signal, AbortSignal.timeout(this.#timeoutMs)])\n' +
++   '                : AbortSignal.timeout(this.#timeoutMs),\n' +
+-   '            signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(this.#timeoutMs)]) : AbortSignal.timeout(this.#timeoutMs),\n' +
+    '            headers: {\n' +
+    '                authorization: `Bearer ${this.#apiKey}`,\n' +
+    '                "content-type": "application/json",\n' +
+    '            },\n' +
+    '            body: JSON.stringify({\n' +
+...
+    '            method: "POST",\n' +
++   '            signal: signal\n' +
++   '                ? AbortSignal.any([signal, AbortSignal.timeout(this.#timeoutMs)])\n' +
++   '                : AbortSignal.timeout(this.#timeoutMs),\n' +
+-   '            signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(this.#timeoutMs)]) : AbortSignal.timeout(this.#timeoutMs),\n' +
+    '            headers: {\n' +
+    '                authorization: `Bearer ${this.#apiKey}`,\n' +
+    '                "content-type": "application/json",\n' +
+    '            },\n' +
+    '            body: JSON.stringify({\n' +
+
+    at file:///workspace/scratch/a51d993d444b/review-prism-84/docs/review/evidence/resume-84-prism-review/static-parity.mjs:15:10
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'export class OpenAICompatibleDesignProvider implements DesignProvider {\n' +
+    '    readonly #endpoint: URL;\n' +
+    '    readonly #embeddingEndpoint: URL | null;\n' +
+    '    readonly #apiKey: string;\n' +
+    '    readonly #model: string;\n' +
+    '    readonly #embeddingModel: string;\n' +
+    '    readonly #timeoutMs: number;\n' +
+    '    constructor(options: {\n' +
+    '        endpoint: string;\n' +
+    '        embeddingEndpoint: string;\n' +
+    '        apiKey: string;\n' +
+    '        model: string;\n' +
+    '        embeddingModel: string;\n' +
+    '        timeoutMs?: number;\n' +
+    '    }) {\n' +
+    '        const providerUrl = (value: string, label: string) => {\n' +
+    '            const url = new URL(value);\n' +
+    '            const internalHttp = url.protocol === "http:" &&\n' +
+    '                (url.hostname.endsWith(".svc.cluster.local") ||\n' +
+    '                    url.hostname.endsWith(".svc"));\n' +
+    '            if (url.protocol !== "https:" && !internalHttp)\n' +
+    '                throw new Error(`${label} requires HTTPS or an internal Kubernetes Service`);\n' +
+    '            return url;\n' +
+    '        };\n' +
+    '        this.#endpoint = providerUrl(options.endpoint, "design provider");\n' +
+    '        if (!options.apiKey || !options.model)\n' +
+    '            throw new Error("design provider credentials and model are required");\n' +
+    '        if (Boolean(options.embeddingEndpoint) !== Boolean(options.embeddingModel))\n' +
+    '            throw new Error("embedding provider endpoint and model must be configured together");\n' +
+    '        this.#embeddingEndpoint = options.embeddingEndpoint\n' +
+    '            ? providerUrl(options.embeddingEndpoint, "embedding provider")\n' +
+    '            : null;\n' +
+    '        this.#apiKey = options.apiKey;\n' +
+    '        this.#model = options.model;\n' +
+    '        this.#embeddingModel = options.embeddingModel;\n' +
+    '        this.#timeoutMs = options.timeoutMs ?? 60000;\n' +
+    '    }\n' +
+    '    async propose(document: PrismDocument, instruction: string, signal?: AbortSignal): Promise<PrismOperation[]> {\n' +
+    '        const response = await fetch(this.#endpoint, {\n' +
+    '            method: "POST",\n' +
+    '            signal: signal\n' +
+    '                ? AbortSignal.any([signal, AbortSignal.timeout(this.#timeoutMs)])\n' +
+    '                : AbortSignal.timeout(this.#timeoutMs),\n' +
+    '            headers: {\n' +
+    '                authorization: `Bearer ${this.#apiKey}`,\n' +
+    '                "content-type": "application/json",\n' +
+    '            },\n' +
+    '            body: JSON.stringify({\n' +
+    '                model: this.#model,\n' +
+    '                response_format: { type: "json_object" },\n' +
+    '                messages: [\n' +
+    '                    {\n' +
+    '                        role: "system",\n' +
+    '                        content: "Return JSON with an operations array. Use only Prism typed operations. Do not return code or markdown.",\n' +
+    '                    },\n' +
+    '                    { role: "user", content: JSON.stringify({ instruction, document }) },\n' +
+    '                ],\n' +
+    '            }),\n' +
+    '        });\n' +
+    '        if (!response.ok)\n' +
+    '            throw new Error(`design provider failed: ${response.status}`);\n' +
+    '        const envelope = (await response.json()) as {\n' +
+    '            choices?: Array<{\n' +
+    '                message?: {\n' +
+    '                    content?: string;\n' +
+    '                };\n' +
+    '            }>;\n' +
+    '        };\n' +
+    '        const text = envelope.choices?.[0]?.message?.content;\n' +
+    '        if (!text)\n' +
+    '            throw new Error("design provider returned no content");\n' +
+    '        const parsed = JSON.parse(text) as {\n' +
+    '            operations?: unknown;\n' +
+    '        };\n' +
+    '        if (!Array.isArray(parsed.operations))\n' +
+    '            throw new Error("design provider returned invalid operations");\n' +
+    '        return parsed.operations.map((value) => validatePrism<PrismOperation>("operation", value));\n' +
+    '    }\n' +
+    '    async embed(text: string, signal?: AbortSignal): Promise<{\n' +
+    '        embedding: number[];\n' +
+    '        model: string;\n' +
+    '        modelVersion: string;\n' +
+    '    }> {\n' +
+    '        if (!this.#embeddingEndpoint || !this.#embeddingModel)\n' +
+    '            throw new Error("embedding provider is not configured");\n' +
+    '        const response = await fetch(this.#embeddingEndpoint, {\n' +
+    '            method: "POST",\n' +
+    '            signal: signal\n' +
+    '                ? AbortSignal.any([signal, AbortSignal.timeout(this.#timeoutMs)])\n' +
+    '                : AbortSignal.timeout(this.#timeoutMs),\n' +
+    '            headers: {\n' +
+    '                authorization: `Bearer ${this.#apiKey}`,\n' +
+    '                "content-type": "application/json",\n' +
+    '            },\n' +
+    '            body: JSON.stringify({\n' +
+    '                model: this.#embeddingModel,\n' +
+    '                input: text,\n' +
+    '                encoding_format: "float",\n' +
+    '            }),\n' +
+    '        });\n' +
+    '        if (!response.ok)\n' +
+    '            throw new Error(`embedding provider failed: ${response.status}`);\n' +
+    '        const value = (await response.json()) as {\n' +
+    '            data?: Array<{\n' +
+    '                embedding?: number[];\n' +
+    '            }>;\n' +
+    '        };\n' +
+    '        const embedding = value.data?.[0]?.embedding;\n' +
+    '        if (!Array.isArray(embedding) ||\n' +
+    '            !embedding.length ||\n' +
+    '            embedding.some((item) => !Number.isFinite(item)))\n' +
+    '            throw new Error("embedding provider returned no valid vector");\n' +
+    '        return { embedding, model: this.#embeddingModel, modelVersion: "provider" };\n' +
+    '    }\n' +
+    '}',
+  expected: 'export class OpenAICompatibleDesignProvider implements DesignProvider {\n' +
+    '    readonly #endpoint: URL;\n' +
+    '    readonly #embeddingEndpoint: URL | null;\n' +
+    '    readonly #apiKey: string;\n' +
+    '    readonly #model: string;\n' +
+    '    readonly #embeddingModel: string;\n' +
+    '    readonly #timeoutMs: number;\n' +
+    '    constructor(options: {\n' +
+    '        endpoint: string;\n' +
+    '        embeddingEndpoint: string;\n' +
+    '        apiKey: string;\n' +
+    '        model: string;\n' +
+    '        embeddingModel: string;\n' +
+    '        timeoutMs?: number;\n' +
+    '    }) {\n' +
+    '        const providerUrl = (value: string, label: string) => {\n' +
+    '            const url = new URL(value);\n' +
+    '            const internalHttp = url.protocol === "http:"\n' +
+    '                && (url.hostname.endsWith(".svc.cluster.local") || url.hostname.endsWith(".svc"));\n' +
+    '            if (url.protocol !== "https:" && !internalHttp)\n' +
+    '                throw new Error(`${label} requires HTTPS or an internal Kubernetes Service`);\n' +
+    '            return url;\n' +
+    '        };\n' +
+    '        this.#endpoint = providerUrl(options.endpoint, "design provider");\n' +
+    '        if (!options.apiKey || !options.model)\n' +
+    '            throw new Error("design provider credentials and model are required");\n' +
+    '        if (Boolean(options.embeddingEndpoint) !== Boolean(options.embeddingModel))\n' +
+    '            throw new Error("embedding provider endpoint and model must be configured together");\n' +
+    '        this.#embeddingEndpoint = options.embeddingEndpoint\n' +
+    '            ? providerUrl(options.embeddingEndpoint, "embedding provider")\n' +
+    '            : null;\n' +
+    '        this.#apiKey = options.apiKey;\n' +
+    '        this.#model = options.model;\n' +
+    '        this.#embeddingModel = options.embeddingModel;\n' +
+    '        this.#timeoutMs = options.timeoutMs ?? 60000;\n' +
+    '    }\n' +
+    '    async propose(document: PrismDocument, instruction: string, signal?: AbortSignal): Promise<PrismOperation[]> {\n' +
+    '        const response = await fetch(this.#endpoint, {\n' +
+    '            method: "POST",\n' +
+    '            signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(this.#timeoutMs)]) : AbortSignal.timeout(this.#timeoutMs),\n' +
+    '            headers: {\n' +
+    '                authorization: `Bearer ${this.#apiKey}`,\n' +
+    '                "content-type": "application/json",\n' +
+    '            },\n' +
+    '            body: JSON.stringify({\n' +
+    '                model: this.#model,\n' +
+    '                response_format: { type: "json_object" },\n' +
+    '                messages: [\n' +
+    '                    {\n' +
+    '                        role: "system",\n' +
+    '                        content: "Return JSON with an operations array. Use only Prism typed operations. Do not return code or markdown.",\n' +
+    '                    },\n' +
+    '                    { role: "user", content: JSON.stringify({ instruction, document }) },\n' +
+    '                ],\n' +
+    '            }),\n' +
+    '        });\n' +
+    '        if (!response.ok)\n' +
+    '            throw new Error(`design provider failed: ${response.status}`);\n' +
+    '        const envelope = (await response.json()) as {\n' +
+    '            choices?: Array<{\n' +
+    '                message?: {\n' +
+    '                    content?: string;\n' +
+    '                };\n' +
+    '            }>;\n' +
+    '        };\n' +
+    '        const text = envelope.choices?.[0]?.message?.content;\n' +
+    '        if (!text)\n' +
+    '            throw new Error("design provider returned no content");\n' +
+    '        const parsed = JSON.parse(text) as {\n' +
+    '            operations?: unknown;\n' +
+    '        };\n' +
+    '        if (!Array.isArray(parsed.operations))\n' +
+    '            throw new Error("design provider returned invalid operations");\n' +
+    '        return parsed.operations.map((value) => validatePrism<PrismOperation>("operation", value));\n' +
+    '    }\n' +
+    '    async embed(text: string, signal?: AbortSignal): Promise<{\n' +
+    '        embedding: number[];\n' +
+    '        model: string;\n' +
+    '        modelVersion: string;\n' +
+    '    }> {\n' +
+    '        if (!this.#embeddingEndpoint || !this.#embeddingModel)\n' +
+    '            throw new Error("embedding provider is not configured");\n' +
+    '        const response = await fetch(this.#embeddingEndpoint, {\n' +
+    '            method: "POST",\n' +
+    '            signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(this.#timeoutMs)]) : AbortSignal.timeout(this.#timeoutMs),\n' +
+    '            headers: {\n' +
+    '                authorization: `Bearer ${this.#apiKey}`,\n' +
+    '                "content-type": "application/json",\n' +
+    '            },\n' +
+    '            body: JSON.stringify({\n' +
+    '                model: this.#embeddingModel,\n' +
+    '                input: text,\n' +
+    '                encoding_format: "float",\n' +
+    '            }),\n' +
+    '        });\n' +
+    '        if (!response.ok)\n' +
+    '            throw new Error(`embedding provider failed: ${response.status}`);\n' +
+    '        const value = (await response.json()) as {\n' +
+    '            data?: Array<{\n' +
+    '                embedding?: number[];\n' +
+    '            }>;\n' +
+    '        };\n' +
+    '        const embedding = value.data?.[0]?.embedding;\n' +
+    '        if (!Array.isArray(embedding) ||\n' +
+    '            !embedding.length ||\n' +
+    '            embedding.some((item) => !Number.isFinite(item)))\n' +
+    '            throw new Error("embedding provider returned no valid vector");\n' +
+    '        return { embedding, model: this.#embeddingModel, modelVersion: "provider" };\n' +
+    '    }\n' +
+    '}',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

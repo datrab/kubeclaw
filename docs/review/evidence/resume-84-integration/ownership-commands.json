@@ -1,0 +1,140 @@
+[
+  {
+    "name": "ownership",
+    "command": [
+      "node",
+      "scripts/check-runtime-package-ownership.mjs"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "integration-types",
+    "command": [
+      "npm",
+      "run",
+      "typecheck:integration"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "prism-package",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "contracts/prism/v1"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "prism-contract-types",
+    "command": [
+      "npm",
+      "run",
+      "typecheck",
+      "--prefix",
+      "contracts/prism/v1"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "pipeline-gate-package",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "contracts/pipeline-test-gate/v1"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "telemetry-package",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/common/plugins/telemetry-store"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "http-package",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/buster/plugins/http"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "http-types",
+    "command": [
+      "npm",
+      "run",
+      "build",
+      "--prefix",
+      "skills/buster/plugins/http"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "demo-auth-package",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/buster/plugins/demo-auth-smoke"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "demo-auth-types",
+    "command": [
+      "npm",
+      "run",
+      "build",
+      "--prefix",
+      "skills/buster/plugins/demo-auth-smoke"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "direct-command-output",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/integration/direct-command-output-contract.test.mts"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "remote-gate-package",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/nova/plugins/remote-test-gate"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "handoff-package",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/nova/plugins/demo-handoff"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "knip-config-regenerated",
+    "command": [
+      "node",
+      "scripts/generate-knip-config.mjs",
+      "--check"
+    ],
+    "exit": 0
+  }
+]

@@ -1,0 +1,98 @@
+DeterministicDesignProvider: identical TypeScript syntax tree and leaf tokens (trivia excluded)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+... Skipped lines
+
+  [
+    264,
+    [
+      [
+        353,
+...
+                                                                  ],
++                                                                 [
++                                                                   28,
++                                                                   ','
++                                                                 ]
+                                                                ]
+                                                              ],
+                                                              [
+                                                                22,
+                                                                ')'
+...
+                                      ],
++                                     [
++                                       28,
++                                       ','
++                                     ]
+                                    ]
+                                  ],
+                                  [
+                                    22,
+                                    ')'
+
+    at file:///workspace/scratch/a51d993d444b/review-prism-84/docs/review/evidence/resume-84-prism-review/static-parity.mjs:15:10
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    264,
+    [
+      [ 353, [ [ 95, 'export' ] ] ],
+      [ 86, 'class' ],
+      [ 80, 'OpenAICompatibleDesignProvider' ],
+      [ 353, [ [ 299, [Array] ] ] ],
+      [ 19, '{' ],
+      [
+        353,
+        [
+          [ 173, [Array] ],
+          [ 173, [Array] ],
+          [ 173, [Array] ],
+          [ 173, [Array] ],
+          [ 173, [Array] ],
+          [ 173, [Array] ],
+          [ 177, [Array] ],
+          [ 175, [Array] ],
+          [ 175, [Array] ]
+        ]
+      ],
+      [ 20, '}' ]
+    ]
+  ],
+  expected: [
+    264,
+    [
+      [ 353, [ [ 95, 'export' ] ] ],
+      [ 86, 'class' ],
+      [ 80, 'OpenAICompatibleDesignProvider' ],
+      [ 353, [ [ 299, [Array] ] ] ],
+      [ 19, '{' ],
+      [
+        353,
+        [
+          [ 173, [Array] ],
+          [ 173, [Array] ],
+          [ 173, [Array] ],
+          [ 173, [Array] ],
+          [ 173, [Array] ],
+          [ 173, [Array] ],
+          [ 177, [Array] ],
+          [ 175, [Array] ],
+          [ 175, [Array] ]
+        ]
+      ],
+      [ 20, '}' ]
+    ]
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

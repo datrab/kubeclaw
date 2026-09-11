@@ -1,0 +1,21 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @kubeclaw/pipeline-test-gate-contract@1.0.0 test
+> node ../../../tests/verification/integration/pipeline-gate-remediation.test.mts && node --test ../../../tests/verification/integration/pipeline-gate-coverage.test.mts
+
+Test-gate declaration type/wire parity and ten real resolver examples passed
+✔ all original suite templates selected with excluded tests do not cover a missing mandatory check (42.335641ms)
+✔ condition-skipped and advisory mandatory checks stay visibly unsatisfied (2.307645ms)
+✔ explicit exclusion retains the required declaration without silently reducing policy (1.417276ms)
+✔ all resolved matrix variations are mandatory, with no synthetic execution assertion (1.980069ms)
+✔ policy corruption, duplicate requirements and unmapped requirements fail validation (1.077993ms)
+✔ existing standalone plans retain execution semantics but carry no completeness policy (1.309063ms)
+✔ a literal matrix-shaped declaration cannot impersonate a missing base check (1.979438ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 683.472158

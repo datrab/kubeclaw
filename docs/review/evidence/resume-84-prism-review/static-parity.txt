@@ -1,0 +1,8 @@
+DeterministicDesignProvider: identical TypeScript syntax tree and leaf tokens (trivia and optional trailing commas excluded)
+OpenAICompatibleDesignProvider: identical TypeScript syntax tree and leaf tokens (trivia and optional trailing commas excluded)
+skills/prism/engine/execution-cache.ts: unchanged bytes
+skills/prism/engine/browser-capture.ts: unchanged bytes
+skills/prism/package.json: unchanged bytes
+skills/prism/runtime.ts: unchanged bytes
+Browser callback free identifiers are only browser globals: Array, Math, Number, getComputedStyle, undefined, window
+Static closure/AST inspection only; no native browser, screenshot, or model execution claimed.

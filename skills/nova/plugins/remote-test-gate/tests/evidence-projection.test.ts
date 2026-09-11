@@ -23,7 +23,7 @@ const limits={maximumRecords:100,maximumBytes:8*1024**2,maximumRecordBytes:2*102
 test('original HTTP importer, artifact store and evidence adapter preserve ownership across reopen; envelopes are contract vectors',async()=>{
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'demo-projection-'));const bundlePath=path.join(root,'auth.json');
  const childEnvironment:NodeJS.ProcessEnv={...process.env,KUBECLAW_DEMO_AUTH_TEST_RESULT:bundlePath};delete childEnvironment.NODE_TEST_CONTEXT;
- execFileSync(process.execPath,['--test',path.join(repository,'skills/buster/plugins/demo-auth-smoke/tests/live-function.test.ts')],{cwd:repository,env:childEnvironment});
+ execFileSync(process.execPath,['--test',path.join(repository,'tests/verification/integration/demo-auth-smoke-live.test.ts')],{cwd:repository,env:childEnvironment});
  const bundle=JSON.parse(fs.readFileSync(bundlePath,'utf8'));const roots=['common','nova','buster'].map(role=>path.join(repository,'skills',role,'plugins'));
  const fixtureRoot=path.join(root,'plugins'),fixture=path.join(fixtureRoot,'consumer');fs.mkdirSync(fixture,{recursive:true});
  fs.writeFileSync(path.join(fixture,'plugin.json'),JSON.stringify({id:'test.evidence-consumer',apiVersion:'pipeline-plugin-v2',packageVersion:'1.0.0',observers:[],adapters:[],stages:[{id:'consume',type:'test.evidence-consumer',module:'stage.mjs',export:'execute',requiredCapabilities:['test.plan.evidence'],configSchema:'schema.json',inputSchema:'schema.json',resultSchema:'schema.json'}]}));

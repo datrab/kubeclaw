@@ -1,0 +1,52 @@
+[
+  {
+    "name": "integration",
+    "command": [
+      "npm",
+      "run",
+      "typecheck:integration"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "prism-package",
+    "command": [
+      "npm",
+      "run",
+      "typecheck",
+      "--prefix",
+      "contracts/prism/v1"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "http-package",
+    "command": [
+      "npm",
+      "run",
+      "build",
+      "--prefix",
+      "skills/buster/plugins/http"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "demo-auth-package",
+    "command": [
+      "npm",
+      "run",
+      "build",
+      "--prefix",
+      "skills/buster/plugins/demo-auth-smoke"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "ownership",
+    "command": [
+      "node",
+      "scripts/check-runtime-package-ownership.mjs"
+    ],
+    "exit": 0
+  }
+]

@@ -15,7 +15,7 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "node tests/remediation.test.mts && node --test tests/coverage.test.mts"
+    "test": "node ../../../tests/verification/integration/pipeline-gate-remediation.test.mts && node --test ../../../tests/verification/integration/pipeline-gate-coverage.test.mts"
   },
   "dependencies": {
     "@kubeclaw/pipeline-observability-contract": "*",

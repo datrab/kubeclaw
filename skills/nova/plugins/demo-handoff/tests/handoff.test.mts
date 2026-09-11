@@ -28,7 +28,7 @@ test('original handoff pipeline and controller reconcile lost TLS response; sour
  try {
   execFileSync('openssl',['req','-x509','-newkey','rsa:2048','-nodes','-keyout',path.join(tls,'key.pem'),'-out',path.join(tls,'cert.pem'),'-subj','/CN=127.0.0.1','-addext','subjectAltName=IP:127.0.0.1','-days','1'],{stdio:'ignore'});
   const bundleFile=path.join(root,'auth.json');const environment={...process.env,KUBECLAW_DEMO_AUTH_TEST_TLS_ROOT:tls,NODE_EXTRA_CA_CERTS:path.join(tls,'cert.pem'),KUBECLAW_DEMO_AUTH_TEST_RESULT:bundleFile};delete environment.NODE_TEST_CONTEXT;
-  execFileSync(process.execPath,['--test',path.join(repository,'skills/buster/plugins/demo-auth-smoke/tests/live-function.test.ts')],{cwd:repository,env:environment});
+  execFileSync(process.execPath,['--test',path.join(repository,'tests/verification/integration/demo-auth-smoke-live.test.ts')],{cwd:repository,env:environment});
   const bundle=JSON.parse(fs.readFileSync(bundleFile,'utf8'));assert.match(bundle.result.outputs[0].value.url,/^https:\/\/127\.0\.0\.1:/);
   const descriptorFile=path.join(root,'controller.json');let diagnostics='';
   child=spawn('go',['test','-count=1','-run','^TestNovaDemoHandoffProducerInterop$','./cmd/buster-namespace-controller'],{cwd:repository,env:{...process.env,KUBECLAW_DEMO_HANDOFF_INTEROP_INPUT:bundleFile,KUBECLAW_DEMO_HANDOFF_INTEROP_OUTPUT:descriptorFile},stdio:['ignore','pipe','pipe']});

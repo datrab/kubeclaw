@@ -1,0 +1,124 @@
+{
+  "args": [
+    "scripts/supervise-repository-review.mjs",
+    "--workdir",
+    "/workspace/scratch/a51d993d444b/review-delivery-84",
+    "--platform",
+    "/tmp/supervisor-stop-review-KK700B/platform.json",
+    "--graph",
+    "/tmp/supervisor-stop-review-KK700B/pipeline.json",
+    "--run-id",
+    "supervisor-stop-review",
+    "--heartbeat",
+    "/tmp/supervisor-stop-review-KK700B/heartbeat.json",
+    "--resource-log",
+    "/tmp/supervisor-stop-review-KK700B/resources.jsonl",
+    "--diagnostic-dir",
+    "/tmp/supervisor-stop-review-KK700B/diagnostics",
+    "--log",
+    "/tmp/supervisor-stop-review-KK700B/pipeline.log",
+    "--lease",
+    "/tmp/supervisor-stop-review-KK700B/lease.json",
+    "--max-recoveries",
+    "1",
+    "--initial-mode",
+    "start"
+  ],
+  "stopAt": "2026-09-11T17:12:13.267Z",
+  "outcome": {
+    "code": 75,
+    "signal": null
+  },
+  "diagnostics": [
+    {
+      "schemaVersion": "repository-review-attempt-diagnostic.v1",
+      "capturedAt": "2026-09-11T17:12:12.046Z",
+      "runId": "supervisor-stop-review",
+      "attempt": 1,
+      "mode": "start",
+      "exit": {
+        "code": 1,
+        "signal": null
+      },
+      "stopping": false,
+      "sample": {
+        "schemaVersion": "repository-review-resource-sample.v1",
+        "observedAt": "2026-09-11T17:12:12.043Z",
+        "pipelinePid": 30,
+        "pipelineAlive": false,
+        "memoryCurrentBytes": 5636173824,
+        "memoryPeakBytes": 7246487552,
+        "memoryEvents": {
+          "low": 0,
+          "high": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_kill": 0,
+          "oom_group_kill": 0
+        },
+        "cpu": {
+          "usage_usec": 3878367468,
+          "user_usec": 2889471231,
+          "system_usec": 988896237,
+          "nice_usec": 0,
+          "nr_periods": 117588,
+          "nr_throttled": 145,
+          "throttled_usec": 17184406,
+          "nr_bursts": 0,
+          "burst_usec": 0
+        },
+        "gateway": {
+          "healthy": false,
+          "error": "TypeError"
+        }
+      }
+    },
+    {
+      "schemaVersion": "repository-review-attempt-diagnostic.v1",
+      "capturedAt": "2026-09-11T17:12:17.645Z",
+      "runId": "supervisor-stop-review",
+      "attempt": 2,
+      "mode": "recover",
+      "exit": {
+        "code": 1,
+        "signal": null
+      },
+      "stopping": false,
+      "sample": {
+        "schemaVersion": "repository-review-resource-sample.v1",
+        "observedAt": "2026-09-11T17:12:17.643Z",
+        "pipelinePid": 59,
+        "pipelineAlive": false,
+        "memoryCurrentBytes": 5658697728,
+        "memoryPeakBytes": 7246487552,
+        "memoryEvents": {
+          "low": 0,
+          "high": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_kill": 0,
+          "oom_group_kill": 0
+        },
+        "cpu": {
+          "usage_usec": 3880881401,
+          "user_usec": 2890626617,
+          "system_usec": 990254783,
+          "nice_usec": 0,
+          "nr_periods": 117622,
+          "nr_throttled": 145,
+          "throttled_usec": 17184406,
+          "nr_bursts": 0,
+          "burst_usec": 0
+        },
+        "gateway": {
+          "healthy": false,
+          "error": "TypeError"
+        }
+      }
+    }
+  ],
+  "stdout": "",
+  "stderr": "",
+  "pipelineLog": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> pipeline\n> node skills/nova/pipeline.ts --platform /tmp/supervisor-stop-review-KK700B/platform.json --pipeline /tmp/supervisor-stop-review-KK700B/pipeline.json --run-id supervisor-stop-review\n\n{\"status\":\"error\",\"error\":\"Value failed canonical contract pipelineDefinition\"}\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> pipeline\n> node skills/nova/pipeline.ts --platform /tmp/supervisor-stop-review-KK700B/platform.json --pipeline /tmp/supervisor-stop-review-KK700B/pipeline.json --recover supervisor-stop-review\n\n{\"status\":\"error\",\"error\":\"Value failed canonical contract pipelineDefinition\"}\n",
+  "leaseRetained": false
+}

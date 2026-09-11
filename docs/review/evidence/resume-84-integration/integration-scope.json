@@ -1,0 +1,17 @@
+{
+  "integrationParent": "a69c3ef505ea1ae424dabb097e4a736be7f2df69",
+  "integrationParentTree": "f7529f412fa660e9c0fcf3f55f7f6c33ea7cb11b",
+  "candidateCheckpoint": "0144df383250a1975d40b04746eac398ee77e747",
+  "candidateTree": "84857f55871ab7e7593b870283074b360834d386",
+  "protectedSourceDiff": [],
+  "protectedFiles": [
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "sha256": "ab3f0e28466c0c75cbd7ec822211640d941da756dc4375771b204c2bdf5c5c20"
+    },
+    {
+      "path": "skills/prism/server/worker-operation.ts",
+      "sha256": "146f07fe7a338bd350536cd8ab3c317f3dddaf4de4a334e5e803e0b0c117b262"
+    }
+  ]
+}

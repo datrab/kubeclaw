@@ -1,0 +1,32 @@
+[
+  {
+    "name": "ownership",
+    "args": [
+      "node",
+      "scripts/check-runtime-package-ownership.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "contract-types",
+    "args": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "contracts/delivery-manifest/v3/tsconfig.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "summary-types",
+    "args": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/nova/plugins/project-summary/tsconfig.json"
+    ],
+    "exitCode": 0
+  }
+]

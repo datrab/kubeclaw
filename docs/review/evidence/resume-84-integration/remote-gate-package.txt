@@ -1,0 +1,15 @@
+
+> test
+> node tests/live-function.test.ts && node --test tests/evidence-projection.test.ts
+
+{"ok":true,"plugin":"kubeclaw.remote-test-gate","live":true}
+✔ original HTTP importer, artifact store and evidence adapter preserve ownership across reopen; envelopes are contract vectors (3915.062627ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4360.213136
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

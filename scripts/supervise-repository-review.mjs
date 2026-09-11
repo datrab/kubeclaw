@@ -182,6 +182,7 @@ function runPreflight(args, cwd) {
 }
 
 async function runAttempt(params, stopSignal) {
+  if (stopSignal.aborted) return { exit: { code: null, signal: null }, stopping: true };
   const descriptor = fs.openSync(params.log, 'a');
   const child = spawn('npm', pipelineArguments(params.mode, params.platform, params.graph, params.runId), {
     cwd: params.cwd, detached: true, stdio: ['ignore', descriptor, descriptor], env: process.env,
@@ -195,6 +196,7 @@ async function runAttempt(params, stopSignal) {
     }
   };
   stopSignal.addEventListener('abort', stop, { once: true });
+  if (stopSignal.aborted) stop();
   await writeHeartbeat({ ...params, pipelinePid: child.pid, stopping });
   const timer = setInterval(() => {
     void writeHeartbeat({ ...params, pipelinePid: child.pid, stopping });
@@ -218,6 +220,34 @@ async function observeExistingPipeline(params, pipelinePid, stopSignal) {
     await new Promise((resolve) => setTimeout(resolve, SAMPLE_INTERVAL_MS));
   }
   return { terminal: false };
+}
+
+function waitForRecovery(stopSignal) {
+  return new Promise((resolve) => {
+    const finish = (resume) => {
+      clearTimeout(timer); stopSignal.removeEventListener('abort', stop); resolve(resume);
+    };
+    const stop = () => finish(false);
+    const timer = setTimeout(() => finish(true), 5_000);
+    stopSignal.addEventListener('abort', stop, { once: true });
+    if (stopSignal.aborted) stop();
+  });
+}
+
+async function superviseAttempts(params, maximumRecoveries, stopSignal) {
+  let mode = params.mode;
+  for (let attempt = 1; attempt <= maximumRecoveries + 1; attempt += 1) {
+    if (stopSignal.aborted) return 130;
+    const result = await runAttempt({ ...params, mode, attempt }, stopSignal);
+    if (result.stopping || stopSignal.aborted) return 130;
+    const status = reviewStatus(params.statusScript, params.cwd, params.platform, params.runId,
+      params.heartbeat, params.resourceLog);
+    if (status.status !== 'running') return terminalExit(status);
+    if (attempt > maximumRecoveries) return 75;
+    mode = 'recover';
+    if (!await waitForRecovery(stopSignal)) return 130;
+  }
+  return 75;
 }
 
 async function main(values) {
@@ -245,6 +275,7 @@ async function main(values) {
       existingHeartbeat.pipelinePid, stopController.signal);
       if (observed.terminal) return terminalExit(observed.terminal);
     }
+    if (stopController.signal.aborted) return 130;
     const initialStatus = reviewStatus(statusScript, cwd, platform, runId, heartbeat, resourceLog);
     if (initialStatus.status !== 'running') return terminalExit(initialStatus);
     let mode = args.get('initial-mode') ?? 'auto';
@@ -254,17 +285,8 @@ async function main(values) {
       'events.jsonl');
     if (mode === 'auto') mode = fs.existsSync(eventFile) ? 'recover' : 'start';
     if (mode === 'start') runPreflight(args, cwd);
-    for (let attempt = 1; attempt <= maximumRecoveries + 1; attempt += 1) {
-      const result = await runAttempt({ cwd, platform, graph, runId, heartbeat, resourceLog,
-        diagnosticDir, log, gatewayUrl, mode, attempt }, stopController.signal);
-      if (result.stopping) return 130;
-      const status = reviewStatus(statusScript, cwd, platform, runId, heartbeat, resourceLog);
-      if (status.status !== 'running') return terminalExit(status);
-      if (attempt > maximumRecoveries) return 75;
-      mode = 'recover';
-      await new Promise((resolve) => setTimeout(resolve, 5_000));
-    }
-    return 75;
+    return await superviseAttempts({ cwd, platform, graph, runId, heartbeat, resourceLog,
+      diagnosticDir, log, gatewayUrl, mode, statusScript }, maximumRecoveries, stopController.signal);
   } finally {
     process.off('SIGINT', stop); process.off('SIGTERM', stop); releaseLease(lease);
   }

@@ -1,0 +1,28 @@
+✔ original ingest provider cancels an actual TLS response body after headers (329.570776ms)
+✔ original propose provider cancels an actual TLS response body after headers (442.308216ms)
+✔ only the admitted owner can cancel a pending original render; legacy callers still coalesce (10.721005ms)
+✔ actual attempt CPU excludes prior process work and stays fixed after execution (263.326389ms)
+✔ real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back (194.045634ms)
+✔ terminate aborts and drains the original artifact read before any engine operation starts (15.810112ms)
+✔ owner cancellation before retention rejects every coalesced original-render caller (2.052188ms)
+✔ actual HTTP caller disconnect cancels and drains original artifact read (141.604238ms)
+✔ actual HTTP caller disconnect cancels and drains original artifact upload (65.171462ms)
+✔ normal HTTP completion keeps its bound result and original persisted full log (53.330375ms)
+✔ actual HMAC HTTP admission fails closed on native pg startup timeout; bootstrap remains available (169.117053ms)
+✔ native connection refusal retains its safe operator system code (8.334702ms)
+✔ SPIFFE operational readiness has no unused database dependency; actual admission still authenticates (59.58359ms)
+✔ original readiness SQL requires the migrated nonce table (PGlite SQL proof only) (1940.071803ms)
+﹣ native PostgreSQL query cancellation settles and releases its actual pool client (0.458381ms) # REAL_POSTGRES_DATABASE_REQUIRED (isolated migrated test database)
+✔ original worker operation reproduces missing log store; actual service executor persists the complete log (223.959504ms)
+✔ real durable log store corruption keeps an otherwise successful engine operation errored (30.920879ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (38.92099ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (13.448195ms)
+✔ full log participates in the real neutral evidence budget before upload (8.365298ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 2926.004129

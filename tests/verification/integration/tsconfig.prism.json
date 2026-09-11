@@ -1,0 +1,13 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "resolveJsonModule": true
+  },
+  "include": [
+    "prism-contract-remediation.test.mts",
+    "prism-baseline-archive.test.mts",
+    "fixtures/prism-baseline-input.mts",
+    "fixtures/prism-baseline-locale.mts"
+  ]
+}

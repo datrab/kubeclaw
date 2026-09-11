@@ -1,0 +1,35 @@
+{
+  "createdAt": "2026-09-11T17:13:36.854201+00:00",
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-nonprism-triage/supervisor-existing.txt",
+      "bytes": 5721,
+      "sha256": "bddf7cb665af14f18ac528edc2191de49d1321efdf16d9251f52f9ed6b9a7adc"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-nonprism-triage/supervisor-lint.txt",
+      "bytes": 919,
+      "sha256": "b287c6d41ed8d40a63a7cc4a43e57ca2f5c89c48ff504e3a00334e521590358c"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-nonprism-triage/supervisor-stop-probe-configured.txt",
+      "bytes": 4074,
+      "sha256": "c8e9bc5183bba918b64d03ee356a2612f3f4721493044a081d6ee29731527028"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-nonprism-triage/supervisor-stop-probe.mjs",
+      "bytes": 3370,
+      "sha256": "90163cb7ab17fff235d0c81631a5e70e55fac23178aa07f0f9a91f6f654026d1"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-nonprism-triage/supervisor-stop-probe.txt",
+      "bytes": 426,
+      "sha256": "c0d43c4148ca818c6e9cb41e2120a5c730feabf6f56b17932822bea76ed6ec81"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-nonprism-triage/terminal-workspace.txt",
+      "bytes": 66,
+      "sha256": "c1f628e40e1fc4324b244dfe08b9e19467e86a377c29b504fcd8651a1d587da1"
+    }
+  ]
+}

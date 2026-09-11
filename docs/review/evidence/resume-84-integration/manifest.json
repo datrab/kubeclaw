@@ -1,0 +1,115 @@
+{
+  "createdAt": "2026-09-11T17:25:49.092137+00:00",
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-integration/commands.json",
+      "sizeBytes": 2263,
+      "sha256": "c5d1c95e0810292e21587431ac0269a7d991d6a50730820cd174f12136c37b95"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/demo-auth-package.txt",
+      "sizeBytes": 652,
+      "sha256": "8028ac4cf386daf4b31406c1cf1e9c2c186922ef855b9be8c0513d14eb403094"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/demo-auth-types.txt",
+      "sizeBytes": 233,
+      "sha256": "9e48d25083f511133f9f5fad2d1419cf8c2caee9e566614a88974c7119551ff1"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/direct-command-output.txt",
+      "sizeBytes": 316,
+      "sha256": "efb51723475b877196b833e582f4fd795a5af35a127608bd39cc747406b5beec"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/handoff-package.txt",
+      "sizeBytes": 692,
+      "sha256": "6a1e62e4e476e7cc3f59edcfcf3594c3d46ad2323f4cf1a4404cc62d3fbb8ea2"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/http-package.txt",
+      "sizeBytes": 274,
+      "sha256": "17e4de6fc6129619a734e47535ca851b5f537145eb7d522df6e04a81af26cb73"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/http-types.txt",
+      "sizeBytes": 222,
+      "sha256": "6dba0e3d0f3e949ef76785d22cabbcaa97302dd40ae15041c2c0749efdd17da9"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/integration-scope.json",
+      "sizeBytes": 640,
+      "sha256": "9401f62f82650b8aa4707fce878125c7ff2b0d375721add1a821b993c5fed350"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/integration-types.txt",
+      "sizeBytes": 343,
+      "sha256": "fec269e53776e3cb87ac3215740e51ea286b246a3779d3fa830a23fb49555cd8"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/knip-config-regenerated.txt",
+      "sizeBytes": 75,
+      "sha256": "1d15ecf41a32b341d49801c70fa9aa6c42f7c288864ce70ad0bda42d498656e5"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/knip-config.txt",
+      "sizeBytes": 78,
+      "sha256": "9f2c869fc6dc361582d0434b222ae763b1eaa27d7251eef067fcdaaa41ef482f"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/lint.txt",
+      "sizeBytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/ownership-commands.json",
+      "sizeBytes": 2301,
+      "sha256": "8ef2ed12d976a5fc3f8662ef5e3699464b66d5e091e8ce13e1d3c3b45f68b12f"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/ownership.txt",
+      "sizeBytes": 82,
+      "sha256": "fbebbbb23b6138a7ddd4d728cd761835a5ba6bcfe333f9cdbc998cc6452b5e9e"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/pipeline-gate-package.txt",
+      "sizeBytes": 1218,
+      "sha256": "c1f1b14d713ec98fd6b80b62187364248392f10d10f4d50aeba3b9f8276caa4c"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/prism-contract-types.txt",
+      "sizeBytes": 333,
+      "sha256": "6cf972ed6fa3620bbeb9088f3d5f9dbd3d5f4dfdc3be69f13bf83c33ef18c56f"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/prism-package.txt",
+      "sizeBytes": 12205,
+      "sha256": "1d4d4efe5050e3e0e3b60ac4be42d7bcb64b69ceeaba8a939768321fbdeec5e1"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/prism.txt",
+      "sizeBytes": 5797,
+      "sha256": "138347432a81bd1e69372c8ca957710519a6b88771f8d141b649f42bf441962d"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/remote-gate-package.txt",
+      "sizeBytes": 514,
+      "sha256": "ccf8d6cbaa7760a3bb75df37991e560f0727dc2ffcfba4570aaede03755bd078"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/supervisor.txt",
+      "sizeBytes": 6365,
+      "sha256": "ed9100d0bc6979cd13bf669d717d7eb538998c1c67f6d0539c64d679ed614113"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/telemetry-package.txt",
+      "sizeBytes": 527,
+      "sha256": "24b61bd0b6b4819d4655a2a3e56dd308c0807577fec0f8a7660a52c478ccd64e"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-integration/types.txt",
+      "sizeBytes": 150,
+      "sha256": "1eb2565d72416f5a9df946d81a47a1d2efd17fb6f4fddb81cd3860e01c8b79f1"
+    }
+  ]
+}

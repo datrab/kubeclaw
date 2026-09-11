@@ -1,0 +1,61 @@
+{
+  "source": "d22ee1d298aa63050673e075b363ae4c996008dc",
+  "tree": "d90200377036cd73d1048e1d206e66cc9e8fed40",
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-prism-review/configured-lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-review/lint.txt",
+      "bytes": 502,
+      "sha256": "51f13d82f4bba8de4b9978514db1f0b9f4ad09a12a5999c99782a96f61e3150d"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-review/original-tests.txt",
+      "bytes": 3329,
+      "sha256": "5448e90ae890ceb8f5ed858f9fa80623abbe35f63a9e462b069865415e02b93a"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-review/parity.txt",
+      "bytes": 3063,
+      "sha256": "755a9cf2e1775a16ec1e0aab1a6361353ac3c8725ce5fa1940e308aa3c44cd78"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-review/static-globals-invocation.txt",
+      "bytes": 1356,
+      "sha256": "1dd7dcf43ffcdff206f31bedc9140a0fa9333426f5baaa3e75607a4f3da4c76d"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-review/static-parity.mjs",
+      "bytes": 2316,
+      "sha256": "2e2783282d82e79ab2f0e0f9e3a69a9df2507e4d6f6ba8482ecd08e2da9b761a"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-review/static-parity.txt",
+      "bytes": 661,
+      "sha256": "981003f398499e97bd5bc2705bca00d87503fff03bbbd616cdebc8e1e8e8000a"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-review/static-printer-invocation.txt",
+      "bytes": 15007,
+      "sha256": "6ab85ce77fa981480402893777d4eafbb82e6f77bc6f43639f69058ea3baa733"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-review/static-punctuation-invocation.txt",
+      "bytes": 2910,
+      "sha256": "1f9d7afc7be7edff149c4d2b7718e5c91060bbd410f985158e8ff08af42f43c4"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-review/studio-triage-tests.txt",
+      "bytes": 3434,
+      "sha256": "6ab4f01fff94fb9b36120adfd0f60cd739a0c6823929d229a26a691f86faafb4"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-review/types.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

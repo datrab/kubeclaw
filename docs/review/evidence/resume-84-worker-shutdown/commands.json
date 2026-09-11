@@ -1,0 +1,54 @@
+[
+  {
+    "name": "combined",
+    "command": [
+      "node",
+      "--test",
+      "skills/prism/tests/worker-process-shutdown.test.mts",
+      "skills/prism/tests/worker-shutdown-boundaries.test.mts",
+      "skills/prism/tests/worker-http-cancellation.test.mts",
+      "skills/prism/tests/worker-cancellation.test.mts",
+      "skills/prism/tests/worker-service.test.mts",
+      "skills/prism/tests/provider-cancellation.test.mts",
+      "skills/prism/tests/worker-readiness.test.mts"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "typecheck",
+    "command": [
+      "npm",
+      "run",
+      "typecheck",
+      "--prefix",
+      "skills/prism"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "lint",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/prism/server/worker.ts",
+      "skills/prism/server/worker-config.ts",
+      "skills/prism/server/worker-lifecycle.ts",
+      "skills/prism/server/worker-service.ts",
+      "skills/prism/server/worker-attempt.ts",
+      "skills/prism/tests/worker-http-cancellation.test.mts",
+      "skills/prism/tests/worker-process-shutdown.test.mts",
+      "skills/prism/tests/worker-shutdown-boundaries.test.mts"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "ownership",
+    "command": [
+      "node",
+      "scripts/check-runtime-package-ownership.mjs"
+    ],
+    "exit": 0
+  }
+]

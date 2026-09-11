@@ -1,0 +1,16 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> cd ../../../.. && node --test skills/nova/plugins/demo-handoff/tests/*.test.mts skills/nova/plugins/demo-handoff/tests/*.test.mjs
+
+✔ original project compiler binds normalized demo policy to source approval and final handoff (226.510389ms)
+✔ original TLS client bounds body lifetime, file admission and response bytes (464.517277ms)
+✔ original handoff pipeline and controller reconcile lost TLS response; source envelopes are contract vectors (17757.187914ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18279.709599

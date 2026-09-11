@@ -1,0 +1,31 @@
+{
+  "base": "7d172b6cee37d2f9e38165f81d06413b4a7cb935",
+  "createdAt": "2026-09-11T17:16:32.822919+00:00",
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-supervisor-stop/after.txt",
+      "bytes": 5932,
+      "sha256": "f96d97ed8358248374fc6442e8e40fbfd9afce7cafac0a1eb9af6e37d596837d"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-supervisor-stop/before.txt",
+      "bytes": 3451,
+      "sha256": "5042fa6991fd6a913bb609ef4b784fa059de6bdfedceb7e368b30b634363068a"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-supervisor-stop/lint.txt",
+      "bytes": 918,
+      "sha256": "1713ca66fb6266fc64e17ee7fc5b75f65a3119a928130d6bf27587c0630394aa"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-supervisor-stop/syntax.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-supervisor-stop/test-lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

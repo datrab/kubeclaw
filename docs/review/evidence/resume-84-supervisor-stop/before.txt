@@ -1,0 +1,72 @@
+✖ original supervisor stops its recovery wait on SIGTERM without starting another pipeline (6725.946144ms)
+✖ original supervisor stops its recovery wait on SIGINT without starting another pipeline (6633.073147ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13457.407651
+
+✖ failing tests:
+
+test at scripts/tests/integration/repository-review-supervisor-stop.test.mjs:34:3
+✖ original supervisor stops its recovery wait on SIGTERM without starting another pipeline (6725.946144ms)
+  AssertionError [ERR_ASSERTION]: npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+  
+  > pipeline
+  > node skills/nova/pipeline.ts --platform /tmp/supervisor-stop-6aol7e/platform.json --pipeline /tmp/supervisor-stop-6aol7e/pipeline.json --run-id supervisor-stop-regression
+  
+  {"status":"error","error":"Value failed canonical contract pipelineDefinition"}
+  npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+  
+  > pipeline
+  > node skills/nova/pipeline.ts --platform /tmp/supervisor-stop-6aol7e/platform.json --pipeline /tmp/supervisor-stop-6aol7e/pipeline.json --recover supervisor-stop-regression
+  
+  {"status":"error","error":"Value failed canonical contract pipelineDefinition"}
+  
+  
+  75 !== 130
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/review-worker-http-84/scripts/tests/integration/repository-review-supervisor-stop.test.mjs:62:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 75,
+    expected: 130,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/tests/integration/repository-review-supervisor-stop.test.mjs:34:3
+✖ original supervisor stops its recovery wait on SIGINT without starting another pipeline (6633.073147ms)
+  AssertionError [ERR_ASSERTION]: npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+  
+  > pipeline
+  > node skills/nova/pipeline.ts --platform /tmp/supervisor-stop-NADnkm/platform.json --pipeline /tmp/supervisor-stop-NADnkm/pipeline.json --run-id supervisor-stop-regression
+  
+  {"status":"error","error":"Value failed canonical contract pipelineDefinition"}
+  npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+  
+  > pipeline
+  > node skills/nova/pipeline.ts --platform /tmp/supervisor-stop-NADnkm/platform.json --pipeline /tmp/supervisor-stop-NADnkm/pipeline.json --recover supervisor-stop-regression
+  
+  {"status":"error","error":"Value failed canonical contract pipelineDefinition"}
+  
+  
+  75 !== 130
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/review-worker-http-84/scripts/tests/integration/repository-review-supervisor-stop.test.mjs:62:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 75,
+    expected: 130,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

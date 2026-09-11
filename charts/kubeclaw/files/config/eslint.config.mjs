@@ -35,6 +35,7 @@ const ENVIRONMENT_BOUNDARIES = [
   'scripts/registry-client-config.mjs',
   'skills/prism/server/studio-config.ts',
   'skills/prism/server/control-config.ts',
+  'skills/prism/server/worker-config.ts',
   'scripts/clawpatch-pipeline-light.mjs',
   'scripts/verify-all-skill-tests.mjs',
   'scripts/verify-plugin-live-capabilities.mjs',
