@@ -1,7 +1,8 @@
 # Resuming the frozen 47 repairs
 
-Latest saved continuation: [2026-09-11 bounded two-hour run](run-20260911-a51d-2h.md),
-with the exact [39-ID state](run-20260911-a51d-2h-state.json).
+Latest saved continuation: [2026-09-11 resumed work](run-20260911-a51d-resumed.md),
+with the exact [39-ID current state](run-20260911-a51d-resumed-state.json) and
+[existence-checked native follow-up matrix](native-followup-39-20260911.json).
 
 This is the durable entrypoint for a fresh repair orchestrator. Chat history and
 local worktree paths are hints, never the only copy of unfinished work.

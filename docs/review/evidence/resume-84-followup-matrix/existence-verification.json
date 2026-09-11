@@ -1,0 +1,10 @@
+{
+  "finding_count": 39,
+  "gate_count": 36,
+  "source_reference_count": 65,
+  "all_gate_paths_exist": true,
+  "all_source_paths_exist": true,
+  "all_named_package_scripts_exist": true,
+  "executed_gates": 0,
+  "json_sha256": "a520c76da57a1c7820eb1db296a7c625546d6ba15a9c4dea98195c33a4478bfc"
+}

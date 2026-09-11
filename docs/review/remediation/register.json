@@ -669,6 +669,12 @@
         {
           "report": "https://github.com/datrab/kubeclaw/blob/d22ee1d298aa63050673e075b363ae4c996008dc/docs/review/remediation/implementation/resume-39-20260911-2h.md",
           "summary": "34 neue originale v2/v3-Consumer-Ablehnungsfälle lokal bestanden; echte Import-CAS/Reopen-, gültige Positivkontrollen und unveränderte Originaljournale gesichert. Sieben Delivery-Lintfehler behoben; Paketgrenzenprüfung durch korrekt platzierte Integrationstests repariert. Separate Gegenprüfung, vollständige Knip-/Semantikabnahme weiterhin offen; Quelle nicht integriert."
+        },
+        {
+          "report": "implementation/resume-84-integration-root-review.md",
+          "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+          "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
+          "summary": "Delivery-Refactor und Consumerfälle unabhängig gegengeprüft; dabei verlorene statische Integrationstestabdeckung repariert, mit sechs echten Typfehlern plus drei Root-Negativen bestätigt. Paketgrenzen/Testabdeckung integriert; gekoppelte SDK-/Delivery-Quelle bleibt separat."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/lib.sdk.md",
@@ -676,11 +682,11 @@
       "source_finding_text": "### PCR-SDK-001 — Serialisierung erzeugt ungültige oder kollidierende Daten\n\n- **Mittel, nachgewiesener Defekt:** Funktion in aktiven Artefakt-/Effektpfaden;\n  kein bisheriger Produktionsvorfall mit normalen JSON-Eingaben behauptet.\n- **Beleg:** src/values.ts:42–51: map/join, undefined→null, localeCompare;\n  ArtifactStore.adapter.ts:108–135 speichert diese Bytes als application/json,\n  Core.effects/identity.ts:5–24 vergleicht so Payloads. unknown ohne JSON-Prüfung.\n- **Auslöser/Ablauf:** in-process Array(2) ergibt ungültiges `[,]`;\n  `{x:undefined}` und `{x:null}` identische Bytes. Originalfunktion tatsächlich\n  ausgeführt: [Reproduktion](../evidence/plugin-contract-sdk-repro.mjs).\n- **Auswirkung:** ungültige JSON-Artefakte bzw. verschiedene Nicht-JSON-Payloads\n  bei Idempotenz gleichgesetzt. Voller Adapterfehlerpfad ist Code-Trace, kein\n  hier gelaufener E2E-Test. Localeordnung zusätzliches Portabilitätsrisiko,\n  noch nicht durch mehrere Umgebungen gemessen.\n- **Ursachenbehebung:** akzeptierten JSON-Datenbereich validieren, Sparsearrays,\n  nichtendliche Zahlen, Getter, exotische Objekte/Zyklen ablehnen und\n  sprachunabhängig ordnen. Persistierte Digestversionen kontrolliert umstellen;\n  kein stiller Fallbackserializer.\n- **Regression:** Originalserializer-Negativ-/Localevektoren; echter\n  ArtifactStore put/get und EffectJournal-Replay dürfen weder ungültige Bytes\n  quittieren noch verschiedene akzeptierte Payloads gleichsetzen.\n  [PCR-PROMPT-001](lib.prompt-contract.md) betrifft getrennten ungenutzten Code,\n  nicht denselben Laufzeitpfad.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Gesicherten Kandidaten c4713132 und resume/run-20260911-a51d-2h.md lesen. Neue Tests und Refactorings separat prüfen; vollständiges Knip sowie echte gekoppelte semantische Producer-/History-Abnahme bleiben offen. Keine isolierte Semantikintegration und keine Wiederholung/Umleitung der früher markierten Helper-Aktion.",
+      "next_action": "Vollständiges Knip und ursprüngliche gekoppelte native Semantik-/Producer-/History-Abnahme fehlen. Markierte Helper-Aktion weder wiederholen noch umleiten.",
       "related_findings": [],
       "decision_notes": [],
       "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe.",
-      "remaining_work": "Finaler Semantic-Source15f6: vollständige Original-Review-Suite, archivierte CLI, Phase6, Types und27 Ownerfälle bestanden; unabhängiger Review5380 ergänzt3/3 Compiler,9/9 echte Core/Journal/Store-Regression und1/1 Historyreader. Integration bleibt wegen fehlendem echten registrierten Semantic-Producer und vollständigen Phasen gesperrt. Registrierter Delivery-v2-Gegenbeleg f3d wurde unabhängig45fff reproduziert; finales Delivery-v3-Design569454 ist unabhängig90dd freigegeben, Implementierung/nativer Nachweis offen. Gesamtfinding offen."
+      "remaining_work": "Vollständiges Knip und ursprüngliche gekoppelte native Semantik-/Producer-/History-Abnahme fehlen. Markierte Helper-Aktion weder wiederholen noch umleiten."
     },
     {
       "id": "PCR-SDK-002",
@@ -2099,6 +2105,12 @@
         {
           "report": "https://github.com/datrab/kubeclaw/blob/d22ee1d298aa63050673e075b363ae4c996008dc/docs/review/remediation/implementation/resume-39-20260911-2h.md",
           "summary": "Originaler nativer Runner nach regulärem Sandbox-Build erneut ausgeführt: write EPIPE, open task children: No such file or directory. Originalassertion erhalten; keine Hostumgehung, keine erfolgreiche Providerausführung."
+        },
+        {
+          "report": "implementation/resume-84-integration-root-review.md",
+          "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+          "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
+          "summary": "Originaltests korrekt als Integrationstests eingeordnet; ursprüngliche npm-Einstiegspunkte erhalten, Outputvertragsprüfung und unveränderte Paketgrenzenprüfung auf integrierter Quelle bestanden."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.direct-command.md",
@@ -2109,10 +2121,10 @@
         "src/provider.js:59–61,212–217",
         "plugin.json"
       ],
-      "next_action": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
+      "next_action": "Originaler vollständiger nativer Runner-/Sandbox-Artefaktnachweis bleibt wegen unveränderter Hostvoraussetzungen offen.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
+      "remaining_work": "Originaler vollständiger nativer Runner-/Sandbox-Artefaktnachweis bleibt wegen unveränderter Hostvoraussetzungen offen."
     },
     {
       "id": "PCR-HTTP-001",
@@ -2579,6 +2591,12 @@
         {
           "report": "https://github.com/datrab/kubeclaw/blob/d22ee1d298aa63050673e075b363ae4c996008dc/docs/review/remediation/implementation/resume-39-20260911-2h.md",
           "summary": "Prism- und tatsächlicher Studio-TSX-Typecheck bestehen auf gesichertem Kandidaten. Studio-App-Quelldatei identisch zur Integration; alter Typfehlerhinweis veraltet. Native PostgreSQL-Pool-, Browser- und Agentabnahme bleibt offen."
+        },
+        {
+          "report": "implementation/resume-84-integration-root-review.md",
+          "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+          "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
+          "summary": "Prism-Typprüfung und frische lokale HTTP-/Worker-Komposition auf integrierter Quelle bestanden; kein neuer TypeScriptblocker."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -2591,7 +2609,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/server/control.ts#L330"
       ],
       "unresolved_code_references": [],
-      "next_action": "Native PostgreSQL-Pool- und Browser-/Agentintegration bei vorhandenen Voraussetzungen ausführen. Tatsächlicher Studio-TSX-Typecheck besteht; kein aktueller Typfehlerblocker.",
+      "next_action": "Native PostgreSQL-Pool-/Browser-/Agentkomposition weiterhin ausstehend.",
       "related_findings": [
         "PATH-T02-003",
         "PCR-PRISM-CONTROL-001"
@@ -2855,12 +2873,18 @@
       "severity": "hoch",
       "work_package": "WP07",
       "status": "implementiert",
-      "implementation_commit": "a328cfc29c20094a66d826237e4b347f89ba33a9",
-      "verification_status": "teilweise / blockiert",
+      "implementation_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+      "verification_status": "teilweise; lokale Ursachenbehebung unabhängig geprüft und integriert, originale native Gesamt-Abnahme offen",
       "verification_evidence": [
         {
           "report": "implementation/prism-worker-control.md",
           "summary": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red."
+        },
+        {
+          "report": "implementation/resume-84-integration-root-review.md",
+          "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+          "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
+          "summary": "Zusätzlich echte Request-/Shutdown-Lebensdauer mit ursprünglichem nonce pg.Pool integriert; Verbindungsaufbau, gesetzte Stoppfrist und nicht als Erfolg ausgegebener Cutoff geprüft."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-worker.md",
@@ -2872,7 +2896,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/server/control.ts#L204"
       ],
       "unresolved_code_references": [],
-      "next_action": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red.",
+      "next_action": "Echter migrierter PostgreSQL-Dienst, SQL-/Lock-/Rollback-/Wiederanlaufnachweise der vollständigen Komposition fehlen; TCP-Peer ist kein PostgreSQL-Dienst.",
       "related_findings": [
         "PCR-OBS-002",
         "PCR-TSTORE-001"
@@ -2880,7 +2904,7 @@
       "decision_notes": [
         "D01/D09: fehlender bestehender Pflicht-Logspeicher bleibt Vertragsbruch. Workerabschluss und benötigte Evidenceablage sauber an Clawdeck/zulässige lokale Artefakte koppeln; weder Dummy-Store noch stiller Logverlust."
       ],
-      "remaining_work": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red."
+      "remaining_work": "Echter migrierter PostgreSQL-Dienst, SQL-/Lock-/Rollback-/Wiederanlaufnachweise der vollständigen Komposition fehlen; TCP-Peer ist kein PostgreSQL-Dienst."
     },
     {
       "id": "PCR-PRISM-WORKER-002",
@@ -2918,13 +2942,19 @@
       "severity": "hoch",
       "work_package": "WP07",
       "status": "implementiert",
-      "implementation_commit": "91030cbc3a30882669b8af834102d368b50bd99d",
-      "verification_status": "37/37 echte lokale Tests unabhängig bestanden, inklusive Abbruch an der Cacheabschlussgrenze; Typprüfung und gezielter Lint bestanden. Native Browserprüfung blockiert, parallele CPU-/Kindprozessattribution offen.",
+      "implementation_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+      "verification_status": "teilweise; lokale Ursachenbehebung unabhängig geprüft und integriert, originale native Gesamt-Abnahme offen",
       "verification_evidence": [
         "docs/review/remediation/implementation/prism-worker-cancellation.md",
         {
           "report": "implementation/attempt-resource-accountability-boundary.md",
           "summary": "Aktuelle Parentmessung erfasst nicht den gesamten Attempt; generischer Executor misst zusätzlich vor Finalisierung/Reportadapter. Atomare Owner-/Containment-/Engineintegration sowie echte delegierte Cgroups erforderlich. Keine funktionale Behebung in diesem Slice."
+        },
+        {
+          "report": "implementation/resume-84-integration-root-review.md",
+          "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+          "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
+          "summary": "Echte HTTP-Disconnect-Lücke sowie fehlender SIGTERM/SIGINT-Serviceabbruch behoben und unabhängig integriert. Original Core bleibt Abbruch-/Drainowner; tatsächliche Kindprozesse und native pg-TCP-Verbindungen geprüft, unaufgelöster Ablauf beendet Prozess mit Fehlercode."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-worker.md",
@@ -2932,7 +2962,7 @@
       "source_finding_text": "### PCR-PRISM-WORKER-003 — Terminate beendet weder Browser noch Evidence-Upload\n\n- **Hoch; Evidenzklasse: nachgewiesener Defekt durch Code-Trace:** worker.ts:97–99 setzt nur terminated=true; Engine.execute (:79–84) und uploadEvidence (:37–40) erhalten kein AbortSignal. Chromium wird erst in Enginefinally geschlossen, Upload hat kein Timeout. Auslöser: laufender Browser/Upload überschreitet Deadline oder Controlclient trennt. Executor kann Ablauf als beendet behandeln, während externe Arbeit/Prozess weiterläuft; harte Claimabschluss-/Ressourcengrenze nicht gewährleistet. Keine tatsächlich beobachtete Prozessleckdauer behauptet.\n- **Behebung:** pro Attempt besitzbarer Browser-/Prozesshandle, Abort weitergeben, Upload/Log/Cleanup gemeinsam gegen absolute Claimdeadline begrenzen; terminate muss tatsächliche Beendigung/Reaping quittieren. Aggregierte Zulassung und messbare Ressourcen pro Versuch ergänzen, nicht nur Configzahlen vergleichen.\n- **Regression:** Originaldienste/echter Chromium, abbrechen während Capture und Upload; nach terminalem Result keine Kindprozesse, keine späteren Writes, alle Abschlussphasen innerhalb Claimdeadline. Disconnect zusätzlich auf bewusste Cancelpolicy prüfen.\n\nDokumentationsabgleich: Implementationplan Engineprofil/Bounded Worker wird nur teilweise umgesetzt; fehlende Logs und fehlende reale Terminierung widerlegen vollständigen neutralen Abschluss. Service-README fehlt; Querverweise Engine-/Storage-/Controlreviews behandeln Idempotenz, CAS und Empfangsbindung. Die drei Befunde ersetzen keine Cluster-/SPIFFE-Betriebsprüfung.\n\nAusführungsprotokoll der ersten Testgruppe: [prism-core-review-tests.txt](../evidence/prism-core-review-tests.txt) (aus Originalausgabe transkribierte Zusammenfassung, kein nachträglich erzeugtes TAP).",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
+      "next_action": "Native Browser-/Kindprozessbereinigung und vollständige native Service-/Control-Recovery bleiben offen. Bereits persistierte Uploadbytes werden nicht als zurückgerollt behauptet.",
       "related_findings": [
         "PCR-BUSTER-ENGINE-001",
         "PCR-NOVA-GATE-001",
@@ -3023,8 +3053,8 @@
       "severity": "mittel",
       "work_package": "WP08",
       "status": "implementiert",
-      "implementation_commit": "ba7becc12519cb84a904bc8c0a29605514b68eea",
-      "verification_status": "teilweise / blockiert",
+      "implementation_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+      "verification_status": "teilweise; lokale Ursachenbehebung unabhängig geprüft und integriert, originale native Gesamt-Abnahme offen",
       "verification_evidence": [
         {
           "report": "implementation/prism-engine-cache.md",
@@ -3033,6 +3063,12 @@
         {
           "report": "https://github.com/datrab/kubeclaw/blob/d22ee1d298aa63050673e075b363ae4c996008dc/docs/review/remediation/implementation/resume-39-20260911-2h.md",
           "summary": "Prism-Engine in Render-/Browsercallback-/Provider-Verantwortungen zerlegt; vier originale Lintverstöße behoben. 36 bestehende Tests ohne Skips und 12 bytegleiche Vergleiche gegen Originalquelle bestanden. Keine native Browser-/Heap-/DB-Recoveryabnahme, keine separate Gegenprüfung; Quelle nicht integriert."
+        },
+        {
+          "report": "implementation/resume-84-integration-root-review.md",
+          "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+          "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
+          "summary": "Engineextraktion unabhängig mit 36 Originaltests, 12 Bytevergleichen und Callback-/Providerprüfung bestätigt und integriert. Frische Integrationssuite 55 bestanden, 1 expliziter nativer PG-Skip."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.engine.md",
@@ -3040,10 +3076,10 @@
       "source_finding_text": "### PCR-PRISM-ENGINE-001 — Erfolgreiche Renderresultate bleiben unbegrenzt im Cache\n\n**Mittel; Evidenzklasse: nachgewiesener Defekt durch Code-Trace:** index.ts:49–76 legt jede erfolgreiche executionId→Promise dauerhaft ab; Löschung nur im catch. Worker ruft mit neuer executionId auf (worker.ts:79–84), und Engine speichert Captureoutput inklusive screenshotBase64/ARIA (:194–286), bevor Worker es in Evidenz umwandelt. Wiederholt erfolgreiche Engineoperationen wachsen deshalb auch dann dauerhaft weiter, wenn der nachgeschaltete neutrale Worker wegen fehlendem Logstore errored liefert. Folge: langlebiger Service behält große Bilder und erreicht Speichergrenze/OOM; keine Lastmessung behauptet. Ursache ist Idempotenzcache ohne TTL/Volumen/Ownership statt an Claim-/Resultlebensdauer gebundener Speicher. Reparatur: begrenzter In-flight-Cache, erfolgreiche Evidence externalisieren und dauerhaften autoritativen Replaystore klar zuordnen; aktive Retries nicht durch willkürliches Eviction duplizieren. Regression: viele echte Captureoperationen in einem langlebigen Worker, Retained-Heap/Cachebudget nach Abschluss messen, paralleles Same-key weiterhin genau einmal, Restart über Controlpersistenz prüfen.\n\nAusführungsprotokoll der ersten Testgruppe: [prism-core-review-tests.txt](../evidence/prism-core-review-tests.txt) (aus Originalausgabe transkribierte Zusammenfassung, kein nachträglich erzeugtes TAP).",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Engine-Refactoring c4713132 separat prüfen. 36 bestehende Tests und 12 Originalbyte-Vergleiche bestehen; native Chromium-Langzeit-/Heap-Abnahme und vollständiger Control-Neustart bleiben offen.",
+      "next_action": "Echte langlebige Chromium-Captures mit Retained-Heap-Messung und vollständiger Neustart über Controlpersistenz bleiben offen; reiner Refactorreview ist abgeschlossen.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "15 original engine/render tests pass, including reviewer-reproduced mutable request binding correction. Completed count/serialized-byte limits and real artifact persistence verified. Original Chromium capture gate blocked by missing executable; long-lived capture/heap and full Control restart proof remain open."
+      "remaining_work": "Echte langlebige Chromium-Captures mit Retained-Heap-Messung und vollständiger Neustart über Controlpersistenz bleiben offen; reiner Refactorreview ist abgeschlossen."
     },
     {
       "id": "PCR-PRISM-RENDERER-001",
@@ -4028,8 +4064,8 @@
       "severity": "mittel",
       "work_package": "WP11",
       "status": "implementiert",
-      "implementation_commit": "1002eb732484f32ae5b5fbd17f402575afc721b8",
-      "verification_status": "teilweise / blockiert",
+      "implementation_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+      "verification_status": "teilweise; lokale Ursachenbehebung unabhängig geprüft und integriert, originale native Gesamt-Abnahme offen",
       "verification_evidence": [
         {
           "report": "implementation/review-supervisor.md",
@@ -4038,6 +4074,12 @@
         {
           "report": "implementation/run8-supervisor-root-review.md",
           "summary": "Originaler Plattformfehler und anschließend tatsächlicher CLI/Core/ArtifactStore-Start unabhängig und Root bestanden; getrennte echte Prozessadoption bleibt offen."
+        },
+        {
+          "report": "implementation/resume-84-integration-root-review.md",
+          "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+          "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
+          "summary": "Weiterer realer Defekt behoben: SIGTERM/SIGINT während Recoverypause startete bisher erneut die Originalpipeline. Originalrot, Fix 8/8 plus 5/5 Operationsfälle unabhängig bestanden und integriert."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/operations-and-packaging.md",
@@ -4047,10 +4089,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/scripts/supervise-repository-review.mjs#L79"
       ],
       "unresolved_code_references": [],
-      "next_action": "Separate tatsächliche Adopted-Pipeline mit temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität oder volle Modell-/Provideranforderung.",
+      "next_action": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität. Sechs bestehende Supervisor-Lintfehler bleiben dokumentiert.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Originaler lesbarer Plattformstart jetzt nachgewiesen. Nur getrennte native Prozessadoption mit temporärem Statusfehler bleibt blockiert."
+      "remaining_work": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität. Sechs bestehende Supervisor-Lintfehler bleiben dokumentiert."
     },
     {
       "id": "IFR-03-001",
@@ -4778,7 +4820,7 @@
     }
   ],
   "implementation_branch": "fix/remediation-foundations-20260909",
-  "updated_at": "2026-09-11",
+  "updated_at": "2026-09-11T17:35:00.694875+00:00",
   "progress_counts": {
     "verifiziert": 94,
     "implementiert": 39,

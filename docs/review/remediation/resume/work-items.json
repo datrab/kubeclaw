@@ -10,7 +10,12 @@
       "id": "PCR-SDK-001",
       "status_at_checkpoint": "in Bearbeitung",
       "evidence": "resume/run-20260911-a51d-2h.md",
-      "next_action": "Restore d22ee1d2. Full fresh Delivery13/13,34 new consumer negatives, corrected package ownership and focused lint/types pass. New tests/refactors require separate review; full Knip and genuine coupled semantic acceptance remain open. Do not integrate semantic source alone or reroute the flagged helper."
+      "next_action": "Restore d22ee1d2. Full fresh Delivery13/13,34 new consumer negatives, corrected package ownership and focused lint/types pass. New tests/refactors require separate review; full Knip and genuine coupled semantic acceptance remain open. Do not integrate semantic source alone or reroute the flagged helper.",
+      "resume_20260911_evidence": {
+        "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+        "summary": "Delivery-Refactor und Consumerfälle unabhängig gegengeprüft; dabei verlorene statische Integrationstestabdeckung repariert, mit sechs echten Typfehlern plus drei Root-Negativen bestätigt. Paketgrenzen/Testabdeckung integriert; gekoppelte SDK-/Delivery-Quelle bleibt separat.",
+        "remaining_gate": "Vollständiges Knip und ursprüngliche gekoppelte native Semantik-/Producer-/History-Abnahme fehlen. Markierte Helper-Aktion weder wiederholen noch umleiten."
+      }
     },
     {
       "id": "PCR-BUSTER-ENGINE-004",
@@ -76,7 +81,12 @@
       "id": "PCR-DIRECT-COMMAND-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-product-gates.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. All eight output positions × six media types pass the original resolver/production validator with actual file copies/hashes. | The original native two-artifact command/provider/runner regression was run after genuine sandbox build and fails (`errored`/EPIPE before command), so the exact original requested native proof remains open. No cluster/BuildKit requirement was added to this finding."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. All eight output positions × six media types pass the original resolver/production validator with actual file copies/hashes. | The original native two-artifact command/provider/runner regression was run after genuine sandbox build and fails (`errored`/EPIPE before command), so the exact original requested native proof remains open. No cluster/BuildKit requirement was added to this finding.",
+      "resume_20260911_evidence": {
+        "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+        "summary": "Originaltests korrekt als Integrationstests eingeordnet; ursprüngliche npm-Einstiegspunkte erhalten, Outputvertragsprüfung und unveränderte Paketgrenzenprüfung auf integrierter Quelle bestanden.",
+        "remaining_gate": "Originaler vollständiger nativer Runner-/Sandbox-Artefaktnachweis bleibt wegen unveränderter Hostvoraussetzungen offen."
+      }
     },
     {
       "id": "PCR-VISUAL-001",
@@ -94,7 +104,12 @@
       "id": "PATH-T02-002",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-prism-reverification.md",
-      "next_action": "Actual Studio TSX and Prism types pass; old type-error blocker is stale. Native pooled PostgreSQL/browser/agent acceptance remains open."
+      "next_action": "Actual Studio TSX and Prism types pass; old type-error blocker is stale. Native pooled PostgreSQL/browser/agent acceptance remains open.",
+      "resume_20260911_evidence": {
+        "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+        "summary": "Prism-Typprüfung und frische lokale HTTP-/Worker-Komposition auf integrierter Quelle bestanden; kein neuer TypeScriptblocker.",
+        "remaining_gate": "Native PostgreSQL-Pool-/Browser-/Agentkomposition weiterhin ausstehend."
+      }
     },
     {
       "id": "PATH-T02-003",
@@ -136,7 +151,12 @@
       "id": "PCR-PRISM-WORKER-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-prism-reverification.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original Control/Worker + temporary Postgres/artifact store; readable correct full log and store failure remains errored. | Code present: required full log uses the original authenticated/digest-bound artifact path; original Executor/Engine/HTTP/CAS regression yields readable matching bytes; corrupt store still errors and budget rejects oversized log. | Complete original Control + Worker with native DB and artifact storage, confirming completion/rollback at the actual service boundary."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original Control/Worker + temporary Postgres/artifact store; readable correct full log and store failure remains errored. | Code present: required full log uses the original authenticated/digest-bound artifact path; original Executor/Engine/HTTP/CAS regression yields readable matching bytes; corrupt store still errors and budget rejects oversized log. | Complete original Control + Worker with native DB and artifact storage, confirming completion/rollback at the actual service boundary.",
+      "resume_20260911_evidence": {
+        "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+        "summary": "Zusätzlich echte Request-/Shutdown-Lebensdauer mit ursprünglichem nonce pg.Pool integriert; Verbindungsaufbau, gesetzte Stoppfrist und nicht als Erfolg ausgegebener Cutoff geprüft.",
+        "remaining_gate": "Echter migrierter PostgreSQL-Dienst, SQL-/Lock-/Rollback-/Wiederanlaufnachweise der vollständigen Komposition fehlen; TCP-Peer ist kein PostgreSQL-Dienst."
+      }
     },
     {
       "id": "PCR-PRISM-WORKER-002",
@@ -148,13 +168,23 @@
       "id": "PCR-PRISM-WORKER-003",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/worker-terminal-resource-measurement.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Zusätzliche Completionmessphase vorhanden; tatsächliche Cancel-/Browsernacharbeit und gesamtes Attempt-CPUfenster nicht vollständig nachgewiesen."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Zusätzliche Completionmessphase vorhanden; tatsächliche Cancel-/Browsernacharbeit und gesamtes Attempt-CPUfenster nicht vollständig nachgewiesen.",
+      "resume_20260911_evidence": {
+        "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+        "summary": "Echte HTTP-Disconnect-Lücke sowie fehlender SIGTERM/SIGINT-Serviceabbruch behoben und unabhängig integriert. Original Core bleibt Abbruch-/Drainowner; tatsächliche Kindprozesse und native pg-TCP-Verbindungen geprüft, unaufgelöster Ablauf beendet Prozess mit Fehlercode.",
+        "remaining_gate": "Native Browser-/Kindprozessbereinigung und vollständige native Service-/Control-Recovery bleiben offen. Bereits persistierte Uploadbytes werden nicht als zurückgerollt behauptet."
+      }
     },
     {
       "id": "PCR-PRISM-ENGINE-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "resume/run-20260911-a51d-2h.md",
-      "next_action": "Review bounded engine refactor d22ee1d2 separately:36 original tests and12 exact original-result comparisons pass; native browser/heap and full Control restart remain open."
+      "next_action": "Review bounded engine refactor d22ee1d2 separately:36 original tests and12 exact original-result comparisons pass; native browser/heap and full Control restart remain open.",
+      "resume_20260911_evidence": {
+        "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+        "summary": "Engineextraktion unabhängig mit 36 Originaltests, 12 Bytevergleichen und Callback-/Providerprüfung bestätigt und integriert. Frische Integrationssuite 55 bestanden, 1 expliziter nativer PG-Skip.",
+        "remaining_gate": "Echte langlebige Chromium-Captures mit Retained-Heap-Messung und vollständiger Neustart über Controlpersistenz bleiben offen; reiner Refactorreview ist abgeschlossen."
+      }
     },
     {
       "id": "PCR-PRISM-RENDERER-002",
@@ -232,7 +262,12 @@
       "id": "PCR-SCAFFOLD-OPS-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/run8-supervisor-root-review.md",
-      "next_action": "Separate tatsächliche Adopted-Pipeline mit temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität oder volle Modell-/Provideranforderung."
+      "next_action": "Separate tatsächliche Adopted-Pipeline mit temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität oder volle Modell-/Provideranforderung.",
+      "resume_20260911_evidence": {
+        "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+        "summary": "Weiterer realer Defekt behoben: SIGTERM/SIGINT während Recoverypause startete bisher erneut die Originalpipeline. Originalrot, Fix 8/8 plus 5/5 Operationsfälle unabhängig bestanden und integriert.",
+        "remaining_gate": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität. Sechs bestehende Supervisor-Lintfehler bleiben dokumentiert."
+      }
     },
     {
       "id": "IFR-07-001",

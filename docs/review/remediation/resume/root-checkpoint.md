@@ -2,7 +2,7 @@
 
 Frozen scope remains exactly 47 IDs. Eight now satisfy their original finding
 requirements; 39 remain incomplete. Overall completion is false. The latest
-continuation is in `run-20260911-a51d-2h.md`; current remote package refs are
+continuation is in `run-20260911-a51d-resumed.md`; current remote package refs are
 listed in `run5-active-packages.json`. Reviewed integration and evidence
 remain in `run-20260909t2146.md` and `run-20260909t2114.md`.
 
@@ -104,3 +104,8 @@ byte-exact original result comparisons pass. Delivery/Prism engine lint and
 ownership gates repaired; Studio TSX stale blocker corrected. Separate review
 and required native gates remain open. See `run-20260911-a51d-2h.md` and its
 39-ID state; no source was integrated and no overall status was promoted.
+
+
+## Resumed2026-09-11 integration
+
+The prior early stop was corrected by an84minute continuation (16:54:11–18:18:11UTC), currently active. Independently reviewed Prism engine extraction, Worker HTTP cancellation/service shutdown, Supervisor stop admission and complete integration-test ownership/typechecking are integrated at da02ba5ae6abe4b11c1addf992df308608eaed1f. Fresh composition:55 Prism/Worker passed with1 explicit native SQL skip,13 Supervisor passed, all selected moved-package/type/ownership/config gates passed. Shared SDK, WorkerCore, NovaCore, Delivery and Summary source are unchanged. The broader candidate remains0144df383250a1975d40b04746eac398ee77e747; coupled native semantic/Delivery acceptance remains held. Current state and all39 follow-up prerequisites are linked from the continuation report.

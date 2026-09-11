@@ -1,0 +1,2006 @@
+{
+  "schema_version": 1,
+  "purpose": "Existence-checked follow-up inventory; not execution authorization or acceptance proof",
+  "created_at": "2026-09-11T17:28:55.346344+00:00",
+  "input_state_path": "docs/review/remediation/resume/run-20260911-a51d-2h-state.json",
+  "input_state_sha256": "266f98b6a73c8d4ca90dc24bfdd98aeb82c92231722aded4e2abfbb57a52bec0",
+  "source_tree": "d90200377036cd73d1048e1d206e66cc9e8fed40",
+  "finding_count": 39,
+  "executed_gates": 0,
+  "finding_closures": 0,
+  "command_placeholders_must_not_be_guessed": true,
+  "gate_catalog": {
+    "delivery": {
+      "path": "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+      "path_exists": true,
+      "sha256": "bc3c62c319a47cf7b147623f6d7a4166f4a1ab644096530ef6579a235d37fde9",
+      "scope": "Local original consumer boundary; does not prove genuine semantic producer/history acceptance",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "knip": {
+      "path": "charts/kubeclaw/files/config/knip.json",
+      "path_exists": true,
+      "sha256": "ea0dcf84442e3c9111bfbcd0225da4f4e1be027da627ae5c9f4fa99a6b191605",
+      "scope": "Whole-repository Knip analysis; config presence alone is not execution",
+      "prerequisites": [
+        "Declared Knip executable/package installed at the pinned version",
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "npm run knip:check",
+      "environment_variables": [],
+      "authorizes_execution": false,
+      "package_script": {
+        "package_json": "package.json",
+        "name": "knip:check",
+        "exact_value": "npm run knip:config:check && npx --no-install knip --config charts/kubeclaw/files/config/knip.json --no-progress --no-config-hints --no-tag-hints"
+      }
+    },
+    "terminal": {
+      "path": "skills/buster/engine/test-gates/tests/terminal-workspace.test.ts",
+      "path_exists": true,
+      "sha256": "b02702d27aedf1ec68ff08ecf6205748f23a4219eb7515f7d52ab87fb19a6b6c",
+      "scope": "Local original idempotent cleanup helper; no orphan ownership/termination proof",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node skills/buster/engine/test-gates/tests/terminal-workspace.test.ts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "kernel": {
+      "path": "tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs",
+      "path_exists": true,
+      "sha256": "4ea386d8a64e840266c2c4eca396b5021161db90f119736dd25a10ed936f610d",
+      "scope": "Native process-tree/credential-drop/cgroup kernel boundary",
+      "prerequisites": [
+        "Original compiled sandbox",
+        "Host with readable process-tree procfs and delegated writable cgroup v2",
+        "Legitimate native UID/GID credential-drop support"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs <delegated-cgroup-root> <nonzero-drop-uid> <nonzero-drop-gid>",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "restart": {
+      "path": "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+      "path_exists": true,
+      "sha256": "5494a3c11b36495d7382f9b99932c1e08f510e67b674545575bd436673746aeb",
+      "scope": "Original full Nova/Buster process-restart test; does not prove all orphan GC scopes",
+      "prerequisites": [
+        "Original compiled sandbox",
+        "Host with readable process-tree procfs and delegated writable cgroup v2",
+        "Legitimate native UID/GID credential-drop support",
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "junit": {
+      "path": "tests/verification/contracts/check-junit-executed-required.mts",
+      "path_exists": true,
+      "sha256": "ab37fe9f5640c9cf449b012fd8df420fc9e5397b1d3f81798f30706a71bbeedc",
+      "scope": "Local original JUnit executed-test contract",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node tests/verification/contracts/check-junit-executed-required.mts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "direct": {
+      "path": "tests/verification/integration/direct-command-runner-artifacts.test.mts",
+      "path_exists": true,
+      "sha256": "4330c6ee5a406f0356f5bdcdc556ab92c1de7e4ccb7bccc01783205aadb17821",
+      "scope": "Original native direct-command runner and artifacts boundary",
+      "prerequisites": [
+        "Original compiled sandbox",
+        "Host with readable process-tree procfs and delegated writable cgroup v2",
+        "Legitimate native UID/GID credential-drop support",
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "npm run test:native-artifacts --prefix skills/buster/plugins/direct-command",
+      "environment_variables": [],
+      "authorizes_execution": false,
+      "package_script": {
+        "package_json": "skills/buster/plugins/direct-command/package.json",
+        "name": "test:native-artifacts",
+        "exact_value": "node ../../../../tests/verification/integration/direct-command-runner-artifacts.test.mts"
+      }
+    },
+    "compiler": {
+      "path": "tests/verification/contracts/check-project-compiler.mts",
+      "path_exists": true,
+      "sha256": "802846a68eced2141516765b573c090138ae3c85669cd7349324cb37b1ecfbf1",
+      "scope": "Local compiler declaration checks; not full application/provider/human acceptance",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node tests/verification/contracts/check-project-compiler.mts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "buildkit": {
+      "path": "tests/verification/e2e/nova-buildkit-production-preflight.mts",
+      "path_exists": true,
+      "sha256": "c660165efe3cd6b23760bf56bc57b5cb2f03764f84144d28f418f17cbdc2644d",
+      "scope": "Existing native signed-source remote container-build preflight; no complete uncached-CRI/offline mirror claim",
+      "prerequisites": [
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task",
+        "Actual BuildKit and registry push/verification route"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node tests/verification/e2e/nova-buildkit-production-preflight.mts",
+      "environment_variables": [
+        "BUSTER_V2_TOKEN",
+        "BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY"
+      ],
+      "authorizes_execution": false
+    },
+    "visual": {
+      "path": "tests/verification/e2e/nova-visual-production-preflight.mts",
+      "path_exists": true,
+      "sha256": "69d60680b2f2671a09c360d9a010d75cec1438cc0c9888b3dbda0d2852f24c00",
+      "scope": "Native remote visual provider path; creates Kubernetes fixture and requires actual browser baseline",
+      "prerequisites": [
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task",
+        "Matching actual Playwright Chromium installation",
+        "Required actual build/assets; no browser substitute or installation retry in this task",
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node tests/verification/e2e/nova-visual-production-preflight.mts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "visual-local": {
+      "path": "skills/buster/plugins/visual/tests/browser-identity.test.mjs",
+      "path_exists": true,
+      "sha256": "84249a40bd69166a6c052e8654fb3b384201c536a818713768e55806e0fea6a3",
+      "scope": "Local version identity/rejection checks; does not approve a new real baseline",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test skills/buster/plugins/visual/tests/browser-identity.test.mjs",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "prism-live": {
+      "path": "tests/verification/live/prism-nova-production-e2e.mjs",
+      "path_exists": true,
+      "sha256": "41cef571679f2b7b41981fa69f1e93de50f7b012a8465eca48bd89ae6f160919",
+      "scope": "Existing mutating full-service production E2E; not an isolated lost-ACK or every restart proof",
+      "prerequisites": [
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task",
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes",
+        "Matching actual Playwright Chromium installation",
+        "Required actual build/assets; no browser substitute or installation retry in this task"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node tests/verification/live/prism-nova-production-e2e.mjs",
+      "environment_variables": [
+        "PRISM_CONTROL_URL",
+        "PRISM_AGENT_URL",
+        "PRISM_E2E_INGRESS_SECRET",
+        "PRISM_E2E_USER"
+      ],
+      "authorizes_execution": false
+    },
+    "prism-recovery": {
+      "path": "tests/verification/live/prism-production-failures.mjs",
+      "path_exists": true,
+      "sha256": "5432b11d7888b1a9386ebbea0f3bc84379d64ac275ac995d1dc6de1d72665ab3",
+      "scope": "Existing mutating pod deletion/rollout/backup/restore test; does not establish in-flight transaction or session crash-prefix correctness",
+      "prerequisites": [
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix",
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node tests/verification/live/prism-production-failures.mjs",
+      "environment_variables": [
+        "PRISM_NAMESPACE",
+        "PRISM_BUSTER_DEFECT_RESULT_FILE",
+        "PRISM_BUSTER_CORRECTED_RESULT_FILE"
+      ],
+      "authorizes_execution": false
+    },
+    "agent-local": {
+      "path": "skills/prism/tests/agent-process.test.mts",
+      "path_exists": true,
+      "sha256": "8eff8fba328604f2a00521afec7fad805d65f50d0f7c502a39eb412ba7aa523a",
+      "scope": "Local agent process contract; not configured actual OpenClaw session recovery",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test skills/prism/tests/agent-process.test.mts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "control-local": {
+      "path": "skills/prism/tests/control-decisions.test.mts",
+      "path_exists": true,
+      "sha256": "9cec9fcdfbd8f56041ee6c08d82eaecc06ec4507d54ed74b5352f82c6cedcf86",
+      "scope": "Local decision transaction regression; native pooled/full-service acceptance separate",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test skills/prism/tests/control-decisions.test.mts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "control-http": {
+      "path": "skills/prism/tests/control-product-independent.test.mts",
+      "path_exists": true,
+      "sha256": "8a6a4ede50868c639fc58505d55bd7c7b81a125a9cdda9b3507b5bc92e4e0392",
+      "scope": "Local Control/HTTP composition coverage; does not replace full native PG lost ACK",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test skills/prism/tests/control-product-independent.test.mts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "corpus": {
+      "path": "skills/prism/integration/corpus-pool.mts",
+      "path_exists": true,
+      "sha256": "993e49c853527500253108753d94178855a6ef019203ac8dd1b012e50de6d8c7",
+      "scope": "Native multi-connection corpus transaction rollback/locking test; creates/drops its own database",
+      "prerequisites": [
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "npm run test:corpus-pool --prefix skills/prism",
+      "environment_variables": [
+        "PRISM_TEST_PG_URL"
+      ],
+      "authorizes_execution": false,
+      "package_script": {
+        "package_json": "skills/prism/package.json",
+        "name": "test:corpus-pool",
+        "exact_value": "node integration/corpus-pool.mts"
+      }
+    },
+    "worker-local": {
+      "path": "skills/prism/tests/worker-service.test.mts",
+      "path_exists": true,
+      "sha256": "aa66b74fee539e40e9f665edd785259f77f514684a4150ae03d14e2a3c7fe237",
+      "scope": "Original worker executor/authenticated HTTP/CAS and durable log boundary; no full PG service claim",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test skills/prism/tests/worker-service.test.mts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "worker-browser": {
+      "path": "skills/prism/integration/worker-browser-cancellation.mts",
+      "path_exists": true,
+      "sha256": "72efc55d4f14352724e68a7858a204c105f973351e7c7eac20e6655cae0f0aa0",
+      "scope": "Native owned Chromium cancellation/drain; does not prove parallel child CPU attribution",
+      "prerequisites": [
+        "Matching actual Playwright Chromium installation",
+        "Required actual build/assets; no browser substitute or installation retry in this task",
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node skills/prism/integration/worker-browser-cancellation.mts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "worker-cancel": {
+      "path": "skills/prism/tests/worker-cancellation.test.mts",
+      "path_exists": true,
+      "sha256": "62393643e23f518fd3e2d608b9c0ec08d4a13b70c13441ec25c7c9145908df60",
+      "scope": "Local existing cancellation/resource samples; shared-parent CPU/RSS is not complete attempt-tree attribution",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test skills/prism/tests/worker-cancellation.test.mts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "worker-pg": {
+      "path": "skills/prism/tests/worker-readiness.test.mts",
+      "path_exists": true,
+      "sha256": "b4b4ab39156d45d0afe4495178df1b129c4d2d55f9d31086de0804b2322d2d0e",
+      "scope": "Includes native PostgreSQL pool/query cancellation case; that case skips without required database",
+      "prerequisites": [
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes",
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test skills/prism/tests/worker-readiness.test.mts",
+      "environment_variables": [
+        "KUBECLAW_PRISM_READINESS_TEST_DATABASE"
+      ],
+      "authorizes_execution": false
+    },
+    "engine-local": {
+      "path": "skills/prism/tests/engine-cache.test.mts",
+      "path_exists": true,
+      "sha256": "d393b01d91407d9a17ba7647dbe9c30a6b311e274c339f7fe20aa6b03b27d485",
+      "scope": "Local engine cache/ownership tests; no Chromium long-lived heap or Control-restart acceptance",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test skills/prism/tests/engine-cache.test.mts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "studio-native": {
+      "path": "skills/prism/studio/tests/remediation.spec.mjs",
+      "path_exists": true,
+      "sha256": "d631f46ce84cc8d9c5007dad494e8a25e8d5801ca5f103dae7f6aae48e18b9df",
+      "scope": "Actual iframe/action/image browser assertions with remediation Playwright config",
+      "prerequisites": [
+        "Matching actual Playwright Chromium installation",
+        "Required actual build/assets; no browser substitute or installation retry in this task",
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "npm run test:studio-remediation --prefix skills/prism",
+      "environment_variables": [],
+      "authorizes_execution": false,
+      "package_script": {
+        "package_json": "skills/prism/package.json",
+        "name": "test:studio-remediation",
+        "exact_value": "node --test tests/studio-roundtrip.test.mts tests/preview-assets.test.mts && npm run build:studio && playwright test --config studio/playwright-remediation.mjs"
+      }
+    },
+    "studio-local": {
+      "path": "skills/prism/tests/preview-assets.test.mts",
+      "path_exists": true,
+      "sha256": "e1c35f0bc6b677916e13e2070d8fb1a9a28a1dd65be130b46ab0f5a957749d7b",
+      "scope": "Local artifact identity/media/HTTP boundaries; not actual image decode/CSP",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test skills/prism/tests/preview-assets.test.mts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "retention-local": {
+      "path": "tests/verification/reliability/operator-retention-authority-fixture.test.mjs",
+      "path_exists": true,
+      "sha256": "646b4ac41f1deec54a572f1f9870e9fec7c78f924a585b762755a6304c92d6f2",
+      "scope": "Explicit bounded operator-retention authority fixture; does not prove all other original consumers/histories",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test tests/verification/reliability/operator-retention-authority-fixture.test.mjs",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "demo-local": {
+      "path": "tests/verification/contracts/check-demo-ready-controller.mts",
+      "path_exists": true,
+      "sha256": "a8efc5ff2d1a62faf88bcd890ed457f275211e7d6103db7122d22d0b1e6a5950",
+      "scope": "Local controller ready contract; no real Tailnet recipient/human acceptance",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node tests/verification/contracts/check-demo-ready-controller.mts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "handoff-local": {
+      "path": "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+      "path_exists": true,
+      "sha256": "b63f93e58e0e9f3d02d8c13111fdedc0f156ef025a9f4101058f4c37d092ccd5",
+      "scope": "Original local TLS handoff/controller interoperability with contract-vector upstream envelopes",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime",
+        "Existing native Go executable"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "npm test --prefix skills/nova/plugins/demo-handoff",
+      "environment_variables": [],
+      "authorizes_execution": false,
+      "package_script": {
+        "package_json": "skills/nova/plugins/demo-handoff/package.json",
+        "name": "test",
+        "exact_value": "cd ../../../.. && node --test skills/nova/plugins/demo-handoff/tests/*.test.mts skills/nova/plugins/demo-handoff/tests/*.test.mjs"
+      }
+    },
+    "registry-local": {
+      "path": "tests/verification/deployment/registry-client-config.test.mjs",
+      "path_exists": true,
+      "sha256": "899b1cc7f9032e26165569c8dace78190252780a11d120c85d8d0ace05e6b3cf",
+      "scope": "Local registry client/config deployment contract; no actual CRI pulls or offline cache",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test tests/verification/deployment/registry-client-config.test.mjs",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "receipt-local": {
+      "path": "tests/verification/contracts/check-production-receipt-attestation.mjs",
+      "path_exists": true,
+      "sha256": "6ad5f9fde877e6194a2f2a33a15cec48c213377958b511f34834013f456bf0ac",
+      "scope": "Local receipt attestation contract; no actual running pod imageID comparison",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node tests/verification/contracts/check-production-receipt-attestation.mjs",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "workflow-local": {
+      "path": "tests/verification/contracts/workflow-trust-split.test.mjs",
+      "path_exists": true,
+      "sha256": "d5198e7e5c1d05a131d006eedba795227f20e3cf87eba387a10ca092be0babec",
+      "scope": "Local workflow trust/permissions declaration; not effective GitHub token rights in actual CI",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test tests/verification/contracts/workflow-trust-split.test.mjs",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "supervisor-native": {
+      "path": "scripts/tests/integration/repository-review-supervisor-adoption.mjs",
+      "path_exists": true,
+      "sha256": "7c385d0548c5fdb10caddaa7ec5e4863df68182bd780066be7da177252f50d18",
+      "scope": "Native adopted-process ownership plus temporary status failure gate; must have genuine readable child cmdline",
+      "prerequisites": [
+        "Host with actual child /proc cmdline and liveness visible to original supervisor",
+        "No invented or substituted process identity",
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test scripts/tests/integration/repository-review-supervisor-adoption.mjs",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "supervisor-local": {
+      "path": "scripts/tests/integration/repository-review-supervisor-start.mjs",
+      "path_exists": true,
+      "sha256": "1de81dd0831b59d6400c541bc5694decc3bdf1609fca839ed74ad0f1e187baa0",
+      "scope": "Original local missing/readable platform start; not native adoption",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test scripts/tests/integration/repository-review-supervisor-start.mjs",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "rollout-local": {
+      "path": "tests/verification/contracts/check-rollout-health.mjs",
+      "path_exists": true,
+      "sha256": "ed441ed7c533cdf1575bb023f71cc25b31ecaea9bb8f3b29a709f89d29a1a2c7",
+      "scope": "Local rendered health/config/rollout sensitivity; not an actual release update",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime",
+        "Existing Helm executable"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node tests/verification/contracts/check-rollout-health.mjs",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "envoy-native": {
+      "path": "tests/verification/deployment/check-worker-trust-envoy-native.mjs",
+      "path_exists": true,
+      "sha256": "8a6939ae66056069819dd71276c822dee8a9b4b7522776f15a5a76c9b8d0a34b",
+      "scope": "Native Envoy test with actual SVID/TLS boundaries; not SPIRE attestation or Kubernetes rollout",
+      "prerequisites": [
+        "Existing real Envoy executable and native TLS tooling",
+        "Does not replace actual deployed SPIRE/Envoy rollout"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node tests/verification/deployment/check-worker-trust-envoy-native.mjs",
+      "environment_variables": [
+        "KUBECLAW_TEST_ENVOY"
+      ],
+      "authorizes_execution": false
+    },
+    "readiness-local": {
+      "path": "tests/verification/deployment/buster-readiness.test.mts",
+      "path_exists": true,
+      "sha256": "e9a61c6085469644632f508bb5acbbdc8110d4e041e2ac166b661a568b963f66",
+      "scope": "Local Buster readiness contracts; no complete actual DB/BuildKit/pod outage or delivered alarm",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "node --test tests/verification/deployment/buster-readiness.test.mts",
+      "environment_variables": [],
+      "authorizes_execution": false
+    },
+    "writer-local": {
+      "path": "skills/nova/plugins/pipeline-review/tests/live-function.test.ts",
+      "path_exists": true,
+      "sha256": "eb56fbcf5a026359aad4351423c92ebfd1f76e72843f646bc7e50953cb6e60ef",
+      "scope": "Local pipeline-review live-function contract, not configured original model/writer execution",
+      "prerequisites": [
+        "Existing repository Node/npm dependencies and original workspace package links; no substitute runtime"
+      ],
+      "executed_by_this_matrix_task": false,
+      "command": "npm test --prefix skills/nova/plugins/pipeline-review",
+      "environment_variables": [],
+      "authorizes_execution": false,
+      "package_script": {
+        "package_json": "skills/nova/plugins/pipeline-review/package.json",
+        "name": "test",
+        "exact_value": "node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+      }
+    }
+  },
+  "findings": [
+    {
+      "finding_id": "PCR-SDK-001",
+      "title": "Serialisierung erzeugt ungültige oder kollidierende Daten",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "34 neue originale v2/v3-Consumer-Ablehnungsfälle lokal bestanden; echte Import-CAS/Reopen-, gültige Positivkontrollen und unveränderte Originaljournale gesichert. Sieben Delivery-Lintfehler behoben; Paketgrenzenprüfung durch korrekt platzierte Integrationstests repariert. Separate Gegenprüfung, vollständige Knip-/Semantikabnahme weiterhin offen; Quelle nicht integriert.",
+      "saved_remaining_acceptance": "Genuine coupled semantic producer/history acceptance and full Knip remain open; existing restrictions unchanged.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "contracts/delivery-manifest/v3/src/index.ts",
+        "skills/nova/plugins/project-summary/src/summary.ts"
+      ],
+      "local_gate_ids": [
+        "delivery"
+      ],
+      "native_or_external_gate_ids": [
+        "knip"
+      ],
+      "remaining_prerequisites": [
+        "Declared full Knip dependency",
+        "Original genuine coupled semantic producer/history acceptance; existing restrictions remain in force"
+      ],
+      "uncovered_acceptance": "Delivery and Knip do not constitute a single full semantic migration acceptance gate. No such standalone full gate is mapped here.",
+      "source_existence": [
+        {
+          "path": "contracts/delivery-manifest/v3/src/index.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/nova/plugins/project-summary/src/summary.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-BUSTER-ENGINE-004",
+      "title": "Terminale Jobs behalten vollständige Quellen und Arbeitsverzeichnisse",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Normale bestätigte Arbeit bereinigt; Restart-/Orphan-/unsichere Eingaben bleiben bis Besitz-/Terminierungsnachweis erhalten.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "skills/buster/engine/test-gates/terminal-workspace.ts"
+      ],
+      "local_gate_ids": [
+        "terminal"
+      ],
+      "native_or_external_gate_ids": [
+        "restart"
+      ],
+      "remaining_prerequisites": [
+        "Original compiled sandbox",
+        "Host with readable process-tree procfs and delegated writable cgroup v2",
+        "Legitimate native UID/GID credential-drop support"
+      ],
+      "uncovered_acceptance": "No standalone complete orphan-owner/quiescence/retention crash-prefix gate identified; restart is related, not complete authority.",
+      "source_existence": [
+        {
+          "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/buster/engine/test-gates/terminal-workspace.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-ISOLATION-002",
+      "title": "SIGKILL trifft Supervisor statt Prozessbaum",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Echte Prozessbaum-/Credential-drop-/Host-SIGKILL-Abnahme durch fehlende proc-children und delegierte Cgroups blockiert.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+        "skills/common/plugin-runtime/foundation/isolation/cgroup.ts"
+      ],
+      "local_gate_ids": [],
+      "native_or_external_gate_ids": [
+        "kernel"
+      ],
+      "remaining_prerequisites": [
+        "Original compiled sandbox",
+        "Host with readable process-tree procfs and delegated writable cgroup v2",
+        "Legitimate native UID/GID credential-drop support"
+      ],
+      "uncovered_acceptance": "Native kernel execution remains unverified; gate existence is not a passed process-tree/OOM result.",
+      "source_existence": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-ISOLATION-004",
+      "title": "Lease-Memorywert ist kein erzwungenes Speichermaximum",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Reale Cgroup2-Speicher/OOM-Grenze implementiert, konservative Page-Rundung lokal geprüft; Kernelabnahme mangels Delegation blockiert.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+        "skills/common/plugin-runtime/foundation/isolation/cgroup.ts"
+      ],
+      "local_gate_ids": [],
+      "native_or_external_gate_ids": [
+        "kernel"
+      ],
+      "remaining_prerequisites": [
+        "Original compiled sandbox",
+        "Host with readable process-tree procfs and delegated writable cgroup v2",
+        "Legitimate native UID/GID credential-drop support"
+      ],
+      "uncovered_acceptance": "Native kernel execution remains unverified; gate existence is not a passed process-tree/OOM result.",
+      "source_existence": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-NOVA-GATE-005",
+      "title": "Prozessrestarttest erwartet entfernte Graphdatei",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Öffentlicher Graphreader korrigiert; realer Vollprozess-Restart scheitert an Sandbox vor neuer Assertion; kein bestandener Nachweis.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+        "skills/nova/core/test-gates/remote-result-import.ts"
+      ],
+      "local_gate_ids": [],
+      "native_or_external_gate_ids": [
+        "restart"
+      ],
+      "remaining_prerequisites": [
+        "Original compiled sandbox",
+        "Host with readable process-tree procfs and delegated writable cgroup v2",
+        "Legitimate native UID/GID credential-drop support"
+      ],
+      "uncovered_acceptance": "Corrected public graph read still requires the complete original native restart run.",
+      "source_existence": [
+        {
+          "path": "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+          "exists": true
+        },
+        {
+          "path": "skills/nova/core/test-gates/remote-result-import.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PATH-T11-001",
+      "title": "Blocking-JUnit kann ohne einen ausgeführten Test bestehen",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Actual Node JUnit output, original parser/finalizer and localhost HTTP Nova import/FileStore verified independently; no review override or invented failed case for missing execution. Full native provider/adapter/runner path blocked by actual EPIPE/exit70 host prerequisite failure.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/buster/engine/test-gates/runner.ts"
+      ],
+      "local_gate_ids": [
+        "junit"
+      ],
+      "native_or_external_gate_ids": [
+        "direct"
+      ],
+      "remaining_prerequisites": [
+        "Original compiled sandbox",
+        "Host with readable process-tree procfs and delegated writable cgroup v2",
+        "Legitimate native UID/GID credential-drop support"
+      ],
+      "uncovered_acceptance": "Direct runner coverage is related; no single mapped standalone full original JUnit-provider-to-Nova acceptance gate established.",
+      "source_existence": [
+        {
+          "path": "skills/buster/engine/test-gates/runner.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PATH-T13-001",
+      "title": "Kumulativer Prüfumfang ist nicht gebunden; letzte Modulbelege genügen dem Abschluss",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Native kumulative Gesamtpipeline mit echten Providern und anschließendem Ready-/Zustellungsnachweis prüfen; technische delivery-manifest.v2 allein ist keine Ready-Freigabe.",
+      "native_gate_availability": "no_standalone_native_acceptance_gate_identified",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/nova/plugins/project-summary/src/summary.ts"
+      ],
+      "local_gate_ids": [
+        "compiler",
+        "demo-local",
+        "handoff-local"
+      ],
+      "native_or_external_gate_ids": [],
+      "remaining_prerequisites": [
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task",
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix"
+      ],
+      "uncovered_acceptance": "No standalone gate identified covering cumulative original full pipeline plus actual readiness, delivery and human acceptance together.",
+      "source_existence": [
+        {
+          "path": "skills/nova/plugins/project-summary/src/summary.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-CONTAINER-BUILD-001",
+      "title": "Fachlicher Buildfehler wird durch erforderliches Imageoutput zum Ausführungsfehler",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/buster/plugins/container-build/src/provider.js"
+      ],
+      "local_gate_ids": [],
+      "native_or_external_gate_ids": [
+        "buildkit"
+      ],
+      "remaining_prerequisites": [
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task",
+        "Actual BuildKit registry verification and all boundary deadline cases"
+      ],
+      "uncovered_acceptance": "Existing preflight is related; does not alone establish both failure-classification/deadline edge cases.",
+      "source_existence": [
+        {
+          "path": "skills/buster/plugins/container-build/src/provider.js",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-CONTAINER-BUILD-002",
+      "title": "Eigenes Zeitlimit endet vor Registryverify",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/buster/plugins/container-build/src/provider.js"
+      ],
+      "local_gate_ids": [],
+      "native_or_external_gate_ids": [
+        "buildkit"
+      ],
+      "remaining_prerequisites": [
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task",
+        "Actual BuildKit registry verification and all boundary deadline cases"
+      ],
+      "uncovered_acceptance": "Existing preflight is related; does not alone establish both failure-classification/deadline edge cases.",
+      "source_existence": [
+        {
+          "path": "skills/buster/plugins/container-build/src/provider.js",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-DIRECT-COMMAND-001",
+      "title": "Deklarierbarer Mediatyp passt nur auf erste Ausgabe",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originaler nativer Runner nach regulärem Sandbox-Build erneut ausgeführt: write EPIPE, open task children: No such file or directory. Originalassertion erhalten; keine Hostumgehung, keine erfolgreiche Providerausführung.",
+      "saved_remaining_acceptance": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/buster/plugins/direct-command/src/provider.js"
+      ],
+      "local_gate_ids": [],
+      "native_or_external_gate_ids": [
+        "direct"
+      ],
+      "remaining_prerequisites": [
+        "Original compiled sandbox",
+        "Host with readable process-tree procfs and delegated writable cgroup v2",
+        "Legitimate native UID/GID credential-drop support"
+      ],
+      "uncovered_acceptance": "Original native runner output acceptance required; full remote integration remains separate.",
+      "source_existence": [
+        {
+          "path": "skills/buster/plugins/direct-command/src/provider.js",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-VISUAL-001",
+      "title": "mittel: Baselineidentität bindet keine Browserversion",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Mit tatsächlichem Workerbrowser neu aufnehmen und freigeben; nativen Versionsabweichungs-/Erneuerungstest und Remote-Vertikale ausführen. Historische v1Fixture bleibt explizit blockiert.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/buster/plugins/visual/src/provider.js",
+        "skills/buster/plugins/visual/src/browser-identity.js"
+      ],
+      "local_gate_ids": [
+        "visual-local"
+      ],
+      "native_or_external_gate_ids": [
+        "visual"
+      ],
+      "remaining_prerequisites": [
+        "Matching actual Playwright Chromium installation",
+        "Required actual build/assets; no browser substitute or installation retry in this task",
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task",
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix"
+      ],
+      "uncovered_acceptance": "Fresh actual worker baseline approval and native version-renewal mismatch acceptance remain additional requirements.",
+      "source_existence": [
+        {
+          "path": "skills/buster/plugins/visual/src/provider.js",
+          "exists": true
+        },
+        {
+          "path": "skills/buster/plugins/visual/src/browser-identity.js",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PATH-T02-002",
+      "title": "Verspätetes Designset wird an neue aktive Architektur gebunden",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Prism- und tatsächlicher Studio-TSX-Typecheck bestehen auf gesichertem Kandidaten. Studio-App-Quelldatei identisch zur Integration; alter Typfehlerhinweis veraltet. Native PostgreSQL-Pool-, Browser- und Agentabnahme bleibt offen.",
+      "saved_remaining_acceptance": "Native PostgreSQL-Pool- und Browser-/Agentintegration bei vorhandenen Voraussetzungen ausführen. Tatsächlicher Studio-TSX-Typecheck besteht; kein aktueller Typfehlerblocker.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/prism/studio/app.tsx",
+        "skills/prism/server/control.ts"
+      ],
+      "local_gate_ids": [
+        "studio-local"
+      ],
+      "native_or_external_gate_ids": [
+        "prism-live",
+        "corpus"
+      ],
+      "remaining_prerequisites": [
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes",
+        "Matching actual Playwright Chromium installation",
+        "Required actual build/assets; no browser substitute or installation retry in this task",
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task"
+      ],
+      "uncovered_acceptance": "Full integration is broader than the listed individual native gates; standalone combined full path not identified.",
+      "source_existence": [
+        {
+          "path": "skills/prism/studio/app.tsx",
+          "exists": true
+        },
+        {
+          "path": "skills/prism/server/control.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-PRISM-AGENT-BRIDGE-001",
+      "title": "Angenommene Aufträge sind nach Neustart verloren",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/prism/server/agent-bridge.mjs",
+        "skills/prism/control/agent-jobs.ts"
+      ],
+      "local_gate_ids": [
+        "agent-local"
+      ],
+      "native_or_external_gate_ids": [
+        "prism-live",
+        "prism-recovery"
+      ],
+      "remaining_prerequisites": [
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes",
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task"
+      ],
+      "uncovered_acceptance": "No standalone original OpenClaw session/process crash-prefix and unknown-action reconciliation gate identified. Existing live recovery only deletes pods/observes rollout and checks supplied Buster results.",
+      "source_existence": [
+        {
+          "path": "skills/prism/server/agent-bridge.mjs",
+          "exists": true
+        },
+        {
+          "path": "skills/prism/control/agent-jobs.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-PRISM-AGENT-BRIDGE-002",
+      "title": "Sanitizing und Kürzung kollidieren Projektsessions",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/prism/server/agent-bridge.mjs",
+        "skills/prism/control/agent-jobs.ts"
+      ],
+      "local_gate_ids": [
+        "agent-local"
+      ],
+      "native_or_external_gate_ids": [
+        "prism-live",
+        "prism-recovery"
+      ],
+      "remaining_prerequisites": [
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes",
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task"
+      ],
+      "uncovered_acceptance": "No standalone original OpenClaw session/process crash-prefix and unknown-action reconciliation gate identified. Existing live recovery only deletes pods/observes rollout and checks supplied Buster results.",
+      "source_existence": [
+        {
+          "path": "skills/prism/server/agent-bridge.mjs",
+          "exists": true
+        },
+        {
+          "path": "skills/prism/control/agent-jobs.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-PRISM-CONTROL-001",
+      "title": "Worker-Ergebnis ohne Envelope-Bindung angenommen",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Aktueller Control-Einstieg besteht kanonischen Lint; Quelldatei identisch zur Integration. Ursprüngliche Worker-Service-Tests im Enginepaket bestanden. Volle native PostgreSQL-/Commit-/Rollback-Abnahme bleibt offen.",
+      "saved_remaining_acceptance": "Aktueller Control-Einstieg besteht kanonischen Lint; volle Originalservices mit nativem PostgreSQL und echtem Commit-/Rollback-Nachweis bleiben offen.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/prism/server/control.ts"
+      ],
+      "local_gate_ids": [
+        "control-local"
+      ],
+      "native_or_external_gate_ids": [
+        "prism-live"
+      ],
+      "remaining_prerequisites": [
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes",
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task"
+      ],
+      "uncovered_acceptance": "No standalone full service commit/rollback fault gate identified beyond related live composition.",
+      "source_existence": [
+        {
+          "path": "skills/prism/server/control.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-PRISM-CONTROL-002",
+      "title": "Directionevent-ID verletzt UUID-Spalte nach Zustandscommit",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Atomic direction/preference SQL and real Studio proxy verified independently; Root 12/12 PGlite/HTTP tests pass. Native pooled PostgreSQL and full Control lost-ACK service proof remain unexecuted.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/prism/control/direction-decisions.ts",
+        "skills/prism/control/product-decisions.ts"
+      ],
+      "local_gate_ids": [
+        "control-local",
+        "control-http"
+      ],
+      "native_or_external_gate_ids": [
+        "prism-live"
+      ],
+      "remaining_prerequisites": [
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes",
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task"
+      ],
+      "uncovered_acceptance": "No standalone full native pooled transaction plus lost-ACK Control service acceptance gate identified.",
+      "source_existence": [
+        {
+          "path": "skills/prism/control/direction-decisions.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/prism/control/product-decisions.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-PRISM-CORPUS-001",
+      "title": "Transaktion auf Pool statt reservierter Verbindung",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Reserved transaction/advisory lock source reviewed; actual PGlite rollback tests pass. NativePG17.5/pgvector0.8.0 built but root-only UID mapping prevents legitimate initdb; real multi-connection gate not run.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/prism/corpus/index.ts"
+      ],
+      "local_gate_ids": [],
+      "native_or_external_gate_ids": [
+        "corpus"
+      ],
+      "remaining_prerequisites": [
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes"
+      ],
+      "uncovered_acceptance": "Native corpus pool gate exists and has not been run here; follow its real fault/rollback assertions, not PGlite equivalence.",
+      "source_existence": [
+        {
+          "path": "skills/prism/corpus/index.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-PRISM-WORKER-001",
+      "title": "Pflicht-Logspeicher fehlt am Executor-Aufruf",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/prism/server/worker.ts",
+        "skills/prism/server/worker-service.ts"
+      ],
+      "local_gate_ids": [
+        "worker-local"
+      ],
+      "native_or_external_gate_ids": [
+        "worker-pg",
+        "prism-live"
+      ],
+      "remaining_prerequisites": [
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes",
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task"
+      ],
+      "uncovered_acceptance": "Readiness native pool test is narrower than complete Control/worker commit/rollback and startup/shutdown lifecycle.",
+      "source_existence": [
+        {
+          "path": "skills/prism/server/worker.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/prism/server/worker-service.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-PRISM-WORKER-002",
+      "title": "CPU-Messung zählt die gesamte Prozesslebensdauer",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/prism/server/worker-operation.ts",
+        "skills/prism/engine/browser-capture.ts"
+      ],
+      "local_gate_ids": [
+        "worker-cancel"
+      ],
+      "native_or_external_gate_ids": [
+        "worker-browser"
+      ],
+      "remaining_prerequisites": [
+        "Matching actual Playwright Chromium installation",
+        "Required actual build/assets; no browser substitute or installation retry in this task",
+        "Original compiled sandbox",
+        "Host with readable process-tree procfs and delegated writable cgroup v2",
+        "Legitimate native UID/GID credential-drop support"
+      ],
+      "uncovered_acceptance": "Browser drain gate exists; no complete parallel native attempt-child CPU attribution gate identified.",
+      "source_existence": [
+        {
+          "path": "skills/prism/server/worker-operation.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/prism/engine/browser-capture.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-PRISM-WORKER-003",
+      "title": "Terminate beendet weder Browser noch Evidence-Upload",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Native Browserbeendigung nachweisen und versuchsbezogene CPUattribution bei Parallelität/Kindprozessen vervollständigen.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/prism/server/worker-operation.ts",
+        "skills/prism/engine/browser-capture.ts"
+      ],
+      "local_gate_ids": [
+        "worker-cancel"
+      ],
+      "native_or_external_gate_ids": [
+        "worker-browser"
+      ],
+      "remaining_prerequisites": [
+        "Matching actual Playwright Chromium installation",
+        "Required actual build/assets; no browser substitute or installation retry in this task",
+        "Original compiled sandbox",
+        "Host with readable process-tree procfs and delegated writable cgroup v2",
+        "Legitimate native UID/GID credential-drop support"
+      ],
+      "uncovered_acceptance": "Browser drain gate exists; no complete parallel native attempt-child CPU attribution gate identified.",
+      "source_existence": [
+        {
+          "path": "skills/prism/server/worker-operation.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/prism/engine/browser-capture.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-PRISM-ENGINE-001",
+      "title": "Erfolgreiche Renderresultate bleiben unbegrenzt im Cache",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Prism-Engine in Render-/Browsercallback-/Provider-Verantwortungen zerlegt; vier originale Lintverstöße behoben. 36 bestehende Tests ohne Skips und 12 bytegleiche Vergleiche gegen Originalquelle bestanden. Keine native Browser-/Heap-/DB-Recoveryabnahme, keine separate Gegenprüfung; Quelle nicht integriert.",
+      "saved_remaining_acceptance": "Engine-Refactoring c4713132 separat prüfen. 36 bestehende Tests und 12 Originalbyte-Vergleiche bestehen; native Chromium-Langzeit-/Heap-Abnahme und vollständiger Control-Neustart bleiben offen.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/prism/engine/index.ts"
+      ],
+      "local_gate_ids": [
+        "engine-local"
+      ],
+      "native_or_external_gate_ids": [
+        "worker-browser",
+        "prism-recovery"
+      ],
+      "remaining_prerequisites": [
+        "Matching actual Playwright Chromium installation",
+        "Required actual build/assets; no browser substitute or installation retry in this task",
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes"
+      ],
+      "uncovered_acceptance": "No standalone long-lived Chromium heap/cache plus in-flight Control restart gate identified. Pod rollout check is not that gate.",
+      "source_existence": [
+        {
+          "path": "skills/prism/engine/index.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-PRISM-RENDERER-002",
+      "title": "Paginationaktionen erreichen Preview nicht",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Action attributes and actual App transition wiring corrected; Node tests pass, actual iframe click proof blocked by missingChromium/CDNtimeout.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/prism/renderer/index.ts",
+        "skills/prism/studio/app.tsx"
+      ],
+      "local_gate_ids": [
+        "studio-local"
+      ],
+      "native_or_external_gate_ids": [
+        "studio-native"
+      ],
+      "remaining_prerequisites": [
+        "Matching actual Playwright Chromium installation",
+        "Required actual build/assets; no browser substitute or installation retry in this task"
+      ],
+      "uncovered_acceptance": "Native iframe click/action propagation still required; Node artifact assertions do not substitute.",
+      "source_existence": [
+        {
+          "path": "skills/prism/renderer/index.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/prism/studio/app.tsx",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-PRISM-STUDIO-002",
+      "title": "Canonicalassets machen lokale Vorschau unbrauchbar",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Actual HTTP artifact loading/digest/size/auth/abort tests pass; browser image decode/CSP proof blocked by missingChromium/CDNtimeout.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/prism/studio/preview-assets.ts",
+        "skills/prism/studio/app.tsx"
+      ],
+      "local_gate_ids": [
+        "studio-local"
+      ],
+      "native_or_external_gate_ids": [
+        "studio-native"
+      ],
+      "remaining_prerequisites": [
+        "Matching actual Playwright Chromium installation",
+        "Required actual build/assets; no browser substitute or installation retry in this task"
+      ],
+      "uncovered_acceptance": "Native image decoding/CSP still required; HTTP bytes alone do not establish it.",
+      "source_existence": [
+        {
+          "path": "skills/prism/studio/preview-assets.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/prism/studio/app.tsx",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-OBS-002",
+      "title": "Aufbewahrungsstrategie für bestätigte Historie fehlt",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Weitere ursprüngliche Retention-Consumer und Quotenpolitik bearbeiten; Buster/derived-source/v2/Discord/externalisierte oder ungewisse Historien nicht aus begrenzten Projektionen ableiten. Originalbelege und Native-Gates erhalten.",
+      "native_gate_availability": "no_standalone_native_acceptance_gate_identified",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-records.ts"
+      ],
+      "local_gate_ids": [
+        "retention-local",
+        "terminal"
+      ],
+      "native_or_external_gate_ids": [],
+      "remaining_prerequisites": [
+        "Original authority/lifetime contracts for each remaining consumer",
+        "Native ownership and uncertain history reconciliation before deletion"
+      ],
+      "uncovered_acceptance": "No standalone all-consumer retention/quota/history acceptance gate identified; bounded authority fixture cannot authorize other consumers.",
+      "source_existence": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "F-T14-01",
+      "title": "Finalpreview-Exposure wird vor Operatorübergabe entfernt",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures.",
+      "native_gate_availability": "no_standalone_native_acceptance_gate_identified",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/nova/plugins/project-summary/src/summary.ts",
+        "skills/nova/plugins/demo-handoff/src/adapter.ts"
+      ],
+      "local_gate_ids": [
+        "compiler",
+        "demo-local",
+        "handoff-local"
+      ],
+      "native_or_external_gate_ids": [],
+      "remaining_prerequisites": [
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task",
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix",
+        "Actual authorized recipient delivery and authenticated human acceptance/extension"
+      ],
+      "uncovered_acceptance": "No standalone original gate identified covering actual app/login/Tailnet delivery/recipient human acceptance and extension. These actions are not authorized here.",
+      "source_existence": [
+        {
+          "path": "skills/nova/plugins/project-summary/src/summary.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "F-T14-02",
+      "title": "Vollständiger Operatorzugang und Appauth-Handoff fehlen",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures.",
+      "native_gate_availability": "no_standalone_native_acceptance_gate_identified",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/nova/plugins/project-summary/src/summary.ts",
+        "skills/nova/plugins/demo-handoff/src/adapter.ts"
+      ],
+      "local_gate_ids": [
+        "compiler",
+        "demo-local",
+        "handoff-local"
+      ],
+      "native_or_external_gate_ids": [],
+      "remaining_prerequisites": [
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task",
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix",
+        "Actual authorized recipient delivery and authenticated human acceptance/extension"
+      ],
+      "uncovered_acceptance": "No standalone original gate identified covering actual app/login/Tailnet delivery/recipient human acceptance and extension. These actions are not authorized here.",
+      "source_existence": [
+        {
+          "path": "skills/nova/plugins/project-summary/src/summary.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "IFR-08-001",
+      "title": "registry-local — Hoch; nachgewiesener unvollständiger Default-Vertrag",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "E2E-Registryzielvertrag ergänzen; echten BuildKit-Push, uncached CRI-Pull und Pod mit Hostkonfiguration prüfen. Kein Deployment in diesem Auftrag.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "my-values/infra/registry-local.yaml",
+        "charts/kubeclaw/templates/_registry-clients.tpl"
+      ],
+      "local_gate_ids": [
+        "registry-local"
+      ],
+      "native_or_external_gate_ids": [
+        "buildkit"
+      ],
+      "remaining_prerequisites": [
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix",
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task"
+      ],
+      "uncovered_acceptance": "No standalone uncached CRI pull plus actual pod image acceptance gate identified; BuildKit preflight is only one portion.",
+      "source_existence": [
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "exists": true
+        },
+        {
+          "path": "charts/kubeclaw/templates/_registry-clients.tpl",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "IFR-08-002",
+      "title": "registry-local — Mittel; nachgewiesener Retention-/Dokumentationsdefekt",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Dokumentationsdefekt korrigiert; Persistenz/Disk-Budget und referenzgeschützte GC bleiben offen, keine Kapazität erfinden.",
+      "native_gate_availability": "no_standalone_native_acceptance_gate_identified",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "my-values/infra/registry-local.yaml"
+      ],
+      "local_gate_ids": [
+        "registry-local"
+      ],
+      "native_or_external_gate_ids": [],
+      "remaining_prerequisites": [
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix",
+        "Operator-approved real persistence/disk budget and reference-safe GC policy"
+      ],
+      "uncovered_acceptance": "No standalone native capacity/persistence/reference-protected registry GC acceptance gate identified.",
+      "source_existence": [
+        {
+          "path": "my-values/infra/registry-local.yaml",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "IFR-09-001",
+      "title": "registry-mirror — Mittel; nachgewiesene Client-/Dokumentationsabweichung",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Tatsächlichen BuildKit-/Node-Mirrorpfad sowie Cache-Hit und Offline-Cache-Miss prüfen.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "my-values/infra/registry-mirror.yaml",
+        "scripts/registry-client-config.mjs"
+      ],
+      "local_gate_ids": [
+        "registry-local"
+      ],
+      "native_or_external_gate_ids": [
+        "buildkit"
+      ],
+      "remaining_prerequisites": [
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix",
+        "Actual node mirror configuration and isolated cache hit/offline miss scenarios"
+      ],
+      "uncovered_acceptance": "No standalone actual BuildKit-and-node mirror cache/offline-miss gate identified; existing preflight is not offline validation.",
+      "source_existence": [
+        {
+          "path": "my-values/infra/registry-mirror.yaml",
+          "exists": true
+        },
+        {
+          "path": "scripts/registry-client-config.mjs",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "IFR-19-001",
+      "title": "role-workloads — Hoch; nachgewiesene inkonsistente Standard-Releaseauswahl",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Ausgewählte Receipt mit tatsächlichen PodimageIDs und aktiven Bundlecommits im späteren autorisierten Clusterlauf vergleichen.",
+      "native_gate_availability": "no_standalone_native_acceptance_gate_identified",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        ".github/workflows/build-images.yaml",
+        "scripts/production-receipt-attestation.mjs"
+      ],
+      "local_gate_ids": [
+        "receipt-local"
+      ],
+      "native_or_external_gate_ids": [],
+      "remaining_prerequisites": [
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix",
+        "Selected real release receipt and actual pod imageIDs/current bundle commits"
+      ],
+      "uncovered_acceptance": "No standalone receipt-versus-live-pod-imageID comparison gate identified.",
+      "source_existence": [
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "exists": true
+        },
+        {
+          "path": "scripts/production-receipt-attestation.mjs",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "IFR-22-001",
+      "title": "ci-build — Mittel; nachgewiesene Berechtigungs-/Vertrauensgrenze mit offenem Hardeningbedarf",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Später autorisierte isolierte Fork-/interne PR-Abnahme der effektiven Tokenrechte; keine CI angefordert.",
+      "native_gate_availability": "no_standalone_native_acceptance_gate_identified",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        ".github/workflows/build-images.yaml"
+      ],
+      "local_gate_ids": [
+        "workflow-local"
+      ],
+      "native_or_external_gate_ids": [],
+      "remaining_prerequisites": [
+        "Explicit authorization for isolated fork/internal PR CI runs and effective token permission validation"
+      ],
+      "uncovered_acceptance": "No standalone local gate can prove effective live GitHub token permissions; current test checks declarations only.",
+      "source_existence": [
+        {
+          "path": ".github/workflows/build-images.yaml",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "PCR-SCAFFOLD-OPS-001",
+      "title": "Statusfehler beendet Supervisor scheinbar erfolgreich",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Separate tatsächliche Adopted-Pipeline mit temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität oder volle Modell-/Provideranforderung.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "scripts/supervise-repository-review.mjs"
+      ],
+      "local_gate_ids": [
+        "supervisor-local"
+      ],
+      "native_or_external_gate_ids": [
+        "supervisor-native"
+      ],
+      "remaining_prerequisites": [
+        "Host with real adopted child cmdline visibility",
+        "Owned isolated real process/test fixtures; never substitute PID identity"
+      ],
+      "uncovered_acceptance": "Original native adoption gate exists; new local stop-admission correction does not replace it.",
+      "source_existence": [
+        {
+          "path": "scripts/supervise-repository-review.mjs",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "IFR-07-001",
+      "title": "envoy — Mittel; nachgewiesene Rollout-Lücke",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "charts/prism/templates/configmap-worker-trust.yaml"
+      ],
+      "local_gate_ids": [
+        "rollout-local"
+      ],
+      "native_or_external_gate_ids": [
+        "envoy-native"
+      ],
+      "remaining_prerequisites": [
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix",
+        "Actual old/new permitted peer identities and authorized deployed Envoy rollout"
+      ],
+      "uncovered_acceptance": "No standalone actual release-change rollout plus old-peer rejection gate identified; native Envoy standalone proof is narrower.",
+      "source_existence": [
+        {
+          "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+          "exists": true
+        },
+        {
+          "path": "charts/prism/templates/configmap-worker-trust.yaml",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "IFR-14-001",
+      "title": "litellm — Mittel; nachgewiesene Rollout-/Health-Lücke",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
+      "native_gate_availability": "no_standalone_native_acceptance_gate_identified",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "my-values/infra/litellm-deployment.yaml",
+        "scripts/render-litellm-deployment.mjs"
+      ],
+      "local_gate_ids": [
+        "rollout-local"
+      ],
+      "native_or_external_gate_ids": [],
+      "remaining_prerequisites": [
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix",
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes",
+        "Actual LiteLLM process with real DB failure/recovery and unchanged liveness"
+      ],
+      "uncovered_acceptance": "No standalone native LiteLLM process/DB-fault transition gate identified.",
+      "source_existence": [
+        {
+          "path": "my-values/infra/litellm-deployment.yaml",
+          "exists": true
+        },
+        {
+          "path": "scripts/render-litellm-deployment.mjs",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "IFR-20-001",
+      "title": "prism-workloads — Mittel; nachgewiesene fehlende Ressourcenbegrenzung",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Mit tatsächlicher Hostkapazität Ressourcen konfigurieren; Last, RAM/CPU/Diskgrenzen und Recovery nach OOM im echten Pod prüfen. Keine geratenen Kapazitätswerte.",
+      "native_gate_availability": "no_standalone_native_acceptance_gate_identified",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "charts/prism/templates/workloads.yaml"
+      ],
+      "local_gate_ids": [
+        "rollout-local"
+      ],
+      "native_or_external_gate_ids": [],
+      "remaining_prerequisites": [
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix",
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes",
+        "Measured host capacity and operator-selected resources; actual load and OOM recovery"
+      ],
+      "uncovered_acceptance": "No standalone comprehensive live resource capacity/OOM/recovery gate identified.",
+      "source_existence": [
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "IFR-20-002",
+      "title": "prism-workloads — Mittel; begründeter Rollout-Verdacht",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "charts/prism/templates/workloads.yaml"
+      ],
+      "local_gate_ids": [
+        "rollout-local"
+      ],
+      "native_or_external_gate_ids": [
+        "prism-recovery"
+      ],
+      "remaining_prerequisites": [
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix",
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes",
+        "Authorized active-write cross-node upgrade and exact transaction integrity observations"
+      ],
+      "uncovered_acceptance": "Existing restart/rollout test is narrower; no standalone active-write cross-node upgrade proof identified.",
+      "source_existence": [
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "IFR-25-001",
+      "title": "observability — Mittel; nachgewiesene begrenzte Health-Aussage",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment.",
+      "native_gate_availability": "related_existing_gate_only_no_full_closure_claim",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+        "charts/prism/templates/_worker-trust-readiness.tpl"
+      ],
+      "local_gate_ids": [
+        "readiness-local"
+      ],
+      "native_or_external_gate_ids": [
+        "envoy-native"
+      ],
+      "remaining_prerequisites": [
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix",
+        "Dedicated native PostgreSQL with pgvector and migration prerequisites",
+        "Legitimate non-root PostgreSQL service owner; real pooled connections",
+        "Explicit authorization for isolated test database writes",
+        "Actual SPIRE gRPC/UDS workload attestation",
+        "Delivered operator alarm and real BuildKit/DB failures with native pod probes"
+      ],
+      "uncovered_acceptance": "No standalone combined native attestation/alarm/dependency-fault gate identified; local Envoy TLS proof is narrower.",
+      "source_existence": [
+        {
+          "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+          "exists": true
+        },
+        {
+          "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "T01-F02",
+      "title": "Projectcompiler deckt nur die Modullane ab, kann aber danach einen erfolgreichen Run melden",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures.",
+      "native_gate_availability": "no_standalone_native_acceptance_gate_identified",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/nova/plugins/project-summary/src/summary.ts",
+        "skills/nova/plugins/demo-handoff/src/adapter.ts"
+      ],
+      "local_gate_ids": [
+        "compiler",
+        "demo-local",
+        "handoff-local"
+      ],
+      "native_or_external_gate_ids": [],
+      "remaining_prerequisites": [
+        "Configured original Nova/Buster route and source-attestation credentials",
+        "Actual original provider/sandbox dependencies",
+        "Authorized isolated test environment; performs remote work, do not run in this task",
+        "Explicit authorization for isolated cluster mutation",
+        "Real Kubernetes/CRI/BuildKit/services and operator-selected capacity/configuration",
+        "No production mutation authorized by this matrix",
+        "Actual authorized recipient delivery and authenticated human acceptance/extension"
+      ],
+      "uncovered_acceptance": "No standalone original gate identified covering actual app/login/Tailnet delivery/recipient human acceptance and extension. These actions are not authorized here.",
+      "source_existence": [
+        {
+          "path": "skills/nova/plugins/project-summary/src/summary.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "finding_id": "T15-F01",
+      "title": "Pipeline Review verarbeitet unbelegte Digestlisten statt geprüfter Run-Evidenz",
+      "status": "partially_implemented",
+      "closed": false,
+      "source_snapshot_local_commit": "bc777cd",
+      "local_partial_evidence_from_saved_state": "Originalanforderung und gespeicherte Restarbeit abgeglichen; kein neuer vollständiger Nachweis.",
+      "saved_remaining_acceptance": "Echten konfigurierten OpenClaw/ACP-Writer mit unveränderlichen Quellen erst bei real verfügbarer CLI/Config/Token/Tools-URL ausführen. Bestehende Original-/Source-Suites sind modelExecution:false; Socketstatus wegen EPERM unbekannt. Keine Wiederholung lokaler Fixtures als Writer-Nachweis.",
+      "native_gate_availability": "no_standalone_native_acceptance_gate_identified",
+      "standalone_full_finding_acceptance_command": null,
+      "source_paths": [
+        "skills/nova/plugins/pipeline-review/src/stage.ts",
+        "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts"
+      ],
+      "local_gate_ids": [
+        "writer-local"
+      ],
+      "native_or_external_gate_ids": [],
+      "remaining_prerequisites": [
+        "Actual configured OpenClaw/ACP writer CLI, configuration, credentials and tool endpoint",
+        "Immutable actual source/run evidence and authorized model execution"
+      ],
+      "uncovered_acceptance": "No standalone configured genuine-writer acceptance gate identified; local live-function is not model execution.",
+      "source_existence": [
+        {
+          "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+          "exists": true
+        },
+        {
+          "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+          "exists": true
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "No gate executed in this matrix task. All gate paths and named package scripts were checked for existence.",
+    "Listed commands are inert references. Native/external prerequisites and existing restrictions remain authoritative.",
+    "No listed related gate is asserted sufficient by itself to close a finding. Null full-acceptance command means no complete standalone gate was identified in this bounded scan.",
+    "Package scripts can run additional commands; exact scripts are retained to expose scope.",
+    "Source snapshot predates the separately saved follow-up HTTP/SIGTERM/Supervisor fixes; their independent reports supplement this matrix without replacing native gates.",
+    "Local partial evidence is inherited from the saved state, not newly verified by this scan."
+  ]
+}

@@ -1,0 +1,261 @@
+{
+  "checked_at": "2026-09-11T17:32:53.960052+00:00",
+  "integration_checkpoint": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
+  "original_matrix_source_checkpoint": "d22ee1d298aa63050673e075b363ae4c996008dc",
+  "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
+  "executed_gates": 0,
+  "finding_closures": 0,
+  "gate_paths": [
+    {
+      "gate_id": "delivery",
+      "path": "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+      "exists_on_integration": false,
+      "read_from_candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747"
+    },
+    {
+      "gate_id": "knip",
+      "path": "charts/kubeclaw/files/config/knip.json",
+      "exists_on_integration": true,
+      "integration_sha256": "ea0dcf84442e3c9111bfbcd0225da4f4e1be027da627ae5c9f4fa99a6b191605",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "terminal",
+      "path": "skills/buster/engine/test-gates/tests/terminal-workspace.test.ts",
+      "exists_on_integration": true,
+      "integration_sha256": "b02702d27aedf1ec68ff08ecf6205748f23a4219eb7515f7d52ab87fb19a6b6c",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "kernel",
+      "path": "tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs",
+      "exists_on_integration": true,
+      "integration_sha256": "4ea386d8a64e840266c2c4eca396b5021161db90f119736dd25a10ed936f610d",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "restart",
+      "path": "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "5494a3c11b36495d7382f9b99932c1e08f510e67b674545575bd436673746aeb",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "junit",
+      "path": "tests/verification/contracts/check-junit-executed-required.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "ab37fe9f5640c9cf449b012fd8df420fc9e5397b1d3f81798f30706a71bbeedc",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "direct",
+      "path": "tests/verification/integration/direct-command-runner-artifacts.test.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "4330c6ee5a406f0356f5bdcdc556ab92c1de7e4ccb7bccc01783205aadb17821",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "compiler",
+      "path": "tests/verification/contracts/check-project-compiler.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "f43245243462e6e02e4c07c368883ac114796a0a8c8d0bcf4f32846d82b1d739",
+      "same_as_original_matrix": false
+    },
+    {
+      "gate_id": "buildkit",
+      "path": "tests/verification/e2e/nova-buildkit-production-preflight.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "c660165efe3cd6b23760bf56bc57b5cb2f03764f84144d28f418f17cbdc2644d",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "visual",
+      "path": "tests/verification/e2e/nova-visual-production-preflight.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "69d60680b2f2671a09c360d9a010d75cec1438cc0c9888b3dbda0d2852f24c00",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "visual-local",
+      "path": "skills/buster/plugins/visual/tests/browser-identity.test.mjs",
+      "exists_on_integration": true,
+      "integration_sha256": "84249a40bd69166a6c052e8654fb3b384201c536a818713768e55806e0fea6a3",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "prism-live",
+      "path": "tests/verification/live/prism-nova-production-e2e.mjs",
+      "exists_on_integration": true,
+      "integration_sha256": "41cef571679f2b7b41981fa69f1e93de50f7b012a8465eca48bd89ae6f160919",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "prism-recovery",
+      "path": "tests/verification/live/prism-production-failures.mjs",
+      "exists_on_integration": true,
+      "integration_sha256": "5432b11d7888b1a9386ebbea0f3bc84379d64ac275ac995d1dc6de1d72665ab3",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "agent-local",
+      "path": "skills/prism/tests/agent-process.test.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "8eff8fba328604f2a00521afec7fad805d65f50d0f7c502a39eb412ba7aa523a",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "control-local",
+      "path": "skills/prism/tests/control-decisions.test.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "9cec9fcdfbd8f56041ee6c08d82eaecc06ec4507d54ed74b5352f82c6cedcf86",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "control-http",
+      "path": "skills/prism/tests/control-product-independent.test.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "8a6a4ede50868c639fc58505d55bd7c7b81a125a9cdda9b3507b5bc92e4e0392",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "corpus",
+      "path": "skills/prism/integration/corpus-pool.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "993e49c853527500253108753d94178855a6ef019203ac8dd1b012e50de6d8c7",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "worker-local",
+      "path": "skills/prism/tests/worker-service.test.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "aa66b74fee539e40e9f665edd785259f77f514684a4150ae03d14e2a3c7fe237",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "worker-browser",
+      "path": "skills/prism/integration/worker-browser-cancellation.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "72efc55d4f14352724e68a7858a204c105f973351e7c7eac20e6655cae0f0aa0",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "worker-cancel",
+      "path": "skills/prism/tests/worker-cancellation.test.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "62393643e23f518fd3e2d608b9c0ec08d4a13b70c13441ec25c7c9145908df60",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "worker-pg",
+      "path": "skills/prism/tests/worker-readiness.test.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "b4b4ab39156d45d0afe4495178df1b129c4d2d55f9d31086de0804b2322d2d0e",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "engine-local",
+      "path": "skills/prism/tests/engine-cache.test.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "d393b01d91407d9a17ba7647dbe9c30a6b311e274c339f7fe20aa6b03b27d485",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "studio-native",
+      "path": "skills/prism/studio/tests/remediation.spec.mjs",
+      "exists_on_integration": true,
+      "integration_sha256": "d631f46ce84cc8d9c5007dad494e8a25e8d5801ca5f103dae7f6aae48e18b9df",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "studio-local",
+      "path": "skills/prism/tests/preview-assets.test.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "e1c35f0bc6b677916e13e2070d8fb1a9a28a1dd65be130b46ab0f5a957749d7b",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "retention-local",
+      "path": "tests/verification/reliability/operator-retention-authority-fixture.test.mjs",
+      "exists_on_integration": true,
+      "integration_sha256": "646b4ac41f1deec54a572f1f9870e9fec7c78f924a585b762755a6304c92d6f2",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "demo-local",
+      "path": "tests/verification/contracts/check-demo-ready-controller.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "a8efc5ff2d1a62faf88bcd890ed457f275211e7d6103db7122d22d0b1e6a5950",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "handoff-local",
+      "path": "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "b63f93e58e0e9f3d02d8c13111fdedc0f156ef025a9f4101058f4c37d092ccd5",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "registry-local",
+      "path": "tests/verification/deployment/registry-client-config.test.mjs",
+      "exists_on_integration": true,
+      "integration_sha256": "899b1cc7f9032e26165569c8dace78190252780a11d120c85d8d0ace05e6b3cf",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "receipt-local",
+      "path": "tests/verification/contracts/check-production-receipt-attestation.mjs",
+      "exists_on_integration": true,
+      "integration_sha256": "6ad5f9fde877e6194a2f2a33a15cec48c213377958b511f34834013f456bf0ac",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "workflow-local",
+      "path": "tests/verification/contracts/workflow-trust-split.test.mjs",
+      "exists_on_integration": true,
+      "integration_sha256": "d5198e7e5c1d05a131d006eedba795227f20e3cf87eba387a10ca092be0babec",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "supervisor-native",
+      "path": "scripts/tests/integration/repository-review-supervisor-adoption.mjs",
+      "exists_on_integration": true,
+      "integration_sha256": "7c385d0548c5fdb10caddaa7ec5e4863df68182bd780066be7da177252f50d18",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "supervisor-local",
+      "path": "scripts/tests/integration/repository-review-supervisor-start.mjs",
+      "exists_on_integration": true,
+      "integration_sha256": "1de81dd0831b59d6400c541bc5694decc3bdf1609fca839ed74ad0f1e187baa0",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "rollout-local",
+      "path": "tests/verification/contracts/check-rollout-health.mjs",
+      "exists_on_integration": true,
+      "integration_sha256": "ed441ed7c533cdf1575bb023f71cc25b31ecaea9bb8f3b29a709f89d29a1a2c7",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "envoy-native",
+      "path": "tests/verification/deployment/check-worker-trust-envoy-native.mjs",
+      "exists_on_integration": true,
+      "integration_sha256": "8a6939ae66056069819dd71276c822dee8a9b4b7522776f15a5a76c9b8d0a34b",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "readiness-local",
+      "path": "tests/verification/deployment/buster-readiness.test.mts",
+      "exists_on_integration": true,
+      "integration_sha256": "e9a61c6085469644632f508bb5acbbdc8110d4e041e2ac166b661a568b963f66",
+      "same_as_original_matrix": true
+    },
+    {
+      "gate_id": "writer-local",
+      "path": "skills/nova/plugins/pipeline-review/tests/live-function.test.ts",
+      "exists_on_integration": true,
+      "integration_sha256": "eb56fbcf5a026359aad4351423c92ebfd1f76e72843f646bc7e50953cb6e60ef",
+      "same_as_original_matrix": true
+    }
+  ]
+}
