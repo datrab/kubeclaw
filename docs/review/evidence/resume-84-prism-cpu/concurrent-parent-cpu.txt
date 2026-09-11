@@ -1,0 +1,32 @@
+{
+  "unrelatedCpuMs": 134.517,
+  "processCpuMs": 170.791,
+  "sumReportedCpuMs": 333,
+  "measured": [
+    {
+      "cpuTimeMs": 168,
+      "maximumMemoryBytes": 163119104,
+      "maximumProcesses": 1
+    },
+    {
+      "cpuTimeMs": 165,
+      "maximumMemoryBytes": 163250176,
+      "maximumProcesses": 1
+    }
+  ],
+  "logs": [
+    {
+      "index": 0,
+      "channel": "system",
+      "message": "Prism render operation started"
+    },
+    {
+      "index": 1,
+      "channel": "system",
+      "message": "Prism render operation started"
+    }
+  ],
+  "originalEngineCompletions": 2,
+  "nativeBrowserExecuted": false,
+  "meaning": "two original overlapping attempts each charge unrelated real shared-parent CPU; not browser-child or isolated CPU proof"
+}

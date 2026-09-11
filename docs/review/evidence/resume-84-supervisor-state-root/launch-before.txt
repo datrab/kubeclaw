@@ -1,0 +1,59 @@
+✖ supervisor records an actual missing npm launch and releases its own lease (128.185267ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 213.262816
+
+✖ failing tests:
+
+test at scripts/tests/repository-review-supervisor-state.test.mjs:45:1
+✖ supervisor records an actual missing npm launch and releases its own lease (128.185267ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /REVIEW_SUPERVISOR_LAUNCH_FAILED/u. Input:
+  
+  'node:events:487\n' +
+    "      throw er; // Unhandled 'error' event\n" +
+    '      ^\n' +
+    '\n' +
+    'Error: spawn npm ENOENT\n' +
+    '    at ChildProcess._handle.onexit (node:internal/child_process:287:19)\n' +
+    '    at onErrorNT (node:internal/child_process:525:16)\n' +
+    '    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\n' +
+    "Emitted 'error' event on ChildProcess instance at:\n" +
+    '    at ChildProcess._handle.onexit (node:internal/child_process:293:12)\n' +
+    '    at onErrorNT (node:internal/child_process:525:16)\n' +
+    '    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {\n' +
+    '  errno: -2,\n' +
+    "  code: 'ENOENT',\n" +
+    "  syscall: 'spawn npm',\n" +
+    "  path: 'npm',\n" +
+    '  spawnargs: [\n' +
+    "    'run',\n" +
+    "    'pipeline',\n" +
+    "    '--',\n" +
+    "    '--platform',\n" +
+    "    '/tmp/supervisor-status-wRhDZf/platform.json',\n" +
+    "    '--pipeline',\n" +
+    "    '/tmp/supervisor-status-wRhDZf/graph.json',\n" +
+    "    '--run-id',\n" +
+    "    'supervisor-status-regression'\n" +
+    '  ]\n' +
+    '}\n' +
+    '\n' +
+    'Node.js v24.19.0\n'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/integration-84/scripts/tests/repository-review-supervisor-state.test.mjs:53:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "node:events:487\n      throw er; // Unhandled 'error' event\n      ^\n\nError: spawn npm ENOENT\n    at ChildProcess._handle.onexit (node:internal/child_process:287:19)\n    at onErrorNT (node:internal/child_process:525:16)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\nEmitted 'error' event on ChildProcess instance at:\n    at ChildProcess._handle.onexit (node:internal/child_process:293:12)\n    at onErrorNT (node:internal/child_process:525:16)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {\n  errno: -2,\n  code: 'ENOENT',\n  syscall: 'spawn npm',\n  path: 'npm',\n  spawnargs: [\n    'run',\n    'pipeline',\n    '--',\n    '--platform',\n    '/tmp/supervisor-status-wRhDZf/platform.json',\n    '--pipeline',\n    '/tmp/supervisor-status-wRhDZf/graph.json',\n    '--run-id',\n    'supervisor-status-regression'\n  ]\n}\n\nNode.js v24.19.0\n",
+    expected: /REVIEW_SUPERVISOR_LAUNCH_FAILED/u,
+    operator: 'match',
+    diff: 'simple'
+  }

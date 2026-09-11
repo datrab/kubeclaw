@@ -1,0 +1,21 @@
+{
+  "source": "268bb72",
+  "execution": "actual original overlapping operations and actual shared-process CPU",
+  "defectDemonstrated": true,
+  "nativeBrowser": false,
+  "nativeCgroup": false,
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-prism-cpu/concurrent-parent-cpu-final.txt",
+      "sha256": "bd080bbc5601d34acd9a6ec4c106370e418b4aa93c12c715bc96b18691d2130f"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-cpu/concurrent-parent-cpu.mjs",
+      "sha256": "293cf0b92769082af424f405b492f953e5505477436059a65aa005da30387a96"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-prism-cpu/concurrent-parent-cpu.txt",
+      "sha256": "5e0d1347c8da25a01ffdf2fd5666a13b7c44398f690693b6641950b4409f0a08"
+    }
+  ]
+}

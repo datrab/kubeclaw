@@ -1,0 +1,13 @@
+✔ supervisor preserves malformed JSON lease and refuses admission (66.942033ms)
+✔ supervisor preserves unknown owner lease and refuses admission (55.636492ms)
+✔ supervisor preserves malformed heartbeat and releases only its newly acquired lease (59.501991ms)
+✔ supervisor refuses a lease held by an actual live process (69.479846ms)
+✔ supervisor records an actual missing npm launch and releases its own lease (137.012452ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 475.581243

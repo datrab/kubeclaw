@@ -1,0 +1,42 @@
+{
+  "base": "268bb72",
+  "createdAt": "2026-09-11T17:51:33.523173+00:00",
+  "nativeAcceptanceExecuted": false,
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-release-evidence/after-final.txt",
+      "bytes": 607,
+      "sha256": "855695db994a022e75ef87874eec3638336c8b2742294e75da7ebb35f6310440"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-release-evidence/after.txt",
+      "bytes": 607,
+      "sha256": "f980ec16965cff21bbae101bf9c2209ac0d4f820cd05a808eec9a5b9456649fb"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-release-evidence/before-final.txt",
+      "bytes": 5760,
+      "sha256": "abf3b46b25d9b67031ad8b90edcdd7a336cb03535b332416006b76d97189ab46"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-release-evidence/before.txt",
+      "bytes": 5760,
+      "sha256": "7df7317429ba271272ded745542d95feb6cf7a45e7911be14cd3302c111aac88"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-release-evidence/lint-final.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-release-evidence/lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-release-evidence/protocol-gap.json",
+      "bytes": 844,
+      "sha256": "b3fe36990af7317b4ad8a0a98be70cce92b1d96d0e38cfb911096641351b3bea"
+    }
+  ]
+}

@@ -21,12 +21,11 @@ export function fixture(t) {
     fs.writeFileSync(events, JSON.stringify({ entry: { type: `run.${status}`,
       occurredAt: new Date().toISOString(), identity: { runId } } }) + '\n');
   };
-  const invoke = () => spawnSync(process.execPath, [path.join(repositoryRoot, 'scripts/supervise-repository-review.mjs'),
+  const invoke = (env = process.env) => spawnSync(process.execPath, [path.join(repositoryRoot, 'scripts/supervise-repository-review.mjs'),
     '--workdir', repositoryRoot, '--platform', platform, '--graph', path.join(root, 'graph.json'),
     '--run-id', runId, '--heartbeat', path.join(root, 'heartbeat.json'),
     '--resource-log', path.join(root, 'resources.jsonl'), '--diagnostic-dir', path.join(root, 'diagnostics'),
     '--log', path.join(root, 'pipeline.log'), '--lease', lease, '--max-recoveries', '0'],
-  { encoding: 'utf8', timeout: 10_000 });
+  { encoding: 'utf8', timeout: 10_000, env });
   return { root, platform, artifactRoot, lease, writePlatform, terminal, invoke };
 }
-

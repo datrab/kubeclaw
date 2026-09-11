@@ -1,0 +1,26 @@
+{
+  "source": "1daf2112d84836bc49595735fc7944a6316674ac",
+  "tree": "f9f125ff53ffae1ccd5333737cf44f27527f3df8",
+  "commands": [
+    {
+      "command": "npm run test:review-operations",
+      "exit": 0,
+      "tests": 18,
+      "skipped": 0
+    },
+    {
+      "command": "node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs scripts/supervise-repository-review.mjs scripts/tests/repository-review-supervisor-state.test.mjs",
+      "exit": 0
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-supervisor-launch-independent/lint.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-supervisor-launch-independent/tests.txt",
+      "sha256": "400914539d1bcc0d19090d456766b2df4a578fba518576f015c9f0b855a4353a"
+    }
+  ]
+}

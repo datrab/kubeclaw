@@ -1,0 +1,22 @@
+{
+  "finding": "IFR-19-001",
+  "closed": false,
+  "nativeAcceptanceExecuted": false,
+  "completeNativeReadOnlyGatePrepared": false,
+  "validatorContractBugFixed": true,
+  "missingProtocol": [
+    "verified OCI index/platform-manifest/config descriptor closure and digest-kind interpretation",
+    "fresh actual pod/node/container instance and imageID capture",
+    "active code-bundle observation bound to same container instance",
+    "atomic or rechecked observation freshness"
+  ],
+  "sourcePaths": [
+    "scripts/updates/release-images.mjs",
+    "scripts/updates/deployment-release.mjs",
+    "scripts/updates/release-configuration.mjs",
+    ".github/workflows/build-images.yaml",
+    "charts/kubeclaw/templates/deployment.yaml",
+    "tests/verification/live/check-prism-release-evidence.mjs"
+  ],
+  "selectedRuntimeReceiptPresent": false
+}

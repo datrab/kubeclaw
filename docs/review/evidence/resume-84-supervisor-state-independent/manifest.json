@@ -1,0 +1,19 @@
+{
+  "source": "21af42f9cfadefe07e989dc6484a625a71dfda64",
+  "tree": "31cfa612e5ef0989badeec9458d0ccd527c49249",
+  "tests": 17,
+  "skipped": 0,
+  "testExit": 0,
+  "lintExit": 0,
+  "nativeAdoptedGate": false,
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-supervisor-state-independent/lint.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-supervisor-state-independent/tests.txt",
+      "sha256": "0b89465c0b5ce2eb90ac0789de568f2d49c51b2891826951d6921497fdc0bb2e"
+    }
+  ]
+}

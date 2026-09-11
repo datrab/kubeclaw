@@ -39,7 +39,11 @@ function atomicJson(file, value) {
 }
 
 function optionalJson(file) {
-  try { return JSON.parse(fs.readFileSync(file, 'utf8')); } catch (_error) { return undefined; }
+  try { return JSON.parse(fs.readFileSync(file, 'utf8')); }
+  catch (cause) {
+    if (cause.code === 'ENOENT') return undefined;
+    throw new Error(`REVIEW_SUPERVISOR_JSON_READ_FAILED:${file}`, { cause });
+  }
 }
 
 function appendJsonLine(file, value) {
@@ -64,6 +68,12 @@ function isOwnedPipeline(pid, runId) {
 
 function acquireLease(file, runId) {
   const existing = optionalJson(file);
+  if (existing !== undefined && (existing?.schemaVersion !== 'repository-review-supervisor-lease.v1'
+    || typeof existing.instanceId !== 'string' || !existing.instanceId
+    || typeof existing.runId !== 'string' || !existing.runId
+    || !Number.isSafeInteger(existing.supervisorPid) || existing.supervisorPid < 1)) {
+    throw new Error(`REVIEW_SUPERVISOR_LEASE_INVALID:${file}`);
+  }
   if (existing && processAlive(existing.supervisorPid)) {
     throw new Error(`REVIEW_SUPERVISOR_ALREADY_ACTIVE:${existing.supervisorPid}`);
   }
@@ -110,25 +120,32 @@ function pipelineArguments(mode, platform, graph, runId) {
     : ['run', 'pipeline', '--', '--platform', platform, '--pipeline', graph, '--run-id', runId];
 }
 
-function readNumber(file) {
+function optionalResource(file, parse, observationErrors) {
   try {
-    const value = fs.readFileSync(file, 'utf8').trim();
+    return parse(fs.readFileSync(file, 'utf8'));
+  } catch (error) {
+    observationErrors.push({ file, error: error.code ?? error.name });
+    return undefined;
+  }
+}
+
+function readNumber(file, observationErrors) {
+  return optionalResource(file, text => {
+    const value = text.trim();
     return value === 'max' ? value : Number(value);
-  } catch (_error) { return undefined; }
+  }, observationErrors);
 }
 
-function readKeyValues(file) {
-  try {
-    return Object.fromEntries(fs.readFileSync(file, 'utf8').trim().split('\n').filter(Boolean)
-      .map((line) => line.trim().split(/\s+/u)).map(([key, value]) => [key, Number(value)]));
-  } catch (_error) { return undefined; }
+function readKeyValues(file, observationErrors) {
+  return optionalResource(file, text => Object.fromEntries(text.trim().split('\n').filter(Boolean)
+    .map((line) => line.trim().split(/\s+/u)).map(([key, value]) => [key, Number(value)])), observationErrors);
 }
 
-function processRssBytes(pid) {
-  try {
-    const match = fs.readFileSync(`/proc/${pid}/status`, 'utf8').match(/^VmRSS:\s+(\d+)\s+kB$/mu);
+function processRssBytes(pid, observationErrors) {
+  return optionalResource(`/proc/${pid}/status`, text => {
+    const match = text.match(/^VmRSS:\s+(\d+)\s+kB$/mu);
     return match ? Number(match[1]) * 1024 : undefined;
-  } catch (_error) { return undefined; }
+  }, observationErrors);
 }
 
 async function gatewayHealth(gatewayUrl) {
@@ -141,14 +158,16 @@ async function gatewayHealth(gatewayUrl) {
 }
 
 async function resourceSample(pipelinePid, gatewayUrl) {
+  const observationErrors = [];
   return {
     schemaVersion: 'repository-review-resource-sample.v1',
     observedAt: new Date().toISOString(), pipelinePid,
-    pipelineAlive: processAlive(pipelinePid), pipelineRssBytes: processRssBytes(pipelinePid),
-    memoryCurrentBytes: readNumber('/sys/fs/cgroup/memory.current'),
-    memoryPeakBytes: readNumber('/sys/fs/cgroup/memory.peak'),
-    memoryEvents: readKeyValues('/sys/fs/cgroup/memory.events'),
-    cpu: readKeyValues('/sys/fs/cgroup/cpu.stat'),
+    pipelineAlive: processAlive(pipelinePid), pipelineRssBytes: processRssBytes(pipelinePid, observationErrors),
+    memoryCurrentBytes: readNumber('/sys/fs/cgroup/memory.current', observationErrors),
+    memoryPeakBytes: readNumber('/sys/fs/cgroup/memory.peak', observationErrors),
+    memoryEvents: readKeyValues('/sys/fs/cgroup/memory.events', observationErrors),
+    cpu: readKeyValues('/sys/fs/cgroup/cpu.stat', observationErrors),
+    observationErrors,
     gateway: await gatewayHealth(gatewayUrl),
   };
 }
@@ -185,9 +204,17 @@ async function runAttempt(params, stopSignal) {
   if (stopSignal.aborted) return { exit: { code: null, signal: null }, stopping: true };
   const descriptor = fs.openSync(params.log, 'a');
   const child = spawn('npm', pipelineArguments(params.mode, params.platform, params.graph, params.runId), {
-    cwd: params.cwd, detached: true, stdio: ['ignore', descriptor, descriptor], env: process.env,
+    cwd: params.cwd, detached: true, stdio: ['ignore', descriptor, descriptor],
   });
-  const childExit = new Promise((resolve) => child.once('exit', (code, signal) => resolve({ code, signal })));
+  let childError;
+  const childExit = new Promise((resolve) => {
+    child.once('exit', (code, signal) => resolve({ code, signal }));
+    child.once('error', error => {
+      childError = error;
+      // A post-launch signal error is not evidence that the child exited.
+      if (child.pid === undefined) resolve({ code: null, signal: null });
+    });
+  });
   let stopping = false;
   const stop = () => {
     stopping = true;
@@ -207,7 +234,11 @@ async function runAttempt(params, stopSignal) {
   atomicJson(path.join(params.diagnosticDir, `attempt-${params.attempt}-exit.json`), {
     schemaVersion: 'repository-review-attempt-diagnostic.v1', capturedAt: new Date().toISOString(),
     runId: params.runId, attempt: params.attempt, mode: params.mode, exit, stopping, sample,
+    ...(childError ? { [child.pid === undefined ? 'launchError' : 'processError']:
+      { code: childError.code, name: childError.name } } : {}),
   });
+  if (childError) throw new Error(child.pid === undefined
+    ? 'REVIEW_SUPERVISOR_LAUNCH_FAILED' : 'REVIEW_SUPERVISOR_PROCESS_FAILED', { cause: childError });
   return { exit, stopping };
 }
 
@@ -250,6 +281,15 @@ async function superviseAttempts(params, maximumRecoveries, stopSignal) {
   return 75;
 }
 
+function initialMode(args, platform, runId) {
+  const mode = args.get('initial-mode') ?? 'auto';
+  if (!['auto', 'start', 'recover'].includes(mode)) throw new Error('REVIEW_SUPERVISOR_INITIAL_MODE_INVALID');
+  if (mode !== 'auto') return mode;
+  const platformConfig = optionalJson(platform);
+  const eventFile = path.join(repositoryReviewRunRoot(platformConfig?.storageRoot ?? '', runId), 'events.jsonl');
+  return fs.existsSync(eventFile) ? 'recover' : 'start';
+}
+
 async function main(values) {
   const args = argumentsMap(values);
   const cwd = path.resolve(required(args, 'workdir'));
@@ -278,12 +318,7 @@ async function main(values) {
     if (stopController.signal.aborted) return 130;
     const initialStatus = reviewStatus(statusScript, cwd, platform, runId, heartbeat, resourceLog);
     if (initialStatus.status !== 'running') return terminalExit(initialStatus);
-    let mode = args.get('initial-mode') ?? 'auto';
-    if (!['auto', 'start', 'recover'].includes(mode)) throw new Error('REVIEW_SUPERVISOR_INITIAL_MODE_INVALID');
-    const platformConfig = optionalJson(platform);
-    const eventFile = path.join(repositoryReviewRunRoot(platformConfig?.storageRoot ?? '', runId),
-      'events.jsonl');
-    if (mode === 'auto') mode = fs.existsSync(eventFile) ? 'recover' : 'start';
+    const mode = initialMode(args, platform, runId);
     if (mode === 'start') runPreflight(args, cwd);
     return await superviseAttempts({ cwd, platform, graph, runId, heartbeat, resourceLog,
       diagnosticDir, log, gatewayUrl, mode, statusScript }, maximumRecoveries, stopController.signal);

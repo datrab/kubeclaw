@@ -1,0 +1,114 @@
+✖ actual validator accepts signed immutable-release contract fixture; no live acceptance claimed (61.214803ms)
+✖ actual validator rejects mutable tag in both expected and signed fixture identities (56.952066ms)
+✔ actual validator rejects malformed or mismatched immutable fixture identities (178.731148ms)
+✔ actual validator preserves signed-body tamper rejection (55.803607ms)
+✖ actual validator preserves clean-run image binding and required live-gate completeness (117.254688ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 2
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 548.152396
+
+✖ failing tests:
+
+test at tests/verification/deployment/prism-release-evidence.test.mjs:41:1
+✖ actual validator accepts signed immutable-release contract fixture; no live acceptance claimed (61.214803ms)
+  AssertionError [ERR_ASSERTION]: node:internal/modules/run_main:107
+      triggerUncaughtException(
+      ^
+  
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(!reference.includes("@sha256:"))
+  
+      at file:///workspace/scratch/a51d993d444b/release-evidence-before-84/tests/verification/live/check-prism-release-evidence.mjs:23:100
+      at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+      at async node:internal/modules/esm/loader:643:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+  
+  Node.js v24.19.0
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/release-evidence-before-84/tests/verification/deployment/prism-release-evidence.test.mjs:42:44)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-release-evidence.test.mjs:45:1
+✖ actual validator rejects mutable tag in both expected and signed fixture identities (56.952066ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to: 0
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/release-evidence-before-84/tests/verification/deployment/prism-release-evidence.test.mjs:47:52)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-release-evidence.test.mjs:59:1
+✖ actual validator preserves clean-run image binding and required live-gate completeness (117.254688ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /security live evidence is incomplete/. Input:
+  
+  'node:internal/modules/run_main:107\n' +
+    '    triggerUncaughtException(\n' +
+    '    ^\n' +
+    '\n' +
+    'AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n' +
+    '\n' +
+    '  assert.ok(!reference.includes("@sha256:"))\n' +
+    '\n' +
+    '    at file:///workspace/scratch/a51d993d444b/release-evidence-before-84/tests/verification/live/check-prism-release-evidence.mjs:23:100\n' +
+    '    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n' +
+    '    at async node:internal/modules/esm/loader:643:26\n' +
+    '    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n' +
+    '  generatedMessage: true,\n' +
+    "  code: 'ERR_ASSERTION',\n" +
+    '  actual: false,\n' +
+    '  expected: true,\n' +
+    "  operator: '==',\n" +
+    "  diff: 'simple'\n" +
+    '}\n' +
+    '\n' +
+    'Node.js v24.19.0\n'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/release-evidence-before-84/tests/verification/deployment/prism-release-evidence.test.mjs:64:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert.ok(!reference.includes("@sha256:"))\n\n    at file:///workspace/scratch/a51d993d444b/release-evidence-before-84/tests/verification/live/check-prism-release-evidence.mjs:23:100\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n`,
+    expected: /security live evidence is incomplete/,
+    operator: 'match',
+    diff: 'simple'
+  }

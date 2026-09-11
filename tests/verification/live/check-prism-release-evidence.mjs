@@ -10,6 +10,8 @@ const expectedCommit=process.env.PRISM_EXPECTED_COMMIT;
 const expectedImages=(process.env.PRISM_EXPECTED_IMAGE_REFERENCES??"").split(",").filter(Boolean).sort();
 if(!key||Buffer.byteLength(key)<32)throw new Error("PRISM_LIVE_EVIDENCE_HMAC_KEY with at least 32 bytes is required");
 if(!expectedCommit||!expectedImages.length)throw new Error("PRISM_EXPECTED_COMMIT and PRISM_EXPECTED_IMAGE_REFERENCES are required");
+const immutableImage = /^ghcr\.io\/[a-z0-9_-]+\/kubeclaw-[a-z0-9-]+@sha256:[a-f0-9]{64}$/u;
+for (const reference of expectedImages) assert.match(reference, immutableImage, "expected image must match the immutable release receipt contract");
 const signature=String(evidence.signature??"");delete evidence.signature;
 const canonical=(value)=>Array.isArray(value)?`[${value.map(canonical).join(",")}]`:value&&typeof value==="object"?`{${Object.keys(value).sort().map((name)=>`${JSON.stringify(name)}:${canonical(value[name])}`).join(",")}}`:JSON.stringify(value);
 const expectedSignature=`hmac-sha256:${createHmac("sha256",key).update(canonical(evidence)).digest("hex")}`;
@@ -20,7 +22,7 @@ assert.equal(evidence.status,"passed");
 assert.equal(evidence.issuer,"github-actions");
 assert.equal(evidence.repositoryCommit,expectedCommit);
 assert.ok(Array.isArray(evidence.imageReferences)&&evidence.imageReferences.length>0);
-for(const reference of evidence.imageReferences){assert.match(reference,/^[^\s]+:[^\s/]+$/);assert.ok(!reference.includes("@sha256:"));}
+for(const reference of evidence.imageReferences) assert.match(reference, immutableImage, "evidence image must match the immutable release receipt contract");
 assert.deepEqual([...evidence.imageReferences].sort(),expectedImages);
 assert.ok(Array.isArray(evidence.cleanRuns)&&evidence.cleanRuns.length>=2);
 assert.equal(new Set(evidence.cleanRuns.map((run)=>run.namespace)).size,evidence.cleanRuns.length);

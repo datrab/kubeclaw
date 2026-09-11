@@ -1,0 +1,15 @@
+✔ actual validator accepts signed immutable-release contract fixture; no live acceptance claimed (65.293536ms)
+✔ actual validator rejects mutable tag in both expected and signed fixture identities (60.957407ms)
+✔ actual validator rejects malformed or mismatched immutable fixture identities (194.638138ms)
+✔ actual validator preserves signed-body tamper rejection (61.195076ms)
+✔ actual validator preserves clean-run image binding and required live-gate completeness (121.862524ms)
+✔ release selection rejects missing, duplicate and cross-commit build receipts (2.791856ms)
+✔ generated release values render actual Helm charts with immutable role and sidecar references (1052.472051ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1164.197192

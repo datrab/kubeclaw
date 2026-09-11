@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-09-11T17:51:59.355361+00:00",
+  "baseline": "268bb72db6fd77d366c5cd7c3b7b42c4f95bf300",
+  "before": {
+    "command": "node --test scripts/tests/repository-review-supervisor-state.test.mjs",
+    "exit": 1,
+    "pass": 1,
+    "fail": 3
+  },
+  "after": {
+    "command": "node --test scripts/tests/repository-review-supervisor-state.test.mjs scripts/tests/repository-review-supervisor-status.test.mjs scripts/tests/repository-review-operations.test.mjs scripts/tests/integration/repository-review-supervisor-start.mjs scripts/tests/integration/repository-review-supervisor-stop.test.mjs",
+    "exit": 0,
+    "pass": 17,
+    "fail": 0,
+    "skip": 0
+  },
+  "lint": {
+    "command": "node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs scripts/supervise-repository-review.mjs scripts/tests/repository-review-supervisor-state.test.mjs",
+    "exit": 0
+  },
+  "native_adopted_process_gate_executed": false
+}

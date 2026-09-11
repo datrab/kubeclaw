@@ -1,0 +1,13 @@
+✔ actual validator accepts signed immutable-release contract fixture; no live acceptance claimed (52.803374ms)
+✔ actual validator rejects mutable tag in both expected and signed fixture identities (60.006932ms)
+✔ actual validator rejects malformed or mismatched immutable fixture identities (178.246679ms)
+✔ actual validator preserves signed-body tamper rejection (56.838563ms)
+✔ actual validator preserves clean-run image binding and required live-gate completeness (119.372682ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 550.517442

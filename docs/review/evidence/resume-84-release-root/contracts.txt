@@ -1,0 +1,46 @@
+✔ actual validator accepts signed immutable-release contract fixture; no live acceptance claimed (60.446132ms)
+✔ actual validator rejects mutable tag in both expected and signed fixture identities (59.65262ms)
+✔ actual validator rejects malformed or mismatched immutable fixture identities (188.408972ms)
+✔ actual validator preserves signed-body tamper rejection (60.772612ms)
+✔ actual validator preserves clean-run image binding and required live-gate completeness (128.668684ms)
+✔ release selection rejects missing, duplicate and cross-commit build receipts (2.579466ms)
+✖ generated release values render actual Helm charts with immutable role and sidecar references (461.156132ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 582.299972
+
+✖ failing tests:
+
+test at tests/verification/deployment/release-images.test.mjs:27:1
+✖ generated release values render actual Helm charts with immutable role and sidecar references (461.156132ms)
+  Error: spawnSync helm ENOENT
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/integration-84/tests/verification/deployment/release-images.test.mjs:47:22)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawnSync helm',
+    path: 'helm',
+    spawnargs: [ 'template', 'nova', '/tmp/release-helm-UuF2Ty/charts/kubeclaw', '-f', '/tmp/release-helm-UuF2Ty/releases/values/nova.yaml' ],
+    error: Error: spawnSync helm ENOENT
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/integration-84/tests/verification/deployment/release-images.test.mjs:47:22)
+        at async Test.run (node:internal/test_runner/test:1389:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }

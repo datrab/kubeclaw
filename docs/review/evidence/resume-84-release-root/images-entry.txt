@@ -1,0 +1,19 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> verify:prism:images
+> node tests/verification/deployment/check-deployment-truth.mjs && node --test tests/verification/deployment/prism-release-evidence.test.mjs
+
+{"ok":true,"phase":12,"v2Deployment":true,"legacyWorkerAbsent":true,"deterministicSuiteRuntime":true}
+✔ actual validator accepts signed immutable-release contract fixture; no live acceptance claimed (65.618057ms)
+✔ actual validator rejects mutable tag in both expected and signed fixture identities (51.206832ms)
+✔ actual validator rejects malformed or mismatched immutable fixture identities (167.61071ms)
+✔ actual validator preserves signed-body tamper rejection (53.940806ms)
+✔ actual validator preserves clean-run image binding and required live-gate completeness (127.062686ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 545.777497
