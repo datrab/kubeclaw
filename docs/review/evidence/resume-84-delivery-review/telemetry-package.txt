@@ -1,0 +1,8 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node ../../../../tests/verification/integration/telemetry-store-projection.test.mts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+{"ok":true,"suite":"telemetry-store-projection","persistence":"real-file-store","fence":"file-resource-lock"}
+{"ok":true,"plugin":"kubeclaw.telemetry-store","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.telemetry-store","suite":"package-boundary"}

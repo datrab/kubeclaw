@@ -1,0 +1,35 @@
+[
+  {
+    "name": "demo-auth-go",
+    "args": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/buster/plugins/demo-auth-smoke"
+    ],
+    "exitCode": 0,
+    "PATHPrefix": "/workspace/scratch/4e25cf57c177/toolchains/go/bin"
+  },
+  {
+    "name": "remote-gate-go",
+    "args": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/nova/plugins/remote-test-gate"
+    ],
+    "exitCode": 0,
+    "PATHPrefix": "/workspace/scratch/4e25cf57c177/toolchains/go/bin"
+  },
+  {
+    "name": "handoff-go",
+    "args": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/nova/plugins/demo-handoff"
+    ],
+    "exitCode": 0,
+    "PATHPrefix": "/workspace/scratch/4e25cf57c177/toolchains/go/bin"
+  }
+]

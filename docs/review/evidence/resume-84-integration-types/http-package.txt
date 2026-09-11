@@ -1,0 +1,5 @@
+
+> build
+> tsc --noEmit -p tsconfig.json && tsc --noEmit -p ../../../../tests/verification/integration/tsconfig.http.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

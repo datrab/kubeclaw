@@ -1,0 +1,10 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @kubeclaw/prism-contracts-v1@1.0.0 pretypecheck
+> node scripts/generate-validators.mjs
+
+
+> @kubeclaw/prism-contracts-v1@1.0.0 typecheck
+> tsc --noEmit && tsc --noEmit -p ../../../tests/verification/integration/tsconfig.prism.json
+
+../../../tests/verification/integration/fixtures/prism-baseline-input.mts(49,7): error TS2322: Type 'number' is not assignable to type 'string'.

@@ -1,0 +1,51 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node --test ../../../../tests/verification/integration/demo-auth-smoke-live.test.ts
+
+✖ original controller credentials authenticate against a real local session application through original network runtime (4.575312ms)
+✔ missing or unsupported protocol and missing business assertion fail explicitly (1.077593ms)
+✔ session cookie contract rejects foreign domain, wrong path, expired and insecure sessions (0.755895ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 472.601739
+
+✖ failing tests:
+
+test at ../../../../tests/verification/integration/demo-auth-smoke-live.test.ts:23:1
+✖ original controller credentials authenticate against a real local session application through original network runtime (4.575312ms)
+  Error: spawnSync go ENOENT
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/review-delivery-84/tests/verification/integration/demo-auth-smoke-live.test.ts:27:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawnSync go',
+    path: 'go',
+    spawnargs: [ 'test', '-count=1', '-run', '^TestDemoAuthenticationCredentialProducer$', './cmd/buster-namespace-controller' ],
+    error: Error: spawnSync go ENOENT
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at TestContext.<anonymous> (file:///workspace/scratch/a51d993d444b/review-delivery-84/tests/verification/integration/demo-auth-smoke-live.test.ts:27:2)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.start (node:internal/test_runner/test:1242:17)
+        at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }

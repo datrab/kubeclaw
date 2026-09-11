@@ -1,0 +1,68 @@
+[
+  {
+    "name": "lint-configured",
+    "args": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "contracts/delivery-manifest/v3/src/index.ts",
+      "skills/nova/plugins/project-summary/src/summary.ts",
+      "skills/nova/plugins/project-summary/src/review-semantics.ts",
+      "tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs",
+      "tests/verification/reliability/delivery-manifest-import-boundary.test.mjs",
+      "tests/verification/reliability/delivery-manifest-gate-reference.test.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "summary-package",
+    "args": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/nova/plugins/project-summary"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "gate-package",
+    "args": [
+      "npm",
+      "test",
+      "--prefix",
+      "contracts/pipeline-test-gate/v1"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "telemetry-package",
+    "args": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/common/plugins/telemetry-store"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "http-package",
+    "args": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/buster/plugins/http"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "demo-auth-package",
+    "args": [
+      "npm",
+      "test",
+      "--prefix",
+      "skills/buster/plugins/demo-auth-smoke"
+    ],
+    "exitCode": 1
+  }
+]

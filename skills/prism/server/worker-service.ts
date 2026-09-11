@@ -23,7 +23,9 @@ return createServer((request, response) => {
 
 async function handleWorkerRequest(auth: WorkerAuthentication, engine: PrismEngine, artifactClient: WorkerArtifactClient, request: IncomingMessage, response: ServerResponse): Promise<void> {
   const cancellation = new AbortController();
-  response.once("close", () => cancellation.abort());
+  // This synchronous HTTP invocation owns one attempt. A lost response has no
+  // durable worker-side result to reconcile, so cancel its work on disconnect.
+  response.once("close", () => { if (!response.writableEnded) cancellation.abort(); });
   if (serveLocalHealth(request, response)) return;
   if (request.url === "/ready") {
     try {
@@ -62,7 +64,7 @@ async function handleWorkerRequest(auth: WorkerAuthentication, engine: PrismEngi
     else await auth.database.authenticate(auth.secret, raw, request.headers, cancellation.signal);
     const input = JSON.parse(raw.toString("utf8")) as WorkerAttemptEnvelopeV1;
     validatePipelineWorkerCoreContract("workerAttemptEnvelope", input);
-    const result = await executeWorkerAttempt(input, engine, artifactClient);
+    const result = await executeWorkerAttempt(input, engine, artifactClient, cancellation.signal);
     response.writeHead(200, { "content-type": "application/json" });
     response.end(JSON.stringify(result));
   } catch (error) {

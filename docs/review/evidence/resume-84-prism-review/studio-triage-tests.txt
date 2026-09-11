@@ -1,0 +1,45 @@
+✔ real stored image traverses HTTP with integrity, size, load and cancellation denials (80.445974ms)
+✔ canonical stack survives actual projection no-op and another node edit (9.104835ms)
+✔ canonical grid survives actual projection no-op and another node edit (2.802747ms)
+✔ canonical split survives actual projection no-op and another node edit (1.744973ms)
+✔ canonical scroll survives actual projection no-op and another node edit (1.122711ms)
+✔ canonical overlay survives actual projection no-op and another node edit (1.070341ms)
+✔ canonical text survives actual projection no-op and another node edit (0.946624ms)
+✔ canonical heading survives actual projection no-op and another node edit (0.833332ms)
+✔ canonical image survives actual projection no-op and another node edit (0.802185ms)
+✔ canonical icon survives actual projection no-op and another node edit (0.876047ms)
+✔ canonical divider survives actual projection no-op and another node edit (0.979164ms)
+✔ canonical code survives actual projection no-op and another node edit (0.752831ms)
+✔ canonical button survives actual projection no-op and another node edit (0.769686ms)
+✔ canonical link survives actual projection no-op and another node edit (1.945428ms)
+✔ canonical text-input survives actual projection no-op and another node edit (0.696465ms)
+✔ canonical select survives actual projection no-op and another node edit (0.681533ms)
+✔ canonical checkbox survives actual projection no-op and another node edit (0.616364ms)
+✔ canonical list survives actual projection no-op and another node edit (0.569323ms)
+✔ canonical table survives actual projection no-op and another node edit (0.770347ms)
+✔ canonical badge survives actual projection no-op and another node edit (0.757108ms)
+✔ canonical progress survives actual projection no-op and another node edit (0.761374ms)
+✔ canonical chart survives actual projection no-op and another node edit (0.695704ms)
+✔ canonical navigation survives actual projection no-op and another node edit (0.727532ms)
+✔ canonical tabs survives actual projection no-op and another node edit (0.73932ms)
+✔ canonical breadcrumb survives actual projection no-op and another node edit (1.307551ms)
+✔ canonical pagination survives actual projection no-op and another node edit (1.16186ms)
+✔ canonical alert survives actual projection no-op and another node edit (0.588411ms)
+✔ canonical dialog survives actual projection no-op and another node edit (0.615362ms)
+✔ canonical toast survives actual projection no-op and another node edit (0.543132ms)
+✔ canonical tooltip survives actual projection no-op and another node edit (0.681272ms)
+✔ canonical empty-state survives actual projection no-op and another node edit (0.585968ms)
+✔ canonical spinner survives actual projection no-op and another node edit (0.568101ms)
+✔ canonical component survives actual projection no-op and another node edit (0.617796ms)
+✔ canonical terminal survives actual projection no-op and another node edit (0.660571ms)
+✔ canonical command survives actual projection no-op and another node edit (0.614411ms)
+✔ canonical prompt survives actual projection no-op and another node edit (0.5876ms)
+✔ canonical output survives actual projection no-op and another node edit (3.843823ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 326.784165

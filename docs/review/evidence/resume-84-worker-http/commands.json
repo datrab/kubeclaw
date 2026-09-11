@@ -1,0 +1,39 @@
+[
+  {
+    "name": "regression",
+    "command": [
+      "node",
+      "--test",
+      "skills/prism/tests/worker-http-cancellation.test.mts",
+      "skills/prism/tests/worker-cancellation.test.mts",
+      "skills/prism/tests/worker-service.test.mts",
+      "skills/prism/tests/worker-readiness.test.mts",
+      "skills/prism/tests/provider-cancellation.test.mts"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "typecheck",
+    "command": [
+      "npm",
+      "run",
+      "typecheck",
+      "--prefix",
+      "skills/prism"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "lint",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/prism/server/worker-attempt.ts",
+      "skills/prism/server/worker-service.ts",
+      "skills/prism/tests/worker-http-cancellation.test.mts"
+    ],
+    "exit": 0
+  }
+]

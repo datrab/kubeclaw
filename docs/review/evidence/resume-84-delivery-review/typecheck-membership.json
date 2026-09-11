@@ -1,0 +1,73 @@
+[
+  {
+    "project": "contracts/prism/v1",
+    "baseline": {
+      "exitCode": 0,
+      "movedFiles": [
+        {
+          "path": "/workspace/scratch/a51d993d444b/candidate/contracts/prism/v1/tests/remediation.test.mts",
+          "included": true
+        },
+        {
+          "path": "/workspace/scratch/a51d993d444b/candidate/contracts/prism/v1/tests/baseline-archive.test.mts",
+          "included": true
+        }
+      ]
+    },
+    "current": {
+      "exitCode": 0,
+      "movedFiles": [
+        {
+          "path": "/workspace/scratch/a51d993d444b/review-delivery-84/tests/verification/integration/prism-contract-remediation.test.mts",
+          "included": false
+        },
+        {
+          "path": "/workspace/scratch/a51d993d444b/review-delivery-84/tests/verification/integration/prism-baseline-archive.test.mts",
+          "included": false
+        }
+      ]
+    }
+  },
+  {
+    "project": "skills/buster/plugins/demo-auth-smoke",
+    "baseline": {
+      "exitCode": 0,
+      "movedFiles": [
+        {
+          "path": "/workspace/scratch/a51d993d444b/candidate/skills/buster/plugins/demo-auth-smoke/tests/live-function.test.ts",
+          "included": true
+        }
+      ]
+    },
+    "current": {
+      "exitCode": 0,
+      "movedFiles": [
+        {
+          "path": "/workspace/scratch/a51d993d444b/review-delivery-84/tests/verification/integration/demo-auth-smoke-live.test.ts",
+          "included": false
+        }
+      ]
+    }
+  },
+  {
+    "project": "skills/buster/plugins/http",
+    "baseline": {
+      "exitCode": 0,
+      "movedFiles": [
+        {
+          "path": "/workspace/scratch/a51d993d444b/candidate/skills/buster/plugins/http/tests/live-function.test.ts",
+          "included": true
+        }
+      ]
+    },
+    "current": {
+      "exitCode": 0,
+      "movedFiles": [
+        {
+          "path": "/workspace/scratch/a51d993d444b/review-delivery-84/tests/verification/integration/http-provider-live.test.ts",
+          "included": false
+        }
+      ]
+    }
+  }
+]

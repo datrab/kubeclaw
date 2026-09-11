@@ -1,0 +1,225 @@
+{
+  "reviewedCommit": "d22ee1d298aa63050673e075b363ae4c996008dc",
+  "reviewedTree": "d90200377036cd73d1048e1d206e66cc9e8fed40",
+  "createdAt": "2026-09-11T17:00:38.698648+00:00",
+  "files": [
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/commands.json",
+      "bytes": 1471,
+      "sha256": "b82be3f6eb16ff9f0537503c410733236a0d66ed99867239fa4a05b107256cfc"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/contract-types.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/delivery.txt",
+      "bytes": 8700,
+      "sha256": "fcbc537916b3922824474b88461f1c712331d7d07d47c520f2e4824b8cbaf941"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/demo-auth-go.txt",
+      "bytes": 652,
+      "sha256": "fde87e68ac1f9c080079331a37e554214002bc368d9a540558f4f77320ecc42a"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/demo-auth-package.txt",
+      "bytes": 2449,
+      "sha256": "f1b6b5577bfa3430b60867e1c806ecf38ea69feb773b9f3eda7f9b5b4f39a2d1"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/gate-package.txt",
+      "bytes": 1218,
+      "sha256": "e8b00b722228f2999c5470fe4978f2e4845e6bbb1423d980d3c923d5298b0874"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/go-commands.json",
+      "bytes": 711,
+      "sha256": "3cfce6a680c57de8f9c2ae6451f305f285ec544a78aa1ce4ea26c2446d762407"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/handoff-go.txt",
+      "bytes": 692,
+      "sha256": "ab86279212e018a3ad33f1cc85605d7ddb840079598625b7ddd8b2038d7599e3"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/http-package.txt",
+      "bytes": 274,
+      "sha256": "29d5d5e4d4532e3c7e1533e2cc5789cc4accfe58c2f35e2c5a77cbb7a1f9f595"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/lint-configured.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/lint.txt",
+      "bytes": 502,
+      "sha256": "51f13d82f4bba8de4b9978514db1f0b9f4ad09a12a5999c99782a96f61e3150d"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/ownership.txt",
+      "bytes": 82,
+      "sha256": "fbebbbb23b6138a7ddd4d728cd761835a5ba6bcfe333f9cdbc998cc6452b5e9e"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/remote-gate-go.txt",
+      "bytes": 513,
+      "sha256": "fed563a9743b30c4d9b5401daf746219e1a2dbcfd46fe42aa594b84d912e41ae"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/static-commands.json",
+      "bytes": 578,
+      "sha256": "8f97c5db6f9f8a113c3e398620ffb53732508df3fc7780cbb39c48d7ee9e3255"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/summary-package.txt",
+      "bytes": 504,
+      "sha256": "c88cbe5e01f0493cd7605cfb92e74474e2fc722983d9380723050a11c3ac9c4a"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/summary-types.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/telemetry-package.txt",
+      "bytes": 527,
+      "sha256": "1beddecdcdfd1733ae1138dde8bcb459db1dd53291a037ec362fe7be20d6a974"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/commands.json",
+      "bytes": 3644,
+      "sha256": "d02449672d3427af8decb30416bed5ec786d0aef602afc1af14709f67552d656"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/compiler-options.json",
+      "bytes": 6419,
+      "sha256": "6a18c1e017e1a22c73d7a050ae79c70e4686b7813770f6fbe604cf0bae46221e"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/demo-auth-smoke-before.txt",
+      "bytes": 233,
+      "sha256": "70e13f5b805453dd7892311b0b00b54a47267cdca0b54ba66bd452b6e17ff765"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/demo-auth-smoke-membership.txt",
+      "bytes": 43725,
+      "sha256": "99a35fe9ff0b67cc10efe4a1c36b39762b9de218f522138f183217767b0d03ba"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/demo-auth-smoke-negative-0.txt",
+      "bytes": 377,
+      "sha256": "61621202fc95f16ae8e310e67f6355032802d042e58287026b6607e431b486f8"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/demo-auth-smoke-restored.txt",
+      "bytes": 233,
+      "sha256": "70e13f5b805453dd7892311b0b00b54a47267cdca0b54ba66bd452b6e17ff765"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/demo-auth-smoke-root-negative.txt",
+      "bytes": 475,
+      "sha256": "345a4e7cc8898bd5925aba3ce290a8f133e3a1909b09e20a2e8558a1ce503f48"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/http-before.txt",
+      "bytes": 222,
+      "sha256": "dcf58906d8c88dd91826d3ff98125981f05ec5f924b03aca90a56d028824e93b"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/http-membership.txt",
+      "bytes": 71336,
+      "sha256": "8c6f92e85d2d43552bae12daf5323ca318e4b594f9c0e377bce7269aa08fbe21"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/http-negative-0.txt",
+      "bytes": 364,
+      "sha256": "75c3ac28a624d0c9bfcef5be9f902642d132a02f4cb74d035b5f5f80c2b05d38"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/http-restored.txt",
+      "bytes": 222,
+      "sha256": "dcf58906d8c88dd91826d3ff98125981f05ec5f924b03aca90a56d028824e93b"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/http-root-negative.txt",
+      "bytes": 473,
+      "sha256": "e91b9a01b69b18ad7e8ed0a6cd95cc07025dd1b5bf75be4cebcaca2278f90bfa"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/membership-and-restoration.json",
+      "bytes": 1534,
+      "sha256": "4be48e060d2fdb89d139ba52bcc0e2858da81dda6b8677deec07b862df2fb18b"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/ownership.txt",
+      "bytes": 82,
+      "sha256": "fbebbbb23b6138a7ddd4d728cd761835a5ba6bcfe333f9cdbc998cc6452b5e9e"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/prism-before.txt",
+      "bytes": 333,
+      "sha256": "daf8fc7233ed6fdab4b954fdd708e45732742db99bd07bc52140f35fee1caebd"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/prism-membership.txt",
+      "bytes": 31754,
+      "sha256": "fad71a0bd7558b7949ca705700f52f77538769b6715d1fa777f3f15fd8236be3"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/prism-negative-0.txt",
+      "bytes": 480,
+      "sha256": "c5b780ba3150b1a8c2106f0110e470e39a716f9953775b12991996c1089b3aae"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/prism-negative-1.txt",
+      "bytes": 477,
+      "sha256": "20e82222a235eaf1f6a6a537ceb2f81fd2296a69c31e3b4ffa5fed49439a5964"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/prism-negative-2.txt",
+      "bytes": 478,
+      "sha256": "84b7a8cf6bb3021f56bc968c62f6eb00db287047b8d30d4e1c0f2de20ea43b3e"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/prism-negative-3.txt",
+      "bytes": 479,
+      "sha256": "24b91c9b195a959dc512ffd10275b402eaca25bff18df332856e858cc44c7d2e"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/prism-restored.txt",
+      "bytes": 333,
+      "sha256": "daf8fc7233ed6fdab4b954fdd708e45732742db99bd07bc52140f35fee1caebd"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/prism-root-negative.txt",
+      "bytes": 481,
+      "sha256": "6c1f551db418f1bd6e757e4a3a2fb43725ff69cee5161cc239fce34d8d4831dd"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/root-restored.txt",
+      "bytes": 343,
+      "sha256": "a60269719c42a6ebf9c862cde36109c9f2080d5b4e22ade24c748c8f78ac5e98"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/source-status.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-fix/verify.py",
+      "bytes": 2661,
+      "sha256": "ae7e9ed074efeb4171b9074229a1d6a6388cf9a26e9a0b2941841be7d8236d6c"
+    },
+    {
+      "path": "docs/review/evidence/resume-84-delivery-review/typecheck-membership.json",
+      "bytes": 2006,
+      "sha256": "24918bca1df080720578695f70a4a1234630a0eabc19da2f8d1d8d3cc35ffe05"
+    }
+  ],
+  "followupLocalCommit": "6f300ece9b9e71daa485100d06f7ce666baaae12",
+  "followupTree": "a2f94dd74c3e9f225fe1e9d6fed98c8109547fe8",
+  "followupVerifiedAt": "2026-09-11T17:03:52.281609+00:00"
+}

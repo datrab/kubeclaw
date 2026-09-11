@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p ../../../../tests/verification/integration/tsconfig.http.json",
     "test": "node ../../../../tests/verification/integration/http-provider-live.test.ts"
   }
 }

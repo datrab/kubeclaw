@@ -1,0 +1,42 @@
+DeterministicDesignProvider: identical TypeScript syntax tree and leaf tokens (trivia and optional trailing commas excluded)
+OpenAICompatibleDesignProvider: identical TypeScript syntax tree and leaf tokens (trivia and optional trailing commas excluded)
+skills/prism/engine/execution-cache.ts: unchanged bytes
+skills/prism/engine/browser-capture.ts: unchanged bytes
+skills/prism/package.json: unchanged bytes
+skills/prism/runtime.ts: unchanged bytes
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
+    'Array',
+    'Math',
+    'Number',
+    'getComputedStyle',
++   'undefined',
+    'window'
+  ]
+
+    at file:///workspace/scratch/a51d993d444b/review-prism-84/docs/review/evidence/resume-84-prism-review/static-parity.mjs:26:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    'Array',
+    'Math',
+    'Number',
+    'getComputedStyle',
+    'undefined',
+    'window'
+  ],
+  expected: [ 'Array', 'Math', 'Number', 'getComputedStyle', 'window' ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

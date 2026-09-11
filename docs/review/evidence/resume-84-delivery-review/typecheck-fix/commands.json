@@ -1,0 +1,220 @@
+[
+  {
+    "name": "prism-membership",
+    "args": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--listFilesOnly",
+      "-p",
+      "tests/verification/integration/tsconfig.prism.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "prism-before",
+    "args": [
+      "npm",
+      "run",
+      "typecheck",
+      "--prefix",
+      "contracts/prism/v1"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "prism-negative-0",
+    "args": [
+      "npm",
+      "run",
+      "typecheck",
+      "--prefix",
+      "contracts/prism/v1"
+    ],
+    "exitCode": 2
+  },
+  {
+    "name": "prism-root-negative",
+    "args": [
+      "npm",
+      "run",
+      "typecheck:integration"
+    ],
+    "exitCode": 2
+  },
+  {
+    "name": "prism-negative-1",
+    "args": [
+      "npm",
+      "run",
+      "typecheck",
+      "--prefix",
+      "contracts/prism/v1"
+    ],
+    "exitCode": 2
+  },
+  {
+    "name": "prism-negative-2",
+    "args": [
+      "npm",
+      "run",
+      "typecheck",
+      "--prefix",
+      "contracts/prism/v1"
+    ],
+    "exitCode": 2
+  },
+  {
+    "name": "prism-negative-3",
+    "args": [
+      "npm",
+      "run",
+      "typecheck",
+      "--prefix",
+      "contracts/prism/v1"
+    ],
+    "exitCode": 2
+  },
+  {
+    "name": "prism-restored",
+    "args": [
+      "npm",
+      "run",
+      "typecheck",
+      "--prefix",
+      "contracts/prism/v1"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "http-membership",
+    "args": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--listFilesOnly",
+      "-p",
+      "tests/verification/integration/tsconfig.http.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "http-before",
+    "args": [
+      "npm",
+      "run",
+      "build",
+      "--prefix",
+      "skills/buster/plugins/http"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "http-negative-0",
+    "args": [
+      "npm",
+      "run",
+      "build",
+      "--prefix",
+      "skills/buster/plugins/http"
+    ],
+    "exitCode": 2
+  },
+  {
+    "name": "http-root-negative",
+    "args": [
+      "npm",
+      "run",
+      "typecheck:integration"
+    ],
+    "exitCode": 2
+  },
+  {
+    "name": "http-restored",
+    "args": [
+      "npm",
+      "run",
+      "build",
+      "--prefix",
+      "skills/buster/plugins/http"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "demo-auth-smoke-membership",
+    "args": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--listFilesOnly",
+      "-p",
+      "tests/verification/integration/tsconfig.demo-auth-smoke.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "demo-auth-smoke-before",
+    "args": [
+      "npm",
+      "run",
+      "build",
+      "--prefix",
+      "skills/buster/plugins/demo-auth-smoke"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "demo-auth-smoke-negative-0",
+    "args": [
+      "npm",
+      "run",
+      "build",
+      "--prefix",
+      "skills/buster/plugins/demo-auth-smoke"
+    ],
+    "exitCode": 2
+  },
+  {
+    "name": "demo-auth-smoke-root-negative",
+    "args": [
+      "npm",
+      "run",
+      "typecheck:integration"
+    ],
+    "exitCode": 2
+  },
+  {
+    "name": "demo-auth-smoke-restored",
+    "args": [
+      "npm",
+      "run",
+      "build",
+      "--prefix",
+      "skills/buster/plugins/demo-auth-smoke"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "root-restored",
+    "args": [
+      "npm",
+      "run",
+      "typecheck:integration"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "ownership",
+    "args": [
+      "node",
+      "scripts/check-runtime-package-ownership.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "source-status",
+    "args": [
+      "git",
+      "status",
+      "--porcelain"
+    ],
+    "exitCode": 0
+  }
+]

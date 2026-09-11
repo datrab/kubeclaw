@@ -1,1 +1,12 @@
-{"name":"@kubeclaw/plugin-demo-auth-smoke","private":true,"type":"module","scripts":{"build":"tsc --noEmit -p tsconfig.json","test":"node --test ../../../../tests/verification/integration/demo-auth-smoke-live.test.ts"},"dependencies":{"@kubeclaw/plugin-sdk":"*"}}
+{
+  "name": "@kubeclaw/plugin-demo-auth-smoke",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p ../../../../tests/verification/integration/tsconfig.demo-auth-smoke.json",
+    "test": "node --test ../../../../tests/verification/integration/demo-auth-smoke-live.test.ts"
+  },
+  "dependencies": {
+    "@kubeclaw/plugin-sdk": "*"
+  }
+}

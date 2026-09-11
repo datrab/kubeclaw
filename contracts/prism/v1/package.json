@@ -3,13 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "exports": { ".": "./src/index.ts", "./digest": "./src/digest.ts", "./baseline-archive": "./src/baseline-archive.ts" },
+  "exports": {
+    ".": "./src/index.ts",
+    "./digest": "./src/digest.ts",
+    "./baseline-archive": "./src/baseline-archive.ts"
+  },
   "scripts": {
     "generate:validators": "node scripts/generate-validators.mjs",
     "pretest": "node scripts/generate-validators.mjs",
     "test": "node tests/contracts.test.mts && node ../../../tests/verification/integration/prism-contract-remediation.test.mts && node --test ../../../tests/verification/integration/prism-baseline-archive.test.mts",
     "pretypecheck": "node scripts/generate-validators.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p ../../../tests/verification/integration/tsconfig.prism.json"
   },
   "dependencies": {
     "ajv": "^8.20.0",
