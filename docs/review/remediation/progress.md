@@ -1,12 +1,14 @@
 # Aktueller Umsetzungsstand
 
-2026-09-09. Branch `fix/remediation-foundations-20260909`. Ausgangscode bleibt als
+2026-09-11. Branch `fix/remediation-foundations-20260909`. Ausgangscode bleibt als
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.
 
 **94/154 lokal verifiziert und unabhängig gegengeprüft; 39 Findings teilweise implementiert; 2 in Bearbeitung; 19 noch offen.** Zusätzliche Integrationsbefunde bleiben separat von den 154 historischen Kennungen dokumentiert. Keine pauschale Regressionsfreiheit, kein Deployment und keine vollständige Pipeline-E2E-Freigabe.
 
 Welle47: **8/47 ursprüngliche Abnahmen unabhängig bestanden, 39/47 noch nicht abgeschlossen**. [Einzelnachweis](implementation/wave47-root-review.md), [eingefrorene Menge](partial-47-scope.json), [ID-Fortschritt](partial-47-progress.json).
+
+Aktueller gesicherter Lauf: [Delivery-/Prism-Fortsetzung mit 2h-Limit](resume/run-20260911-a51d-2h.md). Quelle d22ee1d2 separat gesichert; 13/13 frische Delivery-Testgruppen, 36 Prism-Tests und 12 Originalbyte-Vergleiche bestanden. Keine weitere Gesamtkennung abgeschlossen.
 
 Aktuelle Wiederaufnahme: [geprüfte Pakete, Integrationsnachweise und konkrete Restarbeit](implementation/resume-20260909.md). Die nachfolgenden chronologischen Zwischenstände bleiben historische Belege und sind keine Behauptung aktuell laufender Subagents.
 
