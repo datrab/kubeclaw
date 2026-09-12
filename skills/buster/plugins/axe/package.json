@@ -1,1 +1,8 @@
-{"name":"@kubeclaw/plugin-axe","private":true,"type":"module","scripts":{"test":"node tests/live-function.test.ts"},"dependencies":{"@kubeclaw/plugin-sdk":"*"}}
+{
+  "name": "@kubeclaw/plugin-axe",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/live-function.test.ts"
+  }
+}

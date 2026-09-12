@@ -54,6 +54,11 @@
       "at": "2026-09-12T09:05:26.784487+00:00",
       "state": "native CI prerequisites prepared; full Knip execution exposes real remaining findings",
       "finding_closures": 0
+    },
+    {
+      "at": "2026-09-12T09:15:54.669036+00:00",
+      "state": "Full Knip, canonical lint, original review/lint regressions and package typechecks pass; native workflows failed before executing steps",
+      "finding_closures": 0
     }
   ],
   "blocked_gates": [],

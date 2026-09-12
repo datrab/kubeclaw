@@ -21,7 +21,6 @@ import { selectDefinedValue, selectTruthyValue } from '../support/optional-absen
 export const TOOL_ADAPTERS: any[] = [];
 const TOOL_OUTPUT_EMPTY = '';
 export const TOOL_OUTPUT_PREVIEW_MISSING = 'no output captured';
-export const LINT_VULNERABILITY_FOUND = 'vulnerability found';
 
 export function eslintFindingSeed(ctx: any, fileResult: any, message: any, occurrences: any) {
   const file = path.relative(ctx.repoRoot, fileResult.filePath).split(path.sep).join('/');
@@ -102,9 +101,6 @@ export function uniqueTypeScriptFindings(repoRoot: string, findings: any[]): any
   });
 }
 
-export function npmAuditSeverity(severity: any) {
-  return selectTruthyValue(() => (severity === 'critical'), () => (severity === 'high')) ? 'error' : 'warning';
-}
 
 export function registerTool(tool: any) {
   TOOL_ADAPTERS.push(tool);

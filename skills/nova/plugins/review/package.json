@@ -19,5 +19,8 @@
     "@kubeclaw/plugin-sdk": "*",
     "@kubeclaw/pipeline-test-gate-contract": "*",
     "js-tiktoken": "1.0.21"
+  },
+  "devDependencies": {
+    "tiktoken": "1.0.22"
   }
 }

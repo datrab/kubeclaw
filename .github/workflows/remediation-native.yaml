@@ -6,6 +6,9 @@ on:
       - 'scripts/**'
       - 'contracts/**'
       - 'tests/**'
+      - 'tools/ops-mcp/**'
+      - 'spikes/prism/puck-adapter/**'
+      - 'charts/kubeclaw/files/config/knip.json'
       - 'package.json'
       - 'package-lock.json'
       - 'versions.json'
@@ -14,6 +17,24 @@ on:
 permissions:
   contents: read
 jobs:
+  static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Install the separately locked packages included in the repository graph
+        run: |
+          npm ci --prefix tools/ops-mcp --ignore-scripts
+          npm ci --prefix spikes/prism/puck-adapter --ignore-scripts
+      - run: npm run knip:check
+
   inputs:
     runs-on: ubuntu-latest
     timeout-minutes: 5

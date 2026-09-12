@@ -675,6 +675,10 @@
           "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
           "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
           "summary": "Delivery-Refactor und Consumerfälle unabhängig gegengeprüft; dabei verlorene statische Integrationstestabdeckung repariert, mit sechs echten Typfehlern plus drei Root-Negativen bestätigt. Paketgrenzen/Testabdeckung integriert; gekoppelte SDK-/Delivery-Quelle bleibt separat."
+        },
+        {
+          "report": "implementation/pr6-knip.md",
+          "summary": "Vollständiges Knip mit real installierten gesperrten Paketversionen bestanden; kanonischer Lint und ursprüngliche Review-/Lintregressionen sowie Pakettypprüfungen bestanden. Kein nativer Semantikabschluss."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/lib.sdk.md",
@@ -682,11 +686,11 @@
       "source_finding_text": "### PCR-SDK-001 — Serialisierung erzeugt ungültige oder kollidierende Daten\n\n- **Mittel, nachgewiesener Defekt:** Funktion in aktiven Artefakt-/Effektpfaden;\n  kein bisheriger Produktionsvorfall mit normalen JSON-Eingaben behauptet.\n- **Beleg:** src/values.ts:42–51: map/join, undefined→null, localeCompare;\n  ArtifactStore.adapter.ts:108–135 speichert diese Bytes als application/json,\n  Core.effects/identity.ts:5–24 vergleicht so Payloads. unknown ohne JSON-Prüfung.\n- **Auslöser/Ablauf:** in-process Array(2) ergibt ungültiges `[,]`;\n  `{x:undefined}` und `{x:null}` identische Bytes. Originalfunktion tatsächlich\n  ausgeführt: [Reproduktion](../evidence/plugin-contract-sdk-repro.mjs).\n- **Auswirkung:** ungültige JSON-Artefakte bzw. verschiedene Nicht-JSON-Payloads\n  bei Idempotenz gleichgesetzt. Voller Adapterfehlerpfad ist Code-Trace, kein\n  hier gelaufener E2E-Test. Localeordnung zusätzliches Portabilitätsrisiko,\n  noch nicht durch mehrere Umgebungen gemessen.\n- **Ursachenbehebung:** akzeptierten JSON-Datenbereich validieren, Sparsearrays,\n  nichtendliche Zahlen, Getter, exotische Objekte/Zyklen ablehnen und\n  sprachunabhängig ordnen. Persistierte Digestversionen kontrolliert umstellen;\n  kein stiller Fallbackserializer.\n- **Regression:** Originalserializer-Negativ-/Localevektoren; echter\n  ArtifactStore put/get und EffectJournal-Replay dürfen weder ungültige Bytes\n  quittieren noch verschiedene akzeptierte Payloads gleichsetzen.\n  [PCR-PROMPT-001](lib.prompt-contract.md) betrifft getrennten ungenutzten Code,\n  nicht denselben Laufzeitpfad.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Vollständiges Knip und ursprüngliche gekoppelte native Semantik-/Producer-/History-Abnahme fehlen. Markierte Helper-Aktion weder wiederholen noch umleiten.",
+      "next_action": "Vollständiges Knip auf PR #6 bestanden. Ursprüngliche gekoppelte native Semantik-/Producer-/History-Abnahme fehlt weiterhin. Markierte Helper-Aktion weder wiederholen noch umleiten.",
       "related_findings": [],
       "decision_notes": [],
       "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe.",
-      "remaining_work": "Vollständiges Knip und ursprüngliche gekoppelte native Semantik-/Producer-/History-Abnahme fehlen. Markierte Helper-Aktion weder wiederholen noch umleiten."
+      "remaining_work": "Vollständiges Knip auf PR #6 bestanden. Ursprüngliche gekoppelte native Semantik-/Producer-/History-Abnahme fehlt weiterhin. Markierte Helper-Aktion weder wiederholen noch umleiten."
     },
     {
       "id": "PCR-SDK-002",

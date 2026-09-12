@@ -5,9 +5,6 @@ export function standaloneImportTokenAt(content: string, index: number): boolean
   return !(immediate && /[\p{ID_Continue}$]/u.test(immediate)) && before.trimEnd().at(-1) !== '.';
 }
 
-export function importSpecifiersFromScan(scanned: string): readonly string[] {
-  return importSpecifierRecordsFromScan(scanned).map(({ specifier }) => specifier);
-}
 
 export interface ReviewImportSpecifierRecord { readonly specifier: string; readonly index: number }
 
