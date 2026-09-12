@@ -3,6 +3,8 @@ export { LocalWorkerRuntime } from '../worker/local-runtime.ts';
 export { NativeWorkerResourceScope } from '../worker/native-resource-scope.ts';
 export type { NativeWorkerScopeLimits } from '../worker/native-resource-scope.ts';
 export type { NativeWorkerResourceObservation } from '../worker/native-resource-observation.ts';
+export { FileWorkerOwnershipStore } from '../worker/ownership-store.ts';
+export type { WorkerOwnershipIdentity, WorkerOwnershipRecord, WorkerOwnershipPhase, WorkerScopeBinding } from '../worker/ownership-store.ts';
 export type { LocalWorkerRuntimeOptions } from '../worker/local-runtime.ts';
 export {
   canonicalJson,

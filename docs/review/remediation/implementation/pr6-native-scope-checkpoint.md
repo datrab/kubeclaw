@@ -41,7 +41,32 @@ allocation, native launch, aggregate enforcement, descendant termination and
 restart recovery have not run. No remount, privilege escalation or substituted
 kernel provider was attempted. These tests must not be reported as passing.
 
-## Remaining work
+## Additional ownership metadata and executable native test
+
+`FileWorkerOwnershipStore` now persists neutral claim/profile/spec identities,
+reserved scope names, native identity bindings and revision-fenced lifecycle
+metadata using the existing fsync/rename and kernel flock primitives. Duplicate
+reservations converge; conflicting claims and stale revisions fail. Unresolved
+ownership blocks a replacement generation. Disposed identity records remain
+present for replay. Corrupt files and exhausted quotas fail without overwriting
+existing records. This metadata API is not itself kernel ownership evidence and
+is not yet wired to the native coordinator or either engine.
+
+The combined original terminal-resource suite, native-observation suite and new
+real-filesystem ownership suite pass: 16 tests, zero failures or skips. The
+ownership suite includes competing store instances, reopen, caller mutation,
+CAS/phase conflicts, unresolved ownership, quota atomicity and retained corrupt
+bytes. These are storage tests, not a claim of native restart recovery.
+
+`npm run verify:worker-core:native-scope` is now an executable live gate. It
+requires `KUBECLAW_WORKER_TEST_CGROUP_ROOT` and fails explicitly if absent. With
+a delegated test root it starts two real Node workloads in separate cgroups,
+compares their CPU usage and checks forced drain, retained counters and disposal.
+Its controlled test fixture joins before its CPU workload; it is not a substitute
+for the production pre-execution launcher. The positive native gate remains
+unexecuted here. There is no sampled or fake-cgroup fallback.
+
+## Remaining integration work
 
 Persist and reconcile scope ownership under service/claim fences; implement the
 trusted pre-execution launcher and host protocol; migrate task contracts and

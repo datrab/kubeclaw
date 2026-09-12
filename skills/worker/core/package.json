@@ -6,6 +6,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@kubeclaw/plugin-foundation": "*",
     "@kubeclaw/pipeline-worker-core-contract": "*"
   }
 }
