@@ -103,3 +103,26 @@ Findingabschluss sämtliche Live-/Cluster-/Empfängerprüfungen auszuführen. Si
 keine Deployments, Nachrichten oder Umgehung einer gesperrten Aktion. Umsetzung
 und [Einzelbewertung](implementation/pr6-local-acceptance.md) bleiben in PR #6;
 keine zusätzlichen Branches.
+
+## D13 — Explizite Tasklimits und großzügige Reserve
+
+Am 2026-09-12 vom Auftraggeber nach Abwägung ausdrücklich bestätigt:
+
+- Der neue native Worker-Ressourcenpfad begrenzt Linux-Tasks, also alle Threads
+  einschließlich des Hauptthreads jedes Prozesses. Prozesse werden nicht noch
+  einmal zusätzlich zu ihren Threads gezählt.
+- Die Einheit wird im Ressourcenvertrag und in Profilen ausdrücklich gebunden.
+  Bestehende Prozessbudgets und historische Receipts werden nicht stillschweigend
+  als Taskbudgets umgedeutet; die Migration muss versioniert beziehungsweise
+  eindeutig diskriminiert sein und alte Nachweise lesbar erhalten.
+- Limits mit großzügiger Reserve anhand tatsächlicher Worker-Arbeit wählen,
+  nicht knapp am Normalverbrauch und nicht durch eine feste Umrechnung alter
+  Prozesszahlen. Fehlende Messungen erlauben keine Behauptung einer bereits
+  erfolgten Kalibrierung. CPU, Speicher und Parallelität bleiben separat begrenzt.
+- Die Prüfung und vollständige Zentralisierung aller Betreiber-Einstellungen
+  über die vorhandene `swarm.config.json` ist ein eigener Roadmap-Schritt nach
+  den vier verbleibenden Findings in PR #6. Keine zweite Betreiberdatei einführen.
+
+Dies ist die freigegebene Zielentscheidung, noch kein implementierter oder
+verifizierter Ressourcenpfad. D09 und D12 bleiben unverändert; keine Deployment-
+oder Privilegienänderung ist damit autorisiert.
