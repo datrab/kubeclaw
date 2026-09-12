@@ -48,7 +48,42 @@
     "T01-F02",
     "T15-F01"
   ],
-  "completed_ids": [],
+  "completed_ids": [
+    "PCR-ISOLATION-002",
+    "PCR-ISOLATION-004",
+    "PCR-NOVA-GATE-005",
+    "PATH-T11-001",
+    "PATH-T13-001",
+    "PCR-CONTAINER-BUILD-001",
+    "PCR-CONTAINER-BUILD-002",
+    "PCR-DIRECT-COMMAND-001",
+    "PCR-VISUAL-001",
+    "PATH-T02-002",
+    "PCR-PRISM-AGENT-BRIDGE-001",
+    "PCR-PRISM-AGENT-BRIDGE-002",
+    "PCR-PRISM-CONTROL-001",
+    "PCR-PRISM-CONTROL-002",
+    "PCR-PRISM-CORPUS-001",
+    "PCR-PRISM-WORKER-001",
+    "PCR-PRISM-WORKER-003",
+    "PCR-PRISM-ENGINE-001",
+    "PCR-PRISM-RENDERER-002",
+    "PCR-PRISM-STUDIO-002",
+    "F-T14-01",
+    "F-T14-02",
+    "IFR-08-001",
+    "IFR-09-001",
+    "IFR-19-001",
+    "IFR-22-001",
+    "PCR-SCAFFOLD-OPS-001",
+    "IFR-07-001",
+    "IFR-14-001",
+    "IFR-20-001",
+    "IFR-20-002",
+    "IFR-25-001",
+    "T01-F02",
+    "T15-F01"
+  ],
   "checkpoints": [
     {
       "at": "2026-09-12T09:05:26.784487+00:00",
@@ -79,6 +114,11 @@
       "at": "2026-09-12T10:10:57.493871+00:00",
       "state": "Original supervisor ownership and real filesystem error regressions fixed; operations26/26 and original operator retention11/11 pass; native ownership acceptance remains blocked",
       "finding_closures": 0
+    },
+    {
+      "at": "2026-09-12T10:40:35.397536+00:00",
+      "state": "D12 local acceptance:34 of39 closed against actual local evidence;5 remain; live gates separately retained",
+      "finding_closures": 34
     }
   ],
   "blocked_gates": [
@@ -103,5 +143,6 @@
       "excluded_seconds": 6726,
       "reason": "No active test process or new evidence during interruption; user requested status."
     }
-  ]
+  ],
+  "completion_policy": "D12"
 }

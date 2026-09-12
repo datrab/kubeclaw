@@ -1,0 +1,13 @@
+✔ parsed job guards keep PRs and non-main dispatches read-only (2.57261ms)
+✔ read-only jobs cannot publish, persist checkout credentials or pass artifacts forward (0.500939ms)
+✔ trusted publication rebuilds source and retains digest smoke and receipt authority (0.505074ms)
+✔ trusted docs check before a scoped main-only commit and consume no validation artifacts (0.347602ms)
+✔ every external action in the two entrypoints is commit pinned (0.428293ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 438.122961

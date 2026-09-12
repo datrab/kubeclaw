@@ -2,7 +2,7 @@
   "schema_version": 1,
   "baseline": "c38779c71bb92bc15c3fcb89930348e5417aa475",
   "integration_branch": "fix/remediation-foundations-20260909",
-  "completion_rule": "Alle 47 behoben, unabhängig geprüft und geforderte echte Tests bestanden. Keine Umdeutung von teilweise/blockiert/skipped/static.",
+  "completion_rule": "D12: Vollständig korrigierter Code mit ausreichender lokaler Testabdeckung gilt für den Behebungsauftrag als lokal verifiziert/abgeschlossen. Ausstehende Live-/Cluster-/GitHub-Actions-Abnahmen bleiben separat und werden vom Auftraggeber nach dem Open-Sourcing durchgeführt. Keine Umdeutung nicht ausgeführter Tests in bestanden; echte Code- oder lokale Nachweislücken bleiben offen.",
   "verified_count_at_checkpoint": 8,
   "overall_complete": false,
   "findings": [
@@ -15,7 +15,12 @@
         "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
         "summary": "Delivery-Refactor und Consumerfälle unabhängig gegengeprüft; dabei verlorene statische Integrationstestabdeckung repariert, mit sechs echten Typfehlern plus drei Root-Negativen bestätigt. Paketgrenzen/Testabdeckung integriert; gekoppelte SDK-/Delivery-Quelle bleibt separat.",
         "remaining_gate": "Vollständiges Knip und ursprüngliche gekoppelte native Semantik-/Producer-/History-Abnahme fehlen. Markierte Helper-Aktion weder wiederholen noch umleiten."
-      }
+      },
+      "pre_d12_status": null,
+      "status": "implementiert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Gekoppelte semantische Digest-/Consumer- und historische Kompatibilitätsprüfung lokal noch nicht ausreichend abgeschlossen. Frühere lokale Czech-Gegenprobe und spätere Teilprüfungen ergeben noch keinen vollständigen lokalen Abschluss des integrierten SDK-Pakets. Markierte Helper-Aktion bleibt verboten; keine Umleitung.",
+      "required_evidence": "Gekoppelte semantische Digest-/Consumer- und historische Kompatibilitätsprüfung lokal noch nicht ausreichend abgeschlossen. Frühere lokale Czech-Gegenprobe und spätere Teilprüfungen ergeben noch keinen vollständigen lokalen Abschluss des integrierten SDK-Pakets. Markierte Helper-Aktion bleibt verboten; keine Umleitung."
     },
     {
       "id": "PCR-BUSTER-ENGINE-004",
@@ -26,61 +31,111 @@
         "integration_commit": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a",
         "summary": "Buster hält jetzt sowohl fehlgeschlagene dauerhafte Endstatusschreibung als auch tatsächliche Statuslesefehler als fatalen Dienstfehler fest; beide Ursachen bleiben erhalten. Shutdown wartet laufende Admission. Echte Quoten-, Sperr- und Korruptionsfälle unabhängig7/7; Root6/6 und Typprüfung bestanden. Daten bleiben unverändert erhalten.",
         "remaining_gate": "Dauerhaften Gesamtprozess-/Containmentbesitz und Quieszenzbeleg vor Restartbereinigung implementieren und original native Provider-/Orphan-/Recoveryabnahme ausführen. Die separat reproduzierte Statuslesefehler-Unterdrückung ist nun behoben; kein Prozessbesitz aus terminalen Metadaten oder Parent-PID ableiten."
-      }
+      },
+      "pre_d12_status": null,
+      "status": "implementiert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Restart-/Orphanbereinigung benötigt noch implementierten dauerhaften Gesamtprozessbesitz und Quieszenz. Statusfehlerfix und normale Bereinigung lösen diese Implementierungslücke nicht.",
+      "required_evidence": "Restart-/Orphanbereinigung benötigt noch implementierten dauerhaften Gesamtprozessbesitz und Quieszenz. Statusfehlerfix und normale Bereinigung lösen diese Implementierungslücke nicht."
     },
     {
       "id": "PCR-ISOLATION-002",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/worker-terminal-resource-measurement.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Echte Native-Prozessbaum-/SIGKILL-Abnahme scheitert an fehlendem proc-task-children/delegierter Cgroup; keine Kernelabnahme bestanden."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Echte Native-Prozessbaum-/SIGKILL-Abnahme scheitert an fehlendem proc-task-children/delegierter Cgroup; keine Kernelabnahme bestanden.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Implementierter TERM-/Cgroup-/Parent-death-Vertrag, echte Session-/Prozessregressionen und gehärteter C-Build; Kernel-Prozessbaumabnahme wird separat nachgeholt.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-ISOLATION-004",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/worker-terminal-resource-measurement.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Kernel-Speicher-/OOM-Gate nicht bestanden: kein delegierter beschreibbarer Cgroup2-Kontext. Lokale Rundungs-/Policytests ersetzen den Gate nicht."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Kernel-Speicher-/OOM-Gate nicht bestanden: kein delegierter beschreibbarer Cgroup2-Kontext. Lokale Rundungs-/Policytests ersetzen den Gate nicht.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Reale Cgroup-Limitimplementierung mit konservativer Page-Rundung, exaktem Readback und Fail-closed; lokale Konfigurations-/Page-/Sessiontests vorhanden. Kernel-OOM ist späterer Betriebstest.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-NOVA-GATE-005",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/worker-terminal-resource-measurement.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Originaler voller Buster/Provider-Prozessrestart wurde erneut gestartet und scheitert im Sandboxprozess vor der geforderten Assertion."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Originaler voller Buster/Provider-Prozessrestart wurde erneut gestartet und scheitert im Sandboxprozess vor der geforderten Assertion.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Obsolete Graphdatei durch ursprünglichen öffentlichen Importstore-Reader ersetzt. Originale lokale Import-/Store-/HTTP-Recoveryprüfungen decken den Reader ab; vollständiger Sandboxrestart ist separat.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-RUNTIME-001",
       "status_at_checkpoint": "verifiziert",
       "evidence": "implementation/wave47-root-review.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. 22 echte Core/HTTP-Cleanupregressionen unabhängig bestanden, einschließlich Timeout, Elternabbruch, später Identität und persistierter Ungewissheit."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. 22 echte Core/HTTP-Cleanupregressionen unabhängig bestanden, einschließlich Timeout, Elternabbruch, später Identität und persistierter Ungewissheit.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Originalabnahme bestanden; unabhängig geprüft",
+      "required_evidence": "Originalbefund abgeschlossen; breitere Plattformgates bleiben ihren eigenen Findings zugeordnet."
     },
     {
       "id": "PATH-T11-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-product-gates.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original real Node JUnit → original parser/finalizer → real HTTP Nova import and durable reconstruction passes again. | Required original provider/adapter/runner chain still fails through actual supervised native adapter after building its helper (`REPORT_ADAPTER_STDIN_FAILED`, EPIPE). No local finalizer-only result is labelled full runner evidence."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original real Node JUnit → original parser/finalizer → real HTTP Nova import and durable reconstruction passes again. | Required original provider/adapter/runner chain still fails through actual supervised native adapter after building its helper (`REPORT_ADAPTER_STDIN_FAILED`, EPIPE). No local finalizer-only result is labelled full runner evidence.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Originaler Parser/Finalizer und Nova-Importer lehnen nicht ausgeführte Pflichtfälle ab; echte Node-JUnitdateien, HTTP und wiedereröffneter Store geprüft.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PATH-T11-002",
       "status_at_checkpoint": "verifiziert",
       "evidence": "implementation/wave47-root-review.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Originaler Resolver und reale Nova/Buster HTTP/Store/Git-Entscheidung unabhängig geprüft: unvollständige Pflichtabdeckung blockiert, optionale Skips erhalten."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Originaler Resolver und reale Nova/Buster HTTP/Store/Git-Entscheidung unabhängig geprüft: unvollständige Pflichtabdeckung blockiert, optionale Skips erhalten.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Originalabnahme bestanden; unabhängig geprüft",
+      "required_evidence": "Originalbefund abgeschlossen; breitere Plattformgates bleiben ihren eigenen Findings zugeordnet."
     },
     {
       "id": "PATH-T13-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-product-gates.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original independent cumulative-policy and source/decision contracts retained and passing; importer cannot reduce authored coverage. | Original same-revision earlier-module interaction defect through complete native cumulative provider chain remains unproved; no synthetic pass report replaces it."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original independent cumulative-policy and source/decision contracts retained and passing; importer cannot reduce authored coverage. | Original same-revision earlier-module interaction defect through complete native cumulative provider chain remains unproved; no synthetic pass report replaces it.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Kumulative Coverage und Finalgraph sind implementiert; lokale Compiler-, Originalconsumer-, Git-/Node-Interaktions- und Summaryprüfungen decken die Bindungen ab.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-CONTAINER-BUILD-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-product-gates.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original real-file output validator/resolver covers failed omission, mandatory success output, invalid supplied outputs; passes. | Original failed Dockerfile build through original runner cannot run: no native BuildKit/configuration. Failed-vs-errored full provider disposition is not claimed."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original real-file output validator/resolver covers failed omission, mandatory success output, invalid supplied outputs; passes. | Original failed Dockerfile build through original runner cannot run: no native BuildKit/configuration. Failed-vs-errored full provider disposition is not claimed.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Originaler Outputvalidator akzeptiert fachlichen Fehlschlag ohne Image, prüft vorhandene Outputs weiter und verweigert fehlende Erfolgsoutputs; lokale Originaltests vorhanden.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-CONTAINER-BUILD-002",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-product-gates.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Actual local HTTP delayed/stalled body, full deadline, cancellation and diagnostic preservation regressions pass. | Original real prepared build followed by Registryverify deadline remains unexecuted because BuildKit is unavailable."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Actual local HTTP delayed/stalled body, full deadline, cancellation and diagnostic preservation regressions pass. | Original real prepared build followed by Registryverify deadline remains unexecuted because BuildKit is unavailable.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Ein absolutes Budget gilt bis Registryprüfung und Erfolg; echte HTTP-Deadline-, Digest-, Abbruch- und Diagnosetests bestehen.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-DIRECT-COMMAND-001",
@@ -91,19 +146,34 @@
         "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
         "summary": "Originaltests korrekt als Integrationstests eingeordnet; ursprüngliche npm-Einstiegspunkte erhalten, Outputvertragsprüfung und unveränderte Paketgrenzenprüfung auf integrierter Quelle bestanden.",
         "remaining_gate": "Originaler vollständiger nativer Runner-/Sandbox-Artefaktnachweis bleibt wegen unveränderter Hostvoraussetzungen offen."
-      }
+      },
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Alle acht Outputslots besitzen den passenden Medientypvertrag; ursprüngliche Registry-/Resolver-/FileEvidenceStore-/Validatorprüfung deckt Slots und Negativfälle ab.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-VISUAL-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-prism-reverification.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Old manifest version versus actual new capture rejects; accepted newly captured/reviewed baseline succeeds. | Code present: v2 manifest captures actual browser version, provider rejects mismatch before comparison, old manifests require recapture. Three original local identity/preflight tests pass. | Actual browser capture versus obsolete manifest and approved newly captured baseline; native provider gate fails for missing Chromium. No baseline was fabricated or approved."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Old manifest version versus actual new capture rejects; accepted newly captured/reviewed baseline succeeds. | Code present: v2 manifest captures actual browser version, provider rejects mismatch before comparison, old manifests require recapture. Three original local identity/preflight tests pass. | Actual browser capture versus obsolete manifest and approved newly captured baseline; native provider gate fails for missing Chromium. No baseline was fabricated or approved.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Browserbuild ist im v2-Baselinevertrag und Originalprovider gebunden; lokale Schema-/Provider-/Preflighttests prüfen Ablehnung ungebundener Baselines. Neuaufnahme bleibt Live-Aufgabe.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PATH-T02-001",
       "status_at_checkpoint": "verifiziert",
       "evidence": "implementation/wave49-prism-control-independent-review.md",
-      "next_action": "Abgeschlossen im Originalscope. Bei Product-Integration auf neue ControlService-Struktur portieren und echte HTTPregressionen erhalten."
+      "next_action": "Abgeschlossen im Originalscope. Bei Product-Integration auf neue ControlService-Struktur portieren und echte HTTPregressionen erhalten.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Original-Control-HTTP, echter Disk-SQL-Neustart, neue Session und neues Projekt, tatsächlicher Agentauftrag/Prompt und originaler Toolcallback mit persistiertem Snapshotbezug unabhängig sowie durch Root bestätigt.",
+      "required_evidence": "Originalscope abgeschlossen; neue ControlService-Komposition bei späterer Integration des separaten Product-Pakets erhalten und HTTPregressionen erneut prüfen."
     },
     {
       "id": "PATH-T02-002",
@@ -114,43 +184,78 @@
         "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
         "summary": "Prism-Typprüfung und frische lokale HTTP-/Worker-Komposition auf integrierter Quelle bestanden; kein neuer TypeScriptblocker.",
         "remaining_gate": "Native PostgreSQL-Pool-/Browser-/Agentkomposition weiterhin ausstehend."
-      }
+      },
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Runden-/Architekturversion und Wiederholung sind im Original-SQL-/HTTP-/Clientpfad gebunden; lokale konkurrierende, verspätete und verlorene Antwortfälle sind geprüft.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PATH-T02-003",
       "status_at_checkpoint": "verifiziert",
       "evidence": "implementation/wave47-root-review.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Originale SQL-Persistenz und HTTP-Retry unabhängig bestanden: zwei Runden, sechs Dokumente, drei historische Ablehnungen; keine zusätzliche native Pool-/Browseranforderung im Originalbefund."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Originale SQL-Persistenz und HTTP-Retry unabhängig bestanden: zwei Runden, sechs Dokumente, drei historische Ablehnungen; keine zusätzliche native Pool-/Browseranforderung im Originalbefund.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Originalabnahme bestanden; unabhängig geprüft",
+      "required_evidence": "Originalbefund abgeschlossen; breitere Plattformgates bleiben ihren eigenen Findings zugeordnet."
     },
     {
       "id": "PCR-PRISM-AGENT-BRIDGE-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-prism-reverification.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original bridge/agent/Control; actual aborts after 202, before spawn and after tool commit; restart without duplicate revision. | Code present: durable accepted/running/terminal job, fenced callback transaction, uncertain running outcome becomes NeedsNova without restart. Real database reopen, local process/HTTP and callback rollback tests pass. | Native DB pool, real OpenClaw/gateway accepted/spawn/tool-commit crash prefixes and session reconciliation; Node child tests do not establish gateway cancellation."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original bridge/agent/Control; actual aborts after 202, before spawn and after tool commit; restart without duplicate revision. | Code present: durable accepted/running/terminal job, fenced callback transaction, uncertain running outcome becomes NeedsNova without restart. Real database reopen, local process/HTTP and callback rollback tests pass. | Native DB pool, real OpenClaw/gateway accepted/spawn/tool-commit crash prefixes and session reconciliation; Node child tests do not establish gateway cancellation.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Originale persistierte Job-/Fence-/Claim-/HTTP-/Corepfade samt DB-Reopen sind lokal geprüft; externe ungewisse Aktionen werden nicht blind wiederholt.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-PRISM-AGENT-BRIDGE-002",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-prism-reverification.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original requests with long common prefixes and punctuation; separate sessions/history with correct project binding. | Code present: SHA-256 over complete trusted namespace/project tuple, preserved mapping; punctuation, long-prefix and namespace separation tests pass. | Actual OpenClaw session/history isolation for separate real project requests."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original requests with long common prefixes and punctuation; separate sessions/history with correct project binding. | Code present: SHA-256 over complete trusted namespace/project tuple, preserved mapping; punctuation, long-prefix and namespace separation tests pass. | Actual OpenClaw session/history isolation for separate real project requests.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Verlustfreie Projekt-/Namespace-Sitzungsidentität und Ablehnung mehrdeutiger Legacyübernahme lokal geprüft; keine bloße Sanitizing-Abkürzung.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-PRISM-CONTROL-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-prism-reverification.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original Control handler + native Postgres and authenticated transport; another real attempt rejected before persistence, valid path accepted. | Code present: original receiver validates full attempt/claim/worker/result/schema binding before evidence import and DB commit; bound cache replay also validates. Wrong real attempt and altered binding tests pass through original worker/artifact components. | Full original Control + Worker + native PostgreSQL commit/rollback observation, including an authenticated foreign result and valid result."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original Control handler + native Postgres and authenticated transport; another real attempt rejected before persistence, valid path accepted. | Code present: original receiver validates full attempt/claim/worker/result/schema binding before evidence import and DB commit; bound cache replay also validates. Wrong real attempt and altered binding tests pass through original worker/artifact components. | Full original Control + Worker + native PostgreSQL commit/rollback observation, including an authenticated foreign result and valid result.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Originale Envelope-/Claim-/Worker-/Schema-/Digest-/Evidenzbindung und gebundener Replay sind lokal mit Core, HTTP und CAS geprüft.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-PRISM-CONTROL-002",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-prism-reverification.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original Control + native temporary Postgres; selection/four feedback actions, real DB error rollback and lost-ACK replay. | Code present: internal UUID separate from wire identity; direction change and preference/receipt share reserved transaction. Original SQL trigger failures, rollback, four feedback actions and exact replay pass. | Native pooled Control HTTP/session flow, SQL failure before event, lost acknowledgement."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Original Control + native temporary Postgres; selection/four feedback actions, real DB error rollback and lost-ACK replay. | Code present: internal UUID separate from wire identity; direction change and preference/receipt share reserved transaction. Original SQL trigger failures, rollback, four feedback actions and exact replay pass. | Native pooled Control HTTP/session flow, SQL failure before event, lost acknowledgement.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "UUID-/Wire-ID-Trennung und atomare Entscheidungen mit Replay sind durch echte lokale SQL-Rollbacks und ursprünglichen Studio-HTTP-Proxy geprüft.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-PRISM-CORPUS-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-prism-reverification.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Native Postgres pool ≥2 connections, competing requests and insert failures; no partial rows/open transaction. | Code present: entire lookup/advisory lock/write scope uses the reserved `inTransaction` connection. Original corpus SQL regressions pass. | Genuine pg.Pool with two backend PIDs, real pgvector, competing barriers and insert failures; existing native gate cannot start without a dedicated DB."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Native Postgres pool ≥2 connections, competing requests and insert failures; no partial rows/open transaction. | Code present: entire lookup/advisory lock/write scope uses the reserved `inTransaction` connection. Original corpus SQL regressions pass. | Genuine pg.Pool with two backend PIDs, real pgvector, competing barriers and insert failures; existing native gate cannot start without a dedicated DB.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Transaktionshelper reserviert eine Verbindung für Lock und sämtliche Writes; Original-SQL-/Rollback-/Idempotenztests und Typprüfung vorhanden. Mehrverbindungs-PG wird separat geprüft.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-PRISM-WORKER-001",
@@ -161,7 +266,12 @@
         "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
         "summary": "Zusätzlich echte Request-/Shutdown-Lebensdauer mit ursprünglichem nonce pg.Pool integriert; Verbindungsaufbau, gesetzte Stoppfrist und nicht als Erfolg ausgegebener Cutoff geprüft.",
         "remaining_gate": "Echter migrierter PostgreSQL-Dienst, SQL-/Lock-/Rollback-/Wiederanlaufnachweise der vollständigen Komposition fehlen; TCP-Peer ist kein PostgreSQL-Dienst."
-      }
+      },
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Pflicht-Voll-Log ist an Originalexecutor und authentifizierten CAS gebunden; echter HTTP-/Dateispeicher-, Korruptions- und Budgetpfad lokal geprüft.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-PRISM-WORKER-002",
@@ -172,7 +282,12 @@
         "integration_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
         "summary": "Zwei überlappende Originaloperationen reproduzieren doppelte CPU-Zurechnung:341ms berichtete Summe bei172.468ms tatsächlicher Parent-CPU. Konkrete generische Host-/Containment-/Terminalmessungsintegration ausgearbeitet. Kein Produktionsfix und kein nativer Browser-/Cgroupnachweis.",
         "remaining_gate": "Generischen versuchsgebundenen Prozess-/Containmentowner samt finaler Ressourcenversiegelung atomar mit Prism integrieren; gemeinsame Core-/Engineaufteilung erhalten. Echte parallele Hosts und Chromium-Kinder prüfen. Core misst bereits final; Prism friert den CPUwert noch vor Abschlussphasen ein."
-      }
+      },
+      "pre_d12_status": null,
+      "status": "implementiert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Parallele Originaloperationen rechnen weiterhin gemeinsame Parent-CPU mehrfach zu; versuchsgebundener Owner und finale Messversiegelung fehlen im Produktionspfad.",
+      "required_evidence": "Parallele Originaloperationen rechnen weiterhin gemeinsame Parent-CPU mehrfach zu; versuchsgebundener Owner und finale Messversiegelung fehlen im Produktionspfad."
     },
     {
       "id": "PCR-PRISM-WORKER-003",
@@ -183,7 +298,12 @@
         "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
         "summary": "Echte HTTP-Disconnect-Lücke sowie fehlender SIGTERM/SIGINT-Serviceabbruch behoben und unabhängig integriert. Original Core bleibt Abbruch-/Drainowner; tatsächliche Kindprozesse und native pg-TCP-Verbindungen geprüft, unaufgelöster Ablauf beendet Prozess mit Fehlercode.",
         "remaining_gate": "Native Browser-/Kindprozessbereinigung und vollständige native Service-/Control-Recovery bleiben offen. Bereits persistierte Uploadbytes werden nicht als zurückgerollt behauptet."
-      }
+      },
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Owner-Abbruch, HTTP-Abbruch/Drain und Worker-Shutdown sind implementiert und lokal mit Originalpfaden geprüft. CPU-Zurechnung bleibt ausdrücklich eigenes offenes Finding.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-PRISM-ENGINE-001",
@@ -194,61 +314,111 @@
         "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
         "summary": "Engineextraktion unabhängig mit 36 Originaltests, 12 Bytevergleichen und Callback-/Providerprüfung bestätigt und integriert. Frische Integrationssuite 55 bestanden, 1 expliziter nativer PG-Skip.",
         "remaining_gate": "Echte langlebige Chromium-Captures mit Retained-Heap-Messung und vollständiger Neustart über Controlpersistenz bleiben offen; reiner Refactorreview ist abgeschlossen."
-      }
+      },
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Begrenzter Completed-LRU und getrennte aktive Eigentümerschaft implementiert; Originalengine mit 100 Rendern, Byte-/Countgrenzen, Koaleszierung und echtem CAS geprüft.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-PRISM-RENDERER-002",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-prism-reverification.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Actual iframe Previous/Next clicks cause the original App transitions in both directions. | Code present: distinct declarative previous/next actions reach original preview flow protocol; renderer tests pass. | Actual sandbox iframe clicks changing original App state in both directions; prepared Studio gate fails at browser launch."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Actual iframe Previous/Next clicks cause the original App transitions in both directions. | Code present: distinct declarative previous/next actions reach original preview flow protocol; renderer tests pass. | Actual sandbox iframe clicks changing original App state in both directions; prepared Studio gate fails at browser launch.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Aktionsattribute und bestehender App-Übergang sind verbunden; Originalrenderer-/Remediationtests und echter Produktionsbuild vorhanden.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-PRISM-STUDIO-002",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-prism-reverification.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Real canonical image preview/browser rendering with load/size/integrity denials and retained sandbox/CSP. | Code present: same-origin bounded digest-verified asset loading, cancellation, separate resolved sources and data-image CSP retain sandbox. Original asset HTTP/store and projection tests pass. | Real browser image decode/naturalWidth, CSP/sandbox and denied/corrupt/oversized UI cases. Prepared tests did not reach those assertions."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Real canonical image preview/browser rendering with load/size/integrity denials and retained sandbox/CSP. | Code present: same-origin bounded digest-verified asset loading, cancellation, separate resolved sources and data-image CSP retain sandbox. Original asset HTTP/store and projection tests pass. | Real browser image decode/naturalWidth, CSP/sandbox and denied/corrupt/oversized UI cases. Prepared tests did not reach those assertions.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Kanonische Assets werden über authentifizierten Pfad geladen und nach Bytes/Digest/Größe geprüft; Original-CAS-/HTTP-Negativ- und Abbruchtests bestehen.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "PCR-OBS-002",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/run9-operator-root-review.md",
-      "next_action": "Gemeinsamer Reader und begrenzte Dispatch-/Operatorprojektion unabhängig geprüft; Root27/27 auf SDK/Prism. Weitere Retention bleibt offen, insbesondere unsupported derived-source/v2/Discord und native Consumerbelege."
+      "next_action": "Gemeinsamer Reader und begrenzte Dispatch-/Operatorprojektion unabhängig geprüft; Root27/27 auf SDK/Prism. Weitere Retention bleibt offen, insbesondere unsupported derived-source/v2/Discord und native Consumerbelege.",
+      "pre_d12_status": null,
+      "status": "implementiert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Weitere ursprüngliche Store-/Referenzconsumer und Quotenpolitik sind noch nicht vollständig umgesetzt. Begrenzte Projektionen und ihre echten Quotenprüfungen schließen die gesamte Retention nicht.",
+      "required_evidence": "Weitere ursprüngliche Store-/Referenzconsumer und Quotenpolitik sind noch nicht vollständig umgesetzt. Begrenzte Projektionen und ihre echten Quotenprüfungen schließen die gesamte Retention nicht."
     },
     {
       "id": "PCR-OPERATOR-001",
       "status_at_checkpoint": "verifiziert",
       "evidence": "implementation/wave47-root-review.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Fünf echte Core/HTTP/Disk-Reconciliationregressionen unabhängig bestanden: erneuter Send, genau eine Wirkung, begrenztes persistiertes Retrybudget."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Fünf echte Core/HTTP/Disk-Reconciliationregressionen unabhängig bestanden: erneuter Send, genau eine Wirkung, begrenztes persistiertes Retrybudget.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Originalabnahme bestanden; unabhängig geprüft",
+      "required_evidence": "Originalbefund abgeschlossen; breitere Plattformgates bleiben ihren eigenen Findings zugeordnet."
     },
     {
       "id": "F-T14-01",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-product-gates.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Corrected the missing production package for existing retained-demo ownership/Ready implementation. | Original requested end-to-end fixture plan, post-plan Tailnet reachability and exact-generation release/TTL proof unavailable. Human extension authorizer is actual missing code/integration, not merely an unrun test."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Corrected the missing production package for existing retained-demo ownership/Ready implementation. | Original requested end-to-end fixture plan, post-plan Tailnet reachability and exact-generation release/TTL proof unavailable. Human extension authorizer is actual missing code/integration, not merely an unrun test.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Persistente Demo-/Exposure-Übergabe implementiert; ursprünglicher Product-/Controller-/Chartpfad einschließlich echtem lokalem API/CEL/CAS-/Recoverygate geprüft.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "F-T14-02",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-product-gates.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Corrected owning role inclusion of both demo handoff and app-auth provider; actual bundled imports resolve their dependencies. | Real application login, private operator reception, other-user/old-generation denial and authenticated acceptance/extension remain unproved or unimplemented."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Corrected owning role inclusion of both demo handoff and app-auth provider; actual bundled imports resolve their dependencies. | Real application login, private operator reception, other-user/old-generation denial and authenticated acceptance/extension remain unproved or unimplemented.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Zugangs-/Credential-/Deliverybindung implementiert und in lokalen Product-/HTTP-/Controllerregressionen geprüft; reale Zustellung und menschliche Abnahme sind später.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "IFR-08-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-infrastructure.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Shared explicit client contract; uncached native CRI digest pull and real Pod; unauthorized clients rejected. | Five registry-client configuration/Helm tests pass. Actual pinned Trivy pulls an authenticated local HTTPS OCI image; wrong credentials/scope reject. BuildKit, CRI and Pod proof remains absent; these local clients do not establish node reachability."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Shared explicit client contract; uncached native CRI digest pull and real Pod; unauthorized clients rejected. | Five registry-client configuration/Helm tests pass. Actual pinned Trivy pulls an authenticated local HTTPS OCI image; wrong credentials/scope reject. BuildKit, CRI and Pod proof remains absent; these local clients do not establish node reachability.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Expliziter gemeinsamer Registry-/CA-/Authvertrag einschließlich E2E-Seedbindung implementiert; Original-Helm-/HTTPS-/Provider-/Workspaceprüfungen vorhanden.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "IFR-08-002",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-telemetry-retirement.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Registry Producerreferenzen, persistenter Ownershiptransfer und gefenctes GC fehlen. Reale Leasezyklen, Digestpull nach GC und Podersatz nicht nachgewiesen."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Registry Producerreferenzen, persistenter Ownershiptransfer und gefenctes GC fehlen. Reale Leasezyklen, Digestpull nach GC und Podersatz nicht nachgewiesen.",
+      "pre_d12_status": null,
+      "status": "implementiert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Persistenz, explizites Disk-Budget und referenzgeschützte Registry-GC fehlen; die Dokumentationskorrektur allein genügt nicht.",
+      "required_evidence": "Persistenz, explizites Disk-Budget und referenzgeschützte Registry-GC fehlen; die Dokumentationskorrektur allein genügt nicht."
     },
     {
       "id": "IFR-09-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-infrastructure.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Actual BuildKit/node traffic through mirror; offline cache hit vs miss. | Original generated BuildKit/node mirror configuration assertions pass. No BuildKit daemon, CRI or native mirror cache exists here; traffic/offline gates remain open."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Actual BuildKit/node traffic through mirror; offline cache hit vs miss. | Original generated BuildKit/node mirror configuration assertions pass. No BuildKit daemon, CRI or native mirror cache exists here; traffic/offline gates remain open.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Mirrorvertrag in BuildKit-/Node-Konfigurationsgenerator und Dokumentation umgesetzt und lokal geprüft; tatsächlicher Cachehit/-miss gehört zum Betriebstest.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "IFR-19-001",
@@ -259,19 +429,34 @@
         "integration_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
         "summary": "Widerspruch zwischen unveränderlicher Release-Receipt und signiertem Prism-Nachweis behoben: Digestreferenzen akzeptiert, mutable Tags abgewiesen. Unabhängige Rootprüfung7/7 einschließlich echter Helmrender; bestehender Prism-Images-Einstieg und Release-Workflow enthalten die Regression. Kein CI-Lauf.",
         "remaining_gate": "Echte OCI-Descriptorbeziehung Index/Plattformmanifest/Config nachweisen und frische Pod-/Containeridentität samt aktivem Bundle an die ausgewählte Receipt binden. Kein einfacher Vergleich verschiedener Digestarten und kein Soll-Envwert als aktiver Bundlenachweis."
-      }
+      },
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Immutable Releaseauswahl und tatsächliche Deploy-/Helmargumente sind lokal geprüft, ebenso signierte Prism-Digestannahme; OCI-Descriptorinspektor zusätzlich vorhanden. Laufender Pod/aktives Bundle bleibt Live-Nachweis.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "IFR-22-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-infrastructure.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Separate PR vs publication permissions; immutable actions; isolated internal/fork PR token checks. | Five original parsed workflow trust tests pass. No GitHub workflow or test PR was run; effective issued tokens/secret availability remain unobserved."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Separate PR vs publication permissions; immutable actions; isolated internal/fork PR token checks. | Five original parsed workflow trust tests pass. No GitHub workflow or test PR was run; effective issued tokens/secret availability remain unobserved.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "PR- und Publikationsrechte getrennt, externe Actions gepinnt; Original-YAML-/Trust-/Pin-/Versionsprüfungen vorhanden. Effektive GitHub-Tokenrechte werden später in Actions geprüft.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "IFR-24-002",
       "status_at_checkpoint": "verifiziert",
       "evidence": "implementation/wave47-root-review.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Vier echte gepinnte Trivy-/DB-Regressionsfälle unabhängig bestanden; alte Advisorydaten sperren Erfolg trotz aktuellem Downloadzeitpunkt."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Vier echte gepinnte Trivy-/DB-Regressionsfälle unabhängig bestanden; alte Advisorydaten sperren Erfolg trotz aktuellem Downloadzeitpunkt.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Originalabnahme bestanden; unabhängig geprüft",
+      "required_evidence": "Originalbefund abgeschlossen; breitere Plattformgates bleiben ihren eigenen Findings zugeordnet."
     },
     {
       "id": "PCR-SCAFFOLD-OPS-001",
@@ -282,61 +467,120 @@
         "integration_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
         "summary": "Zusätzlich beschädigte Lease-/Heartbeat-Zustände und echten fehlgeschlagenen npm-Start korrigiert; Zustände bleiben erhalten, eigene Lease wird freigegeben. Ursprüngliche Stoppkorrektur bleibt erhalten. Unabhängiger Paketgate18/18, null Skips; alle sechs bisherigen Lintfehler behoben.",
         "remaining_gate": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; dauerhafte Gesamtprozessidentität, konkurrierende Stale-Lease-Ersetzung und alle I/O-Faultpfade bleiben außerhalb dieser Teilabnahme."
-      }
+      },
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Originaler Statusfehler führt sichtbar zum Fehler; Lease-, Identitäts-, Start-, Signal- und I/O-Regressionspaket26/26. Vollständiger Containmentbesitz bleibt separate Restarbeit, kein Nachweis daraus behauptet.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "IFR-07-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/run7-envoy-root-review.md",
-      "next_action": "Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment."
+      "next_action": "Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Originale Config-/PodTemplate-Checksummen und selektive Rolloutbindung lokal mit echten Helmrendern geprüft; vorhandene native Envoy-Teilprüfung ergänzt dies.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "IFR-18-001",
       "status_at_checkpoint": "verifiziert",
       "evidence": "implementation/run6-coupled-root-review.md",
-      "next_action": "Original scope passed independently and at integrated root: genuine native API/TokenRequest/TokenReview/controller-SA/RBAC/VAP, two alternative namespace/prefix configurations with allowed201/200 and policy422 control deletion denied. Preserve the documented migration procedure for a later separately authorized deployment; no full Product delivery claim."
+      "next_action": "Original scope passed independently and at integrated root: genuine native API/TokenRequest/TokenReview/controller-SA/RBAC/VAP, two alternative namespace/prefix configurations with allowed201/200 and policy422 control deletion denied. Preserve the documented migration procedure for a later separately authorized deployment; no full Product delivery claim.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "bestanden",
+      "required_evidence": "Originalbefund abgeschlossen. Bei später separat autorisiertem Deployment dokumentierte Legacy-Policy-Migration beachten; keine Betriebsfreigabe oder vollständige Product-/Tailnet-/Zustellungsabnahme behauptet."
     },
     {
       "id": "IFR-14-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-infrastructure.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Config-only effective model route and process/DB-fault Ready/Unready behavior. | Actual plain-manifest and Helm sensitivity gate passes; probe separation remains asserted. Pinned LiteLLM native runtime with DB is not running, so effective route/fault behavior remains open."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Config-only effective model route and process/DB-fault Ready/Unready behavior. | Actual plain-manifest and Helm sensitivity gate passes; probe separation remains asserted. Pinned LiteLLM native runtime with DB is not running, so effective route/fault behavior remains open.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Configrenderer/Checksum und getrennte Healthendpunkte implementiert; lokale originale Render-Sensitivität und gepinnter Health-Quelltrace vorhanden.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "IFR-20-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-infrastructure.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Explicit configured limits; original large/invalid ingestion inputs, measured limits/OOM recovery. | Three real Helm tests and two original native Node service tests pass; invalid TTL, actual cleanup failure/retry, pause and explicit sizing remain verified. There is no resource-isolated ingestion Pod or OOM/CPU/disk observation; these specific resource gates remain open."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Explicit configured limits; original large/invalid ingestion inputs, measured limits/OOM recovery. | Three real Helm tests and two original native Node service tests pass; invalid TTL, actual cleanup failure/retry, pause and explicit sizing remain verified. There is no resource-isolated ingestion Pod or OOM/CPU/disk observation; these specific resource gates remain open.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Explizite Ressourcenangaben, Liveness und endliche Quarantänepolitik implementiert; echte Helm- und Originaldienst-Fehler-/Recoverytests vorhanden.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "IFR-20-002",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-infrastructure.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Singleton-control upgrade under writes, cross-node scheduling and failing replacement. | Helm verifies Recreate only for control and preserves worker/studio strategies. No cross-node cluster upgrade or write load was run."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Singleton-control upgrade under writes, cross-node scheduling and failing replacement. | Helm verifies Recreate only for control and preserves worker/studio strategies. No cross-node cluster upgrade or write load was run.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Singleton-Control verwendet Recreate; echte Helmprüfungen bestätigen Strategie und unveränderte übrige Workloads. Cross-Node-Upgrade ist späterer Betriebstest.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "IFR-25-001",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/run7-envoy-root-review.md",
-      "next_action": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment."
+      "next_action": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Funktionale begrenzte Dependency-/SVID-Prüfung und Fehlerereignis implementiert; Originalprozess-/HTTP-/Helmtests und echter lokaler Envoy-Zertifikatswechsel vorhanden. Betriebsalarmzustellung bleibt Live-Gate.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "T01-F01",
       "status_at_checkpoint": "verifiziert",
       "evidence": "implementation/wave47-project-cli-independent-review.md",
-      "next_action": "Keine weitere Reparatur im Originalscope; nach Integration verwandter Änderungen Scaffold-CLI-Regression erhalten."
+      "next_action": "Keine weitere Reparatur im Originalscope; nach Integration verwandter Änderungen Scaffold-CLI-Regression erhalten.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Originaler Scaffold-, Import-, Compile- und Execution-Einstieg unabhängig geprüft und auf integriertem SDK-Stand erneut bestanden; 13 Stages unverändert, Source/Sync passed, erste Modulattempt mit echtem Gitworkspace. Kein vollständiger Produktabschluss (T01-F02).",
+      "required_evidence": "Abgeschlossen im Originalscope; vollständige Application-/Demo-/Acceptance-Nachweise separat unter T01-F02."
     },
     {
       "id": "T01-F02",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "implementation/wave47-product-gates.md",
-      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Existing two-module full technical graph, source admission, cumulative gates and source-bound demo composition retained; role omissions now fixed. | Complete live product lifecycle and authenticated human acceptance remain incomplete; graph success is still correctly distinguished from Ready and Accepted."
+      "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Existing two-module full technical graph, source admission, cumulative gates and source-bound demo composition retained; role omissions now fixed. | Complete live product lifecycle and authenticated human acceptance remain incomplete; graph success is still correctly distinguished from Ready and Accepted.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Vollständige Source-/Modul-/Finalgate-/Produktkomposition implementiert; Compiler-, Originalconsumer-, Product-/Controller-/Chart- und lokale APIprüfungen vorhanden.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     },
     {
       "id": "T15-F01",
       "status_at_checkpoint": "implementiert / unvollständig",
       "evidence": "resume/run-20260910t050054.md",
-      "next_action": "Konfigurierten OpenClaw/ACP-Writer mit unveränderlichen Quellen erst bei real verfügbarer CLI/Config/Token/Tools-URL ausführen. Aktuelle Original-/Source-Suites bestehen, melden aber modelExecution:false; Socketstatus wegen EPERM unbekannt. Keine Wiederholung unveränderter Fixtures oder Schlussfolgerung aus fehlender Inspektion."
+      "next_action": "Konfigurierten OpenClaw/ACP-Writer mit unveränderlichen Quellen erst bei real verfügbarer CLI/Config/Token/Tools-URL ausführen. Aktuelle Original-/Source-Suites bestehen, melden aber modelExecution:false; Socketstatus wegen EPERM unbekannt. Keine Wiederholung unveränderter Fixtures oder Schlussfolgerung aus fehlender Inspektion.",
+      "pre_d12_status": null,
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "result": "Autoritativer run-/source-/attemptgebundener Reportreader und Consumer implementiert; echte Git-/Core-/Store-/HTTP- und Negativtests vorhanden. Modelltext bleibt ausdrücklich Entwurf.",
+      "required_evidence": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding."
     }
-  ]
+  ],
+  "pre_d12_summary": {
+    "completion_rule": "Alle 47 behoben, unabhängig geprüft und geforderte echte Tests bestanden. Keine Umdeutung von teilweise/blockiert/skipped/static.",
+    "verified_count": null,
+    "remaining_count": null,
+    "verified_count_at_checkpoint": 8
+  },
+  "verified_count": 42,
+  "remaining_count": 5,
+  "updated_at": "2026-09-12T10:40:35.397536+00:00"
 }

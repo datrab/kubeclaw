@@ -86,3 +86,20 @@ Stand: 2026-09-09. Vom Auftraggeber in der Planungssitzung ausdrücklich bestät
 ## Noch benötigte Umgebungsdaten, keine neuen stillen Produktentscheidungen
 
 Die Pipelinevorgaben reichen für den Behebungsplan. Konkrete Hostkapazität/Paperless-Reserve, externe Tailnetregeln, unabhängiger Recoveryzugang, Backupziel und akzeptierte Wiederherstellungszeiten sowie verfügbare Clawdeck-Schnittstelle sind vor den jeweiligen Betriebsnachweisen zu erheben. Keine neue VM, kostenpflichtige Ressource, Backupgarantie oder externe Zugriffsregel wird aus diesem Dokument als bereits genehmigt/vorhanden abgeleitet. Technische Vorschläge hierfür gehören mit Begründung in WP09/WP12/WP13.
+
+## D12 — Lokaler Abschluss und separate Live-Abnahme
+
+Am2026-09-12 vom Auftraggeber ausdrücklich bestätigt: Wenn Code vollständig
+korrigiert und ausreichend lokal getestet ist, gilt das Finding als **lokal
+verifiziert und für diesen Behebungsauftrag abgeschlossen**. Die Live-Tests
+führt der Auftraggeber am Ende nach dem Open-Sourcing aus; GitHub-Actions-Gates
+bleiben dafür erhalten. Lokale Nachweise und ausstehende Live-Nachweise werden
+getrennt geführt. Fehlende Implementierung oder unzureichende lokale Abdeckung
+bleiben offen. Nicht ausgeführte Tests werden nicht als bestanden bezeichnet.
+
+Diese Entscheidung ersetzt frühere Anforderungen, bereits für den lokalen
+Findingabschluss sämtliche Live-/Cluster-/Empfängerprüfungen auszuführen. Sie
+ändert weder Runtime-Sicherheitsgates noch D02-Produktabnahme und autorisiert
+keine Deployments, Nachrichten oder Umgehung einer gesperrten Aktion. Umsetzung
+und [Einzelbewertung](implementation/pr6-local-acceptance.md) bleiben in PR #6;
+keine zusätzlichen Branches.

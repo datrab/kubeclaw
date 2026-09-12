@@ -1,5 +1,7 @@
 # Aktueller Umsetzungsstand
 
+Aktueller Stand nach D12 (2026-09-12): **128 lokal verifiziert / 5 teilweise / 2 in Bearbeitung / 19 offen**. Von den39 sind34 lokal abgeschlossen. Live-Abnahmen folgen separat durch den Auftraggeber nach Open-Sourcing. Maßgeblich sind [D12](decisions.md#d12--lokaler-abschluss-und-separate-live-abnahme), [Einzelbewertung](implementation/pr6-local-acceptance.md) und [Register](register.json). Ausschließlich im bestehenden PR #6 und dessen Branch weiterarbeiten; frühere Anweisungen zu weiteren Fixbranches gelten nicht. Die folgenden älteren Stände bleiben historischer Verlauf.
+
 ## Fortsetzung 2026-09-12 auf konsolidiertem main
 
 Die Einzelprüfung bestätigt **94 verifiziert / 39 teilweise / 2 in Bearbeitung / 19 offen**. Die veralteten drei Markdown-Zeilen und die Summe 42 sind korrigiert; keine neue Finding-Hochstufung. Supervisor-Lease-Besitzwechsel und Freigabe sind jetzt mit dem vorhandenen FileMutex serialisiert. Originaler Operations-Prüfeinstieg: **20/20 bestanden, keine Skips**, begrenzter kanonischer Lint bestanden. Native Adoption bleibt durch fehlende Child-cmdline in procfs blockiert. [Abgleich, Ursachenfix, Nachweise und Restarbeit](implementation/resume-20260912-supervisor-lease.md).

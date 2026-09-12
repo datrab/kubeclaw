@@ -1,0 +1,597 @@
+{
+  "schema_version": 1,
+  "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+  "source_commit": "b184b8b5c1827494783a313ea09955b8b7c17c30",
+  "source_tree": "e6d55a1d98002b59239e1c606fc6f0fdcdc99f6c",
+  "pr": 6,
+  "completion_policy": "D12: Vollständig korrigierter Code mit ausreichender lokaler Testabdeckung gilt für den Behebungsauftrag als lokal verifiziert/abgeschlossen. Ausstehende Live-/Cluster-/GitHub-Actions-Abnahmen bleiben separat und werden vom Auftraggeber nach dem Open-Sourcing durchgeführt. Keine Umdeutung nicht ausgeführter Tests in bestanden; echte Code- oder lokale Nachweislücken bleiben offen.",
+  "scope_count": 39,
+  "locally_completed_count": 34,
+  "remaining_count": 5,
+  "findings": [
+    {
+      "id": "PCR-SDK-001",
+      "title": "Serialisierung erzeugt ungültige oder kollidierende Daten",
+      "local_disposition": "offen",
+      "rationale": "Gekoppelte semantische Digest-/Consumer- und historische Kompatibilitätsprüfung lokal noch nicht ausreichend abgeschlossen. Frühere lokale Czech-Gegenprobe und spätere Teilprüfungen ergeben noch keinen vollständigen lokalen Abschluss des integrierten SDK-Pakets. Markierte Helper-Aktion bleibt verboten; keine Umleitung.",
+      "evidence_reports": [
+        "implementation/contracts.md",
+        "implementation/sdk-json-compatibility.md",
+        "implementation/wave47-sdk-subject-independent-review.md",
+        "implementation/sdk-checkpoint-encoding-independent-review.md",
+        "implementation/run3-sdk-repair-independent-review.md",
+        "docs/review/evidence/run3-root-sdk-final.txt",
+        "implementation/run3-review-evidence-independent-review.md",
+        "docs/review/evidence/run4-root-review-npm.txt",
+        "docs/review/evidence/run4-root-review-recovery.txt",
+        "implementation/run5-adapter-independent-review.md",
+        "docs/review/evidence/run6-root-adapter-integrated.txt",
+        "docs/review/evidence/run6-root-adapter-historical-cli.txt",
+        "implementation/run9-sdk-root-review.md",
+        "implementation/run9-prism-baseline-root-review.md",
+        "implementation/run9-cache-reader-root-review.md",
+        "implementation/run10-runtime-admission-root-review.md",
+        "implementation/run11-report-root-review.md",
+        "https://github.com/datrab/kubeclaw/blob/4e7a12c2f24a841519373ff9c18110642d130521/docs/review/remediation/implementation/resume-39-20260911-delivery-review.md",
+        "https://github.com/datrab/kubeclaw/blob/d22ee1d298aa63050673e075b363ae4c996008dc/docs/review/remediation/implementation/resume-39-20260911-2h.md",
+        "implementation/resume-84-integration-root-review.md",
+        "implementation/pr6-knip.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / weitere Consumer offen",
+      "previous_next_action": "Vollständiges Knip auf PR #6 bestanden. Ursprüngliche gekoppelte native Semantik-/Producer-/History-Abnahme fehlt weiterhin. Markierte Helper-Aktion weder wiederholen noch umleiten.",
+      "pending_live_validation": null
+    },
+    {
+      "id": "PCR-BUSTER-ENGINE-004",
+      "title": "Terminale Jobs behalten vollständige Quellen und Arbeitsverzeichnisse",
+      "local_disposition": "offen",
+      "rationale": "Restart-/Orphanbereinigung benötigt noch implementierten dauerhaften Gesamtprozessbesitz und Quieszenz. Statusfehlerfix und normale Bereinigung lösen diese Implementierungslücke nicht.",
+      "evidence_reports": [
+        "implementation/buster-engine.md",
+        "implementation/buster-orphan-recovery-boundary.md",
+        "implementation/resume-84-buster-root-review.md",
+        "implementation/resume-84-buster-read-independent-review.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise; Buster hält jetzt sowohl fehlgeschlagene dauerhafte Endstatusschreibung als auch tatsächliche Statuslesefehler als fatalen Dienstfehler fest; beide Ursachen bleiben erhalten. Shutdown wartet laufende Admission. Echte Quoten-, Sperr- und Korruptionsfälle unabhängig7/7; Root6/6 und Typprüfung bestanden. Daten bleiben unverändert erhalten.",
+      "previous_next_action": "Dauerhaften Gesamtprozess-/Containmentbesitz und Quieszenzbeleg vor Restartbereinigung implementieren und original native Provider-/Orphan-/Recoveryabnahme ausführen. Die separat reproduzierte Statuslesefehler-Unterdrückung ist nun behoben; kein Prozessbesitz aus terminalen Metadaten oder Parent-PID ableiten.",
+      "pending_live_validation": null
+    },
+    {
+      "id": "PCR-ISOLATION-002",
+      "title": "SIGKILL trifft Supervisor statt Prozessbaum",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Implementierter TERM-/Cgroup-/Parent-death-Vertrag, echte Session-/Prozessregressionen und gehärteter C-Build; Kernel-Prozessbaumabnahme wird separat nachgeholt.",
+      "evidence_reports": [
+        "implementation/isolation.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Echte Prozessbaum-/Credential-drop-/Host-SIGKILL-Abnahme durch fehlende proc-children und delegierte Cgroups blockiert.",
+      "pending_live_validation": "Echte Prozessbaum-/Credential-drop-/Host-SIGKILL-Abnahme durch fehlende proc-children und delegierte Cgroups blockiert."
+    },
+    {
+      "id": "PCR-ISOLATION-004",
+      "title": "Lease-Memorywert ist kein erzwungenes Speichermaximum",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Reale Cgroup-Limitimplementierung mit konservativer Page-Rundung, exaktem Readback und Fail-closed; lokale Konfigurations-/Page-/Sessiontests vorhanden. Kernel-OOM ist späterer Betriebstest.",
+      "evidence_reports": [
+        "implementation/isolation.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Reale Cgroup2-Speicher/OOM-Grenze implementiert, konservative Page-Rundung lokal geprüft; Kernelabnahme mangels Delegation blockiert.",
+      "pending_live_validation": "Reale Cgroup2-Speicher/OOM-Grenze implementiert, konservative Page-Rundung lokal geprüft; Kernelabnahme mangels Delegation blockiert."
+    },
+    {
+      "id": "PCR-NOVA-GATE-005",
+      "title": "Prozessrestarttest erwartet entfernte Graphdatei",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Obsolete Graphdatei durch ursprünglichen öffentlichen Importstore-Reader ersetzt. Originale lokale Import-/Store-/HTTP-Recoveryprüfungen decken den Reader ab; vollständiger Sandboxrestart ist separat.",
+      "evidence_reports": [
+        "implementation/nova-gate-deadlines.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Öffentlicher Graphreader korrigiert; realer Vollprozess-Restart scheitert an Sandbox vor neuer Assertion; kein bestandener Nachweis.",
+      "pending_live_validation": "Öffentlicher Graphreader korrigiert; realer Vollprozess-Restart scheitert an Sandbox vor neuer Assertion; kein bestandener Nachweis."
+    },
+    {
+      "id": "PATH-T11-001",
+      "title": "Blocking-JUnit kann ohne einen ausgeführten Test bestehen",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Originaler Parser/Finalizer und Nova-Importer lehnen nicht ausgeführte Pflichtfälle ab; echte Node-JUnitdateien, HTTP und wiedereröffneter Store geprüft.",
+      "evidence_reports": [
+        "implementation/junit-executed-required.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Actual Node JUnit output, original parser/finalizer and localhost HTTP Nova import/FileStore verified independently; no review override or invented failed case for missing execution. Full native provider/adapter/runner path blocked by actual EPIPE/exit70 host prerequisite failure.",
+      "pending_live_validation": "Actual Node JUnit output, original parser/finalizer and localhost HTTP Nova import/FileStore verified independently; no review override or invented failed case for missing execution. Full native provider/adapter/runner path blocked by actual EPIPE/exit70 host prerequisite failure."
+    },
+    {
+      "id": "PATH-T13-001",
+      "title": "Kumulativer Prüfumfang ist nicht gebunden; letzte Modulbelege genügen dem Abschluss",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Kumulative Coverage und Finalgraph sind implementiert; lokale Compiler-, Originalconsumer-, Git-/Node-Interaktions- und Summaryprüfungen decken die Bindungen ab.",
+      "evidence_reports": [
+        "implementation/gate-coverage.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "lokale Prüfungen bestanden; native Gesamtintegration offen",
+      "previous_next_action": "Native kumulative Gesamtpipeline mit echten Providern und anschließendem Ready-/Zustellungsnachweis prüfen; technische delivery-manifest.v2 allein ist keine Ready-Freigabe.",
+      "pending_live_validation": "Native kumulative Gesamtpipeline mit echten Providern und anschließendem Ready-/Zustellungsnachweis prüfen; technische delivery-manifest.v2 allein ist keine Ready-Freigabe."
+    },
+    {
+      "id": "PCR-CONTAINER-BUILD-001",
+      "title": "Fachlicher Buildfehler wird durch erforderliches Imageoutput zum Ausführungsfehler",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Originaler Outputvalidator akzeptiert fachlichen Fehlschlag ohne Image, prüft vorhandene Outputs weiter und verweigert fehlende Erfolgsoutputs; lokale Originaltests vorhanden.",
+      "evidence_reports": [
+        "implementation/build-command.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
+      "pending_live_validation": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
+    },
+    {
+      "id": "PCR-CONTAINER-BUILD-002",
+      "title": "Eigenes Zeitlimit endet vor Registryverify",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Ein absolutes Budget gilt bis Registryprüfung und Erfolg; echte HTTP-Deadline-, Digest-, Abbruch- und Diagnosetests bestehen.",
+      "evidence_reports": [
+        "implementation/build-command.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
+      "pending_live_validation": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
+    },
+    {
+      "id": "PCR-DIRECT-COMMAND-001",
+      "title": "Deklarierbarer Mediatyp passt nur auf erste Ausgabe",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Alle acht Outputslots besitzen den passenden Medientypvertrag; ursprüngliche Registry-/Resolver-/FileEvidenceStore-/Validatorprüfung deckt Slots und Negativfälle ab.",
+      "evidence_reports": [
+        "implementation/build-command.md",
+        "https://github.com/datrab/kubeclaw/blob/d22ee1d298aa63050673e075b363ae4c996008dc/docs/review/remediation/implementation/resume-39-20260911-2h.md",
+        "implementation/resume-84-integration-root-review.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Originaler vollständiger nativer Runner-/Sandbox-Artefaktnachweis bleibt wegen unveränderter Hostvoraussetzungen offen.",
+      "pending_live_validation": "Originaler vollständiger nativer Runner-/Sandbox-Artefaktnachweis bleibt wegen unveränderter Hostvoraussetzungen offen."
+    },
+    {
+      "id": "PCR-VISUAL-001",
+      "title": "mittel: Baselineidentität bindet keine Browserversion",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Browserbuild ist im v2-Baselinevertrag und Originalprovider gebunden; lokale Schema-/Provider-/Preflighttests prüfen Ablehnung ungebundener Baselines. Neuaufnahme bleibt Live-Aufgabe.",
+      "evidence_reports": [
+        "docs/review/remediation/implementation/visual-browser-identity.md",
+        "docs/review/evidence/visual-browser-identity.txt"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "Drei echte lokale Schema-/Provider-/Preflighttests, Originalregistry-/Resolvercheck, fokussierter Lint und unabhängige Gegenprüfung bestanden. Native Browseraufnahme/Upgradevergleich und freigegebene Neubaseline fehlen.",
+      "previous_next_action": "Mit tatsächlichem Workerbrowser neu aufnehmen und freigeben; nativen Versionsabweichungs-/Erneuerungstest und Remote-Vertikale ausführen. Historische v1Fixture bleibt explizit blockiert.",
+      "pending_live_validation": "Mit tatsächlichem Workerbrowser neu aufnehmen und freigeben; nativen Versionsabweichungs-/Erneuerungstest und Remote-Vertikale ausführen. Historische v1Fixture bleibt explizit blockiert."
+    },
+    {
+      "id": "PATH-T02-002",
+      "title": "Verspätetes Designset wird an neue aktive Architektur gebunden",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Runden-/Architekturversion und Wiederholung sind im Original-SQL-/HTTP-/Clientpfad gebunden; lokale konkurrierende, verspätete und verlorene Antwortfälle sind geprüft.",
+      "evidence_reports": [
+        "docs/review/remediation/implementation/prism-design-rounds.md",
+        "https://github.com/datrab/kubeclaw/blob/d22ee1d298aa63050673e075b363ae4c996008dc/docs/review/remediation/implementation/resume-39-20260911-2h.md",
+        "implementation/resume-84-integration-root-review.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "Originale SQL-/HTTP-/Clienttests und unabhängige Gegenprüfung bestanden; verspätete und wiederholte Runden sind versionsgebunden. Native PostgreSQL-Pool-, Browser- und Agentlaufnachweise fehlen.",
+      "previous_next_action": "Native PostgreSQL-Pool-/Browser-/Agentkomposition weiterhin ausstehend.",
+      "pending_live_validation": "Native PostgreSQL-Pool-/Browser-/Agentkomposition weiterhin ausstehend."
+    },
+    {
+      "id": "PCR-PRISM-AGENT-BRIDGE-001",
+      "title": "Angenommene Aufträge sind nach Neustart verloren",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Originale persistierte Job-/Fence-/Claim-/HTTP-/Corepfade samt DB-Reopen sind lokal geprüft; externe ungewisse Aktionen werden nicht blind wiederholt.",
+      "evidence_reports": [
+        "docs/review/remediation/implementation/prism-agent-jobs.md",
+        "docs/review/remediation/implementation/prism-agent-resource-v2.md",
+        "docs/review/evidence/integration-2d1ea1a/manifest.json"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "Originale persistierte Job-/Fencing-/HTTP-/Core-Verträge und Sitzungstrennung lokal geprüft, unabhängig gegengeprüft; isolierte Commitintegration bestanden. Native OpenClaw-/PostgreSQL-/Containerabnahme offen.",
+      "previous_next_action": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen.",
+      "pending_live_validation": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen."
+    },
+    {
+      "id": "PCR-PRISM-AGENT-BRIDGE-002",
+      "title": "Sanitizing und Kürzung kollidieren Projektsessions",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Verlustfreie Projekt-/Namespace-Sitzungsidentität und Ablehnung mehrdeutiger Legacyübernahme lokal geprüft; keine bloße Sanitizing-Abkürzung.",
+      "evidence_reports": [
+        "docs/review/remediation/implementation/prism-agent-jobs.md",
+        "docs/review/remediation/implementation/prism-agent-resource-v2.md",
+        "docs/review/evidence/integration-2d1ea1a/manifest.json"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "Originale persistierte Job-/Fencing-/HTTP-/Core-Verträge und Sitzungstrennung lokal geprüft, unabhängig gegengeprüft; isolierte Commitintegration bestanden. Native OpenClaw-/PostgreSQL-/Containerabnahme offen.",
+      "previous_next_action": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen.",
+      "pending_live_validation": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen."
+    },
+    {
+      "id": "PCR-PRISM-CONTROL-001",
+      "title": "Worker-Ergebnis ohne Envelope-Bindung angenommen",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Originale Envelope-/Claim-/Worker-/Schema-/Digest-/Evidenzbindung und gebundener Replay sind lokal mit Core, HTTP und CAS geprüft.",
+      "evidence_reports": [
+        "implementation/prism-worker-control.md",
+        "https://github.com/datrab/kubeclaw/blob/d22ee1d298aa63050673e075b363ae4c996008dc/docs/review/remediation/implementation/resume-39-20260911-2h.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Aktueller Control-Einstieg besteht kanonischen Lint; volle Originalservices mit nativem PostgreSQL und echtem Commit-/Rollback-Nachweis bleiben offen.",
+      "pending_live_validation": "Aktueller Control-Einstieg besteht kanonischen Lint; volle Originalservices mit nativem PostgreSQL und echtem Commit-/Rollback-Nachweis bleiben offen."
+    },
+    {
+      "id": "PCR-PRISM-CONTROL-002",
+      "title": "Directionevent-ID verletzt UUID-Spalte nach Zustandscommit",
+      "local_disposition": "abgeschlossen",
+      "rationale": "UUID-/Wire-ID-Trennung und atomare Entscheidungen mit Replay sind durch echte lokale SQL-Rollbacks und ursprünglichen Studio-HTTP-Proxy geprüft.",
+      "evidence_reports": [
+        "implementation/prism-control.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Atomic direction/preference SQL and real Studio proxy verified independently; Root 12/12 PGlite/HTTP tests pass. Native pooled PostgreSQL and full Control lost-ACK service proof remain unexecuted.",
+      "pending_live_validation": "Atomic direction/preference SQL and real Studio proxy verified independently; Root 12/12 PGlite/HTTP tests pass. Native pooled PostgreSQL and full Control lost-ACK service proof remain unexecuted."
+    },
+    {
+      "id": "PCR-PRISM-CORPUS-001",
+      "title": "Transaktion auf Pool statt reservierter Verbindung",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Transaktionshelper reserviert eine Verbindung für Lock und sämtliche Writes; Original-SQL-/Rollback-/Idempotenztests und Typprüfung vorhanden. Mehrverbindungs-PG wird separat geprüft.",
+      "evidence_reports": [
+        "implementation/prism-corpus.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Reserved transaction/advisory lock source reviewed; actual PGlite rollback tests pass. NativePG17.5/pgvector0.8.0 built but root-only UID mapping prevents legitimate initdb; real multi-connection gate not run.",
+      "pending_live_validation": "Reserved transaction/advisory lock source reviewed; actual PGlite rollback tests pass. NativePG17.5/pgvector0.8.0 built but root-only UID mapping prevents legitimate initdb; real multi-connection gate not run."
+    },
+    {
+      "id": "PCR-PRISM-WORKER-001",
+      "title": "Pflicht-Logspeicher fehlt am Executor-Aufruf",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Pflicht-Voll-Log ist an Originalexecutor und authentifizierten CAS gebunden; echter HTTP-/Dateispeicher-, Korruptions- und Budgetpfad lokal geprüft.",
+      "evidence_reports": [
+        "implementation/prism-worker-control.md",
+        "implementation/resume-84-integration-root-review.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise; lokale Ursachenbehebung unabhängig geprüft und integriert, originale native Gesamt-Abnahme offen",
+      "previous_next_action": "Echter migrierter PostgreSQL-Dienst, SQL-/Lock-/Rollback-/Wiederanlaufnachweise der vollständigen Komposition fehlen; TCP-Peer ist kein PostgreSQL-Dienst.",
+      "pending_live_validation": "Echter migrierter PostgreSQL-Dienst, SQL-/Lock-/Rollback-/Wiederanlaufnachweise der vollständigen Komposition fehlen; TCP-Peer ist kein PostgreSQL-Dienst."
+    },
+    {
+      "id": "PCR-PRISM-WORKER-002",
+      "title": "CPU-Messung zählt die gesamte Prozesslebensdauer",
+      "local_disposition": "offen",
+      "rationale": "Parallele Originaloperationen rechnen weiterhin gemeinsame Parent-CPU mehrfach zu; versuchsgebundener Owner und finale Messversiegelung fehlen im Produktionspfad.",
+      "evidence_reports": [
+        "docs/review/remediation/implementation/prism-worker-cancellation.md",
+        "implementation/attempt-resource-accountability-boundary.md",
+        "implementation/resume-84-prism-cpu-ownership-direction.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise; Zwei überlappende Originaloperationen reproduzieren doppelte CPU-Zurechnung:341ms berichtete Summe bei172.468ms tatsächlicher Parent-CPU. Konkrete generische Host-/Containment-/Terminalmessungsintegration ausgearbeitet. Kein Produktionsfix und kein nativer Browser-/Cgroupnachweis.",
+      "previous_next_action": "Generischen versuchsgebundenen Prozess-/Containmentowner samt finaler Ressourcenversiegelung atomar mit Prism integrieren; gemeinsame Core-/Engineaufteilung erhalten. Echte parallele Hosts und Chromium-Kinder prüfen. Core misst bereits final; Prism friert den CPUwert noch vor Abschlussphasen ein.",
+      "pending_live_validation": null
+    },
+    {
+      "id": "PCR-PRISM-WORKER-003",
+      "title": "Terminate beendet weder Browser noch Evidence-Upload",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Owner-Abbruch, HTTP-Abbruch/Drain und Worker-Shutdown sind implementiert und lokal mit Originalpfaden geprüft. CPU-Zurechnung bleibt ausdrücklich eigenes offenes Finding.",
+      "evidence_reports": [
+        "docs/review/remediation/implementation/prism-worker-cancellation.md",
+        "implementation/attempt-resource-accountability-boundary.md",
+        "implementation/resume-84-integration-root-review.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise; lokale Ursachenbehebung unabhängig geprüft und integriert, originale native Gesamt-Abnahme offen",
+      "previous_next_action": "Native Browser-/Kindprozessbereinigung und vollständige native Service-/Control-Recovery bleiben offen. Bereits persistierte Uploadbytes werden nicht als zurückgerollt behauptet.",
+      "pending_live_validation": "Native Browser-/Kindprozessbereinigung und vollständige native Service-/Control-Recovery bleiben offen. Bereits persistierte Uploadbytes werden nicht als zurückgerollt behauptet."
+    },
+    {
+      "id": "PCR-PRISM-ENGINE-001",
+      "title": "Erfolgreiche Renderresultate bleiben unbegrenzt im Cache",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Begrenzter Completed-LRU und getrennte aktive Eigentümerschaft implementiert; Originalengine mit 100 Rendern, Byte-/Countgrenzen, Koaleszierung und echtem CAS geprüft.",
+      "evidence_reports": [
+        "implementation/prism-engine-cache.md",
+        "https://github.com/datrab/kubeclaw/blob/d22ee1d298aa63050673e075b363ae4c996008dc/docs/review/remediation/implementation/resume-39-20260911-2h.md",
+        "implementation/resume-84-integration-root-review.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise; lokale Ursachenbehebung unabhängig geprüft und integriert, originale native Gesamt-Abnahme offen",
+      "previous_next_action": "Echte langlebige Chromium-Captures mit Retained-Heap-Messung und vollständiger Neustart über Controlpersistenz bleiben offen; reiner Refactorreview ist abgeschlossen.",
+      "pending_live_validation": "Echte langlebige Chromium-Captures mit Retained-Heap-Messung und vollständiger Neustart über Controlpersistenz bleiben offen; reiner Refactorreview ist abgeschlossen."
+    },
+    {
+      "id": "PCR-PRISM-RENDERER-002",
+      "title": "Paginationaktionen erreichen Preview nicht",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Aktionsattribute und bestehender App-Übergang sind verbunden; Originalrenderer-/Remediationtests und echter Produktionsbuild vorhanden.",
+      "evidence_reports": [
+        "implementation/prism-renderer-studio.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Action attributes and actual App transition wiring corrected; Node tests pass, actual iframe click proof blocked by missingChromium/CDNtimeout.",
+      "pending_live_validation": "Action attributes and actual App transition wiring corrected; Node tests pass, actual iframe click proof blocked by missingChromium/CDNtimeout."
+    },
+    {
+      "id": "PCR-PRISM-STUDIO-002",
+      "title": "Canonicalassets machen lokale Vorschau unbrauchbar",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Kanonische Assets werden über authentifizierten Pfad geladen und nach Bytes/Digest/Größe geprüft; Original-CAS-/HTTP-Negativ- und Abbruchtests bestehen.",
+      "evidence_reports": [
+        "implementation/prism-renderer-studio.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Actual HTTP artifact loading/digest/size/auth/abort tests pass; browser image decode/CSP proof blocked by missingChromium/CDNtimeout.",
+      "pending_live_validation": "Actual HTTP artifact loading/digest/size/auth/abort tests pass; browser image decode/CSP proof blocked by missingChromium/CDNtimeout."
+    },
+    {
+      "id": "PCR-OBS-002",
+      "title": "Aufbewahrungsstrategie für bestätigte Historie fehlt",
+      "local_disposition": "offen",
+      "rationale": "Weitere ursprüngliche Store-/Referenzconsumer und Quotenpolitik sind noch nicht vollständig umgesetzt. Begrenzte Projektionen und ihre echten Quotenprüfungen schließen die gesamte Retention nicht.",
+      "evidence_reports": [
+        "docs/review/remediation/implementation/observability-retention.md",
+        "docs/review/remediation/implementation/buster-job-compaction.md",
+        "docs/review/evidence/integration-eb1d7cc/manifest.json",
+        "docs/review/remediation/implementation/wave47-admission-independent-review.md",
+        "docs/review/remediation/implementation/wave47-retirement-snapshot-integration.md",
+        "docs/review/remediation/implementation/run3-attempt-result-independent-review.md",
+        "docs/review/evidence/run3-root-attempt-final.txt",
+        "docs/review/remediation/implementation/run3-observability-next-package.md",
+        "docs/review/remediation/implementation/run5-blob-reader-independent-review.md",
+        "docs/review/evidence/run5-root-blob-reader-final.txt",
+        "docs/review/evidence/run6-root-blob-reader-recheck.txt",
+        "implementation/run7-dispatch-root-review.md",
+        "implementation/run9-operator-root-review.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "Teilweise: Telemetrie-, Admission- und importierte Attempt-Resultatkopien mit echter Quotenfreigabe und erhaltenem Replay geprüft. Attempt-v2 unabhängig 19/19; Root integriert 45/45, keine Skips. Zusammenhängende weitere Store-/Referenzretention bleibt offen.",
+      "previous_next_action": "Weitere ursprüngliche Retention-Consumer und Quotenpolitik bearbeiten; Buster/derived-source/v2/Discord/externalisierte oder ungewisse Historien nicht aus begrenzten Projektionen ableiten. Originalbelege und Native-Gates erhalten.",
+      "pending_live_validation": null
+    },
+    {
+      "id": "F-T14-01",
+      "title": "Finalpreview-Exposure wird vor Operatorübergabe entfernt",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Persistente Demo-/Exposure-Übergabe implementiert; ursprünglicher Product-/Controller-/Chartpfad einschließlich echtem lokalem API/CEL/CAS-/Recoverygate geprüft.",
+      "evidence_reports": [
+        "implementation/demo-credential-handoff.md",
+        "implementation/demo-handoff-independent-review.md",
+        "implementation/run6-coupled-root-review.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures.",
+      "pending_live_validation": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures."
+    },
+    {
+      "id": "F-T14-02",
+      "title": "Vollständiger Operatorzugang und Appauth-Handoff fehlen",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Zugangs-/Credential-/Deliverybindung implementiert und in lokalen Product-/HTTP-/Controllerregressionen geprüft; reale Zustellung und menschliche Abnahme sind später.",
+      "evidence_reports": [
+        "implementation/demo-credential-handoff.md",
+        "implementation/discord-delivery-receipt.md",
+        "implementation/demo-handoff-independent-review.md",
+        "implementation/run6-coupled-root-review.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures.",
+      "pending_live_validation": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures."
+    },
+    {
+      "id": "IFR-08-001",
+      "title": "registry-local — Hoch; nachgewiesener unvollständiger Default-Vertrag",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Expliziter gemeinsamer Registry-/CA-/Authvertrag einschließlich E2E-Seedbindung implementiert; Original-Helm-/HTTPS-/Provider-/Workspaceprüfungen vorhanden.",
+      "evidence_reports": [
+        "implementation/registry-clients.md",
+        "implementation/registry-client-scope.json",
+        "implementation/pr6-registry-target.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "lokale Vertragsprüfung bestanden; native Betriebsgates offen",
+      "previous_next_action": "E2E-Registryziel und explizites unveränderliches Seedimage sind auf PR #6 an den gemeinsamen Operatorvertrag gebunden. Echten BuildKit-Push, uncached CRI-Pull und Pod mit Hostkonfiguration prüfen. Kein Deployment in diesem Auftrag.",
+      "pending_live_validation": "E2E-Registryziel und explizites unveränderliches Seedimage sind auf PR #6 an den gemeinsamen Operatorvertrag gebunden. Echten BuildKit-Push, uncached CRI-Pull und Pod mit Hostkonfiguration prüfen. Kein Deployment in diesem Auftrag."
+    },
+    {
+      "id": "IFR-08-002",
+      "title": "registry-local — Mittel; nachgewiesener Retention-/Dokumentationsdefekt",
+      "local_disposition": "offen",
+      "rationale": "Persistenz, explizites Disk-Budget und referenzgeschützte Registry-GC fehlen; die Dokumentationskorrektur allein genügt nicht.",
+      "evidence_reports": [
+        "implementation/registry-clients.md",
+        "implementation/registry-client-scope.json"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "lokale Vertragsprüfung bestanden; native Betriebsgates offen",
+      "previous_next_action": "Dokumentationsdefekt korrigiert; Persistenz/Disk-Budget und referenzgeschützte GC bleiben offen, keine Kapazität erfinden.",
+      "pending_live_validation": null
+    },
+    {
+      "id": "IFR-09-001",
+      "title": "registry-mirror — Mittel; nachgewiesene Client-/Dokumentationsabweichung",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Mirrorvertrag in BuildKit-/Node-Konfigurationsgenerator und Dokumentation umgesetzt und lokal geprüft; tatsächlicher Cachehit/-miss gehört zum Betriebstest.",
+      "evidence_reports": [
+        "implementation/registry-clients.md",
+        "implementation/registry-client-scope.json"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "lokale Vertragsprüfung bestanden; native Betriebsgates offen",
+      "previous_next_action": "Tatsächlichen BuildKit-/Node-Mirrorpfad sowie Cache-Hit und Offline-Cache-Miss prüfen.",
+      "pending_live_validation": "Tatsächlichen BuildKit-/Node-Mirrorpfad sowie Cache-Hit und Offline-Cache-Miss prüfen."
+    },
+    {
+      "id": "IFR-19-001",
+      "title": "role-workloads — Hoch; nachgewiesene inkonsistente Standard-Releaseauswahl",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Immutable Releaseauswahl und tatsächliche Deploy-/Helmargumente sind lokal geprüft, ebenso signierte Prism-Digestannahme; OCI-Descriptorinspektor zusätzlich vorhanden. Laufender Pod/aktives Bundle bleibt Live-Nachweis.",
+      "evidence_reports": [
+        "docs/review/remediation/implementation/deployment-release-selection.md",
+        "implementation/resume-84-release-root-review.md",
+        "implementation/pr6-oci-identity.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise; Widerspruch zwischen unveränderlicher Release-Receipt und signiertem Prism-Nachweis behoben: Digestreferenzen akzeptiert, mutable Tags abgewiesen. Unabhängige Rootprüfung7/7 einschließlich echter Helmrender; bestehender Prism-Images-Einstieg und Release-Workflow enthalten die Regression. Kein CI-Lauf.",
+      "previous_next_action": "Descriptor-Inspektions-CLI auf echter ausgewählter Release-Receipt ausführen. Frische Pod-/Containeridentität und tatsächlich aktives Bundle an die ausgewählte Receipt binden; kein einfacher Vergleich unterschiedlicher Digestarten oder Soll-Envwert als aktiver Bundlenachweis.",
+      "pending_live_validation": "Descriptor-Inspektions-CLI auf echter ausgewählter Release-Receipt ausführen. Frische Pod-/Containeridentität und tatsächlich aktives Bundle an die ausgewählte Receipt binden; kein einfacher Vergleich unterschiedlicher Digestarten oder Soll-Envwert als aktiver Bundlenachweis."
+    },
+    {
+      "id": "IFR-22-001",
+      "title": "ci-build — Mittel; nachgewiesene Berechtigungs-/Vertrauensgrenze mit offenem Hardeningbedarf",
+      "local_disposition": "abgeschlossen",
+      "rationale": "PR- und Publikationsrechte getrennt, externe Actions gepinnt; Original-YAML-/Trust-/Pin-/Versionsprüfungen vorhanden. Effektive GitHub-Tokenrechte werden später in Actions geprüft.",
+      "evidence_reports": [
+        "docs/review/remediation/implementation/workflow-trust-split.md",
+        "docs/review/remediation/implementation/github-action-pins.md",
+        "docs/review/remediation/implementation/version-generator-integration.md",
+        "docs/review/evidence/integration-2d1ea1a/manifest.json"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "PR-/Publikationsjobs getrennt; alle 68 externen Actionreferenzen an offiziell unabhängig verifizierte SHAs gebunden; lokale YAML-/Trust-/Pin-/Versionsprüfungen bestehen. Tatsächliche GitHub-Tokenrechte in isolierten Test-PRs nicht ausgeführt.",
+      "previous_next_action": "Später autorisierte isolierte Fork-/interne PR-Abnahme der effektiven Tokenrechte; keine CI angefordert.",
+      "pending_live_validation": "Später autorisierte isolierte Fork-/interne PR-Abnahme der effektiven Tokenrechte; keine CI angefordert."
+    },
+    {
+      "id": "PCR-SCAFFOLD-OPS-001",
+      "title": "Statusfehler beendet Supervisor scheinbar erfolgreich",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Originaler Statusfehler führt sichtbar zum Fehler; Lease-, Identitäts-, Start-, Signal- und I/O-Regressionspaket26/26. Vollständiger Containmentbesitz bleibt separate Restarbeit, kein Nachweis daraus behauptet.",
+      "evidence_reports": [
+        "implementation/review-supervisor.md",
+        "implementation/run8-supervisor-root-review.md",
+        "implementation/resume-84-integration-root-review.md",
+        "implementation/resume-84-supervisor-launch-independent-review.md",
+        "implementation/resume-20260912-supervisor-lease.md",
+        "implementation/pr6-supervisor-ownership-io.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise; Zusätzlich beschädigte Lease-/Heartbeat-Zustände und echten fehlgeschlagenen npm-Start korrigiert; Zustände bleiben erhalten, eigene Lease wird freigegeben. Ursprüngliche Stoppkorrektur bleibt erhalten. Unabhängiger Paketgate18/18, null Skips; alle sechs bisherigen Lintfehler behoben.",
+      "previous_next_action": "Native Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; dauerhafte Gesamtprozessidentität und weitere I/O-Fehlerpfade bleiben offen. Konkurrierende Lease-Ersetzung/Freigabe ist jetzt durch vorhandenen FileMutex serialisiert und mit echter Sperre sowie Eigentümer-SIGKILL geprüft. Kein Abschluss des Findings.",
+      "pending_live_validation": "Native Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; dauerhafte Gesamtprozessidentität und weitere I/O-Fehlerpfade bleiben offen. Konkurrierende Lease-Ersetzung/Freigabe ist jetzt durch vorhandenen FileMutex serialisiert und mit echter Sperre sowie Eigentümer-SIGKILL geprüft. Kein Abschluss des Findings."
+    },
+    {
+      "id": "IFR-07-001",
+      "title": "envoy — Mittel; nachgewiesene Rollout-Lücke",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Originale Config-/PodTemplate-Checksummen und selektive Rolloutbindung lokal mit echten Helmrendern geprüft; vorhandene native Envoy-Teilprüfung ergänzt dies.",
+      "evidence_reports": [
+        "implementation/rollout-health.md",
+        "implementation/run7-envoy-root-review.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / native Envoy-Teilprüfung bestanden; Gesamtfinding offen",
+      "previous_next_action": "Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment.",
+      "pending_live_validation": "Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment."
+    },
+    {
+      "id": "IFR-14-001",
+      "title": "litellm — Mittel; nachgewiesene Rollout-/Health-Lücke",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Configrenderer/Checksum und getrennte Healthendpunkte implementiert; lokale originale Render-Sensitivität und gepinnter Health-Quelltrace vorhanden.",
+      "evidence_reports": [
+        "implementation/rollout-health.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
+      "pending_live_validation": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment."
+    },
+    {
+      "id": "IFR-20-001",
+      "title": "prism-workloads — Mittel; nachgewiesene fehlende Ressourcenbegrenzung",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Explizite Ressourcenangaben, Liveness und endliche Quarantänepolitik implementiert; echte Helm- und Originaldienst-Fehler-/Recoverytests vorhanden.",
+      "evidence_reports": [
+        "implementation/prism-ingestion-resources.md",
+        "../evidence/prism-ingestion-resources-root.txt"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "Helm und Originaldienst lokal bestanden; native Ressourcen-/OOM-Gates offen",
+      "previous_next_action": "Mit tatsächlicher Hostkapazität Ressourcen konfigurieren; Last, RAM/CPU/Diskgrenzen und Recovery nach OOM im echten Pod prüfen. Keine geratenen Kapazitätswerte.",
+      "pending_live_validation": "Mit tatsächlicher Hostkapazität Ressourcen konfigurieren; Last, RAM/CPU/Diskgrenzen und Recovery nach OOM im echten Pod prüfen. Keine geratenen Kapazitätswerte."
+    },
+    {
+      "id": "IFR-20-002",
+      "title": "prism-workloads — Mittel; begründeter Rollout-Verdacht",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Singleton-Control verwendet Recreate; echte Helmprüfungen bestätigen Strategie und unveränderte übrige Workloads. Cross-Node-Upgrade ist späterer Betriebstest.",
+      "evidence_reports": [
+        "implementation/rollout-health.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / blockiert",
+      "previous_next_action": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
+      "pending_live_validation": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment."
+    },
+    {
+      "id": "IFR-25-001",
+      "title": "observability — Mittel; nachgewiesene begrenzte Health-Aussage",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Funktionale begrenzte Dependency-/SVID-Prüfung und Fehlerereignis implementiert; Originalprozess-/HTTP-/Helmtests und echter lokaler Envoy-Zertifikatswechsel vorhanden. Betriebsalarmzustellung bleibt Live-Gate.",
+      "evidence_reports": [
+        "implementation/readiness-independent-review.md",
+        "implementation/run7-envoy-root-review.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "teilweise / native Envoy-Teilprüfung bestanden; Gesamtfinding offen",
+      "previous_next_action": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment.",
+      "pending_live_validation": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment."
+    },
+    {
+      "id": "T01-F02",
+      "title": "Projectcompiler deckt nur die Modullane ab, kann aber danach einen erfolgreichen Run melden",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Vollständige Source-/Modul-/Finalgate-/Produktkomposition implementiert; Compiler-, Originalconsumer-, Product-/Controller-/Chart- und lokale APIprüfungen vorhanden.",
+      "evidence_reports": [
+        "docs/review/remediation/implementation/project-source-v2.md",
+        "docs/review/evidence/integration-eb1d7cc/manifest.json",
+        "implementation/run6-coupled-root-review.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "Pflicht-Sourcepreflight, optionaler gebundener Architekturreview/Freigabepfad und Sync vor Modullane integriert; neun echte lokale Sourceverbraucherfälle, Compiler, Builds/Typen/Lint und unabhängige Gegenprüfung bestanden. Legacyimport und vollständiger Demo-/Acceptance-Abschluss bleiben offen.",
+      "previous_next_action": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures.",
+      "pending_live_validation": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures."
+    },
+    {
+      "id": "T15-F01",
+      "title": "Pipeline Review verarbeitet unbelegte Digestlisten statt geprüfter Run-Evidenz",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Autoritativer run-/source-/attemptgebundener Reportreader und Consumer implementiert; echte Git-/Core-/Store-/HTTP- und Negativtests vorhanden. Modelltext bleibt ausdrücklich Entwurf.",
+      "evidence_reports": [
+        "implementation/report-evidence.md",
+        "../evidence/integration-f10ad7a/README.md"
+      ],
+      "previous_status": "implementiert",
+      "previous_verification_status": "Originale lokale Quellen-/Consumerprüfung bestanden; nativer Writerpfad offen",
+      "previous_next_action": "Echten konfigurierten OpenClaw/ACP-Writer mit unveränderlichen Quellen erst bei real verfügbarer CLI/Config/Token/Tools-URL ausführen. Bestehende Original-/Source-Suites sind modelExecution:false; Socketstatus wegen EPERM unbekannt. Keine Wiederholung lokaler Fixtures als Writer-Nachweis.",
+      "pending_live_validation": "Echten konfigurierten OpenClaw/ACP-Writer mit unveränderlichen Quellen erst bei real verfügbarer CLI/Config/Token/Tools-URL ausführen. Bestehende Original-/Source-Suites sind modelExecution:false; Socketstatus wegen EPERM unbekannt. Keine Wiederholung lokaler Fixtures als Writer-Nachweis."
+    }
+  ]
+}

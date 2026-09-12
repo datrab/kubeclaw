@@ -1,5 +1,7 @@
 # Resuming the frozen 47 repairs
 
+Aktueller Stand nach D12 (2026-09-12): **128 lokal verifiziert / 5 teilweise / 2 in Bearbeitung / 19 offen**. Von den39 sind34 lokal abgeschlossen. Live-Abnahmen folgen separat durch den Auftraggeber nach Open-Sourcing. Maßgeblich sind [D12](../decisions.md#d12--lokaler-abschluss-und-separate-live-abnahme), [Einzelbewertung](../implementation/pr6-local-acceptance.md) und [Register](../register.json). Ausschließlich im bestehenden PR #6 und dessen Branch weiterarbeiten; frühere Anweisungen zu weiteren Fixbranches gelten nicht. Die folgenden älteren Stände bleiben historischer Verlauf.
+
 Latest saved continuation: [2026-09-11 resumed work](run-20260911-a51d-resumed.md),
 with the exact [39-ID current state](run-20260911-a51d-resumed-state.json) and
 [existence-checked native follow-up matrix](native-followup-39-20260911.json).
