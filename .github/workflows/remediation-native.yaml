@@ -34,6 +34,7 @@ jobs:
           npm ci --prefix tools/ops-mcp --ignore-scripts
           npm ci --prefix spikes/prism/puck-adapter --ignore-scripts
       - run: npm run knip:check
+      - run: npm run typecheck:integration
 
   inputs:
     runs-on: ubuntu-latest

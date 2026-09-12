@@ -69,9 +69,28 @@
       "at": "2026-09-12T09:44:47.509122+00:00",
       "state": "OCI identity inspector implemented with 10 local tests; native GHCR attempt timed out and selected runtime receipt absent",
       "finding_closures": 0
+    },
+    {
+      "at": "2026-09-12T09:54:15.651236+00:00",
+      "state": "All integration typechecks including native HTTP/Kubernetes fixtures pass; two unchanged Chromium installation attempts fail their lock heartbeat and both exit1",
+      "finding_closures": 0
     }
   ],
-  "blocked_gates": [],
+  "blocked_gates": [
+    {
+      "gate": "native-github-actions",
+      "run_id": 34684977699,
+      "state": "Jobs failed before their first step; no test logs"
+    },
+    {
+      "gate": "local-studio-chromium",
+      "state": "Both Playwright installations failed with ECOMPROMISED; lock guard unchanged; browser tests not executed"
+    },
+    {
+      "gate": "selected-release-oci",
+      "state": "No selected runtime receipt; public pinned descriptor attempt timed out at30s"
+    }
+  ],
   "observed_interruptions": [
     {
       "last_completed_evidence_at": "2026-09-12T07:11:49Z",

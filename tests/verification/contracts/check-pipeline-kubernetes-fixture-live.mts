@@ -6,6 +6,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { buildRegistry, discoverPackages, loadPipelineTestScope, resolveTestPlan } from '@kubeclaw/nova-core';
 import { DirectCommandCapabilityInvoker, KubernetesFixtureCapabilityInvoker, TestPlanRunner } from '@kubeclaw/buster-engine';
+import type { TestProviderCapabilityInvoker } from '@kubeclaw/buster-engine';
 import { CompositeTestProviderCapabilityInvoker } from '../../../skills/buster/engine/test-gates/composite-capability-runtime.ts';
 import { registryClientConfig } from '../../../scripts/registry-client-config.mjs';
 import { realE2ERegistryTarget, realE2EDeploymentImage } from '../e2e/registry-target.mjs';
@@ -105,7 +106,7 @@ try {
     maximumPersistentVolumeClaimBytes: 10 * 1024 ** 3, maximumPersistentVolumeTotalBytes: 20 * 1024 ** 3,
     maximumRetentionSeconds: 3600,
     maximumExecutionMs: 180_000, pollIntervalMs: 500 });
-  const capabilities = new CompositeTestProviderCapabilityInvoker(new Map([
+  const capabilities = new CompositeTestProviderCapabilityInvoker(new Map<string, TestProviderCapabilityInvoker>([
     ['command.execute', direct], ['kubernetes.fixture', kubernetes],
   ]));
   const runner = new TestPlanRunner({ plan, registry, workspaceRoot: generatedWorkspace.artifactRoot,
