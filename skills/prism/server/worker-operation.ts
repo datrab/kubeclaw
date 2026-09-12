@@ -15,7 +15,6 @@ class PrismWorkerOperation implements WorkerAttemptOperation {
   private terminated = false;
   private readonly controller = new AbortController();
   private baseline: NodeJS.CpuUsage | undefined;
-  private cpuTimeMs: number | undefined;
   private maximumObservedMemoryBytes = 0;
   private execution: Promise<WorkerAttemptOperationResult> | undefined;
   private settlement: Promise<{ ok: true } | { ok: false; error: unknown }> | undefined;
@@ -40,12 +39,7 @@ class PrismWorkerOperation implements WorkerAttemptOperation {
   execute(context: WorkerAttemptContext) {
     if (this.execution) throw new Error('Prism attempt execution already started');
     const signal = AbortSignal.any([context.signal, this.controller.signal]);
-    this.execution = this.run({ ...context, signal }).finally(() => {
-      if (this.baseline) {
-        const delta = process.cpuUsage(this.baseline);
-        this.cpuTimeMs = Math.round((delta.user + delta.system) / 1000);
-      }
-    });
+    this.execution = this.run({ ...context, signal });
     this.settlement = this.execution.then(() => ({ ok: true as const }),
       (error: unknown) => ({ ok: false as const, error }));
     return this.execution;
@@ -64,7 +58,10 @@ class PrismWorkerOperation implements WorkerAttemptOperation {
     // observations. This remains shared-parent RSS, not an attempt-tree peak.
     this.maximumObservedMemoryBytes = Math.max(this.maximumObservedMemoryBytes, process.memoryUsage().rss);
     return {
-      cpuTimeMs: this.cpuTimeMs ?? Math.round((delta.user + delta.system) / 1000),
+      // Core measures again after evidence and full-log storage. Freezing at
+      // execute() settlement would exclude that completion work. The separate
+      // shared-process ownership limitation still applies to this counter.
+      cpuTimeMs: Math.round((delta.user + delta.system) / 1000),
       maximumMemoryBytes: this.maximumObservedMemoryBytes,
       maximumProcesses: 1,
     };

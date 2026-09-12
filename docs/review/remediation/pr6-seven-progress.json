@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-12T11:31:34.769121+00:00",
+  "updated_at": "2026-09-12T12:21:00.845668+00:00",
   "pr": 6,
   "scope_count": 7,
   "completed_count": 3,
@@ -20,7 +20,8 @@
     {
       "id": "PCR-PRISM-WORKER-002",
       "status": "implementiert",
-      "result": "Konkrete Implementierungs-/lokale Nachweisarbeit bleibt offen."
+      "result": "CPU-Abschlussmessung erfasst jetzt auch Arbeit nach execute einschließlich vollständigem Log-Upload; echte Regression vorher rot, danach11/11 Prismtests, Typprüfung und kanonischer Lint bestanden. Gemeinsame Parent-CPU und fehlender Attempt-Prozessbesitz bleiben offen.",
+      "latest_evidence": "implementation/pr6-prism-completion-cpu.md"
     },
     {
       "id": "PCR-OBS-002",

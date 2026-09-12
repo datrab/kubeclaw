@@ -79,7 +79,7 @@ async function setup(t: { after(callback: () => Promise<void>): void }, stall: '
 
 function cpuWork() { pbkdf2Sync('actual CPU work', 'salt', 500_000, 32, 'sha256'); }
 
-test('actual attempt CPU excludes prior process work and stays fixed after execution', async t => {
+test('actual attempt CPU excludes prior process work and remains cumulative through completion', async t => {
   const f = await setup(t);
   cpuWork();
   const prior = process.cpuUsage();
@@ -91,7 +91,8 @@ test('actual attempt CPU excludes prior process work and stays fixed after execu
   const processTotal = process.cpuUsage();
   assert(measured.cpuTimeMs < (processTotal.user + processTotal.system) / 1000 - (prior.user + prior.system) / 2000);
   cpuWork();
-  assert.equal((await operation.measure({ signal })).cpuTimeMs, measured.cpuTimeMs);
+  assert((await operation.measure({ signal })).cpuTimeMs > measured.cpuTimeMs,
+    'completion observations must include CPU consumed after execute settled');
   await operation.terminate();
 });
 

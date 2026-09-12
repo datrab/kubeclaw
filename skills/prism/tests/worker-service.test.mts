@@ -5,7 +5,7 @@ import { once } from 'node:events';
 import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { createHash } from 'node:crypto';
+import { createHash, pbkdf2Sync } from 'node:crypto';
 import fixture from '../../../contracts/prism/v1/fixtures/minimal-web.json' with { type: 'json' };
 import { WorkerAttemptExecutor } from '@kubeclaw/worker-core';
 import { validatePipelineWorkerCoreContract, workerAttemptResultDigest, workerAttemptSpecDigest, type WorkerAttemptResultV1 } from '@kubeclaw/pipeline-worker-core-contract';
@@ -118,4 +118,33 @@ test('full log participates in the real neutral evidence budget before upload', 
   assert.equal(result.state, 'errored'); assert.equal(result.error?.code, 'WORKER_LOG_STORE_FAILED');
   assert.match(result.error!.message, /WORKER_EVIDENCE_BYTE_LIMIT/u);
   assert.equal(f.contacts() - before, 1, 'input GET is allowed, oversized log POST is not');
+});
+
+test('CPU consumed by the actual full-log upload participates in the terminal attempt budget', async t => {
+  const f = await setup(t);
+  const attempt = await f.attempt();
+  attempt.limits.cpuMillis = 1_000;
+  attempt.attemptSpecDigest = workerAttemptSpecDigest(attempt);
+  let uploadCpuMs = 0;
+  class CpuConsumingArtifactClient extends WorkerArtifactClient {
+    override async upload(...args: Parameters<WorkerArtifactClient['upload']>) {
+      assert.equal(args[0], 'prism-full-log');
+      const baseline = process.cpuUsage();
+      do {
+        pbkdf2Sync('attempt-owned log processing', 'local regression', 100_000, 32, 'sha256');
+        const delta = process.cpuUsage(baseline);
+        uploadCpuMs = (delta.user + delta.system) / 1_000;
+      } while (uploadCpuMs <= 1_100);
+      return super.upload(...args);
+    }
+  }
+  const client = new CpuConsumingArtifactClient(f.client.origin, 'local-worker-test', false);
+  const result = await executeWorkerAttempt(attempt, f.engine, client);
+  assert(uploadCpuMs > attempt.limits.cpuMillis, 'the completion callback really exceeded the CPU budget');
+  assert.equal(result.state, 'errored');
+  assert.equal(result.error?.code, 'WORKER_CPU_LIMIT');
+  validatePipelineWorkerCoreContract('workerAttemptResult', result);
+  const log = result.evidence.find(item => item.evidenceId === 'prism-full-log');
+  assert(log, 'the actual completed log upload remains available on budget failure');
+  assert.equal(Buffer.from(await f.artifacts.get(log.artifact.artifactId)).toString(), '[system] Prism render operation started');
 });

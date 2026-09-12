@@ -1,5 +1,10 @@
 # Attempt resource accountability: remaining atomic boundary
 
+Current correction: the Core now has early and final resource observations, and
+Prism no longer freezes CPU before completion hooks. See
+[the verified completion fix](pr6-prism-completion-cpu.md). The source audit below
+is historical; exclusive process ownership remains unresolved.
+
 Reviewed source: `bbc36de` (2026-09-09). Scope: D09,
 PCR-PRISM-WORKER-002/-003 and PCR-BUSTER-ENGINE-001. This is a static
 source/dependency review and a read-only local environment check. No functional
