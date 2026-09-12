@@ -1,5 +1,13 @@
 # Aktueller Umsetzungsstand
 
+## Fortsetzung 2026-09-12 auf konsolidiertem main
+
+Die Einzelprüfung bestätigt **94 verifiziert / 39 teilweise / 2 in Bearbeitung / 19 offen**. Die veralteten drei Markdown-Zeilen und die Summe 42 sind korrigiert; keine neue Finding-Hochstufung. Supervisor-Lease-Besitzwechsel und Freigabe sind jetzt mit dem vorhandenen FileMutex serialisiert. Originaler Operations-Prüfeinstieg: **20/20 bestanden, keine Skips**, begrenzter kanonischer Lint bestanden. Native Adoption bleibt durch fehlende Child-cmdline in procfs blockiert. [Abgleich, Ursachenfix, Nachweise und Restarbeit](implementation/resume-20260912-supervisor-lease.md).
+
+Die Änderungen werden über den bestehenden Branch `fix/remediation-foundations-20260909` als PR gegen main bereitgestellt. Der folgende Stand vom 11. September bleibt als Verlauf erhalten.
+
+## Historischer Stand 2026-09-11
+
 2026-09-11. Branch `fix/remediation-foundations-20260909`. Ausgangscode bleibt als
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.

@@ -1,0 +1,26 @@
+{
+  "checked_main": "1ec7fed59f9f5915b2575e2b332f82605750ef85",
+  "checked_tree": "2750735ffb3afaea265c5af346d865d3d83a9d06",
+  "unique_ids": 154,
+  "counts": {
+    "verifiziert": 94,
+    "implementiert": 39,
+    "in Bearbeitung": 2,
+    "offen": 19
+  },
+  "markdown_matches_all_json_statuses": true,
+  "finding_status_changes": [],
+  "corrected_markdown_ids": [
+    "PATH-T02-001",
+    "IFR-18-001",
+    "T01-F01"
+  ],
+  "native_adoption": "blocked: REAL_PROC_PROCESS_CMDLINE_REQUIRED",
+  "operations": {
+    "tests": 20,
+    "pass": 20,
+    "fail": 0,
+    "skip": 0
+  },
+  "lint_exit": 0
+}

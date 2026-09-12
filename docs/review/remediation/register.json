@@ -4105,6 +4105,10 @@
           "report": "implementation/resume-84-supervisor-launch-independent-review.md",
           "source_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
           "summary": "Zusätzlich beschädigte Lease-/Heartbeat-Zustände und echten fehlgeschlagenen npm-Start korrigiert; Zustände bleiben erhalten, eigene Lease wird freigegeben. Ursprüngliche Stoppkorrektur bleibt erhalten. Unabhängiger Paketgate18/18, null Skips; alle sechs bisherigen Lintfehler behoben."
+        },
+        {
+          "report": "implementation/resume-20260912-supervisor-lease.md",
+          "summary": "Original CLI lease contention reproduces before fix. Existing FileMutex now serializes lease replacement/release; real owner SIGKILL and delayed foreign release checked. Full review-operations entry: 20/20, no skips; scoped canonical lint passes. Native adoption still fails its real procfs prerequisite; finding remains incomplete."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/operations-and-packaging.md",
@@ -4114,7 +4118,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/scripts/supervise-repository-review.mjs#L79"
       ],
       "unresolved_code_references": [],
-      "next_action": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; dauerhafte Gesamtprozessidentität, konkurrierende Stale-Lease-Ersetzung und alle I/O-Faultpfade bleiben außerhalb dieser Teilabnahme.",
+      "next_action": "Native Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; dauerhafte Gesamtprozessidentität und weitere I/O-Fehlerpfade bleiben offen. Konkurrierende Lease-Ersetzung/Freigabe ist jetzt durch vorhandenen FileMutex serialisiert und mit echter Sperre sowie Eigentümer-SIGKILL geprüft. Kein Abschluss des Findings.",
       "related_findings": [],
       "decision_notes": [],
       "remaining_work": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität. Sechs bestehende Supervisor-Lintfehler bleiben dokumentiert."
@@ -4845,7 +4849,7 @@
     }
   ],
   "implementation_branch": "fix/remediation-foundations-20260909",
-  "updated_at": "2026-09-11T18:18:11.019598+00:00",
+  "updated_at": "2026-09-12T06:48:57.477428+00:00",
   "progress_counts": {
     "verifiziert": 94,
     "implementiert": 39,

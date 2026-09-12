@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { repositoryReviewRunRoot } from './lib/repository-review-run-root.mjs';
+import { atomicJson, optionalJson, processAlive, acquireLease, releaseLease } from './lib/repository-review-supervisor-state.mjs';
 
 const SAMPLE_INTERVAL_MS = 15_000;
 
@@ -31,29 +31,9 @@ function integer(value, label, maximum, minimum = 0) {
   return parsed;
 }
 
-function atomicJson(file, value) {
-  fs.mkdirSync(path.dirname(file), { recursive: true });
-  const temporary = `${file}.${process.pid}.tmp`;
-  fs.writeFileSync(temporary, `${JSON.stringify(value)}\n`, { mode: 0o600 });
-  fs.renameSync(temporary, file);
-}
-
-function optionalJson(file) {
-  try { return JSON.parse(fs.readFileSync(file, 'utf8')); }
-  catch (cause) {
-    if (cause.code === 'ENOENT') return undefined;
-    throw new Error(`REVIEW_SUPERVISOR_JSON_READ_FAILED:${file}`, { cause });
-  }
-}
-
 function appendJsonLine(file, value) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.appendFileSync(file, `${JSON.stringify(value)}\n`, { mode: 0o600 });
-}
-
-function processAlive(pid) {
-  if (!Number.isSafeInteger(pid) || pid < 1) return false;
-  try { process.kill(pid, 0); return true; } catch (_error) { return false; }
 }
 
 function processCommand(pid) {
@@ -64,32 +44,6 @@ function processCommand(pid) {
 function isOwnedPipeline(pid, runId) {
   const command = processCommand(pid);
   return processAlive(pid) && command.includes('pipeline') && command.includes(runId);
-}
-
-function acquireLease(file, runId) {
-  const existing = optionalJson(file);
-  if (existing !== undefined && (existing?.schemaVersion !== 'repository-review-supervisor-lease.v1'
-    || typeof existing.instanceId !== 'string' || !existing.instanceId
-    || typeof existing.runId !== 'string' || !existing.runId
-    || !Number.isSafeInteger(existing.supervisorPid) || existing.supervisorPid < 1)) {
-    throw new Error(`REVIEW_SUPERVISOR_LEASE_INVALID:${file}`);
-  }
-  if (existing && processAlive(existing.supervisorPid)) {
-    throw new Error(`REVIEW_SUPERVISOR_ALREADY_ACTIVE:${existing.supervisorPid}`);
-  }
-  if (fs.existsSync(file)) fs.unlinkSync(file);
-  const instanceId = crypto.randomUUID();
-  fs.mkdirSync(path.dirname(file), { recursive: true });
-  const descriptor = fs.openSync(file, 'wx', 0o600);
-  fs.writeFileSync(descriptor, `${JSON.stringify({ schemaVersion: 'repository-review-supervisor-lease.v1',
-    instanceId, runId, supervisorPid: process.pid, acquiredAt: new Date().toISOString() })}\n`);
-  fs.closeSync(descriptor);
-  return { file, instanceId };
-}
-
-function releaseLease(lease) {
-  const current = optionalJson(lease.file);
-  if (current?.instanceId === lease.instanceId) fs.unlinkSync(lease.file);
 }
 
 function reviewStatus(script, cwd, platform, runId, heartbeat, resourceLog) {

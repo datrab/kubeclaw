@@ -2,7 +2,55 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
+import { spawn } from 'node:child_process';
+import { once } from 'node:events';
 import { fixture } from './fixtures/review-supervisor.mjs';
+import { FileMutex } from '../../skills/nova/core/state/file-mutex.ts';
+import { acquireLease, releaseLease } from '../lib/repository-review-supervisor-state.mjs';
+
+test('dead owner is replaced and a late release cannot delete the successor lease', async t => {
+  const f = fixture(t);
+  const module = new URL('../lib/repository-review-supervisor-state.mjs', import.meta.url).href;
+  const child = spawn(process.execPath, ['--input-type=module', '-e',
+    'const {acquireLease}=await import(process.argv[1]); const lease=acquireLease(process.argv[2],"crash-run");'
+    + 'process.send(lease); setInterval(()=>{},1000);', module, f.lease],
+  { stdio: ['ignore', 'ignore', 'pipe', 'ipc'] });
+  const exited = once(child, 'exit');
+  t.after(async () => { if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL'); await exited; });
+  const [old] = await once(child, 'message');
+  const inode = fs.statSync(`${f.lease}.lock`).ino;
+  assert.throws(() => acquireLease(f.lease, 'contender'), /REVIEW_SUPERVISOR_ALREADY_ACTIVE/u);
+  child.kill('SIGKILL'); await exited;
+  const next = acquireLease(f.lease, 'successor');
+  releaseLease(old);
+  assert.equal(JSON.parse(fs.readFileSync(f.lease, 'utf8')).instanceId, next.instanceId);
+  releaseLease(next);
+  assert.equal(fs.existsSync(f.lease), false);
+  assert.equal(fs.statSync(`${f.lease}.lock`).ino, inode);
+});
+
+test('supervisor cannot replace a stale lease during an actual concurrent ownership transaction', t => {
+  const f = fixture(t); f.writePlatform(); f.terminal('succeeded');
+  // This PID cannot be allocated by Linux (pid_max is bounded below 2^22).
+  const content = JSON.stringify({ schemaVersion: 'repository-review-supervisor-lease.v1',
+    instanceId: 'stale-owner', runId: 'supervisor-status-regression', supervisorPid: 2147483647 });
+  fs.writeFileSync(f.lease, content);
+  const mutex = new FileMutex(`${f.lease}.lock`, 1000, 'TEST_LOCK_BUSY');
+  mutex.withLock(() => {
+    const result = f.invoke();
+    assert.equal(result.error, undefined);
+    assert.equal(result.status, 1, result.stderr);
+    assert.match(result.stderr, /REVIEW_SUPERVISOR_LEASE_BUSY/u);
+    assert.equal(fs.readFileSync(f.lease, 'utf8'), content);
+    assert.equal(result.stdout, '');
+  });
+  const inode = fs.statSync(`${f.lease}.lock`).ino;
+  const result = f.invoke();
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(JSON.parse(result.stdout).status, 'succeeded');
+  assert.equal(fs.existsSync(f.lease), false);
+  assert.equal(fs.statSync(`${f.lease}.lock`).ino, inode, 'stable lock inode survives release');
+});
 
 for (const [name, content] of [['malformed JSON', '{broken'], ['unknown owner', '{}']]) {
   test(`supervisor preserves ${name} lease and refuses admission`, t => {
