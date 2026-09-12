@@ -1,0 +1,10 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> build
+> tsc --noEmit -p tsconfig.json
+
+src/eslint-type-evidence-fixture-B05sey/domain-mock.ts(1,1): error TS2552: Cannot find name 'store'. Did you mean 'Storage'?
+src/eslint-type-evidence-fixture-GTRkAX/numeric-dictionary.ts(3,1): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+src/eslint-type-evidence-fixture-TCIR27/numeric-dictionary.ts(3,1): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+src/eslint-type-evidence-fixture-VNo2N9/function-mock.ts(1,19): error TS2304: Cannot find name 'vi'.
+src/eslint-type-evidence-fixture-ZQCdR1/module-do-mock.ts(1,1): error TS2304: Cannot find name 'jest'.

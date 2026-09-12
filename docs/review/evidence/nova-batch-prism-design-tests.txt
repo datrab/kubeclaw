@@ -1,0 +1,10 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node tests/wait.test.ts && node tests/archive.test.ts
+
+{"ok":true,"plugin":"kubeclaw.prism-design","path":"design-not-required","mocks":0}
+{"ok":true,"suite":"prism-real-wait-store"}
+{"ok":true,"suite":"prism-real-archive-integrity","designGeneration":false}
+
+EXIT_CODE=0

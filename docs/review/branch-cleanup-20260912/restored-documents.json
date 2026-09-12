@@ -1,0 +1,1670 @@
+[
+  {
+    "path": "docs/review/README.md",
+    "blob": "100644:2afd24d5ac22b9b1231e37c085e6a799d2c8bd0b",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/buster.engine.md",
+    "blob": "100644:08da940a1aafda36e99a1da2fcb2b7efd29bcfd5",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/buster.entry.md",
+    "blob": "100644:dd7a221ab6a951331c0b7de9e66294339f2b74de",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/buster.namespace-controller.md",
+    "blob": "100644:a68d3da8fd0393f175de62f1a5d5cfec8c392417",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/contract.agent-events.md",
+    "blob": "100644:0b73f587663b7a6807fcb748d87fdfb47c0b6439",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/contract.observability.md",
+    "blob": "100644:6650204732e249d5df51f9ffd36460cd5114d77b",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/contract.plugin-system.md",
+    "blob": "100644:b42981f5cec2fb6c6fac635af81e3248dbaef3b3",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/contract.prism.md",
+    "blob": "100644:05a62a8c605af20ba16650b4debdf0c9c3a86ec6",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/contract.telemetry.md",
+    "blob": "100644:683aa1fa46ea7b1c1e747f2673c307a0200cf14c",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/contract.test-gate.md",
+    "blob": "100644:03fbc95a7c9edfb4cafc3f1dad3acfb63e7ca896",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/contract.worker.md",
+    "blob": "100644:94fff675638dfeffe210a6d0d55cf3232e8ac0be",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/foundation.config.md",
+    "blob": "100644:451e1b01b48e621fbe21f232f96425219268ecfe",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/foundation.isolation.md",
+    "blob": "100644:d835d935639cf05a4b8019b85ee474dd30948c49",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/foundation.observability.md",
+    "blob": "100644:8813d065e722718af409e02172b54893ddb69d57",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/foundation.packages.md",
+    "blob": "100644:e3464c601112168a03a6c29e9d852ed3a7b3bb35",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/foundation.registry.md",
+    "blob": "100644:b983aeeffffdbf1e7506f7cefe810827846a3d30",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw-agent-observer.md",
+    "blob": "100644:a0be3809d5b924a58aa52456c19e2e65c3236569",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.agent-observability.md",
+    "blob": "100644:abccd63173989ffdbc3ce991c4fab4673a1232d2",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.api-flow.md",
+    "blob": "100644:8986782105783ed1e350bcc1e68a829a479b0183",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.architecture-validator.md",
+    "blob": "100644:1c5e3446c89d3c44d5bf6a4c882971647a3d2a64",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.artifact-store.md",
+    "blob": "100644:02c0e481a18021c9ed5d3e0ab4046cfbfe1f3eb3",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.axe.md",
+    "blob": "100644:8e97e9e3888989cedc61630f45fe71dc32648c04",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.blueprint-sync.md",
+    "blob": "100644:5d74a3a4c6adbbe498acc5873a41cadb4f11566f",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.buster-quality-gate.md",
+    "blob": "100644:c44f00152c1d241f49ce687c4b1c75c9220ecc91",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.case-study.md",
+    "blob": "100644:379d576f9fbb7c52e22d266cdf28e286649dded7",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.command-runner.md",
+    "blob": "100644:a4358f4d54819a7ac446a1793272041ed0b2255c",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.container-build.md",
+    "blob": "100644:a4e5f63e5319a63e324ac87927617ac95f550baf",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.coverage-budget.md",
+    "blob": "100644:dc4f278e2d9ec1297cd6db584d80eb4dd46b01f8",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.delivery-lint.md",
+    "blob": "100644:240c57b23abe2527be0ca4246251f055357d1f36",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.direct-command.md",
+    "blob": "100644:7648ba94be5429746ce406044e88ef0ede954bd0",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.git-workspace.md",
+    "blob": "100644:2b43e9d10f6ae720070bbcfab1416b04ee768c7b",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.http.md",
+    "blob": "100644:496a67a877be472ba6466ba7cdbd0989f17da17a",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.human-approval.md",
+    "blob": "100644:14e19d37b86845c07f5275f0d46ee3c22bd2c115",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.implementation-agent.md",
+    "blob": "100644:8648ccfbccffdd2e71a131b74821f6effa6bf2dc",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.junit-report.md",
+    "blob": "100644:dea1f35848c0ee850cb05c4792099ca28ade99b2",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.kubernetes-fixture.md",
+    "blob": "100644:f149affda489035502004041f01c31371f9177cd",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.lighthouse.md",
+    "blob": "100644:d10c0b2f6b5f5c95a6c770b67a5dcd5714666a26",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.lint.md",
+    "blob": "100644:aee5a3c2be437b4ecb56b1666dc033d326ba4344",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.network-http.md",
+    "blob": "100644:452be15a289e3a7b1f5c85ff309e6ae32c1667ce",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.notification-observer.md",
+    "blob": "100644:40043aca51a62d826cd729a050c6054b2601c908",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.openapi.md",
+    "blob": "100644:df7de49fea6a8051ef9b7cf5857ee31bde821cf5",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.openclaw-agent-events.md",
+    "blob": "100644:a149249f863adc7ca93825121b7b8fdc2931347d",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.operator-messaging.md",
+    "blob": "100644:17eb8facff18333b6f05a5cda75734e352d36bae",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.pipeline-review.md",
+    "blob": "100644:8b38464cea6b6f361137cbc0ecfc8c3d4eaedd32",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.playwright.md",
+    "blob": "100644:5718656bd52581908c9d7c269fb165646036c256",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.preflight-contract.md",
+    "blob": "100644:33180c925b30ec5e9405b0ba6d0888a5d7de6e9c",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.prism-design.md",
+    "blob": "100644:55ed033b1d230b16435d8e55ce45207e80060362",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.project-summary.md",
+    "blob": "100644:55818d391fcb82a081a1f0445ef94a43b898a06e",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.redis-transport.md",
+    "blob": "100644:f59a6f8b5a5d2e43b334b429172dbba5f1a3cc77",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.remote-test-gate.md",
+    "blob": "100644:e3ed62fa3eae5e73c4e6ccfa30d575891e42ab89",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.repository-adapter.md",
+    "blob": "100644:86cce567bebd1145a2d03cb182de3d0b5537fc7a",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.review.md",
+    "blob": "100644:207a24c9d726499b374b4ae12de67ed0e7888530",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.runtime-dispatch.md",
+    "blob": "100644:bfda90375e318cad44965dce086b989dca986bb2",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.secret-resolver.md",
+    "blob": "100644:fde2841bfa0416289b61a4206e539e7f71376044",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.security-providers.md",
+    "blob": "100644:2a3152890446d4ad999499191a46b8b1b2df52a3",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.size-budget.md",
+    "blob": "100644:3224a162817f001f6f4e2377ae99ff76cb7d84b8",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.state-store.md",
+    "blob": "100644:d3e14b9917b2deee2c57c3f7201c0cfc338b5f85",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.tailscale-exposure.md",
+    "blob": "100644:48e8a7cd29946701afbf6d3243277489700d59fc",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.telemetry-observer.md",
+    "blob": "100644:a30c77a119fab516ce2cbe1c87d1a750546fa02b",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.telemetry-store.md",
+    "blob": "100644:dda5b9465d7c9df6ed96cd86172dc6613c1d1267",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.transport-publisher.md",
+    "blob": "100644:46e1afa1c516ca9262dbf671fe836cf30cbf1163",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.visual.md",
+    "blob": "100644:127d7693fe959502c28d19a570b80ee303232044",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/kubeclaw.wait-store.md",
+    "blob": "100644:268651087e391e93e46e75dc54249d577f9e91ce",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/lib.prompt-contract.md",
+    "blob": "100644:df84682f1cf83b0e2c1f00199fcae6f67b03a67b",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/lib.sdk.md",
+    "blob": "100644:62af04680ec327814f91f97deb4a8290b529bb4b",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/nova.effects.md",
+    "blob": "100644:2500d63e11e94dc53f98b9562c556d5583123fd0",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/nova.entry.md",
+    "blob": "100644:7a3ad52f0e46260fd148ebe2d229f6960493ea82",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/nova.execution.md",
+    "blob": "100644:1a24f7d491df5b004ae85e59a3c40ec9306ffa61",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/nova.lifecycle.md",
+    "blob": "100644:9b7521f6527a6418da3630b6e06ef0dc56eb7f99",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/nova.observability.md",
+    "blob": "100644:04fe6e8b342c779b6881f271794dba9e74f4e5f5",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/nova.scaffold.md",
+    "blob": "100644:aa736b5ed4b3d7417c92c321b76b758e7e78f464",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/nova.state.md",
+    "blob": "100644:24f20a95b34ee0908d9227e291f74b8866bd3bd6",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/nova.telemetry.md",
+    "blob": "100644:21529e09396a49c95f81f6721c94df0130ee521d",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/nova.test-gates.md",
+    "blob": "100644:a9c999542dcde34771cb68412a00a9da59136b46",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.control.md",
+    "blob": "100644:0bf14fffbd7186130413f7fa5afb29bdca93e51f",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.corpus.md",
+    "blob": "100644:3a114c16c130977479222a3c6b9b86ee566f6a0d",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.directions.md",
+    "blob": "100644:b8cd67e37b8f94024db93c88cab03632284ab4e4",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.domain.md",
+    "blob": "100644:1f2abe9505d2907e31eabfd1953f0df1b5f6cdfb",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.engine.md",
+    "blob": "100644:e20dd66dd567b2c51c55ee7258ee8723341c042f",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.entry.md",
+    "blob": "100644:65b3ccc01051427257395a2f87716e63b3eab4b0",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.evaluation.md",
+    "blob": "100644:57616318f29768ea3ca547c803244b95c3b136a1",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.extension.md",
+    "blob": "100644:e8a8beeaa6664c2517a6d5e9e9dddbf0ad0faa5f",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.pipeline-adapter.md",
+    "blob": "100644:37f28e32f1c2f41e1905adf97b0275c18e3beb7a",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.preferences.md",
+    "blob": "100644:632775753f1dfd6c8f8380af95d850b62acf824d",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.renderer.md",
+    "blob": "100644:443a6c218ebd7ea60233c1810527426f2a3ce22f",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.service-agent-bridge.md",
+    "blob": "100644:7b3050edcb1928ac8dbf5ad9d9da08bd9971f2ef",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.service-common.md",
+    "blob": "100644:7a9509e76e1bf79894ac24165a338229c9754ecb",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.service-control.md",
+    "blob": "100644:46ef28fe2de34252c82440434271d706a8fd908b",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.service-ingestion.md",
+    "blob": "100644:9087d0bfd5d7817247a191d3068507c3ec5c0141",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.service-studio.md",
+    "blob": "100644:31d443c7c861f31ccf1d09ebdb79378c76647371",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.service-worker.md",
+    "blob": "100644:1ebba1d166b4f4d9a1425cacd28a48e1570be261",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.storage.md",
+    "blob": "100644:cb6fd21da410dfc80894744b1b29f6ebae2fab8a",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/prism.studio.md",
+    "blob": "100644:1fd0060613fb7d97f5b2ad4e795407294d41cef7",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/components/worker.core.md",
+    "blob": "100644:c6953f375fd9afa1451113e14c98735e91da1ae3",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/README.md",
+    "blob": "100644:199c1b3f579a56df68cf99fd1b6cce4844652008",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/agent-contract-tests.txt",
+    "blob": "100644:2d88a9fc1060ee6612c9a02a9aa38d10833adb42",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/blueprint-sync-tests.txt",
+    "blob": "100644:501820d503d37989759794083ee1049a20b08457",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-container-recovery-original.txt",
+    "blob": "100644:6ba86ee3dc97ac055d84cb5273dcb8a90295a3fd",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-container-runtime-original.txt",
+    "blob": "100644:ef6eb4e02ce7ad26abf39ca7ad915ed3d0ef32d2",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-container-validation-original.txt",
+    "blob": "100644:730ced4d40800f415f5a39919a2384b7f3889ed0",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-direct-command-diagnosis.txt",
+    "blob": "100644:1e9da714437a90eef9faaab364a77d974860730a",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-engine-check-pipeline-remote-plan-runtime.mts.txt",
+    "blob": "100644:1122be69e5f16c8b749d5149780f1ba063f92807",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-engine-check-pipeline-remote-process-restart.mts.txt",
+    "blob": "100644:773f264c0ebbc7d4f60f50ca2ed8c4f275e6bb2d",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-engine-check-pipeline-remote-runtime-config.mts.txt",
+    "blob": "100644:a7c069f1c17f586bee64cd984ee78514394a528e",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-engine-check-pipeline-test-plan-runner.mts.txt",
+    "blob": "100644:ae54120921ea81f303b844cda7906ed3a8b6dcf7",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-inventory-updates.json",
+    "blob": "100644:34067a61dad8251f0b174229efe0f16589ab5847",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-kubernetes-implementation-original.txt",
+    "blob": "100644:9a0d13212849a810e50461e2bd70cce0bcd28c82",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-kubernetes-validation-original.txt",
+    "blob": "100644:0a5d10b2e38208042c371bcc51e837b0589a08b4",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-provider-api-flow-original.txt",
+    "blob": "100644:c3bd2222ea7ee13cd47400599a82de9c5a02d52d",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-provider-axe-original.txt",
+    "blob": "100644:82898c5746dba6dd822d73e1048c9e9598b874ec",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-provider-boundaries.txt",
+    "blob": "100644:3f70566cdb34434614b6204745fbc1313274c035",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-provider-coverage-budget-original.txt",
+    "blob": "100644:7ea4b97ff82e89a25133d49ab12305cd05652ee1",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-provider-http-original.txt",
+    "blob": "100644:9719bc77236dcccd5035d419063ab2d99f160321",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-provider-inventory-updates.json",
+    "blob": "100644:d0c51995bddbb91b0a06ac8fa8f034f6a7115016",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-provider-junit-isolated-original.txt",
+    "blob": "100644:756fdece4d91f8a959b91f9c92292303c27a186b",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-provider-junit-report-adapter-original.txt",
+    "blob": "100644:ba4b0bbd7a81c01cbaaca01506c566ed3d1bc26b",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-provider-lighthouse-original.txt",
+    "blob": "100644:3de63992db1a59d13026ff83809ae77189755564",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-provider-openapi-original.txt",
+    "blob": "100644:c4bac4be8fce076d706c609bd5252c19e695a8b7",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-provider-playwright-original.txt",
+    "blob": "100644:0f75c8b05f745a460989154c791d0ae1a9e156dc",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-provider-playwright-report-original.txt",
+    "blob": "100644:b038a0d5db25309dd0cf5df77861f43dc22673ef",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-provider-size-budget-original.txt",
+    "blob": "100644:a712c64667a36fba68a5171752a7ba17936cbc4d",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-provider-visual-original.txt",
+    "blob": "100644:4142f28065d50c5a0347abb666f34bf48bb81359",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-security-live-original.txt",
+    "blob": "100644:fcfb7ca51d1878c4a9f24e95db8e5acd5571e6df",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-tailscale-implementation-original.txt",
+    "blob": "100644:1f900cfd9df819e3df2a73224839f4db55fa991a",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/buster-tailscale-validation-original.txt",
+    "blob": "100644:cb1e8ab1160f4cd521d30bcc4bd8d7c1e0ea86b7",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/capabilities-inventory-updates.json",
+    "blob": "100644:8165afec5c1341cf0ce31dcc05474ffd62e843a6",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/capability-adapter-probes-results.md",
+    "blob": "100644:ff4f75d8dc97bc792b3c8a7afd78a7fb06cc4802",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/defect-reproductions.txt",
+    "blob": "100644:14e57b7976937130851345fe14de416b0e59afc3",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/effects-tests.txt",
+    "blob": "100644:0e714b6b6a90f357fe985371e9505b22cf356028",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/foundation-tests.txt",
+    "blob": "100644:83bcb306bdb94a66a5d9f0a29bd20b004b2fd30c",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/inventory-closure.json",
+    "blob": "100644:92f7c1c99b7d21975782d233107d4a5968f71ac2",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/isolation-tests.txt",
+    "blob": "100644:debde17c933b8dc959d5bc9990ee63c52754df8b",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/lint-boundary-probes-results.txt",
+    "blob": "100644:cfc2c11c305fe0549f3f39b401960955b4f18c02",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/lint-manifest-original-test.txt",
+    "blob": "100644:26a08c721d809f32c956def7546bc0c0bb143ce6",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/lint-original-tests.txt",
+    "blob": "100644:96fec962d5d9e133bccbac68c5ca7e7077f95980",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-archive-budget.txt",
+    "blob": "100644:f281279fbe5bc70151e516eebbfff974fd9649f7",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-batch-blueprint-sync-tests.txt",
+    "blob": "100644:7f8c64d9033bc72105bed80212b0b5e53689dde3",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-batch-buster-quality-gate-tests.txt",
+    "blob": "100644:32c8bb1800d93da60beb15fdb265e9c19de09d15",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-batch-case-study-tests.txt",
+    "blob": "100644:b5a47597d0af90bc2c0c1fa5b819fb46d968a7af",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-batch-delivery-lint-tests.txt",
+    "blob": "100644:7cd894131534e3c989e2db9d93f6083265e6df01",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-batch-human-approval-tests.txt",
+    "blob": "100644:76bc9bc19fcb2d4eacf855072cc920f469cb13ec",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-batch-implementation-agent-tests.txt",
+    "blob": "100644:98a977026063128f6b2cdada0a7cc15b2dd69c4c",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-batch-pipeline-review-tests.txt",
+    "blob": "100644:a3791642c2b1437e7085ad77bb2a9c8a60f7cee1",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-batch-preflight-contract-tests.txt",
+    "blob": "100644:08850987d660e3e8011a74268b0fca56303e68a7",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-batch-prism-design-tests.txt",
+    "blob": "100644:e15b12b4d1f9810353b6c4447fd966971b66bda6",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-batch-project-summary-tests.txt",
+    "blob": "100644:b45416f112a0af3b44a5f69f5f25ff9da07e1d6e",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-batch-quality-real-provider-tests.txt",
+    "blob": "100644:b75aae4b5e19da85e484be8e64663792508511be",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-batch-remote-test-gate-tests.txt",
+    "blob": "100644:e368bcc55272fade93efa245b16ba6d307c7abed",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-batch-repository-adapter-tests.txt",
+    "blob": "100644:5ea0956744a557b8d58f4d55f6af2de5c3182921",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-batch-scaffold-tests.txt",
+    "blob": "100644:c7139142d84a24fd28a88cc5773bfb349b57b93b",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-execution-tests.txt",
+    "blob": "100644:4fdbeedbca71378c28f96734e578ca8b01a08c42",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-inventory-updates.json",
+    "blob": "100644:a5c2c255c4268adb08195b4cafbef12bef27faf2",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-lifecycle-tests.txt",
+    "blob": "100644:f79f8985cfe6ded4ccf3ed39baa3a440980ca7c3",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-observability-tests.txt",
+    "blob": "100644:6155b0d418028452d0fbda5b77a5e23a7c5eba1d",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-operations-tests.txt",
+    "blob": "100644:71b4f149f3fe91c5abdcac0e7daddb27a0408997",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-remote-timeouts-recheck.txt",
+    "blob": "100644:ff7028168e38bf83e5697e8e57ea31cdb04ca5f2",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-remote-timeouts.txt",
+    "blob": "100644:4bb4eea833769d1a786277563503d74a399a7ae2",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-resolver-examples.txt",
+    "blob": "100644:01317c9c2c2a102eef04b19e3fd17d5d41a6078f",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-supervisor-status-failure.txt",
+    "blob": "100644:b6b359e0e3ee85e01652f18261b194134c392873",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-telemetry-tests.txt",
+    "blob": "100644:b85113cd570c3e2e626626b5653914946e9aace8",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/nova-test-gates-tests.txt",
+    "blob": "100644:56881919aba0b8ef3721fdc13ae57205d99e2794",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/observability-contract-tests.txt",
+    "blob": "100644:a6f59658303f9fcdfda2318edf9afbd95a94e85c",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/observability-storage-tests.txt",
+    "blob": "100644:358d1bad2a5753ca8621f7256f07c132cedbd566",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/observers-agent-observability-tests.txt",
+    "blob": "100644:926f78a03dea66f89770e7418f1689635e513426",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/observers-boundaries.txt",
+    "blob": "100644:ce242bdcb5dbb40d2db036eef320da85a3b6ee34",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/observers-inventory-updates.json",
+    "blob": "100644:11e1c48ea088c9f09013e5400e783824a9e4049e",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/observers-notification-observer-tests.txt",
+    "blob": "100644:85b3e9f0cc04dacccc5ceb5ac1397a58f825d1f5",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/observers-notification-retry.txt",
+    "blob": "100644:0cb95993dc10d2947fdb06409892d72c4d6d46b0",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/observers-openclaw-agent-events-tests.txt",
+    "blob": "100644:42c9a4d57c77028292bb8c8819f23f032871298e",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/observers-openclaw-agent-observer-tests.txt",
+    "blob": "100644:a40cbfa6de4a3e034300a96b8c9316c53dbb296f",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/observers-operator-messaging-tests.txt",
+    "blob": "100644:104795f7d78d9dca8ae3f886a25cf646c4964a93",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/observers-redis-transport-tests.txt",
+    "blob": "100644:926419a31d1cff239486dfce8c2cf5e6c203a72d",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/observers-telemetry-observer-tests.txt",
+    "blob": "100644:cd81d218459673e38cb3387685a535240e9ec4b1",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/observers-telemetry-store-tests.txt",
+    "blob": "100644:bdfda8cc821dd6263029594efb863108646f6a66",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/observers-transport-publisher-tests.txt",
+    "blob": "100644:c612eba31a56a195b4e536f6d4a5fb759824334a",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/package-install-tests.txt",
+    "blob": "100644:6d8121e22b7bba41110c815b73eacf47ffa6afc1",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/phase7.txt",
+    "blob": "100644:c1a74444dc2508aca088bfaf4740b05e229069cf",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/platform-config-tests.txt",
+    "blob": "100644:e4ddf336f4f3fefd1b4627cdc7b628966cf5ec50",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/plugin-contract-sdk-repro.txt",
+    "blob": "100644:0294413881a7d87ff74b18f1cd72f00564e47402",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/plugin-contract-sdk-tests.txt",
+    "blob": "100644:b86702bd24797e8b177cf880a7215a554f98d13d",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/prism-contract-tests.txt",
+    "blob": "100644:38d3e9169b6b82bfcc2d5fb2200ec8215b452baf",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/prism-core-review-tests.txt",
+    "blob": "100644:c0f36b7da9314fdbc00eb10f129feadc68d245b9",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/prism-domain-tests.txt",
+    "blob": "100644:977e3672ff5d18ff8939b0dedc177ddfeb99123c",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/prism-extension-tests.txt",
+    "blob": "100644:e954d3dab5167f52140b6affb0026cf3688c79ac",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/prism-ingestion-service-error-probe.txt",
+    "blob": "100644:cabfef880aa3debb3684d02845b0fdf7b11e4d3d",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/prism-inventory-updates.json",
+    "blob": "100644:6d06e7c186ab1f3188bb877a23f1afab229e93e7",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/prism-renderer-review-probe.txt",
+    "blob": "100644:fb2e6f9056242ea193eb6d1166e5e16cc73a57e9",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/prism-reviewed-modules-tests.txt",
+    "blob": "100644:fa5190943c3c0d3251fb37063d30a332b3a1ca3d",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/prism-service-review-probe.txt",
+    "blob": "100644:6b41744cb7474dd49f3b06c8fdc644475976f30c",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/prism-studio-service-error-probe.txt",
+    "blob": "100644:1e3c0c003f734096da3ec20e4ed4d17659f7bfaf",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/registry-tests.txt",
+    "blob": "100644:28b783daa23f6ee69809ea365e3049504feb785b",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/review-all-original-tests.txt",
+    "blob": "100644:df3aaab70500ef123983b9d20049e2c515c4fb6c",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/review-audit-compiler-original.txt",
+    "blob": "100644:83ab9b57c137c8ad7d568535c08474a6d50f2364",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/review-audit-malformed-probe.txt",
+    "blob": "100644:3ff12c9d192f2409da075d19443a52ec14bdf511",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/review-audit-original-tests.txt",
+    "blob": "100644:0573a7be579c36f541092a7d40eeaa11ff2dc978",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/review-audit-revalidation-probe.txt",
+    "blob": "100644:76ceecffcbbc46027280dd8f38984dfb184530d2",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/review-audit-scope-probe.txt",
+    "blob": "100644:0804965e9c70f268f8b0de40d52c166ec0bb2ad7",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/review-audit-subreview.md",
+    "blob": "100644:b309a9709cdeb8594f75a5671d0aa0261b52a231",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/review-gate-original-tests.txt",
+    "blob": "100644:aeef51ee682976689c766759e31d7f3848adf610",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/review-inventory-updates.json",
+    "blob": "100644:58355ce5a5c698752cadb50ae2b40d5399ec4883",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/review-policy-boundaries.txt",
+    "blob": "100644:297f647b854835046745bd0bf173c9433919173e",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/review-policy-subreview.md",
+    "blob": "100644:0a11fe2fee2195db2316e3f35d644ebc7f574a0b",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/review-policy-tests.txt",
+    "blob": "100644:5184389dc6269e142f0b3c9934efa0b98e468bc7",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/review-source-coverage.json",
+    "blob": "100644:9906e77b8d19a80b6eaf2bacd78f943bee8407a5",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/review-tests-assessment.md",
+    "blob": "100644:bb8058fb5d712ea839e9020fe44ce741c98b342a",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/telemetry-contract-tests.txt",
+    "blob": "100644:57d8de8f477f2e52e86c13b04d97a2187c9302fc",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/test-gate-contract-tests.txt",
+    "blob": "100644:e048ce55fc1891c1d3c18da1d1191a0ec5ba7b66",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/worker-contract-tests.txt",
+    "blob": "100644:bb22e10164389271cd349eb84f0f92f60b6bfc00",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/evidence/worker-core-tests.txt",
+    "blob": "100644:ab215a5f19d77c5b7df9a7a56a898fe6a368ae2a",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/findings.md",
+    "blob": "100644:860620135b337242363a21f7b6b5035aa2fe3432",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/handoff.md",
+    "blob": "100644:161cae017f50304c50f54430609a139772c3d7fd",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/inventory-data.json",
+    "blob": "100644:30641c05dc54c3a68ccc6fd3dcb68f24c2270e65",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/inventory.md",
+    "blob": "100644:dabddaac7f43d3df46e7ca0467d2f9e33d1e1949",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/operations-and-packaging.md",
+    "blob": "100644:5d9227edb149c5c05a236a6ed7a7f405b2368679",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/README.md",
+    "blob": "100644:fd48ea2402b62cd28be9b67253c5948e3d0afc79",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T01-happy-path.md",
+    "blob": "100644:4a3f923425f2eff290632a0e706f072b44c21f80",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T02-design-feedback.md",
+    "blob": "100644:d836361b7a16daf4d9f18729b227c3a207cb1d64",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T03-architecture-repair.md",
+    "blob": "100644:46f8cba48e437188aa2bc7b324e95de2e94987b2",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T04-risk-acceptance.md",
+    "blob": "100644:9dcfdab57f87a5f7e135519ec43dc7880889c939",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T05-module-repairs.md",
+    "blob": "100644:059703abe091aa234d1027dbf6e244788a2eb0e9",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T06-parallel-modules.md",
+    "blob": "100644:7549c267d88551639bca787f776d879276a49450",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T07-git-failures.md",
+    "blob": "100644:13fe2b9de937b43716d6494e7e06436427f39d8f",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T08-restart-resume.md",
+    "blob": "100644:bec3584af870db5908d72fb9b8a751669f0115a4",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T09-retry-escalation.md",
+    "blob": "100644:a8dd72944856c587f7f0aca01b4d8e5477b6932b",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T10-minimal-checks.md",
+    "blob": "100644:6bca3eee80663c3c10e86c6e4ce9a934bdf95a7d",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T11-deterministic-suites.md",
+    "blob": "100644:ff461fad331252f623a623e7a7ae7e92d9585117",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T12-test-agent.md",
+    "blob": "100644:863dd30dbaab988dbcae6525242dc54bf972134a",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T13-cumulative-gates.md",
+    "blob": "100644:b6a86dc07eeff915eb19c8b61dfc8dae92fbdb27",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T14-operator-preview.md",
+    "blob": "100644:f824b4cd6884f5e52eeec17d49b6cf6a52b2942f",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T15-pipeline-review.md",
+    "blob": "100644:0766acff05d25cc53fe95df8bd53d5c92687498c",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/T16-case-study-closeout.md",
+    "blob": "100644:0822b50b74a0e6f4455cf9faf4fabfcfbdab6913",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/orchestrator-verification.md",
+    "blob": "100644:abbd319864ec6e542da1c796c80af3ffa7282489",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/paths/report.md",
+    "blob": "100644:9f7b0f3a505ddfc795c6f5282b6b58a6c240e7db",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/prism-spikes.md",
+    "blob": "100644:38190be830e3a8795f666a7d989820b1e6a084a3",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/summary.md",
+    "blob": "100644:1cede7ffd67bda07f7349887063dddbaaeb0d91d",
+    "branch": "docs/pipeline-path-review-20260908",
+    "commit": "e3020a7258b8acdf96d9d220cbfab8cf88fb53e9"
+  },
+  {
+    "path": "docs/review/infrastructure/README.md",
+    "blob": "100644:1bb947a8bd14369e70012884a2a4a8ba349b2bfd",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/argocd.md",
+    "blob": "100644:cc4ad0fbb4b04ae62b5b60c66c7e4dd48081a52f",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/backup-recovery.md",
+    "blob": "100644:a268b4a9ea44b53dc73419b05dbf50469ec8bd35",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/buildkit.md",
+    "blob": "100644:d603fc3bd1ea0445cfc2b907ab57492c24474b03",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/ci-build.md",
+    "blob": "100644:769dee1240c158b7f3461bf28cf8ba51f9a57c22",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/cilium-migration.md",
+    "blob": "100644:3d0101f673b0ffeae4ff30f85d98e948824a9b3a",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/cluster-bootstrap.md",
+    "blob": "100644:280c077b5b001da2fa16171e000f537bdc65f5da",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/envoy.md",
+    "blob": "100644:3347e51a8582f45cc53fc39d09d8dafb17ba406a",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/findings-index.json",
+    "blob": "100644:eac4c15cdb759ebc1af1396b876bdd25eec68bd0",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/handoff.md",
+    "blob": "100644:e65bc0b519501ddbacebe26807c27ee7e9cd0f00",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/inventory-data.json",
+    "blob": "100644:a6669666a9a6a32a038763e6f7081d5de9001ed1",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/inventory.md",
+    "blob": "100644:987752838d0086d86aa9cd1b986675aefe5be028",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/litellm-postgresql.md",
+    "blob": "100644:60a115857feca739338ef61c621ca70064d2a3cd",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/litellm.md",
+    "blob": "100644:642394979093dd6bf34bc1df7c65b2602c9c2245",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/namespace-broker.md",
+    "blob": "100644:34e93c9a49dba417702ec0721911d763281ea9fa",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/network-dns.md",
+    "blob": "100644:52a3a4d12ca9f94fe68e3dbb07c612b0b282178a",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/observability.md",
+    "blob": "100644:8418cf7887ac14afff16cd9013db02f94332d3be",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/ops-mcp.md",
+    "blob": "100644:4ac071825a285d4f0b8af19d081f989fe25ff7db",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/ops-pod.md",
+    "blob": "100644:3f3d4ba7ba994b99bf4dee33661480696b02d2dc",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/paths/administrative-access.md",
+    "blob": "100644:bfcdecb7cd2968937c3e4dd5368ce4b5ec10de5b",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/paths/bootstrap.md",
+    "blob": "100644:56fead1f457aaf30978b29463b268bade48e301b",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/paths/cni-migration.md",
+    "blob": "100644:d8511cc9e9f33336f09c1844dd28db2a311d3bb5",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/paths/image-release.md",
+    "blob": "100644:318205fd6ab91ee3e00e273536ad9f91b33562ef",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/paths/persistence-restore.md",
+    "blob": "100644:e435ad4009b5e497ead1e6197d29bbe34e3418a6",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/paths/pipeline-communication.md",
+    "blob": "100644:1b63e3848ac5a417465cc7c120b2d11ded9c0f8e",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/prism-postgresql.md",
+    "blob": "100644:1a481f3f065f0331544fe514b61d88ad8d40bbcc",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/prism-workloads.md",
+    "blob": "100644:e1e7b62d41d38cfcdf1b4279a192ed6e06572b79",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/public-config.md",
+    "blob": "100644:e27ce438c5285d3eec0227a3e2c32750091298f2",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/qdrant.md",
+    "blob": "100644:bcd40e6c6d5869e147aedde70c164101b1761af4",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/redis.md",
+    "blob": "100644:2115f97e27587dc8d301fe5d9f16e8dd91fcb6ad",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/registry-local.md",
+    "blob": "100644:e9fb81b1ad60472bd4a9cb9952534b2f48a07e28",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/registry-mirror.md",
+    "blob": "100644:9a72d1b978e9d2a6de1dc795b9947074f0a72522",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/release-promotion.md",
+    "blob": "100644:9d153d5194a9573fceabda8daa96d1759cc4d83f",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/role-workloads.md",
+    "blob": "100644:3ac4b2798655e1aa2f4f69033b4aa6438e9d79cb",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/runtime-images.md",
+    "blob": "100644:091964962b94f2fc98d20cc93702bf2f684d9286",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/secrets.md",
+    "blob": "100644:34a3bccb1c712c234cbff31a4fef36f08eb35cd6",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/source-coverage.md",
+    "blob": "100644:3c28d79c30231da8e02ff8369e00bf723408b84c",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/spire.md",
+    "blob": "100644:fe9165003852682d41240468c72cdde435294f77",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/storage.md",
+    "blob": "100644:2cbd45083dda906dd8b6f5de566d642d62fa0638",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/tailscale.md",
+    "blob": "100644:83c069cf085a5e2430f57d015c93939b79759e2d",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/updates-security.md",
+    "blob": "100644:5f061221716fde401964438649c48e2a54f917d7",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/verification-results.json",
+    "blob": "100644:b2bf6fdbaff9d2b99dc35553bfa4629fee461332",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  },
+  {
+    "path": "docs/review/infrastructure/verification.md",
+    "blob": "100644:10e66616590a9f80e1d8039ca84becb7fe7d63e0",
+    "branch": "docs/infrastructure-review-20260906",
+    "commit": "eac591fb060458ebb6c6ba34599309e8c424bd08"
+  }
+]

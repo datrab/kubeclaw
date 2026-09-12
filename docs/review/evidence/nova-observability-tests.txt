@@ -1,0 +1,4 @@
+$ node tests/verification/contracts/check-pipeline-observability-nova-reconciliation.mts
+{"ok":true,"phase":"5.7-E","workers":20,"idempotentImports":true,"developmentDegraded":true,"finalStrict":true}
+
+exit=0

@@ -1,0 +1,122 @@
+[
+  {
+    "originalPath": "tests/verification/reliability/delivery-manifest-stage-boundary-child.mjs",
+    "path": "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary-child.mjs",
+    "branch": "fix/resume-47-20260910t035412-delivery-independent",
+    "originalBlob": "100644:83b516c229e68fca9ae1b80c2b5c5c7d5bc988fc",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "83b516c229e68fca9ae1b80c2b5c5c7d5bc988fc"
+  },
+  {
+    "originalPath": "tests/verification/reliability/delivery-manifest-stage-boundary-independent.test.mjs",
+    "path": "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary-independent.test.mjs",
+    "branch": "fix/resume-47-20260910t035412-delivery-independent",
+    "originalBlob": "100644:d9c33780174aaa17a4a9eb0a2e04ba5582c02722",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "47c98f6564769d640adb17e2cbed6c0648968178"
+  },
+  {
+    "originalPath": "tests/verification/reliability/delivery-manifest-stage-boundary.test.mjs",
+    "path": "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary.test.mjs",
+    "branch": "fix/resume-47-20260910t035412-delivery-independent",
+    "originalBlob": "100644:801a5c0a6d28a594a6c6a3f7bcd2e51b5c043342",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "801a5c0a6d28a594a6c6a3f7bcd2e51b5c043342"
+  },
+  {
+    "originalPath": "tests/verification/reliability/review-semantic-history-child.mjs",
+    "path": "tests/verification/historical-branch-acceptance/review-semantic-history-child.mjs",
+    "branch": "fix/resume-47-20260910t035412-semantic-review",
+    "originalBlob": "100644:5a061d8a7b1ab7eb23aa94e5c4eb8a49fdd980fa",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "5a061d8a7b1ab7eb23aa94e5c4eb8a49fdd980fa"
+  },
+  {
+    "originalPath": "tests/verification/reliability/review-semantic-history-independent.test.mjs",
+    "path": "tests/verification/historical-branch-acceptance/review-semantic-history-independent.test.mjs",
+    "branch": "fix/resume-47-20260910t035412-semantic-review",
+    "originalBlob": "100644:f2c71456c479f078e0c278d2762c93cbfeddc3aa",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "94491273a216f28ef5eebcb0a9406ff071085803"
+  },
+  {
+    "originalPath": "tests/verification/reliability/delivery-manifest-v2-reader-corpus-child.mjs",
+    "path": "tests/verification/historical-branch-acceptance/delivery-manifest-v2-reader-corpus-child.mjs",
+    "branch": "fix/resume-47-20260910t050054-delivery-0afc-independent-review",
+    "originalBlob": "100644:c3625753a1c801e826a70a377d4322f0a3e6e98f",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "c3625753a1c801e826a70a377d4322f0a3e6e98f"
+  },
+  {
+    "originalPath": "tests/verification/reliability/delivery-manifest-v2-reader-corpus-independent.test.mjs",
+    "path": "tests/verification/historical-branch-acceptance/delivery-manifest-v2-reader-corpus-independent.test.mjs",
+    "branch": "fix/resume-47-20260910t050054-delivery-0afc-independent-review",
+    "originalBlob": "100644:bb508f99c5b930afcaa4780ab8c5bbc71b18d5cd",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "bb508f99c5b930afcaa4780ab8c5bbc71b18d5cd"
+  },
+  {
+    "originalPath": "tests/verification/reliability/delivery-manifest-v3-compiler-recovery-independent.test.mjs",
+    "path": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-compiler-recovery-independent.test.mjs",
+    "branch": "fix/resume-47-20260910t050054-delivery-0afc-independent-review",
+    "originalBlob": "100644:5d13f7122efb8e7f6cf4a9b5af307b6cfe5332df",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "5d13f7122efb8e7f6cf4a9b5af307b6cfe5332df"
+  },
+  {
+    "originalPath": "tests/verification/reliability/delivery-manifest-v3-contract-independent.test.mjs",
+    "path": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-contract-independent.test.mjs",
+    "branch": "fix/resume-47-20260910t050054-delivery-0afc-independent-review",
+    "originalBlob": "100644:ab732dd92cf7d5a6c42387bcc687246166c054a6",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "ab732dd92cf7d5a6c42387bcc687246166c054a6"
+  },
+  {
+    "originalPath": "tests/verification/reliability/delivery-manifest-v3-public-types-independent.test.mjs",
+    "path": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-public-types-independent.test.mjs",
+    "branch": "fix/resume-47-20260910t050054-delivery-0afc-independent-review",
+    "originalBlob": "100644:5ae94a5c8599a6dab4ba506a537761e75e760d59",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "5ae94a5c8599a6dab4ba506a537761e75e760d59"
+  },
+  {
+    "originalPath": "tests/verification/reliability/delivery-manifest-v3-summary-mode-independent.test.mjs",
+    "path": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-summary-mode-independent.test.mjs",
+    "branch": "fix/resume-47-20260910t050054-delivery-0afc-independent-review",
+    "originalBlob": "100644:b98824314c97de8abf743a63ebf5ca66e5347dca",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "b98824314c97de8abf743a63ebf5ca66e5347dca"
+  },
+  {
+    "originalPath": "tests/verification/reliability/run11-semantic-producer-child.mjs",
+    "path": "tests/verification/historical-branch-acceptance/run11-semantic-producer-child.mjs",
+    "branch": "fix/resume-47-run11-semantic-producer-e52a43e",
+    "originalBlob": "100644:a8956c587d07da4797169ed53ef43501f1742bd6",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "a8956c587d07da4797169ed53ef43501f1742bd6"
+  },
+  {
+    "originalPath": "tests/verification/reliability/run11-semantic-producer-locales.test.mjs",
+    "path": "tests/verification/historical-branch-acceptance/run11-semantic-producer-locales.test.mjs",
+    "branch": "fix/resume-47-run11-semantic-producer-e52a43e",
+    "originalBlob": "100644:d355bbb883bc6af9692880ac0751f48e1840cc88",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "d355bbb883bc6af9692880ac0751f48e1840cc88"
+  },
+  {
+    "originalPath": "tests/verification/reliability/review-semantic-selector-independent.test.mjs",
+    "path": "tests/verification/historical-branch-acceptance/review-semantic-selector-independent.test.mjs",
+    "branch": "fix/resume-47-run14-semantic-review-b634578",
+    "originalBlob": "100644:a2f7943f1472780cfd9d3b9359aebd717b04a3f0",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "a2f7943f1472780cfd9d3b9359aebd717b04a3f0"
+  },
+  {
+    "originalPath": "tests/verification/reliability/review-semantic-summary-independent.test.mjs",
+    "path": "tests/verification/historical-branch-acceptance/review-semantic-summary-independent.test.mjs",
+    "branch": "fix/resume-47-run14-semantic-review-b634578",
+    "originalBlob": "100644:96461de784537f9d122efd91d9491d69082feb5c",
+    "purpose": "Retain explicit historical acceptance harness separately from the default current reliability glob; original environment/baseline prerequisites and assertions remain mandatory.",
+    "consolidatedBlob": "96461de784537f9d122efd91d9491d69082feb5c"
+  }
+]

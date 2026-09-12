@@ -1,0 +1,205 @@
+{
+  "baseline": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
+  "live_verified": false,
+  "render_matrix": [
+    {
+      "variant": "default",
+      "objects": 7,
+      "steady_requested_cpu": 0.2,
+      "effective_requested_GiB": 0.5,
+      "pods": [
+        {
+          "name": "agent-nova",
+          "strategy": {
+            "type": "Recreate"
+          },
+          "cpu": 0.2,
+          "GiB": 0.5
+        }
+      ]
+    },
+    {
+      "variant": "nova",
+      "objects": 13,
+      "steady_requested_cpu": 1.1,
+      "effective_requested_GiB": 12.125,
+      "pods": [
+        {
+          "name": "agent-nova",
+          "strategy": {
+            "type": "Recreate"
+          },
+          "cpu": 1.1,
+          "GiB": 12.125
+        }
+      ]
+    },
+    {
+      "variant": "buster",
+      "objects": 21,
+      "steady_requested_cpu": 3.0999999999999996,
+      "effective_requested_GiB": 20.1875,
+      "pods": [
+        {
+          "name": "agent-buster-namespace-controller",
+          "strategy": "default",
+          "cpu": 0.05,
+          "GiB": 0.125
+        },
+        {
+          "name": "agent-buster",
+          "strategy": {
+            "type": "Recreate"
+          },
+          "cpu": 3.05,
+          "GiB": 20.0625
+        }
+      ]
+    },
+    {
+      "variant": "prism-agent",
+      "objects": 9,
+      "steady_requested_cpu": 0.30000000000000004,
+      "effective_requested_GiB": 0.6875,
+      "pods": [
+        {
+          "name": "agent-prism",
+          "strategy": {
+            "type": "Recreate"
+          },
+          "cpu": 0.30000000000000004,
+          "GiB": 0.6875
+        }
+      ]
+    },
+    {
+      "variant": "prism",
+      "objects": 37,
+      "steady_requested_cpu": 2.35,
+      "effective_requested_GiB": 4.375,
+      "pods": [
+        {
+          "name": "prism-control",
+          "strategy": "default",
+          "cpu": 0.55,
+          "GiB": 1.0625
+        },
+        {
+          "name": "prism-studio",
+          "strategy": "default",
+          "cpu": 0.25,
+          "GiB": 0.25
+        },
+        {
+          "name": "prism-worker",
+          "strategy": "default",
+          "cpu": 1.05,
+          "GiB": 2.0625
+        },
+        {
+          "name": "prism-postgresql",
+          "strategy": "default",
+          "cpu": 0.5,
+          "GiB": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "prism-ingestion",
+      "objects": 40,
+      "steady_requested_cpu": 2.35,
+      "effective_requested_GiB": 4.375,
+      "pods": [
+        {
+          "name": "prism-ingestion",
+          "strategy": "default",
+          "cpu": 0.0,
+          "GiB": 0.0
+        },
+        {
+          "name": "prism-control",
+          "strategy": "default",
+          "cpu": 0.55,
+          "GiB": 1.0625
+        },
+        {
+          "name": "prism-studio",
+          "strategy": "default",
+          "cpu": 0.25,
+          "GiB": 0.25
+        },
+        {
+          "name": "prism-worker",
+          "strategy": "default",
+          "cpu": 1.05,
+          "GiB": 2.0625
+        },
+        {
+          "name": "prism-postgresql",
+          "strategy": "default",
+          "cpu": 0.5,
+          "GiB": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "prism-no-spiffe",
+      "objects": 34,
+      "steady_requested_cpu": 2.25,
+      "effective_requested_GiB": 4.25,
+      "pods": [
+        {
+          "name": "prism-control",
+          "strategy": "default",
+          "cpu": 0.5,
+          "GiB": 1.0
+        },
+        {
+          "name": "prism-studio",
+          "strategy": "default",
+          "cpu": 0.25,
+          "GiB": 0.25
+        },
+        {
+          "name": "prism-worker",
+          "strategy": "default",
+          "cpu": 1.0,
+          "GiB": 2.0
+        },
+        {
+          "name": "prism-postgresql",
+          "strategy": "default",
+          "cpu": 0.5,
+          "GiB": 1.0
+        }
+      ]
+    },
+    {
+      "variant": "nova-two",
+      "objects": 13,
+      "steady_requested_cpu": 2.2,
+      "effective_requested_GiB": 24.25,
+      "pods": [
+        {
+          "name": "agent-nova",
+          "strategy": {
+            "type": "Recreate"
+          },
+          "cpu": 1.1,
+          "GiB": 12.125
+        }
+      ]
+    }
+  ],
+  "optional_git": {
+    "command": "helm template optional-git charts/kubeclaw -n kubeclaw --set agent.git.enabled=false",
+    "exit": 0,
+    "ssh_secret_still_required": true,
+    "secret_name": "git-deploy-key-nova"
+  },
+  "syntax": {
+    "shell_files": 18,
+    "python_files": 4,
+    "errors": []
+  }
+}

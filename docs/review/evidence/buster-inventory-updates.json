@@ -1,0 +1,50 @@
+{
+  "buster.entry": {
+    "status": "abgeschlossen",
+    "responsibility": "ESM-Rollenexport auf Buster-Engine; Quell- und generierter Bundleimport geprüft.",
+    "usage": "ESM-Rollenexport auf Buster-Engine; Quell- und generierter Bundleimport geprüft. Tatsächlicher Aufruf und Gegenstellen im Einzelreview dokumentiert.",
+    "docStatus": "vorhanden; konkrete Grenzen/Abweichungen im Einzelreview"
+  },
+  "buster.namespace-controller": {
+    "status": "abgeschlossen",
+    "responsibility": "Kubernetes-Lease-Reconciliation für Namespace, RBAC, Credentials, Ingress und Runtime-Securitystatus.",
+    "usage": "Kubernetes-Lease-Reconciliation für Namespace, RBAC, Credentials, Ingress und Runtime-Securitystatus. Tatsächlicher Aufruf und Gegenstellen im Einzelreview dokumentiert.",
+    "docStatus": "vorhanden; konkrete Grenzen/Abweichungen im Einzelreview"
+  },
+  "kubeclaw.direct-command": {
+    "status": "abgeschlossen",
+    "responsibility": "Catalogbasierter Commandprovider mit exakten Evidenzdateien und JUnitabschluss im Runner.",
+    "usage": "Catalogbasierter Commandprovider mit exakten Evidenzdateien und JUnitabschluss im Runner. Tatsächlicher Aufruf und Gegenstellen im Einzelreview dokumentiert.",
+    "docStatus": "vorhanden; konkrete Grenzen/Abweichungen im Einzelreview"
+  },
+  "kubeclaw.container-build": {
+    "status": "abgeschlossen",
+    "responsibility": "BuildKit-Build/Push und gehashte Registrymanifestprüfung; kein Deployment.",
+    "usage": "BuildKit-Build/Push und gehashte Registrymanifestprüfung; kein Deployment. Tatsächlicher Aufruf und Gegenstellen im Einzelreview dokumentiert.",
+    "docStatus": "vorhanden; konkrete Grenzen/Abweichungen im Einzelreview"
+  },
+  "kubeclaw.kubernetes-fixture": {
+    "status": "abgeschlossen",
+    "responsibility": "Geprüftes Manifest und immutableImage in brokergebundene Deploymentfixture umsetzen.",
+    "usage": "Geprüftes Manifest und immutableImage in brokergebundene Deploymentfixture umsetzen. Tatsächlicher Aufruf und Gegenstellen im Einzelreview dokumentiert.",
+    "docStatus": "vorhanden; konkrete Grenzen/Abweichungen im Einzelreview"
+  },
+  "kubeclaw.tailscale-exposure": {
+    "status": "abgeschlossen",
+    "responsibility": "Bestehende Deploymentlease als Tailscale-HTTPS-Exposure bereitstellen und freigeben.",
+    "usage": "Bestehende Deploymentlease als Tailscale-HTTPS-Exposure bereitstellen und freigeben. Tatsächlicher Aufruf und Gegenstellen im Einzelreview dokumentiert.",
+    "docStatus": "vorhanden; konkrete Grenzen/Abweichungen im Einzelreview"
+  },
+  "kubeclaw.security-providers": {
+    "status": "abgeschlossen",
+    "responsibility": "Fünf getrennte Header-/Trivy-/Runtime-Kubernetes-Securityprovider mit gemeinsamer strikter Policy.",
+    "usage": "Fünf getrennte Header-/Trivy-/Runtime-Kubernetes-Securityprovider mit gemeinsamer strikter Policy. Tatsächlicher Aufruf und Gegenstellen im Einzelreview dokumentiert.",
+    "docStatus": "vorhanden; konkrete Grenzen/Abweichungen im Einzelreview"
+  },
+  "buster.engine": {
+    "status": "abgeschlossen",
+    "responsibility": "Buster Providergraph, isolierte Provider/Reportadapter, Capabilitybroker und durable authentisierte Remoteplanjobs.",
+    "usage": "Remote-CLI/Productionconfig→Registry/Service→TestPlanRunner→Worker/Provider/Capability, Nova-Transport/Resultimport als Gegenstelle geprüft.",
+    "docStatus": "vorhanden; Buster-v2-Runtime bei Source-/Workspace-Retention und joblokalen Credentials veraltet"
+  }
+}

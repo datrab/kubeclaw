@@ -1,0 +1,36 @@
+{
+  "reviewedMain": "591e61e67e98e82d818c7d7eeb9e8ba5c5cccd2b",
+  "reviewedTree": "9526f261b66ed5bbebbbdf7c6d977b8ae4e3ba84",
+  "remoteBranches": 262,
+  "previouslyUnresolvedBranches": 190,
+  "classificationCounts": {
+    "consolidated-history-parent": 261,
+    "protected-main": 1
+  },
+  "restoredDocuments": 278,
+  "archivedUniqueDocumentBlobs": 897,
+  "archivedBranchPathEntries": 1877,
+  "artifacts": [
+    {
+      "file": "historical-documents.json.gz",
+      "bytes": 5240309,
+      "rawBytes": 23013653,
+      "sha256": "181ebf46627d1e47244664328d10ceef3fda99979d8a69982ffceecd1bc28981"
+    },
+    {
+      "file": "path-decisions.json.gz",
+      "bytes": 212318,
+      "rawBytes": 1945703,
+      "sha256": "5741757cad39cc1cb78879411ae412901243396ec3e37a136fa3b5628f1583c6"
+    }
+  ],
+  "deletedRemoteBranches": 0,
+  "deletedLocalWorktrees": 0,
+  "blockers": [
+    "Direct Git has no authentication; connector has no branch-delete operation. Remote deletion remains pending."
+  ],
+  "sourceIntegrationPaths": 111,
+  "historicalHarnessFiles": 15,
+  "eligibleAfterPublication": 261,
+  "openLiveTestsBlockConsolidation": false
+}

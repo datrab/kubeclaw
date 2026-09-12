@@ -1,0 +1,37 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+added 6 packages in 11s
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @kubeclaw/ops-mcp@0.2.0 test
+> node --test test/*.test.mjs
+
+✔ Ops rendering follows the operator namespace without broadening proxy identity (222.926398ms)
+✔ invalid operator namespace is rejected before any deployment (121.886558ms)
+✔ Cilium policy-only rendering does not require an image and is included in full render (377.137148ms)
+✔ custom namespace migration applies only project policies and cleanup needs no absent Ops deployment (1261.904388ms)
+✔ byte limit never splits UTF-8 or expands beyond the advertised budget (7.101477ms)
+✔ content is not redacted and unavailable history is never called complete (0.850343ms)
+✔ tail saturation remains visible without assuming a full history (0.353535ms)
+✔ malformed target returns 400 and leaves server and authorization intact (1070.472971ms)
+✔ old windows are valid but each window is bounded (19.028574ms)
+✔ lost events and peer status are never fake flows (0.723457ms)
+✔ exact pod filtering, saturation and summaries preserve diagnostic meaning (489.134293ms)
+✔ stderr and nonzero exit are returned as incomplete observation (281.106563ms)
+✔ stdout/stderr share a raw byte ceiling (825.414636ms)
+✔ timeout is explicit and releases concurrency slot (91.006323ms)
+✔ HTTPS verifies CA/hostname, rotates credentials, bounds requests and refuses redirects (1664.204997ms)
+✔ local MCP lists tools while the Kubernetes credential is unavailable and reports failed reads honestly (1255.922763ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2692.81551
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.076s
+
+OK

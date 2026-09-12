@@ -1,0 +1,3 @@
+Command: node tests/verification/contracts/check-pipeline-remote-plan-runtime.mts
+Exit: 0
+{"ok":true,"phase":"7-C","transport":"authenticated-http"}

@@ -54,6 +54,21 @@ async function fixture(t, options = {}) {
   target.listen(0, '127.0.0.1'); await once(target, 'listening');
   t.after(() => new Promise(resolve => target.close(resolve)));
   const origin = `http://127.0.0.1:${target.address().port}`;
+  const forge = options.derived ? http.createServer(async (request, response) => {
+    const chunks = []; for await (const chunk of request) chunks.push(Buffer.from(chunk));
+    const input = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+    const workspace = input.workspaceReference?.workspacePath;
+    assert.equal(typeof workspace, 'string');
+    fs.writeFileSync(path.join(workspace, 'derived-source.txt'), 'genuine registered implementation source\n');
+    response.writeHead(200, { 'content-type': 'application/json' });
+    response.end(JSON.stringify({ result: { status: 'ready_for_testing', summary: 'Produced committed source.',
+      changedPaths: ['derived-source.txt'], checks: [{ name: 'real-file', passed: true }], session: {
+        sessionId: `session:forge:${runId}:implementation:1`, startedAt: '2026-09-09T00:00:00.000Z',
+        completedAt: '2026-09-09T00:00:01.000Z', transcriptDigest: crypto.createHash('sha256').update('derived source').digest('hex'),
+        handoffs: 1, termination: 'completed' } } }));
+  }) : null;
+  if (forge) { forge.listen(0, '127.0.0.1'); await once(forge, 'listening'); t.after(() => new Promise(resolve => forge.close(resolve))); }
+  const forgeOrigin = forge ? `http://127.0.0.1:${forge.address().port}` : null;
   const limits = { cpuMillis: 30000, memoryBytes: 536870912, logBytes: 1048576, artifactBytes: 1048576, artifactFiles: 16, processes: 16 };
   const plan = resolveTestPlan({ planId: 'plan:dispatch-projection', runId, project: 'projection', scope: { moduleId: 'api', gateId: null },
     createdAt: now, registry, suiteTemplates: [], declaration: { tests: { health: { uses: 'kubeclaw.http@1', mode: 'blocking', retries: 0,
@@ -80,29 +95,48 @@ async function fixture(t, options = {}) {
   const roots = ['common', 'nova'].map(role => path.resolve(`skills/${role}/plugins`));
   const artifactId = 'kubeclaw.artifact-store:artifact-store', remoteId = 'kubeclaw.remote-test-gate:plan';
   const runtimeId = 'kubeclaw.runtime-dispatch:runtime', networkId = 'kubeclaw.network-http:http', secretId = 'kubeclaw.secret-resolver:secrets';
+  const gitId = 'kubeclaw.git-workspace:git';
   const platform = { schemaVersion: 'pipeline-platform.v2', installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: { 'test.plan.execute': remoteId, 'runtime.dispatch': runtimeId, 'network.http': networkId,
-      'secrets.read': secretId, 'artifacts.read': artifactId, 'artifacts.write': artifactId },
+      'secrets.read': secretId, 'artifacts.read': artifactId, 'artifacts.write': artifactId,
+      ...(options.derived ? { 'git.workspace.create': gitId, 'git.workspace.remove': gitId, 'git.commit': gitId, 'git.merge': gitId } : {}) },
     grants: { 'kubeclaw.buster-quality-gate:quality': { 'test.plan.execute': { allowedRoots: [repository] },
       'runtime.dispatch': { allowedAgents: ['unused'] }, 'artifacts.read': { allowedNamespaces: ['kubeclaw.implementation-agent'] },
       'artifacts.write': { allowedNamespaces: ['kubeclaw.buster-quality-gate'] } },
+      ...(options.derived ? { 'kubeclaw.implementation-agent:implementation': {
+        'runtime.dispatch': { allowedAgents: ['forge'] }, 'artifacts.read': { allowedNamespaces: ['kubeclaw.lint','kubeclaw.review','kubeclaw.buster-quality-gate'] },
+        'artifacts.write': { allowedNamespaces: ['kubeclaw.implementation-agent'] },
+        'git.workspace.create': { allowedRoots: [root], allowedWorkspaceRoots: [root] },
+        'git.workspace.remove': { allowedRoots: [root], allowedWorkspaceRoots: [root] },
+        'git.commit': { allowedRoots: [root] }, 'git.merge': { allowedRoots: [root] } } } : {}),
       [remoteId]: { 'secrets.read': { allowedNames: ['worker', 'source'] } },
-      [runtimeId]: { 'network.http': { allowedOrigins: [endpoint] }, 'secrets.read': { allowedNames: ['worker'] } } },
+      [runtimeId]: { 'network.http': { allowedOrigins: [endpoint, ...(forgeOrigin ? [forgeOrigin] : [])] }, 'secrets.read': { allowedNames: ['worker'] } } },
     adapters: { [remoteId]: { endpoint, authentication: 'bearer', tokenSecret: 'worker', sourcePrivateKeySecret: 'source',
       sourceAuthority: 'nova:projection', stateRoot, allowedRepositoryRoots: [repository] },
       [artifactId]: { artifactRoot: path.join(root, 'artifacts') },
       [secretId]: { environment: { worker: envToken, source: envSource } },
-      [runtimeId]: { targets: { unused: { endpoint: `${endpoint}/dispatch`, tokenSecret: 'worker' } } },
-      [networkId]: { allowedOrigins: [endpoint], allowedMethods: ['POST'], allowedHeaders: ['content-type', 'authorization'] } },
-    activeAdapters: [remoteId, artifactId, secretId, runtimeId, networkId], observers: {},
+      [runtimeId]: { targets: { unused: { endpoint: `${endpoint}/dispatch`, tokenSecret: 'worker' },
+        ...(forgeOrigin ? { forge: { endpoint: `${forgeOrigin}/dispatch`, tokenSecret: 'worker' } } : {}) } },
+      [networkId]: { allowedOrigins: [endpoint, ...(forgeOrigin ? [forgeOrigin] : [])], allowedMethods: ['POST'],
+        allowedHeaders: ['content-type', 'authorization', 'idempotency-key', 'x-kubeclaw-signature'] },
+      ...(options.derived ? { [gitId]: { allowedRepositoryRoots: [root], workspaceRoot: path.join(root, 'worktrees'),
+        gitExecutable: execFileSync('sh', ['-lc', 'command -v git'], { encoding: 'utf8' }).trim(), authorName: 'Retention Test',
+        authorEmail: 'retention@example.invalid', maxExecutionMs: 5000, maxOutputBytes: 65536, terminationGraceMs: 100 } } : {}) },
+    activeAdapters: [remoteId, artifactId, secretId, runtimeId, networkId, ...(options.derived ? [gitId] : [])], observers: {},
     storageRoot: path.join(root, 'state'), shutdownTimeoutMs: 5000, orchestratorIssuerId: 'nova',
     administrativeDecisionIssuers: [{ type: 'administrator', id: 'admin:projection' }] };
+  const sourceRevision = git(repository, 'rev-parse', 'HEAD');
+  const implementation = options.derived ? [{ id: 'implementation', type: 'kubeclaw.agent.implementation', dependsOn: [], config: { agent: 'forge' },
+    input: { runId, moduleId: 'api', attempt: 1, task: 'Produce the source used by the quality gate.', headBefore: sourceRevision,
+      workspace: { repositoryRoot: repository, workspacePath: path.join(root, 'worktrees', 'implementation'), branch: 'retention-derived-source',
+        baseRef: sourceRevision, mergeTarget: repository, commitMessage: 'Produce derived source' } },
+    execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 30000 } }] : [];
   const definition = { schemaVersion: 'pipeline-definition.v2', id: 'pipeline:projection', maxConcurrency: 1,
-    stages: [{ id: 'test', type: 'kubeclaw.test.quality-evaluation', dependsOn: [], config: { testAgentEnabled: false },
+    stages: [...implementation, { id: 'test', type: 'kubeclaw.test.quality-evaluation', dependsOn: options.derived ? ['implementation'] : [], config: { testAgentEnabled: false },
       execution: { maxAttempts: 1, maxRemediationCycles: 1, timeoutMs: 30000 },
       input: { gateId: 'test', task: 'Exercise original retained dispatch history', providerPlan: { repositoryRoot: repository,
-        repositoryId: 'repository:projection', revision: git(repository, 'rev-parse', 'HEAD'), plan,
+        repositoryId: 'repository:projection', ...(options.derived ? { sourceStageId: 'implementation' } : { revision: sourceRevision }), plan,
         grants: { health: ['network.http'] }, maximumConcurrency: 1, submittedAt: now, timeoutMs: 30000 } } }] };
   const core = { repository, platform, definition };
   let coreResult = await runPipelineV2(platform, definition, runId);
@@ -313,6 +347,43 @@ test('honestly rehashed sourceStageId or missing-source snapshot cannot bypass e
   }
   fs.writeFileSync(file, original);
   assert.equal((await retireNovaDispatch(f.scope)).newlyProjected, true);
+});
+
+test('registered implementation source authorizes dispatch projection through its committed artifact', { timeout: 60000 }, async t => {
+  const f = await fixture(t, { derived: true });
+  assert.match(fs.readFileSync(path.join(f.core.repository, 'derived-source.txt'), 'utf8'), /genuine registered implementation source/);
+  assert.equal(f.core.definition.stages[1].input.providerPlan.sourceStageId, 'implementation');
+  assert.equal(f.job.sourceSnapshot.revision, `git:${git(f.core.repository, 'rev-parse', 'HEAD')}`);
+  const before = fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot));
+  const artifacts = json(recordsFile(path.join(f.root, 'artifacts'))).records;
+  const source = artifacts.find(record => record.payload.namespace === 'kubeclaw.implementation-agent').payload;
+  const sourceBlob = blobFile(path.join(f.root, 'artifacts'), source.digest), sourceBytes = fs.readFileSync(sourceBlob);
+  fs.unlinkSync(sourceBlob);
+  await assert.rejects(retireNovaDispatch(f.scope), /NOVA_DISPATCH_RETENTION_CORE_AUTHORITY_REQUIRED/);
+  assert.deepEqual(fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot)), before);
+  fs.writeFileSync(sourceBlob, Buffer.alloc(sourceBytes.length, 7));
+  await assert.rejects(retireNovaDispatch(f.scope), /NOVA_DISPATCH_RETENTION_CORE_AUTHORITY_REQUIRED/);
+  assert.deepEqual(fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot)), before);
+  fs.writeFileSync(sourceBlob, sourceBytes);
+  const effectsFile = path.join(f.run, 'effects.jsonl'), originalEffects = fs.readFileSync(effectsFile, 'utf8');
+  const entries = originalEffects.trim().split('\n').map(line => JSON.parse(line).entry);
+  const merge = entries.find(entry => entry.type === 'completed' && entry.receipt?.result?.sourceRevision === f.job.sourceSnapshot.revision.slice(4));
+  assert.ok(merge); merge.receipt.result.sourceRevision = '0'.repeat(40);
+  let previousHash = null;
+  fs.writeFileSync(effectsFile, entries.map((entry, index) => {
+    const value = { sequence: index + 1, previousHash, entry };
+    const hash = `sha256:${crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex')}`;
+    previousHash = hash; return JSON.stringify({ ...value, hash });
+  }).join('\n') + '\n');
+  await assert.rejects(retireNovaDispatch(f.scope), /NOVA_DISPATCH_RETENTION_CORE_AUTHORITY_REQUIRED/);
+  assert.deepEqual(fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot)), before);
+  fs.writeFileSync(effectsFile, originalEffects);
+  const receipt = await retireNovaDispatch(f.scope);
+  assert.equal(receipt.newlyProjected, true);
+  assert.ok(receipt.releasedBytes > 32768);
+  assert.ok(fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot)).byteLength < before.byteLength);
+  assert.deepEqual(await new FileNovaRemotePlanStore(f.scope.intent.dispatchRoot, dispatchOptions).load(f.job.jobId), f.job);
+  assert.deepEqual(await retireNovaDispatch(f.scope), { ...receipt, newlyProjected: false, releasedBytes: 0 });
 });
 
 test('actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job', { timeout: 60000 }, async t => {

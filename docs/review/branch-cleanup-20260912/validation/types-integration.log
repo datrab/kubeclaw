@@ -1,0 +1,31 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> typecheck
+> tsc --noEmit -p tsconfig.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> build
+> tsc --noEmit -p tsconfig.json
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"status":"error","error":"Plugin package changed after discovery: kubeclaw.lint"}
+
+
+1 !== 0
+
+    at checkLegacyProjectImport (file:///workspace/scratch/3f5a31a15f20/kubeclaw/tests/verification/contracts/project-legacy-import-cases.mts:53:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///workspace/scratch/3f5a31a15f20/kubeclaw/tests/verification/contracts/check-project-compiler.mts:196:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

@@ -1,0 +1,11 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/package-boundary.test.mjs && node tests/approval.unit.test.mjs && node tests/architecture-approval.unit.test.ts && node tests/live-function.test.ts
+
+{"ok":true,"plugin":"kubeclaw.human-approval","suite":"boundary"}
+{"ok":true,"plugin":"kubeclaw.human-approval","suite":"unit"}
+{"ok":true,"plugin":"kubeclaw.human-approval","suite":"architecture-durable-evidence"}
+{"ok":true,"plugin":"kubeclaw.human-approval","suite":"live-function"}
+
+EXIT_CODE=0

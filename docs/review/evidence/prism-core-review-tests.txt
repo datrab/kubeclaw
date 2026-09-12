@@ -1,0 +1,8 @@
+Review execution record (summary transcribed from successful original tool output; not raw TAP)
+Command: node --test skills/prism/tests/engine.test.mts skills/prism/tests/storage.test.mts skills/prism/tests/control.test.mts
+Baseline: 85ddfcbfc15e078780ea0434fc167e6f9a9b9488
+Exit: 0; tests13, pass13, fail0, cancelled0, skipped0; duration25355.620403ms.
+Session2: trusted ingress exchange; signatures/expiry.
+Engine7: deterministic operations/idempotency; opaque worker binding; unknown operation; concurrent retries; provider URL/config (no network); key conflict; neutral envelope.
+Storage4: two recording-query-double migration policy cases; actual embedded PGlite duplicate migration; actual embedded PGlite revisions/restore/stale conflict and original filesystem ArtifactStore roundtrip.
+No original HTTP Control/Worker services or external PostgreSQL were started by these cases. No full browser capture or model request occurred.

@@ -1,6 +1,9 @@
 import { canonicalJson, PORTABLE_JSON_ENCODING, sha256Text, type StageDefinition } from '@kubeclaw/plugin-sdk';
+import { assertProjectReviewModes, projectReviewConfig, type ProjectReviewSemanticMode } from './review-semantics.ts';
 import { assertCoveragePlan, coverageReviewPrefixes, coverageReviewRequirements, gateCoverageDigest,
   validatePipelineTestGateContract, type GateCoverageV1, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
+import { assertProjectDeliveryManifestMode, DELIVERY_MANIFEST_ENCODING,
+  type ProjectDeliveryManifestMode } from './delivery-manifest.ts';
 
 type ObjectValue = Record<string, any>;
 const compare = (left: string, right: string): number => left < right ? -1 : left > right ? 1 : 0;
@@ -28,9 +31,12 @@ export function testConfiguration(test: ObjectValue) {
 }
 
 export function cumulativeStages(project: ObjectValue, modules: readonly ObjectValue[], sourceStageId: string,
-  reportArtifactEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING = 'legacy'): StageDefinition[] {
+  reportArtifactEncoding: 'legacy' | typeof PORTABLE_JSON_ENCODING = 'legacy',
+  reviewSemanticMode: ProjectReviewSemanticMode = 'legacy',
+  deliveryManifestEncoding: ProjectDeliveryManifestMode = 'legacy'): StageDefinition[] {
   // Historical archived compilers call this current helper without a fourth arg.
-  if (reportArtifactEncoding !== 'legacy' && reportArtifactEncoding !== PORTABLE_JSON_ENCODING) throw new Error('PROJECT_REPORT_ENCODING_INVALID');
+  assertProjectReviewModes(reportArtifactEncoding, reviewSemanticMode);
+  assertProjectDeliveryManifestMode(deliveryManifestEncoding);
   const final = project.final;
   const coverage = projectCoverage(project.id, project.baseRevision, modules, final.test, final.integrationRequirements, 'cumulative');
   const plan = final.test.providerPlan.plan as ResolvedTestPlanV1;
@@ -40,7 +46,7 @@ export function cumulativeStages(project: ObjectValue, modules: readonly ObjectV
     dependsOn: modules.map(module => `test-${module.id}`), config: final.lint,
     input: { workingDirectory: project.repositoryRoot, project: project.id, sourceStageId }, execution }];
   if (final.review) stages.push({ id: 'final-review', type: 'kubeclaw.decision.review', dependsOn: ['final-lint'],
-    config: reportArtifactEncoding === 'legacy' ? final.review : { ...final.review, reportArtifactEncoding },
+    config: projectReviewConfig(final.review, reportArtifactEncoding, reviewSemanticMode),
     input: { task: { id: 'final', statement: 'Review the integrated project against every declared requirement.' },
       revisions: { sourceStageId, base: project.baseRevision },
       scope: { allowedPrefixes: coverageReviewPrefixes(coverage), ownershipPrefixes: coverageReviewPrefixes(coverage) },
@@ -48,10 +54,14 @@ export function cumulativeStages(project: ObjectValue, modules: readonly ObjectV
   stages.push({ id: 'final-test', type: 'kubeclaw.test.quality-evaluation', dependsOn: [final.review ? 'final-review' : 'final-lint'],
     config: testConfiguration(final.test), input: { gateId: 'final-test', task: 'Test the complete integrated project, including declared interactions.',
       expectedCoverage: coverage, providerPlan: { ...final.test.providerPlan, repositoryRoot: project.repositoryRoot, sourceStageId } }, execution });
-  stages.push({ id: 'project-summary', type: 'kubeclaw.report.project-summary', dependsOn: ['final-test'], config: {}, input: {
+  stages.push({ id: 'project-summary', type: 'kubeclaw.report.project-summary', dependsOn: ['final-test'],
+    config: deliveryManifestEncoding === 'legacy' ? {} : { deliveryManifestEncoding: DELIVERY_MANIFEST_ENCODING }, input: {
     projectId: project.id, modules: modules.map(module => ({ moduleId: module.id, sourceStageId: `implement-${module.id}`,
       testStageId: `test-${module.id}`, expectedCoverage: projectCoverage(project.id, project.baseRevision, [module], module.test) })),
     final: { sourceStageId, lintStageId: 'final-lint', ...(final.review ? { reviewStageId: 'final-review' } : {}),
+      ...(deliveryManifestEncoding !== 'legacy' && final.review && reportArtifactEncoding !== 'legacy'
+        ? { reviewArtifactEncoding: reportArtifactEncoding } : {}),
+      ...(final.review && reviewSemanticMode !== 'legacy' ? { reviewSemanticEncoding: reviewSemanticMode } : {}),
       testStageId: 'final-test', expectedCoverage: coverage },
   }, execution });
   return stages;

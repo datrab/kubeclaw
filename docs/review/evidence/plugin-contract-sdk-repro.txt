@@ -1,0 +1,3 @@
+PCR-CONTRACT-PLUGIN-001: production parser accepts manifest without any registration
+PCR-SDK-001: canonicalJson(Array(2)) emits invalid JSON: [,]
+PCR-SDK-001: undefined and null object values collide

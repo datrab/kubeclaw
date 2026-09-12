@@ -51,6 +51,10 @@
     "final": {
       "type": "object",
       "additionalProperties": false,
+      "dependentRequired": {
+        "reviewArtifactEncoding": ["reviewStageId"],
+        "reviewSemanticEncoding": ["reviewStageId"]
+      },
       "required": [
         "sourceStageId",
         "lintStageId",
@@ -72,6 +76,12 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 128
+        },
+        "reviewArtifactEncoding": {
+          "const": "kubeclaw-json.utf16.v1"
+        },
+        "reviewSemanticEncoding": {
+          "const": "review-semantics.utf16-v1"
         },
         "testStageId": {
           "type": "string",

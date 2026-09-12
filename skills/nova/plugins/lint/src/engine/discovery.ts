@@ -84,32 +84,40 @@ function findPolicyTargetFiles(directory: any, projectRoot: any, globalExclusion
   return files;
 }
 
-function listConfiguredTargetFiles(ctx: any, predicate: any = () => true) {
+function listConfiguredTargetFiles(
+  ctx: any,
+  predicate: any = () => true,
+  globalExclusions: string[] = ctx.policy.global_exclusions,
+) {
   const projectRoot = requireRepositoryPath(ctx.repoRoot, path.resolve(ctx.repoRoot, ctx.policyProject?.root || '.'));
   const candidates: any[] = [];
   for (const target of configuredTargetPaths(ctx)) {
     const stat = fs.statSync(target);
     candidates.push(...(stat.isDirectory()
-      ? findPolicyTargetFiles(target, projectRoot, ctx.policy.global_exclusions)
+      ? findPolicyTargetFiles(target, projectRoot, globalExclusions)
       : [target]));
   }
   return [...new Set(candidates)]
     .filter((file: any) => {
       const relative = path.relative(projectRoot, file).split(path.sep).join('/');
-      return predicate(relative) && policyIncludesFile(relative, ctx.tool, ctx.policy.global_exclusions);
+      return predicate(relative) && policyIncludesFile(relative, ctx.tool, globalExclusions);
     })
     .sort();
 }
 
-function configuredTargetFilesForScope(ctx: any, predicate: any = () => true) {
-  if (!ctx.changedFilesRequested) return listConfiguredTargetFiles(ctx, predicate);
+function configuredTargetFilesForScope(
+  ctx: any,
+  predicate: any = () => true,
+  globalExclusions: string[] = ctx.policy.global_exclusions,
+) {
+  if (!ctx.changedFilesRequested) return listConfiguredTargetFiles(ctx, predicate, globalExclusions);
   const projectRoot = requireRepositoryPath(ctx.repoRoot, path.resolve(ctx.repoRoot, ctx.policyProject?.root || '.'));
   return [...new Set(ctx.changedFiles
     .map((file: any) => requireRepositoryPath(ctx.repoRoot, path.isAbsolute(file) ? file : path.join(ctx.repoRoot, file)))
     .filter((file: any) => fs.existsSync(file)))]
     .filter((file: any) => {
       const relative = path.relative(projectRoot, file).split(path.sep).join('/');
-      return predicate(relative) && policyIncludesFile(relative, ctx.tool, ctx.policy.global_exclusions);
+      return predicate(relative) && policyIncludesFile(relative, ctx.tool, globalExclusions);
     })
     .sort();
 }

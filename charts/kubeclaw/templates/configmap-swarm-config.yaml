@@ -25,6 +25,14 @@ data:
 {{- else }}
 {{ .Files.Get "files/config/eslint.config.mjs" | indent 4 }}
 {{- end }}
+  eslint-type-evidence-config.mjs: |
+{{ .Files.Get "files/config/eslint-type-evidence-config.mjs" | indent 4 }}
+  eslint-type-evidence-tests-config.mjs: |
+{{ .Files.Get "files/config/eslint-type-evidence-tests-config.mjs" | indent 4 }}
+  eslint-type-evidence-generated-config.mjs: |
+{{ .Files.Get "files/config/eslint-type-evidence-generated-config.mjs" | indent 4 }}
+  type-evidence-eslint-plugin.mjs: |
+{{ .Files.Get "files/config/type-evidence-eslint-plugin.mjs" | indent 4 }}
   .yamllint.yml: |
 {{ .Files.Get "files/config/.yamllint.yml" | indent 4 }}
   .tflint.hcl: |

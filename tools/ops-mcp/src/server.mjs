@@ -1,7 +1,8 @@
 import { boundedUtf8, logObservation } from './diagnostics.mjs';
-import { createServer } from 'node:http';
+import { getHubbleFlows } from './hubble.mjs';
 import { readFileSync } from 'node:fs';
 import { createKubeRequest, createKubeList } from './kubernetes.mjs';
+import { createServer } from 'node:http';
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server';
 import { toNodeHandler } from '@modelcontextprotocol/node';
 import * as z from 'zod/v4';
@@ -11,6 +12,8 @@ const HOST = process.env.HOST ?? '0.0.0.0';
 const kubeRequest = createKubeRequest();
 const DEFAULT_NAMESPACE = process.env.OPS_DEFAULT_NAMESPACE ?? 'kubeclaw';
 const ARGO_NAMESPACE = process.env.ARGOCD_NAMESPACE ?? 'argocd';
+const HUBBLE_BIN = process.env.HUBBLE_BIN ?? '/usr/local/bin/hubble';
+const HUBBLE_SERVER = process.env.HUBBLE_SERVER ?? 'hubble-relay.cilium.svc.cluster.local:4245';
 const MAX_LOG_BYTES = 64 * 1024;
 const kubeList = createKubeList(kubeRequest);
 const EVENT_PAGE_SIZE = 500;
@@ -138,16 +141,72 @@ async function recentEvents(namespace, objectName, limit) {
   return { events, scanned, pages };
 }
 
+function endpointSummary(endpoint) {
+  return {
+    namespace: endpoint?.namespace ?? null,
+    pod: endpoint?.pod_name ?? endpoint?.podName ?? null,
+    identity: endpoint?.identity ?? null,
+  };
+}
+
+function l4Summary(l4) {
+  const tcp = l4?.TCP ?? l4?.tcp;
+  if (tcp) {
+    return {
+      protocol: 'TCP',
+      sourcePort: tcp.source_port ?? tcp.sourcePort ?? null,
+      destinationPort: tcp.destination_port ?? tcp.destinationPort ?? null,
+      flags: tcp.flags ?? null,
+    };
+  }
+
+  const udp = l4?.UDP ?? l4?.udp;
+  if (udp) {
+    return {
+      protocol: 'UDP',
+      sourcePort: udp.source_port ?? udp.sourcePort ?? null,
+      destinationPort: udp.destination_port ?? udp.destinationPort ?? null,
+    };
+  }
+
+  const icmpv4 = l4?.ICMPv4 ?? l4?.icmpv4;
+  if (icmpv4) return { protocol: 'ICMPv4', type: icmpv4.type ?? null, code: icmpv4.code ?? null };
+
+  const icmpv6 = l4?.ICMPv6 ?? l4?.icmpv6;
+  if (icmpv6) return { protocol: 'ICMPv6', type: icmpv6.type ?? null, code: icmpv6.code ?? null };
+
+  return null;
+}
+
+function hubbleFlowSummary(response) {
+  const flow = response?.flow ?? response;
+  const ip = flow?.IP ?? flow?.ip ?? {};
+  return {
+    time: flow?.time ?? response?.time ?? null,
+    verdict: flow?.verdict ?? null,
+    dropReason: flow?.drop_reason_desc ?? flow?.dropReasonDesc ?? null,
+    trafficDirection: flow?.traffic_direction ?? flow?.trafficDirection ?? null,
+    node: flow?.node_name ?? flow?.nodeName ?? response?.node_name ?? response?.nodeName ?? null,
+    source: endpointSummary(flow?.source),
+    destination: endpointSummary(flow?.destination),
+    sourceIP: ip?.source ?? null,
+    destinationIP: ip?.destination ?? null,
+    l4: l4Summary(flow?.l4),
+    summary: flow?.Summary ?? flow?.summary ?? null,
+  };
+}
+
 function buildServer() {
   const server = new McpServer(
     {
       name: 'kubeclaw-ops',
-      version: '0.1.0',
+      version: '0.2.0',
     },
     {
       instructions:
         'Read-only operations interface for the kubeclaw Kubernetes cluster. ' +
-        'Use observations from Argo CD, Kubernetes workload state, events and bounded pod logs. ' +
+        'Correlate Argo CD, Kubernetes workload state, events, bounded pod logs and bounded Hubble network flows. ' +
+        'For connectivity or policy symptoms, inspect dropped Hubble flows before guessing at network causes. ' +
         'Never claim that a deployment or repair was performed: this server has no write capability.',
     },
   );
@@ -382,8 +441,8 @@ function buildServer() {
       const params = new URLSearchParams({
         timestamps: 'true',
         previous: String(previous),
-        // Ask Kubernetes for one sentinel byte beyond the advertised response
-        // ceiling so we can reliably report server-side truncation.
+        // Ask Kubernetes for one sentinel byte beyond the public MCP limit so
+        // server-side truncation is detectable without downloading unbounded logs.
         limitBytes: String(MAX_LOG_BYTES + 1),
       });
       if (effectiveTailLines !== undefined) params.set('tailLines', String(effectiveTailLines));
@@ -409,6 +468,33 @@ function buildServer() {
         truncated: observation.byteLimited,
         logs,
       });
+    },
+  );
+
+  server.registerTool(
+    'get_hubble_flows',
+    {
+      title: 'Get bounded Hubble network flows',
+      description:
+        'Read a small filtered set of Cilium Hubble flows for one namespace, optionally one pod and verdict. Choose any still available absolute time window, max 15 minutes per call. Inspect partial status and continue with smaller/older windows. Exact pod match. No content redaction; no endpoint label sets.',
+      inputSchema: z.object({
+        namespace: z.string().max(63).regex(/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/).default(DEFAULT_NAMESPACE),
+        pod: z.string().max(253).regex(/^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$/).optional(),
+        verdict: z.enum(['FORWARDED', 'DROPPED', 'AUDIT', 'REDIRECTED', 'ERROR', 'TRACED', 'TRANSLATED']).optional(),
+        startTime: z.iso.datetime({ offset: true }).optional(),
+        endTime: z.iso.datetime({ offset: true }).optional(),
+        node: z.string().max(253).regex(/^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$/).optional(),
+        limit: z.number().int().min(1).max(50).default(20),
+      }),
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+      },
+    },
+    async args => {
+      return jsonText(await getHubbleFlows(args, hubbleFlowSummary));
     },
   );
 

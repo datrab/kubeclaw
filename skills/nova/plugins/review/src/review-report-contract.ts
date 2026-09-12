@@ -1,4 +1,5 @@
-import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, portableJson, sha256Text } from '@kubeclaw/plugin-sdk';
+import { PORTABLE_REVIEW_GOVERNOR_VERSION, PORTABLE_REVIEW_REPORT_VERSION } from './review-semantics.ts';
 
 import { REVIEW_CATEGORIES, REVIEW_PRIORITIES, type ReviewCategory, type ReviewPriority } from './echo-review-contract.ts';
 import { REVIEW_GOVERNOR_DECISIONS, REVIEW_GOVERNOR_SCHEMA_VERSION, type ReviewGovernorSnapshot } from './review-governor.ts';
@@ -26,7 +27,7 @@ export interface ReviewReportItem {
 }
 
 export interface ReviewReport {
-  readonly schemaVersion: typeof REVIEW_REPORT_SCHEMA_VERSION;
+  readonly schemaVersion: typeof REVIEW_REPORT_SCHEMA_VERSION | typeof PORTABLE_REVIEW_REPORT_VERSION;
   readonly attemptId: string;
   readonly taskId: string;
   readonly profile: string;
@@ -121,7 +122,7 @@ function countIntegrity(
 
 function validReportIdentity(report: Readonly<Record<string, unknown>>): boolean {
   return [
-    report.schemaVersion === REVIEW_REPORT_SCHEMA_VERSION,
+    report.schemaVersion === REVIEW_REPORT_SCHEMA_VERSION || report.schemaVersion === PORTABLE_REVIEW_REPORT_VERSION,
     typeof report.attemptId === 'string' && IDENTIFIER.test(report.attemptId),
     typeof report.taskId === 'string' && IDENTIFIER.test(report.taskId),
     typeof report.profile === 'string' && report.profile.length <= 128 && IDENTIFIER.test(report.profile),
@@ -189,7 +190,7 @@ function validGovernorShape(
 ): boolean {
   return [
     exact(governor, ['schemaVersion', 'baselineId', 'baseline', 'current', 'decision']),
-    governor.schemaVersion === REVIEW_GOVERNOR_SCHEMA_VERSION, digest(governor.baselineId),
+    governor.schemaVersion === REVIEW_GOVERNOR_SCHEMA_VERSION || governor.schemaVersion === PORTABLE_REVIEW_GOVERNOR_VERSION, digest(governor.baselineId),
     REVIEW_GOVERNOR_DECISIONS.includes(governor.decision as never),
     exact(baseline, ['base', 'head', 'changedManifestDigest', 'policyDigest', 'allowedPrefixes',
       'ownershipPrefixes', 'changedFileCount', 'nonTestLoc', 'ownerKeys']),
@@ -204,14 +205,18 @@ function validGovernor(value: unknown, report: Readonly<Record<string, unknown>>
   const baseline = record(governor.baseline), current = record(governor.current);
   if (!baseline || !current) return false;
   if (!validGovernorShape(governor, baseline, current)) return false;
+  const portable = report.schemaVersion === PORTABLE_REVIEW_REPORT_VERSION;
+  const version = portable ? PORTABLE_REVIEW_GOVERNOR_VERSION : REVIEW_GOVERNOR_SCHEMA_VERSION;
+  if (governor.schemaVersion !== version) return false;
   if (!validGovernorBaseline(baseline) || !validGovernorCurrent(current)) return false;
   if (!governorMatchesReport(baseline, current, report)) return false;
-  return governor.baselineId === sha256Text(canonicalJson({
-    schemaVersion: REVIEW_GOVERNOR_SCHEMA_VERSION, baseline,
+  return governor.baselineId === sha256Text((portable ? portableJson : canonicalJson)({
+    schemaVersion: version, baseline,
   }));
 }
 
 export function isReviewReport(value: unknown): value is ReviewReport {
+  try { portableJson(value); } catch { return false; }
   const report = record(value);
   if (!report || !exact(report, [
     'schemaVersion', 'attemptId', 'taskId', 'profile', 'policyDigest', 'bundleDigest',

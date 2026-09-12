@@ -1,0 +1,53 @@
+# Example project-owned namespace + explicit allow policy.
+#
+# Ordinary workload namespaces are automatically selected by the central
+# `dtlabs-workload-default-deny` and `dtlabs-workload-allow-dns` cluster policies.
+# A project therefore MUST NOT copy a default-deny/DNS baseline and does not need
+# a custom namespace policy-profile label. It owns only the connectivity that is
+# specific to its workloads.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: example-project
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+---
+# Example: allow only pods of this application to initiate TCP/8080 connections
+# to other pods of the same application in the same namespace. Replace this with
+# the smallest set of flows the real project needs.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: example-project-app
+  namespace: example-project
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: example-project
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: example-project
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: example-project
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+
+# Contract for a new project:
+#   1. create its namespace;
+#   2. deploy its workloads/services;
+#   3. deploy only explicit project-specific CiliumNetworkPolicy allows.
+#
+# Before step 3 succeeds, ordinary workload traffic is already fail-closed by the
+# central cluster baseline; DNS is the only generic egress allowance.

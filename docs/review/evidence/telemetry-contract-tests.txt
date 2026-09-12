@@ -1,0 +1,41 @@
+$ node scripts/generate-telemetry-contracts.mjs --check
+file:///workspace/scratch/4e25cf57c177/kubeclaw/scripts/generate-telemetry-contracts.mjs:25
+  if (result.error) throw new Error(`gofmt is required to generate telemetry contracts: ${result.error.message}`);
+                          ^
+
+Error: gofmt is required to generate telemetry contracts: spawnSync gofmt ENOENT
+    at formatGo (file:///workspace/scratch/4e25cf57c177/kubeclaw/scripts/generate-telemetry-contracts.mjs:25:27)
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw/scripts/generate-telemetry-contracts.mjs:186:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0
+EXIT 1
+$ node docs/review/evidence/telemetry-contract-check.mjs
+/workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/vocabularies/core/ref.js:21
+            throw new ref_error_1.default(it.opts.uriResolver, baseId, $ref);
+                  ^
+
+MissingRefError: can't resolve reference ../correlation_identity.schema.json from id artifact_published.v1
+    at Object.code (/workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/vocabularies/core/ref.js:21:19)
+    at keywordCode (/workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/compile/validate/index.js:464:13)
+    at /workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/compile/validate/index.js:185:25
+    at CodeGen.code (/workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/compile/codegen/index.js:439:13)
+    at CodeGen.block (/workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/compile/codegen/index.js:568:18)
+    at schemaKeywords (/workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/compile/validate/index.js:185:13)
+    at typeAndKeywords (/workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/compile/validate/index.js:128:5)
+    at subSchemaObjCode (/workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/compile/validate/index.js:115:5)
+    at subschemaCode (/workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/compile/validate/index.js:91:13)
+    at KeywordCxt.subschema (/workspace/scratch/4e25cf57c177/kubeclaw/node_modules/ajv/dist/compile/validate/index.js:438:9) {
+  missingRef: 'correlation_identity.schema.json',
+  missingSchema: 'correlation_identity.schema.json'
+}
+
+Node.js v24.19.0
+EXIT 1
+
+Reviewprobe korrigiert: relativen JSON-Schema-Ref unter normalisiertem Schlüssel auflösen; Golden-Payload nicht in anderen Eventtyp übernehmen. Produktdateien unverändert.
+$ node docs/review/evidence/telemetry-contract-check.mjs
+{"manifestFiles":132,"compiledSchemas":122,"goldenValid":true,"missingIdentityRejected":true,"gateAcceptsNullRun":true,"tsEnvelopeLine":"export type TelemetryEnvelope<K extends TelemetryEventType = TelemetryEventType> = CorrelationIdentity & TelemetryPayloadMap[K] & { schema_version:'telemetry_envelope.v1'; event_id:string; source_event_id:string; type:K; occurred_at:string; emitted_at:string; seq:number; cursor:string; authority_class:string; causation_id?:string|null; extensions?:Record<string,unknown>; };","projectionLifecycleVersion":{"type":["integer","string","null"]}}
+EXIT 0

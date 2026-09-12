@@ -1,0 +1,21 @@
+command: node skills/buster/plugins/visual/tests/live-function.test.ts
+exit: 1
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: real Chromium is required
+
+false !== true
+
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw/skills/buster/plugins/visual/tests/live-function.test.ts:33:8
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

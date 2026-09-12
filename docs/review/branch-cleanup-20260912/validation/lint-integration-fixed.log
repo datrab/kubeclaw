@@ -1,0 +1,36 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node tests/adapter-boundary.test.mjs && node tests/discovery.test.mjs && node tests/eslint-discipline.test.mjs && node tests/eslint-type-evidence.test.mjs && node --test tests/remediation.test.mjs && node tests/live-function.test.ts
+
+{"ok":true,"plugin":"kubeclaw.lint","suite":"invalid-report-rejection"}
+{"ok":true,"plugin":"kubeclaw.lint","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.lint","suite":"adapter-boundary"}
+{"ok":true,"suite":"lint-target-discovery"}
+{"ok":true,"suite":"eslint-discipline-rules"}
+{"ts":"2026-09-12T05:53:41.531Z","level":"INFO","component":"lint-report","msg":"ESLint using config: /workspace/scratch/3f5a31a15f20/kubeclaw/charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ Promise {
++   <pending>
+- {
+-   errors: 0,
+-   findings: [],
+-   warnings: 0
+  }
+
+    at file:///workspace/scratch/3f5a31a15f20/kubeclaw/skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs:144:10 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: Promise { <pending> },
+  expected: { errors: 0, warnings: 0, findings: [] },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

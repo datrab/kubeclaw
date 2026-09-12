@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { loadAll } from 'js-yaml';
 
 function sourceRootFromArgs() {
   const index = process.argv.indexOf('--source-root');
@@ -65,8 +66,17 @@ assert.match(prismNetworkPolicies,
 assert.doesNotMatch(networkPolicies,
   /name:\s*kubeclaw-agents-ingress[\s\S]*cidr:\s*0\.0\.0\.0\/0[\s\S]*port:\s*18789/,
   'agent gateway ports must not be open to arbitrary ingress');
-assert.match(networkPolicies, /name:\s*kubeclaw-allow-dns-egress[\s\S]*port:\s*53/,
-  'shared Buster workers must retain the namespace DNS egress baseline');
+const clusterPolicies = loadAll(read('my-values/infra/cilium-cluster-policies.yaml'));
+const dnsPolicy = clusterPolicies.find(policy => policy?.metadata?.name === 'dtlabs-workload-allow-dns');
+assert.equal(dnsPolicy?.kind, 'CiliumClusterwideNetworkPolicy');
+assert.deepEqual(dnsPolicy.spec.endpointSelector, {
+  matchExpressions: [{ key: 'io.kubernetes.pod.namespace', operator: 'NotIn',
+    values: ['kube-system', 'cilium', 'tailscale', 'argocd', 'paperless'] }],
+}, 'the central DNS baseline must select KubeClaw and shared Buster worker namespaces');
+assert.deepEqual(dnsPolicy.spec.egress, [{
+  toEndpoints: [{ matchLabels: { 'k8s:io.kubernetes.pod.namespace': 'kube-system', 'k8s-app': 'kube-dns' } }],
+  toPorts: [{ ports: [{ port: '53', protocol: 'UDP' }, { port: '53', protocol: 'TCP' }] }],
+}], 'shared workers must retain TCP and UDP DNS egress to the cluster resolver');
 assert.match(busterValues, /name:\s*buster-browser-cgroup[\s\S]*mountPath:\s*\/var\/run\/kubeclaw-browser-cgroup/,
   'Buster must mount the dedicated browser cgroup subtree');
 assert.match(busterValues, /name:\s*buster-browser-cgroup[\s\S]*path:\s*\/sys\/fs\/cgroup\/kubeclaw-buster-browser/,
@@ -78,7 +88,7 @@ assert.match(
 );
 assert.doesNotMatch(busterValues, /mountPath:\s*\/sys\/fs\/cgroup\s*$/m,
   'Buster must not mount the host cgroup root');
-assert.match(networkPolicies, /name:\s*kubeclaw-agents-egress[\s\S]*port:\s*6379[\s\S]*port:\s*6333/,
+assert.match(networkPolicies, /name:\s*kubeclaw-agents-egress[\s\S]*port:\s*"?6379[\s\S]*port:\s*"?6333/,
   'lease policies must remain additive to the shared worker service egress baseline');
 assert.match(deploy, /Prism \$\{kind\} image digest is missing or invalid; set PRISM_\$\{upper\}_IMAGE_DIGEST or images\.\$\{kind\}\.digest/,
   'Prism deployment must require immutable image digests from an override or production values');
@@ -453,8 +463,8 @@ for (const values of [novaValues, busterValues, prismAgentValues]) {
   assert.doesNotMatch(values, /Ravencrypt|ForgeStack/,
     'production agent values must not retain a legacy repository identity');
 }
-assert.match(networkPolicies, /name:\s*kubeclaw-nova-buster-test-gates[\s\S]*component:\s*nova[\s\S]*component:\s*buster[\s\S]*port:\s*18891/);
-assert.match(networkPolicies, /name:\s*kubeclaw-buster-test-gates-from-nova[\s\S]*component:\s*buster[\s\S]*component:\s*nova[\s\S]*port:\s*18891/);
+assert.match(networkPolicies, /name:\s*kubeclaw-nova-buster-test-gates[\s\S]*component:\s*nova[\s\S]*component:\s*buster[\s\S]*port:\s*"?18891/);
+assert.match(networkPolicies, /name:\s*kubeclaw-buster-test-gates-from-nova[\s\S]*component:\s*buster[\s\S]*component:\s*nova[\s\S]*port:\s*"?18891/);
 assert.doesNotMatch(networkPolicies, /18892/);
 assert.doesNotMatch(networkPolicies, /name:\s*kubeclaw-buster-managed-test-egress/,
   'Buster E2E egress must be a lease-scoped controller resource, not a namespace-wide static grant');

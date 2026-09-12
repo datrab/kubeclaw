@@ -1,0 +1,3 @@
+{"finding":"PCR-STATE-001","reproduced":true,"memory":"rejected","disk":"approved","readerMutation":true}
+{"finding":"PCR-PROMPT-001","reproduced":true,"first":"{\"evidence\":1}","second":"{\"evidence\":2}","sparse":"[null]","symbol":"{}"}
+{"finding":"PCR-STATE-002","processes":12,"attempts":1200,"overlaps":266,"reproduced":true}

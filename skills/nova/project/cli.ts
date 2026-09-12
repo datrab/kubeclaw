@@ -4,7 +4,9 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { loadPlatformConfig } from '@kubeclaw/plugin-foundation/config/platform';
 import { runPipelineV2, recoverPipelineV2, resumePipelineV2, validatePipelineRuntimeV2 } from '@kubeclaw/nova-core';
-import { canonicalJson, sha256Text, type ResumeSignal } from '@kubeclaw/plugin-sdk';
+import { canonicalJson, PORTABLE_JSON_ENCODING, sha256Text, type ResumeSignal } from '@kubeclaw/plugin-sdk';
+import { PROJECT_REVIEW_SEMANTIC_ENCODING } from './review-semantics.ts';
+import { DELIVERY_MANIFEST_ENCODING } from './delivery-manifest.ts';
 import { compileProject } from './compiler.ts';
 import { compileProjectRecovery } from './recovery.ts';
 
@@ -29,7 +31,9 @@ if (process.argv.includes('--import-legacy')) {
     const project = JSON.parse(fs.readFileSync(path.resolve(args['--project']), 'utf8'));
     const platform = loadPlatformConfig(path.resolve(args['--platform']));
     const { runId, definition } = args['--recover'] || args['--signal']
-      ? compileProjectRecovery(project, platform.storageRoot) : compileProject(project);
+      ? compileProjectRecovery(project, platform.storageRoot)
+      : compileProject(project, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING, PROJECT_REVIEW_SEMANTIC_ENCODING,
+        DELIVERY_MANIFEST_ENCODING);
     // Validate every stage's input, registration and grants from the actual
     // installed role before writing a graph or starting any external operation.
     await validatePipelineRuntimeV2(platform, definition);

@@ -1,0 +1,52 @@
+
+COMMAND node tests/review-bundle-contract.unit.test.mjs
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-bundle-contract"}
+EXIT 0
+
+COMMAND node tests/review-bundle-snapshot.unit.test.mjs
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-bundle-snapshot"}
+EXIT 0
+
+COMMAND node tests/review-context-selection.unit.test.mjs
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-context-selection"}
+EXIT 0
+
+COMMAND node tests/review-context-production.unit.test.mjs
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-context-production"}
+EXIT 0
+
+COMMAND node tests/review-slicing.unit.test.mjs
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-slicing"}
+EXIT 0
+
+COMMAND node tests/review-proposal-preflight.unit.test.mjs
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-proposal-preflight"}
+EXIT 0
+
+COMMAND node tests/review-verification-reconciliation.unit.test.mjs
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-verification-reconciliation"}
+EXIT 0
+
+COMMAND node tests/review-stage-input.unit.test.mjs
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-stage-input"}
+EXIT 0
+
+COMMAND node tests/review-stage-verification.unit.test.mjs
+{"ok":true,"plugin":"kubeclaw.review","suite":"review-stage-verification"}
+EXIT 0
+
+COMMAND node tests/protocol.unit.test.mjs
+{"ok":true,"plugin":"kubeclaw.review","suite":"protocol-unit"}
+EXIT 0
+
+COMMAND node tests/stage.unit.test.mjs
+{"ok":true,"plugin":"kubeclaw.review","suite":"stage-unit"}
+EXIT 0
+
+COMMAND node tests/live-function.test.ts
+{"ok":true,"plugin":"kubeclaw.review","suite":"live-function"}
+EXIT 0
+
+COMMAND node tests/package-boundary.test.mjs
+{"ok":true,"plugin":"kubeclaw.review","suite":"package-boundary"}
+EXIT 0

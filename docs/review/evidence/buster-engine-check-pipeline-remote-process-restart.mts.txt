@@ -1,0 +1,20 @@
+Command: node tests/verification/contracts/check-pipeline-remote-process-restart.mts
+Exit: 1
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"code":1,"output":{"remote":{"status":{"error":null,"jobId":"job:c1d0dfdec1b886afc5462c6784a8b1210bbc80b6237e907fc7b9abe07868aca5","requestDigest":"sha256:d4e265447ba273869b2e27d2da877d12b873913ac2a72a52692a53bb8c74246e","result":{"contentDigest":"sha256:b8b69cc4bac0249aa21fe37b60f014b5b52c914e551321048c19e2fb72d76fb1","resultDigest":"sha256:dfe2fe8af1c577406db6265abcbc40d66dae51245bb34fcbdb21027465684c46","schemaVersion":"buster-plan-result-ref.v1","sizeBytes":3510},"schemaVersion":"buster-plan-status.v1","state":"completed","submittedAt":"2026-08-12T07:30:00.000Z","updatedAt":"2026-09-08T14:14:49.019Z"},"decision":{"decisionDigest":"sha256:1800f5f7ebbe10135ce8e240e525e54176b9621d60a05fa77c3fccf8152df0fd","jobId":"job:c1d0dfdec1b886afc5462c6784a8b1210bbc80b6237e907fc7b9abe07868aca5","nodes":[{"effect":"execution_error","kind":"test","mode":"blocking","nodeId":"restart","reason":"execution errored"}],"planId":"plan:run:nova-restart","resultDigest":"sha256:dfe2fe8af1c577406db6265abcbc40d66dae51245bb34fcbdb21027465684c46","reviews":[],"runId":"run:nova-restart","schemaVersion":"test-gate-decision.v1","state":"execution_error"},"stageResult":{"schemaVersion":"stage-result.v2","outcome":"blocked","artifacts":[],"reason":{"code":"test_gate.execution_error","message":"The remote test gate did not complete safely.","details":{"jobId":"job:c1d0dfdec1b886afc5462c6784a8b1210bbc80b6237e907fc7b9abe07868aca5","planId":"plan:run:nova-restart","decisionDigest":"sha256:1800f5f7ebbe10135ce8e240e525e54176b9621d60a05fa77c3fccf8152df0fd","failedNodes":["restart"],"advisoryFailures":[]}}}}},"stderr":""}
+
+1 !== 0
+
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw/tests/verification/contracts/check-pipeline-remote-process-restart.mts:220:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

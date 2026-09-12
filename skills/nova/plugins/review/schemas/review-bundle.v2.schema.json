@@ -1,0 +1,406 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.dev/schemas/review-bundle.v2.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "task",
+    "revisions",
+    "scope",
+    "requirements",
+    "evidence",
+    "context",
+    "selection",
+    "policyDigest"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "review-bundle.v2"
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "statement"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])"
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16384,
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])"
+        }
+      }
+    },
+    "revisions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "base",
+        "head",
+        "changedManifestDigest"
+      ],
+      "properties": {
+        "base": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})(?![\\s\\S])"
+        },
+        "head": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})(?![\\s\\S])"
+        },
+        "changedManifestDigest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])",
+          "maxLength": 71
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "changedPaths",
+        "allowedPrefixes"
+      ],
+      "properties": {
+        "changedPaths": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2048,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "status"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "allOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1024,
+                    "pattern": "^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])"
+                  },
+                  {
+                    "pattern": "^(?!/)(?!.*:)(?!.*\\\\)(?!.*//)(?!.*/$)(?!.*[\\u0000-\\u001F\\u007F])(?!.*(?:^|/)\\.\\.?(?:/|$)).+$"
+                  }
+                ]
+              },
+              "status": {
+                "enum": [
+                  "added",
+                  "modified",
+                  "deleted",
+                  "renamed",
+                  "copied",
+                  "type_changed"
+                ]
+              },
+              "previousPath": {
+                "type": "string",
+                "allOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1024,
+                    "pattern": "^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])"
+                  },
+                  {
+                    "pattern": "^(?!/)(?!.*:)(?!.*\\\\)(?!.*//)(?!.*/$)(?!.*[\\u0000-\\u001F\\u007F])(?!.*(?:^|/)\\.\\.?(?:/|$)).+$"
+                  }
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "renamed",
+                        "copied"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "allOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1024,
+                          "pattern": "^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])"
+                        },
+                        {
+                          "pattern": "^(?!/)(?!.*:)(?!.*\\\\)(?!.*//)(?!.*/$)(?!.*[\\u0000-\\u001F\\u007F])(?!.*(?:^|/)\\.\\.?(?:/|$)).+$"
+                        }
+                      ]
+                    },
+                    "status": {
+                      "enum": [
+                        "added",
+                        "modified",
+                        "deleted",
+                        "renamed",
+                        "copied",
+                        "type_changed"
+                      ]
+                    },
+                    "previousPath": {
+                      "type": "string",
+                      "allOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1024,
+                          "pattern": "^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])"
+                        },
+                        {
+                          "pattern": "^(?!/)(?!.*:)(?!.*\\\\)(?!.*//)(?!.*/$)(?!.*[\\u0000-\\u001F\\u007F])(?!.*(?:^|/)\\.\\.?(?:/|$)).+$"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "status",
+                    "previousPath"
+                  ]
+                },
+                "else": {
+                  "not": {
+                    "properties": {
+                      "previousPath": {}
+                    },
+                    "required": [
+                      "previousPath"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "allowedPrefixes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "uniqueItems": true,
+          "items": {
+            "anyOf": [
+              {
+                "const": "."
+              },
+              {
+                "type": "string",
+                "allOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1024,
+                    "pattern": "^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])"
+                  },
+                  {
+                    "pattern": "^(?!/)(?!.*:)(?!.*\\\\)(?!.*//)(?!.*/$)(?!.*[\\u0000-\\u001F\\u007F])(?!.*(?:^|/)\\.\\.?(?:/|$)).+$"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "statement"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])"
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "pattern": "^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])"
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "digest",
+          "content"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*(?![\\s\\S])"
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])",
+            "maxLength": 71
+          },
+          "encoding": {
+            "const": "kubeclaw-json.utf16.v1"
+          },
+          "content": {
+            "type": "string",
+            "maxLength": 2097152
+          }
+        }
+      }
+    },
+    "context": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "digest",
+          "content",
+          "reasons"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "allOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1024,
+                "pattern": "^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])"
+              },
+              {
+                "pattern": "^(?!/)(?!.*:)(?!.*\\\\)(?!.*//)(?!.*/$)(?!.*[\\u0000-\\u001F\\u007F])(?!.*(?:^|/)\\.\\.?(?:/|$)).+$"
+              }
+            ]
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])",
+            "maxLength": 71
+          },
+          "content": {
+            "type": "string",
+            "maxLength": 2097152
+          },
+          "reasons": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 16,
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "changed",
+                    "direct_import",
+                    "direct_caller",
+                    "dependency",
+                    "public_export",
+                    "contract",
+                    "schema",
+                    "configuration",
+                    "test",
+                    "ownership",
+                    "context_expansion"
+                  ]
+                },
+                "sourcePath": {
+                  "type": "string",
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 1024,
+                      "pattern": "^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])"
+                    },
+                    {
+                      "pattern": "^(?!/)(?!.*:)(?!.*\\\\)(?!.*//)(?!.*/$)(?!.*[\\u0000-\\u001F\\u007F])(?!.*(?:^|/)\\.\\.?(?:/|$)).+$"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "candidateManifestDigest",
+        "expansionRound"
+      ],
+      "properties": {
+        "version": {
+          "const": "focused-context.v1"
+        },
+        "candidateManifestDigest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])",
+          "maxLength": 71
+        },
+        "expansionRound": {
+          "enum": [
+            0,
+            1
+          ]
+        }
+      }
+    },
+    "policyDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])",
+      "maxLength": 71
+    }
+  }
+}

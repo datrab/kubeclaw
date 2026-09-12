@@ -1,0 +1,1121 @@
+[
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "charts/kubeclaw/files/config/knip.json",
+    "base": "100644:fc5d2536ff753f7400e45755232c252fa6fde316",
+    "head": "100644:91f0ac8aee2dab37ed9224bd1c528eed04e16423",
+    "main": "100644:c084e38595ca465730e0e52fb998b6839388ff24",
+    "result": "resolved-preserving-newer-main-and-candidate",
+    "resolution": "Regenerate Knip from combined packages",
+    "consolidatedBlob": "4316c5bb1ff3ae4a66252e346cac86aea263218d"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "charts/kubeclaw/files/config/lint-policy.json",
+    "base": "100644:1118e2c32a96a516810364af611ed76a31253d1a",
+    "head": "100644:5f7b61411074a1f952e63d5eded1201f2732e738",
+    "main": "100644:46a5b92b498bf9a0c75fb650142ebc82364bce65",
+    "result": "merged",
+    "consolidatedBlob": "67cdb1b3afb7c13a051a23a97b4e3691e50f254e"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+    "base": "100644:3413272a7262e8d008891a2c85817683b3cb618f",
+    "head": "100644:7fae6614044f319df86a000067d6780550d0f0ee",
+    "main": "100644:3413272a7262e8d008891a2c85817683b3cb618f",
+    "result": "merged",
+    "consolidatedBlob": "7fae6614044f319df86a000067d6780550d0f0ee"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "base": "100644:9b42879c17afc8635dda3eda7f35cd948c228d97",
+    "head": "100644:d0c824eec9a336057580807026b3bd3802a323ff",
+    "main": "100644:393805b068fb7ff7a7da8d62e1a8f9fea3a62e62",
+    "result": "merged",
+    "consolidatedBlob": "97604076b2f9793a4d5871e85d750f8cd395a341"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "scripts/generate-knip-config.mjs",
+    "base": "100644:8cfc766c018a38d8cb758a3276ebdb7a90d5dd65",
+    "head": "100644:8e5b988fd4a5f9f69d03de145720536d90c40da1",
+    "main": "100644:228d393cf445cd471a62aab5fc00248e3f59f0c8",
+    "result": "merged",
+    "consolidatedBlob": "e4084b53a2c9ca188ec6fd6b469a5266b548eddf"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "skills/nova/plugins/lint/README.md",
+    "base": "100644:b8bf0134e57dbdbbba410c2c2080b4dc6cc4a673",
+    "head": "100644:1d2ddd31f3f79400e26705028a23c63fd303fa98",
+    "main": "100644:a332620f317b954c35b22d444dc33a8f925fdcb3",
+    "result": "merged",
+    "consolidatedBlob": "5a11387b21f51052cbf43c439ae5ecf01acd4eb6"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "skills/nova/plugins/lint/package.json",
+    "base": "100644:9bd848534a6b5a264757d23121276c8fe451411c",
+    "head": "100644:13208164d2b1714c525ef34594738c3bb21155d3",
+    "main": "100644:184fd87682bcca384c2c6489067f6f18dc84dc3f",
+    "result": "resolved-preserving-newer-main-and-candidate",
+    "resolution": "See integration report conflict resolutions",
+    "consolidatedBlob": "9bde43b1242f6186dbc444ac09b8c797b63b5d55"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "skills/nova/plugins/lint/src/engine/discovery.ts",
+    "base": "100644:cad99a7fd8959baea678e7d6bf8a21f50314fcaf",
+    "head": "100644:b8f49a6454fa747ad0bddb0f7507b94774b64af1",
+    "main": "100644:5e47c91866e776d2f6b546701a2f5146c3e4fe8e",
+    "result": "resolved-preserving-newer-main-and-candidate",
+    "resolution": "See integration report conflict resolutions",
+    "consolidatedBlob": "75bfad4241453d2fbe91aecbdd0a26baaf758a3b"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "skills/nova/plugins/lint/src/engine/report.ts",
+    "base": "100644:1faa655e8499251c108eec9f8ab1216ff5c4df3c",
+    "head": "100644:cd9ea52e4dea512f0111cb5f6f28ee1ed16cb0d1",
+    "main": "100644:da6eaca64cdd18933cd86a3f62f8d6929a4dfac8",
+    "result": "merged",
+    "consolidatedBlob": "7012da2b9e806f845b00c9ae81d02b07d0d8add0"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts",
+    "base": "100644:64e5e8aff29c1a4b4ef67ec87bf32c68b10cea23",
+    "head": "100644:d33f8d3ce0a3e5efa4a0788f8fedb3663f433144",
+    "main": "100644:bc35b180abd444a60e322a4c7fe6b6acded0fff2",
+    "result": "resolved-preserving-newer-main-and-candidate",
+    "resolution": "See integration report conflict resolutions",
+    "consolidatedBlob": "a6c86129d63a5686f2bec5e2468260d7dd98d4d9"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "skills/nova/plugins/lint/tests/discovery.test.mjs",
+    "base": "100644:d35235ab1948565553ada881013f497216b2d00f",
+    "head": "100644:52c191b59a787e2709300148104aa985294d9ea1",
+    "main": "100644:d35235ab1948565553ada881013f497216b2d00f",
+    "result": "merged",
+    "consolidatedBlob": "5b28735d48ef263e3d1e265286dcfed11121c860"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "charts/kubeclaw/files/config/eslint-type-evidence-config.mjs",
+    "base": null,
+    "head": "100644:bedbc95a3d928d59da2fc8794901da10535d93d9",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "bedbc95a3d928d59da2fc8794901da10535d93d9"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs",
+    "base": null,
+    "head": "100644:8ef5639769420e8fc5b57bcc3409a56be79fbe41",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "8ef5639769420e8fc5b57bcc3409a56be79fbe41"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs",
+    "base": null,
+    "head": "100644:61639cb451c033f9f562d54ac8054cea4a7cd52f",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "61639cb451c033f9f562d54ac8054cea4a7cd52f"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs",
+    "base": null,
+    "head": "100644:21ccebe8f518959350161d9848e644241cb05d7b",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "21ccebe8f518959350161d9848e644241cb05d7b"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "skills/nova/plugins/lint/src/engine/evidence-file-partition.ts",
+    "base": null,
+    "head": "100644:f2cd46f141b77e2b8a9143acecc14d24b8addfee",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "599bb1ddbf13d0635d64cdf94c4a8bb0c4ba786e"
+  },
+  {
+    "branch": "agent/lint-type-evidence-audit",
+    "commit": "26fbc85e2e939f56f5f698ad75ec2f8e272db3e9",
+    "path": "skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs",
+    "base": null,
+    "head": "100644:bb94336b58de9dd6db77c756543685a9c0f0ca47",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "e6f0881c848d74425e580ff094ed9e465a45ee07"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": ".github/workflows/build-ops-mcp.yaml",
+    "base": "100644:75488d7e44316560824bb72ffd244909dc2c7ef7",
+    "head": "100644:ad424b0cccc57a757df04c9ac7b159143971f76b",
+    "main": "100644:a41e157f3dcf6b0f13304904509075f3a458e67f",
+    "result": "resolved-preserving-newer-main-and-candidate",
+    "resolution": "See integration report conflict resolutions",
+    "consolidatedBlob": "8c9fd8591765e43bc31820fb05e5afde0e2e423b"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "my-values/infra/buster-namespace-fence.yaml",
+    "base": "100644:5250ee5b5d7fd7ee5f20ea7c6511e01059b0d287",
+    "head": "100644:81501f9e6d3cad1c72e7aaabd66f191573d014bc",
+    "main": "100644:5250ee5b5d7fd7ee5f20ea7c6511e01059b0d287",
+    "result": "merged",
+    "consolidatedBlob": "81501f9e6d3cad1c72e7aaabd66f191573d014bc"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "my-values/infra/network-policies.yaml",
+    "base": "100644:c22cfb7921f491c6a8ba3662ccacdd54ba16dc01",
+    "head": "100644:54e06a4475159c42433bfaa0de5c6832c6563bf5",
+    "main": "100644:c22cfb7921f491c6a8ba3662ccacdd54ba16dc01",
+    "result": "merged",
+    "consolidatedBlob": "54e06a4475159c42433bfaa0de5c6832c6563bf5"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "my-values/infra/ops-mcp.yaml",
+    "base": "100644:10a98506779772959e168d671a780c3f8e276461",
+    "head": "100644:a5a7ada1e6c9c087c19f00d3d0605399eb868d20",
+    "main": "100644:10a98506779772959e168d671a780c3f8e276461",
+    "result": "merged",
+    "consolidatedBlob": "a5a7ada1e6c9c087c19f00d3d0605399eb868d20"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+    "base": "100644:2d7f75d43c6c3dcd8ad4a5de71ad8b1eaf2770ec",
+    "head": "100644:d08049eb5331119e8cd06cbe62aec6274d36faa0",
+    "main": "100644:2d7f75d43c6c3dcd8ad4a5de71ad8b1eaf2770ec",
+    "result": "merged",
+    "consolidatedBlob": "d08049eb5331119e8cd06cbe62aec6274d36faa0"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md",
+    "base": "100644:c31e30b75721a79580703b653e870166628024a1",
+    "head": "100644:ab18c485e70346b3ee5806e15a9f15d3b8ea111f",
+    "main": "100644:c31e30b75721a79580703b653e870166628024a1",
+    "result": "merged",
+    "consolidatedBlob": "ab18c485e70346b3ee5806e15a9f15d3b8ea111f"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "scripts/deploy-ops-mcp.sh",
+    "base": "100755:bc26ba02951e592ae07fcf37a9647f5488eccd00",
+    "head": "100755:e8b3f2b14dce90583472cfc2523e5dd3c99b0315",
+    "main": "100755:bc26ba02951e592ae07fcf37a9647f5488eccd00",
+    "result": "merged",
+    "consolidatedBlob": "e8b3f2b14dce90583472cfc2523e5dd3c99b0315"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "scripts/deploy.sh",
+    "base": "100755:6254f79ff1c5e8d7e447b81a73c3e0790a94ce6a",
+    "head": "100755:4bef19f5817b2b402a5ade8eb81bdb0fc7d8de0a",
+    "main": "100755:61a6dd467feaf175d1b052a6c7b773033d7dd375",
+    "result": "resolved-preserving-newer-main-and-candidate",
+    "resolution": "See integration report conflict resolutions",
+    "consolidatedBlob": "b9bfa3e53c1f1aaa38d729059eee7e3119f10448"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "tools/ops-mcp/Dockerfile",
+    "base": "100644:67a8bd7a67e209e3c45025bfbf2d947a3a64c989",
+    "head": "100644:96c67668700dc7c7d7dbc01d489731f4fba72164",
+    "main": "100644:b718e151d823cb05ffbf256307eae7a71f577cdb",
+    "result": "resolved-preserving-newer-main-and-candidate",
+    "resolution": "See integration report conflict resolutions",
+    "consolidatedBlob": "2fd436dbae9e20f189929defb9cd6fbbbf22682f"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "tools/ops-mcp/package-lock.json",
+    "base": "100644:b051bcbe8f02f794fea8b66b4a430862275309e8",
+    "head": "100644:9ffbc517ed502f7e116d9c4678b59c428ab1ce5d",
+    "main": "100644:b051bcbe8f02f794fea8b66b4a430862275309e8",
+    "result": "merged",
+    "consolidatedBlob": "9ffbc517ed502f7e116d9c4678b59c428ab1ce5d"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "tools/ops-mcp/package.json",
+    "base": "100644:f20638144b33b31ab3f113e7589a253d359a2eab",
+    "head": "100644:3fcdf9c8e7ec5996ce4462c6b0752131f4877067",
+    "main": "100644:f20638144b33b31ab3f113e7589a253d359a2eab",
+    "result": "merged",
+    "consolidatedBlob": "3fcdf9c8e7ec5996ce4462c6b0752131f4877067"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "tools/ops-mcp/src/server.mjs",
+    "base": "100644:8bbfb9147f027435b31711f5f7fbdf0dfcd93ff5",
+    "head": "100644:987da2e9bcce1c4f4fb91175eb02898cfa6bcc9b",
+    "main": "100644:affb21819e01a1b4004a33d85c162db5224f5f8c",
+    "result": "resolved-preserving-newer-main-and-candidate",
+    "resolution": "See integration report conflict resolutions",
+    "consolidatedBlob": "fd82122228022f2d891a28dd61bb4dc43ecad0d9"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "tools/ops-mcp/test/bootstrap.test.mjs",
+    "base": "100644:4e8d2e9ff4bfaf14d16a121a030d2bd6bde930fa",
+    "head": "100644:add964e68cd1408de133ca166342cfbedc470f19",
+    "main": "100644:4e8d2e9ff4bfaf14d16a121a030d2bd6bde930fa",
+    "result": "merged",
+    "consolidatedBlob": "add964e68cd1408de133ca166342cfbedc470f19"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "examples/cilium/project-network-policy.yaml",
+    "base": null,
+    "head": "100644:dd655e686b139dc6613e9b4456e474b51bb2358f",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "dd655e686b139dc6613e9b4456e474b51bb2358f"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "my-values/infra/cilium-cluster-policies.yaml",
+    "base": null,
+    "head": "100644:46401d82faaab5f1c4f0097b6af5744c19a5593d",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "46401d82faaab5f1c4f0097b6af5744c19a5593d"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "my-values/infra/cilium-values.yaml",
+    "base": null,
+    "head": "100644:ed44878c22cc0771e52f2bf84fd87fc140c84e41",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "ed44878c22cc0771e52f2bf84fd87fc140c84e41"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "my-values/infra/ops-mcp-network-policies.yaml",
+    "base": null,
+    "head": "100644:b36d14a81d51b231baca5e6a60f9fcddcb5af6e2",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "b36d14a81d51b231baca5e6a60f9fcddcb5af6e2"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "my-values/infra/spire-network-policies.yaml",
+    "base": null,
+    "head": "100644:cbf27bd855e3b88b6a1234662c4c1679f91c1c3b",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "cbf27bd855e3b88b6a1234662c4c1679f91c1c3b"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "scripts/deploy-cilium.sh",
+    "base": null,
+    "head": "100755:ed7bf15c5d60d6a95ce16c14b0216b043d57bbc7",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "ed7bf15c5d60d6a95ce16c14b0216b043d57bbc7"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "scripts/migrate-kubeclaw-network-policies-to-cilium.sh",
+    "base": null,
+    "head": "100755:a185c3ee1f8ab9322de5cb6d7b79b46a400c9bf4",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "a185c3ee1f8ab9322de5cb6d7b79b46a400c9bf4"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "scripts/verify-cilium-policies.py",
+    "base": null,
+    "head": "100755:c205d5c4a951dd00f86afd3484e9e060edf4ea91",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "c205d5c4a951dd00f86afd3484e9e060edf4ea91"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "tools/ops-mcp/src/hubble.mjs",
+    "base": null,
+    "head": "100644:9c5e41caf82f8ba70584be048db078937b02a79e",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "9c5e41caf82f8ba70584be048db078937b02a79e"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "tools/ops-mcp/test/hubble.test.mjs",
+    "base": null,
+    "head": "100644:6e2ba45db63e70598f1b075d4a80d84e87f1f13e",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "6e2ba45db63e70598f1b075d4a80d84e87f1f13e"
+  },
+  {
+    "branch": "feat/argocd-gitops-bootstrap",
+    "commit": "99b00dae3676cfff8e1ab87385c0eebe95beae85",
+    "path": "tools/ops-mcp/test/policy_contract_test.py",
+    "base": null,
+    "head": "100644:0df741c253dda9e840e353aa2ce4c4d955b95ac4",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "0df741c253dda9e840e353aa2ce4c4d955b95ac4"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "package-lock.json",
+    "base": "100644:96cdba80650e16fb5699df314516b14d08931b95",
+    "head": "100644:ab747ed03f27d5124d04ed325c447da65596eeed",
+    "main": "100644:96cdba80650e16fb5699df314516b14d08931b95",
+    "result": "merged",
+    "consolidatedBlob": "ab747ed03f27d5124d04ed325c447da65596eeed"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "package.json",
+    "base": "100644:48853912f3155557b55b1daed56349ae05740727",
+    "head": "100644:93f08d45f414cab397639aca0b1f16965411ffb9",
+    "main": "100644:cea49afff71f0131989337feec0633c0a36336cd",
+    "result": "resolved-preserving-newer-main-and-candidate",
+    "resolution": "See integration report conflict resolutions",
+    "consolidatedBlob": "3e7d7b7072d033d7998e6c0b43967d3820ce24e2"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/project-summary/package.json",
+    "base": "100644:1d7409b0c8b25ccf4b5bf9599d8ac95871d93e49",
+    "head": "100644:5e92fbb6cd4d9653e2b4b18f7e388416864a2052",
+    "main": "100644:1d7409b0c8b25ccf4b5bf9599d8ac95871d93e49",
+    "result": "merged",
+    "consolidatedBlob": "5e92fbb6cd4d9653e2b4b18f7e388416864a2052"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/project-summary/schemas/config.schema.json",
+    "base": "100644:f4d0ccd569ed6133f34ce53fddbb30f859c8666d",
+    "head": "100644:1722bee132e0b8f36e4dca4db0fff3d39d2da2e0",
+    "main": "100644:f4d0ccd569ed6133f34ce53fddbb30f859c8666d",
+    "result": "merged",
+    "consolidatedBlob": "1722bee132e0b8f36e4dca4db0fff3d39d2da2e0"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/project-summary/schemas/input.schema.json",
+    "base": "100644:56b70bc646eb3dd7ecdd5092adc9d30c46a3cb85",
+    "head": "100644:540d6fd673cb523d40e2f46a0397a7810b3429a6",
+    "main": "100644:56b70bc646eb3dd7ecdd5092adc9d30c46a3cb85",
+    "result": "merged",
+    "consolidatedBlob": "540d6fd673cb523d40e2f46a0397a7810b3429a6"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/project-summary/src/stage.ts",
+    "base": "100644:781e496471b30f64aec77c8806f5115b69faa3d4",
+    "head": "100644:c087c38c6e00a5936587e045ba0f3ca2baf3fbe7",
+    "main": "100644:781e496471b30f64aec77c8806f5115b69faa3d4",
+    "result": "merged",
+    "consolidatedBlob": "c087c38c6e00a5936587e045ba0f3ca2baf3fbe7"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/project-summary/src/summary.ts",
+    "base": "100644:9a8c009488762bc6b4b1f910bb75c15845c4090f",
+    "head": "100644:b2df32e923c9e4d2faadf0fa5fe88149873515af",
+    "main": "100644:9a8c009488762bc6b4b1f910bb75c15845c4090f",
+    "result": "merged",
+    "consolidatedBlob": "b2df32e923c9e4d2faadf0fa5fe88149873515af"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+    "base": "100644:71d919ee2954ffeb0573fa2282829c19dc997fbd",
+    "head": "100644:f3f043930cf0640614a99b998a46fdde37e75712",
+    "main": "100644:71d919ee2954ffeb0573fa2282829c19dc997fbd",
+    "result": "merged",
+    "consolidatedBlob": "f3f043930cf0640614a99b998a46fdde37e75712"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/remote-test-gate/package.json",
+    "base": "100644:33bdfbbf6e483fc524f4ea0b1d7daeedf0dde833",
+    "head": "100644:27d24160e5a414f6fc5fee1865ee70de023ad188",
+    "main": "100644:33bdfbbf6e483fc524f4ea0b1d7daeedf0dde833",
+    "result": "merged",
+    "consolidatedBlob": "27d24160e5a414f6fc5fee1865ee70de023ad188"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+    "base": "100644:2210f2a798f8265b59fc4fd099880d94069bf2e1",
+    "head": "100644:1b84fea555d057554168df8e39aa44070e8a71f5",
+    "main": "100644:2210f2a798f8265b59fc4fd099880d94069bf2e1",
+    "result": "merged",
+    "consolidatedBlob": "1b84fea555d057554168df8e39aa44070e8a71f5"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/schemas/config.schema.json",
+    "base": "100644:c72a9973c75d32f2a7e8577340a6476e59d91a8d",
+    "head": "100644:bad167551ade63f2f4661c8622447c49e3c68f10",
+    "main": "100644:c72a9973c75d32f2a7e8577340a6476e59d91a8d",
+    "result": "merged",
+    "consolidatedBlob": "bad167551ade63f2f4661c8622447c49e3c68f10"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/scripts/generate-bundle-schema.mjs",
+    "base": "100644:010262bb64676f76eed610a1cb27b7e33e9cec5e",
+    "head": "100644:6a71c045b82583df4e67bd89cade72e4880eba91",
+    "main": "100644:010262bb64676f76eed610a1cb27b7e33e9cec5e",
+    "result": "merged",
+    "consolidatedBlob": "6a71c045b82583df4e67bd89cade72e4880eba91"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+    "base": "100644:16ed35be1ef10b0909d80ae604391c52ae2a7c35",
+    "head": "100644:77214bd8363ce7e97333687130620295cfabea07",
+    "main": "100644:16ed35be1ef10b0909d80ae604391c52ae2a7c35",
+    "result": "merged",
+    "consolidatedBlob": "77214bd8363ce7e97333687130620295cfabea07"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/protocol.ts",
+    "base": "100644:c0256b462e6aef430ee2432712de4c84ad620fe3",
+    "head": "100644:5a937f4fb513041ac425b4aa1029574f4d760626",
+    "main": "100644:c0256b462e6aef430ee2432712de4c84ad620fe3",
+    "result": "merged",
+    "consolidatedBlob": "5a937f4fb513041ac425b4aa1029574f4d760626"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-bundle-bounds.ts",
+    "base": "100644:973095e11677371bf8a5364a043a58eba2670569",
+    "head": "100644:e199127a6a436bfa03dfa49cb1567db4fa78a330",
+    "main": "100644:973095e11677371bf8a5364a043a58eba2670569",
+    "result": "merged",
+    "consolidatedBlob": "e199127a6a436bfa03dfa49cb1567db4fa78a330"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-bundle-contract.ts",
+    "base": "100644:1093413d620866e8c44145503d99d49988ad5e24",
+    "head": "100644:a23c61d6d93f118eaad69c9cc7b2bcf3559f1003",
+    "main": "100644:1093413d620866e8c44145503d99d49988ad5e24",
+    "result": "merged",
+    "consolidatedBlob": "a23c61d6d93f118eaad69c9cc7b2bcf3559f1003"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-bundle-parser.ts",
+    "base": "100644:bbd8abce3b4b27ffb83ce922247b0c62f227d129",
+    "head": "100644:d9590eb6a5a17acbaf2214f7522e4053b23ec9b6",
+    "main": "100644:bbd8abce3b4b27ffb83ce922247b0c62f227d129",
+    "result": "merged",
+    "consolidatedBlob": "d9590eb6a5a17acbaf2214f7522e4053b23ec9b6"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-bundle-snapshot.ts",
+    "base": "100644:8b9750f494bb1ef7e1168fa1e48b6623377bbc76",
+    "head": "100644:6ac229eb6ec4657a90f333c1e96b16791ce61ce9",
+    "main": "100644:8b9750f494bb1ef7e1168fa1e48b6623377bbc76",
+    "result": "merged",
+    "consolidatedBlob": "6ac229eb6ec4657a90f333c1e96b16791ce61ce9"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-governor-history.ts",
+    "base": "100644:901255859209c822abe4a900e6ff93752301720d",
+    "head": "100644:edeaa72b1ac0a319f1436e5e021f2c13d2244635",
+    "main": "100644:901255859209c822abe4a900e6ff93752301720d",
+    "result": "merged",
+    "consolidatedBlob": "edeaa72b1ac0a319f1436e5e021f2c13d2244635"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-governor.ts",
+    "base": "100644:7fad0ccf37237efb6e2bd3d0e76af35d5baf1d02",
+    "head": "100644:f2125bd8e98271904eb204a80a49d21308e4f9b5",
+    "main": "100644:7fad0ccf37237efb6e2bd3d0e76af35d5baf1d02",
+    "result": "merged",
+    "consolidatedBlob": "f2125bd8e98271904eb204a80a49d21308e4f9b5"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-policy-resolver.ts",
+    "base": "100644:122627e3a8810ca537721fc6bad09d4535c1e425",
+    "head": "100644:fd0697c7e001d06929b6b1ebf8172d3a8179f94a",
+    "main": "100644:122627e3a8810ca537721fc6bad09d4535c1e425",
+    "result": "merged",
+    "consolidatedBlob": "fd0697c7e001d06929b6b1ebf8172d3a8179f94a"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-preparation.ts",
+    "base": "100644:7ec7b2335c9e66ca8b7ac3b272fab305b81f45a6",
+    "head": "100644:a587b96283bbc80bfb3fcaf7a0a07d049d0ad890",
+    "main": "100644:7ec7b2335c9e66ca8b7ac3b272fab305b81f45a6",
+    "result": "merged",
+    "consolidatedBlob": "a587b96283bbc80bfb3fcaf7a0a07d049d0ad890"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-proposal-preflight.ts",
+    "base": "100644:1eb8fb3471dd20cd8e50caed4324095ffc655c67",
+    "head": "100644:7846ca761b69c080cacd65f9b22bb43aa6ff78cf",
+    "main": "100644:1eb8fb3471dd20cd8e50caed4324095ffc655c67",
+    "result": "merged",
+    "consolidatedBlob": "7846ca761b69c080cacd65f9b22bb43aa6ff78cf"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-reducer.ts",
+    "base": "100644:08b70bb0efe045f10341a17c1918fd4475690c36",
+    "head": "100644:7a3b20827e1bc6b109a7c8e9ddbaf87dc7f3ffbd",
+    "main": "100644:08b70bb0efe045f10341a17c1918fd4475690c36",
+    "result": "merged",
+    "consolidatedBlob": "7a3b20827e1bc6b109a7c8e9ddbaf87dc7f3ffbd"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-reduction-state.ts",
+    "base": "100644:61e53439eef0759c99f4c581c35dbc66595ebe19",
+    "head": "100644:5060a9cc24f1994bf197ba35f726ed51b3ed21bf",
+    "main": "100644:61e53439eef0759c99f4c581c35dbc66595ebe19",
+    "result": "merged",
+    "consolidatedBlob": "5060a9cc24f1994bf197ba35f726ed51b3ed21bf"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-report-builder.ts",
+    "base": "100644:6dfced5254fb096a27c426aed1b9005c6ef654b9",
+    "head": "100644:ca836dac5a686c0c1a075c27b14d79e6e3e9195c",
+    "main": "100644:6dfced5254fb096a27c426aed1b9005c6ef654b9",
+    "result": "merged",
+    "consolidatedBlob": "ca836dac5a686c0c1a075c27b14d79e6e3e9195c"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-report-contract.ts",
+    "base": "100644:3e183b86659d56ad95066d09b1a92794025eefce",
+    "head": "100644:3f333e8d7bdb43003f8ee1e6f79970c58199dc17",
+    "main": "100644:3e183b86659d56ad95066d09b1a92794025eefce",
+    "result": "merged",
+    "consolidatedBlob": "3f333e8d7bdb43003f8ee1e6f79970c58199dc17"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-report-storage.ts",
+    "base": "100644:475a281a5c54dbb39755e5bc572a05278812fa65",
+    "head": "100644:9edd3a7ced07bde6130741177d0afff9c40ce45e",
+    "main": "100644:475a281a5c54dbb39755e5bc572a05278812fa65",
+    "result": "merged",
+    "consolidatedBlob": "9edd3a7ced07bde6130741177d0afff9c40ce45e"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-stage-verification.ts",
+    "base": "100644:b9ff5d9c7351252cd843a61866437c4bfb3e9182",
+    "head": "100644:4c3a19db4450b5baaa306d06eb02c46b4d545631",
+    "main": "100644:b9ff5d9c7351252cd843a61866437c4bfb3e9182",
+    "result": "merged",
+    "consolidatedBlob": "4c3a19db4450b5baaa306d06eb02c46b4d545631"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-verdict-policy.ts",
+    "base": "100644:817ff754f973944bf8cd1d9edc4643ee244d96cc",
+    "head": "100644:161166790b2f3a86dbb4c159543228d72837d8aa",
+    "main": "100644:817ff754f973944bf8cd1d9edc4643ee244d96cc",
+    "result": "merged",
+    "consolidatedBlob": "161166790b2f3a86dbb4c159543228d72837d8aa"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/simplification-fact-producer.ts",
+    "base": "100644:ca7c676b15e9a583b2e82dbd4707f363c5137a5e",
+    "head": "100644:29f9c590b8e95591be07826a93757b3f57c6bc64",
+    "main": "100644:ca7c676b15e9a583b2e82dbd4707f363c5137a5e",
+    "result": "merged",
+    "consolidatedBlob": "29f9c590b8e95591be07826a93757b3f57c6bc64"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/simplification-manifest.ts",
+    "base": "100644:8680d122a1c5a031f3796a60baa1b798b54b50fe",
+    "head": "100644:955dd56d3421c33766d428b9c614a3e948b1b9f9",
+    "main": "100644:8680d122a1c5a031f3796a60baa1b798b54b50fe",
+    "result": "merged",
+    "consolidatedBlob": "955dd56d3421c33766d428b9c614a3e948b1b9f9"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/simplification-miner.ts",
+    "base": "100644:cc16dba4c138157d773be25ddd2d53828c4a04ec",
+    "head": "100644:8e2d33c3afdeb80766a6cd12659d727b73c40671",
+    "main": "100644:cc16dba4c138157d773be25ddd2d53828c4a04ec",
+    "result": "merged",
+    "consolidatedBlob": "8e2d33c3afdeb80766a6cd12659d727b73c40671"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/stage.ts",
+    "base": "100644:b0d739cb5cd38a8467b925f254ef811ee760fe5f",
+    "head": "100644:f4c4134a86676299a50255a5f232478d36be3f08",
+    "main": "100644:b0d739cb5cd38a8467b925f254ef811ee760fe5f",
+    "result": "merged",
+    "consolidatedBlob": "f4c4134a86676299a50255a5f232478d36be3f08"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/verification-protocol.ts",
+    "base": "100644:34e9f36be31984d12c9a83b3df068172eadca73a",
+    "head": "100644:273f11f1cee17b2748855a29329e2a78e0995c2a",
+    "main": "100644:34e9f36be31984d12c9a83b3df068172eadca73a",
+    "result": "merged",
+    "consolidatedBlob": "273f11f1cee17b2748855a29329e2a78e0995c2a"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/project/cli.ts",
+    "base": "100644:691878b4726dbba053747953bd7ffc61f3d8b74a",
+    "head": "100644:b5f299527e43d0ec0061a56ff32d75d9743e7d92",
+    "main": "100644:691878b4726dbba053747953bd7ffc61f3d8b74a",
+    "result": "merged",
+    "consolidatedBlob": "b5f299527e43d0ec0061a56ff32d75d9743e7d92"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/project/compiler.ts",
+    "base": "100644:2a8eabbac8ebc9993958d8a4da86be926790c0bf",
+    "head": "100644:dbbbdf3f00cd1aa741defc95b4c453af69bab31e",
+    "main": "100644:2a8eabbac8ebc9993958d8a4da86be926790c0bf",
+    "result": "merged",
+    "consolidatedBlob": "dbbbdf3f00cd1aa741defc95b4c453af69bab31e"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/project/coverage.ts",
+    "base": "100644:d45d8c872b902d84b5989cbdf30f8b70d7d46940",
+    "head": "100644:1d7e534f70980ed04043f01506126834c6022643",
+    "main": "100644:d45d8c872b902d84b5989cbdf30f8b70d7d46940",
+    "result": "merged",
+    "consolidatedBlob": "1d7e534f70980ed04043f01506126834c6022643"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/project/legacy-import.ts",
+    "base": "100644:682e54387933c465b0fb1c7543883a0cdc8f719b",
+    "head": "100644:547e6b2a4048b189a80cb38c6bc0e4881c59a3e5",
+    "main": "100644:682e54387933c465b0fb1c7543883a0cdc8f719b",
+    "result": "merged",
+    "consolidatedBlob": "547e6b2a4048b189a80cb38c6bc0e4881c59a3e5"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/project/package.json",
+    "base": "100644:8598aea5785d6a338b9993b34ebec4102924f942",
+    "head": "100644:f13f48c6da69e64cde47887888c90553cf48d8ea",
+    "main": "100644:8598aea5785d6a338b9993b34ebec4102924f942",
+    "result": "merged",
+    "consolidatedBlob": "f13f48c6da69e64cde47887888c90553cf48d8ea"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/project/recovery.ts",
+    "base": "100644:345fc70cd5368ba1b7e7d0a616084bd5c83012c9",
+    "head": "100644:da9fbbd04cf20dad8bd9a38b50689d57361a3354",
+    "main": "100644:345fc70cd5368ba1b7e7d0a616084bd5c83012c9",
+    "result": "merged",
+    "consolidatedBlob": "da9fbbd04cf20dad8bd9a38b50689d57361a3354"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/contracts/check-project-compiler.mts",
+    "base": "100644:2914aa3c4ca2dcbb4889b60557f8059c3df69742",
+    "head": "100644:73e75f654b09a1558b5844b43b7fcea135e06e20",
+    "main": "100644:2914aa3c4ca2dcbb4889b60557f8059c3df69742",
+    "result": "merged",
+    "consolidatedBlob": "73e75f654b09a1558b5844b43b7fcea135e06e20"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/contracts/project-legacy-import-cases.mts",
+    "base": "100644:5ba23bea2e39aa59dedc0727fd37a2df5420ab72",
+    "head": "100644:0571e73f9235ea312ba732e181fa2cbe5e477f45",
+    "main": "100644:5ba23bea2e39aa59dedc0727fd37a2df5420ab72",
+    "result": "merged",
+    "consolidatedBlob": "0571e73f9235ea312ba732e181fa2cbe5e477f45"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "contracts/delivery-manifest/v3/package.json",
+    "base": null,
+    "head": "100644:bb3d252bd2354fef92332c630a4c916eb5b50b20",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "bb3d252bd2354fef92332c630a4c916eb5b50b20"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+    "base": null,
+    "head": "100644:e86bdce5b2917302bca2467e95db1518bbac26db",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "e86bdce5b2917302bca2467e95db1518bbac26db"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "contracts/delivery-manifest/v3/src/index.ts",
+    "base": null,
+    "head": "100644:b5e9b7f763fd009073cacaad270b349e46fde040",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "b5e9b7f763fd009073cacaad270b349e46fde040"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "contracts/delivery-manifest/v3/tests/contract.test.mts",
+    "base": null,
+    "head": "100644:0555d7405ab34cb15c25fa9fd6a218cd778e1789",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "0555d7405ab34cb15c25fa9fd6a218cd778e1789"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "contracts/delivery-manifest/v3/tsconfig.json",
+    "base": null,
+    "head": "100644:fafa0d59d2634a76048e39d8ff63e02d12a9f11f",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "fafa0d59d2634a76048e39d8ff63e02d12a9f11f"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/project-summary/src/review-semantics.ts",
+    "base": null,
+    "head": "100644:431d8028f4eb8ba773f7a624c7b29585d456e986",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "431d8028f4eb8ba773f7a624c7b29585d456e986"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/schemas/review-bundle.v2.schema.json",
+    "base": null,
+    "head": "100644:27704260ebd44731df58a8b5b43593d95bf8817a",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "27704260ebd44731df58a8b5b43593d95bf8817a"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/schemas/review-report.v3.schema.json",
+    "base": null,
+    "head": "100644:b4f86d563e480e21600a433d07f4035599d56c6f",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "b4f86d563e480e21600a433d07f4035599d56c6f"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/plugins/review/src/review-semantics.ts",
+    "base": null,
+    "head": "100644:b1770438a6f491991c55fa489f93342040910225",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "b1770438a6f491991c55fa489f93342040910225"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/project/delivery-manifest.ts",
+    "base": null,
+    "head": "100644:faf84b770ad58e9761b8ab3ba523ebae6c86b9f2",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "faf84b770ad58e9761b8ab3ba523ebae6c86b9f2"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "skills/nova/project/review-semantics.ts",
+    "base": null,
+    "head": "100644:3a13f2edd5ab050aa1696d66e6ca116f1b3de191",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "3a13f2edd5ab050aa1696d66e6ca116f1b3de191"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/reliability/delivery-manifest-gate-reference.test.mjs",
+    "base": null,
+    "head": "100644:b2c3890eb6e29a0b61cf605eeb1934c6e0bd6b36",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "b2c3890eb6e29a0b61cf605eeb1934c6e0bd6b36"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/reliability/delivery-manifest-import-boundary.test.mjs",
+    "base": null,
+    "head": "100644:74d94e2569ad6e8fc31aaa535e5678bd8b2cd894",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "74d94e2569ad6e8fc31aaa535e5678bd8b2cd894"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs",
+    "base": null,
+    "head": "100644:9ba9bc55ede3ccf37eef0654781e0b57521a86fc",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "9ba9bc55ede3ccf37eef0654781e0b57521a86fc"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/reliability/delivery-manifest-v3-compiler.test.mjs",
+    "base": null,
+    "head": "100644:6979d21d8ec7a6c9396d53b8eb7e9ce52a841ef4",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "6979d21d8ec7a6c9396d53b8eb7e9ce52a841ef4"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/reliability/delivery-manifest-v3-durability.test.mjs",
+    "base": null,
+    "head": "100644:ed3da46172e515feda2c96806fb0ecc56a0e9c4a",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "ed3da46172e515feda2c96806fb0ecc56a0e9c4a"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/reliability/delivery-manifest-v3-stage-boundary-child.mjs",
+    "base": null,
+    "head": "100644:909e036dd1f92a8e3b8d7ab43381f9632422926e",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "909e036dd1f92a8e3b8d7ab43381f9632422926e"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+    "base": null,
+    "head": "100644:f1b4713e9059cc73106c7511aa96f6bfa327cca0",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "f1b4713e9059cc73106c7511aa96f6bfa327cca0"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/reliability/legacy-cli-diagnostic-reproducibility.test.mjs",
+    "base": null,
+    "head": "100644:07ea9172540f57e5fab75d5dcf5fdf468a30b1f6",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "07ea9172540f57e5fab75d5dcf5fdf468a30b1f6"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/reliability/review-inner-owner-independent.test.mjs",
+    "base": null,
+    "head": "100644:7b0a06515ce8df40241bc984d5d5aad78e65bb59",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "7b0a06515ce8df40241bc984d5d5aad78e65bb59"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/reliability/review-semantic-compiler.test.mjs",
+    "base": null,
+    "head": "100644:3ca52bf6cf64149ffb52835e35b8e050b9b83d06",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "3ca52bf6cf64149ffb52835e35b8e050b9b83d06"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/reliability/review-semantic-inner-owners.test.mjs",
+    "base": null,
+    "head": "100644:feb56bd82945a02b458218a17062360557445a75",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "feb56bd82945a02b458218a17062360557445a75"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/reliability/review-semantic-summary-child.mjs",
+    "base": null,
+    "head": "100644:f8c1c3eabcb580b98d3deabd85e37a3aae09704b",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "f8c1c3eabcb580b98d3deabd85e37a3aae09704b"
+  },
+  {
+    "branch": "fix/resume-39-20260911-a51d-two-hour",
+    "commit": "0144df383250a1975d40b04746eac398ee77e747",
+    "path": "tests/verification/reliability/review-semantic-summary.test.mjs",
+    "base": null,
+    "head": "100644:91b210a3c8ab113c05ddbf00048e87a7433ac0ef",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "91b210a3c8ab113c05ddbf00048e87a7433ac0ef"
+  },
+  {
+    "branch": "fix/resume-47-20260910t073117-obs-retention-review",
+    "commit": "7885f0dc5f316a9603d7088c82cc26f925461801",
+    "path": "scripts/observability-retirement/dispatch.mjs",
+    "base": "100644:d9a9e51cab5f16d700043543e0eaadf74496b97a",
+    "head": "100644:e6601a38a2ddb6d942dcc23f2877966195096609",
+    "main": "100644:d9a9e51cab5f16d700043543e0eaadf74496b97a",
+    "result": "merged",
+    "consolidatedBlob": "e6601a38a2ddb6d942dcc23f2877966195096609"
+  },
+  {
+    "branch": "fix/resume-47-20260910t073117-obs-retention-review",
+    "commit": "7885f0dc5f316a9603d7088c82cc26f925461801",
+    "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+    "base": "100644:21d2fd52750581bb7fccc1b7609241896ce638fb",
+    "head": "100644:562cfaa0bae2b2c88b6f46f9b4ed675bee31fd8b",
+    "main": "100644:21d2fd52750581bb7fccc1b7609241896ce638fb",
+    "result": "merged",
+    "consolidatedBlob": "562cfaa0bae2b2c88b6f46f9b4ed675bee31fd8b"
+  },
+  {
+    "branch": "fix/resume-47-20260910t074500-prism-worker-resource-review",
+    "commit": "00f0a38b4946273cc2b5a6f08f5f4f2951b17123",
+    "path": "skills/prism/integration/worker-concurrent-resource-attribution.mts",
+    "base": null,
+    "head": "100644:5769cec867ce9706d6671ddfd600b5651973f0cd",
+    "main": null,
+    "result": "merged",
+    "consolidatedBlob": "5769cec867ce9706d6671ddfd600b5651973f0cd"
+  }
+]

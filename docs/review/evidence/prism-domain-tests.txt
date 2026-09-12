@@ -1,0 +1,5 @@
+$ node docs/review/evidence/prism-domain-repro.mjs
+{"moveDescendantAccepted":true,"resultRevision":2,"remainingChildren":0}
+{"nonLeafDuplicateRejected":true}
+{"stateTitle":"State title","resolvedTitle":"Deployments","viewportHidden":true}
+EXIT 0

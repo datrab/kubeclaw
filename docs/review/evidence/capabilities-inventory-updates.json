@@ -1,0 +1,56 @@
+{
+  "kubeclaw.artifact-store": {
+    "status": "abgeschlossen",
+    "usage": "Provider artifacts.read/write; Core-AdapterStarter/Namespacegrant; SDK source-revision exact read und Core/Plugins artifact puts.",
+    "responsibility": "Content-addressierte JSON-Artefakte mit Metadaten-before-Blob-Protokoll.",
+    "docStatus": "vorhanden; unvollständig"
+  },
+  "kubeclaw.command-runner": {
+    "status": "abgeschlossen",
+    "usage": "Provider command.execute über Core; außerdem exportierter CommandRunner direkt im Buster DirectCommandCapabilityInvoker.",
+    "responsibility": "Direkte/Sandbox-Prozesse, Ausgabe, Limits und Prozessgruppen-Lifecycle.",
+    "docStatus": "veraltet; unvollständig"
+  },
+  "kubeclaw.git-workspace": {
+    "status": "abgeschlossen",
+    "usage": "Provider git.workspace.create/remove, git.commit/merge/sync; Blueprint-Sync Sender und GitRunner/Filesystem/Remote geprüft.",
+    "responsibility": "Git-Worktree-/Commit-/Merge-/Sync-/Remoteaktionen mit Pfad- und Argumentvalidierung.",
+    "docStatus": "veraltet; unvollständig"
+  },
+  "kubeclaw.network-http": {
+    "status": "abgeschlossen",
+    "usage": "Provider network.http; runtime-dispatch/OpenClaw nutzen confidential HTTP via Core-Grants und exakte Originallowlist.",
+    "responsibility": "Allowlist-HTTP und JSON/Text-Response, Timeout-/Größen-/Headergrenzen.",
+    "docStatus": "veraltet; unvollständig"
+  },
+  "kubeclaw.secret-resolver": {
+    "status": "abgeschlossen",
+    "usage": "Provider secrets.read; Core erzwingt allowedNames und confidential-Aufruf, runtime-dispatch empfängt value transient.",
+    "responsibility": "Explizites logisches Secretmapping auf Prozessumgebung.",
+    "docStatus": "vorhanden; unvollständig"
+  },
+  "kubeclaw.runtime-dispatch": {
+    "status": "abgeschlossen",
+    "usage": "Alternative runtime/openclaw Provider für runtime.dispatch; Review und Prism-Gegenstellen, Core-/Network-/Secret-/Repo-Grenzen geprüft.",
+    "responsibility": "Authentifizierter Runtime-/OpenClaw-Transport, Spawn/Poll/Resultimport/Promptbudgets.",
+    "docStatus": "veraltet; unvollständig"
+  },
+  "kubeclaw.wait-store": {
+    "status": "abgeschlossen",
+    "usage": "Provider signal.wait; human-approval create, Core besitzt Resume/Issuer/Expiry; Store persistiert nur Waitintent.",
+    "responsibility": "Idempotente dauerhafte validierte Wait-Requests ohne Resumeautorität.",
+    "docStatus": "vorhanden; unvollständig"
+  },
+  "prism.studio": {
+    "status": "abgeschlossen",
+    "usage": "index.html → app.tsx React/Puck; Production Session/Control APIs und RevisionRepository.apply, DEV lokale Fixture; preview Originalrenderer.",
+    "responsibility": "Browsereditor, verlustarme typed-operation Übersetzung, isolierte Vorschau und Approval-/Revision-UI.",
+    "docStatus": "vorhanden; unvollständig; Roundtrip-/Assetpreview-Ziel nicht erfüllt"
+  },
+  "kubeclaw.lint": {
+    "status": "abgeschlossen",
+    "usage": "Nova project/compiler.ts erstellt full nach Implementation/sourceStageId; Stage→Core grants→eigener Executor→native Tools→Artifactstore. Original Coreclean-Pfad ausgeführt, Native-Toolchain teilweise fehlend.",
+    "responsibility": "Policy v7, sourceRevision-gepinnte Kandidatenanalyse, Sprach-/Architektur-/Kubernetes-Tools, Reportvalidierung und Gateklassifikation.",
+    "docStatus": "veraltet; unvollständig; v1-Autorität und npm-test-Buildbehauptung falsch"
+  }
+}

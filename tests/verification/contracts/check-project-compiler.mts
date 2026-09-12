@@ -1,12 +1,13 @@
 import { checkLegacyProjectImport } from './project-legacy-import-cases.mts';
 import { gateCoverageDigest } from '@kubeclaw/pipeline-test-gate-contract';
+import { PORTABLE_JSON_ENCODING } from '@kubeclaw/plugin-sdk';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
-import { buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
+import { buildRegistry, discoverPackages, resolveTestPlan, validatePipelineRuntimeV2 } from '@kubeclaw/nova-core';
 
 const root = path.resolve('.');
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'nova-project-proof-'));
@@ -171,7 +172,23 @@ try {
   const output = path.join(temporary, 'compiled.json');
   fs.writeFileSync(projectFile, JSON.stringify(project)); fs.writeFileSync(platformFile, JSON.stringify(platform));
   const launch = () => spawnSync(process.execPath, [path.join(runtime, 'pipeline.ts'), '--platform', platformFile, '--project', projectFile, '--compile', output], { cwd: temporary, encoding: 'utf8', timeout: 30000 });
-  const result = launch(); assert.equal(result.status, 0, result.stderr); assert.deepEqual(JSON.parse(fs.readFileSync(output, 'utf8')), compiled.definition);
+  const result = launch(); assert.equal(result.status, 0, result.stderr);
+  // The exported compiler's old one/two/three-argument APIs remain legacy.
+  // Genuine new CLI compilation selects its independent semantic owner explicitly.
+  const cliCompiled = compileProject(project, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING,
+    'review-semantics.utf16-v1', 'delivery-manifest.utf16-v1');
+  assert.deepEqual(JSON.parse(fs.readFileSync(output, 'utf8')), cliCompiled.definition);
+  assert.deepEqual(compiled.definition.stages.find((stage: any) => stage.id === 'project-summary').config, {});
+  assert.deepEqual(cliCompiled.definition.stages.find((stage: any) => stage.id === 'project-summary').config,
+    { deliveryManifestEncoding: 'delivery-manifest.utf16-v1' });
+  const v3Runtime = await validatePipelineRuntimeV2(platform, cliCompiled.definition);
+  assert.equal(v3Runtime.stageCount > 0, true, 'registered runtime must accept v3 Summary input/config');
+  const legacySemantic = compileProject(project, PORTABLE_JSON_ENCODING, PORTABLE_JSON_ENCODING,
+    'review-semantics.utf16-v1', 'legacy');
+  const legacyRuntime = await validatePipelineRuntimeV2(platform, legacySemantic.definition);
+  assert.equal(legacyRuntime.stageCount, v3Runtime.stageCount, 'registered runtime must retain legacy semantic graph validity');
+  assert(compiled.definition.stages.filter((stage: any) => stage.type === 'kubeclaw.decision.review')
+    .every((stage: any) => !Object.hasOwn(stage.config, 'reviewSemanticEncoding')));
   // A real unsupported stage config must fail before the compiler publishes output.
   fs.rmSync(output); const invalid = structuredClone(project); invalid.modules[0].review.agent = '';
   fs.writeFileSync(projectFile, JSON.stringify(invalid)); const rejected = launch(); assert.notEqual(rejected.status, 0); assert.equal(fs.existsSync(output), false);

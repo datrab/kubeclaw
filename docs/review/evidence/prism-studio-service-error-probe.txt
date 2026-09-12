@@ -1,0 +1,19 @@
+Original studio health succeeded. Calling /v1/projects against intentionally unreachable Control.
+Client failure: fetch failed
+Original process outcome: [ 1, null ]
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+[TypeError: fetch failed] {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:46339
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1864:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 46339
+  }
+}
+
+Node.js v24.19.0

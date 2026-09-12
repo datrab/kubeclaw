@@ -1,0 +1,34 @@
+✔ corpus ingestion is atomic, searchable, idempotent and rights aware (14096.496053ms)
+✔ public acquisition blocks unsafe networks (6.233539ms)
+✔ analysis-only material cannot enter design retrieval (8074.666285ms)
+✔ retrieval applies required, excluded, and source-family diversity rules (8736.800707ms)
+✔ direction diversity ignores copy-only changes (78.695454ms)
+✔ direction diversity rejects one cosmetic token change (3.549014ms)
+✔ direction diversity accepts a material visual system change (16.385509ms)
+✔ direction diversity ignores object key order (1.868563ms)
+✔ internal request authentication binds time, nonce, and body (12.112369ms)
+✔ nonce replay protection is shared across worker replicas (13716.589381ms)
+✔ approved Prism targets map to the visual provider declaration (19.139074ms)
+✔ invalid baseline digests fail closed (2.046021ms)
+✔ Forge receives read-only module-scoped targets (1.43499ms)
+✔ preferences stay contextual, explain evidence, and support retraction (14.891553ms)
+✔ quality report keeps objective findings separate (13.050614ms)
+✔ quality blocks a meaningful icon without alternative text (6.786418ms)
+✔ preference projections decay and remain retractable (3.090147ms)
+✔ preference projections reject invalid occurrence timestamps (2.339644ms)
+✔ renderer escapes active content (8.421049ms)
+✔ renderer resolves collection data and reusable item components (12.946348ms)
+✔ renderer fails closed for unknown components (6.102188ms)
+✔ renderer resolves theme tokens and layout properties (2.260613ms)
+✔ renderer emits only declarative action identities (0.785161ms)
+✔ renderer applies semantic typography tokens (2.048194ms)
+✔ renderer uses semantic output for the full v1 catalogue (2.015122ms)
+✔ Studio preserves every Control Set-Cookie header (24.967604ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 32517.742692

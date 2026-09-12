@@ -1,0 +1,25 @@
+✔ aggregate blob budget survives reconstruction, deduplicates and serializes competing processes (488.069523ms)
+✔ repair through the real recorder and journal reruns lint before Echo and Buster (21.451859ms)
+✔ SIGKILL after durable wait resolution preserves the exact approved continuation (535.19161ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1031.587186
+{"ok":true,"targetMiB":16,"bytes":16780648,"replayMs":258.4221520000001,"appendMs":0.6116809999999759,"records":18}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.state-store","suite":"live-function"}
+{"ok":true,"plugin":"kubeclaw.state-store","suite":"package-boundary"}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/live-function.test.ts
+
+{"ok":true,"library":"@kubeclaw/prompt-contract","suite":"live-function"}

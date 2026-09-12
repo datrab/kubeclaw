@@ -1,0 +1,17 @@
+Baseline: 85ddfcbfc15e078780ea0434fc167e6f9a9b9488; Node v24.19.0
+
+$ node tests/verification/contracts/check-pipeline-test-suite-resolver.mts
+{"ok":true,"nodes":10,"links":2,"digest":"sha256:3bdbfe8cf273589f5c48222f5601015d0c072228ed74a99a5efd0a04af42b55a"}
+Exit: 0
+
+$ node tests/verification/contracts/check-pipeline-remote-plan-runtime.mts
+{"ok":true,"phase":"7-C","transport":"authenticated-http"}
+Exit: 0
+
+$ node tests/verification/contracts/check-pipeline-remote-result-import.mts
+{"ok":true,"phase":"7-D","decisions":7,"evidence":"verified-before-import"}
+Exit: 0
+
+$ node tests/verification/contracts/check-pipeline-remote-runtime-config.mts
+{"ok":true,"phase":"7-runtime-config","secrets":"token-and-local-ed25519","transport":"http-or-https"}
+Exit: 0

@@ -1,0 +1,20 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node tests/adapter-boundary.test.mjs && node tests/discovery.test.mjs && node tests/eslint-discipline.test.mjs && node tests/eslint-type-evidence.test.mjs && node --test tests/remediation.test.mjs && node tests/live-function.test.ts
+
+{"ok":true,"plugin":"kubeclaw.lint","suite":"invalid-report-rejection"}
+{"ok":true,"plugin":"kubeclaw.lint","suite":"package-boundary"}
+{"ok":true,"plugin":"kubeclaw.lint","suite":"adapter-boundary"}
+file:///workspace/scratch/3f5a31a15f20/kubeclaw/skills/nova/plugins/lint/src/engine/evidence-file-partition.ts:29
+    throw Object.assign(new Error('Git could not enumerate tracked files for the type-evidence partition.'), {
+                        ^
+
+Error: Git could not enumerate tracked files for the type-evidence partition.
+    at trackedFiles (file:///workspace/scratch/3f5a31a15f20/kubeclaw/skills/nova/plugins/lint/src/engine/evidence-file-partition.ts:29:25)
+    at Module.partitionEvidenceFiles (file:///workspace/scratch/3f5a31a15f20/kubeclaw/skills/nova/plugins/lint/src/engine/evidence-file-partition.ts:40:19)
+    at file:///workspace/scratch/3f5a31a15f20/kubeclaw/skills/nova/plugins/lint/tests/discovery.test.mjs:78:39 {
+  code: 'eslint-type-evidence-source-classification-failed'
+}
+
+Node.js v24.19.0

@@ -1,0 +1,17 @@
+Original ingestion health succeeded; real quarantine filesystem now contains directory at requested digest path.
+Client failure: fetch failed
+Original process outcome: [ 1, null ]
+node:internal/fs/promises:1127
+  return await PromisePrototypeThen(
+         ^
+
+Error: EISDIR: illegal operation on a directory, unlink '<temporary-quarantine-root>/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+    at async unlink (node:internal/fs/promises:1127:10)
+    at async Server.<anonymous> (file:///workspace/scratch/4e25cf57c177/kubeclaw/skills/prism/server/ingestion.ts:64:5) {
+  errno: -21,
+  code: 'EISDIR',
+  syscall: 'unlink',
+  path: '<temporary-quarantine-root>/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+}
+
+Node.js v24.19.0

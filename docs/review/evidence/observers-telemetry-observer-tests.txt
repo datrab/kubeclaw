@@ -1,0 +1,8 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test
+> node tests/parity.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+
+{"ok":true,"plugin":"kubeclaw.telemetry-observer","suite":"parity"}
+{"ok":true,"plugin":"kubeclaw.telemetry-observer","suite":"live-function","registrations":{"observer:telemetry":["pass","fail","crash"]}}
+{"ok":true,"plugin":"kubeclaw.telemetry-observer","suite":"package-boundary"}

@@ -1,0 +1,6 @@
+Original concurrent journal conflict leaves resource locked after TTL while owner process lives
+
+$ node tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs
+{"ok":true,"contract":"plugin-system-v2-capability-runtime"}
+
+EXIT 0

@@ -1,0 +1,20 @@
+Command: node tests/verification/contracts/check-pipeline-test-plan-runner.mts
+Exit: 1
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: the registered provider export is loaded and executed
+
+null !== 'passed'
+
+    at file:///workspace/scratch/4e25cf57c177/kubeclaw/tests/verification/contracts/check-pipeline-test-plan-runner.mts:1769:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: 'passed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

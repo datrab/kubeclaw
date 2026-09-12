@@ -1,0 +1,3 @@
+Command: node skills/buster/plugins/container-build/tests/live-function.test.ts
+Exit: 0
+{"ok":true,"provider":"container-build","validation":"real-files","acceptance":"verify:test-gate:container-build-live","mocks":0,"emulators":0}

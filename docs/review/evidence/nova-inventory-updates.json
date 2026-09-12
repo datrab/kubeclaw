@@ -1,0 +1,107 @@
+{
+  "nova.entry": {
+    "responsibility": "CLI/Projectcompiler und öffentliche Coreexports",
+    "usage": "pipeline.ts delegiert explicit graphs an Core CLI, --project an Productcompiler; package.json pipeline",
+    "docStatus": "vorhanden; unvollständig für CLI-Abbruch/Crashreste",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.architecture-validator": {
+    "responsibility": "Agentisches Architekturreview und Factsteuerung",
+    "usage": "Nova-Stage bei expliziter Graphauswahl; nicht im Projectcompiler",
+    "docStatus": "vorhanden; unvollständig für Berichtbudgets und Graphapproval",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.blueprint-sync": {
+    "responsibility": "Gitkontrollpfade synchronisieren, committen, dokumentieren",
+    "usage": "Nova sync-Stage mit Git/State/Artefaktadaptern; nicht im Projectcompiler",
+    "docStatus": "vorhanden; unvollständig für Teilcommit/Refprovenienz",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.case-study": {
+    "responsibility": "Faktenbasierter Markdownbericht im JSONartefakt",
+    "usage": "Nova Reportstage bei expliziter Auswahl; feste Faktenliste, kein automatischer Agent-/Faktenbeweis",
+    "docStatus": "vorhanden; unvollständig zu Identität/Headingprüfung",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.pipeline-review": {
+    "responsibility": "Nachträglicher Bericht über fünf Pipelinedimensionen",
+    "usage": "Nova Reportstage, getrennt vom entscheidenden review-Plugin",
+    "docStatus": "veraltet: aktive Run-/Attemptbindung nicht implementiert",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.preflight-contract": {
+    "responsibility": "Forge-Blueprintdeklarationen vor Implementation prüfen",
+    "usage": "Nova Stage liest echte Modul-/Substepdateien über Repositoryadapter",
+    "docStatus": "unvollständig: behauptete Deklarationsprüfung nur Substringsuche",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "nova.scaffold": {
+    "responsibility": "Projektkonfiguration aus Blueprint und Fortschritt erzeugen und anwenden",
+    "usage": "CLI scaffold/refresh/apply; eigene lokale Schreibpfade; Betriebsskripte im verlinkten Appendix",
+    "docStatus": "veraltet; alte CLI und Suites, unvollständige Edit-/Crashsemantik",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.human-approval": {
+    "responsibility": "Signiertes Architekturartefakt prüfen und Operatorentscheidung erwarten",
+    "usage": "Explizite Nova-Stage vor Prism; wait/operator/artefact Gegenstellen",
+    "docStatus": "unvollständig; agentRole Schema widerspricht Parser und Identitätsgrenze fehlt",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.implementation-agent": {
+    "responsibility": "Isolierte Git-Worktree-Implementation über Runtimeagent",
+    "usage": "Projectcompiler Modulstages; Git-Workspace/Runtime/Artefaktadapter",
+    "docStatus": "unvollständig; Workspaceübergabe und unsichere Dispatch-Recovery",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.delivery-lint": {
+    "responsibility": "Statische Forge-Deliveryanforderungen prüfen",
+    "usage": "Explizite Nova-Graphstage; Repository-/Artefaktadapter; Projectcompiler verwendet full lint",
+    "docStatus": "veraltet; Config-/Buildhinweise, unvollständige Dockerfilegrammatik",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.buster-quality-gate": {
+    "responsibility": "Native Remoteproviderentscheidung und nachgelagerte agentische Qualitätsbewertung",
+    "usage": "Projectcompiler-Modul/final-Gates; remote-test-gate und runtime.dispatch; summary konsumiert Evidence",
+    "docStatus": "unvollständig: suite-first-Provenienz, reduzierte Evidence und Testgrenzen",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.remote-test-gate": {
+    "responsibility": "Autorisierte Nova→Buster-Planexecution mit signiertem Sourceimport",
+    "usage": "test.plan.execute-Adapter für buster-quality-gate; produktiver Nova-Gateclient",
+    "docStatus": "unvollständig: Quoten, Importdeadline, Restart und Shutdown",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.prism-design": {
+    "responsibility": "Architekturdispatch, Operatorwait und verifizierter Prism-Baselineimport",
+    "usage": "Explizite Nova-Stage; standalone Prism-Control und Archiv-/Waitstores",
+    "docStatus": "vorhanden; unvollständig zu Crash-/Speichergrenzen, Materialisierung ausdrücklich offen",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.project-summary": {
+    "responsibility": "Digestgebundener Abschlussmanifest aus Implementation-/Gate-/Lint-/Reviewbelegen",
+    "usage": "Projectcompiler-Abschlussstage; nur Artefaktreads und Manifestwrite",
+    "docStatus": "vorhanden; unvollständig zu Attemptauswahl/Budgets/Producervertrauen",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  },
+  "kubeclaw.repository-adapter": {
+    "responsibility": "Worktreelesen und proofgebundene Gitrevision/Inventar/Referenzoperationen",
+    "usage": "preflight/delivery-lint/review und OpenClaw-Collector; runtime-dispatch Fallbackwriter verfolgt",
+    "docStatus": "veraltet: activation-time HEAD; unvollständig zu Missing-Symlinks und Ressourcen",
+    "review": "abgeschlossen",
+    "commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488"
+  }
+}
