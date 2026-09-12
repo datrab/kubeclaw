@@ -3893,6 +3893,10 @@
           "report": "implementation/resume-84-release-root-review.md",
           "source_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
           "summary": "Widerspruch zwischen unveränderlicher Release-Receipt und signiertem Prism-Nachweis behoben: Digestreferenzen akzeptiert, mutable Tags abgewiesen. Unabhängige Rootprüfung7/7 einschließlich echter Helmrender; bestehender Prism-Images-Einstieg und Release-Workflow enthalten die Regression. Kein CI-Lauf."
+        },
+        {
+          "report": "implementation/pr6-oci-identity.md",
+          "summary": "Read-only CLI an bestehende Releaseauswahl gebunden; Index-/Manifest-/Config-Rohbytes, Grössen und Plattformwahl geprüft. Zehn lokale Byte-/Protokollfixturetests, Lint und Knip bestanden. Tatsächlicher GHCR-Versuch an Deadline gescheitert; keine native Image-/Pod-/Bundle-Abnahme."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/role-workloads.md",
@@ -3903,7 +3907,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/.github/workflows/build-images.yaml#L119"
       ],
       "unresolved_code_references": [],
-      "next_action": "Echte OCI-Descriptorbeziehung Index/Plattformmanifest/Config nachweisen und frische Pod-/Containeridentität samt aktivem Bundle an die ausgewählte Receipt binden. Kein einfacher Vergleich verschiedener Digestarten und kein Soll-Envwert als aktiver Bundlenachweis.",
+      "next_action": "Descriptor-Inspektions-CLI auf echter ausgewählter Release-Receipt ausführen. Frische Pod-/Containeridentität und tatsächlich aktives Bundle an die ausgewählte Receipt binden; kein einfacher Vergleich unterschiedlicher Digestarten oder Soll-Envwert als aktiver Bundlenachweis.",
       "related_findings": [],
       "decision_notes": []
     },

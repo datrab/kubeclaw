@@ -64,6 +64,11 @@
       "at": "2026-09-12T09:28:56.525517+00:00",
       "state": "Registry target/seed binding implemented; original workspace 61/61, target/runner20/20, HTTPS3/3, matrix20/20 pass; no native cluster closure",
       "finding_closures": 0
+    },
+    {
+      "at": "2026-09-12T09:44:47.509122+00:00",
+      "state": "OCI identity inspector implemented with 10 local tests; native GHCR attempt timed out and selected runtime receipt absent",
+      "finding_closures": 0
     }
   ],
   "blocked_gates": [],

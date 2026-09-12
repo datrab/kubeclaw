@@ -130,3 +130,29 @@ existing promotion and PR acceptance authenticate the preserved successful build
 receipt; local schema validation does not authenticate an invented receipt.
 Actual Pod `imageID` comparison, startup and migration acceptance still require
 a separately authorized live deployment. No such proof is claimed by these tests.
+
+## Inspect the selected image's descriptor identity
+
+After the normal release selection and materialization, inspect one named slot:
+
+```sh
+node scripts/updates/inspect-release-image.mjs runtime nova linux/amd64
+```
+
+The command consumes the existing selected-release validator and performs bounded,
+read-only GHCR requests. It verifies raw document hashes and child descriptor
+sizes, resolves exactly one platform manifest and checks the corresponding config.
+Its JSON distinguishes the optional index digest, manifest digest and config digest.
+It does not equate these identifiers, verify layers, inspect a Pod or report an
+active code bundle. Multiple matching platforms and nested indexes fail explicitly.
+
+For a private package, an optional fourth argument names a file containing an
+already issued GHCR registry bearer token. It is not a GitHub PAT argument; token
+contents are never printed. Without a token the reader attempts one anonymous
+pull-token exchange scoped to the exact repository. Registry credentials are never
+forwarded to the explicitly allowed signed blob CDN. Other redirects fail closed.
+The deadline applies to the complete descriptor read sequence, including token
+exchange; the default is 30 seconds and each document is capped at 4 MiB.
+
+A successful descriptor inspection remains separate from proof that the fresh
+Pod/container runs that image and has loaded the selected code bundle.

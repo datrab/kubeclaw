@@ -1,0 +1,12 @@
+file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/updates/deployment-release.mjs:18
+  if (!fs.existsSync(file)) throw new Error(`No selected ${family} release. Merge the Promote image release selection PR, then run node scripts/updates/materialize-release.mjs --family=${family}; no latest fallback is available.`);
+                                  ^
+
+Error: No selected runtime release. Merge the Promote image release selection PR, then run node scripts/updates/materialize-release.mjs --family=runtime; no latest fallback is available.
+    at selectedRelease (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/updates/deployment-release.mjs:18:35)
+    at file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/updates/inspect-release-image.mjs:12:17
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0
