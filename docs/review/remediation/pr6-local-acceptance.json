@@ -6,14 +6,14 @@
   "pr": 6,
   "completion_policy": "D12: Vollständig korrigierter Code mit ausreichender lokaler Testabdeckung gilt für den Behebungsauftrag als lokal verifiziert/abgeschlossen. Ausstehende Live-/Cluster-/GitHub-Actions-Abnahmen bleiben separat und werden vom Auftraggeber nach dem Open-Sourcing durchgeführt. Keine Umdeutung nicht ausgeführter Tests in bestanden; echte Code- oder lokale Nachweislücken bleiben offen.",
   "scope_count": 39,
-  "locally_completed_count": 35,
-  "remaining_count": 4,
+  "locally_completed_count": 36,
+  "remaining_count": 3,
   "findings": [
     {
       "id": "PCR-SDK-001",
       "title": "Serialisierung erzeugt ungültige oder kollidierende Daten",
-      "local_disposition": "offen",
-      "rationale": "Gekoppelte semantische Digest-/Consumer- und historische Kompatibilitätsprüfung lokal noch nicht ausreichend abgeschlossen. Frühere lokale Czech-Gegenprobe und spätere Teilprüfungen ergeben noch keinen vollständigen lokalen Abschluss des integrierten SDK-Pakets. Markierte Helper-Aktion bleibt verboten; keine Umleitung.",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Lokaler SDK-Abschluss nach D12: ursprüngliche Serializer-/Artifact-/Effect-/Source-/History-/Compiler-/Semantik-/Summary-/Deliveryconsumer geprüft;13 Owner-,11 History- und5 Deliverytests bestehen, einschließlich12 echter SIGKILL-/Replaygrenzen. Veraltete Summary-Testkopplung an bewusst historisches v2 auf expliziten aktuellen v3-Vertrag korrigiert. Gesperrter Helper nicht erneut ausgeführt; Live-Reviewer/Modelle bleiben separat.",
       "evidence_reports": [
         "implementation/contracts.md",
         "implementation/sdk-json-compatibility.md",
@@ -35,12 +35,13 @@
         "https://github.com/datrab/kubeclaw/blob/4e7a12c2f24a841519373ff9c18110642d130521/docs/review/remediation/implementation/resume-39-20260911-delivery-review.md",
         "https://github.com/datrab/kubeclaw/blob/d22ee1d298aa63050673e075b363ae4c996008dc/docs/review/remediation/implementation/resume-39-20260911-2h.md",
         "implementation/resume-84-integration-root-review.md",
-        "implementation/pr6-knip.md"
+        "implementation/pr6-knip.md",
+        "implementation/pr6-sdk-local-verification.md"
       ],
       "previous_status": "implementiert",
       "previous_verification_status": "teilweise / weitere Consumer offen",
       "previous_next_action": "Vollständiges Knip auf PR #6 bestanden. Ursprüngliche gekoppelte native Semantik-/Producer-/History-Abnahme fehlt weiterhin. Markierte Helper-Aktion weder wiederholen noch umleiten.",
-      "pending_live_validation": null
+      "pending_live_validation": "Vollständiger registrierter Review-/Modell-/Livepfad separat durch Auftraggeber. Gesperrte Helper-Aktion bleibt verboten."
     },
     {
       "id": "PCR-BUSTER-ENGINE-004",
@@ -595,5 +596,5 @@
       "pending_live_validation": "Echten konfigurierten OpenClaw/ACP-Writer mit unveränderlichen Quellen erst bei real verfügbarer CLI/Config/Token/Tools-URL ausführen. Bestehende Original-/Source-Suites sind modelExecution:false; Socketstatus wegen EPERM unbekannt. Keine Wiederholung lokaler Fixtures als Writer-Nachweis."
     }
   ],
-  "updated_at": "2026-09-12T11:07:52.535195+00:00"
+  "updated_at": "2026-09-12T11:31:34.769121+00:00"
 }

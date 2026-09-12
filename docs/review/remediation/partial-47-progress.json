@@ -7,14 +7,14 @@
     {
       "id": "PCR-SDK-001",
       "package": "sdk",
-      "status": "implementiert",
+      "status": "verifiziert",
       "baseline_status": "implementiert",
-      "required_evidence": "Gekoppelte semantische Digest-/Consumer- und historische Kompatibilitätsprüfung lokal noch nicht ausreichend abgeschlossen. Frühere lokale Czech-Gegenprobe und spätere Teilprüfungen ergeben noch keinen vollständigen lokalen Abschluss des integrierten SDK-Pakets. Markierte Helper-Aktion bleibt verboten; keine Umleitung.",
-      "result": "Gekoppelte semantische Digest-/Consumer- und historische Kompatibilitätsprüfung lokal noch nicht ausreichend abgeschlossen. Frühere lokale Czech-Gegenprobe und spätere Teilprüfungen ergeben noch keinen vollständigen lokalen Abschluss des integrierten SDK-Pakets. Markierte Helper-Aktion bleibt verboten; keine Umleitung.",
+      "required_evidence": "Lokaler Abschluss erfolgt; Live-Abnahme später durch Auftraggeber. Gesperrte Helper-Aktion bleibt verboten.",
+      "result": "Lokaler SDK-Abschluss nach D12: ursprüngliche Serializer-/Artifact-/Effect-/Source-/History-/Compiler-/Semantik-/Summary-/Deliveryconsumer geprüft;13 Owner-,11 History- und5 Deliverytests bestehen, einschließlich12 echter SIGKILL-/Replaygrenzen. Veraltete Summary-Testkopplung an bewusst historisches v2 auf expliziten aktuellen v3-Vertrag korrigiert. Gesperrter Helper nicht erneut ausgeführt; Live-Reviewer/Modelle bleiben separat.",
       "baseline_evidence_requirement": "Portable Ordnung/versionierte Digestumstellung noch offen; aktuelle akzeptierte Bytes bewusst unverändert.",
       "evidence": "implementation/wave47-sdk-independent-review.md",
       "pre_d12_status": "in Bearbeitung",
-      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "local_acceptance_report": "implementation/pr6-sdk-local-verification.md",
       "pre_d12_result": "Artifact-, Effect-, Source-/Subject- und Snapshot-Versionierung samt historischer CLI-Kompatibilität integriert. Zusätzlich tatsächlicher Core-Checkpoint-Consumer an Encoding und Originalreplay gebunden, unabhängig und durch Root geprüft. Weitere persistierte Canonical-Consumer bleiben zu prüfen.",
       "pre_d12_required_evidence": "Portable Ordnung/versionierte Digestumstellung noch offen; aktuelle akzeptierte Bytes bewusst unverändert."
     },
@@ -663,8 +663,8 @@
       "pre_d12_required_evidence": "Original immutable report-source suite passes with actual journals/artifact stores, cross-run/stale/missing/tampered/FIFO negatives. | Original requested genuine configured Writer consumption/output remains unavailable. No local source assertion is called a successful Writer."
     }
   ],
-  "verified_count": 43,
-  "remaining_count": 4,
+  "verified_count": 44,
+  "remaining_count": 3,
   "integration_checkpoint": "a134377",
   "overall_complete": false,
   "pre_d12_summary": {
@@ -673,5 +673,5 @@
     "remaining_count": 40,
     "verified_count_at_checkpoint": null
   },
-  "updated_at": "2026-09-12T11:07:52.535195+00:00"
+  "updated_at": "2026-09-12T11:31:34.769121+00:00"
 }

@@ -1,0 +1,20 @@
+✔ nested effects bind actual invocation and attempt, replay once after reconstruction; old snapshots refuse execution (21480.509764ms)
+✔ explicit dependency delivery identity survives attempts while original operator records reject foreign payload and uncertain resend (35339.291301ms)
+✔ original recorded legacy journal prefixes recover without identity migration across native locales (74658.974751ms)
+✔ new original durable producers and completed replay use the same explicit portable identity in both locale directions (15752.732171ms)
+{"originalProducer":"a29a9df8cce605f393fa0bec413604a5ae426eeb","producer":{"locale":"en-US","state":"waiting","originalDigest":"sha256:e6fc3b091b8f840c46e180304cfb023162042d191912e6d135135edd90e8a9d3","sourceAttempts":3},"english":{"locale":"en-US","originalDigest":"sha256:e6fc3b091b8f840c46e180304cfb023162042d191912e6d135135edd90e8a9d3","recoveredDigest":"sha256:e6fc3b091b8f840c46e180304cfb023162042d191912e6d135135edd90e8a9d3","originalWaitDigest":"sha256:e6fc3b091b8f840c46e180304cfb023162042d191912e6d135135edd90e8a9d3","authorized":true},"swedish":{"locale":"sv-SE","originalDigest":"sha256:e6fc3b091b8f840c46e180304cfb023162042d191912e6d135135edd90e8a9d3","recoveredDigest":"sha256:ff95df236f5b630d46590983b5dee544f82e4108ece74b1867e7413ac139d317","originalWaitDigest":"sha256:e6fc3b091b8f840c46e180304cfb023162042d191912e6d135135edd90e8a9d3","authorized":false,"error":"REPAIR_AUTHORIZATION_INVALID"}}
+✔ archived original producer reproduces locale defect without historical Git objects (19673.072995ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=false, Unicode policy=true (104374.30438ms)
+✔ persisted source approval graph sv_SE.UTF-8 -> en_US.UTF-8, legacy=false, Unicode policy=true (101435.16252ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=false (90807.554003ms)
+✔ persisted source approval graph en_US.UTF-8 -> sv_SE.UTF-8, legacy=true, Unicode policy=true (54743.391405ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=false (17880.886044ms)
+✔ mixed SourceBinding codec rejects before review; legacy subject=true (12734.298277ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 384406.408452

@@ -1,0 +1,49 @@
+{
+  "working_directory": "repository root",
+  "commands": [
+    {
+      "command": "node --test tests/verification/reliability/sdk-json-contract.test.mts tests/verification/reliability/sdk-json-portable.test.mts tests/verification/reliability/review-semantic-inner-owners.test.mjs tests/verification/reliability/review-semantic-compiler.test.mjs tests/verification/reliability/review-semantic-summary.test.mjs",
+      "output": "sdk-local-owners-after.log",
+      "exit_code": 0
+    },
+    {
+      "command": "node --test tests/verification/reliability/effect-identity-version.test.mts tests/verification/reliability/adapter-dependency-identity.test.mts tests/verification/reliability/source-identity-version.test.mjs tests/verification/reliability/repair-identity-historical-producer.test.mjs",
+      "output": "sdk-history-after.log",
+      "exit_code": 0
+    },
+    {
+      "command": "node --test tests/verification/reliability/delivery-manifest-v3-compiler.test.mjs tests/verification/reliability/delivery-manifest-v3-durability.test.mjs tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs",
+      "output": "sdk-delivery-after.log",
+      "exit_code": 1
+    },
+    {
+      "command": "node --test --test-concurrency=1 tests/verification/reliability/delivery-manifest-v3-durability.test.mjs tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs",
+      "output": "sdk-delivery-recovery-serial.log",
+      "exit_code": 0
+    },
+    {
+      "command": "npm test --workspace @kubeclaw/plugin-sdk",
+      "output": "sdk-values.log",
+      "exit_code": 0
+    },
+    {
+      "command": "npx --no-install eslint --config charts/kubeclaw/files/config/eslint.config.mjs tests/verification/reliability/review-semantic-summary-child.mjs",
+      "output": "sdk-summary-lint.log",
+      "exit_code": 0
+    },
+    {
+      "command": "node scripts/docs-check-refs.mjs",
+      "output": "sdk-refs.log",
+      "exit_code": 1
+    }
+  ],
+  "before_failure": "sdk-local-owners.log retains the original unselected v2 Summary failure; corrected fixture selects the production CLI v3 mode explicitly.",
+  "local_test_cases": {
+    "sdk_semantic": 13,
+    "history": 11,
+    "delivery": 5,
+    "delivery_initial_pass": 3,
+    "delivery_serial_recovery_pass": 2
+  },
+  "limits": "No native Review/model/cluster execution claim; flagged helper not repeated or rerouted."
+}

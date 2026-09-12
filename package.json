@@ -211,7 +211,8 @@
     "typecheck:integration": "tsc --noEmit -p tests/verification/integration/tsconfig.prism.json && tsc --noEmit -p tests/verification/integration/tsconfig.http.json && tsc --noEmit -p tests/verification/integration/tsconfig.demo-auth-smoke.json && tsc --noEmit -p tests/verification/reliability/tsconfig.buster-shutdown.json && tsc --noEmit -p tests/verification/integration/tsconfig.registry-live.json",
     "test:historical-branch-acceptance": "node --test tests/verification/historical-branch-acceptance/*.test.mjs",
     "verify:registry-local:storage": "node --test tests/verification/deployment/registry-local-storage.test.mjs",
-    "verify:registry-local:native": "node --test tests/verification/integration/registry-local-gc.test.mjs"
+    "verify:registry-local:native": "node --test tests/verification/integration/registry-local-gc.test.mjs",
+    "verify:sdk:local": "node --test --test-concurrency=1 tests/verification/reliability/sdk-json-contract.test.mts tests/verification/reliability/sdk-json-portable.test.mts tests/verification/reliability/review-semantic-inner-owners.test.mjs tests/verification/reliability/review-semantic-compiler.test.mjs tests/verification/reliability/review-semantic-summary.test.mjs tests/verification/reliability/effect-identity-version.test.mts tests/verification/reliability/adapter-dependency-identity.test.mts tests/verification/reliability/source-identity-version.test.mjs tests/verification/reliability/repair-identity-historical-producer.test.mjs tests/verification/reliability/delivery-manifest-v3-compiler.test.mjs tests/verification/reliability/delivery-manifest-v3-durability.test.mjs tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",

@@ -11,9 +11,9 @@ Gesamtabschlussmaßstab bleiben unveränderte Nachweise ihrer damaligen Aussage.
 D12 ändert die Aufgabenabnahme, nicht die Bedeutung eines bestandenen Tests,
 Produktfreigabe, Sicherheitskontrollen oder Produktions-Readiness.
 
-**Aktuell 35 der 39 lokal abgeschlossen; 4 bleiben unvollständig. Zusätzlich ist
+**Aktuell 36 der 39 lokal abgeschlossen; 3 bleiben unvollständig. Zusätzlich ist
 PATH-T04-002 aus den zwei zuvor in Bearbeitung befindlichen Findings abgeschlossen.
-Gesamtregister: 130 verifiziert, 4 teilweise implementiert, 1 in Bearbeitung, 19 offen.**
+Gesamtregister: 131 verifiziert, 3 teilweise implementiert, 1 in Bearbeitung, 19 offen.**
 
 Der nachfolgende ursprüngliche D12-Bewertungsstand wurde durch den
 [Risiko-/Registry-Checkpoint](pr6-risk-and-registry.md) ergänzt. Dies sind belegte Neueinstufungen vorhandener Fixes,
@@ -38,7 +38,7 @@ Rohbelege und exakte Befehle: [Prüfprotokoll](../../evidence/pr6-local-acceptan
 
 | Kennung | Lokaler Auftrag | Begründung und vorhandene Nachweise |
 | --- | --- | --- |
-| PCR-SDK-001 | offen | Gekoppelte semantische Digest-/Consumer- und historische Kompatibilitätsprüfung lokal noch nicht ausreichend abgeschlossen. Frühere lokale Czech-Gegenprobe und spätere Teilprüfungen ergeben noch keinen vollständigen lokalen Abschluss des integrierten SDK-Pakets. Markierte Helper-Aktion bleibt verboten; keine Umleitung. [Nachweise](pr6-knip.md) |
+| PCR-SDK-001 | abgeschlossen | Lokaler SDK-Abschluss nach D12: ursprüngliche Serializer-/Artifact-/Effect-/Source-/History-/Compiler-/Semantik-/Summary-/Deliveryconsumer geprüft;13 Owner-,11 History- und5 Deliverytests bestehen, einschließlich12 echter SIGKILL-/Replaygrenzen. Veraltete Summary-Testkopplung an bewusst historisches v2 auf expliziten aktuellen v3-Vertrag korrigiert. Gesperrter Helper nicht erneut ausgeführt; Live-Reviewer/Modelle bleiben separat. [Nachweise](pr6-sdk-local-verification.md) |
 | PCR-BUSTER-ENGINE-004 | offen | Restart-/Orphanbereinigung benötigt noch implementierten dauerhaften Gesamtprozessbesitz und Quieszenz. Statusfehlerfix und normale Bereinigung lösen diese Implementierungslücke nicht. [Nachweise](resume-84-buster-read-independent-review.md) |
 | PCR-ISOLATION-002 | abgeschlossen | Implementierter TERM-/Cgroup-/Parent-death-Vertrag, echte Session-/Prozessregressionen und gehärteter C-Build; Kernel-Prozessbaumabnahme wird separat nachgeholt. [Nachweise](isolation.md) |
 | PCR-ISOLATION-004 | abgeschlossen | Reale Cgroup-Limitimplementierung mit konservativer Page-Rundung, exaktem Readback und Fail-closed; lokale Konfigurations-/Page-/Sessiontests vorhanden. Kernel-OOM ist späterer Betriebstest. [Nachweise](isolation.md) |

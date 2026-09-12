@@ -83,7 +83,8 @@
     "IFR-25-001",
     "T01-F02",
     "T15-F01",
-    "IFR-08-002"
+    "IFR-08-002",
+    "PCR-SDK-001"
   ],
   "checkpoints": [
     {
@@ -149,6 +150,6 @@
   "additional_scope_completed_ids": [
     "PATH-T04-002"
   ],
-  "updated_at": "2026-09-12T11:07:52.535195+00:00",
+  "updated_at": "2026-09-12T11:31:34.769121+00:00",
   "current_scope_report": "../pr6-seven-progress.json"
 }

@@ -10,17 +10,17 @@
       "id": "PCR-SDK-001",
       "status_at_checkpoint": "in Bearbeitung",
       "evidence": "resume/run-20260911-a51d-2h.md",
-      "next_action": "Restore d22ee1d2. Full fresh Delivery13/13,34 new consumer negatives, corrected package ownership and focused lint/types pass. New tests/refactors require separate review; full Knip and genuine coupled semantic acceptance remain open. Do not integrate semantic source alone or reroute the flagged helper.",
+      "next_action": "Lokaler Abschluss nach D12; historische Restore-/Native-Aufträge sind keine aktuelle lokale Abschlussbedingung. Gesperrte Aktion nicht wiederholen.",
       "resume_20260911_evidence": {
         "integration_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
         "summary": "Delivery-Refactor und Consumerfälle unabhängig gegengeprüft; dabei verlorene statische Integrationstestabdeckung repariert, mit sechs echten Typfehlern plus drei Root-Negativen bestätigt. Paketgrenzen/Testabdeckung integriert; gekoppelte SDK-/Delivery-Quelle bleibt separat.",
         "remaining_gate": "Vollständiges Knip und ursprüngliche gekoppelte native Semantik-/Producer-/History-Abnahme fehlen. Markierte Helper-Aktion weder wiederholen noch umleiten."
       },
       "pre_d12_status": null,
-      "status": "implementiert",
-      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
-      "result": "Gekoppelte semantische Digest-/Consumer- und historische Kompatibilitätsprüfung lokal noch nicht ausreichend abgeschlossen. Frühere lokale Czech-Gegenprobe und spätere Teilprüfungen ergeben noch keinen vollständigen lokalen Abschluss des integrierten SDK-Pakets. Markierte Helper-Aktion bleibt verboten; keine Umleitung.",
-      "required_evidence": "Gekoppelte semantische Digest-/Consumer- und historische Kompatibilitätsprüfung lokal noch nicht ausreichend abgeschlossen. Frühere lokale Czech-Gegenprobe und spätere Teilprüfungen ergeben noch keinen vollständigen lokalen Abschluss des integrierten SDK-Pakets. Markierte Helper-Aktion bleibt verboten; keine Umleitung."
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-sdk-local-verification.md",
+      "result": "Lokaler SDK-Abschluss nach D12: ursprüngliche Serializer-/Artifact-/Effect-/Source-/History-/Compiler-/Semantik-/Summary-/Deliveryconsumer geprüft;13 Owner-,11 History- und5 Deliverytests bestehen, einschließlich12 echter SIGKILL-/Replaygrenzen. Veraltete Summary-Testkopplung an bewusst historisches v2 auf expliziten aktuellen v3-Vertrag korrigiert. Gesperrter Helper nicht erneut ausgeführt; Live-Reviewer/Modelle bleiben separat.",
+      "required_evidence": "Lokaler Abschluss erfolgt; Live-Abnahme später durch Auftraggeber. Gesperrte Helper-Aktion bleibt verboten."
     },
     {
       "id": "PCR-BUSTER-ENGINE-004",
@@ -580,7 +580,7 @@
     "remaining_count": null,
     "verified_count_at_checkpoint": 8
   },
-  "verified_count": 43,
-  "remaining_count": 4,
-  "updated_at": "2026-09-12T11:07:52.535195+00:00"
+  "verified_count": 44,
+  "remaining_count": 3,
+  "updated_at": "2026-09-12T11:31:34.769121+00:00"
 }

@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-12T11:07:52.535195+00:00",
+  "updated_at": "2026-09-12T11:31:34.769121+00:00",
   "pr": 6,
   "scope_count": 7,
-  "completed_count": 2,
-  "remaining_count": 5,
+  "completed_count": 3,
+  "remaining_count": 4,
   "completion_policy": "D12",
   "findings": [
     {
       "id": "PCR-SDK-001",
-      "status": "implementiert",
-      "result": "Konkrete Implementierungs-/lokale Nachweisarbeit bleibt offen."
+      "status": "verifiziert",
+      "result": "Lokaler SDK-Abschluss nach D12: ursprüngliche Serializer-/Artifact-/Effect-/Source-/History-/Compiler-/Semantik-/Summary-/Deliveryconsumer geprüft;13 Owner-,11 History- und5 Deliverytests bestehen, einschließlich12 echter SIGKILL-/Replaygrenzen. Veraltete Summary-Testkopplung an bewusst historisches v2 auf expliziten aktuellen v3-Vertrag korrigiert. Gesperrter Helper nicht erneut ausgeführt; Live-Reviewer/Modelle bleiben separat."
     },
     {
       "id": "PCR-BUSTER-ENGINE-004",
