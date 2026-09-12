@@ -19,7 +19,7 @@ test('production harness validates native module gates and rejects counter-based
   const oldRegistry = process.env.KUBECLAW_REGISTRY_CONFIG;
   process.env.KUBECLAW_REGISTRY_CONFIG = registryTestContract;
   const oldImage = process.env.REAL_E2E_DEPLOYMENT_IMAGE;
-  process.env.REAL_E2E_DEPLOYMENT_IMAGE = `registry-mirror.kubeclaw.svc.cluster.local:5000/library/nginx@sha256:${'a'.repeat(64)}`;
+  process.env.REAL_E2E_DEPLOYMENT_IMAGE = `registry.example.test:5443/library/nginx@sha256:${'a'.repeat(64)}`;
   try {
     fs.cpSync(new URL('./fixtures/nginx-project', import.meta.url), source, { recursive: true });
     const progress = buildProgress({ projectName, runId: 'run:production-graph' });

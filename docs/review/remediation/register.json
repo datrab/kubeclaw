@@ -3814,7 +3814,11 @@
       "verification_status": "lokale Vertragsprüfung bestanden; native Betriebsgates offen",
       "verification_evidence": [
         "implementation/registry-clients.md",
-        "implementation/registry-client-scope.json"
+        "implementation/registry-client-scope.json",
+        {
+          "report": "implementation/pr6-registry-target.md",
+          "summary": "Originale Workspace-Suite61/61, Ziel-/Runner20/20, HTTPS-/Provider3/3 und Matrix20/20 ohne Skips. Native Fixture wählt explizites Image und verwendet ursprüngliche begrenzte Manifestprüfung; kein tatsächlicher BuildKit-/CRI-/Pod-Lauf. Strikte native Testtypen behalten sechs bereits vorher vorhandene Fehler."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/registry-local.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
@@ -3823,7 +3827,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/my-values/infra/k3s-registries.yaml#L1"
       ],
       "unresolved_code_references": [],
-      "next_action": "E2E-Registryzielvertrag ergänzen; echten BuildKit-Push, uncached CRI-Pull und Pod mit Hostkonfiguration prüfen. Kein Deployment in diesem Auftrag.",
+      "next_action": "E2E-Registryziel und explizites unveränderliches Seedimage sind auf PR #6 an den gemeinsamen Operatorvertrag gebunden. Echten BuildKit-Push, uncached CRI-Pull und Pod mit Hostkonfiguration prüfen. Kein Deployment in diesem Auftrag.",
       "related_findings": [],
       "decision_notes": []
     },

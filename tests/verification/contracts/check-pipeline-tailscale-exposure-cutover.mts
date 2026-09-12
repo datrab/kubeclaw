@@ -96,7 +96,7 @@ try {
 } finally { fs.rmSync(scaffoldRoot, { recursive: true, force: true }); }
 
 const prior = process.env.REAL_E2E_DEPLOYMENT_IMAGE;
-process.env.REAL_E2E_DEPLOYMENT_IMAGE = `registry-mirror.kubeclaw.svc.cluster.local:5000/library/nginx@sha256:${'b'.repeat(64)}`;
+process.env.REAL_E2E_DEPLOYMENT_IMAGE = `registry.example.test:5443/library/nginx@sha256:${'b'.repeat(64)}`;
 const priorRegistry = process.env.KUBECLAW_REGISTRY_CONFIG;
 process.env.KUBECLAW_REGISTRY_CONFIG = registryTestContract;
 const workspace = await createRealE2ERunWorkspace({ scenarioId: 'success' });

@@ -1,0 +1,20 @@
+tests/verification/contracts/baseline-check-pipeline-http-live.mts(29,47): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+tests/verification/contracts/baseline-check-pipeline-kubernetes-fixture-live.mts(66,58): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+tests/verification/contracts/baseline-check-pipeline-kubernetes-fixture-live.mts(86,55): error TS2322: Type 'unknown' is not assignable to type 'string'.
+tests/verification/contracts/baseline-check-pipeline-kubernetes-fixture-live.mts(91,36): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+tests/verification/contracts/baseline-check-pipeline-kubernetes-fixture-live.mts(104,71): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(iterable?: Iterable<readonly [string, DirectCommandCapabilityInvoker]> | null | undefined): Map<string, DirectCommandCapabilityInvoker>', gave the following error.
+    Argument of type '([string, DirectCommandCapabilityInvoker] | [string, KubernetesFixtureCapabilityInvoker])[]' is not assignable to parameter of type 'Iterable<readonly [string, DirectCommandCapabilityInvoker]>'.
+      The types returned by '[Symbol.iterator]().next(...)' are incompatible between these types.
+        Type 'IteratorResult<[string, DirectCommandCapabilityInvoker] | [string, KubernetesFixtureCapabilityInvoker], undefined>' is not assignable to type 'IteratorResult<readonly [string, DirectCommandCapabilityInvoker], any>'.
+          Type 'IteratorYieldResult<[string, DirectCommandCapabilityInvoker] | [string, KubernetesFixtureCapabilityInvoker]>' is not assignable to type 'IteratorResult<readonly [string, DirectCommandCapabilityInvoker], any>'.
+            Type 'IteratorYieldResult<[string, DirectCommandCapabilityInvoker] | [string, KubernetesFixtureCapabilityInvoker]>' is not assignable to type 'IteratorYieldResult<readonly [string, DirectCommandCapabilityInvoker]>'.
+              Type '[string, DirectCommandCapabilityInvoker] | [string, KubernetesFixtureCapabilityInvoker]' is not assignable to type 'readonly [string, DirectCommandCapabilityInvoker]'.
+                Type '[string, KubernetesFixtureCapabilityInvoker]' is not assignable to type 'readonly [string, DirectCommandCapabilityInvoker]'.
+                  Type at position 1 in source is not compatible with type at position 1 in target.
+                    Type 'KubernetesFixtureCapabilityInvoker' is not assignable to type 'DirectCommandCapabilityInvoker'.
+                      Property '#root' in type 'KubernetesFixtureCapabilityInvoker' refers to a different member that cannot be accessed from within type 'DirectCommandCapabilityInvoker'.
+  Overload 2 of 4, '(entries?: readonly (readonly [string, DirectCommandCapabilityInvoker])[] | null | undefined): Map<string, DirectCommandCapabilityInvoker>', gave the following error.
+    Type 'KubernetesFixtureCapabilityInvoker' is not assignable to type 'DirectCommandCapabilityInvoker'.
+      Property '#root' in type 'KubernetesFixtureCapabilityInvoker' refers to a different member that cannot be accessed from within type 'DirectCommandCapabilityInvoker'.
+tests/verification/contracts/baseline-check-pipeline-kubernetes-fixture-live.mts(107,55): error TS2322: Type 'unknown' is not assignable to type 'string'.

@@ -136,3 +136,13 @@ then separate cached-hit and uncached-miss behavior with upstream unavailable.
 Registry GC requires multi-lease reference protection and registry-Pod
 replacement tests after a real lifecycle/storage design exists. Local Helm,
 configuration and HTTPS tests do not close any of these native gates.
+
+## E2E target selection
+
+The real E2E runner consumes `KUBECLAW_REGISTRY_CONFIG` and an explicit
+`REAL_E2E_DEPLOYMENT_IMAGE` on that registry, pinned by SHA-256. It rejects the
+retired local-registry override and foreign image authorities. Native fixture
+verification authenticates to the selected manifest and checks its bytes;
+it never chooses the first repository or tag in a catalog. Supply the configured
+CA at Node startup through `NODE_EXTRA_CA_CERTS` when needed. This preflight does
+not establish native BuildKit push, uncached CRI pull or Pod success.

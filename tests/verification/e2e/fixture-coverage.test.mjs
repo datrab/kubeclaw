@@ -8,7 +8,7 @@ import { buildProgress, normalizeRealE2ERuntimeDefaults, writeRealE2ESwarmFiles 
 import { registryTestContract } from './registry-test-contract.mjs';
 
 process.env.KUBECLAW_REGISTRY_CONFIG = registryTestContract;
-process.env.REAL_E2E_DEPLOYMENT_IMAGE = 'registry-mirror.kubeclaw.svc.cluster.local:5000/library/nginx:1.27-alpine@sha256:62223d644fa234c3a1cc785ee14242ec47a77364226f1c811d2f669f96dc2ac8';
+process.env.REAL_E2E_DEPLOYMENT_IMAGE = 'registry.example.test:5443/library/nginx:1.27-alpine@sha256:62223d644fa234c3a1cc785ee14242ec47a77364226f1c811d2f669f96dc2ac8';
 
 test('actual Git baseline survives later commits and scoped resume without inventing coverage', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'fixture-coverage-'));
