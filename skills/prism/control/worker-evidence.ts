@@ -1,11 +1,10 @@
 import { validateEngineResult } from '@kubeclaw/prism-contracts-v1';
-import type { WorkerAttemptEnvelopeV1, WorkerAttemptResultV1 } from '@kubeclaw/pipeline-worker-core-contract';
-import { acceptWorkerResult } from './worker-results.ts';
+import { acceptWorkerResult, type PrismWorkerAttempt, type PrismWorkerResult } from './worker-results.ts';
 import { artifactLocation, type WorkerArtifactClient } from '../server/worker-artifacts.ts';
 
 /** Full binding is checked before the first evidence read, including cache replay. */
-export async function hydrateWorkerResult(attempt: WorkerAttemptEnvelopeV1, raw: unknown,
-  artifacts: WorkerArtifactClient): Promise<{ result: WorkerAttemptResultV1; values: Record<string, unknown> }> {
+export async function hydrateWorkerResult(attempt: PrismWorkerAttempt, raw: unknown,
+  artifacts: WorkerArtifactClient): Promise<{ result: PrismWorkerResult; values: Record<string, unknown> }> {
   const result = acceptWorkerResult(attempt, raw);
   const values: Record<string, unknown> = { ...result.specialistResult!.values };
   const seen = new Set<string>();

@@ -127,8 +127,8 @@ durable coordinator. It requires both `KUBECLAW_WORKER_TEST_CGROUP_ROOT` and
 skip missing delegation. Positive delegated-scope execution remains for the
 operator's final live run and is not claimed by the local negative tests.
 
-Remaining implementation includes production V3 activation and historical-cache
-read support; persistent host outcome/log recovery; delegated-node preparation,
+Remaining implementation includes production V3 activation;
+persistent host outcome/log recovery; delegated-node preparation,
 aggregate resource budgets and charts; Buster's full per-attempt host integration
 and ownership of its nested capability processes; durable retained-fixture
 lifecycle and terminal workspace reconciliation; and connected cross-store
@@ -137,3 +137,15 @@ attempt before dependent nodes run, retains the provider instance, and cleans
 it up only after the plan. That existing lifecycle must be reconciled explicitly
 with native resource ownership, rather than killed by the generic process
 supervisor as soon as setup returns.
+
+Control now validates V1 historical cache entries with the original V1 contract
+and native entries with the distinct V3 contract and binding checks. A new real
+Prism operation/HTTP/artifact regression confirms that the original V1 receipt
+remains readable with identical digest/resources and cannot be imported as a V3
+receipt; rejection occurs before evidence I/O. The affected service suite passed
+7/7 after this change, and Prism type checking and canonical lint passed. This
+does not assert successful native cache replay from a live isolated host.
+
+The retained-fixture budget/receipt alternatives are documented in
+[the fixture lifecycle proposal](pr6-fixture-lifecycle-boundary.md). No new
+fixture lifetime policy is marked accepted or implemented by this checkpoint.

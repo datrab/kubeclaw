@@ -11,7 +11,7 @@ import { WorkerAttemptExecutor } from '@kubeclaw/worker-core';
 import { validatePipelineWorkerCoreContract, workerAttemptResultDigest, workerAttemptSpecDigest, type WorkerAttemptResultV1 } from '@kubeclaw/pipeline-worker-core-contract';
 import { ContentAddressedArtifactStore } from '../storage/artifacts.ts';
 import { PrismEngine, DeterministicDesignProvider } from '../engine/index.ts';
-import { prismAttempt, prismRequestDigest } from '../engine/worker-envelope.ts';
+import { prismAttempt, prismNativeAttempt, prismRequestDigest } from '../engine/worker-envelope.ts';
 import { handleInternalArtifact } from '../server/internal-artifacts.ts';
 import { WorkerArtifactClient } from '../server/worker-artifacts.ts';
 import { operationFor } from '../server/worker-operation.ts';
@@ -100,6 +100,24 @@ test('Control shared boundary rejects other real attempts and modified results b
   assert.throws(() => acceptedCachedResult({ attempt: other, workerResult: foreign }, digest, other.executionId), /CACHE_REQUEST_MISMATCH/u);
   assert.throws(() => acceptedCachedResult({ attempt: expected, workerResult: first }, digest, other.executionId), /CACHE_EXECUTION_MISMATCH/u);
   assert.throws(() => acceptedCachedResult({ values: first.specialistResult!.values, evidence: first.evidence }, digest, expected.executionId), /CACHE_UNBOUND/u);
+});
+
+test('historical real receipts remain readable and cannot be reinterpreted as native task receipts', async t => {
+  const f = await setup(t), legacy = await f.attempt();
+  const result = await executeWorkerAttempt(legacy, f.engine, f.client);
+  assert.equal(result.state, 'completed', result.error?.message);
+  const input = legacy.inputs[0]!;
+  assert.equal(input.kind, 'artifact');
+  if (input.kind !== 'artifact') throw new Error('test input must be the original retained artifact');
+  const native = prismNativeAttempt('render', input.artifact, 'version-boundary');
+  const before = f.contacts();
+  await assert.rejects(hydrateWorkerResult(native, result, f.client));
+  assert.equal(f.contacts(), before, 'a version mismatch must fail before artifact I/O');
+  const requestDigest = prismRequestDigest(legacy.operation, input.artifact.contentDigest);
+  const reopened = acceptedCachedResult(JSON.parse(JSON.stringify({ attempt: legacy, workerResult: result })), requestDigest, legacy.executionId);
+  assert.equal(reopened.workerResult.schemaVersion, 'worker-attempt-result.v1');
+  assert.equal(reopened.workerResult.resultDigest, result.resultDigest);
+  assert.deepEqual(reopened.workerResult.resources, result.resources);
 });
 
 test('actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest', async t => {
