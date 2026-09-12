@@ -1,36 +1,26 @@
 import { boundedUtf8, logObservation } from './diagnostics.mjs';
 import { getHubbleFlows } from './hubble.mjs';
-import { readFileSync } from 'node:fs';
+import { createBearerAuthorization } from './authentication.mjs';
+import { loadOpsMcpConfig } from './config.mjs';
 import { createKubeRequest, createKubeList } from './kubernetes.mjs';
 import { createServer } from 'node:http';
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server';
 import { toNodeHandler } from '@modelcontextprotocol/node';
 import * as z from 'zod/v4';
 
-const PORT = Number.parseInt(process.env.PORT ?? '8080', 10);
-const HOST = process.env.HOST ?? '0.0.0.0';
+const config = loadOpsMcpConfig();
+const PORT = config.port;
+const HOST = config.host;
 const kubeRequest = createKubeRequest();
-const DEFAULT_NAMESPACE = process.env.OPS_DEFAULT_NAMESPACE ?? 'kubeclaw';
-const ARGO_NAMESPACE = process.env.ARGOCD_NAMESPACE ?? 'argocd';
-const HUBBLE_BIN = process.env.HUBBLE_BIN ?? '/usr/local/bin/hubble';
-const HUBBLE_SERVER = process.env.HUBBLE_SERVER ?? 'hubble-relay.cilium.svc.cluster.local:4245';
+const DEFAULT_NAMESPACE = config.defaultNamespace;
+const ARGO_NAMESPACE = config.argoNamespace;
 const MAX_LOG_BYTES = 64 * 1024;
 const kubeList = createKubeList(kubeRequest);
 const EVENT_PAGE_SIZE = 500;
 
-const optionalBearerToken = (process.env.OPS_MCP_BEARER_TOKEN_FILE
-  ? readFileSync(process.env.OPS_MCP_BEARER_TOKEN_FILE, 'utf8').trim()
-  : process.env.OPS_MCP_BEARER_TOKEN?.trim()) || null;
-if (process.env.OPS_LOCAL_ONLY === '1' &&
-    (HOST !== '127.0.0.1' || !optionalBearerToken || optionalBearerToken.length < 32)) {
-  throw new Error('Local-only MCP requires HOST=127.0.0.1 and a bearer token of at least 32 characters');
-}
-const allowedOrigins = new Set(
-  (process.env.MCP_ALLOWED_ORIGINS ?? '')
-    .split(',')
-    .map(value => value.trim())
-    .filter(Boolean),
-);
+const authentication = createBearerAuthorization(config.bearer);
+const namespaceSchema = z.enum(config.namespaces).default(DEFAULT_NAMESPACE);
+const allowedOrigins = config.allowedOrigins;
 
 function jsonText(value) {
   return {
@@ -211,7 +201,7 @@ function buildServer() {
     },
   );
 
-  if (process.env.OPS_LOCAL_ONLY === '1') {
+  if (config.localOnly) {
     server.registerTool('platform_cluster_state', {
       title: 'Nodes and global Cilium policies',
       description: 'Read node health or global Cilium policies through the host API. Does not execute in nodes or Cilium pods.',
@@ -230,7 +220,7 @@ function buildServer() {
       title: 'Platform network state',
       description: 'Read Cilium workloads or namespaced policies through the direct Kubernetes API. Missing Cilium CRDs are reported as unavailable, not healthy.',
       inputSchema: z.object({
-        namespace: z.string().regex(/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/).default(DEFAULT_NAMESPACE),
+        namespace: namespaceSchema,
         resource: z.enum(['daemonsets', 'networkpolicies', 'ciliumnetworkpolicies']),
         continueToken: z.string().max(16384).optional(),
       }),
@@ -296,7 +286,7 @@ function buildServer() {
       description:
         'Summarize deployments, statefulsets, pods, jobs, services and ingresses in one namespace.',
       inputSchema: z.object({
-        namespace: z.string().min(1).default(DEFAULT_NAMESPACE),
+        namespace: namespaceSchema,
       }),
       annotations: {
         readOnlyHint: true,
@@ -364,7 +354,7 @@ function buildServer() {
       title: 'Get pod status',
       description: 'Read detailed status for one pod without reading Secrets or executing commands.',
       inputSchema: z.object({
-        namespace: z.string().min(1).default(DEFAULT_NAMESPACE),
+        namespace: namespaceSchema,
         pod: z.string().min(1),
       }),
       annotations: {
@@ -392,7 +382,7 @@ function buildServer() {
       title: 'Get Kubernetes events',
       description: 'Read recent Kubernetes events in a namespace, optionally filtered to one object name.',
       inputSchema: z.object({
-        namespace: z.string().min(1).default(DEFAULT_NAMESPACE),
+        namespace: namespaceSchema,
         objectName: z.string().min(1).optional(),
         limit: z.number().int().min(1).max(100).default(40),
       }),
@@ -422,7 +412,7 @@ function buildServer() {
       description:
         'Read up to 64 KiB of log text (JSON metadata is additional). Default: recent tail. sinceTime reads from a chosen timestamp in still available logs; no historical cursor or until filter is available. Content is not redacted; inspect observation before drawing conclusions.',
       inputSchema: z.object({
-        namespace: z.string().min(1).default(DEFAULT_NAMESPACE),
+        namespace: namespaceSchema,
         pod: z.string().min(1),
         container: z.string().min(1).optional(),
         tailLines: z.number().int().min(1).max(500).optional(),
@@ -478,7 +468,7 @@ function buildServer() {
       description:
         'Read a small filtered set of Cilium Hubble flows for one namespace, optionally one pod and verdict. Choose any still available absolute time window, max 15 minutes per call. Inspect partial status and continue with smaller/older windows. Exact pod match. No content redaction; no endpoint label sets.',
       inputSchema: z.object({
-        namespace: z.string().max(63).regex(/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/).default(DEFAULT_NAMESPACE),
+        namespace: namespaceSchema,
         pod: z.string().max(253).regex(/^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$/).optional(),
         verdict: z.enum(['FORWARDED', 'DROPPED', 'AUDIT', 'REDIRECTED', 'ERROR', 'TRACED', 'TRANSLATED']).optional(),
         startTime: z.iso.datetime({ offset: true }).optional(),
@@ -505,8 +495,7 @@ const mcpHandler = createMcpHandler(buildServer, { responseMode: 'json' });
 const nodeMcpHandler = toNodeHandler(mcpHandler);
 
 function requestAuthorized(req) {
-  if (!optionalBearerToken) return true;
-  return req.headers.authorization === `Bearer ${optionalBearerToken}`;
+  return authentication.authorized(req.headers.authorization);
 }
 
 function originAllowed(req) {
@@ -529,8 +518,9 @@ const httpServer = createServer((req, res) => {
   }
 
   if (url.pathname === '/healthz') {
-    res.writeHead(200, { 'content-type': 'application/json' });
-    res.end(JSON.stringify({ ok: true, service: 'kubeclaw-ops-mcp' }));
+    const ready = authentication.ready();
+    res.writeHead(ready ? 200 : 503, { 'content-type': 'application/json' });
+    res.end(JSON.stringify({ ok: ready, service: 'kubeclaw-ops-mcp' }));
     return;
   }
 

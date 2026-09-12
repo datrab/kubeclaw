@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 test('malformed target returns 400 and leaves server and authorization intact', async () => {
   const child = spawn(process.execPath, [fileURLToPath(new URL('../src/server.mjs', import.meta.url))], {
-    env: { ...process.env, PORT: '0', HOST: '127.0.0.1', OPS_MCP_BEARER_TOKEN: 'test-only' },
+    env: { ...process.env, PORT: '0', HOST: '127.0.0.1', OPS_MCP_BEARER_TOKEN: 'test-only-' + 'x'.repeat(32) },
     stdio: ['ignore', 'ignore', 'pipe'],
   });
   try {

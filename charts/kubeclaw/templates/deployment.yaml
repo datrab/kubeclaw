@@ -1640,6 +1640,13 @@ spec:
         - name: worker-trust-tmp
           emptyDir: { sizeLimit: 64Mi }
         {{- end }}
+        {{- if .Values.archviewer.enabled }}
+        - name: archviewer-auth
+          secret:
+            secretName: {{ required "archviewer.existingSecret is required" .Values.archviewer.existingSecret | quote }}
+            items: [{key: htpasswd, path: htpasswd}]
+            defaultMode: 0444
+        {{- end }}
         {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

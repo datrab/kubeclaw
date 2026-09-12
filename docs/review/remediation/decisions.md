@@ -126,3 +126,31 @@ Am 2026-09-12 vom Auftraggeber nach Abwägung ausdrücklich bestätigt:
 Dies ist die freigegebene Zielentscheidung, noch kein implementierter oder
 verifizierter Ressourcenpfad. D09 und D12 bleiben unverändert; keine Deployment-
 oder Privilegienänderung ist damit autorisiert.
+
+## D14 — Eigene dauerhafte Fixture-Lebensdauer in Buster
+
+Der Auftraggeber hat den Vorschlag ausdrücklich bestätigt: Retained Fixtures
+erhalten eine eigene dauerhafte Lebensdauer in Buster mit großzügigem separatem
+Ressourcenbudget und einem Abschlussbeleg nach dem Cleanup. Bereitschaft nach
+dem Setup ist kein Nachweis abgeschlossener Bereinigung. Buster führt
+Abhängigkeiten, Bereitschaft und Fixture-Abschluss; Worker Core stellt neutrale
+Prozessbesitz-, Messungs- und Recoverymechanismen bereit. Prism behält seine
+normale Attempt-Lebensdauer. Die bereits freigegebene Core/Buster-Aufteilung und
+Task-Einheit müssen nicht erneut bestätigt werden.
+
+Die physische Ressourcenbindung bleibt während der Fixture-Lebensdauer erhalten;
+ein Prozesswechsel zwischen Cgroups darf nicht als Übertragung bereits
+angefallener Speicherbelastung behauptet werden. Historische Setup-Receipts und
+Budgets bleiben unverändert lesbar; neue Lebensdauerbelege sind explizit
+versioniert und gebunden.
+
+## D15 — Vollständiger verbleibender 23er-Umfang
+
+Der Auftrag umfasst jetzt alle 23 noch nicht verifizierten Findings der
+ursprünglichen 154: die vier laufenden Implementierungen und die 19 bislang
+offenen Infrastrukturfindings. Arbeit weiter direkt in PR #6. Vollständige
+Implementierung und echte ausreichende lokale Verifikation sind erforderlich;
+Live-Gates bleiben vorbereitet für die abschließende Ausführung durch den
+Auftraggeber. Kein Live-Nachweis wird aus Konfiguration oder lokalen Ersatzdaten
+abgeleitet. Die gewünschte Mindestarbeitsdauer von acht Stunden ist kein Beleg
+für Abschluss und wird nur bei tatsächlich geleisteter Zeit behauptet.

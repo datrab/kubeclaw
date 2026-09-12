@@ -1,0 +1,53 @@
+{{- if .Values.archviewer.enabled }}
+{{- if ne .Values.agentRole "nova" }}
+{{- fail "archviewer is a Nova-only sidecar" }}
+{{- end }}
+{{- range .Values.service.extraPorts }}
+{{- if or (eq .name "archviewer") (eq (int .port) 3456) (eq (toString .targetPort) "archviewer") (eq (toString .targetPort) "3456") }}
+{{- fail "Remove legacy archviewer service.extraPorts; the dedicated private Service owns this port" }}
+{{- end }}
+{{- end }}
+{{- $name := printf "%s-archviewer" (include "kubeclaw.fullname" .) | trunc 63 | trimSuffix "-" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "kubeclaw.selectorLabels" . | nindent 4 }}
+  ports:
+    - {name: http, port: 3456, targetPort: archviewer, protocol: TCP}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $name }}
+spec:
+  ingressClassName: tailscale
+  defaultBackend:
+    service:
+      name: {{ $name }}
+      port: {number: 3456}
+  tls:
+    - hosts: [{{ required "archviewer.hostname is required" .Values.archviewer.hostname | quote }}]
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: {{ $name }}
+spec:
+  endpointSelector:
+    matchLabels:
+      {{- include "kubeclaw.selectorLabels" . | nindent 6 }}
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: {{ required "archviewer.tailscaleOperatorNamespace is required" .Values.archviewer.tailscaleOperatorNamespace | quote }}
+            tailscale.com/managed: "true"
+            tailscale.com/parent-resource-type: ingress
+            tailscale.com/parent-resource: {{ $name | quote }}
+            tailscale.com/parent-resource-ns: {{ .Release.Namespace | quote }}
+      toPorts:
+        - ports: [{port: "3456", protocol: TCP}]
+{{- end }}

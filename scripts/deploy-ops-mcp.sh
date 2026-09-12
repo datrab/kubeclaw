@@ -25,7 +25,13 @@ case "$MODE" in
   apply)
     # In PR #2 the policies are Ops-owned, separate from agent connectivity.
     kubectl get crd ciliumnetworkpolicies.cilium.io >/dev/null
+    # Authentication must be provisioned before the new backend starts.
+    kubectl -n kubeclaw get secret ops-mcp-auth >/dev/null
     render | kubectl apply -f -
+    # Applying a Role does not remove a historical cluster-wide binding.
+    # Revoke only this backend's obsolete named grant, never other Ops access.
+    kubectl delete clusterrolebinding kubeclaw-ops-mcp-readonly --ignore-not-found
+    kubectl delete clusterrole kubeclaw-ops-mcp-readonly --ignore-not-found
     kubectl -n kubeclaw rollout status deployment/ops-mcp --timeout=180s
     ;;
   *) echo 'usage: deploy-ops-mcp.sh [render|policies|apply]' >&2; exit 2 ;;

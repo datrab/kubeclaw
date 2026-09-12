@@ -1,6 +1,7 @@
 # Buster fixture accounting boundary — decision proposal
 
-Status: proposed, not implemented and not an issue closure. This is separate
+Status: option 2 explicitly accepted by the user (D14); not yet implemented and
+not an issue closure. This is separate
 from the already accepted decisions about Linux task units, generous limits,
 Worker Core ownership primitives and Buster-only fixture policy.
 
@@ -57,6 +58,7 @@ to use its ordinary per-attempt execution and browser-closure lifecycle.
   failed teardown, cancellation and real supervisor death at ownership changes.
 - No operational cleanup or deployment is authorized by this proposal.
 
-The open choice is the public budget/receipt boundary for retained fixtures.
+The selected public budget/receipt boundary is the separate fixture lifecycle
+described in option 2. No further confirmation of that choice is needed.
 The Core/Buster responsibility split and Prism's independent lifecycle were
 already decided and do not need to be approved again.

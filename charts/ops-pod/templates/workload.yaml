@@ -80,6 +80,7 @@ spec:
             - {name: HOST, value: "127.0.0.1"}
             - {name: OPS_LOCAL_ONLY, value: "1"}
             - {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}
+            - {name: OPS_ALLOWED_NAMESPACES, value: {{ join "," .Values.rbac.namespaces | quote }}}
             - {name: ARGOCD_NAMESPACE, value: {{ .Values.argoNamespace | quote }}}
             - {name: OPS_MCP_BEARER_TOKEN_FILE, value: /var/run/kubeclaw-ops/bearer/token}
           securityContext:

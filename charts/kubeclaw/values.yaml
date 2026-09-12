@@ -273,10 +273,7 @@ service:
   # creates a dedicated NodePort Service for that extra port without exposing
   # the gateway.
   extraPorts: []
-  # - name: archviewer
-  #   port: 3456
-  #   targetPort: 3456
-  #   nodePort: 30456
+  # Archviewer uses its own private Service; configure archviewer below.
 
 # =============================================================================
 # PERSISTENCE
@@ -530,6 +527,14 @@ extraEnv: []
 
 # -- Extra sidecar containers to inject into the agent pod (e.g. archviewer)
 extraContainers: []
+
+# Architecture documents require both Tailnet access and HTTP credentials.
+# Supply Secret/<existingSecret> with an htpasswd key outside the repository.
+archviewer:
+  enabled: false
+  existingSecret: ""
+  hostname: nova-architecture
+  tailscaleOperatorNamespace: tailscale
 
 # -- Extra volumes to mount into the agent pod
 extraVolumes: []

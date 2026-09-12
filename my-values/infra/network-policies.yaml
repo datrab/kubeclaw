@@ -108,13 +108,6 @@ spec:
           port: 18789
         - protocol: TCP
           port: 18790
-    # Archviewer is intentionally exposed through its NodePort.
-    - from:
-        - ipBlock:
-            cidr: 0.0.0.0/0
-      ports:
-        - protocol: TCP
-          port: 3456
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy

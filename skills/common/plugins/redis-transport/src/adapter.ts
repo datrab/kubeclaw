@@ -11,7 +11,7 @@ interface Config {
   readonly timeoutMs: number;
 }
 
-const LUA = `
+export const REDIS_PUBLISH_LUA = `
 local prior = redis.call('GET', KEYS[2])
 if prior then return prior end
 local entry = redis.call('XADD', KEYS[1], 'MAXLEN', '~', ARGV[1], '*',
@@ -78,7 +78,7 @@ function activate(kind: 'publisher' | 'telemetry', context: AdapterActivationCon
       if (Buffer.byteLength(payload) > 1_048_576) throw new Error('REDIS_PAYLOAD_SIZE_EXCEEDED');
       const { stream, dedup } = streamIdentity(options.streamPrefix, kind, request.resource.canonicalId, request.idempotencyKey);
       const result = await exchange(options, secret.value, [
-        'EVAL', LUA, '2', stream, dedup,
+        'EVAL', REDIS_PUBLISH_LUA, '2', stream, dedup,
         String(options.maxLen), request.idempotencyKey, payload, String(options.dedupTtlMs),
       ], signal);
       return Object.freeze({ accepted: true, stream, entryId: streamId(result) });
