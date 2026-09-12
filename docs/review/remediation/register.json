@@ -4678,10 +4678,16 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP12",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "905edf06721b02558b443b676432993c56b201c1",
+      "verification_status": "lokal verifiziert nach D12",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-private-access.md",
+          "raw": "../evidence/pr6-infrastructure/access-native.txt",
+          "summary": "Archviewer-NodePort und World-to-3456-Freigabe entfernt. Dedizierter ClusterIP-Service, spezifische Tailnet-Proxy-Regel und verpflichtende Dokumentanmeldung implementiert. Originales nginx bestätigt Zugriffsschutz, fehlende Auth-Datei, deaktiviertes Directory Listing und Health-Pfad; echtes Helm bestätigt Secret-Verdrahtung und Abweisung alter NodePort-Overlays."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/network-dns.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-03-002 — Archviewer außerhalb des Tailnet-Authentifizierungspfads\n**Mittel; begründeter Expositionsverdacht.** Auslöser: Node-Port ist für nicht vertraute Clients erreichbar und `/designs` enthält schützenswerte Projektartefakte. `my-values/nova-values.yaml:92–94` setzt NodePort30456; `service-extra-nodeports.yaml` erzeugt einen separaten NodePort-Service auch bei primärem ClusterIP. `network-policies.yaml:141–149` erlaubt Backend3456 aus 0.0.0.0/0. `docker/archviewer.nginx.conf:1–12` aktiviert Directory Listing, ohne TLS oder Authentifizierung. Damit ist im Repository ein eigener ungeschützter Artefaktzugang vorgesehen; eine öffentliche Internet-Erreichbarkeit oder vertraulicher Liveinhalt ist nicht nachgewiesen.\n\nUrsachenbehebung: beabsichtigte Lesergruppe festlegen und Archviewer über denselben authentifizierten Zugang führen bzw. den NodePort bei fehlendem Bedarf entfernen; externes Host-Firewallvertrauen ausdrücklich dokumentieren. Echter Test: zulässiger Client kann Artefakte lesen, unzulässiger LAN-/Tailnet-/externer Client erhält keinen Zugriff auf Listing oder Dateien, einschließlich direktem NodePort.\n\nDie offizielle [NetworkPolicy-Referenz](https://kubernetes.io/docs/concepts/services-networking/network-policies/#behavior-of-to-and-from-selectors) lässt die Reihenfolge von Adressübersetzung und Policy-Prüfung implementationsabhängig. Daraus wird keine konkrete CNI-Version oder Live-Regeldurchsetzung abgeleitet.",
@@ -4691,9 +4697,17 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/my-values/infra/network-policies.yaml#L141"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Vorbereitete Live-Gates durch Auftraggeber: reale SA-/Tailnet-Zugriffe, verbotener Client und direkter NodePort, Secret-Projektion nach Rotation.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Keine bekannte offene Code-Lücke im Umfang dieses Findings; Live-Abnahme bleibt separat nach D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T20:15:37.271802+00:00",
+        "status": "verifiziert",
+        "rationale": "Archviewer-NodePort und World-to-3456-Freigabe entfernt. Dedizierter ClusterIP-Service, spezifische Tailnet-Proxy-Regel und verpflichtende Dokumentanmeldung implementiert. Originales nginx bestätigt Zugriffsschutz, fehlende Auth-Datei, deaktiviertes Directory Listing und Health-Pfad; echtes Helm bestätigt Secret-Verdrahtung und Abweisung alter NodePort-Overlays.",
+        "report": "implementation/pr6-infrastructure-checkpoint.md"
+      }
     },
     {
       "id": "IFR-04-001",
@@ -4852,10 +4866,16 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP12",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "905edf06721b02558b443b676432993c56b201c1",
+      "verification_status": "lokal verifiziert nach D12",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-private-access.md",
+          "raw": "../evidence/pr6-infrastructure/access-native.txt",
+          "summary": "Verpflichtende Backend-Authentifizierung mit echter Dateirotation und eng begrenzte namespaced Roles/RoleBindings implementiert. Reale HTTP-Prozesse prüfen fehlende/falsche/rotierte Tokens und Namespace-Ablehnung. Gerenderte RBAC- und Secret-Grenzen sowie bestehende Ops-Pod-Integration lokal geprüft; tatsächlicher SA-/Tailnet-Gate ist für den Auftraggeber vorbereitet."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/ops-mcp.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-27-001\n**Mittel; nachgewiesene breite Lesetrust-Grenze.** Auslöser: erlaubter Tailnet-Client oder kompromittierter zugelassener Tunnel/Proxy. Standalone-Manifest setzt keinen MCP-Bearer; `server.mjs:18–24,445ff.` erlaubt ihn optional. Netzwerk-Ingress beschränkt auf bestimmte Proxy-/Tunnel-Labels, der ClusterRoleBinding dagegen liest clusterweit inklusive fremder Namespace-Podlogs. Damit sind auch potenziell sensible Paperless-Logs im Rechtebereich, obwohl keine Schreiboperation möglich ist.\n\nUrsachenbehebung: benötigte Namespace-/Ressourcenumfänge konkret festlegen und RoleBindings statt globalem Leser verwenden; explizite Backend-Auth entsprechend Clientvertrauen, ohne eine vermeintliche Secret-Redaktion als Ersatz. Echter Test: erlaubte/unerlaubte Namespace-Leseoperationen mit realem SA, autorisierter/unautorisierter Tailnet-Client und wiederverwendetes bzw. rotiertes Token.",
@@ -4863,9 +4883,17 @@
       "unresolved_code_references": [
         "server.mjs:18–24,445ff."
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Vorbereitete Live-Gates durch Auftraggeber: reale SA-/Tailnet-Zugriffe, verbotener Client und direkter NodePort, Secret-Projektion nach Rotation.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Keine bekannte offene Code-Lücke im Umfang dieses Findings; Live-Abnahme bleibt separat nach D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T20:15:37.271802+00:00",
+        "status": "verifiziert",
+        "rationale": "Verpflichtende Backend-Authentifizierung mit echter Dateirotation und eng begrenzte namespaced Roles/RoleBindings implementiert. Reale HTTP-Prozesse prüfen fehlende/falsche/rotierte Tokens und Namespace-Ablehnung. Gerenderte RBAC- und Secret-Grenzen sowie bestehende Ops-Pod-Integration lokal geprüft; tatsächlicher SA-/Tailnet-Gate ist für den Auftraggeber vorbereitet.",
+        "report": "implementation/pr6-infrastructure-checkpoint.md"
+      }
     },
     {
       "id": "IFR-01-001",
@@ -4955,16 +4983,22 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "in Bearbeitung",
+      "implementation_commit": "905edf06721b02558b443b676432993c56b201c1",
+      "verification_status": "Teilpfad lokal verifiziert; Finding offen",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-redis-durability.md",
+          "raw": "../evidence/pr6-infrastructure/access-native.txt",
+          "summary": "Realer Redis: verlorenes ACK, SIGKILL/Neustart, Retry ohne Duplikat und noeviction-Speichergrenze bestehen; Chart-/Imagebindung und Speicherupgrade noch unvollständig."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/redis.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-11-001\n**Mittel; begründeter Verdacht.** Auslöser: größerer Stream-/Dedup-Key-Bestand, OOM oder Neustart. Werte setzen 256Mi Containerlimit, aber keine explizite maxmemory-/Eviction-/Persistenzpolitik. ACK/Dedup beruhen auf Redis-Zustand; Verlust von Dedup-Keys kann erneute Veröffentlichung erlauben, Stream-Trimming kann alte Events entfernen. Persistente 2Gi allein garantieren keine Dauerhaftigkeit jedes ACK.\n\nUrsachenbehebung: tatsächliche Chartversion pinnen und Redis-Dauerhaftigkeits-/Evictionvertrag passend zu den Verbrauchern ausdrücklich setzen, RAM-/Stream-/Payloadbudget ableiten, Wiederveröffentlichung als Wiederholungsfall behandeln. Echter Test: realer Redis mit gerenderten Einstellungen, verlorenes ACK, SIGKILL/Neustart, maxmemory-Grenze und Wiederaufnahme; Events/Dedup-Fenster kontrollieren.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Maintained Image und kompatiblen Chart binden; sichere Migration der bestehenden PVC-/StatefulSet-Konfiguration vorbereiten.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -5490,12 +5524,12 @@
     }
   ],
   "implementation_branch": "fix/remediation-foundations-20260909",
-  "updated_at": "2026-09-12T11:31:34.769121+00:00",
+  "updated_at": "2026-09-12T20:15:37.271802+00:00",
   "progress_counts": {
-    "verifiziert": 131,
-    "in Bearbeitung": 1,
+    "verifiziert": 133,
+    "in Bearbeitung": 2,
     "implementiert": 3,
-    "offen": 19
+    "offen": 16
   },
   "additional_integration_findings": [
     {
