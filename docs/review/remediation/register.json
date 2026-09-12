@@ -4121,6 +4121,10 @@
         {
           "report": "implementation/resume-20260912-supervisor-lease.md",
           "summary": "Original CLI lease contention reproduces before fix. Existing FileMutex now serializes lease replacement/release; real owner SIGKILL and delayed foreign release checked. Full review-operations entry: 20/20, no skips; scoped canonical lint passes. Native adoption still fails its real procfs prerequisite; finding remains incomplete."
+        },
+        {
+          "report": "implementation/pr6-supervisor-ownership-io.md",
+          "summary": "Original CLI rejects an unconfirmed live heartbeat owner; real post-launch heartbeat/resource write failures preserve actual child-exit diagnostic, and combined diagnostic failure preserves both causes. Operations26/26, canonical lint and full Knip pass. Native durable whole-process ownership remains unproved."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/operations-and-packaging.md",

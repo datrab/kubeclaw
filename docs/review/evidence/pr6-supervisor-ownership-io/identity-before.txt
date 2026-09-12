@@ -1,0 +1,85 @@
+✖ supervisor refuses an unconfirmed live heartbeat owner with terminal journal=false (642.994331ms)
+✖ supervisor refuses an unconfirmed live heartbeat owner with terminal journal=true (615.48024ms)
+✔ a confirmed absent heartbeat process does not obstruct original terminal status (648.604457ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 1
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2353.697826
+
+✖ failing tests:
+
+test at scripts/tests/repository-review-supervisor-state.test.mjs:113:1
+✖ supervisor refuses an unconfirmed live heartbeat owner with terminal journal=false (642.994331ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /REVIEW_SUPERVISOR_PROCESS_OWNERSHIP_UNCONFIRMED/u. Input:
+  
+  'file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/supervise-repository-review.mjs:194\n' +
+    '  if (childError) throw new Error(child.pid === undefined\n' +
+    '                        ^\n' +
+    '\n' +
+    'Error: REVIEW_SUPERVISOR_LAUNCH_FAILED\n' +
+    '    at runAttempt (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/supervise-repository-review.mjs:194:25)\n' +
+    '    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n' +
+    '    at async superviseAttempts (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/supervise-repository-review.mjs:226:20)\n' +
+    '    at async main (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/supervise-repository-review.mjs:277:12)\n' +
+    '    at async file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/supervise-repository-review.mjs:284:20 {\n' +
+    '  [cause]: Error: spawn npm ENOENT\n' +
+    '      at ChildProcess._handle.onexit (node:internal/child_process:287:19)\n' +
+    '      at onErrorNT (node:internal/child_process:525:16)\n' +
+    '      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {\n' +
+    '    errno: -2,\n' +
+    "    code: 'ENOENT',\n" +
+    "    syscall: 'spawn npm',\n" +
+    "    path: 'npm',\n" +
+    '    spawnargs: [\n' +
+    "      'run',\n" +
+    "      'pipeline',\n" +
+    "      '--',\n" +
+    "      '--platform',\n" +
+    "      '/tmp/supervisor-status-dU653L/platform.json',\n" +
+    "      '--pipeline',\n" +
+    "      '/tmp/supervisor-status-dU653L/graph.json',\n" +
+    "      '--run-id',\n" +
+    "      'supervisor-status-regression'\n" +
+    '    ]\n' +
+    '  }\n' +
+    '}\n' +
+    '\n' +
+    'Node.js v24.19.0\n'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/tests/repository-review-supervisor-state.test.mjs:126:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/supervise-repository-review.mjs:194\n  if (childError) throw new Error(child.pid === undefined\n                        ^\n\nError: REVIEW_SUPERVISOR_LAUNCH_FAILED\n    at runAttempt (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/supervise-repository-review.mjs:194:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async superviseAttempts (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/supervise-repository-review.mjs:226:20)\n    at async main (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/supervise-repository-review.mjs:277:12)\n    at async file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/supervise-repository-review.mjs:284:20 {\n  [cause]: Error: spawn npm ENOENT\n      at ChildProcess._handle.onexit (node:internal/child_process:287:19)\n      at onErrorNT (node:internal/child_process:525:16)\n      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {\n    errno: -2,\n    code: 'ENOENT',\n    syscall: 'spawn npm',\n    path: 'npm',\n    spawnargs: [\n      'run',\n      'pipeline',\n      '--',\n      '--platform',\n      '/tmp/supervisor-status-dU653L/platform.json',\n      '--pipeline',\n      '/tmp/supervisor-status-dU653L/graph.json',\n      '--run-id',\n      'supervisor-status-regression'\n    ]\n  }\n}\n\nNode.js v24.19.0\n",
+    expected: /REVIEW_SUPERVISOR_PROCESS_OWNERSHIP_UNCONFIRMED/u,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at scripts/tests/repository-review-supervisor-state.test.mjs:113:1
+✖ supervisor refuses an unconfirmed live heartbeat owner with terminal journal=true (615.48024ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/tests/repository-review-supervisor-state.test.mjs:125:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

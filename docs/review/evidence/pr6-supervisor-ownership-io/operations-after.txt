@@ -1,0 +1,42 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:review-operations
+> node --test scripts/tests/repository-review-operations.test.mjs scripts/tests/repository-review-supervisor-status.test.mjs scripts/tests/repository-review-supervisor-state.test.mjs scripts/tests/repository-review-supervisor-io.test.mjs scripts/tests/integration/repository-review-supervisor-start.mjs scripts/tests/integration/repository-review-supervisor-stop.test.mjs
+
+{"phase":"missing-platform","status":1,"stdout":"","stderr":"file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/supervise-repository-review.mjs:58\n    throw new Error(`REVIEW_SUPERVISOR_STATUS_FAILED: run=${runId}; exit=${result.status}; signal=${result.signal}; ${result.error?.message ?? ''}\\n${result.stderr ?? ''}`, { cause: result.error });\n          ^\n\nError: REVIEW_SUPERVISOR_STATUS_FAILED: run=supervisor-native-start; exit=1; signal=null; \nnode:fs:484\n    return binding.readFileUtf8(path, stringToFlags(options.flag));\n                   ^\n\nError: ENOENT: no such file or directory, open '/tmp/supervisor-native-start-dHTf6w/platform.json'\n    at Object.readFileSync (node:fs:484:20)\n    at jsonFile (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/repository-review-status.mjs:16:48)\n    at status (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/repository-review-status.mjs:89:18)\n    at file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/repository-review-status.mjs:184:40\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  errno: -2,\n  code: 'ENOENT',\n  syscall: 'open',\n  path: '/tmp/supervisor-native-start-dHTf6w/platform.json'\n}\n\nNode.js v24.19.0\n\n    at reviewStatus (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/supervise-repository-review.mjs:58:11)\n    at main (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/supervise-repository-review.mjs:245:27)\n    at file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/supervise-repository-review.mjs:256:26\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  [cause]: undefined\n}\n\nNode.js v24.19.0\n"}
+{"phase":"readable-platform","status":0,"stdout":"{\"schemaVersion\":\"repository-review-status.v1\",\"runId\":\"supervisor-native-start\",\"status\":\"succeeded\",\"terminalAt\":\"2026-09-12T10:09:29.808Z\",\"stages\":{\"original-preflight\":\"succeeded\"},\"liveness\":\"terminal\",\"lastEventAt\":\"2026-09-12T10:09:29.808Z\",\"heartbeatAt\":\"2026-09-12T10:09:30.017Z\",\"heartbeatAgeSeconds\":0.175,\"pipelinePid\":272,\"supervisorPid\":170,\"attempt\":1,\"recoveryMode\":\"start\",\"health\":\"terminal\",\"activeDispatches\":0,\"requestedDispatches\":0,\"recentResourceLockExpired\":0,\"resources\":{\"observedAt\":\"2026-09-12T10:09:30.017Z\",\"ageSeconds\":0.175,\"currentCpuPercent\":482.74726252395294,\"peakCpuPercent\":482.74726252395294,\"currentRamBytes\":7338459136,\"peakRamBytes\":7338459136,\"cgroupLifetimePeakRamBytes\":8039555072,\"gateway\":{\"healthy\":false,\"error\":\"TypeError\"},\"oomEvents\":0,\"oomKillEvents\":0},\"plannedPrimary\":0,\"completedReviewCheckpoints\":0,\"remainingPrimary\":0,\"completedContextExpansionCheckpoints\":0,\"completedVerificationCheckpoints\":0,\"estimatedInputTokens\":0,\"actualTokenUsage\":\"unavailable_until_imported_results_expose_usage\",\"planReport\":false,\"finalReport\":false,\"artifactRecords\":1}\n","stderr":"","pipelineOutput":"npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> pipeline\n> node skills/nova/pipeline.ts --platform /tmp/supervisor-native-start-dHTf6w/platform.json --pipeline /tmp/supervisor-native-start-dHTf6w/pipeline.json --run-id supervisor-native-start\n\n{\"runId\":\"supervisor-native-start\",\"status\":\"succeeded\",\"stages\":{\"original-preflight\":{\"stageId\":\"original-preflight\",\"status\":\"succeeded\",\"attemptNumber\":1,\"attemptsUsed\":1,\"remediationCyclesUsed\":0}}}\n"}
+{"phase":"original-core-evidence","eventTypes":["run.created","run.started","stage.started","attempt.created","attempt.dispatched","effect.requested","effect.accepted","effect.completed","effect.requested","effect.accepted","effect.completed","attempt.completed","artifact.created","stage.succeeded","run.succeeded"],"effects":["git.repository.read","artifacts.write"],"artifacts":1,"diagnostic":{"schemaVersion":"repository-review-attempt-diagnostic.v1","capturedAt":"2026-09-12T10:09:30.020Z","runId":"supervisor-native-start","attempt":1,"mode":"start","exit":{"code":0,"signal":null},"stopping":false,"sample":{"schemaVersion":"repository-review-resource-sample.v1","observedAt":"2026-09-12T10:09:30.017Z","pipelinePid":272,"pipelineAlive":false,"memoryCurrentBytes":7338459136,"memoryPeakBytes":8039555072,"memoryEvents":{"low":0,"high":0,"max":0,"oom":0,"oom_kill":0,"oom_group_kill":0},"cpu":{"usage_usec":6264237647,"user_usec":3236731445,"system_usec":3027506201,"nice_usec":0,"nr_periods":98503,"nr_throttled":115,"throttled_usec":3893203,"nr_bursts":0,"burst_usec":0},"observationErrors":[{"file":"/proc/272/status","error":"ENOENT"}],"gateway":{"healthy":false,"error":"TypeError"}}}}
+✔ original supervisor visibly rejects missing platform, then starts a genuine finite original pipeline (9406.408278ms)
+✔ original supervisor stops its recovery wait on SIGTERM without starting another pipeline (4280.755853ms)
+✔ original supervisor stops its recovery wait on SIGINT without starting another pipeline (3993.31286ms)
+✔ compact status and formatter report live state without scanning source journals (1262.303488ms)
+✔ compact status gives a durable terminal event priority over a stale heartbeat (385.916235ms)
+✔ compact status discovers a legacy identity after large and oversized records (400.261796ms)
+✔ supervisor preserves a single lease and records a terminal child attempt (1598.687084ms)
+✔ supervisor start mode uses the current pipeline CLI flag (0.925423ms)
+✔ original supervisor handles resources.jsonl write failure with diagnosticFailure=false (1104.606036ms)
+✔ original supervisor handles heartbeat.json write failure with diagnosticFailure=false (1068.009857ms)
+✔ original supervisor handles resources.jsonl write failure with diagnosticFailure=true (1110.549667ms)
+✔ dead owner is replaced and a late release cannot delete the successor lease (786.989094ms)
+✔ supervisor cannot replace a stale lease during an actual concurrent ownership transaction (2553.08852ms)
+✔ supervisor preserves malformed JSON lease and refuses admission (497.66094ms)
+✔ supervisor preserves unknown owner lease and refuses admission (465.661097ms)
+✔ supervisor preserves malformed heartbeat and releases only its newly acquired lease (579.191973ms)
+✔ supervisor refuses a lease held by an actual live process (536.64564ms)
+✔ supervisor records an actual missing npm launch and releases its own lease (862.399851ms)
+✔ supervisor refuses an unconfirmed live heartbeat owner with terminal journal=false (481.248842ms)
+✔ supervisor refuses an unconfirmed live heartbeat owner with terminal journal=true (551.260856ms)
+✔ a confirmed absent heartbeat process does not obstruct original terminal status (757.172156ms)
+✔ original supervisor fails visibly on unreadable status and accepts a later readable success (2886.308697ms)
+✔ original supervisor preserves artifact read failure despite a terminal journal (934.937306ms)
+✔ original supervisor reports confirmed failed without claiming success (752.328945ms)
+✔ original supervisor reports confirmed blocked without claiming success (983.589911ms)
+✔ original supervisor reports confirmed cancelled without claiming success (1024.153245ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9787.502855

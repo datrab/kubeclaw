@@ -74,6 +74,11 @@
       "at": "2026-09-12T09:54:15.651236+00:00",
       "state": "All integration typechecks including native HTTP/Kubernetes fixtures pass; two unchanged Chromium installation attempts fail their lock heartbeat and both exit1",
       "finding_closures": 0
+    },
+    {
+      "at": "2026-09-12T10:10:57.493871+00:00",
+      "state": "Original supervisor ownership and real filesystem error regressions fixed; operations26/26 and original operator retention11/11 pass; native ownership acceptance remains blocked",
+      "finding_closures": 0
     }
   ],
   "blocked_gates": [

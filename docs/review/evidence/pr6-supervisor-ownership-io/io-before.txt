@@ -1,0 +1,40 @@
+✖ original supervisor retains child-exit evidence after an actual resources.jsonl write failure (680.663265ms)
+✖ original supervisor retains child-exit evidence after an actual heartbeat.json write failure (707.558019ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1660.23674
+
+✖ failing tests:
+
+test at scripts/tests/repository-review-supervisor-io.test.mjs:13:3
+✖ original supervisor retains child-exit evidence after an actual resources.jsonl write failure (680.663265ms)
+  Error: ENOENT: no such file or directory, open '/tmp/supervisor-status-Boob1X/diagnostics/attempt-1-exit.json'
+      at Object.readFileSync (node:fs:484:20)
+      at TestContext.<anonymous> (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/tests/repository-review-supervisor-io.test.mjs:48:38)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/tmp/supervisor-status-Boob1X/diagnostics/attempt-1-exit.json'
+  }
+
+test at scripts/tests/repository-review-supervisor-io.test.mjs:13:3
+✖ original supervisor retains child-exit evidence after an actual heartbeat.json write failure (707.558019ms)
+  Error: ENOENT: no such file or directory, open '/tmp/supervisor-status-Ih0OOA/diagnostics/attempt-1-exit.json'
+      at Object.readFileSync (node:fs:484:20)
+      at TestContext.<anonymous> (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/tests/repository-review-supervisor-io.test.mjs:48:38)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/tmp/supervisor-status-Ih0OOA/diagnostics/attempt-1-exit.json'
+  }

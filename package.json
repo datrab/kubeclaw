@@ -44,7 +44,7 @@
     "review:status": "node scripts/repository-review-status.mjs",
     "review:status:format": "node scripts/format-repository-review-status.mjs",
     "review:supervise": "node scripts/supervise-repository-review.mjs",
-    "test:review-operations": "node --test scripts/tests/repository-review-operations.test.mjs scripts/tests/repository-review-supervisor-status.test.mjs scripts/tests/repository-review-supervisor-state.test.mjs scripts/tests/integration/repository-review-supervisor-start.mjs scripts/tests/integration/repository-review-supervisor-stop.test.mjs",
+    "test:review-operations": "node --test scripts/tests/repository-review-operations.test.mjs scripts/tests/repository-review-supervisor-status.test.mjs scripts/tests/repository-review-supervisor-state.test.mjs scripts/tests/repository-review-supervisor-io.test.mjs scripts/tests/integration/repository-review-supervisor-start.mjs scripts/tests/integration/repository-review-supervisor-stop.test.mjs",
     "e2e:real:fast": "node tests/verification/e2e/run-real-pipeline-e2e.mjs --mode fast",
     "e2e:real:full": "node tests/verification/e2e/run-real-pipeline-e2e.mjs --mode full",
     "e2e:real:matrix": "node tests/verification/e2e/run-real-pipeline-failure-matrix.mjs --mode full --continue-on-failure",

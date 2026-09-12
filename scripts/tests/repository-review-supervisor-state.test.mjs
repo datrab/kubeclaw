@@ -108,3 +108,36 @@ test('supervisor records an actual missing npm launch and releases its own lease
   assert.equal(diagnostic.launchError.code, 'ENOENT');
   assert.equal(diagnostic.sample.pipelineAlive, false);
 });
+
+for (const terminal of [false, true]) {
+test(`supervisor refuses an unconfirmed live heartbeat owner with terminal journal=${terminal}`, t => {
+  const f = fixture(t); f.writePlatform();
+  if (terminal) f.terminal('succeeded');
+  const heartbeat = path.join(f.root, 'heartbeat.json');
+  // This is the actual test process, not a replacement procfs reader or pipeline.
+  // Its command may be unreadable in constrained hosts; on ordinary hosts it is
+  // readable but is not the requested pipeline. Both must refuse a new owner.
+  const content = JSON.stringify({ pipelinePid: process.pid, attempt: 1 });
+  fs.writeFileSync(heartbeat, content);
+  const emptyPath = path.join(f.root, 'empty-path'); fs.mkdirSync(emptyPath);
+  const result = f.invoke({ ...process.env, PATH: emptyPath });
+  assert.equal(result.error, undefined);
+  assert.equal(result.status, 1, result.stderr);
+  assert.match(result.stderr, /REVIEW_SUPERVISOR_PROCESS_OWNERSHIP_UNCONFIRMED/u);
+  assert.equal(result.stdout, '');
+  assert.equal(fs.readFileSync(heartbeat, 'utf8'), content);
+  assert.equal(fs.existsSync(path.join(f.root, 'pipeline.log')), false);
+  assert.equal(fs.existsSync(path.join(f.root, 'resources.jsonl')), false);
+  assert.equal(fs.existsSync(f.lease), false);
+  assert.doesNotThrow(() => process.kill(process.pid, 0));
+});
+}
+
+test('a confirmed absent heartbeat process does not obstruct original terminal status', t => {
+  const f = fixture(t); f.writePlatform(); f.terminal('succeeded');
+  fs.writeFileSync(path.join(f.root, 'heartbeat.json'), JSON.stringify({ pipelinePid: 2147483647 }));
+  const result = f.invoke();
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(JSON.parse(result.stdout).status, 'succeeded');
+  assert.equal(fs.existsSync(f.lease), false);
+});
