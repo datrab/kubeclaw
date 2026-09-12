@@ -76,3 +76,64 @@ Buster fixture lifecycle and restart cleanup. Implement and verify the remaining
 cross-store history-retirement operation. Charts and operating instructions for
 the full native host path are also still pending. PCR-BUSTER-ENGINE-001,
 PCR-BUSTER-ENGINE-004, PCR-PRISM-WORKER-002 and PCR-OBS-002 remain open.
+
+## Continued native execution implementation
+
+This checkpoint is still **WIP, not closure of any of the four findings**.
+The production Prism entry point and Control producer have not switched to V3.
+
+The native scope now supports durable reserved names, native directory identity
+and boot identity reconciliation. The ownership coordinator holds a real flock
+for its lifetime, reconciles old scopes before exposing admission, fences launch
+against shutdown and duplicate identities, and records abandoned reservations
+without claiming successful execution. Confirmed-empty disposal recovery keeps
+its durable proof when the final metadata update fails.
+
+A compiled C pre-exec launcher joins the reserved kernel scope before starting
+the Node host, drops supplementary groups and root identity, and sets
+no-new-privileges. Ordinary filesystems, host-root paths, malformed scope names
+and retained privilege are rejected. The process supervisor bounds input/output,
+polls cumulative kernel counters, stops the native tree on deadline or budget
+failure, and obtains final counters after quiescence. Explicit native V3
+envelopes and receipts name `maximumTasks` with unit `linux-tasks`; V1/V2 remain
+separate historical protocols. The neutral executor supports V3 and the outer
+native executor reseals provisional host results after the complete host exits.
+
+Prism has a native host entry, shared producer/worker policy, a V3 envelope
+producer, and a native HTTP execution boundary. It reuses the original Prism
+operation, cancellation, browser closure and full-log upload lifecycle. All four
+Prism Dockerfiles now copy the Worker Core's transitive Foundation/SDK runtime
+dependencies. The current production startup remains unchanged pending the
+complete deployment and lifecycle integration; no automatic legacy fallback
+has been added to the native execution boundary.
+
+Local verification: 48 tests passed, zero failed/skipped, using the command below.
+The new coverage includes real durable files, a real supervisor SIGKILL and
+kernel flock release, compilation and fail-closed execution of the original C
+launcher, original kernel resource observations, and strict version/unit
+validation. Existing Prism HTTP, artifact, CPU, cancellation and shutdown
+regressions also passed. Worker Core and Prism TypeScript checks passed. Both
+generated resource schemas matched their generators. New modules pass canonical
+ESLint; the old monolithic attempt executor still has its existing complexity,
+size/depth and catch-policy debt. No successful global lint gate is claimed.
+
+```sh
+node --test tests/verification/reliability/worker-terminal-resources.test.mts tests/verification/reliability/worker-native-observation.test.mts tests/verification/reliability/worker-ownership-store.test.mts tests/verification/reliability/worker-native-launcher.test.mts tests/verification/reliability/worker-native-contract.test.mts skills/prism/tests/worker-service.test.mts skills/prism/tests/worker-http-cancellation.test.mts skills/prism/tests/worker-cancellation.test.mts skills/prism/tests/worker-shutdown-boundaries.test.mts skills/prism/tests/agent-resource-contract.test.mts
+```
+
+The native live gate additionally exercises the original production launcher and
+durable coordinator. It requires both `KUBECLAW_WORKER_TEST_CGROUP_ROOT` and
+`KUBECLAW_WORKER_TEST_LAUNCHER`; it does not substitute ordinary directories or
+skip missing delegation. Positive delegated-scope execution remains for the
+operator's final live run and is not claimed by the local negative tests.
+
+Remaining implementation includes production V3 activation and historical-cache
+read support; persistent host outcome/log recovery; delegated-node preparation,
+aggregate resource budgets and charts; Buster's full per-attempt host integration
+and ownership of its nested capability processes; durable retained-fixture
+lifecycle and terminal workspace reconciliation; and connected cross-store
+retirement. In particular Buster currently persists a successful fixture setup
+attempt before dependent nodes run, retains the provider instance, and cleans
+it up only after the plan. That existing lifecycle must be reconciled explicitly
+with native resource ownership, rather than killed by the generic process
+supervisor as soon as setup returns.

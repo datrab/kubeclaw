@@ -4,8 +4,9 @@ import type {
 } from "../engine/index.ts";
 import {
   validatePipelineWorkerCoreContract,
+  validateWorkerResourceContractV3,
   type WorkerAttemptEnvelopeV1,
-  type WorkerAttemptResultV1,
+  type WorkerAttemptResultV1, type WorkerAttemptEnvelopeV3, type WorkerAttemptResultV3,
 } from "@kubeclaw/pipeline-worker-core-contract";
 import type { WorkerArtifactClient } from "./worker-artifacts.ts";
 import { executeWorkerAttempt } from "./worker-attempt.ts";
@@ -17,6 +18,18 @@ export type WorkerAuthentication =
   | { mode: "hmac"; secret: string; database: WorkerNonceDatabase }
   | { mode: "spiffe"; trustedControlSpiffeId: string };
 
+export interface NativePrismWorkerExecution {
+  ready(): boolean;
+  execute(envelope: WorkerAttemptEnvelopeV3, signal: AbortSignal): Promise<WorkerAttemptResultV3>;
+}
+
+export function createNativeWorkerServer(auth: WorkerAuthentication, execution: NativePrismWorkerExecution) {
+  return createManagedWorkerServer(
+    (request, response, signal) => handleWorkerRequest(auth, null, null, request, response, signal, execution),
+    () => auth.mode === 'hmac' ? auth.database.close() : Promise.resolve(),
+  );
+}
+
 export function createWorkerServer(auth: WorkerAuthentication, engine: PrismEngine, artifactClient: WorkerArtifactClient) {
   return createManagedWorkerServer(
     (request, response, signal) => handleWorkerRequest(auth, engine, artifactClient, request, response, signal),
@@ -24,19 +37,11 @@ export function createWorkerServer(auth: WorkerAuthentication, engine: PrismEngi
   );
 }
 
-async function handleWorkerRequest(auth: WorkerAuthentication, engine: PrismEngine, artifactClient: WorkerArtifactClient,
-  request: IncomingMessage, response: ServerResponse, signal: AbortSignal): Promise<WorkerAttemptResultV1 | void> {
+async function handleWorkerRequest(auth: WorkerAuthentication, engine: PrismEngine | null, artifactClient: WorkerArtifactClient | null,
+  request: IncomingMessage, response: ServerResponse, signal: AbortSignal,
+  native?: NativePrismWorkerExecution): Promise<WorkerAttemptResultV1 | WorkerAttemptResultV3 | void> {
   if (serveLocalHealth(request, response)) return;
-  if (request.url === "/ready") {
-    try {
-      if (auth.mode === "hmac") await auth.database.check(signal);
-      response.writeHead(200, { "content-type": "application/json" });
-      return void response.end('{"status":"ready"}');
-    } catch {
-      response.writeHead(503, { "content-type": "application/json" });
-      return void response.end('{"status":"not-ready","error":"PRISM_NONCE_DATABASE_UNAVAILABLE"}');
-    }
-  }
+  if (request.url === '/ready') return serveReadiness(auth, response, signal, native);
   if (request.url !== "/v1/attempts" || request.method !== "POST") {
     response.writeHead(404);
     return void response.end();
@@ -62,9 +67,7 @@ async function handleWorkerRequest(auth: WorkerAuthentication, engine: PrismEngi
     const raw = Buffer.concat(chunks);
     if (auth.mode === "spiffe") authorizeProxiedSpiffePeer(request.headers, request.socket.remoteAddress, new Set([auth.trustedControlSpiffeId]));
     else await auth.database.authenticate(auth.secret, raw, request.headers, signal);
-    const input = JSON.parse(raw.toString("utf8")) as WorkerAttemptEnvelopeV1;
-    validatePipelineWorkerCoreContract("workerAttemptEnvelope", input);
-    const result = await executeWorkerAttempt(input, engine, artifactClient, signal);
+    const result = await dispatchAttempt(JSON.parse(raw.toString('utf8')), engine, artifactClient, signal, native);
     response.writeHead(200, { "content-type": "application/json" });
     response.end(JSON.stringify(result));
     return result;
@@ -76,6 +79,35 @@ async function handleWorkerRequest(auth: WorkerAuthentication, engine: PrismEngi
       }),
     );
   }
+}
+
+async function serveReadiness(auth: WorkerAuthentication, response: ServerResponse, signal: AbortSignal,
+  native?: NativePrismWorkerExecution): Promise<void> {
+  if (native && !native.ready()) {
+    response.writeHead(503, { 'content-type': 'application/json' });
+    response.end('{"status":"not-ready","error":"PRISM_NATIVE_RECONCILIATION_REQUIRED"}');
+    return;
+  }
+  try {
+    if (auth.mode === 'hmac') await auth.database.check(signal);
+    response.writeHead(200, { 'content-type': 'application/json' });
+    response.end('{"status":"ready"}');
+  } catch {
+    response.writeHead(503, { 'content-type': 'application/json' });
+    response.end('{"status":"not-ready","error":"PRISM_NONCE_DATABASE_UNAVAILABLE"}');
+  }
+}
+
+async function dispatchAttempt(input: unknown, engine: PrismEngine | null, artifacts: WorkerArtifactClient | null,
+  signal: AbortSignal, native?: NativePrismWorkerExecution): Promise<WorkerAttemptResultV1 | WorkerAttemptResultV3> {
+  if (native) {
+    if (!native.ready()) throw new Error('PRISM_NATIVE_RECONCILIATION_REQUIRED');
+    validateWorkerResourceContractV3('workerAttemptEnvelope', input);
+    return native.execute(input as WorkerAttemptEnvelopeV3, signal);
+  }
+  if (!engine || !artifacts) throw new Error('PRISM_WORKER_EXECUTION_CONFIGURATION_REQUIRED');
+  validatePipelineWorkerCoreContract('workerAttemptEnvelope', input);
+  return executeWorkerAttempt(input as WorkerAttemptEnvelopeV1, engine, artifacts, signal);
 }
 
 function serveLocalHealth(request: IncomingMessage, response: ServerResponse): boolean {

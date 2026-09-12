@@ -1,11 +1,11 @@
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
-import type { WorkerAttemptResultV1 } from '@kubeclaw/pipeline-worker-core-contract';
+import type { WorkerAttemptResult } from '@kubeclaw/pipeline-worker-core-contract';
 
-type Handler = (request: IncomingMessage, response: ServerResponse, signal: AbortSignal) => Promise<WorkerAttemptResultV1 | void>;
+type Handler = (request: IncomingMessage, response: ServerResponse, signal: AbortSignal) => Promise<WorkerAttemptResult | void>;
 export type ManagedWorkerServer = Server & { shutdown(timeoutMs: number): Promise<void> };
 
 /** A fulfilled HTTP handler is not evidence that unresolved Core work stopped. */
-function unresolved(result: WorkerAttemptResultV1 | void): boolean {
+function unresolved(result: WorkerAttemptResult | void): boolean {
   return Boolean(result && (result.cleanup.state === 'failed'
     || result.error?.code === 'WORKER_PHASE_UNRESOLVED'
     || result.error?.code === 'WORKER_TERMINATION_FAILED'));

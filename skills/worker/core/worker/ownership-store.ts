@@ -14,7 +14,7 @@ export interface WorkerOwnershipIdentity {
   readonly attemptSpecDigest: string;
 }
 
-export type WorkerOwnershipPhase = 'reserved' | 'allocated' | 'running' | 'quiescing' | 'empty' | 'disposed' | 'unresolved';
+export type WorkerOwnershipPhase = 'reserved' | 'allocated' | 'running' | 'quiescing' | 'empty' | 'disposed' | 'unresolved' | 'abandoned';
 
 export interface WorkerScopeBinding {
   readonly scopeName: string;
@@ -38,13 +38,14 @@ interface State {
 }
 
 const transitions: Record<WorkerOwnershipPhase, readonly WorkerOwnershipPhase[]> = {
-  reserved: ['allocated', 'unresolved'],
-  allocated: ['running', 'quiescing', 'unresolved'],
-  running: ['quiescing', 'unresolved'],
-  quiescing: ['empty', 'unresolved'],
-  empty: ['disposed', 'unresolved'],
+  reserved: ['allocated', 'unresolved', 'abandoned'],
+  allocated: ['running', 'quiescing', 'unresolved', 'abandoned'],
+  running: ['quiescing', 'unresolved', 'abandoned'],
+  quiescing: ['empty', 'unresolved', 'abandoned'],
+  empty: ['disposed', 'unresolved', 'abandoned'],
   disposed: [],
-  unresolved: ['quiescing'],
+  unresolved: ['quiescing', 'abandoned'],
+  abandoned: [],
 };
 
 function exact(value: unknown, keys: readonly string[]): asserts value is Record<string, unknown> {
@@ -85,7 +86,7 @@ function bindingValid(binding: unknown, scopeName: string): asserts binding is W
 function validateRecord(record: unknown): asserts record is WorkerOwnershipRecord {
   exact(record, ['identity', 'scopeName', 'revision', 'phase', 'binding', 'diagnosis']);
   identityValid(record.identity);
-  if (typeof record.scopeName !== 'string' || !/^worker-[a-f0-9-]{36}$/u.test(record.scopeName)
+  if (typeof record.scopeName !== 'string' || !/^worker-[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u.test(record.scopeName)
     || !Number.isSafeInteger(record.revision) || Number(record.revision) < 1
     || typeof record.phase !== 'string' || !Object.hasOwn(transitions, record.phase)) {
     throw new Error('WORKER_OWNERSHIP_RECORD_INVALID');
@@ -96,7 +97,7 @@ function validateRecord(record: unknown): asserts record is WorkerOwnershipRecor
 
 function validateRecordBinding(record: Record<string, unknown>): void {
   if (record.binding !== null) bindingValid(record.binding, String(record.scopeName));
-  if (record.phase !== 'reserved' && record.phase !== 'unresolved' && record.binding === null) {
+  if (!['reserved', 'unresolved', 'abandoned'].includes(String(record.phase)) && record.binding === null) {
     throw new Error('WORKER_OWNERSHIP_BINDING_REQUIRED');
   }
   if (record.phase === 'reserved' && record.binding !== null) throw new Error('WORKER_OWNERSHIP_RESERVED_BINDING');
@@ -105,7 +106,7 @@ function validateRecordBinding(record: Record<string, unknown>): void {
 function validateDiagnosis(record: Record<string, unknown>): void {
   if (record.diagnosis !== null && (typeof record.diagnosis !== 'string' || record.diagnosis.length < 1
     || record.diagnosis.length > 4096)) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_INVALID');
-  if (record.phase === 'unresolved' && record.diagnosis === null) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_REQUIRED');
+  if (['unresolved', 'abandoned'].includes(String(record.phase)) && record.diagnosis === null) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_REQUIRED');
 }
 
 function key(identity: WorkerOwnershipIdentity): string {
@@ -136,6 +137,11 @@ export class FileWorkerOwnershipStore {
     return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).records));
   }
 
+  /** Held for the entire supervisor lifetime, including recovery and admission. */
+  async withSupervisor<T>(operation: () => Promise<T>): Promise<T> {
+    return withDurableStoreLock(path.join(path.dirname(this.#file), 'supervisor', 'lifetime'), operation);
+  }
+
   async reserve(input: WorkerOwnershipIdentity): Promise<WorkerOwnershipRecord> {
     const identity = structuredClone(input);
     identityValid(identity);
@@ -151,7 +157,7 @@ export class FileWorkerOwnershipStore {
       if (previous.some(record => record.identity.generation >= identity.generation)) {
         throw new Error('WORKER_OWNERSHIP_STALE_GENERATION');
       }
-      if (previous.some(record => record.phase !== 'disposed')) throw new Error('WORKER_OWNERSHIP_RECONCILIATION_REQUIRED');
+      if (previous.some(record => !['disposed', 'abandoned'].includes(record.phase))) throw new Error('WORKER_OWNERSHIP_RECONCILIATION_REQUIRED');
       const record: WorkerOwnershipRecord = {
         identity, scopeName: `worker-${randomUUID()}`, revision: 1, phase: 'reserved', binding: null, diagnosis: null,
       };

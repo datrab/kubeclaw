@@ -3,8 +3,10 @@ import type { WorkerArtifactRefV1, WorkerAttemptEnvelopeV1, WorkerProfileV1 } fr
 import { sha256Digest, workerAttemptSpecDigest, workerProfileDigest } from "@kubeclaw/worker-core";
 import { engineRequestSchema } from "@kubeclaw/prism-contracts-v1/digest";
 import type { EngineOperation } from "./index.ts";
+import type { WorkerAttemptEnvelopeV3, WorkerProfileV3 } from '@kubeclaw/pipeline-worker-core-contract';
+import { prismNativePolicy, prismEngineContentDigest } from '../config/native-worker.ts';
 
-const engineContentDigest = process.env.PRISM_ENGINE_CONTENT_DIGEST?.trim()
+const engineContentDigest = prismEngineContentDigest()
   || sha256Digest({ engineId: "prism-design-engine", engineVersion: "1.0.0", development: true });
 const unsignedProfile = {
   schemaVersion: "worker-profile.v1" as const,
@@ -31,4 +33,30 @@ export function prismAttempt(operation: EngineOperation, inputArtifact: WorkerAr
     cancellationId: `cancel-${randomUUID()}`, issuedAt: now.toISOString(), queueDeadline: expires.toISOString(),
   };
   return { ...unsigned, attemptSpecDigest: workerAttemptSpecDigest(unsigned) };
+}
+
+export const prismNativeWorkerProfile: WorkerProfileV3 = (() => {
+  const profile: WorkerProfileV3 = { ...prismWorkerProfile, schemaVersion: 'worker-profile.v3', profileId: 'prism-design-engine-v3',
+    resourceCapabilities: { schemaVersion: 'worker-resource-capabilities.v2',
+      cpuTimeMs: { scope: 'native-attempt-tree', unit: 'milliseconds', measurement: 'measured' },
+      maximumMemoryBytes: { scope: 'native-attempt-tree', unit: 'bytes', measurement: 'measured' },
+      maximumTasks: { scope: 'native-attempt-tree', unit: 'linux-tasks', measurement: 'measured' },
+    } };
+  profile.profileDigest = workerProfileDigest(profile);
+  return profile;
+})();
+
+export function prismNativeAttempt(operation: EngineOperation, inputArtifact: WorkerArtifactRefV1,
+  idempotencyKey: string): WorkerAttemptEnvelopeV3 {
+  const common = prismAttempt(operation, inputArtifact, idempotencyKey);
+  const { cpuMillis: _cpuMillis, memoryBytes: _memoryBytes, processes: _processes, ...limits } = common.limits;
+  const policy = prismNativePolicy();
+  const envelope: WorkerAttemptEnvelopeV3 = { ...common, schemaVersion: 'worker-attempt-envelope.v3',
+    profile: prismNativeWorkerProfile, limits,
+    resourceBudgets: { schemaVersion: 'worker-resource-budgets.v2',
+      cpuTimeMs: { state: 'requested', limit: policy.cpuTimeMs }, maximumMemoryBytes: { state: 'requested', limit: policy.memoryBytes },
+      maximumTasks: { state: 'requested', limit: policy.tasks },
+    } };
+  envelope.attemptSpecDigest = workerAttemptSpecDigest(envelope);
+  return envelope;
 }

@@ -1,4 +1,6 @@
 import {workerResourceMetrics,type WorkerAttemptEnvelope,type WorkerResourceObservations,type WorkerResourceUseV1,type WorkerResourceAccounting} from '@kubeclaw/pipeline-worker-core-contract';
+import type { WorkerNativeResourceAccounting } from '@kubeclaw/pipeline-worker-core-contract';
+import { assessNativeWorkerResources } from './native-resource-accounting.ts';
 
 export type ResourceCheck={resources:Partial<WorkerResourceUseV1>;error?:{code:string;message:string}};
 const positiveObservation=(value:unknown):value is number=>Number.isSafeInteger(value)&&Number(value)>=0;
@@ -11,7 +13,7 @@ function regressed(current:Partial<WorkerResourceUseV1>,previous:Partial<WorkerR
 }
 
 /** V1 remains strictly bounded. V2 never converts an unavailable observation to zero. */
-export function assessWorkerResources(envelope:WorkerAttemptEnvelope,measured:unknown,accounting?:WorkerResourceAccounting,previous:Partial<WorkerResourceUseV1>={}):ResourceCheck {
+export function assessWorkerResources(envelope:WorkerAttemptEnvelope,measured:unknown,accounting?:WorkerResourceAccounting | WorkerNativeResourceAccounting,previous:Partial<WorkerResourceUseV1>={}):ResourceCheck {
  if(envelope.schemaVersion==='worker-attempt-envelope.v1'){
   const values=measured as Record<string,unknown>|null;
   if(!values || !workerResourceMetrics.every(metric=>positiveObservation(values[metric])))return invalid();
@@ -22,6 +24,11 @@ export function assessWorkerResources(envelope:WorkerAttemptEnvelope,measured:un
   const exceeded=workerResourceMetrics.find(metric=>Number(resources[metric])>limits[metric]);
   return exceeded?{resources,error:{code:codes[exceeded],message:codes[exceeded]}}:{resources};
  }
+ if(envelope.schemaVersion==='worker-attempt-envelope.v3'){
+  if(accounting?.schemaVersion!=='worker-resource-accounting.v2')return invalid();
+  return assessNativeWorkerResources(measured,accounting,previous);
+ }
+ if(accounting?.schemaVersion==='worker-resource-accounting.v2')return invalid();
  if(!accounting || !measured || typeof measured!=='object')return invalid(accounting);
  return assessDeclaredResources(measured as WorkerResourceObservations,accounting,previous);
 }
@@ -51,6 +58,6 @@ function assessDeclaredResources(measured:WorkerResourceObservations,accounting:
 }
 
 export function unsupportedWorkerBudget(envelope:WorkerAttemptEnvelope):string|undefined {
- if(envelope.schemaVersion==='worker-attempt-envelope.v1')return undefined;
+ if(envelope.schemaVersion!=='worker-attempt-envelope.v2')return undefined;
  return workerResourceMetrics.find(metric=>envelope.resourceBudgets[metric].state==='requested' && envelope.profile.resourceCapabilities[metric].measurement==='unavailable');
 }

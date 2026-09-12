@@ -1,0 +1,59 @@
+import path from 'node:path';
+
+/** Shared producer/worker defaults; deployment overrides use these same named settings. */
+export function prismEngineContentDigest(environment: NodeJS.ProcessEnv = process.env): string | undefined {
+  return environment.PRISM_ENGINE_CONTENT_DIGEST?.trim();
+}
+
+export function prismNativePolicy(environment: NodeJS.ProcessEnv = process.env) {
+  const read = (name: string, fallback: number) => {
+    const value = Number(environment[name] ?? fallback);
+    if (!Number.isSafeInteger(value) || value < 1) throw new Error(`PRISM_NATIVE_POLICY_INVALID:${name}`);
+    return value;
+  };
+  return Object.freeze({
+    cpuTimeMs: read('PRISM_NATIVE_CPU_TIME_MS', 60000),
+    memoryBytes: read('PRISM_NATIVE_MEMORY_BYTES', 8589934592),
+    tasks: read('PRISM_NATIVE_TASKS', 2048),
+  });
+}
+
+export function nativePrismHostConfig(environment: NodeJS.ProcessEnv = process.env) {
+  const scope = environment.KUBECLAW_NATIVE_SCOPE;
+  if (!scope) throw new Error('PRISM_NATIVE_PREEXEC_MEMBERSHIP_REQUIRED');
+  const maximumInputBytes = Number(environment.PRISM_NATIVE_MAXIMUM_INPUT_BYTES);
+  if (!Number.isSafeInteger(maximumInputBytes) || maximumInputBytes < 1) throw new Error('PRISM_NATIVE_INPUT_LIMIT_REQUIRED');
+  const controlInternalUrl = new URL(environment.PRISM_CONTROL_INTERNAL_URL!);
+  const workerSecret = environment.PRISM_WORKER_SECRET ?? '';
+  const spiffeEnabled = environment.WORKER_TRUST_SPIFFE_ENABLED === 'true';
+  if (!spiffeEnabled && !workerSecret) throw new Error('PRISM_NATIVE_ARTIFACT_AUTH_REQUIRED');
+  return Object.freeze({ scope, maximumInputBytes, controlInternalUrl, workerSecret, spiffeEnabled });
+}
+
+export function nativePrismSupervisorConfig(environment: NodeJS.ProcessEnv = process.env) {
+  const root = (name: string) => {
+    const value = environment[name];
+    if (!value || !path.isAbsolute(value) || path.resolve(value) !== value || value === '/') throw new Error(`PRISM_NATIVE_PATH_REQUIRED:${name}`);
+    return value;
+  };
+  const read = (name: string, fallback: number) => {
+    const value = Number(environment[name] ?? fallback);
+    if (!Number.isSafeInteger(value) || value < 1 || value > 2_147_483_647) throw new Error(`PRISM_NATIVE_CONFIG_INVALID:${name}`);
+    return value;
+  };
+  return Object.freeze({
+    policy: prismNativePolicy(environment),
+    cgroupRoot: root('PRISM_NATIVE_CGROUP_ROOT'), ownershipRoot: root('PRISM_NATIVE_OWNERSHIP_ROOT'),
+    launcher: root('PRISM_NATIVE_LAUNCHER'),
+    uid: read('PRISM_NATIVE_UID', 1000), gid: read('PRISM_NATIVE_GID', 1000),
+    maximumActiveScopes: read('PRISM_NATIVE_MAXIMUM_ACTIVE_ATTEMPTS', 8),
+    maximumRecords: read('PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS', 65536),
+    maximumBytes: read('PRISM_NATIVE_MAXIMUM_OWNERSHIP_BYTES', 67108864),
+    maximumInputBytes: read('PRISM_NATIVE_MAXIMUM_INPUT_BYTES', 16777216),
+    maximumOutputBytes: read('PRISM_NATIVE_MAXIMUM_OUTPUT_BYTES', 33554432),
+    pollIntervalMs: read('PRISM_NATIVE_POLL_INTERVAL_MS', 20),
+    drainTimeoutMs: read('PRISM_NATIVE_DRAIN_TIMEOUT_MS', 10000),
+    closeTimeoutMs: read('PRISM_NATIVE_CLOSE_TIMEOUT_MS', 15000),
+    browserPath: environment.PLAYWRIGHT_BROWSERS_PATH ?? '/ms-playwright',
+  });
+}

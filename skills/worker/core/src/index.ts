@@ -1,6 +1,13 @@
 export { WorkerAttemptExecutor } from '../worker/attempt-executor.ts';
 export { LocalWorkerRuntime } from '../worker/local-runtime.ts';
 export { NativeWorkerResourceScope } from '../worker/native-resource-scope.ts';
+export { NativeWorkerOwnership, NativeWorkerOwnershipLease } from '../worker/native-worker-ownership.ts';
+export type { NativeWorkerOwnershipOptions } from '../worker/native-worker-ownership.ts';
+export { runNativeWorkerProcess } from '../worker/native-worker-process.ts';
+export type { NativeWorkerProcessLimits, NativeWorkerProcessOptions, NativeWorkerProcessResult } from '../worker/native-worker-process.ts';
+export { executeNativeWorkerAttempt } from '../worker/native-attempt-executor.ts';
+export type { NativeWorkerAttemptExecutorOptions } from '../worker/native-attempt-executor.ts';
+export { observeNativeWorkerResources } from '../worker/native-resource-observation.ts';
 export type { NativeWorkerScopeLimits } from '../worker/native-resource-scope.ts';
 export type { NativeWorkerResourceObservation } from '../worker/native-resource-observation.ts';
 export { FileWorkerOwnershipStore } from '../worker/ownership-store.ts';

@@ -3,6 +3,12 @@ import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { once } from 'node:events';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import { FileWorkerOwnershipStore } from '../../../skills/worker/core/worker/ownership-store.ts';
+import { NativeWorkerOwnership } from '../../../skills/worker/core/worker/native-worker-ownership.ts';
+import { runNativeWorkerProcess } from '../../../skills/worker/core/worker/native-worker-process.ts';
 import { NativeWorkerResourceScope } from '../../../skills/worker/core/worker/native-resource-scope.ts';
 
 const root = process.env.KUBECLAW_WORKER_TEST_CGROUP_ROOT;
@@ -79,4 +85,43 @@ test('actual parallel scopes have independent CPU and retain final counters afte
     }
     if (failures.length) throw new AggregateError(failures, 'Native scope test cleanup failed');
   }
+});
+
+test('production launcher and durable owner account the whole host and fence exact replay', { timeout: 30000 }, async () => {
+  const launcher = process.env.KUBECLAW_WORKER_TEST_LAUNCHER;
+  if (!launcher || !path.isAbsolute(launcher)) throw new Error('KUBECLAW_WORKER_TEST_LAUNCHER must name the compiled production launcher');
+  const stateRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'worker-native-live-'));
+  const store = new FileWorkerOwnershipStore(stateRoot, { maximumRecords: 32, maximumBytes: 65536 });
+  const identity = { workerId: 'worker:live', attemptId: 'attempt:live', claimId: 'claim:live', generation: 1,
+    profileDigest: `sha256:${'1'.repeat(64)}`, attemptSpecDigest: `sha256:${'2'.repeat(64)}` };
+  const ownership = { cgroupRoot: root, store, drainTimeoutMs: 5000 };
+  try {
+    await NativeWorkerOwnership.supervise(ownership, async owner => {
+      const result = await runNativeWorkerProcess({ owner, identity,
+        limits: { ...limits, cpuTimeMs: 10000, timeoutMs: 15000, pollIntervalMs: 20,
+          maximumInputBytes: 4096, maximumOutputBytes: 16384, closeTimeoutMs: 5000 },
+        command: { launcher, uid: 1000, gid: 1000, executable: process.execPath,
+          arguments: [fileURLToPath(new URL('../../fixtures/worker-native-process-child.mjs', import.meta.url))],
+          cwd: '/', environment: {} },
+        input: Buffer.from(JSON.stringify({ iterations: 500000 })),
+      });
+      assert.equal(result.fault, null, Buffer.from(result.stderr).toString());
+      assert.equal(result.exitCode, 0);
+      const facts = JSON.parse(Buffer.from(result.stdout).toString());
+      assert.equal(facts.uid, 1000); assert.equal(facts.gid, 1000);
+      // Node includes the effective GID in getgroups(), even after setgroups(0, NULL).
+      assert.deepEqual(facts.groups, [1000]);
+      const records = await store.records();
+      assert.equal(records.length, 1); assert.equal(records[0]!.phase, 'disposed');
+      assert.ok(facts.membership.includes(records[0]!.scopeName));
+      assert.equal(result.resources.unit, 'linux-tasks');
+      assert.equal(result.resources.populated, false);
+      assert.ok(result.resources.cpuTimeMicroseconds > 0);
+      assert.ok(result.resources.maximumTasks > 1, 'Node threads must be counted as tasks');
+      await assert.rejects(owner.allocate(identity, limits), /WORKER_NATIVE_IDENTITY_ALREADY_USED/u);
+    });
+    await NativeWorkerOwnership.supervise(ownership, async owner => {
+      await assert.rejects(owner.allocate(identity, limits), /WORKER_NATIVE_IDENTITY_ALREADY_USED/u);
+    });
+  } finally { await fs.rm(stateRoot, { recursive: true, force: true }); }
 });

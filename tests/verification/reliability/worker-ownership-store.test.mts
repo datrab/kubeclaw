@@ -3,7 +3,12 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { spawn } from 'node:child_process';
+import { once } from 'node:events';
+import { setTimeout as delay } from 'node:timers/promises';
+import { fileURLToPath } from 'node:url';
 import { FileWorkerOwnershipStore, type WorkerOwnershipIdentity } from '../../../skills/worker/core/worker/ownership-store.ts';
+import { NativeWorkerOwnership } from '../../../skills/worker/core/worker/native-worker-ownership.ts';
 
 const identity: WorkerOwnershipIdentity = {
   workerId: 'worker:test', attemptId: 'attempt:test', claimId: 'claim:test', generation: 1,
@@ -97,5 +102,63 @@ test('corrupt persisted ownership fails without overwriting the record', async (
     await fs.writeFile(file, bytes);
     await assert.rejects(f.store.reserve(identity), SyntaxError);
     assert.deepEqual(await fs.readFile(file), bytes);
+  } finally { await f.cleanup(); }
+});
+
+test('abandoned admission preserves replay identity and requires a failure diagnosis', async () => {
+  const f = await fixture();
+  try {
+    const reserved = await f.store.reserve(identity);
+    await assert.rejects(f.store.transition(reserved, 'abandoned'), /WORKER_OWNERSHIP_DIAGNOSIS_REQUIRED/u);
+    const abandoned = await f.store.transition(reserved, 'abandoned', { diagnosis: 'reservation never launched' });
+    assert.deepEqual(await new FileWorkerOwnershipStore(f.root, limits).reserve(identity), abandoned);
+    await assert.rejects(f.store.transition(abandoned, 'allocated'), /WORKER_OWNERSHIP_TRANSITION_INVALID/u);
+    assert.equal((await f.store.reserve({ ...identity, generation: 2 })).phase, 'reserved');
+  } finally { await f.cleanup(); }
+});
+
+test('supervisor holds a separate real kernel lock and SIGKILL releases it without erasing reservations', { timeout: 15000 }, async () => {
+  const f = await fixture();
+  const child = spawn(process.execPath, [fileURLToPath(new URL('../../fixtures/worker-ownership-supervisor.mjs', import.meta.url)), f.root], { stdio: 'pipe' });
+  const exited = once(child, 'exit');
+  let contender: Promise<void> | undefined;
+  try {
+    const ready = await Promise.race([
+      once(child.stdout, 'data').then(([bytes]) => String(bytes)),
+      exited.then(() => { throw new Error('ownership fixture exited before acquiring lock'); }),
+    ]);
+    assert.equal(ready, 'locked\n');
+    let acquired = false;
+    contender = f.store.withSupervisor(async () => {
+      acquired = true;
+      const records = await f.store.records(); // Distinct store lock: this must not deadlock.
+      assert.deepEqual(records.map(record => record.identity), [identity]);
+    });
+    await delay(100);
+    assert.equal(acquired, false, 'concurrent supervisor must not enter admission');
+    child.kill('SIGKILL');
+    assert.deepEqual(await exited, [null, 'SIGKILL']);
+    await contender;
+    assert.equal(acquired, true);
+    assert.equal((await f.store.records())[0]?.phase, 'reserved');
+  } finally {
+    child.kill('SIGKILL');
+    await exited;
+    await contender?.catch(() => undefined);
+    await f.cleanup();
+  }
+});
+
+test('native recovery rejects ordinary directories before exposing admission or modifying existing ownership', async () => {
+  const f = await fixture();
+  try {
+    await f.store.reserve(identity);
+    const before = await fs.readFile(path.join(f.root, 'owners.json'));
+    let entered = false;
+    await assert.rejects(NativeWorkerOwnership.supervise({ cgroupRoot: f.root, store: f.store, drainTimeoutMs: 1000 }, async () => {
+      entered = true;
+    }), /WORKER_NATIVE_ROOT_INVALID/u);
+    assert.equal(entered, false);
+    assert.deepEqual(await fs.readFile(path.join(f.root, 'owners.json')), before);
   } finally { await f.cleanup(); }
 });

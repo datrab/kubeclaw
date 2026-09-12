@@ -1,4 +1,5 @@
 import type { WorkerAttemptEnvelopeV1,WorkerAttemptLimitsV1,WorkerAttemptResultV1,WorkerProfileV1 } from './types.ts';
+import type { WorkerAttemptEnvelopeV3, WorkerAttemptResultV3 } from './resource-types-v3.ts';
 
 export type WorkerResourceMetric = 'cpuTimeMs'|'maximumMemoryBytes'|'maximumProcesses';
 export type WorkerResourceCapability = {scope:string;unit:'milliseconds'|'bytes'|'processes'} & (
@@ -18,6 +19,6 @@ export type WorkerResourceAccounting = {schemaVersion:'worker-resource-accountin
 export type WorkerAttemptResultV2 = Omit<WorkerAttemptResultV1,'schemaVersion'> & {
   schemaVersion:'worker-attempt-result.v2';profileDigest:string;attemptSpecDigest:string;resourceAccounting:WorkerResourceAccounting;
 };
-export type WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1|WorkerAttemptEnvelopeV2;
-export type WorkerAttemptResult = WorkerAttemptResultV1|WorkerAttemptResultV2;
-export type WorkerResultFor<E extends WorkerAttemptEnvelope> = E extends WorkerAttemptEnvelopeV2 ? WorkerAttemptResultV2 : WorkerAttemptResultV1;
+export type WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1|WorkerAttemptEnvelopeV2|WorkerAttemptEnvelopeV3;
+export type WorkerAttemptResult = WorkerAttemptResultV1|WorkerAttemptResultV2|WorkerAttemptResultV3;
+export type WorkerResultFor<E extends WorkerAttemptEnvelope> = E extends WorkerAttemptEnvelopeV3 ? WorkerAttemptResultV3 : E extends WorkerAttemptEnvelopeV2 ? WorkerAttemptResultV2 : WorkerAttemptResultV1;
