@@ -11,9 +11,12 @@ Gesamtabschlussmaßstab bleiben unveränderte Nachweise ihrer damaligen Aussage.
 D12 ändert die Aufgabenabnahme, nicht die Bedeutung eines bestandenen Tests,
 Produktfreigabe, Sicherheitskontrollen oder Produktions-Readiness.
 
-**34 der 39 sind damit lokal abgeschlossen; 5 bleiben in Bearbeitung der
-unvollständigen Menge. Gesamtregister: 128 verifiziert, 5 teilweise implementiert,
-2 in Bearbeitung, 19 offen.** Dies sind belegte Neueinstufungen vorhandener Fixes,
+**Aktuell 35 der 39 lokal abgeschlossen; 4 bleiben unvollständig. Zusätzlich ist
+PATH-T04-002 aus den zwei zuvor in Bearbeitung befindlichen Findings abgeschlossen.
+Gesamtregister: 130 verifiziert, 4 teilweise implementiert, 1 in Bearbeitung, 19 offen.**
+
+Der nachfolgende ursprüngliche D12-Bewertungsstand wurde durch den
+[Risiko-/Registry-Checkpoint](pr6-risk-and-registry.md) ergänzt. Dies sind belegte Neueinstufungen vorhandener Fixes,
 keine 34 neuen Codekorrekturen in diesem Commit. Die früheren94 werden nicht als
 in diesem Lauf vollständig erneut getestet ausgegeben.
 
@@ -62,7 +65,7 @@ Rohbelege und exakte Befehle: [Prüfprotokoll](../../evidence/pr6-local-acceptan
 | F-T14-01 | abgeschlossen | Persistente Demo-/Exposure-Übergabe implementiert; ursprünglicher Product-/Controller-/Chartpfad einschließlich echtem lokalem API/CEL/CAS-/Recoverygate geprüft. [Nachweise](run6-coupled-root-review.md) |
 | F-T14-02 | abgeschlossen | Zugangs-/Credential-/Deliverybindung implementiert und in lokalen Product-/HTTP-/Controllerregressionen geprüft; reale Zustellung und menschliche Abnahme sind später. [Nachweise](run6-coupled-root-review.md) |
 | IFR-08-001 | abgeschlossen | Expliziter gemeinsamer Registry-/CA-/Authvertrag einschließlich E2E-Seedbindung implementiert; Original-Helm-/HTTPS-/Provider-/Workspaceprüfungen vorhanden. [Nachweise](pr6-registry-target.md) |
-| IFR-08-002 | offen | Persistenz, explizites Disk-Budget und referenzgeschützte Registry-GC fehlen; die Dokumentationskorrektur allein genügt nicht. [Nachweise](registry-clients.md) |
+| IFR-08-002 | abgeschlossen | Expliziter PVC-Speichervertrag, RWOP/Recreate und konservative manuelle Offline-GC implementiert; Umstieg von flüchtigem Speicher wird vor Apply abgewiesen. Originaler Distribution-3.0.0-Server bestätigt Digest-/Layererhalt nach GC/Neustart und Freigabe von 65536 unreferenzierten Blobbytes. Lokaler Abschluss nach D12; CSI/Kapazität/Podwechsel bleiben spätere Live-Prüfung. [Nachweise](pr6-risk-and-registry.md) |
 | IFR-09-001 | abgeschlossen | Mirrorvertrag in BuildKit-/Node-Konfigurationsgenerator und Dokumentation umgesetzt und lokal geprüft; tatsächlicher Cachehit/-miss gehört zum Betriebstest. [Nachweise](registry-clients.md) |
 | IFR-19-001 | abgeschlossen | Immutable Releaseauswahl und tatsächliche Deploy-/Helmargumente sind lokal geprüft, ebenso signierte Prism-Digestannahme; OCI-Descriptorinspektor zusätzlich vorhanden. Laufender Pod/aktives Bundle bleibt Live-Nachweis. [Nachweise](pr6-oci-identity.md) |
 | IFR-22-001 | abgeschlossen | PR- und Publikationsrechte getrennt, externe Actions gepinnt; Original-YAML-/Trust-/Pin-/Versionsprüfungen vorhanden. Effektive GitHub-Tokenrechte werden später in Actions geprüft. [Nachweise](../implementation/version-generator-integration.md) |

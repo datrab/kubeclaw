@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-09-12T11:07:52.535195+00:00",
+  "pr": 6,
+  "scope_count": 7,
+  "completed_count": 2,
+  "remaining_count": 5,
+  "completion_policy": "D12",
+  "findings": [
+    {
+      "id": "PCR-SDK-001",
+      "status": "implementiert",
+      "result": "Konkrete Implementierungs-/lokale Nachweisarbeit bleibt offen."
+    },
+    {
+      "id": "PCR-BUSTER-ENGINE-004",
+      "status": "implementiert",
+      "result": "Konkrete Implementierungs-/lokale Nachweisarbeit bleibt offen."
+    },
+    {
+      "id": "PCR-PRISM-WORKER-002",
+      "status": "implementiert",
+      "result": "Konkrete Implementierungs-/lokale Nachweisarbeit bleibt offen."
+    },
+    {
+      "id": "PCR-OBS-002",
+      "status": "implementiert",
+      "result": "Konkrete Implementierungs-/lokale Nachweisarbeit bleibt offen."
+    },
+    {
+      "id": "IFR-08-002",
+      "status": "verifiziert",
+      "result": "Expliziter PVC-Speichervertrag, RWOP/Recreate und konservative manuelle Offline-GC implementiert; Umstieg von flüchtigem Speicher wird vor Apply abgewiesen. Originaler Distribution-3.0.0-Server bestätigt Digest-/Layererhalt nach GC/Neustart und Freigabe von 65536 unreferenzierten Blobbytes. Lokaler Abschluss nach D12; CSI/Kapazität/Podwechsel bleiben spätere Live-Prüfung."
+    },
+    {
+      "id": "PCR-BUSTER-ENGINE-001",
+      "status": "in Bearbeitung",
+      "result": "Konkrete Implementierungs-/lokale Nachweisarbeit bleibt offen."
+    },
+    {
+      "id": "PATH-T04-002",
+      "status": "verifiziert",
+      "result": "D10-Risikoakzeptanz verlangt jetzt eine nichtleere Begründung; blocking bleibt nicht übersteuerbar. Vier echte Core/Git/Artefakt-Gatefolgen, neun Source-Regressionsfälle, Originalpakettests, Compiler und Paketbuild bestanden. Lokaler Abschluss nach D12."
+    }
+  ]
+}

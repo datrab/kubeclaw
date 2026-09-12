@@ -404,10 +404,10 @@
       "evidence": "implementation/wave47-telemetry-retirement.md",
       "next_action": "Read original register requirement and cited evidence; reconcile newer package checkpoints before changing code. Registry Producerreferenzen, persistenter Ownershiptransfer und gefenctes GC fehlen. Reale Leasezyklen, Digestpull nach GC und Podersatz nicht nachgewiesen.",
       "pre_d12_status": null,
-      "status": "implementiert",
-      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
-      "result": "Persistenz, explizites Disk-Budget und referenzgeschützte Registry-GC fehlen; die Dokumentationskorrektur allein genügt nicht.",
-      "required_evidence": "Persistenz, explizites Disk-Budget und referenzgeschützte Registry-GC fehlen; die Dokumentationskorrektur allein genügt nicht."
+      "status": "verifiziert",
+      "local_acceptance_report": "implementation/pr6-risk-and-registry.md",
+      "result": "Expliziter PVC-Speichervertrag, RWOP/Recreate und konservative manuelle Offline-GC implementiert; Umstieg von flüchtigem Speicher wird vor Apply abgewiesen. Originaler Distribution-3.0.0-Server bestätigt Digest-/Layererhalt nach GC/Neustart und Freigabe von 65536 unreferenzierten Blobbytes. Lokaler Abschluss nach D12; CSI/Kapazität/Podwechsel bleiben spätere Live-Prüfung.",
+      "required_evidence": "Lokaler Abschluss erfolgt; CSI/Kapazität/Podwechsel später durch Auftraggeber."
     },
     {
       "id": "IFR-09-001",
@@ -580,7 +580,7 @@
     "remaining_count": null,
     "verified_count_at_checkpoint": 8
   },
-  "verified_count": 42,
-  "remaining_count": 5,
-  "updated_at": "2026-09-12T10:40:35.397536+00:00"
+  "verified_count": 43,
+  "remaining_count": 4,
+  "updated_at": "2026-09-12T11:07:52.535195+00:00"
 }

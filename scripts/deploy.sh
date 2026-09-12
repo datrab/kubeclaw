@@ -1182,7 +1182,24 @@ cmd_infra() {
   esac
   case "${KUBECLAW_DEPLOY_LAB_REGISTRY:-false}" in
     true)
-      kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/registry-local.yaml"
+      local registry_existing registry_pvc registry_manifests
+      : "${KUBECLAW_LAB_REGISTRY_STORAGE_CONFIG:?Set to an explicit registry storage JSON config file}"
+      registry_existing="$(mktemp)" || return 1
+      registry_pvc="$(mktemp)" || { rm -f -- "$registry_existing"; return 1; }
+      if ! kubectl get pvc registry-local-data -n "$NAMESPACE" --ignore-not-found -o json > "$registry_pvc"; then
+        rm -f -- "$registry_existing" "$registry_pvc"
+        return 1
+      fi
+      if ! kubectl get deployment registry-local -n "$NAMESPACE" --ignore-not-found -o json > "$registry_existing"; then
+        rm -f -- "$registry_existing" "$registry_pvc"
+        return 1
+      fi
+      registry_manifests="$(node "$SCRIPT_DIR/render-registry-local.mjs" "$KUBECLAW_LAB_REGISTRY_STORAGE_CONFIG" serve "$registry_existing" "$registry_pvc")" || {
+        rm -f -- "$registry_existing" "$registry_pvc"
+        return 1
+      }
+      rm -f -- "$registry_existing" "$registry_pvc"
+      printf '%s\n' "$registry_manifests" | kubectl apply -n "$NAMESPACE" -f -
       wait_for_rollout_required "Registry Local" deployment/registry-local -n "$NAMESPACE" --timeout=60s
       ;;
     false) info "Anonymous HTTP lab registry not selected; use an explicitly configured registry." ;;
@@ -2729,8 +2746,12 @@ remove_destructive_infra() {
   delete_manifested_resource_if_present deployment registry-mirror "$INFRA_DIR/registry-mirror.yaml" \
     "deployment,svc,pvc" "app=registry-mirror"
 
-  delete_manifested_resource_if_present deployment registry-local "$INFRA_DIR/registry-local.yaml" \
-    "deployment,svc" "app=registry-local"
+  # Preserve image data here; explicit PVC/namespace destruction owns data deletion.
+  delete_namespaced_resource_if_present deployment registry-local
+  delete_namespaced_resource_if_present service registry-local
+  delete_namespaced_resource_if_present job registry-local-gc
+  delete_namespaced_resource_if_present job registry-local-gc-dry-run
+  delete_namespaced_resource_if_present configmap registry-local-config
 
   kubectl delete -n "$NAMESPACE" -f "$INFRA_DIR/network-policies.yaml" --ignore-not-found
 

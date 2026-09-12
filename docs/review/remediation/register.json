@@ -1661,13 +1661,17 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP04",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
+      "status": "verifiziert",
+      "implementation_commit": "PR #6: pr6-risk-and-registry checkpoint",
+      "verification_status": "lokal verifiziert nach D12",
       "verification_evidence": [
         {
           "report": "implementation/discord-delivery-receipt.md",
           "summary": "Remote 7ac8a7fe95066b5dcf3bf9bf53ad1894410bc4e9: tatsächliche Discord-ID+Wire-Payloaddigest und dauerhaft unsichere verlorene Antwort; neun Originalregressionen bestanden. Native Zustellung/Ready-Produzent offen."
+        },
+        {
+          "report": "implementation/pr6-risk-and-registry.md",
+          "summary": "D10-Risikoakzeptanz verlangt jetzt eine nichtleere Begründung; blocking bleibt nicht übersteuerbar. Vier echte Core/Git/Artefakt-Gatefolgen, neun Source-Regressionsfälle, Originalpakettests, Compiler und Paketbuild bestanden. Lokaler Abschluss nach D12."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -1682,7 +1686,7 @@
       "unresolved_code_references": [
         "stage.ts:25–42"
       ],
-      "next_action": "Zugewiesene Implementierung mit Originalregressionen abschließen und unabhängig gegenprüfen; keine fertige Umsetzung behauptet.",
+      "next_action": "Spätere Live-Abnahme durch Auftraggeber; lokale Korrektur abgeschlossen.",
       "related_findings": [
         "PATH-T13-001",
         "PTR-T05-001",
@@ -4257,15 +4261,19 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP11",
-      "status": "implementiert",
-      "implementation_commit": "85178d4a16b1bec3bb5634c3799ae50d4cc8cb0a",
-      "verification_status": "lokale Vertragsprüfung bestanden; native Betriebsgates offen",
+      "status": "verifiziert",
+      "implementation_commit": "PR #6: pr6-risk-and-registry checkpoint",
+      "verification_status": "lokal verifiziert nach D12",
       "verification_evidence": [
         "implementation/registry-clients.md",
         "implementation/registry-client-scope.json",
         {
           "report": "implementation/pr6-local-acceptance.md",
           "summary": "Persistenz, explizites Disk-Budget und referenzgeschützte Registry-GC fehlen; die Dokumentationskorrektur allein genügt nicht."
+        },
+        {
+          "report": "implementation/pr6-risk-and-registry.md",
+          "summary": "Expliziter PVC-Speichervertrag, RWOP/Recreate und konservative manuelle Offline-GC implementiert; Umstieg von flüchtigem Speicher wird vor Apply abgewiesen. Originaler Distribution-3.0.0-Server bestätigt Digest-/Layererhalt nach GC/Neustart und Freigabe von 65536 unreferenzierten Blobbytes. Lokaler Abschluss nach D12; CSI/Kapazität/Podwechsel bleiben spätere Live-Prüfung."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/registry-local.md",
@@ -4273,7 +4281,7 @@
       "source_finding_text": "## Befund IFR-08-002\n**Mittel; nachgewiesener Retention-/Dokumentationsdefekt.** Manifestkommentar behauptet, Test-Images würden bei Namespace-Löschung entfernt. Tatsächlich speichert der gemeinsame Registry-Pod ohne Volume in seiner Container-Schreibschicht; das Löschen eines Test-Namespace berührt ihn nicht. Keine GC-/Löschroutine zwischen Lease-Ende und Registry nachgewiesen. Folge: ungebundenes Disk-Wachstum bis Containerverlust/Node-Druck; Registry-Neustart verliert wiederum benötigte Images.\n\nUrsachenbehebung: explizite Artefaktlebensdauer und GC mit Referenzschutz plus definierte Persistenz/Disk-Budgets. Test: mehrere echte Lease-Zyklen, GC, noch benötigten Digest erneut ziehen, Registry-Pod ersetzen. Schema- und Source-Prüfung ersetzt diese Tests nicht. Registry und Build-Cache bleiben getrennte Einheiten.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Persistenz, explizites Disk-Budget und referenzgeschützte Registry-GC fehlen; die Dokumentationskorrektur allein genügt nicht.",
+      "next_action": "Spätere Live-Abnahme durch Auftraggeber; lokale Korrektur abgeschlossen.",
       "related_findings": [],
       "decision_notes": [],
       "local_acceptance": {
@@ -5478,11 +5486,11 @@
     }
   ],
   "implementation_branch": "fix/remediation-foundations-20260909",
-  "updated_at": "2026-09-12T10:40:35.397536+00:00",
+  "updated_at": "2026-09-12T11:07:52.535195+00:00",
   "progress_counts": {
-    "verifiziert": 128,
-    "implementiert": 5,
-    "in Bearbeitung": 2,
+    "verifiziert": 130,
+    "implementiert": 4,
+    "in Bearbeitung": 1,
     "offen": 19
   },
   "additional_integration_findings": [

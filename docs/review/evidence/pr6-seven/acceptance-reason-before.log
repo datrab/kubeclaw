@@ -1,0 +1,16 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Missing expected rejection.
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///workspace/scratch/9fa3b9b80bce/kubeclaw/tests/verification/integration/architecture-approval.test.mts:42:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: /ARCHITECTURE_APPROVAL_REASON_REQUIRED/,
+  operator: 'rejects',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

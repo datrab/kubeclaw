@@ -82,7 +82,8 @@
     "IFR-20-002",
     "IFR-25-001",
     "T01-F02",
-    "T15-F01"
+    "T15-F01",
+    "IFR-08-002"
   ],
   "checkpoints": [
     {
@@ -144,5 +145,10 @@
       "reason": "No active test process or new evidence during interruption; user requested status."
     }
   ],
-  "completion_policy": "D12"
+  "completion_policy": "D12",
+  "additional_scope_completed_ids": [
+    "PATH-T04-002"
+  ],
+  "updated_at": "2026-09-12T11:07:52.535195+00:00",
+  "current_scope_report": "../pr6-seven-progress.json"
 }

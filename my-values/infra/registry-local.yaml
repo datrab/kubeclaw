@@ -1,18 +1,37 @@
-# Registry Local — Writable registry for buster ephemeral test images
-#
-# Unlike registry-mirror (pull-through cache, read-only), this is a plain
-# registry:2 with no proxy config, so push is enabled. Buster builds the
-# production Dockerfile and pushes to this registry before deploying to
-# the test namespace.
-#
-# Anonymous HTTP lab registry only; never select it implicitly for node pulls.
-# No PVC: replacing this Pod can lose every image. Deleting a test namespace
-# does not delete shared registry data. There is no reference-aware GC here.
-# Operators must retain required digests for active leases/demos and resumable
-# runs, provision storage/capacity explicitly, and perform deliberate cleanup.
-# See docs/operations/registry-clients.md. This is not a durable registry service.
-# Port 5001 to avoid clash with registry-mirror (5000).
-# The registry image uses a mirror only if the node CRI is separately configured.
+# Anonymous HTTP lab registry. Render through scripts/render-registry-local.mjs.
+# Storage class/capacity MUST be supplied explicitly; do not apply this template.
+# RWOP needs a supporting CSI provisioner. Never substitute RWO: it allows
+# concurrent writer/GC Pods on the same node. See docs/operations/registry-clients.md.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: registry-local-data
+spec:
+  accessModes: [ReadWriteOncePod]
+  storageClassName: REQUIRED_STORAGE_CLASS
+  resources:
+    requests:
+      storage: REQUIRED_CAPACITY
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: registry-local-config
+data:
+  config.yml: |
+    version: 0.1
+    log:
+      level: info
+    storage:
+      filesystem:
+        rootdirectory: /var/lib/registry
+      delete:
+        enabled: false
+      maintenance:
+        uploadpurging:
+          enabled: false
+    http:
+      addr: :5000
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -22,6 +41,8 @@ metadata:
     app: registry-local
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: registry-local
@@ -32,12 +53,28 @@ spec:
     spec:
       containers:
         - name: registry
-          image: registry:2
+          image: registry:3.0.0
+          args: [serve, /etc/kubeclaw-registry/config.yml]
           ports:
             - containerPort: 5000
           env:
-            - name: REGISTRY_STORAGE_DELETE_ENABLED
-              value: "true"
+            - name: OTEL_TRACES_EXPORTER
+              value: none
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/registry
+            - name: config
+              mountPath: /etc/kubeclaw-registry
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /v2/
+              port: 5000
+          livenessProbe:
+            httpGet:
+              path: /v2/
+              port: 5000
+            initialDelaySeconds: 10
           resources:
             requests:
               cpu: 50m
@@ -45,6 +82,13 @@ spec:
             limits:
               cpu: 200m
               memory: 128Mi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: registry-local-data
+        - name: config
+          configMap:
+            name: registry-local-config
 ---
 apiVersion: v1
 kind: Service

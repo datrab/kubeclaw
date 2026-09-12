@@ -1,0 +1,60 @@
+{
+  "working_directory": "repository root",
+  "commands": [
+    {
+      "command": "node --test tests/verification/reliability/architecture-risk-acceptance.test.mjs",
+      "output": "acceptance-risk-after.log",
+      "exit_code": 0
+    },
+    {
+      "command": "node --test tests/verification/reliability/project-source.test.mjs",
+      "output": "acceptance-source-after.log",
+      "exit_code": 0
+    },
+    {
+      "command": "npm test --workspace @kubeclaw/plugin-human-approval",
+      "output": "acceptance-package.log",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run build --workspace @kubeclaw/plugin-human-approval",
+      "output": "acceptance-types.log",
+      "exit_code": 0
+    },
+    {
+      "command": "node tests/verification/contracts/check-project-compiler.mts",
+      "output": "acceptance-compiler.log",
+      "exit_code": 0
+    },
+    {
+      "command": "node --test tests/verification/deployment/registry-local-storage.test.mjs",
+      "output": "registry-storage-tests.log",
+      "exit_code": 0
+    },
+    {
+      "command": "KUBECLAW_REGISTRY_BINARY=/workspace/scratch/9fa3b9b80bce/registry-native-bin/registry node --test tests/verification/integration/registry-local-gc.test.mjs",
+      "output": "registry-native-gc.log",
+      "exit_code": 0
+    },
+    {
+      "command": "npx --no-install eslint --config charts/kubeclaw/files/config/eslint.config.mjs scripts/render-registry-local.mjs tests/verification/deployment/registry-local-storage.test.mjs tests/verification/integration/registry-local-gc.test.mjs",
+      "output": "registry-lint-final.log",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run knip:check",
+      "output": "seven-knip.log",
+      "exit_code": 0
+    },
+    {
+      "command": "PATH=/workspace/scratch/4e25cf57c177/toolchains/bin:$PATH node --test tests/verification/deployment/registry-client-config.test.mjs",
+      "output": "registry-client-regression-after.log",
+      "exit_code": 0
+    }
+  ],
+  "limitations": [
+    "No live cluster/CSI or deployed Pod verification.",
+    "Initial v2 registry build, missing ESLint config and complexity failures are preserved separately.",
+    "Missing-reason before-failure is preserved; original reason regression passes after correction."
+  ]
+}

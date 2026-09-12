@@ -455,14 +455,14 @@
     {
       "id": "IFR-08-002",
       "package": "storage",
-      "status": "implementiert",
+      "status": "verifiziert",
       "baseline_status": "implementiert",
-      "required_evidence": "Persistenz, explizites Disk-Budget und referenzgeschützte Registry-GC fehlen; die Dokumentationskorrektur allein genügt nicht.",
-      "result": "Persistenz, explizites Disk-Budget und referenzgeschützte Registry-GC fehlen; die Dokumentationskorrektur allein genügt nicht.",
+      "required_evidence": "Lokaler Abschluss erfolgt; CSI/Kapazität/Podwechsel später durch Auftraggeber.",
+      "result": "Expliziter PVC-Speichervertrag, RWOP/Recreate und konservative manuelle Offline-GC implementiert; Umstieg von flüchtigem Speicher wird vor Apply abgewiesen. Originaler Distribution-3.0.0-Server bestätigt Digest-/Layererhalt nach GC/Neustart und Freigabe von 65536 unreferenzierten Blobbytes. Lokaler Abschluss nach D12; CSI/Kapazität/Podwechsel bleiben spätere Live-Prüfung.",
       "baseline_evidence_requirement": "Dokumentationsdefekt korrigiert; Persistenz/Disk-Budget und referenzgeschützte GC bleiben offen, keine Kapazität erfinden.",
       "evidence": "implementation/wave47-telemetry-retirement.md",
       "pre_d12_status": "implementiert / unvollständig",
-      "local_acceptance_report": "implementation/pr6-local-acceptance.md",
+      "local_acceptance_report": "implementation/pr6-risk-and-registry.md",
       "pre_d12_result": "Registry Producerreferenzen, persistenter Ownershiptransfer und gefenctes GC fehlen. Reale Leasezyklen, Digestpull nach GC und Podersatz nicht nachgewiesen.",
       "pre_d12_required_evidence": "Dokumentationsdefekt korrigiert; Persistenz/Disk-Budget und referenzgeschützte GC bleiben offen, keine Kapazität erfinden."
     },
@@ -663,8 +663,8 @@
       "pre_d12_required_evidence": "Original immutable report-source suite passes with actual journals/artifact stores, cross-run/stale/missing/tampered/FIFO negatives. | Original requested genuine configured Writer consumption/output remains unavailable. No local source assertion is called a successful Writer."
     }
   ],
-  "verified_count": 42,
-  "remaining_count": 5,
+  "verified_count": 43,
+  "remaining_count": 4,
   "integration_checkpoint": "a134377",
   "overall_complete": false,
   "pre_d12_summary": {
@@ -673,5 +673,5 @@
     "remaining_count": 40,
     "verified_count_at_checkpoint": null
   },
-  "updated_at": "2026-09-12T10:40:35.397536+00:00"
+  "updated_at": "2026-09-12T11:07:52.535195+00:00"
 }

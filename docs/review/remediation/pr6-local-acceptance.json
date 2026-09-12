@@ -6,8 +6,8 @@
   "pr": 6,
   "completion_policy": "D12: Vollständig korrigierter Code mit ausreichender lokaler Testabdeckung gilt für den Behebungsauftrag als lokal verifiziert/abgeschlossen. Ausstehende Live-/Cluster-/GitHub-Actions-Abnahmen bleiben separat und werden vom Auftraggeber nach dem Open-Sourcing durchgeführt. Keine Umdeutung nicht ausgeführter Tests in bestanden; echte Code- oder lokale Nachweislücken bleiben offen.",
   "scope_count": 39,
-  "locally_completed_count": 34,
-  "remaining_count": 5,
+  "locally_completed_count": 35,
+  "remaining_count": 4,
   "findings": [
     {
       "id": "PCR-SDK-001",
@@ -422,16 +422,17 @@
     {
       "id": "IFR-08-002",
       "title": "registry-local — Mittel; nachgewiesener Retention-/Dokumentationsdefekt",
-      "local_disposition": "offen",
-      "rationale": "Persistenz, explizites Disk-Budget und referenzgeschützte Registry-GC fehlen; die Dokumentationskorrektur allein genügt nicht.",
+      "local_disposition": "abgeschlossen",
+      "rationale": "Expliziter PVC-Speichervertrag, RWOP/Recreate und konservative manuelle Offline-GC implementiert; Umstieg von flüchtigem Speicher wird vor Apply abgewiesen. Originaler Distribution-3.0.0-Server bestätigt Digest-/Layererhalt nach GC/Neustart und Freigabe von 65536 unreferenzierten Blobbytes. Lokaler Abschluss nach D12; CSI/Kapazität/Podwechsel bleiben spätere Live-Prüfung.",
       "evidence_reports": [
         "implementation/registry-clients.md",
-        "implementation/registry-client-scope.json"
+        "implementation/registry-client-scope.json",
+        "implementation/pr6-risk-and-registry.md"
       ],
       "previous_status": "implementiert",
       "previous_verification_status": "lokale Vertragsprüfung bestanden; native Betriebsgates offen",
       "previous_next_action": "Dokumentationsdefekt korrigiert; Persistenz/Disk-Budget und referenzgeschützte GC bleiben offen, keine Kapazität erfinden.",
-      "pending_live_validation": null
+      "pending_live_validation": "RWOP/CSI-Kapazität und Registry-Podwechsel im Cluster durch Auftraggeber."
     },
     {
       "id": "IFR-09-001",
@@ -593,5 +594,6 @@
       "previous_next_action": "Echten konfigurierten OpenClaw/ACP-Writer mit unveränderlichen Quellen erst bei real verfügbarer CLI/Config/Token/Tools-URL ausführen. Bestehende Original-/Source-Suites sind modelExecution:false; Socketstatus wegen EPERM unbekannt. Keine Wiederholung lokaler Fixtures als Writer-Nachweis.",
       "pending_live_validation": "Echten konfigurierten OpenClaw/ACP-Writer mit unveränderlichen Quellen erst bei real verfügbarer CLI/Config/Token/Tools-URL ausführen. Bestehende Original-/Source-Suites sind modelExecution:false; Socketstatus wegen EPERM unbekannt. Keine Wiederholung lokaler Fixtures als Writer-Nachweis."
     }
-  ]
+  ],
+  "updated_at": "2026-09-12T11:07:52.535195+00:00"
 }

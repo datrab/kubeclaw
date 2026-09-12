@@ -1,5 +1,7 @@
 # Übergabe des ursprünglichen Planungsstands
 
+Aktueller Folgecheckpoint: **130 lokal verifiziert / 4 teilweise / 1 in Bearbeitung / 19 offen**. Von den zuletzt angefragten7 sind2 abgeschlossen;5 bleiben. [Risiko-/Registry-Nachweise](implementation/pr6-risk-and-registry.md). Ältere Zähler unten sind historische Stände.
+
 Aktueller Stand nach D12 (2026-09-12): **128 lokal verifiziert / 5 teilweise / 2 in Bearbeitung / 19 offen**. Von den39 sind34 lokal abgeschlossen. Live-Abnahmen folgen separat durch den Auftraggeber nach Open-Sourcing. Maßgeblich sind [D12](decisions.md#d12--lokaler-abschluss-und-separate-live-abnahme), [Einzelbewertung](implementation/pr6-local-acceptance.md) und [Register](register.json). Ausschließlich im bestehenden PR #6 und dessen Branch weiterarbeiten; frühere Anweisungen zu weiteren Fixbranches gelten nicht. Die folgenden älteren Stände bleiben historischer Verlauf.
 
 **Historischer Planungscheckpoint. Die Umsetzung läuft inzwischen; aktueller Stand und nächste Schritte stehen in [progress.md](progress.md) und register.json.**
