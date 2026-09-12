@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "pr": 6,
+  "branch": "fix/remediation-foundations-20260909",
+  "base_head": "0f673eacaef206fb6846672bce1fe856209d7ac7",
+  "started_at": "2026-09-12T07:05:10Z",
+  "requested_active_seconds": 18000,
+  "earliest_stop_at": "2026-09-12T13:57:16Z",
+  "state": "running",
+  "scope_ids": [
+    "PCR-SDK-001",
+    "PCR-BUSTER-ENGINE-004",
+    "PCR-ISOLATION-002",
+    "PCR-ISOLATION-004",
+    "PCR-NOVA-GATE-005",
+    "PATH-T11-001",
+    "PATH-T13-001",
+    "PCR-CONTAINER-BUILD-001",
+    "PCR-CONTAINER-BUILD-002",
+    "PCR-DIRECT-COMMAND-001",
+    "PCR-VISUAL-001",
+    "PATH-T02-002",
+    "PCR-PRISM-AGENT-BRIDGE-001",
+    "PCR-PRISM-AGENT-BRIDGE-002",
+    "PCR-PRISM-CONTROL-001",
+    "PCR-PRISM-CONTROL-002",
+    "PCR-PRISM-CORPUS-001",
+    "PCR-PRISM-WORKER-001",
+    "PCR-PRISM-WORKER-002",
+    "PCR-PRISM-WORKER-003",
+    "PCR-PRISM-ENGINE-001",
+    "PCR-PRISM-RENDERER-002",
+    "PCR-PRISM-STUDIO-002",
+    "PCR-OBS-002",
+    "F-T14-01",
+    "F-T14-02",
+    "IFR-08-001",
+    "IFR-08-002",
+    "IFR-09-001",
+    "IFR-19-001",
+    "IFR-22-001",
+    "PCR-SCAFFOLD-OPS-001",
+    "IFR-07-001",
+    "IFR-14-001",
+    "IFR-20-001",
+    "IFR-20-002",
+    "IFR-25-001",
+    "T01-F02",
+    "T15-F01"
+  ],
+  "completed_ids": [],
+  "checkpoints": [
+    {
+      "at": "2026-09-12T09:05:26.784487+00:00",
+      "state": "native CI prerequisites prepared; full Knip execution exposes real remaining findings",
+      "finding_closures": 0
+    }
+  ],
+  "blocked_gates": [],
+  "observed_interruptions": [
+    {
+      "last_completed_evidence_at": "2026-09-12T07:11:49Z",
+      "resumed_at": "2026-09-12T09:03:55Z",
+      "excluded_seconds": 6726,
+      "reason": "No active test process or new evidence during interruption; user requested status."
+    }
+  ]
+}

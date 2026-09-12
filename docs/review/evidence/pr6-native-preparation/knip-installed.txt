@@ -1,0 +1,76 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> knip:check
+> npm run knip:config:check && npx --no-install knip --config charts/kubeclaw/files/config/knip.json --no-progress --no-config-hints --no-tag-hints
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> knip:config:check
+> node scripts/generate-knip-config.mjs --check
+
+{"ok":true,"plugins":50,"output":"charts/kubeclaw/files/config/knip.json"}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+Unused files (12)
+contracts/pipeline-test-gate/v1/tests/declarations-typecheck.ts          
+contracts/pipeline-worker-core/v1/scripts/generate-resource-schema-v2.mjs
+contracts/prism/v1/src/validators.generated.d.mts                        
+scripts/updates/renovate.cjs                                             
+skills/prism/integration/engine-cache-capture.mts                        
+skills/prism/integration/engine-capture-retention.mts                    
+skills/prism/integration/worker-browser-cancellation.mts                 
+skills/prism/integration/worker-concurrent-resource-attribution.mts      
+skills/prism/studio/puck-render.test.tsx                                 
+skills/prism/tests/export-product-vectors.mts                            
+tests/fixtures/plugin-system-v2/recovery-plugin/stage.js                 
+tests/fixtures/plugin-system-v2/resume-plugin/checkpoint.js              
+Unused dependencies (1)
+@kubeclaw/plugin-sdk  skills/buster/plugins/axe/package.json
+Unused devDependencies (1)
+typescript-eslint  package.json:222:6
+Unlisted dependencies (22)
+yaml                          ops/pod/test/deployment.test.mjs:8:35                                   
+yaml                          scripts/check-action-pins.mjs:5:18                                      
+yaml                          scripts/check-workflow-yaml.mjs:2:31                                    
+chrome-launcher               skills/buster/engine/test-gates/browser-lighthouse-runtime.ts:9:26      
+@playwright/test              skills/buster/plugins/playwright/tests/fixture/playwright.config.ts:1:30
+@playwright/test              skills/buster/plugins/playwright/tests/fixture/specs/home.spec.ts:1:30  
+tiktoken                      skills/nova/plugins/review/tests/remediation.test.mjs:3:30              
+vitest                        spikes/prism/puck-adapter/tests/adapter.test.ts:1:38                    
+@puckeditor/core              spikes/prism/puck-adapter/tests/adapter.test.ts:2:49                    
+yaml                          tests/verification/contracts/check-demo-ready-controller.mts:4:18       
+yaml                          tests/verification/contracts/workflow-trust-split.test.mjs:4:18         
+yaml                          tests/verification/deployment/buster-readiness.test.mts:7:33            
+yaml                          tests/verification/deployment/check-git-disabled.mjs:3:35               
+yaml                          tests/verification/deployment/check-role-chart.mjs:3:35                 
+yaml                          tests/verification/deployment/check-verification-secret-rbac.mjs:3:35   
+yaml                          tests/verification/deployment/prism-ingestion-resources.test.mjs:4:18   
+yaml                          tests/verification/deployment/registry-client-config.test.mjs:6:33      
+yaml                          tests/verification/deployment/release-images.test.mjs:29:11             
+@playwright/test              tests/verification/reliability/provider-completion.test.mjs:15:127      
+@modelcontextprotocol/server  tools/ops-mcp/src/server.mjs:6:45                                       
+@modelcontextprotocol/node    tools/ops-mcp/src/server.mjs:7:31                                       
+zod/v4                        tools/ops-mcp/src/server.mjs:8:20                                       
+Unlisted binaries (16)
+go       package.json                                                     
+openssl  skills/nova/plugins/demo-handoff/tests/controller-client.test.mts
+mkfifo   skills/nova/plugins/demo-handoff/tests/controller-client.test.mts
+openssl  skills/nova/plugins/demo-handoff/tests/handoff.test.mts          
+go       skills/nova/plugins/demo-handoff/tests/handoff.test.mts          
+mkfifo   skills/prism/tests/artifact-durability.test.mts                  
+openssl  skills/prism/tests/product-controller.test.mts                   
+openssl  skills/prism/tests/provider-cancellation.test.mts                
+openssl  tests/verification/deployment/registry-client-config.test.mjs    
+openssl  tests/verification/deployment/registry-health.test.mts           
+openssl  tests/verification/deployment/registry-trivy-native.test.mts     
+mkfifo   tests/verification/reliability/admission-retirement.test.mjs     
+mkfifo   tests/verification/reliability/blob-read-boundary.test.mjs       
+mkfifo   tests/verification/reliability/buster-job-compaction.test.mts    
+mkfifo   tests/verification/reliability/report-evidence.test.mts          
+openssl  tools/ops-mcp/test/kubernetes.test.mjs                           
+Unresolved imports (1)
+/usr/local/bin/kubectl  tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts
+Unused exports (4)
+LINT_VULNERABILITY_FOUND                      skills/nova/plugins/lint/src/engine/tool-registry-core.ts:24:14          
+npmAuditSeverity                    function  skills/nova/plugins/lint/src/engine/tool-registry-core.ts:105:17         
+repositoryRevalidationResultDigest  function  skills/nova/plugins/review/src/repository-revalidation-contract.ts:142:17
+reviewImportSpecifiers              function  skills/nova/plugins/review/src/review-context-production.ts:96:17        

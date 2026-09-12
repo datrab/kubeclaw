@@ -1,0 +1,14 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> knip:check
+> npm run knip:config:check && npx --no-install knip --config charts/kubeclaw/files/config/knip.json --no-progress --no-config-hints --no-tag-hints
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> knip:config:check
+> node scripts/generate-knip-config.mjs --check
+
+{"ok":true,"plugins":50,"output":"charts/kubeclaw/files/config/knip.json"}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm error npx canceled due to missing packages and no YES option: ["knip@6.35.1"]
+npm error A complete log of this run can be found in: /root/.npm/_logs/2026-09-12T07_07_07_612Z-debug-0.log
