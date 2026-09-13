@@ -1,5 +1,13 @@
 # Aktueller Umsetzungsstand
 
+IFR-24-001 zusätzlich lokal abgeschlossen: echte PostgreSQL17→18- und
+Qdrant1.18.2→1.19.1-Migration, Erhalt der Altdaten, frische Ziel-Releases/PVCs,
+Recovery-/TLS-/Netzwerkbindung und zehn Helm-/Manifestgates.
+[Abschluss, Rohbelege und Live-Grenzen](implementation/pr6-stateful-migration-closure.md).
+IFR-21-001 jetzt in Bearbeitung: Python-/Go-/Download-/apt-Inputs gebunden und
+real geprüft; Browser/DB-Inputs und vollständige Imagevergleiche bleiben offen.
+[Image-Checkpoint](implementation/pr6-runtime-tool-locks.md).
+
 Redis IFR-11-001 lokal abgeschlossen: echte Versions-/RDB-AOF-Migration,
 Crash-/Dedup-/OOM-Prüfung und vier Helm-/PVC-Gates bestanden.
 [Abschluss und Live-Grenzen](implementation/pr6-redis-migration-closure.md).
@@ -9,7 +17,7 @@ Prozesskanal und separater Core-Lifetime-API verbunden. 12 lokale Tests bestande
 keine Finding-Schließung, keine aktivierte Runner-Umstellung. [Checkpoint und
 offene Integration](implementation/pr6-buster-fixture-control.md).
 
-**139/154 lokal verifiziert, 15 unvollständig** (2 teilweise implementiert, 2 in Bearbeitung, 11 offen). PCR-PRISM-WORKER-002 nach Prüfung des aktuellen V3-Produktionspfads und lokalen Originaltests gemäß D12 geschlossen; veralteten V1-Testimport durch originale historische Receipts ersetzt. [Nachweis und separate Live-Gates](implementation/pr6-prism-native-local-closure.md). Frühere Zähler darunter sind historische Checkpoints.
+**140/154 lokal verifiziert, 14 unvollständig** (2 teilweise implementiert, 2 in Bearbeitung, 10 offen). PCR-PRISM-WORKER-002 nach Prüfung des aktuellen V3-Produktionspfads und lokalen Originaltests gemäß D12 geschlossen; veralteten V1-Testimport durch originale historische Receipts ersetzt. [Nachweis und separate Live-Gates](implementation/pr6-prism-native-local-closure.md). Frühere Zähler darunter sind historische Checkpoints.
 
 Wiederaufnahme 2026-09-13: drei offene Worker-Dateien geprüft; Startbesitz und Elternprozessbindung ergänzt. 24 echte lokale Prozess-/Ownership-/Channel-Tests bestehen. Buster-Rollenintegration bleibt unvollständig; **137/154 lokal verifiziert, 17 unvollständig**. Aktuelle [Übergabe](handoff.md) und [Nachweise](implementation/pr6-launch-ownership-checkpoint.md).
 

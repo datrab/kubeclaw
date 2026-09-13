@@ -46,9 +46,16 @@ server_identity() {
   printf '%s\n' "$identifier"
 }
 
+client_version() {
+  local value
+  value=$("$1" --version)
+  [[ $value =~ PostgreSQL\)\ ([0-9]+)\.([0-9]+) ]] || fail CLIENT_VERSION_INVALID
+  printf '%s\n' "$(( 10#${BASH_REMATCH[1]} * 10000 + 10#${BASH_REMATCH[2]} ))"
+}
+
 backup() {
-  local identity started used allowance blocks stage final
-  identity=$(server_identity); started=$(date +%s)
+  local identity started used allowance blocks stage final client
+  identity=$(server_identity); client=$(client_version pg_dump); started=$(date +%s)
   used=$(du --summarize --bytes "$BACKUP_ROOT" | cut -f1)
   [[ $used =~ ^[0-9]+$ ]] || fail RETAINED_SIZE_INVALID
   allowance=$(( BACKUP_MAXIMUM_RETAINED_BYTES - used - 67108864 ))
@@ -71,6 +78,7 @@ backup() {
     printf 'database=%s\n' "$PGDATABASE"
     printf 'source_system_identifier=%s\n' "$identity"
     printf 'server_version_num=%s\n' "$BACKUP_EXPECTED_SERVER_VERSION"
+    printf 'dump_client_version_num=%s\n' "$client"
     printf 'application_image=%s\n' "$BACKUP_APPLICATION_IMAGE"
     printf 'credential_authority_ref=%s\ncredential_binding=%s\n' "$BACKUP_CREDENTIAL_AUTHORITY_REF" "$(credential_binding)"
     printf 'started_epoch=%s\ncompleted_epoch=%s\n' "$started" "$(date +%s)"
@@ -91,7 +99,7 @@ metadata() {
 }
 
 verify() {
-  local directory=$1 name escaped age started completed
+  local directory=$1 source_version=$2 name escaped age started completed
   [[ $directory == "$BACKUP_ROOT"/backup-* && -d $directory && ! -L $directory ]] || fail BACKUP_PATH_INVALID
   [[ ${directory#"$BACKUP_ROOT"/} != */* ]] || fail BACKUP_PATH_INVALID
   for name in database.dump archive-toc.txt metadata.env SHA256SUMS; do
@@ -111,7 +119,7 @@ verify() {
   [[ $(metadata "$directory" database) == "$PGDATABASE" ]] || fail BACKUP_DATABASE_MISMATCH
   [[ $(metadata "$directory" application_image) == "$BACKUP_APPLICATION_IMAGE" ]] || fail BACKUP_APPLICATION_MISMATCH
   [[ $(metadata "$directory" credential_binding) == "$(credential_binding)" ]] || fail BACKUP_CREDENTIAL_SET_MISMATCH
-  [[ $(metadata "$directory" server_version_num) == "$BACKUP_EXPECTED_SERVER_VERSION" ]] || fail BACKUP_VERSION_MISMATCH
+  [[ $(metadata "$directory" server_version_num) == "$source_version" ]] || fail BACKUP_VERSION_MISMATCH
   started=$(metadata "$directory" started_epoch); completed=$(metadata "$directory" completed_epoch)
   positive STARTED_EPOCH "$started"; positive COMPLETED_EPOCH "$completed"
   age=$(( $(date +%s) - started ))
@@ -131,8 +139,12 @@ latest() {
 }
 
 restore() {
-  local directory=$1 target count
-  verify "$directory"
+  local directory=$1 source_version=$2 target count
+  verify "$directory" "$source_version"
+  if [[ $source_version != "$BACKUP_EXPECTED_SERVER_VERSION" ]]; then
+    [[ $(metadata "$directory" dump_client_version_num) == "$BACKUP_EXPECTED_SERVER_VERSION" \
+      && $(client_version pg_restore) == "$BACKUP_EXPECTED_SERVER_VERSION" ]] || fail MIGRATION_SELECTED_CLIENT_REQUIRED
+  fi
   target=$(server_identity)
   [[ $target != "$(metadata "$directory" source_system_identifier)" ]] || fail SAME_SERVER_RESTORE_FORBIDDEN
   count=$(sql "SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname NOT IN ('pg_catalog','information_schema') AND n.nspname NOT LIKE 'pg_toast%' AND c.relkind IN ('r','p','v','m','S','f')")
@@ -144,16 +156,23 @@ restore() {
   printf '%s\n' 'POSTGRES_RECOVERY_RESTORED_APPLICATION_ACCEPTANCE_REQUIRED'
 }
 
+migrate() {
+  local directory=$1 source_version=$2
+  positive SOURCE_VERSION "$source_version"
+  (( source_version >= 100000 && source_version < BACKUP_EXPECTED_SERVER_VERSION )) || fail FORWARD_MIGRATION_REQUIRED
+  restore "$directory" "$source_version"
+}
+
 scheduled() {
   : "${BACKUP_INTERVAL_SECONDS:?}"
   positive BACKUP_INTERVAL_SECONDS "$BACKUP_INTERVAL_SECONDS"
   local selected age
-  if selected=$(latest) && (verify "$selected"); then
+  if selected=$(latest) && (verify "$selected" "$BACKUP_EXPECTED_SERVER_VERSION"); then
     age=$(( $(date +%s) - $(metadata "$selected" started_epoch) ))
     if (( age < BACKUP_INTERVAL_SECONDS )); then printf '%s\n' "$selected"; return; fi
   fi
   selected=$(backup)
-  verify "$selected"
+  verify "$selected" "$BACKUP_EXPECTED_SERVER_VERSION"
   printf '%s\n' "$selected"
 }
 
@@ -162,7 +181,7 @@ configuration "${1:-}"
 # read-only verifier can safely inspect either side of the atomic publication.
 if [[ ${1:-} == verify ]]; then
   [[ $# == 1 ]] || fail ARGUMENTS_INVALID
-  selected=$(latest); verify "$selected"; printf '%s\n' "$selected"; exit 0
+  selected=$(latest); verify "$selected" "$BACKUP_EXPECTED_SERVER_VERSION"; printf '%s\n' "$selected"; exit 0
 fi
 # The kernel releases the lock after SIGKILL; no stale-PID lock takeover exists.
 [[ ! -L $BACKUP_ROOT/.recovery.lock ]] || fail LOCK_PATH_INVALID
@@ -171,6 +190,7 @@ flock --exclusive --nonblock 9 || fail BUSY
 case ${1:-} in
   backup) [[ $# == 1 ]] || fail ARGUMENTS_INVALID; backup ;;
   scheduled) [[ $# == 1 ]] || fail ARGUMENTS_INVALID; scheduled ;;
-  restore) [[ $# == 2 ]] || fail ARGUMENTS_INVALID; restore "$2" ;;
-  *) fail 'USAGE_backup_scheduled_verify_restore_BACKUP_DIRECTORY' ;;
+  restore) [[ $# == 2 ]] || fail ARGUMENTS_INVALID; restore "$2" "$BACKUP_EXPECTED_SERVER_VERSION" ;;
+  migrate) [[ $# == 3 ]] || fail ARGUMENTS_INVALID; migrate "$2" "$3" ;;
+  *) fail 'USAGE_backup_scheduled_verify_restore_BACKUP_DIRECTORY_migrate_BACKUP_DIRECTORY_SOURCE_VERSION_NUM' ;;
 esac

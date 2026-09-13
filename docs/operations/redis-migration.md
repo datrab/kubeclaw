@@ -172,3 +172,13 @@ The separate durability test covers lost ACK, SIGKILL/restart and noeviction OOM
 These are native data-path tests, not a Kubernetes/CSI or hardware power-loss
 claim. The live acceptance is the install, restart, endpoint and workload sequence
 above with the actual deployment's credentials and storage provider.
+
+## Network policy after a release-name change
+
+`deploy.sh infra` now derives stateful ingress and consumer egress from the
+actual selected Redis, PostgreSQL and Qdrant charts. Before resuming clients in
+a manual cutover, render/apply `scripts/render-stateful-network-policies.mjs`
+with the policy file, namespace and all three release/value-file pairs, as shown
+in the [PostgreSQL migration procedure](postgresql-migration.md). Preserve the
+other databases' selections. Changing only a client URL leaves the old network
+selectors behind and is not a completed cutover.

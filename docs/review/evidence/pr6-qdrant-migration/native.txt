@@ -1,0 +1,11 @@
+✔ real consecutive Qdrant upgrade restores every collection and alias into fresh storage (13945.563717ms)
+ℹ Original Qdrant 1.18.2 to 1.19.1; two complete collections, original alias, vectors, payloads and query order preserved; copied storage restarts in cluster mode; unchanged old source remains readable
+✔ real Qdrant enforces TLS/auth and restores a verified snapshot into a fresh store (4827.940891ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14352.729968

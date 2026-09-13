@@ -1,0 +1,12 @@
+✔ actual locked Helm service binds scheduled recovery image, storage, credentials and narrow network policy (673.86667ms)
+✔ real Helm fullname override is respected and an impossible configured RPO is refused (772.664344ms)
+✔ a separately named migration release binds recovery to the destination service and selector (678.936982ms)
+✔ real chart service names, destination selectors and translated ports bind both migrated database policies (1531.190885ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2559.005273

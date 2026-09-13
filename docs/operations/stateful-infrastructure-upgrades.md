@@ -1,4 +1,4 @@
-# Redis and LiteLLM PostgreSQL upgrades
+# Redis, LiteLLM PostgreSQL and Qdrant upgrades
 
 `versions.json` selects both database images by immutable digest and their
 Bitnami Helm charts by version, OCI manifest digest and archive SHA-256. The
@@ -50,9 +50,15 @@ It uses a fresh release/PVC and preserves the original source, avoiding a
 provider-specific in-place expansion. `REDIS_RELEASE` and `REDIS_VALUES_FILE`
 select the new release for subsequent normal deployment and teardown. Role
 endpoint values must select the same destination before clients resume.
-PostgreSQL's complete version/storage cutover, common off-node backup policy and
-provider capacity remain tracked separately in IFR-24-001, IFR-26-001 and
-IFR-16-001. A blocked unsafe upgrade alone is not a completed migration.
+The complete [PostgreSQL logical migration](postgresql-migration.md) and
+[Qdrant full-storage migration](qdrant-migration.md) use independent releases
+and preserve their source stores. The actual chart service selectors and ports
+bind scheduled recovery and database network edges to all selected releases.
+`POSTGRESQL_RELEASE`/`POSTGRESQL_VALUES_FILE` and
+`QDRANT_RELEASE`/`QDRANT_VALUES_FILE` retain those selections on subsequent deploys.
+Common off-node backup and provider capacity remain separately open in
+IFR-26-001 and IFR-16-001. Local migration evidence does not claim CSI or live
+application acceptance.
 
 ## Local verification
 

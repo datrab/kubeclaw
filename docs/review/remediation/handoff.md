@@ -1,12 +1,20 @@
 # Aktuelle Übergabe PR #6
 
+IFR-24-001 zusätzlich lokal abgeschlossen: echte PostgreSQL17→18- und
+Qdrant1.18.2→1.19.1-Migration, Erhalt der Altdaten, frische Ziel-Releases/PVCs,
+Recovery-/TLS-/Netzwerkbindung und zehn Helm-/Manifestgates.
+[Abschluss, Rohbelege und Live-Grenzen](implementation/pr6-stateful-migration-closure.md).
+IFR-21-001 jetzt in Bearbeitung: Python-/Go-/Download-/apt-Inputs gebunden und
+real geprüft; Browser/DB-Inputs und vollständige Imagevergleiche bleiben offen.
+[Image-Checkpoint](implementation/pr6-runtime-tool-locks.md).
+
 Redis IFR-11-001 lokal abgeschlossen: echte Versions-/RDB-AOF-Migration,
 Crash-/Dedup-/OOM-Prüfung und vier Helm-/PVC-Gates bestanden.
 [Abschluss und Live-Grenzen](implementation/pr6-redis-migration-closure.md).
 
-Stand der Wiederaufnahme am 2026-09-13: **139/154 lokal verifiziert, 15 unvollständig**.
+Stand der Wiederaufnahme am 2026-09-13: **140/154 lokal verifiziert, 14 unvollständig**.
 Das Register `register.json` enthält 2 teilweise implementierte, 2 in Bearbeitung
-und 11 offene Findings. PCR-PRISM-WORKER-002 ist gemäß D12 lokal geschlossen; separate Live-Abnahme offen.
+und 10 offene Findings. PCR-PRISM-WORKER-002 ist gemäß D12 lokal geschlossen; separate Live-Abnahme offen.
 
 ## Gesicherte Arbeit
 

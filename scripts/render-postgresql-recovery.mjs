@@ -3,9 +3,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { dump, load, loadAll } from 'js-yaml';
-import { infrastructureChart, stageInfrastructureChart } from './infrastructure-chart.mjs';
+import { infrastructureChart } from './infrastructure-chart.mjs';
 import { preflightRecoveryVolume } from './postgresql-recovery-preflight.mjs';
-import { renderInfrastructureChart } from './infrastructure-release.mjs';
+import { statefulDatabaseService } from './stateful-database-service.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const name = 'litellm-postgresql-backup';
@@ -96,27 +96,8 @@ function networkPolicies(metadata, service) {
   ];
 }
 
-function databaseService(namespace, postgresFile, helm) {
-  const archive = stageInfrastructureChart('postgresql');
-  const rendered = loadAll(renderInfrastructureChart('postgresql', 'postgresql', namespace, archive, postgresFile, helm, true));
-  const services = rendered.filter(value => value?.kind === 'Service' && value.spec.clusterIP !== 'None'
-    && value.spec.ports?.some(port => port.name === 'tcp-postgresql'));
-  if (services.length !== 1) throw new Error('POSTGRES_RECOVERY_DATABASE_SERVICE_AMBIGUOUS');
-  const service = services[0]; const port = service.spec.ports.find(value => value.name === 'tcp-postgresql');
-  const workloads = rendered.filter(value => value?.kind === 'StatefulSet'
-    && Object.entries(service.spec.selector).every(([key, label]) => value.spec.template.metadata.labels[key] === label));
-  if (workloads.length !== 1) throw new Error('POSTGRES_RECOVERY_DATABASE_WORKLOAD_AMBIGUOUS');
-  return { name: service.metadata.name, selector: service.spec.selector, port: port.port, targetPort: targetPort(workloads[0], port.targetPort) };
-}
 
-function targetPort(workload, target) {
-  if (typeof target === 'number') return target;
-  const ports = workload.spec.template.spec.containers.flatMap(container => container.ports ?? []).filter(port => port.name === target);
-  if (ports.length !== 1) throw new Error('POSTGRES_RECOVERY_DATABASE_PORT_AMBIGUOUS');
-  return ports[0].containerPort;
-}
-
-export function renderPostgresqlRecovery(namespace, policyFile, postgresFile, applicationFile, helm = 'helm') {
+export function renderPostgresqlRecovery(namespace, policyFile, postgresFile, applicationFile, helm = 'helm', release = 'postgresql') {
   const policy = load(fs.readFileSync(policyFile, 'utf8')); const postgres = load(fs.readFileSync(postgresFile, 'utf8'));
   const application = loadAll(fs.readFileSync(applicationFile, 'utf8')).find(value => value?.kind === 'Deployment' && value.metadata?.name === 'litellm');
   validate(policy, namespace, postgres, application);
@@ -124,7 +105,8 @@ export function renderPostgresqlRecovery(namespace, policyFile, postgresFile, ap
   const version = JSON.parse(fs.readFileSync(path.join(root, 'versions.json'), 'utf8'));
   const image = version.infrastructure.postgresql.replace(/:[^:@]+@/, '@');
   const script = fs.readFileSync(path.join(root, 'scripts/postgresql-recovery.sh'), 'utf8');
-  const service = databaseService(namespace, postgresFile, helm);
+  if (!identifier(release) || release.length > 53) throw new Error('POSTGRES_RECOVERY_RELEASE_INVALID');
+  const service = statefulDatabaseService('postgresql', release, namespace, postgresFile, helm);
   const data = configuration(policy, postgres, application, service, namespace);
   const checksum = createHash('sha256').update(script).update(JSON.stringify(data)).digest('hex');
   const metadata = { namespace, labels: { app: name, 'app.kubernetes.io/managed-by': 'kubeclaw-infrastructure' } };
@@ -140,8 +122,8 @@ export function renderPostgresqlRecovery(namespace, policyFile, postgresFile, ap
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const preflight = process.argv[2] === '--preflight';
   const args = process.argv.slice(preflight ? 3 : 2);
-  if (args.length !== 4) throw new Error('Usage: render-postgresql-recovery.mjs [--preflight] NAMESPACE POLICY POSTGRES_VALUES LITELLM_DEPLOYMENT');
-  const documents = renderPostgresqlRecovery(...args);
+  if (![4, 5].includes(args.length)) throw new Error('Usage: render-postgresql-recovery.mjs [--preflight] NAMESPACE POLICY POSTGRES_VALUES LITELLM_DEPLOYMENT [RELEASE]');
+  const documents = renderPostgresqlRecovery(...args.slice(0, 4), 'helm', args[4] ?? 'postgresql');
   if (preflight) preflightRecoveryVolume(args[0], documents);
   process.stdout.write(documents.map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\n'));
 }

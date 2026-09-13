@@ -3,7 +3,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import { loadAll } from 'js-yaml';
-import { infrastructureChart, verifyInfrastructureChart } from './infrastructure-chart.mjs';
+import { verifyInfrastructureChart } from './infrastructure-chart.mjs';
 import { bindInfrastructureImages } from './infrastructure-image-renderer.mjs';
 import { renderInfrastructureChart } from './infrastructure-release.mjs';
 
@@ -60,6 +60,7 @@ function kube(namespace, args) {
 
 function runtimeVersion(name, namespace, workload) {
   const target = `statefulset/${workload}`;
+  if (name === 'qdrant') return kube(namespace, ['exec', target, '--', '/qdrant/qdrant', '--version']).trim().match(/^qdrant (\d+\.\d+\.\d+)$/)?.[1] ?? null;
   if (name === 'postgresql') {
     const version = kube(namespace, ['exec', target, '--', 'postgres', '--version']).match(/PostgreSQL\) (\d+\.\d+)/)?.[1];
     return version ? `${version}.0` : null;
@@ -72,9 +73,9 @@ function runtimeVersion(name, namespace, workload) {
 }
 
 export function preflightStatefulRelease(name, namespace, archive, values, helm = 'helm', release = name) {
-  if (!['redis', 'postgresql'].includes(name) || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(namespace)) throw new Error('STATEFUL_PREFLIGHT_IDENTITY_INVALID');
+  if (!['redis', 'postgresql', 'qdrant'].includes(name) || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(namespace)) throw new Error('STATEFUL_PREFLIGHT_IDENTITY_INVALID');
   if (!/^[a-z0-9](?:[a-z0-9-]{0,51}[a-z0-9])?$/.test(release)) throw new Error('STATEFUL_PREFLIGHT_RELEASE_INVALID');
-  verifyInfrastructureChart(name, archive);
+  const verified = verifyInfrastructureChart(name, archive);
   const desired = bindInfrastructureImages(name, loadAll(renderInfrastructureChart(name, release, namespace, archive, values, helm, true))
     .filter(Boolean)).find(value => value.kind === 'StatefulSet');
   if (!desired) throw new Error('STATEFUL_DESIRED_WORKLOAD_REQUIRED');
@@ -86,7 +87,7 @@ export function preflightStatefulRelease(name, namespace, archive, values, helm 
     namedClaims.includes(claim.metadata.name) || claim.metadata.labels?.['app.kubernetes.io/instance'] === release
       || prefixes.some(prefix => claim.metadata.name.startsWith(prefix)));
   const version = existing ? runtimeVersion(name, namespace, desired.metadata.name) : null;
-  return requireCompatibleStatefulRelease(existing, desired, claims, version, infrastructureChart(name).appVersion);
+  return requireCompatibleStatefulRelease(existing, desired, claims, version, String(verified.appVersion).replace(/^v/, ''));
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

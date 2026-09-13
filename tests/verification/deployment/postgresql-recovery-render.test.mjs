@@ -59,3 +59,12 @@ test('real Helm fullname override is respected and an impossible configured RPO 
     assert.throws(() => renderPostgresqlRecovery('recovery-test', customPolicy, postgresFile, applicationFile, helm), /RECOVERY_BUDGET_INVALID|RECOVERY_SCHEDULE_RPO_INVALID/);
   } finally { fs.rmSync(directory, { recursive: true, force: true }); }
 });
+
+test('a separately named migration release binds recovery to the destination service and selector', () => {
+  const documents = renderPostgresqlRecovery('recovery-test', policyFile, postgresFile, applicationFile, helm, 'postgresql-migrated');
+  const settings = documents.find(value => value.metadata.name.endsWith('-settings')).data;
+  assert.equal(settings.PGHOST, 'postgresql-migrated');
+  const egress = documents.find(value => value.kind === 'CiliumNetworkPolicy').spec.egress[1];
+  assert.equal(egress.toEndpoints[0].matchLabels['app.kubernetes.io/instance'], 'postgresql-migrated');
+  assert.throws(() => renderPostgresqlRecovery('recovery-test', policyFile, postgresFile, applicationFile, helm, '--invalid'), /RELEASE_INVALID/);
+});

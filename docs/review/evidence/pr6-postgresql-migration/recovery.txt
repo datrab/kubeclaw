@@ -1,0 +1,10 @@
+✔ native PG18 recovery preserves full LiteLLM schema/auth/models and rejects unsafe restoration (54363.437319ms)
+ℹ Real PostgreSQL18.6; 1012 schema columns; 217 restored indexes; object ownership, atomic rollback after real SQL failure, original key/model JSON, SQL authentication and original LiteLLM legacy/AES-GCM decryption verified
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 55005.212616

@@ -45,6 +45,9 @@ All logs are under `docs/review/evidence/pr6-runtime-tool-locks/`:
   versions/locks and compares with independently committed selections.
 - `drift.txt`: three passing central-generation/lock regressions.
 - `chart-lock.txt`: four passing actual archived Helm/chart validation tests.
+- `trusted-updater.txt`: the genuine updater executes from an isolated trusted
+  tool root without node_modules. Deliberately throwing workspace copies are
+  never executed; generated selections remain unchanged. One test passes.
 - `lint.txt`: canonical lint exits zero without diagnostics.
 
 The attempted Playwright CDN downloads returned 195-byte HTML error pages.

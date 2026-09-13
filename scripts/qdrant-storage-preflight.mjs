@@ -1,8 +1,6 @@
-import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadAll } from 'js-yaml';
-import { verifyInfrastructureChart } from './infrastructure-chart.mjs';
+import { preflightStatefulRelease } from './stateful-release-preflight.mjs';
 
 export function requireCompatibleQdrantClaims(existing, desired) {
   if (!existing) return;
@@ -15,15 +13,8 @@ export function requireCompatibleQdrantClaims(existing, desired) {
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const [namespace, archive] = process.argv.slice(2);
-  if (process.argv.length !== 4 || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(namespace)) throw new Error('Usage: qdrant-storage-preflight.mjs NAMESPACE VERIFIED_CHART');
-  verifyInfrastructureChart('qdrant', archive);
-  const root = fileURLToPath(new URL('../', import.meta.url));
-  const existing = execFileSync('kubectl', ['get', 'statefulset', 'qdrant', '-n', namespace, '--ignore-not-found', '-o', 'json'],
-    { encoding: 'utf8', maxBuffer: 4 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
-  const desired = loadAll(execFileSync('helm', ['template', 'qdrant', archive, '--namespace', namespace,
-    '-f', path.join(root, 'my-values/infra/qdrant-values.yaml'), '--post-renderer', path.join(root, 'scripts/infrastructure-image-renderer.mjs'),
-    '--post-renderer-args', 'qdrant'], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 })).find(value => value?.kind === 'StatefulSet');
-  requireCompatibleQdrantClaims(existing.trim() ? JSON.parse(existing) : null, desired);
-  process.stdout.write('Qdrant immutable claim templates verified.\n');
+  const [namespace, archive, values, release] = process.argv.slice(2);
+  if (![4, 6].includes(process.argv.length)) throw new Error('Usage: qdrant-storage-preflight.mjs NAMESPACE VERIFIED_CHART [VALUES RELEASE]');
+  const selected = values ?? fileURLToPath(new URL('../my-values/infra/qdrant-values.yaml', import.meta.url));
+  console.log(JSON.stringify(preflightStatefulRelease('qdrant', namespace, archive, selected, 'helm', release ?? 'qdrant')));
 }

@@ -165,3 +165,9 @@ real Secret/certificate rotation and a restore using a copied production export.
 None has been run here. For the upstream snapshot and security contracts see
 [Qdrant snapshots](https://qdrant.tech/documentation/snapshots/) and
 [Qdrant security](https://qdrant.tech/documentation/security/).
+
+For a complete version/PVC cutover, use the separate
+[full-storage migration procedure](qdrant-migration.md). It covers all collections
+and aliases, explicit consecutive version changes, a fresh release/claim
+transfer, the chart's single-peer cluster mode, TLS/network binding and rollback.
+The exact-version one-collection recovery instructions above remain unchanged.

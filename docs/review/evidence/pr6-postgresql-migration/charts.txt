@@ -1,0 +1,18 @@
+✔ actual locked Helm service binds scheduled recovery image, storage, credentials and narrow network policy (1016.185159ms)
+✔ real Helm fullname override is respected and an impossible configured RPO is refused (994.350891ms)
+✔ a separately named migration release binds recovery to the destination service and selector (832.201525ms)
+✔ actual pinned Qdrant chart produces fresh storage claims and a network-isolated transfer Pod (2539.034645ms)
+✔ real chart service names, destination selectors and translated ports bind all three migrated database policies (2888.889173ms)
+✔ redis actual locked install/upgrade Helm render binds every image and protects retained claims (2889.588129ms)
+✔ postgresql actual locked install/upgrade Helm render binds every image and protects retained claims (1996.901409ms)
+✔ qdrant actual locked install/upgrade Helm render binds every image and protects retained claims (1664.780246ms)
+✔ Redis policy refuses a restart-based RDB-to-AOF conversion or implicit dedup eviction (0.802216ms)
+✔ Redis migration release renders independently and an explicitly restored PVC must remain bound (1860.446374ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8943.109167

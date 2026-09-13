@@ -41,9 +41,10 @@ export function validateQdrantCertificate(tls, hostname) {
   } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
 }
 
-export function prepareQdrantSecrets(namespace, createMissingAuth = false) {
+export function prepareQdrantSecrets(namespace, createMissingAuth = false, serviceName = 'qdrant') {
   if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(namespace)) throw new Error('QDRANT_NAMESPACE_INVALID');
-  validateQdrantCertificate(secret(namespace, 'qdrant-tls'), `qdrant.${namespace}.svc.cluster.local`);
+  if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(serviceName)) throw new Error('QDRANT_SERVICE_IDENTITY_INVALID');
+  validateQdrantCertificate(secret(namespace, 'qdrant-tls'), `${serviceName}.${namespace}.svc.cluster.local`);
   let auth = secret(namespace, 'qdrant-auth');
   if (!auth && createMissingAuth) {
     auth = { 'api-key': randomBytes(48).toString('base64url'), 'read-only-api-key': randomBytes(48).toString('base64url') };
@@ -54,8 +55,8 @@ export function prepareQdrantSecrets(namespace, createMissingAuth = false) {
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const [mode, namespace] = process.argv.slice(2);
-  if (!['check', 'ensure-auth'].includes(mode) || process.argv.length !== 4) throw new Error('Usage: qdrant-secrets.mjs check|ensure-auth NAMESPACE');
-  prepareQdrantSecrets(namespace, mode === 'ensure-auth');
+  const [mode, namespace, serviceName] = process.argv.slice(2);
+  if (!['check', 'ensure-auth'].includes(mode) || ![4, 5].includes(process.argv.length)) throw new Error('Usage: qdrant-secrets.mjs check|ensure-auth NAMESPACE [SERVICE]');
+  prepareQdrantSecrets(namespace, mode === 'ensure-auth', serviceName);
   process.stdout.write('Qdrant TLS identity and distinct API keys verified.\n');
 }

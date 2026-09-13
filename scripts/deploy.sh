@@ -56,6 +56,8 @@
 #   KUBECLAW_RUN_SECRET_SETUP      auto|true|false for setup/all (default: auto)
 #   KUBECLAW_WORKSPACE_PROMPT      auto|true|false (default: auto)
 #   KUBECLAW_DEPLOY_POSTGRESQL    true|false (default: true)
+#   POSTGRESQL_RELEASE / POSTGRESQL_VALUES_FILE  Selected database release and values
+#   QDRANT_RELEASE / QDRANT_VALUES_FILE          Selected vector database release and values
 #   REDIS_RELEASE / REDIS_VALUES_FILE  Selected Redis release and values (migration keeps the old release intact)
 #   KUBECLAW_DEPLOY_QDRANT        true|false (default: true)
 #   KUBECLAW_DEPLOY_LITELLM       true|false (default: true)
@@ -72,6 +74,10 @@ REPO_DIR="$(dirname "$SCRIPT_DIR")"
 CHART_DIR="$REPO_DIR/charts/kubeclaw"
 VALUES_DIR="$REPO_DIR/my-values"
 INFRA_DIR="$VALUES_DIR/infra"
+POSTGRESQL_RELEASE="${POSTGRESQL_RELEASE:-postgresql}"
+QDRANT_RELEASE="${QDRANT_RELEASE:-qdrant}"
+QDRANT_VALUES_FILE="${QDRANT_VALUES_FILE:-$REPO_DIR/my-values/infra/qdrant-values.yaml}"
+POSTGRESQL_VALUES_FILE="${POSTGRESQL_VALUES_FILE:-$INFRA_DIR/postgresql-values.yaml}"
 REDIS_RELEASE="${REDIS_RELEASE:-redis}"
 REDIS_VALUES_FILE="${REDIS_VALUES_FILE:-$INFRA_DIR/redis-values.yaml}"
 PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE="/etc/kubeclaw/production-receipt-authority.pub"
@@ -1098,20 +1104,23 @@ ensure_tailscale_oauth_secret() {
 }
 
 cmd_infra() {
-  local qdrant_chart="" redis_chart postgresql_chart="" postgresql_recovery_manifests=""
+  local qdrant_chart="" redis_chart postgresql_chart="" postgresql_recovery_manifests="" stateful_network_policies
   redis_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" redis "$REDIS_RELEASE" "$NAMESPACE" "$REDIS_VALUES_FILE")"
   node "$REPO_DIR/scripts/stateful-release-preflight.mjs" redis "$NAMESPACE" "$redis_chart" "$REDIS_VALUES_FILE" "$REDIS_RELEASE"
   if component_enabled "$KUBECLAW_DEPLOY_POSTGRESQL"; then
-    postgresql_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" postgresql postgresql "$NAMESPACE" "$INFRA_DIR/postgresql-values.yaml")"
-    node "$REPO_DIR/scripts/stateful-release-preflight.mjs" postgresql "$NAMESPACE" "$postgresql_chart" "$INFRA_DIR/postgresql-values.yaml"
+    postgresql_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" postgresql "$POSTGRESQL_RELEASE" "$NAMESPACE" "$POSTGRESQL_VALUES_FILE")"
+    node "$REPO_DIR/scripts/stateful-release-preflight.mjs" postgresql "$NAMESPACE" "$postgresql_chart" "$POSTGRESQL_VALUES_FILE" "$POSTGRESQL_RELEASE"
     postgresql_recovery_manifests="$(node "$REPO_DIR/scripts/render-postgresql-recovery.mjs" --preflight "$NAMESPACE" \
-      "$INFRA_DIR/postgresql-recovery.yaml" "$INFRA_DIR/postgresql-values.yaml" "$INFRA_DIR/litellm-deployment.yaml")"
+      "$INFRA_DIR/postgresql-recovery.yaml" "$POSTGRESQL_VALUES_FILE" "$INFRA_DIR/litellm-deployment.yaml" "$POSTGRESQL_RELEASE")"
   fi
   if component_enabled "$KUBECLAW_DEPLOY_QDRANT"; then
-    qdrant_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" qdrant qdrant "$NAMESPACE" "$INFRA_DIR/qdrant-values.yaml")"
-    node "$REPO_DIR/scripts/qdrant-secrets.mjs" check "$NAMESPACE"
-    node "$REPO_DIR/scripts/qdrant-storage-preflight.mjs" "$NAMESPACE" "$qdrant_chart"
+    qdrant_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" qdrant "$QDRANT_RELEASE" "$NAMESPACE" "$QDRANT_VALUES_FILE")"
+    node "$REPO_DIR/scripts/qdrant-secrets.mjs" check "$NAMESPACE" \
+      "$(node "$REPO_DIR/scripts/stateful-database-service.mjs" qdrant "$QDRANT_RELEASE" "$NAMESPACE" "$QDRANT_VALUES_FILE")"
+    node "$REPO_DIR/scripts/qdrant-storage-preflight.mjs" "$NAMESPACE" "$qdrant_chart" "$QDRANT_VALUES_FILE" "$QDRANT_RELEASE"
   fi
+  stateful_network_policies="$(node "$REPO_DIR/scripts/render-stateful-network-policies.mjs" "$INFRA_DIR/network-policies.yaml" "$NAMESPACE" \
+    "$REDIS_RELEASE" "$REDIS_VALUES_FILE" "$POSTGRESQL_RELEASE" "$POSTGRESQL_VALUES_FILE" "$QDRANT_RELEASE" "$QDRANT_VALUES_FILE")"
   if component_enabled "$KUBECLAW_DEPLOY_SPIRE"; then
     header "Infrastructure: SPIFFE/SPIRE workload identity"
     if [[ ! -f $SPIRE_VALUES_FILE ]]; then
@@ -1152,10 +1161,10 @@ cmd_infra() {
 
   if component_enabled "$KUBECLAW_DEPLOY_POSTGRESQL"; then
     header "Infrastructure: PostgreSQL"
-    helm upgrade --install postgresql "$postgresql_chart" \
+    helm upgrade --install "$POSTGRESQL_RELEASE" "$postgresql_chart" \
       --post-renderer "$REPO_DIR/scripts/infrastructure-image-renderer.mjs" --post-renderer-args postgresql \
       --namespace "$NAMESPACE" \
-      --values "$INFRA_DIR/postgresql-values.yaml" \
+      --values "$POSTGRESQL_VALUES_FILE" \
       --wait --timeout 120s
     log "PostgreSQL deployed"
     printf '%s\n' "$postgresql_recovery_manifests" | kubectl apply -n "$NAMESPACE" -f -
@@ -1166,10 +1175,10 @@ cmd_infra() {
 
   if component_enabled "$KUBECLAW_DEPLOY_QDRANT"; then
     header "Infrastructure: Qdrant"
-    helm upgrade --install qdrant "$qdrant_chart" \
+    helm upgrade --install "$QDRANT_RELEASE" "$qdrant_chart" \
       --post-renderer "$REPO_DIR/scripts/infrastructure-image-renderer.mjs" --post-renderer-args qdrant \
       --namespace "$NAMESPACE" \
-      --values "$INFRA_DIR/qdrant-values.yaml" \
+      --values "$QDRANT_VALUES_FILE" \
       --wait --timeout 120s
     log "Qdrant deployed"
   else
@@ -1235,7 +1244,7 @@ cmd_infra() {
   info "Buster namespace admission fence is owned by the broker Helm release (Kubernetes >=1.30)."
 
   header "Infrastructure: Network Policies"
-  kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/network-policies.yaml"
+  printf '%s\n' "$stateful_network_policies" | kubectl apply -n "$NAMESPACE" -f -
   log "Network policies applied"
 
   deploy_tailscale_operator
@@ -2767,7 +2776,7 @@ delete_manifested_resource_if_present() {
 }
 
 remove_destructive_infra() {
-  for release in qdrant postgresql "$REDIS_RELEASE"; do
+  for release in "$QDRANT_RELEASE" "$POSTGRESQL_RELEASE" "$REDIS_RELEASE"; do
     uninstall_helm_release_if_present "$release"
   done
 
