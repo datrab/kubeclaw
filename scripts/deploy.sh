@@ -10,6 +10,8 @@
 #   ./deploy.sh infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM
 #   ./deploy.sh tailscale          Deploy Tailscale Kubernetes Operator
 #   ./deploy.sh buildkit-preflight Verify rootless BuildKit support on a cluster node
+#   ./deploy.sh native-node-render OUT [POLICY] Generate a reviewable host-pool setup bundle
+#   ./deploy.sh native-node-preflight [POLICY] Read-only native capacity check on the selected host
 #   ./deploy.sh nova-buildkit-preflight Build and verify a real image through Nova's v2 capability graph
 #   ./deploy.sh nova-kubernetes-fixture-preflight Verify the real Kubernetes fixture lifecycle through Nova and Buster
 #   ./deploy.sh nova-http-preflight Verify an in-cluster HTTP service through Nova and Buster
@@ -2897,6 +2899,14 @@ case "${1:-}" in
   buildkit-preflight)
     cmd_buildkit_preflight "${2:-}" "${3:-}"
     ;;
+  native-node-render)
+    [[ $# -ge 2 && $# -le 3 ]] || { err "Usage: $0 native-node-render NEW_OUTPUT_DIRECTORY [POLICY_YAML]"; exit 1; }
+    node "$SCRIPT_DIR/render-native-worker-node.mjs" "${3:-$INFRA_DIR/native-worker-pools.yaml}" "$2"
+    ;;
+  native-node-preflight)
+    [[ $# -le 2 ]] || { err "Usage: $0 native-node-preflight [POLICY_YAML]"; exit 1; }
+    node "$SCRIPT_DIR/native-worker-node-preflight.mjs" "${2:-$INFRA_DIR/native-worker-pools.yaml}"
+    ;;
   buster-buildkit-smoke)
     warn "buster-buildkit-smoke is retained as an alias; use nova-buildkit-preflight."
     cmd_nova_buildkit_preflight
@@ -3017,6 +3027,8 @@ case "${1:-}" in
     echo "  tailscale          Deploy Tailscale Kubernetes Operator"
     echo "  buildkit-preflight [image] [pull-secret]"
     echo "                    Verify rootless BuildKit support with a temporary pod"
+    echo "  native-node-render OUT [POLICY] Generate host-pool setup files for review"
+    echo "  native-node-preflight [POLICY] Read-only check on the selected host"
     echo "  nova-buildkit-preflight Build, publish, deploy, and verify an image through Nova and Buster v2"
     echo "  nova-unit-preflight Run a real unit process through Nova and Buster v2"
     echo "  nova-kubernetes-fixture-preflight [image] [secret-name]"

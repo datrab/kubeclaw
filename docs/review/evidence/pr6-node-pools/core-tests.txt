@@ -1,0 +1,26 @@
+✔ new-admission rejection persists no accepted work and cannot block historical receipt replay (1064.48745ms)
+✔ real writer SIGKILL preserves accepted identity, original output and receipt without re-admission (1570.867532ms)
+✔ real writer SIGKILL preserves sealed identity, original output and receipt without re-admission (1841.115212ms)
+✔ journal binds the full envelope and reserves retained disk before admitting output (527.487567ms)
+✔ process archive verifies original output and immutable completion time before receipt construction (433.064399ms)
+✔ busy live attempt reports retryable contention without changing its durable identity (6252.324167ms)
+✔ concurrent durable reservations converge and survive reopening (247.330778ms)
+✔ caller mutation after reserve starts cannot change persisted identity (107.057453ms)
+✔ metadata lifecycle is fenced and disposed identities cannot execute again (559.809061ms)
+✔ unresolved ownership preserves diagnosis and blocks generation replacement (205.47392ms)
+✔ record quota fails atomically without losing existing ownership (117.319741ms)
+✔ corrupt persisted ownership fails without overwriting the record (84.683031ms)
+✔ abandoned admission preserves replay identity and requires a failure diagnosis (230.831757ms)
+✔ supervisor holds a separate real kernel lock and SIGKILL releases it without erasing reservations (1155.402018ms)
+✔ native recovery rejects ordinary directories before exposing admission or modifying existing ownership (85.049892ms)
+✔ full pending reservations prevent concurrent memory overcommit and return capacity exactly once (6.148063ms)
+✔ Linux-task capacity and scope count independently gate admission without consuming rejected capacity (1.029382ms)
+✔ invalid and near-integer-limit budgets cannot bypass aggregate accounting (1.157691ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12687.785018

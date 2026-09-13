@@ -11,6 +11,10 @@ import { NativeWorkerOwnership } from '../../../skills/worker/core/worker/native
 import { runNativeWorkerProcess } from '../../../skills/worker/core/worker/native-worker-process.ts';
 import { readNativeWorkerNodeIdentity } from '../../../skills/worker/core/worker/native-node-identity.ts';
 import { NativeWorkerResourceScope } from '../../../skills/worker/core/worker/native-resource-scope.ts';
+import { NativeAttemptJournal } from '../../../skills/worker/core/worker/native-attempt-journal.ts';
+import { executeNativeWorkerAttempt } from '../../../skills/worker/core/worker/native-attempt-executor.ts';
+import { prismNativeAttempt } from '../../../skills/prism/engine/worker-envelope.ts';
+import { workerAttemptSpecDigest } from '@kubeclaw/pipeline-worker-core-contract';
 
 const root = process.env.KUBECLAW_WORKER_TEST_CGROUP_ROOT;
 if (!root) throw new Error('KUBECLAW_WORKER_TEST_CGROUP_ROOT is required; native scope checks cannot be skipped');
@@ -97,7 +101,10 @@ test('production launcher and durable owner account the whole host and fence exa
     profileDigest: `sha256:${'1'.repeat(64)}`, attemptSpecDigest: `sha256:${'2'.repeat(64)}` };
   const identityFile = process.env.KUBECLAW_WORKER_TEST_NODE_IDENTITY_FILE;
   if (!identityFile) throw new Error('KUBECLAW_WORKER_TEST_NODE_IDENTITY_FILE must name the trusted mounted host identity');
-  const ownership = { cgroupRoot: root, store, nodeIdentity: readNativeWorkerNodeIdentity(identityFile), drainTimeoutMs: 5000 };
+  const poolFile = process.env.KUBECLAW_WORKER_TEST_POOL_LIMITS_FILE;
+  if (!poolFile) throw new Error('KUBECLAW_WORKER_TEST_POOL_LIMITS_FILE must bind the actual prepared aggregate pool');
+  const poolLimits = JSON.parse(await fs.readFile(poolFile, 'utf8'));
+  const ownership = { cgroupRoot: root, store, nodeIdentity: readNativeWorkerNodeIdentity(identityFile), drainTimeoutMs: 5000, poolLimits };
   try {
     await NativeWorkerOwnership.supervise(ownership, async owner => {
       const result = await runNativeWorkerProcess({ owner, identity,
@@ -127,6 +134,42 @@ test('production launcher and durable owner account the whole host and fence exa
     });
     await NativeWorkerOwnership.supervise(ownership, async owner => {
       await assert.rejects(owner.allocate(identity, limits), /WORKER_NATIVE_IDENTITY_ALREADY_USED/u);
+      const fullIdentity = { ...identity, attemptId: 'attempt:full-pool' };
+      const full = await owner.allocate(fullIdentity, { memoryBytes: poolLimits.memoryBytes, tasks: poolLimits.tasks });
+      const before = await store.records();
+      await assert.rejects(owner.allocate({ ...identity, attemptId: 'attempt:over-capacity' }, limits), /WORKER_NATIVE_CAPACITY_EXCEEDED/u);
+      assert.deepEqual(await store.records(), before, 'aggregate rejection must precede durable owner reservation');
+      assert.equal(owner.isReady(), true);
+      await capacityReceipt(owner, stateRoot, launcher);
+      assert.deepEqual(await store.records(), before, 'journal rejection must not allocate a native owner');
+      await full.finish();
+      const replacement = await owner.allocate({ ...identity, attemptId: 'attempt:capacity-returned' }, limits);
+      await replacement.finish();
     });
   } finally { await fs.rm(stateRoot, { recursive: true, force: true }); }
 });
+
+async function capacityReceipt(owner: NativeWorkerOwnership, stateRoot: string, launcher: string): Promise<void> {
+  const artifact = { artifactId: 'input:pool-capacity', type: 'prism-engine-input', mediaType: 'application/json',
+    contentDigest: `sha256:${'1'.repeat(64)}`, sizeBytes: 2, storageUrl: 'https://control.example/input' };
+  const envelope = prismNativeAttempt('render', artifact, 'pool-capacity');
+  envelope.resourceBudgets.maximumMemoryBytes = { state: 'requested', limit: limits.memoryBytes };
+  envelope.resourceBudgets.maximumTasks = { state: 'requested', limit: limits.tasks };
+  envelope.resourceBudgets.cpuTimeMs = { state: 'requested', limit: 10000 };
+  envelope.attemptSpecDigest = workerAttemptSpecDigest(envelope);
+  const journal = new NativeAttemptJournal(path.join(stateRoot, 'capacity-journal'), {
+    maximumRecords: 32, maximumStateBytes: 262144, maximumTotalBytes: 8388608,
+    maximumInputBytes: 65536, maximumOutputBytes: 65536, maximumResultBytes: 65536,
+  });
+  const input = { envelope, journal, process: { owner,
+    limits: { ...limits, cpuTimeMs: 10000, timeoutMs: 15000, pollIntervalMs: 20,
+      maximumInputBytes: 65536, maximumOutputBytes: 65536, closeTimeoutMs: 5000 },
+    command: { launcher, uid: 1000, gid: 1000, executable: process.execPath,
+      arguments: [fileURLToPath(new URL('../../fixtures/worker-native-process-child.mjs', import.meta.url))], cwd: '/', environment: {} },
+  } };
+  const result = await executeNativeWorkerAttempt(input);
+  assert.equal(result.error?.code, 'WORKER_NATIVE_CAPACITY_EXCEEDED');
+  assert.equal(result.cleanup.state, 'not_required');
+  assert.equal(owner.isReady(), true);
+  assert.deepEqual(await executeNativeWorkerAttempt(input), result, 'capacity-failure receipt replays exactly');
+}

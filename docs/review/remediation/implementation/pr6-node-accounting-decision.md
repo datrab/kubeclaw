@@ -1,6 +1,7 @@
-# Native worker node accounting — decision required
+# Native worker node accounting — accepted host reservation
 
-Status: proposal, not an accepted decision or completed implementation. This is
+Status: choice A explicitly accepted by the user (D16); implementation remains
+in progress. This is
 separate from the approved Core/Buster split, Linux-task units, generous limits,
 Buster fixture lifecycle and dedicated delegated areas. Those decisions remain
 accepted and do not need confirmation again.
@@ -27,15 +28,14 @@ its own worker container. Domain-controller delegation requires an empty parent;
 the supervisor needs its own child. Moving running processes later does not
 transfer existing memory charges. See the [kernel cgroup-v2 contract](https://docs.kernel.org/admin-guide/cgroup-v2.html).
 
-## Alternatives to decide
+## Assessed alternatives
 
 | Choice | Benefit | Cost and implementation consequence |
 | --- | --- | --- |
 | A: Host-managed role pools with fixed, explicitly reserved capacity | Persistent role scope can outlive a supervisor container; fits the existing durable scope/fixture recovery model | Requires host preparation and a reviewed scheduler-capacity reservation that also protects other host services. Pool capacity cannot be scheduled again to ordinary Pods. No silent kubelet edits. |
 | B: Runtime-delegated subtree inside each worker container | Attempt usage stays under that container's aggregate accounting; capacity follows normal worker Pod scheduling | Requires a version-bound container-runtime integration and careful container replacement/drain handling. A static host-path mount cannot stand in for this implementation. |
 
-Recommendation: A for the existing durable role-scope design, **if fixed host
-capacity reservation is acceptable**. It need not require a new VM, but available
+Accepted choice: A for the existing durable role-scope design. It need not require a new VM, but available
 capacity cannot be assumed. B is preferable if execution must remain entirely
 under ordinary Pod resource allocation; it is a materially different deployment
 integration. Neither choice authorizes a deployment or host modification during
@@ -68,8 +68,8 @@ this remediation task.
    aggregate exhaustion, scheduler capacity, supervisor/Pod replacement and
    unchanged capacity for other host workloads on the selected environment.
 
-The requested decision is only whether to implement A's fixed host reservation
-or B's Pod-contained runtime delegation. No resource purchase, concrete host
-capacity or change to D13/D14 is inferred. This decision blocks production native
+The user selected A's fixed host reservation. No further confirmation of A
+is required. No resource purchase, concrete host
+capacity or change to D13/D14 is inferred. The remaining implementation blocks production native
 activation and affects both Buster and Prism; unrelated completed infrastructure
 findings remain valid.

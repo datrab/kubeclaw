@@ -4,6 +4,7 @@ import { NativeWorkerResourceScope, type NativeWorkerScopeLimits } from './nativ
 import type { NativeWorkerResourceObservation } from './native-resource-observation.ts';
 import type { FileWorkerOwnershipStore, WorkerOwnershipIdentity, WorkerOwnershipRecord } from './ownership-store.ts';
 import { canonicalJson } from './digest.ts';
+import { NativeWorkerResourcePool, type NativeWorkerPoolLimits } from './native-resource-pool.ts';
 
 export interface NativeWorkerOwnershipOptions {
   readonly cgroupRoot: string;
@@ -11,6 +12,7 @@ export interface NativeWorkerOwnershipOptions {
   readonly nodeIdentity: string;
   readonly drainTimeoutMs: number;
   readonly maximumActiveScopes?: number;
+  readonly poolLimits: NativeWorkerPoolLimits;
 }
 
 function terminal(record: WorkerOwnershipRecord): boolean {
@@ -109,11 +111,20 @@ export class NativeWorkerOwnership {
   readonly #leases = new Set<NativeWorkerOwnershipLease>();
   readonly #admitting = new Set<string>();
   readonly #allocations = new Set<Promise<NativeWorkerOwnershipLease>>();
+  readonly #pool: NativeWorkerResourcePool;
   #closed = false;
 
-  private constructor(options: NativeWorkerOwnershipOptions) { this.#options = options; }
+  private constructor(options: NativeWorkerOwnershipOptions) {
+    this.#options = options;
+    this.#pool = new NativeWorkerResourcePool(options.cgroupRoot, options.poolLimits, options.maximumActiveScopes ?? 128);
+  }
 
-  isReady(): boolean { return !this.#closed; }
+  isReady(): boolean {
+    if (!this.#closed) {
+      try { this.#pool.verify(); } catch { this.#closed = true; }
+    }
+    return !this.#closed;
+  }
 
   fenceAdmission(): void { this.#closed = true; }
 
@@ -133,7 +144,7 @@ export class NativeWorkerOwnership {
     if (options.maximumActiveScopes !== undefined && (!Number.isSafeInteger(options.maximumActiveScopes) || options.maximumActiveScopes < 1)) {
       throw new Error('WORKER_NATIVE_CAPACITY_INVALID');
     }
-    const captured = { ...options, cgroupRoot: fs.realpathSync(options.cgroupRoot) };
+    const captured = { ...options, poolLimits: { ...options.poolLimits }, cgroupRoot: fs.realpathSync(options.cgroupRoot) };
     return captured.store.withSupervisor(async () => {
       const owner = new NativeWorkerOwnership(captured);
       await owner.#recover();
@@ -161,7 +172,7 @@ export class NativeWorkerOwnership {
     const requested = { ...limits };
     const key = JSON.stringify([captured.workerId, captured.attemptId]);
     if (this.#closed || this.#admitting.has(key)) throw new Error('WORKER_NATIVE_ADMISSION_FENCED');
-    if (this.#leases.size + this.#admitting.size >= (this.#options.maximumActiveScopes ?? 128)) throw new Error('WORKER_NATIVE_CAPACITY_EXCEEDED');
+    const releaseCapacity = this.#pool.reserve(requested);
     this.#admitting.add(key);
     let record: WorkerOwnershipRecord | undefined;
     try {
@@ -171,7 +182,7 @@ export class NativeWorkerOwnership {
       record = await this.#options.store.transition(record, 'allocated', { binding: scope.binding() });
       const lease = new NativeWorkerOwnershipLease(scope, record, this.#options, failed => {
         if (failed) this.#closed = true;
-        else this.#leases.delete(lease);
+        else { this.#leases.delete(lease); releaseCapacity(); }
       });
       this.#leases.add(lease);
       if (this.#closed) {
@@ -183,6 +194,9 @@ export class NativeWorkerOwnership {
       // A reservation without a committed binding can never have launched work.
       // Keep it recoverable; never reuse its name or infer completion from failure.
       if (record?.phase === 'reserved') this.#closed = true;
+      // Only a confirmed unused identity may return its reservation here. Once
+      // allocated, the lease releases it after durable quiescence and disposal.
+      if (!record || record.phase !== 'allocated') releaseCapacity();
       throw error;
     } finally { this.#admitting.delete(key); }
   }

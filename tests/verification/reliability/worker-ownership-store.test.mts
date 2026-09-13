@@ -155,7 +155,8 @@ test('native recovery rejects ordinary directories before exposing admission or 
     await f.store.reserve(identity);
     const before = await fs.readFile(path.join(f.root, 'owners.json'));
     let entered = false;
-    await assert.rejects(NativeWorkerOwnership.supervise({ cgroupRoot: f.root, store: f.store, nodeIdentity: 'storage-test-node', drainTimeoutMs: 1000 }, async () => {
+    await assert.rejects(NativeWorkerOwnership.supervise({ cgroupRoot: f.root, store: f.store, nodeIdentity: 'storage-test-node', drainTimeoutMs: 1000,
+      poolLimits: { memoryBytes: 1073741824, tasks: 1024, cpuQuotaMicroseconds: 100000, cpuPeriodMicroseconds: 100000 } }, async () => {
       entered = true;
     }), /WORKER_NATIVE_ROOT_INVALID/u);
     assert.equal(entered, false);

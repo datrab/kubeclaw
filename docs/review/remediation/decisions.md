@@ -154,3 +154,17 @@ Live-Gates bleiben vorbereitet für die abschließende Ausführung durch den
 Auftraggeber. Kein Live-Nachweis wird aus Konfiguration oder lokalen Ersatzdaten
 abgeleitet. Die gewünschte Mindestarbeitsdauer von acht Stunden ist kein Beleg
 für Abschluss und wird nur bei tatsächlich geleisteter Zeit behauptet.
+
+## D16 — Feste Host-Reservierung für native Worker
+
+Der Auftraggeber hat Variante A aus `implementation/pr6-node-accounting-decision.md`
+ausdrücklich bestätigt: hostverwaltete Rollenbereiche mit festen, tatsächlich
+schedulerwirksamen Kapazitätsreservierungen. Die Umsetzung betrifft Buster und
+Prism. Gesamtlimits und vollständige Admission-Reservierungen verhindern, dass
+Parallelität großzügige Einzelbudgets unkontrolliert vervielfacht. Kubernetes darf
+diese Hostkapazität nicht nochmals an Pods vergeben. Andere Hostdienste behalten
+eine getrennte Reserve. Konkrete verfügbare Kapazität wird geprüft, nicht erfunden.
+
+D13/D14 bleiben unverändert. Die Entscheidung autorisiert die Implementierung in
+PR #6, keinen Hosteingriff, Deployment oder Kauf zusätzlicher Ressourcen. Die
+Node-/Runtime-Anbindung muss fehlende Voraussetzungen vor Aktivierung abweisen.

@@ -1,0 +1,5 @@
+{
+  "extends": "../../../skills/worker/core/tsconfig.json",
+  "include": ["worker-native-scope-live.mts"],
+  "compilerOptions": { "rootDir": "../../.." }
+}

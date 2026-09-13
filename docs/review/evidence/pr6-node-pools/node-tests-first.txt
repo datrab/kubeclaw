@@ -1,0 +1,12 @@
+✔ real generated bundle binds both role readers, selected runtime and actual systemd unit parser (812.64342ms)
+✔ actual policy files reject writable authority and symlinks without consuming their contents (3.76373ms)
+✔ capacity contract requires matching host, effective kubelet reservation and withheld allocatable capacity (4.819712ms)
+✔ quantity comparison is exact for Kubernetes CPU and memory units and rejects ambiguous precision (1.123893ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1435.076999

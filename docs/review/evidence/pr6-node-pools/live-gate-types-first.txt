@@ -1,0 +1,4 @@
+skills/prism/engine/render-operation.ts(75,5): error TS2379: Argument of type '{ data: Record<string, unknown> | undefined; components: Record<string, unknown>; theme: Record<string, unknown>; }' is not assignable to parameter of type 'RenderContext' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'data' are incompatible.
+    Type 'Record<string, unknown> | undefined' is not assignable to type 'Record<string, unknown>'.
+      Type 'undefined' is not assignable to type 'Record<string, unknown>'.

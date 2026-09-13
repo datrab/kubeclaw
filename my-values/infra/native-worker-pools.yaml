@@ -1,0 +1,23 @@
+# D16: explicit fixed host pools. Set the real node name before generating setup.
+# These are requested ceilings, not a claim that the selected host has capacity.
+schemaVersion: 1
+nodeName: null
+systemReserve:
+  cpuMillicores: 1000
+  memoryBytes: 4294967296
+  tasks: 2048
+kubernetesReserve:
+  cpuMillicores: 1000
+  memoryBytes: 2147483648
+  tasks: 2048
+pools:
+  buster:
+    cpuMillicores: 4000
+    memoryBytes: 34359738368
+    tasks: 8192
+    maximumActiveScopes: 4
+  prism:
+    cpuMillicores: 4000
+    memoryBytes: 17179869184
+    tasks: 4096
+    maximumActiveScopes: 2

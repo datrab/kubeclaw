@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { readNativeWorkerNodeIdentity } from '@kubeclaw/worker-core';
+import { readNativeWorkerNodeIdentity, readNativeWorkerPoolPolicy } from '@kubeclaw/worker-core';
 
 /** Shared producer/worker defaults; deployment overrides use these same named settings. */
 export function prismEngineContentDigest(environment: NodeJS.ProcessEnv = process.env): string | undefined {
@@ -42,13 +42,14 @@ export function nativePrismSupervisorConfig(environment: NodeJS.ProcessEnv = pro
     if (!Number.isSafeInteger(value) || value < 1 || value > maximum) throw new Error(`PRISM_NATIVE_CONFIG_INVALID:${name}`);
     return value;
   };
+  const pool = readNativeWorkerPoolPolicy(root('PRISM_NATIVE_POOL_POLICY_FILE'), 'prism');
   return Object.freeze({
     policy: prismNativePolicy(environment),
-    cgroupRoot: root('PRISM_NATIVE_CGROUP_ROOT'), ownershipRoot: root('PRISM_NATIVE_OWNERSHIP_ROOT'),
-    nodeIdentity: readNativeWorkerNodeIdentity(root('PRISM_NATIVE_NODE_IDENTITY_FILE')),
+    cgroupRoot: pool.cgroupRoot, ownershipRoot: pool.ownershipRoot,
+    poolLimits: pool.limits, nodeIdentity: readNativeWorkerNodeIdentity(pool.nodeIdentityFile),
     launcher: root('PRISM_NATIVE_LAUNCHER'),
     uid: read('PRISM_NATIVE_UID', 1000), gid: read('PRISM_NATIVE_GID', 1000),
-    maximumActiveScopes: read('PRISM_NATIVE_MAXIMUM_ACTIVE_ATTEMPTS', 8),
+    maximumActiveScopes: pool.maximumActiveScopes,
     maximumRecords: read('PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS', 65536),
     maximumBytes: read('PRISM_NATIVE_MAXIMUM_OWNERSHIP_BYTES', 67108864),
     maximumInputBytes: read('PRISM_NATIVE_MAXIMUM_INPUT_BYTES', 16777216),

@@ -1,0 +1,13 @@
+
+/workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/native-worker-node-capacity.mjs
+  26:8  error  Function 'requireNativeNodeCapacity' has a complexity of 27. Maximum allowed is 15  complexity
+
+/workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/prepare-native-worker-pools.mjs
+   7:1  error  Function 'configuration' has a complexity of 17. Maximum allowed is 15  complexity
+  17:9  error  Blocks are nested too deeply (4). Maximum allowed is 3                  max-depth
+
+/workspace/scratch/9fa3b9b80bce/kubeclaw/skills/worker/core/worker/native-pool-policy.ts
+  32:1  error  Function 'validate' has a complexity of 20. Maximum allowed is 15  complexity
+
+✖ 4 problems (4 errors, 0 warnings)
+
