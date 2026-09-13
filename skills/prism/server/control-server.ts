@@ -37,7 +37,6 @@ import {
 } from "../control/session.ts";
 import { handleInternalArtifact } from "./internal-artifacts.ts";
 import { runNativePrismOperation } from '../control/native-operation.ts';
-import { runLegacyPrismOperation } from '../control/legacy-operation.ts';
 import { ingest, search, type CorpusInput } from "../corpus/index.ts";
 import { evaluate } from "../evaluation/index.ts";
 import {
@@ -128,8 +127,7 @@ private runWorker(
   input: Record<string, unknown>,
   idempotencyKey: string,
 ): Promise<Record<string, unknown>> {
-  const execute = this.config.workerExecutionMode === 'native' ? runNativePrismOperation : runLegacyPrismOperation;
-  return execute(this.pool, this.artifacts, this.config, operation, input, idempotencyKey);
+  return runNativePrismOperation(this.pool, this.artifacts, this.config, operation, input, idempotencyKey);
 }
 
   async handle(request: IncomingMessage, response: ServerResponse) {

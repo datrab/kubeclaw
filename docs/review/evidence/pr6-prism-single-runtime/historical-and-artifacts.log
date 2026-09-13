@@ -1,0 +1,14 @@
+✔ current specialist renders through the original authenticated artifact service (121.414859ms)
+✔ original artifact service rejects actual full-log storage corruption (17.653241ms)
+✔ captured historical receipts and evidence retain their original validated digests (140.84271ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (30.978146ms)
+✔ historical real receipts remain readable and cannot be reinterpreted as native task receipts (106.752886ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (17.872816ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2097.873298

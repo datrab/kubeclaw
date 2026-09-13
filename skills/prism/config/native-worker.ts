@@ -1,13 +1,6 @@
 import path from 'node:path';
 import { readNativeWorkerNodeIdentity, readNativeWorkerPoolPolicy, requireNativeWorkerRuntimeIdentity } from '@kubeclaw/worker-core';
 
-/** One explicit migration selection shared by Control and the worker chart. */
-export function prismWorkerExecutionMode(environment: NodeJS.ProcessEnv = process.env): 'legacy' | 'native' {
-  const mode = environment.PRISM_WORKER_EXECUTION_MODE ?? 'legacy';
-  if (mode !== 'legacy' && mode !== 'native') throw new Error('PRISM_WORKER_EXECUTION_MODE_INVALID');
-  return mode;
-}
-
 export function prismNativeMaximumResultBytes(environment: NodeJS.ProcessEnv = process.env): number {
   const value = Number(environment.PRISM_NATIVE_MAXIMUM_RESULT_BYTES ?? 67108864);
   if (!Number.isSafeInteger(value) || value < 1 || value > 2_147_483_647) throw new Error('PRISM_NATIVE_RESULT_LIMIT_INVALID');
@@ -22,7 +15,11 @@ export function prismNativeDispatchTimeoutMs(environment: NodeJS.ProcessEnv = pr
 
 /** Shared producer/worker defaults; deployment overrides use these same named settings. */
 export function prismEngineContentDigest(environment: NodeJS.ProcessEnv = process.env): string | undefined {
-  return environment.PRISM_ENGINE_CONTENT_DIGEST?.trim();
+  const digest = environment.PRISM_ENGINE_CONTENT_DIGEST?.trim();
+  if (environment.NODE_ENV === 'production' && !/^sha256:[a-f0-9]{64}$/u.test(digest ?? '')) {
+    throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+  }
+  return digest;
 }
 
 export function prismNativePolicy(environment: NodeJS.ProcessEnv = process.env) {
@@ -61,11 +58,13 @@ export function nativePrismSupervisorConfig(environment: NodeJS.ProcessEnv = pro
     if (!Number.isSafeInteger(value) || value < 1 || value > maximum) throw new Error(`PRISM_NATIVE_CONFIG_INVALID:${name}`);
     return value;
   };
+  const engineContentDigest = prismEngineContentDigest(environment);
+  if (!/^sha256:[a-f0-9]{64}$/u.test(engineContentDigest ?? '')) throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
   const pool = readNativeWorkerPoolPolicy(root('PRISM_NATIVE_POOL_POLICY_FILE'), 'prism');
   requireNativeWorkerRuntimeIdentity(pool.runtimeIdentityFile);
   return Object.freeze({
     policy: prismNativePolicy(environment),
-    engineContentDigest: prismEngineContentDigest(environment) ?? '',
+    engineContentDigest: engineContentDigest!,
     cgroupRoot: pool.cgroupRoot, ownershipRoot: pool.ownershipRoot,
     poolLimits: pool.limits, nodeIdentity: readNativeWorkerNodeIdentity(pool.nodeIdentityFile),
     launcher: root('PRISM_NATIVE_LAUNCHER'),
@@ -79,7 +78,7 @@ export function nativePrismSupervisorConfig(environment: NodeJS.ProcessEnv = pro
     maximumJournalBytes: read('PRISM_NATIVE_MAXIMUM_JOURNAL_BYTES', 68719476736, Number.MAX_SAFE_INTEGER),
     pollIntervalMs: read('PRISM_NATIVE_POLL_INTERVAL_MS', 20),
     drainTimeoutMs: read('PRISM_NATIVE_DRAIN_TIMEOUT_MS', 10000),
-    closeTimeoutMs: read('PRISM_NATIVE_CLOSE_TIMEOUT_MS', 15000),
+    closeTimeoutMs: read('PRISM_NATIVE_CLOSE_TIMEOUT_MS', 105000),
     browserPath: environment.PLAYWRIGHT_BROWSERS_PATH ?? '/ms-playwright',
   });
 }

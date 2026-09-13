@@ -48,10 +48,9 @@ test('actual native Prism CLI refuses invalid runtime and unavailable host prere
     for (const validNamespace of [false, true]) {
       fs.writeFileSync(runtimeIdentityFile, JSON.stringify({ ...actualIdentity(),
         ...(validNamespace ? {} : { bootId: 'stale-boot' }) }), { mode: 0o600 });
-      const result = spawnSync(process.execPath, ['skills/prism/server/native-worker.ts'], {
+      const result = spawnSync(process.execPath, ['skills/prism/server/worker.ts'], {
         encoding: 'utf8', timeout: 20000, env: { PATH: process.env.PATH,
           PRISM_NATIVE_POOL_POLICY_FILE: poolFile, PRISM_NATIVE_LAUNCHER: '/usr/bin/false',
-          PRISM_WORKER_EXECUTION_MODE: 'native',
           PRISM_ENGINE_CONTENT_DIGEST: `sha256:${'a'.repeat(64)}`,
           WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://test/control', PORT: '0' },
       });

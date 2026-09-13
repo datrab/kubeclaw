@@ -20,7 +20,7 @@ function render(config, extra = {}) {
     const file = path.join(root, 'values.yaml');
     fs.writeFileSync(file, yaml.dump({ control: { productDecisions: config }, ...extra }));
     return spawnSync('helm', ['template', 'prism-test', 'charts/prism', '--namespace', 'prism-test',
-      '-f', 'charts/prism/ci-values.yaml', '-f', file], { encoding: 'utf8' });
+      '-f', 'charts/prism/ci-values.yaml', '--set', 'worker.native.namespace=prism-test', '-f', file], { encoding: 'utf8' });
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 }
 function success(result) {

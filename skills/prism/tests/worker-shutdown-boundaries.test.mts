@@ -2,9 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer as createTcpServer, type Socket } from 'node:net';
 import { once } from 'node:events';
-import { PrismEngine, DeterministicDesignProvider } from '../engine/index.ts';
-import { WorkerArtifactClient } from '../server/worker-artifacts.ts';
-import { createWorkerServer } from '../server/worker-service.ts';
+import { createManagedWorkerServer } from '../server/worker-lifecycle.ts';
 import { WorkerNonceDatabase } from '../server/worker-readiness.ts';
 import { loadWorkerConfig } from '../server/worker-config.ts';
 
@@ -14,16 +12,22 @@ async function setup(t: { after(callback: () => Promise<void>): void }, connectT
   tcp.listen(0, '127.0.0.1'); await once(tcp, 'listening');
   const address = tcp.address(); assert(address && typeof address !== 'string');
   const database = new WorkerNonceDatabase(`postgresql://local:local@127.0.0.1:${address.port}/local`, connectTimeoutMs);
-  const engine = new PrismEngine(new DeterministicDesignProvider());
-  const worker = createWorkerServer({ mode: 'hmac', secret: 'local', database }, engine,
-    new WorkerArtifactClient(new URL('http://127.0.0.1:1'), 'local', false));
+  // Exercise the original service lifecycle and original pg pool directly.
+  // This HTTP application performs a real database check; it does not stand in
+  // for native attempt execution or manufacture Worker receipts.
+  const worker = createManagedWorkerServer(async (request, response, signal) => {
+    if (request.url === '/bootstrap') { response.writeHead(200); response.end(); return; }
+    try { await database.check(signal); response.writeHead(200); }
+    catch { response.writeHead(503); }
+    response.end();
+  }, () => database.close());
   worker.listen(0, '127.0.0.1'); await once(worker, 'listening');
   const listener = worker.address(); assert(listener && typeof listener !== 'string');
   t.after(async () => {
     worker.closeAllConnections(); await new Promise<void>(resolve => worker.close(() => resolve()));
     for (const socket of sockets) socket.destroy(); await new Promise<void>(resolve => tcp.close(() => resolve()));
   });
-  return { tcp, sockets, database, worker, engine, origin: new URL(`http://127.0.0.1:${listener.port}`) };
+  return { tcp, sockets, database, worker, origin: new URL(`http://127.0.0.1:${listener.port}`) };
 }
 
 // The original pg client connects to an actual TCP peer that does not complete
@@ -40,7 +44,6 @@ test('shutdown waits for actual native pg acquisition settlement and closes the 
   const response = await pending; assert.equal(response.status, 503); await response.body?.cancel();
   await shutdown;
   assert.equal(f.database.openConnections, 0); assert.equal(f.database.pendingConnections, 0);
-  assert.equal(f.engine.cacheUsage().totalEntries, 0);
   await assert.rejects(f.database.check(), /PRISM_NONCE_DATABASE_UNAVAILABLE/u);
 });
 
@@ -69,7 +72,7 @@ test('invalid service deadline cannot stop a healthy listener; configuration own
   }
   await f.worker.shutdown(1500);
   const environment = { WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' };
-  assert.equal(loadWorkerConfig(environment).shutdownTimeoutMs, 20_000);
+  assert.equal(loadWorkerConfig(environment).shutdownTimeoutMs, 120_000);
   for (const value of ['', '0', '-1', '1.5', 'NaN', 'Infinity', '2147483648']) {
     assert.throws(() => loadWorkerConfig({ ...environment, PRISM_WORKER_SHUTDOWN_TIMEOUT_MS: value }), /PRISM_WORKER_SHUTDOWN_TIMEOUT_MS/u);
   }

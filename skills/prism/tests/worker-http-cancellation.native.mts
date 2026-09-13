@@ -6,11 +6,9 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import fixture from '../../../contracts/prism/v1/fixtures/minimal-web.json' with { type: 'json' };
-import { PrismEngine, DeterministicDesignProvider } from '../engine/index.ts';
-import { prismAttempt } from '../engine/worker-envelope.ts';
+import { prismNativeAttempt } from '../engine/worker-envelope.ts';
 import { ContentAddressedArtifactStore } from '../storage/artifacts.ts';
-import { WorkerArtifactClient } from '../server/worker-artifacts.ts';
-import { createWorkerServer } from '../server/worker-service.ts';
+import { nativeWorkerHarness } from './native/worker-harness.mts';
 import { handleInternalArtifact } from '../server/internal-artifacts.ts';
 
 async function listen(server: Server): Promise<URL> {
@@ -50,15 +48,13 @@ async function setup(t: { after(callback: () => Promise<void>): void }, stall?: 
     })().catch((error: unknown) => { res.writeHead(500); res.end(String(error)); });
   });
   const origin = await listen(control);
-  const engine = new PrismEngine(new DeterministicDesignProvider());
-  const worker = createWorkerServer({ mode: 'spiffe', trustedControlSpiffeId: 'spiffe://local/control' },
-    engine, new WorkerArtifactClient(origin, 'local', false));
+  const worker = await nativeWorkerHarness(t, { mode: 'spiffe', trustedControlSpiffeId: 'spiffe://local/control' }, origin);
   const workerOrigin = await listen(worker);
   t.after(async () => { stalled?.destroy(); await close(control); await close(worker); await rm(root, { recursive: true, force: true }); });
   const input = await store.put(Buffer.from(JSON.stringify({ document: fixture, view: 'home', state: 'default', viewport: 'wide' })));
-  const envelope = prismAttempt('render', { artifactId: input.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
+  const envelope = prismNativeAttempt('render', { artifactId: input.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
     contentDigest: input.digest, sizeBytes: input.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${input.digest}`, origin).href }, 'http-cancellation');
-  return { store, engine, envelope, worker, workerOrigin, started, drained, contacts, storedUpload: () => storedUpload };
+  return { store, envelope, worker, workerOrigin, started, drained, contacts, storedUpload: () => storedUpload };
 }
 const headers = { 'content-type': 'application/json', 'x-forwarded-client-cert': 'URI=spiffe://local/control' };
 
@@ -74,9 +70,7 @@ for (const phase of ['read', 'upload'] as const) {
       const timer = setTimeout(() => reject(new Error('artifact I/O remained active after caller disconnect')), 1500);
       timer.unref(); f.drained.promise.then(() => clearTimeout(timer));
     })]);
-    assert.equal(f.engine.cacheUsage().inFlight, 0);
     if (phase === 'read') {
-      assert.equal(f.engine.cacheUsage().totalEntries, 0);
       assert.deepEqual(f.contacts, ['GET'], 'cancelled hydration must not start rendering or upload a full log');
     } else {
       assert.deepEqual(f.contacts, ['GET', 'POST']);
@@ -94,7 +88,6 @@ test('normal HTTP completion keeps its bound result and original persisted full 
   assert.equal(result.state, 'completed'); assert.equal(result.attemptId, f.envelope.attemptId);
   const log = result.evidence.find(value => value.evidenceId === 'prism-full-log'); assert(log);
   assert.equal(Buffer.from(await f.store.get(log.artifact.artifactId)).toString(), '[system] Prism render operation started');
-  assert.equal(f.engine.cacheUsage().completedEntries, 1);
 });
 
 for (const phase of ['read', 'upload'] as const) {
@@ -108,7 +101,6 @@ for (const phase of ['read', 'upload'] as const) {
     assert.equal(result.state, 'cancelled'); assert.equal(result.attemptId, f.envelope.attemptId);
     assert.equal(result.error?.code, 'WORKER_ATTEMPT_CANCELLED');
     await shutdown; await f.drained.promise;
-    assert.equal(f.engine.cacheUsage().inFlight, 0);
     assert.equal(f.worker.listening, false);
     await assert.rejects(fetch(new URL('/ready', f.workerOrigin)), /fetch failed/u);
   });
@@ -122,5 +114,5 @@ test('shutdown interrupts a real incomplete request body before authentication o
   caller.write('{');
   await admitted;
   await f.worker.shutdown(1500); await disconnected;
-  assert.deepEqual(f.contacts, []); assert.equal(f.engine.cacheUsage().totalEntries, 0);
+  assert.deepEqual(f.contacts, []);
 });

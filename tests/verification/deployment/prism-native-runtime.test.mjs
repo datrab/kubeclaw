@@ -29,10 +29,13 @@ test('actual Prism Helm render binds V3 producer, supervisor, NRI selection and 
     assert.equal(nri.roles.prism.policyDigest, worker.spec.template.metadata.annotations['kubeclaw.dev/native-worker-policy']);
     assert.equal(nri.roles.prism.container, supervisor.name); assert.equal(nri.roles.prism.namespace, 'kubeclaw');
     assert.equal(worker.spec.template.metadata.annotations['kubeclaw.dev/native-worker-role'], 'prism');
+    assert.equal(spec.terminationGracePeriodSeconds, 150);
+    assert.equal(supervisor.env.find(item => item.name === 'PRISM_WORKER_SHUTDOWN_TIMEOUT_MS').value, '120000');
+    assert.equal(supervisor.env.find(item => item.name === 'PRISM_NATIVE_CLOSE_TIMEOUT_MS').value, '105000');
     assert.equal(worker.spec.strategy.type, 'Recreate'); assert.equal(worker.spec.replicas, 1);
     assert.deepEqual(spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms,
       [{ matchFields: [{ key: 'metadata.name', operator: 'In', values: [selected.nodeName] }] }]);
-    assert.deepEqual(supervisor.command, ['node', 'skills/prism/server/native-worker.ts']);
+    assert.deepEqual(supervisor.command, ['node', 'skills/prism/server/worker.ts']);
     assert.equal(spec.securityContext.runAsUser, 0); assert.equal(spec.securityContext.fsGroup, undefined);
     assert.deepEqual(supervisor.securityContext.capabilities, { drop: ['ALL'], add: ['SETUID', 'SETGID', 'KILL'] });
     assert.equal(supervisor.securityContext.allowPrivilegeEscalation, false);
@@ -48,11 +51,14 @@ test('actual Prism Helm render binds V3 producer, supervisor, NRI selection and 
     assert.equal(proxy.securityContext.runAsUser, 1000); assert.deepEqual(proxy.securityContext.capabilities, { drop: ['ALL'] });
     for (const [name, pod] of [['control', control], ['worker', worker]]) {
       const container = pod.spec.template.spec.containers.find(container => container.name === name);
-      assert.equal(container.env.find(item => item.name === 'PRISM_WORKER_EXECUTION_MODE').value, 'native');
+      assert.equal(container.env.some(item => item.name === 'PRISM_WORKER_EXECUTION_MODE'), false);
       assert.equal(container.env.find(item => item.name === 'PRISM_ENGINE_CONTENT_DIGEST').value, supervisor.image.split('@')[1]);
     }
     assert.equal(control.spec.template.spec.volumes.some(volume => volume.hostPath), false);
     assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.replicas=2'], { stdio: 'pipe' }));
+    assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.native.enabled=false'], { stdio: 'pipe' }));
+    assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.shutdownTimeoutMs=100000'], { stdio: 'pipe' }));
+    assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.terminationGracePeriodSeconds=120'], { stdio: 'pipe' }));
     assert.throws(() => execFileSync('helm', [...args, '--set', 'worker.native.namespace=other'], { stdio: 'pipe' }));
   } finally { fs.rmSync(directory, { recursive: true, force: true }); }
 });

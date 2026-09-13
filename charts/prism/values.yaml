@@ -30,13 +30,15 @@ studio:
   replicas: 1
   resources: { requests: { cpu: 250m, memory: 256Mi }, limits: { cpu: "2", memory: 1Gi } }
 worker:
-  # Explicit migration switch: Control and Worker move to V3 together.
+  # Required host binding for the sole native worker runtime.
   # Use the generated prism-native-values.yaml after host preflight.
   native:
-    enabled: false
     nodeName: ""
     namespace: ""
     policyDigest: ""
+    closeTimeoutMs: 105000
+  shutdownTimeoutMs: 120000
+  terminationGracePeriodSeconds: 150
   replicas: 1
   resources: { requests: { cpu: "1", memory: 2Gi }, limits: { cpu: "8", memory: 8Gi } }
 ingestion:

@@ -15,7 +15,7 @@ export function renderNativeWorkerNode(policy) {
   const setup = { schemaVersion: 1, nodeVersion, pools: Object.fromEntries(Object.entries(pools).map(([role, pool]) => [role, pool.limits])) };
   const kubelet = { ...nativeNodeReservation(selected), cgroupDriver: 'systemd', cgroupsPerQOS: true, enforceNodeAllocatable: ['pods'] };
   return {
-    'prism-native-values.yaml': dump({ worker: { native: { enabled: true, nodeName: selected.nodeName,
+    'prism-native-values.yaml': dump({ worker: { native: { nodeName: selected.nodeName,
       namespace: selected.pools.prism.namespace, policyDigest: pools.prism.policyDigest }, replicas: 1 } }),
     'native-nri.json': `${JSON.stringify(nriPolicy(selected, pools), null, 2)}\n`,
     'containerd-nri.toml': '[plugins."io.containerd.nri.v1.nri"]\n  disable = false\n',

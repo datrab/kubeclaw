@@ -8,9 +8,11 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import fixture from '../../../contracts/prism/v1/fixtures/minimal-web.json' with { type: 'json' };
-import { prismAttempt } from '../engine/worker-envelope.ts';
+import { prismNativeAttempt } from '../engine/worker-envelope.ts';
 import { ContentAddressedArtifactStore } from '../storage/artifacts.ts';
 import { handleInternalArtifact } from '../server/internal-artifacts.ts';
+
+assert.equal(process.env.PRISM_NATIVE_ISOLATED_TEST_POOL, 'true', 'A dedicated native test pool is required');
 
 async function unusedPort(): Promise<number> {
   const reservation = createTcpServer(); reservation.listen(0, '127.0.0.1'); await once(reservation, 'listening');
@@ -66,7 +68,7 @@ async function setup(t: { after(callback: () => Promise<void>): void }, phase: '
   });
   await ready(child, workerOrigin, () => stderr);
   const input = await store.put(Buffer.from(JSON.stringify({ document: fixture, view: 'home', state: 'default', viewport: 'wide' })));
-  const envelope = prismAttempt('render', { artifactId: input.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
+  const envelope = prismNativeAttempt('render', { artifactId: input.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
     contentDigest: input.digest, sizeBytes: input.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${input.digest}`, origin).href }, 'process-shutdown');
   return { child, workerOrigin, envelope, started, closed, exit, store, stored: () => stored, stderr: () => stderr };
 }
@@ -82,18 +84,19 @@ for (const signal of ['SIGTERM', 'SIGINT'] as const) for (const phase of ['read'
     await f.started; assert.equal(f.child.kill(signal), true);
     const [code, exitSignal] = await f.exit;
     assert.equal(code, 0, f.stderr()); assert.equal(exitSignal, null);
-    assert.match(f.stderr(), /"state":"requests_drained"/u); assert.doesNotMatch(f.stderr(), /"state":"unresolved"/u);
+    assert.match(f.stderr(), /"state":"ownership_reconciled"/u); assert.doesNotMatch(f.stderr(), /prism_native_worker_failure/u);
     const result = await response; assert.equal(result.ok, true, JSON.stringify(result));
     if (result.ok) {
       assert.equal(result.status, 200); assert.equal(result.body.attemptId, f.envelope.attemptId);
       if (phase === 'read') {
-        assert.equal(result.body.state, 'cancelled'); assert.equal(result.body.error?.code, 'WORKER_ATTEMPT_CANCELLED');
+        assert.equal(result.body.state, 'cancelled');
+        assert.equal(result.body.error?.code, 'WORKER_ATTEMPT_CANCELLED');
       } else {
-        // This actual SPIFFE-mode process has no deployed trust proxy. The
-        // original HMAC Control handler refuses its input, then Core writes the
-        // genuine failure log. Shutdown must drain that upload and retain the
-        // first execution error; this is not a successful trust/render proof.
-        assert.equal(result.body.state, 'errored'); assert.equal(result.body.error?.code, 'WORKER_ATTEMPT_ERROR');
+        // No trust proxy is deployed in this isolated process test. The original
+        // HMAC artifact endpoint refuses SPIFFE input, then the genuine failure
+        // log upload stalls. Cancellation preserves that first execution error.
+        assert.equal(result.body.state, 'errored');
+        assert.equal(result.body.error?.code, 'WORKER_ATTEMPT_ERROR');
         assert.match(result.body.error?.message ?? '', /Prism artifact read failed: 401/u);
       }
     }
@@ -127,7 +130,7 @@ for (const signal of ['SIGTERM', 'SIGINT'] as const) {
     const [code, exitSignal] = await exit;
     assert.equal(code, 1, stderr); assert.equal(exitSignal, null);
     assert(performance.now() - started < 2000, 'failed drain must reach a bounded nonzero process cutoff');
-    assert.match(stderr, /"state":"unresolved"/u); assert.doesNotMatch(stderr, /"state":"requests_drained"/u);
+    assert.match(stderr, /PRISM_WORKER_SHUTDOWN_DEADLINE/u); assert.doesNotMatch(stderr, /"state":"ownership_reconciled"/u);
     await pending; await closed;
   });
 }

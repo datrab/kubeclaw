@@ -1,0 +1,25 @@
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_CONNECT_TIMEOUT","durationMs":110,"active":1,"open":0,"pending":0}
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_UNKNOWN","durationMs":0,"active":1,"open":0,"pending":0}
+✔ shutdown waits for actual native pg acquisition settlement and closes the original pool (181.256622ms)
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_CONNECT_TIMEOUT","durationMs":351,"active":1,"open":0,"pending":0}
+✔ one service deadline fails explicitly while the real pg startup remains unresolved (361.847957ms)
+✔ invalid service deadline cannot stop a healthy listener; configuration owns a separate bounded default (21.27656ms)
+✔ actual cooperative host gets bounded cancellation with no invented cleanup receipt (531.603997ms)
+✔ actual unresponsive host gets bounded cancellation with no invented cleanup receipt (830.475038ms)
+✔ missing or invalid control limits cannot create an unbounded channel (1.45157ms)
+✔ runtime authority binds the actual kernel boot and cgroup namespace, and rejects stale or writable evidence (5.165691ms)
+✔ actual native Prism CLI refuses invalid runtime and unavailable host prerequisites before durable admission (2046.698511ms)
+✔ actual fourth pipe carries readiness and teardown while original stdin/stdout stay independent (572.446667ms)
+✔ actual child oversized framing is rejected before phase acceptance (548.767037ms)
+✔ actual child truncated framing is rejected before phase acceptance (535.084594ms)
+✔ actual child cumulative framing is rejected before phase acceptance (489.838704ms)
+✔ real host death after readiness cannot produce completion or keep its control channel alive (438.224517ms)
+✔ phase persistence failure stops the actual child and is not hidden by subsequent close (441.41617ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3731.502959

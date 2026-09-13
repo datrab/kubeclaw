@@ -1,5 +1,5 @@
 {
   "extends": "../../../skills/worker/core/tsconfig.json",
-  "include": ["buster-fixture-journal.test.mts", "worker-control-channel.test.mts", "../../fixtures/buster-fixture-writer.mts", "../../fixtures/worker-control-child.mts"],
+  "include": ["buster-fixture-journal.test.mts", "worker-control-channel.test.mts", "native-process-cancellation.test.mts", "../../fixtures/native-cancellation-child.mts", "../../fixtures/buster-fixture-writer.mts", "../../fixtures/worker-control-child.mts"],
   "compilerOptions": { "rootDir": "../../.." }
 }

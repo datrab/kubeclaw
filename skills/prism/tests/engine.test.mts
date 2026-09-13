@@ -4,8 +4,8 @@ import fixture from "../../../contracts/prism/v1/fixtures/minimal-web.json" with
 import { PrismEngine, DeterministicDesignProvider, OpenAICompatibleDesignProvider } from "../engine/index.ts";
 import { executePrismOperation } from "../engine/worker-binding.ts";
 import { engineRequestSchema } from "@kubeclaw/prism-contracts-v1/digest";
-import { prismAttempt, prismRequestDigest } from "../engine/worker-envelope.ts";
-import { validatePipelineWorkerCoreContract } from "@kubeclaw/pipeline-worker-core-contract";
+import { prismNativeAttempt, prismRequestDigest } from "../engine/worker-envelope.ts";
+import { validateWorkerResourceContractV3 } from "@kubeclaw/pipeline-worker-core-contract";
 test("engine generates, renders, evaluates and publishes idempotently", async () => {
   const engine = new PrismEngine(new DeterministicDesignProvider());
   const base = {
@@ -154,8 +154,8 @@ test("an idempotency key cannot identify different requests", async () => {
 });
 
 test("Prism creates a valid neutral worker envelope", () => {
-  const attempt = prismAttempt("render", {artifactId:"artifact:sha256:"+"a".repeat(64),type:"prism-engine-input",mediaType:"application/json",contentDigest:"sha256:"+"a".repeat(64),sizeBytes:128,storageUrl:"http://prism-control:8080/v1/internal/artifacts/sha256:"+"a".repeat(64)}, "render-one");
-  validatePipelineWorkerCoreContract("workerAttemptEnvelope", attempt);
+  const attempt = prismNativeAttempt("render", {artifactId:"artifact:sha256:"+"a".repeat(64),type:"prism-engine-input",mediaType:"application/json",contentDigest:"sha256:"+"a".repeat(64),sizeBytes:128,storageUrl:"http://prism-control:8080/v1/internal/artifacts/sha256:"+"a".repeat(64)}, "render-one");
+  validateWorkerResourceContractV3("workerAttemptEnvelope", attempt);
   assert.equal(attempt.operation.contractId, "kubeclaw.prism-design-engine@1");
   assert.notEqual(prismRequestDigest(attempt.operation,`sha256:${"a".repeat(64)}`),prismRequestDigest(attempt.operation,`sha256:${"b".repeat(64)}`));
 });

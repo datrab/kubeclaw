@@ -39,7 +39,7 @@ assert.equal(trustMap(prism).data['worker.yaml'], trustMap(changedPeer).data['wo
 assert.notEqual(checksum(deployment(prism, 'prism-control')), checksum(deployment(changedPeer, 'prism-control')));
 for (const name of ['worker', 'studio']) {
   assert.deepEqual(deployment(prism, `prism-${name}`).spec.template, deployment(changedPeer, `prism-${name}`).spec.template);
-  assert.equal(deployment(prism, `prism-${name}`).spec.strategy, undefined);
+  assert.deepEqual(deployment(prism, `prism-${name}`).spec.strategy, name === 'worker' ? { type: 'Recreate' } : undefined);
 }
 for (const name of ['control', 'studio', 'worker']) {
   assert.deepEqual(deployment(prism, `prism-${name}`).spec.template, deployment(unrelatedPrism, `prism-${name}`).spec.template);

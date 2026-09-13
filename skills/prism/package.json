@@ -29,7 +29,8 @@
     "test:studio-remediation": "node --test tests/studio-roundtrip.test.mts tests/preview-assets.test.mts && npm run build:studio && playwright test --config studio/playwright-remediation.mjs",
     "test:corpus-pool": "node integration/corpus-pool.mts",
     "test:engine:native-retention": "node --expose-gc integration/engine-capture-retention.mts",
-    "test:worker-readiness-native": "node tests/native/worker-readiness-gate.mts"
+    "test:worker-readiness-native": "node tests/native/worker-readiness-gate.mts",
+    "test:worker:native": "node --test --test-concurrency=1 tests/*.native.mts integration/worker-concurrent-resource-attribution.mts"
   },
   "dependencies": {
     "@kubeclaw/pipeline-worker-core-contract": "1.0.0",

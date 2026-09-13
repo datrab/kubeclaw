@@ -3,6 +3,7 @@ import type { NativeWorkerOwnership, NativeWorkerOwnershipLease } from './native
 import type { WorkerOwnershipIdentity } from './ownership-store.ts';
 import type { NativeWorkerResourceObservation } from './native-resource-observation.ts';
 import type { NativeWorkerOutputCapture } from './native-output-spool.ts';
+import { cancelNativeProcess } from './native-process-cancellation.ts';
 import { captureNativeWorkerOutput } from './native-process-output.ts';
 import { validateNativeWorkerControlLimits } from './native-control-channel.ts';
 import { startNativeProcessControl, type NativeWorkerProcessControl } from './native-process-control.ts';
@@ -105,7 +106,12 @@ async function collectProcess(child: ChildProcessWithoutNullStreams, lease: Nati
   };
   const output = captureNativeWorkerOutput(child, limits.maximumOutputBytes, stop, outputCapture);
   const control = startNativeProcessControl(child, controlOptions, stop, limits.closeTimeoutMs);
-  const abort = () => stop('WORKER_ATTEMPT_CANCELLED');
+  let disposeCancellation: (() => void) | undefined;
+  const abort = () => {
+    if (closing || disposeCancellation) return;
+    fault ??= 'WORKER_ATTEMPT_CANCELLED';
+    disposeCancellation = cancelNativeProcess(child, limits.closeTimeoutMs, close);
+  };
   child.once('error', () => stop('WORKER_NATIVE_PROCESS_START_FAILED'));
   child.stdin.once('error', () => stop('WORKER_NATIVE_PROCESS_INPUT_FAILED'));
   child.once('exit', () => { close(); });
@@ -132,6 +138,7 @@ async function collectProcess(child: ChildProcessWithoutNullStreams, lease: Nati
   } finally {
     clearTimeout(deadline); clearInterval(poll); if (closeTimer) clearTimeout(closeTimer);
     signal?.removeEventListener('abort', abort);
+    disposeCancellation?.();
     child.stdin.destroy(); child.stdout.destroy(); child.stderr.destroy();
     await control.finish();
   }

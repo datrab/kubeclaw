@@ -1,6 +1,6 @@
 import { loadProductConfig, type ProductConfig } from '../control/product-decisions.ts';
 import { authorizePipelinePreferenceSubject } from '../control/pipeline-preference-subject.ts';
-import { prismWorkerExecutionMode, prismNativeMaximumResultBytes, prismNativeDispatchTimeoutMs } from '../config/native-worker.ts';
+import { prismNativeMaximumResultBytes, prismNativeDispatchTimeoutMs } from '../config/native-worker.ts';
 
 export interface ControlConfig {
   readonly pipelinePreferenceSubject: string | undefined;
@@ -41,7 +41,6 @@ function loadTrustConfig(environment: NodeJS.ProcessEnv) {
 export function loadControlServerConfig(environment: NodeJS.ProcessEnv = process.env) {
   return Object.freeze({
     ...loadControlConfig(environment),
-    workerExecutionMode: prismWorkerExecutionMode(environment),
     maximumWorkerResponseBytes: prismNativeMaximumResultBytes(environment),
     nativeWorkerDispatchTimeoutMs: prismNativeDispatchTimeoutMs(environment),
     sessionSecret: required(environment, 'PRISM_SESSION_SECRET'),

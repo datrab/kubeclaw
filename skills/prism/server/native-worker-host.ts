@@ -5,6 +5,10 @@ import { WorkerArtifactClient } from './worker-artifacts.ts';
 import { nativeOperationFor } from './worker-operation.ts';
 import { nativePrismHostConfig } from '../config/native-worker.ts';
 
+const cancellation = new AbortController();
+const cancel = () => cancellation.abort(new Error('WORKER_ATTEMPT_CANCELLED'));
+process.once('SIGTERM', cancel); process.once('SIGINT', cancel);
+
 async function main(): Promise<void> {
 const config = nativePrismHostConfig();
 const chunks: Buffer[] = [];
@@ -18,7 +22,7 @@ const envelope = JSON.parse(Buffer.concat(chunks).toString('utf8')) as WorkerAtt
 validateWorkerResourceContractV3('workerAttemptEnvelope', envelope);
 const artifacts = new WorkerArtifactClient(config.controlInternalUrl, config.workerSecret, config.spiffeEnabled);
 const engine = new PrismEngine(new DeterministicDesignProvider());
-const result = await new WorkerAttemptExecutor({ envelope,
+const result = await new WorkerAttemptExecutor({ envelope, signal: cancellation.signal,
   operation: nativeOperationFor(envelope, engine, artifacts, config.scope), receiptNamespace: 'prism-native-provisional',
   storeFullLog(attemptId, content, { signal }) {
     if (attemptId !== envelope.attemptId) throw new Error('Prism log attempt identity mismatch');
@@ -28,4 +32,5 @@ const result = await new WorkerAttemptExecutor({ envelope,
 // Closing stdout is not the completion boundary: the supervisor drains the tree and reseals.
 process.stdout.write(JSON.stringify(result));
 }
-await main();
+try { await main(); }
+finally { process.removeListener('SIGTERM', cancel); process.removeListener('SIGINT', cancel); }

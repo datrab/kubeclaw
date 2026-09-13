@@ -6,7 +6,7 @@ export interface NativeWorkerControlLimits {
 }
 
 export function validateNativeWorkerControlLimits(limits: NativeWorkerControlLimits): void {
-  if (Object.values(limits).some(value => !Number.isSafeInteger(value) || value < 1)
+  if ([limits.maximumMessageBytes, limits.maximumSessionBytes].some(value => !Number.isSafeInteger(value) || value < 1)
     || limits.maximumMessageBytes > 0xffffffff || limits.maximumMessageBytes > limits.maximumSessionBytes) {
     throw new Error('WORKER_NATIVE_CONTROL_CONFIG_INVALID');
   }

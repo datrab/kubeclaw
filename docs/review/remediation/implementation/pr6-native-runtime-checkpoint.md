@@ -1,5 +1,8 @@
 # PR6 native runtime / Prism startup checkpoint
 
+Historical checkpoint. The legacy/native switch and separate CLI described below
+were subsequently removed; see [the current cleanup](pr6-prism-single-runtime.md).
+
 D16 remains accepted. This is a code checkpoint, not completion of the four
 original findings or all remaining work. **137 locally verified / 17 incomplete**
 remains unchanged. No deployment, host installation, live test, merge or

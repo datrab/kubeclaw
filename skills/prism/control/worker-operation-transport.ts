@@ -1,11 +1,11 @@
 import { randomBytes } from 'node:crypto';
-import type { PrismWorkerAttempt } from './worker-results.ts';
+import type { WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
 import type { loadControlServerConfig } from '../server/control-config.ts';
 import { signInternalRequest } from '../server/internal-auth.ts';
 
 type Config = ReturnType<typeof loadControlServerConfig>;
 
-export async function requestWorkerResult(config: Config, attempt: PrismWorkerAttempt): Promise<unknown> {
+export async function requestWorkerResult(config: Config, attempt: WorkerAttemptEnvelopeV3): Promise<unknown> {
   const body = Buffer.from(JSON.stringify(attempt)); const timestamp = Date.now(); const nonce = randomBytes(16).toString('hex');
   const response = await fetch(new URL('/v1/attempts', config.workerUrl), {
     method: 'POST', body, signal: AbortSignal.timeout(config.nativeWorkerDispatchTimeoutMs),

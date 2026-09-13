@@ -2,10 +2,11 @@
 {{- fail "control.replicas must be 1 while prism-artifacts uses ReadWriteOnce storage" }}
 {{- end }}
 {{- include "prism.productDecisions.validate" . }}
-{{- if .Values.worker.native.enabled }}
 {{- if or (ne (int .Values.worker.replicas) 1) (ne .Values.worker.native.namespace .Release.Namespace) (not .Values.worker.native.nodeName) (not (regexMatch "^[a-f0-9]{64}$" .Values.worker.native.policyDigest)) }}
 {{- fail "native Prism requires one worker, its selected namespace/node and generated policy digest" }}
 {{- end }}
+{{- if or (le (int .Values.worker.shutdownTimeoutMs) (add (int .Values.worker.native.closeTimeoutMs) 10000)) (le (mul (int .Values.worker.terminationGracePeriodSeconds) 1000) (int .Values.worker.shutdownTimeoutMs)) }}
+{{- fail "worker shutdown must cover native close plus scope drain, and fit within pod termination grace" }}
 {{- end }}
 {{- range $name := list "control" "studio" "worker" }}
 {{- $image := index $.Values.images $name }}
@@ -14,7 +15,7 @@ kind: Deployment
 metadata: { name: prism-{{ $name }} }
 spec:
   replicas: {{ (index $.Values $name).replicas }}
-  {{- if or (eq $name "control") (and (eq $name "worker") $.Values.worker.native.enabled) }}
+  {{- if or (eq $name "control") (eq $name "worker") }}
   strategy: { type: Recreate }
   {{- end }}
   selector: { matchLabels: { app: prism-{{ $name }} } }
@@ -25,9 +26,9 @@ spec:
         {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
         kubeclaw.dev/worker-trust: "true"
         {{- end }}
-      {{- if or (and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker"))) (and (eq $name "control") $.Values.control.productDecisions.enabled) (and (eq $name "worker") $.Values.worker.native.enabled) }}
+      {{- if or (and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker"))) (and (eq $name "control") $.Values.control.productDecisions.enabled) (eq $name "worker") }}
       annotations:
-        {{- if and (eq $name "worker") $.Values.worker.native.enabled }}
+        {{- if eq $name "worker" }}
         kubeclaw.dev/native-worker-role: prism
         kubeclaw.dev/native-worker-policy: {{ $.Values.worker.native.policyDigest | quote }}
         {{- end }}
@@ -40,12 +41,15 @@ spec:
       {{- end }}
     spec:
       serviceAccountName: prism-{{ $name }}
+      {{- if eq $name "worker" }}
+      terminationGracePeriodSeconds: {{ $.Values.worker.terminationGracePeriodSeconds }}
+      {{- end }}
       imagePullSecrets: {{ toYaml $.Values.imagePullSecrets | nindent 8 }}
       automountServiceAccountToken: false
       # The Prism images use the named `node` image user. Kubernetes cannot prove
       # that a named image user is non-root when runAsNonRoot is set, so make the
       # image's numeric runtime identity explicit for every Prism application pod.
-      {{- if and (eq $name "worker") $.Values.worker.native.enabled }}
+      {{- if eq $name "worker" }}
       securityContext: { runAsNonRoot: false, runAsUser: 0, runAsGroup: 0, seccompProfile: { type: RuntimeDefault } }
       affinity:
         nodeAffinity:
@@ -65,8 +69,8 @@ spec:
         - name: {{ $name }}
           image: {{ include "prism.imageRef" $image | quote }}
           imagePullPolicy: {{ $image.pullPolicy }}
-          {{- if and (eq $name "worker") $.Values.worker.native.enabled }}
-          command: ["node", "skills/prism/server/native-worker.ts"]
+          {{- if eq $name "worker" }}
+          command: ["node", "skills/prism/server/worker.ts"]
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"], add: ["SETUID", "SETGID", "KILL"] } }
           {{- else }}
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
@@ -74,10 +78,7 @@ spec:
           env:
             - { name: PORT, value: "8080" }
             {{- if or (eq $name "control") (eq $name "worker") }}
-            - { name: PRISM_WORKER_EXECUTION_MODE, value: {{ ternary "native" "legacy" $.Values.worker.native.enabled | quote }} }
-            {{- if $.Values.worker.native.enabled }}
             - { name: PRISM_ENGINE_CONTENT_DIGEST, value: {{ $.Values.images.worker.digest | quote }} }
-            {{- end }}
             {{- end }}
             {{- if and (or (eq $name "control") (eq $name "worker")) (not $.Values.workerTrust.spiffe.enabled) }}
             - name: PRISM_WORKER_SECRET
@@ -114,6 +115,8 @@ spec:
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingress-secret } }
             {{- end }}
             {{- if eq $name "worker" }}
+            - { name: PRISM_NATIVE_CLOSE_TIMEOUT_MS, value: {{ $.Values.worker.native.closeTimeoutMs | quote }} }
+            - { name: PRISM_WORKER_SHUTDOWN_TIMEOUT_MS, value: {{ $.Values.worker.shutdownTimeoutMs | quote }} }
             - { name: PRISM_CONTROL_INTERNAL_URL, value: {{ ternary "http://127.0.0.1:18080" "http://prism-control:8080" $.Values.workerTrust.spiffe.enabled | quote }} }
             - name: DATABASE_URL
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }
@@ -134,7 +137,7 @@ spec:
           resources: {{ toYaml (index $.Values $name).resources | nindent 12 }}
           volumeMounts:
             - { name: tmp, mountPath: /tmp }
-            {{- if and (eq $name "worker") $.Values.worker.native.enabled }}
+            {{- if eq $name "worker" }}
             - { name: native-pool, mountPath: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism }
             - { name: native-ownership, mountPath: /var/lib/kubeclaw/native/prism }
             - { name: native-policy, mountPath: /etc/kubeclaw/prism-pool.json, readOnly: true }
@@ -182,7 +185,7 @@ spec:
         {{- end }}
       volumes:
         - { name: tmp, emptyDir: { sizeLimit: 4Gi } }
-        {{- if and (eq $name "worker") $.Values.worker.native.enabled }}
+        {{- if eq $name "worker" }}
         - { name: native-pool, hostPath: { path: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism, type: Directory } }
         - { name: native-ownership, hostPath: { path: /var/lib/kubeclaw/native/prism, type: Directory } }
         - { name: native-policy, hostPath: { path: /etc/kubeclaw/prism-pool.json, type: File } }

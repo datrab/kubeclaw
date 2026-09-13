@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import test from "node:test";
 import { PGlite } from "@electric-sql/pglite";
 import { vector } from "@electric-sql/pglite-pgvector";
@@ -98,17 +98,30 @@ test("wire preference IDs replay only exact owner and content while preserving i
 });
 
 test("wire ID migration preserves legacy UUID/content and refuses ambiguous historical wire identities", async () => {
-  const {db} = await fixture();
-  try {
-    await db.exec("ALTER TABLE prism.preference_event DROP COLUMN wire_event_id; ALTER TABLE prism.preference_event DROP COLUMN request_digest; ALTER TABLE prism.preference_event DROP COLUMN decision_response; DELETE FROM prism.schema_migration WHERE name='011_preference_wire_ids.sql';");
-    const id = randomUUID(); const content = {eventId: "event-legacy", actorEvidence: "unchanged"};
-    await db.query("INSERT INTO prism.preference_event(id,subject_id,event_type,content,consent_scope,occurred_at) VALUES($1,'legacy','liked',$2::jsonb,'personal',now())", [id, JSON.stringify(content)]);
-    await migrate(db);
-    const row = (await db.query<{id: string; content: unknown; wire_event_id: string; request_digest: unknown}>("SELECT * FROM prism.preference_event")).rows[0]!;
-    assert.equal(row.id, id); assert.deepEqual(row.content, content); assert.equal(row.wire_event_id, "event-legacy"); assert.equal(row.request_digest, null);
-    await db.exec("ALTER TABLE prism.preference_event DROP COLUMN wire_event_id; ALTER TABLE prism.preference_event DROP COLUMN request_digest; ALTER TABLE prism.preference_event DROP COLUMN decision_response; DELETE FROM prism.schema_migration WHERE name='011_preference_wire_ids.sql';");
-    await db.query("INSERT INTO prism.preference_event(id,subject_id,event_type,content,consent_scope,occurred_at) VALUES($1,'other','liked',$2::jsonb,'personal',now())", [randomUUID(), JSON.stringify(content)]);
-    await assert.rejects(migrate(db), /unique|duplicate/);
-    assert.equal(await eventCount(db), 2);
-  } finally { await db.close(); }
+  // Build the real pre-011 schema from its original migrations. Dropping columns
+  // from the latest schema leaves later triggers behind and is not historical state.
+  for (const ambiguous of [false, true]) {
+    const db = new PGlite({extensions: {vector}});
+    try {
+      await db.exec("CREATE EXTENSION vector; CREATE ROLE prism_migrator; CREATE ROLE prism_runtime; CREATE ROLE prism_readonly; CREATE SCHEMA prism; CREATE TABLE prism.schema_migration(name text PRIMARY KEY,applied_at timestamptz NOT NULL DEFAULT now());");
+      const root = new URL('../storage/migrations/', import.meta.url);
+      for (const name of (await readdir(root)).filter(name => /^\d{3}_.*\.sql$/u.test(name) && Number(name.slice(0, 3)) < 11).sort()) {
+        await db.exec(await readFile(new URL(name, root), 'utf8'));
+        await db.query('INSERT INTO prism.schema_migration(name) VALUES($1)', [name]);
+      }
+      const id = randomUUID(); const content = {eventId: "event-legacy", actorEvidence: "unchanged"};
+      const insert = "INSERT INTO prism.preference_event(id,subject_id,event_type,content,consent_scope,occurred_at) VALUES($1,'legacy','liked',$2::jsonb,'personal',now())";
+      await db.query(insert, [id, JSON.stringify(content)]);
+      if (ambiguous) {
+        await db.query(insert, [randomUUID(), JSON.stringify(content)]);
+        await assert.rejects(migrate(db), /unique|duplicate/);
+        assert.equal(await eventCount(db), 2);
+      } else {
+        await migrate(db);
+        const row = (await db.query<{id: string; content: unknown; wire_event_id: string; request_digest: unknown}>("SELECT * FROM prism.preference_event")).rows[0]!;
+        assert.equal(row.id, id); assert.deepEqual(row.content, content);
+        assert.equal(row.wire_event_id, "event-legacy"); assert.equal(row.request_digest, null);
+      }
+    } finally { await db.close(); }
+  }
 });

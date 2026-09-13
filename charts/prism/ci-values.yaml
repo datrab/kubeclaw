@@ -6,3 +6,10 @@ images:
   ingestion: { digest: "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }
 postgresql:
   existingSecret: prism-postgresql-auth
+
+# Synthetic host binding for render tests only; never a deployment policy.
+worker:
+  native:
+    nodeName: native-render-test
+    namespace: default
+    policyDigest: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
