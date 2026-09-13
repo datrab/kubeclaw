@@ -39,6 +39,12 @@ Produktionsscheduler aktiv. 12 echte lokale Prozess-/Journaltests bestehen;
 Typprüfungen und Lint sind geprüft. Details und Grenzen:
 `implementation/pr6-buster-fixture-control.md`.
 
+Zusätzlicher Bereinigungsfix: Job-/Workspace-Symlink-Eltern werden vor jeder
+Quellenlöschung abgewiesen; echte Dateien anderer Jobs und Evidence bleiben
+erhalten. Drei native Dateisystemtests bestanden. Dies ersetzt keinen Nachweis
+von Prozessquieszenz und schließt Busters Retention nicht.
+[Nachweis und exakte Integrationsgrenze](implementation/pr6-buster-cleanup-parent.md).
+
 ## Exakter nächster Schritt
 
 Busters neuen Attempt-Host, die eingeschränkte rollenbezogene Startpolitik und
