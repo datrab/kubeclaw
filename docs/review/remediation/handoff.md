@@ -19,6 +19,14 @@ Elternbindung erneut gesetzt und geprüft.
 
 Lokale Nachweise: `implementation/pr6-launch-ownership-checkpoint.md`.
 
+Fixture-Journal und nativer Prozesskanal sind jetzt verbunden: dauerhafte
+Bereitschaft vor Abhängigkeitsfreigabe, gebundene Teardown-Nachricht und
+gespeicherter Abbruch vor erzwungener Beendigung. Die neue Lifetime-API verbindet
+dies mit Core und dessen originalem Abschlussjournal, ist aber noch nicht im
+Produktionsscheduler aktiv. 12 echte lokale Prozess-/Journaltests bestehen;
+Typprüfungen und Lint sind geprüft. Details und Grenzen:
+`implementation/pr6-buster-fixture-control.md`.
+
 ## Exakter nächster Schritt
 
 Busters neuen Attempt-Host, die eingeschränkte rollenbezogene Startpolitik und
