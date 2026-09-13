@@ -1,5 +1,7 @@
 # Aktueller Umsetzungsstand
 
+Stand 2026-09-13: **136 lokal verifiziert / 18 unvollständig** (3 teilweise implementiert, 3 in Bearbeitung, 12 offen). Neu nach D12 abgeschlossen: IFR-15-001, Prism-Datenbankmigration und Credential-Rollbackgrenze. Code/Nachweise: `8d47764b7b276c783f312198d6987b9197e593e4`; [Checkpoint](implementation/pr6-stateful-upgrade-checkpoint.md). Die vier ursprünglichen Core/Buster/Prism/Observability-Findings bleiben unvollständig. Redis/PostgreSQL-Pins und Upgrade-Preflights sind ergänzt, vollständige Daten-/Storage-Migrationen bleiben offen. Alle nachfolgenden Zähler sind historische Stände.
+
 Aktueller Folgecheckpoint: **131 lokal verifiziert / 3 teilweise / 1 in Bearbeitung / 19 offen**. Von den zuletzt angefragten7 sind3 abgeschlossen;4 bleiben. SDK-Nachweis: implementation/pr6-sdk-local-verification.md. [Risiko-/Registry-Nachweise](implementation/pr6-risk-and-registry.md). Ältere Zähler unten sind historische Stände.
 
 Aktueller Stand nach D12 (2026-09-12): **128 lokal verifiziert / 5 teilweise / 2 in Bearbeitung / 19 offen**. Von den39 sind34 lokal abgeschlossen. Live-Abnahmen folgen separat durch den Auftraggeber nach Open-Sourcing. Maßgeblich sind [D12](decisions.md#d12--lokaler-abschluss-und-separate-live-abnahme), [Einzelbewertung](implementation/pr6-local-acceptance.md) und [Register](register.json). Ausschließlich im bestehenden PR #6 und dessen Branch weiterarbeiten; frühere Anweisungen zu weiteren Fixbranches gelten nicht. Die folgenden älteren Stände bleiben historischer Verlauf.
