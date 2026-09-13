@@ -16,7 +16,7 @@ function validateAttempt(attempt: PrismWorkerAttempt): void {
   else validatePipelineWorkerCoreContract('workerAttemptEnvelope', attempt);
 }
 
-function boundResult(attempt: PrismWorkerAttempt, raw: unknown): PrismWorkerResult {
+export function boundWorkerResult(attempt: PrismWorkerAttempt, raw: unknown): PrismWorkerResult {
   validateAttempt(attempt);
   const native = attempt.schemaVersion === 'worker-attempt-envelope.v3';
   if (native) validateWorkerResourceContractV3('workerAttemptResult', raw);
@@ -31,7 +31,7 @@ export function acceptWorkerResult(attempt: WorkerAttemptEnvelopeV1, raw: unknow
 export function acceptWorkerResult(attempt: WorkerAttemptEnvelopeV3, raw: unknown): WorkerAttemptResultV3;
 export function acceptWorkerResult(attempt: PrismWorkerAttempt, raw: unknown): PrismWorkerResult;
 export function acceptWorkerResult(attempt: PrismWorkerAttempt, raw: unknown): PrismWorkerResult {
-  const result = boundResult(attempt, raw);
+  const result = boundWorkerResult(attempt, raw);
   if (result.state !== 'completed') throw new Error(result.error?.message ?? 'Prism worker attempt failed', { cause: result.error });
   const name = attempt.operation.values.operation as EngineOperation;
   const expected = engineResultSchema(name);

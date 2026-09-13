@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import type { WorkerArtifactRefV1, WorkerAttemptEnvelopeV1, WorkerProfileV1 } from "@kubeclaw/pipeline-worker-core-contract";
-import { sha256Digest, workerAttemptSpecDigest, workerProfileDigest } from "@kubeclaw/worker-core";
+import { canonicalJson, sha256Digest, workerAttemptSpecDigest, workerProfileDigest } from "@kubeclaw/worker-core";
 import { engineRequestSchema } from "@kubeclaw/prism-contracts-v1/digest";
 import type { EngineOperation } from "./index.ts";
 import type { WorkerAttemptEnvelopeV3, WorkerProfileV3 } from '@kubeclaw/pipeline-worker-core-contract';
@@ -20,7 +20,13 @@ const unsignedProfile = {
   capabilities: ["artifacts.read", "artifacts.write", "network.http", "secrets.read", "telemetry.emit"],
 };
 export const prismWorkerProfile: WorkerProfileV1 = { ...unsignedProfile, profileDigest: workerProfileDigest(unsignedProfile) };
-export const prismRequestDigest=(operation:WorkerAttemptEnvelopeV1["operation"],inputDigest:string)=>sha256Digest(JSON.stringify({operation,inputDigest}));
+/** Reconstruct the original producer order so PostgreSQL jsonb reordering preserves historical digests. */
+export function prismRequestDigest(operation: WorkerAttemptEnvelopeV1['operation'], inputDigest: string): string {
+  const values = JSON.parse(canonicalJson(operation.values)) as typeof operation.values;
+  const ordered = { contractId: operation.contractId, inputSchemaId: operation.inputSchemaId, inputSchemaDigest: operation.inputSchemaDigest,
+    values: { operation: values.operation, inputName: values.inputName, ...values } };
+  return sha256Digest(JSON.stringify({ operation: ordered, inputDigest }));
+}
 
 export function prismAttempt(operation: EngineOperation, inputArtifact: WorkerArtifactRefV1, idempotencyKey: string): WorkerAttemptEnvelopeV1 {
   const now = new Date(); const expires = new Date(now.getTime() + 10 * 60_000); const attemptId = `attempt-${randomUUID()}`;

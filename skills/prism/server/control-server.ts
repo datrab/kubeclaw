@@ -35,18 +35,15 @@ import {
   exchangeTailscaleIdentity,
   verifySession,
 } from "../control/session.ts";
-import { acceptedCachedResult } from "../control/worker-results.ts";
-import { hydrateWorkerResult } from "../control/worker-evidence.ts";
-import { WorkerArtifactClient } from "./worker-artifacts.ts";
 import { handleInternalArtifact } from "./internal-artifacts.ts";
-import { prismAttempt, prismNativeAttempt, prismRequestDigest } from "../engine/worker-envelope.ts";
+import { runNativePrismOperation } from '../control/native-operation.ts';
+import { runLegacyPrismOperation } from '../control/legacy-operation.ts';
 import { ingest, search, type CorpusInput } from "../corpus/index.ts";
 import { evaluate } from "../evaluation/index.ts";
 import {
   projectPreferences,
   type PreferenceEvent,
 } from "../preferences/index.ts";
-import { signInternalRequest } from "./internal-auth.ts";
 import { assertMaterialDirectionDiversity } from "../directions/index.ts";
 import { authorizeProxiedSpiffePeer } from "@kubeclaw/worker-core";
 
@@ -126,71 +123,13 @@ private authenticated(request: IncomingMessage): {
   return { user: session.user, roles: session.roles, csrf };
 }
 
-private async runWorker(
+private runWorker(
   operation: "generate" | "render" | "evaluate" | "ingest" | "publish",
   input: Record<string, unknown>,
   idempotencyKey: string,
 ): Promise<Record<string, unknown>> {
-  const {pool, artifacts} = this;
-  const {workerUrl, controlInternalUrl, workerSecret, spiffeEnabled} = this.config;
-  const inputBytes=Buffer.from(JSON.stringify(input));
-  const storedInput=await artifacts.put(inputBytes);
-  const attempt = (this.config.workerExecutionMode === 'native' ? prismNativeAttempt : prismAttempt)(operation,{
-    artifactId:storedInput.artifactId,type:"prism-engine-input",mediaType:"application/json",contentDigest:storedInput.digest,sizeBytes:storedInput.sizeBytes,
-    storageUrl:new URL(`/v1/internal/artifacts/${storedInput.digest}`,controlInternalUrl).toString(),
-  }, idempotencyKey);
-  const requestDigest = prismRequestDigest(attempt.operation,storedInput.digest);
-  return inTransaction(pool, async client => {
-    await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1,0))", [
-      idempotencyKey,
-    ]);
-    const prior = await client.query<{
-      request_digest: string | null;
-      attempt_id: string;
-      result: Record<string, unknown> | null;
-    }>(
-      "SELECT request_digest,attempt_id,result FROM prism.engine_operation WHERE idempotency_key=$1",
-      [idempotencyKey],
-    );
-    if (
-      prior.rows[0]?.request_digest &&
-      prior.rows[0].request_digest !== requestDigest
-    )
-      throw new Error("idempotency key was used for a different Prism request");
-    if (prior.rows[0]?.result) {
-      const stored = acceptedCachedResult(prior.rows[0].result, requestDigest, prior.rows[0].attempt_id);
-      const cached = await hydrateWorkerResult(stored.attempt, stored.workerResult,
-        new WorkerArtifactClient(controlInternalUrl, workerSecret, spiffeEnabled));
-      return cached.values;
-    }
-    await client.query(
-      "INSERT INTO prism.engine_operation(idempotency_key,attempt_id,operation,request_digest) VALUES($1,$2,$3,$4) ON CONFLICT(idempotency_key) DO UPDATE SET attempt_id=excluded.attempt_id,request_digest=COALESCE(prism.engine_operation.request_digest,excluded.request_digest)",
-      [idempotencyKey, attempt.executionId, operation, requestDigest],
-    );
-    const body = Buffer.from(JSON.stringify(attempt));
-    const timestamp = Date.now();
-    const nonce = randomBytes(16).toString("hex");
-    const result = await fetch(new URL("/v1/attempts", workerUrl), {
-      method: "POST",
-      headers: spiffeEnabled ? {
-        "content-type": "application/json",
-      } : {
-        "content-type": "application/json",
-        "x-prism-timestamp": String(timestamp),
-        "x-prism-nonce": nonce,
-        "x-prism-signature": `v1=${signInternalRequest(workerSecret, body, timestamp, nonce)}`,
-      },
-      body,
-    });
-    if (!result.ok) throw new Error(`Prism worker failed: ${result.status}`);
-    const accepted = await hydrateWorkerResult(attempt, await result.json(),
-      new WorkerArtifactClient(controlInternalUrl, workerSecret, spiffeEnabled));
-    await client.query(
-      "UPDATE prism.engine_operation SET result=$2::jsonb,completed_at=now() WHERE idempotency_key=$1",
-      [idempotencyKey, JSON.stringify({ attempt, workerResult: accepted.result })],
-    );
-    return accepted.values;
-  });
+  const execute = this.config.workerExecutionMode === 'native' ? runNativePrismOperation : runLegacyPrismOperation;
+  return execute(this.pool, this.artifacts, this.config, operation, input, idempotencyKey);
 }
 
   async handle(request: IncomingMessage, response: ServerResponse) {

@@ -8,6 +8,18 @@ export function prismWorkerExecutionMode(environment: NodeJS.ProcessEnv = proces
   return mode;
 }
 
+export function prismNativeMaximumResultBytes(environment: NodeJS.ProcessEnv = process.env): number {
+  const value = Number(environment.PRISM_NATIVE_MAXIMUM_RESULT_BYTES ?? 67108864);
+  if (!Number.isSafeInteger(value) || value < 1 || value > 2_147_483_647) throw new Error('PRISM_NATIVE_RESULT_LIMIT_INVALID');
+  return value;
+}
+
+export function prismNativeDispatchTimeoutMs(environment: NodeJS.ProcessEnv = process.env): number {
+  const value = Number(environment.PRISM_NATIVE_DISPATCH_TIMEOUT_MS ?? 900000);
+  if (!Number.isSafeInteger(value) || value < 1 || value > 2_147_483_647) throw new Error('PRISM_NATIVE_DISPATCH_DEADLINE_INVALID');
+  return value;
+}
+
 /** Shared producer/worker defaults; deployment overrides use these same named settings. */
 export function prismEngineContentDigest(environment: NodeJS.ProcessEnv = process.env): string | undefined {
   return environment.PRISM_ENGINE_CONTENT_DIGEST?.trim();
@@ -63,7 +75,7 @@ export function nativePrismSupervisorConfig(environment: NodeJS.ProcessEnv = pro
     maximumBytes: read('PRISM_NATIVE_MAXIMUM_OWNERSHIP_BYTES', 67108864),
     maximumInputBytes: read('PRISM_NATIVE_MAXIMUM_INPUT_BYTES', 16777216),
     maximumOutputBytes: read('PRISM_NATIVE_MAXIMUM_OUTPUT_BYTES', 33554432),
-    maximumResultBytes: read('PRISM_NATIVE_MAXIMUM_RESULT_BYTES', 67108864),
+    maximumResultBytes: prismNativeMaximumResultBytes(environment),
     maximumJournalBytes: read('PRISM_NATIVE_MAXIMUM_JOURNAL_BYTES', 68719476736, Number.MAX_SAFE_INTEGER),
     pollIntervalMs: read('PRISM_NATIVE_POLL_INTERVAL_MS', 20),
     drainTimeoutMs: read('PRISM_NATIVE_DRAIN_TIMEOUT_MS', 10000),
