@@ -1,0 +1,10 @@
+✔ native Prism credentials survive failed upgrade; legacy writes and fresh-server restore retain schema and data (17630.935515ms)
+ℹ Native PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2); pgvector 0.8.6
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18711.937343

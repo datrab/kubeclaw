@@ -34,7 +34,8 @@ export class NativeAttemptJournal {
   }
 
   async withAttempt<T>(input: WorkerAttemptEnvelopeV3,
-    operation: (context: { envelope: WorkerAttemptEnvelopeV3; newlyAccepted: boolean; acceptedAt: string; outputRoot: string }) => Promise<T>): Promise<T> {
+    operation: (context: { envelope: WorkerAttemptEnvelopeV3; newlyAccepted: boolean; acceptedAt: string; outputRoot: string }) => Promise<T>,
+    validateNewAdmission: (envelope: WorkerAttemptEnvelopeV3) => void = () => {}): Promise<T> {
     const envelope = structuredClone(input);
     validateWorkerResourceContractV3('workerAttemptEnvelope', envelope);
     const bytes = Buffer.from(canonicalJson(envelope));
@@ -47,7 +48,7 @@ export class NativeAttemptJournal {
     try {
       return await withDurableStoreLock(path.join(this.#root, 'fences', key.slice(-2), 'lifetime'), async () => {
         entered = true;
-        const reserved = await this.#reserve(envelope, bytes);
+        const reserved = await this.#reserve(envelope, bytes, validateNewAdmission);
         return operation({ envelope, newlyAccepted: reserved.newlyAccepted, acceptedAt: reserved.record.payload.acceptedAt,
           outputRoot: this.outputRoot(envelope) });
       });
@@ -158,10 +159,13 @@ export class NativeAttemptJournal {
     return record;
   }
 
-  async #reserve(envelope: WorkerAttemptEnvelopeV3, bytes: Buffer) {
+  async #reserve(envelope: WorkerAttemptEnvelopeV3, bytes: Buffer, validateNewAdmission: (envelope: WorkerAttemptEnvelopeV3) => void) {
     return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {
       const existing = await this.#lookup(envelope);
       if (existing) return { newlyAccepted: false, record: existing };
+      // Reject expired or unsupported new work under the admission lock, before
+      // retaining input or accepting an identity. Historical replay bypasses it.
+      validateNewAdmission(envelope);
       const reservationBytes = bytes.byteLength + this.#limits.maximumOutputBytes + this.#limits.maximumResultBytes + 65536;
       const records = await this.#all();
       const pending = records.filter(record => record.payload.result === null).reduce((sum, record) => sum + record.payload.reservationBytes, 0);

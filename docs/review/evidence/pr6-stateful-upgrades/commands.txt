@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd REPOSITORY_ROOT
+
+HELM_BIN=/absolute/path/to/helm node --test tests/verification/reliability/stateful-release-pins.test.mjs > docs/review/evidence/pr6-stateful-upgrades/pins.txt 2>&1
+REDIS_SERVER=/absolute/path/to/redis-8.10.1/src/redis-server node --test tests/verification/reliability/redis-transport.test.mts > docs/review/evidence/pr6-stateful-upgrades/redis-durability.txt 2>&1
+node --test tests/verification/reliability/worker-native-journal.test.mts > docs/review/evidence/pr6-stateful-upgrades/native-admission.txt 2>&1
+
+# Executed with the two disposable native PG17.11/vector0.8.6 servers in the
+# same process/network context as the QEMU host, using compiled PG18.6 clients.
+PRISM_NATIVE_TEST_DATABASE_URL="$DISPOSABLE_SOURCE_ADMIN_URL" \
+PRISM_NATIVE_RESTORE_DATABASE_URL="$DISPOSABLE_DESTINATION_ADMIN_URL" \
+PRISM_NATIVE_POSTGRES_BIN="$POSTGRES_CLIENT_BIN_DIRECTORY" \
+node --test skills/prism/tests/native/database-upgrade.mts > docs/review/evidence/pr6-stateful-upgrades/prism-native.txt 2>&1
+
+node --test tests/verification/deployment/versions.test.mjs > docs/review/evidence/pr6-stateful-upgrades/version-regression.txt 2>&1
+node scripts/versions.mjs --check > docs/review/evidence/pr6-stateful-upgrades/versions.txt 2>&1
+bash -n scripts/deploy.sh
+node_modules/.bin/tsc --noEmit -p skills/prism/tsconfig.json > docs/review/evidence/pr6-stateful-upgrades/prism-typecheck.txt 2>&1
+node_modules/.bin/tsc --noEmit -p skills/worker/core/tsconfig.json > docs/review/evidence/pr6-stateful-upgrades/core-typecheck.txt 2>&1
+node_modules/.bin/eslint -c charts/kubeclaw/files/config/eslint.config.mjs scripts/infrastructure-oci-chart.mjs scripts/infrastructure-release.mjs scripts/stateful-release-preflight.mjs scripts/infrastructure-chart.mjs scripts/infrastructure-image-renderer.mjs scripts/versions.mjs skills/prism/server/database-roles.ts skills/prism/server/bootstrap-database.ts skills/prism/config/database-bootstrap.ts skills/prism/tests/native/database-upgrade.mts skills/worker/core/worker/native-attempt-executor.ts skills/worker/core/worker/native-attempt-journal.ts > docs/review/evidence/pr6-stateful-upgrades/lint.txt 2>&1

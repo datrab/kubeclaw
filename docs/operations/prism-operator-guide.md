@@ -15,7 +15,13 @@ an OpenAI model route and the LiteLLM credential used for memory-search
 embeddings. Control, Studio, worker, and ingestion use
 Node images and do not receive provider credentials. Any user authenticated
 through the trusted Tailscale ingress can approve a design. Helm uses atomic
-upgrades, so a failed upgrade keeps the last healthy release.
+upgrades to roll Kubernetes resources back when an upgrade fails. It does not
+roll back committed database migrations or external Secret changes. Schema
+changes must preserve the previous application contract; destructive migrations
+and credential rotation require a separately reviewed transition and restore plan.
+The [database transition guide](prism-database-transitions.md) defines the
+compatible migration contract, maintenance password transition, isolated restore
+procedure and deferred rollout-failure acceptance.
 
 Production Prism image digests come from the reviewed `releases/runtime-images.json`.
 `deploy.sh prism` verifies the complete receipt, source chart/value bytes and
@@ -77,9 +83,14 @@ tokens into `prism-runtime` or the worker Deployment.
 
 `./scripts/deploy.sh prism` first starts Control, Studio, Worker, and PostgreSQL.
 The one-shot `prism-migrate` job has two privilege-separated stages. Its admin
-bootstrap waits for PostgreSQL with bounded retries, creates or refreshes the
+bootstrap waits for PostgreSQL with bounded retries, creates missing
 least-privilege roles, installs the `vector` extension, and ensures that
-`prism_migrator` owns the `prism` schema. It also reapplies least-privilege
+`prism_migrator` owns the `prism` schema. Existing role passwords are verified
+with real password authentication before any changes are committed. A changed
+password fails with `PRISM_ROLE_CREDENTIAL_TRANSITION_REQUIRED`; ordinary
+bootstrap never rotates role passwords. Keep the current runtime Secret during
+an application upgrade. Replacing that Secret first can break old Pods even
+though bootstrap preserves their database credentials. It also reapplies least-privilege
 table grants so objects left by an interrupted earlier install remain usable by
 `prism_runtime`. The ordinary migrator then verifies that ownership and runs
 only schema-local migrations; it is not granted global database `CREATE` or

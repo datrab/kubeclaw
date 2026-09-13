@@ -1,0 +1,14 @@
+✔ SQL preference history crosses sessions with consent, isolated scopes, overrides and persisted prompt identity (11352.796231ms)
+✔ projection deduplicates evidence and refuses cross-project or cross-user retractions (4.641167ms)
+✔ migration lock is acquired before schema metadata is touched (19.601945ms)
+✔ managed migrations require the preprovisioned schema without database-wide DDL (12.243501ms)
+✔ direction uniqueness migration archives existing unsourced duplicates (11759.209575ms)
+✔ PostgreSQL migrations, immutable revisions, and artifacts work (6007.455534ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19023.074649

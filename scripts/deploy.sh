@@ -1093,7 +1093,13 @@ ensure_tailscale_oauth_secret() {
 }
 
 cmd_infra() {
-  local qdrant_chart=""
+  local qdrant_chart="" redis_chart postgresql_chart=""
+  redis_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" redis redis "$NAMESPACE" "$INFRA_DIR/redis-values.yaml")"
+  node "$REPO_DIR/scripts/stateful-release-preflight.mjs" redis "$NAMESPACE" "$redis_chart" "$INFRA_DIR/redis-values.yaml"
+  if component_enabled "$KUBECLAW_DEPLOY_POSTGRESQL"; then
+    postgresql_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" postgresql postgresql "$NAMESPACE" "$INFRA_DIR/postgresql-values.yaml")"
+    node "$REPO_DIR/scripts/stateful-release-preflight.mjs" postgresql "$NAMESPACE" "$postgresql_chart" "$INFRA_DIR/postgresql-values.yaml"
+  fi
   if component_enabled "$KUBECLAW_DEPLOY_QDRANT"; then
     qdrant_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" qdrant qdrant "$NAMESPACE" "$INFRA_DIR/qdrant-values.yaml")"
     node "$REPO_DIR/scripts/qdrant-secrets.mjs" check "$NAMESPACE"
@@ -1130,7 +1136,8 @@ cmd_infra() {
   fi
 
   header "Infrastructure: Redis"
-  helm upgrade --install redis bitnami/redis \
+  helm upgrade --install redis "$redis_chart" \
+    --post-renderer "$REPO_DIR/scripts/infrastructure-image-renderer.mjs" --post-renderer-args redis \
     --namespace "$NAMESPACE" \
     --values "$INFRA_DIR/redis-values.yaml" \
     --wait --timeout 120s
@@ -1138,7 +1145,8 @@ cmd_infra() {
 
   if component_enabled "$KUBECLAW_DEPLOY_POSTGRESQL"; then
     header "Infrastructure: PostgreSQL"
-    helm upgrade --install postgresql bitnami/postgresql \
+    helm upgrade --install postgresql "$postgresql_chart" \
+      --post-renderer "$REPO_DIR/scripts/infrastructure-image-renderer.mjs" --post-renderer-args postgresql \
       --namespace "$NAMESPACE" \
       --values "$INFRA_DIR/postgresql-values.yaml" \
       --wait --timeout 120s

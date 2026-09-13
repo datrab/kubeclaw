@@ -7,7 +7,7 @@ import { loadAll, dump } from 'js-yaml';
 const root = fileURLToPath(new URL('../', import.meta.url));
 
 export function bindInfrastructureImages(name, documents) {
-  if (!['qdrant', 'tailscale'].includes(name)) throw new Error('INFRASTRUCTURE_IMAGE_PROFILE_INVALID');
+  if (!['qdrant', 'tailscale', 'redis', 'postgresql'].includes(name)) throw new Error('INFRASTRUCTURE_IMAGE_PROFILE_INVALID');
   const images = JSON.parse(fs.readFileSync(path.join(root, 'versions.json'), 'utf8')).infrastructure;
   const bindings = new Map([[images.qdrant.split('@')[0], images.qdrant]]);
   const result = structuredClone(documents);
@@ -34,6 +34,9 @@ function podSpec(document) {
 function verifyReservedImage(name, container, images) {
   const variables = container.env ?? [];
   if (new Set(variables.map(variable => variable.name)).size !== variables.length) throw new Error('INFRASTRUCTURE_DUPLICATE_ENVIRONMENT');
+  if (['redis', 'postgresql'].includes(name) && container.image !== images[name].replace(/:[^:@]+@/, '@')) {
+    throw new Error('INFRASTRUCTURE_DATABASE_IMAGE_OVERRIDE');
+  }
   if (name === 'qdrant' && ['qdrant', 'ensure-dir-ownership'].includes(container.name) && container.image !== images.qdrant) {
     throw new Error('INFRASTRUCTURE_QDRANT_IMAGE_OVERRIDE');
   }

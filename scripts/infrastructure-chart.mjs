@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { load } from 'js-yaml';
+import { parseInfrastructureOciChart, downloadInfrastructureOciChart } from './infrastructure-oci-chart.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const maximumBytes = 32 * 1024 * 1024;
@@ -18,8 +19,12 @@ export function infrastructureChart(name) {
 export function validateInfrastructureChartLock(lock) {
   if (!lock || !/^[a-z][a-z0-9-]*$/.test(lock.name) || !/^\d+\.\d+\.\d+$/.test(lock.version)
     || !/^[a-f0-9]{64}$/.test(lock.sha256)) throw new Error('INFRASTRUCTURE_CHART_LOCK_INVALID');
+  if (lock.appVersion !== undefined && !/^\d+\.\d+\.\d+$/.test(lock.appVersion)) throw new Error('INFRASTRUCTURE_CHART_APP_VERSION_INVALID');
   const url = new URL(lock.url);
-  if (url.protocol !== 'https:' || url.username || url.password || url.search || url.hash) {
+  if (url.protocol === 'oci:') {
+    const { repository } = parseInfrastructureOciChart(lock.url);
+    if (repository.split('/').at(-1) !== lock.name) throw new Error('INFRASTRUCTURE_CHART_URL_INVALID');
+  } else if (url.protocol !== 'https:' || url.username || url.password || url.search || url.hash) {
     throw new Error('INFRASTRUCTURE_CHART_URL_INVALID');
   }
   return Object.freeze(lock);
@@ -35,6 +40,7 @@ export function verifyInfrastructureChart(name, file) {
   // exact packaged dependencies. Never run helm dependency update at deployment.
   const metadata = load(execFileSync('tar', ['-xOf', file, `${lock.name}/Chart.yaml`], { encoding: 'utf8', maxBuffer: maximumBytes }));
   if (metadata.name !== lock.name || metadata.version !== lock.version) throw new Error('INFRASTRUCTURE_CHART_IDENTITY_MISMATCH');
+  if (lock.appVersion !== undefined && metadata.appVersion !== lock.appVersion) throw new Error('INFRASTRUCTURE_CHART_APP_VERSION_MISMATCH');
   return { name: lock.name, version: lock.version, appVersion: metadata.appVersion, sha256: digest };
 }
 
@@ -51,7 +57,8 @@ export function stageInfrastructureChart(name) {
     const temporary = fs.mkdtempSync(path.join(cache, 'download-'));
     try {
       const download = path.join(temporary, 'chart.tgz');
-      execFileSync('curl', ['--fail', '--silent', '--show-error', '--location', '--proto', '=https',
+      if (lock.url.startsWith('oci:')) downloadInfrastructureOciChart(lock.url, download);
+      else execFileSync('curl', ['--fail', '--silent', '--show-error', '--location', '--proto', '=https',
         '--proto-redir', '=https', '--max-time', '180', '--max-filesize', String(maximumBytes),
         '--output', download, lock.url], { stdio: ['ignore', 'ignore', 'inherit'] });
       verifyInfrastructureChart(name, download);

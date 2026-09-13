@@ -5,7 +5,7 @@ import { runNativeWorkerProcess, type NativeWorkerProcessOptions } from './nativ
 import { NativeWorkerAttemptBusy, type NativeAttemptJournal } from './native-attempt-journal.ts';
 import { NativeWorkerOutputSpool } from './native-output-spool.ts';
 import { journalIdentity } from './native-journal-state.ts';
-import { finalizeNativeWorkerResult } from './native-result.ts';
+import { finalizeNativeWorkerResult, interruptedNativeWorkerResult } from './native-result.ts';
 import { recoverNativeAttempt } from './native-attempt-recovery.ts';
 
 export interface NativeWorkerAttemptExecutorOptions {
@@ -13,6 +13,8 @@ export interface NativeWorkerAttemptExecutorOptions {
   readonly journal: NativeAttemptJournal;
   readonly process: Omit<NativeWorkerProcessOptions, 'identity' | 'input' | 'outputCapture'>;
 }
+
+class NativeAdmissionRejected extends Error {}
 
 /** A fsynced identity precedes launch; a fsynced sealed receipt precedes delivery. */
 export async function executeNativeWorkerAttempt(options: NativeWorkerAttemptExecutorOptions): Promise<WorkerAttemptResultV3> {
@@ -25,7 +27,12 @@ export async function executeNativeWorkerAttempt(options: NativeWorkerAttemptExe
       const started = new Date(context.acceptedAt);
       const recovered = await recoverNativeAttempt(options.journal, options.process.owner, envelope, started, context.newlyAccepted);
       if (recovered) return options.journal.seal(envelope, recovered);
-      const limits = acceptedLimits(options, envelope, new Date());
+      const limits = launchLimits(options, envelope);
+      if (limits instanceof NativeAdmissionRejected) {
+        // Admission was persisted, but the claim expired before launch. The
+        // ownership lookup above proved that no process crossed that boundary.
+        return options.journal.seal(envelope, interruptedNativeWorkerResult(envelope, started, limits.message, null, true));
+      }
       const spool = await NativeWorkerOutputSpool.create(context.outputRoot, limits.maximumOutputBytes);
       try {
         const process = await runNativeWorkerProcess({ ...options.process, limits, outputCapture: spool,
@@ -35,27 +42,31 @@ export async function executeNativeWorkerAttempt(options: NativeWorkerAttemptExe
         await options.journal.recordProcess(envelope, process, completed);
         return await options.journal.seal(envelope, finalizeNativeWorkerResult(envelope, process, started, completed));
       } finally { await spool.close(); }
-    });
+    }, envelope => { acceptedLimits(options, envelope, new Date()); });
     if (result.cleanup.state === 'failed') options.process.owner.fenceAdmission();
     return result;
   } catch (error) {
-    if (error instanceof NativeWorkerAttemptBusy) throw error;
+    if (error instanceof NativeWorkerAttemptBusy || error instanceof NativeAdmissionRejected) throw error;
     // Persistence or ownership uncertainty cannot permit a later admission.
     options.process.owner.fenceAdmission();
     throw error;
   }
 }
 
+function launchLimits(options: NativeWorkerAttemptExecutorOptions, envelope: WorkerAttemptEnvelopeV3) {
+  try { return acceptedLimits(options, envelope, new Date()); }
+  catch (error) { if (error instanceof NativeAdmissionRejected) return error; throw error; }
+}
 
 function acceptedLimits(options: NativeWorkerAttemptExecutorOptions, envelope: WorkerAttemptEnvelopeV3, started: Date) {
   const limits = options.process.limits;
   const accepted = { cpuTimeMs: limits.cpuTimeMs, maximumMemoryBytes: limits.memoryBytes, maximumTasks: limits.tasks };
   for (const [metric, maximum] of Object.entries(accepted)) {
     const budget = envelope.resourceBudgets[metric as keyof typeof accepted];
-    if (budget.state !== 'requested' || budget.limit !== maximum) throw new Error('WORKER_NATIVE_ACCEPTED_LIMIT_MISMATCH');
+    if (budget.state !== 'requested' || budget.limit !== maximum) throw new NativeAdmissionRejected('WORKER_NATIVE_ACCEPTED_LIMIT_MISMATCH');
   }
   const claimRemaining = Date.parse(envelope.claim.expiresAt) - started.getTime();
   if (started.getTime() < Date.parse(envelope.claim.claimedAt) || claimRemaining <= 0
-    || started.getTime() >= Date.parse(envelope.queueDeadline)) throw new Error('WORKER_NATIVE_CLAIM_NOT_ACTIVE');
+    || started.getTime() >= Date.parse(envelope.queueDeadline)) throw new NativeAdmissionRejected('WORKER_NATIVE_CLAIM_NOT_ACTIVE');
   return { ...limits, timeoutMs: Math.min(limits.timeoutMs, claimRemaining) };
 }

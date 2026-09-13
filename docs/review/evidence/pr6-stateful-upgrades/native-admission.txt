@@ -1,0 +1,14 @@
+✔ new-admission rejection persists no accepted work and cannot block historical receipt replay (920.834159ms)
+✔ real writer SIGKILL preserves accepted identity, original output and receipt without re-admission (1749.351853ms)
+✔ real writer SIGKILL preserves sealed identity, original output and receipt without re-admission (2015.955614ms)
+✔ journal binds the full envelope and reserves retained disk before admitting output (662.483375ms)
+✔ process archive verifies original output and immutable completion time before receipt construction (557.119952ms)
+✔ busy live attempt reports retryable contention without changing its durable identity (6500.759839ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13563.078648

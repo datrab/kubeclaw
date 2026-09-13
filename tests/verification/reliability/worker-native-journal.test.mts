@@ -17,6 +17,25 @@ const limits = { maximumRecords: 32, maximumStateBytes: 262144, maximumTotalByte
 const artifact = { artifactId: 'input:journal-test', type: 'prism-engine-input', mediaType: 'application/json',
   contentDigest: `sha256:${'1'.repeat(64)}`, sizeBytes: 2, storageUrl: 'https://control.example/input' };
 
+test('new-admission rejection persists no accepted work and cannot block historical receipt replay', async () => {
+  const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'native-journal-admission-'));
+  const journal = new NativeAttemptJournal(path.join(parent, 'journal'), limits);
+  const envelope = prismNativeAttempt('render', artifact, 'admission-precondition');
+  const reject = () => { throw new Error('EXPIRED_NEW_ADMISSION'); };
+  try {
+    await assert.rejects(journal.withAttempt(envelope, async () => assert.fail('rejected work entered'), reject), /EXPIRED_NEW_ADMISSION/);
+    assert.equal(await journal.hasAttempt(envelope), false);
+    const result = await journal.withAttempt(envelope, async context => journal.seal(envelope,
+      interruptedNativeWorkerResult(envelope, new Date(context.acceptedAt), 'TEST_NOT_LAUNCHED', null, true)));
+    const reopened = new NativeAttemptJournal(path.join(parent, 'journal'), limits);
+    const replay = await reopened.withAttempt(envelope, async context => {
+      assert.equal(context.newlyAccepted, false);
+      return reopened.readResult(envelope);
+    }, reject);
+    assert.deepEqual(replay, result);
+  } finally { await fs.rm(parent, { recursive: true, force: true }); }
+});
+
 for (const mode of ['accepted', 'sealed']) {
   test(`real writer SIGKILL preserves ${mode} identity, original output and receipt without re-admission`, { timeout: 20000 }, async () => {
     const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'native-journal-crash-'));
