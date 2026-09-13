@@ -1,6 +1,8 @@
 # Redis durability implementation checkpoint
 
-Partial implementation for IFR-11-001; not yet closed. The checked-in policy now
+Historical partial checkpoint for IFR-11-001. The later local closure and
+complete migration procedure are in `pr6-redis-migration-closure.md`.
+The checked-in policy now
 sets `appendonly yes`, `appendfsync always`, no fsync suspension during rewrite,
 `aof-load-truncated no`, and `maxmemory-policy noeviction`. Memory admission is
 1 GiB with a 4 GiB container limit to leave substantial allocator, connection and

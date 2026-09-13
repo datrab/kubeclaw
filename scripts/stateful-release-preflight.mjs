@@ -16,6 +16,15 @@ function immutableSpec(workload) {
     } })) };
 }
 
+function requireMountedClaims(desired, claims) {
+  for (const volume of desired.spec.template.spec.volumes ?? []) {
+    const name = volume.persistentVolumeClaim?.claimName;
+    if (name && !claims.some(claim => claim.metadata.name === name && claim.status?.phase === 'Bound')) {
+      throw new Error('STATEFUL_BOUND_PVC_REQUIRED');
+    }
+  }
+}
+
 export function requireCompatibleStatefulRelease(existing, desired, claims, actualVersion, expectedVersion) {
   if (!desired || desired.kind !== 'StatefulSet') throw new Error('STATEFUL_DESIRED_WORKLOAD_REQUIRED');
   if (!existing) {
@@ -27,6 +36,7 @@ export function requireCompatibleStatefulRelease(existing, desired, claims, actu
   }
   if (actualVersion !== expectedVersion) throw new Error('STATEFUL_VERSION_MIGRATION_REQUIRED: back up, restore into fresh compatible storage and verify before switching clients');
   const desiredClaims = desired.spec.volumeClaimTemplates ?? [];
+  requireMountedClaims(desired, claims);
   for (const claim of desiredClaims) {
     const name = `${claim.metadata.name}-${desired.metadata.name}-0`;
     const actual = claims.find(value => value.metadata.name === name);
@@ -61,22 +71,26 @@ function runtimeVersion(name, namespace, workload) {
   return kube(namespace, ['exec', target, '--', 'redis-server', '--version']).match(/\bv=(\d+\.\d+\.\d+)\b/)?.[1] ?? null;
 }
 
-export function preflightStatefulRelease(name, namespace, archive, values, helm = 'helm') {
+export function preflightStatefulRelease(name, namespace, archive, values, helm = 'helm', release = name) {
   if (!['redis', 'postgresql'].includes(name) || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(namespace)) throw new Error('STATEFUL_PREFLIGHT_IDENTITY_INVALID');
+  if (!/^[a-z0-9](?:[a-z0-9-]{0,51}[a-z0-9])?$/.test(release)) throw new Error('STATEFUL_PREFLIGHT_RELEASE_INVALID');
   verifyInfrastructureChart(name, archive);
-  const desired = bindInfrastructureImages(name, loadAll(renderInfrastructureChart(name, name, namespace, archive, values, helm, true))
+  const desired = bindInfrastructureImages(name, loadAll(renderInfrastructureChart(name, release, namespace, archive, values, helm, true))
     .filter(Boolean)).find(value => value.kind === 'StatefulSet');
   if (!desired) throw new Error('STATEFUL_DESIRED_WORKLOAD_REQUIRED');
   const prior = kube(namespace, ['get', 'statefulset', desired.metadata.name, '--ignore-not-found', '-o', 'json']);
   const existing = prior.trim() ? JSON.parse(prior) : null;
   const prefixes = (desired.spec.volumeClaimTemplates ?? []).map(claim => `${claim.metadata.name}-${desired.metadata.name}-`);
+  const namedClaims = (desired.spec.template.spec.volumes ?? []).map(volume => volume.persistentVolumeClaim?.claimName).filter(Boolean);
   const claims = JSON.parse(kube(namespace, ['get', 'pvc', '-o', 'json'])).items.filter(claim =>
-    claim.metadata.labels?.['app.kubernetes.io/instance'] === name || prefixes.some(prefix => claim.metadata.name.startsWith(prefix)));
+    namedClaims.includes(claim.metadata.name) || claim.metadata.labels?.['app.kubernetes.io/instance'] === release
+      || prefixes.some(prefix => claim.metadata.name.startsWith(prefix)));
   const version = existing ? runtimeVersion(name, namespace, desired.metadata.name) : null;
   return requireCompatibleStatefulRelease(existing, desired, claims, version, infrastructureChart(name).appVersion);
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  if (process.argv.length !== 6) throw new Error('Usage: stateful-release-preflight.mjs PROFILE NAMESPACE VERIFIED_CHART VALUES');
-  console.log(JSON.stringify(preflightStatefulRelease(...process.argv.slice(2))));
+  if (![6, 7].includes(process.argv.length)) throw new Error('Usage: stateful-release-preflight.mjs PROFILE NAMESPACE VERIFIED_CHART VALUES [RELEASE]');
+  const [name, namespace, archive, values, release] = process.argv.slice(2);
+  console.log(JSON.stringify(preflightStatefulRelease(name, namespace, archive, values, 'helm', release ?? name)));
 }

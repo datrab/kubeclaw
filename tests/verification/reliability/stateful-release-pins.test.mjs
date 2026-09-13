@@ -40,3 +40,20 @@ test('Redis policy refuses a restart-based RDB-to-AOF conversion or implicit ded
   requireRedisAofPolicy(policy);
   for (const key of Object.keys(policy)) assert.throws(() => requireRedisAofPolicy({ ...policy, [key]: 'different' }), /REDIS_DURABILITY_MIGRATION_REQUIRED/u);
 });
+
+test('Redis migration release renders independently and an explicitly restored PVC must remain bound', () => {
+  const archive = prepareInfrastructureRelease('redis', 'redis-next', 'stateful-test', 'my-values/infra/redis-values.yaml', helm);
+  const manifests = loadAll(renderInfrastructureChart('redis', 'redis-next', 'stateful-test', archive,
+    'my-values/infra/redis-values.yaml', helm, true)).filter(Boolean);
+  const workload = manifests.find(value => value.kind === 'StatefulSet');
+  assert.equal(workload.metadata.name, 'redis-next-master');
+  assert.equal(workload.metadata.labels['app.kubernetes.io/instance'], 'redis-next');
+  const restored = structuredClone(workload);
+  restored.spec.volumeClaimTemplates = [];
+  restored.spec.template.spec.volumes.push({ name: 'restored-data', persistentVolumeClaim: { claimName: 'redis-restored' } });
+  const version = infrastructureChart('redis').appVersion;
+  assert.throws(() => requireCompatibleStatefulRelease(restored, restored, [], version, version), /BOUND_PVC_REQUIRED/);
+  const claims = [{ metadata: { name: 'redis-restored' }, status: { phase: 'Bound' } }];
+  assert.equal(requireCompatibleStatefulRelease(restored, restored, claims, version, version).action, 'compatible-upgrade');
+  assert.throws(() => requireCompatibleStatefulRelease(null, restored, claims, null, version), /ORPHANED_PVC_RESTORE_REQUIRED/);
+});

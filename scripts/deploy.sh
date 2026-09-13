@@ -56,6 +56,7 @@
 #   KUBECLAW_RUN_SECRET_SETUP      auto|true|false for setup/all (default: auto)
 #   KUBECLAW_WORKSPACE_PROMPT      auto|true|false (default: auto)
 #   KUBECLAW_DEPLOY_POSTGRESQL    true|false (default: true)
+#   REDIS_RELEASE / REDIS_VALUES_FILE  Selected Redis release and values (migration keeps the old release intact)
 #   KUBECLAW_DEPLOY_QDRANT        true|false (default: true)
 #   KUBECLAW_DEPLOY_LITELLM       true|false (default: true)
 #   LITELLM_NODE_PORT             LiteLLM Service NodePort (default: 30050)
@@ -71,6 +72,8 @@ REPO_DIR="$(dirname "$SCRIPT_DIR")"
 CHART_DIR="$REPO_DIR/charts/kubeclaw"
 VALUES_DIR="$REPO_DIR/my-values"
 INFRA_DIR="$VALUES_DIR/infra"
+REDIS_RELEASE="${REDIS_RELEASE:-redis}"
+REDIS_VALUES_FILE="${REDIS_VALUES_FILE:-$INFRA_DIR/redis-values.yaml}"
 PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE="/etc/kubeclaw/production-receipt-authority.pub"
 
 NAMESPACE_WAS_SET="${NAMESPACE+x}"
@@ -1096,8 +1099,8 @@ ensure_tailscale_oauth_secret() {
 
 cmd_infra() {
   local qdrant_chart="" redis_chart postgresql_chart="" postgresql_recovery_manifests=""
-  redis_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" redis redis "$NAMESPACE" "$INFRA_DIR/redis-values.yaml")"
-  node "$REPO_DIR/scripts/stateful-release-preflight.mjs" redis "$NAMESPACE" "$redis_chart" "$INFRA_DIR/redis-values.yaml"
+  redis_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" redis "$REDIS_RELEASE" "$NAMESPACE" "$REDIS_VALUES_FILE")"
+  node "$REPO_DIR/scripts/stateful-release-preflight.mjs" redis "$NAMESPACE" "$redis_chart" "$REDIS_VALUES_FILE" "$REDIS_RELEASE"
   if component_enabled "$KUBECLAW_DEPLOY_POSTGRESQL"; then
     postgresql_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" postgresql postgresql "$NAMESPACE" "$INFRA_DIR/postgresql-values.yaml")"
     node "$REPO_DIR/scripts/stateful-release-preflight.mjs" postgresql "$NAMESPACE" "$postgresql_chart" "$INFRA_DIR/postgresql-values.yaml"
@@ -1140,10 +1143,10 @@ cmd_infra() {
   fi
 
   header "Infrastructure: Redis"
-  helm upgrade --install redis "$redis_chart" \
+  helm upgrade --install "$REDIS_RELEASE" "$redis_chart" \
     --post-renderer "$REPO_DIR/scripts/infrastructure-image-renderer.mjs" --post-renderer-args redis \
     --namespace "$NAMESPACE" \
-    --values "$INFRA_DIR/redis-values.yaml" \
+    --values "$REDIS_VALUES_FILE" \
     --wait --timeout 120s
   log "Redis deployed"
 
@@ -2764,7 +2767,7 @@ delete_manifested_resource_if_present() {
 }
 
 remove_destructive_infra() {
-  for release in qdrant postgresql redis; do
+  for release in qdrant postgresql "$REDIS_RELEASE"; do
     uninstall_helm_release_if_present "$release"
   done
 

@@ -1,7 +1,11 @@
 # Aktuelle Übergabe PR #6
 
-Stand der Wiederaufnahme am 2026-09-13: **138/154 lokal verifiziert, 16 unvollständig**.
-Das Register `register.json` enthält 2 teilweise implementierte, 3 in Bearbeitung
+Redis IFR-11-001 lokal abgeschlossen: echte Versions-/RDB-AOF-Migration,
+Crash-/Dedup-/OOM-Prüfung und vier Helm-/PVC-Gates bestanden.
+[Abschluss und Live-Grenzen](implementation/pr6-redis-migration-closure.md).
+
+Stand der Wiederaufnahme am 2026-09-13: **139/154 lokal verifiziert, 15 unvollständig**.
+Das Register `register.json` enthält 2 teilweise implementierte, 2 in Bearbeitung
 und 11 offene Findings. PCR-PRISM-WORKER-002 ist gemäß D12 lokal geschlossen; separate Live-Abnahme offen.
 
 ## Gesicherte Arbeit

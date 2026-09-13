@@ -5014,9 +5014,9 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "in Bearbeitung",
+      "status": "verifiziert",
       "implementation_commit": "905edf06721b02558b443b676432993c56b201c1",
-      "verification_status": "Teilpfad lokal verifiziert; Finding offen",
+      "verification_status": "Lokal vollständig gemäß D12; separate Kubernetes-/CSI-/Power-loss-Abnahme durch Auftraggeber",
       "verification_evidence": [
         {
           "report": "implementation/pr6-redis-durability.md",
@@ -5028,6 +5028,11 @@
           "raw": "../evidence/pr6-stateful-upgrades/pins.txt",
           "implementation_commit": "8d47764b7b276c783f312198d6987b9197e593e4",
           "summary": "Redis/PostgreSQL Chart-/OCI-/Imagehashes zentral gebunden; echte install/upgrade-Helm-Render und Versionsgenerator bestanden. Tatsächlicher StatefulSet/PVC-/Version-/Redis-AOF-Preflight vor Mutationen; großzügigere PostgreSQL-Budgets. Vollständige Daten-/Storage-/Cutovermigration bleibt offen."
+        },
+        {
+          "report": "implementation/pr6-redis-migration-closure.md",
+          "raw": "../evidence/pr6-redis-migration/",
+          "summary": "Echte Redis-7.2.7-zu-8.10.1-RDB/AOF-Migration und AOF-Neustart erhalten Streams, Pending-Consumer und absolute Dedup-TTL; Original-Lua-Retry ohne Duplikat. Crash/OOM-Gate und vier gepinnte Helm-/PVC-Tests bestanden. Vollständige frische Release-/PVC-Cutover- und Rollbackprozedur dokumentiert."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/redis.md",
@@ -5035,7 +5040,7 @@
       "source_finding_text": "## Befund IFR-11-001\n**Mittel; begründeter Verdacht.** Auslöser: größerer Stream-/Dedup-Key-Bestand, OOM oder Neustart. Werte setzen 256Mi Containerlimit, aber keine explizite maxmemory-/Eviction-/Persistenzpolitik. ACK/Dedup beruhen auf Redis-Zustand; Verlust von Dedup-Keys kann erneute Veröffentlichung erlauben, Stream-Trimming kann alte Events entfernen. Persistente 2Gi allein garantieren keine Dauerhaftigkeit jedes ACK.\n\nUrsachenbehebung: tatsächliche Chartversion pinnen und Redis-Dauerhaftigkeits-/Evictionvertrag passend zu den Verbrauchern ausdrücklich setzen, RAM-/Stream-/Payloadbudget ableiten, Wiederveröffentlichung als Wiederholungsfall behandeln. Echter Test: realer Redis mit gerenderten Einstellungen, verlorenes ACK, SIGKILL/Neustart, maxmemory-Grenze und Wiederaufnahme; Events/Dedup-Fenster kontrollieren.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Maintained Image und kompatiblen Chart binden; sichere Migration der bestehenden PVC-/StatefulSet-Konfiguration vorbereiten.",
+      "next_action": "Separate Live-Abnahme gemäß docs/operations/redis-migration.md; keine weiteren lokalen Implementierungsschritte für IFR-11-001.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -5620,10 +5625,10 @@
     }
   ],
   "implementation_branch": "fix/remediation-foundations-20260909",
-  "updated_at": "2026-09-13T19:08:29.775784+00:00",
+  "updated_at": "2026-09-13T21:04:39.474821Z",
   "progress_counts": {
-    "verifiziert": 138,
-    "in Bearbeitung": 3,
+    "verifiziert": 139,
+    "in Bearbeitung": 2,
     "implementiert": 2,
     "offen": 11
   },

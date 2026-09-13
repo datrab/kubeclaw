@@ -45,10 +45,14 @@ Prepare a separate migration with these reviewable inputs:
 5. Required node/storage capacity for both source and destination during the
    transition, plus a measured backup age and recovery duration.
 
-The preflight is implemented; a complete automated migration/cutover workflow,
-off-node backup policy and provider-specific PVC expansion verification remain
-tracked in IFR-11-001, IFR-12-001, IFR-16-001, IFR-24-001 and IFR-26-001. A blocked
-unsafe upgrade is not recorded as a completed migration.
+Redis now has a tested [offline data migration and explicit cutover procedure](redis-migration.md).
+It uses a fresh release/PVC and preserves the original source, avoiding a
+provider-specific in-place expansion. `REDIS_RELEASE` and `REDIS_VALUES_FILE`
+select the new release for subsequent normal deployment and teardown. Role
+endpoint values must select the same destination before clients resume.
+PostgreSQL's complete version/storage cutover, common off-node backup policy and
+provider capacity remain tracked separately in IFR-24-001, IFR-26-001 and
+IFR-16-001. A blocked unsafe upgrade alone is not a completed migration.
 
 ## Local verification
 
