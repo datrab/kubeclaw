@@ -105,7 +105,7 @@ async function collectProcess(child: ChildProcessWithoutNullStreams, lease: Nati
     close();
   };
   const output = captureNativeWorkerOutput(child, limits.maximumOutputBytes, stop, outputCapture);
-  const control = startNativeProcessControl(child, controlOptions, stop, limits.closeTimeoutMs);
+  const control = startNativeProcessControl(child, controlOptions, stop, limits.closeTimeoutMs, lease.launchAuthority());
   let disposeCancellation: (() => void) | undefined;
   const abort = () => {
     if (closing || disposeCancellation) return;

@@ -2,7 +2,7 @@ export { WorkerAttemptExecutor } from '../worker/attempt-executor.ts';
 export { LocalWorkerRuntime } from '../worker/local-runtime.ts';
 export { NativeWorkerResourceScope } from '../worker/native-resource-scope.ts';
 export { NativeWorkerOwnership, NativeWorkerOwnershipLease } from '../worker/native-worker-ownership.ts';
-export type { NativeWorkerOwnershipOptions } from '../worker/native-worker-ownership.ts';
+export type { NativeWorkerOwnershipOptions, NativeWorkerLaunchAuthority, NativeWorkerLaunchCommand } from '../worker/native-worker-ownership.ts';
 export { NativeWorkerResourcePool } from '../worker/native-resource-pool.ts';
 export type { NativeWorkerPoolLimits } from '../worker/native-resource-pool.ts';
 export { NativeWorkerCapacityExceeded } from '../worker/resource-reservations.ts';

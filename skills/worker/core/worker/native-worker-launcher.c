@@ -4,6 +4,7 @@
 #include <grp.h>
 #include <linux/magic.h>
 #include <limits.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -45,6 +46,12 @@ static void scope_name(const char *value) {
 int main(int argc, char **argv) {
   if (argc < 5 || argv[1][0] != '/' || argv[4][0] != '/') fail("WORKER_NATIVE_LAUNCH_ARGUMENTS_INVALID");
   if (getuid() != 0 || geteuid() != 0) fail("WORKER_NATIVE_SUPERVISOR_IDENTITY_REQUIRED");
+  const char *parent = getenv("KUBECLAW_NATIVE_SUPERVISOR_PID");
+  if (!parent) fail("WORKER_NATIVE_LAUNCH_PARENT_REQUIRED");
+  unsigned int supervisor = identity(parent);
+  if (supervisor > INT_MAX || prctl(PR_SET_PDEATHSIG, SIGKILL) || getppid() != (pid_t)supervisor) {
+    fail("WORKER_NATIVE_LAUNCH_PARENT_LOST");
+  }
   uid_t uid = identity(argv[2]);
   gid_t gid = identity(argv[3]);
   scope_name(argv[1]);
@@ -67,6 +74,11 @@ int main(int argc, char **argv) {
       || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) fail("WORKER_NATIVE_LAUNCH_DROP_PRIVILEGE_FAILED");
   if (getuid() != uid || geteuid() != uid || getgid() != gid || getegid() != gid) {
     fail("WORKER_NATIVE_LAUNCH_PRIVILEGE_RETAINED");
+  }
+  /* Credential changes clear PDEATHSIG. Re-arm and check the original parent
+     again, closing the death race before any trusted role code executes. */
+  if (prctl(PR_SET_PDEATHSIG, SIGKILL) || getppid() != (pid_t)supervisor) {
+    fail("WORKER_NATIVE_LAUNCH_PARENT_LOST");
   }
   execv(argv[4], &argv[4]);
   fail("WORKER_NATIVE_LAUNCH_EXEC_FAILED");

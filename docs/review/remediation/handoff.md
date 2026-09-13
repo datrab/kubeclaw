@@ -1,33 +1,43 @@
-# Übergabe des ursprünglichen Planungsstands
+# Aktuelle Übergabe PR #6
 
-Aktueller Folgecheckpoint: **131 lokal verifiziert / 3 teilweise / 1 in Bearbeitung / 19 offen**. Von den zuletzt angefragten7 sind3 abgeschlossen;4 bleiben. SDK-Nachweis: implementation/pr6-sdk-local-verification.md. [Risiko-/Registry-Nachweise](implementation/pr6-risk-and-registry.md). Ältere Zähler unten sind historische Stände.
+Stand der Wiederaufnahme am 2026-09-13: **137/154 lokal verifiziert, 17 unvollständig**.
+Das Register `register.json` enthält 3 teilweise implementierte, 3 in Bearbeitung
+und 11 offene Findings. Keine zusätzliche Finding-Schließung in diesem Checkpoint.
 
-Aktueller Stand nach D12 (2026-09-12): **128 lokal verifiziert / 5 teilweise / 2 in Bearbeitung / 19 offen**. Von den39 sind34 lokal abgeschlossen. Live-Abnahmen folgen separat durch den Auftraggeber nach Open-Sourcing. Maßgeblich sind [D12](decisions.md#d12--lokaler-abschluss-und-separate-live-abnahme), [Einzelbewertung](implementation/pr6-local-acceptance.md) und [Register](register.json). Ausschließlich im bestehenden PR #6 und dessen Branch weiterarbeiten; frühere Anweisungen zu weiteren Fixbranches gelten nicht. Die folgenden älteren Stände bleiben historischer Verlauf.
+## Gesicherte Arbeit
 
-**Historischer Planungscheckpoint. Die Umsetzung läuft inzwischen; aktueller Stand und nächste Schritte stehen in [progress.md](progress.md) und register.json.**
+Prism verwendet ausschließlich den nativen V3-Ausführungspfad; Details und
+historische Testnachweise in `implementation/pr6-prism-single-runtime.md`.
 
-## Gespeicherter Stand
+Die drei bei Wiederaufnahme uncommitteten Worker-Dateien wurden geprüft und die
+Start-/Abbruchgrenze weiter bearbeitet. Der Supervisor kann zusätzliche Starts
+über die an den Attempt gebundene Berechtigung besitzen. Alle gestarteten Helfer
+werden vor finaler Scope-Bereinigung beendet und abgewartet, auch vor ihrem
+Cgroup-Beitritt. Der originale C-Launcher bindet sich an den erwarteten
+Supervisor-PID und beendet sich bei dessen Tod; nach dem UID-Wechsel wird die
+Elternbindung erneut gesetzt und geprüft.
 
-- D01–D11 halten die bestätigten Produkt-/Architekturentscheidungen einschließlich Nutzerkorrekturen fest.
-- 154/154 kanonische Kennungen sind im Register enthalten: 103 Pipeline, 34 Infrastruktur, 17 zusätzliche Traces. Jede besitzt genau ein primäres Arbeitspaket und eine commitfeste Originalquelle.
-- 14 Arbeitspakete mit Integrationsabhängigkeiten und Abnahmekriterien. Original-Findingabschnitte in register.json bewahren die detaillierten Auslöser, Ursachenbehebung und Verifikationsvorschläge; Beziehungen markieren gemeinsame Ursachen ohne Verlust der Kennungen.
-- Alle Findings weiterhin offen. Keine funktionale Implementierung und keine neuen Softwaretests erfolgt. Planungsprüfung steht in validation.md.
+Lokale Nachweise: `implementation/pr6-launch-ownership-checkpoint.md`.
 
-## Konkreter nächster Arbeitsschritt
+## Exakter nächster Schritt
 
-Für einen gesonderten Umsetzungsauftrag aktuellen main-/Fixbranchstand erneut prüfen, danach WP02 mit `PCR-STATE-002` (atomare Sperrenübernahme) und `PCR-STATE-001` (Objektbesitz im Journal) beginnen. Die Originalberichte enthalten echte Mehrprozess-/Mutationsnachweise. Aktuellen Fehler mit Originalimplementierung bestätigen, gemeinsame Locknutzer und Dateisystemvoraussetzungen lesen, kleine Ursachenbehebung plus echte Regression und Gegenprüfung erstellen. Anschließend Effect-/Replay-/Recoveryabhängigkeiten abarbeiten.
+Busters neuen Attempt-Host, die eingeschränkte rollenbezogene Startpolitik und
+den dauerhaft gebundenen Fixture-Lebenszyklus vollständig mit dem Runner
+verbinden. Der aktuelle Buster-Runner verwendet weiterhin V1/LocalWorkerRuntime;
+der Startberechtigungsbaustein allein ersetzt ihn nicht. Capabilityarbeit und
+Brokerarbeit müssen vollständig innerhalb derselben Attempt-Ressourcengrenze
+bleiben. Anschließend den alten Runner, File-Capability-Start und ersetzte
+Samplingpfade löschen; keine dauerhaften Fallbacks hinzufügen.
 
-Parallel kann WP01 Verträge/Registry und WP11/WP12 voneinander getrennte Build-/Berechtigungsbereiche bearbeiten. Keine parallelen unkoordinierten Änderungen an gemeinsamer Core-/Worker-/Remediationlogik. Noch kein Subagent hat in diesem Planungsauftrag ein Implementierungspaket übernommen.
+Danach die übrigen Worker-/Retention- und Infrastrukturfindings anhand der
+Originalbefunde im Register schließen. Die bestehende Zeile
+PCR-PRISM-WORKER-002 muss gegen den neueren Prism-V3-Code neu bewertet werden;
+ihr alter next_action-Text beschreibt noch den historischen Parent-CPU-Pfad.
 
-## Noch offene Voraussetzungen
+## Arbeitsregeln
 
-- Verfügbare Node-/Python-/Go-/Helm-/Browser-/Containerwerkzeuge zu Beginn des jeweiligen Pakets prüfen; historische Testfehlschläge oder fehlende Werkzeuge sind keine aktuelle Messung.
-- Echte Clawdeck-Schnittstelle, Redis/PostgreSQL/Prism/Agentdienste und deren Zugänge für End-to-End-Nachweise erforderlich; keine erfundenen Ersatzempfänger als bestandene Integration.
-- Kubernetes/Tailscale/Hostkapazität/Paperless-Abhängigkeiten sowie unabhängiger Recoveryzugang für WP10/WP12/WP13 erheben. Live-Cutover, Restoreexperimente und Deployment sind hier nicht autorisiert.
-- Cilium-Zusatzstand separat vergleichen. Keine Übernahme eines anderen Branches allein aufgrund des Befundlinks.
-- Die automatische Loglöschung ist ausdrücklich verworfen. Manuelle Bereinigung und Kapazitätsgrenzen müssen mit langlebigem Ausführungszustand und Clawdeck vereinbar sein; nicht einfach alle Cleanupmechanismen abschalten.
-- Unaufgelöste Kurzreferenzen in register.json sind ehrlich markiert. Vor konkreter Codeänderung im Kontext des vollständigen Eigentümerberichts auflösen; keine erfundenen Permalinks.
-
-## Fortschritt bei der Umsetzung
-
-Nach jeweils drei abgeschlossenen Findings oder spätestens zehn Minuten kurz melden: erledigt/154, aktuelles Paket, Auffälligkeiten/Blocker und Subagentfortschritt. Auf solche Fortschrittsmeldungen keine Antwort abwarten. Erkenntnisse und Belege fortlaufend im Repository sichern; vor jeder Remoteaktualisierung Branchdrift prüfen.
+Im bestehenden Branch `fix/remediation-foundations-20260909` und PR #6 arbeiten.
+D12: vollständige Implementierung plus ausreichende echte lokale Tests reichen
+zum lokalen Abschluss; Live-Abnahme folgt separat durch den Auftraggeber.
+Keine Deployments, kein Merge und keine History-Bereinigung in dieser Fortsetzung.
+Fortschritt nach überprüften Teilschritten sichern, PR und Register synchron halten.

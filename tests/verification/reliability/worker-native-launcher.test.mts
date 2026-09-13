@@ -25,7 +25,9 @@ test('compiled original launcher refuses ordinary filesystems and cannot execute
     await fs.mkdir(ordinaryScope);
     for (const target of [ordinaryScope, '/sys/fs/cgroup']) {
       const result = spawnSync(binary, [target, '1000', '1000', process.execPath, '-e',
-        'require("node:fs").writeFileSync(process.argv[1], "executed")', sentinel], { encoding: 'utf8' });
+        'require("node:fs").writeFileSync(process.argv[1], "executed")', sentinel], {
+        encoding: 'utf8', env: { ...process.env, KUBECLAW_NATIVE_SUPERVISOR_PID: String(process.pid) },
+      });
       assert.equal(result.status, 125);
       assert.match(result.stderr, /WORKER_NATIVE_(LAUNCH_(SCOPE_INVALID|MEMBERSHIP_INVALID|ATTACH_FAILED)|SUPERVISOR_IDENTITY_REQUIRED)/u);
       await assert.rejects(fs.stat(sentinel), { code: 'ENOENT' });
@@ -33,5 +35,15 @@ test('compiled original launcher refuses ordinary filesystems and cannot execute
     const invalid = spawnSync(binary, [], { encoding: 'utf8' });
     assert.equal(invalid.status, 125);
     assert.match(invalid.stderr, /WORKER_NATIVE_LAUNCH_ARGUMENTS_INVALID/u);
+    for (const parent of [undefined, '0', '2147483648']) {
+      const env = { ...process.env };
+      delete env.KUBECLAW_NATIVE_SUPERVISOR_PID;
+      if (parent !== undefined) env.KUBECLAW_NATIVE_SUPERVISOR_PID = parent;
+      const denied = spawnSync(binary, [ordinaryScope, '1000', '1000', process.execPath, '-e',
+        'require("node:fs").writeFileSync(process.argv[1], "executed")', sentinel], { encoding: 'utf8', env });
+      assert.equal(denied.status, 125);
+      assert.match(denied.stderr, /WORKER_NATIVE_(LAUNCH_(PARENT_REQUIRED|PARENT_LOST|IDENTITY_INVALID)|SUPERVISOR_IDENTITY_REQUIRED)/u);
+      await assert.rejects(fs.stat(sentinel), { code: 'ENOENT' });
+    }
   } finally { await fs.rm(root, { recursive: true, force: true }); }
 });

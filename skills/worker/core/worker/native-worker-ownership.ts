@@ -1,5 +1,6 @@
 import fs from 'node:fs';
-import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
+import { NativeProcessLaunches } from './native-process-launches.ts';
+import type { ChildProcessWithoutNullStreams } from 'node:child_process';
 import { NativeWorkerResourceScope, type NativeWorkerScopeLimits } from './native-resource-scope.ts';
 import type { NativeWorkerResourceObservation } from './native-resource-observation.ts';
 import type { FileWorkerOwnershipStore, WorkerOwnershipIdentity, WorkerOwnershipRecord } from './ownership-store.ts';
@@ -13,6 +14,20 @@ export interface NativeWorkerOwnershipOptions {
   readonly drainTimeoutMs: number;
   readonly maximumActiveScopes?: number;
   readonly poolLimits: NativeWorkerPoolLimits;
+}
+
+/** Constructed by supervisor policy code, never deserialized from a worker request. */
+export interface NativeWorkerLaunchCommand {
+  readonly uid: number;
+  readonly gid: number;
+  readonly executable: string;
+  readonly arguments: readonly string[];
+  readonly cwd: string;
+  readonly environment: NodeJS.ProcessEnv;
+}
+
+export interface NativeWorkerLaunchAuthority {
+  readonly launch: (command: NativeWorkerLaunchCommand) => Promise<ChildProcessWithoutNullStreams>;
 }
 
 function terminal(record: WorkerOwnershipRecord): boolean {
@@ -33,6 +48,8 @@ export class NativeWorkerOwnershipLease {
   #closing = false;
   #launch: Promise<ChildProcessWithoutNullStreams> | undefined;
   #completion: Promise<NativeWorkerResourceObservation> | undefined;
+  #launcher: string | undefined;
+  readonly #launchers = new NativeProcessLaunches();
 
   constructor(scope: NativeWorkerResourceScope, record: WorkerOwnershipRecord, options: NativeWorkerOwnershipOptions,
     settled: (failed: boolean) => void = () => {}) {
@@ -43,21 +60,38 @@ export class NativeWorkerOwnershipLease {
   }
 
   /** Spawn is inside the launch fence; callers never receive a reusable admission path. */
-  launch(command: { launcher: string; uid: number; gid: number; executable: string; arguments: readonly string[];
-    cwd: string; environment: NodeJS.ProcessEnv }, controlPipe = false): Promise<ChildProcessWithoutNullStreams> {
+  launch(command: NativeWorkerLaunchCommand & { readonly launcher: string }, controlPipe = false): Promise<ChildProcessWithoutNullStreams> {
     if (this.#started || this.#closing) return Promise.reject(new Error('WORKER_NATIVE_LAUNCH_FENCED'));
     const input = structuredClone(command);
+    this.#launcher = input.launcher;
     this.#started = true;
     this.#launch = this.#options.store.transition(this.#record, 'running').then(record => {
       this.#record = record;
       if (this.#closing) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
-      const child = spawn(input.launcher, [this.#scope.launcherPath(), String(input.uid), String(input.gid),
-        input.executable, ...input.arguments], { cwd: input.cwd, env: input.environment,
-        stdio: controlPipe ? ['pipe', 'pipe', 'pipe', 'pipe'] : 'pipe' });
-      // Both explicit spawn configurations create all three standard pipes.
-      return child as ChildProcessWithoutNullStreams;
+      return this.#spawn(input, controlPipe);
     });
     return this.#launch;
+  }
+
+  /** Only trusted supervisor callbacks receive this capability. No scope path crosses IPC. */
+  launchAuthority(): NativeWorkerLaunchAuthority {
+    return Object.freeze({ launch: async (command: NativeWorkerLaunchCommand) => {
+      const input = structuredClone(command);
+      if (this.#closing || !this.#started || !this.#launch) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
+      await this.#launch;
+      if (this.#closing || this.#record.phase !== 'running') throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
+      // Check the durable binding before every start. The same launcher attaches
+      // the new process before exec and drops credentials before any role code.
+      this.#scope.observe();
+      return this.#spawn(input, false);
+    } });
+  }
+
+  #spawn(command: NativeWorkerLaunchCommand, controlPipe: boolean): ChildProcessWithoutNullStreams {
+    if (this.#closing || !this.#launcher) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
+    return this.#launchers.spawn(this.#launcher, [this.#scope.launcherPath(), String(command.uid), String(command.gid),
+      command.executable, ...command.arguments], { cwd: command.cwd,
+      env: { ...command.environment, KUBECLAW_NATIVE_SUPERVISOR_PID: String(process.pid) } }, controlPipe);
   }
 
   observe(): NativeWorkerResourceObservation { return this.#scope.observe(); }
@@ -78,6 +112,9 @@ export class NativeWorkerOwnershipLease {
     // A concurrent fsync of the launch fence must settle before the terminal CAS.
     await this.#launch?.catch(() => undefined);
     try {
+      // Include launchers that have not yet joined the cgroup. Reaping these
+      // closes the admission race before the final kernel drain and disposal.
+      await this.#launchers.drain(this.#options.drainTimeoutMs);
       if (this.#record.phase !== 'quiescing' && this.#record.phase !== 'empty') {
         const notLaunched = this.#record.phase === 'allocated' && !this.#started;
         this.#record = await this.#options.store.transition(this.#record, 'quiescing',
