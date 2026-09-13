@@ -44,15 +44,18 @@ export class NativeWorkerOwnershipLease {
 
   /** Spawn is inside the launch fence; callers never receive a reusable admission path. */
   launch(command: { launcher: string; uid: number; gid: number; executable: string; arguments: readonly string[];
-    cwd: string; environment: NodeJS.ProcessEnv }): Promise<ChildProcessWithoutNullStreams> {
+    cwd: string; environment: NodeJS.ProcessEnv }, controlPipe = false): Promise<ChildProcessWithoutNullStreams> {
     if (this.#started || this.#closing) return Promise.reject(new Error('WORKER_NATIVE_LAUNCH_FENCED'));
     const input = structuredClone(command);
     this.#started = true;
     this.#launch = this.#options.store.transition(this.#record, 'running').then(record => {
       this.#record = record;
       if (this.#closing) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
-      return spawn(input.launcher, [this.#scope.launcherPath(), String(input.uid), String(input.gid),
-        input.executable, ...input.arguments], { cwd: input.cwd, env: input.environment, stdio: 'pipe' });
+      const child = spawn(input.launcher, [this.#scope.launcherPath(), String(input.uid), String(input.gid),
+        input.executable, ...input.arguments], { cwd: input.cwd, env: input.environment,
+        stdio: controlPipe ? ['pipe', 'pipe', 'pipe', 'pipe'] : 'pipe' });
+      // Both explicit spawn configurations create all three standard pipes.
+      return child as ChildProcessWithoutNullStreams;
     });
     return this.#launch;
   }

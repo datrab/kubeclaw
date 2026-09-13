@@ -1,0 +1,39 @@
+✔ fixture accepted survives real writer SIGKILL and cannot become a new identity (2611.999188ms)
+✔ fixture teardown survives real writer SIGKILL and cannot become a new identity (2369.206191ms)
+✔ actual fixture files preserve nonterminal readiness, first teardown intent and immutable scope binding (1450.819512ms)
+✔ original Core never-launched receipt closes an unready fixture and remains replayable without invented observations (1278.680541ms)
+✔ retained bytes reserve readiness and receipt space, and corruption is not silently repaired (507.639533ms)
+✔ runtime authority binds the actual kernel boot and cgroup namespace, and rejects stale or writable evidence (8.136821ms)
+✔ actual native Prism CLI refuses invalid runtime and unavailable host prerequisites before durable admission (5088.597082ms)
+✔ actual fourth pipe carries readiness and teardown while original stdin/stdout stay independent (875.658608ms)
+✔ actual child oversized framing is rejected before phase acceptance (791.222354ms)
+✔ actual child truncated framing is rejected before phase acceptance (666.213415ms)
+✔ actual child cumulative framing is rejected before phase acceptance (698.267477ms)
+✔ real host death after readiness cannot produce completion or keep its control channel alive (773.523006ms)
+✔ phase persistence failure stops the actual child and is not hidden by subsequent close (730.537113ms)
+✔ new-admission rejection persists no accepted work and cannot block historical receipt replay (1389.625972ms)
+✔ real writer SIGKILL preserves accepted identity, original output and receipt without re-admission (2312.265762ms)
+✔ real writer SIGKILL preserves sealed identity, original output and receipt without re-admission (2246.022389ms)
+✔ journal binds the full envelope and reserves retained disk before admitting output (693.124005ms)
+✔ process archive verifies original output and immutable completion time before receipt construction (502.516931ms)
+✔ busy live attempt reports retryable contention without changing its durable identity (6509.159532ms)
+✔ concurrent durable reservations converge and survive reopening (309.827025ms)
+✔ caller mutation after reserve starts cannot change persisted identity (128.138275ms)
+✔ metadata lifecycle is fenced and disposed identities cannot execute again (760.435068ms)
+✔ unresolved ownership preserves diagnosis and blocks generation replacement (282.593281ms)
+✔ record quota fails atomically without losing existing ownership (178.670831ms)
+✔ corrupt persisted ownership fails without overwriting the record (118.67169ms)
+✔ abandoned admission preserves replay identity and requires a failure diagnosis (387.41313ms)
+✔ supervisor holds a separate real kernel lock and SIGKILL releases it without erasing reservations (1687.420854ms)
+✔ native recovery rejects ordinary directories before exposing admission or modifying existing ownership (88.258516ms)
+✔ full pending reservations prevent concurrent memory overcommit and return capacity exactly once (4.589798ms)
+✔ Linux-task capacity and scope count independently gate admission without consuming rejected capacity (0.668454ms)
+✔ invalid and near-integer-limit budgets cannot bypass aggregate accounting (1.157158ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15150.654791

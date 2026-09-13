@@ -4,6 +4,8 @@ import type { WorkerOwnershipIdentity } from './ownership-store.ts';
 import type { NativeWorkerResourceObservation } from './native-resource-observation.ts';
 import type { NativeWorkerOutputCapture } from './native-output-spool.ts';
 import { captureNativeWorkerOutput } from './native-process-output.ts';
+import { validateNativeWorkerControlLimits } from './native-control-channel.ts';
+import { startNativeProcessControl, type NativeWorkerProcessControl } from './native-process-control.ts';
 
 export interface NativeWorkerProcessLimits {
   readonly cpuTimeMs: number;
@@ -24,6 +26,7 @@ export interface NativeWorkerProcessOptions {
   readonly input: Uint8Array;
   readonly signal?: AbortSignal;
   readonly outputCapture?: NativeWorkerOutputCapture;
+  readonly control?: NativeWorkerProcessControl;
 }
 
 export interface NativeWorkerProcessResult {
@@ -55,7 +58,12 @@ function budgetFault(observation: NativeWorkerResourceObservation, limits: Nativ
 /** Entire trusted attempt host, including its completion I/O and every descendant. */
 export async function runNativeWorkerProcess(options: NativeWorkerProcessOptions): Promise<NativeWorkerProcessResult> {
   const limits = { ...options.limits };
+  const control = options.control ? { limits: { ...options.control.limits }, run: options.control.run } : undefined;
   validateLimits(limits);
+  if (control) {
+    validateNativeWorkerControlLimits(control.limits);
+    if (typeof control.run !== 'function') throw new Error('WORKER_NATIVE_CONTROL_CONFIG_INVALID');
+  }
   if (options.input.byteLength > limits.maximumInputBytes) throw new Error('WORKER_NATIVE_INPUT_LIMIT');
   const input = Buffer.from(options.input);
   const command = structuredClone(options.command);
@@ -64,8 +72,8 @@ export async function runNativeWorkerProcess(options: NativeWorkerProcessOptions
   let child: ChildProcessWithoutNullStreams | undefined;
   try {
     options.signal?.throwIfAborted();
-    child = await lease.launch(command);
-    return await collectProcess(child, lease, input, limits, options.signal, options.outputCapture);
+    child = await lease.launch(command, control !== undefined);
+    return await collectProcess(child, lease, input, limits, options.signal, options.outputCapture, control);
   } finally {
     // Also stop a launcher interrupted before joining; it has no authority to start later.
     child?.kill('SIGKILL');
@@ -74,7 +82,8 @@ export async function runNativeWorkerProcess(options: NativeWorkerProcessOptions
 }
 
 async function collectProcess(child: ChildProcessWithoutNullStreams, lease: NativeWorkerOwnershipLease,
-  input: Buffer, limits: NativeWorkerProcessLimits, signal?: AbortSignal, outputCapture?: NativeWorkerOutputCapture): Promise<NativeWorkerProcessResult> {
+  input: Buffer, limits: NativeWorkerProcessLimits, signal?: AbortSignal, outputCapture?: NativeWorkerOutputCapture,
+  controlOptions?: NativeWorkerProcessControl): Promise<NativeWorkerProcessResult> {
   let fault: string | null = null;
   let closeTimer: NodeJS.Timeout | undefined;
   let closing: Promise<NativeWorkerResourceObservation> | undefined;
@@ -95,6 +104,7 @@ async function collectProcess(child: ChildProcessWithoutNullStreams, lease: Nati
     close();
   };
   const output = captureNativeWorkerOutput(child, limits.maximumOutputBytes, stop, outputCapture);
+  const control = startNativeProcessControl(child, controlOptions, stop, limits.closeTimeoutMs);
   const abort = () => stop('WORKER_ATTEMPT_CANCELLED');
   child.once('error', () => stop('WORKER_NATIVE_PROCESS_START_FAILED'));
   child.stdin.once('error', () => stop('WORKER_NATIVE_PROCESS_INPUT_FAILED'));
@@ -114,6 +124,7 @@ async function collectProcess(child: ChildProcessWithoutNullStreams, lease: Nati
     close();
     const resources = await closing!;
     await output.flush();
+    await control.finish();
     fault ??= budgetFault(resources, limits);
     if (child.exitCode !== 0 && fault === null) fault = 'WORKER_NATIVE_PROCESS_FAILED';
     return { schemaVersion: 'worker-native-process-result.v1', ...output.snapshot(),
@@ -122,5 +133,6 @@ async function collectProcess(child: ChildProcessWithoutNullStreams, lease: Nati
     clearTimeout(deadline); clearInterval(poll); if (closeTimer) clearTimeout(closeTimer);
     signal?.removeEventListener('abort', abort);
     child.stdin.destroy(); child.stdout.destroy(); child.stderr.destroy();
+    await control.finish();
   }
 }

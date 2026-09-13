@@ -1,0 +1,13 @@
+✔ fixture accepted survives real writer SIGKILL and cannot become a new identity (2111.936528ms)
+✔ fixture teardown survives real writer SIGKILL and cannot become a new identity (1960.014718ms)
+✔ actual fixture files preserve nonterminal readiness, first teardown intent and immutable scope binding (1479.272898ms)
+✔ original Core never-launched receipt closes an unready fixture and remains replayable without invented observations (1164.191725ms)
+✔ retained bytes reserve readiness and receipt space, and corruption is not silently repaired (475.439914ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8255.791836

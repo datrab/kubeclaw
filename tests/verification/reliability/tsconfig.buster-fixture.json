@@ -1,0 +1,5 @@
+{
+  "extends": "../../../skills/worker/core/tsconfig.json",
+  "include": ["buster-fixture-journal.test.mts", "worker-control-channel.test.mts", "../../fixtures/buster-fixture-writer.mts", "../../fixtures/worker-control-child.mts"],
+  "compilerOptions": { "rootDir": "../../.." }
+}

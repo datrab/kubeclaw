@@ -47,3 +47,6 @@ export {
 export type { WorkerPrincipal } from '../worker/trust.ts';
 export { requireNativeWorkerRuntimeIdentity } from '../worker/native-runtime-identity.ts';
 export { requireNativeWorkerSupervisorAuthority, requireNativeWorkerLauncher } from '../worker/native-supervisor-authority.ts';
+export { NativeWorkerControlChannel } from '../worker/native-control-channel.ts';
+export type { NativeWorkerControlLimits } from '../worker/native-control-channel.ts';
+export type { NativeWorkerProcessControl } from '../worker/native-process-control.ts';

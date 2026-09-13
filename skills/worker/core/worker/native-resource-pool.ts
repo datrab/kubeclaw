@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { NativeWorkerResourceScope, type NativeWorkerScopeLimits } from './native-resource-scope.ts';
 import { WorkerResourceReservations } from './resource-reservations.ts';
+import { observeNativeWorkerResources } from './native-resource-observation.ts';
 
 export interface NativeWorkerPoolLimits extends NativeWorkerScopeLimits {
   readonly cpuQuotaMicroseconds: number;
@@ -44,6 +45,13 @@ export class NativeWorkerResourcePool {
         throw new Error(`WORKER_NATIVE_POOL_LIMIT_MISMATCH:${file}`);
       }
     }
+    if (fs.readFileSync(path.join(this.#root, 'cgroup.type'), 'utf8').trim() !== 'domain') {
+      throw new Error('WORKER_NATIVE_POOL_DOMAIN_REQUIRED');
+    }
+    // Readiness must reject missing peak counters or a read-only kill boundary,
+    // before an accepted attempt discovers those prerequisites during allocation.
+    observeNativeWorkerResources(this.#root);
+    fs.accessSync(path.join(this.#root, 'cgroup.kill'), fs.constants.W_OK);
     NativeWorkerResourceScope.inventory(this.#root);
     const after = fs.statSync(this.#root);
     if (after.dev !== this.#device || after.ino !== this.#inode) throw new Error('WORKER_NATIVE_POOL_IDENTITY_CHANGED');
