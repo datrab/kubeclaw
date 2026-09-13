@@ -5041,18 +5041,37 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "9e725b35e0e623708f7f0e26ed120fc6ac60eb68",
+      "verification_status": "lokal verifiziert nach D12; vollständige Image-/Cluster-/LiteLLM-HTTP-Live-Abnahme separat ausstehend",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-postgresql-recovery-checkpoint.md",
+          "raw": "../evidence/pr6-postgresql-recovery/native-crypto.txt",
+          "summary": "Separater vollständiger LiteLLM-Dump-/Restorevertrag mit konfigurierbarem RPO, atomarer Veröffentlichung, Checksum-/Credentialbindung und konservativen Zielprüfungen; tatsächlicher PG18.6-Dump/Restore auf zweitem Server mit 1012 Schema-Spalten, 217 Indizes, originaler Key-/Modellkonfiguration, SQL-Authentifizierung und unveränderter originaler LiteLLM-XSalsa20-/AES-GCM-Entschlüsselung. Zwei echte Helm-Renderfälle einschließlich abweichender Namen/Ports bestehen."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/litellm-postgresql.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-12-001\n**Mittel; offene Frage.** Auslöser: DB-Verlust oder Major-Upgrade mit persistentem Volume. Belege: Values, Installationsblock und fehlender zugeordneter Backup-Pfad im Deployment-Skript. LiteLLM konfiguriert `STORE_MODEL_IN_DB=True`; der gespeicherte Zustand darf daher nicht als verlustfreier Cache betrachtet werden. Ursachenbehebung: Schema-/Version-/Restorevertrag, akzeptierte Datenverlustdauer und separat geprüfte Backups für LiteLLM definieren. Test: echte DB mit repräsentativer LiteLLM-Konfiguration sichern, in kompatiblem frischem DB-Server wiederherstellen und Auth-/Modellkonfiguration prüfen.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Auftraggeber führt die isolierte Image/UID/PVC/Cilium-/CronJob-Abnahme, unabhängigen Kopie-Restore und echten LiteLLM-API-/Budget-/Modelltest nach docs/operations/litellm-postgresql-recovery.md durch. Initiales konfigurierbares Zwei-Stunden-RPO betrieblich bewerten; keine Datenverlustzusage behauptet. Cross-Store/Off-Node bleibt IFR-26-001.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Keine bekannte offene Code-Lücke im engeren Findingumfang. Live-Abnahme, betriebliche RPO-Bewertung und separate Kapazitäts-/Off-Node-Abhängigkeiten bleiben ausdrücklich offen.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-13T08:16:49.479674+00:00",
+        "status": "verifiziert",
+        "rationale": "Separater vollständiger LiteLLM-Dump-/Restorevertrag mit konfigurierbarem RPO, atomarer Veröffentlichung, Checksum-/Credentialbindung und konservativen Zielprüfungen; tatsächlicher PG18.6-Dump/Restore auf zweitem Server mit 1012 Schema-Spalten, 217 Indizes, originaler Key-/Modellkonfiguration, SQL-Authentifizierung und unveränderter originaler LiteLLM-XSalsa20-/AES-GCM-Entschlüsselung. Zwei echte Helm-Renderfälle einschließlich abweichender Namen/Ports bestehen.",
+        "report": "implementation/pr6-postgresql-recovery-checkpoint.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber",
+        "procedure": "docs/operations/litellm-postgresql-recovery.md"
+      }
     },
     {
       "id": "IFR-13-001",
@@ -5597,12 +5616,12 @@
     }
   ],
   "implementation_branch": "fix/remediation-foundations-20260909",
-  "updated_at": "2026-09-13T07:13:40.800990+00:00",
+  "updated_at": "2026-09-13T08:16:49.479674+00:00",
   "progress_counts": {
-    "verifiziert": 136,
+    "verifiziert": 137,
     "in Bearbeitung": 3,
     "implementiert": 3,
-    "offen": 12
+    "offen": 11
   },
   "additional_integration_findings": [
     {

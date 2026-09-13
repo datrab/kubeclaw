@@ -1,5 +1,7 @@
 # Aktueller Umsetzungsstand
 
+Stand 2026-09-13: **137 lokal verifiziert / 17 unvollständig** (3 teilweise implementiert, 3 in Bearbeitung, 11 offen). Neu nach D12 abgeschlossen: IFR-12-001, separate LiteLLM-PostgreSQL-Recovery mit echtem Restore und originaler Crypto-/Konfigurationsprüfung. Code/Nachweise: `9e725b35e0e623708f7f0e26ed120fc6ac60eb68`; [Checkpoint](implementation/pr6-postgresql-recovery-checkpoint.md). Vollständige Image-/Cluster-/API-Live-Abnahme übernimmt der Auftraggeber. Cross-Store-/Off-Node-Recovery und alle vier ursprünglichen Findings bleiben unvollständig. Alle nachfolgenden Zähler sind historische Stände.
+
 Stand 2026-09-13: **136 lokal verifiziert / 18 unvollständig** (3 teilweise implementiert, 3 in Bearbeitung, 12 offen). Neu nach D12 abgeschlossen: IFR-15-001, Prism-Datenbankmigration und Credential-Rollbackgrenze. Code/Nachweise: `8d47764b7b276c783f312198d6987b9197e593e4`; [Checkpoint](implementation/pr6-stateful-upgrade-checkpoint.md). Die vier ursprünglichen Core/Buster/Prism/Observability-Findings bleiben unvollständig. Redis/PostgreSQL-Pins und Upgrade-Preflights sind ergänzt, vollständige Daten-/Storage-Migrationen bleiben offen. Alle nachfolgenden Zähler sind historische Stände.
 
 Aktueller Folgecheckpoint: **131 lokal verifiziert / 3 teilweise / 1 in Bearbeitung / 19 offen**. Von den zuletzt angefragten7 sind3 abgeschlossen;4 bleiben. SDK-Nachweis: implementation/pr6-sdk-local-verification.md. [Risiko-/Registry-Nachweise](implementation/pr6-risk-and-registry.md). Ältere Zähler unten sind historische Stände.
