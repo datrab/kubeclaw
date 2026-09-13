@@ -1093,12 +1093,14 @@ ensure_tailscale_oauth_secret() {
 }
 
 cmd_infra() {
-  local qdrant_chart="" redis_chart postgresql_chart=""
+  local qdrant_chart="" redis_chart postgresql_chart="" postgresql_recovery_manifests=""
   redis_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" redis redis "$NAMESPACE" "$INFRA_DIR/redis-values.yaml")"
   node "$REPO_DIR/scripts/stateful-release-preflight.mjs" redis "$NAMESPACE" "$redis_chart" "$INFRA_DIR/redis-values.yaml"
   if component_enabled "$KUBECLAW_DEPLOY_POSTGRESQL"; then
     postgresql_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" postgresql postgresql "$NAMESPACE" "$INFRA_DIR/postgresql-values.yaml")"
     node "$REPO_DIR/scripts/stateful-release-preflight.mjs" postgresql "$NAMESPACE" "$postgresql_chart" "$INFRA_DIR/postgresql-values.yaml"
+    postgresql_recovery_manifests="$(node "$REPO_DIR/scripts/render-postgresql-recovery.mjs" --preflight "$NAMESPACE" \
+      "$INFRA_DIR/postgresql-recovery.yaml" "$INFRA_DIR/postgresql-values.yaml" "$INFRA_DIR/litellm-deployment.yaml")"
   fi
   if component_enabled "$KUBECLAW_DEPLOY_QDRANT"; then
     qdrant_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" qdrant qdrant "$NAMESPACE" "$INFRA_DIR/qdrant-values.yaml")"
@@ -1151,6 +1153,8 @@ cmd_infra() {
       --values "$INFRA_DIR/postgresql-values.yaml" \
       --wait --timeout 120s
     log "PostgreSQL deployed"
+    printf '%s\n' "$postgresql_recovery_manifests" | kubectl apply -n "$NAMESPACE" -f -
+    log "PostgreSQL scheduled backups and RPO checks configured"
   else
     warn "Skipping PostgreSQL by KUBECLAW_DEPLOY_POSTGRESQL=$KUBECLAW_DEPLOY_POSTGRESQL"
   fi

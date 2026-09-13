@@ -1,0 +1,138 @@
+{
+  "bash": [
+    {
+      "name": "usr/bin/bash",
+      "size": 1268464,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "psql": [
+    {
+      "name": "opt/bitnami/postgresql/bin/psql",
+      "size": 935120,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "pg_dump": [
+    {
+      "name": "opt/bitnami/postgresql/bin/pg_dump",
+      "size": 485624,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "pg_restore": [
+    {
+      "name": "opt/bitnami/postgresql/bin/pg_restore",
+      "size": 247128,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "flock": [
+    {
+      "name": "usr/bin/flock",
+      "size": 36744,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "sha256sum": [
+    {
+      "name": "usr/bin/sha256sum",
+      "size": 49416,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "stat": [
+    {
+      "name": "usr/bin/stat",
+      "size": 103152,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "du": [
+    {
+      "name": "usr/bin/du",
+      "size": 112232,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "timeout": [
+    {
+      "name": "usr/bin/timeout",
+      "size": 45632,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "sync": [
+    {
+      "name": "usr/bin/sync",
+      "size": 45072,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "cut": [
+    {
+      "name": "usr/bin/cut",
+      "size": 53480,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "mktemp": [
+    {
+      "name": "usr/bin/mktemp",
+      "size": 45176,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "date": [
+    {
+      "name": "usr/bin/date",
+      "size": 119384,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "mv": [
+    {
+      "name": "usr/bin/mv",
+      "size": 149816,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "grep": [
+    {
+      "name": "usr/bin/grep",
+      "size": 241480,
+      "link": "",
+      "mode": "0o755"
+    }
+  ],
+  "awk": [
+    {
+      "name": "usr/bin/awk",
+      "size": 0,
+      "link": "gawk",
+      "mode": "0o777"
+    }
+  ],
+  "wc": [
+    {
+      "name": "usr/bin/wc",
+      "size": 53616,
+      "link": "",
+      "mode": "0o755"
+    }
+  ]
+}

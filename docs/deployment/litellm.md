@@ -17,6 +17,13 @@ Use this rendered output for manual installation too; applying the raw Deploymen
 alone does not bind it to the ConfigMap content. Secret rotation still requires
 an explicit operational rollout; secret values are not embedded in annotations.
 
+The managed PostgreSQL deployment also installs the scheduled logical backup
+and age-check job from `my-values/infra/postgresql-recovery.yaml`. Treat this
+database's keys, permissions and stored models as authoritative. The
+[database recovery guide](../operations/litellm-postgresql-recovery.md) covers
+the configured recovery objective, retained encryption keys, isolated restore
+and the separate off-node recovery requirement.
+
 ## Verify
 
 Verify provider health from the gateway namespace before a model-backed run.
