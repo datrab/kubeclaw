@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { validateInfrastructureChartLock } from './infrastructure-chart.mjs';
 
 // Native files remain directly buildable. Only their version fields are generated.
 // Compute and validate every change before writing any file.
@@ -61,10 +62,23 @@ export function versionOutputs(root) {
   };
   replaceOne('scripts/deploy.sh', /^BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="[^"\n]+"$/m,
     `BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${'${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-'}${manifest.imageOverrides?.['buster-runtime']?.BUILDKIT_BASE ?? args.BUILDKIT_BASE}}"`);
-  for (const reference of [manifest.infrastructure?.envoy, ...Object.values(manifest.automation ?? {})]) {
+  for (const reference of [...Object.values(manifest.infrastructure ?? {}), ...Object.values(manifest.automation ?? {})]) {
     if (typeof reference !== 'string' || !/^[a-z0-9./_-]+:[a-zA-Z0-9._-]+@sha256:[a-f0-9]{64}$/.test(reference))
       throw new Error('Infrastructure and automation images require exact tags and digests');
   }
+  for (const name of ['tailscale', 'qdrant']) validateInfrastructureChartLock(manifest.infrastructureCharts?.[name]);
+  for (const [section, key] of [['operatorConfig', 'tailscaleOperator'], ['proxyConfig', 'tailscaleProxy']]) {
+    const reference = manifest.infrastructure[key].match(/^(.+):([^:@]+)@(sha256:[a-f0-9]{64})$/);
+    replaceOne('my-values/infra/tailscale-operator-values.yaml',
+      new RegExp(`^${section}:\\n  image:\\n    repository: [^\\n]+\\n    digest: [^\\n]+`, 'm'),
+      `${section}:\n  image:\n    repository: ${reference[1]}\n    digest: ${reference[3]}`);
+  }
+  const qdrant = manifest.infrastructure.qdrant.match(/^(.+):([^:@]+)@(sha256:[a-f0-9]{64})$/);
+  replaceOne('my-values/infra/qdrant-values.yaml', /^  repository: [^\n]+$/m, `  repository: ${qdrant[1]}`);
+  replaceOne('my-values/infra/qdrant-values.yaml', /^  tag: [^\n]+$/m, `  tag: ${qdrant[2]}`);
+  replaceOne('my-values/infra/qdrant-values.yaml', /^    image: [^\n]+$/m, `    image: ${manifest.infrastructure.qdrantTest}`);
+  replaceOne('my-values/infra/registry-mirror.yaml', /^          image: [^\n]+$/m,
+    `          image: ${manifest.infrastructure.registryMirror}`);
   const envoy = manifest.infrastructure.envoy.match(/^(.+):([^:@]+)@(sha256:[a-f0-9]{64})$/);
   for (const file of ['charts/kubeclaw/values.yaml', 'charts/prism/values.yaml']) {
     replaceOne(file, /^      repository: envoyproxy\/envoy$/m, `      repository: ${envoy[1]}`);

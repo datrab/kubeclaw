@@ -232,7 +232,12 @@ redis:
 
 # -- Qdrant (confidence-weighted vector memory)
 qdrant:
-  url: "http://qdrant.kubeclaw.svc.cluster.local:6333"
+  # Empty selects the Qdrant Service in this release's namespace.
+  url: ""
+  authSecretName: qdrant-auth
+  readOnlyKey: read-only-api-key
+  tlsSecretName: qdrant-tls
+  caKey: ca.crt
 
 # =============================================================================
 # =============================================================================

@@ -75,7 +75,6 @@ NAMESPACE_WAS_SET="${NAMESPACE+x}"
 NAMESPACE="${NAMESPACE:-kubeclaw}"
 TAILSCALE_OPERATOR_NAMESPACE="${TAILSCALE_OPERATOR_NAMESPACE:-tailscale}"
 TAILSCALE_OPERATOR_RELEASE="${TAILSCALE_OPERATOR_RELEASE:-tailscale-operator}"
-TAILSCALE_HELM_REPO="${TAILSCALE_HELM_REPO:-https://pkgs.tailscale.com/helmcharts}"
 TAILSCALE_OAUTH_SECRET_NAME="${TAILSCALE_OAUTH_SECRET_NAME:-operator-oauth}"
 TAILSCALE_VALUES_FILE="${TAILSCALE_VALUES_FILE:-$INFRA_DIR/tailscale-operator-values.yaml}"
 KUBECLAW_WORKSPACE_PROMPT="${KUBECLAW_WORKSPACE_PROMPT:-auto}"
@@ -890,8 +889,7 @@ cmd_setup() {
   header "Step 2: Helm Repos"
 
   add_helm_repo_once bitnami https://charts.bitnami.com/bitnami
-  add_helm_repo_once qdrant https://qdrant.github.io/qdrant-helm
-  add_helm_repo_once tailscale "$TAILSCALE_HELM_REPO"
+  # Tailscale and Qdrant use checked archives from versions.json.
   add_helm_repo_once spiffe "$SPIFFE_HELM_REPO"
   helm repo update >/dev/null
   log "Helm repos ready"
@@ -1014,6 +1012,17 @@ deploy_tailscale_operator() {
     return 0
   fi
 
+  if [[ -n ${TAILSCALE_HELM_REPO:-} ]]; then
+    err "TAILSCALE_HELM_REPO is superseded by the reviewed infrastructureCharts lock in versions.json"
+    return 1
+  fi
+  if [[ ! -f $TAILSCALE_VALUES_FILE ]]; then
+    err "Tailscale values file not found: $TAILSCALE_VALUES_FILE"
+    return 1
+  fi
+  local tailscale_chart
+  tailscale_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" tailscale "$TAILSCALE_OPERATOR_RELEASE" "$TAILSCALE_OPERATOR_NAMESPACE" "$TAILSCALE_VALUES_FILE")"
+
   local secret_status=0
   if ensure_tailscale_oauth_secret "$normalized_mode"; then
     secret_status=0
@@ -1027,15 +1036,8 @@ deploy_tailscale_operator() {
     return "$secret_status"
   fi
 
-  if [[ ! -f $TAILSCALE_VALUES_FILE ]]; then
-    err "Tailscale values file not found: $TAILSCALE_VALUES_FILE"
-    return 1
-  fi
-
-  add_helm_repo_once tailscale "$TAILSCALE_HELM_REPO"
-  helm repo update >/dev/null
-
-  helm upgrade --install "$TAILSCALE_OPERATOR_RELEASE" tailscale/tailscale-operator \
+  helm upgrade --install "$TAILSCALE_OPERATOR_RELEASE" "$tailscale_chart" \
+    --post-renderer "$REPO_DIR/scripts/infrastructure-image-renderer.mjs" --post-renderer-args tailscale \
     --namespace "$TAILSCALE_OPERATOR_NAMESPACE" \
     --create-namespace \
     --values "$TAILSCALE_VALUES_FILE" \
@@ -1091,6 +1093,12 @@ ensure_tailscale_oauth_secret() {
 }
 
 cmd_infra() {
+  local qdrant_chart=""
+  if component_enabled "$KUBECLAW_DEPLOY_QDRANT"; then
+    qdrant_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" qdrant qdrant "$NAMESPACE" "$INFRA_DIR/qdrant-values.yaml")"
+    node "$REPO_DIR/scripts/qdrant-secrets.mjs" check "$NAMESPACE"
+    node "$REPO_DIR/scripts/qdrant-storage-preflight.mjs" "$NAMESPACE" "$qdrant_chart"
+  fi
   if component_enabled "$KUBECLAW_DEPLOY_SPIRE"; then
     header "Infrastructure: SPIFFE/SPIRE workload identity"
     if [[ ! -f $SPIRE_VALUES_FILE ]]; then
@@ -1141,7 +1149,8 @@ cmd_infra() {
 
   if component_enabled "$KUBECLAW_DEPLOY_QDRANT"; then
     header "Infrastructure: Qdrant"
-    helm upgrade --install qdrant qdrant/qdrant \
+    helm upgrade --install qdrant "$qdrant_chart" \
+      --post-renderer "$REPO_DIR/scripts/infrastructure-image-renderer.mjs" --post-renderer-args qdrant \
       --namespace "$NAMESPACE" \
       --values "$INFRA_DIR/qdrant-values.yaml" \
       --wait --timeout 120s
