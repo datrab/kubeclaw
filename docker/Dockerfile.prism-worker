@@ -35,6 +35,8 @@ RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
 
 FROM ${NODE_BASE}
 USER root
+COPY --from=native-launcher /etc/apt/sources.list.d/debian.sources /etc/apt/sources.list.d/debian.sources
+COPY --from=native-launcher /etc/apt/apt.conf.d/99snapshot /etc/apt/apt.conf.d/99snapshot
 WORKDIR /app/prism
 COPY --from=build /build/node_modules /app/prism/node_modules
 COPY --from=build /build/contracts /app/prism/contracts
@@ -45,7 +47,8 @@ COPY --from=native-launcher /native-worker-launcher /usr/local/libexec/kubeclaw-
 ENV PRISM_NATIVE_LAUNCHER=/usr/local/libexec/kubeclaw-native-worker-launcher \
     PRISM_NATIVE_POOL_POLICY_FILE=/etc/kubeclaw/prism-pool.json
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
-RUN node ./node_modules/playwright/cli.js install --with-deps chromium \
+RUN rm -f /etc/apt/sources.list \
+ && node ./node_modules/playwright/cli.js install --with-deps chromium \
  && test -d /ms-playwright \
  && chown -R node:node /app/prism /ms-playwright
 USER node

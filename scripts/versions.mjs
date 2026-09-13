@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { validateInfrastructureChartLock } from './infrastructure-chart.mjs';
+import { validateInfrastructureChartLock } from './infrastructure-chart-lock.mjs';
+import { checkRuntimeToolLocks } from './runtime-tool-locks.mjs';
 
 function validateVersionEntries(entries) {
     for (const [key, value] of Object.entries(entries)) {
@@ -111,6 +112,19 @@ function bindApplicationVersions(manifest, args, replaceOne) {
     replaceOne('scripts/scan-runtime-images.sh', new RegExp(`^readonly ${shellKey}="[^"]+"$`, 'm'), `readonly ${shellKey}="${args[key]}"`);
 }
 
+function bindRuntimeToolInputs(manifest, args, outputs) {
+  const tools = [['RUFF_VERSION', 'ruff'], ['MYPY_VERSION', 'mypy'], ['PIP_AUDIT_VERSION', 'pip-audit']];
+  const requirements = entries => '# Generated from versions.json; use scripts/versions.mjs\n'
+    + entries.map(([name, version]) => `${name}==${version}\n`).join('');
+  const common = tools.map(([key, name]) => [name, args[key]]);
+  outputs.set('docker/python-tools/common.in', requirements(common));
+  outputs.set('docker/python-tools/semgrep-nova.in', requirements([['semgrep', args.SEMGREP_VERSION]]));
+  outputs.set('docker/python-tools/buster.in', requirements([...common,
+    ['semgrep', manifest.imageOverrides['buster-runtime'].SEMGREP_VERSION ?? args.SEMGREP_VERSION]]));
+  outputs.set('docker/go-tools/requirements.json', JSON.stringify(Object.fromEntries(
+    ['GO_VERSION', 'STATICCHECK_VERSION', 'GOVULNCHECK_VERSION', 'GOCYCLO_VERSION'].map(key => [key, args[key]])), null, 2) + '\n');
+}
+
 // Validate all generated version fields before writing any file.
 export function versionOutputs(root) {
   const read = file => fs.readFileSync(path.join(root, file), 'utf8');
@@ -127,6 +141,7 @@ export function versionOutputs(root) {
     `BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${'${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-'}${manifest.imageOverrides?.['buster-runtime']?.BUILDKIT_BASE ?? args.BUILDKIT_BASE}}"`);
   bindInfrastructureVersions(manifest, replaceOne);
   bindApplicationVersions(manifest, args, replaceOne);
+  bindRuntimeToolInputs(manifest, args, outputs);
   return outputs;
 }
 
@@ -141,4 +156,5 @@ export function syncVersions(root, check = true) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   if (process.argv.length !== 3 || !['--check', '--write'].includes(process.argv[2])) throw new Error('Usage: node scripts/versions.mjs --check|--write');
   console.log(JSON.stringify(syncVersions(fileURLToPath(new URL('../', import.meta.url)), process.argv[2] === '--check')));
+  if (process.argv[2] === '--check') console.log(JSON.stringify(checkRuntimeToolLocks()));
 }

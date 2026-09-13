@@ -5,7 +5,8 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { load } from 'js-yaml';
-import { parseInfrastructureOciChart, downloadInfrastructureOciChart } from './infrastructure-oci-chart.mjs';
+import { downloadInfrastructureOciChart } from './infrastructure-oci-chart.mjs';
+import { validateInfrastructureChartLock } from './infrastructure-chart-lock.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const maximumBytes = 32 * 1024 * 1024;
@@ -16,19 +17,6 @@ export function infrastructureChart(name) {
   return validateInfrastructureChartLock(lock);
 }
 
-export function validateInfrastructureChartLock(lock) {
-  if (!lock || !/^[a-z][a-z0-9-]*$/.test(lock.name) || !/^\d+\.\d+\.\d+$/.test(lock.version)
-    || !/^[a-f0-9]{64}$/.test(lock.sha256)) throw new Error('INFRASTRUCTURE_CHART_LOCK_INVALID');
-  if (lock.appVersion !== undefined && !/^\d+\.\d+\.\d+$/.test(lock.appVersion)) throw new Error('INFRASTRUCTURE_CHART_APP_VERSION_INVALID');
-  const url = new URL(lock.url);
-  if (url.protocol === 'oci:') {
-    const { repository } = parseInfrastructureOciChart(lock.url);
-    if (repository.split('/').at(-1) !== lock.name) throw new Error('INFRASTRUCTURE_CHART_URL_INVALID');
-  } else if (url.protocol !== 'https:' || url.username || url.password || url.search || url.hash) {
-    throw new Error('INFRASTRUCTURE_CHART_URL_INVALID');
-  }
-  return Object.freeze(lock);
-}
 
 export function verifyInfrastructureChart(name, file) {
   const lock = infrastructureChart(name);

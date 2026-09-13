@@ -7,6 +7,10 @@
 !docker/Dockerfile.prism-agent
 !docker/nova-tools/
 !docker/nova-tools/**
+!docker/python-tools/
+!docker/python-tools/**
+!docker/go-tools/
+!docker/go-tools/**
 !docker/openclaw-tools/
 !docker/openclaw-tools/**
 !docker/Dockerfile.buster-gateway

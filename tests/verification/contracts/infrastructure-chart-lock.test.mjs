@@ -5,8 +5,8 @@ import path from 'node:path';
 import os from 'node:os';
 import { execFileSync } from 'node:child_process';
 import { loadAll } from 'js-yaml';
-import { infrastructureChart, verifyInfrastructureChart,
-  validateInfrastructureChartLock } from '../../../scripts/infrastructure-chart.mjs';
+import { validateInfrastructureChartLock } from '../../../scripts/infrastructure-chart-lock.mjs';
+import { infrastructureChart, verifyInfrastructureChart } from '../../../scripts/infrastructure-chart.mjs';
 import { prepareInfrastructureRelease } from '../../../scripts/infrastructure-release.mjs';
 import { bindInfrastructureImages } from '../../../scripts/infrastructure-image-renderer.mjs';
 import { requireCompatibleQdrantClaims } from '../../../scripts/qdrant-storage-preflight.mjs';

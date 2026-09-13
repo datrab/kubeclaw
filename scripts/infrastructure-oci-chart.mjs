@@ -4,14 +4,9 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
+import { parseInfrastructureOciChart } from './infrastructure-chart-lock.mjs';
+
 const maximumBytes = 32 * 1024 * 1024;
-export function parseInfrastructureOciChart(value) {
-  const url = new URL(value);
-  const match = url.pathname.match(/^\/(bitnamicharts\/[a-z][a-z0-9-]*)@(sha256:[a-f0-9]{64})$/);
-  if (url.protocol !== 'oci:' || url.hostname !== 'registry-1.docker.io' || url.port || url.username || url.password
-    || url.search || url.hash || !match) throw new Error('INFRASTRUCTURE_OCI_CHART_URL_INVALID');
-  return { repository: match[1], digest: match[2] };
-}
 
 function request(url, token, output) {
   const config = token ? `header = ${JSON.stringify(`Authorization: Bearer ${token}`)}\n` : '';

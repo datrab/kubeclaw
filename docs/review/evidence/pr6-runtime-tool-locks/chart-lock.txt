@@ -1,0 +1,12 @@
+✔ actual checked Tailscale archive renders pinned operator and proxy images (2563.730104ms)
+✔ actual checked Qdrant archive pins both data workload images and rejects archive corruption (1905.836155ms)
+✔ actual agent render gives Qdrant health only read credentials and the CA in the release namespace (268.626605ms)
+✔ chart authority refuses mutable versions, credential URLs and non-HTTPS sources (1.864228ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5139.390711

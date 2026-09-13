@@ -3,6 +3,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { syncVersions } from '../versions.mjs';
+import { updateRuntimeToolLocks } from '../runtime-tool-locks.mjs';
 
 // Mounted read-only from the trusted default-branch checkout, never from a bot PR.
 const root = process.cwd();
@@ -64,41 +65,58 @@ if (next.openclaw.version !== before.openclaw.version) {
 }
 for (const section of ['buildArgs', 'infrastructure', 'automation']) {
   for (const [key, value] of Object.entries(next[section] ?? {})) {
-    if (typeof value === 'string' && value.includes('@sha256:') && value !== before[section]?.[key]) {
-      const digest = await imageDigest(value);
-      if (value.split('@')[1] !== digest) throw new Error(`Updater supplied stale digest: ${key}`);
-    }
+    if (typeof value !== 'string' || !value.includes('@sha256:') || value === before[section]?.[key]) continue;
+    const digest = await imageDigest(value);
+    if (value.split('@')[1] !== digest) throw new Error(`Updater supplied stale digest: ${key}`);
   }
 }
-const args = next.buildArgs;
-for (const tool of ['GO', 'SHFMT', 'TERRAFORM', 'TFLINT', 'TRIVY', 'KUBECTL']) {
-  if (args[`${tool}_VERSION`] === before.buildArgs[`${tool}_VERSION`]) continue;
+async function releaseArtifact(tool, version, arch) {
+let url, digest;
+if (tool === 'GO') {
+  const releases = await (await get('https://go.dev/dl/?mode=json&include=all')).json();
+  const artifact = releases.find(r => r.version === `go${version}`)?.files.find(f => f.os === 'linux' && f.arch === arch && f.kind === 'archive');
+  if (!artifact) throw new Error(`Go release unavailable: ${version}/${arch}`);
+  url = `https://go.dev/dl/${artifact.filename}`; digest = artifact.sha256;
+} else if (tool === 'SHFMT') {
+  const release = await (await get(`https://api.github.com/repos/mvdan/sh/releases/tags/v${version}`)).json();
+  const asset = release.assets?.find(a => a.name === `shfmt_v${version}_linux_${arch}`);
+  if (!/^sha256:[a-f0-9]{64}$/.test(asset?.digest)) throw new Error(`Missing published shfmt digest: ${version}/${arch}`);
+  url = asset.browser_download_url; digest = asset.digest.slice(7);
+} else if (tool === 'HADOLINT') {
+  url = `https://github.com/hadolint/hadolint/releases/download/v${version}/hadolint-Linux-${arch === 'amd64' ? 'x86_64' : 'arm64'}`;
+  digest = (await text(`${url}.sha256`)).trim().split(/\s+/)[0];
+} else if (tool === 'HELM') {
+  url = `https://get.helm.sh/helm-v${version}-linux-${arch}.tar.gz`;
+  digest = (await text(`${url}.sha256sum`)).trim().split(/\s+/)[0];
+} else if (tool === 'KUBECONFORM') {
+  const name = `kubeconform-linux-${arch}.tar.gz`;
+  const base = `https://github.com/yannh/kubeconform/releases/download/v${version}`;
+  url = `${base}/${name}`; digest = await checksum(`${base}/CHECKSUMS`, name);
+} else if (tool === 'KUBECTL') {
+  url = `https://dl.k8s.io/release/v${version}/bin/linux/${arch}/kubectl`; digest = (await text(`${url}.sha256`)).trim();
+} else {
+  const names = { TERRAFORM: `terraform_${version}_linux_${arch}.zip`, TFLINT: `tflint_linux_${arch}.zip`, TRIVY: `trivy_${version}_Linux-${arch === 'amd64' ? '64bit' : 'ARM64'}.tar.gz` };
+  const bases = { TERRAFORM: `https://releases.hashicorp.com/terraform/${version}`, TFLINT: `https://github.com/terraform-linters/tflint/releases/download/v${version}`, TRIVY: `https://github.com/aquasecurity/trivy/releases/download/v${version}` };
+  const lists = { TERRAFORM: `terraform_${version}_SHA256SUMS`, TFLINT: 'checksums.txt', TRIVY: `trivy_${version}_checksums.txt` };
+  url = `${bases[tool]}/${names[tool]}`; digest = await checksum(`${bases[tool]}/${lists[tool]}`, names[tool]);
+}
+  return { url, digest };
+}
+
+for (const [args, previous] of [[next.buildArgs, before.buildArgs],
+  [next.imageOverrides['ops-pod'], before.imageOverrides['ops-pod']]]) {
+for (const tool of ['GO', 'SHFMT', 'TERRAFORM', 'TFLINT', 'TRIVY', 'KUBECTL', 'HADOLINT', 'HELM', 'KUBECONFORM']) {
+  if (!args[`${tool}_VERSION`] || args[`${tool}_VERSION`] === previous[`${tool}_VERSION`]) continue;
   const version = args[`${tool}_VERSION`].replace(/^v/, '');
   for (const arch of ['amd64', 'arm64']) {
     console.log(`Verifying upstream ${tool} ${version} linux/${arch}`);
-    let url, digest;
-    if (tool === 'GO') {
-      const releases = await (await get('https://go.dev/dl/?mode=json&include=all')).json();
-      const artifact = releases.find(r => r.version === `go${version}`)?.files.find(f => f.os === 'linux' && f.arch === arch && f.kind === 'archive');
-      if (!artifact) throw new Error(`Go release unavailable: ${version}/${arch}`);
-      url = `https://go.dev/dl/${artifact.filename}`; digest = artifact.sha256;
-    } else if (tool === 'SHFMT') {
-      const release = await (await get(`https://api.github.com/repos/mvdan/sh/releases/tags/v${version}`)).json();
-      const asset = release.assets?.find(a => a.name === `shfmt_v${version}_linux_${arch}`);
-      if (!/^sha256:[a-f0-9]{64}$/.test(asset?.digest)) throw new Error(`Missing published shfmt digest: ${version}/${arch}`);
-      url = asset.browser_download_url; digest = asset.digest.slice(7);
-    } else if (tool === 'KUBECTL') {
-      url = `https://dl.k8s.io/release/v${version}/bin/linux/${arch}/kubectl`; digest = (await text(`${url}.sha256`)).trim();
-    } else {
-      const names = { TERRAFORM: `terraform_${version}_linux_${arch}.zip`, TFLINT: `tflint_linux_${arch}.zip`, TRIVY: `trivy_${version}_Linux-${arch === 'amd64' ? '64bit' : 'ARM64'}.tar.gz` };
-      const bases = { TERRAFORM: `https://releases.hashicorp.com/terraform/${version}`, TFLINT: `https://github.com/terraform-linters/tflint/releases/download/v${version}`, TRIVY: `https://github.com/aquasecurity/trivy/releases/download/v${version}` };
-      const lists = { TERRAFORM: `terraform_${version}_SHA256SUMS`, TFLINT: 'checksums.txt', TRIVY: `trivy_${version}_checksums.txt` };
-      url = `${bases[tool]}/${names[tool]}`; digest = await checksum(`${bases[tool]}/${lists[tool]}`, names[tool]);
-    }
+    const { url, digest } = await releaseArtifact(tool, version, arch);
     args[`${tool}_SHA256_${arch.toUpperCase()}`] = await verified(url, digest);
   }
+}
 }
 try {
   fs.writeFileSync(file, `${JSON.stringify(next, null, 2)}\n`);
   console.log(JSON.stringify(syncVersions(root, false)));
+  console.log(JSON.stringify(updateRuntimeToolLocks(root)));
 } catch (error) { fs.writeFileSync(file, original); throw error; }
