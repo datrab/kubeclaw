@@ -12,6 +12,16 @@ export interface NativeWorkerResourceObservation {
   readonly taskLimitHits: number;
 }
 
+export function validateNativeWorkerResourceObservation(value: unknown): asserts value is NativeWorkerResourceObservation {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('WORKER_NATIVE_OBSERVATION_INVALID');
+  const observation = value as Record<string, unknown>;
+  const counters = ['cpuTimeMicroseconds', 'maximumMemoryBytes', 'maximumTasks', 'oomKills', 'taskLimitHits'];
+  if (Object.keys(observation).length !== 7 || observation.unit !== 'linux-tasks' || typeof observation.populated !== 'boolean'
+    || counters.some(key => !Number.isSafeInteger(observation[key]) || Number(observation[key]) < 0)) {
+    throw new Error('WORKER_NATIVE_OBSERVATION_INVALID');
+  }
+}
+
 const CGROUP2_SUPER_MAGIC = 0x63677270;
 
 function unsigned(value: string, field: string): number {

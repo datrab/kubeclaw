@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { readNativeWorkerNodeIdentity } from '@kubeclaw/worker-core';
 
 /** Shared producer/worker defaults; deployment overrides use these same named settings. */
 export function prismEngineContentDigest(environment: NodeJS.ProcessEnv = process.env): string | undefined {
@@ -36,14 +37,15 @@ export function nativePrismSupervisorConfig(environment: NodeJS.ProcessEnv = pro
     if (!value || !path.isAbsolute(value) || path.resolve(value) !== value || value === '/') throw new Error(`PRISM_NATIVE_PATH_REQUIRED:${name}`);
     return value;
   };
-  const read = (name: string, fallback: number) => {
+  const read = (name: string, fallback: number, maximum = 2_147_483_647) => {
     const value = Number(environment[name] ?? fallback);
-    if (!Number.isSafeInteger(value) || value < 1 || value > 2_147_483_647) throw new Error(`PRISM_NATIVE_CONFIG_INVALID:${name}`);
+    if (!Number.isSafeInteger(value) || value < 1 || value > maximum) throw new Error(`PRISM_NATIVE_CONFIG_INVALID:${name}`);
     return value;
   };
   return Object.freeze({
     policy: prismNativePolicy(environment),
     cgroupRoot: root('PRISM_NATIVE_CGROUP_ROOT'), ownershipRoot: root('PRISM_NATIVE_OWNERSHIP_ROOT'),
+    nodeIdentity: readNativeWorkerNodeIdentity(root('PRISM_NATIVE_NODE_IDENTITY_FILE')),
     launcher: root('PRISM_NATIVE_LAUNCHER'),
     uid: read('PRISM_NATIVE_UID', 1000), gid: read('PRISM_NATIVE_GID', 1000),
     maximumActiveScopes: read('PRISM_NATIVE_MAXIMUM_ACTIVE_ATTEMPTS', 8),
@@ -51,6 +53,8 @@ export function nativePrismSupervisorConfig(environment: NodeJS.ProcessEnv = pro
     maximumBytes: read('PRISM_NATIVE_MAXIMUM_OWNERSHIP_BYTES', 67108864),
     maximumInputBytes: read('PRISM_NATIVE_MAXIMUM_INPUT_BYTES', 16777216),
     maximumOutputBytes: read('PRISM_NATIVE_MAXIMUM_OUTPUT_BYTES', 33554432),
+    maximumResultBytes: read('PRISM_NATIVE_MAXIMUM_RESULT_BYTES', 67108864),
+    maximumJournalBytes: read('PRISM_NATIVE_MAXIMUM_JOURNAL_BYTES', 68719476736, Number.MAX_SAFE_INTEGER),
     pollIntervalMs: read('PRISM_NATIVE_POLL_INTERVAL_MS', 20),
     drainTimeoutMs: read('PRISM_NATIVE_DRAIN_TIMEOUT_MS', 10000),
     closeTimeoutMs: read('PRISM_NATIVE_CLOSE_TIMEOUT_MS', 15000),

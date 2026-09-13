@@ -1,5 +1,6 @@
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
 import type { WorkerAttemptResult } from '@kubeclaw/pipeline-worker-core-contract';
+import { workerIngressLimits } from './worker-config.ts';
 
 type Handler = (request: IncomingMessage, response: ServerResponse, signal: AbortSignal) => Promise<WorkerAttemptResult | void>;
 export type ManagedWorkerServer = Server & { shutdown(timeoutMs: number): Promise<void> };
@@ -10,13 +11,14 @@ function unresolved(result: WorkerAttemptResult | void): boolean {
     || result.error?.code === 'WORKER_PHASE_UNRESOLVED'
     || result.error?.code === 'WORKER_TERMINATION_FAILED'));
 }
-function unavailable(response: ServerResponse): void {
+function unavailable(response: ServerResponse, code = 'PRISM_WORKER_STOPPING'): void {
   response.writeHead(503, { 'content-type': 'application/json', connection: 'close' });
-  response.end('{"status":"not-ready","error":"PRISM_WORKER_STOPPING"}');
+  response.end(JSON.stringify({ status: 'not-ready', error: code }));
 }
 
-export function createManagedWorkerServer(handler: Handler, closeDependencies: () => Promise<void>): ManagedWorkerServer {
-  return new WorkerLifecycle(handler, closeDependencies).server;
+export function createManagedWorkerServer(handler: Handler, closeDependencies: () => Promise<void>,
+  limits = workerIngressLimits()): ManagedWorkerServer {
+  return new WorkerLifecycle(handler, closeDependencies, limits).server;
 }
 
 class WorkerLifecycle {
@@ -27,15 +29,25 @@ class WorkerLifecycle {
   private shutdownWork: Promise<void> | undefined;
   private readonly handler: Handler;
   private readonly closeDependencies: () => Promise<void>;
-  constructor(handler: Handler, closeDependencies: () => Promise<void>) {
+  private readonly limits: ReturnType<typeof workerIngressLimits>;
+  constructor(handler: Handler, closeDependencies: () => Promise<void>, limits: ReturnType<typeof workerIngressLimits>) {
+    if (Object.values(limits).some(value => !Number.isSafeInteger(value) || value < 1 || value > 2_147_483_647)) throw new Error('PRISM_WORKER_INGRESS_INVALID');
+    this.limits = { ...limits };
     this.handler = handler;
     this.closeDependencies = closeDependencies;
     this.server = Object.assign(createServer((request, response) => this.accept(request, response)), {
       shutdown: (timeoutMs: number) => this.shutdown(timeoutMs),
     });
+    this.server.maxConnections = limits.maximumConnections;
+    this.server.requestTimeout = limits.requestTimeoutMs;
+    this.server.headersTimeout = Math.min(this.server.headersTimeout, limits.requestTimeoutMs);
   }
   private accept(request: IncomingMessage, response: ServerResponse): void {
     if (this.stopping || this.unsafe) { unavailable(response); return; }
+    const probe = request.method === 'GET' && ['/health', '/bootstrap', '/ready'].includes(request.url ?? '')
+      && !request.headers['transfer-encoding'] && Number(request.headers['content-length'] ?? 0) === 0;
+    const capacity = this.limits.maximumActiveRequests + (probe ? this.limits.maximumProbeRequests : 0);
+    if (this.active.size >= capacity) { unavailable(response, 'PRISM_WORKER_CAPACITY_EXCEEDED'); return; }
     const cancellation = new AbortController();
     const disconnect = () => { if (!response.writableEnded) cancellation.abort(); };
     const interruptBody = () => { if (!request.complete) request.destroy(); };

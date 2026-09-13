@@ -3,7 +3,9 @@ import { constants } from 'node:fs';
 import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { withDurableStoreLock, writeDurableState } from '@kubeclaw/plugin-foundation/observability/durable-delivery';
-import { canonicalJson, sha256Digest } from './digest.ts';
+import { canonicalJson } from './digest.ts';
+import type { NativeWorkerResourceObservation } from './native-resource-observation.ts';
+import { transitions, identityValid, validateRecord, key, decodeOwnershipState, type WorkerOwnershipState as State } from './ownership-state.ts';
 
 export interface WorkerOwnershipIdentity {
   readonly workerId: string;
@@ -30,87 +32,19 @@ export interface WorkerOwnershipRecord {
   readonly phase: WorkerOwnershipPhase;
   readonly binding: WorkerScopeBinding | null;
   readonly diagnosis: string | null;
+  readonly finalObservation: NativeWorkerResourceObservation | null;
 }
 
-interface State {
-  schemaVersion: 'worker-ownership-store.v1';
-  records: WorkerOwnershipRecord[];
-}
 
-const transitions: Record<WorkerOwnershipPhase, readonly WorkerOwnershipPhase[]> = {
-  reserved: ['allocated', 'unresolved', 'abandoned'],
-  allocated: ['running', 'quiescing', 'unresolved', 'abandoned'],
-  running: ['quiescing', 'unresolved', 'abandoned'],
-  quiescing: ['empty', 'unresolved', 'abandoned'],
-  empty: ['disposed', 'unresolved', 'abandoned'],
-  disposed: [],
-  unresolved: ['quiescing', 'abandoned'],
-  abandoned: [],
-};
+type TransitionChange = { binding?: WorkerScopeBinding; diagnosis?: string; finalObservation?: NativeWorkerResourceObservation };
 
-function exact(value: unknown, keys: readonly string[]): asserts value is Record<string, unknown> {
-  if (!value || typeof value !== 'object' || Array.isArray(value)
-    || Object.keys(value).length !== keys.length || keys.some(key => !Object.hasOwn(value, key))) {
-    throw new Error('WORKER_OWNERSHIP_RECORD_INVALID');
+function validateTransitionChange(current: WorkerOwnershipRecord, phase: WorkerOwnershipPhase, change: TransitionChange): void {
+  if (change.binding !== undefined && (current.phase !== 'reserved' || phase !== 'allocated')) {
+    throw new Error('WORKER_OWNERSHIP_REBIND_FORBIDDEN');
   }
-}
-
-function identityValid(identity: unknown): asserts identity is WorkerOwnershipIdentity {
-  exact(identity, ['workerId', 'attemptId', 'claimId', 'generation', 'profileDigest', 'attemptSpecDigest']);
-  for (const key of ['workerId', 'attemptId', 'claimId']) {
-    const value = identity[key];
-    if (typeof value !== 'string' || value.length < 1 || value.length > 512 || value !== value.toWellFormed()) {
-      throw new Error('WORKER_OWNERSHIP_IDENTITY_INVALID');
-    }
-  }
-  if (!Number.isSafeInteger(identity.generation) || Number(identity.generation) < 1) {
-    throw new Error('WORKER_OWNERSHIP_GENERATION_INVALID');
-  }
-  for (const key of ['profileDigest', 'attemptSpecDigest']) {
-    if (typeof identity[key] !== 'string' || !/^sha256:[a-f0-9]{64}$/u.test(identity[key])) {
-      throw new Error('WORKER_OWNERSHIP_DIGEST_INVALID');
-    }
-  }
-}
-
-function bindingValid(binding: unknown, scopeName: string): asserts binding is WorkerScopeBinding {
-  exact(binding, ['scopeName', 'bootId', 'device', 'inode']);
-  if (binding.scopeName !== scopeName || typeof binding.bootId !== 'string'
-    || !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u.test(binding.bootId)
-    || !Number.isSafeInteger(binding.device) || Number(binding.device) < 0
-    || !Number.isSafeInteger(binding.inode) || Number(binding.inode) < 1) {
-    throw new Error('WORKER_OWNERSHIP_BINDING_INVALID');
-  }
-}
-
-function validateRecord(record: unknown): asserts record is WorkerOwnershipRecord {
-  exact(record, ['identity', 'scopeName', 'revision', 'phase', 'binding', 'diagnosis']);
-  identityValid(record.identity);
-  if (typeof record.scopeName !== 'string' || !/^worker-[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u.test(record.scopeName)
-    || !Number.isSafeInteger(record.revision) || Number(record.revision) < 1
-    || typeof record.phase !== 'string' || !Object.hasOwn(transitions, record.phase)) {
-    throw new Error('WORKER_OWNERSHIP_RECORD_INVALID');
-  }
-  validateRecordBinding(record);
-  validateDiagnosis(record);
-}
-
-function validateRecordBinding(record: Record<string, unknown>): void {
-  if (record.binding !== null) bindingValid(record.binding, String(record.scopeName));
-  if (!['reserved', 'unresolved', 'abandoned'].includes(String(record.phase)) && record.binding === null) {
-    throw new Error('WORKER_OWNERSHIP_BINDING_REQUIRED');
-  }
-  if (record.phase === 'reserved' && record.binding !== null) throw new Error('WORKER_OWNERSHIP_RESERVED_BINDING');
-}
-
-function validateDiagnosis(record: Record<string, unknown>): void {
-  if (record.diagnosis !== null && (typeof record.diagnosis !== 'string' || record.diagnosis.length < 1
-    || record.diagnosis.length > 4096)) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_INVALID');
-  if (['unresolved', 'abandoned'].includes(String(record.phase)) && record.diagnosis === null) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_REQUIRED');
-}
-
-function key(identity: WorkerOwnershipIdentity): string {
-  return sha256Digest([identity.workerId, identity.attemptId, identity.generation]);
+  if (change.finalObservation !== undefined && (current.finalObservation !== null || phase !== 'empty'
+    || !['quiescing', 'empty'].includes(current.phase))) throw new Error('WORKER_OWNERSHIP_OBSERVATION_REWRITE_FORBIDDEN');
+  if (current.phase === phase && change.finalObservation === undefined) throw new Error('WORKER_OWNERSHIP_TRANSITION_INVALID');
 }
 
 /**
@@ -137,6 +71,24 @@ export class FileWorkerOwnershipStore {
     return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).records));
   }
 
+  /** A changed boot is only a reboot proof after this store is bound to one host. */
+  async bindHostIdentity(hostIdentity: string, currentBootId: string): Promise<void> {
+    if (!/^[A-Za-z0-9][A-Za-z0-9:._-]{0,255}$/u.test(hostIdentity)) throw new Error('WORKER_OWNERSHIP_HOST_IDENTITY_INVALID');
+    if (!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u.test(currentBootId)) throw new Error('WORKER_OWNERSHIP_BOOT_IDENTITY_INVALID');
+    await withDurableStoreLock(this.#file, async () => {
+      const state = await this.#read();
+      if (state.hostIdentity !== null) {
+        if (state.hostIdentity !== hostIdentity) throw new Error('WORKER_OWNERSHIP_DIFFERENT_HOST_UNRESOLVED');
+        return;
+      }
+      if (state.records.some(record => record.binding !== null && record.binding.bootId !== currentBootId)) {
+        throw new Error('WORKER_OWNERSHIP_LEGACY_HOST_UNPROVEN');
+      }
+      state.hostIdentity = hostIdentity;
+      await this.#write(state);
+    });
+  }
+
   /** Held for the entire supervisor lifetime, including recovery and admission. */
   async withSupervisor<T>(operation: () => Promise<T>): Promise<T> {
     return withDurableStoreLock(path.join(path.dirname(this.#file), 'supervisor', 'lifetime'), operation);
@@ -159,7 +111,7 @@ export class FileWorkerOwnershipStore {
       }
       if (previous.some(record => !['disposed', 'abandoned'].includes(record.phase))) throw new Error('WORKER_OWNERSHIP_RECONCILIATION_REQUIRED');
       const record: WorkerOwnershipRecord = {
-        identity, scopeName: `worker-${randomUUID()}`, revision: 1, phase: 'reserved', binding: null, diagnosis: null,
+        identity, scopeName: `worker-${randomUUID()}`, revision: 1, phase: 'reserved', binding: null, diagnosis: null, finalObservation: null,
       };
       state.records.push(record);
       await this.#write(state);
@@ -168,7 +120,7 @@ export class FileWorkerOwnershipStore {
   }
 
   async transition(input: WorkerOwnershipRecord, phase: WorkerOwnershipPhase,
-    options: { binding?: WorkerScopeBinding; diagnosis?: string } = {}): Promise<WorkerOwnershipRecord> {
+    options: TransitionChange = {}): Promise<WorkerOwnershipRecord> {
     const expected = structuredClone(input);
     const change = structuredClone(options);
     validateRecord(expected);
@@ -179,12 +131,11 @@ export class FileWorkerOwnershipStore {
       const current = state.records[index];
       if (!current || canonicalJson(current) !== canonicalJson(expected)) throw new Error('WORKER_OWNERSHIP_CAS_CONFLICT');
       if (!transitions[current.phase].includes(phase)) throw new Error('WORKER_OWNERSHIP_TRANSITION_INVALID');
-      if (change.binding !== undefined && (current.phase !== 'reserved' || phase !== 'allocated')) {
-        throw new Error('WORKER_OWNERSHIP_REBIND_FORBIDDEN');
-      }
+      validateTransitionChange(current, phase, change);
       const updated: WorkerOwnershipRecord = {
         ...current, revision: current.revision + 1, phase,
         binding: change.binding ?? current.binding, diagnosis: change.diagnosis ?? current.diagnosis,
+        finalObservation: change.finalObservation ?? current.finalObservation,
       };
       validateRecord(updated);
       state.records[index] = updated;
@@ -197,7 +148,7 @@ export class FileWorkerOwnershipStore {
     let handle;
     try { handle = await fs.open(this.#file, constants.O_RDONLY | constants.O_NOFOLLOW | constants.O_NONBLOCK); }
     catch (error) {
-      if ((error as NodeJS.ErrnoException).code === 'ENOENT') return { schemaVersion: 'worker-ownership-store.v1', records: [] };
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') return { schemaVersion: 'worker-ownership-store.v2', hostIdentity: null, records: [] };
       throw error;
     }
     let value: unknown;
@@ -208,20 +159,7 @@ export class FileWorkerOwnershipStore {
       if (bytes.byteLength > this.#maximumBytes) throw new Error('WORKER_OWNERSHIP_CAPACITY_EXCEEDED');
       value = JSON.parse(bytes.toString('utf8'));
     } finally { await handle.close(); }
-    exact(value, ['schemaVersion', 'records']);
-    if (value.schemaVersion !== 'worker-ownership-store.v1' || !Array.isArray(value.records)) {
-      throw new Error('WORKER_OWNERSHIP_STORE_INVALID');
-    }
-    if (value.records.length > this.#maximumRecords) throw new Error('WORKER_OWNERSHIP_CAPACITY_EXCEEDED');
-    const keys = new Set<string>();
-    const scopes = new Set<string>();
-    for (const record of value.records) {
-      validateRecord(record);
-      const identityKey = key(record.identity);
-      if (keys.has(identityKey) || scopes.has(record.scopeName)) throw new Error('WORKER_OWNERSHIP_DUPLICATE');
-      keys.add(identityKey); scopes.add(record.scopeName);
-    }
-    return value as unknown as State;
+    return decodeOwnershipState(value, this.#maximumRecords);
   }
 
   async #write(state: State): Promise<void> {

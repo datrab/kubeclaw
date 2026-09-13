@@ -2,6 +2,8 @@ import type { ChildProcessWithoutNullStreams } from 'node:child_process';
 import type { NativeWorkerOwnership, NativeWorkerOwnershipLease } from './native-worker-ownership.ts';
 import type { WorkerOwnershipIdentity } from './ownership-store.ts';
 import type { NativeWorkerResourceObservation } from './native-resource-observation.ts';
+import type { NativeWorkerOutputCapture } from './native-output-spool.ts';
+import { captureNativeWorkerOutput } from './native-process-output.ts';
 
 export interface NativeWorkerProcessLimits {
   readonly cpuTimeMs: number;
@@ -21,6 +23,7 @@ export interface NativeWorkerProcessOptions {
   readonly command: Parameters<NativeWorkerOwnershipLease['launch']>[0];
   readonly input: Uint8Array;
   readonly signal?: AbortSignal;
+  readonly outputCapture?: NativeWorkerOutputCapture;
 }
 
 export interface NativeWorkerProcessResult {
@@ -62,7 +65,7 @@ export async function runNativeWorkerProcess(options: NativeWorkerProcessOptions
   try {
     options.signal?.throwIfAborted();
     child = await lease.launch(command);
-    return await collectProcess(child, lease, input, limits, options.signal);
+    return await collectProcess(child, lease, input, limits, options.signal, options.outputCapture);
   } finally {
     // Also stop a launcher interrupted before joining; it has no authority to start later.
     child?.kill('SIGKILL');
@@ -71,9 +74,7 @@ export async function runNativeWorkerProcess(options: NativeWorkerProcessOptions
 }
 
 async function collectProcess(child: ChildProcessWithoutNullStreams, lease: NativeWorkerOwnershipLease,
-  input: Buffer, limits: NativeWorkerProcessLimits, signal?: AbortSignal): Promise<NativeWorkerProcessResult> {
-  const stdout: Buffer[] = [], stderr: Buffer[] = [];
-  let totalBytes = 0;
+  input: Buffer, limits: NativeWorkerProcessLimits, signal?: AbortSignal, outputCapture?: NativeWorkerOutputCapture): Promise<NativeWorkerProcessResult> {
   let fault: string | null = null;
   let closeTimer: NodeJS.Timeout | undefined;
   let closing: Promise<NativeWorkerResourceObservation> | undefined;
@@ -93,14 +94,8 @@ async function collectProcess(child: ChildProcessWithoutNullStreams, lease: Nati
     fault ??= code;
     close();
   };
-  const receive = (target: Buffer[], bytes: Buffer) => {
-    totalBytes += bytes.byteLength;
-    if (totalBytes > limits.maximumOutputBytes) { stop('WORKER_NATIVE_OUTPUT_LIMIT'); return; }
-    target.push(Buffer.from(bytes));
-  };
+  const output = captureNativeWorkerOutput(child, limits.maximumOutputBytes, stop, outputCapture);
   const abort = () => stop('WORKER_ATTEMPT_CANCELLED');
-  child.stdout.on('data', (bytes: Buffer) => receive(stdout, bytes));
-  child.stderr.on('data', (bytes: Buffer) => receive(stderr, bytes));
   child.once('error', () => stop('WORKER_NATIVE_PROCESS_START_FAILED'));
   child.stdin.once('error', () => stop('WORKER_NATIVE_PROCESS_INPUT_FAILED'));
   child.once('exit', () => { close(); });
@@ -118,9 +113,10 @@ async function collectProcess(child: ChildProcessWithoutNullStreams, lease: Nati
     await exited;
     close();
     const resources = await closing!;
+    await output.flush();
     fault ??= budgetFault(resources, limits);
     if (child.exitCode !== 0 && fault === null) fault = 'WORKER_NATIVE_PROCESS_FAILED';
-    return { schemaVersion: 'worker-native-process-result.v1', stdout: Buffer.concat(stdout), stderr: Buffer.concat(stderr),
+    return { schemaVersion: 'worker-native-process-result.v1', ...output.snapshot(),
       exitCode: child.exitCode, signal: child.signalCode, fault, resources };
   } finally {
     clearTimeout(deadline); clearInterval(poll); if (closeTimer) clearTimeout(closeTimer);

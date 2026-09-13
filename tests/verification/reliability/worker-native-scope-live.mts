@@ -9,6 +9,7 @@ import path from 'node:path';
 import { FileWorkerOwnershipStore } from '../../../skills/worker/core/worker/ownership-store.ts';
 import { NativeWorkerOwnership } from '../../../skills/worker/core/worker/native-worker-ownership.ts';
 import { runNativeWorkerProcess } from '../../../skills/worker/core/worker/native-worker-process.ts';
+import { readNativeWorkerNodeIdentity } from '../../../skills/worker/core/worker/native-node-identity.ts';
 import { NativeWorkerResourceScope } from '../../../skills/worker/core/worker/native-resource-scope.ts';
 
 const root = process.env.KUBECLAW_WORKER_TEST_CGROUP_ROOT;
@@ -94,7 +95,9 @@ test('production launcher and durable owner account the whole host and fence exa
   const store = new FileWorkerOwnershipStore(stateRoot, { maximumRecords: 32, maximumBytes: 65536 });
   const identity = { workerId: 'worker:live', attemptId: 'attempt:live', claimId: 'claim:live', generation: 1,
     profileDigest: `sha256:${'1'.repeat(64)}`, attemptSpecDigest: `sha256:${'2'.repeat(64)}` };
-  const ownership = { cgroupRoot: root, store, drainTimeoutMs: 5000 };
+  const identityFile = process.env.KUBECLAW_WORKER_TEST_NODE_IDENTITY_FILE;
+  if (!identityFile) throw new Error('KUBECLAW_WORKER_TEST_NODE_IDENTITY_FILE must name the trusted mounted host identity');
+  const ownership = { cgroupRoot: root, store, nodeIdentity: readNativeWorkerNodeIdentity(identityFile), drainTimeoutMs: 5000 };
   try {
     await NativeWorkerOwnership.supervise(ownership, async owner => {
       const result = await runNativeWorkerProcess({ owner, identity,
@@ -116,6 +119,8 @@ test('production launcher and durable owner account the whole host and fence exa
       assert.ok(facts.membership.includes(records[0]!.scopeName));
       assert.equal(result.resources.unit, 'linux-tasks');
       assert.equal(result.resources.populated, false);
+      assert.deepEqual(records[0]!.finalObservation, result.resources,
+        'final kernel evidence must survive scope disposal in the durable owner record');
       assert.ok(result.resources.cpuTimeMicroseconds > 0);
       assert.ok(result.resources.maximumTasks > 1, 'Node threads must be counted as tasks');
       await assert.rejects(owner.allocate(identity, limits), /WORKER_NATIVE_IDENTITY_ALREADY_USED/u);

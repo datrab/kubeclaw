@@ -3,10 +3,12 @@ import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { NativeWorkerResourceScope, type NativeWorkerScopeLimits } from './native-resource-scope.ts';
 import type { NativeWorkerResourceObservation } from './native-resource-observation.ts';
 import type { FileWorkerOwnershipStore, WorkerOwnershipIdentity, WorkerOwnershipRecord } from './ownership-store.ts';
+import { canonicalJson } from './digest.ts';
 
 export interface NativeWorkerOwnershipOptions {
   readonly cgroupRoot: string;
   readonly store: FileWorkerOwnershipStore;
+  readonly nodeIdentity: string;
   readonly drainTimeoutMs: number;
   readonly maximumActiveScopes?: number;
 }
@@ -72,10 +74,19 @@ export class NativeWorkerOwnershipLease {
     await this.#launch?.catch(() => undefined);
     try {
       if (this.#record.phase !== 'quiescing' && this.#record.phase !== 'empty') {
-        this.#record = await this.#options.store.transition(this.#record, 'quiescing');
+        const notLaunched = this.#record.phase === 'allocated' && !this.#started;
+        this.#record = await this.#options.store.transition(this.#record, 'quiescing',
+          notLaunched ? { diagnosis: 'WORKER_NATIVE_ALLOCATION_NOT_LAUNCHED' } : {});
       }
       const observation = await this.#scope.terminateAndDrain(this.#options.drainTimeoutMs);
-      if (this.#record.phase !== 'empty') this.#record = await this.#options.store.transition(this.#record, 'empty');
+      if (this.#record.finalObservation !== null && canonicalJson(this.#record.finalObservation) !== canonicalJson(observation)) {
+        throw new Error('WORKER_NATIVE_TERMINAL_COUNTERS_CHANGED');
+      }
+      if (this.#record.phase !== 'empty' || this.#record.finalObservation === null) {
+        // Persist the final kernel counters in the same fsynced state as the
+        // empty phase. A crash after rmdir must not erase accounting evidence.
+        this.#record = await this.#options.store.transition(this.#record, 'empty', { finalObservation: observation });
+      }
       this.#scope.dispose();
       this.#record = await this.#options.store.transition(this.#record, 'disposed');
       return observation;
@@ -103,6 +114,16 @@ export class NativeWorkerOwnership {
   private constructor(options: NativeWorkerOwnershipOptions) { this.#options = options; }
 
   isReady(): boolean { return !this.#closed; }
+
+  fenceAdmission(): void { this.#closed = true; }
+
+  async record(identity: WorkerOwnershipIdentity): Promise<WorkerOwnershipRecord | null> {
+    const expected = structuredClone(identity);
+    const record = (await this.#options.store.records()).find(record => record.identity.workerId === expected.workerId
+      && record.identity.attemptId === expected.attemptId && record.identity.generation === expected.generation);
+    if (record && canonicalJson(record.identity) !== canonicalJson(expected)) throw new Error('WORKER_NATIVE_RECOVERY_IDENTITY_CONFLICT');
+    return record ?? null;
+  }
 
   static async supervise<T>(options: NativeWorkerOwnershipOptions,
     operation: (owner: NativeWorkerOwnership) => Promise<T>): Promise<T> {
@@ -172,6 +193,9 @@ export class NativeWorkerOwnership {
     const registered = new Set(records.map(record => record.scopeName));
     if ([...names].some(name => !registered.has(name))) throw new Error('WORKER_NATIVE_UNKNOWN_SCOPE');
     const currentBoot = fs.readFileSync('/proc/sys/kernel/random/boot_id', 'utf8').trim();
+    // A PVC can move between machines. A different boot ID alone cannot prove
+    // that processes on the previous machine have stopped.
+    await this.#options.store.bindHostIdentity(this.#options.nodeIdentity, currentBoot);
     for (const record of records) await this.#recoverRecord(record, names, currentBoot);
   }
 

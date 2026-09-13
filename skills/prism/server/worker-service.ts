@@ -12,7 +12,8 @@ import type { WorkerArtifactClient } from "./worker-artifacts.ts";
 import { executeWorkerAttempt } from "./worker-attempt.ts";
 import { type WorkerNonceDatabase, WorkerDependencyUnavailable } from "./worker-readiness.ts";
 import { createManagedWorkerServer } from "./worker-lifecycle.ts";
-import { authorizeProxiedSpiffePeer } from "@kubeclaw/worker-core";
+import { authorizeProxiedSpiffePeer, NativeWorkerAttemptBusy } from "@kubeclaw/worker-core";
+import { workerIngressLimits } from './worker-config.ts';
 
 export type WorkerAuthentication =
   | { mode: "hmac"; secret: string; database: WorkerNonceDatabase }
@@ -23,23 +24,25 @@ export interface NativePrismWorkerExecution {
   execute(envelope: WorkerAttemptEnvelopeV3, signal: AbortSignal): Promise<WorkerAttemptResultV3>;
 }
 
-export function createNativeWorkerServer(auth: WorkerAuthentication, execution: NativePrismWorkerExecution) {
+export function createNativeWorkerServer(auth: WorkerAuthentication, execution: NativePrismWorkerExecution, limits = workerIngressLimits()) {
   return createManagedWorkerServer(
-    (request, response, signal) => handleWorkerRequest(auth, null, null, request, response, signal, execution),
+    (request, response, signal) => handleWorkerRequest(auth, null, null, request, response, signal, { maximumInputBytes: limits.maximumInputBytes, native: execution }),
     () => auth.mode === 'hmac' ? auth.database.close() : Promise.resolve(),
+    limits,
   );
 }
 
-export function createWorkerServer(auth: WorkerAuthentication, engine: PrismEngine, artifactClient: WorkerArtifactClient) {
+export function createWorkerServer(auth: WorkerAuthentication, engine: PrismEngine, artifactClient: WorkerArtifactClient, limits = workerIngressLimits()) {
   return createManagedWorkerServer(
-    (request, response, signal) => handleWorkerRequest(auth, engine, artifactClient, request, response, signal),
+    (request, response, signal) => handleWorkerRequest(auth, engine, artifactClient, request, response, signal, { maximumInputBytes: limits.maximumInputBytes }),
     () => auth.mode === "hmac" ? auth.database.close() : Promise.resolve(),
+    limits,
   );
 }
 
 async function handleWorkerRequest(auth: WorkerAuthentication, engine: PrismEngine | null, artifactClient: WorkerArtifactClient | null,
   request: IncomingMessage, response: ServerResponse, signal: AbortSignal,
-  native?: NativePrismWorkerExecution): Promise<WorkerAttemptResultV1 | WorkerAttemptResultV3 | void> {
+  { maximumInputBytes, native }: { maximumInputBytes: number; native?: NativePrismWorkerExecution }): Promise<WorkerAttemptResultV1 | WorkerAttemptResultV3 | void> {
   if (serveLocalHealth(request, response)) return;
   if (request.url === '/ready') return serveReadiness(auth, response, signal, native);
   if (request.url !== "/v1/attempts" || request.method !== "POST") {
@@ -60,7 +63,7 @@ async function handleWorkerRequest(auth: WorkerAuthentication, engine: PrismEngi
     let size = 0;
     for await (const chunk of request) {
       size += chunk.length;
-      if (size > 16_000_000)
+      if (size > maximumInputBytes)
         throw new Error("Prism attempt request is too large");
       chunks.push(chunk);
     }
@@ -72,7 +75,7 @@ async function handleWorkerRequest(auth: WorkerAuthentication, engine: PrismEngi
     response.end(JSON.stringify(result));
     return result;
   } catch (error) {
-    response.writeHead(error instanceof WorkerDependencyUnavailable ? 503 : 422, { "content-type": "application/json" });
+    response.writeHead(error instanceof WorkerDependencyUnavailable || error instanceof NativeWorkerAttemptBusy ? 503 : 422, { "content-type": "application/json" });
     response.end(
       JSON.stringify({
         error: error instanceof Error ? error.message : "failed",

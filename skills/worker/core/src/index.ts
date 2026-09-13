@@ -6,11 +6,15 @@ export type { NativeWorkerOwnershipOptions } from '../worker/native-worker-owner
 export { runNativeWorkerProcess } from '../worker/native-worker-process.ts';
 export type { NativeWorkerProcessLimits, NativeWorkerProcessOptions, NativeWorkerProcessResult } from '../worker/native-worker-process.ts';
 export { executeNativeWorkerAttempt } from '../worker/native-attempt-executor.ts';
+export { NativeAttemptJournal, NativeWorkerAttemptBusy } from '../worker/native-attempt-journal.ts';
+export { recoverNativeWorkerAttempts } from '../worker/native-attempt-recovery.ts';
+export type { NativeAttemptJournalLimits } from '../worker/native-attempt-journal.ts';
 export type { NativeWorkerAttemptExecutorOptions } from '../worker/native-attempt-executor.ts';
 export { observeNativeWorkerResources } from '../worker/native-resource-observation.ts';
 export type { NativeWorkerScopeLimits } from '../worker/native-resource-scope.ts';
 export type { NativeWorkerResourceObservation } from '../worker/native-resource-observation.ts';
 export { FileWorkerOwnershipStore } from '../worker/ownership-store.ts';
+export { readNativeWorkerNodeIdentity } from '../worker/native-node-identity.ts';
 export type { WorkerOwnershipIdentity, WorkerOwnershipRecord, WorkerOwnershipPhase, WorkerScopeBinding } from '../worker/ownership-store.ts';
 export type { LocalWorkerRuntimeOptions } from '../worker/local-runtime.ts';
 export {

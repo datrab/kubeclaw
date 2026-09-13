@@ -1,0 +1,35 @@
+✔ actual HTTP ingress rejects excess unfinished bodies while reserving health capacity (64.402576ms)
+✔ V3 explicitly names Linux tasks while the original V1 envelope remains independently valid (238.654276ms)
+✔ native contract rejects relabelled process budgets, task units and unsafe integers even with recomputed digests (4.966197ms)
+✔ resource assessment compares real kernel task observations without manufacturing a process count (3.199168ms)
+✔ real writer SIGKILL preserves accepted identity, original output and receipt without re-admission (2201.696753ms)
+✔ real writer SIGKILL preserves sealed identity, original output and receipt without re-admission (1907.500036ms)
+✔ journal binds the full envelope and reserves retained disk before admitting output (458.829275ms)
+✔ process archive verifies original output and immutable completion time before receipt construction (400.872736ms)
+✔ busy live attempt reports retryable contention without changing its durable identity (6187.832389ms)
+✔ real kernel observation is validated without replacing absent counters with samples (16.215983ms)
+✔ fsynced terminal metadata survives a real writer SIGKILL and cannot be resealed with different counters (1786.094031ms)
+✔ legacy ownership remains readable without fabricating missing historical observations (151.774928ms)
+✔ a moved ownership store cannot turn another host into a reboot proof (183.408963ms)
+✔ unbound legacy records from a different boot cannot be silently assigned to this host (119.083581ms)
+✔ host identity reader uses a real root-owned file and rejects mutable or redirected files (8.139181ms)
+✔ production collector persists both real child pipes byte-for-byte with backpressure (450.035978ms)
+✔ combined output quota stops a real producer and cannot be split across stdout/stderr (390.056092ms)
+✔ flushed original output survives a real writer SIGKILL (1262.677234ms)
+✔ concurrent durable reservations converge and survive reopening (249.643901ms)
+✔ caller mutation after reserve starts cannot change persisted identity (87.462275ms)
+✔ metadata lifecycle is fenced and disposed identities cannot execute again (658.408481ms)
+✔ unresolved ownership preserves diagnosis and blocks generation replacement (215.12214ms)
+✔ record quota fails atomically without losing existing ownership (158.589184ms)
+✔ corrupt persisted ownership fails without overwriting the record (148.68905ms)
+✔ abandoned admission preserves replay identity and requires a failure diagnosis (330.793533ms)
+✔ supervisor holds a separate real kernel lock and SIGKILL releases it without erasing reservations (1227.44303ms)
+✔ native recovery rejects ordinary directories before exposing admission or modifying existing ownership (135.912868ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12509.969347
