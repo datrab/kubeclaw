@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { dump } from 'js-yaml';
 import { loadNativeNodePolicy, nativeNodeReservation, nativePoolPolicy, validateNativeNodePolicy } from './native-worker-node-policy.mjs';
 
 const repository = fileURLToPath(new URL('../', import.meta.url));
@@ -14,6 +15,10 @@ export function renderNativeWorkerNode(policy) {
   const setup = { schemaVersion: 1, nodeVersion, pools: Object.fromEntries(Object.entries(pools).map(([role, pool]) => [role, pool.limits])) };
   const kubelet = { ...nativeNodeReservation(selected), cgroupDriver: 'systemd', cgroupsPerQOS: true, enforceNodeAllocatable: ['pods'] };
   return {
+    'prism-native-values.yaml': dump({ worker: { native: { enabled: true, nodeName: selected.nodeName,
+      namespace: selected.pools.prism.namespace, policyDigest: pools.prism.policyDigest }, replicas: 1 } }),
+    'native-nri.json': `${JSON.stringify(nriPolicy(selected, pools), null, 2)}\n`,
+    'containerd-nri.toml': '[plugins."io.containerd.nri.v1.nri"]\n  disable = false\n',
     'native-node-policy.json': `${JSON.stringify(setup, null, 2)}\n`,
     'buster-pool.json': `${JSON.stringify(pools.buster, null, 2)}\n`,
     'prism-pool.json': `${JSON.stringify(pools.prism, null, 2)}\n`,
@@ -21,6 +26,18 @@ export function renderNativeWorkerNode(policy) {
     'prepare-native-worker-pools.mjs': fs.readFileSync(path.join(repository, 'scripts/prepare-native-worker-pools.mjs'), 'utf8'),
     'kubeclaw-native-pools.service': unit(),
   };
+}
+
+function nriPolicy(selected, pools) {
+  const containerdVersion = selected.runtime?.containerdVersion;
+  if (typeof containerdVersion !== 'string' || !/^v?2\.(?:[2-9]|[1-9][0-9]+)\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$/.test(containerdVersion)) {
+    throw new Error('NATIVE_NODE_SELECTED_CONTAINERD_VERSION_REQUIRED');
+  }
+  const roles = Object.fromEntries(['buster', 'prism'].map(role => [role, {
+    namespace: selected.pools[role].namespace, container: role === 'buster' ? 'buster-v2-runtime' : 'worker',
+    policyDigest: pools[role].policyDigest,
+  }]));
+  return { schemaVersion: 1, containerdVersion, roles };
 }
 
 function unit() {

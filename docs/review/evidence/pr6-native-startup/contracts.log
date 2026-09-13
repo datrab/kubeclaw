@@ -1,0 +1,14 @@
+$ node --test tests/verification/reliability/worker-native-contract.test.mts
+✔ V3 explicitly names Linux tasks while the original V1 envelope remains independently valid (207.602781ms)
+✔ native contract rejects relabelled process budgets, task units and unsafe integers even with recomputed digests (5.333328ms)
+✔ resource assessment compares real kernel task observations without manufacturing a process count (3.488709ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1217.852764
+
+exit_code=0

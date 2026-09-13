@@ -39,6 +39,16 @@ function hostBinding(policy, node, hostIdentity) {
     || node.status?.nodeInfo?.machineID !== hostIdentity.machineId || node.status.nodeInfo.bootID !== hostIdentity.bootId) throw new Error('NATIVE_NODE_HOST_BINDING_MISMATCH');
   if (!hostIdentity.machineId || !hostIdentity.bootId) throw new Error('NATIVE_NODE_HOST_IDENTITY_REQUIRED');
   if (!node.status.conditions?.some(condition => condition.type === 'Ready' && condition.status === 'True')) throw new Error('NATIVE_NODE_NOT_READY');
+  runtimeBinding(policy, node);
+}
+
+function runtimeBinding(policy, node) {
+  const runtime = policy.runtime?.containerdVersion;
+  const actual = node.status.nodeInfo.containerRuntimeVersion;
+  if (typeof runtime !== 'string' || typeof actual !== 'string' || !actual.startsWith('containerd://')
+    || actual.slice('containerd://'.length).replace(/^v/, '') !== runtime.replace(/^v/, '')) {
+    throw new Error('NATIVE_NODE_CONTAINERD_VERSION_MISMATCH');
+  }
 }
 
 export function requireNativeNodeCapacity(policy, node, kubelet, hostIdentity) {

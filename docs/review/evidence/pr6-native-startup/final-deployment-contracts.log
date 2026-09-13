@@ -1,0 +1,17 @@
+$ node --test tests/verification/deployment/native-worker-node.test.mjs tests/verification/deployment/prism-native-runtime.test.mjs
+✔ real generated bundle binds both role readers, selected runtime and actual systemd unit parser (1005.374395ms)
+✔ actual policy files reject writable authority and symlinks without consuming their contents (6.671047ms)
+✔ capacity contract requires matching host, effective kubelet reservation and withheld allocatable capacity (9.907762ms)
+✔ quantity comparison is exact for Kubernetes CPU and memory units and rejects ambiguous precision (0.912091ms)
+✔ actual Prism Helm render binds V3 producer, supervisor, NRI selection and only its role mounts (717.608587ms)
+✔ original statically built NRI executable reads the actual generated root-owned policy (4078.063121ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5385.221031
+
+exit_code=0

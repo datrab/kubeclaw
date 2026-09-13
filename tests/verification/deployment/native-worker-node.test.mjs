@@ -11,10 +11,11 @@ import { nativeNodeQuantity, requireNativeNodeCapacity } from '../../../scripts/
 import { readNativeWorkerPoolPolicy } from '../../../skills/worker/core/worker/native-pool-policy.ts';
 
 const source = load(fs.readFileSync('my-values/infra/native-worker-pools.yaml', 'utf8'));
-const policy = { ...source, nodeName: 'native-policy-test' };
+const policy = { ...source, nodeName: 'native-policy-test', runtime: { containerdVersion: 'v2.2.0-k3s1' } };
 
 test('real generated bundle binds both role readers, selected runtime and actual systemd unit parser', () => {
   assert.throws(() => validateNativeNodePolicy(source), /NATIVE_NODE_IDENTITY_REQUIRED/);
+  assert.throws(() => renderNativeWorkerNode({ ...source, nodeName: policy.nodeName }), /SELECTED_CONTAINERD_VERSION_REQUIRED/);
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'native-node-bundle-'));
   try {
     const input = path.join(directory, 'policy.yaml'); const output = path.join(directory, 'bundle');
@@ -54,12 +55,16 @@ test('capacity contract requires matching host, effective kubelet reservation an
   // Protocol vectors for the real checker; no Kubernetes API is replaced or claimed to have run.
   const host = { machineId: 'a'.repeat(32), bootId: 'b'.repeat(32), pidMax: '4194304', threadsMax: '4194304', podTasksMax: '4000000' };
   const node = { metadata: { name: policy.nodeName, uid: 'node-contract-vector' }, status: {
-    nodeInfo: { machineID: host.machineId, bootID: host.bootId }, conditions: [{ type: 'Ready', status: 'True' }],
+    nodeInfo: { machineID: host.machineId, bootID: host.bootId, containerRuntimeVersion: 'containerd://2.2.0-k3s1' }, conditions: [{ type: 'Ready', status: 'True' }],
     capacity: { cpu: '16', memory: '64Gi' }, allocatable: { cpu: '6', memory: '10Gi' } } };
   const kubelet = JSON.parse(renderNativeWorkerNode(policy)['kubelet-reservations.json']);
   const receipt = requireNativeNodeCapacity(policy, node, kubelet, host);
   assert.equal(receipt.scope, 'current-node-cpu-memory-task-reservation-only');
   assert.equal(receipt.reservation.systemReserved.cpu, '9000m');
+  const wrongRuntime = structuredClone(node); wrongRuntime.status.nodeInfo.containerRuntimeVersion = 'containerd://2.1.4';
+  assert.throws(() => requireNativeNodeCapacity(policy, wrongRuntime, kubelet, host), /CONTAINERD_VERSION_MISMATCH/);
+  const prefixedRuntime = structuredClone(node); prefixedRuntime.status.nodeInfo.containerRuntimeVersion = 'containerd://v2.2.0-k3s1';
+  assert.equal(requireNativeNodeCapacity(policy, prefixedRuntime, kubelet, host).nodeName, policy.nodeName);
   for (const resource of ['cpu', 'memory']) {
     const unreserved = structuredClone(node); unreserved.status.allocatable[resource] = node.status.capacity[resource];
     assert.throws(() => requireNativeNodeCapacity(policy, unreserved, kubelet, host), /ALLOCATABLE_NOT_RESERVED/);

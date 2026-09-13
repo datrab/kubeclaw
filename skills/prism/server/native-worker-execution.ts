@@ -18,6 +18,7 @@ export async function nativePrismExecution(owner: NativeWorkerOwnership, native:
   const command = { launcher: native.launcher, uid: native.uid, gid: native.gid, executable: process.execPath,
     arguments: [fileURLToPath(new URL('./native-worker-host.ts', import.meta.url))], cwd: process.cwd(),
     environment: { PATH: '/usr/local/bin:/usr/bin:/bin', HOME: '/tmp', NODE_ENV: 'production',
+      PRISM_WORKER_EXECUTION_MODE: 'native', PRISM_ENGINE_CONTENT_DIGEST: native.engineContentDigest,
       PLAYWRIGHT_BROWSERS_PATH: native.browserPath, PRISM_CONTROL_INTERNAL_URL: config.controlInternalUrl.toString(),
       PRISM_WORKER_SECRET: config.workerSecret, WORKER_TRUST_SPIFFE_ENABLED: String(config.spiffeEnabled),
       PRISM_NATIVE_MAXIMUM_INPUT_BYTES: String(native.maximumInputBytes) },

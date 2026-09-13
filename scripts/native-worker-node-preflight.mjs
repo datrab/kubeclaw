@@ -5,6 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { isDeepStrictEqual } from 'node:util';
 import { NativeWorkerResourcePool } from '../skills/worker/core/worker/native-resource-pool.ts';
 import { readNativeWorkerPoolPolicy } from '../skills/worker/core/worker/native-pool-policy.ts';
+import { requireNativeWorkerRuntimeIdentity } from '../skills/worker/core/worker/native-runtime-identity.ts';
 import { loadNativeNodePolicy, nativePoolPolicy, validateNativeNodePolicy } from './native-worker-node-policy.mjs';
 import { requireNativeNodeCapacity } from './native-worker-node-capacity.mjs';
 
@@ -34,6 +35,7 @@ export function preflightNativeWorkerNode(policy) {
     const pool = nativePoolPolicy(policy, role);
     const installed = readNativeWorkerPoolPolicy(`/etc/kubeclaw/${role}-pool.json`, role);
     if (!isDeepStrictEqual(pool, installed)) throw new Error('NATIVE_NODE_INSTALLED_POLICY_MISMATCH');
+    requireNativeWorkerRuntimeIdentity(pool.runtimeIdentityFile);
     new NativeWorkerResourcePool(pool.cgroupRoot, pool.limits, pool.maximumActiveScopes).verify();
   }
   const after = kubectl(['get', 'node', policy.nodeName, '-o', 'json']);

@@ -1,5 +1,12 @@
 import path from 'node:path';
-import { readNativeWorkerNodeIdentity, readNativeWorkerPoolPolicy } from '@kubeclaw/worker-core';
+import { readNativeWorkerNodeIdentity, readNativeWorkerPoolPolicy, requireNativeWorkerRuntimeIdentity } from '@kubeclaw/worker-core';
+
+/** One explicit migration selection shared by Control and the worker chart. */
+export function prismWorkerExecutionMode(environment: NodeJS.ProcessEnv = process.env): 'legacy' | 'native' {
+  const mode = environment.PRISM_WORKER_EXECUTION_MODE ?? 'legacy';
+  if (mode !== 'legacy' && mode !== 'native') throw new Error('PRISM_WORKER_EXECUTION_MODE_INVALID');
+  return mode;
+}
 
 /** Shared producer/worker defaults; deployment overrides use these same named settings. */
 export function prismEngineContentDigest(environment: NodeJS.ProcessEnv = process.env): string | undefined {
@@ -43,8 +50,10 @@ export function nativePrismSupervisorConfig(environment: NodeJS.ProcessEnv = pro
     return value;
   };
   const pool = readNativeWorkerPoolPolicy(root('PRISM_NATIVE_POOL_POLICY_FILE'), 'prism');
+  requireNativeWorkerRuntimeIdentity(pool.runtimeIdentityFile);
   return Object.freeze({
     policy: prismNativePolicy(environment),
+    engineContentDigest: prismEngineContentDigest(environment) ?? '',
     cgroupRoot: pool.cgroupRoot, ownershipRoot: pool.ownershipRoot,
     poolLimits: pool.limits, nodeIdentity: readNativeWorkerNodeIdentity(pool.nodeIdentityFile),
     launcher: root('PRISM_NATIVE_LAUNCHER'),

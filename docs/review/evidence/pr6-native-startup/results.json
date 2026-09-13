@@ -1,0 +1,50 @@
+[
+  {
+    "gate": "native-runtime",
+    "exitCode": 0,
+    "startedAt": "2026-09-13T09:32:19.718677+00:00",
+    "finishedAt": "2026-09-13T09:32:30.420785+00:00"
+  },
+  {
+    "gate": "node-pools",
+    "exitCode": 0,
+    "startedAt": "2026-09-13T09:30:11.055709+00:00",
+    "finishedAt": "2026-09-13T09:30:29.030800+00:00"
+  },
+  {
+    "gate": "core-types",
+    "exitCode": 0,
+    "startedAt": "2026-09-13T09:30:11.058731+00:00",
+    "finishedAt": "2026-09-13T09:30:19.348698+00:00"
+  },
+  {
+    "gate": "prism-types",
+    "exitCode": 0,
+    "startedAt": "2026-09-13T09:30:19.348886+00:00",
+    "finishedAt": "2026-09-13T09:30:28.542704+00:00"
+  },
+  {
+    "gate": "live-gate-types",
+    "exitCode": 0,
+    "startedAt": "2026-09-13T09:30:20.989561+00:00",
+    "finishedAt": "2026-09-13T09:30:27.073073+00:00"
+  },
+  {
+    "gate": "contracts",
+    "exitCode": 0,
+    "startedAt": "2026-09-13T09:30:27.073279+00:00",
+    "finishedAt": "2026-09-13T09:30:28.625321+00:00"
+  },
+  {
+    "gate": "versions",
+    "exitCode": 0,
+    "startedAt": "2026-09-13T09:30:28.542738+00:00",
+    "finishedAt": "2026-09-13T09:30:29.452792+00:00"
+  },
+  {
+    "gate": "shell-syntax",
+    "exitCode": 0,
+    "startedAt": "2026-09-13T09:30:28.625356+00:00",
+    "finishedAt": "2026-09-13T09:30:28.643767+00:00"
+  }
+]

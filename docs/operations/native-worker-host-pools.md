@@ -6,15 +6,19 @@ outside the supervisor Pod's resource hierarchy. Its capacity must therefore
 be withheld separately from ordinary Kubernetes Pod allocation.
 
 This document describes the implemented pool preparation and verification
-contract. Production V3 startup/chart/runtime activation and Buster's complete
-fixture/host integration are still being completed. Creating pools alone does
+contract. Prism now has an explicit native V3 startup/chart/runtime selection.
+Buster's complete fixture/host integration is still being completed. Creating pools alone does
 not activate native workers or close the original four findings.
 
 ## One source for this host policy
 
 Edit `my-values/infra/native-worker-pools.yaml` (or its private selected copy).
-The node name deliberately starts unset: no production host or available
-capacity is inferred. The initial requested role ceilings are:
+The node name and exact containerd runtime version deliberately start unset:
+no production host, installed runtime or available capacity is inferred. Set
+`runtime.containerdVersion` to the exact containerd/NRI-reported version, including
+its K3s build suffix. The selected profile requires containerd 2.2+ with NRI
+namespace adjustment support. The two role namespaces are explicit policy fields;
+only trusted deployment authors may create Pods in those namespaces. The initial requested role ceilings are:
 
 | Pool | CPU bandwidth ceiling | Memory ceiling | Linux tasks | Concurrent scopes |
 | --- | --- | --- | --- | --- |
@@ -76,7 +80,10 @@ In a separately planned maintenance window, an operator must:
    places setup in its own child. It changes only its two designated role
    subtrees. Existing changed limits or unknown children stop preparation;
    preparation does not adopt/reconfigure running pools or remove old scopes.
-   The persistent node identity is bound to the actual `/etc/machine-id`.
+   The persistent node identity is bound to the actual `/etc/machine-id`. Setup
+   also writes root-owned `native-runtime-identity.json`, binding the host cgroup
+   namespace inode/device to this boot. A new boot replaces that runtime identity;
+   conflicting evidence within the same boot stops setup.
 4. Start the reviewed host service and perform the read-only check below before
    allowing native worker activation. Service stop/restart kills its complete
    subtree: drain/fence both roles first and retain their final observations.
@@ -117,17 +124,72 @@ permission to change kubelet settings later. Reservation or hierarchy changes
 require fencing workers, maintenance and a new check. Runtime workers recheck
 the actual role limits before allocations and readiness.
 
-The supervisor Pod still needs its own requests/limits for supervisor overhead.
-A role-only writable cgroup mount and root-owned read-only policy do not prove
-that the container runtime permits moving a pre-exec launcher into the host
-pool. The production runtime/cgroup-namespace/UID/mount acceptance must be
-completed explicitly. No entire-host cgroup mount or generic privileged fallback
-is introduced by these files.
+## Runtime and Prism activation
+
+The supervisor Pod still has ordinary requests/limits for its own overhead.
+containerd adds a private cgroup namespace to non-privileged cgroup-v2 containers;
+a base OCI runtime spec or a hostPath mount alone is insufficient. The versioned
+`tools/native-worker-nri` plugin uses the supported NRI adjustment after CRI spec
+construction. It removes **only** the selected supervisor's cgroup namespace.
+The supervisor inherits the host cgroup namespace, while PID/network/mount
+namespaces, OCI resources and other containers remain unchanged.
+
+The plugin uses NRI v0.10.0 and its upstream-required runtime-tools replacement,
+both pinned with Go module checksums. Build the original static executable with
+the `versions.json` Go version available on PATH:
+
+```sh
+node scripts/build-native-worker-nri.mjs "$NEW_BINARY_PATH"
+"$NEW_BINARY_PATH" --check-policy "$GENERATED_BUNDLE/native-nri.json"
+```
+
+During reviewed host maintenance, install the root-owned executable as
+`/opt/nri/plugins/10-kubeclaw-native` and the generated root-owned policy as
+`/etc/kubeclaw/native-nri.json`. Merge `containerd-nri.toml` into the actual
+supported containerd/K3s configuration template; it is a fragment, not a full
+replacement. Preserve existing validators and restrictions. If an existing
+validator rejects namespace adjustments, activation must remain blocked until a
+reviewed compatible policy is provided; do not globally disable that validator.
+No plugin, service, containerd configuration or binary has been installed here.
+
+Selection binds exact trusted Kubernetes namespace, role, container name and
+policy digest, plus the runtime-supplied Pod UID/sandbox/container relationship.
+Other containers, including the trust proxy, receive no adjustment. NRI does
+not expose an authenticated service-account/image identity in this API, so the
+annotation is **not** a substitute for namespace RBAC. Untrusted fixture authors
+must not be able to create supervisor Pods in either selected namespace. The
+plugin accepts only the exact configured containerd version and refuses a
+second NRI-supplied configuration authority.
+
+Use the generated `prism-native-values.yaml` as the selected private Prism
+overlay. It switches Control's envelope producer and the worker command together;
+a native request is never retried through the legacy executor. Both bind the
+engine profile to the selected immutable worker image digest. Historical V1
+results remain readable. The native worker requires one replica with Recreate,
+scheduler affinity to the selected Node, its own writable role/ownership paths,
+and read-only root-managed identity/policy files. Its supervisor runs as root
+with only SETUID, SETGID and KILL; the non-setuid launcher attaches before exec,
+drops to UID/GID 1000, clears supplementary groups and enables no-new-privileges.
+No privileged Pod, host PID/network namespace or complete writable host cgroup
+mount is introduced. The proxy stays unprivileged.
+
+Before HTTP admission the native process checks real namespace/boot identity,
+required effective capabilities, trusted launcher, exact role limits and durable
+ownership/journal recovery. A missing NRI plugin or a wrong namespace prevents
+startup. Failed capacity/ownership readiness also fails bootstrap readiness.
+The `prism` deploy command checks the actual rendered producer/worker policy and
+runs the real node preflight **before** applying a native deployment. Run that
+native deployment command on the selected host; set `NATIVE_WORKER_NODE_POLICY_FILE`
+when using a private source policy. Render-only remains render-only. Manual Helm
+execution still requires the same host preflight; a chart render cannot certify
+host state. Native activation is opt-in during this migration and is not claimed
+to be deployed. Buster's equivalent startup/chart/fixture wiring remains open.
 
 ## Local and final live gates
 
 ```sh
 npm run verify:worker-core:node-pools
+npm run verify:worker-core:native-runtime
 ```
 
 The filesystem authority tests require a root-owned test environment; they do
@@ -160,3 +222,8 @@ and [PID limits and reservations](https://kubernetes.io/docs/concepts/policy/pid
 The Linux kernel specifies [cgroup delegation and non-migrating memory charges](https://docs.kernel.org/admin-guide/cgroup-v2.html).
 Systemd documents [delegation ownership](https://systemd.io/CGROUP_DELEGATION/)
 and introduced DelegateSubgroup in [systemd 254](https://lists.freedesktop.org/archives/systemd-devel/2023-July/049310.html).
+
+The runtime integration was checked against containerd's
+[2.2 CRI spec construction](https://github.com/containerd/containerd/blob/v2.2.0/internal/cri/server/container_create.go),
+[NRI configuration defaults](https://github.com/containerd/containerd/blob/v2.2.0/internal/nri/config.go),
+and NRI's pinned [namespace adjustment implementation](https://github.com/containerd/nri/blob/a2eea2bc19ada59eafdb1237a4720ef8ab11e5b1/pkg/api/adjustment.go).

@@ -4,6 +4,7 @@ import { WorkerNonceDatabase } from "./worker-readiness.ts";
 import { createWorkerServer } from "./worker-service.ts";
 import { loadWorkerConfig } from "./worker-config.ts";
 const config = loadWorkerConfig();
+if (config.executionMode !== 'legacy') throw new Error('PRISM_NATIVE_ENTRYPOINT_REQUIRED');
 // The worker is intentionally model-free. OpenClaw is the sole owner of LLM
 // calls; this deterministic provider only supports bounded render/evaluation
 // operations and cannot reach OpenAI, LiteLLM, or any other model endpoint.

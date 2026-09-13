@@ -43,7 +43,7 @@ export function createWorkerServer(auth: WorkerAuthentication, engine: PrismEngi
 async function handleWorkerRequest(auth: WorkerAuthentication, engine: PrismEngine | null, artifactClient: WorkerArtifactClient | null,
   request: IncomingMessage, response: ServerResponse, signal: AbortSignal,
   { maximumInputBytes, native }: { maximumInputBytes: number; native?: NativePrismWorkerExecution }): Promise<WorkerAttemptResultV1 | WorkerAttemptResultV3 | void> {
-  if (serveLocalHealth(request, response)) return;
+  if (serveLocalHealth(request, response, native)) return;
   if (request.url === '/ready') return serveReadiness(auth, response, signal, native);
   if (request.url !== "/v1/attempts" || request.method !== "POST") {
     response.writeHead(404);
@@ -113,8 +113,13 @@ async function dispatchAttempt(input: unknown, engine: PrismEngine | null, artif
   return executeWorkerAttempt(input as WorkerAttemptEnvelopeV1, engine, artifacts, signal);
 }
 
-function serveLocalHealth(request: IncomingMessage, response: ServerResponse): boolean {
+function serveLocalHealth(request: IncomingMessage, response: ServerResponse, native?: NativePrismWorkerExecution): boolean {
   if (request.url === "/health" || request.url === "/bootstrap") {
+    if (request.url === '/bootstrap' && native && !native.ready()) {
+      response.writeHead(503, { 'content-type': 'application/json' });
+      response.end('{"status":"not-ready","error":"PRISM_NATIVE_RECONCILIATION_REQUIRED"}');
+      return true;
+    }
     response.writeHead(200, { "content-type": "application/json" });
     response.end(JSON.stringify({ status: request.url === "/health" ? "alive" : "initialized" }));
     return true;

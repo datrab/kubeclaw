@@ -2,6 +2,11 @@
 {{- fail "control.replicas must be 1 while prism-artifacts uses ReadWriteOnce storage" }}
 {{- end }}
 {{- include "prism.productDecisions.validate" . }}
+{{- if .Values.worker.native.enabled }}
+{{- if or (ne (int .Values.worker.replicas) 1) (ne .Values.worker.native.namespace .Release.Namespace) (not .Values.worker.native.nodeName) (not (regexMatch "^[a-f0-9]{64}$" .Values.worker.native.policyDigest)) }}
+{{- fail "native Prism requires one worker, its selected namespace/node and generated policy digest" }}
+{{- end }}
+{{- end }}
 {{- range $name := list "control" "studio" "worker" }}
 {{- $image := index $.Values.images $name }}
 apiVersion: apps/v1
@@ -9,7 +14,7 @@ kind: Deployment
 metadata: { name: prism-{{ $name }} }
 spec:
   replicas: {{ (index $.Values $name).replicas }}
-  {{- if eq $name "control" }}
+  {{- if or (eq $name "control") (and (eq $name "worker") $.Values.worker.native.enabled) }}
   strategy: { type: Recreate }
   {{- end }}
   selector: { matchLabels: { app: prism-{{ $name }} } }
@@ -20,8 +25,12 @@ spec:
         {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
         kubeclaw.dev/worker-trust: "true"
         {{- end }}
-      {{- if or (and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker"))) (and (eq $name "control") $.Values.control.productDecisions.enabled) }}
+      {{- if or (and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker"))) (and (eq $name "control") $.Values.control.productDecisions.enabled) (and (eq $name "worker") $.Values.worker.native.enabled) }}
       annotations:
+        {{- if and (eq $name "worker") $.Values.worker.native.enabled }}
+        kubeclaw.dev/native-worker-role: prism
+        kubeclaw.dev/native-worker-policy: {{ $.Values.worker.native.policyDigest | quote }}
+        {{- end }}
         {{- if and (eq $name "control") $.Values.control.productDecisions.enabled }}
         checksum/product-decisions: {{ toJson $.Values.control.productDecisions | sha256sum }}
         {{- end }}
@@ -36,7 +45,17 @@ spec:
       # The Prism images use the named `node` image user. Kubernetes cannot prove
       # that a named image user is non-root when runAsNonRoot is set, so make the
       # image's numeric runtime identity explicit for every Prism application pod.
+      {{- if and (eq $name "worker") $.Values.worker.native.enabled }}
+      securityContext: { runAsNonRoot: false, runAsUser: 0, runAsGroup: 0, seccompProfile: { type: RuntimeDefault } }
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchFields:
+                  - { key: metadata.name, operator: In, values: [{{ $.Values.worker.native.nodeName | quote }}] }
+      {{- else }}
       securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, fsGroup: 1000, seccompProfile: { type: RuntimeDefault } }
+      {{- end }}
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
@@ -46,9 +65,20 @@ spec:
         - name: {{ $name }}
           image: {{ include "prism.imageRef" $image | quote }}
           imagePullPolicy: {{ $image.pullPolicy }}
+          {{- if and (eq $name "worker") $.Values.worker.native.enabled }}
+          command: ["node", "skills/prism/server/native-worker.ts"]
+          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"], add: ["SETUID", "SETGID", "KILL"] } }
+          {{- else }}
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
+          {{- end }}
           env:
             - { name: PORT, value: "8080" }
+            {{- if or (eq $name "control") (eq $name "worker") }}
+            - { name: PRISM_WORKER_EXECUTION_MODE, value: {{ ternary "native" "legacy" $.Values.worker.native.enabled | quote }} }
+            {{- if $.Values.worker.native.enabled }}
+            - { name: PRISM_ENGINE_CONTENT_DIGEST, value: {{ $.Values.images.worker.digest | quote }} }
+            {{- end }}
+            {{- end }}
             {{- if and (or (eq $name "control") (eq $name "worker")) (not $.Values.workerTrust.spiffe.enabled) }}
             - name: PRISM_WORKER_SECRET
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: worker-secret } }
@@ -104,6 +134,13 @@ spec:
           resources: {{ toYaml (index $.Values $name).resources | nindent 12 }}
           volumeMounts:
             - { name: tmp, mountPath: /tmp }
+            {{- if and (eq $name "worker") $.Values.worker.native.enabled }}
+            - { name: native-pool, mountPath: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism }
+            - { name: native-ownership, mountPath: /var/lib/kubeclaw/native/prism }
+            - { name: native-policy, mountPath: /etc/kubeclaw/prism-pool.json, readOnly: true }
+            - { name: native-node-identity, mountPath: /etc/kubeclaw/native-node-id, readOnly: true }
+            - { name: native-runtime-identity, mountPath: /etc/kubeclaw/native-runtime-identity.json, readOnly: true }
+            {{- end }}
             {{- if eq $name "control" }}
             - { name: artifacts, mountPath: /var/lib/prism/artifacts }
             {{- if $.Values.control.productDecisions.enabled }}
@@ -145,6 +182,13 @@ spec:
         {{- end }}
       volumes:
         - { name: tmp, emptyDir: { sizeLimit: 4Gi } }
+        {{- if and (eq $name "worker") $.Values.worker.native.enabled }}
+        - { name: native-pool, hostPath: { path: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism, type: Directory } }
+        - { name: native-ownership, hostPath: { path: /var/lib/kubeclaw/native/prism, type: Directory } }
+        - { name: native-policy, hostPath: { path: /etc/kubeclaw/prism-pool.json, type: File } }
+        - { name: native-node-identity, hostPath: { path: /etc/kubeclaw/native-node-id, type: File } }
+        - { name: native-runtime-identity, hostPath: { path: /etc/kubeclaw/native-runtime-identity.json, type: File } }
+        {{- end }}
         {{- if eq $name "control" }}
         - { name: artifacts, persistentVolumeClaim: { claimName: prism-artifacts } }
         {{- include "prism.productDecisions.volumes" $ | nindent 8 }}

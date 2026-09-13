@@ -1,0 +1,3 @@
+$ node_modules/.bin/tsc --noEmit -p tests/verification/reliability/tsconfig.native-scope.json
+
+exit_code=0

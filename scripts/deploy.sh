@@ -1760,6 +1760,12 @@ cmd_prism() {
     return 1
   fi
   if [[ ${KUBECLAW_DEPLOY_RENDER_ONLY:-0} == 1 ]]; then rm -f "$prism_bundle_override"; return 0; fi
+  if ! node "$REPO_DIR/scripts/native-worker-deployment-preflight.mjs" \
+    "${NATIVE_WORKER_NODE_POLICY_FILE:-$INFRA_DIR/native-worker-pools.yaml}" "$PRISM_NAMESPACE" \
+    template "$PRISM_RELEASE" "$REPO_DIR/charts/prism" -n "$PRISM_NAMESPACE" "${overrides[@]}"; then
+    rm -f "$prism_bundle_override"
+    return 1
+  fi
   require_helm_release_idle "$PRISM_RELEASE" "$PRISM_NAMESPACE"
   require_helm_release_idle agent-prism "$PRISM_NAMESPACE"
   require_spiffe_csi_driver

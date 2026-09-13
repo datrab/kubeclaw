@@ -20,6 +20,7 @@ export function validateNativeNodePolicy(policy) {
   positive(policy.systemReserve.tasks); positive(policy.kubernetesReserve.tasks);
   if (Object.keys(policy.pools ?? {}).sort().join(',') !== 'buster,prism') throw new Error('NATIVE_NODE_ROLE_SET_INVALID');
   for (const pool of Object.values(policy.pools)) {
+    if (typeof pool.namespace !== 'string' || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(pool.namespace)) throw new Error('NATIVE_NODE_NAMESPACE_REQUIRED');
     resources(pool); positive(pool.tasks); positive(pool.maximumActiveScopes);
     if (pool.cpuMillicores > Number.MAX_SAFE_INTEGER / 100) throw new Error('NATIVE_NODE_CPU_RANGE_INVALID');
   }
@@ -41,7 +42,8 @@ export function nativePoolPolicy(policy, role) {
   return { schemaVersion: 1, role, nodeName: selected.nodeName,
     policyDigest: createHash('sha256').update(JSON.stringify(selected)).digest('hex'),
     cgroupRoot: `${nativePoolRoot}/${role}`, ownershipRoot: `/var/lib/kubeclaw/native/${role}`,
-    nodeIdentityFile: '/etc/kubeclaw/native-node-id', maximumActiveScopes: pool.maximumActiveScopes,
+    nodeIdentityFile: '/etc/kubeclaw/native-node-id', runtimeIdentityFile: '/etc/kubeclaw/native-runtime-identity.json',
+    maximumActiveScopes: pool.maximumActiveScopes,
     limits: { memoryBytes: pool.memoryBytes, tasks: pool.tasks,
       cpuQuotaMicroseconds: pool.cpuMillicores * 100, cpuPeriodMicroseconds: 100000 } };
 }

@@ -59,6 +59,30 @@ function identity() {
   try { fs.fsyncSync(parent); } finally { fs.closeSync(parent); }
 }
 
+function runtimeIdentity() {
+  const own = fs.statSync('/proc/self/ns/cgroup', { bigint: true });
+  const host = fs.statSync('/proc/1/ns/cgroup', { bigint: true });
+  if (own.dev !== host.dev || own.ino !== host.ino) throw new Error('NATIVE_SETUP_HOST_NAMESPACE_REQUIRED');
+  const value = { schemaVersion: 1, bootId: read('/proc/sys/kernel/random/boot_id'),
+    cgroupNamespace: { device: String(own.dev), inode: String(own.ino) } };
+  const file = '/etc/kubeclaw/native-runtime-identity.json';
+  if (fs.existsSync(file)) {
+    const stat = fs.lstatSync(file);
+    if (!stat.isFile() || stat.uid !== 0 || (stat.mode & 0o022) !== 0 || stat.size > 4096) throw new Error('NATIVE_SETUP_RUNTIME_IDENTITY_NOT_TRUSTED');
+    const previous = JSON.parse(read(file));
+    if (previous.bootId === value.bootId) {
+      if (JSON.stringify(previous) !== JSON.stringify(value)) throw new Error('NATIVE_SETUP_RUNTIME_IDENTITY_CONFLICT');
+      return;
+    }
+  }
+  const temporary = `${file}.${process.pid}.pending`;
+  const fd = fs.openSync(temporary, fs.constants.O_WRONLY | fs.constants.O_CREAT | fs.constants.O_EXCL, 0o444);
+  try { fs.writeFileSync(fd, `${JSON.stringify(value)}\n`); fs.fsyncSync(fd); } finally { fs.closeSync(fd); }
+  fs.renameSync(temporary, file);
+  const parent = fs.openSync('/etc/kubeclaw', fs.constants.O_RDONLY);
+  try { fs.fsyncSync(parent); } finally { fs.closeSync(parent); }
+}
+
 function prepare(policy) {
   if (process.getuid() !== 0 || fs.statfsSync(root).type !== 0x63677270
     || !read('/proc/self/cgroup').split('\n').includes(`0::${root.slice('/sys/fs/cgroup'.length)}/setup`)
@@ -71,6 +95,7 @@ function prepare(policy) {
   // Inspect all existing role limits before creating or changing anything.
   const existing = new Set(Object.entries(policy.pools).filter(([role, pool]) => verifyExisting(role, pool)).map(([role]) => role));
   identity();
+  runtimeIdentity();
   fs.writeFileSync(`${root}/cgroup.subtree_control`, required.map(controller => `+${controller}`).join(' '));
   for (const [role, pool] of Object.entries(policy.pools)) {
     if (existing.has(role)) continue;

@@ -1,4 +1,6 @@
 /** Platform-owned configuration is captured once before starting the worker. */
+import { prismWorkerExecutionMode } from '../config/native-worker.ts';
+
 export function loadWorkerConfig(environment: NodeJS.ProcessEnv = process.env) {
   const spiffeEnabled = environment.WORKER_TRUST_SPIFFE_ENABLED === 'true';
   const workerSecret = environment.PRISM_WORKER_SECRET ?? '';
@@ -7,7 +9,7 @@ export function loadWorkerConfig(environment: NodeJS.ProcessEnv = process.env) {
   if (spiffeEnabled && !trustedControlSpiffeId) throw new Error('Prism worker SPIFFE trust policy is incomplete');
   const databaseUrl = environment.DATABASE_URL ?? '';
   if (!spiffeEnabled && !databaseUrl) throw new Error('DATABASE_URL is required');
-  return Object.freeze({ spiffeEnabled, workerSecret, trustedControlSpiffeId, databaseUrl, shutdownTimeoutMs: shutdownTimeout(environment),
+  return Object.freeze({ executionMode: prismWorkerExecutionMode(environment), spiffeEnabled, workerSecret, trustedControlSpiffeId, databaseUrl, shutdownTimeoutMs: shutdownTimeout(environment),
     controlInternalUrl: new URL(environment.PRISM_CONTROL_INTERNAL_URL ?? 'http://prism-control:8080'),
     port: Number(environment.PORT ?? 8080), ingress: workerIngressLimits(environment),
   });

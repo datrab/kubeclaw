@@ -4,10 +4,13 @@ import { sha256Digest, workerAttemptSpecDigest, workerProfileDigest } from "@kub
 import { engineRequestSchema } from "@kubeclaw/prism-contracts-v1/digest";
 import type { EngineOperation } from "./index.ts";
 import type { WorkerAttemptEnvelopeV3, WorkerProfileV3 } from '@kubeclaw/pipeline-worker-core-contract';
-import { prismNativePolicy, prismEngineContentDigest } from '../config/native-worker.ts';
+import { prismNativePolicy, prismEngineContentDigest, prismWorkerExecutionMode } from '../config/native-worker.ts';
 
 const engineContentDigest = prismEngineContentDigest()
   || sha256Digest({ engineId: "prism-design-engine", engineVersion: "1.0.0", development: true });
+if (prismWorkerExecutionMode() === 'native' && !/^sha256:[a-f0-9]{64}$/u.test(prismEngineContentDigest() ?? '')) {
+  throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+}
 const unsignedProfile = {
   schemaVersion: "worker-profile.v1" as const,
   profileId: "prism-design-engine-v1",

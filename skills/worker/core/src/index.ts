@@ -45,3 +45,5 @@ export {
   spiffePeerFromForwardedClientCertificate,
 } from '../worker/trust.ts';
 export type { WorkerPrincipal } from '../worker/trust.ts';
+export { requireNativeWorkerRuntimeIdentity } from '../worker/native-runtime-identity.ts';
+export { requireNativeWorkerSupervisorAuthority, requireNativeWorkerLauncher } from '../worker/native-supervisor-authority.ts';

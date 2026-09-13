@@ -34,7 +34,7 @@ const CONSOLE_BOUNDARIES = [
 const ENVIRONMENT_BOUNDARIES = [
   'tools/ops-mcp/src/config.mjs',
   'scripts/verify-ops-mcp-live.mjs',
-  'scripts/registry-client-config.mjs',
+  'scripts/registry-client-config.mjs', 'scripts/build-native-worker-nri.mjs',
   'skills/prism/server/studio-config.ts',
   'skills/prism/server/control-config.ts',
   'skills/prism/server/worker-config.ts',

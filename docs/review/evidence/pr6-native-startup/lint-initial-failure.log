@@ -1,0 +1,10 @@
+$ node_modules/.bin/eslint -c charts/kubeclaw/files/config/eslint.config.mjs charts/kubeclaw/files/config/eslint.config.mjs scripts/native-worker-node-capacity.mjs scripts/native-worker-node-policy.mjs scripts/native-worker-node-preflight.mjs scripts/prepare-native-worker-pools.mjs scripts/render-native-worker-node.mjs skills/prism/config/native-worker.ts skills/prism/engine/worker-envelope.ts skills/prism/server/control-config.ts skills/prism/server/native-worker-execution.ts skills/prism/server/worker-config.ts skills/prism/server/worker-service.ts skills/prism/server/worker.ts skills/worker/core/src/index.ts skills/worker/core/worker/native-pool-policy.ts tests/verification/deployment/native-worker-node.test.mjs tests/verification/reliability/worker-native-launcher.test.mts scripts/build-native-worker-nri.mjs scripts/native-worker-deployment-preflight.mjs skills/prism/server/native-worker.ts skills/worker/core/worker/native-runtime-identity.ts skills/worker/core/worker/native-supervisor-authority.ts tests/verification/deployment/prism-native-runtime.test.mjs tests/verification/reliability/prism-native-startup.test.mts
+
+/workspace/scratch/9fa3b9b80bce/kubeclaw/charts/kubeclaw/files/config/eslint.config.mjs
+    3:1  error  Use a lowercase kebab-case filename                    discipline/filename-case
+  323:1  error  File has too many lines (315). Maximum allowed is 300  max-lines
+
+✖ 2 problems (2 errors, 0 warnings)
+
+
+exit_code=1

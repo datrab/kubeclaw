@@ -39,7 +39,7 @@ import { acceptedCachedResult } from "../control/worker-results.ts";
 import { hydrateWorkerResult } from "../control/worker-evidence.ts";
 import { WorkerArtifactClient } from "./worker-artifacts.ts";
 import { handleInternalArtifact } from "./internal-artifacts.ts";
-import { prismAttempt, prismRequestDigest } from "../engine/worker-envelope.ts";
+import { prismAttempt, prismNativeAttempt, prismRequestDigest } from "../engine/worker-envelope.ts";
 import { ingest, search, type CorpusInput } from "../corpus/index.ts";
 import { evaluate } from "../evaluation/index.ts";
 import {
@@ -135,7 +135,7 @@ private async runWorker(
   const {workerUrl, controlInternalUrl, workerSecret, spiffeEnabled} = this.config;
   const inputBytes=Buffer.from(JSON.stringify(input));
   const storedInput=await artifacts.put(inputBytes);
-  const attempt = prismAttempt(operation,{
+  const attempt = (this.config.workerExecutionMode === 'native' ? prismNativeAttempt : prismAttempt)(operation,{
     artifactId:storedInput.artifactId,type:"prism-engine-input",mediaType:"application/json",contentDigest:storedInput.digest,sizeBytes:storedInput.sizeBytes,
     storageUrl:new URL(`/v1/internal/artifacts/${storedInput.digest}`,controlInternalUrl).toString(),
   }, idempotencyKey);

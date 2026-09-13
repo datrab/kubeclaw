@@ -10,6 +10,7 @@ export interface NativeWorkerPoolPolicy {
   readonly cgroupRoot: string;
   readonly ownershipRoot: string;
   readonly nodeIdentityFile: string;
+  readonly runtimeIdentityFile: string;
   readonly maximumActiveScopes: number;
   readonly limits: NativeWorkerPoolLimits;
 }
@@ -37,7 +38,7 @@ function validate(value: NativeWorkerPoolPolicy, role: string): void {
 }
 
 function validatePaths(value: NativeWorkerPoolPolicy): void {
-  for (const location of [value.cgroupRoot, value.ownershipRoot, value.nodeIdentityFile]) {
+  for (const location of [value.cgroupRoot, value.ownershipRoot, value.nodeIdentityFile, value.runtimeIdentityFile]) {
     if (typeof location !== 'string' || !path.isAbsolute(location) || location === '/' || path.resolve(location) !== location) {
       throw new Error('WORKER_NATIVE_POOL_POLICY_PATH_INVALID');
     }

@@ -5,14 +5,21 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
+import { requireNativeWorkerLauncher } from '../../../skills/worker/core/worker/native-supervisor-authority.ts';
 
 test('compiled original launcher refuses ordinary filesystems and cannot execute the requested program', async () => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'worker-launcher-'));
   try {
     const binary = path.join(root, 'native-worker-launcher');
     const source = fileURLToPath(new URL('../../../skills/worker/core/worker/native-worker-launcher.c', import.meta.url));
-    const build = spawnSync('cc', ['-std=c11', '-Wall', '-Wextra', '-Werror', '-O2', '-o', binary, source], { encoding: 'utf8' });
+    const build = spawnSync('cc', ['-std=c11', '-Wall', '-Wextra', '-Werror', '-O2', '-fstack-protector-strong', '-D_FORTIFY_SOURCE=3', '-fPIE', '-pie', '-Wl,-z,relro,-z,now', '-o', binary, source], { encoding: 'utf8' });
     assert.equal(build.status, 0, build.stderr);
+    requireNativeWorkerLauncher(binary);
+    for (const mode of [0o777, 0o4755]) {
+      await fs.chmod(binary, mode);
+      assert.throws(() => requireNativeWorkerLauncher(binary), /LAUNCHER_NOT_TRUSTED/);
+    }
+    await fs.chmod(binary, 0o755);
     const sentinel = path.join(root, 'must-not-exist');
     const ordinaryScope = path.join(root, 'worker-11111111-1111-1111-1111-111111111111');
     await fs.mkdir(ordinaryScope);
