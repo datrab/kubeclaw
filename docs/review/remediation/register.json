@@ -4514,10 +4514,16 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP11",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "in Bearbeitung",
+      "implementation_commit": "af15fce0aff3e1ea7c07009350d0c950b0612147",
+      "verification_status": "Teilfix lokal verifiziert, Gesamtfinding offen",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-qdrant-checkpoint.md",
+          "raw": "../evidence/pr6-qdrant/local-tests.txt",
+          "summary": "Tailscale/Qdrant Archive gehasht und alle erzeugten Workload-/Hook-Images kontrolliert; Operator/Proxy/Qdrant/Registry-Mirror-Digests zentral gebunden. Kein vollständiger IFR-24-Abschluss."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/updates-security.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-24-001\n**Mittel; nachgewiesene Versionslücke.** `deploy.sh:1027–1032,1109–1132` installiert Tailscale, Redis, PostgreSQL und Qdrant ohne Chartversion. Registry-Manifeste verwenden registry:2; Rootless-Preflight mutable Tag. Diese Installationen werden durch einen zentral gepinnten Docker-Base-Generator nicht reproduzierbar. Auslöser: späterer Bootstrap/Upgrade mit veränderten Chart-/Image-Defaults.\n\nUrsachenbehebung: tatsächliche Infra-Chart-/Imageversionen samt kompatiblen Values explizit binden und durch echten Render-/Upgrade-Test aktualisieren. Regression: Offline-Render mit gesicherten Chartartefakten, Versionsvergleich aller tatsächlichen Installationsaufrufer. Keine aktuell zufällig aufgelösten Upstreamdefaults als geprüfte Baseline übernehmen.",
@@ -4525,9 +4531,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/scripts/deploy.sh#L1027"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Verbleibende Datenbankpins und sichere zustandsbehaftete Upgrades implementieren und lokal verifizieren.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Redis/PostgreSQL: vollständige Chart-/Imagebindung und kompatible bestehende Daten-/PVC-/StatefulSet-Migration. Qdrant: bestehende immutable Claim-Templates vor Rollout sicher migrieren; Preflight blockiert statt PVCs zu löschen."
     },
     {
       "id": "IFR-24-002",
@@ -4656,10 +4663,16 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP12",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "af15fce0aff3e1ea7c07009350d0c950b0612147",
+      "verification_status": "lokal verifiziert nach D12",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-api-network-contract.md",
+          "raw": "../evidence/pr6-qdrant/local-tests.txt",
+          "summary": "Bestehende explizite Cilium-kube-apiserver-Regeln für Nova/Buster-Clients, Controller und Ops-MCP gegen vollständige ausgelieferte Manifeste bestätigt: TCP 443 und 6443, enge Identitätsselektoren. Reales Ops-Helm-Rendering prüft portable/Cilium-Pfade mit entdeckbaren IPs und abweichendem Endpoint-Port. Keine lokale Kubernetes-HTTP-Attrappe als Live-Nachweis."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/network-dns.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-03-001\n**Mittel; begründeter Verdacht.** Auslöser: API-Service 443 wird vor Policy-Prüfung auf einen Host-/Endpoint-Port 6443 übersetzt. Beleg: allgemeines Agent-Egress `network-policies.yaml:110–121` und eigenständiges MCP-Egress `ops-mcp.yaml:157–171` erlauben nur 443, keinen expliziten API-Endpoint-Port. Lease-Controller und MCP benötigen API-Zugriff. Das Verhalten hängt vom tatsächlich eingesetzten Enforcer und DNAT-Pfad ab; kein bewiesener Live-Ausfall.\n\nUrsachenbehebung: API-Endpunkt und Vor-/Nach-DNAT-Policy-Vertrag explizit modellieren; bei Cilium `kube-apiserver`-Entity statt pauschaler Internet-Allow. Test: echte API-Aufrufe mit jeweiligem SA aus Controller, Nova und MCP, dazu negative private Ziele; Paket-/Drop-Evidenz unter altem und neuem CNI.",
@@ -4668,9 +4681,17 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/my-values/infra/ops-mcp.yaml#L157"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Vorbereitete echte SA-/Service-/Endpoint-Live-Prüfung und CNI/Hubble-Negativnachweise durch Auftraggeber; keine offene Code-Lücke im ursprünglichen 443/6443-Policy-Umfang. CNI-Migration und Umgebungsvorbereitung bleiben separat.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Keine bekannte offene Code-Lücke im engeren Umfang dieses Findings; Abhängigkeiten und Live-Gates sind unter next_action ausdrücklich erhalten.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-13T05:00:55.566798+00:00",
+        "status": "verifiziert",
+        "rationale": "Bestehende explizite Cilium-kube-apiserver-Regeln für Nova/Buster-Clients, Controller und Ops-MCP gegen vollständige ausgelieferte Manifeste bestätigt: TCP 443 und 6443, enge Identitätsselektoren. Reales Ops-Helm-Rendering prüft portable/Cilium-Pfade mit entdeckbaren IPs und abweichendem Endpoint-Port. Keine lokale Kubernetes-HTTP-Attrappe als Live-Nachweis.",
+        "report": "implementation/pr6-api-network-contract.md"
+      }
     },
     {
       "id": "IFR-03-002",
@@ -5027,18 +5048,32 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "af15fce0aff3e1ea7c07009350d0c950b0612147",
+      "verification_status": "lokal verifiziert nach D12",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-qdrant-checkpoint.md",
+          "raw": "../evidence/pr6-qdrant/local-tests.txt",
+          "summary": "Qdrant 1.19.1: tatsächlicher nativer Prozess mit TLS/Auth, getrenntem Leseschlüssel, Original-Agent-Probe, Snapshot-Export/SHA256, SIGKILL und frischem Restore mit identischen Vektoren/Payloads/Suchresultaten; Korruption, bestehendes Ziel und altes rotiertes Token abgewiesen. Collection-Ownership und konservative Retention dokumentiert."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/qdrant.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Review und Befund IFR-13-001\n**Mittel; offene Sicherheits-/Wiederherstellungsfrage.** Lokale Values konfigurieren weder API-Key/TLS noch Snapshots/Backup/Retention. Ob das aktuell aufgelöste Chart darüber hinaus Defaults setzt, ist wegen fehlendem Pin offen. Auslöser: kompromittierter zulässiger Agent oder Verlust des Single-PVC. Wirkung: möglicherweise breite Collection-Rechte bzw. Verlust gespeicherter Vektordaten, Wiederaufbaukosten unbekannt.\n\nUrsachenbehebung: Chart/Image pinnen, tatsächliche Consumer/Collections und Auth-Vertrag erfassen, zwischen reproduzierbaren Indizes und originären Daten unterscheiden; daraus Snapshot-/Rebuildverfahren ableiten. Echter Test: tatsächlicher Client mit erforderlicher Auth, Ablehnung eines unzulässigen Clients, Snapshot-Restore bzw. kompletter Rebuild und Vergleich der Suchresultate.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Live-Abnahme nach Abschluss der separat offenen Infrastruktur-Upgrades: reale Zertifikate/Secrets, Netzwerk-Negativtest und Restore eines unabhängig kopierten Produktionsexports. Bestehende StatefulSet/PVC-Migration bleibt IFR-24-001/IFR-16-001; der neue Preflight blockiert inkompatible Änderungen vor Mutationen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Keine bekannte offene Code-Lücke im engeren Umfang dieses Findings; Abhängigkeiten und Live-Gates sind unter next_action ausdrücklich erhalten.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-13T05:00:55.566798+00:00",
+        "status": "verifiziert",
+        "rationale": "Qdrant 1.19.1: tatsächlicher nativer Prozess mit TLS/Auth, getrenntem Leseschlüssel, Original-Agent-Probe, Snapshot-Export/SHA256, SIGKILL und frischem Restore mit identischen Vektoren/Payloads/Suchresultaten; Korruption, bestehendes Ziel und altes rotiertes Token abgewiesen. Collection-Ownership und konservative Retention dokumentiert.",
+        "report": "implementation/pr6-qdrant-checkpoint.md"
+      }
     },
     {
       "id": "IFR-14-001",
@@ -5524,12 +5559,12 @@
     }
   ],
   "implementation_branch": "fix/remediation-foundations-20260909",
-  "updated_at": "2026-09-12T20:15:37.271802+00:00",
+  "updated_at": "2026-09-13T05:00:55.566798+00:00",
   "progress_counts": {
-    "verifiziert": 133,
-    "in Bearbeitung": 2,
+    "verifiziert": 135,
+    "in Bearbeitung": 3,
     "implementiert": 3,
-    "offen": 16
+    "offen": 13
   },
   "additional_integration_findings": [
     {
