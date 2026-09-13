@@ -4,7 +4,8 @@ import {
   checkWorkerResourceContractV3, validatePipelineWorkerCoreContract, workerAttemptSpecDigest, workerProfileDigest,
   initialWorkerNativeResourceAccounting,
 } from '@kubeclaw/pipeline-worker-core-contract';
-import { prismAttempt, prismNativeAttempt } from '../../../skills/prism/engine/worker-envelope.ts';
+import { prismNativeAttempt } from '../../../skills/prism/engine/worker-envelope.ts';
+import historical from '../../../skills/prism/tests/fixtures/historical-worker-v1.json' with { type: 'json' };
 import { observeNativeWorkerResources } from '../../../skills/worker/core/worker/native-resource-observation.ts';
 import { assessNativeWorkerResources } from '../../../skills/worker/core/worker/native-resource-accounting.ts';
 
@@ -12,8 +13,9 @@ const artifact = { artifactId: 'input:protocol-test', type: 'prism-engine-input'
   contentDigest: `sha256:${'1'.repeat(64)}`, sizeBytes: 2, storageUrl: 'https://control.example/input' };
 
 test('V3 explicitly names Linux tasks while the original V1 envelope remains independently valid', () => {
-  const legacy = prismAttempt('render', artifact, 'version-test');
+  const legacy = historical.receipts[0]!.attempt;
   validatePipelineWorkerCoreContract('workerAttemptEnvelope', legacy);
+  assert.equal(workerAttemptSpecDigest(legacy), legacy.attemptSpecDigest);
   assert.equal(legacy.limits.processes, 256);
   const native = prismNativeAttempt('render', artifact, 'version-test');
   assert.deepEqual(checkWorkerResourceContractV3('workerAttemptEnvelope', native), { ok: true, errors: [] });

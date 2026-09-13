@@ -1,5 +1,7 @@
 # Aktueller Umsetzungsstand
 
+**138/154 lokal verifiziert, 16 unvollständig** (2 teilweise implementiert, 3 in Bearbeitung, 11 offen). PCR-PRISM-WORKER-002 nach Prüfung des aktuellen V3-Produktionspfads und lokalen Originaltests gemäß D12 geschlossen; veralteten V1-Testimport durch originale historische Receipts ersetzt. [Nachweis und separate Live-Gates](implementation/pr6-prism-native-local-closure.md). Frühere Zähler darunter sind historische Checkpoints.
+
 Wiederaufnahme 2026-09-13: drei offene Worker-Dateien geprüft; Startbesitz und Elternprozessbindung ergänzt. 24 echte lokale Prozess-/Ownership-/Channel-Tests bestehen. Buster-Rollenintegration bleibt unvollständig; **137/154 lokal verifiziert, 17 unvollständig**. Aktuelle [Übergabe](handoff.md) und [Nachweise](implementation/pr6-launch-ownership-checkpoint.md).
 
 Prism-Bereinigung: Der aktive Control-/Worker-Pfad ist ausschließlich V3; Legacy-Dispatcher, V1-Executor/-Producer, gemeinsame Prozessmessung und zweiter CLI-Einstieg sind entfernt. Helm und Preflight bieten keinen Legacy-Schalter mehr. Lokale Prüfungen und vorbereitete echte Native-Gates: [Single-Runtime-Checkpoint](implementation/pr6-prism-single-runtime.md). Busters bestehender UID-Wechsel kollidiert mit dem vollständig entrechteten nativen Host; dazu liegt eine neue [Entscheidung zur Startberechtigung](implementation/pr6-buster-launch-authority-decision.md) vor. **137 lokal verifiziert / 17 unvollständig**, keine pauschale Finding-Schließung.

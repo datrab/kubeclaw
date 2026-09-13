@@ -1,8 +1,8 @@
 # Aktuelle Übergabe PR #6
 
-Stand der Wiederaufnahme am 2026-09-13: **137/154 lokal verifiziert, 17 unvollständig**.
-Das Register `register.json` enthält 3 teilweise implementierte, 3 in Bearbeitung
-und 11 offene Findings. Keine zusätzliche Finding-Schließung in diesem Checkpoint.
+Stand der Wiederaufnahme am 2026-09-13: **138/154 lokal verifiziert, 16 unvollständig**.
+Das Register `register.json` enthält 2 teilweise implementierte, 3 in Bearbeitung
+und 11 offene Findings. PCR-PRISM-WORKER-002 ist gemäß D12 lokal geschlossen; separate Live-Abnahme offen.
 
 ## Gesicherte Arbeit
 
@@ -30,9 +30,8 @@ bleiben. Anschließend den alten Runner, File-Capability-Start und ersetzte
 Samplingpfade löschen; keine dauerhaften Fallbacks hinzufügen.
 
 Danach die übrigen Worker-/Retention- und Infrastrukturfindings anhand der
-Originalbefunde im Register schließen. Die bestehende Zeile
-PCR-PRISM-WORKER-002 muss gegen den neueren Prism-V3-Code neu bewertet werden;
-ihr alter next_action-Text beschreibt noch den historischen Parent-CPU-Pfad.
+Originalbefunde im Register schließen. PCR-PRISM-WORKER-002 wurde gegen den V3-Produktionspfad neu bewertet;
+Nachweis: `implementation/pr6-prism-native-local-closure.md`.
 
 ## Arbeitsregeln
 

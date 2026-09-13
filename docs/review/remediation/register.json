@@ -3217,9 +3217,9 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "implementiert",
-      "implementation_commit": "91030cbc3a30882669b8af834102d368b50bd99d",
-      "verification_status": "teilweise; Zwei überlappende Originaloperationen reproduzieren doppelte CPU-Zurechnung:341ms berichtete Summe bei172.468ms tatsächlicher Parent-CPU. Konkrete generische Host-/Containment-/Terminalmessungsintegration ausgearbeitet. Kein Produktionsfix und kein nativer Browser-/Cgroupnachweis.",
+      "status": "verifiziert",
+      "implementation_commit": "60620e34cbcfc5cd616fb20c9166d8f9123aa7eb",
+      "verification_status": "bestanden (lokal nach D12); positive Native-/Cluster-Abnahme separat offen",
       "verification_evidence": [
         "docs/review/remediation/implementation/prism-worker-cancellation.md",
         {
@@ -3234,6 +3234,10 @@
         {
           "report": "implementation/pr6-local-acceptance.md",
           "summary": "Parallele Originaloperationen rechnen weiterhin gemeinsame Parent-CPU mehrfach zu; versuchsgebundener Owner und finale Messversiegelung fehlen im Produktionspfad."
+        },
+        {
+          "report": "implementation/pr6-prism-native-local-closure.md",
+          "summary": "Aktuellen nativen Produktionspfad geprüft: keine gemeinsame Parent-CPU-Messung mehr; per-Attempt-Scope und finale Zählerversiegelung vorhanden. 21 lokale Prüfungen bestanden, verbliebenen V1-Testimport korrigiert und alle 3 Vertragstests bestanden. Native Live-Abnahme separat offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-worker.md",
@@ -3245,17 +3249,17 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/worker/core/worker/attempt-executor.ts#L437"
       ],
       "unresolved_code_references": [],
-      "next_action": "Parallele Originaloperationen rechnen weiterhin gemeinsame Parent-CPU mehrfach zu; versuchsgebundener Owner und finale Messversiegelung fehlen im Produktionspfad.",
+      "next_action": "Vorbereitete positive Native-/Browser-/Attributionsgates bei der separaten Live-Abnahme ausführen; keine verbleibende Implementierungsarbeit für den ursprünglichen Parent-CPU-Befund.",
       "related_findings": [],
       "decision_notes": [],
       "local_acceptance": {
         "policy": "D12",
-        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
-        "status": "offen",
-        "rationale": "Parallele Originaloperationen rechnen weiterhin gemeinsame Parent-CPU mehrfach zu; versuchsgebundener Owner und finale Messversiegelung fehlen im Produktionspfad.",
-        "report": "implementation/pr6-local-acceptance.md"
+        "assessed_at": "2026-09-13T19:08:29.775543+00:00",
+        "status": "verifiziert",
+        "rationale": "Der frühere next_action-Text war veraltet; der Produktionspfad wurde vollständig auf native Attempt-Scope-Abrechnung umgestellt. Lokale Original-Komponentenprüfungen ausreichend; keine Live-Abnahme behauptet.",
+        "report": "implementation/pr6-prism-native-local-closure.md"
       },
-      "remaining_work": "Parallele Originaloperationen rechnen weiterhin gemeinsame Parent-CPU mehrfach zu; versuchsgebundener Owner und finale Messversiegelung fehlen im Produktionspfad."
+      "remaining_work": "Nur separate positive Native-/Cluster-Abnahme nach D12."
     },
     {
       "id": "PCR-PRISM-WORKER-003",
@@ -5616,11 +5620,11 @@
     }
   ],
   "implementation_branch": "fix/remediation-foundations-20260909",
-  "updated_at": "2026-09-13T08:16:49.479674+00:00",
+  "updated_at": "2026-09-13T19:08:29.775784+00:00",
   "progress_counts": {
-    "verifiziert": 137,
+    "verifiziert": 138,
     "in Bearbeitung": 3,
-    "implementiert": 3,
+    "implementiert": 2,
     "offen": 11
   },
   "additional_integration_findings": [
