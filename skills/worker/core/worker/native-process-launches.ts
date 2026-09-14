@@ -33,7 +33,9 @@ export class NativeProcessLaunches {
 
   async #stop(timeoutMs: number): Promise<void> {
     const children = [...this.#children];
-    for (const [child] of children) child.kill('SIGKILL');
+    // A failed spawn still has an error event pending but owns no process.
+    // Signalling its uninitialized handle can replace the spawn error with EPERM.
+    for (const [child] of children) if (child.pid !== undefined) child.kill('SIGKILL');
     let timer: NodeJS.Timeout | undefined;
     try {
       await Promise.race([Promise.all(children.map(([, exited]) => exited)), new Promise<never>((_resolve, reject) => {
