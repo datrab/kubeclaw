@@ -4992,18 +4992,33 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "0663807443b42e3222d52ff02486f959d7b7acf0",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-gitops-closure.md",
+          "raw": [
+            "../evidence/pr6-gitops/local-tests.txt",
+            "../evidence/pr6-gitops/bootstrap-test.txt",
+            "../evidence/pr6-gitops/backup-regression.txt",
+            "../evidence/pr6-gitops/lint.txt",
+            "../evidence/pr6-gitops/shell-syntax.txt",
+            "../evidence/pr6-gitops/versions.txt",
+            "../evidence/pr6-gitops/chart-source-blobs.json"
+          ],
+          "summary": "27 lokale Tests ohne Skips bestanden: echte Git-/Helm-/Lua-Ausführung, gepinntes Argo-Chart mit gehashten Originaldateien; Release-/Ownership-/Secret-/Health-/PVC-Gates und Backupregression. Clusterantworten, DB-Kommandos und Release-Digests sind explizite Fixtures. Kein Argo-Controller oder Cluster gestartet."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/argocd.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-05-001\n**Mittel; nachgewiesene Implementierungslücke gegenüber vollständigem GitOps-Betrieb.** Auslöser: Erwartung, dass der Bootstrap bereits Pipeline-Releases verwaltet. Beleg: gesamtes Installationsskript; Suche nach `kind: Application`/`AppProject` in main liefert keine Produktionsressource. Es werden Argo und sein Ingress installiert, keine Release-Auswahl oder Deployment-Reihenfolge eingerichtet. Damit sind Ownership, Drift-/Prune-Verhalten und Health-Gates noch nicht implementiert.\n\nUrsachenbehebung: explizite Applications/Projects, einziger Eigentümer pro Ressource, Secret-Vorversorgung, Digest-Values und Verhalten persistenter Ressourcen festlegen. Skriptverwaltete Releases nicht gleichzeitig ungeregelt von Argo verwalten. Echter Test: später auf isoliertem Cluster Bootstrap, ersten Sync, fehlgeschlagenen Hook, Drift, Registry-/Git-Ausfall und Rollback unter Erhalt der PVCs prüfen.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Separate Live-Abnahme: frischer Bootstrap, fehlgeschlagene Migration, Drift/Self-heal, Git-/Registry-Ausfall und kompatibler Rollback mit identischen PVCs gemäß GitOps-Abschlussbericht.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Nur separate Live-Gates nach D12. Helm-Bestandscutover erfordert explizite geprüfte Eigentumsübergabe; keine automatische Adoption. IFR-26-001/IFR-16-001 bleiben eigenständige Findings."
     },
     {
       "id": "IFR-06-001",
@@ -5649,10 +5664,10 @@
   "implementation_branch": "fix/remediation-foundations-20260909",
   "updated_at": "2026-09-14",
   "progress_counts": {
-    "verifiziert": 140,
+    "verifiziert": 141,
     "in Bearbeitung": 3,
     "implementiert": 2,
-    "offen": 9
+    "offen": 8
   },
   "additional_integration_findings": [
     {

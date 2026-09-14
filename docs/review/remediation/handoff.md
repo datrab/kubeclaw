@@ -1,5 +1,11 @@
 # Aktuelle Übergabe PR #6
 
+GitOps IFR-05-001 ist am 2026-09-14 nach D12 lokal abgeschlossen.
+27 Tests ohne Skips, Lint, Shellsyntax und Versionsprüfung bestanden.
+Implementierung: `0663807443b42e3222d52ff02486f959d7b7acf0`.
+[Neue vollständige Übergabe mit Git-Zustand und allen 13 Restfindings](implementation/resume-20260914-gitops-handoff.md).
+[GitOps-Abschluss und separate Live-Grenzen](implementation/pr6-gitops-closure.md).
+
 IFR-26-001 zusätzlich in Bearbeitung: Der geplante Prism-Backupjob enthält jetzt
 einen gemeinsamen DB-/Artefaktstand mit geprüfter Gruppenveröffentlichung,
 Kapazitätsgrenzen und Erhalt alter Backups. Separate Integritätsprüfung sowie
@@ -21,9 +27,9 @@ Redis IFR-11-001 lokal abgeschlossen: echte Versions-/RDB-AOF-Migration,
 Crash-/Dedup-/OOM-Prüfung und vier Helm-/PVC-Gates bestanden.
 [Abschluss und Live-Grenzen](implementation/pr6-redis-migration-closure.md).
 
-Aktueller Stand am 2026-09-14: **140/154 lokal verifiziert, 14 unvollständig**.
+Aktueller Stand am 2026-09-14: **141/154 lokal verifiziert, 13 unvollständig**.
 Das Register `register.json` enthält 2 teilweise implementierte, 3 in Bearbeitung
-und 9 offene Findings. PCR-PRISM-WORKER-002 ist gemäß D12 lokal geschlossen; separate Live-Abnahme offen.
+und 8 offene Findings. PCR-PRISM-WORKER-002 ist gemäß D12 lokal geschlossen; separate Live-Abnahme offen.
 
 ## Gesicherte Arbeit
 
