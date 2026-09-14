@@ -19,7 +19,13 @@ const fields = [...Object.entries(manifest.buildArgs), ...Object.values(manifest
 for (const [key] of fields) assert.ok(deps.some(dep => dep.replaceString?.includes(`"${key}"`)), `Undiscovered pin: ${key}`);
 assert.ok(deps.every(dep => !dep.skipReason));
 assert.ok(deps.some(dep => dep.depName === 'openclaw/openclaw'));
-for (const key of Object.keys(manifest.automation)) assert.ok(deps.some(dep => dep.replaceString.includes(`"${key}"`)));
+for (const [key, image] of Object.entries(manifest.automation)) {
+  const matches = deps.filter(dep => dep.replaceString?.includes(`"${key}"`));
+  assert.equal(matches.length, 1, `Expected exactly one discovered automation pin: ${key}`);
+  const dep = matches[0];
+  assert.equal(`${dep.depName}:${dep.currentValue}@${dep.currentDigest}`, image,
+    `Incorrect image extraction for automation pin: ${key}`);
+}
 // Exercise Renovate's real replacement engine, including native v-prefixed overrides.
 // Synthetic versions stay in a disposable directory and are never published or built.
 for (const prefix of ['', 'v']) {

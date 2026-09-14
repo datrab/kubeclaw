@@ -19,7 +19,7 @@
         "/^versions\\.json$/"
       ],
       "matchStrings": [
-        "\"(?:[A-Z_]+_BASE|envoy|renovate|testRegistry)\": \"(?<depName>[^\"@]+?):(?<currentValue>[^\"@]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
+        "\"(?:[A-Z_]+_BASE|envoy|renovate|testRegistry|prismTestPostgres)\": \"(?<depName>[^\"@]+?):(?<currentValue>[^\"@]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
       ],
       "datasourceTemplate": "docker"
     },
