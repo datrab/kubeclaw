@@ -15,11 +15,6 @@ jobs:
     uses: ./.github/workflows/pipeline-reliability.yaml
     permissions:
       contents: read
-  role-images:
-    uses: ./.github/workflows/role-images.yaml
-    if: github.event_name != 'schedule'
-    permissions:
-      contents: read
   detect-build-inputs:
     name: Detect Image Build Inputs
     runs-on: ubuntu-latest
@@ -41,6 +36,10 @@ jobs:
               - 'versions.json'
               - 'scripts/versions.mjs'
               - 'scripts/check-role-image.sh'
+              - 'scripts/check-built-runtime-image.sh'
+              - 'scripts/registry-client-config.mjs'
+              - 'tests/verification/deployment/check-buster-build.sh'
+              - '.github/workflows/build-images.yaml'
               - 'scripts/prepare-image-build-runner.sh'
               - 'tsconfig.base.json'
               - 'package.json'
@@ -48,19 +47,19 @@ jobs:
               - 'docker/**'
               - 'go.mod'
               - 'cmd/buster-namespace-controller/**'
-              - 'skills/common/plugins/openclaw-agent-observer/**'
-              - 'skills/buster/plugins/buster-suite-runtime/**'
-              - 'contracts/agent-observability/v1/**'
-              - 'contracts/prism/v1/**'
-              - 'skills/prism/**'
-              - 'skills/worker/core/**'
-              - 'contracts/pipeline-worker-core/v1/**'
+              - 'skills/**'
+              - 'contracts/**'
+              - 'scripts/build-plugin-sandbox.mjs'
+              - 'tests/verification/contracts/check-pipeline-container-build-production.mts'
+              - 'tests/verification/contracts/check-pipeline-container-build-recovery.mts'
+              - 'tests/verification/live/**'
   build:
-    name: Build & Push
+    name: Build & Verify
     runs-on: ubuntu-latest
-    needs: [detect-build-inputs, reliability, role-images, update-policy]
+    timeout-minutes: 60
+    needs: [detect-build-inputs, reliability, update-policy]
     if: |
-      always() && needs.reliability.result == 'success' && needs.role-images.result == 'success' && needs.update-policy.result == 'success' &&
+      always() && needs.reliability.result == 'success' && needs.update-policy.result == 'success' &&
       (github.event_name == 'workflow_dispatch' ||
        (github.event_name == 'push' && needs.detect-build-inputs.outputs.image_inputs_changed == 'true'))
     permissions:
@@ -69,37 +68,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - name: nova
-            dockerfile: docker/Dockerfile.nova
-            image_suffix: kubeclaw-nova
-          - name: prism-agent
-            dockerfile: docker/Dockerfile.prism-agent
-            image_suffix: kubeclaw-prism-agent
-          - name: buster-gateway
-            dockerfile: docker/Dockerfile.buster-gateway
-            image_suffix: kubeclaw-buster-gateway
-          - name: buster-runtime
-            dockerfile: docker/Dockerfile.buster-runtime
-            image_suffix: kubeclaw-buster-runtime
-          - name: namespace-controller
-            dockerfile: docker/Dockerfile.namespace-controller
-            image_suffix: kubeclaw-namespace-controller
-          - name: archviewer
-            dockerfile: docker/Dockerfile.archviewer
-            image_suffix: kubeclaw-archviewer
-          - name: prism-control
-            dockerfile: docker/Dockerfile.prism-control
-            image_suffix: kubeclaw-prism-control
-          - name: prism-studio
-            dockerfile: docker/Dockerfile.prism-studio
-            image_suffix: kubeclaw-prism-studio
-          - name: prism-worker
-            dockerfile: docker/Dockerfile.prism-worker
-            image_suffix: kubeclaw-prism-worker
-          - name: prism-ingestion
-            dockerfile: docker/Dockerfile.prism-ingestion
-            image_suffix: kubeclaw-prism-ingestion
+        name: [nova, prism-agent, buster-gateway, buster-runtime, namespace-controller, archviewer, prism-control, prism-studio, prism-worker, prism-ingestion]
     steps:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -117,7 +86,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_suffix }}
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/kubeclaw-${{ matrix.name }}
           tags: |
             type=sha,prefix=candidate-,format=long
       - name: Build & Push
@@ -125,7 +94,7 @@ jobs:
         uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7
         with:
           context: .
-          file: ${{ matrix.dockerfile }}
+          file: docker/Dockerfile.${{ matrix.name }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha,scope=${{ matrix.name }}
@@ -136,19 +105,17 @@ jobs:
             TRIVY_DATABASE_REFRESH=${{ github.run_id }}.${{ github.run_attempt }}
           provenance: mode=max
           sbom: true
-      - name: Verify the exact published role artifact
-        if: contains(fromJSON('["nova","prism-agent","buster-gateway"]'), matrix.name)
+      - name: Verify the exact published artifact
+        if: contains(fromJSON('["nova","prism-agent","buster-gateway","buster-runtime"]'), matrix.name)
         env:
-          IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_suffix }}@${{ steps.build.outputs.digest }}
+          IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/kubeclaw-${{ matrix.name }}@${{ steps.build.outputs.digest }}
           ROLE: ${{ matrix.name }}
         run: |
           docker pull "$IMAGE"
-          version="$(node -p 'require("./versions.json").openclaw.version')"
-          docker run --rm --network none --user 0 --entrypoint bash -v "$PWD/scripts/check-role-image.sh:/check-role-image.sh:ro" "$IMAGE" /check-role-image.sh "$ROLE" "$version"
-          docker run --rm --network none --entrypoint bash -v "$PWD/scripts/check-role-image.sh:/check-role-image.sh:ro" "$IMAGE" /check-role-image.sh "$ROLE" "$version" runtime
+          bash scripts/check-built-runtime-image.sh "$ROLE" "$IMAGE"
       - name: Record immutable build receipt
         env:
-          IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_suffix }}@${{ steps.build.outputs.digest }}
+          IMAGE: ${{ env.REGISTRY }}/${{ github.repository_owner }}/kubeclaw-${{ matrix.name }}@${{ steps.build.outputs.digest }}
           IMAGE_NAME: ${{ matrix.name }}
         run: |
           mkdir -p dist/image-receipts
@@ -166,15 +133,16 @@ jobs:
           echo '```' >> $GITHUB_STEP_SUMMARY
           echo "- Digest: \`${{ steps.build.outputs.digest }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- BuildKit provenance and SBOM: published with the image" >> $GITHUB_STEP_SUMMARY
-          echo "- Local scan: \`npm run scan:images -- ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_suffix }}@${{ steps.build.outputs.digest }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Local scan: \`npm run scan:images -- ${{ env.REGISTRY }}/${{ github.repository_owner }}/kubeclaw-${{ matrix.name }}@${{ steps.build.outputs.digest }}\`" >> $GITHUB_STEP_SUMMARY
   bundle-skills:
     name: Package & Publish Skill Bundles
     runs-on: ubuntu-latest
-    needs: [detect-build-inputs, reliability, role-images, update-policy]
+    needs: [detect-build-inputs, build, reliability, update-policy]
     if: |
-      always() && needs.reliability.result == 'success' && needs.role-images.result == 'success' && needs.update-policy.result == 'success' &&
-      (github.event_name == 'push' ||
-       github.event_name == 'workflow_dispatch')
+      always() && needs.reliability.result == 'success' && needs.update-policy.result == 'success' &&
+      (needs.build.result == 'success' ||
+       (needs.build.result == 'skipped' && github.event_name == 'push' && needs.detect-build-inputs.outputs.image_inputs_changed == 'false')) &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     permissions:
       contents: write
     env:

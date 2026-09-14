@@ -26,7 +26,6 @@
       "jobs": [
         "update-policy",
         "reliability",
-        "role-images",
         "detect-build-inputs",
         "build",
         "bundle-skills",
@@ -40,7 +39,6 @@
         "npm run plugin-system:sandbox:build",
         "uses: ./.github/workflows/pipeline-reliability.yaml",
         "uses: ./.github/workflows/publish-image-receipts.yaml",
-        "uses: ./.github/workflows/role-images.yaml",
         "uses: ./.github/workflows/update-checks.yaml",
         "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
         "uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
@@ -292,8 +290,7 @@
       "name": "Role image acceptance",
       "triggers": [
         "pull_request",
-        "workflow_dispatch",
-        "workflow_call"
+        "workflow_dispatch"
       ],
       "pathFilters": [
         "package.json",
@@ -305,21 +302,26 @@
         "tsconfig.base.json",
         "scripts/versions.mjs",
         "scripts/check-role-image.sh",
+        "scripts/check-built-runtime-image.sh",
+        "scripts/registry-client-config.mjs",
+        "scripts/build-plugin-sandbox.mjs",
+        "tests/verification/contracts/check-pipeline-container-build-production.mts",
+        "tests/verification/contracts/check-pipeline-container-build-recovery.mts",
+        "tests/verification/live/**",
+        "tests/verification/deployment/check-buster-build.sh",
+        "contracts/**",
+        "go.mod",
+        "cmd/**",
         "scripts/prepare-image-build-runner.sh",
         ".github/workflows/role-images.yaml",
-        "skills/common/plugins/openclaw-agent-observer/**",
-        "contracts/agent-observability/v1/**",
-        "skills/prism/openclaw-plugin/**",
-        "skills/prism/server/agent-bridge.mjs",
         "charts/kubeclaw/**"
       ],
       "schedules": [],
       "jobs": [
-        "image",
-        "buster-build",
-        "application-builds"
+        "image"
       ],
       "commandAndActionRefs": [
+        "bash scripts/check-built-runtime-image.sh \"$ROLE\" \"$IMAGE",
         "bash scripts/prepare-image-build-runner.sh",
         "node scripts/versions.mjs --check",
         "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
