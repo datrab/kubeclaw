@@ -69,11 +69,14 @@
     }
   ],
   "commandCases": [
+    "render",
     "setup",
     "infra",
     "secrets",
     "tailscale",
     "buildkit-preflight",
+    "native-node-render",
+    "native-node-preflight",
     "buster-buildkit-smoke",
     "nova-buildkit-preflight",
     "nova-unit-preflight",
@@ -122,10 +125,6 @@
     {
       "name": "CODE_BUNDLE_GITHUB_REPOSITORY",
       "description": "owner/repo override for derived GitHub release bundle URLs"
-    },
-    {
-      "name": "CODE_BUNDLE_DEFAULT_REF",
-      "description": "Git ref to resolve when code deploy omits an explicit expected commit (default: refs/heads/main)"
     },
     {
       "name": "CODE_BUNDLE_RELEASE_TAG",
@@ -209,7 +208,7 @@
     },
     {
       "name": "BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE",
-      "description": "Rootless BuildKit probe image (default: moby/buildkit:rootless)"
+      "description": "Digest-pinned probe image (default: managed BUILDKIT_BASE)"
     }
   ],
   "defaults": {
@@ -217,7 +216,6 @@
     "AGENT_HELM_TIMEOUT": "45m",
     "AGENT_ROLLOUT_TIMEOUT": "45m",
     "CODE_BUNDLE_GITHUB_REPOSITORY": null,
-    "CODE_BUNDLE_DEFAULT_REF": "refs/heads/main",
     "CODE_BUNDLE_RELEASE_TAG": "agent-code-bundles",
     "CODE_BUNDLE_PREFLIGHT_SKIP": "false",
     "NOVA_CODE_BUNDLE_ARCHIVE_URL": null,
@@ -238,7 +236,7 @@
     "LITELLM_NODE_PORT": "30050",
     "KUBECLAW_DEPLOY_SPIRE": "true",
     "ALLOW_PARTIAL_INFRA": "false",
-    "BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE": "moby/buildkit:rootless"
+    "BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE": "moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c"
   },
   "functions": [
     "log",
@@ -267,6 +265,9 @@
     "derive_github_repository",
     "default_bundle_archive_url",
     "default_bundle_expected_commit",
+    "bundle_values_field",
+    "require_selected_runtime",
+    "render_selected_role",
     "verify_bundle_archive_url",
     "bundle_env_for_role",
     "resolve_deploy_targets",
@@ -341,12 +342,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 855,
-    "secrets": 900,
-    "tailscale": 991,
-    "infra": 1082,
-    "agents": 1405,
-    "smoke": 1527,
-    "teardown": 2748
+    "setup": 884,
+    "secrets": 921,
+    "tailscale": 1012,
+    "infra": 1107,
+    "agents": 1484,
+    "smoke": 1609,
+    "teardown": 2854
   }
 }

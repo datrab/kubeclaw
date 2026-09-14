@@ -9,7 +9,7 @@ import { parsePayload } from './payload.ts';
 type Payload = Readonly<Record<string, unknown>>;
 const hash = (value: string) => crypto.createHash('sha256').update(value).digest('hex');
 const same = (left: unknown, right: unknown) => payloadDigest(left) === payloadDigest(right);
-const fail = (): never => { throw new Error('OPERATOR_PROJECTION_AUTHORITY_REQUIRED'); };
+function fail(): never { throw new Error('OPERATOR_PROJECTION_AUTHORITY_REQUIRED'); }
 const digest = (value: unknown) => typeof value === 'string' && /^sha256:[a-f0-9]{64}$/u.test(value);
 const shape = (value: unknown, keys: string) => value !== null && typeof value === 'object'
   && !Array.isArray(value) && Object.keys(value).sort().join(',') === keys;

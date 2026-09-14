@@ -9,6 +9,7 @@
     ".github/workflows/promote-runtime.yaml",
     ".github/workflows/publish-image-receipts.yaml",
     ".github/workflows/release-security.yaml",
+    ".github/workflows/remediation-native.yaml",
     ".github/workflows/role-images.yaml",
     ".github/workflows/update-checks.yaml"
   ],
@@ -41,16 +42,16 @@
         "uses: ./.github/workflows/publish-image-receipts.yaml",
         "uses: ./.github/workflows/role-images.yaml",
         "uses: ./.github/workflows/update-checks.yaml",
-        "uses: actions/checkout@v6",
-        "uses: actions/setup-node@v5",
-        "uses: actions/upload-artifact@v4",
-        "uses: azure/setup-helm@v4",
-        "uses: azure/setup-kubectl@v4",
-        "uses: docker/build-push-action@v7",
-        "uses: docker/login-action@v4",
-        "uses: docker/metadata-action@v6",
-        "uses: docker/setup-buildx-action@v4",
-        "uses: dorny/paths-filter@v3"
+        "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+        "uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+        "uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+        "uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4",
+        "uses: azure/setup-kubectl@776406bce94f63e41d621b960d78ee25c8b76ede",
+        "uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a",
+        "uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+        "uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302",
+        "uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e",
+        "uses: dorny/paths-filter@0e4a8c6effa4802afeda77dc8d303f8176d7dfad"
       ]
     },
     {
@@ -65,6 +66,9 @@
         "versions.json",
         "scripts/versions.mjs",
         "tools/ops-mcp/**",
+        "my-values/infra/**",
+        "scripts/*cilium*",
+        "examples/cilium/**",
         "ops/pod/**",
         "charts/ops-pod/**",
         "scripts/deploy-ops-pod.sh",
@@ -72,7 +76,8 @@
       ],
       "schedules": [],
       "jobs": [
-        "build",
+        "validate",
+        "publish",
         "preserve-receipts"
       ],
       "commandAndActionRefs": [
@@ -80,14 +85,14 @@
         "bash tools/ops-mcp/test-image.sh \"$TEST_IMAGE",
         "node scripts/versions.mjs --check",
         "uses: ./.github/workflows/publish-image-receipts.yaml",
-        "uses: actions/checkout@v6",
-        "uses: actions/setup-node@v6",
-        "uses: actions/upload-artifact@v4",
-        "uses: azure/setup-helm@v4.3.1",
-        "uses: docker/build-push-action@v7",
-        "uses: docker/login-action@v4",
-        "uses: docker/metadata-action@v6",
-        "uses: docker/setup-buildx-action@v4"
+        "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+        "uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38",
+        "uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+        "uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4",
+        "uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a",
+        "uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+        "uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302",
+        "uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e"
       ]
     },
     {
@@ -105,9 +110,8 @@
         "renovate"
       ],
       "commandAndActionRefs": [
-        "test -n \"$APP_ID\" && test -n \"$APP_KEY",
-        "uses: actions/checkout@v6",
-        "uses: actions/create-github-app-token@v2"
+        "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+        "uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349"
       ]
     },
     {
@@ -134,7 +138,8 @@
       ],
       "schedules": [],
       "jobs": [
-        "docs"
+        "validate",
+        "update"
       ],
       "commandAndActionRefs": [
         "git diff --check",
@@ -143,9 +148,9 @@
         "npm run docs:check:coverage",
         "npm run docs:check:generated",
         "npm run docs:check:refs",
-        "npm run docs:inventory && npm run docs:generate",
-        "uses: actions/checkout@v4",
-        "uses: actions/setup-node@v4"
+        "npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate",
+        "uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+        "uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020"
       ]
     },
     {
@@ -153,7 +158,6 @@
       "name": "Pipeline reliability",
       "triggers": [
         "pull_request",
-        "push",
         "workflow_call"
       ],
       "pathFilters": [],
@@ -178,9 +182,9 @@
         "npm test --prefix skills/buster/plugins/${{ matrix.provider }}",
         "npm test --workspace @kubeclaw/plugin-security-providers",
         "sudo apt-get update && sudo apt-get install -y shellcheck shfmt",
-        "uses: actions/checkout@v6",
-        "uses: actions/setup-node@v5",
-        "uses: azure/setup-helm@v4"
+        "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+        "uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+        "uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4"
       ]
     },
     {
@@ -196,10 +200,10 @@
       ],
       "commandAndActionRefs": [
         "npm ci --ignore-scripts --no-audit --no-fund",
-        "uses: actions/checkout@v6",
-        "uses: actions/create-github-app-token@v2",
-        "uses: actions/setup-node@v5",
-        "uses: actions/upload-artifact@v4"
+        "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+        "uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349",
+        "uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+        "uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"
       ]
     },
     {
@@ -214,9 +218,9 @@
         "preserve"
       ],
       "commandAndActionRefs": [
-        "uses: actions/checkout@v6",
-        "uses: actions/download-artifact@v4",
-        "uses: actions/setup-node@v5"
+        "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+        "uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093",
+        "uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444"
       ]
     },
     {
@@ -236,9 +240,51 @@
       "commandAndActionRefs": [
         "node scripts/updates/scan-releases.mjs",
         "node scripts/versions.mjs --check",
-        "uses: actions/checkout@v6",
-        "uses: actions/setup-node@v5",
-        "uses: actions/upload-artifact@v4"
+        "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+        "uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+        "uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"
+      ]
+    },
+    {
+      "path": ".github/workflows/remediation-native.yaml",
+      "name": "Native remediation acceptance",
+      "triggers": [
+        "pull_request",
+        "workflow_call"
+      ],
+      "pathFilters": [
+        "skills/**",
+        "scripts/**",
+        "contracts/**",
+        "tests/**",
+        "tools/ops-mcp/**",
+        "spikes/prism/puck-adapter/**",
+        "charts/kubeclaw/files/config/knip.json",
+        "package.json",
+        "package-lock.json",
+        "versions.json",
+        ".github/workflows/remediation-native.yaml"
+      ],
+      "schedules": [],
+      "jobs": [
+        "static",
+        "inputs",
+        "postgres",
+        "studio",
+        "supervisor"
+      ],
+      "commandAndActionRefs": [
+        "node node_modules/playwright/cli.js install --with-deps chromium",
+        "node skills/prism/tests/native/postgres-suite.mts transactions",
+        "node skills/prism/tests/native/postgres-suite.mts worker-readiness",
+        "npm ci --ignore-scripts",
+        "npm run knip:check",
+        "npm run test:corpus-pool --workspace @kubeclaw/prism",
+        "npm run test:review-operations",
+        "npm run test:studio-remediation --workspace @kubeclaw/prism",
+        "npm run typecheck:integration",
+        "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+        "uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444"
       ]
     },
     {
@@ -276,10 +322,10 @@
       "commandAndActionRefs": [
         "bash scripts/prepare-image-build-runner.sh",
         "node scripts/versions.mjs --check",
-        "uses: actions/checkout@v6",
-        "uses: actions/setup-node@v5",
-        "uses: docker/build-push-action@v7",
-        "uses: docker/setup-buildx-action@v4"
+        "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+        "uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+        "uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a",
+        "uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e"
       ]
     },
     {
@@ -301,9 +347,9 @@
         "node scripts/updates/check-upstream-refresh.mjs",
         "node scripts/updates/verify-release-source.mjs",
         "npm ci --ignore-scripts --no-audit --no-fund",
-        "uses: actions/checkout@v6",
-        "uses: actions/setup-node@v5",
-        "uses: azure/setup-helm@v4"
+        "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+        "uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+        "uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4"
       ]
     }
   ]

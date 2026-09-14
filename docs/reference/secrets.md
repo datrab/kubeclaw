@@ -45,8 +45,8 @@ Generated from: `my-values/setup-secrets.sh`
 | `litellm-secrets` | `NAMESPACE` | KUBECLAW_DEPLOY_LITELLM is enabled | `LITELLM_MASTER_KEY`, `DATABASE_URL` | setup_litellm_secret, line 740 |
 | `google-sa-key` | `NAMESPACE` | KUBECLAW_DEPLOY_LITELLM is enabled | `credentials.json` | setup_google_sa_key, line 839 |
 | `ghcr-secret` | `NAMESPACE` | always when imagePullSecrets reference GHCR | `.dockerconfigjson` | setup_ghcr_secret, line 874 |
-| `git-deploy-key-nova` | `NAMESPACE` | Nova git checkout is enabled | `id_rsa` | setup_git_deploy_key git-deploy-key-nova Nova, line 1076 |
-| `git-deploy-key-buster` | `NAMESPACE` | Buster git checkout is enabled | `id_rsa` | setup_git_deploy_key git-deploy-key-buster Buster, line 1077 |
+| `git-deploy-key-nova` | `NAMESPACE` | Nova git checkout is enabled | `id_rsa` | setup_git_deploy_key git-deploy-key-nova Nova, line 1080 |
+| `git-deploy-key-buster` | `NAMESPACE` | Buster git checkout is enabled | `id_rsa` | setup_git_deploy_key git-deploy-key-buster Buster, line 1081 |
 | `operator-oauth` | `TAILSCALE_OPERATOR_NAMESPACE` | TAILSCALE_OPERATOR_ENABLED is enabled | `client_id`, `client_secret` | setup_tailscale_oauth_secret, line 961 |
 
 

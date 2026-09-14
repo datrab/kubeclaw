@@ -44,10 +44,14 @@ function resolvePython(directory, temporary) {
   for (const group of groups) {
     const source = `docker/python-tools/${group}.in`, output = `docker/python-tools/${group}.txt`;
     const common = ['pip', 'compile', '--python-version', '3.11', '--generate-hashes', '--only-binary', ':all:',
-      '--no-annotate', '--no-header', '--default-index', 'https://pypi.org/simple'];
+      '--no-annotate', '--no-header', '--no-strip-extras', '--default-index', 'https://pypi.org/simple'];
     run('uv', [...common, '--python-platform', 'x86_64-manylinux_2_36', source, '-o', output], directory);
+    // Keep extras in install requirements; constraints must contain bare package pins.
+    const constraints = path.join(temporary, `${group}-constraints.txt`);
+    fs.writeFileSync(constraints, fs.readFileSync(path.join(directory, output), 'utf8')
+      .replace(/^(\S+?)\[[^\]]+\](==)/gmu, '$1$2'));
     const arm = path.join(temporary, `${group}-arm64.txt`);
-    run('uv', [...common, '--python-platform', 'aarch64-manylinux_2_36', '--constraints', output, source, '-o', arm], directory);
+    run('uv', [...common, '--python-platform', 'aarch64-manylinux_2_36', '--constraints', constraints, source, '-o', arm], directory);
     if (!fs.readFileSync(path.join(directory, output)).equals(fs.readFileSync(arm))) throw new Error('RUNTIME_PYTHON_ARCHITECTURE_LOCK_MISMATCH');
   }
 }

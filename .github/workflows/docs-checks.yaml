@@ -49,16 +49,16 @@ jobs:
       - name: Install repository dependencies
         run: npm ci --ignore-scripts
       - name: Regenerate docs
-        run: npm run docs:inventory && npm run docs:generate
+        run: npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate
       - name: Reject generated docs drift
         run: |
-          if git diff --quiet -- docs/generated docs/reference; then
+          if git diff --quiet -- docs/generated docs/reference docs/architecture/plugin-system-current-inventory.md; then
             echo "Generated docs are already current."
             exit 0
           fi
 
-          echo "::error::Generated docs are stale. Run npm run docs:inventory && npm run docs:generate and commit the result."
-          git diff --name-only -- docs/generated docs/reference
+          echo "::error::Generated docs are stale. Run npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate and commit the result."
+          git diff --name-only -- docs/generated docs/reference docs/architecture/plugin-system-current-inventory.md
           exit 1
       - name: Check generated docs freshness
         run: npm run docs:check:generated
@@ -88,7 +88,7 @@ jobs:
       - name: Install repository dependencies
         run: npm ci --ignore-scripts
       - name: Regenerate docs
-        run: npm run docs:inventory && npm run docs:generate
+        run: npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate
       - name: Check generated docs freshness
         run: npm run docs:check:generated
       - name: Check Markdown hygiene
@@ -101,14 +101,14 @@ jobs:
         run: git diff --check
       - name: Commit generated docs
         run: |
-          if git diff --quiet -- docs/generated docs/reference; then
+          if git diff --quiet -- docs/generated docs/reference docs/architecture/plugin-system-current-inventory.md; then
             echo "Generated docs are already current."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/generated docs/reference
+          git add docs/generated docs/reference docs/architecture/plugin-system-current-inventory.md
           git commit -m "docs: refresh generated references"
           git push origin HEAD:refs/heads/main
     if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'

@@ -34,11 +34,14 @@ Generated from: `scripts/deploy.sh`
 
 ## Command Cases
 
+- `render`
 - `setup`
 - `infra`
 - `secrets`
 - `tailscale`
 - `buildkit-preflight`
+- `native-node-render`
+- `native-node-preflight`
 - `buster-buildkit-smoke`
 - `nova-buildkit-preflight`
 - `nova-unit-preflight`

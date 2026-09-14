@@ -1,8 +1,7 @@
 name: Pipeline reliability
 on:
   pull_request:
-  push:
-    branches: [main]
+  # main is covered by the required call from build-images.yaml.
   workflow_call:
 permissions:
   contents: read

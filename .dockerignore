@@ -30,6 +30,7 @@
 !scripts/
 scripts/*
 !scripts/build-plugin-sandbox.mjs
+!scripts/registry-client-config.mjs
 !tests/
 tests/*
 !tests/verification/

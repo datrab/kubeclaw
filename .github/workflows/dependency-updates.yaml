@@ -21,7 +21,17 @@ jobs:
         env:
           APP_ID: ${{ vars.DEPENDENCY_APP_ID }}
           APP_KEY: ${{ secrets.DEPENDENCY_APP_PRIVATE_KEY }}
-        run: test -n "$APP_ID" && test -n "$APP_KEY"
+        run: |
+          missing=0
+          if [ -z "$APP_ID" ]; then
+            echo "::error::Configure repository variable DEPENDENCY_APP_ID with the updater GitHub App ID."
+            missing=1
+          fi
+          if [ -z "$APP_KEY" ]; then
+            echo "::error::Configure repository secret DEPENDENCY_APP_PRIVATE_KEY with the updater GitHub App private key."
+            missing=1
+          fi
+          exit "$missing"
       - uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2
         id: app
         with:
