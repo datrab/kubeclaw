@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import type { PipelineDefinition } from '@kubeclaw/plugin-sdk';
 import { registryTestContract } from './registry-test-contract.mjs';
 import assert from 'node:assert/strict';
 import { prepareRuntime } from '../../../skills/nova/core/execution/engine-runtime.ts';
@@ -66,7 +67,7 @@ try {
     ].filter(Boolean).join('\n'));
   }
   const result = JSON.parse(execution.stdout.trim());
-  const definition = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'v2-runtime/pipeline.json'), 'utf8'));
+  const definition: PipelineDefinition = JSON.parse(fs.readFileSync(path.join(workspace.swarmDir, 'v2-runtime/pipeline.json'), 'utf8'));
   const platform = loadPlatformConfig(path.join(workspace.swarmDir, 'v2-runtime/platform.json'));
   const runtime = await prepareRuntime(platform, definition);
   assert.equal(result.schemaVersion, 'real-production-pipeline-validation.v2');

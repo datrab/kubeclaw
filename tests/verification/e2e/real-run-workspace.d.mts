@@ -8,6 +8,10 @@ export interface RealE2ERunWorkspace {
 }
 
 export interface RealE2EProgress {
+  readonly real_e2e: {
+    coverage_base_revision?: string;
+    readonly [key: string]: unknown;
+  };
   readonly modules: Record<string, Record<string, unknown>>;
   readonly [key: string]: unknown;
 }
