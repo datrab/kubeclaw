@@ -5380,10 +5380,15 @@
       "family": "infrastructure",
       "severity": "hoch",
       "work_package": "WP13",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "verification_status": "Teilfix lokal geprüft: 7 Dateisystem-/Prozess-/Helmtests; DB-Kommandos explizite Fixtures. Vollständige Recovery noch unvollständig.",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-prism-backup-groups.md",
+          "summary": "Geplanter Backupjob sichert DB und unveränderliche Artefakte gemeinsam; atomare Gruppen, Integritätsprüfung, Quoten, keine automatische Löschung, sichere eigene SQL-Proof-Datenbank. Keine echte SQL-/Image-/DR-Verifikation aus diesen Tests abgeleitet."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/backup-recovery.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-26-001\n**Hoch; nachgewiesene unvollständige Wiederherstellungsabdeckung.** Auslöser: Verlust des Artefakt-/Host-Volumes oder Wiederaufbau mit ausschließlich vorhandenem DB-Dump. Belege: Backupjob mountet nur Backup-PVC und liest PostgreSQL; `workloads.yaml` mountet Artefakte ausschließlich im Control. `prism-recovery-observability-v1.md` beschreibt zusätzlich versionierten Artefaktspeicher, der im Chart nicht als entsprechender Backupdienst umgesetzt ist. DB-Referenzen können nach Restore auf fehlende Binär-/Designobjekte zeigen.\n\nUrsachenbehebung: konsistente Backupgruppe aus DB, Artefakten und erforderlichen Schlüsseln/Journals mit dokumentiertem Commit-/Quiesce-Punkt, externem Ausfallbereich und überprüfter Retention. Echter Test: vollständiger Wiederaufbau in anderem Namespace/Host aus gesicherten Artefakten; referenzierte Digests lesen, Sessions/Jobs sinnvoll wiederaufnehmen und Pipeline-/Prism-Pfad ausführen. Nicht nur pg_restore --list.",
@@ -5392,9 +5397,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/docs/architecture/prism-recovery-observability-v1.md"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originale PostgreSQL-Image-/DB-/Referenzwiederherstellung, Bindung erforderlicher Schlüssel/Journals und unabhängiger externer Ausfallbereich sowie vollständige Anwendungs-Recovery fehlen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Originale PostgreSQL-Image-/DB-/Referenzwiederherstellung, Bindung erforderlicher Schlüssel/Journals und unabhängiger externer Ausfallbereich sowie vollständige Anwendungs-Recovery fehlen."
     },
     {
       "id": "IFR-28-001",
@@ -5641,12 +5647,12 @@
     }
   ],
   "implementation_branch": "fix/remediation-foundations-20260909",
-  "updated_at": "2026-09-13",
+  "updated_at": "2026-09-14",
   "progress_counts": {
     "verifiziert": 140,
-    "in Bearbeitung": 2,
+    "in Bearbeitung": 3,
     "implementiert": 2,
-    "offen": 10
+    "offen": 9
   },
   "additional_integration_findings": [
     {

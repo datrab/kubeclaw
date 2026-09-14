@@ -1,5 +1,14 @@
 # Aktuelle Übergabe PR #6
 
+IFR-26-001 zusätzlich in Bearbeitung: Der geplante Prism-Backupjob enthält jetzt
+einen gemeinsamen DB-/Artefaktstand mit geprüfter Gruppenveröffentlichung,
+Kapazitätsgrenzen und Erhalt alter Backups. Separate Integritätsprüfung sowie
+eigene temporäre Datenbank für den bestehenden SQL-Restorecheck. Sieben lokale
+Dateisystem-/Prozess-/Helmtests bestanden; SQL-Kommandos sind explizite Fixtures.
+Kein zusätzlicher historischer Findingabschluss. Original-DB-/Imageprüfung,
+Schlüssel/Journals, externes Backupziel und volle Recovery bleiben offen.
+[Backup-Checkpoint und Grenzen](implementation/pr6-prism-backup-groups.md).
+
 IFR-24-001 zusätzlich lokal abgeschlossen: echte PostgreSQL17→18- und
 Qdrant1.18.2→1.19.1-Migration, Erhalt der Altdaten, frische Ziel-Releases/PVCs,
 Recovery-/TLS-/Netzwerkbindung und zehn Helm-/Manifestgates.
@@ -12,9 +21,9 @@ Redis IFR-11-001 lokal abgeschlossen: echte Versions-/RDB-AOF-Migration,
 Crash-/Dedup-/OOM-Prüfung und vier Helm-/PVC-Gates bestanden.
 [Abschluss und Live-Grenzen](implementation/pr6-redis-migration-closure.md).
 
-Stand der Wiederaufnahme am 2026-09-13: **140/154 lokal verifiziert, 14 unvollständig**.
-Das Register `register.json` enthält 2 teilweise implementierte, 2 in Bearbeitung
-und 10 offene Findings. PCR-PRISM-WORKER-002 ist gemäß D12 lokal geschlossen; separate Live-Abnahme offen.
+Aktueller Stand am 2026-09-14: **140/154 lokal verifiziert, 14 unvollständig**.
+Das Register `register.json` enthält 2 teilweise implementierte, 3 in Bearbeitung
+und 9 offene Findings. PCR-PRISM-WORKER-002 ist gemäß D12 lokal geschlossen; separate Live-Abnahme offen.
 
 ## Gesicherte Arbeit
 
@@ -66,3 +75,4 @@ D12: vollständige Implementierung plus ausreichende echte lokale Tests reichen
 zum lokalen Abschluss; Live-Abnahme folgt separat durch den Auftraggeber.
 Keine Deployments, kein Merge und keine History-Bereinigung in dieser Fortsetzung.
 Fortschritt nach überprüften Teilschritten sichern, PR und Register synchron halten.
+
