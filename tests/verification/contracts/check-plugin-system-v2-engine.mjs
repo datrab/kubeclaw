@@ -78,7 +78,11 @@ try {
     'utf8',
   )).registry;
   const packageIds = snapshot.packages.map(([id]) => id).sort();
-  assert.equal(packageIds.length, 31, 'run snapshot must record the complete discovered registry');
+  const manifests = pluginRoots.flatMap(root => fs.readdirSync(root)
+    .map(name => path.join(root, name, 'plugin.json')).filter(file => fs.existsSync(file))
+    .map(file => JSON.parse(fs.readFileSync(file, 'utf8'))));
+  assert.deepEqual(packageIds, manifests.map(manifest => manifest.id).sort(),
+    'run snapshot must record every installed package exactly once');
   for (const id of [
     'kubeclaw.architecture-validator',
     'kubeclaw.artifact-store',
@@ -87,9 +91,12 @@ try {
     'kubeclaw.telemetry-observer',
     'kubeclaw.telemetry-store',
   ]) assert.ok(packageIds.includes(id), `run snapshot missing ${id}`);
-  assert.equal(snapshot.registrations.stages.length, 17);
-  assert.equal(snapshot.registrations.observers.length, 5);
-  assert.equal(snapshot.registrations.adapters.length, 18);
+  assert.deepEqual(snapshot.registrations.stages.map(entry => entry.stageType).sort(),
+    manifests.flatMap(manifest => manifest.stages.map(stage => stage.type)).sort());
+  for (const kind of ['observers', 'adapters']) {
+    assert.deepEqual(snapshot.registrations[kind].map(entry => entry.registrationId).sort(),
+      manifests.flatMap(manifest => manifest[kind].map(entry => `${manifest.id}:${entry.id}`)).sort());
+  }
   assert.ok(snapshot.enabledRegistrations.includes('kubeclaw.delivery-lint:delivery-lint'));
   assert.ok(snapshot.grants.some(([id]) => id === 'kubeclaw.delivery-lint:delivery-lint'));
   assert.ok(snapshot.selectedProviders.some(({ capability }) => capability === 'git.repository.read'));
