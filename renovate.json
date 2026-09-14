@@ -386,6 +386,51 @@
       "extractVersionTemplate": "^v?(?<version>.+)$",
       "versioningTemplate": "semver",
       "autoReplaceStringTemplate": "\"TRIVY_VERSION\": \"v{{{newValue}}}\""
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"GH_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "cli/cli",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"OPS_NPM_TAR_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "tar",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"OPS_NPM_BRACE_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "brace-expansion",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"OPS_NPM_IP_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "ip-address",
+      "datasourceTemplate": "npm"
     }
   ],
   "timezone": "Etc/UTC",
