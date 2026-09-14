@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { once } from 'node:events';
 import test from 'node:test';
-import { fetchUpstream } from '../../../scripts/updates/upstream-fetch.mjs';
+import { fetchUpstream, upstreamAttemptUrl } from '../../../scripts/updates/upstream-fetch.mjs';
 
 async function fixture(t, handler) {
   const server = createServer(handler);
@@ -47,4 +47,18 @@ test('the shared deadline interrupts retry waits', async t => {
   const url = await fixture(t, (_request, response) => { calls++; response.writeHead(504); response.end(); });
   await assert.rejects(fetchUpstream(url, { timeoutMs: 1000, retryDelayMs: 10000 }), { name: 'AbortError' });
   assert.equal(calls, 1);
+});
+
+
+test('release retries refresh the same GitHub asset without rewriting other or signed URLs', () => {
+  const original = 'https://github.com/owner/repo/releases/download/v1/tool.tar.gz';
+  assert.equal(upstreamAttemptUrl(original, 1), original);
+  const retry = new URL(upstreamAttemptUrl(original, 2));
+  assert.equal(retry.origin + retry.pathname, original);
+  assert.equal(retry.searchParams.get('download'), '1');
+  assert.match(retry.searchParams.get('kubeclaw_retry'), /^\d+-2$/);
+  for (const url of [original + '?signature=keep-exact', 'https://release-assets.githubusercontent.com/asset?sig=keep',
+    'https://github.com.evil.example/owner/repo/releases/download/v1/tool.tar.gz', 'https://api.github.com/repos/owner/repo']) {
+    assert.equal(upstreamAttemptUrl(url, 2), url);
+  }
 });
