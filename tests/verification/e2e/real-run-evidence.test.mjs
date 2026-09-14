@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { registryTestContract } from './registry-test-contract.mjs';
 
 import {
   expectedFailureContractForScenario,
@@ -128,7 +129,13 @@ test('native subagent tool evidence requires exact causal pairing', () => {
   assert.equal(verifyNativeSubagentToolPairs([pairedToolEvents()[0]]).ok, false);
 });
 
-test('every expected nonzero scenario retains an explicit typed failure contract', () => {
+test('every expected nonzero scenario retains an explicit typed failure contract', t => {
+  const previous = process.env.KUBECLAW_REGISTRY_CONFIG;
+  process.env.KUBECLAW_REGISTRY_CONFIG = registryTestContract;
+  t.after(() => {
+    if (previous === undefined) delete process.env.KUBECLAW_REGISTRY_CONFIG;
+    else process.env.KUBECLAW_REGISTRY_CONFIG = previous;
+  });
   for (const id of listRealE2EScenarioIds()) {
     const scenario = resolveRealE2EScenario(id);
     if (scenario.expectedPipelineExit !== 'nonzero') continue;
