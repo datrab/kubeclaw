@@ -7,6 +7,7 @@ permissions:
   contents: read
 jobs:
   core-reliability:
+    # Report independent check failures together; failed steps still fail the job.
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -15,24 +16,33 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - run: npm ci --ignore-scripts
+      - id: dependencies
+        run: npm ci --ignore-scripts
       - name: Check central versions and reject drift
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: |
           npm run versions:check
           node --test tests/verification/deployment/versions.test.mjs
       - name: Typecheck source packages
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: npm run typecheck:skills
       - name: Build isolation launcher before contract tests
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: npm run plugin-system:sandbox:build
       - name: Exercise recovery and remote import contracts
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: npm run verify:reliability:contracts
       - name: Validate project compiler and installed stage contracts
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: node tests/verification/contracts/check-project-compiler.mts
       - name: Validate production graph and native gate evidence
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: node --test tests/verification/e2e/production-graph-validation.test.mts tests/verification/e2e/real-run-evidence.test.mjs tests/verification/e2e/durable-evidence.test.mjs
       - name: Install real shell lint tools
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: sudo apt-get update && sudo apt-get install -y shellcheck shfmt
       - name: Check affected stage and adapter contracts
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: |
           npm test --workspace @kubeclaw/plugin-prism-design
           npm test --workspace @kubeclaw/plugin-notification-observer
@@ -47,17 +57,21 @@ jobs:
           npm test --prefix skills/nova/plugins/delivery-lint
           npm test --workspace @kubeclaw/plugin-review
       - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         with:
           version: v3.18.4
       - name: Validate Buster persistent storage manifests
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: |
           node tests/verification/deployment/check-role-chart.mjs
           node tests/verification/deployment/check-deployment-truth.mjs
           helm lint charts/kubeclaw -f my-values/buster-values.yaml
           helm template agent-buster charts/kubeclaw -f my-values/buster-values.yaml > /tmp/buster-rendered.yaml
       - name: Exercise real isolated provider transport and evidence import
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: node tests/verification/contracts/check-pipeline-remote-real-provider.mts
       - name: Assemble production role packages
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: |
           mkdir -p dist
           bash scripts/package-agent-skill-bundle.sh nova "dist/nova-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"

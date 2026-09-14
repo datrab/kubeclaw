@@ -23,7 +23,8 @@ docker cp "$container:/opt/bitnami" "$destination/bitnami"
 # loader and libraries, without replacing any libraries on the CI host.
 docker cp -L "$container:/lib64/ld-linux-x86-64.so.2" "$destination/redis-loader"
 docker cp -L "$container:/usr/lib" "$destination/redis-system-libs"
-for program in redis-server redis-cli; do
+for program in redis-server redis-cli redis-check-rdb redis-check-aof; do
+  test -x "$destination/bitnami/redis/bin/$program"
   {
     printf '#!/usr/bin/env bash\n'
     printf 'exec %q --library-path %q %q "$@"\n' "$destination/redis-loader" \
