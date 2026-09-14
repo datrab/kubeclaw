@@ -6,7 +6,7 @@ import { workerAttemptSpecDigest, workerProfileDigest, sha256Text } from '../../
 import type { WorkerAttemptEnvelopeV1, WorkerEvidenceRefV1 } from '@kubeclaw/pipeline-worker-core-contract';
 import type { WorkerAttemptContext, WorkerAttemptOperation } from '../../../skills/worker/core/worker/attempt-executor.ts';
 
-export function envelope(windowMs = 2000, cleanupTimeoutMs = 50): WorkerAttemptEnvelopeV1 {
+export function envelope(windowMs = 2000, cleanupTimeoutMs = 50, timeoutMs = 100): WorkerAttemptEnvelopeV1 {
   const digest = `sha256:${'a'.repeat(64)}`, now = Date.now(), attemptId = `attempt:${crypto.randomUUID()}`;
   const profileBase = { schemaVersion: 'worker-profile.v1' as const, profileId: 'file.local', workerType: 'file', coreContractId: 'kubeclaw.worker-core@1',
     engine: { engineId: 'file', contractId: 'kubeclaw.file@1', engineVersion: '1.0.0', contentDigest: digest }, capabilities: [] };
@@ -15,7 +15,7 @@ export function envelope(windowMs = 2000, cleanupTimeoutMs = 50): WorkerAttemptE
     claim: { schemaVersion: 'attempt-claim.v1' as const, claimId: `claim:${attemptId}`, attemptId, generation: 1, workerId: 'worker:file',
       claimedAt: new Date(now - 10).toISOString(), expiresAt: new Date(now + windowMs).toISOString() },
     profile: { ...profileBase, profileDigest: workerProfileDigest(profileBase) }, packages: [], grantedCapabilities: [],
-    limits: { timeoutMs: 100, cleanupTimeoutMs, cpuMillis: 100000, memoryBytes: 1024 * 1024 * 1024, processes: 100,
+    limits: { timeoutMs, cleanupTimeoutMs, cpuMillis: 100000, memoryBytes: 1024 * 1024 * 1024, processes: 100,
       logBytes: 65536, resultBytes: 65536, evidenceBytes: 65536, evidenceFiles: 10 }, inputs: [],
     operation: { contractId: 'kubeclaw.file@1', inputSchemaId: 'kubeclaw.file.v1', inputSchemaDigest: digest, values: {} },
     cancellationId: `cancel:${attemptId}`, issuedAt: new Date(now - 10).toISOString(), queueDeadline: new Date(now + 5000).toISOString() };

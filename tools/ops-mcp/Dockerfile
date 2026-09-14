@@ -9,9 +9,13 @@ ENV GOTOOLCHAIN=local
 WORKDIR /src
 # Keep Cilium 1.20.1's CLI, rebuilding with patched Go/gRPC/text dependencies.
 COPY hubble/go.mod hubble/go.sum ./
-RUN go mod download
+# Retry bounded module transfers over HTTP/1.1 after observed proxy HTTP/2 stream failures.
+RUN attempt=1; until GODEBUG=http2client=0 timeout 180 go mod download; do \
+      if [ "$attempt" -ge 3 ]; then exit 1; fi; \
+      sleep "$((attempt * 5))"; attempt="$((attempt + 1))"; \
+    done
 COPY hubble/main.go hubble/LICENSE ./
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=readonly -trimpath -o /out/hubble .
+RUN GOPROXY=off CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=readonly -trimpath -o /out/hubble .
 
 FROM ${OPS_MCP_NODE_BASE}
 

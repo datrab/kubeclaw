@@ -10,10 +10,10 @@ export async function fetchUpstream(url, {
   for (let attempt = 1; attempt <= attempts; attempt++) {
     let response;
     try {
-      response = await fetch(url, { headers, signal });
+      response = await fetch(url, { headers, signal, cache: 'no-store' });
     } catch (error) {
       if (signal.aborted || attempt === attempts || !(error instanceof TypeError)) throw error;
-      await delay(retryDelayMs, undefined, { signal });
+      await delay(retryDelayMs * 2 ** (attempt - 1), undefined, { signal });
       continue;
     }
     if (response.ok) return response;
@@ -21,7 +21,7 @@ export async function fetchUpstream(url, {
     if (!transientStatuses.has(response.status) || attempt === attempts) {
       throw new Error(`${response.status}: ${url}`);
     }
-    await delay(retryDelayMs, undefined, { signal });
+    await delay(retryDelayMs * 2 ** (attempt - 1), undefined, { signal });
   }
   throw new Error(`Upstream request exhausted its attempts: ${url}`);
 }

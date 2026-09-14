@@ -19,6 +19,7 @@ test('real HTTP 504s are retried and the eventual release bytes are preserved', 
   let calls = 0;
   const url = await fixture(t, (request, response) => {
     assert.equal(request.headers.accept, 'application/octet-stream');
+    assert.equal(request.headers['cache-control'], 'no-cache');
     response.writeHead(++calls < 3 ? 504 : 200);
     response.end(calls < 3 ? 'gateway timeout' : 'exact release bytes');
   });

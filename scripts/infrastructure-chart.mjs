@@ -47,7 +47,7 @@ export function stageInfrastructureChart(name) {
       const download = path.join(temporary, 'chart.tgz');
       if (lock.url.startsWith('oci:')) downloadInfrastructureOciChart(lock.url, download);
       else execFileSync('curl', ['--fail', '--silent', '--show-error', '--location', '--proto', '=https',
-        '--proto-redir', '=https', '--max-time', '180', '--max-filesize', String(maximumBytes),
+        '--proto-redir', '=https', '--retry', '4', '--retry-max-time', '120', '--connect-timeout', '15', '--max-time', '60', '--max-filesize', String(maximumBytes),
         '--output', download, lock.url], { stdio: ['ignore', 'ignore', 'inherit'] });
       verifyInfrastructureChart(name, download);
       fs.renameSync(download, file);

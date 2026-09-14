@@ -12,7 +12,12 @@ RUN wget -O source.tar.gz "https://codeload.github.com/cli/cli/tar.gz/refs/tags/
     && printf '%s  source.tar.gz\n' "$GH_SOURCE_SHA256" | sha256sum -c - \
     && tar -xzf source.tar.gz --strip-components=1 && rm source.tar.gz
 COPY gh-build/go.mod gh-build/go.sum ./
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=readonly -trimpath \
+# Retry bounded module transfers over HTTP/1.1 after observed proxy HTTP/2 stream failures.
+RUN attempt=1; until GODEBUG=http2client=0 timeout 180 go mod download; do \
+      if [ "$attempt" -ge 3 ]; then exit 1; fi; \
+      sleep "$((attempt * 5))"; attempt="$((attempt + 1))"; \
+    done
+RUN GOPROXY=off CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=readonly -trimpath \
     -ldflags "-X github.com/cli/cli/v2/internal/build.Version=${GH_VERSION}" -o /out/gh ./cmd/gh
 
 FROM ${OPS_TOOLS_GO_BASE} AS kubectl-build
@@ -21,8 +26,13 @@ ARG KUBECTL_VERSION=v1.34.11
 ENV GOTOOLCHAIN=local
 WORKDIR /src
 COPY kubectl-build/ ./
-RUN sh verify-version.sh "${KUBECTL_VERSION}"
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=readonly -trimpath \
+# Retry bounded module transfers over HTTP/1.1 after observed proxy HTTP/2 stream failures.
+RUN attempt=1; until GODEBUG=http2client=0 timeout 180 go mod download; do \
+      if [ "$attempt" -ge 3 ]; then exit 1; fi; \
+      sleep "$((attempt * 5))"; attempt="$((attempt + 1))"; \
+    done
+RUN GOPROXY=off sh verify-version.sh "${KUBECTL_VERSION}"
+RUN GOPROXY=off CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=readonly -trimpath \
     -ldflags "-X k8s.io/client-go/pkg/version.gitVersion=${KUBECTL_VERSION} -X k8s.io/component-base/version.gitVersion=${KUBECTL_VERSION}" \
     -o /out/kubectl .
 

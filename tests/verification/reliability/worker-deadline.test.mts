@@ -25,7 +25,7 @@ for (const wrapper of ['direct', 'runtime']) test(`${wrapper}: actual optional p
 });
 
 test('real completion hooks and durable log finish successfully inside the reserved claim', async t => {
-  const root = await directory(t), attempt = envelope(), operation = fileOperation(root, undefined, 10);
+  const root = await directory(t), attempt = envelope(10000, 1000, 2000), operation = fileOperation(root, undefined, 10);
   const result = await new WorkerAttemptExecutor({ envelope: attempt, operation,
     storeFullLog: async (_id, content, { signal }) => { await delay(10, undefined, { signal }); return writeEvidence(root, 'log', content, signal); } }).execute();
   assert.equal(result.state, 'completed', JSON.stringify(result.error));
@@ -76,13 +76,13 @@ test('original executor preserves each UTF-8 byte split and rejects malformed/in
   const root = await directory(t);
   for (const text of ['é', '日', '😀', '\uFEFF']) for (let split = 1; split < Buffer.byteLength(text); split++) {
     const bytes = Buffer.from(text), id = `${text.codePointAt(0)}-${split}`;
-    const result = await new WorkerAttemptExecutor({ envelope: envelope(), operation: fileOperation(root, [bytes.subarray(0, split), bytes.subarray(split)]),
+    const result = await new WorkerAttemptExecutor({ envelope: envelope(10000, 1000, 2000), operation: fileOperation(root, [bytes.subarray(0, split), bytes.subarray(split)]),
       storeFullLog: (_id, content, { signal }) => writeEvidence(root, id, content, signal) }).execute();
     assert.equal(result.state, 'completed', JSON.stringify(result.error));
     assert.equal(await fs.readFile(path.join(root, id), 'utf8'), `[stdout] ${text}`);
   }
   for (const bytes of [Buffer.from([255]), Buffer.from([240,159])]) {
-    const result = await new WorkerAttemptExecutor({ envelope: envelope(), operation: fileOperation(root, [bytes]) }).execute();
+    const result = await new WorkerAttemptExecutor({ envelope: envelope(10000, 1000, 2000), operation: fileOperation(root, [bytes]) }).execute();
     assert.equal(result.error?.code, 'WORKER_LOG_UTF8_INVALID');
   }
 });
@@ -107,7 +107,7 @@ test('stdout and stderr streaming decoders retain separate partial byte sequence
     context.log('stdout', out.subarray(0, 2)); context.log('stderr', err.subarray(0, 2));
     context.log('stdout', out.subarray(2)); context.log('stderr', err.subarray(2)); return result;
   };
-  const result = await new WorkerAttemptExecutor({ envelope: envelope(), operation,
+  const result = await new WorkerAttemptExecutor({ envelope: envelope(10000, 1000, 2000), operation,
     storeFullLog: (_id, content, { signal }) => writeEvidence(root, 'mixed-log', content, signal) }).execute();
   assert.equal(result.state, 'completed', JSON.stringify(result.error));
   assert.equal(await fs.readFile(path.join(root, 'mixed-log'), 'utf8'), '[stdout] 😀[stderr] 日本');
