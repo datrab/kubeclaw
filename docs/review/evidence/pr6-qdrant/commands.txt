@@ -1,0 +1,33 @@
+2026-09-13, PR #6 continuation; local execution only.
+
+PATH=/workspace/scratch/860ccb4a33b8/toolchains/linux-amd64:$PATH \
+QDRANT_TEST_BINARY=/workspace/scratch/860ccb4a33b8/toolchains/qdrant/qdrant \
+node --test \
+  tests/verification/contracts/infrastructure-chart-lock.test.mjs \
+  tests/verification/reliability/qdrant-native.test.mjs \
+  tests/verification/contracts/infra-private-access.test.mjs \
+  tests/verification/contracts/kubernetes-api-policy.test.mjs
+
+Result: local-tests.txt, 10 passed, zero failed/skipped.
+Helm 3.18.4; original Qdrant 1.19.1 Linux x86_64 native release.
+Qdrant archive SHA256: eef986e769d4d3e806dd2d546e1b4ecdd416211e54d34b4ed764fac7c58e1085.
+Native binaries are not a claim of running the selected production container images.
+
+node_modules/.bin/eslint -c charts/kubeclaw/files/config/eslint.config.mjs \
+  scripts/qdrant-client.mjs scripts/qdrant-snapshot.mjs scripts/qdrant-secrets.mjs \
+  scripts/qdrant-restore.mjs scripts/qdrant-storage-preflight.mjs scripts/verify-qdrant-live.mjs \
+  scripts/infrastructure-chart.mjs scripts/infrastructure-image-renderer.mjs scripts/infrastructure-release.mjs \
+  scripts/kubernetes-api-probe.mjs scripts/render-kubernetes-api-probe.mjs
+Result: exit 0, lint.txt intentionally empty.
+
+node scripts/versions.mjs --check
+Result: {"checked":25,"changed":[]}
+
+bash -n scripts/deploy.sh my-values/setup-secrets.sh
+Result: exit 0.
+
+Initial API probe lint exceeded the complexity limit; validation was split into
+named origin/HTTPS checks. The final canonical lint passes without a disable.
+Previous-turn chart test setup failures (missing Helm in PATH, executable mode,
+semver-with-digest) are retained in earlier checkpoint history and not counted
+as successful first attempts. This run uses the final real chart/renderer path.

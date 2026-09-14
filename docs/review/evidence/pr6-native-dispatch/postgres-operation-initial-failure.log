@@ -1,0 +1,26 @@
+$ node --test skills/prism/tests/native/operation-journal.mts
+✖ real PostgreSQL commit, concurrent retries, writer death and original worker journal preserve one native attempt (12752.488109ms)
+ℹ Original PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2); original schema migration 017
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13821.729102
+
+✖ failing tests:
+
+test at skills/prism/tests/native/operation-journal.mts:30:1
+✖ real PostgreSQL commit, concurrent retries, writer death and original worker journal preserve one native attempt (12752.488109ms)
+  Error: PRISM_NATIVE_OPERATION_BINDING_INVALID
+      at file:///workspace/scratch/9fa3b9b80bce/kubeclaw/skills/prism/control/native-operation-store.ts:37:94
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async inTransaction (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/skills/prism/storage/index.ts:86:22)
+      at async Promise.all (index 0)
+      at async TestContext.<anonymous> (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/skills/prism/tests/native/operation-journal.mts:46:24)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+exit_code=1

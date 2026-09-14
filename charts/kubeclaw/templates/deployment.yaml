@@ -3,6 +3,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "kubeclaw.fullname" . }}
+  {{- if eq .Values.agentRole "prism" }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  {{- end }}
   labels:
     {{- include "kubeclaw.labels" . | nindent 4 }}
 spec:
@@ -844,7 +848,20 @@ spec:
               }
 
               async function checkQdrant() {
-                await httpOk(`${baseUrl(process.env.QDRANT_URL)}/readyz`);
+                const url = new URL(`${baseUrl(process.env.QDRANT_URL)}/collections`);
+                if (url.protocol !== 'https:' || url.username || url.password) throw new Error('Qdrant requires an HTTPS origin');
+                const key = fs.readFileSync('/var/run/qdrant-client-auth/api-key', 'utf8').trim();
+                if (!/^[A-Za-z0-9._~-]{32,512}$/.test(key)) throw new Error('Qdrant read-only key is missing or invalid');
+                await new Promise((resolve, reject) => {
+                  require('node:https').get(url, {
+                    ca: fs.readFileSync('/var/run/qdrant-client-ca/ca.crt'), rejectUnauthorized: true,
+                    headers: { 'api-key': key }, signal: AbortSignal.timeout(timeoutMs),
+                  }, response => {
+                    response.resume();
+                    if (response.statusCode === 200) resolve();
+                    else reject(new Error(`Qdrant HTTP ${response.statusCode}`));
+                  }).on('error', reject);
+                });
               }
 
               async function checkRegistries() {
@@ -1287,7 +1304,7 @@ spec:
                   name: {{ .Values.redis.secretName }}
                   key: {{ .Values.redis.secretKey | default "redis-password" }}
             - name: QDRANT_URL
-              value: {{ .Values.qdrant.url | quote }}
+              value: {{ default (printf "https://qdrant.%s.svc.cluster.local:6333" .Release.Namespace) .Values.qdrant.url | quote }}
             - name: LITELLM_URL
               value: {{ .Values.litellm.endpoint | trimSuffix "/v1" | quote }}
             - name: OPENCLAW_GATEWAY_URL
@@ -1407,6 +1424,14 @@ spec:
 
           volumeMounts:
             {{- include "kubeclaw.demoReadyClientMounts" . | nindent 12 }}
+            {{- if .Values.probes.dependencies.qdrant.enabled }}
+            - name: qdrant-client-auth
+              mountPath: /var/run/qdrant-client-auth
+              readOnly: true
+            - name: qdrant-client-ca
+              mountPath: /var/run/qdrant-client-ca
+              readOnly: true
+            {{- end }}
             - name: config
               mountPath: /home/node/.openclaw
             - name: runtime-config
@@ -1570,6 +1595,20 @@ spec:
       # ---------------------------------------------------------------
       volumes:
         {{- include "kubeclaw.demoReadyClientVolumes" . | nindent 8 }}
+        {{- if .Values.probes.dependencies.qdrant.enabled }}
+        - name: qdrant-client-auth
+          secret:
+            secretName: {{ required "qdrant.authSecretName is required" .Values.qdrant.authSecretName | quote }}
+            items:
+              - key: {{ required "qdrant.readOnlyKey is required" .Values.qdrant.readOnlyKey | quote }}
+                path: api-key
+        - name: qdrant-client-ca
+          secret:
+            secretName: {{ required "qdrant.tlsSecretName is required" .Values.qdrant.tlsSecretName | quote }}
+            items:
+              - key: {{ required "qdrant.caKey is required" .Values.qdrant.caKey | quote }}
+                path: ca.crt
+        {{- end }}
         {{- range $name, $client := dict "registry" .Values.runtimeInfrastructure.registry "dockerHubMirror" .Values.runtimeInfrastructure.dockerHubMirror }}
         {{- if $client.caSecretName }}
         - name: registry-client-{{ lower $name }}
@@ -1639,6 +1678,13 @@ spec:
             readOnly: true
         - name: worker-trust-tmp
           emptyDir: { sizeLimit: 64Mi }
+        {{- end }}
+        {{- if .Values.archviewer.enabled }}
+        - name: archviewer-auth
+          secret:
+            secretName: {{ required "archviewer.existingSecret is required" .Values.archviewer.existingSecret | quote }}
+            items: [{key: htpasswd, path: htpasswd}]
+            defaultMode: 0444
         {{- end }}
         {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}

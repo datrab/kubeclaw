@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { realE2ERegistryTarget } from './registry-target.mjs';
 
 const SCENARIOS = Object.freeze({
   success: Object.freeze({
@@ -909,12 +910,6 @@ const SETUP_CONTRACTS = Object.freeze({
       'real_e2e.intentional_config_failure.error_code': 'REDIS_CONNECTION_UNAVAILABLE',
     }),
   }),
-  'registry-pull-failure': Object.freeze({
-    progress: Object.freeze({
-      'real_e2e.kubernetes_fixture.image.reference': `registry-local.kubeclaw.svc.cluster.local:5001/real-e2e-intentional-missing@sha256:${'f'.repeat(64)}`,
-      'real_e2e.kubernetes_fixture.image.digest': `sha256:${'f'.repeat(64)}`,
-    }),
-  }),
   'forge-timeout': Object.freeze({
     progress: Object.freeze({
       'modules.01-nginx.timeout_minutes': Number(process.env.REAL_E2E_FORGE_TIMEOUT_MINUTES || 0.001),
@@ -953,6 +948,10 @@ const SETUP_CONTRACTS = Object.freeze({
 
 export function realE2EScenarioSetupContract(scenarioId) {
   const scenario = requireScenario(scenarioId);
+  if (scenario.id === 'registry-pull-failure') return Object.freeze({ progress: Object.freeze({
+    'real_e2e.kubernetes_fixture.image.reference': `${realE2ERegistryTarget().host}/real-e2e-intentional-missing@sha256:${'f'.repeat(64)}`,
+    'real_e2e.kubernetes_fixture.image.digest': `sha256:${'f'.repeat(64)}`,
+  }) });
   return SETUP_CONTRACTS[scenario.id] || Object.freeze({});
 }
 
@@ -1341,7 +1340,7 @@ export function applyRealE2EScenario(progress, scenarioId) {
 
   if (scenario.id === 'registry-pull-failure') {
     next.real_e2e.kubernetes_fixture.image = {
-      reference: `registry-local.kubeclaw.svc.cluster.local:5001/real-e2e-intentional-missing@sha256:${'f'.repeat(64)}`,
+      reference: `${realE2ERegistryTarget().host}/real-e2e-intentional-missing@sha256:${'f'.repeat(64)}`,
       digest: `sha256:${'f'.repeat(64)}`,
     };
   }

@@ -1,0 +1,32 @@
+✖ supervisor cannot replace a stale lease during an actual concurrent ownership transaction (452.115848ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 827.882171
+
+✖ failing tests:
+
+test at scripts/tests/repository-review-supervisor-state.test.mjs:8:1
+✖ supervisor cannot replace a stale lease during an actual concurrent ownership transaction (452.115848ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/tests/repository-review-supervisor-state.test.mjs:18:12
+      at FileMutex.withLock (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/skills/nova/core/state/file-mutex.ts:19:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/scripts/tests/repository-review-supervisor-state.test.mjs:15:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

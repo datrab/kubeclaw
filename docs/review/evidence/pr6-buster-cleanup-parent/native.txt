@@ -1,0 +1,12 @@
+{"ok":true,"suite":"terminal-workspace","removed":3,"retained":6}
+✔ skills/buster/engine/test-gates/tests/terminal-workspace.test.ts (526.514064ms)
+✔ terminal cleanup refuses linked parent directories and preserves another job source (13.488635ms)
+✔ terminal cleanup unlinks a leaf symlink without deleting its target and remains idempotent (5.734039ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 625.986508

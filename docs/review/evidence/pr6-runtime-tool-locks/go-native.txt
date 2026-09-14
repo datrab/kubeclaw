@@ -1,0 +1,28 @@
+go: downloading github.com/fzipp/gocyclo v0.6.0
+go: downloading honnef.co/go/tools v0.7.0
+go: downloading golang.org/x/vuln v1.1.4
+go: downloading golang.org/x/telemetry v0.0.0-20251203150158-8fff8a5912fc
+go: downloading golang.org/x/tools v0.40.1-0.20260108161641-ca281cf95054
+go: downloading golang.org/x/mod v0.31.0
+go: downloading golang.org/x/sync v0.19.0
+go: downloading github.com/BurntSushi/toml v1.4.1-0.20240526193622-a339e1f7089c
+go: downloading golang.org/x/exp/typeparams v0.0.0-20231108232855-2478ac86f678
+go: downloading github.com/fzipp/gocyclo v0.6.0
+go: downloading honnef.co/go/tools v0.7.0
+go: downloading golang.org/x/vuln v1.1.4
+go: downloading golang.org/x/tools v0.40.1-0.20260108161641-ca281cf95054
+go: downloading golang.org/x/mod v0.31.0
+go: downloading golang.org/x/telemetry v0.0.0-20251203150158-8fff8a5912fc
+go: downloading golang.org/x/sync v0.19.0
+go: downloading golang.org/x/exp/typeparams v0.0.0-20231108232855-2478ac86f678
+go: downloading github.com/BurntSushi/toml v1.4.1-0.20240526193622-a339e1f7089c
+✔ two isolated Go builds consume committed sums and produce identical analyzer bytes (243561.085123ms)
+ℹ {"goVersion":"go version go1.26.5 linux/amd64","binarySha256":{"staticcheck":"c2208ef583032b28e3695b0dcfecfdec5b7a0ff5a8cee4970d71e13671423eaa","govulncheck":"5f8a1154febddabbb46a13f2c97ea448603e92b947b7add67ed966bb18b3ae24","gocyclo":"4a433e59e4d24b4a5aa074f01f8df4d3534a74cb6472337984409834998a03b6"}}
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 243905.289753

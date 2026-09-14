@@ -6,14 +6,21 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { buildRegistry, discoverPackages, loadPipelineTestScope, resolveTestPlan } from '@kubeclaw/nova-core';
 import { DirectCommandCapabilityInvoker, KubernetesFixtureCapabilityInvoker, TestPlanRunner } from '@kubeclaw/buster-engine';
+import type { TestProviderCapabilityInvoker } from '@kubeclaw/buster-engine';
 import { CompositeTestProviderCapabilityInvoker } from '../../../skills/buster/engine/test-gates/composite-capability-runtime.ts';
+import { registryClientConfig } from '../../../scripts/registry-client-config.mjs';
+import { realE2ERegistryTarget, realE2EDeploymentImage } from '../e2e/registry-target.mjs';
+import { verifyContainerManifest } from '../../../skills/buster/engine/test-gates/container-build-runtime.ts';
 import { cleanupRealE2ERunWorkspace, createRealE2ERunWorkspace } from '../e2e/real-run-workspace.mjs';
 
 if (process.env.KUBECLAW_KUBERNETES_FIXTURE_LIVE !== '1') {
   throw new Error('KUBECLAW_KUBERNETES_FIXTURE_LIVE=1 is required because this check creates and deletes a real namespace lease');
 }
 
-const registryHost = process.env.KUBECLAW_LOCAL_REGISTRY ?? 'registry-local.kubeclaw.svc.cluster.local:5001';
+const target = realE2ERegistryTarget();
+const registryHost = target.host;
+const selectedImage = realE2EDeploymentImage();
+const registryConfig = registryClientConfig(JSON.parse(process.env.KUBECLAW_REGISTRY_CONFIG!), process.env);
 const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
 const runtimeRevision = execFileSync('git', ['-C', repositoryRoot, 'rev-parse', '--verify', 'HEAD'],
   { encoding: 'utf8' }).trim();
@@ -21,21 +28,19 @@ const busterRuntimeRevision = process.env.KUBECLAW_BUILD_REVISION;
 if (!busterRuntimeRevision || !/^[a-f0-9]{40,64}$/u.test(busterRuntimeRevision)) {
   throw new Error('KUBERNETES_FIXTURE_LIVE_BUSTER_REVISION_MISSING');
 }
-const registryUrl = `http://${registryHost}`;
-const catalog = await (await fetch(`${registryUrl}/v2/_catalog`)).json() as { repositories?: string[] };
-const repositoryName = catalog.repositories?.sort()[0];
-if (!repositoryName) throw new Error('KUBERNETES_FIXTURE_LIVE_IMAGE_MISSING');
-const tags = await (await fetch(`${registryUrl}/v2/${repositoryName}/tags/list`)).json() as { tags?: string[] };
-const tag = tags.tags?.sort()[0];
-if (!tag) throw new Error('KUBERNETES_FIXTURE_LIVE_TAG_MISSING');
-const manifestResponse = await fetch(`${registryUrl}/v2/${repositoryName}/manifests/${tag}`, {
-  headers: { Accept: 'application/vnd.oci.image.manifest.v1+json, application/vnd.docker.distribution.manifest.v2+json' },
-});
-assert.equal(manifestResponse.ok, true);
-await manifestResponse.arrayBuffer();
-const digest = manifestResponse.headers.get('docker-content-digest');
-assert.match(String(digest), /^sha256:[a-f0-9]{64}$/u);
-const immutableImage = `${registryHost}/${repositoryName}@${digest}`;
+if (registryConfig.caFile && (!process.env.NODE_EXTRA_CA_CERTS
+  || fs.realpathSync(process.env.NODE_EXTRA_CA_CERTS) !== fs.realpathSync(registryConfig.caFile))) {
+  throw new Error('KUBERNETES_FIXTURE_LIVE_CA_REQUIRED: start Node with NODE_EXTRA_CA_CERTS set to the configured registry CA');
+}
+const registryRuntime = registryConfig.runtime;
+await verifyContainerManifest({ maximumManifestBytes: 4 * 1024 * 1024,
+  ...(registryRuntime.registryUsernameEnvironmentVariable ? {
+    registryUsername: process.env[registryRuntime.registryUsernameEnvironmentVariable],
+    registryPassword: process.env[registryRuntime.registryPasswordEnvironmentVariable] } : {}) },
+new URL(target.origin), selectedImage.repository, selectedImage.digest, AbortSignal.timeout(30_000));
+const repositoryName = selectedImage.repository;
+const digest = selectedImage.digest;
+const immutableImage = selectedImage.reference;
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubernetes-fixture-live-'));
 let leaseName: string | null = null;
@@ -101,7 +106,7 @@ try {
     maximumPersistentVolumeClaimBytes: 10 * 1024 ** 3, maximumPersistentVolumeTotalBytes: 20 * 1024 ** 3,
     maximumRetentionSeconds: 3600,
     maximumExecutionMs: 180_000, pollIntervalMs: 500 });
-  const capabilities = new CompositeTestProviderCapabilityInvoker(new Map([
+  const capabilities = new CompositeTestProviderCapabilityInvoker(new Map<string, TestProviderCapabilityInvoker>([
     ['command.execute', direct], ['kubernetes.fixture', kubernetes],
   ]));
   const runner = new TestPlanRunner({ plan, registry, workspaceRoot: generatedWorkspace.artifactRoot,

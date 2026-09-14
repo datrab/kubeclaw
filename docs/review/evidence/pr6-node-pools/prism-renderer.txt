@@ -1,0 +1,17 @@
+✔ original Engine and Studio preserve disjoint component layers and targeted override precedence (22.60112ms)
+✔ each declared interactive control has its own escaped action (0.748164ms)
+✔ renderer escapes active content (4.467337ms)
+✔ renderer resolves collection data and reusable item components (1.922446ms)
+✔ renderer fails closed for unknown components (1.016293ms)
+✔ renderer resolves theme tokens and layout properties (1.155499ms)
+✔ renderer emits only declarative action identities (0.39651ms)
+✔ renderer applies semantic typography tokens (1.039127ms)
+✔ renderer uses semantic output for the full v1 catalogue (1.082076ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1466.089048

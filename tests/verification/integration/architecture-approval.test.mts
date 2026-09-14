@@ -29,8 +29,21 @@ try {
   await assert.rejects(() => execute(input, context([])), /REFERENCE_MISSING_OR_AMBIGUOUS/);
   await assert.rejects(() => execute(input, context([clean, blocked])), /REFERENCE_MISSING_OR_AMBIGUOUS/);
   await assert.rejects(() => execute(input, context([{ ...clean, producer: { ...producer, runId: 'another:run' } }])), /REFERENCE_MISSING_OR_AMBIGUOUS/);
-  await assert.rejects(() => execute(input, context([{ ...clean, sizeBytes: clean.sizeBytes + 1 }])), /CONTENT_INVALID/);
+  await assert.rejects(() => execute(input, context([{ ...clean, sizeBytes: clean.sizeBytes + 1 }])), /ARTIFACT_REFERENCE_CORRUPT/);
   const malformed = await write({ verdict: 'passed' });
   await assert.rejects(() => execute(input, context([malformed])), /FINDINGS_INVALID/);
+  const finding = { id: 'risk-1', severity: 'warn', scope: 'integration_boundary', paths: ['design.md'],
+    explanation: 'The operator must accept this documented tradeoff.', remediation: 'Record the decision.' };
+  const risk = await write({ verdict: 'passed', findings: [finding], checkedFiles: ['design.md'], summary: 'Risk requires approval.' });
+  const riskContext = (reason?: string, issuerId = 'operator:test') => ({ ...context([risk]), contract: {
+    ...context([risk]).contract, config: { target: 'operators', issuerId: 'operator:test' },
+    guidance: { decision: 'approved', issuer: { type: 'operator', id: issuerId }, ...(reason === undefined ? {} : { reason }) },
+  } }) as unknown as PluginInvocationContext;
+  await assert.rejects(() => execute(input, riskContext()), /ARCHITECTURE_APPROVAL_REASON_REQUIRED/);
+  await assert.rejects(() => execute(input, riskContext('   ')), /ARCHITECTURE_APPROVAL_REASON_REQUIRED/);
+  await assert.rejects(() => execute(input, riskContext('Accepted deliberately.', 'operator:foreign')), /APPROVAL_ISSUER_DENIED/);
+  assert.equal((await execute(input, riskContext('Accepted this reviewed tradeoff.'))).outcome, 'passed');
+  const contradictory = await write({ verdict: 'passed', findings: [{ ...finding, severity: 'blocking' }], summary: 'Must stay blocked.' });
+  await assert.rejects(() => execute(input, context([contradictory])), /ARCHITECTURE_APPROVAL_BLOCKING_FINDING/);
 } finally { await adapter.shutdown(); fs.rmSync(root, { recursive: true, force: true }); }
 console.log(JSON.stringify({ ok: true, plugin: 'kubeclaw.human-approval', suite: 'architecture-durable-evidence' }));

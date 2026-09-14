@@ -1,0 +1,11 @@
+✔ redis actual locked install/upgrade Helm render binds every image and protects retained claims (2063.012407ms)
+✔ postgresql actual locked install/upgrade Helm render binds every image and protects retained claims (1905.077019ms)
+✔ Redis policy refuses a restart-based RDB-to-AOF conversion or implicit dedup eviction (2.572508ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4358.797631

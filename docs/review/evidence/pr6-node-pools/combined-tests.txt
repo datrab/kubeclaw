@@ -1,0 +1,35 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> verify:worker-core:node-pools
+> node --test tests/verification/reliability/worker-resource-reservations.test.mts tests/verification/reliability/worker-ownership-store.test.mts tests/verification/reliability/worker-native-journal.test.mts tests/verification/deployment/native-worker-node.test.mjs
+
+✔ real generated bundle binds both role readers, selected runtime and actual systemd unit parser (1172.88778ms)
+✔ actual policy files reject writable authority and symlinks without consuming their contents (5.312655ms)
+✔ capacity contract requires matching host, effective kubelet reservation and withheld allocatable capacity (11.010057ms)
+✔ quantity comparison is exact for Kubernetes CPU and memory units and rejects ambiguous precision (1.781144ms)
+✔ new-admission rejection persists no accepted work and cannot block historical receipt replay (1418.101934ms)
+✔ real writer SIGKILL preserves accepted identity, original output and receipt without re-admission (1827.003694ms)
+✔ real writer SIGKILL preserves sealed identity, original output and receipt without re-admission (1981.145434ms)
+✔ journal binds the full envelope and reserves retained disk before admitting output (699.29988ms)
+✔ process archive verifies original output and immutable completion time before receipt construction (537.655708ms)
+✔ busy live attempt reports retryable contention without changing its durable identity (6348.45558ms)
+✔ concurrent durable reservations converge and survive reopening (351.804674ms)
+✔ caller mutation after reserve starts cannot change persisted identity (98.369161ms)
+✔ metadata lifecycle is fenced and disposed identities cannot execute again (610.570923ms)
+✔ unresolved ownership preserves diagnosis and blocks generation replacement (310.179643ms)
+✔ record quota fails atomically without losing existing ownership (179.741815ms)
+✔ corrupt persisted ownership fails without overwriting the record (115.379113ms)
+✔ abandoned admission preserves replay identity and requires a failure diagnosis (221.262103ms)
+✔ supervisor holds a separate real kernel lock and SIGKILL releases it without erasing reservations (1587.173338ms)
+✔ native recovery rejects ordinary directories before exposing admission or modifying existing ownership (89.230236ms)
+✔ full pending reservations prevent concurrent memory overcommit and return capacity exactly once (4.950795ms)
+✔ Linux-task capacity and scope count independently gate admission without consuming rejected capacity (0.779127ms)
+✔ invalid and near-integer-limit budgets cannot bypass aggregate accounting (1.263422ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14114.365915

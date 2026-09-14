@@ -30,7 +30,7 @@ import { malformedOutputScenarioConfig } from './malformed-output-publisher.mjs'
 process.env.KUBECLAW_REGISTRY_CONFIG ??= registryTestContract;
 const FIXTURE_DIR = path.join(REPO_ROOT, 'tests', 'verification', 'e2e', 'fixtures', 'nginx-project');
 process.env.REAL_E2E_DEPLOYMENT_IMAGE = process.env.REAL_E2E_DEPLOYMENT_IMAGE
-  || 'registry-mirror.kubeclaw.svc.cluster.local:5000/library/nginx:1.27-alpine@sha256:62223d644fa234c3a1cc785ee14242ec47a77364226f1c811d2f669f96dc2ac8';
+  || 'registry.example.test:5443/library/nginx:1.27-alpine@sha256:62223d644fa234c3a1cc785ee14242ec47a77364226f1c811d2f669f96dc2ac8';
 const DEFAULT_MODULE_TIMEOUT_MINUTES = 10;
 const MODULE_BUSTER_AUTHORITY_EVIDENCE = Object.freeze(new Set([
   'buster_module_failure',

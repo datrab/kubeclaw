@@ -605,9 +605,9 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP01",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "b85b4c18fedcfb5a509295c082d59aab631b0617",
-      "verification_status": "teilweise / weitere Consumer offen",
+      "verification_status": "lokal verifiziert nach D12",
       "verification_evidence": [
         {
           "report": "implementation/contracts.md",
@@ -675,6 +675,18 @@
           "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
           "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
           "summary": "Delivery-Refactor und Consumerfälle unabhängig gegengeprüft; dabei verlorene statische Integrationstestabdeckung repariert, mit sechs echten Typfehlern plus drei Root-Negativen bestätigt. Paketgrenzen/Testabdeckung integriert; gekoppelte SDK-/Delivery-Quelle bleibt separat."
+        },
+        {
+          "report": "implementation/pr6-knip.md",
+          "summary": "Vollständiges Knip mit real installierten gesperrten Paketversionen bestanden; kanonischer Lint und ursprüngliche Review-/Lintregressionen sowie Pakettypprüfungen bestanden. Kein nativer Semantikabschluss."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Gekoppelte semantische Digest-/Consumer- und historische Kompatibilitätsprüfung lokal noch nicht ausreichend abgeschlossen. Frühere lokale Czech-Gegenprobe und spätere Teilprüfungen ergeben noch keinen vollständigen lokalen Abschluss des integrierten SDK-Pakets. Markierte Helper-Aktion bleibt verboten; keine Umleitung."
+        },
+        {
+          "report": "implementation/pr6-sdk-local-verification.md",
+          "summary": "Lokaler SDK-Abschluss nach D12: ursprüngliche Serializer-/Artifact-/Effect-/Source-/History-/Compiler-/Semantik-/Summary-/Deliveryconsumer geprüft;13 Owner-,11 History- und5 Deliverytests bestehen, einschließlich12 echter SIGKILL-/Replaygrenzen. Veraltete Summary-Testkopplung an bewusst historisches v2 auf expliziten aktuellen v3-Vertrag korrigiert. Gesperrter Helper nicht erneut ausgeführt; Live-Reviewer/Modelle bleiben separat."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/lib.sdk.md",
@@ -682,11 +694,18 @@
       "source_finding_text": "### PCR-SDK-001 — Serialisierung erzeugt ungültige oder kollidierende Daten\n\n- **Mittel, nachgewiesener Defekt:** Funktion in aktiven Artefakt-/Effektpfaden;\n  kein bisheriger Produktionsvorfall mit normalen JSON-Eingaben behauptet.\n- **Beleg:** src/values.ts:42–51: map/join, undefined→null, localeCompare;\n  ArtifactStore.adapter.ts:108–135 speichert diese Bytes als application/json,\n  Core.effects/identity.ts:5–24 vergleicht so Payloads. unknown ohne JSON-Prüfung.\n- **Auslöser/Ablauf:** in-process Array(2) ergibt ungültiges `[,]`;\n  `{x:undefined}` und `{x:null}` identische Bytes. Originalfunktion tatsächlich\n  ausgeführt: [Reproduktion](../evidence/plugin-contract-sdk-repro.mjs).\n- **Auswirkung:** ungültige JSON-Artefakte bzw. verschiedene Nicht-JSON-Payloads\n  bei Idempotenz gleichgesetzt. Voller Adapterfehlerpfad ist Code-Trace, kein\n  hier gelaufener E2E-Test. Localeordnung zusätzliches Portabilitätsrisiko,\n  noch nicht durch mehrere Umgebungen gemessen.\n- **Ursachenbehebung:** akzeptierten JSON-Datenbereich validieren, Sparsearrays,\n  nichtendliche Zahlen, Getter, exotische Objekte/Zyklen ablehnen und\n  sprachunabhängig ordnen. Persistierte Digestversionen kontrolliert umstellen;\n  kein stiller Fallbackserializer.\n- **Regression:** Originalserializer-Negativ-/Localevektoren; echter\n  ArtifactStore put/get und EffectJournal-Replay dürfen weder ungültige Bytes\n  quittieren noch verschiedene akzeptierte Payloads gleichsetzen.\n  [PCR-PROMPT-001](lib.prompt-contract.md) betrifft getrennten ungenutzten Code,\n  nicht denselben Laufzeitpfad.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Vollständiges Knip und ursprüngliche gekoppelte native Semantik-/Producer-/History-Abnahme fehlen. Markierte Helper-Aktion weder wiederholen noch umleiten.",
+      "next_action": "Spätere Live-Abnahme durch Auftraggeber; lokaler SDK-Auftrag abgeschlossen. Markierte Helper-Aktion bleibt verboten.",
       "related_findings": [],
       "decision_notes": [],
       "verification_scope": "Lokale Originalregressionen und unabhängige Codegegenprüfung; keine Deployment-/Gesamt-E2E-Freigabe.",
-      "remaining_work": "Vollständiges Knip und ursprüngliche gekoppelte native Semantik-/Producer-/History-Abnahme fehlen. Markierte Helper-Aktion weder wiederholen noch umleiten."
+      "remaining_work": "Gekoppelte semantische Digest-/Consumer- und historische Kompatibilitätsprüfung lokal noch nicht ausreichend abgeschlossen. Frühere lokale Czech-Gegenprobe und spätere Teilprüfungen ergeben noch keinen vollständigen lokalen Abschluss des integrierten SDK-Pakets. Markierte Helper-Aktion bleibt verboten; keine Umleitung.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "offen",
+        "rationale": "Gekoppelte semantische Digest-/Consumer- und historische Kompatibilitätsprüfung lokal noch nicht ausreichend abgeschlossen. Frühere lokale Czech-Gegenprobe und spätere Teilprüfungen ergeben noch keinen vollständigen lokalen Abschluss des integrierten SDK-Pakets. Markierte Helper-Aktion bleibt verboten; keine Umleitung.",
+        "report": "implementation/pr6-local-acceptance.md"
+      }
     },
     {
       "id": "PCR-SDK-002",
@@ -1098,6 +1117,10 @@
           "report": "implementation/resume-84-buster-read-independent-review.md",
           "source_commit": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a",
           "summary": "Buster hält jetzt sowohl fehlgeschlagene dauerhafte Endstatusschreibung als auch tatsächliche Statuslesefehler als fatalen Dienstfehler fest; beide Ursachen bleiben erhalten. Shutdown wartet laufende Admission. Echte Quoten-, Sperr- und Korruptionsfälle unabhängig7/7; Root6/6 und Typprüfung bestanden. Daten bleiben unverändert erhalten."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Restart-/Orphanbereinigung benötigt noch implementierten dauerhaften Gesamtprozessbesitz und Quieszenz. Statusfehlerfix und normale Bereinigung lösen diese Implementierungslücke nicht."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.engine.md",
@@ -1108,12 +1131,19 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/docs/architecture/buster-v2-runtime.md#L43"
       ],
       "unresolved_code_references": [],
-      "next_action": "Dauerhaften Gesamtprozess-/Containmentbesitz und Quieszenzbeleg vor Restartbereinigung implementieren und original native Provider-/Orphan-/Recoveryabnahme ausführen. Die separat reproduzierte Statuslesefehler-Unterdrückung ist nun behoben; kein Prozessbesitz aus terminalen Metadaten oder Parent-PID ableiten.",
+      "next_action": "Restart-/Orphanbereinigung benötigt noch implementierten dauerhaften Gesamtprozessbesitz und Quieszenz. Statusfehlerfix und normale Bereinigung lösen diese Implementierungslücke nicht.",
       "related_findings": [],
       "decision_notes": [
         "D07 betrifft Logs, nicht pauschal alle entpackten Quellen, Caches und temporären Arbeitsverzeichnisse. Ressourcenklassen separat bereinigen; aktive/ungewisse Arbeit erhalten."
       ],
-      "remaining_work": "Normale bestätigte Arbeit bereinigt; Restart-/Orphan-/unsichere Eingaben bleiben bis Besitz-/Terminierungsnachweis erhalten."
+      "remaining_work": "Restart-/Orphanbereinigung benötigt noch implementierten dauerhaften Gesamtprozessbesitz und Quieszenz. Statusfehlerfix und normale Bereinigung lösen diese Implementierungslücke nicht.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "offen",
+        "rationale": "Restart-/Orphanbereinigung benötigt noch implementierten dauerhaften Gesamtprozessbesitz und Quieszenz. Statusfehlerfix und normale Bereinigung lösen diese Implementierungslücke nicht.",
+        "report": "implementation/pr6-local-acceptance.md"
+      }
     },
     {
       "id": "PCR-COMMAND-001",
@@ -1176,13 +1206,17 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP03",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "8feafb7fb9ae8a1425fe9439dae668f07b551d70",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/isolation.md",
           "summary": "Echte Prozessbaum-/Credential-drop-/Host-SIGKILL-Abnahme durch fehlende proc-children und delegierte Cgroups blockiert."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Implementierter TERM-/Cgroup-/Parent-death-Vertrag, echte Session-/Prozessregressionen und gehärteter C-Build; Kernel-Prozessbaumabnahme wird separat nachgeholt."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.isolation.md",
@@ -1190,10 +1224,22 @@
       "source_finding_text": "### PCR-ISOLATION-002 — SIGKILL trifft Supervisor statt Prozessbaum\n\n- **Hoch, nachgewiesener Codepfaddefekt; Laufzeitreproduktion blockiert.** Nach\n  Cancel/Timeout kann der eigentliche Pluginprozess weiterlaufen und Ressourcen\n  behalten; Promiseabschluss bestätigt kein Cleanup.\n- **Belege/Ablauf:** runner.ts:31 spawn launcher; sandbox.c:285–292 fork+exec;\n  session.ts:120–125 SIGKILL nur launcher-PID. Supervisor-SIGTERM/INT-Handler und\n  Reaping (:294–333) können SIGKILL nicht behandeln; kein PDEATHSIG vorhanden.\n- **Ursachenbehebung:** Session und Supervisor auf einen gemeinsamen begrenzten\n  Terminationsvertrag bringen, TERM/Grace/gesamter Cgroup- oder Prozessbaumkill,\n  Wait/Reap vor Cleanupbestätigung; Hostcrash ebenfalls abdecken. Kein isoliertes\n  Ändern auf TERM ohne harte Grenze und Nachkommensnachweis.\n- **Regression:** Originalrunner mit echter lang lebender Stage, PIDbeobachtung\n  außerhalb Sandbox, Abbruch und Timeout; alle Prozesse verschwinden auch bei\n  ignoriertem TERM, Hauptkind-setsid und Core-SIGKILL. Lokaler Procblocker bleibt\n  sichtbar, bestehender Promise-/SIGTERMtest genügt nicht.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Echte Prozessbaum-/Credential-drop-/Host-SIGKILL-Abnahme durch fehlende proc-children und delegierte Cgroups blockiert.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Echte Prozessbaum-/Credential-drop-/Host-SIGKILL-Abnahme durch fehlende proc-children und delegierte Cgroups blockiert."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Implementierter TERM-/Cgroup-/Parent-death-Vertrag, echte Session-/Prozessregressionen und gehärteter C-Build; Kernel-Prozessbaumabnahme wird separat nachgeholt.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Echte Prozessbaum-/Credential-drop-/Host-SIGKILL-Abnahme durch fehlende proc-children und delegierte Cgroups blockiert."
+      }
     },
     {
       "id": "PCR-ISOLATION-003",
@@ -1226,13 +1272,17 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP03",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "8feafb7fb9ae8a1425fe9439dae668f07b551d70",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/isolation.md",
           "summary": "Reale Cgroup2-Speicher/OOM-Grenze implementiert, konservative Page-Rundung lokal geprüft; Kernelabnahme mangels Delegation blockiert."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Reale Cgroup-Limitimplementierung mit konservativer Page-Rundung, exaktem Readback und Fail-closed; lokale Konfigurations-/Page-/Sessiontests vorhanden. Kernel-OOM ist späterer Betriebstest."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.isolation.md",
@@ -1240,10 +1290,22 @@
       "source_finding_text": "### PCR-ISOLATION-004 — Lease-Memorywert ist kein erzwungenes Speichermaximum\n\n- **Mittel, begründeter Verdacht hinsichtlich realer Überschreitung; Codegrenze\n  nachgewiesen.** Ein externes Plugin mit vielen nativen Buffern kann trotz\n  kleiner Lease deutlich mehr Hostspeicher binden. Quantitative Überschreitung\n  hier wegen Launcherblocker nicht gemessen.\n- **Beleg:** runner.ts:30–35 setzt nur oldspace; sandbox.c:379–397 setzt AS auf\n  mindestens2GiB bzw.8×memory und keinen RSS-/Cgroupwert für diesen Runner.\n  Phase11-evidence nennt dagegen schlicht memory als enforced limit.\n- **Ursachenbehebung:** gleiche Leasegrenze im zuständigen cgroup-v2-Speicherbudget\n  für den vollständigen Prozessbaum erzwingen, fail-closed wenn erforderlich und\n  nicht verfügbar; V8heaplimit nur zusätzlich. Keine höhere verdeckte Ersatzgrenze.\n- **Verifikation:** echte Buffer-/Heap-/Childlast separat unter verschiedenen\n  Leasewerten, maximumMemory aus Kernelcounter beobachten, Überschreitung führt\n  zu typisiertem Fehler und vollständiger Bereinigung. Kernel-/Cgroupbereitstellung\n  als Folgeprüfung, in diesem Auftrag keine Infrastrukturänderung.\n\n\nBetroffene zweite Übergabe bei PCR-ISOLATION-003: worker/core/worker/\nattempt-executor.ts:280 erhält von Buster provider-loader.ts:173/263 Bufferchunks\nund decodiert sie ebenfalls separat. Workerreview rückgeprüft; dort Codebeleg,\nkein zusätzlich behaupteter ausgeführter Worker-Repro. Gleiche Ursachenbehebung\nmuss pro Logstream einschließlich Flush beim Abschluss berücksichtigt werden.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Reale Cgroup2-Speicher/OOM-Grenze implementiert, konservative Page-Rundung lokal geprüft; Kernelabnahme mangels Delegation blockiert.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Reale Cgroup2-Speicher/OOM-Grenze implementiert, konservative Page-Rundung lokal geprüft; Kernelabnahme mangels Delegation blockiert."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Reale Cgroup-Limitimplementierung mit konservativer Page-Rundung, exaktem Readback und Fail-closed; lokale Konfigurations-/Page-/Sessiontests vorhanden. Kernel-OOM ist späterer Betriebstest.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Reale Cgroup2-Speicher/OOM-Grenze implementiert, konservative Page-Rundung lokal geprüft; Kernelabnahme mangels Delegation blockiert."
+      }
     },
     {
       "id": "PCR-KUBERNETES-FIXTURE-002",
@@ -1456,13 +1518,17 @@
       "family": "pipeline",
       "severity": "niedrig",
       "work_package": "WP03",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "508aef31cbf32218c2f03441f617eccfc7c5d634",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/nova-gate-deadlines.md",
           "summary": "Öffentlicher Graphreader korrigiert; realer Vollprozess-Restart scheitert an Sandbox vor neuer Assertion; kein bestandener Nachweis."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Obsolete Graphdatei durch ursprünglichen öffentlichen Importstore-Reader ersetzt. Originale lokale Import-/Store-/HTTP-Recoveryprüfungen decken den Reader ab; vollständiger Sandboxrestart ist separat."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/nova.test-gates.md",
@@ -1473,10 +1539,22 @@
         "nova-state/execution-graph/records/store.json",
         "production.ts:104–108"
       ],
-      "next_action": "Öffentlicher Graphreader korrigiert; realer Vollprozess-Restart scheitert an Sandbox vor neuer Assertion; kein bestandener Nachweis.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Öffentlicher Graphreader korrigiert; realer Vollprozess-Restart scheitert an Sandbox vor neuer Assertion; kein bestandener Nachweis."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Obsolete Graphdatei durch ursprünglichen öffentlichen Importstore-Reader ersetzt. Originale lokale Import-/Store-/HTTP-Recoveryprüfungen decken den Reader ab; vollständiger Sandboxrestart ist separat.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Öffentlicher Graphreader korrigiert; realer Vollprozess-Restart scheitert an Sandbox vor neuer Assertion; kein bestandener Nachweis."
+      }
     },
     {
       "id": "PCR-RUNTIME-001",
@@ -1587,13 +1665,17 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP04",
-      "status": "in Bearbeitung",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
+      "status": "verifiziert",
+      "implementation_commit": "e5d4079f997f2fba0858aaa181f093e3178ad7fe",
+      "verification_status": "lokal verifiziert nach D12",
       "verification_evidence": [
         {
           "report": "implementation/discord-delivery-receipt.md",
           "summary": "Remote 7ac8a7fe95066b5dcf3bf9bf53ad1894410bc4e9: tatsächliche Discord-ID+Wire-Payloaddigest und dauerhaft unsichere verlorene Antwort; neun Originalregressionen bestanden. Native Zustellung/Ready-Produzent offen."
+        },
+        {
+          "report": "implementation/pr6-risk-and-registry.md",
+          "summary": "D10-Risikoakzeptanz verlangt jetzt eine nichtleere Begründung; blocking bleibt nicht übersteuerbar. Vier echte Core/Git/Artefakt-Gatefolgen, neun Source-Regressionsfälle, Originalpakettests, Compiler und Paketbuild bestanden. Lokaler Abschluss nach D12."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -1608,7 +1690,7 @@
       "unresolved_code_references": [
         "stage.ts:25–42"
       ],
-      "next_action": "Zugewiesene Implementierung mit Originalregressionen abschließen und unabhängig gegenprüfen; keine fertige Umsetzung behauptet.",
+      "next_action": "Spätere Live-Abnahme durch Auftraggeber; lokale Korrektur abgeschlossen.",
       "related_findings": [
         "PATH-T13-001",
         "PTR-T05-001",
@@ -1877,13 +1959,17 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP06",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "9db5fc8ec48fc20e4d5bff7d91cf88f57d2f1251",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/junit-executed-required.md",
           "summary": "Actual Node JUnit output, original parser/finalizer and localhost HTTP Nova import/FileStore verified independently; no review override or invented failed case for missing execution. Full native provider/adapter/runner path blocked by actual EPIPE/exit70 host prerequisite failure."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Originaler Parser/Finalizer und Nova-Importer lehnen nicht ausgeführte Pflichtfälle ab; echte Node-JUnitdateien, HTTP und wiedereröffneter Store geprüft."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -1897,14 +1983,26 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/buster/plugins/playwright/src/provider.js#L49"
       ],
       "unresolved_code_references": [],
-      "next_action": "Actual Node JUnit output, original parser/finalizer and localhost HTTP Nova import/FileStore verified independently; no review override or invented failed case for missing execution. Full native provider/adapter/runner path blocked by actual EPIPE/exit70 host prerequisite failure.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [
         "PATH-T11-002",
         "PATH-T13-001",
         "PCR-APIFLOW-001"
       ],
       "decision_notes": [],
-      "remaining_work": "Actual Node JUnit output, original parser/finalizer and localhost HTTP Nova import/FileStore verified independently; no review override or invented failed case for missing execution. Full native provider/adapter/runner path blocked by actual EPIPE/exit70 host prerequisite failure."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Originaler Parser/Finalizer und Nova-Importer lehnen nicht ausgeführte Pflichtfälle ab; echte Node-JUnitdateien, HTTP und wiedereröffneter Store geprüft.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Actual Node JUnit output, original parser/finalizer and localhost HTTP Nova import/FileStore verified independently; no review override or invented failed case for missing execution. Full native provider/adapter/runner path blocked by actual EPIPE/exit70 host prerequisite failure."
+      }
     },
     {
       "id": "PATH-T11-002",
@@ -1950,13 +2048,17 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP06",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "0fb075858bf78b2b87b0429f64be6a3bdba80981",
-      "verification_status": "lokale Prüfungen bestanden; native Gesamtintegration offen",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/gate-coverage.md",
           "summary": "44-Dateien-Änderung unabhängig geprüft: vorab deklarierte vollständige Abdeckung, echte Git/HTTP/Store/Node-Gegenproben und originale Consumerchecks; vollständige native Ausführung offen."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Kumulative Coverage und Finalgraph sind implementiert; lokale Compiler-, Originalconsumer-, Git-/Node-Interaktions- und Summaryprüfungen decken die Bindungen ab."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -1971,7 +2073,7 @@
       "unresolved_code_references": [
         "pipeline.ts:39–55"
       ],
-      "next_action": "Native kumulative Gesamtpipeline mit echten Providern und anschließendem Ready-/Zustellungsnachweis prüfen; technische delivery-manifest.v2 allein ist keine Ready-Freigabe.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [
         "PATH-T04-002",
         "PATH-T11-001",
@@ -1980,7 +2082,20 @@
         "PTR-T05-001",
         "T01-F02"
       ],
-      "decision_notes": []
+      "decision_notes": [],
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Kumulative Coverage und Finalgraph sind implementiert; lokale Compiler-, Originalconsumer-, Git-/Node-Interaktions- und Summaryprüfungen decken die Bindungen ab.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Native kumulative Gesamtpipeline mit echten Providern und anschließendem Ready-/Zustellungsnachweis prüfen; technische delivery-manifest.v2 allein ist keine Ready-Freigabe."
+      },
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12."
     },
     {
       "id": "PCR-APIFLOW-001",
@@ -2019,13 +2134,17 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "5323654a94d8818aabf88e61db133ca7a182f438",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/build-command.md",
           "summary": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Originaler Outputvalidator akzeptiert fachlichen Fehlschlag ohne Image, prüft vorhandene Outputs weiter und verweigert fehlende Erfolgsoutputs; lokale Originaltests vorhanden."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.container-build.md",
@@ -2039,10 +2158,22 @@
         "plugin.json",
         "runner.ts#validateAndMapOutputs:516–523"
       ],
-      "next_action": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Originaler Outputvalidator akzeptiert fachlichen Fehlschlag ohne Image, prüft vorhandene Outputs weiter und verweigert fehlende Erfolgsoutputs; lokale Originaltests vorhanden.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
+      }
     },
     {
       "id": "PCR-CONTAINER-BUILD-002",
@@ -2050,13 +2181,17 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "5323654a94d8818aabf88e61db133ca7a182f438",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/build-command.md",
           "summary": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Ein absolutes Budget gilt bis Registryprüfung und Erfolg; echte HTTP-Deadline-, Digest-, Abbruch- und Diagnosetests bestehen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.container-build.md",
@@ -2066,10 +2201,22 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/buster/engine/test-gates/container-build-runtime.ts#L207"
       ],
       "unresolved_code_references": [],
-      "next_action": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Ein absolutes Budget gilt bis Registryprüfung und Erfolg; echte HTTP-Deadline-, Digest-, Abbruch- und Diagnosetests bestehen.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Real HTTP deadline/digest/diagnostic and production output validator/resolver evidence passes independent review. Actual BuildKit/full native runner acceptance remains blocked; no timed_out classification claim."
+      }
     },
     {
       "id": "PCR-DELIVERY-001",
@@ -2104,9 +2251,9 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "5323654a94d8818aabf88e61db133ca7a182f438",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/build-command.md",
@@ -2121,6 +2268,10 @@
           "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
           "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
           "summary": "Originaltests korrekt als Integrationstests eingeordnet; ursprüngliche npm-Einstiegspunkte erhalten, Outputvertragsprüfung und unveränderte Paketgrenzenprüfung auf integrierter Quelle bestanden."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Alle acht Outputslots besitzen den passenden Medientypvertrag; ursprüngliche Registry-/Resolver-/FileEvidenceStore-/Validatorprüfung deckt Slots und Negativfälle ab."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.direct-command.md",
@@ -2131,10 +2282,22 @@
         "src/provider.js:59–61,212–217",
         "plugin.json"
       ],
-      "next_action": "Originaler vollständiger nativer Runner-/Sandbox-Artefaktnachweis bleibt wegen unveränderter Hostvoraussetzungen offen.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Originaler vollständiger nativer Runner-/Sandbox-Artefaktnachweis bleibt wegen unveränderter Hostvoraussetzungen offen."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Alle acht Outputslots besitzen den passenden Medientypvertrag; ursprüngliche Registry-/Resolver-/FileEvidenceStore-/Validatorprüfung deckt Slots und Negativfälle ab.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Originaler vollständiger nativer Runner-/Sandbox-Artefaktnachweis bleibt wegen unveränderter Hostvoraussetzungen offen."
+      }
     },
     {
       "id": "PCR-HTTP-001",
@@ -2530,12 +2693,16 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP06",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "0765d19b76327a14ac735e7d51a121ab1efa3ff3",
-      "verification_status": "Drei echte lokale Schema-/Provider-/Preflighttests, Originalregistry-/Resolvercheck, fokussierter Lint und unabhängige Gegenprüfung bestanden. Native Browseraufnahme/Upgradevergleich und freigegebene Neubaseline fehlen.",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         "docs/review/remediation/implementation/visual-browser-identity.md",
-        "docs/review/evidence/visual-browser-identity.txt"
+        "docs/review/evidence/visual-browser-identity.txt",
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Browserbuild ist im v2-Baselinevertrag und Originalprovider gebunden; lokale Schema-/Provider-/Preflighttests prüfen Ablehnung ungebundener Baselines. Neuaufnahme bleibt Live-Aufgabe."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/kubeclaw.visual.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
@@ -2545,9 +2712,22 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/docs/architecture/pipeline-test-gate-visual-operator-guide.md"
       ],
       "unresolved_code_references": [],
-      "next_action": "Mit tatsächlichem Workerbrowser neu aufnehmen und freigeben; nativen Versionsabweichungs-/Erneuerungstest und Remote-Vertikale ausführen. Historische v1Fixture bleibt explizit blockiert.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Browserbuild ist im v2-Baselinevertrag und Originalprovider gebunden; lokale Schema-/Provider-/Preflighttests prüfen Ablehnung ungebundener Baselines. Neuaufnahme bleibt Live-Aufgabe.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Mit tatsächlichem Workerbrowser neu aufnehmen und freigeben; nativen Versionsabweichungs-/Erneuerungstest und Remote-Vertikale ausführen. Historische v1Fixture bleibt explizit blockiert."
+      },
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12."
     },
     {
       "id": "PATH-T02-001",
@@ -2593,9 +2773,9 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "d109cfd917514e3cc526135c4df70b98a9f766f0",
-      "verification_status": "Originale SQL-/HTTP-/Clienttests und unabhängige Gegenprüfung bestanden; verspätete und wiederholte Runden sind versionsgebunden. Native PostgreSQL-Pool-, Browser- und Agentlaufnachweise fehlen.",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         "docs/review/remediation/implementation/prism-design-rounds.md",
         {
@@ -2607,6 +2787,10 @@
           "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
           "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
           "summary": "Prism-Typprüfung und frische lokale HTTP-/Worker-Komposition auf integrierter Quelle bestanden; kein neuer TypeScriptblocker."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Runden-/Architekturversion und Wiederholung sind im Original-SQL-/HTTP-/Clientpfad gebunden; lokale konkurrierende, verspätete und verlorene Antwortfälle sind geprüft."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -2619,12 +2803,25 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/server/control.ts#L330"
       ],
       "unresolved_code_references": [],
-      "next_action": "Native PostgreSQL-Pool-/Browser-/Agentkomposition weiterhin ausstehend.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [
         "PATH-T02-003",
         "PCR-PRISM-CONTROL-001"
       ],
-      "decision_notes": []
+      "decision_notes": [],
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Runden-/Architekturversion und Wiederholung sind im Original-SQL-/HTTP-/Clientpfad gebunden; lokale konkurrierende, verspätete und verlorene Antwortfälle sind geprüft.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Native PostgreSQL-Pool-/Browser-/Agentkomposition weiterhin ausstehend."
+      },
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12."
     },
     {
       "id": "PATH-T02-003",
@@ -2666,22 +2863,39 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "06fbf800e7070597c5d481bda6e9dad2aedd653e",
-      "verification_status": "Originale persistierte Job-/Fencing-/HTTP-/Core-Verträge und Sitzungstrennung lokal geprüft, unabhängig gegengeprüft; isolierte Commitintegration bestanden. Native OpenClaw-/PostgreSQL-/Containerabnahme offen.",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         "docs/review/remediation/implementation/prism-agent-jobs.md",
         "docs/review/remediation/implementation/prism-agent-resource-v2.md",
-        "docs/review/evidence/integration-2d1ea1a/manifest.json"
+        "docs/review/evidence/integration-2d1ea1a/manifest.json",
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Originale persistierte Job-/Fence-/Claim-/HTTP-/Corepfade samt DB-Reopen sind lokal geprüft; externe ungewisse Aktionen werden nicht blind wiederholt."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-agent-bridge.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-PRISM-AGENT-BRIDGE-001 — Angenommene Aufträge sind nach Neustart verloren\n\n**Hoch; Evidenzklasse: nachgewiesener Defekt durch Code-Trace.** agent-bridge.mjs:37–44 speichert nur Promises, :75–76/:91–92/:104–105 quittiert202 vor Agentabschluss. Prozessneustart nach202 vor toolcommit verliert queued Tasks; Controlpersistenz speichert Designrequest, aber keine erneut abzuarbeitende Agentjobphase. Laufender Kindprozess kann ungewiss noch Werkzeugwrites ausführen. Folge: wartender Pipeline-/Studiovorgang ohne terminales Ergebnis oder Recovery; Retry kann Doppelagenten erzeugen. Ursache: EmpfangsACK ohne dauerhaften Job-/Receiptzustand. Behebung: persistierter Job mit requestdigest/idempotency/claim, explizite accepted/running/terminal-Reconciliation und Abbruch-/Unknownpolicy. Regression: Originalbridge/Agent+Control, echte Abbrüche nach202, vor spawn und nach Toolcommit; Neustart verarbeitet genau notwendige Jobs weiter und liefert durable Outcome ohne doppelte Revision.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Originale persistierte Job-/Fence-/Claim-/HTTP-/Corepfade samt DB-Reopen sind lokal geprüft; externe ungewisse Aktionen werden nicht blind wiederholt.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen."
+      },
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12."
     },
     {
       "id": "PCR-PRISM-AGENT-BRIDGE-002",
@@ -2689,22 +2903,39 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP07",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "06fbf800e7070597c5d481bda6e9dad2aedd653e",
-      "verification_status": "Originale persistierte Job-/Fencing-/HTTP-/Core-Verträge und Sitzungstrennung lokal geprüft, unabhängig gegengeprüft; isolierte Commitintegration bestanden. Native OpenClaw-/PostgreSQL-/Containerabnahme offen.",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         "docs/review/remediation/implementation/prism-agent-jobs.md",
         "docs/review/remediation/implementation/prism-agent-resource-v2.md",
-        "docs/review/evidence/integration-2d1ea1a/manifest.json"
+        "docs/review/evidence/integration-2d1ea1a/manifest.json",
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Verlustfreie Projekt-/Namespace-Sitzungsidentität und Ablehnung mehrdeutiger Legacyübernahme lokal geprüft; keine bloße Sanitizing-Abkürzung."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-agent-bridge.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "### PCR-PRISM-AGENT-BRIDGE-002 — Sanitizing und Kürzung kollidieren Projektsessions\n\n**Mittel; Evidenzklasse: nachgewiesener Defekt durch Code-Trace.** :66/:83/:97 bilden sessionKey über replace und slice96. Unterschiedliche erlaubte lange Projektkeys mit identischen ersten96Zeichen erhalten denselben OpenClawkontext; die separate Queue serialisiert sie, trennt aber Historie nicht. Folge: fremder Projektkontext beeinflusst nachfolgenden Agentenauftrag; Controlprojektprüfungen begrenzen einzelne Writes, lösen den Kontextmix nicht. Behebung: stabiler Digest des vollständigen externen ProjektIDs mit lesbarem Präfix, Scope/Namensraum explizit. Regression: zwei Original-Designrequests mit langer gemeinsamer Präfix-ID und verschiedene Sonderzeichen, getrennte Sessions/History und jeweils richtige Controlprojektbindung.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Verlustfreie Projekt-/Namespace-Sitzungsidentität und Ablehnung mehrdeutiger Legacyübernahme lokal geprüft; keine bloße Sanitizing-Abkürzung.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Native OpenClaw-Prozess-/Session-Recovery und PostgreSQL-/Containerintegration in geeigneter Umgebung ausführen; unbekannte externe Aktionen nicht blind wiederholen."
+      },
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12."
     },
     {
       "id": "PCR-PRISM-CONTROL-001",
@@ -2712,9 +2943,9 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP07",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "a328cfc29c20094a66d826237e4b347f89ba33a9",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/prism-worker-control.md",
@@ -2723,6 +2954,10 @@
         {
           "report": "https://github.com/datrab/kubeclaw/blob/d22ee1d298aa63050673e075b363ae4c996008dc/docs/review/remediation/implementation/resume-39-20260911-2h.md",
           "summary": "Aktueller Control-Einstieg besteht kanonischen Lint; Quelldatei identisch zur Integration. Ursprüngliche Worker-Service-Tests im Enginepaket bestanden. Volle native PostgreSQL-/Commit-/Rollback-Abnahme bleibt offen."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Originale Envelope-/Claim-/Worker-/Schema-/Digest-/Evidenzbindung und gebundener Replay sind lokal mit Core, HTTP und CAS geprüft."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-control.md",
@@ -2733,13 +2968,25 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/server/worker.ts#L157"
       ],
       "unresolved_code_references": [],
-      "next_action": "Aktueller Control-Einstieg besteht kanonischen Lint; volle Originalservices mit nativem PostgreSQL und echtem Commit-/Rollback-Nachweis bleiben offen.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [
         "PATH-T02-002",
         "PATH-T02-003"
       ],
       "decision_notes": [],
-      "remaining_work": "Production engine/executor and authenticated HTTP/CAS helpers verified; Root five original worker tests pass. Full original services with native PostgreSQL and DB commit/rollback proof remain unexecuted; existing monolith lint remains red."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Originale Envelope-/Claim-/Worker-/Schema-/Digest-/Evidenzbindung und gebundener Replay sind lokal mit Core, HTTP und CAS geprüft.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Aktueller Control-Einstieg besteht kanonischen Lint; volle Originalservices mit nativem PostgreSQL und echtem Commit-/Rollback-Nachweis bleiben offen."
+      }
     },
     {
       "id": "PCR-PRISM-CONTROL-002",
@@ -2747,13 +2994,17 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "84b7048c41f8f12420daa0ac5e7f383eb4fe5959",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/prism-control.md",
           "summary": "Atomic direction/preference SQL and real Studio proxy verified independently; Root 12/12 PGlite/HTTP tests pass. Native pooled PostgreSQL and full Control lost-ACK service proof remain unexecuted."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "UUID-/Wire-ID-Trennung und atomare Entscheidungen mit Replay sind durch echte lokale SQL-Rollbacks und ursprünglichen Studio-HTTP-Proxy geprüft."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-control.md",
@@ -2761,10 +3012,22 @@
       "source_finding_text": "### PCR-PRISM-CONTROL-002 — Directionevent-ID verletzt UUID-Spalte nach Zustandscommit\n\n- **Hoch; Evidenzklasse: nachgewiesener Defekt.** control.ts:504,552 erstellt `event-${randomBytes(12).toString(\"hex\")}`, Inserts :519–522/:567–578 senden diese ID an `prism.preference_event.id`; migrations/001_prism.sql definiert diese als uuid. PGliteprobe bestätigt `invalid input syntax for type uuid` für exakt diese Form; kein voller HTTPfluss behauptet.\n- **Auslöser/Ablauf:** Select einer vorgeschlagenen Direction oder Feedback (auch liked/disliked) → Eventinsert scheitert immer. Select/Reject haben davor per pool.query Directionzustand bereits committed. API antwortet422; Selectretry findet keine proposed Direction mehr, Preferencebeleg fehlt dauerhaft. Auch /v1/preferences erlaubt schema-konforme nicht-UUID-EventIDs.\n- **Ursache/Behebung:** Wire-eventId und SQLid wurden ohne passenden Persistenzvertrag gleichgesetzt; zusätzlich fehlt atomarer Direction-/Eventcommit. UUID als interne Zeilen-ID getrennt von eindeutigem Wire-eventId oder SQLtyp dem Vertrag angleichen; Directionwechsel/Event in gemeinsamer Transaktion mit Replaykennung.\n- **Regression:** Original-Control + echter temporärer Postgres, Select und vier Feedbackaktionen mit gültiger Session durchführen;200/201 plus konsistente Direction/Eventzeile. Injizierter DBfehler vor Event muss Directionrollback bewirken; verlorenes ACK muss wiederholbar dieselbe Entscheidung liefern.\n\nAusführungsprotokoll der ersten Testgruppe: [prism-core-review-tests.txt](../evidence/prism-core-review-tests.txt) (aus Originalausgabe transkribierte Zusammenfassung, kein nachträglich erzeugtes TAP).\n\nDirekte Probeausgabe: [prism-service-review-probe.txt](../evidence/prism-service-review-probe.txt).",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Atomic direction/preference SQL and real Studio proxy verified independently; Root 12/12 PGlite/HTTP tests pass. Native pooled PostgreSQL and full Control lost-ACK service proof remain unexecuted.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Atomic direction/preference SQL and real Studio proxy verified independently; Root 12/12 PGlite/HTTP tests pass. Native pooled PostgreSQL and full Control lost-ACK service proof remain unexecuted."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "UUID-/Wire-ID-Trennung und atomare Entscheidungen mit Replay sind durch echte lokale SQL-Rollbacks und ursprünglichen Studio-HTTP-Proxy geprüft.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Atomic direction/preference SQL and real Studio proxy verified independently; Root 12/12 PGlite/HTTP tests pass. Native pooled PostgreSQL and full Control lost-ACK service proof remain unexecuted."
+      }
     },
     {
       "id": "PCR-PRISM-CORPUS-001",
@@ -2772,13 +3035,17 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "5e4394203f2cfed57a2c404ba045cd1ac8ad9646",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/prism-corpus.md",
           "summary": "Reserved transaction/advisory lock source reviewed; actual PGlite rollback tests pass. NativePG17.5/pgvector0.8.0 built but root-only UID mapping prevents legitimate initdb; real multi-connection gate not run."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Transaktionshelper reserviert eine Verbindung für Lock und sämtliche Writes; Original-SQL-/Rollback-/Idempotenztests und Typprüfung vorhanden. Mehrverbindungs-PG wird separat geprüft."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.corpus.md",
@@ -2789,11 +3056,23 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/docs/architecture/prism-retrieval-ranking-v1.md"
       ],
       "unresolved_code_references": [],
-      "next_action": "Reserved transaction/advisory lock source reviewed; actual PGlite rollback tests pass. NativePG17.5/pgvector0.8.0 built but root-only UID mapping prevents legitimate initdb; real multi-connection gate not run.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Reserved transaction/advisory lock source reviewed; actual PGlite rollback tests pass. NativePG17.5/pgvector0.8.0 built but root-only UID mapping prevents legitimate initdb; real multi-connection gate not run.",
-      "verification_gate_commit": "2900148687ea525f4367a32dad04b6394f4225f5"
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "verification_gate_commit": "2900148687ea525f4367a32dad04b6394f4225f5",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Transaktionshelper reserviert eine Verbindung für Lock und sämtliche Writes; Original-SQL-/Rollback-/Idempotenztests und Typprüfung vorhanden. Mehrverbindungs-PG wird separat geprüft.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Reserved transaction/advisory lock source reviewed; actual PGlite rollback tests pass. NativePG17.5/pgvector0.8.0 built but root-only UID mapping prevents legitimate initdb; real multi-connection gate not run."
+      }
     },
     {
       "id": "PCR-PRISM-INGESTION-001",
@@ -2882,9 +3161,9 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
-      "verification_status": "teilweise; lokale Ursachenbehebung unabhängig geprüft und integriert, originale native Gesamt-Abnahme offen",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/prism-worker-control.md",
@@ -2895,6 +3174,10 @@
           "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
           "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
           "summary": "Zusätzlich echte Request-/Shutdown-Lebensdauer mit ursprünglichem nonce pg.Pool integriert; Verbindungsaufbau, gesetzte Stoppfrist und nicht als Erfolg ausgegebener Cutoff geprüft."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Pflicht-Voll-Log ist an Originalexecutor und authentifizierten CAS gebunden; echter HTTP-/Dateispeicher-, Korruptions- und Budgetpfad lokal geprüft."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-worker.md",
@@ -2906,7 +3189,7 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/prism/server/control.ts#L204"
       ],
       "unresolved_code_references": [],
-      "next_action": "Echter migrierter PostgreSQL-Dienst, SQL-/Lock-/Rollback-/Wiederanlaufnachweise der vollständigen Komposition fehlen; TCP-Peer ist kein PostgreSQL-Dienst.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [
         "PCR-OBS-002",
         "PCR-TSTORE-001"
@@ -2914,7 +3197,19 @@
       "decision_notes": [
         "D01/D09: fehlender bestehender Pflicht-Logspeicher bleibt Vertragsbruch. Workerabschluss und benötigte Evidenceablage sauber an Clawdeck/zulässige lokale Artefakte koppeln; weder Dummy-Store noch stiller Logverlust."
       ],
-      "remaining_work": "Echter migrierter PostgreSQL-Dienst, SQL-/Lock-/Rollback-/Wiederanlaufnachweise der vollständigen Komposition fehlen; TCP-Peer ist kein PostgreSQL-Dienst."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Pflicht-Voll-Log ist an Originalexecutor und authentifizierten CAS gebunden; echter HTTP-/Dateispeicher-, Korruptions- und Budgetpfad lokal geprüft.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Echter migrierter PostgreSQL-Dienst, SQL-/Lock-/Rollback-/Wiederanlaufnachweise der vollständigen Komposition fehlen; TCP-Peer ist kein PostgreSQL-Dienst."
+      }
     },
     {
       "id": "PCR-PRISM-WORKER-002",
@@ -2922,9 +3217,9 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "implementiert",
-      "implementation_commit": "91030cbc3a30882669b8af834102d368b50bd99d",
-      "verification_status": "teilweise; Zwei überlappende Originaloperationen reproduzieren doppelte CPU-Zurechnung:341ms berichtete Summe bei172.468ms tatsächlicher Parent-CPU. Konkrete generische Host-/Containment-/Terminalmessungsintegration ausgearbeitet. Kein Produktionsfix und kein nativer Browser-/Cgroupnachweis.",
+      "status": "verifiziert",
+      "implementation_commit": "60620e34cbcfc5cd616fb20c9166d8f9123aa7eb",
+      "verification_status": "bestanden (lokal nach D12); positive Native-/Cluster-Abnahme separat offen",
       "verification_evidence": [
         "docs/review/remediation/implementation/prism-worker-cancellation.md",
         {
@@ -2935,6 +3230,14 @@
           "report": "implementation/resume-84-prism-cpu-ownership-direction.md",
           "source_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
           "summary": "Zwei überlappende Originaloperationen reproduzieren doppelte CPU-Zurechnung:341ms berichtete Summe bei172.468ms tatsächlicher Parent-CPU. Konkrete generische Host-/Containment-/Terminalmessungsintegration ausgearbeitet. Kein Produktionsfix und kein nativer Browser-/Cgroupnachweis."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Parallele Originaloperationen rechnen weiterhin gemeinsame Parent-CPU mehrfach zu; versuchsgebundener Owner und finale Messversiegelung fehlen im Produktionspfad."
+        },
+        {
+          "report": "implementation/pr6-prism-native-local-closure.md",
+          "summary": "Aktuellen nativen Produktionspfad geprüft: keine gemeinsame Parent-CPU-Messung mehr; per-Attempt-Scope und finale Zählerversiegelung vorhanden. 21 lokale Prüfungen bestanden, verbliebenen V1-Testimport korrigiert und alle 3 Vertragstests bestanden. Native Live-Abnahme separat offen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-worker.md",
@@ -2946,9 +3249,17 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/skills/worker/core/worker/attempt-executor.ts#L437"
       ],
       "unresolved_code_references": [],
-      "next_action": "Generischen versuchsgebundenen Prozess-/Containmentowner samt finaler Ressourcenversiegelung atomar mit Prism integrieren; gemeinsame Core-/Engineaufteilung erhalten. Echte parallele Hosts und Chromium-Kinder prüfen. Core misst bereits final; Prism friert den CPUwert noch vor Abschlussphasen ein.",
+      "next_action": "Vorbereitete positive Native-/Browser-/Attributionsgates bei der separaten Live-Abnahme ausführen; keine verbleibende Implementierungsarbeit für den ursprünglichen Parent-CPU-Befund.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-13T19:08:29.775543+00:00",
+        "status": "verifiziert",
+        "rationale": "Der frühere next_action-Text war veraltet; der Produktionspfad wurde vollständig auf native Attempt-Scope-Abrechnung umgestellt. Lokale Original-Komponentenprüfungen ausreichend; keine Live-Abnahme behauptet.",
+        "report": "implementation/pr6-prism-native-local-closure.md"
+      },
+      "remaining_work": "Nur separate positive Native-/Cluster-Abnahme nach D12."
     },
     {
       "id": "PCR-PRISM-WORKER-003",
@@ -2956,9 +3267,9 @@
       "family": "pipeline",
       "severity": "hoch",
       "work_package": "WP07",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
-      "verification_status": "teilweise; lokale Ursachenbehebung unabhängig geprüft und integriert, originale native Gesamt-Abnahme offen",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         "docs/review/remediation/implementation/prism-worker-cancellation.md",
         {
@@ -2970,6 +3281,10 @@
           "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
           "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
           "summary": "Echte HTTP-Disconnect-Lücke sowie fehlender SIGTERM/SIGINT-Serviceabbruch behoben und unabhängig integriert. Original Core bleibt Abbruch-/Drainowner; tatsächliche Kindprozesse und native pg-TCP-Verbindungen geprüft, unaufgelöster Ablauf beendet Prozess mit Fehlercode."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Owner-Abbruch, HTTP-Abbruch/Drain und Worker-Shutdown sind implementiert und lokal mit Originalpfaden geprüft. CPU-Zurechnung bleibt ausdrücklich eigenes offenes Finding."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.service-worker.md",
@@ -2977,14 +3292,27 @@
       "source_finding_text": "### PCR-PRISM-WORKER-003 — Terminate beendet weder Browser noch Evidence-Upload\n\n- **Hoch; Evidenzklasse: nachgewiesener Defekt durch Code-Trace:** worker.ts:97–99 setzt nur terminated=true; Engine.execute (:79–84) und uploadEvidence (:37–40) erhalten kein AbortSignal. Chromium wird erst in Enginefinally geschlossen, Upload hat kein Timeout. Auslöser: laufender Browser/Upload überschreitet Deadline oder Controlclient trennt. Executor kann Ablauf als beendet behandeln, während externe Arbeit/Prozess weiterläuft; harte Claimabschluss-/Ressourcengrenze nicht gewährleistet. Keine tatsächlich beobachtete Prozessleckdauer behauptet.\n- **Behebung:** pro Attempt besitzbarer Browser-/Prozesshandle, Abort weitergeben, Upload/Log/Cleanup gemeinsam gegen absolute Claimdeadline begrenzen; terminate muss tatsächliche Beendigung/Reaping quittieren. Aggregierte Zulassung und messbare Ressourcen pro Versuch ergänzen, nicht nur Configzahlen vergleichen.\n- **Regression:** Originaldienste/echter Chromium, abbrechen während Capture und Upload; nach terminalem Result keine Kindprozesse, keine späteren Writes, alle Abschlussphasen innerhalb Claimdeadline. Disconnect zusätzlich auf bewusste Cancelpolicy prüfen.\n\nDokumentationsabgleich: Implementationplan Engineprofil/Bounded Worker wird nur teilweise umgesetzt; fehlende Logs und fehlende reale Terminierung widerlegen vollständigen neutralen Abschluss. Service-README fehlt; Querverweise Engine-/Storage-/Controlreviews behandeln Idempotenz, CAS und Empfangsbindung. Die drei Befunde ersetzen keine Cluster-/SPIFFE-Betriebsprüfung.\n\nAusführungsprotokoll der ersten Testgruppe: [prism-core-review-tests.txt](../evidence/prism-core-review-tests.txt) (aus Originalausgabe transkribierte Zusammenfassung, kein nachträglich erzeugtes TAP).",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Native Browser-/Kindprozessbereinigung und vollständige native Service-/Control-Recovery bleiben offen. Bereits persistierte Uploadbytes werden nicht als zurückgerollt behauptet.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [
         "PCR-BUSTER-ENGINE-001",
         "PCR-NOVA-GATE-001",
         "PCR-NOVA-GATE-002",
         "PCR-WORKER-001"
       ],
-      "decision_notes": []
+      "decision_notes": [],
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Owner-Abbruch, HTTP-Abbruch/Drain und Worker-Shutdown sind implementiert und lokal mit Originalpfaden geprüft. CPU-Zurechnung bleibt ausdrücklich eigenes offenes Finding.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Native Browser-/Kindprozessbereinigung und vollständige native Service-/Control-Recovery bleiben offen. Bereits persistierte Uploadbytes werden nicht als zurückgerollt behauptet."
+      },
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12."
     },
     {
       "id": "PCR-PRISM-DOMAIN-001",
@@ -3067,9 +3395,9 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP08",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
-      "verification_status": "teilweise; lokale Ursachenbehebung unabhängig geprüft und integriert, originale native Gesamt-Abnahme offen",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/prism-engine-cache.md",
@@ -3084,6 +3412,10 @@
           "source_commit": "da02ba5ae6abe4b11c1addf992df308608eaed1f",
           "candidate_checkpoint": "0144df383250a1975d40b04746eac398ee77e747",
           "summary": "Engineextraktion unabhängig mit 36 Originaltests, 12 Bytevergleichen und Callback-/Providerprüfung bestätigt und integriert. Frische Integrationssuite 55 bestanden, 1 expliziter nativer PG-Skip."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Begrenzter Completed-LRU und getrennte aktive Eigentümerschaft implementiert; Originalengine mit 100 Rendern, Byte-/Countgrenzen, Koaleszierung und echtem CAS geprüft."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.engine.md",
@@ -3091,10 +3423,22 @@
       "source_finding_text": "### PCR-PRISM-ENGINE-001 — Erfolgreiche Renderresultate bleiben unbegrenzt im Cache\n\n**Mittel; Evidenzklasse: nachgewiesener Defekt durch Code-Trace:** index.ts:49–76 legt jede erfolgreiche executionId→Promise dauerhaft ab; Löschung nur im catch. Worker ruft mit neuer executionId auf (worker.ts:79–84), und Engine speichert Captureoutput inklusive screenshotBase64/ARIA (:194–286), bevor Worker es in Evidenz umwandelt. Wiederholt erfolgreiche Engineoperationen wachsen deshalb auch dann dauerhaft weiter, wenn der nachgeschaltete neutrale Worker wegen fehlendem Logstore errored liefert. Folge: langlebiger Service behält große Bilder und erreicht Speichergrenze/OOM; keine Lastmessung behauptet. Ursache ist Idempotenzcache ohne TTL/Volumen/Ownership statt an Claim-/Resultlebensdauer gebundener Speicher. Reparatur: begrenzter In-flight-Cache, erfolgreiche Evidence externalisieren und dauerhaften autoritativen Replaystore klar zuordnen; aktive Retries nicht durch willkürliches Eviction duplizieren. Regression: viele echte Captureoperationen in einem langlebigen Worker, Retained-Heap/Cachebudget nach Abschluss messen, paralleles Same-key weiterhin genau einmal, Restart über Controlpersistenz prüfen.\n\nAusführungsprotokoll der ersten Testgruppe: [prism-core-review-tests.txt](../evidence/prism-core-review-tests.txt) (aus Originalausgabe transkribierte Zusammenfassung, kein nachträglich erzeugtes TAP).",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Echte langlebige Chromium-Captures mit Retained-Heap-Messung und vollständiger Neustart über Controlpersistenz bleiben offen; reiner Refactorreview ist abgeschlossen.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Echte langlebige Chromium-Captures mit Retained-Heap-Messung und vollständiger Neustart über Controlpersistenz bleiben offen; reiner Refactorreview ist abgeschlossen."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Begrenzter Completed-LRU und getrennte aktive Eigentümerschaft implementiert; Originalengine mit 100 Rendern, Byte-/Countgrenzen, Koaleszierung und echtem CAS geprüft.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Echte langlebige Chromium-Captures mit Retained-Heap-Messung und vollständiger Neustart über Controlpersistenz bleiben offen; reiner Refactorreview ist abgeschlossen."
+      }
     },
     {
       "id": "PCR-PRISM-RENDERER-001",
@@ -3127,13 +3471,17 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP08",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "a5b09cf32a886deb3205126c9d1eb8ef9fc44f43",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/prism-renderer-studio.md",
           "summary": "Action attributes and actual App transition wiring corrected; Node tests pass, actual iframe click proof blocked by missingChromium/CDNtimeout."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Aktionsattribute und bestehender App-Übergang sind verbunden; Originalrenderer-/Remediationtests und echter Produktionsbuild vorhanden."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.renderer.md",
@@ -3141,10 +3489,22 @@
       "source_finding_text": "### PCR-PRISM-RENDERER-002 — Paginationaktionen erreichen Preview nicht\n\n**Mittel; Evidenzklasse: nachgewiesener Defekt durch Originalausgabe und Gegenstellentrace.** index.ts:278–279 rendert Previous/Next ohne data-prism-action trotz previousAction/nextAction im Vertrag; Studio preview.ts:29 sendet nur bei gefundenem data-prism-action ein prism.action.v1. Originalprobe liefert Buttons ohne back/forward-Aktion. Auslöser: gültige Pagination mit Flowtriggern; Klick wählt allenfalls Node, schaltet Flow nicht. Ursache: switch ignoriert deklarierte spezifische Actionprops. Behebung: beide Buttons separat an entsprechende Action binden; Tabs/Dialogs/Empty-state vergleichbar vollständig auflösen. Regression: echter iframeclick auf Previous/Next und Original-Appflow, richtige unterschiedliche Transition/State, keine direkte Scriptaktion. Nicht pauschal jeden Katalogtyp als funktionierend aus Tagtests ableiten.\n\nDirekte Probeausgabe: [prism-renderer-review-probe.txt](../evidence/prism-renderer-review-probe.txt).\n\nHistorische Prototypen und ihre getrennte Testaussage: [Prism-Spikeabgrenzung](../prism-spikes.md).",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Action attributes and actual App transition wiring corrected; Node tests pass, actual iframe click proof blocked by missingChromium/CDNtimeout.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Action attributes and actual App transition wiring corrected; Node tests pass, actual iframe click proof blocked by missingChromium/CDNtimeout."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Aktionsattribute und bestehender App-Übergang sind verbunden; Originalrenderer-/Remediationtests und echter Produktionsbuild vorhanden.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Action attributes and actual App transition wiring corrected; Node tests pass, actual iframe click proof blocked by missingChromium/CDNtimeout."
+      }
     },
     {
       "id": "PCR-PRISM-STUDIO-001",
@@ -3182,13 +3542,17 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP08",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "a5b09cf32a886deb3205126c9d1eb8ef9fc44f43",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/prism-renderer-studio.md",
           "summary": "Actual HTTP artifact loading/digest/size/auth/abort tests pass; browser image decode/CSP proof blocked by missingChromium/CDNtimeout."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Kanonische Assets werden über authentifizierten Pfad geladen und nach Bytes/Digest/Größe geprüft; Original-CAS-/HTTP-Negativ- und Abbruchtests bestehen."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/prism.studio.md",
@@ -3201,10 +3565,22 @@
       "unresolved_code_references": [
         "contracts/prism/v1/schemas/prism-v1.schema.json:373–386"
       ],
-      "next_action": "Actual HTTP artifact loading/digest/size/auth/abort tests pass; browser image decode/CSP proof blocked by missingChromium/CDNtimeout.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Actual HTTP artifact loading/digest/size/auth/abort tests pass; browser image decode/CSP proof blocked by missingChromium/CDNtimeout."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Kanonische Assets werden über authentifizierten Pfad geladen und nach Bytes/Digest/Größe geprüft; Original-CAS-/HTTP-Negativ- und Abbruchtests bestehen.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Actual HTTP artifact loading/digest/size/auth/abort tests pass; browser image decode/CSP proof blocked by missingChromium/CDNtimeout."
+      }
     },
     {
       "id": "PCR-PRISM-STUDIO-SERVICE-001",
@@ -3364,6 +3740,10 @@
         {
           "report": "implementation/run9-operator-root-review.md",
           "summary": "Originale kausale JSON-v1-Operatorprojektion unabhängig geprüft und mit SDK/Prism Root27/27 getestet; echte Quotenfreigabe7358Bytes, unveränderte Recordzahl, Replay/Prozessfences/SIGKILL/historischer Ablauf. Andere Retention bleibt offen."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Weitere ursprüngliche Store-/Referenzconsumer und Quotenpolitik sind noch nicht vollständig umgesetzt. Begrenzte Projektionen und ihre echten Quotenprüfungen schließen die gesamte Retention nicht."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.observability.md",
@@ -3371,7 +3751,7 @@
       "source_finding_text": "### PCR-OBS-002 — Aufbewahrungsstrategie für bestätigte Historie fehlt\n\n- **Mittel, offene Architekturfrage:** endliche Quoten verhindern unbeschränktes\n  Wachstum, nach Ausschöpfung steht aber kein sicherer Freigabeweg bereit.\n- **Beleg:** RecordStore hat append/read/transition ohne Delete; Admission ohne\n  Compaction; AttemptStore reclaimExpiredEvidence entfernt nur ohne Result\n  referenzierte Evidence. README benennt fehlende Admissioncompaction, W6 ebenso.\n- **Auslöser/Auswirkung:** fortlaufende Runs füllen globale Stores; weitere\n  notwendige Belege/Writes scheitern, keine automatische Wiederherstellung der\n  Kapazität. Manuelles Löschen könnte Idempotenz/Beweisketten verlieren.\n- **Ursache lösen:** explizite runbezogene Retention mit Consumercheckpoint,\n  referenziertem Evidenceabschluss und nötigen Idempotenz-Tombstones; erst danach\n  zusammenhängend freigeben. Größere Quoten allein verschieben das Problem.\n- **Verifikation:** mit kleinen echten Quoten abgeschlossene und aktive Runs\n  mischen; Retention gibt nur bestätigte Historie frei, Replay von alten\n  Zustellungen führt zu keiner erneuten externen Aktion. Policyentscheidung\n  und Umsetzung gehören zum späteren Reparatur-/Betriebsauftrag.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Weitere ursprüngliche Retention-Consumer und Quotenpolitik bearbeiten; Buster/derived-source/v2/Discord/externalisierte oder ungewisse Historien nicht aus begrenzten Projektionen ableiten. Originalbelege und Native-Gates erhalten.",
+      "next_action": "Weitere ursprüngliche Store-/Referenzconsumer und Quotenpolitik sind noch nicht vollständig umgesetzt. Begrenzte Projektionen und ihre echten Quotenprüfungen schließen die gesamte Retention nicht.",
       "related_findings": [
         "PCR-PRISM-WORKER-001",
         "PCR-TSTORE-001"
@@ -3379,7 +3759,14 @@
       "decision_notes": [
         "D01/D07: keine automatische 30-Tage-Löschung für Logs auf Disk/Git. Manuelle Bereinigung, Kapazitätsdiagnose und geschützte aktive Recoverydaten definieren; Clawdeck sammelt Logs."
       ],
-      "remaining_work": "Bounded Admission-/Attempt-/Dispatch-/JSON-v1-Operatorprojektion geprüft; breitere Store-/Blob-/History-Lebensdauer und ursprüngliche native Anforderungen bleiben offen."
+      "remaining_work": "Weitere ursprüngliche Store-/Referenzconsumer und Quotenpolitik sind noch nicht vollständig umgesetzt. Begrenzte Projektionen und ihre echten Quotenprüfungen schließen die gesamte Retention nicht.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "offen",
+        "rationale": "Weitere ursprüngliche Store-/Referenzconsumer und Quotenpolitik sind noch nicht vollständig umgesetzt. Begrenzte Projektionen und ihre echten Quotenprüfungen schließen die gesamte Retention nicht.",
+        "report": "implementation/pr6-local-acceptance.md"
+      }
     },
     {
       "id": "PCR-OPERATOR-001",
@@ -3557,9 +3944,9 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP10",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "5ce5bda2318efff700343ad623c62cfb520e8732",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/demo-credential-handoff.md",
@@ -3572,6 +3959,10 @@
         {
           "report": "implementation/run6-coupled-root-review.md",
           "summary": "Gekoppelte Product-/Controller-/Chart-Implementierung nach unabhängiger Prüfung und echten nativen CRD/CEL/CAS-/signierten Controller-Tests integriert; Root wiederholt Native, Product21(17verschiedene), Chart6 und Typprüfung erfolgreich. Echte Anwendung/Tailnet/Empfängerzustellung und menschliche Gesamtacceptance bleiben offen."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Persistente Demo-/Exposure-Übergabe implementiert; ursprünglicher Product-/Controller-/Chartpfad einschließlich echtem lokalem API/CEL/CAS-/Recoverygate geprüft."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -3579,7 +3970,7 @@
       "source_finding_text": "### F-T14-01 — Finalpreview-Exposure wird vor Operatorübergabe entfernt\n\nEigentümertrace: [T14-operator-preview.md](T14-operator-preview.md); Codecommit wie oben.\n\n**Hoch; statisch bestätigter komponentenübergreifender Lifecycledefekt gegenüber dem gewünschten Operatorabschluss.** Trigger: erfolgreicher Plan mit Kubernetesfixture retention=retain und Tailscale-Exposurefixture. Runner finally räumt Fixture auf (runner.ts 897–899,2005–2018), Exposurecleanup ist unbedingt (provider.js 85–90), Runtime schaltet off (231–241), Controller löscht Ingress (1353–1362). Folge: Namespace erhalten, URL nach Abschluss nicht erhalten. Rootfix: bewusster, persistierter Ownership-/Lifecycletransfer einer finalen Preview einschließlich Exposure, Namespace, TTL, Source-/Imagedigest und Cleanupbefugnis; normale Testfixtures weiterhin am Planende aufräumen. Kein pauschales Entfernen des Cleanup-finally. Regression: echter End-to-end-Fixtureplan, danach erlaubter Tailnetbrowser erreicht Anwendung für festgelegten Operatorzeitraum; explizites Release/TTL entfernt exakt diese Generation. Keine Ausführung hier.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [
         "F-T14-02",
         "IFR-04-001",
@@ -3589,7 +3980,19 @@
         "D06: Namespace UND Exposure eine Woche ab Bereit-zur-Abnahme; Planfinally darf den übertragenen Operatorzugang nicht entfernen."
       ],
       "implementation_local_commit": "055ed19",
-      "remaining_work": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Persistente Demo-/Exposure-Übergabe implementiert; ursprünglicher Product-/Controller-/Chartpfad einschließlich echtem lokalem API/CEL/CAS-/Recoverygate geprüft.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures."
+      }
     },
     {
       "id": "F-T14-02",
@@ -3597,9 +4000,9 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP10",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "5ce5bda2318efff700343ad623c62cfb520e8732",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/demo-credential-handoff.md",
@@ -3616,6 +4019,10 @@
         {
           "report": "implementation/run6-coupled-root-review.md",
           "summary": "Gekoppelte Product-/Controller-/Chart-Implementierung nach unabhängiger Prüfung und echten nativen CRD/CEL/CAS-/signierten Controller-Tests integriert; Root wiederholt Native, Product21(17verschiedene), Chart6 und Typprüfung erfolgreich. Echte Anwendung/Tailnet/Empfängerzustellung und menschliche Gesamtacceptance bleiben offen."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Zugangs-/Credential-/Deliverybindung implementiert und in lokalen Product-/HTTP-/Controllerregressionen geprüft; reale Zustellung und menschliche Abnahme sind später."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -3623,7 +4030,7 @@
       "source_finding_text": "### F-T14-02 — Vollständiger Operatorzugang und Appauth-Handoff fehlen\n\nEigentümertrace: [T14-operator-preview.md](T14-operator-preview.md); Codecommit wie oben.\n\n**Hoch für das Abschlussziel; statisch bestätigte Integrationslücke, keine behauptete Credentialoffenlegung.** Trigger: Pipeline verlangt Login und „ohne manuelle Clusterarbeit testen“. Controller erstellt nur dediziertes Secret (main.go 1165–1225); Manifest-/Ingresspfad bindet die App nicht automatisch daran; Summary konsumiert keine Exposure (summary.ts 46–68); Previewobserver sendet nur Artefaktmetadaten (observer.ts 139–160). Folge: weder funktionierender Login noch URL-/Credentialempfang/Abnahme sind durch den Runabschluss garantiert. Rootfix: verpflichtender Previewdeliveryvertrag mit Source/Image/Lease/Generation/URL/Authmodus/Expiry, Appseitiger Secretintegration und überprüftem Login; Credentials als gezielt abrufbare geschützte Referenz und autorisierte sichere Zustellung, nicht als unredigiertes allgemeines Runartefakt. Operatorfeedback an dieselbe Generation und Sourcebindung koppeln. Regression: Anwendung mit tatsächlicher Auth, erlaubter Operator kann lesen/login/Feedback geben, anderer Tailnetnutzer und alte Previewgeneration werden abgewiesen; Nachricht enthält nötige URL ohne öffentliche Secretbytes. Keine Tests hier.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [
         "F-T14-01",
         "IFR-04-001",
@@ -3633,7 +4040,19 @@
         "D01/D02/D06: pipelinegenerierte Demo-Credentials dürfen direkt in autorisierten Operatornachrichten stehen. Historische Empfehlung ausschließlich geschützter Referenzzustellung ist hierfür nicht verpflichtend; öffentliche Verbreitung ist nicht autorisiert."
       ],
       "implementation_local_commit": "055ed19",
-      "remaining_work": "Kompilierter quellgebundener Demo-Handoff, verifizierter Login, dauerhafte einmalige Zustellungsreceipt und Ready-Commit integriert. Interrupted receipt lookup ursächlich repariert und über echte Journal-/SIGKILL-Recovery gegengeprüft. Native Tailnet/Cluster/Empfängerabnahme, authentifizierte menschliche Acceptance und Verlängerung bleiben offen."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Zugangs-/Credential-/Deliverybindung implementiert und in lokalen Product-/HTTP-/Controllerregressionen geprüft; reale Zustellung und menschliche Abnahme sind später.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures."
+      }
     },
     {
       "id": "PCR-BUSTER-NS-001",
@@ -3805,12 +4224,20 @@
       "family": "infrastructure",
       "severity": "hoch",
       "work_package": "WP11",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "85178d4a16b1bec3bb5634c3799ae50d4cc8cb0a",
-      "verification_status": "lokale Vertragsprüfung bestanden; native Betriebsgates offen",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         "implementation/registry-clients.md",
-        "implementation/registry-client-scope.json"
+        "implementation/registry-client-scope.json",
+        {
+          "report": "implementation/pr6-registry-target.md",
+          "summary": "Originale Workspace-Suite61/61, Ziel-/Runner20/20, HTTPS-/Provider3/3 und Matrix20/20 ohne Skips. Native Fixture wählt explizites Image und verwendet ursprüngliche begrenzte Manifestprüfung; kein tatsächlicher BuildKit-/CRI-/Pod-Lauf. Strikte native Testtypen behalten sechs bereits vorher vorhandene Fehler."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Expliziter gemeinsamer Registry-/CA-/Authvertrag einschließlich E2E-Seedbindung implementiert; Original-Helm-/HTTPS-/Provider-/Workspaceprüfungen vorhanden."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/registry-local.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
@@ -3819,9 +4246,22 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/my-values/infra/k3s-registries.yaml#L1"
       ],
       "unresolved_code_references": [],
-      "next_action": "E2E-Registryzielvertrag ergänzen; echten BuildKit-Push, uncached CRI-Pull und Pod mit Hostkonfiguration prüfen. Kein Deployment in diesem Auftrag.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Expliziter gemeinsamer Registry-/CA-/Authvertrag einschließlich E2E-Seedbindung implementiert; Original-Helm-/HTTPS-/Provider-/Workspaceprüfungen vorhanden.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "E2E-Registryziel und explizites unveränderliches Seedimage sind auf PR #6 an den gemeinsamen Operatorvertrag gebunden. Echten BuildKit-Push, uncached CRI-Pull und Pod mit Hostkonfiguration prüfen. Kein Deployment in diesem Auftrag."
+      },
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12."
     },
     {
       "id": "IFR-08-002",
@@ -3829,21 +4269,37 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP11",
-      "status": "implementiert",
-      "implementation_commit": "85178d4a16b1bec3bb5634c3799ae50d4cc8cb0a",
-      "verification_status": "lokale Vertragsprüfung bestanden; native Betriebsgates offen",
+      "status": "verifiziert",
+      "implementation_commit": "e5d4079f997f2fba0858aaa181f093e3178ad7fe",
+      "verification_status": "lokal verifiziert nach D12",
       "verification_evidence": [
         "implementation/registry-clients.md",
-        "implementation/registry-client-scope.json"
+        "implementation/registry-client-scope.json",
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Persistenz, explizites Disk-Budget und referenzgeschützte Registry-GC fehlen; die Dokumentationskorrektur allein genügt nicht."
+        },
+        {
+          "report": "implementation/pr6-risk-and-registry.md",
+          "summary": "Expliziter PVC-Speichervertrag, RWOP/Recreate und konservative manuelle Offline-GC implementiert; Umstieg von flüchtigem Speicher wird vor Apply abgewiesen. Originaler Distribution-3.0.0-Server bestätigt Digest-/Layererhalt nach GC/Neustart und Freigabe von 65536 unreferenzierten Blobbytes. Lokaler Abschluss nach D12; CSI/Kapazität/Podwechsel bleiben spätere Live-Prüfung."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/registry-local.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-08-002\n**Mittel; nachgewiesener Retention-/Dokumentationsdefekt.** Manifestkommentar behauptet, Test-Images würden bei Namespace-Löschung entfernt. Tatsächlich speichert der gemeinsame Registry-Pod ohne Volume in seiner Container-Schreibschicht; das Löschen eines Test-Namespace berührt ihn nicht. Keine GC-/Löschroutine zwischen Lease-Ende und Registry nachgewiesen. Folge: ungebundenes Disk-Wachstum bis Containerverlust/Node-Druck; Registry-Neustart verliert wiederum benötigte Images.\n\nUrsachenbehebung: explizite Artefaktlebensdauer und GC mit Referenzschutz plus definierte Persistenz/Disk-Budgets. Test: mehrere echte Lease-Zyklen, GC, noch benötigten Digest erneut ziehen, Registry-Pod ersetzen. Schema- und Source-Prüfung ersetzt diese Tests nicht. Registry und Build-Cache bleiben getrennte Einheiten.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Dokumentationsdefekt korrigiert; Persistenz/Disk-Budget und referenzgeschützte GC bleiben offen, keine Kapazität erfinden.",
+      "next_action": "Spätere Live-Abnahme durch Auftraggeber; lokale Korrektur abgeschlossen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "offen",
+        "rationale": "Persistenz, explizites Disk-Budget und referenzgeschützte Registry-GC fehlen; die Dokumentationskorrektur allein genügt nicht.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "remaining_work": "Persistenz, explizites Disk-Budget und referenzgeschützte Registry-GC fehlen; die Dokumentationskorrektur allein genügt nicht."
     },
     {
       "id": "IFR-09-001",
@@ -3851,12 +4307,16 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP11",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "85178d4a16b1bec3bb5634c3799ae50d4cc8cb0a",
-      "verification_status": "lokale Vertragsprüfung bestanden; native Betriebsgates offen",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         "implementation/registry-clients.md",
-        "implementation/registry-client-scope.json"
+        "implementation/registry-client-scope.json",
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Mirrorvertrag in BuildKit-/Node-Konfigurationsgenerator und Dokumentation umgesetzt und lokal geprüft; tatsächlicher Cachehit/-miss gehört zum Betriebstest."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/registry-mirror.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
@@ -3866,9 +4326,22 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/my-values/infra/k3s-registries.yaml"
       ],
       "unresolved_code_references": [],
-      "next_action": "Tatsächlichen BuildKit-/Node-Mirrorpfad sowie Cache-Hit und Offline-Cache-Miss prüfen.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Mirrorvertrag in BuildKit-/Node-Konfigurationsgenerator und Dokumentation umgesetzt und lokal geprüft; tatsächlicher Cachehit/-miss gehört zum Betriebstest.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Tatsächlichen BuildKit-/Node-Mirrorpfad sowie Cache-Hit und Offline-Cache-Miss prüfen."
+      },
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12."
     },
     {
       "id": "IFR-19-001",
@@ -3876,15 +4349,23 @@
       "family": "infrastructure",
       "severity": "hoch",
       "work_package": "WP11",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
-      "verification_status": "teilweise; Widerspruch zwischen unveränderlicher Release-Receipt und signiertem Prism-Nachweis behoben: Digestreferenzen akzeptiert, mutable Tags abgewiesen. Unabhängige Rootprüfung7/7 einschließlich echter Helmrender; bestehender Prism-Images-Einstieg und Release-Workflow enthalten die Regression. Kein CI-Lauf.",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         "docs/review/remediation/implementation/deployment-release-selection.md",
         {
           "report": "implementation/resume-84-release-root-review.md",
           "source_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
           "summary": "Widerspruch zwischen unveränderlicher Release-Receipt und signiertem Prism-Nachweis behoben: Digestreferenzen akzeptiert, mutable Tags abgewiesen. Unabhängige Rootprüfung7/7 einschließlich echter Helmrender; bestehender Prism-Images-Einstieg und Release-Workflow enthalten die Regression. Kein CI-Lauf."
+        },
+        {
+          "report": "implementation/pr6-oci-identity.md",
+          "summary": "Read-only CLI an bestehende Releaseauswahl gebunden; Index-/Manifest-/Config-Rohbytes, Grössen und Plattformwahl geprüft. Zehn lokale Byte-/Protokollfixturetests, Lint und Knip bestanden. Tatsächlicher GHCR-Versuch an Deadline gescheitert; keine native Image-/Pod-/Bundle-Abnahme."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Immutable Releaseauswahl und tatsächliche Deploy-/Helmargumente sind lokal geprüft, ebenso signierte Prism-Digestannahme; OCI-Descriptorinspektor zusätzlich vorhanden. Laufender Pod/aktives Bundle bleibt Live-Nachweis."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/role-workloads.md",
@@ -3895,9 +4376,22 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/.github/workflows/build-images.yaml#L119"
       ],
       "unresolved_code_references": [],
-      "next_action": "Echte OCI-Descriptorbeziehung Index/Plattformmanifest/Config nachweisen und frische Pod-/Containeridentität samt aktivem Bundle an die ausgewählte Receipt binden. Kein einfacher Vergleich verschiedener Digestarten und kein Soll-Envwert als aktiver Bundlenachweis.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Immutable Releaseauswahl und tatsächliche Deploy-/Helmargumente sind lokal geprüft, ebenso signierte Prism-Digestannahme; OCI-Descriptorinspektor zusätzlich vorhanden. Laufender Pod/aktives Bundle bleibt Live-Nachweis.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Descriptor-Inspektions-CLI auf echter ausgewählter Release-Receipt ausführen. Frische Pod-/Containeridentität und tatsächlich aktives Bundle an die ausgewählte Receipt binden; kein einfacher Vergleich unterschiedlicher Digestarten oder Soll-Envwert als aktiver Bundlenachweis."
+      },
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12."
     },
     {
       "id": "IFR-19-002",
@@ -3934,16 +4428,22 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP11",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "in Bearbeitung",
+      "implementation_commit": "2ed91ef75e4c18b0a6b95b6d2850739b3c38ebf4",
+      "verification_status": "Teilfix lokal verifiziert, Gesamtfinding offen",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-runtime-tool-locks.md",
+          "raw": "../evidence/pr6-runtime-tool-locks/",
+          "summary": "Geprüfte Python-/Go-Transitivelocks, feste Download-Hashes und verbleibende apt-Snapshots; jeweils zwei reale Python-Installationen/Go-Builds stimmen überein. Originaler vertrauenswürdiger Updater läuft isoliert ohne Workspace-Code."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/runtime-images.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-21-001\n**Mittel; nachgewiesene unvollständige Reproduzierbarkeit.** Auslöser: erneuter Build desselben Source-Commits zu anderem Zeitpunkt. Base-Digest und Top-Level-Versionen sind gepinnt, aber Ops apt-Repositories und verschiedene transitive Python-/Go-Installationen werden zeitabhängig aufgelöst; manche Prüfsummen werden vom selben Upstream beim Build bezogen. Quellen: `ops/pod/Dockerfile:8–29`, Nova-Dockerfile pip/go-/Downloadblöcke, Prism-Worker Browser-OS-Installation. Ein Source-Pin ist deshalb keine Zusicherung bitidentischer Rebuilds.\n\nUrsachenbehebung: benötigte Reproduzierbarkeit definieren und verbleibende Installer über geprüfte Locks/Snapshots/Checksums binden; bis dahin immer den geprüften Output-Digest deployen. Test: zwei isolierte reale Builds mit identischem Input, Paket-/SBOM-/Digestvergleich, Abweichungen zuordnen. Kein Build hier ausgeführt.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Browserarchive und DB-Refresh-Inputs explizit binden, anschließend zwei vollständige isolierte reale Images bauen und Paket-/SBOM-/Digestabweichungen zuordnen. Keine vollständigen Image- oder ARM64-Laufzeittests bisher.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -3953,14 +4453,18 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP11",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "2a9481cd7ae69eaa572eb290bf5ba3fcc2ddde07",
-      "verification_status": "PR-/Publikationsjobs getrennt; alle 68 externen Actionreferenzen an offiziell unabhängig verifizierte SHAs gebunden; lokale YAML-/Trust-/Pin-/Versionsprüfungen bestehen. Tatsächliche GitHub-Tokenrechte in isolierten Test-PRs nicht ausgeführt.",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         "docs/review/remediation/implementation/workflow-trust-split.md",
         "docs/review/remediation/implementation/github-action-pins.md",
         "docs/review/remediation/implementation/version-generator-integration.md",
-        "docs/review/evidence/integration-2d1ea1a/manifest.json"
+        "docs/review/evidence/integration-2d1ea1a/manifest.json",
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "PR- und Publikationsrechte getrennt, externe Actions gepinnt; Original-YAML-/Trust-/Pin-/Versionsprüfungen vorhanden. Effektive GitHub-Tokenrechte werden später in Actions geprüft."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/ci-build.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
@@ -3970,9 +4474,22 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/.github/workflows/docs-checks.yaml#L35"
       ],
       "unresolved_code_references": [],
-      "next_action": "Später autorisierte isolierte Fork-/interne PR-Abnahme der effektiven Tokenrechte; keine CI angefordert.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "PR- und Publikationsrechte getrennt, externe Actions gepinnt; Original-YAML-/Trust-/Pin-/Versionsprüfungen vorhanden. Effektive GitHub-Tokenrechte werden später in Actions geprüft.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Später autorisierte isolierte Fork-/interne PR-Abnahme der effektiven Tokenrechte; keine CI angefordert."
+      },
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12."
     },
     {
       "id": "IFR-23-001",
@@ -4007,10 +4524,32 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP11",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "8d47764b7b276c783f312198d6987b9197e593e4",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-qdrant-checkpoint.md",
+          "raw": "../evidence/pr6-qdrant/local-tests.txt",
+          "summary": "Tailscale/Qdrant Archive gehasht und alle erzeugten Workload-/Hook-Images kontrolliert; Operator/Proxy/Qdrant/Registry-Mirror-Digests zentral gebunden. Kein vollständiger IFR-24-Abschluss."
+        },
+        {
+          "report": "implementation/pr6-stateful-upgrade-checkpoint.md",
+          "raw": "../evidence/pr6-stateful-upgrades/pins.txt",
+          "implementation_commit": "8d47764b7b276c783f312198d6987b9197e593e4",
+          "summary": "Redis/PostgreSQL Chart-/OCI-/Imagehashes zentral gebunden; echte install/upgrade-Helm-Render und Versionsgenerator bestanden. Tatsächlicher StatefulSet/PVC-/Version-/Redis-AOF-Preflight vor Mutationen; großzügigere PostgreSQL-Budgets. Vollständige Daten-/Storage-/Cutovermigration bleibt offen."
+        },
+        {
+          "report": "implementation/pr6-stateful-migration-closure.md",
+          "raw": [
+            "../evidence/pr6-postgresql-migration/migration.txt",
+            "../evidence/pr6-postgresql-migration/recovery.txt",
+            "../evidence/pr6-postgresql-migration/charts.txt",
+            "../evidence/pr6-qdrant-migration/native.txt"
+          ],
+          "summary": "Echte PostgreSQL17→18-Migration mit Original-LiteLLM-Schema/Crypto und atomarem Fehlerrollback; echte Qdrant1.18.2→1.19.1-Gesamtsnapshotmigration samt kopiertem Speicher, Cluster-Neustart und erhaltenem Altbestand; zehn echte Helm-/Manifestgates. Separate Releases, frische Claims, TLS-/Recovery-/Netzwerkbindungen, Cutover und Rollback vollständig vorbereitet."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/updates-security.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-24-001\n**Mittel; nachgewiesene Versionslücke.** `deploy.sh:1027–1032,1109–1132` installiert Tailscale, Redis, PostgreSQL und Qdrant ohne Chartversion. Registry-Manifeste verwenden registry:2; Rootless-Preflight mutable Tag. Diese Installationen werden durch einen zentral gepinnten Docker-Base-Generator nicht reproduzierbar. Auslöser: späterer Bootstrap/Upgrade mit veränderten Chart-/Image-Defaults.\n\nUrsachenbehebung: tatsächliche Infra-Chart-/Imageversionen samt kompatiblen Values explizit binden und durch echten Render-/Upgrade-Test aktualisieren. Regression: Offline-Render mit gesicherten Chartartefakten, Versionsvergleich aller tatsächlichen Installationsaufrufer. Keine aktuell zufällig aufgelösten Upstreamdefaults als geprüfte Baseline übernehmen.",
@@ -4018,9 +4557,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/scripts/deploy.sh#L1027"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Separate Live-Abnahme der ausgewählten Images/Entrypoints, Kubernetes-/CSI-Übertragung, echten Netzwerkverbote und Anwendungs-Canaries gemäß Migrationsrunbooks; keine weitere lokale Ursachenlücke in IFR-24-001.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Live-Gates nach D12; gemeinsame Off-Node-Recovery und tatsächliche Providerkapazität bleiben eigenständig IFR-26-001/IFR-16-001."
     },
     {
       "id": "IFR-24-002",
@@ -4083,9 +4623,9 @@
       "family": "pipeline",
       "severity": "mittel",
       "work_package": "WP11",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
-      "verification_status": "teilweise; Zusätzlich beschädigte Lease-/Heartbeat-Zustände und echten fehlgeschlagenen npm-Start korrigiert; Zustände bleiben erhalten, eigene Lease wird freigegeben. Ursprüngliche Stoppkorrektur bleibt erhalten. Unabhängiger Paketgate18/18, null Skips; alle sechs bisherigen Lintfehler behoben.",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/review-supervisor.md",
@@ -4105,6 +4645,18 @@
           "report": "implementation/resume-84-supervisor-launch-independent-review.md",
           "source_commit": "56c205ef0b421f40a378dbe94f072f8c5e94aa91",
           "summary": "Zusätzlich beschädigte Lease-/Heartbeat-Zustände und echten fehlgeschlagenen npm-Start korrigiert; Zustände bleiben erhalten, eigene Lease wird freigegeben. Ursprüngliche Stoppkorrektur bleibt erhalten. Unabhängiger Paketgate18/18, null Skips; alle sechs bisherigen Lintfehler behoben."
+        },
+        {
+          "report": "implementation/resume-20260912-supervisor-lease.md",
+          "summary": "Original CLI lease contention reproduces before fix. Existing FileMutex now serializes lease replacement/release; real owner SIGKILL and delayed foreign release checked. Full review-operations entry: 20/20, no skips; scoped canonical lint passes. Native adoption still fails its real procfs prerequisite; finding remains incomplete."
+        },
+        {
+          "report": "implementation/pr6-supervisor-ownership-io.md",
+          "summary": "Original CLI rejects an unconfirmed live heartbeat owner; real post-launch heartbeat/resource write failures preserve actual child-exit diagnostic, and combined diagnostic failure preserves both causes. Operations26/26, canonical lint and full Knip pass. Native durable whole-process ownership remains unproved."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Originaler Statusfehler führt sichtbar zum Fehler; Lease-, Identitäts-, Start-, Signal- und I/O-Regressionspaket26/26. Vollständiger Containmentbesitz bleibt separate Restarbeit, kein Nachweis daraus behauptet."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/operations-and-packaging.md",
@@ -4114,10 +4666,22 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/scripts/supervise-repository-review.mjs#L79"
       ],
       "unresolved_code_references": [],
-      "next_action": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; dauerhafte Gesamtprozessidentität, konkurrierende Stale-Lease-Ersetzung und alle I/O-Faultpfade bleiben außerhalb dieser Teilabnahme.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Separate tatsächliche Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; keine erfundene Prozessidentität. Sechs bestehende Supervisor-Lintfehler bleiben dokumentiert."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Originaler Statusfehler führt sichtbar zum Fehler; Lease-, Identitäts-, Start-, Signal- und I/O-Regressionspaket26/26. Vollständiger Containmentbesitz bleibt separate Restarbeit, kein Nachweis daraus behauptet.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Native Adopted-Pipeline bei temporärem Statusfehler auf Host mit lesbarer Child-cmdline prüfen; dauerhafte Gesamtprozessidentität und weitere I/O-Fehlerpfade bleiben offen. Konkurrierende Lease-Ersetzung/Freigabe ist jetzt durch vorhandenen FileMutex serialisiert und mit echter Sperre sowie Eigentümer-SIGKILL geprüft. Kein Abschluss des Findings."
+      }
     },
     {
       "id": "IFR-03-001",
@@ -4125,10 +4689,16 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP12",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "af15fce0aff3e1ea7c07009350d0c950b0612147",
+      "verification_status": "lokal verifiziert nach D12",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-api-network-contract.md",
+          "raw": "../evidence/pr6-qdrant/local-tests.txt",
+          "summary": "Bestehende explizite Cilium-kube-apiserver-Regeln für Nova/Buster-Clients, Controller und Ops-MCP gegen vollständige ausgelieferte Manifeste bestätigt: TCP 443 und 6443, enge Identitätsselektoren. Reales Ops-Helm-Rendering prüft portable/Cilium-Pfade mit entdeckbaren IPs und abweichendem Endpoint-Port. Keine lokale Kubernetes-HTTP-Attrappe als Live-Nachweis."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/network-dns.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-03-001\n**Mittel; begründeter Verdacht.** Auslöser: API-Service 443 wird vor Policy-Prüfung auf einen Host-/Endpoint-Port 6443 übersetzt. Beleg: allgemeines Agent-Egress `network-policies.yaml:110–121` und eigenständiges MCP-Egress `ops-mcp.yaml:157–171` erlauben nur 443, keinen expliziten API-Endpoint-Port. Lease-Controller und MCP benötigen API-Zugriff. Das Verhalten hängt vom tatsächlich eingesetzten Enforcer und DNAT-Pfad ab; kein bewiesener Live-Ausfall.\n\nUrsachenbehebung: API-Endpunkt und Vor-/Nach-DNAT-Policy-Vertrag explizit modellieren; bei Cilium `kube-apiserver`-Entity statt pauschaler Internet-Allow. Test: echte API-Aufrufe mit jeweiligem SA aus Controller, Nova und MCP, dazu negative private Ziele; Paket-/Drop-Evidenz unter altem und neuem CNI.",
@@ -4137,9 +4707,17 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/my-values/infra/ops-mcp.yaml#L157"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Vorbereitete echte SA-/Service-/Endpoint-Live-Prüfung und CNI/Hubble-Negativnachweise durch Auftraggeber; keine offene Code-Lücke im ursprünglichen 443/6443-Policy-Umfang. CNI-Migration und Umgebungsvorbereitung bleiben separat.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Keine bekannte offene Code-Lücke im engeren Umfang dieses Findings; Abhängigkeiten und Live-Gates sind unter next_action ausdrücklich erhalten.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-13T05:00:55.566798+00:00",
+        "status": "verifiziert",
+        "rationale": "Bestehende explizite Cilium-kube-apiserver-Regeln für Nova/Buster-Clients, Controller und Ops-MCP gegen vollständige ausgelieferte Manifeste bestätigt: TCP 443 und 6443, enge Identitätsselektoren. Reales Ops-Helm-Rendering prüft portable/Cilium-Pfade mit entdeckbaren IPs und abweichendem Endpoint-Port. Keine lokale Kubernetes-HTTP-Attrappe als Live-Nachweis.",
+        "report": "implementation/pr6-api-network-contract.md"
+      }
     },
     {
       "id": "IFR-03-002",
@@ -4147,10 +4725,16 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP12",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "905edf06721b02558b443b676432993c56b201c1",
+      "verification_status": "lokal verifiziert nach D12",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-private-access.md",
+          "raw": "../evidence/pr6-infrastructure/access-native.txt",
+          "summary": "Archviewer-NodePort und World-to-3456-Freigabe entfernt. Dedizierter ClusterIP-Service, spezifische Tailnet-Proxy-Regel und verpflichtende Dokumentanmeldung implementiert. Originales nginx bestätigt Zugriffsschutz, fehlende Auth-Datei, deaktiviertes Directory Listing und Health-Pfad; echtes Helm bestätigt Secret-Verdrahtung und Abweisung alter NodePort-Overlays."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/network-dns.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-03-002 — Archviewer außerhalb des Tailnet-Authentifizierungspfads\n**Mittel; begründeter Expositionsverdacht.** Auslöser: Node-Port ist für nicht vertraute Clients erreichbar und `/designs` enthält schützenswerte Projektartefakte. `my-values/nova-values.yaml:92–94` setzt NodePort30456; `service-extra-nodeports.yaml` erzeugt einen separaten NodePort-Service auch bei primärem ClusterIP. `network-policies.yaml:141–149` erlaubt Backend3456 aus 0.0.0.0/0. `docker/archviewer.nginx.conf:1–12` aktiviert Directory Listing, ohne TLS oder Authentifizierung. Damit ist im Repository ein eigener ungeschützter Artefaktzugang vorgesehen; eine öffentliche Internet-Erreichbarkeit oder vertraulicher Liveinhalt ist nicht nachgewiesen.\n\nUrsachenbehebung: beabsichtigte Lesergruppe festlegen und Archviewer über denselben authentifizierten Zugang führen bzw. den NodePort bei fehlendem Bedarf entfernen; externes Host-Firewallvertrauen ausdrücklich dokumentieren. Echter Test: zulässiger Client kann Artefakte lesen, unzulässiger LAN-/Tailnet-/externer Client erhält keinen Zugriff auf Listing oder Dateien, einschließlich direktem NodePort.\n\nDie offizielle [NetworkPolicy-Referenz](https://kubernetes.io/docs/concepts/services-networking/network-policies/#behavior-of-to-and-from-selectors) lässt die Reihenfolge von Adressübersetzung und Policy-Prüfung implementationsabhängig. Daraus wird keine konkrete CNI-Version oder Live-Regeldurchsetzung abgeleitet.",
@@ -4160,9 +4744,17 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/my-values/infra/network-policies.yaml#L141"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Vorbereitete Live-Gates durch Auftraggeber: reale SA-/Tailnet-Zugriffe, verbotener Client und direkter NodePort, Secret-Projektion nach Rotation.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Keine bekannte offene Code-Lücke im Umfang dieses Findings; Live-Abnahme bleibt separat nach D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T20:15:37.271802+00:00",
+        "status": "verifiziert",
+        "rationale": "Archviewer-NodePort und World-to-3456-Freigabe entfernt. Dedizierter ClusterIP-Service, spezifische Tailnet-Proxy-Regel und verpflichtende Dokumentanmeldung implementiert. Originales nginx bestätigt Zugriffsschutz, fehlende Auth-Datei, deaktiviertes Directory Listing und Health-Pfad; echtes Helm bestätigt Secret-Verdrahtung und Abweisung alter NodePort-Overlays.",
+        "report": "implementation/pr6-infrastructure-checkpoint.md"
+      }
     },
     {
       "id": "IFR-04-001",
@@ -4195,9 +4787,9 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP12",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "fc136fc8d1351f9ef6bccfafa9f63dd55addbce2",
-      "verification_status": "teilweise / native Envoy-Teilprüfung bestanden; Gesamtfinding offen",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/rollout-health.md",
@@ -4206,6 +4798,10 @@
         {
           "report": "implementation/run7-envoy-root-review.md",
           "summary": "Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Originale Config-/PodTemplate-Checksummen und selektive Rolloutbindung lokal mit echten Helmrendern geprüft; vorhandene native Envoy-Teilprüfung ergänzt dies."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/envoy.md",
@@ -4215,10 +4811,22 @@
       "unresolved_code_references": [
         "deployment.yaml:23–35"
       ],
-      "next_action": "Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Originale Config-/PodTemplate-Checksummen und selektive Rolloutbindung lokal mit echten Helmrendern geprüft; vorhandene native Envoy-Teilprüfung ergänzt dies.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Originale Helm-/Checksum-/Konfigurationssensitivität und sechs vollständige Envoy-Konfigurationen erneut geprüft. Tatsächliches Release-Update, Pod-/Envoy-Rollout und Ablehnung der zuvor erlaubten Peer-ID bleiben offen; native TLS-Selbstprobe ersetzt diese ursprünglichen Gates nicht. Kein Deployment."
+      }
     },
     {
       "id": "IFR-10-001",
@@ -4305,10 +4913,16 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP12",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "905edf06721b02558b443b676432993c56b201c1",
+      "verification_status": "lokal verifiziert nach D12",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-private-access.md",
+          "raw": "../evidence/pr6-infrastructure/access-native.txt",
+          "summary": "Verpflichtende Backend-Authentifizierung mit echter Dateirotation und eng begrenzte namespaced Roles/RoleBindings implementiert. Reale HTTP-Prozesse prüfen fehlende/falsche/rotierte Tokens und Namespace-Ablehnung. Gerenderte RBAC- und Secret-Grenzen sowie bestehende Ops-Pod-Integration lokal geprüft; tatsächlicher SA-/Tailnet-Gate ist für den Auftraggeber vorbereitet."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/ops-mcp.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-27-001\n**Mittel; nachgewiesene breite Lesetrust-Grenze.** Auslöser: erlaubter Tailnet-Client oder kompromittierter zugelassener Tunnel/Proxy. Standalone-Manifest setzt keinen MCP-Bearer; `server.mjs:18–24,445ff.` erlaubt ihn optional. Netzwerk-Ingress beschränkt auf bestimmte Proxy-/Tunnel-Labels, der ClusterRoleBinding dagegen liest clusterweit inklusive fremder Namespace-Podlogs. Damit sind auch potenziell sensible Paperless-Logs im Rechtebereich, obwohl keine Schreiboperation möglich ist.\n\nUrsachenbehebung: benötigte Namespace-/Ressourcenumfänge konkret festlegen und RoleBindings statt globalem Leser verwenden; explizite Backend-Auth entsprechend Clientvertrauen, ohne eine vermeintliche Secret-Redaktion als Ersatz. Echter Test: erlaubte/unerlaubte Namespace-Leseoperationen mit realem SA, autorisierter/unautorisierter Tailnet-Client und wiederverwendetes bzw. rotiertes Token.",
@@ -4316,9 +4930,17 @@
       "unresolved_code_references": [
         "server.mjs:18–24,445ff."
       ],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Vorbereitete Live-Gates durch Auftraggeber: reale SA-/Tailnet-Zugriffe, verbotener Client und direkter NodePort, Secret-Projektion nach Rotation.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Keine bekannte offene Code-Lücke im Umfang dieses Findings; Live-Abnahme bleibt separat nach D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T20:15:37.271802+00:00",
+        "status": "verifiziert",
+        "rationale": "Verpflichtende Backend-Authentifizierung mit echter Dateirotation und eng begrenzte namespaced Roles/RoleBindings implementiert. Reale HTTP-Prozesse prüfen fehlende/falsche/rotierte Tokens und Namespace-Ablehnung. Gerenderte RBAC- und Secret-Grenzen sowie bestehende Ops-Pod-Integration lokal geprüft; tatsächlicher SA-/Tailnet-Gate ist für den Auftraggeber vorbereitet.",
+        "report": "implementation/pr6-infrastructure-checkpoint.md"
+      }
     },
     {
       "id": "IFR-01-001",
@@ -4370,18 +4992,33 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "0663807443b42e3222d52ff02486f959d7b7acf0",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-gitops-closure.md",
+          "raw": [
+            "../evidence/pr6-gitops/local-tests.txt",
+            "../evidence/pr6-gitops/bootstrap-test.txt",
+            "../evidence/pr6-gitops/backup-regression.txt",
+            "../evidence/pr6-gitops/lint.txt",
+            "../evidence/pr6-gitops/shell-syntax.txt",
+            "../evidence/pr6-gitops/versions.txt",
+            "../evidence/pr6-gitops/chart-source-blobs.json"
+          ],
+          "summary": "27 lokale Tests ohne Skips bestanden: echte Git-/Helm-/Lua-Ausführung, gepinntes Argo-Chart mit gehashten Originaldateien; Release-/Ownership-/Secret-/Health-/PVC-Gates und Backupregression. Clusterantworten, DB-Kommandos und Release-Digests sind explizite Fixtures. Kein Argo-Controller oder Cluster gestartet."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/argocd.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-05-001\n**Mittel; nachgewiesene Implementierungslücke gegenüber vollständigem GitOps-Betrieb.** Auslöser: Erwartung, dass der Bootstrap bereits Pipeline-Releases verwaltet. Beleg: gesamtes Installationsskript; Suche nach `kind: Application`/`AppProject` in main liefert keine Produktionsressource. Es werden Argo und sein Ingress installiert, keine Release-Auswahl oder Deployment-Reihenfolge eingerichtet. Damit sind Ownership, Drift-/Prune-Verhalten und Health-Gates noch nicht implementiert.\n\nUrsachenbehebung: explizite Applications/Projects, einziger Eigentümer pro Ressource, Secret-Vorversorgung, Digest-Values und Verhalten persistenter Ressourcen festlegen. Skriptverwaltete Releases nicht gleichzeitig ungeregelt von Argo verwalten. Echter Test: später auf isoliertem Cluster Bootstrap, ersten Sync, fehlgeschlagenen Hook, Drift, Registry-/Git-Ausfall und Rollback unter Erhalt der PVCs prüfen.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Separate Live-Abnahme: frischer Bootstrap, fehlgeschlagene Migration, Drift/Self-heal, Git-/Registry-Ausfall und kompatibler Rollback mit identischen PVCs gemäß GitOps-Abschlussbericht.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Nur separate Live-Gates nach D12. Helm-Bestandscutover erfordert explizite geprüfte Eigentumsübergabe; keine automatische Adoption. IFR-26-001/IFR-16-001 bleiben eigenständige Findings."
     },
     {
       "id": "IFR-06-001",
@@ -4408,16 +5045,33 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "905edf06721b02558b443b676432993c56b201c1",
+      "verification_status": "Lokal vollständig gemäß D12; separate Kubernetes-/CSI-/Power-loss-Abnahme durch Auftraggeber",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-redis-durability.md",
+          "raw": "../evidence/pr6-infrastructure/access-native.txt",
+          "summary": "Realer Redis: verlorenes ACK, SIGKILL/Neustart, Retry ohne Duplikat und noeviction-Speichergrenze bestehen; Chart-/Imagebindung und Speicherupgrade noch unvollständig."
+        },
+        {
+          "report": "implementation/pr6-stateful-upgrade-checkpoint.md",
+          "raw": "../evidence/pr6-stateful-upgrades/pins.txt",
+          "implementation_commit": "8d47764b7b276c783f312198d6987b9197e593e4",
+          "summary": "Redis/PostgreSQL Chart-/OCI-/Imagehashes zentral gebunden; echte install/upgrade-Helm-Render und Versionsgenerator bestanden. Tatsächlicher StatefulSet/PVC-/Version-/Redis-AOF-Preflight vor Mutationen; großzügigere PostgreSQL-Budgets. Vollständige Daten-/Storage-/Cutovermigration bleibt offen."
+        },
+        {
+          "report": "implementation/pr6-redis-migration-closure.md",
+          "raw": "../evidence/pr6-redis-migration/",
+          "summary": "Echte Redis-7.2.7-zu-8.10.1-RDB/AOF-Migration und AOF-Neustart erhalten Streams, Pending-Consumer und absolute Dedup-TTL; Original-Lua-Retry ohne Duplikat. Crash/OOM-Gate und vier gepinnte Helm-/PVC-Tests bestanden. Vollständige frische Release-/PVC-Cutover- und Rollbackprozedur dokumentiert."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/redis.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-11-001\n**Mittel; begründeter Verdacht.** Auslöser: größerer Stream-/Dedup-Key-Bestand, OOM oder Neustart. Werte setzen 256Mi Containerlimit, aber keine explizite maxmemory-/Eviction-/Persistenzpolitik. ACK/Dedup beruhen auf Redis-Zustand; Verlust von Dedup-Keys kann erneute Veröffentlichung erlauben, Stream-Trimming kann alte Events entfernen. Persistente 2Gi allein garantieren keine Dauerhaftigkeit jedes ACK.\n\nUrsachenbehebung: tatsächliche Chartversion pinnen und Redis-Dauerhaftigkeits-/Evictionvertrag passend zu den Verbrauchern ausdrücklich setzen, RAM-/Stream-/Payloadbudget ableiten, Wiederveröffentlichung als Wiederholungsfall behandeln. Echter Test: realer Redis mit gerenderten Einstellungen, verlorenes ACK, SIGKILL/Neustart, maxmemory-Grenze und Wiederaufnahme; Events/Dedup-Fenster kontrollieren.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Separate Live-Abnahme gemäß docs/operations/redis-migration.md; keine weiteren lokalen Implementierungsschritte für IFR-11-001.",
       "related_findings": [],
       "decision_notes": []
     },
@@ -4427,18 +5081,37 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "9e725b35e0e623708f7f0e26ed120fc6ac60eb68",
+      "verification_status": "lokal verifiziert nach D12; vollständige Image-/Cluster-/LiteLLM-HTTP-Live-Abnahme separat ausstehend",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-postgresql-recovery-checkpoint.md",
+          "raw": "../evidence/pr6-postgresql-recovery/native-crypto.txt",
+          "summary": "Separater vollständiger LiteLLM-Dump-/Restorevertrag mit konfigurierbarem RPO, atomarer Veröffentlichung, Checksum-/Credentialbindung und konservativen Zielprüfungen; tatsächlicher PG18.6-Dump/Restore auf zweitem Server mit 1012 Schema-Spalten, 217 Indizes, originaler Key-/Modellkonfiguration, SQL-Authentifizierung und unveränderter originaler LiteLLM-XSalsa20-/AES-GCM-Entschlüsselung. Zwei echte Helm-Renderfälle einschließlich abweichender Namen/Ports bestehen."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/litellm-postgresql.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-12-001\n**Mittel; offene Frage.** Auslöser: DB-Verlust oder Major-Upgrade mit persistentem Volume. Belege: Values, Installationsblock und fehlender zugeordneter Backup-Pfad im Deployment-Skript. LiteLLM konfiguriert `STORE_MODEL_IN_DB=True`; der gespeicherte Zustand darf daher nicht als verlustfreier Cache betrachtet werden. Ursachenbehebung: Schema-/Version-/Restorevertrag, akzeptierte Datenverlustdauer und separat geprüfte Backups für LiteLLM definieren. Test: echte DB mit repräsentativer LiteLLM-Konfiguration sichern, in kompatiblem frischem DB-Server wiederherstellen und Auth-/Modellkonfiguration prüfen.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Auftraggeber führt die isolierte Image/UID/PVC/Cilium-/CronJob-Abnahme, unabhängigen Kopie-Restore und echten LiteLLM-API-/Budget-/Modelltest nach docs/operations/litellm-postgresql-recovery.md durch. Initiales konfigurierbares Zwei-Stunden-RPO betrieblich bewerten; keine Datenverlustzusage behauptet. Cross-Store/Off-Node bleibt IFR-26-001.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Keine bekannte offene Code-Lücke im engeren Findingumfang. Live-Abnahme, betriebliche RPO-Bewertung und separate Kapazitäts-/Off-Node-Abhängigkeiten bleiben ausdrücklich offen.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-13T08:16:49.479674+00:00",
+        "status": "verifiziert",
+        "rationale": "Separater vollständiger LiteLLM-Dump-/Restorevertrag mit konfigurierbarem RPO, atomarer Veröffentlichung, Checksum-/Credentialbindung und konservativen Zielprüfungen; tatsächlicher PG18.6-Dump/Restore auf zweitem Server mit 1012 Schema-Spalten, 217 Indizes, originaler Key-/Modellkonfiguration, SQL-Authentifizierung und unveränderter originaler LiteLLM-XSalsa20-/AES-GCM-Entschlüsselung. Zwei echte Helm-Renderfälle einschließlich abweichender Namen/Ports bestehen.",
+        "report": "implementation/pr6-postgresql-recovery-checkpoint.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber",
+        "procedure": "docs/operations/litellm-postgresql-recovery.md"
+      }
     },
     {
       "id": "IFR-13-001",
@@ -4446,18 +5119,32 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "af15fce0aff3e1ea7c07009350d0c950b0612147",
+      "verification_status": "lokal verifiziert nach D12",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-qdrant-checkpoint.md",
+          "raw": "../evidence/pr6-qdrant/local-tests.txt",
+          "summary": "Qdrant 1.19.1: tatsächlicher nativer Prozess mit TLS/Auth, getrenntem Leseschlüssel, Original-Agent-Probe, Snapshot-Export/SHA256, SIGKILL und frischem Restore mit identischen Vektoren/Payloads/Suchresultaten; Korruption, bestehendes Ziel und altes rotiertes Token abgewiesen. Collection-Ownership und konservative Retention dokumentiert."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/qdrant.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Review und Befund IFR-13-001\n**Mittel; offene Sicherheits-/Wiederherstellungsfrage.** Lokale Values konfigurieren weder API-Key/TLS noch Snapshots/Backup/Retention. Ob das aktuell aufgelöste Chart darüber hinaus Defaults setzt, ist wegen fehlendem Pin offen. Auslöser: kompromittierter zulässiger Agent oder Verlust des Single-PVC. Wirkung: möglicherweise breite Collection-Rechte bzw. Verlust gespeicherter Vektordaten, Wiederaufbaukosten unbekannt.\n\nUrsachenbehebung: Chart/Image pinnen, tatsächliche Consumer/Collections und Auth-Vertrag erfassen, zwischen reproduzierbaren Indizes und originären Daten unterscheiden; daraus Snapshot-/Rebuildverfahren ableiten. Echter Test: tatsächlicher Client mit erforderlicher Auth, Ablehnung eines unzulässigen Clients, Snapshot-Restore bzw. kompletter Rebuild und Vergleich der Suchresultate.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Live-Abnahme nach Abschluss der separat offenen Infrastruktur-Upgrades: reale Zertifikate/Secrets, Netzwerk-Negativtest und Restore eines unabhängig kopierten Produktionsexports. Bestehende StatefulSet/PVC-Migration bleibt IFR-24-001/IFR-16-001; der neue Preflight blockiert inkompatible Änderungen vor Mutationen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Keine bekannte offene Code-Lücke im engeren Umfang dieses Findings; Abhängigkeiten und Live-Gates sind unter next_action ausdrücklich erhalten.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-13T05:00:55.566798+00:00",
+        "status": "verifiziert",
+        "rationale": "Qdrant 1.19.1: tatsächlicher nativer Prozess mit TLS/Auth, getrenntem Leseschlüssel, Original-Agent-Probe, Snapshot-Export/SHA256, SIGKILL und frischem Restore mit identischen Vektoren/Payloads/Suchresultaten; Korruption, bestehendes Ziel und altes rotiertes Token abgewiesen. Collection-Ownership und konservative Retention dokumentiert.",
+        "report": "implementation/pr6-qdrant-checkpoint.md"
+      }
     },
     {
       "id": "IFR-14-001",
@@ -4465,13 +5152,17 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "fc136fc8d1351f9ef6bccfafa9f63dd55addbce2",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/rollout-health.md",
           "summary": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Configrenderer/Checksum und getrennte Healthendpunkte implementiert; lokale originale Render-Sensitivität und gepinnter Health-Quelltrace vorhanden."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/litellm.md",
@@ -4479,10 +5170,22 @@
       "source_finding_text": "## Befund IFR-14-001\n**Mittel; nachgewiesene Rollout-/Health-Lücke.** Auslöser: Konfigurationsänderung ohne Image-/PodTemplate-Änderung oder ein nach Prozessstart nicht funktionsfähiger Proxy. Manifest hat keinerlei Startup-/Readiness-/Liveness-Probe. Config wird mit subPath gemountet und erzeugt keinen Checksum-Rollout; `kubectl rollout status` allein erkennt den Bedarf nicht. Wirkung: als erfolgreich gemeldeter Rollout kann alte Konfiguration bzw. nicht funktionsfähigen HTTP-Dienst belassen.\n\nUrsachenbehebung: explizites ConfigMap-zu-Pod-Rollout und geeignete lokale/startup-/abhängigkeitsbewusste Readiness definieren. Echter Test: Configänderung ausrollen, effektive Modellroute prüfen; Prozess hängt/DB-Ausfall kontrolliert simulieren und Ready/Unready beobachten. Keine Liveness-Abhängigkeit bauen, die DB-Ausfälle zu Restart-Stürmen macht.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Configrenderer/Checksum und getrennte Healthendpunkte implementiert; lokale originale Render-Sensitivität und gepinnter Health-Quelltrace vorhanden.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment."
+      }
     },
     {
       "id": "IFR-15-001",
@@ -4490,10 +5193,16 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "offen",
-      "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "status": "verifiziert",
+      "implementation_commit": "8d47764b7b276c783f312198d6987b9197e593e4",
+      "verification_status": "lokal verifiziert nach D12; Kubernetes-Rollout-Live-Abnahme separat ausstehend",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-stateful-upgrade-checkpoint.md",
+          "raw": "../evidence/pr6-stateful-upgrades/prism-native.txt",
+          "summary": "Native PostgreSQL17.11/pgvector0.8.6: echte Rollen-/Migrationsausführung, Passwortwechsel ohne Änderung alter SCRAM-Verifier abgewiesen, alte INSERTs und readonly-Rechte bestätigt, Prozessfehler nach DB-Commit und echter Dump/Restore auf zweitem Server mit identischen Migrations-/Event-/Nonce-Daten und funktionsfähigen Rollen. Helm-/Secret-/Restoregrenzen und Credential-Übergang dokumentiert."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/prism-postgresql.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-15-001\n**Mittel; nachgewiesene Dokumentationsabweichung und Rollback-Risiko.** Auslöser: pre-upgrade-Migration/Passwortänderung gelingt, nachfolgendes Helm-Upgrade scheitert. `jobs.yaml` führt Änderungen vor Rollout aus; `bootstrap-database.ts:24–48` ändert Rollen/Passwörter und Grants. `docs/operations/prism-operator-guide.md` beschreibt atomare Upgrades als Erhalt der letzten gesunden Release. Kubernetes-/Helm-Rollback stellt jedoch weder Datenbankänderungen noch alte Passwörter zurück.\n\nUrsachenbehebung: kompatible Expand/Contract-Migrationen, Credential-Übergangsstrategie und DB-Backup-/Rollbackgrenzen dokumentieren; nicht aus `--atomic` Datenbankatomizität ableiten. Echter Test: reale pgvector-Version, Migration durchführen, absichtlich nachfolgenden Pod-Rollout scheitern lassen, alte Anwendung/alte Credentials gegen veränderte DB und Restorepfad prüfen.",
@@ -4503,9 +5212,22 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/docs/operations/prism-operator-guide.md"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Auftraggeber führt die vorbereitete isolierte Kubernetes-Abnahme mit erfolgreicher Migration und absichtlich fehlschlagendem Worker-Rollout, alter Anwendung/alten Credentials und frischem Restore aus; docs/operations/prism-database-transitions.md. Koordinierte Cross-Store-/Off-Node-Recovery bleibt IFR-26-001.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Keine bekannte offene Code-Lücke im engeren Findingumfang; Live-Abnahme und separate Backup-Abhängigkeit bleiben ausdrücklich offen.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-13T07:13:40.800990+00:00",
+        "status": "verifiziert",
+        "rationale": "Native PostgreSQL17.11/pgvector0.8.6: echte Rollen-/Migrationsausführung, Passwortwechsel ohne Änderung alter SCRAM-Verifier abgewiesen, alte INSERTs und readonly-Rechte bestätigt, Prozessfehler nach DB-Commit und echter Dump/Restore auf zweitem Server mit identischen Migrations-/Event-/Nonce-Daten und funktionsfähigen Rollen. Helm-/Secret-/Restoregrenzen und Credential-Übergang dokumentiert.",
+        "report": "implementation/pr6-stateful-upgrade-checkpoint.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber",
+        "procedure": "docs/operations/prism-database-transitions.md"
+      }
     },
     {
       "id": "IFR-16-001",
@@ -4516,7 +5238,14 @@
       "status": "offen",
       "implementation_commit": null,
       "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-stateful-upgrade-checkpoint.md",
+          "raw": "../evidence/pr6-stateful-upgrades/pins.txt",
+          "implementation_commit": "8d47764b7b276c783f312198d6987b9197e593e4",
+          "summary": "Redis/PostgreSQL Chart-/OCI-/Imagehashes zentral gebunden; echte install/upgrade-Helm-Render und Versionsgenerator bestanden. Tatsächlicher StatefulSet/PVC-/Version-/Redis-AOF-Preflight vor Mutationen; großzügigere PostgreSQL-Budgets. Vollständige Daten-/Storage-/Cutovermigration bleibt offen."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/storage.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-16-001\n**Mittel; begründeter Kapazitätsverdacht.** Auslöser: vollständiger Default-Stack oder zeitgleiche Build-/Restore-/Browserlast auf gemeinsamem Node. Große Requests/Limits, zusätzliche Jobs und caches treffen auf nicht dokumentierte allocatable-/Disk-Budgets. Belege: obige Renderwerte, Buster-Values und 100Gi-PVCs für Prism-DB, Artefakte und Backups. Scheduler-Requests verhindern keinen gemeinsamen Disk-Druck.\n\nUrsachenbehebung: reale Allocatable-Werte und Paperless-Reserve erheben, Ephemeral-/PVC-/Cache-/Backupwachstum zusammen budgetieren, Quotas/Retention mit Lastmessungen abstimmen. Test: Scheduling aller Komponenten plus geplanter Jobs und gezielter Disk-Grenztest im isolierten Umfeld; Paperless-Latenz/Wiederanlauf beobachten.",
@@ -4532,12 +5261,16 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "8b4238f5e0c9e383911c20726e4386bfa72fb846",
-      "verification_status": "Helm und Originaldienst lokal bestanden; native Ressourcen-/OOM-Gates offen",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         "implementation/prism-ingestion-resources.md",
-        "../evidence/prism-ingestion-resources-root.txt"
+        "../evidence/prism-ingestion-resources-root.txt",
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Explizite Ressourcenangaben, Liveness und endliche Quarantänepolitik implementiert; echte Helm- und Originaldienst-Fehler-/Recoverytests vorhanden."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/prism-workloads.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
@@ -4546,9 +5279,22 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/charts/prism/templates/ingestion.yaml"
       ],
       "unresolved_code_references": [],
-      "next_action": "Mit tatsächlicher Hostkapazität Ressourcen konfigurieren; Last, RAM/CPU/Diskgrenzen und Recovery nach OOM im echten Pod prüfen. Keine geratenen Kapazitätswerte.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Explizite Ressourcenangaben, Liveness und endliche Quarantänepolitik implementiert; echte Helm- und Originaldienst-Fehler-/Recoverytests vorhanden.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Mit tatsächlicher Hostkapazität Ressourcen konfigurieren; Last, RAM/CPU/Diskgrenzen und Recovery nach OOM im echten Pod prüfen. Keine geratenen Kapazitätswerte."
+      },
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12."
     },
     {
       "id": "IFR-20-002",
@@ -4556,13 +5302,17 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "fc136fc8d1351f9ef6bccfafa9f63dd55addbce2",
-      "verification_status": "teilweise / blockiert",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/rollout-health.md",
           "summary": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Singleton-Control verwendet Recreate; echte Helmprüfungen bestätigen Strategie und unveränderte übrige Workloads. Cross-Node-Upgrade ist späterer Betriebstest."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/prism-workloads.md",
@@ -4572,10 +5322,22 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/charts/prism/templates/workloads.yaml#L1"
       ],
       "unresolved_code_references": [],
-      "next_action": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
-      "remaining_work": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Singleton-Control verwendet Recreate; echte Helmprüfungen bestätigen Strategie und unveränderte übrige Workloads. Cross-Node-Upgrade ist späterer Betriebstest.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Actual Helm/config sensitivity passes; LiteLLM endpoints traced through digest-verified OCI metadata to exact original source1.101.0. Real Envoy peer rejection, LiteLLM process/DB-fault transitions and Prism cross-node active-write upgrade remain unexecuted. No deployment."
+      }
     },
     {
       "id": "IFR-25-001",
@@ -4583,9 +5345,9 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": null,
-      "verification_status": "teilweise / native Envoy-Teilprüfung bestanden; Gesamtfinding offen",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         {
           "report": "implementation/readiness-independent-review.md",
@@ -4594,6 +5356,10 @@
         {
           "report": "implementation/run7-envoy-root-review.md",
           "summary": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Funktionale begrenzte Dependency-/SVID-Prüfung und Fehlerereignis implementiert; Originalprozess-/HTTP-/Helmtests und echter lokaler Envoy-Zertifikatswechsel vorhanden. Betriebsalarmzustellung bleibt Live-Gate."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/observability.md",
@@ -4605,11 +5371,23 @@
       "unresolved_code_references": [
         "configmap-worker-trust.yaml:19–38"
       ],
-      "next_action": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [],
       "decision_notes": [],
       "implementation_local_commit": "6c171ba",
-      "remaining_work": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Funktionale begrenzte Dependency-/SVID-Prüfung und Fehlerereignis implementiert; Originalprozess-/HTTP-/Helmtests und echter lokaler Envoy-Zertifikatswechsel vorhanden. Betriebsalarmzustellung bleibt Live-Gate.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Echte Envoy1.39.0-Funktionsprüfung mit installierten gültigen/falschen/abgelaufenen SVIDs, Erholung, unveränderter Liveness und begrenztem stderr-Fehlerevent unabhängig und Root bestanden. SPIRE-gRPC/UDS-Attestation, zugestellter Operatoralarm sowie echte DB-/BuildKit-Ausfälle und native Pod-Probes bleiben offen; kein Deployment."
+      }
     },
     {
       "id": "IFR-26-001",
@@ -4617,10 +5395,15 @@
       "family": "infrastructure",
       "severity": "hoch",
       "work_package": "WP13",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "verification_status": "Teilfix lokal geprüft: 7 Dateisystem-/Prozess-/Helmtests; DB-Kommandos explizite Fixtures. Vollständige Recovery noch unvollständig.",
+      "verification_evidence": [
+        {
+          "report": "implementation/pr6-prism-backup-groups.md",
+          "summary": "Geplanter Backupjob sichert DB und unveränderliche Artefakte gemeinsam; atomare Gruppen, Integritätsprüfung, Quoten, keine automatische Löschung, sichere eigene SQL-Proof-Datenbank. Keine echte SQL-/Image-/DR-Verifikation aus diesen Tests abgeleitet."
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/backup-recovery.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-26-001\n**Hoch; nachgewiesene unvollständige Wiederherstellungsabdeckung.** Auslöser: Verlust des Artefakt-/Host-Volumes oder Wiederaufbau mit ausschließlich vorhandenem DB-Dump. Belege: Backupjob mountet nur Backup-PVC und liest PostgreSQL; `workloads.yaml` mountet Artefakte ausschließlich im Control. `prism-recovery-observability-v1.md` beschreibt zusätzlich versionierten Artefaktspeicher, der im Chart nicht als entsprechender Backupdienst umgesetzt ist. DB-Referenzen können nach Restore auf fehlende Binär-/Designobjekte zeigen.\n\nUrsachenbehebung: konsistente Backupgruppe aus DB, Artefakten und erforderlichen Schlüsseln/Journals mit dokumentiertem Commit-/Quiesce-Punkt, externem Ausfallbereich und überprüfter Retention. Echter Test: vollständiger Wiederaufbau in anderem Namespace/Host aus gesicherten Artefakten; referenzierte Digests lesen, Sessions/Jobs sinnvoll wiederaufnehmen und Pipeline-/Prism-Pfad ausführen. Nicht nur pg_restore --list.",
@@ -4629,9 +5412,10 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/docs/architecture/prism-recovery-observability-v1.md"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Originale PostgreSQL-Image-/DB-/Referenzwiederherstellung, Bindung erforderlicher Schlüssel/Journals und unabhängiger externer Ausfallbereich sowie vollständige Anwendungs-Recovery fehlen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [],
+      "remaining_work": "Originale PostgreSQL-Image-/DB-/Referenzwiederherstellung, Bindung erforderlicher Schlüssel/Journals und unabhängiger externer Ausfallbereich sowie vollständige Anwendungs-Recovery fehlen."
     },
     {
       "id": "IFR-28-001",
@@ -4779,15 +5563,19 @@
       "family": "trace",
       "severity": "hoch",
       "work_package": "WP14",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "5b7f8c694dc3aa2c05edb45ad8d88483bcdc36b2",
-      "verification_status": "Pflicht-Sourcepreflight, optionaler gebundener Architekturreview/Freigabepfad und Sync vor Modullane integriert; neun echte lokale Sourceverbraucherfälle, Compiler, Builds/Typen/Lint und unabhängige Gegenprüfung bestanden. Legacyimport und vollständiger Demo-/Acceptance-Abschluss bleiben offen.",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         "docs/review/remediation/implementation/project-source-v2.md",
         "docs/review/evidence/integration-eb1d7cc/manifest.json",
         {
           "report": "implementation/run6-coupled-root-review.md",
           "summary": "Gekoppelte Product-/Controller-/Chart-Implementierung nach unabhängiger Prüfung und echten nativen CRD/CEL/CAS-/signierten Controller-Tests integriert; Root wiederholt Native, Product21(17verschiedene), Chart6 und Typprüfung erfolgreich. Echte Anwendung/Tailnet/Empfängerzustellung und menschliche Gesamtacceptance bleiben offen."
+        },
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Vollständige Source-/Modul-/Finalgate-/Produktkomposition implementiert; Compiler-, Originalconsumer-, Product-/Controller-/Chart- und lokale APIprüfungen vorhanden."
         }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
@@ -4802,7 +5590,7 @@
       "unresolved_code_references": [
         "nova.entry.md"
       ],
-      "next_action": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [
         "PATH-T04-002",
         "PATH-T13-001",
@@ -4810,7 +5598,20 @@
       ],
       "decision_notes": [
         "D02/D03/D11: vollständigen Zielgraph herstellen; agentisches Architekturreview ist optional. Historische Forderung einer universellen agentischen Architekturfreigabe gilt nicht als Zielvorgabe."
-      ]
+      ],
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Vollständige Source-/Modul-/Finalgate-/Produktkomposition implementiert; Compiler-, Originalconsumer-, Product-/Controller-/Chart- und lokale APIprüfungen vorhanden.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Gekoppelte Implementierung und nativer CRD/CEL-/Controller-Gate abgeschlossen. Originale vollständige Pipeline mit echter Anwendung/Login, Tailnetzugang, tatsächlicher Empfängerzustellung und authentifizierter menschlicher Acceptance/Verlängerung nachweisen; Deployments und Nachrichten sind in diesem Auftrag nicht autorisiert. Kein Gesamtabschluss aus Admissionfixtures."
+      },
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12."
     },
     {
       "id": "T15-F01",
@@ -4818,12 +5619,16 @@
       "family": "trace",
       "severity": "mittel",
       "work_package": "WP14",
-      "status": "implementiert",
+      "status": "verifiziert",
       "implementation_commit": "86b11c0c7e58cbb7f87ef35bd67bbbccdfad6b37",
-      "verification_status": "Originale lokale Quellen-/Consumerprüfung bestanden; nativer Writerpfad offen",
+      "verification_status": "lokal verifiziert nach D12; Live-Abnahme separat ausstehend",
       "verification_evidence": [
         "implementation/report-evidence.md",
-        "../evidence/integration-f10ad7a/README.md"
+        "../evidence/integration-f10ad7a/README.md",
+        {
+          "report": "implementation/pr6-local-acceptance.md",
+          "summary": "Autoritativer run-/source-/attemptgebundener Reportreader und Consumer implementiert; echte Git-/Core-/Store-/HTTP- und Negativtests vorhanden. Modelltext bleibt ausdrücklich Entwurf."
+        }
       ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/e3020a7258b8acdf96d9d220cbfab8cf88fb53e9/docs/review/paths/report.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
@@ -4836,21 +5641,33 @@
         "protocol.ts:1–22",
         "stage.ts:6–11"
       ],
-      "next_action": "Echten konfigurierten OpenClaw/ACP-Writer mit unveränderlichen Quellen erst bei real verfügbarer CLI/Config/Token/Tools-URL ausführen. Bestehende Original-/Source-Suites sind modelExecution:false; Socketstatus wegen EPERM unbekannt. Keine Wiederholung lokaler Fixtures als Writer-Nachweis.",
+      "next_action": "Lokale Behebung abgeschlossen. Spätere Live-Abnahme gemäß pr6-local-acceptance.json; kein offener Implementierungsauftrag aus diesem Finding.",
       "related_findings": [
         "PCR-PREPORT-001"
       ],
       "decision_notes": [],
-      "remaining_work": "Bestehende echte Source-/Core-/Artifact-Prüfung10/10 sowie ursprüngliche Pipeline-Review-/Case-Study-Suites unabhängig bestanden, jedoch beide Livepfade ausdrücklich modelExecution:false. Keine OpenClaw-CLI, Config, Token oder Tools-URL verfügbar; Socketstatus wegen EPERM unbekannt. Konfigurierte Writerintegration bleibt offen."
+      "remaining_work": "Nur separat dokumentierte Live-/Betriebsabnahme; kein lokaler Abschlussblocker gemäß D12.",
+      "local_acceptance": {
+        "policy": "D12",
+        "assessed_at": "2026-09-12T10:40:35.397536+00:00",
+        "status": "abgeschlossen",
+        "rationale": "Autoritativer run-/source-/attemptgebundener Reportreader und Consumer implementiert; echte Git-/Core-/Store-/HTTP- und Negativtests vorhanden. Modelltext bleibt ausdrücklich Entwurf.",
+        "report": "implementation/pr6-local-acceptance.md"
+      },
+      "pending_live_validation": {
+        "status": "ausstehend",
+        "owner": "Auftraggeber nach Open-Sourcing",
+        "prior_next_action": "Echten konfigurierten OpenClaw/ACP-Writer mit unveränderlichen Quellen erst bei real verfügbarer CLI/Config/Token/Tools-URL ausführen. Bestehende Original-/Source-Suites sind modelExecution:false; Socketstatus wegen EPERM unbekannt. Keine Wiederholung lokaler Fixtures als Writer-Nachweis."
+      }
     }
   ],
   "implementation_branch": "fix/remediation-foundations-20260909",
-  "updated_at": "2026-09-11T18:18:11.019598+00:00",
+  "updated_at": "2026-09-14",
   "progress_counts": {
-    "verifiziert": 94,
-    "implementiert": 39,
-    "in Bearbeitung": 2,
-    "offen": 19
+    "verifiziert": 141,
+    "in Bearbeitung": 3,
+    "implementiert": 2,
+    "offen": 8
   },
   "additional_integration_findings": [
     {
@@ -4896,5 +5713,6 @@
     "scope": "Ausgewählte lokale Integrationsgates; keine Gesamt-E2E-, CI- oder Deploymentfreigabe.",
     "final_source_commit": "b7f496dc51d743afe556c79c6ae18be653d63b66",
     "selected_gate_result": "14 ausgewählte Gruppen bestanden, mit einem ausdrücklich nicht bestandenen/ausgelassenen nativen PostgreSQL-Gate innerhalb der Readinessgruppe; Originalfehlversuche erhalten."
-  }
+  },
+  "completion_policy": "D12: Vollständig korrigierter Code mit ausreichender lokaler Testabdeckung gilt für den Behebungsauftrag als lokal verifiziert/abgeschlossen. Ausstehende Live-/Cluster-/GitHub-Actions-Abnahmen bleiben separat und werden vom Auftraggeber nach dem Open-Sourcing durchgeführt. Keine Umdeutung nicht ausgeführter Tests in bestanden; echte Code- oder lokale Nachweislücken bleiben offen."
 }

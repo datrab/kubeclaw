@@ -18,6 +18,7 @@ import {
   writeResultRecord,
 } from './run-real-pipeline-e2e.mjs';
 import { createChildOutputCapture, appendStreamCapture, childOutputDiagnostics } from './bounded-output-capture.mjs';
+import { registryTestContract } from './registry-test-contract.mjs';
 import { listRealE2EScenarioIds } from './failure-scenarios.mjs';
 
 test('README supported-scenarios list matches the scenario registry', () => {
@@ -32,26 +33,18 @@ test('README supported-scenarios list matches the scenario registry', () => {
   assert.deepEqual(readmeIds, listRealE2EScenarioIds());
 });
 
-test('real E2E pipeline env bridges local registry until deployment supplies it', () => {
-  const workspace = {
-    worktreePath: '/tmp/worktree',
-    runConfigPath: '/tmp/swarm.config.json',
-  };
+test('real E2E pipeline env requires the single configured registry authority', () => {
+  const workspace = { worktreePath: '/tmp/worktree', runConfigPath: '/tmp/swarm.config.json' };
   const scenario = { id: 'success' };
-
-  const defaulted = buildRealE2EPipelineEnv({
-    workspace,
-    scenario,
-    baseEnv: { KUBECLAW_NAMESPACE: 'custom-ns' },
-  });
-  assert.equal(defaulted.KUBECLAW_LOCAL_REGISTRY, 'registry-local.custom-ns.svc.cluster.local:5001');
-
-  const explicit = buildRealE2EPipelineEnv({
-    workspace,
-    scenario,
-    baseEnv: { KUBECLAW_LOCAL_REGISTRY: 'registry.example:5001' },
-  });
-  assert.equal(explicit.KUBECLAW_LOCAL_REGISTRY, 'registry.example:5001');
+  const baseEnv = { KUBECLAW_REGISTRY_CONFIG: registryTestContract };
+  const configured = buildRealE2EPipelineEnv({ workspace, scenario, baseEnv });
+  assert.equal(configured.KUBECLAW_REGISTRY_CONFIG, registryTestContract);
+  assert.equal(configured.KUBECLAW_LOCAL_REGISTRY, undefined);
+  assert.throws(() => buildRealE2EPipelineEnv({ workspace, scenario, baseEnv: {} }),
+    /REAL_E2E_REGISTRY_CONFIG_REQUIRED/u);
+  assert.throws(() => buildRealE2EPipelineEnv({ workspace, scenario,
+    baseEnv: { ...baseEnv, KUBECLAW_LOCAL_REGISTRY: 'foreign.example.test:5001' } }),
+  /REAL_E2E_LEGACY_REGISTRY_OVERRIDE/u);
 });
 
 test('git fault scenarios use a harness shim instead of product config flags', () => {
@@ -64,7 +57,7 @@ test('git fault scenarios use a harness shim instead of product config flags', (
         runConfigPath: '/tmp/swarm.config.json',
       },
       scenario: { id: 'git-credential-failure' },
-      baseEnv: { PATH: process.env.PATH },
+      baseEnv: { PATH: process.env.PATH, KUBECLAW_REGISTRY_CONFIG: registryTestContract },
     });
 
     const shimDir = env.PATH.split(path.delimiter)[0];

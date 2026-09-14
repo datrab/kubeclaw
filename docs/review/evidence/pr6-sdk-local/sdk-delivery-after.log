@@ -1,0 +1,102 @@
+✖ real cancelled v2/v3 Summary writes and nested evidence reads never publish a successful receipt (139375.645709ms)
+✔ delivery mode is independent across source, report, Review and topology and recovers the whole graph (3860.271428ms)
+✔ recovery rejects missing, swapped, junk, unknown and foreign delivery selector authority (1151.691065ms)
+✖ v2/v3 Summary write and downstream read retain exact real disk prefixes across actual SIGKILL and replay (151832.048731ms)
+{"phase":"produce","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"produce\",\"locale\":\"en-US\",\"status\":\"succeeded\",\"manifestDigest\":\"sha256:091c61253b0a771138a5ac04e616da2b38df692d1a98701d62e3cbe4cd81f5dd\",\"artifactDigest\":\"sha256:82188d4b4f78da067e9ef4ed50e97cee5438eaeb9755403bd3c6cd63e2fdd227\",\"manifestBytes\":7616,\"summaryWriteKey\":\"run:delivery-manifest-stage-boundary:project-summary:1:12\"}\n","stderr":""}
+{"phase":"consume-en","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-en\",\"locale\":\"en-US\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-cs","locale":"cs_CZ.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-cs\",\"locale\":\"cs-CZ\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-da","locale":"da_DK.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-da\",\"locale\":\"da-DK\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-tr","locale":"tr_TR.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-tr\",\"locale\":\"tr-TR\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-sv","locale":"sv_SE.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-sv\",\"locale\":\"sv-SE\",\"outcome\":\"succeeded\",\"importedResultSuccess\":true,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-missing","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-missing\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":false,\"importStoreReached\":true}\n","stderr":""}
+{"phase":"consume-wrong-digest","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-digest\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-missing-digest","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-missing-digest\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-size","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-size\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-tag","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-tag\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-missing-tag","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-missing-tag\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-id","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-id\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-run","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-run\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-stage","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-stage\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-wrong-namespace","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-wrong-namespace\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-missing-inner-digest","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-missing-inner-digest\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-wrong-inner-digest","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-wrong-inner-digest\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-unknown-key","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-unknown-key\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-oversize","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-oversize\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-gate","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-gate\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-coverage","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-coverage\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":false,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-source","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-source\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-review","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-review\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+{"phase":"consume-body-competing","locale":"en_US.UTF-8","status":0,"signal":null,"stdout":"{\"phase\":\"consume-body-competing\",\"locale\":\"en-US\",\"outcome\":\"blocked\",\"importedResultSuccess\":false,\"manifestIntegrityRejected\":true,\"importStoreReached\":false}\n","stderr":""}
+✔ registered Summary v3 stored output is accepted by the original durable import consumer across locales (353890.214812ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 354544.294103
+
+✖ failing tests:
+
+test at tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs:34:1
+✖ real cancelled v2/v3 Summary writes and nested evidence reads never publish a successful receipt (139375.645709ms)
+  AssertionError [ERR_ASSERTION]: node:internal/modules/run_main:107
+      triggerUncaughtException(
+      ^
+  
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'failed'
+  - 'succeeded'
+  
+      at produce (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/tests/verification/reliability/delivery-manifest-v3-stage-boundary-child.mjs:238:12)
+      at async file:///workspace/scratch/9fa3b9b80bce/kubeclaw/tests/verification/reliability/delivery-manifest-v3-stage-boundary-child.mjs:513:121 {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'failed',
+    expected: 'succeeded',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+  
+  Node.js v24.19.0
+  
+  
+  1 !== 0
+  
+      at prepare (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs:20:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs:40:41)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/delivery-manifest-v3-durability.test.mjs:19:1
+✖ v2/v3 Summary write and downstream read retain exact real disk prefixes across actual SIGKILL and replay (151832.048731ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'SIGTERM'
+  - 'SIGKILL'
+        ^
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/tests/verification/reliability/delivery-manifest-v3-durability.test.mjs:35:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'SIGTERM',
+    expected: 'SIGKILL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

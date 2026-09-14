@@ -1,0 +1,26 @@
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/codex-pod-test-LJ7s7u/.codex"))
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/codex-pod-test-LJ7s7u/.codex"))
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/codex-pod-test-LJ7s7u/.codex"))
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "/tmp" (codex_home: AbsolutePathBuf("/tmp/codex-pod-test-LJ7s7u/.codex"))
+✔ real Helm render isolates credentials and persists a single non-root Codex identity (341.85916ms)
+✔ optional Tailscale and Cilium render without privileged access or operator dependency (415.268612ms)
+✔ mutable images and undiscovered API endpoints are rejected before deployment (505.772239ms)
+✔ the actual pinned Codex CLI accepts the installed MCP config and exposes pairing/device auth (1379.732791ms)
+✔ custom observer namespace is shared by MCP and the Codex verification process (288.746448ms)
+✔ actual Nova Helm render exposes architecture only through its private authenticated service (558.567763ms)
+✔ actual Helm rejects credential omission and a carried-over legacy architecture NodePort (670.164424ms)
+✔ rendered Ops RBAC has only the two intended namespace grants and mandatory Secret auth (98.966744ms)
+✔ real nginx protects documents, refuses directory listing and fails closed without credentials (353.618071ms)
+✔ real Redis recovers an unreceived ACK and dedup after SIGKILL, and refuses writes without eviction (804.575507ms)
+✔ backend refuses to listen with absent or weak authentication (1443.779549ms)
+✔ real HTTP backend enforces authentication, atomic rotation and namespace boundaries (721.462132ms)
+✔ malformed target returns 400 and leaves server and authorization intact (965.913975ms)
+✔ local MCP lists tools while the Kubernetes credential is unavailable and reports failed reads honestly (890.849347ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3426.187565

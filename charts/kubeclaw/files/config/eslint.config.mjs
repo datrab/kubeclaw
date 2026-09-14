@@ -32,10 +32,16 @@ const CONSOLE_BOUNDARIES = [
 ];
 
 const ENVIRONMENT_BOUNDARIES = [
-  'scripts/registry-client-config.mjs',
+  'scripts/gitops.mjs',
+  'scripts/updates/refresh-versions.mjs',
+  'tools/ops-mcp/src/config.mjs',
+  'scripts/verify-ops-mcp-live.mjs',
+  'scripts/registry-client-config.mjs', 'scripts/build-native-worker-nri.mjs',
   'skills/prism/server/studio-config.ts',
   'skills/prism/server/control-config.ts',
   'skills/prism/server/worker-config.ts',
+  'skills/prism/config/native-worker.ts',
+  'skills/prism/config/database-bootstrap.ts',
   'scripts/clawpatch-pipeline-light.mjs',
   'scripts/verify-all-skill-tests.mjs',
   'scripts/verify-plugin-live-capabilities.mjs',

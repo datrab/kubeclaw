@@ -1,0 +1,67 @@
+[
+  {
+    "file": "tests/verification/e2e/failure-scenarios.mjs",
+    "baseline": {
+      "exit_code": 0,
+      "rules": {},
+      "messages": []
+    },
+    "current": {
+      "exit_code": 0,
+      "rules": {},
+      "messages": []
+    }
+  },
+  {
+    "file": "tests/verification/e2e/real-run-workspace.mjs",
+    "baseline": {
+      "exit_code": 0,
+      "rules": {},
+      "messages": []
+    },
+    "current": {
+      "exit_code": 0,
+      "rules": {},
+      "messages": []
+    }
+  },
+  {
+    "file": "tests/verification/e2e/run-real-pipeline-e2e.mjs",
+    "baseline": {
+      "exit_code": 0,
+      "rules": {},
+      "messages": []
+    },
+    "current": {
+      "exit_code": 0,
+      "rules": {},
+      "messages": []
+    }
+  },
+  {
+    "file": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+    "baseline": {
+      "exit_code": 0,
+      "rules": {},
+      "messages": []
+    },
+    "current": {
+      "exit_code": 0,
+      "rules": {},
+      "messages": []
+    }
+  },
+  {
+    "file": "tests/verification/contracts/check-pipeline-http-live.mts",
+    "baseline": {
+      "exit_code": 0,
+      "rules": {},
+      "messages": []
+    },
+    "current": {
+      "exit_code": 0,
+      "rules": {},
+      "messages": []
+    }
+  }
+]

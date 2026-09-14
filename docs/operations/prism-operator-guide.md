@@ -4,7 +4,7 @@
 
 1. Merge a reviewed runtime image release selection and verify it with `node scripts/updates/materialize-release.mjs --family=runtime --check`, then run `./scripts/deploy.sh setup`.
 2. Run `./scripts/deploy.sh secrets`.
-3. Run `./scripts/deploy.sh prism`.
+3. Prepare the reviewed native worker node policy and include its generated `prism-native-values.yaml` in the private Prism values overlay, then run `./scripts/deploy.sh prism`.
 4. Run `./scripts/deploy.sh prism-status`.
 5. Run `./scripts/deploy.sh prism-smoke`.
 
@@ -15,7 +15,13 @@ an OpenAI model route and the LiteLLM credential used for memory-search
 embeddings. Control, Studio, worker, and ingestion use
 Node images and do not receive provider credentials. Any user authenticated
 through the trusted Tailscale ingress can approve a design. Helm uses atomic
-upgrades, so a failed upgrade keeps the last healthy release.
+upgrades to roll Kubernetes resources back when an upgrade fails. It does not
+roll back committed database migrations or external Secret changes. Schema
+changes must preserve the previous application contract; destructive migrations
+and credential rotation require a separately reviewed transition and restore plan.
+The [database transition guide](prism-database-transitions.md) defines the
+compatible migration contract, maintenance password transition, isolated restore
+procedure and deferred rollout-failure acceptance.
 
 Production Prism image digests come from the reviewed `releases/runtime-images.json`.
 `deploy.sh prism` verifies the complete receipt, source chart/value bytes and
@@ -77,9 +83,14 @@ tokens into `prism-runtime` or the worker Deployment.
 
 `./scripts/deploy.sh prism` first starts Control, Studio, Worker, and PostgreSQL.
 The one-shot `prism-migrate` job has two privilege-separated stages. Its admin
-bootstrap waits for PostgreSQL with bounded retries, creates or refreshes the
+bootstrap waits for PostgreSQL with bounded retries, creates missing
 least-privilege roles, installs the `vector` extension, and ensures that
-`prism_migrator` owns the `prism` schema. It also reapplies least-privilege
+`prism_migrator` owns the `prism` schema. Existing role passwords are verified
+with real password authentication before any changes are committed. A changed
+password fails with `PRISM_ROLE_CREDENTIAL_TRANSITION_REQUIRED`; ordinary
+bootstrap never rotates role passwords. Keep the current runtime Secret during
+an application upgrade. Replacing that Secret first can break old Pods even
+though bootstrap preserves their database credentials. It also reapplies least-privilege
 table grants so objects left by an interrupted earlier install remain usable by
 `prism_runtime`. The ordinary migrator then verifies that ownership and runs
 only schema-local migrations; it is not granted global database `CREATE` or
@@ -154,6 +165,28 @@ Late results from superseded architecture or rounds cannot create documents.
 The Prism agent must return the assigned `generationId`; it cannot select a
 new architecture or round by supplying only the project ID.
 
+### Native worker runtime
+
+`skills/prism/server/worker.ts` is the sole worker entrypoint. Control produces
+V3 attempts and commits the original identity before sending HTTP. The worker
+recovers its durable ownership and result journal before accepting attempts.
+An unsuccessful dispatch does not switch runtime or create a replacement V1 attempt.
+Historical V1 receipts remain read-only input to the bound result reader.
+
+The required `worker.native.nodeName`, `namespace`, and `policyDigest` values come
+from `scripts/render-native-worker-node.mjs` and must match the selected host policy.
+There is no `worker.native.enabled` switch. The deployment preflight always checks
+the host pool and selected image identity. The worker is a single Recreate replica;
+its supervisor owns only the Prism pool and launches each attempt with dropped UID/GID.
+Input hydration, rendering, browser descendants and completion I/O share that attempt scope.
+
+`npm run verify:prism:native-worker` runs the original native HTTP, signal and CPU
+attribution gates. It requires a dedicated test pool explicitly selected with
+`PRISM_NATIVE_ISOLATED_TEST_POOL=true`, the normal native supervisor environment,
+and `PRISM_NATIVE_OPERATION_TEST_DATABASE_URL` for an isolated migrated database.
+Missing host prerequisites fail the gate. Local specialist/HTTP artifact tests and
+historical receipt checks do not substitute for this live gate.
+
 ### Worker cancellation and shutdown
 
 A worker HTTP invocation owns its attempt. Disconnecting before the response
@@ -168,19 +201,22 @@ termination/drain paths before closing its nonce database pool. Requests receive
 on existing connections during shutdown return 503, including `/bootstrap` and
 `/ready`. Repeated signals share the same shutdown operation.
 
-`PRISM_WORKER_SHUTDOWN_TIMEOUT_MS` is a platform-owned positive integer, at most
-2147483647, defaulting to 20000 milliseconds. It is one total service drain
-budget, separate from each attempt's `cleanupTimeoutMs`; it does not multiply
-for requests or cleanup stages. Deployment owners must fit it within their
-actual workload termination grace. The chart currently does not expose a
-separate worker shutdown/grace value. This application change does not alter a
-running deployment.
+The default service drain budget is 120 seconds (`worker.shutdownTimeoutMs`),
+with 105 seconds for cooperative host cancellation (`worker.native.closeTimeoutMs`)
+and a 150-second Pod termination grace (`worker.terminationGracePeriodSeconds`).
+Helm rejects budgets that cannot contain native close plus scope drain, or cannot
+fit within the Pod grace. The corresponding process settings are
+`PRISM_WORKER_SHUTDOWN_TIMEOUT_MS` and `PRISM_NATIVE_CLOSE_TIMEOUT_MS`.
 
-The worker logs `prism_worker_shutdown` with `requests_drained` after its tracked
-handlers and nonce pool finish. A known unresolved Core phase, failed cleanup,
-or service deadline causes nonzero process exit and a best-effort `unresolved`
-diagnostic. The failure exit does not wait for log-pipe flushing. That cutoff
-is not proof that external browser children or remote artifact work were reaped;
-those cases still require the native process/deployment recovery checks. A Core
-result reporting unresolved termination also prevents further request admission
-in that worker process.
+On user cancellation, the supervisor signals the host so its original Core
+lifecycle can terminate browser and artifact work and emit a provisional result.
+Resource violations, expired execution deadlines, and an exhausted cancellation
+budget force scope termination. The supervisor drains the scope, observes its
+kernel counters and seals the final receipt before delivery. A killed host with
+no validated specialist cleanup result remains unresolved for external effects.
+
+Successful supervisor shutdown logs `prism_native_worker_shutdown` with
+`ownership_reconciled`. Failed cleanup, a service deadline or durable ownership
+uncertainty exits nonzero with `prism_native_worker_failure`; none permits further
+admission. A remote receiver may already have persisted bytes when a request is
+cancelled, and such bytes are not reported as rolled back.

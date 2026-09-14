@@ -3,11 +3,15 @@ import assert from 'node:assert/strict';
 import { pbkdf2Sync, createHash } from 'node:crypto';
 import { createServer } from 'node:http';
 import { once } from 'node:events';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { ContentAddressedArtifactStore } from '../storage/artifacts.ts';
+import { handleInternalArtifact } from '../server/internal-artifacts.ts';
 import fixture from '../../../contracts/prism/v1/fixtures/minimal-web.json' with { type: 'json' };
-import { PrismEngine, DeterministicDesignProvider } from '../engine/index.ts';
-import { prismAttempt } from '../engine/worker-envelope.ts';
-import { operationFor } from '../server/worker-operation.ts';
-import { WorkerArtifactClient } from '../server/worker-artifacts.ts';
+import { prismNativeAttempt } from '../engine/worker-envelope.ts';
+import { nativeWorkerHarness } from '../tests/native/worker-harness.mts';
+import { boundWorkerResult } from '../control/worker-results.ts';
 
 const input = Buffer.from(JSON.stringify({
   document: structuredClone(fixture),
@@ -17,16 +21,23 @@ const input = Buffer.from(JSON.stringify({
 }));
 const contentDigest = `sha256:${createHash('sha256').update(input).digest('hex')}`;
 
-await test('one small original Prism attempt does not inherit concurrent service CPU', async t => {
+await test('native attempt receipt excludes real concurrent supervisor-process CPU', { timeout: 60000 }, async t => {
+  const root = await mkdtemp(join(tmpdir(), 'prism-native-attribution-'));
+  const store = new ContentAddressedArtifactStore(root);
+  await store.put(input);
   let releaseRead!: () => void;
   let markReadStarted!: () => void;
   const readReleased = new Promise<void>(resolve => { releaseRead = resolve; });
   const readStarted = new Promise<void>(resolve => { markReadStarted = resolve; });
   const server = createServer((request, response) => {
     void (async () => {
+      if (request.method !== 'GET') {
+        await handleInternalArtifact(request, response, new URL(request.url!, 'http://control'), {
+          artifacts: store, spiffeEnabled: false, workerSecret: 'local', trustedControlSpiffeId: '', trustedWorkerSpiffeId: '',
+        }); return;
+      }
       assert.equal(request.headers.authorization, 'Bearer local');
       assert.equal(request.url, `/v1/internal/artifacts/${contentDigest}`);
-      assert.equal(request.method, 'GET');
       markReadStarted();
       await readReleased;
       response.writeHead(200, { 'content-type': 'application/octet-stream' });
@@ -50,29 +61,33 @@ await test('one small original Prism attempt does not inherit concurrent service
     sizeBytes: input.byteLength,
     storageUrl: new URL(`/v1/internal/artifacts/${contentDigest}`, origin).href,
   };
-  const envelope = prismAttempt('render', artifact, 'concurrent-resource-attribution');
-  const operation = operationFor(
-    envelope,
-    new PrismEngine(new DeterministicDesignProvider()),
-    new WorkerArtifactClient(origin, 'local', false),
-  );
-  operation.prepare(envelope.limits);
-  const signal = new AbortController().signal;
-  const execution = operation.execute({ attempt: envelope, signal, log() {} });
+  const envelope = prismNativeAttempt('render', artifact, 'concurrent-resource-attribution');
+  const worker = await nativeWorkerHarness(t, { mode: 'spiffe', trustedControlSpiffeId: 'spiffe://local/control' }, origin);
+  t.after(() => rm(root, { recursive: true, force: true }));
+  worker.listen(0, '127.0.0.1'); await once(worker, 'listening');
+  const workerAddress = worker.address(); assert(workerAddress && typeof workerAddress !== 'string');
+  const execution = fetch(`http://127.0.0.1:${workerAddress.port}/v1/attempts`, { method: 'POST',
+    headers: { 'content-type': 'application/json', 'x-forwarded-client-cert': 'URI=spiffe://local/control' }, body: JSON.stringify(envelope) });
   await readStarted;
 
   const before = process.cpuUsage();
-  pbkdf2Sync('unrelated concurrent service work', 'local salt', 2_000_000, 32, 'sha256');
+  do { pbkdf2Sync('unrelated concurrent service work', 'local salt', 500_000, 32, 'sha256'); }
+  while ((process.cpuUsage(before).user + process.cpuUsage(before).system) / 1000 < 5000);
   const burn = process.cpuUsage(before);
   const unrelatedCpuMs = (burn.user + burn.system) / 1000;
   releaseRead();
-  await execution;
-  const measured = await operation.measure({ signal });
-  await operation.terminate();
+  const response = await execution; assert.equal(response.status, 200);
+  const result = boundWorkerResult(envelope, await response.json());
+  assert.equal(result.schemaVersion, 'worker-attempt-result.v3');
+  if (result.schemaVersion !== 'worker-attempt-result.v3') throw new Error('Current receipt required');
+  assert.equal(result.state, 'completed', result.error?.message);
+  const measured = result.resourceAccounting.observations.cpuTimeMs;
+  assert.equal(measured.status, 'observed');
+  if (measured.status !== 'observed') throw new Error('Actual kernel CPU observation required');
 
   assert(unrelatedCpuMs > 100, `expected material unrelated CPU, got ${unrelatedCpuMs} ms`);
   assert(
-    measured.cpuTimeMs < unrelatedCpuMs / 2,
-    `attempt receipt included concurrent service CPU: measured=${measured.cpuTimeMs} ms, unrelated=${unrelatedCpuMs} ms`,
+    measured.value < unrelatedCpuMs / 2,
+    `attempt receipt included concurrent service CPU: measured=${measured.value} ms, unrelated=${unrelatedCpuMs} ms`,
   );
 });

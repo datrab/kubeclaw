@@ -24,7 +24,7 @@ jobs:
           node scripts/check-action-pins.mjs
           node --test tests/verification/contracts/action-pins.test.mjs
           node scripts/versions.mjs --check
-          node --test tests/verification/deployment/versions.test.mjs tests/verification/deployment/release-images.test.mjs tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/prism-release-evidence.test.mjs
+          node --test tests/verification/deployment/versions.test.mjs tests/verification/deployment/release-images.test.mjs tests/verification/deployment/oci-image-identity.test.mjs tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/prism-release-evidence.test.mjs
           if test -f releases/runtime-images.json; then node scripts/updates/materialize-release.mjs --check; fi
           if test -f releases/ops-images.json; then node scripts/updates/materialize-release.mjs --check --family=ops; fi
       - name: Verify selected digests against successful source workflow receipts

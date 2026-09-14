@@ -2,7 +2,7 @@
 
 Planungsstand 2026-09-09. **154 historische Finding-Kennungen vollständig erfasst und 14 Arbeitspaketen zugeordnet. Planungsauftrag abgeschlossen; aktive Umsetzung auf `fix/remediation-foundations-20260909`, siehe [Fortschritt](progress.md).** Entscheidungen sind bestätigte Zielvorgaben, keine Beschreibung des gegenwärtigen Implementierungsstands.
 
-- [Bestätigte Entscheidungen D01–D11](decisions.md)
+- [Bestätigte Entscheidungen D01–D12](decisions.md)
 - [Arbeitspakete, Reihenfolge und Abnahmekriterien](work-packages.md)
 - [Vollständiges Register mit Originalquellen](register.md)
 - [Maschinenlesbarer Prüf- und Fortschrittsstand](register.json)

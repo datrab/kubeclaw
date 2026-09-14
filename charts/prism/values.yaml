@@ -30,6 +30,15 @@ studio:
   replicas: 1
   resources: { requests: { cpu: 250m, memory: 256Mi }, limits: { cpu: "2", memory: 1Gi } }
 worker:
+  # Required host binding for the sole native worker runtime.
+  # Use the generated prism-native-values.yaml after host preflight.
+  native:
+    nodeName: ""
+    namespace: ""
+    policyDigest: ""
+    closeTimeoutMs: 105000
+  shutdownTimeoutMs: 120000
+  terminationGracePeriodSeconds: 150
   replicas: 1
   resources: { requests: { cpu: "1", memory: 2Gi }, limits: { cpu: "8", memory: 8Gi } }
 ingestion:
@@ -52,6 +61,16 @@ secrets:
   runtime: prism-runtime
   database: prism-postgresql-auth
 artifactStorage: { storage: 100Gi, storageClass: "" }
+backup:
+  schedule: "0 2 * * *"
+  verificationSchedule: "0 3 * * 0"
+  databaseProofSchedule: "0 4 * * 0"
+  # Local capacity ceilings; no automatic expiry. Independent off-host copies
+  # and the complete external credential/journal recovery set remain required.
+  maximumBytes: "85899345920"
+  maximumRetainedBytes: "96636764160"
+  maximumDurationSeconds: 3600
+  resources: { requests: { cpu: 250m, memory: 256Mi }, limits: { cpu: "2", memory: 2Gi } }
 tailscale: { enabled: true, hostname: prism-studio, operatorNamespace: tailscale }
 workerTrust:
   spiffe:

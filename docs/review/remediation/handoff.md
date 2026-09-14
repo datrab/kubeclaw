@@ -1,29 +1,84 @@
-# Übergabe des ursprünglichen Planungsstands
+# Aktuelle Übergabe PR #6
 
-**Historischer Planungscheckpoint. Die Umsetzung läuft inzwischen; aktueller Stand und nächste Schritte stehen in [progress.md](progress.md) und register.json.**
+GitOps IFR-05-001 ist am 2026-09-14 nach D12 lokal abgeschlossen.
+27 Tests ohne Skips, Lint, Shellsyntax und Versionsprüfung bestanden.
+Implementierung: `0663807443b42e3222d52ff02486f959d7b7acf0`.
+[Neue vollständige Übergabe mit Git-Zustand und allen 13 Restfindings](implementation/resume-20260914-gitops-handoff.md).
+[GitOps-Abschluss und separate Live-Grenzen](implementation/pr6-gitops-closure.md).
 
-## Gespeicherter Stand
+IFR-26-001 zusätzlich in Bearbeitung: Der geplante Prism-Backupjob enthält jetzt
+einen gemeinsamen DB-/Artefaktstand mit geprüfter Gruppenveröffentlichung,
+Kapazitätsgrenzen und Erhalt alter Backups. Separate Integritätsprüfung sowie
+eigene temporäre Datenbank für den bestehenden SQL-Restorecheck. Sieben lokale
+Dateisystem-/Prozess-/Helmtests bestanden; SQL-Kommandos sind explizite Fixtures.
+Kein zusätzlicher historischer Findingabschluss. Original-DB-/Imageprüfung,
+Schlüssel/Journals, externes Backupziel und volle Recovery bleiben offen.
+[Backup-Checkpoint und Grenzen](implementation/pr6-prism-backup-groups.md).
 
-- D01–D11 halten die bestätigten Produkt-/Architekturentscheidungen einschließlich Nutzerkorrekturen fest.
-- 154/154 kanonische Kennungen sind im Register enthalten: 103 Pipeline, 34 Infrastruktur, 17 zusätzliche Traces. Jede besitzt genau ein primäres Arbeitspaket und eine commitfeste Originalquelle.
-- 14 Arbeitspakete mit Integrationsabhängigkeiten und Abnahmekriterien. Original-Findingabschnitte in register.json bewahren die detaillierten Auslöser, Ursachenbehebung und Verifikationsvorschläge; Beziehungen markieren gemeinsame Ursachen ohne Verlust der Kennungen.
-- Alle Findings weiterhin offen. Keine funktionale Implementierung und keine neuen Softwaretests erfolgt. Planungsprüfung steht in validation.md.
+IFR-24-001 zusätzlich lokal abgeschlossen: echte PostgreSQL17→18- und
+Qdrant1.18.2→1.19.1-Migration, Erhalt der Altdaten, frische Ziel-Releases/PVCs,
+Recovery-/TLS-/Netzwerkbindung und zehn Helm-/Manifestgates.
+[Abschluss, Rohbelege und Live-Grenzen](implementation/pr6-stateful-migration-closure.md).
+IFR-21-001 jetzt in Bearbeitung: Python-/Go-/Download-/apt-Inputs gebunden und
+real geprüft; Browser/DB-Inputs und vollständige Imagevergleiche bleiben offen.
+[Image-Checkpoint](implementation/pr6-runtime-tool-locks.md).
 
-## Konkreter nächster Arbeitsschritt
+Redis IFR-11-001 lokal abgeschlossen: echte Versions-/RDB-AOF-Migration,
+Crash-/Dedup-/OOM-Prüfung und vier Helm-/PVC-Gates bestanden.
+[Abschluss und Live-Grenzen](implementation/pr6-redis-migration-closure.md).
 
-Für einen gesonderten Umsetzungsauftrag aktuellen main-/Fixbranchstand erneut prüfen, danach WP02 mit `PCR-STATE-002` (atomare Sperrenübernahme) und `PCR-STATE-001` (Objektbesitz im Journal) beginnen. Die Originalberichte enthalten echte Mehrprozess-/Mutationsnachweise. Aktuellen Fehler mit Originalimplementierung bestätigen, gemeinsame Locknutzer und Dateisystemvoraussetzungen lesen, kleine Ursachenbehebung plus echte Regression und Gegenprüfung erstellen. Anschließend Effect-/Replay-/Recoveryabhängigkeiten abarbeiten.
+Aktueller Stand am 2026-09-14: **141/154 lokal verifiziert, 13 unvollständig**.
+Das Register `register.json` enthält 2 teilweise implementierte, 3 in Bearbeitung
+und 8 offene Findings. PCR-PRISM-WORKER-002 ist gemäß D12 lokal geschlossen; separate Live-Abnahme offen.
 
-Parallel kann WP01 Verträge/Registry und WP11/WP12 voneinander getrennte Build-/Berechtigungsbereiche bearbeiten. Keine parallelen unkoordinierten Änderungen an gemeinsamer Core-/Worker-/Remediationlogik. Noch kein Subagent hat in diesem Planungsauftrag ein Implementierungspaket übernommen.
+## Gesicherte Arbeit
 
-## Noch offene Voraussetzungen
+Prism verwendet ausschließlich den nativen V3-Ausführungspfad; Details und
+historische Testnachweise in `implementation/pr6-prism-single-runtime.md`.
 
-- Verfügbare Node-/Python-/Go-/Helm-/Browser-/Containerwerkzeuge zu Beginn des jeweiligen Pakets prüfen; historische Testfehlschläge oder fehlende Werkzeuge sind keine aktuelle Messung.
-- Echte Clawdeck-Schnittstelle, Redis/PostgreSQL/Prism/Agentdienste und deren Zugänge für End-to-End-Nachweise erforderlich; keine erfundenen Ersatzempfänger als bestandene Integration.
-- Kubernetes/Tailscale/Hostkapazität/Paperless-Abhängigkeiten sowie unabhängiger Recoveryzugang für WP10/WP12/WP13 erheben. Live-Cutover, Restoreexperimente und Deployment sind hier nicht autorisiert.
-- Cilium-Zusatzstand separat vergleichen. Keine Übernahme eines anderen Branches allein aufgrund des Befundlinks.
-- Die automatische Loglöschung ist ausdrücklich verworfen. Manuelle Bereinigung und Kapazitätsgrenzen müssen mit langlebigem Ausführungszustand und Clawdeck vereinbar sein; nicht einfach alle Cleanupmechanismen abschalten.
-- Unaufgelöste Kurzreferenzen in register.json sind ehrlich markiert. Vor konkreter Codeänderung im Kontext des vollständigen Eigentümerberichts auflösen; keine erfundenen Permalinks.
+Die drei bei Wiederaufnahme uncommitteten Worker-Dateien wurden geprüft und die
+Start-/Abbruchgrenze weiter bearbeitet. Der Supervisor kann zusätzliche Starts
+über die an den Attempt gebundene Berechtigung besitzen. Alle gestarteten Helfer
+werden vor finaler Scope-Bereinigung beendet und abgewartet, auch vor ihrem
+Cgroup-Beitritt. Der originale C-Launcher bindet sich an den erwarteten
+Supervisor-PID und beendet sich bei dessen Tod; nach dem UID-Wechsel wird die
+Elternbindung erneut gesetzt und geprüft.
 
-## Fortschritt bei der Umsetzung
+Lokale Nachweise: `implementation/pr6-launch-ownership-checkpoint.md`.
 
-Nach jeweils drei abgeschlossenen Findings oder spätestens zehn Minuten kurz melden: erledigt/154, aktuelles Paket, Auffälligkeiten/Blocker und Subagentfortschritt. Auf solche Fortschrittsmeldungen keine Antwort abwarten. Erkenntnisse und Belege fortlaufend im Repository sichern; vor jeder Remoteaktualisierung Branchdrift prüfen.
+Fixture-Journal und nativer Prozesskanal sind jetzt verbunden: dauerhafte
+Bereitschaft vor Abhängigkeitsfreigabe, gebundene Teardown-Nachricht und
+gespeicherter Abbruch vor erzwungener Beendigung. Die neue Lifetime-API verbindet
+dies mit Core und dessen originalem Abschlussjournal, ist aber noch nicht im
+Produktionsscheduler aktiv. 12 echte lokale Prozess-/Journaltests bestehen;
+Typprüfungen und Lint sind geprüft. Details und Grenzen:
+`implementation/pr6-buster-fixture-control.md`.
+
+Zusätzlicher Bereinigungsfix: Job-/Workspace-Symlink-Eltern werden vor jeder
+Quellenlöschung abgewiesen; echte Dateien anderer Jobs und Evidence bleiben
+erhalten. Drei native Dateisystemtests bestanden. Dies ersetzt keinen Nachweis
+von Prozessquieszenz und schließt Busters Retention nicht.
+[Nachweis und exakte Integrationsgrenze](implementation/pr6-buster-cleanup-parent.md).
+
+## Exakter nächster Schritt
+
+Busters neuen Attempt-Host, die eingeschränkte rollenbezogene Startpolitik und
+den dauerhaft gebundenen Fixture-Lebenszyklus vollständig mit dem Runner
+verbinden. Der aktuelle Buster-Runner verwendet weiterhin V1/LocalWorkerRuntime;
+der Startberechtigungsbaustein allein ersetzt ihn nicht. Capabilityarbeit und
+Brokerarbeit müssen vollständig innerhalb derselben Attempt-Ressourcengrenze
+bleiben. Anschließend den alten Runner, File-Capability-Start und ersetzte
+Samplingpfade löschen; keine dauerhaften Fallbacks hinzufügen.
+
+Danach die übrigen Worker-/Retention- und Infrastrukturfindings anhand der
+Originalbefunde im Register schließen. PCR-PRISM-WORKER-002 wurde gegen den V3-Produktionspfad neu bewertet;
+Nachweis: `implementation/pr6-prism-native-local-closure.md`.
+
+## Arbeitsregeln
+
+Im bestehenden Branch `fix/remediation-foundations-20260909` und PR #6 arbeiten.
+D12: vollständige Implementierung plus ausreichende echte lokale Tests reichen
+zum lokalen Abschluss; Live-Abnahme folgt separat durch den Auftraggeber.
+Keine Deployments, kein Merge und keine History-Bereinigung in dieser Fortsetzung.
+Fortschritt nach überprüften Teilschritten sichern, PR und Register synchron halten.
+

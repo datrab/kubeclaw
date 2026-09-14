@@ -1,4 +1,4 @@
-import { canonicalJson, sha256Text } from '@kubeclaw/plugin-sdk';
+import { canonicalJson } from '@kubeclaw/plugin-sdk';
 
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
 
@@ -82,6 +82,15 @@ function textList(value: unknown, label: string, maximum: number): readonly stri
   return Object.freeze(output);
 }
 
+function validateIdentity(output: Readonly<Record<string, unknown>>,
+  expected: { readonly fingerprint: string; readonly targetHead: string }): void {
+  if (output.schemaVersion !== 'repository-finding-revalidation.v1'
+    || output.findingFingerprint !== expected.fingerprint || output.targetHead !== expected.targetHead
+    || !REVALIDATION_DISPOSITIONS.includes(output.disposition as never)) {
+    throw new Error('repository revalidation output identity is invalid');
+  }
+}
+
 export function parseRepositoryRevalidationResult(
   value: unknown, expected: { readonly fingerprint: string; readonly targetHead: string;
     readonly sources: ReadonlyMap<string, { readonly digest: string;
@@ -92,11 +101,7 @@ export function parseRepositoryRevalidationResult(
   const required = ['schemaVersion', 'findingFingerprint', 'targetHead', 'disposition', 'reason', 'evidence',
     'validationCommands', 'remediationDependencies'];
   exact(output, required, ['supersededBy']);
-  if (output.schemaVersion !== 'repository-finding-revalidation.v1'
-    || output.findingFingerprint !== expected.fingerprint || output.targetHead !== expected.targetHead
-    || !REVALIDATION_DISPOSITIONS.includes(output.disposition as never)) {
-    throw new Error('repository revalidation output identity is invalid');
-  }
+  validateIdentity(output, expected);
   if (!Array.isArray(output.evidence) || output.evidence.length > 64) throw new Error('repository revalidation evidence is invalid');
   const evidence = output.evidence.map((raw, index) => {
     const item = record(raw, `evidence[${index}]`); exact(item, ['path', 'lineHint', 'digest'], ['symbol']);
@@ -137,8 +142,4 @@ export function parseRepositoryRevalidationResult(
     evidence: Object.freeze(evidence), validationCommands: commands,
     ...(supersededBy === undefined ? {} : { supersededBy }),
     remediationDependencies: Object.freeze(dependencies) });
-}
-
-export function repositoryRevalidationResultDigest(value: RepositoryRevalidationResult): `sha256:${string}` {
-  return sha256Text(canonicalJson(value));
 }

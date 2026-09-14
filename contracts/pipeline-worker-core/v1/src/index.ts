@@ -4,3 +4,5 @@ export * from './validation.ts';
 export * from './trust.ts';
 export * from './resource-types-v2.ts';
 export * from './resource-validation-v2.ts';
+export * from './resource-types-v3.ts';
+export * from './resource-validation-v3.ts';

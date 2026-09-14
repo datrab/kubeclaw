@@ -5,21 +5,19 @@ import { once } from 'node:events';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { pbkdf2Sync } from 'node:crypto';
 import fixture from '../../../contracts/prism/v1/fixtures/minimal-web.json' with { type: 'json' };
 import { PrismEngine, DeterministicDesignProvider } from '../engine/index.ts';
-import { operationFor } from '../server/worker-operation.ts';
-import { executeWorkerAttempt } from '../server/worker-attempt.ts';
+import { PrismWorkerOperation } from '../server/worker-operation.ts';
 import { WorkerArtifactClient } from '../server/worker-artifacts.ts';
 import { ContentAddressedArtifactStore } from '../storage/artifacts.ts';
 import { handleInternalArtifact } from '../server/internal-artifacts.ts';
-import { prismAttempt } from '../engine/worker-envelope.ts';
-import { workerAttemptSpecDigest, type WorkerAttemptEnvelopeV1 } from '@kubeclaw/pipeline-worker-core-contract';
+import { prismNativeAttempt } from '../engine/worker-envelope.ts';
+import { type WorkerAttemptEnvelopeV3 } from '@kubeclaw/pipeline-worker-core-contract';
 
 const request = (key: string) => ({ contract: 'kubeclaw.prism-design-engine@1' as const,
   operation: 'render' as const, input: { document: structuredClone(fixture), view: 'home', state: 'default', viewport: 'wide' }, idempotencyKey: key });
 
-test('only the admitted owner can cancel a pending original render; legacy callers still coalesce', async () => {
+test('only the admitted owner can cancel a pending original render; callers without cancellation still coalesce', async () => {
   const engine = new PrismEngine(new DeterministicDesignProvider());
   const owner = new AbortController(), stranger = new AbortController();
   const options = { signal: owner.signal };
@@ -29,8 +27,8 @@ test('only the admitted owner can cancel a pending original render; legacy calle
   await assert.rejects(engine.execute(request('owner'), { signal: stranger.signal }), /OWNER_CONFLICT/u);
   stranger.abort();
   assert.equal(await first, await duplicate);
-  const legacy = engine.execute(request('legacy')), same = engine.execute(request('legacy'));
-  assert.equal(await legacy, await same);
+  const firstUnowned = engine.execute(request('unowned')), same = engine.execute(request('unowned'));
+  assert.equal(await firstUnowned, await same);
   const cancelled = new AbortController();
   const pending = engine.execute(request('cancel'), { signal: cancelled.signal });
   cancelled.abort(new Error('owner cancelled'));
@@ -58,6 +56,7 @@ async function setup(t: { after(callback: () => Promise<void>): void }, stall: '
         res.on('close', () => { uploadClosed = true; });
         res.writeHead(200, { 'content-type': 'application/json' });
         res.write('{"artifactId":'); // Actual persisted write, stalled acknowledgment body.
+        started();
         return;
       }
       await handleInternalArtifact(req, res, new URL(req.url!, 'http://control'), {
@@ -71,38 +70,18 @@ async function setup(t: { after(callback: () => Promise<void>): void }, stall: '
   const address = server.address(); assert(address && typeof address !== 'string');
   const origin = new URL(`http://127.0.0.1:${address.port}`);
   const ref = await store.put(Buffer.from(JSON.stringify(request('input').input)));
-  const envelope = structuredClone(prismAttempt('render', { artifactId: ref.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
-    contentDigest: ref.digest, sizeBytes: ref.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${ref.digest}`, origin).href }, 'cancel-test')) as WorkerAttemptEnvelopeV1;
+  const envelope = structuredClone(prismNativeAttempt('render', { artifactId: ref.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
+    contentDigest: ref.digest, sizeBytes: ref.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${ref.digest}`, origin).href }, 'cancel-test')) as WorkerAttemptEnvelopeV3;
   return { store, envelope, client: new WorkerArtifactClient(origin, 'local', false), engine: new PrismEngine(new DeterministicDesignProvider()),
     contact, uploadClosed: () => uploadClosed, storedUpload: () => storedUpload };
 }
 
-function cpuWork() { pbkdf2Sync('actual CPU work', 'salt', 500_000, 32, 'sha256'); }
-
-test('actual attempt CPU excludes prior process work and stays fixed after execution', async t => {
-  const f = await setup(t);
-  cpuWork();
-  const prior = process.cpuUsage();
-  const operation = operationFor(f.envelope, f.engine, f.client);
-  operation.prepare(f.envelope.limits);
-  const signal = new AbortController().signal;
-  await operation.execute({ attempt: f.envelope, signal, log() {} });
-  const measured = await operation.measure({ signal });
-  const processTotal = process.cpuUsage();
-  assert(measured.cpuTimeMs < (processTotal.user + processTotal.system) / 1000 - (prior.user + prior.system) / 2000);
-  cpuWork();
-  assert.equal((await operation.measure({ signal })).cpuTimeMs, measured.cpuTimeMs);
-  await operation.terminate();
-});
-
-test('real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back', async t => {
+test('real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back', { timeout: 5000 }, async t => {
   const f = await setup(t, 'upload');
-  const envelope = JSON.parse(JSON.stringify(f.envelope)) as WorkerAttemptEnvelopeV1;
-  envelope.limits.cleanupTimeoutMs = 80;
-  envelope.attemptSpecDigest = workerAttemptSpecDigest(envelope);
-  const result = await executeWorkerAttempt(envelope, f.engine, f.client);
-  assert.notEqual(result.state, 'completed');
-  assert.match(result.error?.code ?? '', /WORKER_LOG_STORE/u);
+  const content = Buffer.from('[system] Prism render operation started');
+  const controller = new AbortController();
+  const rejected = assert.rejects(f.client.upload('prism-full-log', 'log', 'text/plain', content, controller.signal));
+  await f.contact; controller.abort(); await rejected;
   for (let index = 0; index < 20 && !f.uploadClosed(); index++) await new Promise(resolve => setTimeout(resolve, 10));
   assert(f.uploadClosed(), 'actual fetch response connection closed on phase abort');
   assert.equal(Buffer.from(await f.store.get(f.storedUpload())).toString(), '[system] Prism render operation started');
@@ -111,9 +90,9 @@ test('real full-log upload aborts a stalled response body; persisted receiver by
 
 test('terminate aborts and drains the original artifact read before any engine operation starts', async t => {
   const f = await setup(t, 'read');
-  const operation = operationFor(f.envelope, f.engine, f.client);
+  const operation = new PrismWorkerOperation(f.envelope, f.engine, f.client);
   operation.prepare(f.envelope.limits);
-  const result = operation.execute({ attempt: f.envelope, signal: new AbortController().signal, log() {} });
+  const result = operation.execute({ signal: new AbortController().signal, log() {} });
   const rejected = assert.rejects(result, /terminated/u);
   await f.contact;
   await operation.terminate();

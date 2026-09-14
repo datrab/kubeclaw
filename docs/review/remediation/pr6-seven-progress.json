@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-09-12T12:21:00.845668+00:00",
+  "pr": 6,
+  "scope_count": 7,
+  "completed_count": 3,
+  "remaining_count": 4,
+  "completion_policy": "D12",
+  "findings": [
+    {
+      "id": "PCR-SDK-001",
+      "status": "verifiziert",
+      "result": "Lokaler SDK-Abschluss nach D12: ursprüngliche Serializer-/Artifact-/Effect-/Source-/History-/Compiler-/Semantik-/Summary-/Deliveryconsumer geprüft;13 Owner-,11 History- und5 Deliverytests bestehen, einschließlich12 echter SIGKILL-/Replaygrenzen. Veraltete Summary-Testkopplung an bewusst historisches v2 auf expliziten aktuellen v3-Vertrag korrigiert. Gesperrter Helper nicht erneut ausgeführt; Live-Reviewer/Modelle bleiben separat."
+    },
+    {
+      "id": "PCR-BUSTER-ENGINE-004",
+      "status": "implementiert",
+      "result": "Konkrete Implementierungs-/lokale Nachweisarbeit bleibt offen."
+    },
+    {
+      "id": "PCR-PRISM-WORKER-002",
+      "status": "implementiert",
+      "result": "CPU-Abschlussmessung erfasst jetzt auch Arbeit nach execute einschließlich vollständigem Log-Upload; echte Regression vorher rot, danach11/11 Prismtests, Typprüfung und kanonischer Lint bestanden. Gemeinsame Parent-CPU und fehlender Attempt-Prozessbesitz bleiben offen.",
+      "latest_evidence": "implementation/pr6-prism-completion-cpu.md"
+    },
+    {
+      "id": "PCR-OBS-002",
+      "status": "implementiert",
+      "result": "Konkrete Implementierungs-/lokale Nachweisarbeit bleibt offen."
+    },
+    {
+      "id": "IFR-08-002",
+      "status": "verifiziert",
+      "result": "Expliziter PVC-Speichervertrag, RWOP/Recreate und konservative manuelle Offline-GC implementiert; Umstieg von flüchtigem Speicher wird vor Apply abgewiesen. Originaler Distribution-3.0.0-Server bestätigt Digest-/Layererhalt nach GC/Neustart und Freigabe von 65536 unreferenzierten Blobbytes. Lokaler Abschluss nach D12; CSI/Kapazität/Podwechsel bleiben spätere Live-Prüfung."
+    },
+    {
+      "id": "PCR-BUSTER-ENGINE-001",
+      "status": "in Bearbeitung",
+      "result": "Konkrete Implementierungs-/lokale Nachweisarbeit bleibt offen."
+    },
+    {
+      "id": "PATH-T04-002",
+      "status": "verifiziert",
+      "result": "D10-Risikoakzeptanz verlangt jetzt eine nichtleere Begründung; blocking bleibt nicht übersteuerbar. Vier echte Core/Git/Artefakt-Gatefolgen, neun Source-Regressionsfälle, Originalpakettests, Compiler und Paketbuild bestanden. Lokaler Abschluss nach D12."
+    }
+  ]
+}

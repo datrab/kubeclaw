@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "runtime-tool-locks.v1",
+  "inputs": {
+    "docker/python-tools/common.in": "6fa6f7f60fa49beebfe2c6987b7ff88ed5e9f7ac0164a850029bfb6b7bd29ff9",
+    "docker/python-tools/semgrep-nova.in": "f96295d98f4c2b52f429380773c7e8b45c7553cd200c80722ddc0c7a90962188",
+    "docker/python-tools/buster.in": "382ebca1979ffa306d27ba26dd06def23d8ee702aa9fb7c899299152afb855ea",
+    "docker/go-tools/requirements.json": "8f403fa26ac90caec632138739384cb494901674dbc57f9651fadc475ce88d7c"
+  },
+  "outputs": {
+    "docker/python-tools/common.txt": "769e14d90ffaeb4aa3c243d9fa35a9e4c75ee0e16b8f90a6b88fa95e4aed7389",
+    "docker/python-tools/semgrep-nova.txt": "fb92e3771badc656d5e5818a50bf9832e279f1c25053faee72c1a1d7d31c0b54",
+    "docker/python-tools/buster.txt": "0d17f298fa82832c91a9f4071f79c8613a683b00ed97fc989af929578adafc61",
+    "docker/go-tools/go.mod": "e596896028535f4fbd34e54d318cc84d63020b4d4d32dbd09b362a044e2a56db",
+    "docker/go-tools/go.sum": "08eda4b375fcd8d33d7d4d21533f0fe4a308434d42e2fa56ca313cf8851fc9ab"
+  }
+}

@@ -1,0 +1,18 @@
+✔ actual Nova Helm render exposes architecture only through its private authenticated service (405.365484ms)
+✔ actual Helm rejects credential omission and a carried-over legacy architecture NodePort (586.990773ms)
+✔ rendered Ops RBAC has only the two intended namespace grants and mandatory Secret auth (129.852339ms)
+✔ actual checked Tailscale archive renders pinned operator and proxy images (2895.17186ms)
+✔ actual checked Qdrant archive pins both data workload images and rejects archive corruption (1696.45304ms)
+✔ actual agent render gives Qdrant health only read credentials and the CA in the release namespace (334.174912ms)
+✔ chart authority refuses mutable versions, credential URLs and non-HTTPS sources (0.771415ms)
+✔ shipped Cilium API grants cover pre/post DNAT only for intended workload identities (126.566239ms)
+✔ actual Ops Helm supports discovered endpoint ports, exact CIDRs and both CNI paths (504.355485ms)
+✔ real Qdrant enforces TLS/auth and restores a verified snapshot into a fresh store (4148.140586ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5350.973649

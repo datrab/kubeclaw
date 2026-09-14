@@ -1,0 +1,291 @@
+✔ actual HTTP job routes authenticate before claim, persist one fence and reject stale completion (10891.111975ms)
+✔ session identities retain full project and namespace identity without lossy legacy adoption (3.452098ms)
+✔ accepted jobs survive a real database reopen; running uncertainty is never replayed (12240.125813ms)
+✔ actual design commit and agent receipt are atomic; stale fence and changed retry cannot mutate (7404.510876ms)
+✔ expired agent cannot commit and missing tool result is explicitly NeedsNova (7910.846143ms)
+✔ revision retries bind actor, source and input and replay the actual committed repository receipt (8380.178245ms)
+✔ provably unstarted superseded work is retired without taking over the new source session (7832.498733ms)
+✔ original WorkerCore drains a real Node process through close and retains its real HTTP-uploaded log (612.129902ms)
+✔ original WorkerCore times out and terminates a real running process; no gateway success is inferred (118.911696ms)
+✔ real process failure and output overflow preserve diagnostics and fail the bounded attempt (624.281143ms)
+✔ real CPU-consuming child has explicit V2 unavailable observations and no parent resource claims (1306.994447ms)
+✔ requested unsupported child budget fails before actual process launch (17.702171ms)
+✔ V2 requires explicit policy and correct units; V1 refuses the opt-in envelope (30.251081ms)
+✔ requested runtime measurement unavailable fails even when profile advertised measurement (290.347784ms)
+✔ original generic assessor rejects requested real observed overrun and V1 missing metrics (8.836262ms)
+✔ actual HTTP dropped admission response retains the same client key; SQL replay and NeedsNova remain explicit (8761.719438ms)
+✔ corrupt existing object is never acknowledged or overwritten and failed pending is removed (42.588597ms)
+✔ put snapshots caller buffers before IO and retained IDs survive a new store instance (78.649313ms)
+✔ independent native writers atomically install identical content and leave no pending files (1098.700437ms)
+✔ acknowledged native writer content remains readable after SIGKILL (566.478074ms)
+✔ actual FIFO objects reject without blocking get or existing-object put (502.56971ms)
+✔ direction selection rolls back on actual SQL insert failure and replays a committed response (8898.8241ms)
+✔ all feedback actions persist valid wire IDs, explicit retries deduplicate and fresh actions remain distinct (6563.969717ms)
+✔ failed rejection retains proposed state; stale and historical partial selections do not invent receipts (6784.655262ms)
+✔ wire preference IDs replay only exact owner and content while preserving internal UUIDs (6894.623288ms)
+✖ wire ID migration preserves legacy UUID/content and refuses ambiguous historical wire identities (6640.175615ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/preferences',
+  error: 'preference user does not match the session'
+}
+✔ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (10557.953693ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/agent/design-sets',
+  error: 'stale design generation'
+}
+✔ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (7853.977472ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (7805.326526ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (1049.708509ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (8289.372908ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (8898.357491ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (8327.944699ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (1170.213944ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (8178.817945ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (8335.54058ms)
+✔ independent composed startup rejects a genuine wrong key type and disabled authority does not read its missing key (7644.214248ms)
+✔ independent original composed restart rejects prior session authority before recording and preserves fresh authorized intent (8860.440468ms)
+✔ Control configuration preserves production listener and original non-SPIFFE service defaults (4.936884ms)
+✔ Control trust configuration fails closed and keeps optional test-runner identity optional (1.211913ms)
+✔ Control service configuration is an owned startup snapshot, not mutable caller environment (0.448757ms)
+✔ Tailscale exchange requires the trusted ingress path (7.948927ms)
+✔ session signatures and expiry fail closed (1.064529ms)
+✔ corpus ingestion is atomic, searchable, idempotent and rights aware (8631.971828ms)
+✔ public acquisition blocks unsafe networks (2.412428ms)
+✔ analysis-only material cannot enter design retrieval (7094.667167ms)
+✔ retrieval applies required, excluded, and source-family diversity rules (7499.142042ms)
+✔ original round client retains a lost-response request across reload and pending retry over real HTTP (144.73566ms)
+✔ original round HTTP calls preserve 400, 500 and text diagnostics and identify broken success contracts (29.477541ms)
+✔ late architecture generation cannot mutate its successor; exact delivery retry is distinct from a new round (9194.971706ms)
+✔ three rejections feed a successor round while predecessor documents and decisions remain immutable history (8242.559804ms)
+✔ source revision mutation after dispatch rejects result before creating new documents (7309.979688ms)
+✔ real insertion failure rolls back the whole round and leaves its delivery retry usable (7202.44762ms)
+✔ final Nova baseline consumption rejects an approved predecessor after a new round starts (6309.525757ms)
+✔ same architecture revision cannot substitute content under a replayed dispatch (2.752666ms)
+✔ legacy unbound documents can start a first explicit round without invented predecessor identity (6177.12348ms)
+✔ installed pg int8 parser strings cannot bypass the original architecture transition guard (5739.561935ms)
+✔ direction diversity ignores copy-only changes (22.716932ms)
+✔ direction diversity rejects one cosmetic token change (1.419239ms)
+✔ direction diversity accepts a material visual system change (3.049008ms)
+✔ direction diversity ignores object key order (0.575106ms)
+✔ rejected descendant move commits nothing; duplicated subtree survives revision restore (10487.816008ms)
+✔ operations are immutable and reject stale revisions (16.364738ms)
+✔ batch fails without partial mutation (0.933997ms)
+✔ responsive patches resolve without changing canonical source (2.158554ms)
+✔ move rejects self/descendant target parent without mutating source (2.831934ms)
+✔ move rejects self/descendant target child without mutating source (0.986639ms)
+✔ move rejects self/descendant target leaf without mutating source (0.73651ms)
+✔ legal sibling reorder and cross-view move preserve complete subtree (8.6551ms)
+✔ nested duplicate remaps IDs, patches and node-scoped actions deterministically (4.047876ms)
+✔ leaf duplicate and maximum-length root ID remain supported (1.729934ms)
+✔ compact patches merge by property with base < state < viewport precedence (0.71825ms)
+✔ regular patches merge by property with base < state < viewport precedence (0.352622ms)
+✔ wide patches merge by property with base < state < viewport precedence (0.521257ms)
+✔ Nova request to Prism baseline to visual provider plan (9573.393301ms)
+✔ publication rejects missing approval and stale edits reject conflicts (5.691071ms)
+✔ many original renders bound retained entries and bytes without changing returned output (138.622742ms)
+✔ byte pressure and oversized successful renders do not retain their large payloads (2.210504ms)
+✔ accumulated render bytes evict completed entries before the count ceiling (5.411201ms)
+✔ active duplicates share one original operation and admission never evicts active ownership (2.654115ms)
+✔ retained replay snapshots cannot be enlarged or corrupted through caller mutation (1.402018ms)
+✔ failure releases admission and invalid cache limits cannot disable its bounds (1.212368ms)
+✔ real render evidence survives RAM eviction and artifact-store reconstruction (26.015023ms)
+✔ deferred original rendering uses the request snapshot bound to its fingerprint (1.38728ms)
+✔ engine generates, renders, evaluates and publishes idempotently (25.181837ms)
+✔ the generic worker carries an opaque Prism operation (4.179409ms)
+✔ the worker binding rejects unknown operations (0.369898ms)
+✔ concurrent retries share one provider execution (1.217761ms)
+✔ the live provider accepts internal LiteLLM without requiring embeddings (0.803186ms)
+✔ an idempotency key cannot identify different requests (1.406676ms)
+✔ Prism creates a valid neutral worker envelope (62.243132ms)
+✔ real ingestion cleanup failure is explicit, preserves authorization and supports retry without process restart (1178.833914ms)
+✔ real ingestion rejects nonfinite and fractional quarantine TTL before serving (3049.094974ms)
+✔ internal request authentication binds time, nonce, and body (6.270156ms)
+✔ nonce replay protection is shared across worker replicas (8305.711642ms)
+✔ actual transport refusal preserves one durable V3 identity; SQL rejects replacement with a historical attempt (2034.741272ms)
+✔ approved Prism targets map to the visual provider declaration (3.859389ms)
+✔ invalid baseline digests fail closed (1.196556ms)
+✔ Forge receives read-only module-scoped targets (0.575425ms)
+✔ signed dispatch cannot select a personal subject without exact platform authorization (2.291036ms)
+✔ platform subject automatically selects its real persisted personal history in another project (9083.377603ms)
+✔ Control startup validates and freezes platform subject configuration (5.807412ms)
+✔ SQL preference history crosses sessions with consent, isolated scopes, overrides and persisted prompt identity (9128.927514ms)
+✔ projection deduplicates evidence and refuses cross-project or cross-user retractions (2.851281ms)
+✔ real stored image traverses HTTP with integrity, size, load and cancellation denials (162.618551ms)
+✔ original HTTPS client validates actual TLS, rereads rotated token, and rejects HTTP errors and oversized responses (863.049911ms)
+✔ real session issuer, explicit operator policy, origin and CSRF bind the signer (9.341806ms)
+✔ real HTTP authorization persists signed intent before failed transport and recovers identical bytes after durable database reopen (9757.434458ms)
+✔ SQL receipt replay compares nested signature bytes and preserves append-only history (6108.028608ms)
+✔ receipt contract preserves Go nanosecond expiry and rejects changed nested envelope (5661.149415ms)
+✔ original ingest provider cancels an actual TLS response body after headers (1260.694124ms)
+✔ original propose provider cancels an actual TLS response body after headers (660.222823ms)
+✔ preferences stay contextual, explain evidence, and support retraction (19.743657ms)
+✔ quality report keeps objective findings separate (1.939909ms)
+✔ quality blocks a meaningful icon without alternative text (1.23383ms)
+✔ preference projections decay and remain retractable (1.1361ms)
+✔ preference projections reject invalid occurrence timestamps (1.813231ms)
+✔ original Engine and Studio preserve disjoint component layers and targeted override precedence (32.62562ms)
+✔ each declared interactive control has its own escaped action (0.933721ms)
+✔ renderer escapes active content (3.015829ms)
+✔ renderer resolves collection data and reusable item components (1.508282ms)
+✔ renderer fails closed for unknown components (0.815593ms)
+✔ renderer resolves theme tokens and layout properties (1.076579ms)
+✔ renderer emits only declarative action identities (0.441868ms)
+✔ renderer applies semantic typography tokens (1.169763ms)
+✔ renderer uses semantic output for the full v1 catalogue (1.032483ms)
+✔ migration lock is acquired before schema metadata is touched (20.678553ms)
+✔ managed migrations require the preprovisioned schema without database-wide DDL (10.474632ms)
+✔ direction uniqueness migration archives existing unsourced duplicates (8662.524362ms)
+✔ PostgreSQL migrations, immutable revisions, and artifacts work (6757.805051ms)
+✔ desktop startup and failure panels remain visible (3.2568ms)
+✔ Puck insertion becomes a typed canonical operation (1.436551ms)
+✔ Puck completes a split with one explicit child (1.192363ms)
+✔ an empty canvas renders a safe empty state (0.94113ms)
+✔ a valid leaf root renders as content (1.660957ms)
+✔ Puck preserves nested content and inserts into the correct parent (0.516902ms)
+✔ Puck edits a nested node through a typed operation (0.523157ms)
+✔ one Puck change emits one atomic batch for multiple edits (1.639213ms)
+✔ the isolated preview uses the trusted renderer for every node (0.77418ms)
+✔ actual schema initialState and validated flow action preserve source, action and optional node matching (22.972667ms)
+✔ malformed unknown flows fail actual contract validation before Studio navigation (8.440409ms)
+✔ Studio preserves every Control Set-Cookie header (4.286652ms)
+✔ canonical stack survives actual projection no-op and another node edit (30.045724ms)
+✔ canonical grid survives actual projection no-op and another node edit (10.867512ms)
+✔ canonical split survives actual projection no-op and another node edit (3.183298ms)
+✔ canonical scroll survives actual projection no-op and another node edit (2.926286ms)
+✔ canonical overlay survives actual projection no-op and another node edit (2.929812ms)
+✔ canonical text survives actual projection no-op and another node edit (2.763208ms)
+✔ canonical heading survives actual projection no-op and another node edit (2.935661ms)
+✔ canonical image survives actual projection no-op and another node edit (3.368314ms)
+✔ canonical icon survives actual projection no-op and another node edit (3.201276ms)
+✔ canonical divider survives actual projection no-op and another node edit (4.232958ms)
+✔ canonical code survives actual projection no-op and another node edit (3.655179ms)
+✔ canonical button survives actual projection no-op and another node edit (3.225506ms)
+✔ canonical link survives actual projection no-op and another node edit (4.08226ms)
+✔ canonical text-input survives actual projection no-op and another node edit (1.792688ms)
+✔ canonical select survives actual projection no-op and another node edit (1.379626ms)
+✔ canonical checkbox survives actual projection no-op and another node edit (1.216242ms)
+✔ canonical list survives actual projection no-op and another node edit (1.04647ms)
+✔ canonical table survives actual projection no-op and another node edit (1.029995ms)
+✔ canonical badge survives actual projection no-op and another node edit (3.581229ms)
+✔ canonical progress survives actual projection no-op and another node edit (2.766117ms)
+✔ canonical chart survives actual projection no-op and another node edit (3.674582ms)
+✔ canonical navigation survives actual projection no-op and another node edit (3.245144ms)
+✔ canonical tabs survives actual projection no-op and another node edit (5.392454ms)
+✔ canonical breadcrumb survives actual projection no-op and another node edit (5.167642ms)
+✔ canonical pagination survives actual projection no-op and another node edit (2.177327ms)
+✔ canonical alert survives actual projection no-op and another node edit (1.090293ms)
+✔ canonical dialog survives actual projection no-op and another node edit (1.911846ms)
+✔ canonical toast survives actual projection no-op and another node edit (0.98477ms)
+✔ canonical tooltip survives actual projection no-op and another node edit (1.269834ms)
+✔ canonical empty-state survives actual projection no-op and another node edit (1.506364ms)
+✔ canonical spinner survives actual projection no-op and another node edit (1.158919ms)
+✔ canonical component survives actual projection no-op and another node edit (1.245771ms)
+✔ canonical terminal survives actual projection no-op and another node edit (1.391684ms)
+✔ canonical command survives actual projection no-op and another node edit (1.067912ms)
+✔ canonical prompt survives actual projection no-op and another node edit (1.371259ms)
+✔ canonical output survives actual projection no-op and another node edit (2.825299ms)
+✔ actual Studio survives refused Control and malformed URL with explicit responses (678.883353ms)
+✔ actual Studio retains proxy bytes, cookies and upstream status (629.280729ms)
+✔ actual Studio forwards direction idempotency keys and retry payloads to Control (707.185579ms)
+✔ actual Studio bounds upstream headers wait and remains healthy (870.16258ms)
+✔ actual Studio bounds upstream empty-body wait and remains healthy (804.690559ms)
+✔ actual Studio bounds upstream partial-body wait and remains healthy (867.741033ms)
+✔ actual Studio cancels upstream streaming when the client disconnects (581.399629ms)
+✔ only the admitted owner can cancel a pending original render; callers without cancellation still coalesce (24.0109ms)
+✔ real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back (91.282816ms)
+✔ terminate aborts and drains the original artifact read before any engine operation starts (31.496274ms)
+✔ owner cancellation before retention rejects every coalesced original-render caller (4.93032ms)
+✔ actual HTTP ingress rejects excess unfinished bodies while reserving health capacity (51.712254ms)
+✖ actual Helm worker bootstrap readiness preserves post-install migration startup (14.303664ms)
+✔ native connection refusal retains its safe operator system code (25.669911ms)
+{"event":"prism_nonce_dependency_failure","phase":"cancel","code":"REQUEST_CANCELLED","durationMs":31,"active":1,"open":1,"pending":0}
+{"event":"prism_nonce_dependency_failure","phase":"query","code":"PG_UNKNOWN","durationMs":32,"active":1,"open":1,"pending":0}
+{"event":"prism_nonce_dependency_failure","phase":"cancel","code":"DEPENDENCY_DEADLINE","durationMs":237,"active":1,"open":1,"pending":0}
+{"event":"prism_nonce_dependency_failure","phase":"query","code":"PG_UNKNOWN","durationMs":238,"active":1,"open":1,"pending":0}
+✔ native PostgreSQL query cancellation settles and releases its actual pool client (632.126986ms)
+✔ current specialist renders through the original authenticated artifact service (145.875078ms)
+✔ original artifact service rejects actual full-log storage corruption (18.785078ms)
+✔ captured historical receipts and evidence retain their original validated digests (138.869223ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (25.417668ms)
+✔ historical real receipts remain readable and cannot be reinterpreted as native task receipts (103.828298ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (20.681781ms)
+ℹ tests 199
+ℹ suites 0
+ℹ pass 197
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 206167.457325
+
+✖ failing tests:
+
+test at skills/prism/tests/control-decisions.test.mts:100:1
+✖ wire ID migration preserves legacy UUID/content and refuses ambiguous historical wire identities (6640.175615ms)
+  error: record "new" has no field "wire_event_id"
+      at pe.Ue (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/node_modules/@electric-sql/pglite/dist/chunk-2BOC2OMW.js:1:17959)
+      at pe.tt (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/node_modules/@electric-sql/pglite/dist/chunk-2BOC2OMW.js:1:15347)
+      at pe.parse (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/node_modules/@electric-sql/pglite/dist/chunk-2BOC2OMW.js:1:14021)
+      at O.qe (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/node_modules/@electric-sql/pglite/dist/index.js:5:1762)
+      at file:///workspace/scratch/9fa3b9b80bce/kubeclaw/node_modules/@electric-sql/pglite/dist/index.js:5:1155
+      at wasm://wasm/0267b22e:wasm-function[10926]:0x5a5a7a
+      at wasm://wasm/0267b22e:wasm-function[3584]:0x27ea68
+      at wasm://wasm/0267b22e:wasm-function[3626]:0x28694e
+      at wasm://wasm/0267b22e:wasm-function[3636]:0x286baa
+      at wasm://wasm/0267b22e:wasm-function[9913]:0x54fcc7 {
+    length: 238,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: 'PL/pgSQL expression "NEW.wire_event_id IS NULL"\nPL/pgSQL function prism.preference_event_fill_wire_id() line 3 at IF',
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'pl_exec.c',
+    line: '5590',
+    routine: 'plpgsql_exec_get_datum_type_info',
+    query: "INSERT INTO prism.preference_event(id,subject_id,event_type,content,consent_scope,occurred_at) VALUES($1,'legacy','liked',$2::jsonb,'personal',now())",
+    params: [ '35fdca31-a45e-425c-924f-1c6ccb39ce40', '{"eventId":"event-legacy","actorEvidence":"unchanged"}' ],
+    queryOptions: undefined
+  }
+
+test at skills/prism/tests/worker-readiness-chart.test.mts:6:1
+✖ actual Helm worker bootstrap readiness preserves post-install migration startup (14.303664ms)
+  Error: spawnSync helm ENOENT
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/skills/prism/tests/worker-readiness-chart.test.mts:7:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawnSync helm',
+    path: 'helm',
+    spawnargs: [ 'template', 'prism', 'charts/prism', '-f', 'charts/prism/ci-values.yaml' ],
+    error: Error: spawnSync helm ENOENT
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at TestContext.<anonymous> (file:///workspace/scratch/9fa3b9b80bce/kubeclaw/skills/prism/tests/worker-readiness-chart.test.mts:7:20)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.start (node:internal/test_runner/test:1242:17)
+        at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }

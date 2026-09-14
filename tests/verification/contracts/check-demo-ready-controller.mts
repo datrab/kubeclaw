@@ -74,7 +74,7 @@ test('product decisions are disabled by default and require separate explicit hu
   assert.deepEqual(JSON.parse(env.BUSTER_PRODUCT_ACTORS_JSON),['human-contract-actor']);
   const policy=docs.find(d=>d.kind==='NetworkPolicy'&&d.metadata.name.endsWith('-demo-ready'));
   const peer=policy.spec.ingress[0].from.find((p:any)=>p.namespaceSelector.matchLabels['kubernetes.io/metadata.name']==='prism-contract');
-  const prismDocs=YAML.parseAllDocuments(execFileSync(helm,['template','prism-contract','charts/prism','--namespace','prism-contract','--set','postgresql.existingSecret=contract-db-secret',...['ingestion','control','studio','worker'].flatMap(name=>['--set',`images.${name}.digest=sha256:${'a'.repeat(64)}`])],{encoding:'utf8',maxBuffer:8*1024*1024})).map(d=>d.toJSON()).filter(Boolean);
+  const prismDocs=YAML.parseAllDocuments(execFileSync(helm,['template','prism-contract','charts/prism','-f','charts/prism/ci-values.yaml','--namespace','prism-contract','--set','worker.native.namespace=prism-contract','--set','postgresql.existingSecret=contract-db-secret',...['ingestion','control','studio','worker'].flatMap(name=>['--set',`images.${name}.digest=sha256:${'a'.repeat(64)}`])],{encoding:'utf8',maxBuffer:8*1024*1024})).map(d=>d.toJSON()).filter(Boolean);
   const prismControl=prismDocs.find(d=>d.kind==='Deployment'&&d.spec.template.metadata.labels.app==='prism-control');
   for(const [key,value] of Object.entries(peer.podSelector.matchLabels))assert.equal(prismControl.spec.template.metadata.labels[key],value);
   const crd=docs.find(d=>d.kind==='CustomResourceDefinition'&&d.metadata.name.startsWith('busternamespaceleases.'));

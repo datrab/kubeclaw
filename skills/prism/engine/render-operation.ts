@@ -58,6 +58,7 @@ function renderHtml(
     (document.theme.colors as Record<string, unknown>)?.text,
     "#111111",
   );
+  const viewData = document.views[String(input.view)]?.mockData as Record<string, unknown> | undefined;
   const bodyFont = safeFont(
     (
       (document.theme.typography as Record<string, unknown>)?.body as
@@ -73,8 +74,7 @@ function renderHtml(
     ),
     renderAssets,
     {
-      data: document.views[String(input.view)]?.mockData as
-        Record<string, unknown> | undefined,
+      ...(viewData === undefined ? {} : { data: viewData }),
       components: document.components,
       theme: document.theme as Record<string, unknown>,
     },

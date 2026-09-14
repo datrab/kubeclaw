@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import { DELIVERY_MANIFEST_ENCODING } from '@kubeclaw/delivery-manifest-contract';
 import { portableJson, PORTABLE_JSON_ENCODING, sha256Text } from '@kubeclaw/plugin-sdk';
 import { activate } from '../../../skills/common/plugins/artifact-store/src/adapter.ts';
 import { EffectCoordinator } from '../../../skills/nova/core/effects/coordinator.ts';
@@ -21,6 +22,9 @@ let sequence = 0;
 // Actual Core effect coordinator, disk journal and ArtifactStore. The other
 // provider outputs remain the existing explicit artifact-contract fixtures;
 // this is NOT full Review lifecycle or fresh policy/governor production proof.
+// Select the same explicit delivery-v3 and outer-artifact modes as current CLI.
+// Omitted buildSummary mode intentionally preserves historical v2 bytes; it
+// cannot serve as a portable-v3 positive. Legacy compatibility has its own tests.
 function context(identity, artifacts = []) {
   return { contract: { lease: { attempt: identity }, artifacts }, invoke: async (capability, request) => {
     const receipt = await coordinator.invoke(adapter, adapterOwner,
@@ -48,23 +52,24 @@ try {
     const writer = context({ runId, stageId: 'review', attemptId: report.attemptId, attemptNumber: 1 });
     const artifacts = saved.artifacts.filter(a => a.namespace !== 'kubeclaw.review');
     artifacts.push(await storeReviewBundle(snapshot, writer), await storeReviewReport(report, writer, PORTABLE_JSON_ENCODING));
-    const input = { ...saved.input, final: { ...saved.input.final, reviewSemanticEncoding: REVIEW_SEMANTIC_ENCODING } };
-    const summary = await buildSummary(input, context(readerIdentity, artifacts));
+    const input = { ...saved.input, final: { ...saved.input.final, reviewSemanticEncoding: REVIEW_SEMANTIC_ENCODING, reviewArtifactEncoding: PORTABLE_JSON_ENCODING } };
+    const summary = await buildSummary(input, context(readerIdentity, artifacts), DELIVERY_MANIFEST_ENCODING);
+    assert.equal(summary.schemaVersion, 'delivery-manifest.v3');
     fs.writeFileSync(path.join(root, 'saved.json'), JSON.stringify({ input, artifacts, digest: summary.digest, bundleDigest: snapshot.digest }));
     console.log(JSON.stringify({ phase, locale: Intl.DateTimeFormat().resolvedOptions().locale, summaryDigest: summary.digest, bundleDigest: snapshot.digest,
       actualCore: true, actualArtifactStore: true, artifactContractFixture: true, freshPolicyProduction: false }));
   } else {
     const saved = JSON.parse(fs.readFileSync(path.join(root, 'saved.json'), 'utf8'));
-    const summary = await buildSummary(saved.input, context(readerIdentity, saved.artifacts));
+    const summary = await buildSummary(saved.input, context(readerIdentity, saved.artifacts), DELIVERY_MANIFEST_ENCODING);
     assert.equal(summary.digest, saved.digest);
     const oldMode = structuredClone(saved.input); delete oldMode.final.reviewSemanticEncoding;
-    await assert.rejects(() => buildSummary(oldMode, context(readerIdentity, saved.artifacts)), /SEMANTIC_PAIR_INVALID/);
+    await assert.rejects(() => buildSummary(oldMode, context(readerIdentity, saved.artifacts), DELIVERY_MANIFEST_ENCODING), /SEMANTIC_PAIR_INVALID/);
     const wrongMode = structuredClone(saved.input); wrongMode.final.reviewSemanticEncoding = 'future';
     const before = sequence;
-    await assert.rejects(() => buildSummary(wrongMode, context(readerIdentity, saved.artifacts)), /SEMANTIC_MODE_INVALID/);
+    await assert.rejects(() => buildSummary(wrongMode, context(readerIdentity, saved.artifacts), DELIVERY_MANIFEST_ENCODING), /SEMANTIC_MODE_INVALID/);
     assert.equal(sequence, before, 'unsupported owner rejected before any effect');
     const wrongEncoding = saved.artifacts.map(a => a.namespace === 'kubeclaw.review' ? (({ encoding, ...ref }) => ref)(a) : a);
-    await assert.rejects(() => buildSummary(saved.input, context(readerIdentity, wrongEncoding)), /ARTIFACT_ENCODING_REQUIRED/);
+    await assert.rejects(() => buildSummary(saved.input, context(readerIdentity, wrongEncoding), DELIVERY_MANIFEST_ENCODING), /ARTIFACT_ENCODING_REQUIRED/);
     console.log(JSON.stringify({ phase, locale: Intl.DateTimeFormat().resolvedOptions().locale, summaryDigest: summary.digest, samePersistedDigest: true,
       actualCore: true, actualArtifactStore: true, wrongModeAndEncodingRejected: true, providerExecution: false }));
   }

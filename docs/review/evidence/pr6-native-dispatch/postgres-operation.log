@@ -1,0 +1,13 @@
+$ node --test skills/prism/tests/native/operation-journal.mts
+✔ real PostgreSQL commit, concurrent retries, writer death and original worker journal preserve one native attempt (8209.401706ms)
+ℹ Original PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2); original schema migration 017
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9324.389051
+
+exit_code=0

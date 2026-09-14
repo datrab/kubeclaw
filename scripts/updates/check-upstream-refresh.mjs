@@ -11,14 +11,16 @@ try {
     fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true });
     fs.copyFileSync(file, path.join(root, file));
   }
+  for (const item of ['python-tools', 'go-tools', 'runtime-tool-locks.json']) fs.cpSync(path.join(source, 'docker', item), path.join(root, 'docker', item), { recursive: true });
   const expected = JSON.parse(fs.readFileSync('versions.json', 'utf8'));
   const baseline = structuredClone(expected);
   // Only the prior metadata is synthetic. Every requested release and byte is real.
-  for (const tool of ['GO', 'SHFMT', 'TERRAFORM', 'TFLINT', 'TRIVY', 'KUBECTL']) baseline.buildArgs[`${tool}_VERSION`] = '0.0.0';
+  for (const tool of ['GO', 'SHFMT', 'TERRAFORM', 'TFLINT', 'TRIVY', 'KUBECTL', 'HADOLINT', 'HELM', 'KUBECONFORM']) baseline.buildArgs[`${tool}_VERSION`] = '0.0.0';
+  for (const tool of ['KUBECTL', 'HELM']) baseline.imageOverrides['ops-pod'][`${tool}_VERSION`] = '0.0.0';
   fs.writeFileSync(path.join(root, 'versions.json'), JSON.stringify(baseline));
   for (const args of [['init', '-q'], ['config', 'user.name', 'Updater regression'], ['config', 'user.email', 'updater@example.invalid'], ['add', '.'], ['commit', '-qm', 'Prior metadata fixture']]) execFileSync('git', args, { cwd: root });
   fs.copyFileSync('versions.json', path.join(root, 'versions.json'));
   execFileSync(process.execPath, [path.join(source, 'scripts/updates/refresh-versions.mjs')], { cwd: root, stdio: 'inherit', timeout: 900000 });
   assert.deepEqual(JSON.parse(fs.readFileSync(path.join(root, 'versions.json'), 'utf8')), expected, 'Downloaded release checksums must match the independently committed pins');
-  console.log('Verified actual amd64 and arm64 release bytes for Go, shfmt, Terraform, TFLint, Trivy and kubectl.');
+  console.log('Verified actual amd64 and arm64 release bytes for all nine central checksum-managed tools and both Ops overrides.');
 } finally { fs.rmSync(root, { recursive: true, force: true }); }

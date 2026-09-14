@@ -30,6 +30,7 @@ The approved [documentation blueprint](blueprint/README.md) classifies existing 
 
 - [Codex Ops Pod architecture](architecture/ops-pod.md): authority, runtime, networking, persistence and failure domains.
 - [Codex Ops Pod operations](ops/ops-pod.md): deployment, acceptance, diagnosis, upgrades, credential rotation and recovery.
+- [Qdrant operations](operations/qdrant.md): client authority, TLS, collection ownership, snapshot export and isolated restore.
 
 These are repository source documents; adding them here does not add them to the
 published site's explicit allowlist.

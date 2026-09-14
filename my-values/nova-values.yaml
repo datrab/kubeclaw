@@ -84,14 +84,11 @@ busterNamespaceBroker:
     verificationRead:
       enabled: true
 
-service:
-  extraPorts:
-    # Nova's HTML architecture presentations are separate from Prism Studio.
-    # Keep the established NodePort so existing Tailscale exposure remains valid.
-    - name: archviewer
-      port: 3456
-      targetPort: archviewer
-      nodePort: 30456
+archviewer:
+  enabled: true
+  existingSecret: nova-archviewer-auth
+  hostname: nova-architecture
+  tailscaleOperatorNamespace: tailscale
 
 capabilityProviders:
   buster:
@@ -163,19 +160,22 @@ extraContainers:
         containerPort: 3456
         protocol: TCP
     volumeMounts:
+      - name: archviewer-auth
+        mountPath: /etc/archviewer-auth
+        readOnly: true
       - name: workspace
         mountPath: /designs
         subPath: prism/designs
         readOnly: true
     startupProbe:
-      httpGet: { path: /, port: archviewer }
+      httpGet: { path: /healthz, port: archviewer }
       periodSeconds: 2
       failureThreshold: 30
     readinessProbe:
-      httpGet: { path: /, port: archviewer }
+      httpGet: { path: /healthz, port: archviewer }
       periodSeconds: 10
     livenessProbe:
-      httpGet: { path: /, port: archviewer }
+      httpGet: { path: /healthz, port: archviewer }
       initialDelaySeconds: 10
       periodSeconds: 15
     resources:

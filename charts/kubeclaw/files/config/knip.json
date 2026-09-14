@@ -6,6 +6,9 @@
     "cc",
     "eslint",
     "gofmt",
+    "go",
+    "openssl",
+    "mkfifo",
     "helm",
     "kubeconform",
     "kubectl",
@@ -17,11 +20,6 @@
     "**/generated/**",
     "**/node_modules/**",
     "Projects/**",
-    "charts/kubeclaw/files/config/eslint.config.mjs",
-    "charts/kubeclaw/files/config/eslint-type-evidence-config.mjs",
-    "charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs",
-    "charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs",
-    "charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs",
     "contracts/telemetry/v1/{bundle-types,telemetry-types}.ts"
   ],
   "ignoreDependencies": [
@@ -39,14 +37,22 @@
   ],
   "workspaces": {
     ".": {
+      "ignoreUnresolved": [
+        "^/usr/local/bin/kubectl$"
+      ],
       "entry": [
-        "scripts/**/*.mjs",
+        "scripts/**/*.{mjs,cjs}",
+        "charts/kubeclaw/files/config/eslint*.mjs",
         "skills/nova/pipeline.ts",
         "skills/nova/project_setup/**/*.ts",
-        "tests/**/*.{mjs,mts,ts}"
+        "tests/**/*.{mjs,mts,ts}",
+        "tests/fixtures/plugin-system-v2/recovery-plugin/stage.js",
+        "tests/fixtures/plugin-system-v2/recovery-plugin/stage.js",
+        "tests/fixtures/plugin-system-v2/resume-plugin/checkpoint.js"
       ],
       "project": [
         "scripts/**/*.{js,mjs,cjs}",
+        "charts/kubeclaw/files/config/*.mjs",
         "skills/nova/pipeline.ts",
         "skills/nova/project_setup/**/*.{ts,mjs}",
         "tests/**/*.{js,mjs,mts,cjs,ts}"
@@ -58,6 +64,30 @@
       ],
       "project": [
         "src/**/*.ts"
+      ]
+    },
+    "contracts/pipeline-test-gate/v1": {
+      "entry": [
+        "src/index.ts",
+        "src/gate-decision.ts",
+        "tests/**/*.ts"
+      ],
+      "project": [
+        "src/**/*.ts",
+        "tests/**/*.ts"
+      ]
+    },
+    "contracts/prism/v1": {
+      "entry": [
+        "src/index.ts",
+        "src/digest.ts",
+        "src/baseline-archive.ts",
+        "src/validators.generated.d.mts",
+        "tests/**/*.mts"
+      ],
+      "project": [
+        "src/**/*.{ts,mts,mjs}",
+        "tests/**/*.mts"
       ]
     },
     "skills/buster/engine": {
@@ -712,12 +742,50 @@
         "tests/**/*.{ts,mts,mjs}"
       ]
     },
+    "skills/prism": {
+      "entry": [
+        "runtime.ts",
+        "domain/index.ts",
+        "renderer/index.ts",
+        "server/{control,worker,studio}.ts",
+        "server/agent-bridge.mjs",
+        "tests/**/*.{ts,mts,mjs}",
+        "integration/*.mts",
+        "studio/*.test.tsx",
+        "studio/main.tsx"
+      ],
+      "project": [
+        "**/*.{ts,tsx,mts,mjs}"
+      ]
+    },
     "skills/worker/core": {
       "entry": [
         "src/index.ts"
       ],
       "project": [
         "**/*.{ts,mjs}"
+      ]
+    },
+    "spikes/prism/puck-adapter": {
+      "entry": [
+        "tests/*.test.ts"
+      ],
+      "project": [
+        "**/*.{ts,tsx}"
+      ],
+      "ignoreDependencies": [
+        "react-dom",
+        "@types/react-dom"
+      ]
+    },
+    "tools/ops-mcp": {
+      "entry": [
+        "src/server.mjs",
+        "test/*.test.mjs"
+      ],
+      "project": [
+        "src/**/*.mjs",
+        "test/**/*.mjs"
       ]
     }
   }

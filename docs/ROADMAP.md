@@ -18,6 +18,38 @@ This page keeps future direction separate from current operator behavior. Items 
 
 ## Product And Platform Direction
 
+### Central operator configuration audit
+
+Status: planned, requested 2026-09-12; follows completion of the four remaining
+PR #6 remediation findings. This is not an implemented configuration guarantee.
+
+- Use the existing `swarm.config.json` as the single authored source for operator
+  settings; do not introduce a competing `kubeclaw.yaml` configuration surface.
+- Inventory every configurable setting across production code, worker profiles,
+  environment loaders and deployment templates. Remove scattered hardcoded
+  operator settings and trace each setting from the central source to its actual
+  runtime consumer, including Buster and Prism. Test-only profile expansion is
+  not proof of production wiring.
+- Keep centrally defined defaults, readable feature/tuning groups and explicit
+  overrides. Validate unknown keys, units, precedence and conflicting budgets.
+  Distinguish immutable protocol constants from operator-tunable settings; the
+  audit must not turn security invariants into bypass switches.
+- Generate or resolve downstream configuration automatically through the normal
+  build/deployment path, with no additional manual synchronization step. Verify
+  drift and end-to-end propagation with regression tests and document the
+  effective configuration without exposing secrets.
+- Keep secrets external and reference them; retain `versions.json` as the
+  canonical software-version source without duplicate version maintenance.
+- Give worker task limits generous measured headroom and coordinate per-attempt
+  budgets, concurrency and container capacity. Do not silently reinterpret old
+  process limits as task limits or automatically raise limits after a failure.
+
+Acceptance: the inventory accounts for all operator settings; production
+consumers use the central resolved values; regressions detect hardcoded setting
+drift; operator documentation covers defaults and overrides in one place.
+
+### Other themes
+
 These are candidate roadmap themes, not current behavior claims:
 
 - ClawDeck as the first real pipeline-built project and as richer platform/pipeline visibility.

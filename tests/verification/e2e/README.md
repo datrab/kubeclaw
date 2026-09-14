@@ -274,3 +274,24 @@ If the smoke config says `subagent`, the probe proves subagent launch; if it
 says `acp`, the probe proves ACP launch. Use `REAL_E2E_MODEL`,
 `REAL_E2E_THINKING`, or `REAL_E2E_AGENT_RUNTIME` only when a run intentionally
 needs an override.
+
+## Registry target prerequisites
+
+Supply `KUBECLAW_REGISTRY_CONFIG` using the same operator-owned
+`registry-clients.v1` contract as the Buster runtime. The runner rejects the
+retired `KUBECLAW_LOCAL_REGISTRY` override. Supply `REAL_E2E_DEPLOYMENT_IMAGE`
+as an explicit immutable `host/repository[:tag]@sha256:...` reference on that
+configured writable registry. Generation rejects a foreign registry, mutable
+reference, missing image or missing contract before workspace creation. The
+intentional missing-image scenario uses the same configured registry authority.
+The seed reference is operator input; generation alone does not prove image
+availability, BuildKit publication, CRI trust, or node reachability.
+
+The opt-in Kubernetes fixture check verifies the selected manifest bytes with
+the original container-build manifest verifier before requesting a lease. It
+uses the configured credentials, bounded response size and deadline, and does
+not discover an arbitrary image via `_catalog` or tags. For a private CA, start
+Node with `NODE_EXTRA_CA_CERTS` pointing to the contract's `caFile`. The separate
+HTTP live check requires an explicit `KUBECLAW_HTTP_LIVE_ORIGIN` for its actual
+in-cluster service and the same explicit seed image; it supplies no implicit
+anonymous registry or deployment image.

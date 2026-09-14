@@ -1,0 +1,3 @@
+$ bash -n scripts/deploy.sh
+
+exit_code=0

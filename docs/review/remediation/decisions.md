@@ -86,3 +86,85 @@ Stand: 2026-09-09. Vom Auftraggeber in der Planungssitzung ausdrücklich bestät
 ## Noch benötigte Umgebungsdaten, keine neuen stillen Produktentscheidungen
 
 Die Pipelinevorgaben reichen für den Behebungsplan. Konkrete Hostkapazität/Paperless-Reserve, externe Tailnetregeln, unabhängiger Recoveryzugang, Backupziel und akzeptierte Wiederherstellungszeiten sowie verfügbare Clawdeck-Schnittstelle sind vor den jeweiligen Betriebsnachweisen zu erheben. Keine neue VM, kostenpflichtige Ressource, Backupgarantie oder externe Zugriffsregel wird aus diesem Dokument als bereits genehmigt/vorhanden abgeleitet. Technische Vorschläge hierfür gehören mit Begründung in WP09/WP12/WP13.
+
+## D12 — Lokaler Abschluss und separate Live-Abnahme
+
+Am2026-09-12 vom Auftraggeber ausdrücklich bestätigt: Wenn Code vollständig
+korrigiert und ausreichend lokal getestet ist, gilt das Finding als **lokal
+verifiziert und für diesen Behebungsauftrag abgeschlossen**. Die Live-Tests
+führt der Auftraggeber am Ende nach dem Open-Sourcing aus; GitHub-Actions-Gates
+bleiben dafür erhalten. Lokale Nachweise und ausstehende Live-Nachweise werden
+getrennt geführt. Fehlende Implementierung oder unzureichende lokale Abdeckung
+bleiben offen. Nicht ausgeführte Tests werden nicht als bestanden bezeichnet.
+
+Diese Entscheidung ersetzt frühere Anforderungen, bereits für den lokalen
+Findingabschluss sämtliche Live-/Cluster-/Empfängerprüfungen auszuführen. Sie
+ändert weder Runtime-Sicherheitsgates noch D02-Produktabnahme und autorisiert
+keine Deployments, Nachrichten oder Umgehung einer gesperrten Aktion. Umsetzung
+und [Einzelbewertung](implementation/pr6-local-acceptance.md) bleiben in PR #6;
+keine zusätzlichen Branches.
+
+## D13 — Explizite Tasklimits und großzügige Reserve
+
+Am 2026-09-12 vom Auftraggeber nach Abwägung ausdrücklich bestätigt:
+
+- Der neue native Worker-Ressourcenpfad begrenzt Linux-Tasks, also alle Threads
+  einschließlich des Hauptthreads jedes Prozesses. Prozesse werden nicht noch
+  einmal zusätzlich zu ihren Threads gezählt.
+- Die Einheit wird im Ressourcenvertrag und in Profilen ausdrücklich gebunden.
+  Bestehende Prozessbudgets und historische Receipts werden nicht stillschweigend
+  als Taskbudgets umgedeutet; die Migration muss versioniert beziehungsweise
+  eindeutig diskriminiert sein und alte Nachweise lesbar erhalten.
+- Limits mit großzügiger Reserve anhand tatsächlicher Worker-Arbeit wählen,
+  nicht knapp am Normalverbrauch und nicht durch eine feste Umrechnung alter
+  Prozesszahlen. Fehlende Messungen erlauben keine Behauptung einer bereits
+  erfolgten Kalibrierung. CPU, Speicher und Parallelität bleiben separat begrenzt.
+- Die Prüfung und vollständige Zentralisierung aller Betreiber-Einstellungen
+  über die vorhandene `swarm.config.json` ist ein eigener Roadmap-Schritt nach
+  den vier verbleibenden Findings in PR #6. Keine zweite Betreiberdatei einführen.
+
+Dies ist die freigegebene Zielentscheidung, noch kein implementierter oder
+verifizierter Ressourcenpfad. D09 und D12 bleiben unverändert; keine Deployment-
+oder Privilegienänderung ist damit autorisiert.
+
+## D14 — Eigene dauerhafte Fixture-Lebensdauer in Buster
+
+Der Auftraggeber hat den Vorschlag ausdrücklich bestätigt: Retained Fixtures
+erhalten eine eigene dauerhafte Lebensdauer in Buster mit großzügigem separatem
+Ressourcenbudget und einem Abschlussbeleg nach dem Cleanup. Bereitschaft nach
+dem Setup ist kein Nachweis abgeschlossener Bereinigung. Buster führt
+Abhängigkeiten, Bereitschaft und Fixture-Abschluss; Worker Core stellt neutrale
+Prozessbesitz-, Messungs- und Recoverymechanismen bereit. Prism behält seine
+normale Attempt-Lebensdauer. Die bereits freigegebene Core/Buster-Aufteilung und
+Task-Einheit müssen nicht erneut bestätigt werden.
+
+Die physische Ressourcenbindung bleibt während der Fixture-Lebensdauer erhalten;
+ein Prozesswechsel zwischen Cgroups darf nicht als Übertragung bereits
+angefallener Speicherbelastung behauptet werden. Historische Setup-Receipts und
+Budgets bleiben unverändert lesbar; neue Lebensdauerbelege sind explizit
+versioniert und gebunden.
+
+## D15 — Vollständiger verbleibender 23er-Umfang
+
+Der Auftrag umfasst jetzt alle 23 noch nicht verifizierten Findings der
+ursprünglichen 154: die vier laufenden Implementierungen und die 19 bislang
+offenen Infrastrukturfindings. Arbeit weiter direkt in PR #6. Vollständige
+Implementierung und echte ausreichende lokale Verifikation sind erforderlich;
+Live-Gates bleiben vorbereitet für die abschließende Ausführung durch den
+Auftraggeber. Kein Live-Nachweis wird aus Konfiguration oder lokalen Ersatzdaten
+abgeleitet. Die gewünschte Mindestarbeitsdauer von acht Stunden ist kein Beleg
+für Abschluss und wird nur bei tatsächlich geleisteter Zeit behauptet.
+
+## D16 — Feste Host-Reservierung für native Worker
+
+Der Auftraggeber hat Variante A aus `implementation/pr6-node-accounting-decision.md`
+ausdrücklich bestätigt: hostverwaltete Rollenbereiche mit festen, tatsächlich
+schedulerwirksamen Kapazitätsreservierungen. Die Umsetzung betrifft Buster und
+Prism. Gesamtlimits und vollständige Admission-Reservierungen verhindern, dass
+Parallelität großzügige Einzelbudgets unkontrolliert vervielfacht. Kubernetes darf
+diese Hostkapazität nicht nochmals an Pods vergeben. Andere Hostdienste behalten
+eine getrennte Reserve. Konkrete verfügbare Kapazität wird geprüft, nicht erfunden.
+
+D13/D14 bleiben unverändert. Die Entscheidung autorisiert die Implementierung in
+PR #6, keinen Hosteingriff, Deployment oder Kauf zusätzlicher Ressourcen. Die
+Node-/Runtime-Anbindung muss fehlende Voraussetzungen vor Aktivierung abweisen.

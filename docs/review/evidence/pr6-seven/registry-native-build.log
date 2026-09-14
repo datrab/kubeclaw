@@ -1,0 +1,55 @@
+go: downloading github.com/docker/distribution v2.8.3+incompatible
+go: finding module for package github.com/yvasiyarov/gorelic
+go: finding module for package github.com/Shopify/logrus-bugsnag
+go: finding module for package github.com/sirupsen/logrus
+go: finding module for package github.com/docker/libtrust
+go: finding module for package github.com/bshuster-repo/logrus-logstash-hook
+go: finding module for package github.com/spf13/cobra
+go: finding module for package github.com/docker/go-metrics
+go: finding module for package github.com/bugsnag/bugsnag-go
+go: finding module for package github.com/gorilla/handlers
+go: downloading github.com/yvasiyarov/gorelic v0.0.7
+go: downloading github.com/gorilla/handlers v1.5.2
+go: downloading github.com/bshuster-repo/logrus-logstash-hook v1.1.0
+go: downloading github.com/spf13/cobra v1.10.2
+go: downloading github.com/Shopify/logrus-bugsnag v0.0.0-20250605201603-d55aa3c8353b
+go: finding module for package rsc.io/letsencrypt
+go: finding module for package golang.org/x/crypto/bcrypt
+go: finding module for package github.com/distribution/reference
+go: finding module for package github.com/opencontainers/go-digest
+go: downloading github.com/docker/libtrust v0.0.0-20160708172513-aabc10ec26b7
+go: downloading github.com/docker/go-metrics v0.1.0
+go: downloading github.com/sirupsen/logrus v1.10.2
+go: finding module for package github.com/Azure/azure-sdk-for-go/storage
+go: downloading github.com/bugsnag/bugsnag-go v2.6.4+incompatible
+go: finding module for package github.com/aws/aws-sdk-go/service/cloudfront/sign
+go: finding module for package github.com/aws/aws-sdk-go/aws
+go: finding module for package github.com/aws/aws-sdk-go/aws/awserr
+go: finding module for package github.com/aws/aws-sdk-go/aws/corehandlers
+go: downloading github.com/distribution/reference v0.6.0
+go: downloading github.com/opencontainers/go-digest v1.0.0
+go: downloading rsc.io/letsencrypt v0.0.3
+go: downloading golang.org/x/crypto v0.57.0
+go: finding module for package github.com/aws/aws-sdk-go/aws/credentials
+go: finding module for package github.com/aws/aws-sdk-go/aws/credentials/ec2rolecreds
+go: downloading github.com/aws/aws-sdk-go v1.55.8
+go: finding module for package github.com/aws/aws-sdk-go/aws/ec2metadata
+go: finding module for package github.com/aws/aws-sdk-go/aws/endpoints
+go: downloading github.com/Azure/azure-sdk-for-go v68.0.0+incompatible
+go: finding module for package github.com/aws/aws-sdk-go/aws/request
+go: finding module for package github.com/aws/aws-sdk-go/aws/session
+go: finding module for package github.com/aws/aws-sdk-go/service/s3
+go: finding module for package github.com/mitchellh/mapstructure
+go: finding module for package github.com/ncw/swift
+go: finding module for package gopkg.in/yaml.v2
+go: finding module for package github.com/gorilla/mux
+go: finding module for package github.com/garyburd/redigo/redis
+go: finding module for package github.com/opencontainers/image-spec/specs-go/v1
+go: downloading github.com/mitchellh/mapstructure v1.5.0
+go: downloading github.com/gorilla/mux v1.8.1
+go: downloading github.com/ncw/swift v1.0.53
+go: downloading gopkg.in/yaml.v2 v2.4.0
+go: downloading github.com/garyburd/redigo v1.6.4
+go: downloading github.com/opencontainers/image-spec v1.1.1
+go: toolchain upgrade needed to resolve golang.org/x/crypto/bcrypt
+go: golang.org/x/crypto@v0.57.0 requires go >= 1.26.0 (running go 1.24.13)

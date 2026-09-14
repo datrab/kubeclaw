@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
+import { writeHeartbeat } from './lib/repository-review-supervisor-heartbeat.mjs';
 import { repositoryReviewRunRoot } from './lib/repository-review-run-root.mjs';
+import { atomicJson, optionalJson, processAlive, acquireLease, releaseLease } from './lib/repository-review-supervisor-state.mjs';
 
 const SAMPLE_INTERVAL_MS = 15_000;
 
@@ -31,65 +32,22 @@ function integer(value, label, maximum, minimum = 0) {
   return parsed;
 }
 
-function atomicJson(file, value) {
-  fs.mkdirSync(path.dirname(file), { recursive: true });
-  const temporary = `${file}.${process.pid}.tmp`;
-  fs.writeFileSync(temporary, `${JSON.stringify(value)}\n`, { mode: 0o600 });
-  fs.renameSync(temporary, file);
-}
-
-function optionalJson(file) {
-  try { return JSON.parse(fs.readFileSync(file, 'utf8')); }
-  catch (cause) {
-    if (cause.code === 'ENOENT') return undefined;
-    throw new Error(`REVIEW_SUPERVISOR_JSON_READ_FAILED:${file}`, { cause });
-  }
-}
-
-function appendJsonLine(file, value) {
-  fs.mkdirSync(path.dirname(file), { recursive: true });
-  fs.appendFileSync(file, `${JSON.stringify(value)}\n`, { mode: 0o600 });
-}
-
-function processAlive(pid) {
-  if (!Number.isSafeInteger(pid) || pid < 1) return false;
-  try { process.kill(pid, 0); return true; } catch (_error) { return false; }
-}
-
-function processCommand(pid) {
-  try { return fs.readFileSync(`/proc/${pid}/cmdline`, 'utf8').replaceAll('\0', ' '); }
-  catch (_error) { return ''; }
-}
-
 function isOwnedPipeline(pid, runId) {
-  const command = processCommand(pid);
-  return processAlive(pid) && command.includes('pipeline') && command.includes(runId);
-}
-
-function acquireLease(file, runId) {
-  const existing = optionalJson(file);
-  if (existing !== undefined && (existing?.schemaVersion !== 'repository-review-supervisor-lease.v1'
-    || typeof existing.instanceId !== 'string' || !existing.instanceId
-    || typeof existing.runId !== 'string' || !existing.runId
-    || !Number.isSafeInteger(existing.supervisorPid) || existing.supervisorPid < 1)) {
-    throw new Error(`REVIEW_SUPERVISOR_LEASE_INVALID:${file}`);
+  if (!processAlive(pid)) return false;
+  let command;
+  try { command = fs.readFileSync(`/proc/${pid}/cmdline`, 'utf8').replaceAll('\0', ' '); }
+  catch (cause) {
+    // The process can exit between the liveness check and the procfs read.
+    // Only confirmed absence permits recovery; an unreadable live PID is not
+    // permission to replace, adopt, or signal that process.
+    if (!processAlive(pid)) return false;
+    throw new Error(`REVIEW_SUPERVISOR_PROCESS_OWNERSHIP_UNCONFIRMED:${pid}`, { cause });
   }
-  if (existing && processAlive(existing.supervisorPid)) {
-    throw new Error(`REVIEW_SUPERVISOR_ALREADY_ACTIVE:${existing.supervisorPid}`);
+  if (!processAlive(pid)) return false;
+  if (!command.includes('pipeline') || !command.includes(runId)) {
+    throw new Error(`REVIEW_SUPERVISOR_PROCESS_OWNERSHIP_UNCONFIRMED:${pid}`);
   }
-  if (fs.existsSync(file)) fs.unlinkSync(file);
-  const instanceId = crypto.randomUUID();
-  fs.mkdirSync(path.dirname(file), { recursive: true });
-  const descriptor = fs.openSync(file, 'wx', 0o600);
-  fs.writeFileSync(descriptor, `${JSON.stringify({ schemaVersion: 'repository-review-supervisor-lease.v1',
-    instanceId, runId, supervisorPid: process.pid, acquiredAt: new Date().toISOString() })}\n`);
-  fs.closeSync(descriptor);
-  return { file, instanceId };
-}
-
-function releaseLease(lease) {
-  const current = optionalJson(lease.file);
-  if (current?.instanceId === lease.instanceId) fs.unlinkSync(lease.file);
+  return true;
 }
 
 function reviewStatus(script, cwd, platform, runId, heartbeat, resourceLog) {
@@ -120,68 +78,6 @@ function pipelineArguments(mode, platform, graph, runId) {
     : ['run', 'pipeline', '--', '--platform', platform, '--pipeline', graph, '--run-id', runId];
 }
 
-function optionalResource(file, parse, observationErrors) {
-  try {
-    return parse(fs.readFileSync(file, 'utf8'));
-  } catch (error) {
-    observationErrors.push({ file, error: error.code ?? error.name });
-    return undefined;
-  }
-}
-
-function readNumber(file, observationErrors) {
-  return optionalResource(file, text => {
-    const value = text.trim();
-    return value === 'max' ? value : Number(value);
-  }, observationErrors);
-}
-
-function readKeyValues(file, observationErrors) {
-  return optionalResource(file, text => Object.fromEntries(text.trim().split('\n').filter(Boolean)
-    .map((line) => line.trim().split(/\s+/u)).map(([key, value]) => [key, Number(value)])), observationErrors);
-}
-
-function processRssBytes(pid, observationErrors) {
-  return optionalResource(`/proc/${pid}/status`, text => {
-    const match = text.match(/^VmRSS:\s+(\d+)\s+kB$/mu);
-    return match ? Number(match[1]) * 1024 : undefined;
-  }, observationErrors);
-}
-
-async function gatewayHealth(gatewayUrl) {
-  try {
-    const response = await fetch(new URL('/healthz', gatewayUrl), { signal: AbortSignal.timeout(2_000) });
-    return { healthy: response.ok, status: response.status };
-  } catch (error) {
-    return { healthy: false, error: error instanceof Error ? error.name : 'unknown' };
-  }
-}
-
-async function resourceSample(pipelinePid, gatewayUrl) {
-  const observationErrors = [];
-  return {
-    schemaVersion: 'repository-review-resource-sample.v1',
-    observedAt: new Date().toISOString(), pipelinePid,
-    pipelineAlive: processAlive(pipelinePid), pipelineRssBytes: processRssBytes(pipelinePid, observationErrors),
-    memoryCurrentBytes: readNumber('/sys/fs/cgroup/memory.current', observationErrors),
-    memoryPeakBytes: readNumber('/sys/fs/cgroup/memory.peak', observationErrors),
-    memoryEvents: readKeyValues('/sys/fs/cgroup/memory.events', observationErrors),
-    cpu: readKeyValues('/sys/fs/cgroup/cpu.stat', observationErrors),
-    observationErrors,
-    gateway: await gatewayHealth(gatewayUrl),
-  };
-}
-
-async function writeHeartbeat(params) {
-  const sample = await resourceSample(params.pipelinePid, params.gatewayUrl);
-  appendJsonLine(params.resourceLog, sample);
-  atomicJson(params.heartbeat, { schemaVersion: 'repository-review-supervisor-heartbeat.v1',
-    updatedAt: sample.observedAt, supervisorPid: process.pid, pipelinePid: params.pipelinePid,
-    processAlive: sample.pipelineAlive && !params.stopping, attempt: params.attempt,
-    mode: params.mode, gateway: sample.gateway });
-  return sample;
-}
-
 function runPreflight(args, cwd) {
   const concurrency = args.get('preflight-concurrency');
   const model = args.get('preflight-model');
@@ -210,7 +106,7 @@ async function runAttempt(params, stopSignal) {
   const childExit = new Promise((resolve) => {
     child.once('exit', (code, signal) => resolve({ code, signal }));
     child.once('error', error => {
-      childError = error;
+      childError ??= error;
       // A post-launch signal error is not evidence that the child exited.
       if (child.pid === undefined) resolve({ code: null, signal: null });
     });
@@ -218,28 +114,58 @@ async function runAttempt(params, stopSignal) {
   let stopping = false;
   const stop = () => {
     stopping = true;
-    if (child.exitCode === null) {
-      try { process.kill(-child.pid, 'SIGTERM'); } catch (_error) { child.kill('SIGTERM'); }
+    if (child.pid !== undefined && child.exitCode === null && child.signalCode === null) {
+      try { process.kill(-child.pid, 'SIGTERM'); }
+      catch (_error) {
+        try { child.kill('SIGTERM'); } catch (error) { childError ??= error; }
+      }
     }
+  };
+  let heartbeatError;
+  let pendingHeartbeat = Promise.resolve();
+  const heartbeat = (isStopping) => {
+    pendingHeartbeat = pendingHeartbeat.then(async () => {
+      try { return await writeHeartbeat({ ...params, pipelinePid: child.pid, stopping: isStopping }); }
+      catch (error) { heartbeatError ??= error; stop(); return undefined; }
+    });
+    return pendingHeartbeat;
   };
   stopSignal.addEventListener('abort', stop, { once: true });
   if (stopSignal.aborted) stop();
-  await writeHeartbeat({ ...params, pipelinePid: child.pid, stopping });
+  await heartbeat(stopping);
   const timer = setInterval(() => {
-    void writeHeartbeat({ ...params, pipelinePid: child.pid, stopping });
+    void heartbeat(stopping);
   }, SAMPLE_INTERVAL_MS);
   const exit = await childExit;
-  clearInterval(timer); stopSignal.removeEventListener('abort', stop); fs.closeSync(descriptor);
-  const sample = await writeHeartbeat({ ...params, pipelinePid: child.pid, stopping: true });
-  atomicJson(path.join(params.diagnosticDir, `attempt-${params.attempt}-exit.json`), {
-    schemaVersion: 'repository-review-attempt-diagnostic.v1', capturedAt: new Date().toISOString(),
-    runId: params.runId, attempt: params.attempt, mode: params.mode, exit, stopping, sample,
-    ...(childError ? { [child.pid === undefined ? 'launchError' : 'processError']:
-      { code: childError.code, name: childError.name } } : {}),
-  });
+  clearInterval(timer);
+  // No asynchronous sample may overwrite the final stopped heartbeat. Keep the
+  // lease and signal listener until both the actual child exit and queued I/O
+  // have settled, including when a heartbeat write itself failed.
+  await pendingHeartbeat;
+  stopSignal.removeEventListener('abort', stop); fs.closeSync(descriptor);
+  const sample = await heartbeat(true);
+  writeAttemptDiagnostic(params, { exit, stopping, sample, childError, heartbeatError, pipelinePid: child.pid });
+  if (childError && heartbeatError) {
+    throw new AggregateError([childError, heartbeatError], 'REVIEW_SUPERVISOR_PROCESS_AND_HEARTBEAT_FAILED');
+  }
   if (childError) throw new Error(child.pid === undefined
     ? 'REVIEW_SUPERVISOR_LAUNCH_FAILED' : 'REVIEW_SUPERVISOR_PROCESS_FAILED', { cause: childError });
+  if (heartbeatError) throw new Error('REVIEW_SUPERVISOR_HEARTBEAT_FAILED', { cause: heartbeatError });
   return { exit, stopping };
+}
+
+function writeAttemptDiagnostic(params, { exit, stopping, sample, childError, heartbeatError, pipelinePid }) {
+  const diagnostic = {
+    schemaVersion: 'repository-review-attempt-diagnostic.v1', capturedAt: new Date().toISOString(),
+    runId: params.runId, attempt: params.attempt, mode: params.mode, exit, stopping, sample,
+    ...(heartbeatError ? { heartbeatError: { code: heartbeatError.code, name: heartbeatError.name } } : {}),
+    ...(childError ? { [pipelinePid === undefined ? 'launchError' : 'processError']:
+      { code: childError.code, name: childError.name } } : {}),
+  };
+  try { atomicJson(path.join(params.diagnosticDir, `attempt-${params.attempt}-exit.json`), diagnostic); }
+  catch (error) {
+    throw new AggregateError([heartbeatError, childError, error].filter(Boolean), 'REVIEW_SUPERVISOR_DIAGNOSTIC_FAILED');
+  }
 }
 
 async function observeExistingPipeline(params, pipelinePid, stopSignal) {

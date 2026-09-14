@@ -91,14 +91,24 @@ const pluginDirectories = [
 
 const workspaces = {
   '.': {
+    // The live Kubernetes fixture invokes this host executable via execFileSync;
+    // it is not a JavaScript module import.
+    ignoreUnresolved: ['^/usr/local/bin/kubectl$'],
     entry: [
-      'scripts/**/*.mjs',
+      'scripts/**/*.{mjs,cjs}',
+      'charts/kubeclaw/files/config/eslint*.mjs',
       'skills/nova/pipeline.ts',
       'skills/nova/project_setup/**/*.ts',
       'tests/**/*.{mjs,mts,ts}',
+      ...childDirectories('tests/fixtures/plugin-system-v2').flatMap(directory => {
+        const manifest = path.posix.join(directory, 'plugin.json');
+        return fs.existsSync(path.join(repoRoot, manifest))
+          ? pluginEntrypoints(readJson(manifest)).map(entry => path.posix.join(directory, entry)) : [];
+      }),
     ],
     project: [
       'scripts/**/*.{js,mjs,cjs}',
+      'charts/kubeclaw/files/config/*.mjs',
       'skills/nova/pipeline.ts',
       'skills/nova/project_setup/**/*.{ts,mjs}',
       'tests/**/*.{js,mjs,mts,cjs,ts}',
@@ -107,6 +117,15 @@ const workspaces = {
   'contracts/agent-observability/v1': {
     entry: ['src/index.ts'],
     project: ['src/**/*.ts'],
+  },
+  'contracts/pipeline-test-gate/v1': {
+    entry: [...packageEntrypoints(readJson('contracts/pipeline-test-gate/v1/package.json')), 'tests/**/*.ts'],
+    project: ['src/**/*.ts', 'tests/**/*.ts'],
+  },
+  'contracts/prism/v1': {
+    entry: [...packageEntrypoints(readJson('contracts/prism/v1/package.json')),
+      'src/validators.generated.d.mts', 'tests/**/*.mts'],
+    project: ['src/**/*.{ts,mts,mjs}', 'tests/**/*.mts'],
   },
   'skills/common/plugin-runtime/foundation': {
     entry: ['isolation/child.mjs'],
@@ -128,6 +147,23 @@ const workspaces = {
     entry: ['src/index.ts', 'src/testing/index.ts'],
     project: ['src/**/*.ts'],
   },
+  'skills/prism': {
+    entry: [...packageEntrypoints(readJson('skills/prism/package.json')),
+      'server/{control,worker,studio}.ts', 'server/agent-bridge.mjs',
+      'tests/**/*.{ts,mts,mjs}', 'integration/*.mts', 'studio/*.test.tsx', 'studio/main.tsx'],
+    project: ['**/*.{ts,tsx,mts,mjs}'],
+  },
+  'tools/ops-mcp': {
+    entry: ['src/server.mjs', 'test/*.test.mjs'],
+    project: ['src/**/*.mjs', 'test/**/*.mjs'],
+  },
+  'spikes/prism/puck-adapter': {
+    entry: ['tests/*.test.ts'],
+    project: ['**/*.{ts,tsx}'],
+    // Puck's transitive @tiptap/react and Radix packages require these peers.
+    // This source-only adapter does not import their DOM entrypoints directly.
+    ignoreDependencies: ['react-dom', '@types/react-dom'],
+  },
 };
 
 for (const directory of pluginDirectories) workspaces[directory] = pluginWorkspace(directory);
@@ -144,6 +180,9 @@ const config = {
     'cc',
     'eslint',
     'gofmt',
+    'go',
+    'openssl',
+    'mkfifo',
     'helm',
     'kubeconform',
     'kubectl',
@@ -155,11 +194,6 @@ const config = {
     '**/generated/**',
     '**/node_modules/**',
     'Projects/**',
-    'charts/kubeclaw/files/config/eslint.config.mjs',
-    'charts/kubeclaw/files/config/eslint-type-evidence-config.mjs',
-    'charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs',
-    'charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs',
-    'charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs',
     'contracts/telemetry/v1/{bundle-types,telemetry-types}.ts',
   ],
   ignoreDependencies: [

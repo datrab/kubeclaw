@@ -6,7 +6,7 @@ import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 
 /** Original engine plugins/adapters and native Git/HTTP/artifact stores. */
-export async function sourceApprovalFixture(root, clean = false) {
+export async function sourceApprovalFixture(root, clean = false, findingSeverity = 'warn') {
   const repository = path.join(root, 'repository'); const workspaces = path.join(root, 'workspaces');
   fs.mkdirSync(repository); fs.mkdirSync(workspaces);
   const git = (...args) => execFileSync('git', ['-C', repository, ...args], { encoding: 'utf8' }).trim();
@@ -24,8 +24,8 @@ export async function sourceApprovalFixture(root, clean = false) {
         if (request.url === '/operator') { messages.push(body); response.end(JSON.stringify({ id: `message:${messages.length}` })); return; }
         dispatches.push(body);
         if (body.protocol === 'kubeclaw.architecture-validation.v2') {
-          response.end(JSON.stringify({ result: { verdict: 'passed', summary: 'Reviewed immutable architecture and plan.',
-            checkedFiles: body.reviewSubject?.paths ?? ['architecture.md', 'plan.json'], findings: clean ? [] : [{ id: 'api-owner', severity: 'warn', scope: 'integration_boundary', paths: ['architecture.md'], explanation: 'Confirm ownership.', remediation: 'Operator confirms.' }] } })); return;
+          response.end(JSON.stringify({ result: { verdict: findingSeverity === 'blocking' ? 'blocked' : 'passed', summary: 'Reviewed immutable architecture and plan.',
+            checkedFiles: body.reviewSubject?.paths ?? ['architecture.md', 'plan.json'], findings: clean ? [] : [{ id: 'api-owner', severity: findingSeverity, scope: 'integration_boundary', paths: ['architecture.md'], explanation: 'Confirm ownership.', remediation: 'Operator confirms.' }] } })); return;
         }
         const workspace = body.workspaceReference.workspacePath;
         const content = 'export const answer = 42;\n'; fs.writeFileSync(path.join(workspace, `${body.identity.moduleId}.mjs`), content);

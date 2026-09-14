@@ -10,6 +10,8 @@
 #   ./deploy.sh infra              Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM
 #   ./deploy.sh tailscale          Deploy Tailscale Kubernetes Operator
 #   ./deploy.sh buildkit-preflight Verify rootless BuildKit support on a cluster node
+#   ./deploy.sh native-node-render OUT [POLICY] Generate a reviewable host-pool setup bundle
+#   ./deploy.sh native-node-preflight [POLICY] Read-only native capacity check on the selected host
 #   ./deploy.sh nova-buildkit-preflight Build and verify a real image through Nova's v2 capability graph
 #   ./deploy.sh nova-kubernetes-fixture-preflight Verify the real Kubernetes fixture lifecycle through Nova and Buster
 #   ./deploy.sh nova-http-preflight Verify an in-cluster HTTP service through Nova and Buster
@@ -54,6 +56,9 @@
 #   KUBECLAW_RUN_SECRET_SETUP      auto|true|false for setup/all (default: auto)
 #   KUBECLAW_WORKSPACE_PROMPT      auto|true|false (default: auto)
 #   KUBECLAW_DEPLOY_POSTGRESQL    true|false (default: true)
+#   POSTGRESQL_RELEASE / POSTGRESQL_VALUES_FILE  Selected database release and values
+#   QDRANT_RELEASE / QDRANT_VALUES_FILE          Selected vector database release and values
+#   REDIS_RELEASE / REDIS_VALUES_FILE  Selected Redis release and values (migration keeps the old release intact)
 #   KUBECLAW_DEPLOY_QDRANT        true|false (default: true)
 #   KUBECLAW_DEPLOY_LITELLM       true|false (default: true)
 #   LITELLM_NODE_PORT             LiteLLM Service NodePort (default: 30050)
@@ -69,13 +74,18 @@ REPO_DIR="$(dirname "$SCRIPT_DIR")"
 CHART_DIR="$REPO_DIR/charts/kubeclaw"
 VALUES_DIR="$REPO_DIR/my-values"
 INFRA_DIR="$VALUES_DIR/infra"
+POSTGRESQL_RELEASE="${POSTGRESQL_RELEASE:-postgresql}"
+QDRANT_RELEASE="${QDRANT_RELEASE:-qdrant}"
+QDRANT_VALUES_FILE="${QDRANT_VALUES_FILE:-$REPO_DIR/my-values/infra/qdrant-values.yaml}"
+POSTGRESQL_VALUES_FILE="${POSTGRESQL_VALUES_FILE:-$INFRA_DIR/postgresql-values.yaml}"
+REDIS_RELEASE="${REDIS_RELEASE:-redis}"
+REDIS_VALUES_FILE="${REDIS_VALUES_FILE:-$INFRA_DIR/redis-values.yaml}"
 PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE="/etc/kubeclaw/production-receipt-authority.pub"
 
 NAMESPACE_WAS_SET="${NAMESPACE+x}"
 NAMESPACE="${NAMESPACE:-kubeclaw}"
 TAILSCALE_OPERATOR_NAMESPACE="${TAILSCALE_OPERATOR_NAMESPACE:-tailscale}"
 TAILSCALE_OPERATOR_RELEASE="${TAILSCALE_OPERATOR_RELEASE:-tailscale-operator}"
-TAILSCALE_HELM_REPO="${TAILSCALE_HELM_REPO:-https://pkgs.tailscale.com/helmcharts}"
 TAILSCALE_OAUTH_SECRET_NAME="${TAILSCALE_OAUTH_SECRET_NAME:-operator-oauth}"
 TAILSCALE_VALUES_FILE="${TAILSCALE_VALUES_FILE:-$INFRA_DIR/tailscale-operator-values.yaml}"
 KUBECLAW_WORKSPACE_PROMPT="${KUBECLAW_WORKSPACE_PROMPT:-auto}"
@@ -159,6 +169,7 @@ require_helm_release_idle() {
   local namespace="$2"
   local output status
 
+  node "$SCRIPT_DIR/gitops-owner.mjs" "$namespace" "$release" || return 1
   if ! output="$(helm status "$release" -n "$namespace" 2>&1)"; then
     if is_not_found_error "$output"; then
       return 0
@@ -890,8 +901,7 @@ cmd_setup() {
   header "Step 2: Helm Repos"
 
   add_helm_repo_once bitnami https://charts.bitnami.com/bitnami
-  add_helm_repo_once qdrant https://qdrant.github.io/qdrant-helm
-  add_helm_repo_once tailscale "$TAILSCALE_HELM_REPO"
+  # Tailscale and Qdrant use checked archives from versions.json.
   add_helm_repo_once spiffe "$SPIFFE_HELM_REPO"
   helm repo update >/dev/null
   log "Helm repos ready"
@@ -1014,6 +1024,17 @@ deploy_tailscale_operator() {
     return 0
   fi
 
+  if [[ -n ${TAILSCALE_HELM_REPO:-} ]]; then
+    err "TAILSCALE_HELM_REPO is superseded by the reviewed infrastructureCharts lock in versions.json"
+    return 1
+  fi
+  if [[ ! -f $TAILSCALE_VALUES_FILE ]]; then
+    err "Tailscale values file not found: $TAILSCALE_VALUES_FILE"
+    return 1
+  fi
+  local tailscale_chart
+  tailscale_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" tailscale "$TAILSCALE_OPERATOR_RELEASE" "$TAILSCALE_OPERATOR_NAMESPACE" "$TAILSCALE_VALUES_FILE")"
+
   local secret_status=0
   if ensure_tailscale_oauth_secret "$normalized_mode"; then
     secret_status=0
@@ -1027,15 +1048,8 @@ deploy_tailscale_operator() {
     return "$secret_status"
   fi
 
-  if [[ ! -f $TAILSCALE_VALUES_FILE ]]; then
-    err "Tailscale values file not found: $TAILSCALE_VALUES_FILE"
-    return 1
-  fi
-
-  add_helm_repo_once tailscale "$TAILSCALE_HELM_REPO"
-  helm repo update >/dev/null
-
-  helm upgrade --install "$TAILSCALE_OPERATOR_RELEASE" tailscale/tailscale-operator \
+  helm upgrade --install "$TAILSCALE_OPERATOR_RELEASE" "$tailscale_chart" \
+    --post-renderer "$REPO_DIR/scripts/infrastructure-image-renderer.mjs" --post-renderer-args tailscale \
     --namespace "$TAILSCALE_OPERATOR_NAMESPACE" \
     --create-namespace \
     --values "$TAILSCALE_VALUES_FILE" \
@@ -1091,6 +1105,23 @@ ensure_tailscale_oauth_secret() {
 }
 
 cmd_infra() {
+  local qdrant_chart="" redis_chart postgresql_chart="" postgresql_recovery_manifests="" stateful_network_policies
+  redis_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" redis "$REDIS_RELEASE" "$NAMESPACE" "$REDIS_VALUES_FILE")"
+  node "$REPO_DIR/scripts/stateful-release-preflight.mjs" redis "$NAMESPACE" "$redis_chart" "$REDIS_VALUES_FILE" "$REDIS_RELEASE"
+  if component_enabled "$KUBECLAW_DEPLOY_POSTGRESQL"; then
+    postgresql_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" postgresql "$POSTGRESQL_RELEASE" "$NAMESPACE" "$POSTGRESQL_VALUES_FILE")"
+    node "$REPO_DIR/scripts/stateful-release-preflight.mjs" postgresql "$NAMESPACE" "$postgresql_chart" "$POSTGRESQL_VALUES_FILE" "$POSTGRESQL_RELEASE"
+    postgresql_recovery_manifests="$(node "$REPO_DIR/scripts/render-postgresql-recovery.mjs" --preflight "$NAMESPACE" \
+      "$INFRA_DIR/postgresql-recovery.yaml" "$POSTGRESQL_VALUES_FILE" "$INFRA_DIR/litellm-deployment.yaml" "$POSTGRESQL_RELEASE")"
+  fi
+  if component_enabled "$KUBECLAW_DEPLOY_QDRANT"; then
+    qdrant_chart="$(node "$REPO_DIR/scripts/infrastructure-release.mjs" qdrant "$QDRANT_RELEASE" "$NAMESPACE" "$QDRANT_VALUES_FILE")"
+    node "$REPO_DIR/scripts/qdrant-secrets.mjs" check "$NAMESPACE" \
+      "$(node "$REPO_DIR/scripts/stateful-database-service.mjs" qdrant "$QDRANT_RELEASE" "$NAMESPACE" "$QDRANT_VALUES_FILE")"
+    node "$REPO_DIR/scripts/qdrant-storage-preflight.mjs" "$NAMESPACE" "$qdrant_chart" "$QDRANT_VALUES_FILE" "$QDRANT_RELEASE"
+  fi
+  stateful_network_policies="$(node "$REPO_DIR/scripts/render-stateful-network-policies.mjs" "$INFRA_DIR/network-policies.yaml" "$NAMESPACE" \
+    "$REDIS_RELEASE" "$REDIS_VALUES_FILE" "$POSTGRESQL_RELEASE" "$POSTGRESQL_VALUES_FILE" "$QDRANT_RELEASE" "$QDRANT_VALUES_FILE")"
   if component_enabled "$KUBECLAW_DEPLOY_SPIRE"; then
     header "Infrastructure: SPIFFE/SPIRE workload identity"
     if [[ ! -f $SPIRE_VALUES_FILE ]]; then
@@ -1122,28 +1153,33 @@ cmd_infra() {
   fi
 
   header "Infrastructure: Redis"
-  helm upgrade --install redis bitnami/redis \
+  helm upgrade --install "$REDIS_RELEASE" "$redis_chart" \
+    --post-renderer "$REPO_DIR/scripts/infrastructure-image-renderer.mjs" --post-renderer-args redis \
     --namespace "$NAMESPACE" \
-    --values "$INFRA_DIR/redis-values.yaml" \
+    --values "$REDIS_VALUES_FILE" \
     --wait --timeout 120s
   log "Redis deployed"
 
   if component_enabled "$KUBECLAW_DEPLOY_POSTGRESQL"; then
     header "Infrastructure: PostgreSQL"
-    helm upgrade --install postgresql bitnami/postgresql \
+    helm upgrade --install "$POSTGRESQL_RELEASE" "$postgresql_chart" \
+      --post-renderer "$REPO_DIR/scripts/infrastructure-image-renderer.mjs" --post-renderer-args postgresql \
       --namespace "$NAMESPACE" \
-      --values "$INFRA_DIR/postgresql-values.yaml" \
+      --values "$POSTGRESQL_VALUES_FILE" \
       --wait --timeout 120s
     log "PostgreSQL deployed"
+    printf '%s\n' "$postgresql_recovery_manifests" | kubectl apply -n "$NAMESPACE" -f -
+    log "PostgreSQL scheduled backups and RPO checks configured"
   else
     warn "Skipping PostgreSQL by KUBECLAW_DEPLOY_POSTGRESQL=$KUBECLAW_DEPLOY_POSTGRESQL"
   fi
 
   if component_enabled "$KUBECLAW_DEPLOY_QDRANT"; then
     header "Infrastructure: Qdrant"
-    helm upgrade --install qdrant qdrant/qdrant \
+    helm upgrade --install "$QDRANT_RELEASE" "$qdrant_chart" \
+      --post-renderer "$REPO_DIR/scripts/infrastructure-image-renderer.mjs" --post-renderer-args qdrant \
       --namespace "$NAMESPACE" \
-      --values "$INFRA_DIR/qdrant-values.yaml" \
+      --values "$QDRANT_VALUES_FILE" \
       --wait --timeout 120s
     log "Qdrant deployed"
   else
@@ -1182,7 +1218,24 @@ cmd_infra() {
   esac
   case "${KUBECLAW_DEPLOY_LAB_REGISTRY:-false}" in
     true)
-      kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/registry-local.yaml"
+      local registry_existing registry_pvc registry_manifests
+      : "${KUBECLAW_LAB_REGISTRY_STORAGE_CONFIG:?Set to an explicit registry storage JSON config file}"
+      registry_existing="$(mktemp)" || return 1
+      registry_pvc="$(mktemp)" || { rm -f -- "$registry_existing"; return 1; }
+      if ! kubectl get pvc registry-local-data -n "$NAMESPACE" --ignore-not-found -o json > "$registry_pvc"; then
+        rm -f -- "$registry_existing" "$registry_pvc"
+        return 1
+      fi
+      if ! kubectl get deployment registry-local -n "$NAMESPACE" --ignore-not-found -o json > "$registry_existing"; then
+        rm -f -- "$registry_existing" "$registry_pvc"
+        return 1
+      fi
+      registry_manifests="$(node "$SCRIPT_DIR/render-registry-local.mjs" "$KUBECLAW_LAB_REGISTRY_STORAGE_CONFIG" serve "$registry_existing" "$registry_pvc")" || {
+        rm -f -- "$registry_existing" "$registry_pvc"
+        return 1
+      }
+      rm -f -- "$registry_existing" "$registry_pvc"
+      printf '%s\n' "$registry_manifests" | kubectl apply -n "$NAMESPACE" -f -
       wait_for_rollout_required "Registry Local" deployment/registry-local -n "$NAMESPACE" --timeout=60s
       ;;
     false) info "Anonymous HTTP lab registry not selected; use an explicitly configured registry." ;;
@@ -1192,7 +1245,7 @@ cmd_infra() {
   info "Buster namespace admission fence is owned by the broker Helm release (Kubernetes >=1.30)."
 
   header "Infrastructure: Network Policies"
-  kubectl apply -n "$NAMESPACE" -f "$INFRA_DIR/network-policies.yaml"
+  printf '%s\n' "$stateful_network_policies" | kubectl apply -n "$NAMESPACE" -f -
   log "Network policies applied"
 
   deploy_tailscale_operator
@@ -1656,7 +1709,8 @@ cmd_prism_secrets() {
 
 cmd_prism() {
   component_enabled "$KUBECLAW_DEPLOY_PRISM" || { info "Prism deployment is disabled"; return 0; }
-  require_command kubectl; require_command helm; prism_validate_values
+  require_command helm; prism_validate_values
+  if [[ ${KUBECLAW_DEPLOY_RENDER_ONLY:-0} != 1 ]]; then require_command kubectl; fi
   local prism_agent_image_repo prism_bundle_archive_url prism_bundle_expected_commit
   local prism_bundle_contract_version prism_bundle_auth_secret prism_bundle_auth_key
   local prism_bundle_override
@@ -1720,6 +1774,12 @@ cmd_prism() {
     return 1
   fi
   if [[ ${KUBECLAW_DEPLOY_RENDER_ONLY:-0} == 1 ]]; then rm -f "$prism_bundle_override"; return 0; fi
+  if ! node "$REPO_DIR/scripts/native-worker-deployment-preflight.mjs" \
+    "${NATIVE_WORKER_NODE_POLICY_FILE:-$INFRA_DIR/native-worker-pools.yaml}" "$PRISM_NAMESPACE" \
+    template "$PRISM_RELEASE" "$REPO_DIR/charts/prism" -n "$PRISM_NAMESPACE" "${overrides[@]}"; then
+    rm -f "$prism_bundle_override"
+    return 1
+  fi
   require_helm_release_idle "$PRISM_RELEASE" "$PRISM_NAMESPACE"
   require_helm_release_idle agent-prism "$PRISM_NAMESPACE"
   require_spiffe_csi_driver
@@ -1927,6 +1987,7 @@ EOF
 }
 
 cmd_teardown_prism() {
+  node "$SCRIPT_DIR/gitops-owner.mjs" "$PRISM_NAMESPACE" "*" || return 1
   helm uninstall agent-prism -n "$PRISM_NAMESPACE" --ignore-not-found
   helm uninstall "$PRISM_RELEASE" -n "$PRISM_NAMESPACE" --ignore-not-found
   log "Prism workloads removed. PVCs and Secrets remain in $PRISM_NAMESPACE."
@@ -2655,6 +2716,7 @@ cmd_buster_infra_smoke() {
 # ─── Teardown ────────────────────────────────────────────────────────────
 
 cmd_teardown_agents() {
+  node "$SCRIPT_DIR/gitops-owner.mjs" "$NAMESPACE" "*" || return 1
   warn "Removing KubeClaw agents from $NAMESPACE..."
   for role in nova buster; do
     uninstall_helm_release_if_present "agent-${role}"
@@ -2718,7 +2780,7 @@ delete_manifested_resource_if_present() {
 }
 
 remove_destructive_infra() {
-  for release in qdrant postgresql redis; do
+  for release in "$QDRANT_RELEASE" "$POSTGRESQL_RELEASE" "$REDIS_RELEASE"; do
     uninstall_helm_release_if_present "$release"
   done
 
@@ -2729,8 +2791,12 @@ remove_destructive_infra() {
   delete_manifested_resource_if_present deployment registry-mirror "$INFRA_DIR/registry-mirror.yaml" \
     "deployment,svc,pvc" "app=registry-mirror"
 
-  delete_manifested_resource_if_present deployment registry-local "$INFRA_DIR/registry-local.yaml" \
-    "deployment,svc" "app=registry-local"
+  # Preserve image data here; explicit PVC/namespace destruction owns data deletion.
+  delete_namespaced_resource_if_present deployment registry-local
+  delete_namespaced_resource_if_present service registry-local
+  delete_namespaced_resource_if_present job registry-local-gc
+  delete_namespaced_resource_if_present job registry-local-gc-dry-run
+  delete_namespaced_resource_if_present configmap registry-local-config
 
   kubectl delete -n "$NAMESPACE" -f "$INFRA_DIR/network-policies.yaml" --ignore-not-found
 
@@ -2765,6 +2831,7 @@ print_remaining_secrets() {
 
 run_destructive_teardown() {
   local destroy_namespace="${1:-0}"
+  node "$SCRIPT_DIR/gitops-owner.mjs" "$NAMESPACE" "*" || return 1
 
   cmd_teardown_agents
   remove_destructive_infra
@@ -2854,6 +2921,14 @@ case "${1:-}" in
     ;;
   buildkit-preflight)
     cmd_buildkit_preflight "${2:-}" "${3:-}"
+    ;;
+  native-node-render)
+    [[ $# -ge 2 && $# -le 3 ]] || { err "Usage: $0 native-node-render NEW_OUTPUT_DIRECTORY [POLICY_YAML]"; exit 1; }
+    node "$SCRIPT_DIR/render-native-worker-node.mjs" "${3:-$INFRA_DIR/native-worker-pools.yaml}" "$2"
+    ;;
+  native-node-preflight)
+    [[ $# -le 2 ]] || { err "Usage: $0 native-node-preflight [POLICY_YAML]"; exit 1; }
+    node "$SCRIPT_DIR/native-worker-node-preflight.mjs" "${2:-$INFRA_DIR/native-worker-pools.yaml}"
     ;;
   buster-buildkit-smoke)
     warn "buster-buildkit-smoke is retained as an alias; use nova-buildkit-preflight."
@@ -2975,6 +3050,8 @@ case "${1:-}" in
     echo "  tailscale          Deploy Tailscale Kubernetes Operator"
     echo "  buildkit-preflight [image] [pull-secret]"
     echo "                    Verify rootless BuildKit support with a temporary pod"
+    echo "  native-node-render OUT [POLICY] Generate host-pool setup files for review"
+    echo "  native-node-preflight [POLICY] Read-only check on the selected host"
     echo "  nova-buildkit-preflight Build, publish, deploy, and verify an image through Nova and Buster v2"
     echo "  nova-unit-preflight Run a real unit process through Nova and Buster v2"
     echo "  nova-kubernetes-fixture-preflight [image] [secret-name]"

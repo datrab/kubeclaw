@@ -1,0 +1,74 @@
+[
+  {
+    "name": "container-deadlines",
+    "argv": [
+      "node",
+      "skills/buster/plugins/container-build/tests/deadline.test.mts"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "direct-output-contract",
+    "argv": [
+      "node",
+      "skills/buster/plugins/direct-command/tests/output-contract.test.mts"
+    ],
+    "exit_code": 1
+  },
+  {
+    "name": "junit-executed",
+    "argv": [
+      "node",
+      "tests/verification/contracts/check-junit-executed-required.mts"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "workflow-trust",
+    "argv": [
+      "node",
+      "--test",
+      "tests/verification/contracts/workflow-trust-split.test.mjs"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "rollout-render",
+    "argv": [
+      "node",
+      "tests/verification/contracts/check-rollout-health.mjs"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "direct-output-contract-current-path",
+    "argv": [
+      "node",
+      "tests/verification/integration/direct-command-output-contract.test.mts"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "prism",
+    "argv": [
+      "node",
+      "--test",
+      "skills/prism/tests/worker-service.test.mts",
+      "skills/prism/tests/worker-cancellation.test.mts",
+      "skills/prism/tests/worker-http-cancellation.test.mts",
+      "skills/prism/tests/engine-cache.test.mts",
+      "skills/prism/tests/engine.test.mts",
+      "skills/prism/tests/design-rounds.test.mts",
+      "skills/prism/tests/design-round-client.test.mts",
+      "skills/prism/tests/control-decisions.test.mts",
+      "skills/prism/tests/agent-jobs.test.mts",
+      "skills/prism/tests/agent-job-http.test.mts",
+      "skills/prism/tests/corpus.test.mts",
+      "skills/prism/tests/renderer-remediation.test.mts",
+      "skills/prism/tests/preview-assets.test.mts"
+    ],
+    "exit_code": 0,
+    "passed": 60,
+    "skipped": 0
+  }
+]

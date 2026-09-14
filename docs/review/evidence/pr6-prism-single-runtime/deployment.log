@@ -1,0 +1,17 @@
+✔ actual Helm worker bootstrap readiness preserves post-install migration startup (591.130909ms)
+✔ actual Prism Helm render binds V3 producer, supervisor, NRI selection and only its role mounts (1837.207996ms)
+✔ original statically built NRI executable reads the actual generated root-owned policy (5679.329907ms)
+✔ disabled product authority creates no key mount, audience token, environment or network access (440.519396ms)
+✔ explicit product authority belongs only to Control and uses separate signing and scoped transport (1161.355432ms)
+✔ incomplete or ambiguous product authority fails actual Helm validation (4160.054905ms)
+✔ five original rendered Envoy consumers separate process probes from fresh self-mTLS readiness (1826.913008ms)
+✔ both independent charts carry the same scoped readiness helper (4.240423ms)
+✔ SPIFFE cannot render with an unbound default ServiceAccount; disabled trust retains original default behavior (3338.307618ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8462.315137

@@ -1,3 +1,8 @@
+image:
+  registry: registry-1.docker.io
+  repository: bitnami/postgresql
+  tag: latest
+  digest: sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1
 architecture: standalone
 auth:
   database: litellm
@@ -8,7 +13,7 @@ auth:
     userPasswordKey: litellm-password
 primary:
   persistence:
-    size: 1Gi
+    size: 20Gi
   resources:
-    requests: { cpu: 50m, memory: 128Mi }
-    limits: { cpu: 250m, memory: 256Mi }
+    requests: { cpu: 250m, memory: 512Mi }
+    limits: { cpu: "2", memory: 4Gi }

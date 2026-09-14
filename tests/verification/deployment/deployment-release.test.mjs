@@ -14,6 +14,12 @@ function fixture(run) {
   try {
     for (const directory of ['charts', 'my-values', 'scripts']) fs.cpSync(path.join(source, directory), path.join(root, directory), { recursive: true });
     fs.symlinkSync(path.join(source, 'node_modules'), path.join(root, 'node_modules'));
+    const prismValuesFile = path.join(root, 'my-values/prism-values.yaml');
+    const prismValues = yaml.load(fs.readFileSync(prismValuesFile, 'utf8'));
+    prismValues.worker.native = { ...prismValues.worker.native, nodeName: 'native-render-test', namespace: 'kubeclaw', policyDigest: 'a'.repeat(64) };
+    fs.writeFileSync(prismValuesFile, yaml.dump(prismValues));
+    const bin = path.join(root, 'bin'); fs.mkdirSync(bin);
+    fs.writeFileSync(path.join(bin, 'kubectl'), '#!/bin/sh\necho unexpected cluster access >&2\nexit 99\n', { mode: 0o755 });
     git(['init', '-q']); git(['add', 'charts', 'my-values']);
     git(['-c', 'user.name=Deployment Test', '-c', 'user.email=deployment@example.invalid', 'commit', '-qm', 'Actual configuration fixture']);
     const commit = git(['rev-parse', 'HEAD']);
@@ -31,7 +37,7 @@ function fixture(run) {
     fs.writeFileSync(registryOverlay, yaml.dump({ runtimeInfrastructure: { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } } }));
     const shell = (script, args, environment = {}) => spawnSync('bash', [path.join(root, 'scripts', script), ...args], {
       cwd: root, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024,
-      env: { ...process.env, KUBECONFIG: path.join(root, 'no-cluster.yaml'), CODE_BUNDLE_GITHUB_REPOSITORY: 'datrab/kubeclaw', BUSTER_VALUES_FILE: registryOverlay, ...environment },
+      env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, KUBECONFIG: path.join(root, 'no-cluster.yaml'), CODE_BUNDLE_GITHUB_REPOSITORY: 'datrab/kubeclaw', BUSTER_VALUES_FILE: registryOverlay, ...environment },
     });
     run({ root, commit, images, shell });
   } finally { fs.rmSync(root, { recursive: true, force: true }); }

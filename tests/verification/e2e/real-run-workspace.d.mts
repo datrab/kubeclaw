@@ -1,6 +1,9 @@
 export interface RealE2ERunWorkspace {
+  readonly runId: string;
   readonly projectName: string;
   readonly worktreePath: string;
+  readonly artifactRoot: string;
+  readonly swarmDir: string;
   readonly [key: string]: unknown;
 }
 

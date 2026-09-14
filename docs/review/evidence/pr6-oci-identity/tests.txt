@@ -1,0 +1,18 @@
+✔ raw OCI bytes prove distinct index, selected manifest and config relationships (6.95162ms)
+✔ single platform manifest and index variant metadata are supported without inventing an index (2.785365ms)
+✔ same manifest/config digest is never inferred from a differently hashed document (3.839655ms)
+✔ descriptor sizes, media type and configured platform are independently checked (2.730087ms)
+✔ absent, duplicate or nested platform selection cannot silently pick the first descriptor (1.675257ms)
+✔ artifact configs and malformed rootfs/layer relationships are rejected (1.652457ms)
+✔ registry adapter validates scope and limits before it can contact a registry (0.815764ms)
+✔ protocol response fixture keeps token exchange scoped and strips auth from signed blob redirects (9.69889ms)
+✔ protocol response negatives reject arbitrary redirects and retain explicit credential failure (1.531794ms)
+✔ actual Response streams are cancelled on size failures and token JSON is not echoed (2.973755ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 351.817747

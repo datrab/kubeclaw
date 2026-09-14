@@ -82,7 +82,7 @@ try {
     validate(config, role);
     if (role === 'nova') nova = config;
   }
-  const prism = render('prism', ['-f', 'charts/prism/ci-values.yaml']).find(doc => doc?.data?.['control.yaml']);
+  const prism = render('prism', ['-f', 'charts/prism/ci-values.yaml', '--set', 'worker.native.namespace=alternative']).find(doc => doc?.data?.['control.yaml']);
   for (const [name, config] of Object.entries(prism.data)) validate(yaml.load(config), name);
   run('openssl', ['req', '-x509', '-newkey', 'rsa:2048', '-nodes', '-keyout', 'ca.key', '-out', 'ca.crt', '-days', '1', '-subj', '/CN=Readiness-Test-CA']);
   const identity = 'spiffe://kubeclaw.internal/ns/alternative/sa/agent-nova';

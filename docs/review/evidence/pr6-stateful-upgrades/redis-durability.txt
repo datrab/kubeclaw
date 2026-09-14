@@ -1,0 +1,9 @@
+✔ real Redis recovers an unreceived ACK and dedup after SIGKILL, and refuses writes without eviction (704.849263ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1301.194904

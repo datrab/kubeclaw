@@ -1,0 +1,15 @@
+schemaVersion: 1
+# Logical LiteLLM recovery policy. Off-node replication is a separate requirement.
+backupIntervalMinutes: 15
+verificationIntervalMinutes: 5
+maximumAgeSeconds: 7200
+maximumDurationSeconds: 1800
+verificationDeadlineSeconds: 900
+maximumBackupBytes: 68719476736
+maximumRetainedBytes: 96636764160
+persistence:
+  size: 100Gi
+  storageClass: null
+resources:
+  requests: { cpu: 250m, memory: 256Mi }
+  limits: { cpu: "1", memory: 1Gi }

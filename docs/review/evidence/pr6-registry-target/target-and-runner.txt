@@ -1,0 +1,28 @@
+✔ operator registry projection does not resolve or expose credentials (3.369791ms)
+✔ seed image cannot select another registry, mutable tag or malformed reference (3.664052ms)
+✔ original workspace and failure mutation select the same configured authority (9.785849ms)
+✔ README supported-scenarios list matches the scenario registry (3.521291ms)
+✔ real E2E pipeline env requires the single configured registry authority (1.540594ms)
+✔ git fault scenarios use a harness shim instead of product config flags (2.03025ms)
+✔ expected nonzero scenarios require durable failure evidence (0.582233ms)
+✔ expected nonzero scenarios ignore process-output diagnostics when typed evidence matches (0.672439ms)
+✔ failure output diagnostics are classified but not success evidence (0.483375ms)
+✔ matching fake output diagnostics cannot make a failed scenario pass (0.377405ms)
+✔ expected zero scenarios still require success evidence (0.198427ms)
+✔ structured result files persist canonical metadata assertions cleanup and bounded diagnostics (4.113299ms)
+✔ snapshotResultArtifacts copies only canonical v2 evidence into a stable result bundle (12.881991ms)
+✔ stable bundle reports absent canonical v2 evidence without legacy path inference (5.231616ms)
+✔ cleanup verification treats retained artifacts as diagnostic while requiring infra cleanup (3.236963ms)
+✔ cleanup verification fails when infra cleanup fails even if artifacts are retained (0.536001ms)
+✔ cleanup verification explains missing cleanup authorities (0.336134ms)
+✔ cleanup verification records induced git cleanup failure as recovered infra cleanup (0.46928ms)
+✔ cleanup verification fails when any remote e2e branch cleanup fails (0.336286ms)
+✔ Buster simulator timeout includes explicit rate-limit cooldown budget outside pipeline timeout (0.250958ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1254.582024

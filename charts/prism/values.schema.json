@@ -264,7 +264,57 @@
       "type": "object"
     },
     "worker": {
-      "type": "object"
+      "type": "object",
+      "required": [
+        "native",
+        "replicas",
+        "shutdownTimeoutMs",
+        "terminationGracePeriodSeconds"
+      ],
+      "properties": {
+        "replicas": {
+          "const": 1
+        },
+        "native": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "nodeName",
+            "namespace",
+            "policyDigest",
+            "closeTimeoutMs"
+          ],
+          "properties": {
+            "nodeName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "namespace": {
+              "type": "string",
+              "minLength": 1
+            },
+            "policyDigest": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "closeTimeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            }
+          }
+        },
+        "shutdownTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "terminationGracePeriodSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483
+        }
+      }
     },
     "ingestion": {
       "type": "object",
@@ -429,6 +479,52 @@
     },
     "tailscale": {
       "type": "object"
+    },
+    "backup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schedule",
+        "verificationSchedule",
+        "maximumBytes",
+        "maximumRetainedBytes",
+        "maximumDurationSeconds",
+        "resources",
+        "databaseProofSchedule"
+      ],
+      "properties": {
+        "schedule": {
+          "type": "string",
+          "minLength": 9,
+          "maxLength": 128
+        },
+        "verificationSchedule": {
+          "type": "string",
+          "minLength": 9,
+          "maxLength": 128
+        },
+        "maximumBytes": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,12}$"
+        },
+        "maximumRetainedBytes": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,12}$"
+        },
+        "maximumDurationSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400
+        },
+        "resources": {
+          "type": "object"
+        },
+        "databaseProofSchedule": {
+          "type": "string",
+          "minLength": 9,
+          "maxLength": 128
+        }
+      }
     }
   },
   "additionalProperties": false

@@ -1,0 +1,33 @@
+$ npm run verify:worker-core:native-runtime
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> verify:worker-core:native-runtime
+> node --test tests/verification/reliability/prism-native-startup.test.mts tests/verification/reliability/worker-native-launcher.test.mts tests/verification/deployment/native-worker-node.test.mjs tests/verification/deployment/prism-native-runtime.test.mjs && GOTOOLCHAIN=local go -C tools/native-worker-nri test -mod=readonly -race -count=1 -v ./...
+
+✔ real generated bundle binds both role readers, selected runtime and actual systemd unit parser (1021.366202ms)
+✔ actual policy files reject writable authority and symlinks without consuming their contents (4.958264ms)
+✔ capacity contract requires matching host, effective kubelet reservation and withheld allocatable capacity (8.421301ms)
+✔ quantity comparison is exact for Kubernetes CPU and memory units and rejects ambiguous precision (1.215533ms)
+✔ actual Prism Helm render binds V3 producer, supervisor, NRI selection and only its role mounts (817.842094ms)
+✔ original statically built NRI executable reads the actual generated root-owned policy (4677.242406ms)
+✔ runtime authority binds the actual kernel boot and cgroup namespace, and rejects stale or writable evidence (9.146717ms)
+✔ actual native Prism CLI refuses invalid runtime and unavailable host prerequisites before durable admission (4281.939564ms)
+✔ compiled original launcher refuses ordinary filesystems and cannot execute the requested program (492.013106ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6312.900334
+=== RUN   TestOriginalNRIWireAndOCIGeneratorChangeOnlyCgroupNamespace
+--- PASS: TestOriginalNRIWireAndOCIGeneratorChangeOnlyCgroupNamespace (0.02s)
+=== RUN   TestSelectionRejectsMismatchedAuthorityAndLeavesOtherContainersUntouched
+--- PASS: TestSelectionRejectsMismatchedAuthorityAndLeavesOtherContainersUntouched (0.00s)
+=== RUN   TestSelectedRuntimeAndRootOwnedPolicy
+--- PASS: TestSelectedRuntimeAndRootOwnedPolicy (0.02s)
+PASS
+ok  	github.com/datrab/kubeclaw/tools/native-worker-nri	1.171s
+
+exit_code=0

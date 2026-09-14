@@ -43,7 +43,13 @@
     "TRIVY_SHA256_AMD64": "2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a",
     "TRIVY_SHA256_ARM64": "b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5",
     "TRIVY_VERSION": "0.74.0",
-    "CILIUM_TOOLS_BASE": "quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b"
+    "CILIUM_TOOLS_BASE": "quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b",
+    "HADOLINT_SHA256_AMD64": "56de6d5e5ec427e17b74fa48d51271c7fc0d61244bf5c90e828aab8362d55010",
+    "HELM_SHA256_AMD64": "f8180838c23d7c7d797b208861fecb591d9ce1690d8704ed1e4cb8e2add966c1",
+    "HADOLINT_SHA256_ARM64": "5798551bf19f33951881f15eb238f90aef023f11e7ec7e9f4c37961cb87c5df6",
+    "HELM_SHA256_ARM64": "c0a45e67eef0c7416a8a8c9e9d5d2d30d70e4f4d3f7bea5de28241fffa8f3b89",
+    "KUBECONFORM_SHA256_AMD64": "2b4ebeaa4d5ac4843cf8f7b7e66a8874252b6b71bc7cbfc4ef1cbf85acec7c07",
+    "KUBECONFORM_SHA256_ARM64": "582a8a3eb3c33feb065928728ddac6e544c4f0b1234fd78fc1e4c4175a422b22"
   },
   "imageOverrides": {
     "buster-runtime": {
@@ -52,14 +58,54 @@
     },
     "ops-pod": {
       "KUBECTL_VERSION": "v1.34.1",
-      "HELM_VERSION": "v3.19.0"
+      "HELM_VERSION": "v3.19.0",
+      "HELM_SHA256_AMD64": "a7f81ce08007091b86d8bd696eb4d86b8d0f2e1b9f6c714be62f82f96a594496",
+      "KUBECTL_SHA256_AMD64": "7721f265e18709862655affba5343e85e1980639395d5754473dafaadcaa69e3",
+      "HELM_SHA256_ARM64": "440cf7add0aee27ebc93fada965523c1dc2e0ab340d4348da2215737fc0d76ad",
+      "KUBECTL_SHA256_ARM64": "420e6110e3ba7ee5a3927b5af868d18df17aae36b720529ffa4e9e945aa95450"
     }
   },
   "infrastructure": {
-    "envoy": "envoyproxy/envoy:v1.39.0@sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66"
+    "envoy": "envoyproxy/envoy:v1.39.0@sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66",
+    "tailscaleOperator": "docker.io/tailscale/k8s-operator:v1.102.3@sha256:d86a8be7ad9d38714968f5d4e010ba8dad30c8f672736ef94eda9b250febeb12",
+    "tailscaleProxy": "docker.io/tailscale/tailscale:v1.102.3@sha256:8c42c4574ab066384fcb72f69e086a2ff1dd3652eb6f56856cee34bcf0d2f680",
+    "qdrant": "docker.io/qdrant/qdrant:v1.19.1@sha256:12364fe851b9f17356fc88189fc06d1b521262e04659ec7345975b00c9246a10",
+    "registryMirror": "docker.io/library/registry:2.8.3@sha256:a3d8aaa63ed8681a604f1dea0aa03f100d5895b6a58ace528858a7b332415373",
+    "qdrantTest": "registry.suse.com/bci/bci-base:latest@sha256:3e961532089c1ca792d004250b56f02af782ee909f5543086166d89730d8eaab",
+    "redis": "registry-1.docker.io/bitnami/redis:latest@sha256:ffa455a3ad00bccc24dfde113ef55329dde687da242e9feb6ccd2b30eb93e8f3",
+    "postgresql": "registry-1.docker.io/bitnami/postgresql:latest@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1"
   },
   "automation": {
     "renovate": "renovate/renovate:44.65.5@sha256:4e10f76a79f1c597f427f83c788a9f5b14a6295784c4cb68307b89b0a954abce",
-    "testRegistry": "registry:3@sha256:1be55279f18a2fe1a74edf2664cac61c1bea305b7b4642dab412e7affdcb3e33"
+    "testRegistry": "registry:3@sha256:1be55279f18a2fe1a74edf2664cac61c1bea305b7b4642dab412e7affdcb3e33",
+    "prismTestPostgres": "pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f"
+  },
+  "infrastructureCharts": {
+    "tailscale": {
+      "name": "tailscale-operator",
+      "version": "1.102.3",
+      "url": "https://pkgs.tailscale.com/helmcharts/tailscale-operator-1.102.3-1787221603-c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a.tgz",
+      "sha256": "c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a"
+    },
+    "qdrant": {
+      "name": "qdrant",
+      "version": "1.19.1",
+      "url": "https://github.com/qdrant/qdrant-helm/releases/download/qdrant-1.19.1/qdrant-1.19.1.tgz",
+      "sha256": "4562eb295c2d98ad9dbb625a729fcb593d315f2538d0200035aac37521f12b17"
+    },
+    "redis": {
+      "name": "redis",
+      "version": "28.1.0",
+      "appVersion": "8.10.1",
+      "sha256": "74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386",
+      "url": "oci://registry-1.docker.io/bitnamicharts/redis@sha256:795df3b4dda22a86db62f511a62970fb547658b0d1349ec210783516b2e6157e"
+    },
+    "postgresql": {
+      "name": "postgresql",
+      "version": "18.11.1",
+      "appVersion": "18.6.0",
+      "sha256": "d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b",
+      "url": "oci://registry-1.docker.io/bitnamicharts/postgresql@sha256:4e3a4ec010437ba9a9def6306d6db0e1f687193769b51c3146e7608580744977"
+    }
   }
 }

@@ -1,0 +1,34 @@
+Verifying upstream GO 1.26.5 linux/amd64
+Verifying upstream GO 1.26.5 linux/arm64
+Verifying upstream SHFMT 3.13.1 linux/amd64
+Verifying upstream SHFMT 3.13.1 linux/arm64
+Verifying upstream TERRAFORM 1.15.7 linux/amd64
+Verifying upstream TERRAFORM 1.15.7 linux/arm64
+Verifying upstream TFLINT 0.64.0 linux/amd64
+Verifying upstream TFLINT 0.64.0 linux/arm64
+Verifying upstream TRIVY 0.74.0 linux/amd64
+Verifying upstream TRIVY 0.74.0 linux/arm64
+Verifying upstream KUBECTL 1.35.6 linux/amd64
+Verifying upstream KUBECTL 1.35.6 linux/arm64
+Verifying upstream HADOLINT 2.12.0 linux/amd64
+Verifying upstream HADOLINT 2.12.0 linux/arm64
+Verifying upstream HELM 3.18.4 linux/amd64
+Verifying upstream HELM 3.18.4 linux/arm64
+Verifying upstream KUBECONFORM 0.6.4 linux/amd64
+Verifying upstream KUBECONFORM 0.6.4 linux/arm64
+Verifying upstream KUBECTL 1.34.1 linux/amd64
+Verifying upstream KUBECTL 1.34.1 linux/arm64
+Verifying upstream HELM 3.19.0 linux/amd64
+Verifying upstream HELM 3.19.0 linux/arm64
+{"checked":31,"changed":[]}
+{"inputs":4,"locks":5}
+Verified actual amd64 and arm64 release bytes for all nine central checksum-managed tools and both Ops overrides.
+✔ scripts/updates/check-upstream-refresh.mjs (573361.163497ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 573386.941407

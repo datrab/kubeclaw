@@ -1,0 +1,11 @@
+✔ runtime locks reject changed source, transitive wheels and Go sums without silently repairing them (50.296938ms)
+✔ central versions update actual build/deployment files and reject drift without repairing it (147.148605ms)
+✔ every central base requires a digest, including non-OpenClaw runtimes (0.704702ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 537.753223

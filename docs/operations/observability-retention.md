@@ -82,8 +82,11 @@ observability and durable records. These reproducible input copies are distinct
 from D07 retained logs.
 
 The [durable record/blob interfaces](../../skills/common/plugin-runtime/foundation/observability/durable-records.ts)
-provide append/read/transition and put/get, respectively. They expose no
-run-retirement or tombstone operation. The
+provide append/read/transition and put/get. The concrete FileDurableRecordStore
+also has an explicit writer-fenced `retire` operation for owned v2 records. It
+releases payload/count capacity while retaining permanent identity tombstones;
+this is currently connected to selected telemetry projections. It does not
+authorize applying the same deletion to arbitrary state/wait/artifact consumers. The
 [Clawdeck observation view](../../skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts)
 projects admission/attempt state with cursors and completeness; it is not a durable
 consumer checkpoint or storage-deletion acknowledgement.
@@ -110,11 +113,45 @@ runs or unbound external store paths. See the exact
 [scope and local verification](../review/remediation/implementation/wave47-admission-retirement.md).
 This does not release attempt-result or evidence capacity or delete log history.
 
+## Manual imported-result, dispatch and operator-request compaction
+
+The original Attempt store also supports
+`node scripts/retire-attempt-result.mjs --apply /absolute/scope.json`. Its
+`attempt-result-retirement-scope.v1` names the exact canonical run, store,
+unchanged limits, import journal sequence/hash, result digest and expected store
+snapshot. It projects a completed result only after a verified durable Nova
+import. The original result, Admission ACK, Clawdeck view and replay consumer
+reconstruct it from that retained journal. One resident result slot and actual
+net metadata bytes are released; completion intents, closures, unique evidence
+and permanent references remain. Missing/corrupt source history fails before an
+ACK. Run, store and journal writer fences protect the transition. See the
+[original acceptance and recovery tests](../../tests/verification/reliability/admission-retirement.test.mjs)
+and [independent consumer cases](../../tests/verification/reliability/attempt-projection-review.test.mjs).
+
+`node scripts/retire-nova-dispatch.mjs --apply /absolute/scope.json` removes only
+the redundant embedded archive after the original import/source authority and
+retained blob are verified. It preserves job identity, replay and the required
+source blob; it releases metadata bytes, not unique archive capacity or a job
+record slot. See [dispatch acceptance](../review/remediation/implementation/run7-dispatch-root-review.md).
+
+`node scripts/retire-operator-request.mjs --apply /absolute/scope.json` projects
+only supported completed JSON-v1 human-approval requests. It binds the original
+wait, single-use operator signal and terminal receipt under run/wait/delivery
+fences. Existing accepted receipts and no-repeat behavior remain authoritative.
+It releases net request bytes, not record count; uncertain, externalized,
+Discord and unsupported producer histories remain protected. See
+[operator-request acceptance](../review/remediation/implementation/run9-operator-root-review.md).
+
+All scopes must be inventoried from actual configured stores and their unchanged
+limits. These explicit commands do not run automatically and are not executed
+on operational data by this remediation task. Their bounded capacity release
+does not authorize deleting canonical logs, final reports or history.
+
 ## Required broader manual retirement contract — not yet implemented
 
 PCR-OBS-002 remains partially addressed: policy is decided, but a safe capacity
 release operation is missing for the remaining stores. Beyond the bounded
-telemetry projection cleanup and redundant admission completion compaction above,
+telemetry, admission, imported-result, dispatch and operator-request operations above,
 no supported command selectively deletes
 confirmed history from these stores. Do not edit
 `store.json`, `admission.json`, `attempt-store.json`, journal prefixes or referenced

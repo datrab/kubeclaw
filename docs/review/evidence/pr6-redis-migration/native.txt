@@ -1,0 +1,10 @@
+✔ real Redis recovers an unreceived ACK and dedup after SIGKILL, and refuses writes without eviction (611.560166ms)
+✔ original Redis RDB migrates into selected AOF with streams, pending consumers and absolute dedup expiry (7547.041312ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9493.398701

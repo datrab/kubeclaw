@@ -1,0 +1,10 @@
+✔ real cancelled v2/v3 Summary writes and nested evidence reads never publish a successful receipt (63072.583056ms)
+✔ v2/v3 Summary write and downstream read retain exact real disk prefixes across actual SIGKILL and replay (218301.878339ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 283051.973743

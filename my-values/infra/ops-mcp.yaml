@@ -5,12 +5,13 @@ metadata:
   namespace: kubeclaw
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
   name: kubeclaw-ops-mcp-readonly
+  namespace: kubeclaw
 rules:
   - apiGroups: [""]
-    resources: ["namespaces", "pods", "pods/log", "services", "events"]
+    resources: ["pods", "pods/log", "services", "events"]
     verbs: ["get", "list"]
   - apiGroups: ["apps"]
     resources: ["deployments", "statefulsets", "daemonsets", "replicasets"]
@@ -21,18 +22,40 @@ rules:
   - apiGroups: ["networking.k8s.io"]
     resources: ["ingresses"]
     verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kubeclaw-ops-mcp-readonly
+  namespace: kubeclaw
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: kubeclaw-ops-mcp-readonly
+subjects:
+  - kind: ServiceAccount
+    name: kubeclaw-ops-mcp
+    namespace: kubeclaw
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: kubeclaw-ops-mcp-applications
+  namespace: argocd
+rules:
   - apiGroups: ["argoproj.io"]
     resources: ["applications"]
     verbs: ["get", "list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
-  name: kubeclaw-ops-mcp-readonly
+  name: kubeclaw-ops-mcp-applications
+  namespace: argocd
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: kubeclaw-ops-mcp-readonly
+  kind: Role
+  name: kubeclaw-ops-mcp-applications
 subjects:
   - kind: ServiceAccount
     name: kubeclaw-ops-mcp
@@ -66,10 +89,18 @@ spec:
           env:
             - name: OPS_DEFAULT_NAMESPACE
               value: kubeclaw
+            - name: OPS_ALLOWED_NAMESPACES
+              value: kubeclaw
+            - name: OPS_MCP_BEARER_TOKEN_FILE
+              value: /var/run/ops-mcp-auth/token
             - name: ARGOCD_NAMESPACE
               value: argocd
             - name: HUBBLE_SERVER
               value: hubble-relay.cilium.svc.cluster.local:4245
+          volumeMounts:
+            - name: backend-auth
+              mountPath: /var/run/ops-mcp-auth
+              readOnly: true
           ports:
             - name: http
               containerPort: 8080
@@ -98,6 +129,14 @@ spec:
             runAsNonRoot: true
             capabilities:
               drop: ["ALL"]
+      volumes:
+        - name: backend-auth
+          secret:
+            secretName: ops-mcp-auth
+            defaultMode: 0444
+            items:
+              - key: token
+                path: token
 ---
 apiVersion: v1
 kind: Service
@@ -130,4 +169,3 @@ spec:
   tls:
     - hosts:
         - ops-mcp
-

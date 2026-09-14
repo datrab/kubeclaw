@@ -8,8 +8,8 @@ import { cleanupRealE2ERunWorkspace, createRealE2ERunWorkspace } from '../e2e/re
 
 if (process.env.KUBECLAW_HTTP_LIVE !== '1') throw new Error('KUBECLAW_HTTP_LIVE_REQUIRED');
 
-const origin = process.env.KUBECLAW_HTTP_LIVE_ORIGIN
-  ?? 'http://registry-local.kubeclaw.svc.cluster.local:5001';
+const origin = process.env.KUBECLAW_HTTP_LIVE_ORIGIN;
+if (!origin) throw new Error('KUBECLAW_HTTP_LIVE_ORIGIN_REQUIRED: supply an explicit in-cluster HTTP service');
 const requestPath = process.env.KUBECLAW_HTTP_LIVE_PATH ?? '/v2/';
 const target = new URL(requestPath, `${origin}/`);
 assert.equal(target.hostname.endsWith('.svc.cluster.local'), true, 'live proof must use an in-cluster Service');
@@ -21,11 +21,7 @@ const registry = buildRegistry(discoverPackages({ installationRoots: [pluginRoot
 } }));
 const limits = { cpuMillis: 60_000, memoryBytes: 256 * 1024 * 1024, logBytes: 1024 * 1024,
   artifactBytes: 1024 * 1024, artifactFiles: 4, processes: 4 };
-const priorImage = process.env.REAL_E2E_DEPLOYMENT_IMAGE;
-process.env.REAL_E2E_DEPLOYMENT_IMAGE = 'registry-mirror.kubeclaw.svc.cluster.local:5000/library/nginx:1.27-alpine@sha256:62223d644fa234c3a1cc785ee14242ec47a77364226f1c811d2f669f96dc2ac8';
 const workspace = await createRealE2ERunWorkspace({ scenarioId: 'success' });
-if (priorImage === undefined) delete process.env.REAL_E2E_DEPLOYMENT_IMAGE;
-else process.env.REAL_E2E_DEPLOYMENT_IMAGE = priorImage;
 const scope = loadPipelineTestScope(path.join(workspace.swarmDir, 'pipeline.json'), { moduleId: null, gateId: 'final-buster' });
 const generatedHealth = scope.declaration.tests?.health;
 assert.equal(generatedHealth?.uses, 'kubeclaw.http@1');

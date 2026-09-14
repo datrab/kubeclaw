@@ -1,51 +1,49 @@
-import type { WorkerAttemptEnvelopeV1, WorkerAttemptLimitsV1 } from '@kubeclaw/pipeline-worker-core-contract';
+import type { WorkerAttemptEnvelopeV3, WorkerAttemptLimitsV2 } from '@kubeclaw/pipeline-worker-core-contract';
+import { observeNativeWorkerResources } from '@kubeclaw/worker-core';
 import type { WorkerAttemptContext, WorkerAttemptOperation, WorkerAttemptOperationResult } from '@kubeclaw/worker-core';
 import type { PrismEngine } from '../engine/index.ts';
 import { executePrismOperation } from '../engine/worker-binding.ts';
 import type { WorkerArtifactClient } from './worker-artifacts.ts';
 import { PrismBrowserCloseError } from '../engine/browser-capture.ts';
 
-export function operationFor(envelope: WorkerAttemptEnvelopeV1, engine: PrismEngine,
-  artifacts: WorkerArtifactClient): WorkerAttemptOperation {
-  return new PrismWorkerOperation(envelope, engine, artifacts);
+/** The same Prism lifecycle runs inside the dedicated native host. */
+export function nativeOperationFor(envelope: WorkerAttemptEnvelopeV3, engine: PrismEngine,
+  artifacts: WorkerArtifactClient, scope: string): WorkerAttemptOperation<WorkerAttemptEnvelopeV3> {
+  const operation = new PrismWorkerOperation(envelope, engine, artifacts);
+  return {
+    prepare: limits => operation.prepare(limits), execute: context => operation.execute(context),
+    terminate: () => operation.terminate(),
+    async measure({ signal }) {
+      signal.throwIfAborted();
+      const resources = observeNativeWorkerResources(scope);
+      return { cpuTimeMs: { status: 'observed', value: Math.ceil(resources.cpuTimeMicroseconds / 1000) },
+        maximumMemoryBytes: { status: 'observed', value: resources.maximumMemoryBytes },
+        maximumTasks: { status: 'observed', value: resources.maximumTasks } };
+    },
+  };
 }
 
-class PrismWorkerOperation implements WorkerAttemptOperation {
+export class PrismWorkerOperation implements Omit<WorkerAttemptOperation<WorkerAttemptEnvelopeV3>, 'measure'> {
   private prepared = false;
   private terminated = false;
   private readonly controller = new AbortController();
-  private baseline: NodeJS.CpuUsage | undefined;
-  private cpuTimeMs: number | undefined;
-  private maximumObservedMemoryBytes = 0;
   private execution: Promise<WorkerAttemptOperationResult> | undefined;
   private settlement: Promise<{ ok: true } | { ok: false; error: unknown }> | undefined;
-  private readonly envelope: WorkerAttemptEnvelopeV1;
+  private readonly envelope: WorkerAttemptEnvelopeV3;
   private readonly engine: PrismEngine;
   private readonly artifacts: WorkerArtifactClient;
-  constructor(envelope: WorkerAttemptEnvelopeV1, engine: PrismEngine, artifacts: WorkerArtifactClient) {
+  constructor(envelope: WorkerAttemptEnvelopeV3, engine: PrismEngine, artifacts: WorkerArtifactClient) {
     this.envelope = envelope; this.engine = engine; this.artifacts = artifacts;
   }
-  prepare(limits: WorkerAttemptLimitsV1) {
+  prepare(_limits: WorkerAttemptLimitsV2) {
     if (this.prepared || this.terminated) throw new Error('Prism attempt cannot be prepared again');
-    if (
-      limits.cpuMillis > 4000 ||
-      limits.memoryBytes > 8_589_934_592 ||
-      limits.processes > 256
-    )
-      throw new Error("Prism attempt exceeds the worker resource boundary");
-    this.baseline = process.cpuUsage();
     this.prepared = true;
     return undefined;
   }
-  execute(context: WorkerAttemptContext) {
+  execute(context: Pick<WorkerAttemptContext, 'signal' | 'log'>) {
     if (this.execution) throw new Error('Prism attempt execution already started');
     const signal = AbortSignal.any([context.signal, this.controller.signal]);
-    this.execution = this.run({ ...context, signal }).finally(() => {
-      if (this.baseline) {
-        const delta = process.cpuUsage(this.baseline);
-        this.cpuTimeMs = Math.round((delta.user + delta.system) / 1000);
-      }
-    });
+    this.execution = this.run({ ...context, signal });
     this.settlement = this.execution.then(() => ({ ok: true as const }),
       (error: unknown) => ({ ok: false as const, error }));
     return this.execution;
@@ -57,19 +55,7 @@ class PrismWorkerOperation implements WorkerAttemptOperation {
     const settled = await this.settlement;
     if (settled && !settled.ok && settled.error instanceof PrismBrowserCloseError) throw settled.error;
   }
-  async measure() {
-    if (!this.baseline) throw new Error('Prism attempt measurement was not prepared');
-    const delta = process.cpuUsage(this.baseline);
-    // Preserve the actual sampled maximum across Core's execution and terminal
-    // observations. This remains shared-parent RSS, not an attempt-tree peak.
-    this.maximumObservedMemoryBytes = Math.max(this.maximumObservedMemoryBytes, process.memoryUsage().rss);
-    return {
-      cpuTimeMs: this.cpuTimeMs ?? Math.round((delta.user + delta.system) / 1000),
-      maximumMemoryBytes: this.maximumObservedMemoryBytes,
-      maximumProcesses: 1,
-    };
-  }
-  private async run(context: WorkerAttemptContext) {
+  private async run(context: Pick<WorkerAttemptContext, 'signal' | 'log'>) {
     if (!this.prepared || this.terminated || context.signal.aborted)
       throw new Error("Prism attempt cannot start");
     if (this.envelope.operation.values.operation === "generate")
@@ -102,7 +88,7 @@ class PrismWorkerOperation implements WorkerAttemptOperation {
   }
 }
 
-async function readInput(envelope: WorkerAttemptEnvelopeV1, artifacts: WorkerArtifactClient,
+async function readInput(envelope: WorkerAttemptEnvelopeV3, artifacts: WorkerArtifactClient,
   signal: AbortSignal): Promise<Record<string, unknown>> {
   const inputName = String(envelope.operation.values.inputName ?? '');
   const declared = envelope.inputs.find((item) => item.name === inputName && item.kind === 'artifact');

@@ -5,7 +5,7 @@ import type { ReviewContextCandidate } from './review-context-selection.ts';
 import { REVIEW_HARD_LIMITS } from './review-hard-limits.ts';
 import { ReviewRepositoryProofError, type FrozenReviewRevision } from './review-repository.ts';
 import { compareCodeUnits } from './review-ordering.ts';
-import { importSpecifierRecordsFromScan, importSpecifiersFromScan } from './review-import-syntax.ts';
+import { importSpecifierRecordsFromScan } from './review-import-syntax.ts';
 import { importScanSource } from './review-import-scanner.ts';
 
 export interface ProductionContextDescriptor { readonly path: string; readonly reasons: readonly ReviewContextReason[]; readonly dependencyDepth: number }
@@ -93,9 +93,6 @@ export function reviewImportSpecifiersWithLines(content: string): readonly Revie
   return records.map(({ specifier, index }) => Object.freeze({ specifier, line: lines.get(index) as number }));
 }
 
-export function reviewImportSpecifiers(content: string): readonly string[] {
-  return importSpecifiersFromScan(importScanSource(content));
-}
 export function reviewImportCandidates(sourcePath: string, content: string, tracked: ReadonlySet<string>): readonly string[] {
   return reviewImportReferences(sourcePath, content, tracked)
     .flatMap(({ resolvedPath }) => resolvedPath ? [resolvedPath] : []);

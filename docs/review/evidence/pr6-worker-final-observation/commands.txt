@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd REPOSITORY_ROOT
+node --test tests/verification/reliability/worker-observation-durability.test.mts tests/verification/reliability/worker-output-spool.test.mts tests/verification/reliability/worker-ownership-store.test.mts tests/verification/reliability/worker-native-journal.test.mts tests/verification/reliability/worker-native-contract.test.mts skills/prism/tests/worker-ingress-capacity.test.mts > docs/review/evidence/pr6-worker-final-observation/tests.txt 2>&1
+node_modules/.bin/tsc --noEmit -p skills/worker/core/tsconfig.json > docs/review/evidence/pr6-worker-final-observation/typecheck.txt 2>&1
+npm run typecheck --prefix skills/prism > docs/review/evidence/pr6-worker-final-observation/prism-typecheck.txt 2>&1
+node_modules/.bin/eslint -c charts/kubeclaw/files/config/eslint.config.mjs skills/worker/core/worker/native-attempt-{executor,journal,recovery}.ts skills/worker/core/worker/native-{journal-state,result,node-identity,output-spool,process-output,worker-process,worker-ownership,resource-observation}.ts skills/worker/core/worker/ownership-{store,state}.ts skills/prism/server/worker-{lifecycle,service,config}.ts skills/prism/server/native-worker-execution.ts skills/prism/config/native-worker.ts > docs/review/evidence/pr6-worker-final-observation/lint.txt 2>&1

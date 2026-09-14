@@ -1,0 +1,10 @@
+✔ actual locked Helm service binds scheduled recovery image, storage, credentials and narrow network policy (676.522806ms)
+✔ real Helm fullname override is respected and an impossible configured RPO is refused (606.32665ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1689.836302

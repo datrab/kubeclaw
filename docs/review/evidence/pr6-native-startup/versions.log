@@ -1,0 +1,9 @@
+$ npm run versions:check
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> versions:check
+> node scripts/versions.mjs --check
+
+{"checked":27,"changed":[]}
+
+exit_code=0

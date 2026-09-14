@@ -1,0 +1,10 @@
+✔ native PG18 full LiteLLM schema/auth/model backup restores on a separate server and rejects unsafe recovery (32277.209095ms)
+ℹ Real PostgreSQL18.6; 1012 schema columns; 217 restored indexes; original key/model JSON and SQL authentication verified
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33000.406183

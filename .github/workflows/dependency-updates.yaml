@@ -33,7 +33,7 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/kubeclaw-updates/updates"
           cp scripts/updates/refresh-versions.mjs "$RUNNER_TEMP/kubeclaw-updates/updates/"
-          cp scripts/updates/renovate.cjs scripts/versions.mjs "$RUNNER_TEMP/kubeclaw-updates/"
+          cp scripts/updates/renovate.cjs scripts/versions.mjs scripts/infrastructure-chart-lock.mjs scripts/runtime-tool-locks.mjs "$RUNNER_TEMP/kubeclaw-updates/"
           echo "RENOVATE_IMAGE=$(node -p 'require("./versions.json").automation.renovate')" >> "$GITHUB_ENV"
       - name: Discover updates and prepare pull requests
         env:

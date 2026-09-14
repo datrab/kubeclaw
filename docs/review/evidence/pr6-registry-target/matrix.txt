@@ -1,0 +1,28 @@
+✔ failure matrix contract audit materializes every scenario fresh and restored without stale harness drift (12824.447426ms)
+✔ failure matrix contract audit catches stale restored checkpoint runtime defaults (2870.490457ms)
+✔ failure matrix exposes eight canonical suites covering every case once (3.300275ms)
+✔ failure matrix suite cases declare canonical execution boundaries (0.261503ms)
+✔ failure matrix runs selected suites and rolls case failures into suite failures (14.919053ms)
+✔ failure matrix records aborted case and continues through requested suite cases (11.755295ms)
+✔ failure matrix can resume a suite from a selected scenario (5.097229ms)
+✔ failure matrix can run one selected scenario through its owning suite only (1.843769ms)
+✔ failure matrix fail-fast stops at the first failed suite (0.867761ms)
+✔ failure matrix seed mode runs the canonical checkpoint seed child only (1.071051ms)
+✔ canonical full-pipeline-smoke always starts fresh even in reuse mode (5.959095ms)
+✔ canonical full-pipeline-smoke auto mode does not launch a checkpoint seed run (1.266011ms)
+✔ failure matrix suite Discord presentation and receipt use suite identity (0.89569ms)
+✔ failure matrix CLI and summary records are suite based (0.502998ms)
+✔ failure matrix Discord notifier reports explicit muted mode when disabled (0.282278ms)
+✔ failure matrix applies longer timeout only to expected happy-path scenarios (0.162466ms)
+✔ failure matrix report includes suite and case result files (0.577852ms)
+✔ runScenario stamps typed harness-aborted result when child exits before pipeline verdict (224.792424ms)
+✔ runScenario passes suite boundary and disables terminal extras outside full runs (197.48635ms)
+✔ runScenario does not mute Discord webhooks for the Discord-unavailable scenario (266.04092ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16543.855961

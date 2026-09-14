@@ -35,7 +35,7 @@ process.env.KUBECLAW_REGISTRY_CONFIG = JSON.stringify({ schemaVersion: 'registry
   auth: { usernameEnvironmentVariable: 'REGISTRY_TEST_USER', passwordEnvironmentVariable: 'REGISTRY_TEST_PASSWORD' },
 } });
 
-process.env.REAL_E2E_DEPLOYMENT_IMAGE = 'registry-mirror.kubeclaw.svc.cluster.local:5000/library/nginx:1.27-alpine@sha256:62223d644fa234c3a1cc785ee14242ec47a77364226f1c811d2f669f96dc2ac8';
+process.env.REAL_E2E_DEPLOYMENT_IMAGE = 'registry.example.test:5443/library/nginx:1.27-alpine@sha256:62223d644fa234c3a1cc785ee14242ec47a77364226f1c811d2f669f96dc2ac8';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const execFileAsync = promisify(execFile);

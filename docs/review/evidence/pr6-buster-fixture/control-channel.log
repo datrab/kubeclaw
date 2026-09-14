@@ -1,0 +1,14 @@
+✔ actual fourth pipe carries readiness and teardown while original stdin/stdout stay independent (508.503959ms)
+✔ actual child oversized framing is rejected before phase acceptance (517.248981ms)
+✔ actual child truncated framing is rejected before phase acceptance (546.162518ms)
+✔ actual child cumulative framing is rejected before phase acceptance (563.430405ms)
+✔ real host death after readiness cannot produce completion or keep its control channel alive (614.129426ms)
+✔ phase persistence failure stops the actual child and is not hidden by subsequent close (527.835591ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3819.815632

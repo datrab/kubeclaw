@@ -1,0 +1,17 @@
+Command: node --test tests/verification/deployment/prism-backup.test.mts
+Exit: 0
+✔ DB/object group preserves original artifact IDs on a fresh directory and retains old backups (718.146544ms)
+✔ verification catches modified DB, missing/extra/corrupt objects, and symlinks (2008.742994ms)
+✔ failures and capacity limits keep previous groups and never publish partial copies (999.239571ms)
+✔ corrupt or symlinked sources cannot produce a completed group (560.016595ms)
+✔ native lock prevents overlap and whole-operation deadline kills blocked dump (1125.458604ms)
+✔ actual Helm render runs the group script and verification has no database credentials (142.944321ms)
+✔ SQL proof uses only its newly created DB and never drops a failed creation (718.936816ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6621.016117

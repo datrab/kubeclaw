@@ -15,6 +15,7 @@ COPY --from=build /build/node_modules /app/prism/node_modules
 COPY --from=build /build/contracts /app/prism/contracts
 COPY --from=build /build/skills/prism /app/prism/skills/prism
 COPY --from=build /build/skills/worker/core /app/prism/skills/worker/core
+COPY --from=build /build/skills/common/plugin-runtime /app/prism/skills/common/plugin-runtime
 COPY --from=build /build/tests/verification/live /app/prism/tests/verification/live
 RUN install -d -o node -g node /var/lib/prism/artifacts
 USER node

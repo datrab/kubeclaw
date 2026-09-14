@@ -14,7 +14,7 @@ export function renderedTrust() {
     const config = docs.find(doc => doc?.kind === 'ConfigMap' && doc.data?.['envoy.yaml']);
     configurations.push({ name: role, workload, config: yaml.load(config.data['envoy.yaml']) });
   }
-  const docs = yaml.loadAll(execFileSync('helm', ['template', 'review', 'charts/prism', '-f', 'charts/prism/ci-values.yaml', '--namespace', 'alternative', '--set', 'workerTrust.spiffe.enabled=true'], { encoding: 'utf8' }));
+  const docs = yaml.loadAll(execFileSync('helm', ['template', 'review', 'charts/prism', '-f', 'charts/prism/ci-values.yaml', '--set', 'worker.native.namespace=alternative', '--namespace', 'alternative', '--set', 'workerTrust.spiffe.enabled=true'], { encoding: 'utf8' }));
   for (const role of ['control', 'worker']) configurations.push({ name: `prism-${role}`, workload: docs.find(doc => doc?.kind === 'Deployment' && doc.metadata.name === `prism-${role}`), config: yaml.load(docs.find(doc => doc?.kind === 'ConfigMap' && doc.data?.[`${role}.yaml`]).data[`${role}.yaml`]) });
   return configurations;
 }

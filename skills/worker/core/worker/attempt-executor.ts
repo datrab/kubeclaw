@@ -1,10 +1,13 @@
 import { assessWorkerResources, unsupportedWorkerBudget } from './resource-accounting.ts';
+import { resourceResultFields } from './resource-result-fields.ts';
 import crypto from 'node:crypto';
 import { WorkerPhaseDeadline, settlesWithin, armWorkerClaimDeadline } from './phase-deadline.ts';
 import { WorkerLogDecoder } from './log-decoder.ts';
 import {
   validatePipelineWorkerCoreContract,
   validateWorkerResourceContractV2, initialWorkerResourceAccounting,
+  validateWorkerResourceContractV3, initialWorkerNativeResourceAccounting,
+  type WorkerAttemptEnvelopeV3, type WorkerNativeResourceAccounting, type WorkerNativeResourceObservations,
   type WorkerAttemptEnvelope, type WorkerAttemptEnvelopeV2, type WorkerAttemptResult, type WorkerResultFor,
   type WorkerResourceObservations, type WorkerResourceAccounting,
   type AttemptProgressEventV1,
@@ -68,7 +71,7 @@ export interface WorkerAttemptOperation<E extends WorkerAttemptEnvelope = Worker
   execute(context: WorkerAttemptContext<E>): Promise<WorkerAttemptOperationResult>;
   terminate(): Promise<void>;
   /** Cumulative owned usage. Called after execution and again after completion hooks. */
-  measure(context: { readonly signal: AbortSignal }): Promise<E extends WorkerAttemptEnvelopeV2 ? WorkerResourceObservations : WorkerAttemptOperationResources>;
+  measure(context: { readonly signal: AbortSignal }): Promise<E extends WorkerAttemptEnvelopeV3 ? WorkerNativeResourceObservations : E extends WorkerAttemptEnvelopeV2 ? WorkerResourceObservations : WorkerAttemptOperationResources>;
   cleanup?(context: WorkerAttemptContext<E>): Promise<void>;
   collectEvidence?(context: WorkerAttemptEvidenceContext<E>): Promise<WorkerAttemptEvidenceResult>;
   /** Add evidence-derived facts before the terminal result becomes durable. */
@@ -182,7 +185,8 @@ function preflightJson(value: unknown, byteLimit: number, prefix: string): void 
 }
 
 function validateEnvelopeDigests(envelope: WorkerAttemptEnvelope): void {
-  if(envelope.schemaVersion==='worker-attempt-envelope.v2')validateWorkerResourceContractV2('workerAttemptEnvelope',envelope);
+  if(envelope.schemaVersion==='worker-attempt-envelope.v3')validateWorkerResourceContractV3('workerAttemptEnvelope',envelope);
+  else if(envelope.schemaVersion==='worker-attempt-envelope.v2')validateWorkerResourceContractV2('workerAttemptEnvelope',envelope);
   else validatePipelineWorkerCoreContract('workerAttemptEnvelope', envelope);
 }
 
@@ -206,7 +210,7 @@ function checkEvidence(evidence: readonly WorkerEvidenceRefV1[], envelope: Worke
 
 export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttemptEnvelopeV1> {
   readonly #options: WorkerAttemptExecutorOptions<E>;
-  readonly #accounting: WorkerResourceAccounting | undefined;
+  readonly #accounting: WorkerResourceAccounting | WorkerNativeResourceAccounting | undefined;
   readonly #now: () => Date;
   readonly #id: () => string;
   #progressSequence = 0;
@@ -224,7 +228,8 @@ export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttem
       throw new Error('WORKER_RECEIPT_NAMESPACE_INVALID');
     }
     this.#options = { ...options, envelope };
-    this.#accounting=envelope.schemaVersion==='worker-attempt-envelope.v2'?initialWorkerResourceAccounting(envelope):undefined;
+    this.#accounting=envelope.schemaVersion==='worker-attempt-envelope.v3'?initialWorkerNativeResourceAccounting(envelope)
+      :envelope.schemaVersion==='worker-attempt-envelope.v2'?initialWorkerResourceAccounting(envelope):undefined;
     this.#now = options.now ?? (() => new Date());
     this.#id = options.id ?? (() => crypto.randomUUID());
   }
@@ -627,7 +632,7 @@ export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttem
     const { envelope } = this.#options;
     const finalCompleted = completed.getTime() < started.getTime() ? started : completed;
     const unsigned = {
-      ...(envelope.schemaVersion==='worker-attempt-envelope.v2'?{schemaVersion:'worker-attempt-result.v2' as const,profileDigest:envelope.profile.profileDigest,attemptSpecDigest:envelope.attemptSpecDigest,resourceAccounting:structuredClone(this.#accounting!)}:{schemaVersion:'worker-attempt-result.v1' as const}),
+      ...resourceResultFields(envelope, this.#accounting),
       protocolVersion: envelope.protocolVersion,
       attemptId: envelope.attemptId,
       claimId: envelope.claim.claimId,
@@ -674,7 +679,8 @@ export class WorkerAttemptExecutor<E extends WorkerAttemptEnvelope = WorkerAttem
       receipt: receipt(namespace, this.#id(), resultDigest),
     };
     try {
-      if(result.schemaVersion==='worker-attempt-result.v2')validateWorkerResourceContractV2('workerAttemptResult',result);
+      if(result.schemaVersion==='worker-attempt-result.v3')validateWorkerResourceContractV3('workerAttemptResult',result);
+      else if(result.schemaVersion==='worker-attempt-result.v2')validateWorkerResourceContractV2('workerAttemptResult',result);
       else validatePipelineWorkerCoreContract('workerAttemptResult', result);
       const frozenResult = freeze(result);
       if (!fault && this.#now().getTime() >= Date.parse(envelope.claim.expiresAt)) {

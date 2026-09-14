@@ -27,7 +27,7 @@ Application dependencies remain in their native manifests and lockfiles, includi
 
 The ops-pod keeps its existing kubectl/Helm versions in an explicit image override, including the Helm version used by its CI tests. Its Dockerfile and the MCP Dockerfile consume centrally managed, digest-pinned Node bases.
 
-The default Debian snapshot applies to the OpenClaw images. Buster's worker retains its explicitly named snapshot override. Changing OpenClaw does not automatically advance an unrelated OS snapshot. Changing a downloaded binary requires updating its corresponding architecture checksums as well as its version. Several upstream tools still supply their checksum files at build time; those are not equivalent to a committed checksum pin.
+The default Debian snapshot applies to the OpenClaw images. Buster's worker retains its explicitly named snapshot override. Changing OpenClaw does not automatically advance an unrelated OS snapshot. Changing a downloaded binary requires updating its corresponding architecture checksums as well as its version. Nova and Ops binary downloads use committed architecture hashes; builds no longer fetch their checksum files alongside the binaries.
 
 ## Upgrade procedure
 
@@ -57,7 +57,7 @@ Node image upgrades stay on the currently supported 22/24 lines until a reviewed
 
 Renovate discovers native npm/Go dependencies, GitHub Actions, Helm dependencies/values and custom central pins. It ignores centrally generated Envoy chart fields and our own runtime image tags, which are release outputs. OpenClaw numbered correction releases remain eligible, while alpha/beta tags are excluded. Lockfile changes and version changes trigger real role-image acceptance.
 
-The administrative Renovate configuration permits one exact post-update command. The workflow mounts the updater and version generator read-only from the trusted main checkout. It does not execute updater code supplied by an update PR. The updater resolves the OpenClaw image and checks that both official npm plugins exist. For downloaded Go, kubectl, shfmt, Terraform, TFLint and Trivy binaries it updates both architecture checksums and verifies actual downloaded bytes before generating native files. Registry digest changes are checked against actual manifest bytes. Unknown checksums, unavailable upstream releases or failed generation stop the update; stale checksums are never retained to produce a green PR.
+The administrative Renovate configuration permits one exact post-update command. The workflow mounts the updater and version generator read-only from the trusted main checkout. It does not execute updater code supplied by an update PR. The updater resolves the OpenClaw image and checks that both official npm plugins exist. For downloaded Go, kubectl, shfmt, Terraform, TFLint, Trivy, hadolint, Helm and kubeconform binaries, including the separate Ops kubectl/Helm versions, it updates both architecture checksums and verifies actual downloaded bytes before generating native files. Registry digest changes are checked against actual manifest bytes. Unknown checksums, unavailable upstream releases or failed generation stop the update; stale checksums are never retained to produce a green PR.
 
 ### Activate the updater
 
@@ -130,3 +130,80 @@ existing promotion and PR acceptance authenticate the preserved successful build
 receipt; local schema validation does not authenticate an invented receipt.
 Actual Pod `imageID` comparison, startup and migration acceptance still require
 a separately authorized live deployment. No such proof is claimed by these tests.
+
+## Inspect the selected image's descriptor identity
+
+After the normal release selection and materialization, inspect one named slot:
+
+```sh
+node scripts/updates/inspect-release-image.mjs runtime nova linux/amd64
+```
+
+The command consumes the existing selected-release validator and performs bounded,
+read-only GHCR requests. It verifies raw document hashes and child descriptor
+sizes, resolves exactly one platform manifest and checks the corresponding config.
+Its JSON distinguishes the optional index digest, manifest digest and config digest.
+It does not equate these identifiers, verify layers, inspect a Pod or report an
+active code bundle. Multiple matching platforms and nested indexes fail explicitly.
+
+For a private package, an optional fourth argument names a file containing an
+already issued GHCR registry bearer token. It is not a GitHub PAT argument; token
+contents are never printed. Without a token the reader attempts one anonymous
+pull-token exchange scoped to the exact repository. Registry credentials are never
+forwarded to the explicitly allowed signed blob CDN. Other redirects fail closed.
+The deadline applies to the complete descriptor read sequence, including token
+exchange; the default is 30 seconds and each document is capped at 4 MiB.
+
+A successful descriptor inspection remains separate from proof that the fresh
+Pod/container runs that image and has loaded the selected code bundle.
+
+## Rebuild contract and remaining inputs
+
+The supported contract is a reviewed software dependency set plus a tested
+output image digest. It is not a promise of identical OCI bytes from a Git
+commit alone. Build architecture, builder/provenance settings, browser archives
+and explicitly refreshed security databases are additional inputs.
+
+Nova and Buster Python tools now consume complete version/hash wheel locks in
+`docker/python-tools`. Only binary wheels are accepted, so an unbound source
+build backend cannot enter through a missing wheel. The same lock resolution is
+checked for Debian12 Python3.11 on AMD64 and ARM64. Nova's Semgrep environment
+remains separate; Buster has its own combined lock and selected Semgrep version.
+Go analyzers use the committed `docker/go-tools/go.mod` and `go.sum`, read-only
+module resolution, the selected local toolchain and `-trimpath`. Automatic Go
+toolchain download is disabled. Ops apt and Prism browser OS packages now use
+the selected Debian snapshot, including the final image stages.
+
+`npm run versions:sync` generates direct requirements from `versions.json` and
+refreshes dependency locks if their recorded inputs or outputs differ. It needs
+`uv` and the exact selected Go toolchain in PATH for a refresh. The trusted
+Renovate updater uses the same resolver; missing tools, mismatched toolchains,
+unavailable wheels or differing ARM64 resolution stop the update. No repository
+postinstall script is enabled. `npm run versions:check` validates the input/output
+hash receipt without resolving or repairing dependencies. Review all generated
+requirements, hashes and module changes together. A deliberate same-version
+transitive refresh can remove `docker/runtime-tool-locks.json` before running
+`npm run versions:sync`; the receipt is regenerated only after all resolution
+and verification succeeds.
+
+Local package reconstruction checks are available as:
+
+```sh
+RUNTIME_LOCK_PYTHON="$PYTHON_311" node --test tests/verification/deployment/runtime-tool-locks-native.mjs
+RUNTIME_LOCK_GO="$SELECTED_GO" node --test tests/verification/deployment/go-tool-locks-native.mjs
+node --test tests/verification/deployment/runtime-tool-locks.test.mjs tests/verification/deployment/versions.test.mjs
+```
+
+These tests compare two actual isolated Python installations and two actual Go
+builds, and reject deliberately wrong hashes. They are not two complete image
+builds. ARM64 wheel resolution/installation does not prove ARM64 execution.
+Playwright's npm version fixes browser revisions, but independently verified
+browser archive hashes remain unfinished. Trivy's deliberate database refresh
+also remains a separate data input: its freshness gate and observed database
+hashes do not make two different refreshes identical. IFR-21-001 stays open.
+
+For complete image acceptance, preserve the architecture and builder settings,
+selected browser/database bytes, complete package inventory/SBOM and output
+manifests for two isolated builds. Compare software identities and classify
+metadata/provenance and intentional data-refresh differences. Continue deploying
+only the accepted output digest through the existing release-selection path.

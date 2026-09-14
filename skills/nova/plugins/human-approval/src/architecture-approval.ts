@@ -55,6 +55,10 @@ function findingSummary(value: unknown, maximum: number): string {
       throw new Error(`ARCHITECTURE_APPROVAL_FINDING_INVALID:${index}`);
     }
     const finding = entry as Record<string, unknown>;
+    if (finding.severity === 'blocking') throw new Error('ARCHITECTURE_APPROVAL_BLOCKING_FINDING');
+    if (!['error', 'warn', 'info'].includes(String(finding.severity))) {
+      throw new Error('ARCHITECTURE_APPROVAL_FINDING_SEVERITY_INVALID');
+    }
     return [
       reportText(finding.severity, `FINDING_${index}_SEVERITY`, 32).toUpperCase(),
       reportText(finding.id, `FINDING_${index}_ID`, 256),
@@ -115,6 +119,10 @@ export async function execute(rawInput: unknown, context: PluginInvocationContex
   const subject = report.subject === undefined ? undefined : await verifyReviewSubject(report.subject, context);
   const approvalPrefix = `${input.summary} Evidence: ${artifact.digest}. Findings: `;
   const findings = findingSummary(report, 10_000 - approvalPrefix.length);
+  if (findings && context.contract.guidance?.decision === 'approved') {
+    const reason = context.contract.guidance.reason;
+    if (typeof reason !== 'string' || !reason.trim()) throw new Error('ARCHITECTURE_APPROVAL_REASON_REQUIRED');
+  }
   const result = findings ? await executeApproval({ summary: `${approvalPrefix}${findings}` }, context) : {
       schemaVersion: 'stage-result.v2',
       outcome: 'passed',

@@ -81,8 +81,13 @@ ARG RUFF_VERSION=0.15.22
 ARG MYPY_VERSION=2.3.0
 ARG PIP_AUDIT_VERSION=2.10.1
 ARG SEMGREP_VERSION=1.170.1
-RUN pip install --break-system-packages --no-cache-dir \
-      "ruff==${RUFF_VERSION}" "mypy==${MYPY_VERSION}" "pip-audit==${PIP_AUDIT_VERSION}" "semgrep==${SEMGREP_VERSION}"
+COPY docker/python-tools/buster.txt /opt/kubeclaw-python-locks/buster.txt
+RUN grep -F "ruff==${RUFF_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
+    && grep -F "mypy==${MYPY_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
+    && grep -F "pip-audit==${PIP_AUDIT_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
+    && grep -F "semgrep==${SEMGREP_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
+    && pip install --break-system-packages --no-cache-dir --require-hashes --only-binary=:all: \
+      -r /opt/kubeclaw-python-locks/buster.txt
 
 ENV PATH="/app/node_modules/.bin:${PATH}" \
     PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \

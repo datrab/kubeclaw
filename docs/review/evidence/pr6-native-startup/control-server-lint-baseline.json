@@ -1,0 +1,106 @@
+{
+  "originalBlob": "a86e191dcfe8bf6643eafb78c040c13bae00665e",
+  "comparison": "rule and message multisets identical; existing baseline not modified",
+  "diagnostics": [
+    [
+      "complexity",
+      "Async method 'handle' has a complexity of 202. Maximum allowed is 15."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (4). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (4). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (4). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (4). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (4). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (4). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (4). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (4). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (4). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (4). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (4). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (4). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (5). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (5). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (5). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (5). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (6). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (6). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (6). Maximum allowed is 3."
+    ],
+    [
+      "max-depth",
+      "Blocks are nested too deeply (6). Maximum allowed is 3."
+    ],
+    [
+      "max-lines",
+      "File has too many lines (992). Maximum allowed is 300."
+    ],
+    [
+      "max-lines-per-function",
+      "Async method 'handle' has too many lines (797). Maximum allowed is 60."
+    ],
+    [
+      "max-lines-per-function",
+      "Async method 'runWorker' has too many lines (66). Maximum allowed is 60."
+    ],
+    [
+      "no-console",
+      "Unexpected console statement."
+    ]
+  ]
+}

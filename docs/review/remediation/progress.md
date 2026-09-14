@@ -1,5 +1,46 @@
 # Aktueller Umsetzungsstand
 
+IFR-24-001 zusätzlich lokal abgeschlossen: echte PostgreSQL17→18- und
+Qdrant1.18.2→1.19.1-Migration, Erhalt der Altdaten, frische Ziel-Releases/PVCs,
+Recovery-/TLS-/Netzwerkbindung und zehn Helm-/Manifestgates.
+[Abschluss, Rohbelege und Live-Grenzen](implementation/pr6-stateful-migration-closure.md).
+IFR-21-001 jetzt in Bearbeitung: Python-/Go-/Download-/apt-Inputs gebunden und
+real geprüft; Browser/DB-Inputs und vollständige Imagevergleiche bleiben offen.
+[Image-Checkpoint](implementation/pr6-runtime-tool-locks.md).
+
+Redis IFR-11-001 lokal abgeschlossen: echte Versions-/RDB-AOF-Migration,
+Crash-/Dedup-/OOM-Prüfung und vier Helm-/PVC-Gates bestanden.
+[Abschluss und Live-Grenzen](implementation/pr6-redis-migration-closure.md).
+
+Fixture-Fortsetzung 2026-09-13: dauerhafte Bereitschaft/Teardown mit echtem
+Prozesskanal und separater Core-Lifetime-API verbunden. 12 lokale Tests bestanden;
+keine Finding-Schließung, keine aktivierte Runner-Umstellung. [Checkpoint und
+offene Integration](implementation/pr6-buster-fixture-control.md).
+
+**140/154 lokal verifiziert, 14 unvollständig** (2 teilweise implementiert, 2 in Bearbeitung, 10 offen). PCR-PRISM-WORKER-002 nach Prüfung des aktuellen V3-Produktionspfads und lokalen Originaltests gemäß D12 geschlossen; veralteten V1-Testimport durch originale historische Receipts ersetzt. [Nachweis und separate Live-Gates](implementation/pr6-prism-native-local-closure.md). Frühere Zähler darunter sind historische Checkpoints.
+
+Wiederaufnahme 2026-09-13: drei offene Worker-Dateien geprüft; Startbesitz und Elternprozessbindung ergänzt. 24 echte lokale Prozess-/Ownership-/Channel-Tests bestehen. Buster-Rollenintegration bleibt unvollständig; **137/154 lokal verifiziert, 17 unvollständig**. Aktuelle [Übergabe](handoff.md) und [Nachweise](implementation/pr6-launch-ownership-checkpoint.md).
+
+Prism-Bereinigung: Der aktive Control-/Worker-Pfad ist ausschließlich V3; Legacy-Dispatcher, V1-Executor/-Producer, gemeinsame Prozessmessung und zweiter CLI-Einstieg sind entfernt. Helm und Preflight bieten keinen Legacy-Schalter mehr. Lokale Prüfungen und vorbereitete echte Native-Gates: [Single-Runtime-Checkpoint](implementation/pr6-prism-single-runtime.md). Busters bestehender UID-Wechsel kollidiert mit dem vollständig entrechteten nativen Host; dazu liegt eine neue [Entscheidung zur Startberechtigung](implementation/pr6-buster-launch-authority-decision.md) vor. **137 lokal verifiziert / 17 unvollständig**, keine pauschale Finding-Schließung.
+
+D16 ist ausdrücklich bestätigt: feste Host-Reservierungen für Buster und Prism. Gesamtbudgets, vollständige Pending-/Active-Admission-Reservierungen, generierte Hostvorbereitung und read-only Prüfung von echtem Node/Kubelet/cgroup sind implementiert und lokal geprüft. [Checkpoint](implementation/pr6-node-pools-checkpoint.md). **137 lokal verifiziert / 17 unvollständig**, keine zusätzliche Schließung. Runtime-/Chart-/V3-Start und vollständige Buster-Fixture-Integration bleiben in Umsetzung; keine erneute Freigabe von D16 erforderlich.
+
+Stand 2026-09-13: **137 lokal verifiziert / 17 unvollständig** (3 teilweise implementiert, 3 in Bearbeitung, 11 offen). Neu nach D12 abgeschlossen: IFR-12-001, separate LiteLLM-PostgreSQL-Recovery mit echtem Restore und originaler Crypto-/Konfigurationsprüfung. Code/Nachweise: `9e725b35e0e623708f7f0e26ed120fc6ac60eb68`; [Checkpoint](implementation/pr6-postgresql-recovery-checkpoint.md). Vollständige Image-/Cluster-/API-Live-Abnahme übernimmt der Auftraggeber. Cross-Store-/Off-Node-Recovery und alle vier ursprünglichen Findings bleiben unvollständig. Alle nachfolgenden Zähler sind historische Stände.
+
+Stand 2026-09-13: **136 lokal verifiziert / 18 unvollständig** (3 teilweise implementiert, 3 in Bearbeitung, 12 offen). Neu nach D12 abgeschlossen: IFR-15-001, Prism-Datenbankmigration und Credential-Rollbackgrenze. Code/Nachweise: `8d47764b7b276c783f312198d6987b9197e593e4`; [Checkpoint](implementation/pr6-stateful-upgrade-checkpoint.md). Die vier ursprünglichen Core/Buster/Prism/Observability-Findings bleiben unvollständig. Redis/PostgreSQL-Pins und Upgrade-Preflights sind ergänzt, vollständige Daten-/Storage-Migrationen bleiben offen. Alle nachfolgenden Zähler sind historische Stände.
+
+Aktueller Folgecheckpoint: **131 lokal verifiziert / 3 teilweise / 1 in Bearbeitung / 19 offen**. Von den zuletzt angefragten7 sind3 abgeschlossen;4 bleiben. SDK-Nachweis: implementation/pr6-sdk-local-verification.md. [Risiko-/Registry-Nachweise](implementation/pr6-risk-and-registry.md). Ältere Zähler unten sind historische Stände.
+
+Aktueller Stand nach D12 (2026-09-12): **128 lokal verifiziert / 5 teilweise / 2 in Bearbeitung / 19 offen**. Von den39 sind34 lokal abgeschlossen. Live-Abnahmen folgen separat durch den Auftraggeber nach Open-Sourcing. Maßgeblich sind [D12](decisions.md#d12--lokaler-abschluss-und-separate-live-abnahme), [Einzelbewertung](implementation/pr6-local-acceptance.md) und [Register](register.json). Ausschließlich im bestehenden PR #6 und dessen Branch weiterarbeiten; frühere Anweisungen zu weiteren Fixbranches gelten nicht. Die folgenden älteren Stände bleiben historischer Verlauf.
+
+## Fortsetzung 2026-09-12 auf konsolidiertem main
+
+Die Einzelprüfung bestätigt **94 verifiziert / 39 teilweise / 2 in Bearbeitung / 19 offen**. Die veralteten drei Markdown-Zeilen und die Summe 42 sind korrigiert; keine neue Finding-Hochstufung. Supervisor-Lease-Besitzwechsel und Freigabe sind jetzt mit dem vorhandenen FileMutex serialisiert. Originaler Operations-Prüfeinstieg: **20/20 bestanden, keine Skips**, begrenzter kanonischer Lint bestanden. Native Adoption bleibt durch fehlende Child-cmdline in procfs blockiert. [Abgleich, Ursachenfix, Nachweise und Restarbeit](implementation/resume-20260912-supervisor-lease.md).
+
+Die Änderungen werden über den bestehenden Branch `fix/remediation-foundations-20260909` als PR gegen main bereitgestellt. Der folgende Stand vom 11. September bleibt als Verlauf erhalten.
+
+## Historischer Stand 2026-09-11
+
 2026-09-11. Branch `fix/remediation-foundations-20260909`. Ausgangscode bleibt als
 historische Baseline `85ddfcbf` dokumentiert; neue Implementierung ist in getrennten
 Fixcommits gesichert. Originalberichte werden nicht nachträglich umgeschrieben.

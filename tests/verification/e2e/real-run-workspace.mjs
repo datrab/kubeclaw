@@ -12,7 +12,7 @@ import {
   validateRealE2EScenarioSetup,
 } from './failure-scenarios.mjs';
 import { expandSwarmConfig } from './support/platform-config.ts';
-import { registryClientOrigin } from '../../../scripts/registry-client-config.mjs';
+import { realE2ERegistryTarget, realE2EDeploymentImage } from './registry-target.mjs';
 import { fixtureCoverage } from './fixture-coverage.mjs';
 
 const execFileAsync = promisify(execFile);
@@ -26,14 +26,6 @@ export const DEFAULT_REAL_E2E_AGENT_JUDGMENT_MODULE_TIMEOUT_MINUTES = 10;
 const REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD = 2;
 const REAL_E2E_MODULE_MAX_FAILS = REAL_E2E_MODULE_AUTO_RETRY_THRESHOLD + 1;
 const FIXTURE_DIR = path.join(SCRIPT_DIR, 'fixtures', 'nginx-project');
-function realE2EDeploymentImage() {
-  const image = process.env.REAL_E2E_DEPLOYMENT_IMAGE?.trim();
-  if (!image) throw new Error('REAL_E2E_DEPLOYMENT_IMAGE_REQUIRED: supply the published immutable release image');
-  if (!/^[a-z0-9.-]+\.svc\.cluster\.local:\d+\/[a-z0-9._/:-]+@sha256:[a-f0-9]{64}$/u.test(image)) {
-    throw new Error('REAL_E2E_DEPLOYMENT_IMAGE_INVALID: expected an in-cluster immutable SHA-256 image reference');
-  }
-  return image;
-}
 const DEPLOYED_COMPACT_CONFIG_PATH = path.join(REPO_ROOT, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json');
 const REAL_E2E_MODULE_ID = '01-nginx';
 const REAL_E2E_SEED_MODULE_IDS = Object.freeze(['01-nginx', '02-nginx', '03-nginx', '04-nginx']);
@@ -469,7 +461,7 @@ function applyScenarioModuleScope(progress, scenarioId) {
   const projectName = progress.project || 'real-pipeline-e2e';
   const projectSrc = `Projects/${projectName}/src`;
   const releaseCandidateImage = progress.contracts?.deployable_artifact?.image?.reference
-    || realE2EDeploymentImage();
+    || realE2EDeploymentImage().reference;
   progress.contracts = buildRealE2EContractCatalog({
     projectName,
     projectSrc,
@@ -776,7 +768,7 @@ export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SE
   const terminalExtrasEnabled = realE2ETerminalExtrasEnabled();
   const executionBoundary = realE2EExecutionBoundary();
   const projectSrc = `Projects/${projectName}/src`;
-  const releaseCandidateImage = realE2EDeploymentImage();
+  const releaseCandidateImage = realE2EDeploymentImage().reference;
   const progressModuleIds = canonicalModuleIds(moduleIds);
   const contracts = buildRealE2EContractCatalog({ projectName, projectSrc, releaseCandidateImage, moduleIds: progressModuleIds });
   const modules = Object.fromEntries(progressModuleIds.map((moduleId) => [
@@ -930,14 +922,8 @@ export function buildProgress({ projectName, runId = '', moduleIds = REAL_E2E_SE
   return progress;
 }
 
-function realE2ERegistryOrigin() {
-  const contract = process.env.KUBECLAW_REGISTRY_CONFIG;
-  if (!contract) throw new Error('REAL_E2E_REGISTRY_CONFIG_REQUIRED: supply the operator registry-clients.v1 contract');
-  return registryClientOrigin(JSON.parse(contract));
-}
-
 function instructionFiles(progress) {
-  const registryOrigin = realE2ERegistryOrigin();
+  const registryOrigin = realE2ERegistryTarget().origin;
   const contracts = progress?.contracts || {};
   const projectSrc = `Projects/${progress.project}/src`;
   const moduleIds = Object.keys(progress?.modules || {});
@@ -1552,7 +1538,7 @@ export function buildRunConfig({ runId, worktreePath, scenarioId = 'success' }) 
 }
 
 export async function createRealE2ERunWorkspace({ mode = 'full', scenarioId = 'success' } = {}) {
-  realE2ERegistryOrigin();
+  realE2EDeploymentImage();
   const runId = `real-e2e-${Date.now()}-${process.pid}`;
   const model = e2eModel();
   const projectName = projectNameForRun(runId);

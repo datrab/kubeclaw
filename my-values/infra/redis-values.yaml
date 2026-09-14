@@ -1,11 +1,29 @@
+image:
+  registry: registry-1.docker.io
+  repository: bitnami/redis
+  tag: latest
+  digest: sha256:ffa455a3ad00bccc24dfde113ef55329dde687da242e9feb6ccd2b30eb93e8f3
 architecture: standalone
+# Redis contains ACK/dedup state, not disposable cache entries. Refuse writes at
+# capacity; never evict a dedup key to make room for a later stream append.
+commonConfiguration: |-
+  appendonly yes
+  appendfsync always
+  no-appendfsync-on-rewrite no
+  aof-load-truncated no
+  aof-use-rdb-preamble yes
+  save ""
+  maxmemory 1gb
+  maxmemory-policy noeviction
+  auto-aof-rewrite-percentage 100
+  auto-aof-rewrite-min-size 64mb
 auth:
   enabled: true
   existingSecret: redis-secrets
   existingSecretPasswordKey: redis-password
 master:
   persistence:
-    size: 2Gi
+    size: 20Gi
   resources:
-    requests: { cpu: 50m, memory: 64Mi }
-    limits: { cpu: 250m, memory: 256Mi }
+    requests: { cpu: 100m, memory: 512Mi }
+    limits: { cpu: "1", memory: 4Gi }

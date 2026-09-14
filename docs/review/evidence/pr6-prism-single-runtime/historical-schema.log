@@ -1,0 +1,13 @@
+✔ direction selection rolls back on actual SQL insert failure and replays a committed response (7969.418742ms)
+✔ all feedback actions persist valid wire IDs, explicit retries deduplicate and fresh actions remain distinct (6011.392161ms)
+✔ failed rejection retains proposed state; stale and historical partial selections do not invent receipts (6035.874701ms)
+✔ wire preference IDs replay only exact owner and content while preserving internal UUIDs (5736.271148ms)
+✔ wire ID migration preserves legacy UUID/content and refuses ambiguous historical wire identities (11161.771915ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 38093.5028

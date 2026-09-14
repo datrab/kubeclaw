@@ -120,6 +120,7 @@ COPY skills/prism/openclaw-plugin/ /app/dist/extensions/kubeclaw-prism/
 COPY --from=prism-bridge-dependencies /build/node_modules /opt/kubeclaw-prism/node_modules
 COPY --from=prism-bridge-dependencies /build/contracts /opt/kubeclaw-prism/contracts
 COPY --from=prism-bridge-dependencies /build/skills/worker/core /opt/kubeclaw-prism/skills/worker/core
+COPY --from=prism-bridge-dependencies /build/skills/common/plugin-runtime /opt/kubeclaw-prism/skills/common/plugin-runtime
 COPY skills/prism/server/agent-bridge.mjs skills/prism/server/agent-job-runner.mjs skills/prism/server/agent-prompt.mjs skills/prism/server/preference-prompt.mjs skills/prism/server/agent-attempt.ts skills/prism/server/agent-process.ts skills/prism/server/worker-artifacts.ts /opt/kubeclaw-prism/
 
 LABEL org.opencontainers.image.title="KubeClaw Prism Agent"

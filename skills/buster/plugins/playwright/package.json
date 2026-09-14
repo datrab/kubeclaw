@@ -1,1 +1,14 @@
-{"name":"@kubeclaw/plugin-playwright","private":true,"type":"module","scripts":{"test":"node tests/live-function.test.ts"},"dependencies":{"@kubeclaw/buster-engine":"*"}}
+{
+  "name": "@kubeclaw/plugin-playwright",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/live-function.test.ts"
+  },
+  "dependencies": {
+    "@kubeclaw/buster-engine": "*"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1"
+  }
+}

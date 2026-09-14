@@ -69,19 +69,22 @@ NODE_PATH=/opt/kubeclaw-tools/node_modules:/app/node_modules \
 NPM_CONFIG_CACHE=/root/.npm
 
 
-# Exact Python tool versions keep resolver output stable.
+# Complete hashed wheel locks; builds never resolve transitive versions.
 
 ARG RUFF_VERSION=0.15.22
 ARG MYPY_VERSION=2.3.0
 ARG PIP_AUDIT_VERSION=2.10.1
 ARG SEMGREP_VERSION=1.170.0
 
-RUN pip install --break-system-packages --no-cache-dir \
-"ruff==${RUFF_VERSION}" \
-"mypy==${MYPY_VERSION}" \
-"pip-audit==${PIP_AUDIT_VERSION}" \
+COPY docker/python-tools/common.txt docker/python-tools/semgrep-nova.txt /opt/kubeclaw-python-locks/
+RUN grep -F "ruff==${RUFF_VERSION} " /opt/kubeclaw-python-locks/common.txt \
+&& grep -F "mypy==${MYPY_VERSION} " /opt/kubeclaw-python-locks/common.txt \
+&& grep -F "pip-audit==${PIP_AUDIT_VERSION} " /opt/kubeclaw-python-locks/common.txt \
+&& grep -F "semgrep==${SEMGREP_VERSION} " /opt/kubeclaw-python-locks/semgrep-nova.txt \
+&& pip install --break-system-packages --no-cache-dir --require-hashes --only-binary=:all: \
+  -r /opt/kubeclaw-python-locks/common.txt \
 && python3 -m venv /opt/semgrep \
-&& /opt/semgrep/bin/pip install --no-cache-dir "semgrep==${SEMGREP_VERSION}" \
+&& /opt/semgrep/bin/pip install --no-cache-dir --require-hashes --only-binary=:all: -r /opt/kubeclaw-python-locks/semgrep-nova.txt \
 && ln -s /opt/semgrep/bin/semgrep /usr/local/bin/semgrep \
 && ruff --version \
 && mypy --version \
@@ -120,17 +123,24 @@ tar -C /usr/local -xzf "/tmp/${go_archive}"; \
 rm "/tmp/${go_archive}"
 
 ENV PATH=/usr/local/go/bin:${PATH}
+ENV GOTOOLCHAIN=local
+COPY docker/go-tools/ /opt/kubeclaw-go-tools/
+WORKDIR /opt/kubeclaw-go-tools
 
 RUN --mount=type=cache,target=/tmp/kubeclaw-go-build \
 --mount=type=cache,target=/tmp/kubeclaw-go-mod \
 export GOCACHE=/tmp/kubeclaw-go-build GOMODCACHE=/tmp/kubeclaw-go-mod \
-&& GOBIN=/usr/local/bin go install "honnef.co/go/tools/cmd/staticcheck@${STATICCHECK_VERSION}" \
-&& GOBIN=/usr/local/bin go install "golang.org/x/vuln/cmd/govulncheck@${GOVULNCHECK_VERSION}" \
-&& GOBIN=/usr/local/bin go install "github.com/fzipp/gocyclo/cmd/gocyclo@${GOCYCLO_VERSION}" \
+&& test "$STATICCHECK_VERSION" = "$(jq -r .STATICCHECK_VERSION requirements.json)" \
+&& test "$GOVULNCHECK_VERSION" = "$(jq -r .GOVULNCHECK_VERSION requirements.json)" \
+&& test "$GOCYCLO_VERSION" = "$(jq -r .GOCYCLO_VERSION requirements.json)" \
+&& GOBIN=/usr/local/bin go install -mod=readonly -trimpath honnef.co/go/tools/cmd/staticcheck \
+  golang.org/x/vuln/cmd/govulncheck github.com/fzipp/gocyclo/cmd/gocyclo \
 && go version \
 && staticcheck -version \
 && govulncheck -version \
 && gocyclo -avg-short "$(go env GOROOT)/src/errors/errors.go" >/dev/null
+
+WORKDIR /app
 
 # Pinned, checksum-verified binary tools for amd64 and arm64.
 
@@ -139,6 +149,14 @@ ARG KUBECONFORM_VERSION=0.6.4
 ARG KUBECTL_VERSION=1.35.6
 ARG KUBERNETES_JSON_SCHEMA_COMMIT=c8f4e61c63bc529749125ac566bccc6986e08d45
 ARG HELM_VERSION=3.18.4
+ARG HELM_SHA256_AMD64=f8180838c23d7c7d797b208861fecb591d9ce1690d8704ed1e4cb8e2add966c1
+ARG HELM_SHA256_ARM64=c0a45e67eef0c7416a8a8c9e9d5d2d30d70e4f4d3f7bea5de28241fffa8f3b89
+ARG HADOLINT_SHA256_AMD64=56de6d5e5ec427e17b74fa48d51271c7fc0d61244bf5c90e828aab8362d55010
+ARG HADOLINT_SHA256_ARM64=5798551bf19f33951881f15eb238f90aef023f11e7ec7e9f4c37961cb87c5df6
+ARG KUBECONFORM_SHA256_AMD64=2b4ebeaa4d5ac4843cf8f7b7e66a8874252b6b71bc7cbfc4ef1cbf85acec7c07
+ARG KUBECONFORM_SHA256_ARM64=582a8a3eb3c33feb065928728ddac6e544c4f0b1234fd78fc1e4c4175a422b22
+ARG KUBECTL_SHA256_AMD64=5d11e2ba01ea68ffd053f56e27738e2b4330013ee67f7e46c6da6c585d3c9926
+ARG KUBECTL_SHA256_ARM64=c0f97f31c9ddc22d4951d543a1a7125a9af4b31e895ad4aa99899c4ba2a6ff0b
 ARG SHFMT_VERSION=3.13.1
 ARG TERRAFORM_VERSION=1.15.7
 ARG TFLINT_VERSION=0.64.0
@@ -147,15 +165,13 @@ ARG TRIVY_VERSION=0.74.0
 RUN set -eux; \
 arch="${TARGETARCH:-$(dpkg --print-architecture)}"; \
 case "$arch" in \
-amd64) hadolint_arch="x86_64"; shfmt_sha="${SHFMT_SHA256_AMD64}"; terraform_sha="${TERRAFORM_SHA256_AMD64}"; tflint_sha="${TFLINT_SHA256_AMD64}"; trivy_arch="64bit"; trivy_sha="${TRIVY_SHA256_AMD64}" ;; \
-arm64) hadolint_arch="arm64"; shfmt_sha="${SHFMT_SHA256_ARM64}"; terraform_sha="${TERRAFORM_SHA256_ARM64}"; tflint_sha="${TFLINT_SHA256_ARM64}"; trivy_arch="ARM64"; trivy_sha="${TRIVY_SHA256_ARM64}" ;; \
+amd64) hadolint_arch="x86_64"; shfmt_sha="${SHFMT_SHA256_AMD64}"; terraform_sha="${TERRAFORM_SHA256_AMD64}"; tflint_sha="${TFLINT_SHA256_AMD64}"; trivy_arch="64bit"; trivy_sha="${TRIVY_SHA256_AMD64}"; hadolint_sha="${HADOLINT_SHA256_AMD64}"; helm_sha="${HELM_SHA256_AMD64}"; kubeconform_sha="${KUBECONFORM_SHA256_AMD64}"; kubectl_sha="${KUBECTL_SHA256_AMD64}" ;; \
+arm64) hadolint_arch="arm64"; shfmt_sha="${SHFMT_SHA256_ARM64}"; terraform_sha="${TERRAFORM_SHA256_ARM64}"; tflint_sha="${TFLINT_SHA256_ARM64}"; trivy_arch="ARM64"; trivy_sha="${TRIVY_SHA256_ARM64}"; hadolint_sha="${HADOLINT_SHA256_ARM64}"; helm_sha="${HELM_SHA256_ARM64}"; kubeconform_sha="${KUBECONFORM_SHA256_ARM64}"; kubectl_sha="${KUBECTL_SHA256_ARM64}" ;; \
 *) echo "Unsupported architecture: $arch" >&2; exit 1 ;; \
 esac; \
 tmp="$(mktemp -d)"; \
 hadolint_file="hadolint-Linux-${hadolint_arch}"; \
 curl -fsSL "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/${hadolint_file}" -o "$tmp/$hadolint_file"; \
-curl -fsSL "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/${hadolint_file}.sha256" -o "$tmp/${hadolint_file}.sha256"; \
-hadolint_sha="$(awk '{ print $1 }' "$tmp/${hadolint_file}.sha256")"; \
 printf '%s  %s\n' "$hadolint_sha" "$tmp/$hadolint_file" | sha256sum -c -; \
 install -m 0755 "$tmp/$hadolint_file" /usr/local/bin/hadolint; \
 shfmt_file="shfmt_v${SHFMT_VERSION}_linux_${arch}"; \
@@ -178,18 +194,14 @@ printf '%s  %s\n' "$trivy_sha" "$tmp/$trivy_archive" | sha256sum -c -; \
 tar -xzf "$tmp/$trivy_archive" -C /usr/local/bin trivy; \
 kubeconform_archive="kubeconform-linux-${arch}.tar.gz"; \
 curl -fsSL "https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/${kubeconform_archive}" -o "$tmp/$kubeconform_archive"; \
-curl -fsSL "https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/CHECKSUMS" -o "$tmp/kubeconform-checksums.txt"; \
-kubeconform_sha="$(awk -v file="$kubeconform_archive" '$2 == file { print $1 }' "$tmp/kubeconform-checksums.txt")"; \
 printf '%s  %s\n' "$kubeconform_sha" "$tmp/$kubeconform_archive" | sha256sum -c -; \
 tar -xzf "$tmp/$kubeconform_archive" -C /usr/local/bin kubeconform; \
 kubectl_file="kubectl-${arch}"; \
 curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl" -o "$tmp/$kubectl_file"; \
-kubectl_sha="$(curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl.sha256")"; \
 printf '%s  %s\n' "$kubectl_sha" "$tmp/$kubectl_file" | sha256sum -c -; \
 install -m 0755 "$tmp/$kubectl_file" /usr/local/bin/kubectl; \
 helm_archive="helm-v${HELM_VERSION}-linux-${arch}.tar.gz"; \
 curl -fsSL "https://get.helm.sh/${helm_archive}" -o "$tmp/$helm_archive"; \
-helm_sha="$(curl -fsSL "https://get.helm.sh/${helm_archive}.sha256sum" | awk '{ print $1 }')"; \
 printf '%s  %s\n' "$helm_sha" "$tmp/$helm_archive" | sha256sum -c -; \
 tar -xzf "$tmp/$helm_archive" -C "$tmp"; \
 install -m 0755 "$tmp/linux-${arch}/helm" /usr/local/bin/helm; \

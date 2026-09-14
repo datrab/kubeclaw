@@ -1,0 +1,22 @@
+✔ engine generates, renders, evaluates and publishes idempotently (38.598749ms)
+✔ the generic worker carries an opaque Prism operation (6.22493ms)
+✔ the worker binding rejects unknown operations (0.377979ms)
+✔ concurrent retries share one provider execution (2.133261ms)
+✔ the live provider accepts internal LiteLLM without requiring embeddings (1.023362ms)
+✔ an idempotency key cannot identify different requests (3.47536ms)
+✔ Prism creates a valid neutral worker envelope (69.215384ms)
+✔ original worker operation reproduces missing log store; actual service executor persists the complete log (336.123521ms)
+✔ real durable log store corruption keeps an otherwise successful engine operation errored (58.352501ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (58.029194ms)
+✔ historical real receipts remain readable and cannot be reinterpreted as native task receipts (231.789238ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (23.624025ms)
+✔ full log participates in the real neutral evidence budget before upload (20.382278ms)
+✔ CPU consumed by the actual full-log upload participates in the terminal attempt budget (1185.641888ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4082.981591

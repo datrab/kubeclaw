@@ -11,12 +11,9 @@ const families = {
 
 // Provenance is authenticated by promotion/PR acceptance. This local boundary
 // validates that persisted selection, source configuration and deployment agree.
-export function selectedRelease(root, family) {
+export function validateReleaseReceipt(receipt, family) {
   const names = families[family];
   if (!names) throw new Error('Unknown release family');
-  const file = path.join(root, `releases/${family}-images.json`);
-  if (!fs.existsSync(file)) throw new Error(`No selected ${family} release. Merge the Promote image release selection PR, then run node scripts/updates/materialize-release.mjs --family=${family}; no latest fallback is available.`);
-  const receipt = JSON.parse(fs.readFileSync(file, 'utf8'));
   if (receipt.schemaVersion !== 1 || !/^[a-f0-9]{40}$/u.test(receipt.commit)
     || !Number.isSafeInteger(receipt.sourceRunId) || receipt.sourceRunId < 1
     || !Number.isSafeInteger(receipt.sourceRunAttempt) || receipt.sourceRunAttempt < 1
@@ -29,6 +26,16 @@ export function selectedRelease(root, family) {
       throw new Error(`Invalid selected image slot: ${name}`);
     }
   }
+  return receipt;
+}
+
+export function selectedRelease(root, family) {
+  const names = families[family];
+  if (!names) throw new Error('Unknown release family');
+  const file = path.join(root, `releases/${family}-images.json`);
+  if (!fs.existsSync(file)) throw new Error(`No selected ${family} release. Merge the Promote image release selection PR, then run node scripts/updates/materialize-release.mjs --family=${family}; no latest fallback is available.`);
+  const receipt = JSON.parse(fs.readFileSync(file, 'utf8'));
+  validateReleaseReceipt(receipt, family);
   execFileSync(process.execPath, [path.join(import.meta.dirname, 'materialize-release.mjs'), `--family=${family}`, '--check'], { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] });
   return receipt;
 }
@@ -113,9 +120,9 @@ export function validateRenderedRelease(baseline, rendered, receipt, requireBund
   if (requireBundle && bundleConsumers === 0) throw new Error('Selected code bundle is missing from rendered workload');
 }
 
-// Only registry connectivity belongs to this render context. Release images and
-// bundle controls must still come from the independently verified selection.
-function withRegistryContext(args, run) {
+// Private registry connectivity and the native host binding are needed even to
+// render a valid baseline. Never import images or bundle controls from overlays.
+function withDeploymentContext(args, role, run) {
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'release-registry-context-'));
   const context = [];
   try {
@@ -123,9 +130,13 @@ function withRegistryContext(args, run) {
       if (!['-f', '--values'].includes(args[index])) continue;
       const values = yaml.load(fs.readFileSync(args[++index], 'utf8'));
       const registry = values?.runtimeInfrastructure?.registry;
-      if (registry === undefined) continue;
+      const native = role === 'prism' ? values?.worker?.native : undefined;
+      const binding = native && Object.fromEntries(['nodeName', 'namespace', 'policyDigest']
+        .filter(key => native[key] !== undefined).map(key => [key, native[key]]));
+      if (registry === undefined && (!binding || !Object.keys(binding).length)) continue;
       const file = path.join(temporary, `${index}.yaml`);
-      fs.writeFileSync(file, yaml.dump({ runtimeInfrastructure: { registry } }), { mode: 0o600 });
+      fs.writeFileSync(file, yaml.dump({ ...(registry === undefined ? {} : { runtimeInfrastructure: { registry } }),
+        ...(binding && Object.keys(binding).length ? { worker: { native: binding } } : {}) }), { mode: 0o600 });
       context.push('-f', file);
     }
     return run(context);
@@ -165,7 +176,7 @@ if (process.argv[1] === import.meta.filename) {
     const baselineArgs = discovery ? ['-f', discovery] : [];
     baselineArgs.push('-f', path.join(root, `releases/values/${role}.yaml`));
     const render = values => execFileSync('helm', [...common, ...values], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
-    withRegistryContext(args, context => {
+    withDeploymentContext(args, role, context => {
       const baseline = render([...baselineArgs, ...context]);
       validateOverlays(args, root, role, baseline, values => render([...context, ...values]), receipt);
       const rendered = render(args);

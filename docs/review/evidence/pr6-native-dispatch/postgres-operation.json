@@ -1,0 +1,6 @@
+{
+  "startedAt": "2026-09-13T10:01:44.302343+00:00",
+  "finishedAt": "2026-09-13T10:01:53.916919+00:00",
+  "exitCode": 0,
+  "scope": "original PostgreSQL17 schema, SQL commit/concurrency/trigger, real writer SIGKILL and original durable worker journal; no positive cgroup execution"
+}

@@ -1,0 +1,324 @@
+{
+  "provenance": {
+    "sourceCommit": "0ad3a952f1bda57069e9165edef908cb73d88ae9",
+    "producer": "skills/prism/server/worker-attempt.ts",
+    "capturedAt": "2026-09-13T10:47:28.501Z",
+    "description": "Original V1 executor, original Prism renderer, actual local HTTP artifact store; unmodified receipt bytes and evidence."
+  },
+  "receipts": [
+    {
+      "attempt": {
+        "schemaVersion": "worker-attempt-envelope.v1",
+        "protocolVersion": "worker-protocol.v1",
+        "pipelineRunId": "prism-test-request",
+        "moduleId": null,
+        "gateId": null,
+        "planId": "plan-test-request",
+        "nodeId": "node-render",
+        "executionId": "execution-f41b0233-43df-4d85-8147-1357cd6f3bec",
+        "attemptId": "attempt-d523cc16-502e-42ba-84da-f5976e7c8487",
+        "attemptNumber": 1,
+        "claim": {
+          "schemaVersion": "attempt-claim.v1",
+          "claimId": "claim-5db36dbc-f6a8-4aba-a470-6bff82586fdc",
+          "attemptId": "attempt-d523cc16-502e-42ba-84da-f5976e7c8487",
+          "generation": 1,
+          "workerId": "prism-worker",
+          "claimedAt": "2026-09-13T10:47:28.200Z",
+          "expiresAt": "2026-09-13T10:57:28.200Z"
+        },
+        "profile": {
+          "schemaVersion": "worker-profile.v1",
+          "profileId": "prism-design-engine-v1",
+          "workerType": "prism",
+          "coreContractId": "kubeclaw.pipeline-worker-core@1",
+          "engine": {
+            "engineId": "prism-design-engine",
+            "contractId": "kubeclaw.prism-design-engine@1",
+            "engineVersion": "1.0.0",
+            "contentDigest": "sha256:2841affba4a9298a20fa3632303512516ad9c227b2abdb6a437eebe2d601cd54"
+          },
+          "capabilities": [
+            "artifacts.read",
+            "artifacts.write",
+            "network.http",
+            "secrets.read",
+            "telemetry.emit"
+          ],
+          "profileDigest": "sha256:e2b7f5c83a1a4dbbf9eca19de5d2324278446286dc3fe195ffceb0948d07e8aa"
+        },
+        "packages": [],
+        "grantedCapabilities": [
+          "artifacts.read",
+          "artifacts.write",
+          "network.http",
+          "secrets.read",
+          "telemetry.emit"
+        ],
+        "limits": {
+          "timeoutMs": 300000,
+          "cleanupTimeoutMs": 10000,
+          "cpuMillis": 4000,
+          "memoryBytes": 8589934592,
+          "processes": 256,
+          "logBytes": 1048576,
+          "resultBytes": 16777216,
+          "evidenceBytes": 134217728,
+          "evidenceFiles": 64
+        },
+        "inputs": [
+          {
+            "name": "prism-input",
+            "kind": "artifact",
+            "artifact": {
+              "artifactId": "artifact:sha256:5707f33b43412682edf406758ef03e7b8f180743970f232dd4f77ae0fd97ee17",
+              "type": "prism-engine-input",
+              "mediaType": "application/json",
+              "contentDigest": "sha256:5707f33b43412682edf406758ef03e7b8f180743970f232dd4f77ae0fd97ee17",
+              "sizeBytes": 1009,
+              "storageUrl": "http://127.0.0.1:35567/v1/internal/artifacts/sha256:5707f33b43412682edf406758ef03e7b8f180743970f232dd4f77ae0fd97ee17"
+            }
+          }
+        ],
+        "operation": {
+          "contractId": "kubeclaw.prism-design-engine@1",
+          "inputSchemaId": "prism.engine-requests.v1.json#/$defs/render",
+          "inputSchemaDigest": "sha256:1af1426f1694c73f8b7d1baded15ba6fc3441e06a03e9950f9f577cbfd1103e6",
+          "values": {
+            "operation": "render",
+            "inputName": "prism-input"
+          }
+        },
+        "cancellationId": "cancel-0bf7c3ec-2195-4bfa-9585-027fb3bee618",
+        "issuedAt": "2026-09-13T10:47:28.200Z",
+        "queueDeadline": "2026-09-13T10:57:28.200Z",
+        "attemptSpecDigest": "sha256:c06f40877f609dc0af0483a0d846c6775fa6720d2bec5a4cccc67b8433a3d950"
+      },
+      "workerResult": {
+        "schemaVersion": "worker-attempt-result.v1",
+        "protocolVersion": "worker-protocol.v1",
+        "attemptId": "attempt-d523cc16-502e-42ba-84da-f5976e7c8487",
+        "claimId": "claim-5db36dbc-f6a8-4aba-a470-6bff82586fdc",
+        "claimGeneration": 1,
+        "workerId": "prism-worker",
+        "state": "completed",
+        "startedAt": "2026-09-13T10:47:28.276Z",
+        "completedAt": "2026-09-13T10:47:28.367Z",
+        "durationMs": 91,
+        "summary": "Prism operation completed",
+        "specialistResult": {
+          "schemaId": "https://kubeclaw.dev/contracts/prism/engine-results.v1.json#/$defs/render",
+          "schemaDigest": "sha256:dfd2beb6acf288381e44afbd56241572f6e09549993e14b71dbbab2e643ff2ac",
+          "values": {
+            "html": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; img-src data:; font-src data:; style-src 'unsafe-inline'\"><style>*,*::before,*::after{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#0b0d10;color:#f4f6f8;font-family:Inter,system-ui,sans-serif}button,input,select,textarea{font:inherit}img{max-width:100%;height:auto}</style></head><body><div data-prism-id=\"home-root\" data-prism-type=\"stack\" style=\"display:flex;flex-direction:column;gap:16px\"><h1 data-prism-id=\"title\" data-prism-type=\"heading\">Deployments</h1></div></body></html>",
+            "renderer": {
+              "name": "prism-html",
+              "version": "v1",
+              "locale": "en-US",
+              "timezone": "UTC",
+              "motion": "reduced"
+            },
+            "accessibilityFindings": []
+          }
+        },
+        "error": null,
+        "evidence": [
+          {
+            "evidenceId": "prism-full-log",
+            "type": "log",
+            "artifact": {
+              "artifactId": "artifact:sha256:0f22c2fa19eac2b8e15c5a42f204e8a8d7dd3fb4348b032837ff82ceef802af7",
+              "type": "log",
+              "mediaType": "text/plain",
+              "contentDigest": "sha256:0f22c2fa19eac2b8e15c5a42f204e8a8d7dd3fb4348b032837ff82ceef802af7",
+              "sizeBytes": 39,
+              "storageUrl": "http://127.0.0.1:35567/v1/internal/artifacts/sha256:0f22c2fa19eac2b8e15c5a42f204e8a8d7dd3fb4348b032837ff82ceef802af7"
+            }
+          }
+        ],
+        "resources": {
+          "cpuTimeMs": 106,
+          "maximumMemoryBytes": 168951808,
+          "maximumProcesses": 1,
+          "logBytes": 39,
+          "resultBytes": 1050,
+          "evidenceBytes": 39
+        },
+        "cleanup": {
+          "state": "not_required",
+          "summary": null
+        },
+        "exitCode": 0,
+        "signal": null,
+        "resultDigest": "sha256:e030cc12976b8169801aaaf319a96bf3da2dc3c9c714268393b8ebcc155beccf",
+        "receipt": {
+          "receiptId": "receipt:e309307efa2b22dfc764c2d465586d2a770a7ed02e5a18cda5758d6bdfba58db",
+          "receiptDigest": "sha256:fc5133c3b74be2fea1205a90b535689edd55de80fc291f36bc6fc662f84c53d0"
+        }
+      },
+      "evidence": [
+        {
+          "artifactId": "artifact:sha256:0f22c2fa19eac2b8e15c5a42f204e8a8d7dd3fb4348b032837ff82ceef802af7",
+          "base64": "W3N5c3RlbV0gUHJpc20gcmVuZGVyIG9wZXJhdGlvbiBzdGFydGVk"
+        }
+      ]
+    },
+    {
+      "attempt": {
+        "schemaVersion": "worker-attempt-envelope.v1",
+        "protocolVersion": "worker-protocol.v1",
+        "pipelineRunId": "prism-test-request",
+        "moduleId": null,
+        "gateId": null,
+        "planId": "plan-test-request",
+        "nodeId": "node-render",
+        "executionId": "execution-47ce5feb-76e4-4381-be4d-36db9df36896",
+        "attemptId": "attempt-5a74d3a2-c8ed-415b-af56-c219dd9faf9c",
+        "attemptNumber": 1,
+        "claim": {
+          "schemaVersion": "attempt-claim.v1",
+          "claimId": "claim-5c8e0e25-1d5b-485e-b1ef-4ded60b22152",
+          "attemptId": "attempt-5a74d3a2-c8ed-415b-af56-c219dd9faf9c",
+          "generation": 1,
+          "workerId": "prism-worker",
+          "claimedAt": "2026-09-13T10:47:28.453Z",
+          "expiresAt": "2026-09-13T10:57:28.453Z"
+        },
+        "profile": {
+          "schemaVersion": "worker-profile.v1",
+          "profileId": "prism-design-engine-v1",
+          "workerType": "prism",
+          "coreContractId": "kubeclaw.pipeline-worker-core@1",
+          "engine": {
+            "engineId": "prism-design-engine",
+            "contractId": "kubeclaw.prism-design-engine@1",
+            "engineVersion": "1.0.0",
+            "contentDigest": "sha256:2841affba4a9298a20fa3632303512516ad9c227b2abdb6a437eebe2d601cd54"
+          },
+          "capabilities": [
+            "artifacts.read",
+            "artifacts.write",
+            "network.http",
+            "secrets.read",
+            "telemetry.emit"
+          ],
+          "profileDigest": "sha256:e2b7f5c83a1a4dbbf9eca19de5d2324278446286dc3fe195ffceb0948d07e8aa"
+        },
+        "packages": [],
+        "grantedCapabilities": [
+          "artifacts.read",
+          "artifacts.write",
+          "network.http",
+          "secrets.read",
+          "telemetry.emit"
+        ],
+        "limits": {
+          "timeoutMs": 300000,
+          "cleanupTimeoutMs": 10000,
+          "cpuMillis": 4000,
+          "memoryBytes": 8589934592,
+          "processes": 256,
+          "logBytes": 1048576,
+          "resultBytes": 16777216,
+          "evidenceBytes": 134217728,
+          "evidenceFiles": 64
+        },
+        "inputs": [
+          {
+            "name": "prism-input",
+            "kind": "artifact",
+            "artifact": {
+              "artifactId": "artifact:sha256:1a48388e5d6978b660d70f9bf009fcee458751ff98280f2086e8fb646d89ceb6",
+              "type": "prism-engine-input",
+              "mediaType": "application/json",
+              "contentDigest": "sha256:1a48388e5d6978b660d70f9bf009fcee458751ff98280f2086e8fb646d89ceb6",
+              "sizeBytes": 1011,
+              "storageUrl": "http://127.0.0.1:35567/v1/internal/artifacts/sha256:1a48388e5d6978b660d70f9bf009fcee458751ff98280f2086e8fb646d89ceb6"
+            }
+          }
+        ],
+        "operation": {
+          "contractId": "kubeclaw.prism-design-engine@1",
+          "inputSchemaId": "prism.engine-requests.v1.json#/$defs/render",
+          "inputSchemaDigest": "sha256:1af1426f1694c73f8b7d1baded15ba6fc3441e06a03e9950f9f577cbfd1103e6",
+          "values": {
+            "operation": "render",
+            "inputName": "prism-input"
+          }
+        },
+        "cancellationId": "cancel-c5d30c27-d0fe-4f53-9c22-7c7547469b01",
+        "issuedAt": "2026-09-13T10:47:28.453Z",
+        "queueDeadline": "2026-09-13T10:57:28.453Z",
+        "attemptSpecDigest": "sha256:c5a44b6ac811c84fb699763b12746dcc8be4ad676cb8308bf4e17d9e3313dc6f"
+      },
+      "workerResult": {
+        "schemaVersion": "worker-attempt-result.v1",
+        "protocolVersion": "worker-protocol.v1",
+        "attemptId": "attempt-5a74d3a2-c8ed-415b-af56-c219dd9faf9c",
+        "claimId": "claim-5c8e0e25-1d5b-485e-b1ef-4ded60b22152",
+        "claimGeneration": 1,
+        "workerId": "prism-worker",
+        "state": "completed",
+        "startedAt": "2026-09-13T10:47:28.456Z",
+        "completedAt": "2026-09-13T10:47:28.495Z",
+        "durationMs": 39,
+        "summary": "Prism operation completed",
+        "specialistResult": {
+          "schemaId": "https://kubeclaw.dev/contracts/prism/engine-results.v1.json#/$defs/render",
+          "schemaDigest": "sha256:dfd2beb6acf288381e44afbd56241572f6e09549993e14b71dbbab2e643ff2ac",
+          "values": {
+            "html": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; img-src data:; font-src data:; style-src 'unsafe-inline'\"><style>*,*::before,*::after{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#0b0d10;color:#f4f6f8;font-family:Inter,system-ui,sans-serif}button,input,select,textarea{font:inherit}img{max-width:100%;height:auto}</style></head><body><div data-prism-id=\"home-root\" data-prism-type=\"stack\" style=\"display:flex;flex-direction:column;gap:16px\"><h1 data-prism-id=\"title\" data-prism-type=\"heading\">Other request</h1></div></body></html>",
+            "renderer": {
+              "name": "prism-html",
+              "version": "v1",
+              "locale": "en-US",
+              "timezone": "UTC",
+              "motion": "reduced"
+            },
+            "accessibilityFindings": []
+          }
+        },
+        "error": null,
+        "evidence": [
+          {
+            "evidenceId": "prism-full-log",
+            "type": "log",
+            "artifact": {
+              "artifactId": "artifact:sha256:0f22c2fa19eac2b8e15c5a42f204e8a8d7dd3fb4348b032837ff82ceef802af7",
+              "type": "log",
+              "mediaType": "text/plain",
+              "contentDigest": "sha256:0f22c2fa19eac2b8e15c5a42f204e8a8d7dd3fb4348b032837ff82ceef802af7",
+              "sizeBytes": 39,
+              "storageUrl": "http://127.0.0.1:35567/v1/internal/artifacts/sha256:0f22c2fa19eac2b8e15c5a42f204e8a8d7dd3fb4348b032837ff82ceef802af7"
+            }
+          }
+        ],
+        "resources": {
+          "cpuTimeMs": 72,
+          "maximumMemoryBytes": 190709760,
+          "maximumProcesses": 1,
+          "logBytes": 39,
+          "resultBytes": 1052,
+          "evidenceBytes": 39
+        },
+        "cleanup": {
+          "state": "not_required",
+          "summary": null
+        },
+        "exitCode": 0,
+        "signal": null,
+        "resultDigest": "sha256:adff9e5b5ecf90ebb1918609674df9ac0a7e194be300b88adee4ea70a0d2a041",
+        "receipt": {
+          "receiptId": "receipt:78fbf6ff4a17199bbf057425b36108292a8b3ba6ca8cbdbf3ff3cc2ce65a95ea",
+          "receiptDigest": "sha256:7a6b9584417f78d243aa9490a6f5a4239bec73764b4e441dde1119ed5e2a2354"
+        }
+      },
+      "evidence": [
+        {
+          "artifactId": "artifact:sha256:0f22c2fa19eac2b8e15c5a42f204e8a8d7dd3fb4348b032837ff82ceef802af7",
+          "base64": "W3N5c3RlbV0gUHJpc20gcmVuZGVyIG9wZXJhdGlvbiBzdGFydGVk"
+        }
+      ]
+    }
+  ]
+}

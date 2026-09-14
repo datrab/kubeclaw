@@ -1,3 +1,4 @@
+import { registryTestContract } from './registry-test-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -50,12 +51,16 @@ function generatedProbeProject(t) {
   const project = path.basename(root);
   const swarm = path.join(root, 'src', '.swarm');
   fs.mkdirSync(swarm, { recursive: true });
+  const originalRegistry = process.env.KUBECLAW_REGISTRY_CONFIG;
+  process.env.KUBECLAW_REGISTRY_CONFIG = registryTestContract;
   const originalImage = process.env.REAL_E2E_DEPLOYMENT_IMAGE;
   // Original generator metadata only; this test does not pull or deploy the image.
-  process.env.REAL_E2E_DEPLOYMENT_IMAGE = 'registry-mirror.kubeclaw.svc.cluster.local:5000/library/nginx:1.27-alpine@sha256:62223d644fa234c3a1cc785ee14242ec47a77364226f1c811d2f669f96dc2ac8';
+  process.env.REAL_E2E_DEPLOYMENT_IMAGE = 'registry.example.test:5443/library/nginx:1.27-alpine@sha256:62223d644fa234c3a1cc785ee14242ec47a77364226f1c811d2f669f96dc2ac8';
   try {
     fs.writeFileSync(path.join(swarm, 'progress.json'), JSON.stringify(buildProgress({ projectName: project })));
   } finally {
+    if (originalRegistry === undefined) delete process.env.KUBECLAW_REGISTRY_CONFIG;
+    else process.env.KUBECLAW_REGISTRY_CONFIG = originalRegistry;
     if (originalImage === undefined) delete process.env.REAL_E2E_DEPLOYMENT_IMAGE;
     else process.env.REAL_E2E_DEPLOYMENT_IMAGE = originalImage;
   }

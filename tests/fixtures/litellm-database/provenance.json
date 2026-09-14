@@ -1,0 +1,11 @@
+{
+  "source": "https://github.com/BerriAI/litellm",
+  "commit": "7d5b6456baaf8be6ac1a60db2b710566b5344adf",
+  "schemaGitBlob": "7604ceadf7a82ddea7d9e5f929ef2c373ff3fe74",
+  "applicationImage": "ghcr.io/berriai/litellm@sha256:690f24800e2208e4f31b01483b9d0521d79dc508c8191f1c0b2f21549400c580",
+  "generator": "prisma@5.17.0 migrate diff --from-empty --to-schema-datamodel schema.prisma --script",
+  "schemaSqlSha256": "efcec102154d9747e6276347d93035a922dc429cca164206cd95857393846c8e",
+  "scope": "Full declarative schema from pinned source, not a claim that historical SQL-only migrations or the application image were executed.",
+  "cryptoModule": "litellm/proxy/common_utils/encrypt_decrypt_utils.py",
+  "cryptoModuleSha256": "5a4eb0a8e639bbdf94c045d87668f7eadf55db06c84f3b6ec3651bc60ad2939d"
+}

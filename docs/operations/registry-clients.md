@@ -37,9 +37,9 @@ TLS settings. The checked-in `my-values/infra/registry-local.yaml` is such a lab
 service, with no server TLS/auth. Deploy tooling applies it only when
 `KUBECLAW_DEPLOY_LAB_REGISTRY=true` is explicitly selected. That switch does not
 configure clients or expose a node endpoint. It does not remove an existing
-registry when false. Do not interpret the lab manifest as a durable or secured
-registry. It has no persistence or disk budget; configure capacity deliberately
-before relying on it. No NodePort is introduced. Image security scans against this HTTP lab registry
+registry when false. The lab manifest is a template rendered with an explicit storage class and capacity
+(see the maintenance procedure below). It still supplies no server TLS/auth.
+No NodePort is introduced. Image security scans against this HTTP lab registry
 fail explicitly with `SECURITY_SCAN_HTTP_LAB_UNSUPPORTED`: the pinned scanner
 flag also relaxes TLS verification, so the client does not silently enable it.
 The full lab image pipeline is therefore unsupported; use authenticated HTTPS
@@ -119,20 +119,84 @@ actual 200. These checks establish registry health, not image push/pull success.
 
 ## Image lifetime and outstanding native evidence
 
-Deleting a test namespace does not remove images from a shared registry.
-Registry replacement can lose the current lab container's writable layer. The
-repository supplies no reference-aware registry GC. Until an authoritative
-reference lifecycle exists, retain required images and clean up only by an
-explicit operator action that protects active leases/demos, waiting runs and
-images needed for retained acceptance evidence. D06 demo expiry is not D07 log
-expiry. Logs, reports and source retention remain unchanged. BuildKit cache and
-registry images are separate stores. No storage size/class, automatic retention
-period or deletion policy is invented here.
+Deleting a test namespace does not remove images from a shared registry. The lab
+registry now stores its data on `registry-local-data`, an explicitly sized
+ReadWriteOncePod PVC. `Recreate` avoids overlapping server replicas. The same PVC
+provides exclusivity for the offline GC Job. A CSI driver supporting RWOP is
+required; ordinary RWO allows concurrent Pods on one node and is rejected.
+See the [Kubernetes access-mode contract](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes).
+Do not downgrade the access mode to make an unsupported provisioner accept it.
+
+Set `KUBECLAW_LAB_REGISTRY_STORAGE_CONFIG` to a private JSON file containing
+exactly `capacity` (a positive integer with Mi/Gi/Ti suffix) and
+`storageClassName`. The operator selects both; the repository chooses no disk
+allocation for the cluster. The PVC request is the declared storage budget,
+not a filesystem quota on a shared unbounded backend. Select a provisioner that
+actually bounds the volume and monitor its free bytes/inodes. Exhaustion fails
+writes; increasing capacity or deleting retained images is not automatic.
+Existing PVC class, access mode and requested capacity must match. Resize or
+migration is a separate deliberate storage operation. The deploy command reads
+existing Deployment/PVC objects and refuses an ephemeral or ambiguous existing
+mount before applying anything. Migrate and verify all existing digests offline
+before switching an old `registry:2` installation to this `registry:3.0.0` layout.
+The renderer does not perform that migration or authorize deleting old data.
+
+### Manual maintenance
+
+Finish or stop image-producing jobs before the maintenance window; interrupted
+uploads may need to be retried. Retain their source/build evidence. Capture the
+current objects, render and review a dry-run plan:
+
+```sh
+kubectl get deployment registry-local -n "$NAMESPACE" --ignore-not-found -o json > registry-deployment.json
+kubectl get pvc registry-local-data -n "$NAMESPACE" --ignore-not-found -o json > registry-pvc.json
+node scripts/render-registry-local.mjs "$KUBECLAW_LAB_REGISTRY_STORAGE_CONFIG" gc-dry-run registry-deployment.json registry-pvc.json > registry-gc-dry-run.yaml
+```
+
+Check each command succeeded. Explicitly applying the reviewed plan scales the
+server to zero and creates `registry-local-gc-dry-run`. RWOP prevents it mounting
+while the old writer still owns the volume. Inspect the completed Job's logs.
+Only after that review, render mode `gc` using freshly captured Deployment/PVC
+objects, then explicitly apply it and inspect `registry-local-gc`. A failed Job
+has no automatic retry; investigate the failure while keeping the server stopped.
+Jobs/logs have no TTL and no automatic deletion. For a subsequent maintenance
+run, retain the previous logs and deliberately remove the completed Job objects
+before creating new ones with these fixed names.
+
+The official [Distribution GC](https://distribution.github.io/distribution/about/garbage-collection/)
+marks every existing manifest reference before sweeping unreferenced blobs.
+The generated command never enables `--delete-untagged`; DELETE and automatic
+upload purging are disabled in the server configuration. Thus all published
+manifest digests and their layers are retained, including overwritten tags,
+active demos, waiting runs and accepted images. This conservative policy may
+release little space: it intentionally has no age-based image eviction and no
+claim that a completed job makes its image deletable. Unfinished upload chunks
+are retained too. It only releases completed blobs that no manifest references.
+
+After successful GC and deliberate removal of the completed GC Pod/Job (to
+release its RWOP mount), render mode `serve` against current objects and apply
+that reviewed plan. Verify reads by retained digest. No command here is invoked
+automatically during deployment, and no cluster change was executed by the local
+tests. Full namespace/PVC destruction remains destructive and deletes this data;
+ordinary Pod replacement preserves it. Logs, reports and source retention retain
+the D07 policy. BuildKit cache remains a separate store.
 
 Before treating a deployment as working, use an uncached immutable digest in an
 actual node CRI pull and a real test Pod, including unauthorized-client rejection.
 For a mirror, observe requests from an actual fresh build and uncached node pull;
 then separate cached-hit and uncached-miss behavior with upstream unavailable.
-Registry GC requires multi-lease reference protection and registry-Pod
-replacement tests after a real lifecycle/storage design exists. Local Helm,
-configuration and HTTPS tests do not close any of these native gates.
+The original local Distribution test verifies two retained manifest digests,
+shared layers, DELETE rejection, dry-run, actual orphan-blob release and server
+restart. Kubernetes RWOP enforcement, provisioner capacity and Pod replacement
+remain later live checks under D12; local configuration tests do not claim those
+cluster results.
+
+## E2E target selection
+
+The real E2E runner consumes `KUBECLAW_REGISTRY_CONFIG` and an explicit
+`REAL_E2E_DEPLOYMENT_IMAGE` on that registry, pinned by SHA-256. It rejects the
+retired local-registry override and foreign image authorities. Native fixture
+verification authenticates to the selected manifest and checks its bytes;
+it never chooses the first repository or tag in a catalog. Supply the configured
+CA at Node startup through `NODE_EXTRA_CA_CERTS` when needed. This preflight does
+not establish native BuildKit push, uncached CRI pull or Pod success.

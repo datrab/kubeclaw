@@ -7,6 +7,10 @@ metadata:
     {{- include "kubeclaw.labels" . | nindent 4 }}
   annotations:
     "helm.sh/resource-policy": keep
+    argocd.argoproj.io/sync-options: Prune=false,Delete=false
+    {{- if eq .Values.agentRole "prism" }}
+    argocd.argoproj.io/sync-wave: "3"
+    {{- end }}
 spec:
   accessModes:
     {{- toYaml .Values.persistence.config.accessModes | nindent 4 }}
@@ -29,6 +33,10 @@ metadata:
     {{- include "kubeclaw.labels" . | nindent 4 }}
   annotations:
     "helm.sh/resource-policy": keep
+    argocd.argoproj.io/sync-options: Prune=false,Delete=false
+    {{- if eq .Values.agentRole "prism" }}
+    argocd.argoproj.io/sync-wave: "3"
+    {{- end }}
 spec:
   accessModes:
     {{- toYaml .Values.persistence.workspace.accessModes | nindent 4 }}

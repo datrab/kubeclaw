@@ -43,6 +43,7 @@ import {
   restoreCheckpointProjectSource,
   startCheckpointCaptureController,
 } from './checkpoints.mjs';
+import { realE2ERegistryTarget } from './registry-target.mjs';
 import { rateLimitCooldownDetails } from './rate-limit-output.mjs';
 
 const OPENCLAW_CONFIG_PATH = '/home/node/.openclaw/openclaw.json';
@@ -1025,12 +1026,10 @@ export function realPipelineScenarioResultOk({
 }
 
 export function buildRealE2EPipelineEnv({ workspace, scenario, baseEnv = process.env } = {}) {
-  const kubeclawNamespace = baseEnv.KUBECLAW_NAMESPACE || 'kubeclaw';
+  realE2ERegistryTarget(baseEnv);
   const env = {
     ...baseEnv,
     ...buildRealE2EScenarioEnv(scenario.id),
-    // Temporary real-E2E bridge until deployed agents provide this env directly.
-    KUBECLAW_LOCAL_REGISTRY: baseEnv.KUBECLAW_LOCAL_REGISTRY || `registry-local.${kubeclawNamespace}.svc.cluster.local:5001`,
     REPO_ROOT: workspace.worktreePath,
     SWARM_CONFIG: workspace.runConfigPath,
     AGENT_ROLE: baseEnv.AGENT_ROLE || 'nova',

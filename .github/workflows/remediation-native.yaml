@@ -1,0 +1,130 @@
+name: Native remediation acceptance
+on:
+  pull_request:
+    paths:
+      - 'skills/**'
+      - 'scripts/**'
+      - 'contracts/**'
+      - 'tests/**'
+      - 'tools/ops-mcp/**'
+      - 'spikes/prism/puck-adapter/**'
+      - 'charts/kubeclaw/files/config/knip.json'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'versions.json'
+      - '.github/workflows/remediation-native.yaml'
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Install the separately locked packages included in the repository graph
+        run: |
+          npm ci --prefix tools/ops-mcp --ignore-scripts
+          npm ci --prefix spikes/prism/puck-adapter --ignore-scripts
+      - run: npm run knip:check
+      - run: npm run typecheck:integration
+
+  inputs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      postgres: ${{ steps.images.outputs.postgres }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - id: images
+        name: Read the pinned native database image from the central manifest
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const image = JSON.parse(fs.readFileSync('versions.json', 'utf8')).automation.prismTestPostgres;
+          if (!/^pgvector\/pgvector:pg17@sha256:[a-f0-9]{64}$/.test(image)) throw new Error('Pinned test PostgreSQL image required');
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `postgres=${image}\n`);
+          NODE
+
+  postgres:
+    needs: inputs
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: ${{ needs.inputs.outputs.postgres }}
+        env:
+          POSTGRES_USER: kubeclaw_test
+          POSTGRES_PASSWORD: isolated_native_test_only
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U kubeclaw_test -d postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PRISM_TEST_PG_URL: postgres://kubeclaw_test:isolated_native_test_only@127.0.0.1:5432/postgres
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Original corpus pool interleaving and rollback acceptance
+        run: npm run test:corpus-pool --workspace @kubeclaw/prism
+      - name: Original concurrent transaction and claim acceptance
+        if: ${{ !cancelled() }}
+        run: node skills/prism/tests/native/postgres-suite.mts transactions
+      - name: Original native readiness cancellation with zero skips required
+        if: ${{ !cancelled() }}
+        run: node skills/prism/tests/native/postgres-suite.mts worker-readiness
+
+  studio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: /tmp/kubeclaw-prism-native-browsers
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Install the actual browser for the locked Playwright package
+        run: node node_modules/playwright/cli.js install --with-deps chromium
+      - name: Original Studio iframe, pagination, image decode and error assertions
+        run: npm run test:studio-remediation --workspace @kubeclaw/prism
+
+  supervisor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Original operations and native process adoption
+        run: |
+          npm run test:review-operations
+          node --test scripts/tests/integration/repository-review-supervisor-adoption.mjs
