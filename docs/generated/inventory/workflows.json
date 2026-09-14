@@ -63,6 +63,7 @@
       "pathFilters": [
         "versions.json",
         "scripts/versions.mjs",
+        "scripts/scan-runtime-images.sh",
         "tools/ops-mcp/**",
         "my-values/infra/**",
         "scripts/*cilium*",
@@ -80,6 +81,7 @@
       ],
       "commandAndActionRefs": [
         "bash ops/pod/test-image.sh \"$TEST_IMAGE",
+        "bash scripts/scan-runtime-images.sh \"$IMAGE",
         "bash tools/ops-mcp/test-image.sh \"$TEST_IMAGE",
         "node scripts/versions.mjs --check",
         "uses: ./.github/workflows/publish-image-receipts.yaml",

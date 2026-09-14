@@ -1,4 +1,7 @@
 export * from '@kubeclaw/worker-core';
+// Native fixture integration API; exporting it does not switch the production scheduler.
+export { startNativeBusterFixture } from '../test-gates/native-fixture-lifetime.ts';
+export type { NativeBusterFixtureOptions, NativeBusterFixtureLifetime } from '../test-gates/native-fixture-lifetime.ts';
 export { FileEvidenceStore } from '../test-gates/artifacts.ts';
 export { RegisteredTestProviderLoader } from '../test-gates/provider-loader.ts';
 export { FileReportArtifactReader, RegisteredReportAdapterRuntime } from '../test-gates/report-adapter-runtime.ts';

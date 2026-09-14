@@ -108,12 +108,23 @@ for (const [args, previous] of [[next.buildArgs, before.buildArgs],
 for (const tool of ['GO', 'SHFMT', 'TERRAFORM', 'TFLINT', 'TRIVY', 'KUBECTL', 'HADOLINT', 'HELM', 'KUBECONFORM']) {
   if (!args[`${tool}_VERSION`] || args[`${tool}_VERSION`] === previous[`${tool}_VERSION`]) continue;
   const version = args[`${tool}_VERSION`].replace(/^v/, '');
+  if (tool === 'KUBECTL' && args === next.imageOverrides['ops-pod']) {
+    const moduleVersion = `v0.${version.split('.').slice(1).join('.')}`;
+    if (!fs.readFileSync('ops/pod/kubectl-build/go.mod', 'utf8').includes(`k8s.io/kubectl ${moduleVersion}`)) {
+      throw new Error('Update the Ops kubectl source module locks before changing its version');
+    }
+    continue;
+  }
   for (const arch of ['amd64', 'arm64']) {
     console.log(`Verifying upstream ${tool} ${version} linux/${arch}`);
     const { url, digest } = await releaseArtifact(tool, version, arch);
     args[`${tool}_SHA256_${arch.toUpperCase()}`] = await verified(url, digest);
   }
 }
+}
+if (next.buildArgs.GH_VERSION !== before.buildArgs.GH_VERSION) {
+  const source = await get(`https://codeload.github.com/cli/cli/tar.gz/refs/tags/v${next.buildArgs.GH_VERSION}`);
+  next.buildArgs.GH_SOURCE_SHA256 = sha(Buffer.from(await source.arrayBuffer()));
 }
 try {
   fs.writeFileSync(file, `${JSON.stringify(next, null, 2)}\n`);

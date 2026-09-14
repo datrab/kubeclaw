@@ -386,6 +386,51 @@
       "extractVersionTemplate": "^v?(?<version>.+)$",
       "versioningTemplate": "semver",
       "autoReplaceStringTemplate": "\"TRIVY_VERSION\": \"v{{{newValue}}}\""
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"GH_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "cli/cli",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"OPS_NPM_TAR_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "tar",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"OPS_NPM_BRACE_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "brace-expansion",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"OPS_NPM_IP_VERSION\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "ip-address",
+      "datasourceTemplate": "npm"
     }
   ],
   "timezone": "Etc/UTC",
@@ -476,6 +521,26 @@
         "docker"
       ],
       "pinDigests": true
+    },
+    {
+      "description": "Ops kubectl release modules must be updated together with the selected client version and source entry point.",
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchFileNames": [
+        "ops/pod/kubectl-build/go.mod"
+      ],
+      "matchPackageNames": [
+        "k8s.io/api",
+        "k8s.io/apimachinery",
+        "k8s.io/cli-runtime",
+        "k8s.io/client-go",
+        "k8s.io/component-base",
+        "k8s.io/component-helpers",
+        "k8s.io/kubectl",
+        "k8s.io/metrics"
+      ],
+      "allowedVersions": "0.34.11"
     }
   ],
   "vulnerabilityAlerts": {

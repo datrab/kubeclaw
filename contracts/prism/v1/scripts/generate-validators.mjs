@@ -55,14 +55,16 @@ for (const name of engineNames) {
     `${engineResults.$id}#/$defs/${name}`;
 }
 
+// Node exposes CommonJS default exports as a module object; Vite unwraps them.
+// Accept both shapes so the same CSP-safe validators work on server and browser.
 const generated = standaloneCode(ajv, validators)
   .replace(
     /const (\w+) = require\("ajv\/dist\/runtime\/ucs2length"\)\.default;/u,
-    'import ucs2LengthModule from "ajv/dist/runtime/ucs2length.js";const $1 = ucs2LengthModule.default;',
+    'import ucs2LengthModule from "ajv/dist/runtime/ucs2length.js";const $1 = typeof ucs2LengthModule === "function" ? ucs2LengthModule : ucs2LengthModule.default;',
   )
   .replace(
     /const (\w+) = require\("ajv\/dist\/runtime\/equal"\)\.default;/u,
-    'import equalModule from "ajv/dist/runtime/equal.js";const $1 = equalModule.default;',
+    'import equalModule from "ajv/dist/runtime/equal.js";const $1 = typeof equalModule === "function" ? equalModule : equalModule.default;',
   )
   .replace(
     /const (\w+) = require\("ajv-formats\/dist\/formats"\)\.fullFormats\["date-time"\];/u,
