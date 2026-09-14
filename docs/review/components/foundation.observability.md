@@ -136,7 +136,7 @@ bewerten; die pauschale damalige „clean“-Aussage nicht übernommen.
 - **Auslöser/Ablauf:** echten Record aufnehmen, danach in eigener temporärer
   admission.json nur payload.state ändern, Digest und ursprüngliche bytes
   unverändert lassen. Neu erzeugter Originalstore liefert geänderten Payload
-  mit falschem Digest ohne Fehler. [Repro](../evidence/admission-replay.mjs).
+  mit falschem Digest ohne Fehler. [Repro — historischer Stand](https://github.com/datrab/kubeclaw/blob/91396dc4975ed05a0cb674b0e1327ddbf3ef1f12/docs/review/evidence/admission-replay.mjs).
 - **Auswirkung:** beschädigte gültige JSON-Snapshots können als authentische
   Fakten in ClawDeck/Recovery weitergereicht werden; Eingangsquarantäne greift
   beim Replay nicht. Attemptauswirkung durch Code-Trace, direkt reproduziert

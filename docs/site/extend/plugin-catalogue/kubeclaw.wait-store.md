@@ -56,12 +56,10 @@ Run:
 npm test --prefix skills/common/plugins/wait-store
 ```
 
-Package tests found: 2.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/wait-store/plugin.json`
 - Package root: `skills/common/plugins/wait-store`
 - Authored package guide: `skills/common/plugins/wait-store/README.md`
-- Test: `skills/common/plugins/wait-store/tests/live-function.test.ts`
-- Test: `skills/common/plugins/wait-store/tests/package-boundary.test.mjs`

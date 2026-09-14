@@ -61,11 +61,10 @@ Run:
 npm test --prefix skills/buster/plugins/visual
 ```
 
-Package tests found: 1.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/visual/plugin.json`
 - Package root: `skills/buster/plugins/visual`
 - Authored package guide: `skills/buster/plugins/visual/README.md`
-- Test: `skills/buster/plugins/visual/tests/live-function.test.ts`

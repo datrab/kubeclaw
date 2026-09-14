@@ -47,7 +47,7 @@ Result schema: `schemas/result.schema.json`
 
 Public identifier: `kubeclaw.decision.architecture-approval`.
 
-Required capabilities: `artifacts.read`, `operator.request`, `signal.wait`
+Required capabilities: `artifacts.read`, `operator.request`, `signal.wait`, `git.repository.read`, `artifacts.write`
 
 Provided capabilities: None.
 
@@ -71,14 +71,10 @@ Run:
 npm test --prefix skills/nova/plugins/human-approval
 ```
 
-Package tests found: 4.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/human-approval/plugin.json`
 - Package root: `skills/nova/plugins/human-approval`
 - Authored package guide: `skills/nova/plugins/human-approval/README.md`
-- Test: `skills/nova/plugins/human-approval/tests/approval.unit.test.mjs`
-- Test: `skills/nova/plugins/human-approval/tests/architecture-approval.unit.test.ts`
-- Test: `skills/nova/plugins/human-approval/tests/live-function.test.ts`
-- Test: `skills/nova/plugins/human-approval/tests/package-boundary.test.mjs`

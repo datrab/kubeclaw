@@ -141,7 +141,9 @@ function candidateRefs(text) {
 }
 
 function checkRepoRefs(filePath, text) {
-  if (historicalRepoRefDocs.has(rel(filePath))) return;
+  // Review reports describe dated source snapshots, not the current checkout.
+  // Their explicit Markdown links are still checked by checkMarkdownLinks.
+  if (historicalRepoRefDocs.has(rel(filePath)) || rel(filePath).startsWith('docs/review/')) return;
   for (const raw of candidateRefs(text)) {
     const ref = normalizeReference(raw);
     if (!ref || !isRepoReference(ref) || shouldSkipRepoReference(ref)) continue;

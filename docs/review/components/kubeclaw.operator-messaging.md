@@ -96,7 +96,7 @@ Originalregistry/-network/-secret; MemoryEffectJournal/MemoryResourceLockManager
 Direkte Adapterfixtures zusätzlich503→anderer Attempt, lange Keys, Konflikt,
 volle Recordkapazität ohne Send und paralleler failure/success. Diese letzten
 Sends sind aufgezeichnete context.invoke-Fixtures, kein echter HTTPserver.
-[Integrationsprobe](../evidence/observers-notification-retry.mts),
+[Integrationsprobe — historischer Stand](https://github.com/datrab/kubeclaw/blob/2121dcaae14c65c0b0608dc5fe365041b7de6242/docs/review/evidence/observers-notification-retry.mts),
 [Log](../evidence/observers-notification-retry.txt) modifiziert nur vorhandenes
 HTTPfixture auf einmal503, dann gesund: Originalcore/Observer/Adapter/Dateien,
 5 gescheiterte Deliveryversuche,1 HTTPrequest,0 Checkpoints. Kein Modul ersetzt.

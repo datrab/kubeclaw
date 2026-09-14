@@ -64,6 +64,8 @@ jobs:
         run: npm run docs:check:generated
       - name: Check Markdown hygiene
         run: node scripts/docs-check.mjs
+      - name: Verify reference-checking boundaries
+        run: node --test tests/verification/deployment/docs-reference-scope.test.mjs
       - name: Check cited repository references
         run: npm run docs:check:refs
       - name: Check documentation topic map
@@ -93,6 +95,8 @@ jobs:
         run: npm run docs:check:generated
       - name: Check Markdown hygiene
         run: node scripts/docs-check.mjs
+      - name: Verify reference-checking boundaries
+        run: node --test tests/verification/deployment/docs-reference-scope.test.mjs
       - name: Check cited repository references
         run: npm run docs:check:refs
       - name: Check documentation topic map

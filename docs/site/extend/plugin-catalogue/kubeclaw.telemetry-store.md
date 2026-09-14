@@ -56,12 +56,10 @@ Run:
 npm test --prefix skills/common/plugins/telemetry-store
 ```
 
-Package tests found: 2.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/telemetry-store/plugin.json`
 - Package root: `skills/common/plugins/telemetry-store`
 - Authored package guide: `skills/common/plugins/telemetry-store/README.md`
-- Test: `skills/common/plugins/telemetry-store/tests/live-function.test.ts`
-- Test: `skills/common/plugins/telemetry-store/tests/package-boundary.test.mjs`

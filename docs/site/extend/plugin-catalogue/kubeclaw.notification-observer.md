@@ -71,14 +71,10 @@ Run:
 npm test --prefix skills/common/plugins/notification-observer
 ```
 
-Package tests found: 4.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/notification-observer/plugin.json`
 - Package root: `skills/common/plugins/notification-observer`
 - Authored package guide: `skills/common/plugins/notification-observer/README.md`
-- Test: `skills/common/plugins/notification-observer/tests/live-function.test.ts`
-- Test: `skills/common/plugins/notification-observer/tests/observer.unit.test.mjs`
-- Test: `skills/common/plugins/notification-observer/tests/package-boundary.test.mjs`
-- Test: `skills/common/plugins/notification-observer/tests/parity.test.ts`

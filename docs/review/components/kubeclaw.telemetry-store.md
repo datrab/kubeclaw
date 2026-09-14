@@ -83,7 +83,7 @@ Beide Originaltests gelesen, `npm test` bestanden:
 [Log](../evidence/observers-telemetry-store-tests.txt). Live-function benutzt
 Originaladapter und echten temporären Store mit Dedupe, Konflikt, Sequenz,
 0600, Größenfehler und Vorab-Abort; Fence ist Fixture. Kein tatsächlicher
-Prozesscrash oder Timeout während fsync. [Grenzprobe](../evidence/observers-boundaries.mjs)
+Prozesscrash oder Timeout während fsync. [Grenzprobe — historischer Stand](https://github.com/datrab/kubeclaw/blob/667669da6a67262b725508a0f0328f7f10f57da4/docs/review/evidence/observers-boundaries.mjs)
 und [Ausgabe](../evidence/observers-boundaries.txt) zeigen Originalpersistenz
 synthetischer API-Key/Credentialmarker und RangeError beim Zyklus. Keine Module ersetzt.
 

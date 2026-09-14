@@ -4,7 +4,7 @@ Baseline: `85ddfcbfc15e078780ea0434fc167e6f9a9b9488`; Tree: `e43c39eea59b07f0a74
 
 **93 abgegrenzte Einheiten.** Die Paket-/Manifestzuordnung ist mit den tatsächlichen
 Rollen-Entrypoints, Importen und den Einzelreviews abgeglichen. Die wiederholbare
-[Inventarprüfung](evidence/inventory-closure.mjs) ordnet 46 Pipeline-Manifeste,
+[Inventarprüfung — historischer Stand](https://github.com/datrab/kubeclaw/blob/2121dcaae14c65c0b0608dc5fe365041b7de6242/docs/review/evidence/inventory-closure.mjs) ordnet 46 Pipeline-Manifeste,
 2 OpenClaw-Manifeste und 401 Quelldateien unter skills/cmd/contracts zu; ihr
 [Ergebnis](evidence/inventory-closure.json) enthält keine unzugeordnete Datei.
 Dies ist ein Zuordnungsnachweis, kein Laufzeittest oder Beleg aktiver Installation.

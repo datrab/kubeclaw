@@ -56,12 +56,10 @@ Run:
 npm test --prefix skills/common/plugins/command-runner
 ```
 
-Package tests found: 2.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/command-runner/plugin.json`
 - Package root: `skills/common/plugins/command-runner`
 - Authored package guide: `skills/common/plugins/command-runner/README.md`
-- Test: `skills/common/plugins/command-runner/tests/live-function.test.ts`
-- Test: `skills/common/plugins/command-runner/tests/package-boundary.test.mjs`

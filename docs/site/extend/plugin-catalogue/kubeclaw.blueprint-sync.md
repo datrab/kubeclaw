@@ -32,7 +32,7 @@ Use this package when a pipeline graph needs one of its declared stage types.
 
 Public identifier: `kubeclaw.generate.blueprint-sync`.
 
-Required capabilities: `git.sync`, `git.commit`, `state.append`, `artifacts.write`
+Required capabilities: `git.sync`, `git.commit`, `state.append`, `artifacts.write`, `artifacts.read`
 
 Provided capabilities: None.
 
@@ -56,12 +56,10 @@ Run:
 npm test --prefix skills/nova/plugins/blueprint-sync
 ```
 
-Package tests found: 2.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/blueprint-sync/plugin.json`
 - Package root: `skills/nova/plugins/blueprint-sync`
 - Authored package guide: `skills/nova/plugins/blueprint-sync/README.md`
-- Test: `skills/nova/plugins/blueprint-sync/tests/live-function.test.ts`
-- Test: `skills/nova/plugins/blueprint-sync/tests/package-boundary.test.mjs`

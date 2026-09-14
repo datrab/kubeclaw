@@ -65,11 +65,10 @@ Run:
 npm test --prefix skills/buster/plugins/size-budget
 ```
 
-Package tests found: 1.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/size-budget/plugin.json`
 - Package root: `skills/buster/plugins/size-budget`
 - Authored package guide: `skills/buster/plugins/size-budget/README.md`
-- Test: `skills/buster/plugins/size-budget/tests/live-function.test.ts`

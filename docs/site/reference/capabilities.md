@@ -14,17 +14,18 @@ This catalogue lists each grantable capability and every registration that decla
 | Capability | Declared by |
 | --- | --- |
 | `agent.events.subscribe` | `kubeclaw.openclaw-agent-events:source` |
-| `artifacts.read` | `kubeclaw.artifact-store:artifact-store`<br>`kubeclaw.buster-quality-gate:quality`<br>`kubeclaw.human-approval:architecture-approval`<br>`kubeclaw.implementation-agent:implementation`<br>`kubeclaw.lint:pre-check`<br>`kubeclaw.lint:full`<br>`kubeclaw.prism-design:design`<br>`kubeclaw.project-summary:summary`<br>`kubeclaw.review:review`<br>`kubeclaw.review:repository-audit`<br>`kubeclaw.review:repository-revalidation` |
-| `artifacts.write` | `kubeclaw.agent-observability:evidence`<br>`kubeclaw.artifact-store:artifact-store`<br>`kubeclaw.architecture-validator:architecture`<br>`kubeclaw.blueprint-sync:sync`<br>`kubeclaw.buster-quality-gate:quality`<br>`kubeclaw.case-study:case-study`<br>`kubeclaw.delivery-lint:delivery-lint`<br>`kubeclaw.implementation-agent:implementation`<br>`kubeclaw.lint:pre-check`<br>`kubeclaw.lint:full`<br>`kubeclaw.pipeline-review:review`<br>`kubeclaw.preflight-contract:validate`<br>`kubeclaw.prism-design:design`<br>`kubeclaw.project-summary:summary`<br>`kubeclaw.review:review`<br>`kubeclaw.review:repository-audit`<br>`kubeclaw.review:repository-revalidation` |
+| `artifacts.read` | `kubeclaw.artifact-store:artifact-store`<br>`kubeclaw.architecture-validator:architecture`<br>`kubeclaw.blueprint-sync:sync`<br>`kubeclaw.buster-quality-gate:quality`<br>`kubeclaw.demo-handoff:handoff`<br>`kubeclaw.human-approval:architecture-approval`<br>`kubeclaw.implementation-agent:implementation`<br>`kubeclaw.lint:pre-check`<br>`kubeclaw.lint:full`<br>`kubeclaw.pipeline-review:evidence`<br>`kubeclaw.prism-design:design`<br>`kubeclaw.project-summary:summary`<br>`kubeclaw.remote-test-gate:evidence`<br>`kubeclaw.review:review`<br>`kubeclaw.review:repository-audit`<br>`kubeclaw.review:repository-revalidation` |
+| `artifacts.write` | `kubeclaw.agent-observability:evidence`<br>`kubeclaw.artifact-store:artifact-store`<br>`kubeclaw.architecture-validator:architecture`<br>`kubeclaw.blueprint-sync:sync`<br>`kubeclaw.buster-quality-gate:quality`<br>`kubeclaw.case-study:case-study`<br>`kubeclaw.delivery-lint:delivery-lint`<br>`kubeclaw.demo-handoff:candidate`<br>`kubeclaw.demo-handoff:delivery`<br>`kubeclaw.demo-handoff:ready`<br>`kubeclaw.human-approval:architecture-approval`<br>`kubeclaw.implementation-agent:implementation`<br>`kubeclaw.lint:pre-check`<br>`kubeclaw.lint:full`<br>`kubeclaw.pipeline-review:review`<br>`kubeclaw.preflight-contract:validate`<br>`kubeclaw.preflight-contract:source`<br>`kubeclaw.prism-design:design`<br>`kubeclaw.project-summary:summary`<br>`kubeclaw.review:review`<br>`kubeclaw.review:repository-audit`<br>`kubeclaw.review:repository-revalidation` |
 | `browser.axe` | `kubeclaw.axe:axe` |
 | `browser.lighthouse` | `kubeclaw.lighthouse:lighthouse` |
 | `browser.playwright` | `kubeclaw.playwright:playwright` |
 | `browser.visual` | `kubeclaw.visual:visual` |
 | `command.execute` | `kubeclaw.direct-command:command`<br>`kubeclaw.command-runner:command` |
 | `container.build` | `kubeclaw.container-build:buildkit` |
+| `demo.handoff` | `kubeclaw.demo-handoff:delivery`<br>`kubeclaw.demo-handoff:ready`<br>`kubeclaw.demo-handoff:handoff` |
 | `git.commit` | `kubeclaw.git-workspace:git`<br>`kubeclaw.blueprint-sync:sync`<br>`kubeclaw.implementation-agent:implementation` |
 | `git.merge` | `kubeclaw.git-workspace:git`<br>`kubeclaw.implementation-agent:implementation` |
-| `git.repository.read` | `kubeclaw.runtime-dispatch:openclaw`<br>`kubeclaw.delivery-lint:delivery-lint`<br>`kubeclaw.preflight-contract:validate`<br>`kubeclaw.repository-adapter:repository`<br>`kubeclaw.review:review`<br>`kubeclaw.review:repository-audit`<br>`kubeclaw.review:repository-revalidation` |
+| `git.repository.read` | `kubeclaw.runtime-dispatch:openclaw`<br>`kubeclaw.architecture-validator:architecture`<br>`kubeclaw.delivery-lint:delivery-lint`<br>`kubeclaw.human-approval:architecture-approval`<br>`kubeclaw.preflight-contract:validate`<br>`kubeclaw.preflight-contract:source`<br>`kubeclaw.repository-adapter:repository`<br>`kubeclaw.review:review`<br>`kubeclaw.review:repository-audit`<br>`kubeclaw.review:repository-revalidation` |
 | `git.sync` | `kubeclaw.git-workspace:git`<br>`kubeclaw.blueprint-sync:sync` |
 | `git.workspace.create` | `kubeclaw.git-workspace:git`<br>`kubeclaw.implementation-agent:implementation` |
 | `git.workspace.remove` | `kubeclaw.git-workspace:git`<br>`kubeclaw.implementation-agent:implementation` |
@@ -32,8 +33,10 @@ This catalogue lists each grantable capability and every registration that decla
 | `kubernetes.fixture` | `kubeclaw.kubernetes-fixture:deployment` |
 | `kubernetes.runtime-security` | `kubeclaw.security-providers:kubernetes-runtime` |
 | `lint.execute` | `kubeclaw.lint:pre-check`<br>`kubeclaw.lint:full`<br>`kubeclaw.lint:executor` |
-| `network.http` | `kubeclaw.api-flow:flow`<br>`kubeclaw.http:request`<br>`kubeclaw.openapi:operations`<br>`kubeclaw.security-providers:headers`<br>`kubeclaw.network-http:http`<br>`kubeclaw.operator-messaging:operator`<br>`kubeclaw.runtime-dispatch:runtime`<br>`kubeclaw.runtime-dispatch:openclaw`<br>`kubeclaw.transport-publisher:publisher` |
-| `operator.request` | `kubeclaw.notification-observer:notifications`<br>`kubeclaw.notification-observer:preview-delivery`<br>`kubeclaw.operator-messaging:operator`<br>`kubeclaw.human-approval:approval`<br>`kubeclaw.human-approval:architecture-approval`<br>`kubeclaw.prism-design:design` |
+| `network.http` | `kubeclaw.api-flow:flow`<br>`kubeclaw.demo-auth-smoke:session`<br>`kubeclaw.http:request`<br>`kubeclaw.openapi:operations`<br>`kubeclaw.security-providers:headers`<br>`kubeclaw.network-http:http`<br>`kubeclaw.operator-messaging:operator`<br>`kubeclaw.runtime-dispatch:runtime`<br>`kubeclaw.runtime-dispatch:openclaw`<br>`kubeclaw.transport-publisher:publisher` |
+| `operator.receipt` | `kubeclaw.operator-messaging:operator`<br>`kubeclaw.demo-handoff:handoff` |
+| `operator.request` | `kubeclaw.notification-observer:notifications`<br>`kubeclaw.notification-observer:preview-delivery`<br>`kubeclaw.operator-messaging:operator`<br>`kubeclaw.demo-handoff:handoff`<br>`kubeclaw.human-approval:approval`<br>`kubeclaw.human-approval:architecture-approval`<br>`kubeclaw.prism-design:design` |
+| `report.evidence.read` | `kubeclaw.case-study:case-study`<br>`kubeclaw.pipeline-review:review`<br>`kubeclaw.pipeline-review:evidence` |
 | `runtime.dispatch` | `kubeclaw.runtime-dispatch:runtime`<br>`kubeclaw.runtime-dispatch:openclaw`<br>`kubeclaw.architecture-validator:architecture`<br>`kubeclaw.buster-quality-gate:quality`<br>`kubeclaw.case-study:case-study`<br>`kubeclaw.implementation-agent:implementation`<br>`kubeclaw.pipeline-review:review`<br>`kubeclaw.prism-design:design`<br>`kubeclaw.review:review`<br>`kubeclaw.review:repository-audit`<br>`kubeclaw.review:repository-revalidation` |
 | `secrets.read` | `kubeclaw.operator-messaging:operator`<br>`kubeclaw.redis-transport:publisher`<br>`kubeclaw.redis-transport:telemetry`<br>`kubeclaw.runtime-dispatch:runtime`<br>`kubeclaw.runtime-dispatch:openclaw`<br>`kubeclaw.secret-resolver:secrets`<br>`kubeclaw.transport-publisher:publisher`<br>`kubeclaw.remote-test-gate:plan` |
 | `security.scan` | `kubeclaw.security-providers:dependency-trivy`<br>`kubeclaw.security-providers:image-trivy`<br>`kubeclaw.security-providers:kubernetes-policy` |
@@ -41,5 +44,6 @@ This catalogue lists each grantable capability and every registration that decla
 | `state.append` | `kubeclaw.state-store:state`<br>`kubeclaw.blueprint-sync:sync` |
 | `state.read` | `kubeclaw.state-store:state` |
 | `telemetry.emit` | `kubeclaw.agent-observability:ingester`<br>`kubeclaw.redis-transport:telemetry`<br>`kubeclaw.telemetry-observer:telemetry`<br>`kubeclaw.telemetry-store:telemetry` |
+| `test.plan.evidence` | `kubeclaw.demo-handoff:candidate`<br>`kubeclaw.demo-handoff:handoff`<br>`kubeclaw.remote-test-gate:evidence` |
 | `test.plan.execute` | `kubeclaw.buster-quality-gate:quality`<br>`kubeclaw.remote-test-gate:plan` |
 | `transport.publish` | `kubeclaw.redis-transport:publisher`<br>`kubeclaw.transport-publisher:publisher` |

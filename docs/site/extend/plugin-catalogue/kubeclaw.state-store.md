@@ -56,12 +56,10 @@ Run:
 npm test --prefix skills/common/plugins/state-store
 ```
 
-Package tests found: 2.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/state-store/plugin.json`
 - Package root: `skills/common/plugins/state-store`
 - Authored package guide: `skills/common/plugins/state-store/README.md`
-- Test: `skills/common/plugins/state-store/tests/live-function.test.ts`
-- Test: `skills/common/plugins/state-store/tests/package-boundary.test.mjs`

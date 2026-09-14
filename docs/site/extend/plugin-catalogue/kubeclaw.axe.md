@@ -61,11 +61,10 @@ Run:
 npm test --prefix skills/buster/plugins/axe
 ```
 
-Package tests found: 1.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/axe/plugin.json`
 - Package root: `skills/buster/plugins/axe`
 - Authored package guide: `skills/buster/plugins/axe/README.md`
-- Test: `skills/buster/plugins/axe/tests/live-function.test.ts`

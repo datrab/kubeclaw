@@ -56,13 +56,10 @@ Run:
 npm test --prefix skills/common/plugins/transport-publisher
 ```
 
-Package tests found: 3.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/transport-publisher/plugin.json`
 - Package root: `skills/common/plugins/transport-publisher`
 - Authored package guide: `skills/common/plugins/transport-publisher/README.md`
-- Test: `skills/common/plugins/transport-publisher/tests/config-validation.test.mjs`
-- Test: `skills/common/plugins/transport-publisher/tests/live-function.test.ts`
-- Test: `skills/common/plugins/transport-publisher/tests/package-boundary.test.mjs`

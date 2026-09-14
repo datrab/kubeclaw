@@ -86,64 +86,10 @@ Run:
 npm test --prefix skills/nova/plugins/review
 ```
 
-Package tests found: 54.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/review/plugin.json`
 - Package root: `skills/nova/plugins/review`
 - Authored package guide: `skills/nova/plugins/review/README.md`
-- Test: `skills/nova/plugins/review/tests/echo-review-output.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/echo-review-verification.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/fixtures/review-governor.mjs`
-- Test: `skills/nova/plugins/review/tests/fixtures/review-policy.mjs`
-- Test: `skills/nova/plugins/review/tests/fixtures/scalable-review-quality-baseline.json`
-- Test: `skills/nova/plugins/review/tests/fixtures/scalable-review-quality-corpus.json`
-- Test: `skills/nova/plugins/review/tests/live-function.test.ts`
-- Test: `skills/nova/plugins/review/tests/package-boundary.test.mjs`
-- Test: `skills/nova/plugins/review/tests/protocol.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/repository-review-profile.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-bundle-contract.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-bundle-snapshot.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-cluster-contract.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-cluster-identity.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-content-cache.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-context-production.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-context-selection.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-contract-parity.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-decision-matrix.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-evaluation-metadata.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-evidence-authority.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-fact-extractors.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-governor.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-graph.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-invariants.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-map-artifacts.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-policy-contract.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-policy-profiles.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-policy-resolver.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-prompt-budget.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-proposal-preflight.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-quality-corpus.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-reducer.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-report-builder.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-report-contract.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-scale-slicing.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-slicing.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-snapshot-inventory.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-stage-input.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-stage-verification.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-verdict-policy.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-verification-reconciliation.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/review-verified-findings.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/scalable-review-compiler.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/scalable-review-jobs.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/scalable-review-topology.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/scalable-review-verification.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/simplification-contract.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/simplification-fact-producer.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/simplification-manifest.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/simplification-miner.unit.test.mjs`
-- Test: `skills/nova/plugins/review/tests/stage.unit.test.mjs`

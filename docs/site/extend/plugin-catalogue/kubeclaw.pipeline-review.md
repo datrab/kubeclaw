@@ -9,7 +9,7 @@ Last verified: generated during publication
 
 ## Purpose
 
-This package provides 1 registered extension through the canonical plugin runtime.
+This package provides 2 registered extensions through the canonical plugin runtime.
 
 ## When To Use It
 
@@ -27,12 +27,13 @@ Use this package when a pipeline graph needs one of its declared stage types.
 | Kind | ID | Public contract or type | Module | Export |
 | --- | --- | --- | --- | --- |
 | stage | `review` | `kubeclaw.report.pipeline-review` | `src/stage.ts` | `execute` |
+| capability adapter | `evidence` | `evidence` | `src/evidence-adapter.ts` | `activate` |
 
 ## stage: review
 
 Public identifier: `kubeclaw.report.pipeline-review`.
 
-Required capabilities: `runtime.dispatch`, `artifacts.write`
+Required capabilities: `runtime.dispatch`, `artifacts.write`, `report.evidence.read`
 
 Provided capabilities: None.
 
@@ -41,6 +42,20 @@ Configuration schema: `schemas/config.schema.json`
 Input schema: `schemas/input.schema.json`
 
 Result schema: `schemas/result.schema.json`
+
+## capability adapter: evidence
+
+Public identifier: `evidence`.
+
+Required capabilities: `artifacts.read`
+
+Provided capabilities: `report.evidence.read`
+
+Configuration schema: `schemas/evidence-config.schema.json`
+
+Input schema: None.
+
+Result schema: None.
 
 ## Failure Behavior
 
@@ -56,13 +71,10 @@ Run:
 npm test --prefix skills/nova/plugins/pipeline-review
 ```
 
-Package tests found: 3.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/pipeline-review/plugin.json`
 - Package root: `skills/nova/plugins/pipeline-review`
 - Authored package guide: `skills/nova/plugins/pipeline-review/README.md`
-- Test: `skills/nova/plugins/pipeline-review/tests/live-function.test.ts`
-- Test: `skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs`
-- Test: `skills/nova/plugins/pipeline-review/tests/protocol.test.mjs`

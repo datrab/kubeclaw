@@ -150,7 +150,7 @@ Manipulations-/Traversalfehler, keine tatsächliche Designfreigabe.
 [prism-contract-tests.txt](../evidence/prism-contract-tests.txt): Generatorbytegleich,
 Originalcontracttest und Typecheck bestanden. Domain-/Enginetests und Archive-
 Integrität ebenfalls lokal ausgeführt, Details im Log. Repro
-[prism-contract-repro.mjs](../evidence/prism-contract-repro.mjs) bestätigt 001/002
+[prism-contract-repro.mjs — historischer Stand](https://github.com/datrab/kubeclaw/blob/46e02ea278a0721c3698fef486a27512a16e5e1c/docs/review/evidence/prism-contract-repro.mjs) bestätigt 001/002
 mit Originalvalidator, OriginalresolveView und Originalrenderer. Erster Tiefen-
 probeversuch scheiterte bereits an reviewseitigem JSON.stringify; finale Probe
 konstruiert gültige Wirebytes iterativ und prüft den Originalvalidator. Beide

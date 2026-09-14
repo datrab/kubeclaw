@@ -61,11 +61,10 @@ Run:
 npm test --prefix skills/buster/plugins/lighthouse
 ```
 
-Package tests found: 1.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/lighthouse/plugin.json`
 - Package root: `skills/buster/plugins/lighthouse`
 - Authored package guide: `skills/buster/plugins/lighthouse/README.md`
-- Test: `skills/buster/plugins/lighthouse/tests/live-function.test.ts`

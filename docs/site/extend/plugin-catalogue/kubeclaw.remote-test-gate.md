@@ -9,7 +9,7 @@ Last verified: generated during publication
 
 ## Purpose
 
-This package provides 1 registered extension through the canonical plugin runtime.
+This package provides 2 registered extensions through the canonical plugin runtime.
 
 ## When To Use It
 
@@ -27,6 +27,7 @@ Use this package when a granted capability needs one of its declared adapters.
 | Kind | ID | Public contract or type | Module | Export |
 | --- | --- | --- | --- | --- |
 | capability adapter | `plan` | `plan` | `src/adapter.ts` | `activate` |
+| capability adapter | `evidence` | `evidence` | `src/evidence-adapter.ts` | `activate` |
 
 ## capability adapter: plan
 
@@ -37,6 +38,20 @@ Required capabilities: `secrets.read`
 Provided capabilities: `test.plan.execute`
 
 Configuration schema: `schemas/config.schema.json`
+
+Input schema: None.
+
+Result schema: None.
+
+## capability adapter: evidence
+
+Public identifier: `evidence`.
+
+Required capabilities: `artifacts.read`
+
+Provided capabilities: `test.plan.evidence`
+
+Configuration schema: `schemas/evidence-config.schema.json`
 
 Input schema: None.
 
@@ -56,11 +71,10 @@ Run:
 npm test --prefix skills/nova/plugins/remote-test-gate
 ```
 
-Package tests found: 1.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/remote-test-gate/plugin.json`
 - Package root: `skills/nova/plugins/remote-test-gate`
 - Authored package guide: `skills/nova/plugins/remote-test-gate/README.md`
-- Test: `skills/nova/plugins/remote-test-gate/tests/live-function.test.ts`

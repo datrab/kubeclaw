@@ -61,11 +61,10 @@ Run:
 npm test --prefix skills/buster/plugins/api-flow
 ```
 
-Package tests found: 1.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/api-flow/plugin.json`
 - Package root: `skills/buster/plugins/api-flow`
 - Authored package guide: `skills/buster/plugins/api-flow/README.md`
-- Test: `skills/buster/plugins/api-flow/tests/live-function.test.ts`

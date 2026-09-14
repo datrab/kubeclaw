@@ -254,7 +254,7 @@ Ursache beheben: Beispiele an die tatsächliche Deklarationsschnittstelle
 anpassen, keine redundante schemaId-Overridefunktion hinzufügen.
 Regression: alle Beispiele in ein vollständiges echtes Projekt einbetten und
 mit Originalregistry/-resolver prüfen, einschließlich Suite-lokaler Referenzen.
-[Probe](../evidence/nova-resolver-examples.mjs),
+[Probe — historischer Stand](https://github.com/datrab/kubeclaw/blob/762243be85ad661302dddafc36e7aeca45a8e197/docs/review/evidence/nova-resolver-examples.mjs),
 [Resultat](../evidence/nova-resolver-examples.txt). Die Probe bestätigt die
 unzulässigen Felder; sie behauptet nicht, dass deren Entfernung allein alle
 externen Fixturebezüge vollständig macht. Rückprüfung aus nova.test-gates;

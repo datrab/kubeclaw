@@ -92,7 +92,7 @@ portables JSON-Normalisierungsprotokoll verstanden werden.
   Core.effects/identity.ts:5–24 vergleicht so Payloads. unknown ohne JSON-Prüfung.
 - **Auslöser/Ablauf:** in-process Array(2) ergibt ungültiges `[,]`;
   `{x:undefined}` und `{x:null}` identische Bytes. Originalfunktion tatsächlich
-  ausgeführt: [Reproduktion](../evidence/plugin-contract-sdk-repro.mjs).
+  ausgeführt: [Reproduktion — historischer Stand](https://github.com/datrab/kubeclaw/blob/815b7edea4af1e23ef7b40b43806db6741fb0007/docs/review/evidence/plugin-contract-sdk-repro.mjs).
 - **Auswirkung:** ungültige JSON-Artefakte bzw. verschiedene Nicht-JSON-Payloads
   bei Idempotenz gleichgesetzt. Voller Adapterfehlerpfad ist Code-Trace, kein
   hier gelaufener E2E-Test. Localeordnung zusätzliches Portabilitätsrisiko,

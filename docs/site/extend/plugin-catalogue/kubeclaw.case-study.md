@@ -32,7 +32,7 @@ Use this package when a pipeline graph needs one of its declared stage types.
 
 Public identifier: `kubeclaw.report.case-study`.
 
-Required capabilities: `runtime.dispatch`, `artifacts.write`
+Required capabilities: `runtime.dispatch`, `artifacts.write`, `report.evidence.read`
 
 Provided capabilities: None.
 
@@ -56,13 +56,10 @@ Run:
 npm test --prefix skills/nova/plugins/case-study
 ```
 
-Package tests found: 3.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/case-study/plugin.json`
 - Package root: `skills/nova/plugins/case-study`
 - Authored package guide: `skills/nova/plugins/case-study/README.md`
-- Test: `skills/nova/plugins/case-study/tests/live-function.test.ts`
-- Test: `skills/nova/plugins/case-study/tests/package-boundary.test.mjs`
-- Test: `skills/nova/plugins/case-study/tests/protocol.test.mjs`

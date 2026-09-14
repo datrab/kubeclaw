@@ -133,7 +133,7 @@ Exit70 „open task children: No such file or directory“; Bundleisolation Exit
 erster Supervisorassertion. Somit keine aktuellen FS-/Netz-/Crash-/Cancelgarantien
 bestätigt, keine späteren Bundletests erreicht. Einfacher Isolationstest nach
 identischem Startblocker nicht zusätzlich ausgeführt. Es wurde kein Ersatzlauncher
-gebaut oder Schutz entfernt. [isolation-utf8.mjs](../evidence/isolation-utf8.mjs)
+gebaut oder Schutz entfernt. [isolation-utf8.mjs — historischer Stand](https://github.com/datrab/kubeclaw/blob/d8aec76ac4733106f13a0695773235b44bd499d3/docs/review/evidence/isolation-utf8.mjs)
 startet Originalchild und Originalsession ohne Sandbox, gezielte gültige UTF-8-
 Chunkteilung bestätigt Datenkorruption; nur Protokolltest, kein Isolationstest.
 

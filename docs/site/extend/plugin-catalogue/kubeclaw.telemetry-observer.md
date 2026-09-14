@@ -56,13 +56,10 @@ Run:
 npm test --prefix skills/common/plugins/telemetry-observer
 ```
 
-Package tests found: 3.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/telemetry-observer/plugin.json`
 - Package root: `skills/common/plugins/telemetry-observer`
 - Authored package guide: `skills/common/plugins/telemetry-observer/README.md`
-- Test: `skills/common/plugins/telemetry-observer/tests/live-function.test.ts`
-- Test: `skills/common/plugins/telemetry-observer/tests/package-boundary.test.mjs`
-- Test: `skills/common/plugins/telemetry-observer/tests/parity.test.ts`

@@ -56,13 +56,10 @@ Run:
 npm test --prefix skills/nova/plugins/implementation-agent
 ```
 
-Package tests found: 3.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/implementation-agent/plugin.json`
 - Package root: `skills/nova/plugins/implementation-agent`
 - Authored package guide: `skills/nova/plugins/implementation-agent/README.md`
-- Test: `skills/nova/plugins/implementation-agent/tests/live-function.test.ts`
-- Test: `skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs`
-- Test: `skills/nova/plugins/implementation-agent/tests/protocol.test.ts`

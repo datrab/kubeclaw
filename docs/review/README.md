@@ -1,5 +1,15 @@
 # Pipeline-Komponentenreview
 
+## Referenzen und historische Evidenz
+
+Die Berichte in diesem Verzeichnis dokumentieren die jeweils genannten Commits
+und Review-Zeitpunkte. Codepfade im Fließtext sind historische Fundstellen,
+keine Zusage über Dateien im aktuellen Checkout. Die Referenzprüfung prüft
+weiterhin alle expliziten Markdown-Links. Entfernte Reproduktionsskripte werden
+über unveränderliche GitHub-Commit-Links zugänglich gemacht; vorhandene lokale
+Ausgaben bleiben verlinkt. Aktuelle Anleitungen unter `docs/site/` und den
+Operator-Verzeichnissen unterliegen weiterhin der Prüfung gegen den Checkout.
+
 ## Auftrag und Prüfstand
 
 Technische Bestandsaufnahme für ein experimentelles Open-Source-Hobbyprojekt.

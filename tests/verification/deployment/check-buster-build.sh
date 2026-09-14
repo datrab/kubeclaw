@@ -11,12 +11,14 @@ TOML
 export BUILDKIT_HOST=unix:///run/user/1000/proof/buildkit.sock
 setpriv --reuid=1000 --regid=1000 --init-groups rootlesskit --net=host buildkitd \
   --config /tmp/buildkit-proof.toml --addr "$BUILDKIT_HOST" \
+  --otel-socket-path /run/user/1000/proof/otel-grpc.sock \
   --root /home/builder/.local/share/buildkit-proof --oci-worker-no-process-sandbox \
   --oci-worker-snapshotter=native > /tmp/buildkit-proof.log 2>&1 &
 pid=$!
 trap 'kill "$pid" 2>/dev/null || true; cat /tmp/buildkit-proof.log' EXIT
 ready=false
 for attempt in {1..60}; do
+  if ! kill -0 "$pid" 2>/dev/null; then wait "$pid"; exit 1; fi
   if buildctl --addr "$BUILDKIT_HOST" debug workers >/dev/null 2>&1; then ready=true; break; fi
   sleep 1
 done

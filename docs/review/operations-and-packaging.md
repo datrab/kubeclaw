@@ -111,7 +111,7 @@ fake-npm/fake-openclaw-Fixtures simulieren Pipeline/Taskantworten. Kein echter
 Agentlauf, keine neu geschriebenen Ersatzimplementierungen zum Grünmachen.
 Test deckt Status/Legacy/Resume/Terminal/Flag ab, keinen unkooperativen Prozess,
 Lost-ACK, Multi-Supervisor-Wettlauf oder Speicherfehler.
-Zusatzprobe [nova-supervisor-status-failure.mjs](evidence/nova-supervisor-status-failure.mjs)
+Zusatzprobe [nova-supervisor-status-failure.mjs — historischer Stand](https://github.com/datrab/kubeclaw/blob/2121dcaae14c65c0b0608dc5fe365041b7de6242/docs/review/evidence/nova-supervisor-status-failure.mjs)
 startet unveränderten Supervisor mit fehlender Plattformdatei: **Exit0, keine
 Fehlermeldung, keine Pipeline gestartet**. [Ergebnis](evidence/nova-supervisor-status-failure.txt).
 

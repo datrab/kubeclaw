@@ -60,11 +60,10 @@ Run:
 npm test --prefix skills/buster/plugins/container-build
 ```
 
-Package tests found: 1.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/container-build/plugin.json`
 - Package root: `skills/buster/plugins/container-build`
 - Authored package guide: `skills/buster/plugins/container-build/README.md`
-- Test: `skills/buster/plugins/container-build/tests/live-function.test.ts`

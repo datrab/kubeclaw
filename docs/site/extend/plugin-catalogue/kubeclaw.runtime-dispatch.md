@@ -71,12 +71,10 @@ Run:
 npm test --prefix skills/common/plugins/runtime-dispatch
 ```
 
-Package tests found: 2.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/runtime-dispatch/plugin.json`
 - Package root: `skills/common/plugins/runtime-dispatch`
 - Authored package guide: `skills/common/plugins/runtime-dispatch/README.md`
-- Test: `skills/common/plugins/runtime-dispatch/tests/live-function.test.ts`
-- Test: `skills/common/plugins/runtime-dispatch/tests/package-boundary.test.mjs`

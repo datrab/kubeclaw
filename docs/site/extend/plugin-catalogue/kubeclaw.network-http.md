@@ -56,12 +56,10 @@ Run:
 npm test --prefix skills/common/plugins/network-http
 ```
 
-Package tests found: 2.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/network-http/plugin.json`
 - Package root: `skills/common/plugins/network-http`
 - Authored package guide: `skills/common/plugins/network-http/README.md`
-- Test: `skills/common/plugins/network-http/tests/live-function.test.ts`
-- Test: `skills/common/plugins/network-http/tests/package-boundary.test.mjs`

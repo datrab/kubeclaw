@@ -260,7 +260,7 @@ zeigt `running`, `NOVA_REMOTE_PLAN_TIMEOUT`, **0 DELETEs**.
 Ursache beheben: ein gemeinsamer zeitbegrenzter Cancel-/Reconciliationabschluss
 für jeden Deadline-/Abortpfad, unbekannten Remotestatus sichtbar halten.
 Regression: echter Service und verlorene Antworten wie
-[nova-remote-timeouts.mjs](../evidence/nova-remote-timeouts.mjs), danach Cancel-
+[nova-remote-timeouts.mjs — historischer Stand](https://github.com/datrab/kubeclaw/blob/762243be85ad661302dddafc36e7aeca45a8e197/docs/review/evidence/nova-remote-timeouts.mjs), danach Cancel-
 Anfrage und terminales Ergebnis nachweisen; zusätzlich Timeout während Bodylesen.
 
 ### PCR-NOVA-GATE-002 — Gate-Zeitlimit endet vor Ergebnisimport
@@ -288,7 +288,7 @@ Originalconstructor mit `http://[::1]:8080` wirft NOT_LOOPBACK, obwohl
 `secure-endpoint.ts` diesen Loopback akzeptiert.
 Ursache: konsistente kanonische Loopbackklassifikation an beiden Grenzen.
 Regression: Originalfactory/Adapter mit IPv4, IPv6, localhost und Nichtloopback;
-Proxyvertrauen nicht erweitern. [Probe](../evidence/nova-resolver-examples.mjs).
+Proxyvertrauen nicht erweitern. [Probe — historischer Stand](https://github.com/datrab/kubeclaw/blob/762243be85ad661302dddafc36e7aeca45a8e197/docs/review/evidence/nova-resolver-examples.mjs).
 
 ### PCR-NOVA-GATE-004 — Storegesamtquote als Einzelbloblimit übergeben
 

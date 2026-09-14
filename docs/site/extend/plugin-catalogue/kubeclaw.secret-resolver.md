@@ -56,12 +56,10 @@ Run:
 npm test --prefix skills/common/plugins/secret-resolver
 ```
 
-Package tests found: 2.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/secret-resolver/plugin.json`
 - Package root: `skills/common/plugins/secret-resolver`
 - Authored package guide: `skills/common/plugins/secret-resolver/README.md`
-- Test: `skills/common/plugins/secret-resolver/tests/live-function.test.ts`
-- Test: `skills/common/plugins/secret-resolver/tests/package-boundary.test.mjs`

@@ -56,12 +56,10 @@ Run:
 npm test --prefix skills/buster/plugins/junit-report-adapter
 ```
 
-Package tests found: 2.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/junit-report-adapter/plugin.json`
 - Package root: `skills/buster/plugins/junit-report-adapter`
 - Authored package guide: `skills/buster/plugins/junit-report-adapter/README.md`
-- Test: `skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs`
-- Test: `skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts`

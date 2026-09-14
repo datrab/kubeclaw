@@ -56,12 +56,10 @@ Run:
 npm test --prefix skills/common/plugins/artifact-store
 ```
 
-Package tests found: 2.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/artifact-store/plugin.json`
 - Package root: `skills/common/plugins/artifact-store`
 - Authored package guide: `skills/common/plugins/artifact-store/README.md`
-- Test: `skills/common/plugins/artifact-store/tests/live-function.test.ts`
-- Test: `skills/common/plugins/artifact-store/tests/package-boundary.test.mjs`

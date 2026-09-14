@@ -61,13 +61,10 @@ Run:
 npm test --prefix skills/buster/plugins/playwright
 ```
 
-Package tests found: 3.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/playwright/plugin.json`
 - Package root: `skills/buster/plugins/playwright`
 - Authored package guide: `skills/buster/plugins/playwright/README.md`
-- Test: `skills/buster/plugins/playwright/tests/fixture/playwright.config.ts`
-- Test: `skills/buster/plugins/playwright/tests/fixture/specs/home.spec.ts`
-- Test: `skills/buster/plugins/playwright/tests/live-function.test.ts`

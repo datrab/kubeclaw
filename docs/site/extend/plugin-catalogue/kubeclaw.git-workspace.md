@@ -56,12 +56,10 @@ Run:
 npm test --prefix skills/common/plugins/git-workspace
 ```
 
-Package tests found: 2.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/git-workspace/plugin.json`
 - Package root: `skills/common/plugins/git-workspace`
 - Authored package guide: `skills/common/plugins/git-workspace/README.md`
-- Test: `skills/common/plugins/git-workspace/tests/live-function.test.ts`
-- Test: `skills/common/plugins/git-workspace/tests/package-boundary.test.mjs`

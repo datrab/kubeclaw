@@ -86,16 +86,10 @@ Run:
 npm test --prefix skills/nova/plugins/lint
 ```
 
-Package tests found: 6.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/lint/plugin.json`
 - Package root: `skills/nova/plugins/lint`
 - Authored package guide: `skills/nova/plugins/lint/README.md`
-- Test: `skills/nova/plugins/lint/tests/adapter-boundary.test.mjs`
-- Test: `skills/nova/plugins/lint/tests/discovery.test.mjs`
-- Test: `skills/nova/plugins/lint/tests/eslint-discipline.test.mjs`
-- Test: `skills/nova/plugins/lint/tests/live-function.test.ts`
-- Test: `skills/nova/plugins/lint/tests/package-boundary.test.mjs`
-- Test: `skills/nova/plugins/lint/tests/stage.unit.test.mjs`

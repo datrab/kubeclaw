@@ -56,14 +56,10 @@ Run:
 npm test --prefix skills/nova/plugins/buster-quality-gate
 ```
 
-Package tests found: 4.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/buster-quality-gate/plugin.json`
 - Package root: `skills/nova/plugins/buster-quality-gate`
 - Authored package guide: `skills/nova/plugins/buster-quality-gate/README.md`
-- Test: `skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts`
-- Test: `skills/nova/plugins/buster-quality-gate/tests/package-boundary.test.mjs`
-- Test: `skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts`
-- Test: `skills/nova/plugins/buster-quality-gate/tests/suite-first.test.ts`

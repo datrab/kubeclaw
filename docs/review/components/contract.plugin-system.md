@@ -89,7 +89,7 @@ ununtersuchter historischer Laufzeitaudit als bestätigt übernommen.
   fehlende Funktion fällt erst beim späteren Aufrufer auf.
 - **Ursachenbehebung:** jeder anyOf-Zweig muss die zugehörige nichtleere Surface
   auch als Pflichtfeld verlangen; keine Registry-Kompatibilitätssonderregel.
-- **Echter Nachweis:** [Reproduktion](../evidence/plugin-contract-sdk-repro.mjs)
+- **Echter Nachweis:** [Reproduktion — historischer Stand](https://github.com/datrab/kubeclaw/blob/815b7edea4af1e23ef7b40b43806db6741fb0007/docs/review/evidence/plugin-contract-sdk-repro.mjs)
   ruft Originalparser auf; [Ausgabe](../evidence/plugin-contract-sdk-repro.txt).
   Regression: Matrix fehlender/leerer/gefüllter Arrays gegen denselben Parser;
   alle fünf einzelnen Surfaces müssen weiterhin gültig sein.

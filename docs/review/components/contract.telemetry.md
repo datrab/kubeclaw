@@ -120,7 +120,7 @@ Keine dedizierten aktuellen Laufzeittests per Pfad-/Wire-/Typreferenz in tests
 gefunden; Golden- und Missing-run-Fixture geprüft. Originalgenerator --check
 Exit1: gofmt fehlt. Go-Typkompilierung und Schema/Go-Roundtrip nicht ausgeführt.
 [telemetry-contract-tests.txt](../evidence/telemetry-contract-tests.txt) trennt dies
-von [telemetry-contract-check.mjs](../evidence/telemetry-contract-check.mjs):
+von [telemetry-contract-check.mjs — historischer Stand](https://github.com/datrab/kubeclaw/blob/d8aec76ac4733106f13a0695773235b44bd499d3/docs/review/evidence/telemetry-contract-check.mjs):
 132 Manifestdateihashes/Längen stimmen;122 Originalschemas mit installiertem Ajv
 und formats kompiliert; Golden-Agenttool-event gültig; fehlende Identity verworfen;
 Gateevent akzeptiert null-run, Basis-Envelopeschema lehnt genau diese Identity ab.

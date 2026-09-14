@@ -61,11 +61,10 @@ Run:
 npm test --prefix skills/buster/plugins/http
 ```
 
-Package tests found: 1.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/http/plugin.json`
 - Package root: `skills/buster/plugins/http`
 - Authored package guide: `skills/buster/plugins/http/README.md`
-- Test: `skills/buster/plugins/http/tests/live-function.test.ts`

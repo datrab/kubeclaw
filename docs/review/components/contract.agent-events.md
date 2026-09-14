@@ -95,7 +95,7 @@ Verdrahtung dieser Brücke. Keine Übernahme historischer Test-Erfolge.
   validatePayload:211–220 prüft metadata vor jeglicher Bytebegrenzung.
 - **Auslöser/Ablauf:** JSON.parse erzeugt etwa 20 KiB gültiges JSON mit 10000
   verschachtelten Arrays in metadata; Validierung läuft in RangeError.
-  Originalvalidator: [Reproduktion](../evidence/agent-contract-depth.mjs),
+  Originalvalidator: [Reproduktion — historischer Stand](https://github.com/datrab/kubeclaw/blob/815b7edea4af1e23ef7b40b43806db6741fb0007/docs/review/evidence/agent-contract-depth.mjs),
   Ausgabe im Testprotokoll. Kein Mock und kein geänderter Runtimecode.
 - **Auswirkung:** zulässiger Größenrahmen schützt nicht vor Diagnoseverlust/
   Ausnahme an Normalisierungsgrenze; ein künftiger Ingressconsumer wäre ebenfalls

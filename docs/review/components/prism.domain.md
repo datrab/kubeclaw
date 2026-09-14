@@ -104,7 +104,7 @@ Drei bestehende Domainfälle (Unveränderlichkeit/Revision, Batchrollback,
 Responsivepatch) und sieben Enginefälle gelesen und bestanden:
 [prism-contract-tests.txt](../evidence/prism-contract-tests.txt). Echte Original-
 funktionen, kleine lokale Dokumente; keine Browserinteraktion oder DBtransaktion.
-[prism-domain-repro.mjs](../evidence/prism-domain-repro.mjs) reproduziert alle drei
+[prism-domain-repro.mjs — historischer Stand](https://github.com/datrab/kubeclaw/blob/46e02ea278a0721c3698fef486a27512a16e5e1c/docs/review/evidence/prism-domain-repro.mjs) reproduziert alle drei
 folgenden Defekte mit validiertem Originalfixture und Originalreducer/-resolver;
 [prism-domain-tests.txt](../evidence/prism-domain-tests.txt). Kein Mock oder eigener
 Reducer. Fehlend: Descendantmove, Subtreeduplikation und kombinierte Patchlayer als

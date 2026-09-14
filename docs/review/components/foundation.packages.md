@@ -114,7 +114,7 @@ Runtimeaktivierung aller Surfaces.
 - **Ursachenbehebung:** gemeinsame vollständige Enumeration ausführbarer
   Surfaces und deren gebündelter Importclosure für Vorprüfung verwenden;
   dabei keine Pluginimporte auf trusted Host ausführen.
-- **Echter Nachweis:** [Repro](../evidence/install-report-syntax.mjs) verwendet
+- **Echter Nachweis:** [Repro — historischer Stand](https://github.com/datrab/kubeclaw/blob/91396dc4975ed05a0cb674b0e1327ddbf3ef1f12/docs/review/evidence/install-report-syntax.mjs) verwendet
   Originalinstaller/Registry und echte Dateien, Log oben. Regression muss alle
   erlaubten Surfaces mit gültiger/ungültiger Syntax prüfen und darf nach
   Fehler kein Zielpaket hinterlassen. Keine Dummy-Stage als Workaround.

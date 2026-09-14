@@ -34,7 +34,7 @@ Public identifier: `operator`.
 
 Required capabilities: `network.http`, `secrets.read`
 
-Provided capabilities: `operator.request`
+Provided capabilities: `operator.request`, `operator.receipt`
 
 Configuration schema: `schemas/config.schema.json`
 
@@ -56,12 +56,10 @@ Run:
 npm test --prefix skills/common/plugins/operator-messaging
 ```
 
-Package tests found: 2.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/operator-messaging/plugin.json`
 - Package root: `skills/common/plugins/operator-messaging`
 - Authored package guide: `skills/common/plugins/operator-messaging/README.md`
-- Test: `skills/common/plugins/operator-messaging/tests/live-function.test.ts`
-- Test: `skills/common/plugins/operator-messaging/tests/package-boundary.test.mjs`

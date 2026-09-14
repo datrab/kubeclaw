@@ -105,7 +105,7 @@ unveränderte Kopie, Typecheck/config/live-function/boundary bestanden:
 an funktionalen Repoquellen, keine Mockmodule nachgerüstet. Live-function selbst
 verwendet vorhandene fake Redis-/Diagnosticfactory, prüft disabled/start,
 ein session_start-XADD und fehlerhafte Factory; kein echter Redis/OpenClaw,
-Reconnect/Timeout-/Deadletter-/SIGKILLnachweis. [Grenzprobe](../evidence/observers-boundaries.mjs)
+Reconnect/Timeout-/Deadletter-/SIGKILLnachweis. [Grenzprobe — historischer Stand](https://github.com/datrab/kubeclaw/blob/667669da6a67262b725508a0f0328f7f10f57da4/docs/review/evidence/observers-boundaries.mjs)
 und [Log](../evidence/observers-boundaries.txt) prüfen originale Dedupefunktion
 und toJsonValue direkt ohne die generierten Runtimeimporte.
 

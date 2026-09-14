@@ -64,11 +64,10 @@ Run:
 npm test --prefix skills/buster/plugins/tailscale-exposure
 ```
 
-Package tests found: 1.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/tailscale-exposure/plugin.json`
 - Package root: `skills/buster/plugins/tailscale-exposure`
 - Authored package guide: `skills/buster/plugins/tailscale-exposure/README.md`
-- Test: `skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts`

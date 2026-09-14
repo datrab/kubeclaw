@@ -79,7 +79,7 @@ Alle Unit-, Parity-, live-function- und Boundarytests vollständig gelesen;
 Live-function läuft mit originalem Core, Filejournal/Sinks und localhost-HTTP-
 Fixture (synthetische Events, MemoryResourceLockManager). Zwei Zustellungen,
 zwei Checkpoints und erneuter leerer Drain; kein echter Discord/OpenClaw.
-[Originalgrenzprobe](../evidence/observers-boundaries.mjs),
+[Originalgrenzprobe — historischer Stand](https://github.com/datrab/kubeclaw/blob/667669da6a67262b725508a0f0328f7f10f57da4/docs/review/evidence/observers-boundaries.mjs),
 [Ausgabe](../evidence/observers-boundaries.txt) bestanden als Defektbelege:
 Projektoroutput wird durch originalen parsePayload abgelehnt. Kein Mockersatz.
 

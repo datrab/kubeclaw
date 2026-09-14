@@ -71,12 +71,10 @@ Run:
 npm test --prefix skills/common/plugins/redis-transport
 ```
 
-Package tests found: 2.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/redis-transport/plugin.json`
 - Package root: `skills/common/plugins/redis-transport`
 - Authored package guide: `skills/common/plugins/redis-transport/README.md`
-- Test: `skills/common/plugins/redis-transport/tests/live-function.test.ts`
-- Test: `skills/common/plugins/redis-transport/tests/package-boundary.test.ts`

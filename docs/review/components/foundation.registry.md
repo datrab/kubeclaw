@@ -162,7 +162,7 @@ Buster-Aktivierung und Budgetannahmen fehlen).
 - **Auslöser:** zweimal dasselbe gültige Schema mit `$id` über
   validateReferencedSchema laden. Zweiter Aufruf wirft REGISTRY_MANIFEST_INVALID
   mit „schema with key or id … already exists“. Originalrepro
-  [registry-schema-reload.mjs](../evidence/registry-schema-reload.mjs), keine Ajv-
+  [registry-schema-reload.mjs — historischer Stand](https://github.com/datrab/kubeclaw/blob/91396dc4975ed05a0cb674b0e1327ddbf3ef1f12/docs/review/evidence/registry-schema-reload.mjs), keine Ajv-
   Ersatzimplementierung. Aktive Builtins brauchen nicht alle solche referenzierten
   IDs; eine flächendeckende aktuelle Produktionsstörung wird nicht behauptet.
 - **Ursachenbehebung:** Validatorinstanzen/Referenzen an unveränderlichen

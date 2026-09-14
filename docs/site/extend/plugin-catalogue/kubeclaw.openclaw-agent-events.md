@@ -56,12 +56,10 @@ Run:
 npm test --prefix skills/common/plugins/openclaw-agent-events
 ```
 
-Package tests found: 2.
+Package tests found: 0.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/openclaw-agent-events/plugin.json`
 - Package root: `skills/common/plugins/openclaw-agent-events`
 - Authored package guide: `skills/common/plugins/openclaw-agent-events/README.md`
-- Test: `skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts`
-- Test: `skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs`

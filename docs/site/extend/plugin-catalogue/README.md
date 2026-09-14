@@ -11,7 +11,7 @@ Last verified: generated during publication
 
 Use this catalogue to find every installed plugin package and its declared extension surfaces.
 
-The catalogue contains 48 packages.
+The catalogue contains 50 packages.
 
 ## Stage Packages
 
@@ -20,6 +20,7 @@ The catalogue contains 48 packages.
 - [kubeclaw.buster-quality-gate](kubeclaw.buster-quality-gate.md)
 - [kubeclaw.case-study](kubeclaw.case-study.md)
 - [kubeclaw.delivery-lint](kubeclaw.delivery-lint.md)
+- [kubeclaw.demo-handoff](kubeclaw.demo-handoff.md)
 - [kubeclaw.human-approval](kubeclaw.human-approval.md)
 - [kubeclaw.implementation-agent](kubeclaw.implementation-agent.md)
 - [kubeclaw.lint](kubeclaw.lint.md)
@@ -39,11 +40,13 @@ The catalogue contains 48 packages.
 
 - [kubeclaw.artifact-store](kubeclaw.artifact-store.md)
 - [kubeclaw.command-runner](kubeclaw.command-runner.md)
+- [kubeclaw.demo-handoff](kubeclaw.demo-handoff.md)
 - [kubeclaw.git-workspace](kubeclaw.git-workspace.md)
 - [kubeclaw.lint](kubeclaw.lint.md)
 - [kubeclaw.network-http](kubeclaw.network-http.md)
 - [kubeclaw.openclaw-agent-events](kubeclaw.openclaw-agent-events.md)
 - [kubeclaw.operator-messaging](kubeclaw.operator-messaging.md)
+- [kubeclaw.pipeline-review](kubeclaw.pipeline-review.md)
 - [kubeclaw.redis-transport](kubeclaw.redis-transport.md)
 - [kubeclaw.remote-test-gate](kubeclaw.remote-test-gate.md)
 - [kubeclaw.repository-adapter](kubeclaw.repository-adapter.md)
@@ -60,6 +63,7 @@ The catalogue contains 48 packages.
 - [kubeclaw.axe](kubeclaw.axe.md)
 - [kubeclaw.container-build](kubeclaw.container-build.md)
 - [kubeclaw.coverage-budget](kubeclaw.coverage-budget.md)
+- [kubeclaw.demo-auth-smoke](kubeclaw.demo-auth-smoke.md)
 - [kubeclaw.direct-command](kubeclaw.direct-command.md)
 - [kubeclaw.http](kubeclaw.http.md)
 - [kubeclaw.kubernetes-fixture](kubeclaw.kubernetes-fixture.md)
