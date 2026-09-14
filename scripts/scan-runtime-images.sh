@@ -64,11 +64,19 @@ install_trivy() {
   temporary="$(mktemp -d "${TMPDIR:-/tmp}/kubeclaw-trivy.XXXXXX")"
   trap 'rm -rf -- "$temporary"' RETURN
   local archive="trivy_${TRIVY_VERSION}_Linux-${archive_arch}.tar.gz"
-  curl -fsSL --retry 4 --retry-delay 2 --retry-max-time 120 --connect-timeout 15 --max-time 60 "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${archive}" \
-    -o "$temporary/$archive"
-  printf '%s  %s\n' "$archive_sha" "$temporary/$archive" | sha256sum -c - >/dev/null
-  tar --no-same-owner -xzf "$temporary/$archive" -C "$temporary" trivy
-  install -m 0755 "$temporary/trivy" "$executable"
+  local attempt
+  for attempt in 1 2 3; do
+    if curl -fsSL --connect-timeout 15 --max-time 60 \
+      "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${archive}?download=1&kubeclaw_retry=$(date +%s)-$attempt" \
+      -o "$temporary/$archive"; then
+      break
+    fi
+    if [[ $attempt == 3 ]]; then return 1; fi
+    sleep "$((attempt * 5))"
+  done
+  printf '%s  %s\n' "$archive_sha" "$temporary/$archive" | sha256sum -c - >/dev/null || return 1
+  tar --no-same-owner -xzf "$temporary/$archive" -C "$temporary" trivy || return 1
+  install -m 0755 "$temporary/trivy" "$executable" || return 1
   printf '%s\n' "$executable"
 }
 
