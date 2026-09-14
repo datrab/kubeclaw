@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "openclaw": {
-    "version": "2026.9.3",
-    "digest": "sha256:6cb72e1599b3b76e2ea3dcc2f4dd7f112247367fbecadfcdee8caa7423f4989b"
+    "version": "2026.9.4",
+    "digest": "sha256:cc596b846506a5f4cfcee111394a2725f375f01cca2ebb492a161fd1b747f101"
   },
   "buildArgs": {
     "ARCHVIEWER_BASE": "docker.io/library/nginx:1.29-alpine@sha256:5616878291a2eed594aee8db4dade5878cf7edcb475e59193904b198d9b830de",
