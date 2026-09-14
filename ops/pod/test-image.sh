@@ -15,7 +15,12 @@ container=$(docker run -d --read-only --cap-drop ALL --security-opt no-new-privi
 for attempt in {1..30}; do
   if docker exec "$container" python3 -c "import json; assert json.load(open('/tmp/codex-ops-status.json'))['phase']=='waiting-for-login'" 2>/dev/null; then
     docker exec "$container" gh --version
-    docker exec "$container" kubectl version --client -o json
+    docker exec "$container" kubectl version --client -o json | python3 -c '
+import json, sys
+expected = json.load(open(sys.argv[1]))["imageOverrides"]["ops-pod"]["KUBECTL_VERSION"]
+actual = json.load(sys.stdin)["clientVersion"]["gitVersion"]
+assert actual == expected, (actual, expected)
+' "$(dirname -- "${BASH_SOURCE[0]}")/../../versions.json"
     docker exec "$container" helm version --short
     docker exec "$container" npm --version
     docker exec "$container" codex remote-control pair --help >/dev/null

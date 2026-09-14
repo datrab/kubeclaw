@@ -21,6 +21,7 @@ ARG KUBECTL_VERSION=v1.34.11
 ENV GOTOOLCHAIN=local
 WORKDIR /src
 COPY kubectl-build/ ./
+RUN sh verify-version.sh "${KUBECTL_VERSION}"
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=readonly -trimpath \
     -ldflags "-X k8s.io/client-go/pkg/version.gitVersion=${KUBECTL_VERSION} -X k8s.io/component-base/version.gitVersion=${KUBECTL_VERSION}" \
     -o /out/kubectl .
