@@ -27,7 +27,7 @@ ENV GOTOOLCHAIN=local
 WORKDIR /src
 COPY kubectl-build/ ./
 # Retry bounded module transfers over HTTP/1.1 after observed proxy HTTP/2 stream failures.
-RUN attempt=1; until GODEBUG=http2client=0 timeout 180 go mod download; do \
+RUN attempt=1; until GODEBUG=http2client=0 timeout 180 go mod download all; do \
       if [ "$attempt" -ge 3 ]; then exit 1; fi; \
       sleep "$((attempt * 5))"; attempt="$((attempt + 1))"; \
     done
