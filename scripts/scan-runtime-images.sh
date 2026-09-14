@@ -64,7 +64,7 @@ install_trivy() {
   temporary="$(mktemp -d "${TMPDIR:-/tmp}/kubeclaw-trivy.XXXXXX")"
   trap 'rm -rf -- "$temporary"' RETURN
   local archive="trivy_${TRIVY_VERSION}_Linux-${archive_arch}.tar.gz"
-  curl -fsSL "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${archive}" \
+  curl -fsSL --retry 4 --retry-delay 2 --retry-max-time 120 --connect-timeout 15 --max-time 60 "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${archive}" \
     -o "$temporary/$archive"
   printf '%s  %s\n' "$archive_sha" "$temporary/$archive" | sha256sum -c - >/dev/null
   tar --no-same-owner -xzf "$temporary/$archive" -C "$temporary" trivy
