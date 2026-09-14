@@ -18,6 +18,7 @@
     { "id": "prism-engine", "source": "skills/prism", "owner": "prism", "roles": ["prism"], "bundle": { "kind": "node-package" } },
     { "id": "prism-runtime", "source": "skills/prism", "owner": "prism", "roles": ["prism"], "bundle": { "kind": "entrypoint" } },
     { "id": "agent-observability-contract", "source": "contracts/agent-observability/v1", "owner": "shared", "roles": ["nova", "buster", "prism"], "bundle": { "kind": "node-package" } },
+    { "id": "delivery-manifest-contract", "source": "contracts/delivery-manifest/v3", "owner": "shared", "roles": ["nova"], "bundle": { "kind": "node-package" } },
     { "id": "telemetry-contract", "source": "contracts/telemetry/v1", "owner": "shared", "roles": ["nova", "buster"], "bundle": { "kind": "assets", "target": "skills/contracts/telemetry/v1" } },
     { "id": "pipeline-test-gate-contract", "source": "contracts/pipeline-test-gate/v1", "owner": "shared", "roles": ["nova", "buster", "prism"], "bundle": { "kind": "node-package" } },
     { "id": "pipeline-worker-core-contract", "source": "contracts/pipeline-worker-core/v1", "owner": "shared", "roles": ["nova", "buster", "prism"], "bundle": { "kind": "node-package" } },

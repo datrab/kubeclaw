@@ -15,6 +15,7 @@
     "nova-core",
     "nova-runtime",
     "agent-observability-contract",
+    "delivery-manifest-contract",
     "telemetry-contract",
     "pipeline-test-gate-contract",
     "pipeline-worker-core-contract",
