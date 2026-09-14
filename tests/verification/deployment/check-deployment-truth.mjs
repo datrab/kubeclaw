@@ -496,11 +496,12 @@ assert.match(
   'authoritative worker receipts must survive Pod replacement in their dedicated PVC',
 );
 assert.doesNotMatch(novaValues, /\.kubeclaw\.svc\.cluster\.local/);
-assert.match(
-  novaValues,
-  /service:[\s\S]*name:\s*archviewer[\s\S]*port:\s*3456[\s\S]*targetPort:\s*archviewer[\s\S]*nodePort:\s*30456/,
-  'Nova must expose its independent HTML architecture viewer on the established NodePort',
-);
+const novaSettings = loadAll(novaValues)[0];
+assert.equal(novaSettings.archviewer.enabled, true);
+assert.equal(novaSettings.archviewer.existingSecret, 'nova-archviewer-auth');
+assert.equal(novaSettings.archviewer.hostname, 'nova-architecture');
+assert.ok(!(novaSettings.service?.extraPorts ?? []).some(port => port.name === 'archviewer' || port.port === 3456),
+  'Archviewer must not retain its retired public NodePort');
 assert.match(
   novaValues,
   /extraContainers:[\s\S]*name:\s*archviewer[\s\S]*kubeclaw-archviewer:latest[\s\S]*name:\s*archviewer[\s\S]*containerPort:\s*3456[\s\S]*mountPath:\s*\/designs[\s\S]*readOnly:\s*true/,
@@ -521,11 +522,8 @@ assert.doesNotMatch(
   /buster-plan-trust|NODE_EXTRA_CA_CERTS/,
   'Nova must not retain the retired direct-TLS Buster trust volume',
 );
-assert.match(
-  networkPolicies,
-  /name:\s*kubeclaw-agents-ingress[\s\S]*port:\s*3456/,
-  'the Archviewer NodePort path must retain ingress to Nova port 3456',
-);
+assert.doesNotMatch(networkPolicies, /port:\s*["']?3456/,
+  'Archviewer ingress must be owned by its dedicated Tailscale policy');
 assert.match(chart, /fsGroup:\s*1000/);
 assert.match(
   chart,
@@ -1013,6 +1011,20 @@ if (helm.error?.code !== 'ENOENT') {
     0,
     `Nova provider-role helm template failed:\n${novaHelm.stderr}`,
   );
+  const novaObjects = loadAll(novaHelm.stdout);
+  const viewer = kind => novaObjects.find(object => object?.kind === kind && object.metadata.name === 'agent-nova-archviewer');
+  assert.equal(viewer('Service')?.spec.type, 'ClusterIP');
+  assert.deepEqual(viewer('Service').spec.ports, [{ name: 'http', port: 3456, targetPort: 'archviewer', protocol: 'TCP' }]);
+  assert.equal(viewer('Ingress')?.spec.ingressClassName, 'tailscale');
+  assert.equal(viewer('Ingress').spec.defaultBackend.service.name, 'agent-nova-archviewer');
+  const viewerIngress = viewer('CiliumNetworkPolicy')?.spec.ingress;
+  assert.equal(viewerIngress?.length, 1);
+  assert.deepEqual(viewerIngress[0].fromEndpoints, [{ matchLabels: {
+    'k8s:io.kubernetes.pod.namespace': 'tailscale', 'tailscale.com/managed': 'true',
+    'tailscale.com/parent-resource-type': 'ingress', 'tailscale.com/parent-resource': 'agent-nova-archviewer',
+    'tailscale.com/parent-resource-ns': 'kubeclaw',
+  } }]);
+  assert.deepEqual(viewerIngress[0].toPorts, [{ ports: [{ port: '3456', protocol: 'TCP' }] }]);
   assert.match(
     novaHelm.stdout,
     /name:\s*KUBECLAW_CAPABILITY_PROVIDERS[\s\S]*agent-buster:18789[\s\S]*127\.0\.0\.1:28891/,

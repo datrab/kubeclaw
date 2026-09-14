@@ -65,8 +65,8 @@ jobs:
         run: |
           node tests/verification/deployment/check-role-chart.mjs
           node tests/verification/deployment/check-deployment-truth.mjs
-          helm lint charts/kubeclaw -f my-values/buster-values.yaml
-          helm template agent-buster charts/kubeclaw -f my-values/buster-values.yaml > /tmp/buster-rendered.yaml
+          helm lint charts/kubeclaw -f my-values/buster-values.yaml -f tests/fixtures/helm/runtime-registry.yaml
+          helm template agent-buster charts/kubeclaw -f my-values/buster-values.yaml -f tests/fixtures/helm/runtime-registry.yaml > /tmp/buster-rendered.yaml
       - name: Exercise real isolated provider transport and evidence import
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: node tests/verification/contracts/check-pipeline-remote-real-provider.mts

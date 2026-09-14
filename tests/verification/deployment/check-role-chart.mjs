@@ -7,7 +7,8 @@ for (const [role, values, repository] of [
   ['prism', 'my-values/prism-agent-values.yaml', 'ghcr.io/datrab/kubeclaw-prism-agent'],
   ['buster', 'my-values/buster-values.yaml', 'ghcr.io/datrab/kubeclaw-buster-gateway'],
 ]) {
-  const rendered = spawnSync('helm', ['template', `agent-${role}`, 'charts/kubeclaw', '-f', values], { encoding: 'utf8' });
+  const rendered = spawnSync('helm', ['template', `agent-${role}`, 'charts/kubeclaw', '-f', values,
+    '-f', 'tests/fixtures/helm/runtime-registry.yaml'], { encoding: 'utf8' });
   assert.equal(rendered.status, 0, `Real Helm rendering is required: ${rendered.error ?? rendered.stderr}`);
   const objects = parseAllDocuments(rendered.stdout).map(doc => { assert.deepEqual(doc.errors, []); return doc.toJSON(); });
   const deployment = objects.find(doc => doc?.kind === 'Deployment' && doc.metadata.name === `agent-${role}`);

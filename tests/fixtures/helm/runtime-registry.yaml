@@ -1,0 +1,6 @@
+# Rendering-only operator contract. No real credentials or cluster endpoint.
+runtimeInfrastructure:
+  registry:
+    endpoint: https://registry.example.test
+    transport: https
+    authSecretName: registry-contract-test
