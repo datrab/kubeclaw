@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "commit": "9e85c86343ff87c76eb331983c82122e82f2ae38",
+  "images": {
+    "codex-ops": "ghcr.io/datrab/kubeclaw-codex-ops@sha256:b52ba81c67f19073ad4fa19dc3fa48cb12cfa275e2ae6333de4e8079f95deb35",
+    "ops-mcp": "ghcr.io/datrab/kubeclaw-ops-mcp@sha256:c7f162412212bb05a4649b8dadcab672d3382f243301faaa05b3c5530e95ad27"
+  },
+  "sourceRunId": 34855248442,
+  "sourceRunAttempt": 1
+}
