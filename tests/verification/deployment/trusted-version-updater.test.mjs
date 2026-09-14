@@ -21,7 +21,7 @@ test('the actual trusted updater runs from an isolated read-only module set with
       fs.cpSync(path.join(root, 'docker', name), path.join(repository, 'docker', name), { recursive: true });
     }
     fs.mkdirSync(path.join(trusted, 'updates'), { recursive: true });
-    for (const file of ['versions.mjs', 'infrastructure-chart-lock.mjs', 'runtime-tool-locks.mjs', 'updates/refresh-versions.mjs']) {
+    for (const file of ['versions.mjs', 'infrastructure-chart-lock.mjs', 'runtime-tool-locks.mjs', 'updates/refresh-versions.mjs', 'updates/upstream-fetch.mjs']) {
       const target = path.join(trusted, file);
       fs.copyFileSync(path.join(root, 'scripts', file), target); fs.chmodSync(target, 0o444);
     }

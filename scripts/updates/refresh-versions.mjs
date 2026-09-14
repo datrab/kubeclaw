@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { fetchUpstream } from './upstream-fetch.mjs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -14,9 +15,7 @@ const before = JSON.parse(execFileSync('git', ['show', 'HEAD:versions.json'], { 
 const sha = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 async function get(url, headers = {}) {
   if (new URL(url).hostname === 'api.github.com' && process.env.RENOVATE_TOKEN) headers = { ...headers, Authorization: `Bearer ${process.env.RENOVATE_TOKEN}` };
-  const response = await fetch(url, { headers, signal: AbortSignal.timeout(120000) });
-  if (!response.ok) throw new Error(`${response.status}: ${url}`);
-  return response;
+  return fetchUpstream(url, { headers });
 }
 async function text(url) { return (await get(url)).text(); }
 async function checksum(url, name) {
