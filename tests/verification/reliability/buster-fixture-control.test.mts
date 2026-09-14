@@ -66,6 +66,7 @@ test('repeated host readiness is a protocol failure, not another fixture admissi
   const f = await setup(t, 'repeat');
   const running = f.controller.run(f.channel, new AbortController().signal, f.vector.scope); f.send();
   await assert.rejects(running, /READINESS_REPEATED/);
+  assert.deepEqual(await f.controller.ready, f.vector);
   assert.equal((await f.journal.snapshot()).length, 1);
   assert.equal((await f.journal.snapshot())[0]!.terminal, null);
 });

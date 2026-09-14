@@ -1,4 +1,6 @@
+import assert from 'node:assert/strict';
 import { Socket } from 'node:net';
+import { sha256Digest } from '@kubeclaw/worker-core';
 import { NativeWorkerControlChannel } from '../../skills/worker/core/worker/native-control-channel.ts';
 import { awaitBusterFixtureTeardown } from '../../skills/buster/engine/test-gates/native-fixture-control.ts';
 import type { BusterFixtureAdmission, BusterFixtureReadiness } from '../../skills/buster/engine/test-gates/native-fixture-state.ts';
@@ -13,8 +15,14 @@ for await (const bytes of process.stdin) {
 const vector = JSON.parse(input) as { admission: BusterFixtureAdmission; readiness: BusterFixtureReadiness };
 if (process.argv[2] === 'repeat') {
   await channel.send(Buffer.from(JSON.stringify(vector.readiness)));
-  await channel.send(Buffer.from(JSON.stringify(vector.readiness)));
-  await channel.end();
+  // Keep the transport open until the controller rejects the duplicate. Closing
+  // before its durable ready ACK races the protocol failure with a broken pipe.
+  for await (const bytes of channel.messages()) {
+    assert.deepEqual(JSON.parse(String(bytes)), {
+      schemaVersion: 'buster-fixture-ready-ack.v1', readinessDigest: sha256Digest(vector.readiness),
+    });
+    await channel.send(Buffer.from(JSON.stringify(vector.readiness)));
+  }
 } else {
   try {
     const teardown = await awaitBusterFixtureTeardown(channel, vector.admission, vector.readiness, new AbortController().signal);
