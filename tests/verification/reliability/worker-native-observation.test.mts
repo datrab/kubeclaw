@@ -1,3 +1,4 @@
+import { currentTestCgroup } from './native-test-cgroup.mts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -8,9 +9,9 @@ import { observeNativeWorkerResources } from '../../../skills/worker/core/worker
 import { NativeWorkerResourceScope } from '../../../skills/worker/core/worker/native-resource-scope.ts';
 
 test('original kernel observations preserve task units and cumulative CPU', () => {
-  const before = observeNativeWorkerResources('/sys/fs/cgroup');
+  const before = observeNativeWorkerResources(currentTestCgroup());
   pbkdf2Sync('worker-observation', 'actual-cpu-work', 20000, 32, 'sha256');
-  const after = observeNativeWorkerResources('/sys/fs/cgroup');
+  const after = observeNativeWorkerResources(currentTestCgroup());
   assert.equal(after.unit, 'linux-tasks');
   assert.ok(after.cpuTimeMicroseconds > before.cpuTimeMicroseconds);
   assert.ok(after.maximumMemoryBytes >= before.maximumMemoryBytes);

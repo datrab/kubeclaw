@@ -22,7 +22,8 @@ for(const entry of provenance.files.filter(entry=>entry.sourcePath.startsWith('s
 }
 const original=path.join(root,'tests/verification/contracts/check-project-compiler.mts');
 const temporary=path.join(path.dirname(original),`.legacy-resume-cutover-${process.pid}.mts`);
-const marker='  console.log(JSON.stringify({ ok: true, scope: archive ?';
+// Run against the clean baseline before the authoring test writes progress.json.
+const marker='  await checkLegacyProjectImport({ project, platformFile, temporary, runtime, compilerFile });';
 const source=fs.readFileSync(original,'utf8');
 if(source.split(marker).length!==2)throw new Error('ORIGINAL_HOOK_BOUNDARY_CHANGED');
 const hook=String.raw`

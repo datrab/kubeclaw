@@ -17,7 +17,7 @@ test('archived legacy CLI diagnostic runs historical source before harness-owned
     maxBuffer: 8 * 1024 * 1024,
   });
   assert.equal(result.signal, null);
-  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.status, 0, result.stdout + '\n' + result.stderr);
   assert.match(result.stdout, /"diagnostic":"historical-source-stage-results"/);
   assert.match(result.stdout, /"source-preflight",\{"stageId":"source-preflight","status":"succeeded"/);
   assert.match(result.stdout, /"scope":"original-project-legacy-cli-recovery"/);

@@ -1,3 +1,4 @@
+import { currentTestCgroup } from './native-test-cgroup.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -13,7 +14,7 @@ import { readNativeWorkerNodeIdentity } from '../../../skills/worker/core/worker
 const limits = { maximumRecords: 32, maximumBytes: 65536 };
 
 test('real kernel observation is validated without replacing absent counters with samples', () => {
-  const observation = observeNativeWorkerResources('/sys/fs/cgroup');
+  const observation = observeNativeWorkerResources(currentTestCgroup());
   validateNativeWorkerResourceObservation(observation);
   assert.equal(observation.unit, 'linux-tasks');
   assert.equal(observation.populated, true, 'this test process is in a populated real kernel scope');

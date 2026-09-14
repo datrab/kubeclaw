@@ -102,7 +102,7 @@ test(`module review binds real ${objectFormat} implementation artifacts, retains
     await assert.rejects(() => resolveImplementationRevisions('missing-stage', context), /MISSING_OR_AMBIGUOUS/);
     const originalSize = refs[1]!.sizeBytes;
     refs[1] = { ...refs[1]!, sizeBytes: originalSize + 1 };
-    await assert.rejects(() => resolveImplementationRevisions('implement-beta', context), /ARTIFACT_CORRUPT/);
+    await assert.rejects(() => resolveImplementationRevisions('implement-beta', context), /^Error: ARTIFACT_REFERENCE_CORRUPT$/);
     refs[1] = { ...refs[1]!, sizeBytes: originalSize };
     refs.push(refs.find(ref => ref.producer.stageId === 'implement-beta' && ref.producer.attemptNumber === 2)!);
     await assert.rejects(() => resolveImplementationRevisions('implement-beta', context), /MISSING_OR_AMBIGUOUS/);

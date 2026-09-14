@@ -44,7 +44,7 @@ test('repair handoff reads real durable findings and rejects corrupt, cross-run 
       assert.equal(reads, 1, 'invalid evidence must be rejected before reading');
     }
     await assert.rejects(() => repairEvidence(context({ ...request,
-      requesterResult: { ...request.requesterResult, artifacts: [{ ...artifact, sizeBytes: artifact.sizeBytes + 1 }] } })), /CONTENT_INVALID/);
+      requesterResult: { ...request.requesterResult, artifacts: [{ ...artifact, sizeBytes: artifact.sizeBytes + 1 }] } })), /^Error: ARTIFACT_REFERENCE_CORRUPT$/);
     await assert.rejects(() => repairEvidence(context({ ...request, targetStageId: 'unrelated' })), /REQUEST_INVALID/);
     await assert.rejects(() => repairEvidence(context({ ...request,
       requesterResult: { ...request.requesterResult, artifacts: [artifact, artifact] } })), /REFERENCE_DUPLICATE/);

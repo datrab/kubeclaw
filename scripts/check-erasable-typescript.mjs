@@ -17,6 +17,7 @@ const sourceConfigs = execFileSync('find', [
   .sort();
 
 for (const config of sourceConfigs) {
+  console.log(`Typecheck ${sourceConfigs.indexOf(config) + 1}/${sourceConfigs.length}: ${config}`);
   const file = path.join(root, config);
   const parsed = JSON.parse(fs.readFileSync(file, 'utf8'));
   const extended = path.resolve(path.dirname(file), parsed.extends ?? '');

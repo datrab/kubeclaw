@@ -22,8 +22,10 @@ jobs:
           node --test tests/verification/deployment/versions.test.mjs
       - name: Typecheck source packages
         run: npm run typecheck:skills
-      - name: Exercise journals, process death, real Git, HTTP and Playwright reports
-        run: npm run verify:reliability
+      - name: Build isolation launcher before contract tests
+        run: npm run plugin-system:sandbox:build
+      - name: Exercise recovery and remote import contracts
+        run: npm run verify:reliability:contracts
       - name: Validate project compiler and installed stage contracts
         run: node tests/verification/contracts/check-project-compiler.mts
       - name: Validate production graph and native gate evidence
@@ -53,8 +55,6 @@ jobs:
           node tests/verification/deployment/check-deployment-truth.mjs
           helm lint charts/kubeclaw -f my-values/buster-values.yaml
           helm template agent-buster charts/kubeclaw -f my-values/buster-values.yaml > /tmp/buster-rendered.yaml
-      - name: Build isolation launcher
-        run: npm run plugin-system:sandbox:build
       - name: Exercise real isolated provider transport and evidence import
         run: node tests/verification/contracts/check-pipeline-remote-real-provider.mts
       - name: Assemble production role packages
@@ -64,6 +64,63 @@ jobs:
           bash scripts/package-agent-skill-bundle.sh buster "dist/buster-${GITHUB_SHA}.tgz" "${GITHUB_SHA}"
           node tests/verification/contracts/check-review-bundle-tokenizer.mjs "dist/nova-${GITHUB_SHA}.tgz"
           node tests/verification/contracts/check-project-compiler.mts "dist/nova-${GITHUB_SHA}.tgz"
+
+  reliability-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run plugin-system:sandbox:build
+      - name: Verify complete test partition
+        run: node --test tests/verification/deployment/reliability-groups.test.mjs
+      - name: Run reliability shard
+        run: node scripts/reliability-tests.mjs core ${{ matrix.shard }} 4
+
+  native-reliability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Run native authority tests in an actual accounted Linux scope
+        run: |
+          sudo systemd-run --scope --quiet \
+            -p MemoryAccounting=yes -p TasksAccounting=yes -p CPUAccounting=yes \
+            env "PATH=$PATH" "$(command -v node)" scripts/reliability-tests.mjs native
+
+  service-reliability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Install nginx and the source Redis used for migration
+        run: sudo apt-get -o Acquire::Retries=3 update && sudo apt-get -o Acquire::Retries=3 install -y nginx redis-server
+      - name: Extract selected native database binaries and check prerequisites
+        run: bash scripts/prepare-reliability-services.sh
+      - name: Exercise real service durability, migration and authentication
+        run: node scripts/reliability-tests.mjs services
 
   browser-reliability:
     strategy:

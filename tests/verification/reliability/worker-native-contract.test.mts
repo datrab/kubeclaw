@@ -1,3 +1,4 @@
+import { currentTestCgroup } from './native-test-cgroup.mts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
@@ -41,7 +42,7 @@ test('native contract rejects relabelled process budgets, task units and unsafe 
 test('resource assessment compares real kernel task observations without manufacturing a process count', () => {
   // This exercises numeric policy with this container's original counters only.
   // It does not assert that the container is an isolated production attempt.
-  const observation = observeNativeWorkerResources('/sys/fs/cgroup');
+  const observation = observeNativeWorkerResources(currentTestCgroup());
   assert.ok(observation.maximumTasks > 1);
   const native = prismNativeAttempt('render', artifact, 'task-policy');
   native.resourceBudgets.cpuTimeMs = { state: 'unrequested' };

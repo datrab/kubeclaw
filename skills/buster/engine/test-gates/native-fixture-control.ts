@@ -95,6 +95,13 @@ export class BusterFixtureControl {
       if (!this.#ready || !this.#sendTeardown) throw new Error('BUSTER_FIXTURE_CONTROL_CLOSED_BEFORE_TEARDOWN');
       await this.#sendTeardown;
     } catch (error) {
+      // A killed host can close cleanly or reset the pipe, depending on unread
+      // bytes. Both mean the fixture lifetime ended before teardown was sent.
+      if ((!this.#ready || !this.#sendTeardown) && error instanceof Error
+        && 'code' in error && ['ECONNRESET', 'EPIPE'].includes(String(error.code))) {
+        const closed = new Error('BUSTER_FIXTURE_CONTROL_CLOSED_BEFORE_TEARDOWN', { cause: error });
+        this.#readyReject(closed); throw closed;
+      }
       this.#readyReject(error); throw error;
     } finally {
       this.#finished = true; signal.removeEventListener('abort', abort);
