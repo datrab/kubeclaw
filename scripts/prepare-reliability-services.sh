@@ -22,7 +22,7 @@ docker cp "$container:/opt/bitnami" "$destination/bitnami"
 # The selected Redis may target a newer glibc than ubuntu-latest. Use its own
 # loader and libraries, without replacing any libraries on the CI host.
 docker cp -L "$container:/lib64/ld-linux-x86-64.so.2" "$destination/redis-loader"
-docker cp -L "$container:/usr/lib/x86_64-linux-gnu" "$destination/redis-system-libs"
+docker cp -L "$container:/usr/lib" "$destination/redis-system-libs"
 for program in redis-server redis-cli; do
   {
     printf '#!/usr/bin/env bash\n'

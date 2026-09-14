@@ -134,6 +134,7 @@ async function fixture(t, options = {}) {
     execution: { maxAttempts: 1, maxRemediationCycles: 0, timeoutMs: 30000 } }] : [];
   const definition = { schemaVersion: 'pipeline-definition.v2', id: 'pipeline:projection', maxConcurrency: 1,
     stages: [...implementation, { id: 'test', type: 'kubeclaw.test.quality-evaluation', dependsOn: options.derived ? ['implementation'] : [], config: { testAgentEnabled: false },
+      ...(options.derived ? { on: { request_fix: 'implementation' } } : {}),
       execution: { maxAttempts: 1, maxRemediationCycles: 1, timeoutMs: 30000 },
       input: { gateId: 'test', task: 'Exercise original retained dispatch history', providerPlan: { repositoryRoot: repository,
         repositoryId: 'repository:projection', ...(options.derived ? { sourceStageId: 'implementation' } : { revision: sourceRevision }), plan,
@@ -322,7 +323,9 @@ async function stop(child) {
 }
 
 test('actual blocked original Core with a completed import cannot authorize retention before cancellation', { timeout: 60000 }, async t => {
-  const f = await fixture(t, { keepBlocked: true });
+  // A failed real quality gate requests repair. Declare its actual source owner;
+  // the one-attempt budget then produces the blocked state under test.
+  const f = await fixture(t, { keepBlocked: true, derived: true });
   const before = fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot));
   await assert.rejects(retireNovaDispatch(f.scope), /NOVA_DISPATCH_RETENTION_BLOCKED/);
   assert.deepEqual(fs.readFileSync(recordsFile(f.scope.intent.dispatchRoot)), before);
