@@ -82,6 +82,11 @@ if (tool === 'GO') {
   const asset = release.assets?.find(a => a.name === `shfmt_v${version}_linux_${arch}`);
   if (!/^sha256:[a-f0-9]{64}$/.test(asset?.digest)) throw new Error(`Missing published shfmt digest: ${version}/${arch}`);
   url = asset.browser_download_url; digest = asset.digest.slice(7);
+} else if (tool === 'GH') {
+  const release = await (await get(`https://api.github.com/repos/cli/cli/releases/tags/v${version}`)).json();
+  const asset = release.assets?.find(a => a.name === `gh_${version}_linux_${arch}.tar.gz`);
+  if (!/^sha256:[a-f0-9]{64}$/.test(asset?.digest)) throw new Error(`Missing published gh digest: ${version}/${arch}`);
+  url = asset.browser_download_url; digest = asset.digest.slice(7);
 } else if (tool === 'HADOLINT') {
   url = `https://github.com/hadolint/hadolint/releases/download/v${version}/hadolint-Linux-${arch === 'amd64' ? 'x86_64' : 'arm64'}`;
   digest = (await text(`${url}.sha256`)).trim().split(/\s+/)[0];
@@ -105,7 +110,7 @@ if (tool === 'GO') {
 
 for (const [args, previous] of [[next.buildArgs, before.buildArgs],
   [next.imageOverrides['ops-pod'], before.imageOverrides['ops-pod']]]) {
-for (const tool of ['GO', 'SHFMT', 'TERRAFORM', 'TFLINT', 'TRIVY', 'KUBECTL', 'HADOLINT', 'HELM', 'KUBECONFORM']) {
+for (const tool of ['GO', 'SHFMT', 'TERRAFORM', 'TFLINT', 'TRIVY', 'KUBECTL', 'HADOLINT', 'HELM', 'KUBECONFORM', 'GH']) {
   if (!args[`${tool}_VERSION`] || args[`${tool}_VERSION`] === previous[`${tool}_VERSION`]) continue;
   const version = args[`${tool}_VERSION`].replace(/^v/, '');
   for (const arch of ['amd64', 'arm64']) {

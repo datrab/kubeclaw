@@ -1,20 +1,30 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
-ARG OPS_MCP_NODE_BASE=node:22.23.2-alpine3.24@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32
+ARG OPS_MCP_NODE_BASE=node:24.21.0-alpine3.24@sha256:be80f76cf40ec8e42b9bec49f60a55e0660f30af58d3e5a25530785b30ea67e2
 
-ARG CILIUM_TOOLS_BASE=quay.io/cilium/cilium:v1.20.1@sha256:ae9ea21f7427fe24bc6ea7247eb552157a1b0a431744045d3f641545ca71d11b
+ARG OPS_HUBBLE_GO_BASE=golang:1.26.8-alpine3.24@sha256:ce864e7223ac17b1775e6fd0b4c0db580c2eb50e7953a427916379e4b92a1628
 
-FROM ${CILIUM_TOOLS_BASE} AS cilium-tools
+FROM ${OPS_HUBBLE_GO_BASE} AS hubble-build
+ARG TARGETARCH=amd64
+ENV GOTOOLCHAIN=local
+WORKDIR /src
+# Keep Cilium 1.20.1's CLI, rebuilding with patched Go/gRPC/text dependencies.
+COPY hubble/go.mod hubble/go.sum ./
+RUN go mod download
+COPY hubble/main.go hubble/LICENSE ./
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -mod=readonly -trimpath -o /out/hubble .
 
 FROM ${OPS_MCP_NODE_BASE}
 
 WORKDIR /app
+RUN apk upgrade --no-cache
 
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev --ignore-scripts \
     && npm cache clean --force
 
 COPY src ./src
-COPY --from=cilium-tools /usr/bin/hubble /usr/local/bin/hubble
+COPY --from=hubble-build /out/hubble /usr/local/bin/hubble
+COPY hubble/LICENSE /usr/local/share/licenses/hubble/LICENSE
 RUN node --check src/server.mjs \
     && /usr/local/bin/hubble version >/dev/null
 
@@ -29,4 +39,3 @@ USER 1000:1000
 EXPOSE 8080
 
 CMD ["node", "src/server.mjs"]
-
