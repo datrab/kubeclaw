@@ -82,11 +82,6 @@ if (tool === 'GO') {
   const asset = release.assets?.find(a => a.name === `shfmt_v${version}_linux_${arch}`);
   if (!/^sha256:[a-f0-9]{64}$/.test(asset?.digest)) throw new Error(`Missing published shfmt digest: ${version}/${arch}`);
   url = asset.browser_download_url; digest = asset.digest.slice(7);
-} else if (tool === 'GH') {
-  const release = await (await get(`https://api.github.com/repos/cli/cli/releases/tags/v${version}`)).json();
-  const asset = release.assets?.find(a => a.name === `gh_${version}_linux_${arch}.tar.gz`);
-  if (!/^sha256:[a-f0-9]{64}$/.test(asset?.digest)) throw new Error(`Missing published gh digest: ${version}/${arch}`);
-  url = asset.browser_download_url; digest = asset.digest.slice(7);
 } else if (tool === 'HADOLINT') {
   url = `https://github.com/hadolint/hadolint/releases/download/v${version}/hadolint-Linux-${arch === 'amd64' ? 'x86_64' : 'arm64'}`;
   digest = (await text(`${url}.sha256`)).trim().split(/\s+/)[0];
@@ -110,15 +105,26 @@ if (tool === 'GO') {
 
 for (const [args, previous] of [[next.buildArgs, before.buildArgs],
   [next.imageOverrides['ops-pod'], before.imageOverrides['ops-pod']]]) {
-for (const tool of ['GO', 'SHFMT', 'TERRAFORM', 'TFLINT', 'TRIVY', 'KUBECTL', 'HADOLINT', 'HELM', 'KUBECONFORM', 'GH']) {
+for (const tool of ['GO', 'SHFMT', 'TERRAFORM', 'TFLINT', 'TRIVY', 'KUBECTL', 'HADOLINT', 'HELM', 'KUBECONFORM']) {
   if (!args[`${tool}_VERSION`] || args[`${tool}_VERSION`] === previous[`${tool}_VERSION`]) continue;
   const version = args[`${tool}_VERSION`].replace(/^v/, '');
+  if (tool === 'KUBECTL' && args === next.imageOverrides['ops-pod']) {
+    const moduleVersion = `v0.${version.split('.').slice(1).join('.')}`;
+    if (!fs.readFileSync('ops/pod/kubectl-build/go.mod', 'utf8').includes(`k8s.io/kubectl ${moduleVersion}`)) {
+      throw new Error('Update the Ops kubectl source module locks before changing its version');
+    }
+    continue;
+  }
   for (const arch of ['amd64', 'arm64']) {
     console.log(`Verifying upstream ${tool} ${version} linux/${arch}`);
     const { url, digest } = await releaseArtifact(tool, version, arch);
     args[`${tool}_SHA256_${arch.toUpperCase()}`] = await verified(url, digest);
   }
 }
+}
+if (next.buildArgs.GH_VERSION !== before.buildArgs.GH_VERSION) {
+  const source = await get(`https://codeload.github.com/cli/cli/tar.gz/refs/tags/v${next.buildArgs.GH_VERSION}`);
+  next.buildArgs.GH_SOURCE_SHA256 = sha(Buffer.from(await source.arrayBuffer()));
 }
 try {
   fs.writeFileSync(file, `${JSON.stringify(next, null, 2)}\n`);

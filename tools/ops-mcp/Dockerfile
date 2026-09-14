@@ -1,9 +1,9 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
 ARG OPS_MCP_NODE_BASE=node:24.21.0-alpine3.24@sha256:be80f76cf40ec8e42b9bec49f60a55e0660f30af58d3e5a25530785b30ea67e2
 
-ARG OPS_HUBBLE_GO_BASE=golang:1.26.8-alpine3.24@sha256:ce864e7223ac17b1775e6fd0b4c0db580c2eb50e7953a427916379e4b92a1628
+ARG OPS_TOOLS_GO_BASE=golang:1.26.8-alpine3.24@sha256:ce864e7223ac17b1775e6fd0b4c0db580c2eb50e7953a427916379e4b92a1628
 
-FROM ${OPS_HUBBLE_GO_BASE} AS hubble-build
+FROM ${OPS_TOOLS_GO_BASE} AS hubble-build
 ARG TARGETARCH=amd64
 ENV GOTOOLCHAIN=local
 WORKDIR /src
@@ -20,7 +20,9 @@ RUN apk upgrade --no-cache
 
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev --ignore-scripts \
-    && npm cache clean --force
+    && npm cache clean --force \
+    && rm -rf /usr/local/lib/node_modules /opt/yarn-* \
+    && rm -f /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /usr/local/bin/yarn /usr/local/bin/yarnpkg
 
 COPY src ./src
 COPY --from=hubble-build /out/hubble /usr/local/bin/hubble

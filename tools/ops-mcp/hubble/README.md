@@ -6,7 +6,7 @@ under Apache-2.0; the command implementation remains the upstream module.
 It changes the client shipped in the Ops image, not the cluster's Cilium version.
 
 `go.mod` and `go.sum` lock the complete module graph. Use Go 1.26.8, matching
-the digest-pinned `OPS_HUBBLE_GO_BASE` in `versions.json`, when updating them:
+the digest-pinned `OPS_TOOLS_GO_BASE` in `versions.json`, when updating them:
 
 ```sh
 go mod tidy
