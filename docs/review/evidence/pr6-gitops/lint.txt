@@ -1,0 +1,2 @@
+Command: node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs scripts/gitops.mjs scripts/gitops-bundle.mjs scripts/gitops-owner.mjs scripts/updates/deployment-release.mjs tests/verification/deployment/argocd-chart-order.test.mjs tests/verification/deployment/gitops-release.test.mjs tests/verification/deployment/gitops-health.test.mjs tests/verification/deployment/gitops-bootstrap.test.mjs tests/verification/deployment/deployment-release.test.mjs
+Exit: 0

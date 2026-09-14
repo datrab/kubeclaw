@@ -1,0 +1,65 @@
+{{- $repository := required "repository is required" .Values.repository -}}
+{{- $revision := required "revision is required" .Values.revision -}}
+{{- if not (regexMatch "^[a-f0-9]{40}$" $revision) }}{{ fail "revision must be a complete Git commit" }}{{ end -}}
+{{- $project := required "project is required" .Values.project -}}
+{{- if not .Values.groups }}{{ fail "release groups are required" }}{{ end }}
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: {{ $project }}
+  labels:
+    kubeclaw.dev/gitops-root: {{ required "rootName is required" .Values.rootName }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  sourceRepos:
+    - {{ $repository | quote }}
+  destinations:
+  {{- range .Values.destinations }}
+    - namespace: {{ . | quote }}
+      server: https://kubernetes.default.svc
+  {{- end }}
+  clusterResourceWhitelist:
+    {{- toYaml .Values.clusterResourceWhitelist | nindent 4 }}
+  namespaceResourceWhitelist:
+    {{- toYaml .Values.namespaceResourceWhitelist | nindent 4 }}
+  orphanedResources:
+    warn: true
+{{- range .Values.groups }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: {{ .wave | quote }}
+    kubeclaw.dev/helm-releases: {{ .helmReleases | toJson | quote }}
+  labels:
+    kubeclaw.dev/gitops-project: {{ $project }}
+spec:
+  project: {{ $project }}
+  source:
+    repoURL: {{ $repository | quote }}
+    targetRevision: {{ $revision | quote }}
+    path: {{ .path | quote }}
+    directory:
+      include: resources.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ .namespace | quote }}
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+      - FailOnSharedResource=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 1m
+{{- end }}

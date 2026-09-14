@@ -1,7 +1,10 @@
 {{- if .Values.ingestion.enabled }}
 apiVersion: apps/v1
 kind: Deployment
-metadata: { name: prism-ingestion }
+metadata:
+  name: prism-ingestion
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: {{ .Values.ingestion.replicas }}
   selector: { matchLabels: { app: prism-ingestion } }

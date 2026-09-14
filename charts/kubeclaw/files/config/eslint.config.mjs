@@ -32,6 +32,7 @@ const CONSOLE_BOUNDARIES = [
 ];
 
 const ENVIRONMENT_BOUNDARIES = [
+  'scripts/gitops.mjs',
   'scripts/updates/refresh-versions.mjs',
   'tools/ops-mcp/src/config.mjs',
   'scripts/verify-ops-mcp-live.mjs',

@@ -4,6 +4,8 @@
 # argocd-tailscale-ingress.yaml. TLS is terminated by the Tailscale proxy.
 
 configs:
+  cm:
+    application.resourceTrackingMethod: annotation
   params:
     server.insecure: true
 

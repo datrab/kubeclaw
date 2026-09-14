@@ -1,0 +1,4 @@
+apiVersion: v2
+name: kubeclaw-gitops
+version: 0.1.0
+description: Reviewed immutable runtime release Applications

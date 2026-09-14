@@ -12,7 +12,10 @@
 {{- $image := index $.Values.images $name }}
 apiVersion: apps/v1
 kind: Deployment
-metadata: { name: prism-{{ $name }} }
+metadata:
+  name: prism-{{ $name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: {{ (index $.Values $name).replicas }}
   {{- if or (eq $name "control") (eq $name "worker") }}
@@ -217,6 +220,8 @@ metadata:
   name: prism-artifacts
   annotations:
     helm.sh/resource-policy: keep
+    argocd.argoproj.io/sync-options: Prune=false,Delete=false
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   accessModes: [ReadWriteOnce]
   {{- if .Values.artifactStorage.storageClass }}

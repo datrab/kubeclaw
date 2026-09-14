@@ -169,6 +169,7 @@ require_helm_release_idle() {
   local namespace="$2"
   local output status
 
+  node "$SCRIPT_DIR/gitops-owner.mjs" "$namespace" "$release" || return 1
   if ! output="$(helm status "$release" -n "$namespace" 2>&1)"; then
     if is_not_found_error "$output"; then
       return 0
@@ -1708,7 +1709,8 @@ cmd_prism_secrets() {
 
 cmd_prism() {
   component_enabled "$KUBECLAW_DEPLOY_PRISM" || { info "Prism deployment is disabled"; return 0; }
-  require_command kubectl; require_command helm; prism_validate_values
+  require_command helm; prism_validate_values
+  if [[ ${KUBECLAW_DEPLOY_RENDER_ONLY:-0} != 1 ]]; then require_command kubectl; fi
   local prism_agent_image_repo prism_bundle_archive_url prism_bundle_expected_commit
   local prism_bundle_contract_version prism_bundle_auth_secret prism_bundle_auth_key
   local prism_bundle_override
@@ -1985,6 +1987,7 @@ EOF
 }
 
 cmd_teardown_prism() {
+  node "$SCRIPT_DIR/gitops-owner.mjs" "$PRISM_NAMESPACE" "*" || return 1
   helm uninstall agent-prism -n "$PRISM_NAMESPACE" --ignore-not-found
   helm uninstall "$PRISM_RELEASE" -n "$PRISM_NAMESPACE" --ignore-not-found
   log "Prism workloads removed. PVCs and Secrets remain in $PRISM_NAMESPACE."
@@ -2713,6 +2716,7 @@ cmd_buster_infra_smoke() {
 # ─── Teardown ────────────────────────────────────────────────────────────
 
 cmd_teardown_agents() {
+  node "$SCRIPT_DIR/gitops-owner.mjs" "$NAMESPACE" "*" || return 1
   warn "Removing KubeClaw agents from $NAMESPACE..."
   for role in nova buster; do
     uninstall_helm_release_if_present "agent-${role}"
@@ -2827,6 +2831,7 @@ print_remaining_secrets() {
 
 run_destructive_teardown() {
   local destroy_namespace="${1:-0}"
+  node "$SCRIPT_DIR/gitops-owner.mjs" "$NAMESPACE" "*" || return 1
 
   cmd_teardown_agents
   remove_destructive_infra

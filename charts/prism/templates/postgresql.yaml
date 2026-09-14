@@ -60,7 +60,10 @@ spec:
       volumes:
         - { name: init, configMap: { name: prism-postgresql-init, defaultMode: 365 } }
   volumeClaimTemplates:
-    - metadata: { name: data }
+    - metadata:
+        name: data
+        annotations:
+          argocd.argoproj.io/sync-options: Prune=false,Delete=false
       spec:
         accessModes: [ReadWriteOnce]
         {{- if .Values.postgresql.storageClass }}

@@ -3,6 +3,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "kubeclaw.fullname" . }}
+  {{- if eq .Values.agentRole "prism" }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  {{- end }}
   labels:
     {{- include "kubeclaw.labels" . | nindent 4 }}
 spec:

@@ -1,0 +1,29 @@
+Command: node --test tests/verification/deployment/argocd-chart-order.test.mjs tests/verification/deployment/gitops-release.test.mjs tests/verification/deployment/gitops-health.test.mjs tests/verification/deployment/deployment-release.test.mjs
+Exit: 0
+✔ Prism database and migration prerequisites precede its Argo migration hook and all application deployments (170.587408ms)
+✔ all standalone data claims and PostgreSQL-generated claims retain data on Argo prune/delete (390.215847ms)
+✔ an external database selection does not create a phantom migration hook or PostgreSQL data claim (146.117435ms)
+✔ every standalone claim has a same-wave consumer, including backup storage before its first schedule (290.172868ms)
+✔ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (20098.686917ms)
+✔ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (5138.623567ms)
+✔ private operational overlays survive while replaced or removed runtime slots fail (5133.681096ms)
+✔ Prism and Ops reject image overrides even when another value could conceal them (7922.062447ms)
+✔ source configuration and materialized values are rechecked by actual deployment entrypoints (1975.702487ms)
+✔ private bundle URL and authentication survive while the selected revision stays fixed (3531.852972ms)
+✔ private extraEnv cannot shadow reserved runtime bundle controls (13812.278185ms)
+✔ noncanonical alias and indirect controls cannot stand in for bundle consumers (4988.211797ms)
+✔ original Application health Lua rejects stale sync, failed hooks, drift and unavailable Git (15.065136ms)
+✔ real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps (16029.390849ms)
+✔ imperative ownership guard fails closed and permits only other namespaces (1.128111ms)
+✔ committed bundle corruption, switched selection and hidden image changes fail before activation (8266.206539ms)
+✔ activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint (7080.42542ms)
+✔ root claim and retained workload tracking block imperative adoption after partial GitOps transitions (1.060573ms)
+✔ original runtime teardown commands stop before any Helm mutation when Argo owns the namespace (698.825324ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 62941.499729

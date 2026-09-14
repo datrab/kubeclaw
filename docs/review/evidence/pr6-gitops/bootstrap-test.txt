@@ -1,0 +1,11 @@
+Command: node --test tests/verification/deployment/gitops-bootstrap.test.mjs
+Exit: 0
+✔ original Argo installer installs exact health text and annotation tracking through pinned Helm chart (2192.405111ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2400.368079

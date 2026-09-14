@@ -26,6 +26,8 @@ helm upgrade --install "$ARGOCD_RELEASE" argo/argo-cd \
   --namespace "$ARGOCD_NAMESPACE" \
   --version "$ARGOCD_CHART_VERSION" \
   --values "$ARGOCD_VALUES_FILE" \
+  --set-string configs.cm.application\\.resourceTrackingMethod=annotation \
+  --set-file "configs.cm.resource\\.customizations\\.health\\.argoproj\\.io_Application=$REPO_DIR/charts/gitops/files/application-health.lua" \
   --wait \
   --timeout 10m
 

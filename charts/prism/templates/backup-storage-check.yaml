@@ -1,0 +1,42 @@
+{{- if .Values.postgresql.enabled }}
+# Bind WaitForFirstConsumer backup storage during sync, not at the next nightly job.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: prism-backup-storage-check
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 120
+  template:
+    metadata:
+      labels: { app: prism-backup }
+    spec:
+      serviceAccountName: prism-backup
+      automountServiceAccountToken: false
+      imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 8 }}
+      restartPolicy: Never
+      securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, fsGroup: 1000, seccompProfile: { type: RuntimeDefault } }
+      containers:
+        - name: storage-check
+          image: {{ .Values.postgresql.image | quote }}
+          command: [/bin/sh, -ec]
+          args:
+            - |
+              umask 077
+              probe=$(mktemp /backups/.write-check-XXXXXX)
+              trap 'rm -f -- "$probe"' EXIT
+              printf verified > "$probe"
+              test "$(cat "$probe")" = verified
+          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: [ALL] } }
+          resources: { requests: { cpu: 50m, memory: 64Mi }, limits: { cpu: 200m, memory: 128Mi } }
+          volumeMounts:
+            - { name: backups, mountPath: /backups }
+      volumes:
+        - { name: backups, persistentVolumeClaim: { claimName: prism-backups } }
+{{- end }}

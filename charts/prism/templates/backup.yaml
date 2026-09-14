@@ -11,6 +11,8 @@ data:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
   name: {{ if eq $mode "backup" }}prism-backup{{ else if eq $mode "verify" }}prism-backup-verification{{ else }}prism-restore-proof{{ end }}
 spec:
   schedule: {{ if eq $mode "backup" }}{{ $.Values.backup.schedule | quote }}{{ else if eq $mode "verify" }}{{ $.Values.backup.verificationSchedule | quote }}{{ else }}{{ $.Values.backup.databaseProofSchedule | quote }}{{ end }}
