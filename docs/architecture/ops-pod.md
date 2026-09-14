@@ -4,7 +4,7 @@ Status: implemented in source; live cluster acceptance and mobile pairing pendin
 Audience: architecture reader, platform maintainer, security reviewer
 Owner: platform operations
 Evidence: `charts/ops-pod/`; `ops/pod/`; `tools/ops-mcp/src/`; `scripts/deploy-ops-pod.sh`
-Applies to: the persistent Codex Ops Pod, not the separately exposed ChatGPT MCP deployment
+Applies to: the persistent Codex Ops Pod
 Last verified: source and CI checks on 2026-09-06; not a live recovery proof
 
 ## Navigation
@@ -40,12 +40,10 @@ Its chart is not installed through the pipeline it is meant to diagnose. A stopp
 Argo controller does not by itself stop a running Ops Pod. Kubernetes still owns
 scheduling, restart, networking, projected credentials and storage.
 
-The existing [ChatGPT Ops bootstrap](../ops/chatgpt-ops-bootstrap.md) is a separate
-access path: ChatGPT reaches an exposed MCP through its configured tunnel. This
-Pod instead gives the Codex process a loopback MCP connection. The implementations
-share MCP source and its image; they have separate deployments and identities.
-Installing this chart does not migrate or remove the existing MCP deployment,
-Tailscale Operator, Argo installation, or unrelated application namespaces.
+The Codex Ops Pod is the single supported interactive operations path. Codex uses
+the MCP sidecar over loopback; there is no separate externally exposed Ops MCP or
+OpenAI Secure MCP Tunnel deployment. The MCP implementation and image remain shared
+components of this Pod rather than a second independently deployed service.
 
 This chart installs no pipeline worker, task queue, generic privileged command
 executor, backup service, monitoring stack, or cluster repair controller.
@@ -287,6 +285,5 @@ acceptance result is inferred from a green build.
 ## Related documentation
 
 - [Ops Pod operations](../ops/ops-pod.md)
-- [Existing ChatGPT MCP deployment](../ops/chatgpt-ops-bootstrap.md)
 - [Worker trust operations](../operations/worker-trust-runbook.md)
 - [Architecture index](README.md)
