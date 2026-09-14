@@ -599,34 +599,49 @@ try {
   assert.equal(remediated.status, 'succeeded');
   assert.equal(remediated.stages.get('approval').remediationCyclesUsed, 1);
 
+  const cancellationReleaseEvent = `phase6-cancellation-release-${process.pid}`;
   const cancellationDefinition = {
     schemaVersion: 'pipeline-definition.v2',
     id: 'pipeline:cancellation',
     maxConcurrency: 2,
     stages: [
-      stage('slow-left', [], { input: { mode: 'passed', delayMs: 1_000 } }),
-      stage('slow-right', [], { input: { mode: 'passed', delayMs: 1_000 } }),
+      ...['slow-left', 'slow-right'].map(id => stage(id, [], {
+        input: { mode: 'passed', waitForEvent: cancellationReleaseEvent },
+        execution: { maxAttempts: 3, maxRemediationCycles: 1, timeoutMs: 30_000 },
+      })),
     ],
   };
   const cancellation = new AbortController();
-  const cancellationStartedAt = Date.now();
   const cancelledRun = core.runPipelineV2(
     platform,
     cancellationDefinition,
     'run:cancellation',
     cancellation.signal,
   );
-  setTimeout(() => cancellation.abort(new Error('test cancellation')), 10);
-  const cancelled = await cancelledRun;
+  void cancelledRun.catch(() => {});
+  let cancelled;
+  let cancellationWatchdog;
+  try {
+    const startedDeadline = Date.now() + 5_000;
+    while (process.listenerCount(cancellationReleaseEvent) !== 2) {
+      assert(Date.now() < startedDeadline, 'both cancellation fixtures must enter their barrier');
+      await new Promise(resolve => setTimeout(resolve, 5));
+    }
+    cancellation.abort(new Error('test cancellation'));
+    cancelled = await Promise.race([cancelledRun, new Promise((_resolve, reject) => {
+      cancellationWatchdog = setTimeout(() => reject(new Error('core waited for abort-ignoring plugins')), 5_000);
+    })]);
+    assert.equal(process.listenerCount(cancellationReleaseEvent), 2,
+      'core cancellation completes while both plugins are still blocked');
+  } finally {
+    clearTimeout(cancellationWatchdog);
+    process.emit(cancellationReleaseEvent);
+  }
   assert.equal(cancelled.status, 'cancelled');
   assert.equal(cancelled.stages.get('slow-left').attemptsUsed, 1);
   assert.equal(cancelled.stages.get('slow-right').attemptsUsed, 1);
   assert.equal(cancelled.stages.get('slow-left').status, 'cancelled');
   assert.equal(cancelled.stages.get('slow-right').status, 'cancelled');
-  assert(
-    Date.now() - cancellationStartedAt < 500,
-    'core cancellation must not wait for a plugin that ignores its abort signal',
-  );
   const cancellationEvents = fs.readFileSync(
     path.join(resolveRunRoot(platform.storageRoot, 'run:cancellation'), 'events.jsonl'),
     'utf8',

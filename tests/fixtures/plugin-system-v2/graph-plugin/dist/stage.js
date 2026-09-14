@@ -1,4 +1,7 @@
 export async function execute(input, context) {
+  // Test-controlled barrier deliberately ignores context.signal. It proves
+  // cancellation does not depend on this plugin finishing its own work.
+  if (input.waitForEvent) await new Promise(resolve => process.once(input.waitForEvent, resolve));
   if (input.delayMs > 0) {
     await new Promise((resolve) => setTimeout(resolve, input.delayMs));
   }
