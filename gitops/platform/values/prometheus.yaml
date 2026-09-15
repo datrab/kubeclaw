@@ -1,0 +1,43 @@
+alertmanager:
+  enabled: false
+grafana:
+  admin:
+    existingSecret: prometheus-grafana
+    userKey: admin-user
+    passwordKey: admin-password
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      access: proxy
+      isDefault: false
+      url: http://loki.monitoring.svc.cluster.local:3100
+  persistence:
+    enabled: true
+    size: 5Gi
+  resources:
+    limits: {cpu: 500m, memory: 256Mi}
+    requests: {cpu: 100m, memory: 128Mi}
+  service:
+    type: NodePort
+    nodePort: 30030
+kube-state-metrics:
+  resources:
+    limits: {cpu: 200m, memory: 128Mi}
+    requests: {cpu: 50m, memory: 64Mi}
+prometheus-node-exporter:
+  resources:
+    limits: {cpu: 200m, memory: 64Mi}
+    requests: {cpu: 50m, memory: 32Mi}
+prometheus:
+  prometheusSpec:
+    resources:
+      limits: {cpu: 1000m, memory: 1536Mi}
+      requests: {cpu: 200m, memory: 512Mi}
+    retention: 15d
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: [ReadWriteOnce]
+          resources:
+            requests:
+              storage: 20Gi

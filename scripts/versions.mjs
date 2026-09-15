@@ -62,6 +62,13 @@ function bindDockerVersions(root, manifest, args, read, outputs) {
 }
 
 function bindInfrastructureVersions(manifest, replaceOne) {
+  for (const [name, chart] of Object.entries({ prometheus: 'kube-prometheus-stack', loki: 'loki', alloy: 'alloy', promtail: 'promtail' })) {
+    const version = manifest.monitoringCharts?.[name]?.version;
+    if (!/^\d+\.\d+\.\d+$/.test(version ?? '')) throw new Error(`Invalid monitoring chart version: ${name}`);
+    replaceOne(`gitops/platform/bootstrap/${name}.yaml`, new RegExp(`chart: ${chart}\\n      targetRevision: [^\\n]+`),
+      `chart: ${chart}\n      targetRevision: ${version}`);
+  }
+
   const redis = manifest.redisProduction;
   const image = redis?.image?.match(/^(registry-1\.docker\.io)\/(bitnami\/redis):([a-zA-Z0-9._-]+)@(sha256:[a-f0-9]{64})$/);
   if (!image || !/^\d+\.\d+\.\d+$/.test(redis?.chartVersion ?? '')) throw new Error('Invalid production Redis chart version or image digest');

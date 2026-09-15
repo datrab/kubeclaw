@@ -32,6 +32,11 @@ assert.equal(redisChart[0].currentValue, manifest.redisProduction.chartVersion);
 const redisImages = deps.filter(dep => dep.depName === 'registry-1.docker.io/bitnami/redis');
 assert.equal(redisImages.length, 1);
 assert.equal(`${redisImages[0].depName}:${redisImages[0].currentValue}@${redisImages[0].currentDigest}`, manifest.redisProduction.image);
+for (const [name, chart] of Object.entries({ prometheus: 'kube-prometheus-stack', loki: 'loki', alloy: 'alloy' })) {
+  const found = deps.filter(dep => dep.depName === chart && dep.datasource === 'helm');
+  assert.equal(found.length, 1, `Expected one central monitoring chart: ${chart}`);
+  assert.equal(found[0].currentValue, manifest.monitoringCharts[name].version);
+}
 // Exercise Renovate's real replacement engine, including native v-prefixed overrides.
 // Synthetic versions stay in a disposable directory and are never published or built.
 for (const prefix of ['', 'v']) {

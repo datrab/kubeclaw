@@ -114,5 +114,19 @@
   "redisProduction": {
     "chartVersion": "28.1.0",
     "image": "registry-1.docker.io/bitnami/redis:latest@sha256:ffa455a3ad00bccc24dfde113ef55329dde687da242e9feb6ccd2b30eb93e8f3"
+  },
+  "monitoringCharts": {
+    "prometheus": {
+      "version": "91.4.0"
+    },
+    "loki": {
+      "version": "18.13.1"
+    },
+    "alloy": {
+      "version": "1.12.1"
+    },
+    "promtail": {
+      "version": "6.17.1"
+    }
   }
 }

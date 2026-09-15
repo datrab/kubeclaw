@@ -29,6 +29,7 @@ test('central versions update actual build/deployment files and reject drift wit
     // A synthetic version tests propagation only; it is never built or declared a real release.
     manifest.openclaw.version = '2099.1.1';
     manifest.redisProduction.chartVersion = '25.99.1';
+    manifest.monitoringCharts.loki.version = '99.1.2';
     manifest.redisProduction.image = `registry-1.docker.io/bitnami/redis:latest@sha256:${'a'.repeat(64)}`;
     manifest.buildArgs.KUBECTL_VERSION = '1.99.9';
     manifest.buildArgs.BUILDKIT_BASE = `moby/buildkit:v99.0.0-rootless@sha256:${'c'.repeat(64)}`;
@@ -41,6 +42,7 @@ test('central versions update actual build/deployment files and reject drift wit
     assert.match(fs.readFileSync(path.join(copy, 'gitops/platform/bootstrap/redis.yaml'), 'utf8'), /targetRevision: 25\.99\.1/);
     assert.ok(fs.readFileSync(path.join(copy, 'gitops/platform/values/redis.yaml'), 'utf8').includes(`digest: sha256:${'a'.repeat(64)}`));
     assert.equal(JSON.parse(fs.readFileSync(path.join(copy, 'versions.json'), 'utf8')).infrastructureCharts.redis.version, manifest.infrastructureCharts.redis.version);
+    assert.match(fs.readFileSync(path.join(copy, 'gitops/platform/bootstrap/loki.yaml'), 'utf8'), /targetRevision: 99\.1\.2/);
     const deploy = fs.readFileSync(path.join(copy, 'scripts/deploy.sh'), 'utf8');
     assert.ok(deploy.includes(`BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${'${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-'}${manifest.buildArgs.BUILDKIT_BASE}}"`));
     assert.ok(fs.readFileSync(path.join(copy, 'docker/Dockerfile.buster-runtime'), 'utf8')
