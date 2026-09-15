@@ -28,7 +28,7 @@ The comparison used these independent inputs:
   decisions from AP04;
 - the U1–U4, O1–O5, E1–E6, R1, S1 and D1 reader outcomes from AP02.
 
-The result is 12 writing packages: three P0, six P1 and three P2. Every AP02 reader
+The result is 12 writing packages: three P0, seven P1 and two P2. Every AP02 reader
 outcome is either already owned by an AP04 authority or assigned to one of these
 packages. No chapter heading counts as coverage. Each package below has a required
 reader result and evidence boundary.
@@ -126,6 +126,30 @@ examples remain authored in U3/E3/E4.
 Public reference pages must generate exhaustive fields from source. They must not
 publish the private values in `my-values`. Authored task pages use placeholders and
 show how the operator verifies the effective result.
+
+### Inventory-backed interface assignment
+
+The current generators provide an exact lower bound, not a complete interface
+catalogue. AP05 assigns each generated set and each declared residual set so that a
+coarse family row cannot be mistaken for exhaustive coverage.
+
+| Inventory or residual set | Verified current scope | Writing owner |
+| --- | --- | --- |
+| Deployment command inventory | 16 command cases from `scripts/deploy.sh`, including source anchors, flags, environment and defaults | W01, W03, W07 and the W12 command reference |
+| Helm/value inventory | 14 chart, role and infrastructure value sources tracked by the current generator | W01–W03 and the W12 configuration reference |
+| Secret setup inventory | 11 environment inputs and 10 Secret records from the setup source | W01–W03 and the W12 secret reference |
+| Workflow inventory | 13 GitHub workflows with triggers, jobs and command references | W03, W09 and the W12 workflow/verification reference |
+| Plugin-system inventory | 49 package roots, 48 pipeline packages and 67 registrations: 21 stages, five observers, 21 adapters, 19 test providers and one report adapter | W08–W11 and the W12 contract/capability reference |
+| Runtime and contract declarations | three role manifests, four charts and seven versioned contract families | W04–W06, W10 and W12 |
+| CLI surfaces outside the deployment inventory | Nova Core CLI, project/compiler CLI, project scaffold CLI and remote test-gate CLI | W05, W07–W10 and W12; AP06–AP09 must enumerate commands and flags from source |
+| Service/API surfaces outside generated inventory | Nova/Buster remote plan and Prism control, worker, agent bridge, ingestion, Studio, artifact and product-authority handlers | W05–W07, W10 and W12; enumerate routes, caller identity, schemas, errors and timeouts during writing |
+| Configuration outside generated inventory | project/compiler inputs, OpenClaw and swarm configuration, role bundles, telemetry/events, Redis/status/artifact paths, Buster suite/provider/report and lint policies | W05, W07–W10 and W12; generate facts where stable and keep task explanations authored |
+| Kubernetes surfaces outside value inventory | rendered workloads/services, RBAC, network policy, namespace lease CRD, admission policy and Argo Applications | W01–W03, W06–W07 and W12; enumerate resource ownership and effective behavior from rendered output |
+
+The existing generated inventory explicitly calls itself a first slice. Therefore
+AP05 does not call its current reference pages complete. W12 must close the residual
+sets or retain an itemized gap; AP11 must reject a generic “covered by reference”
+claim without that enumeration.
 
 ## Plugin and extension coverage
 
@@ -298,7 +322,8 @@ remain AP11 gates.
 
 | Check | Result and boundary |
 | --- | --- |
-| AP05 structural audit | Passed: all 18 U/O/E/R/S/D reader outcomes and W01–W12 are present; the inventory still contains exactly 51 plugin manifests split 48 pipeline, two OpenClaw and one Codex. |
+| AP05 structural audit | Passed: all 18 U/O/E/R/S/D reader outcomes and W01–W12 are present. Priorities resolve to three P0, seven P1 and two P2. The inventory contains exactly 51 plugin manifests split 48 pipeline, two OpenClaw and one Codex. |
+| Interface-inventory audit | Passed for the declared lower bound: 16 deploy command cases, 14 Helm/value sources, 11 secret environment inputs, 10 Secret records, 13 workflows, 49 plugin roots and 67 registrations. The generator's own residual list was compared with current CLI/service sources and assigned above; it remains work for W12, not a false exhaustive-reference claim. |
 | `npm run docs:check:refs` | Passed after the reference repair: 1,583 local links and 791 repository-path references resolve. Planned AP06–AP09 destinations use explicit future routes and do not masquerade as existing files. |
 | `git diff --check origin/main` | Passed after normalizing the four AP01 TSV inventories, supplying `unchanged` instead of an empty trailing field, and removing Markdown trailing whitespace. |
 | Status authority | All 13 status-generator tests passed with no skip; the generated open-issue view matches its JSON source. |

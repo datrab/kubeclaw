@@ -112,7 +112,7 @@ Einzelentscheidungen im [manuellen Register](review-ledger.jsonl).
 - [x] Dokumentationslücken, technische Implementierungslücken und fehlende Live-Nachweise getrennt führen.
 - [x] Zielstruktur aus AP02 vereinfachen oder ergänzen, wo die Inhaltsprüfung es rechtfertigt.
 
-**Abgeschlossen:** Der [AP05-Lücken- und Schreibplan](AP05-gap-plan.md) weist alle U/O/E/R/S/D-Leseraufgaben sowie Komponenten, Verträge, Schnittstellen, Konfigurationsfamilien, Pluginarten und Betriebsabhängigkeiten zwölf konkreten Schreibpaketen zu. Priorität und DOC/IMP/LIVE-Typ bleiben getrennt; keine bloße Kapitelüberschrift gilt als inhaltliche Abdeckung.
+**Abgeschlossen:** Der [AP05-Lücken- und Schreibplan](AP05-gap-plan.md) weist alle U/O/E/R/S/D-Leseraufgaben sowie Komponenten, Verträge, Schnittstellen, Konfigurationsfamilien, Pluginarten und Betriebsabhängigkeiten zwölf konkreten Schreibpaketen zu. Maschinelle Inventare bilden eine nachgewiesene Untergrenze; noch nicht inventarisierte CLI-, API-, Konfigurations- und Kubernetes-Flächen sind einzeln benannt und zugeordnet. Priorität und DOC/IMP/LIVE-Typ bleiben getrennt; keine bloße Kapitelüberschrift gilt als inhaltliche Abdeckung.
 
 ### AP06 — Einstieg und Architektur
 
