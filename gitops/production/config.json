@@ -1,0 +1,6 @@
+{
+  "namespace": "kubeclaw",
+  "prismNamespace": "kubeclaw",
+  "argoNamespace": "argocd",
+  "overlays": {}
+}

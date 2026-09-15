@@ -10,6 +10,7 @@ import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs
 import { exportGitOpsBundle, gitOpsDigest } from '../../../scripts/gitops-bundle.mjs';
 import { bootstrapDocuments, readCommittedBundle, preflightGitOps } from '../../../scripts/gitops.mjs';
 import { assertNoGitOpsOwner } from '../../../scripts/gitops-owner.mjs';
+import { renderContinuousEnvironment } from '../../../scripts/gitops-continuous.mjs';
 
 const source = path.resolve(import.meta.dirname, '../../..');
 function fixture(run) {
@@ -52,6 +53,21 @@ test('real selected-release renderer exports immutable groups and bootstraps a c
   assert.throws(() => exportGitOpsBundle(root, directory, 'agents', 'agents', env), /ALREADY_EXISTS/);
   const revision = commit('Reviewed immutable manifests');
   const result = bootstrapDocuments(root, directory, url, revision, 'argocd');
+  const continuous = renderContinuousEnvironment(root, directory, url, revision, { argoNamespace: 'argocd' });
+  const continuousApps = yaml.loadAll(continuous.files['apps/applications.yaml']).filter(document => document?.kind === 'Application');
+  assert.equal(continuousApps.length, 3);
+  for (const app of continuousApps) {
+    assert.equal(app.spec.source.targetRevision, 'main');
+    assert.ok(app.spec.source.path.startsWith(`${directory}/`));
+    assert.ok(fs.existsSync(path.join(root, app.spec.source.path, 'resources.yaml')));
+  }
+  for (const [name, bytes] of Object.entries(continuous.files)) {
+    const file = path.join(root, 'gitops/production', name);
+    fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, bytes);
+  }
+  const mergedRevision = commit('Environment files committed with a different revision');
+  assert.notEqual(mergedRevision, revision);
+  assert.deepEqual(renderContinuousEnvironment(root, directory, url, mergedRevision, { argoNamespace: 'argocd' }).files, continuous.files);
   assert.equal(result.documents[1].spec.source.targetRevision, revision);
   const file = path.join(root, 'gitops-values.yaml'); fs.writeFileSync(file, yaml.dump(result.values));
   const rendered = execFileSync(process.env.HELM_BIN ?? 'helm', ['template', 'runtime', 'charts/gitops', '-n', 'argocd', '-f', file], { cwd: root, encoding: 'utf8' });

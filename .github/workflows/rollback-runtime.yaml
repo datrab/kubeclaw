@@ -1,0 +1,64 @@
+name: Roll back production deployment
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: previous, or the full main commit of the desired deployment (not the image source commit)
+        required: true
+        default: previous
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: rollback-runtime
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
+        with:
+          version: v3.18.4
+      - name: Prepare the previous deployment without rebuilding images
+        env:
+          ROLLBACK_TARGET: ${{ inputs.target }}
+        run: node scripts/gitops-rollback.mjs "https://github.com/$GITHUB_REPOSITORY.git" "$ROLLBACK_TARGET" > "$RUNNER_TEMP/rollback.json"
+      - name: Verify preserved release provenance
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/updates/verify-release-source.mjs
+      - uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2
+        id: app
+        with:
+          app-id: ${{ vars.DEPENDENCY_APP_ID }}
+          private-key: ${{ secrets.DEPENDENCY_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+      - name: Open rollback PR
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+        run: |
+          set -euo pipefail
+          branch="release/rollback-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          git switch -c "$branch"
+          git config user.name kubeclaw-updates
+          git config user.email kubeclaw-updates@users.noreply.github.com
+          git add releases/runtime-images.json releases/values/buster.yaml releases/values/prism.yaml releases/values/prism-agent.yaml releases/values/nova.yaml gitops/production/apps/applications.yaml gitops/production/bootstrap.yaml gitops/production/selection.json
+          git commit -m "Restore previous production deployment"
+          bundle="$(jq -r .directory "$RUNNER_TEMP/rollback.json")"
+          target="$(jq -r .revision "$RUNNER_TEMP/rollback.json")"
+          node scripts/gitops-continuous.mjs check "$bundle" "https://github.com/$GITHUB_REPOSITORY.git" "$(git rev-parse HEAD)"
+          printf 'Restore production bundle %s from deployment commit %s. Merging this PR tells Argo to synchronize the restored release. No image rebuild or source revert is needed.\n\nThe previous selection is not automatically known healthy. Check devbox/MCP diagnostics, retained image availability and database migration compatibility before merging. This does not restore database contents or remove resources retained by prune=false.\n' "$bundle" "$target" > "$RUNNER_TEMP/rollback-body.md"
+          gh auth setup-git
+          git push origin "$branch"
+          gh pr create --base main --head "$branch" --title "Roll back production to $bundle" --body-file "$RUNNER_TEMP/rollback-body.md"

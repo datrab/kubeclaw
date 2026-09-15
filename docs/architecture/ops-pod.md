@@ -60,6 +60,7 @@ flowchart TD
   Codex -->|"outbound connection"| Relay
   Codex -->|"Git / gh over HTTPS"| GitHub["GitHub"]
   MCP -->|"TLS + observer token"| API["Kubernetes API"]
+  Codex -->|"kubectl exec, configured namespaces only"| API
   TS --> Management["Existing management hosts"]
 ```
 
@@ -143,8 +144,8 @@ remote process, so that this connection remains attached to the deployed sidecar
 | Identity | Available authority | Explicit boundary |
 | --- | --- | --- |
 | Bootstrap operator | Install Helm resources, read discovery data and prepare Secrets | Existing administrative context; not mounted permanently into the Pod |
-| Codex runtime | Own home/workspace; local MCP bearer; separately supplied GitHub identity | No automatic Kubernetes token, host mount or container-runtime socket |
-| MCP observer | `get` and `list` for allowed resource types | No write verbs, Secret/ConfigMap reads, pod exec, port-forward or token minting |
+| Codex runtime | Own home/workspace; local MCP bearer; separately supplied GitHub identity; Kubernetes reads and pod exec in configured namespaces | Explicit rotating API token and kubeconfig only when exec is configured; no host mount or container-runtime socket |
+| MCP observer tools | `get` and `list` for allowed resource types | No arbitrary API or exec tool; the shared Pod ServiceAccount also has the configured exec rights |
 | Optional Tailscale identity | Tailnet connectivity allowed by operator grants | No Kubernetes token, NET_ADMIN or host network |
 | Incident operator | Explicit short-lived Kubernetes/SSH authority supplied for a repair | Not an automatic escalation endpoint and not a permanent MCP capability |
 
@@ -155,6 +156,23 @@ make these resources readable everywhere: it is attached through RoleBindings in
 selected namespaces. The separate ClusterRoleBinding permits only node and
 cluster-wide Cilium policy reads. Not every RBAC-permitted resource has a dedicated
 MCP tool. There is no general arbitrary-API or shell-execution MCP tool.
+
+`rbac.execNamespaces` grants `get` and `create` on `pods/exec`, plus pod lookup,
+using a Role and RoleBinding in each explicitly selected namespace. The default
+is `[kubeclaw]`; observer namespace discovery does not expand this list. Set it
+to `[]` to remove these Roles/Bindings and the Codex API-token/kubeconfig mounts.
+The Codex container can run `kubectl -n kubeclaw exec POD -c CONTAINER -- COMMAND`.
+Its kubeconfig references the rotating projected token file, rather than copying
+a long-lived credential into the persistent home. This is direct CLI access;
+the MCP tool set remains read-only. Both containers use the same ServiceAccount,
+so this is not a separate Kubernetes identity boundary for the MCP process.
+
+Exec permits arbitrary commands with the target container's effective identity,
+including access to mounted data, credentials and ServiceAccount tokens. The
+actual reach therefore includes those target credentials and privileges. No
+Secret API reads, workload patch/delete, node proxy or port-forward rights are
+added by these exec Roles. Private Tailscale connectivity does not further limit
+what a command can do once it is executing in an authorized target Pod.
 
 Both primary containers run as UID/GID 1000 with fsGroup 1000, RuntimeDefault
 seccomp, read-only root filesystems, no privilege escalation and all capabilities
