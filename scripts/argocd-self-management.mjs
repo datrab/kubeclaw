@@ -55,7 +55,7 @@ const tailscale = {
     project: 'infra',
     sources: [
       {
-        repoURL: 'https://pkgs.tailscale.com/helmcharts', chart: 'tailscale-operator', targetRevision: '1.98.4',
+        repoURL: 'https://pkgs.tailscale.com/helmcharts', chart: 'tailscale-operator', targetRevision: '1.102.3',
         helm: { releaseName: 'tailscale-operator', valueFiles: ['$values/gitops/platform/values/tailscale-operator.yaml'] },
       },
       { repoURL: repository, targetRevision: 'main', ref: 'values' },
