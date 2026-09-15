@@ -4,12 +4,13 @@ Stand: 15.09.2026. **In Arbeit; nicht abgeschlossen.**
 
 ## Ergebnis dieses Zwischenstands
 
-408 Dokumente wurden vollständig gelesen und einzeln entschieden: sämtliche
-97 Root-/Komponententexte, beide Agentenanweisungen und 309 Dokumentationstexte.
-Die Entscheidungen sind **139 erweitern, 262 Informationen extrahieren,
-6 behalten und 1 entfernen**. Die Entfernung betrifft einen redundanten
-Projekt-Runtime-Verweis; seine Links und gegebenenfalls benötigten Angaben müssen
-zuerst übernommen werden. Keine automatische Erfassung zählt als Inhaltsprüfung.
+444 Dokumente wurden vollständig gelesen und einzeln entschieden: sämtliche
+97 Root-/Komponententexte, beide Agentenanweisungen,
+344 Dokumentationstexte und eine Verwaltungsdatei.
+Die Entscheidungen sind **142 erweitern, 289 Informationen extrahieren,
+10 behalten und 3 entfernen**. Die Entfernung betrifft einen redundanten
+Projekt-Runtime-Verweis und zwei veraltete generierte Zusammenfassungen. Ihre
+Verbraucher müssen zuerst migriert oder nachvollziehbar stillgelegt werden. Keine automatische Erfassung zählt als Inhaltsprüfung.
 Noch kein Ersatztext ist abgenommen und keine Quelldatei wurde gelöscht.
 
 Das [manuell gepflegte Prüfregister](review-ledger.jsonl) enthält je Quelldatei
@@ -36,15 +37,15 @@ inhaltliche bzw. funktionale Einzelbewertung, keine bloße Dateinamensentscheidu
 | Gruppe | Dateien | Davon inhaltlich geprüft |
 | --- | ---: | ---: |
 | Root- und komponentennahe Dokumentation | 97 | 97 |
-| Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 309 |
+| Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 344 |
 | Dokumentationsunterstützung | 82 | 0 |
-| Neue AP01-/Plan-Verwaltungsdateien | 7 | 0 |
+| Neue AP01-/Plan-Verwaltungsdateien | 7 | 1 |
 | Review-Texte | 479 | 0 |
 | Review-Nachweise und Register | 1.832 | 0 |
 | Agentenanweisungen | 2 | 2 |
-| **Gesamt** | **2.879** | **408** |
+| **Gesamt** | **2.879** | **444** |
 
-**2.471 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 552
+**2.435 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 516
 Markdown-Dokumente. Die bereits erfolgte AP02-Blueprint-Abnahme ersetzt diese
 dateibezogene Migrationsentscheidung nicht. Die beiden neuen AP03-Arbeitsdateien
 dieses Zwischenstands sind Verwaltungszugänge nach dem eingefrorenen Quellstand;
@@ -114,7 +115,7 @@ Prüfstatus beibehalten. Der Quellcommit dieses Berichts bindet auch die
 Alle Operations-, Deployment- und Sicherheitsdokumente, die ersten sieben
 Architektureinstiege, alle 51 Katalogseiten und sämtliche 95 weiteren
 Komponententexte/Agentenanweisungen sind jetzt einzeln entschieden. Als Nächstes
-folgen die übrigen 73 Markdown-Texte außerhalb der Reviews und die 479
+folgen die übrigen 37 Markdown-Texte außerhalb der Reviews und die 479
 Review-Texte samt ihren Nachweisen. Verwaltungsdateien und technische
 Dokumentationsunterstützung erhalten ebenfalls Einzelentscheidungen.
 
@@ -258,3 +259,32 @@ Nachweise dürfen nicht als beliebig neu erzeugbare Derivate behandelt werden.
 Es wurden keine Runtime-, Browser-, Datenbank-, Deployment- oder Live-Tests
 ausgeführt. Die 13 offenen Findings und getrennte Produktionsabnahmen bleiben
 unverändert; sämtliche redaktionellen Migrationen stehen weiterhin aus.
+
+## Fortsetzung: Blueprint und Prism-Umsetzungshistorie
+
+Weitere 36 Dateien wurden vollständig gelesen und entschieden: die sechs
+Blueprint-Regeln, AP01-Bericht, generierte Zusammenfassungen und Support-Indizes,
+zwei Namespace-Controller-Texte sowie sämtliche 22 Prism-Umsetzungspläne und
+Phasenberichte. Der eingefrorene Blueprint-Index und Arbeitsplan wurden ebenfalls
+gelesen; ihre inzwischen geänderten Blobs erhalten erst nach dem gezielten
+Abgleich eine Entscheidung. Sie sind noch nicht in den 444 Prüfungen enthalten.
+
+Zwei alte generierte Zusammenfassungen haben keinen eigenständigen verbleibenden
+Inhalt. Ihre Entfernung setzt die Migration der Generator- und Prüfverbraucher
+voraus. Die sechs Blueprint-Regeln bleiben während der Migration maßgeblich;
+CLI-Quellen, konkrete Zielzuordnungen und Entscheidungssupersession werden ergänzt.
+
+Der aktuelle Prism-Code widerspricht der alten No-Decay-Architektur: Die
+Präferenzprojektion verwendet eine Halbwertszeit von 180 Tagen. Der Control-Pfad
+speichert Referenzzeit, Policyversion und Projektvorrang. Implementierung,
+Control-Snapshot und zugehöriger Test wurden vollständig gelesen und anhand
+ihrer Git-Blobs geprüft. Die alten Ledger-Aufträge wurden entsprechend präzisiert.
+Die Abweichung braucht eine nachvollziehbare Entscheidungsauflösung; ein Testlauf
+fand nicht statt.
+
+Die Prism-Phasenberichte zeigen außerdem, warum historische erfolgreiche
+Aufrufe von verify:prism:production keine heutige Produktionsabnahme beweisen:
+Der spätere Gate verlangt einen geschützten Live-Nachweis. Dessen HMAC-Vertrag
+ist von den Ed25519-Operatorreceipts anderer Test-Suiten zu unterscheiden.
+Alte Account-, Controller- und Clusterblockaden werden erst nach aktuellem
+Abgleich als noch offene Arbeit übernommen.
