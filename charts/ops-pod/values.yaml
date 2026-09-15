@@ -22,6 +22,9 @@ rbac:
   # The deployment helper discovers existing platform namespaces. RoleBindings
   # must not refer to namespaces that do not exist yet.
   namespaces: [kubeclaw]
+  # Explicit application namespaces for kubectl exec from the Codex container.
+  # Independent of discovered observer namespaces; [] disables exec and its token mount.
+  execNamespaces: [kubeclaw]
 argoNamespace: argocd
 defaultNamespace: kubeclaw
 

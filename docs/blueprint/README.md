@@ -1,6 +1,6 @@
 # Documentation transformation blueprint
 
-Status: AP02 completed and rechecked; AP03 recheck found unresolved decision handoffs (285 blocked, 2,594 content-reviewed).
+Status: AP01–AP03 completed and rechecked; 2,887 content-reviewed decisions, no open AP03 handoff. AP04 is next.
 Scope: documentation migration; implementation and live acceptance remain separate.
 
 KubeClaw documentation must let a new reader understand the system, an operator complete operational tasks, and a developer build supported extensions without previous conversations. Detail is required where it explains behavior or lets a task finish. More pages are not a measure of completeness.
@@ -14,13 +14,13 @@ KubeClaw documentation must let a new reader understand the system, an operator 
 5. [Decision preservation](05-decision-record-catalogue.md): retain reasoning without confusing acceptance with implementation.
 6. [Tooling and publication](06-automation-and-publication.md): reuse existing tools, add only necessary checks, keep unfinished work visible.
 
-[Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the complete source inventory, plugin comparison, open findings and executable review dependencies. [AP03 recheck](AP03-recheck.md): all 2,879 frozen sources retain their individual decisions, but 285 handoffs are blocked pending concrete destinations. AP03 is not yet accepted. Migration remains pending; AP04 follows the corrected handoff and preserves open work, acceptance requirements, decisions and test dependencies before rewriting.
+[Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the original inventory and executable dependencies. The [AP03 completion report](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) resolves the 285 former handoff blockers and additional candidates. Migration remains pending; AP04 preserves open work, separate live acceptance, decisions and test dependencies before rewriting.
 
 ## Authority and historical outputs
 
-The revised six artifacts define the migration policy. The files in `generated/` remain earlier mechanical output and are not current completion evidence. AP01 demonstrated that the old ledger omits 2,322 paths in its present generator scope. The old generator also overwrites completion text with a pending value. Do not write human review decisions into its generated CSV.
+The revised six artifacts define the migration policy. Only the [human-maintained review ledger](review-ledger.jsonl) is authoritative for current individual decisions. Files in `generated/` are earlier heuristic AP02 output, not accepted manual decisions or current completion evidence. AP01 found that the old ledger omits 2,322 paths in its generator scope; its generator also resets completion prose to pending. Consumer migration belongs to AP09; do not overwrite human decisions with that output.
 
-The current baseline is commit `6979bced8e5bbca90568276256e7328d93a1e072`. PR #12's removal of the standalone ChatGPT tunnel remains pending at this revision. Recheck affected paths after it merges. No cluster or Devbox configuration was inspected by this blueprint revision.
+The original AP01 baseline is `6979bced8e5bbca90568276256e7328d93a1e072`; AP03 preserves source identities at `e4ba8b1dd830f38450fcabedf4db7188aaeb6c44`. Current main through `1e50167fcb4355dfce4110d612ab360828c64394` has been integrated and affected documentation reconciled, including the removed standalone ChatGPT bootstrap. Six AP03 administrative sources and two new main documents are explicitly added. No cluster or Devbox live acceptance was performed.
 
 ## Rules that apply across all chapters
 
@@ -58,14 +58,8 @@ The recheck made engine authoring, configuration-only extension, routine backup 
 
 ## AP03 individual document review
 
-All 2,879 frozen source files retain decisions: 182 expand, 1,898 extract,
-14 keep and 785 remove. The independent recheck corrected 61 records and
-reopened the concrete-target acceptance gate: 2,594 records are content-reviewed,
-285 are blocked for decision clarification, and all migrations remain pending.
-These are documentation handoff blockers, not reopened implementation findings.
+All 2,887 sources have concrete decisions: 191 expand, 1,752 extract, 18 keep and 926 remove. The original 2,879 identities remain intact; eight sources are explicitly added. There are 2,886 current files and one historical main removal. All records are content-reviewed, none blocked, and all migrations remain pending.
 
-Next: resolve the exact blockers in `review-ledger.jsonl`, triage the separately
-identified target candidates, and reconcile the nine documentation changes on
-main before claiming a current-source handoff. See the [recheck](AP03-recheck.md)
-for evidence and limits, the [progress report](AP03-progress.md) for history,
-and the [human-maintained ledger](review-ledger.jsonl) for each next action.
+The six-agent follow-up and independent checks resolved concrete destinations, parent evidence, machine-readable inventories and fixture consumers. Source, functional and target-only checks are distinguished; this does not claim a fresh full reading of every historical source-code attachment. See the [completion report](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) for scope and evidence and the [progress report](AP03-progress.md) for history.
+
+Next: AP04, preserving the 13 incomplete findings, 141 local closures, Issue #7, separate live acceptance and decisions. The source-confirmed GitOps branch/resolved-revision health-gate discrepancy is an additional technical follow-up, not a closed finding. AP04–AP11 and product/live acceptance remain outstanding.

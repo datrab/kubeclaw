@@ -24,7 +24,7 @@ folgt weder ein bestandener Test noch eine vollständige Verifikation des Laufs.
 
 ## Vorgehen und Zusammenführung
 
-Jeder Bearbeiter liest die zugeteilten Quellen vollständig und entscheidet in
+Bei der ursprünglichen Inhaltsprüfung liest jeder Bearbeiter die zugeteilten Texte vollständig und entscheidet in
 kleinen Themenblöcken. Er benennt zu bewahrende Informationen, konkrete Zielorte,
 Korrekturen, Quellen und Verbraucher. Entscheidungen werden zunächst separat
 zwischengespeichert. Nur die Hauptsession führt sie in das
@@ -65,13 +65,13 @@ Für jedes Paket die zugeteilten Pfade mit dem Register verbinden: Zeilen mit
 Inhaltsentscheidung, `migration_status: pending` bedeutet noch keine Umsetzung.
 Keine bereits geprüften Originalblobs ungeprüft auf einen neueren Stand setzen.
 
-Neue AP03-Verwaltungsdateien liegen außerhalb des oben eingefrorenen Quellumfangs.
-Sie sind beim nächsten ausdrücklichen Bestandsabgleich zusätzlich zu erfassen;
-der feste Nenner darf nicht als vollständiger zukünftiger Repositorybestand gelten.
+Die sechs neuen AP03-Verwaltungsdateien und zwei neuen main-Dokumente sind
+im Abschluss ausdrücklich als acht Erweiterungen erfasst. Sie ändern nicht die
+ursprüngliche Paketzuordnung; der feste Nenner bezeichnet deren Quellstand.
 Die laufenden Zahlen und der nächste Einstieg stehen im
 [AP03-Fortschrittsbericht](AP03-progress.md).
 
-## Zusammengeführter Stand nach Qualitätsnachprüfung
+## Abgeschlossener Stand nach Nacharbeit
 
 | Paket | Entscheidungen erfasst | content-reviewed | Übergabe blocked |
 | --- | ---: | ---: | ---: |
@@ -79,14 +79,21 @@ Die laufenden Zahlen und der nächste Einstieg stehen im
 | AP03-P02 | 112 | 112 | 0 |
 | AP03-P03 | 275 | 275 | 0 |
 | AP03-P04 | 149 | 149 | 0 |
-| AP03-P05 | 858 | 580 | 278 |
-| AP03-P06 | 915 | 912 | 3 |
-| Ursprüngliche 506 | 506 | 502 | 4 |
-| **Gesamt** | **2.879** | **2.594** | **285** |
+| AP03-P05 | 858 | 858 | 0 |
+| AP03-P06 | 915 | 915 | 0 |
+| Ursprüngliche 506 | 506 | 506 | 0 |
+| Ausdrückliche Erweiterungen | 8 | 8 | 0 |
+| **Gesamt** | **2.887** | **2.887** | **0** |
 
-Alle 2.373 zugeteilten Quellen besitzen Entscheidungen; zusammen mit den
-ursprünglichen 506 ergibt dies 2.879. Die [Nachprüfung](AP03-recheck.md) hat
-61 Einträge korrigiert und 285 unzureichende Zielübergaben auf `blocked` gesetzt.
-Das verwirft keine bisherige Lesearbeit und schließt keine technischen Findings.
-AP03 wird erst nach der benannten Nacharbeit erneut abgenommen.
-Die Migration bleibt vollständig ausstehend.
+Die zuvor 285 gesperrten Übergaben und die zusätzlichen Zielkandidaten sind
+bearbeitet. Alle Originalidentitäten und die historische Zuteilung bleiben
+nachvollziehbar. Die acht Erweiterungen sind sechs AP03-Verwaltungsdateien und
+zwei neue main-Dokumente. Eine ursprüngliche Quelle wurde bereits auf main
+entfernt und bleibt mit dieser Herkunft im Register; 2.886 Quellen sind vorhanden.
+
+Die Nacharbeit kombinierte Inhalts-/Funktionsprüfung der zugeteilten Nachweise,
+gezielte technische Quellenprüfungen und ausdrücklich begrenzte Zielabgleiche;
+sie ist keine erneute vollständige Inhaltslektüre des gesamten Bestands.
+Der [Abschlussbericht](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026)
+beschreibt Entscheidungen, Gegenprüfungen und Grenzen. AP03 ist abgeschlossen;
+AP04 und alle Migrationen bleiben ausstehend.

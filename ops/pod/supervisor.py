@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keep onboarding available before login; supervise the real foreground CLI.
+"""Keep onboarding available before login; supervise the pairable Codex daemon.
 
 The status file describes process state, never successful pairing or relay health.
 Authentication is completed interactively via kubectl exec, on the same PVC.
@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 import shutil
 import signal
+import socket
 import subprocess
 import threading
 import time
@@ -31,6 +32,38 @@ def shutdown(*_):
 signal.signal(signal.SIGTERM, shutdown)
 signal.signal(signal.SIGINT, shutdown)
 
+def control_ready(address):
+    """A live local listener is required; a stale socket file is insufficient."""
+    try:
+        with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as connection:
+            connection.settimeout(0.5)
+            connection.connect(str(address))
+        return True
+    except OSError:
+        return False
+
+def wait_for_control(address, timeout=20):
+    deadline = time.monotonic() + timeout
+    while not stop.is_set() and time.monotonic() < deadline:
+        if control_ready(address):
+            return True
+        stop.wait(0.2)
+    return False
+
+def run_control(command, env, timeout=20, quiet=False):
+    global child
+    child = subprocess.Popen(command, env=env,
+                             stdout=subprocess.DEVNULL if quiet else None,
+                             stderr=subprocess.DEVNULL if quiet else None)
+    try:
+        return child.wait(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        child.kill()
+        child.wait()
+        return 124
+    finally:
+        child = None
+
 def main():
     global child
     home = Path.home()
@@ -46,35 +79,45 @@ def main():
     env['KUBECLAW_MCP_TOKEN'] = Path('/var/run/kubeclaw-ops/bearer/token').read_text().strip()
     if len(env['KUBECLAW_MCP_TOKEN']) < 32:
         raise RuntimeError('MCP bearer token must contain at least 32 characters')
+    control_socket = config_dir / 'app-server-control' / 'app-server-control.sock'
+    # Use the daemon's app-server transport directly under container supervision.
+    # remote-control start requires a standalone install and launches an updater.
+    command = ['codex', '-c', 'mcp_servers.kubeclaw_ops.url="http://127.0.0.1:8080/mcp"',
+               '-c', 'mcp_servers.kubeclaw_ops.bearer_token_env_var="KUBECLAW_MCP_TOKEN"',
+               'app-server', '--remote-control', '--listen', 'unix://']
     while not stop.is_set():
         status('waiting-for-login')
         try:
-            logged_in = subprocess.run(['codex', 'login', 'status'], stdout=subprocess.DEVNULL,
-                                       stderr=subprocess.DEVNULL, timeout=15, env=env).returncode == 0
+            logged_in = run_control(['codex', 'login', 'status'], env, timeout=15, quiet=True) == 0
         except subprocess.TimeoutExpired:
             logged_in = False
         if not logged_in:
             stop.wait(5)
             continue
-        # Keep the installed MCP connection authoritative while preserving other
-        # user preferences and connections in the persistent Codex config.
-        command = ['codex', '-c', 'mcp_servers.kubeclaw_ops.url="http://127.0.0.1:8080/mcp"',
-                   '-c', 'mcp_servers.kubeclaw_ops.bearer_token_env_var="KUBECLAW_MCP_TOKEN"',
-                   'remote-control']
-        child = subprocess.Popen(command, env=env)
-        status('remote-process-running', pid=child.pid)
-        while child.poll() is None and not stop.wait(2):
-            status('remote-process-running', pid=child.pid)
-        if stop.is_set() and child.poll() is None:
-            child.terminate()
-            try:
-                child.wait(timeout=10)
-            except subprocess.TimeoutExpired:
-                child.kill()
-                child.wait()
-        code = child.wait()
-        status('remote-process-exited', exitCode=code)
-        child = None
+        if stop.is_set():
+            break
+        status('remote-process-starting', controlSocketReady=False)
+        try:
+            child = subprocess.Popen(command, env=env)
+            if wait_for_control(control_socket) and child.poll() is None:
+                print('Codex app-server control socket is reachable; pairing can be attempted.', flush=True)
+                while not stop.is_set() and child.poll() is None and control_ready(control_socket):
+                    status('remote-process-running', controlSocketReady=True)
+                    stop.wait(2)
+            else:
+                print(f'Codex app-server failed to become ready (exit {child.poll()}).', flush=True)
+        finally:
+            status('remote-process-stopping', controlSocketReady=False)
+            if child is not None:
+                if child.poll() is None:
+                    child.terminate()
+                try:
+                    child.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    child.kill()
+                    child.wait()
+                child = None
+        status('remote-process-exited', controlSocketReady=False)
         stop.wait(10)
     status('stopped')
 

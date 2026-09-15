@@ -1,0 +1,29 @@
+# Initial single-node profile, not a measured workload capacity guarantee.
+# Render and review before activation; reconcile ordinary Pod requests first.
+# Worker ceilings: 3.5 CPUs / 24 GiB, one active scope per role.
+# With existing daemon reservations: 4.5 CPUs / 25.5 GiB withheld from Pods.
+schemaVersion: 1
+nodeName: ax41-production
+runtime:
+  containerdVersion: 2.3.4-k3s1.36
+systemReserve:
+  cpuMillicores: 500
+  memoryBytes: 1073741824
+  tasks: 2048
+kubernetesReserve:
+  cpuMillicores: 500
+  memoryBytes: 536870912
+  tasks: 2048
+pools:
+  buster:
+    namespace: kubeclaw
+    cpuMillicores: 1500
+    memoryBytes: 8589934592
+    tasks: 4096
+    maximumActiveScopes: 1
+  prism:
+    namespace: kubeclaw
+    cpuMillicores: 2000
+    memoryBytes: 17179869184
+    tasks: 2048
+    maximumActiveScopes: 1

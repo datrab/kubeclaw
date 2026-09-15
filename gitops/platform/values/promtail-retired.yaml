@@ -1,0 +1,10 @@
+# Transitional retirement: sync only when ready to start Alloy.
+# No node may carry this label; the DaemonSet then runs zero Pods.
+nodeSelector:
+  kubeclaw.io/log-collector: promtail-retired
+config:
+  clients:
+    - url: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+resources:
+  limits: {cpu: 200m, memory: 128Mi}
+  requests: {cpu: 50m, memory: 64Mi}

@@ -1,0 +1,37 @@
+name: Propose production deployment
+on:
+  workflow_run:
+    workflows: [Build Runtime Images And Skill Bundles]
+    types: [completed]
+    branches: [main]
+permissions:
+  contents: read
+  actions: write
+jobs:
+  propose:
+    if: >-
+      vars.GITOPS_ENABLED == 'true' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_repository.full_name == github.repository &&
+      (github.event.workflow_run.event == 'push' || github.event.workflow_run.event == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Promote only builds with a preserved runtime receipt
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+        run: |
+          set -euo pipefail
+          # Code-only runs can succeed with image publication skipped.
+          # Do not turn such runs (including promotion merges) into release loops.
+          gh api "repos/$GH_REPO/actions/runs/$RUN_ID" > "$RUNNER_TEMP/run.json"
+          jq -e '.path == ".github/workflows/build-images.yaml" and .head_branch == "main" and .conclusion == "success"' "$RUNNER_TEMP/run.json"
+          gh api "repos/$GH_REPO/actions/runs/$RUN_ID/attempts/$RUN_ATTEMPT/jobs" --paginate --jq '.jobs[] | select(.name == "preserve-receipts / preserve") | .conclusion' > "$RUNNER_TEMP/receipt-job.txt"
+          if ! grep -qx success "$RUNNER_TEMP/receipt-job.txt"; then
+            echo 'No successful receipt publication in this attempt; no deployment proposed.'
+            exit 0
+          fi
+          gh release view "runtime-images-$RUN_ID-$RUN_ATTEMPT" --json assets --jq '.assets[].name' | grep -qx runtime-images.json
+          gh workflow run promote-runtime.yaml --ref main -f family=runtime -f "source_run_id=$RUN_ID"

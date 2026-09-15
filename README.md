@@ -30,6 +30,11 @@ Expected result: the deployment truth command prints JSON with all checks passed
 
 ## Live Cluster Path
 
+For deployments managed through Git and Argo CD, use the
+[continuous GitOps setup](docs/deployment/continuous-gitops.md). After the one-time
+handover, successful image builds propose deployment PRs automatically and Argo
+rolls out merged releases without commands on the control node.
+
 The live operator path is implemented by `scripts/deploy.sh`. First merge the
 reviewed **Promote image release** selection for the runtime family and run
 `node scripts/updates/materialize-release.mjs --family=runtime --check`.

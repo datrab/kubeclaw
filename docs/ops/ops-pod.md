@@ -122,7 +122,9 @@ file is committed. Omit them for interactive GitHub login and no Tailscale.
 ```
 
 Device login writes into the persistent Codex home. The supervisor then launches
-the real foreground `codex remote-control` process and restarts it if it exits.
+`codex app-server --remote-control --listen unix://` and waits for its local control socket.
+A lost socket triggers child termination/restart. Shutdown terminates and reaps the
+child. The standalone daemon installer and auto-updater are not needed.
 `pair` invokes the real CLI pairing command. Follow its output in the mobile app.
 Login and pairing do not require another image build or Helm deployment. A running
 process/readiness is not proof of a working mobile session.

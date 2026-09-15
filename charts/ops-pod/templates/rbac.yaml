@@ -60,3 +60,33 @@ roleRef:
   name: {{ .Release.Namespace }}-{{ .Release.Name }}-cluster-reader
 subjects:
   - {kind: ServiceAccount, name: {{ .Release.Name }}, namespace: {{ .Release.Namespace }}}
+{{- range .Values.rbac.execNamespaces }}
+{{- if or (not (kindIs "string" .)) (not (regexMatch "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$" .)) (gt (len .) 63) }}
+{{- fail "rbac.execNamespaces must contain valid namespace names" }}
+{{- end }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $.Release.Namespace }}-{{ $.Release.Name }}-exec
+  namespace: {{ . }}
+rules:
+  - apiGroups: [""]
+    resources: [pods]
+    verbs: [get, list]
+  - apiGroups: [""]
+    resources: [pods/exec]
+    verbs: [get, create]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $.Release.Namespace }}-{{ $.Release.Name }}-exec
+  namespace: {{ . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ $.Release.Namespace }}-{{ $.Release.Name }}-exec
+subjects:
+  - {kind: ServiceAccount, name: {{ $.Release.Name }}, namespace: {{ $.Release.Namespace }}}
+{{- end }}

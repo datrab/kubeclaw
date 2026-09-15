@@ -1,0 +1,21 @@
+# Image managed from versions.json redisProduction by scripts/versions.mjs.
+image:
+  registry: registry-1.docker.io
+  repository: bitnami/redis
+  tag: latest
+  digest: sha256:ffa455a3ad00bccc24dfde113ef55329dde687da242e9feb6ccd2b30eb93e8f3
+architecture: standalone
+auth:
+  enabled: true
+  existingSecret: redis-secrets
+  existingSecretPasswordKey: redis-password
+master:
+  persistence:
+    size: 2Gi
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi

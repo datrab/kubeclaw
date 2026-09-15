@@ -4,7 +4,7 @@ Status: implemented in source; live cluster acceptance and mobile pairing pendin
 Audience: architecture reader, platform maintainer, security reviewer
 Owner: platform operations
 Evidence: `charts/ops-pod/`; `ops/pod/`; `tools/ops-mcp/src/`; `scripts/deploy-ops-pod.sh`
-Applies to: the persistent Codex Ops Pod, not the separately exposed ChatGPT MCP deployment
+Applies to: the persistent Codex Ops Pod
 Last verified: source and CI checks on 2026-09-06; not a live recovery proof
 
 ## Navigation
@@ -40,12 +40,10 @@ Its chart is not installed through the pipeline it is meant to diagnose. A stopp
 Argo controller does not by itself stop a running Ops Pod. Kubernetes still owns
 scheduling, restart, networking, projected credentials and storage.
 
-The existing [ChatGPT Ops bootstrap](../ops/chatgpt-ops-bootstrap.md) is a separate
-access path: ChatGPT reaches an exposed MCP through its configured tunnel. This
-Pod instead gives the Codex process a loopback MCP connection. The implementations
-share MCP source and its image; they have separate deployments and identities.
-Installing this chart does not migrate or remove the existing MCP deployment,
-Tailscale Operator, Argo installation, or unrelated application namespaces.
+The Codex Ops Pod is the single supported interactive operations path. Codex uses
+the MCP sidecar over loopback; there is no separate externally exposed Ops MCP or
+OpenAI Secure MCP Tunnel deployment. The MCP implementation and image remain shared
+components of this Pod rather than a second independently deployed service.
 
 This chart installs no pipeline worker, task queue, generic privileged command
 executor, backup service, monitoring stack, or cluster repair controller.
@@ -62,6 +60,7 @@ flowchart TD
   Codex -->|"outbound connection"| Relay
   Codex -->|"Git / gh over HTTPS"| GitHub["GitHub"]
   MCP -->|"TLS + observer token"| API["Kubernetes API"]
+  Codex -->|"kubectl exec, configured namespaces only"| API
   TS --> Management["Existing management hosts"]
 ```
 
@@ -118,12 +117,15 @@ storage does not provide recovery from loss of the storage node.
    It checks `codex login status`, with a 15-second timeout and five-second waits
    while unauthenticated.
 4. The operator runs device login through `kubectl exec`. The running supervisor
-   notices the persistent login and starts the real foreground remote-control CLI.
+   notices the persistent login and runs `codex app-server --remote-control --listen unix://`. It waits up
+   to twenty seconds for the local control socket used by `pair` to accept connections.
 5. Pairing is a separate CLI action. A process being alive does not prove that a
    mobile client is connected or that the remote service is reachable.
-6. A remote-control exit is recorded and retried after ten seconds. SIGTERM stops
-   the child; the supervisor allows ten seconds before killing an unresponsive
-   child. The Pod termination grace period is 30 seconds.
+6. A lost control socket causes the supervisor to terminate and reap the app-server,
+   then retry after ten seconds. SIGTERM interrupts startup/waits and stops the child.
+   Shutdown has a ten-second limit before killing and reaping the child.
+   The Pod termination grace period is 30 seconds. The standalone daemon and its
+   automatic updater are not used; the server runs from the pinned image.
 
 Interactive access through the deployment helper uses `/opt/codex/shell.sh` to
 load and export the mounted bearer for the new shell. It does not depend on
@@ -131,7 +133,8 @@ inheriting the supervisor environment and refuses a missing/short credential.
 
 The status file is `/tmp/codex-ops-status.json`. Its `pairingVerified` field is
 always false: the supervisor does not observe or certify pairing. Codex readiness
-checks `remote-process-running`. There is no Codex liveness probe that restarts the
+checks `remote-process-running`, which is only reported while the control socket
+accepts local connections. A leftover socket file alone is insufficient. There is no Codex liveness probe that restarts the
 container simply because login or a remote service is unavailable. MCP has local
 HTTP health checks executed inside its own container.
 
@@ -145,8 +148,8 @@ remote process, so that this connection remains attached to the deployed sidecar
 | Identity | Available authority | Explicit boundary |
 | --- | --- | --- |
 | Bootstrap operator | Install Helm resources, read discovery data and prepare Secrets | Existing administrative context; not mounted permanently into the Pod |
-| Codex runtime | Own home/workspace; local MCP bearer; separately supplied GitHub identity | No automatic Kubernetes token, host mount or container-runtime socket |
-| MCP observer | `get` and `list` for allowed resource types | No write verbs, Secret/ConfigMap reads, pod exec, port-forward or token minting |
+| Codex runtime | Own home/workspace; local MCP bearer; separately supplied GitHub identity; Kubernetes reads and pod exec in configured namespaces | Explicit rotating API token and kubeconfig only when exec is configured; no host mount or container-runtime socket |
+| MCP observer tools | `get` and `list` for allowed resource types | No arbitrary API or exec tool; the shared Pod ServiceAccount also has the configured exec rights |
 | Optional Tailscale identity | Tailnet connectivity allowed by operator grants | No Kubernetes token, NET_ADMIN or host network |
 | Incident operator | Explicit short-lived Kubernetes/SSH authority supplied for a repair | Not an automatic escalation endpoint and not a permanent MCP capability |
 
@@ -157,6 +160,23 @@ make these resources readable everywhere: it is attached through RoleBindings in
 selected namespaces. The separate ClusterRoleBinding permits only node and
 cluster-wide Cilium policy reads. Not every RBAC-permitted resource has a dedicated
 MCP tool. There is no general arbitrary-API or shell-execution MCP tool.
+
+`rbac.execNamespaces` grants `get` and `create` on `pods/exec`, plus pod lookup,
+using a Role and RoleBinding in each explicitly selected namespace. The default
+is `[kubeclaw]`; observer namespace discovery does not expand this list. Set it
+to `[]` to remove these Roles/Bindings and the Codex API-token/kubeconfig mounts.
+The Codex container can run `kubectl -n kubeclaw exec POD -c CONTAINER -- COMMAND`.
+Its kubeconfig references the rotating projected token file, rather than copying
+a long-lived credential into the persistent home. This is direct CLI access;
+the MCP tool set remains read-only. Both containers use the same ServiceAccount,
+so this is not a separate Kubernetes identity boundary for the MCP process.
+
+Exec permits arbitrary commands with the target container's effective identity,
+including access to mounted data, credentials and ServiceAccount tokens. The
+actual reach therefore includes those target credentials and privileges. No
+Secret API reads, workload patch/delete, node proxy or port-forward rights are
+added by these exec Roles. Private Tailscale connectivity does not further limit
+what a command can do once it is executing in an authorized target Pod.
 
 Both primary containers run as UID/GID 1000 with fsGroup 1000, RuntimeDefault
 seccomp, read-only root filesystems, no privilege escalation and all capabilities
@@ -287,6 +307,5 @@ acceptance result is inferred from a green build.
 ## Related documentation
 
 - [Ops Pod operations](../ops/ops-pod.md)
-- [Existing ChatGPT MCP deployment](../ops/chatgpt-ops-bootstrap.md)
 - [Worker trust operations](../operations/worker-trust-runbook.md)
 - [Architecture index](README.md)

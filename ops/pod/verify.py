@@ -22,9 +22,15 @@ def call(method, params):
         raise SystemExit('MCP returned an error for ' + method + ' ' + str(params.get('name', '')))
     return reply['result']
 
-assert not Path('/var/run/secrets/kubernetes.io/serviceaccount/token').exists(), 'Codex must not mount the observer token'
+exec_namespaces = [item for item in os.environ.get('OPS_EXEC_NAMESPACES', '').split(',') if item]
+assert Path('/var/run/secrets/kubernetes.io/serviceaccount/token').exists() == bool(exec_namespaces), 'Codex API token mount must match exec configuration'
+if exec_namespaces:
+    import subprocess
+    for namespace in exec_namespaces:
+        for verb in ['get', 'create']:
+            subprocess.run(['kubectl', 'auth', 'can-i', verb, 'pods', '--subresource=exec', '-n', namespace, '--quiet'], check=True)
 tools = call('tools/list', {})['tools']
 assert any(tool['name'] == 'namespace_overview' for tool in tools)
 call('tools/call', {'name': 'namespace_overview', 'arguments': {'namespace': os.environ['OPS_DEFAULT_NAMESPACE']}})
 call('tools/call', {'name': 'platform_cluster_state', 'arguments': {'resource': 'nodes'}})
-print('PASS: actual MCP tools, Kubernetes reads and Codex credential isolation. Pairing and pipeline health require separate live observation.')
+print('PASS: actual MCP tools, Kubernetes reads and configured Codex exec authorization. No command executed in target pods. Pairing and pipeline health require separate live observation.')

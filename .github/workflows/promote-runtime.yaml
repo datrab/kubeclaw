@@ -16,6 +16,9 @@ permissions:
   contents: read
   actions: read
   packages: read
+concurrency:
+  group: promote-${{ inputs.family }}
+  cancel-in-progress: false
 jobs:
   prepare:
     runs-on: ubuntu-latest
@@ -49,6 +52,10 @@ jobs:
           mkdir -p releases
           gh release download "$RELEASE_FAMILY-images-$RUN_ID-$attempt" --repo "$GITHUB_REPOSITORY" --pattern "$RELEASE_FAMILY-images.json" --dir releases --clobber
       - run: npm ci --ignore-scripts --no-audit --no-fund
+      - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
+        if: inputs.family == 'runtime' && vars.GITOPS_ENABLED == 'true'
+        with:
+          version: v3.18.4
       - name: Prepare release selection and values
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -78,14 +85,29 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.app.outputs.token }}
           RUN_ID: ${{ inputs.source_run_id }}
+          GITOPS_ENABLED: ${{ vars.GITOPS_ENABLED }}
+          CODE_BUNDLE_GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           branch="release/$RELEASE_FAMILY-$RUN_ID"
           git switch -c "$branch"
           git config user.name kubeclaw-updates
           git config user.email kubeclaw-updates@users.noreply.github.com
+          if [[ "$RELEASE_FAMILY" == runtime && "$GITOPS_ENABLED" == true ]]; then
+            bundle="releases/gitops/runtime-$RUN_ID-$(jq -r .sourceRunAttempt releases/runtime-images.json)"
+            node scripts/gitops-continuous.mjs export "$bundle"
+          fi
           git add releases
           git commit -m "Select tested $RELEASE_FAMILY images from run $RUN_ID"
+          if [[ "$RELEASE_FAMILY" == runtime && "$GITOPS_ENABLED" == true ]]; then
+            node scripts/gitops-continuous.mjs prepare "$bundle" "https://github.com/$GITHUB_REPOSITORY.git" "$(git rev-parse HEAD)"
+            git add gitops/production
+            git commit -m "Prepare production Argo deployment"
+            node scripts/gitops-continuous.mjs check "$bundle" "https://github.com/$GITHUB_REPOSITORY.git" "$(git rev-parse HEAD)"
+          fi
           gh auth setup-git
           git push origin "$branch"
           printf 'Select immutable image digests from successful main run %s, source commit %s. No images are rebuilt and no deployment is performed. Review the generated values before rollout.\n' "$RUN_ID" "$SOURCE_COMMIT" > "$RUNNER_TEMP/release-body.md"
+          if [[ "$RELEASE_FAMILY" == runtime && "$GITOPS_ENABLED" == true ]]; then
+            printf '\nThis PR includes the production Argo manifests. Once continuous GitOps has been bootstrapped, merging this PR authorizes Argo to deploy it automatically. Review gitops/production/apps/applications.yaml and the referenced release bundle.\n' >> "$RUNNER_TEMP/release-body.md"
+          fi
           gh pr create --base main --head "$branch" --title "Select $RELEASE_FAMILY release $RUN_ID" --body-file "$RUNNER_TEMP/release-body.md"

@@ -431,6 +431,64 @@
       ],
       "depNameTemplate": "ip-address",
       "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"redisProduction\": \\{\\s*\"chartVersion\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "registry-1.docker.io/bitnamicharts/redis",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"redisProduction\": \\{\\s*\"chartVersion\": \"[^\"\\n]+\",\\s*\"image\": \"(?<depName>[^\"@]+?):(?<currentValue>[^\"@]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
+      ],
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"prometheus\": \\{\\s*\"version\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "kube-prometheus-stack",
+      "datasourceTemplate": "helm",
+      "registryUrlTemplate": "https://prometheus-community.github.io/helm-charts"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"loki\": \\{\\s*\"version\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "loki",
+      "datasourceTemplate": "helm",
+      "registryUrlTemplate": "https://grafana-community.github.io/helm-charts"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"alloy\": \\{\\s*\"version\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "alloy",
+      "datasourceTemplate": "helm",
+      "registryUrlTemplate": "https://grafana.github.io/helm-charts"
     }
   ],
   "timezone": "Etc/UTC",
@@ -450,6 +508,29 @@
     "**/dist/**"
   ],
   "packageRules": [
+    {
+      "description": "Monitoring images follow the selected chart releases; Promtail remains frozen for retirement.",
+      "matchManagers": [
+        "helm-values"
+      ],
+      "matchFileNames": [
+        "gitops/platform/values/prometheus.yaml",
+        "gitops/platform/values/loki.yaml",
+        "gitops/platform/values/alloy.yaml",
+        "gitops/platform/values/promtail-retired.yaml"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "Production Redis image is generated from the central selection.",
+      "matchManagers": [
+        "helm-values"
+      ],
+      "matchFileNames": [
+        "gitops/platform/values/redis.yaml"
+      ],
+      "enabled": false
+    },
     {
       "matchUpdateTypes": [
         "major"
@@ -490,7 +571,14 @@
           "charts/**",
           "skills/common/plugins/openclaw-agent-observer/package.json",
           "scripts/scan-runtime-images.sh",
-          ".github/workflows/*.yaml"
+          ".github/workflows/*.yaml",
+          "my-values/infra/**",
+          "gitops/platform/values/redis.yaml",
+          "gitops/platform/bootstrap/redis.yaml",
+          "gitops/platform/bootstrap/prometheus.yaml",
+          "gitops/platform/bootstrap/loki.yaml",
+          "gitops/platform/bootstrap/alloy.yaml",
+          "gitops/platform/bootstrap/promtail.yaml"
         ],
         "executionMode": "branch"
       }

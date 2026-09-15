@@ -50,10 +50,6 @@ legacy_policies=(
   kubeclaw-registry-local-ingress
   kubeclaw-registry-mirror-ingress
   kubeclaw-registry-mirror-egress
-  ops-mcp-ingress
-  ops-mcp-kubernetes-api-egress
-  ops-mcp-hubble-relay-egress
-  ops-mcp-tunnel-egress
 )
 
 case "$MODE" in
@@ -82,16 +78,7 @@ case "$MODE" in
     # Keep the legacy default-deny as a redundant safety belt through cleanup.
     # It may be retired separately after post-cleanup negative tests; no allow gap.
     [[ "${CILIUM_TRAFFIC_VERIFIED:-false}" == true ]] || { echo 'Pipeline and negative traffic tests must pass; set CILIUM_TRAFFIC_VERIFIED=true.' >&2; exit 2; }
-    verification_files=("$BASELINE_FILE" "$POLICY_FILE")
-    legacy_ops="$(kubectl -n "$NAMESPACE" get networkpolicy ops-mcp-ingress ops-mcp-kubernetes-api-egress ops-mcp-hubble-relay-egress ops-mcp-tunnel-egress --ignore-not-found -o name)"
-    if [[ -n "$legacy_ops" ]]; then
-      [[ "$NAMESPACE" == kubeclaw ]] || { echo 'Legacy Ops policies outside the fixed kubeclaw Ops namespace require a separate migration; refusing cleanup.' >&2; exit 2; }
-      rendered_dir="$(mktemp -d)"
-      trap 'rm -rf "$rendered_dir"' EXIT
-      "$SCRIPT_DIR/deploy-ops-mcp.sh" policies > "$rendered_dir/ops-mcp-network-policies.yaml"
-      verification_files+=("$rendered_dir/ops-mcp-network-policies.yaml")
-    fi
-    python3 "$SCRIPT_DIR/verify-cilium-policies.py" "$NAMESPACE" "${verification_files[@]}"
+    python3 "$SCRIPT_DIR/verify-cilium-policies.py" "$NAMESPACE" "$BASELINE_FILE" "$POLICY_FILE"
     for policy in "${legacy_policies[@]}"; do
       kubectl -n "$NAMESPACE" delete networkpolicy "$policy" --ignore-not-found
     done

@@ -30,7 +30,13 @@ test('real Helm render isolates credentials and persists a single non-root Codex
   assert.equal(pod.securityContext.runAsNonRoot, true);
   assert.deepEqual(pod.containers.map(c => c.name), ['codex', 'ops-mcp']);
   const [codex, mcp] = pod.containers;
-  assert.equal(codex.volumeMounts.some(m => m.name === 'kube-api'), false);
+  assert.ok(codex.volumeMounts.some(m => m.name === 'kube-api' && m.readOnly));
+  assert.equal(codex.env.find(e => e.name === 'OPS_EXEC_NAMESPACES').value, 'kubeclaw');
+  assert.equal(codex.env.find(e => e.name === 'KUBECONFIG').value, '/var/run/kubeclaw-ops/kubeconfig/config');
+  const kubeconfig = parseAllDocuments(resources.find(x => x.kind === 'ConfigMap').data.config)[0].toJSON();
+  assert.equal(kubeconfig.users[0].user.tokenFile, '/var/run/secrets/kubernetes.io/serviceaccount/token');
+  assert.equal(kubeconfig.users[0].user.token, undefined);
+  assert.equal(kubeconfig.contexts[0].context.namespace, 'kubeclaw');
   assert.equal(mcp.volumeMounts.some(m => ['home', 'workspace'].includes(m.name)), false);
   assert.ok(mcp.volumeMounts.some(m => m.name === 'kube-api' && m.readOnly));
   assert.deepEqual(stateful.spec.volumeClaimTemplates.map(x => x.metadata.name), ['home', 'workspace']);
@@ -39,7 +45,7 @@ test('real Helm render isolates credentials and persists a single non-root Codex
     assert.equal(container.securityContext.readOnlyRootFilesystem, true);
     assert.deepEqual(container.securityContext.capabilities.drop, ['ALL']);
   }
-  const bound = resources.filter(x => x.kind === 'RoleBinding').map(x => x.metadata.namespace);
+  const bound = resources.filter(x => x.kind === 'RoleBinding' && x.roleRef.kind === 'ClusterRole').map(x => x.metadata.namespace);
   assert.deepEqual(bound, ['kubeclaw']);
   for (const role of resources.filter(x => x.kind === 'ClusterRole')) {
     for (const rule of role.rules) {
@@ -77,6 +83,8 @@ test('the actual pinned Codex CLI accepts the installed MCP config and exposes p
     const run = a => execFileSync(codex, a, { env, encoding: 'utf8', timeout: 15000 });
     assert.match(run(['--version']), /0\.153\.4/);
     assert.match(run(['remote-control', '--help']), /pair/);
+    assert.match(run(['remote-control', 'start', '--help']), /daemon/);
+    assert.match(run(['remote-control', 'stop', '--help']), /daemon/);
     assert.match(run(['login', '--help']), /--device-auth/);
     const servers = JSON.parse(run(['mcp', 'list', '--json']));
     const mcp = servers.find(x => x.name === 'kubeclaw_ops');
@@ -91,5 +99,30 @@ test('custom observer namespace is shared by MCP and the Codex verification proc
   for (const container of pod.containers) {
     assert.equal(container.env.find(x => x.name === 'OPS_DEFAULT_NAMESPACE').value, 'platform');
   }
-  assert.deepEqual(resources.filter(x => x.kind === 'RoleBinding').map(x => x.metadata.namespace), ['platform']);
+  assert.deepEqual(resources.filter(x => x.kind === 'RoleBinding' && x.roleRef.kind === 'ClusterRole').map(x => x.metadata.namespace), ['platform']);
+});
+
+test('exec is namespace scoped, independent of observer discovery, and removable', () => {
+  const resources = render(['--set-json', 'rbac.namespaces=["kubeclaw","argocd","kube-system"]']);
+  const roles = resources.filter(x => x.kind === 'Role');
+  assert.equal(roles.length, 1);
+  assert.equal(roles[0].metadata.namespace, 'kubeclaw');
+  assert.deepEqual(roles[0].rules, [
+    { apiGroups: [''], resources: ['pods'], verbs: ['get', 'list'] },
+    { apiGroups: [''], resources: ['pods/exec'], verbs: ['get', 'create'] },
+  ]);
+  const binding = resources.find(x => x.kind === 'RoleBinding' && x.roleRef.kind === 'Role');
+  assert.equal(binding.metadata.namespace, 'kubeclaw');
+  assert.equal(binding.roleRef.name, roles[0].metadata.name);
+  assert.deepEqual(binding.subjects, [{ kind: 'ServiceAccount', name: 'codex-ops', namespace: 'kubeclaw-ops' }]);
+  const disabled = render(['--set-json', 'rbac.execNamespaces=[]']);
+  assert.ok(!disabled.some(x => x.kind === 'Role'));
+  const codex = disabled.find(x => x.kind === 'StatefulSet').spec.template.spec.containers[0];
+  assert.ok(!codex.volumeMounts.some(m => m.name === 'kube-api'));
+  assert.ok(!codex.env.some(e => e.name === 'KUBECONFIG'));
+  assert.ok(!disabled.some(x => x.kind === 'ConfigMap'));
+  assert.equal(codex.env.find(e => e.name === 'OPS_EXEC_NAMESPACES').value, '');
+  const custom = render(['--set-json', 'rbac.execNamespaces=["buster","prism"]']);
+  assert.deepEqual(custom.filter(x => x.kind === 'Role').map(x => x.metadata.namespace), ['buster', 'prism']);
+  assert.throws(() => render(['--set-json', 'rbac.execNamespaces=["*"]']));
 });

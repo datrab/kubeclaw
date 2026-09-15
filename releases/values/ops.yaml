@@ -1,3 +1,3 @@
-# Generated from release 9e85c86343ff87c76eb331983c82122e82f2ae38 and byte-matched source configuration; do not edit.
-codexImage: ghcr.io/datrab/kubeclaw-codex-ops@sha256:b52ba81c67f19073ad4fa19dc3fa48cb12cfa275e2ae6333de4e8079f95deb35
-mcpImage: ghcr.io/datrab/kubeclaw-ops-mcp@sha256:c7f162412212bb05a4649b8dadcab672d3382f243301faaa05b3c5530e95ad27
+# Generated from release c93b21da179d0cfc65a20b894bfa74759edcb0e5 and byte-matched source configuration; do not edit.
+codexImage: ghcr.io/datrab/kubeclaw-codex-ops@sha256:607b51291c8f6952be903d81f760d8eb893474b47bb419b1b67526f38c7589c0
+mcpImage: ghcr.io/datrab/kubeclaw-ops-mcp@sha256:a9aa21492d046ba5929c0bca7cc0991bd8d52a25f69e8a824ca286c8aa23f855

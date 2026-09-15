@@ -110,5 +110,23 @@
       "sha256": "d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b",
       "url": "oci://registry-1.docker.io/bitnamicharts/postgresql@sha256:4e3a4ec010437ba9a9def6306d6db0e1f687193769b51c3146e7608580744977"
     }
+  },
+  "redisProduction": {
+    "chartVersion": "28.1.0",
+    "image": "registry-1.docker.io/bitnami/redis:latest@sha256:ffa455a3ad00bccc24dfde113ef55329dde687da242e9feb6ccd2b30eb93e8f3"
+  },
+  "monitoringCharts": {
+    "prometheus": {
+      "version": "91.4.0"
+    },
+    "loki": {
+      "version": "18.13.1"
+    },
+    "alloy": {
+      "version": "1.12.1"
+    },
+    "promtail": {
+      "version": "6.17.1"
+    }
   }
 }

@@ -1,9 +1,15 @@
 # AP03 — Einzelprüfung der Dokumentation
 
-Stand: 15.09.2026. **Nachkontrolle: AP03 noch nicht abgenommen.**
-Die früher dokumentierte Abschlussbewertung wird durch die
-[unabhängige Nachprüfung](AP03-recheck.md) korrigiert: 2.594 `content-reviewed`,
-285 wegen unzureichender Übergabeziele `blocked`; alle 2.879 Entscheidungen bleiben erhalten.
+Stand: 15.09.2026. **AP03 abgeschlossen: 2.887 content-reviewed, keine Sperre.**
+191 erweitern, 1.752 extrahieren, 18 behalten, 926 entfernen.
+2.879 ursprüngliche Quellen plus acht ausdrücklich erfasste Erweiterungen;
+2.886 aktuell vorhanden und eine auf main entfernte historische Quelle.
+Alle Migrationen bleiben ausstehend. Nächster Schritt ist AP04.
+Details und Prüfgrenzen im [Abschluss der Nachprüfung](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026).
+
+Die folgenden Abschnitte dokumentieren den historischen Prüfverlauf einschließlich
+der zwischenzeitlich wieder geöffneten Übergaben. Ihre damaligen Zahlen und
+Fortsetzungsanweisungen werden durch den Abschluss am Ende ersetzt.
 
 ## Ergebnis der Einzelprüfung
 
@@ -493,3 +499,108 @@ Nächster Schritt ist die dort benannte AP03-Nacharbeit, anschließend AP04.
 Weitere heuristische Zielkandidaten sind keine pauschal bestätigten Fehler.
 Der aktuelle main-Abgleich ist separat mit neun betroffenen Dokumentationspfaden
 erfasst; es wurde kein Merge und kein Laufzeit-/Live-Test durchgeführt.
+
+## Abschluss der AP03-Nacharbeit am 15.09.2026
+
+**AP03 ist abgeschlossen: 2.887 begründete Inhalts-/Funktionsentscheidungen,
+keine offene Übergabesperre.** Die 2.879 eingefrorenen Quellen bleiben mit ihren
+Originalblobs erhalten; ausdrücklich ergänzt sind sechs AP03-Verwaltungsdateien
+und zwei neue main-Dokumente. 2.886 Quellen sind aktuell vorhanden. Die auf main
+bereits entfernte `docs/ops/chatgpt-ops-bootstrap.md` bleibt als historischer
+Datensatz mit `removed_on_main` und Entfernungskommit nachvollziehbar.
+
+| Entscheidung | Dateien |
+| --- | ---: |
+| Erweitern | 191 |
+| Informationen extrahieren | 1.752 |
+| Behalten | 18 |
+| Entfernen | 926 |
+| **Gesamt / content-reviewed** | **2.887** |
+| **blocked / captured** | **0 / 0** |
+
+Alle 285 zuvor gesperrten Übergaben sind konkret entschieden. Die zusätzlichen
+Zielkandidaten wurden ebenfalls bearbeitet: 364 übrige Übergaben, die beiden
+P05-Gruppen mit zusammen 278 Quellen, 597 P06-Übergaben und 768 historische
+Entfernungsentscheidungen. Diese Bearbeitungsgruppen und die späteren
+Gegenkorrekturen sind keine addierbaren neuen Quellen. Allgemeine Statusziele,
+Dateinamenkapitel und pauschale spätere Parententscheidungen sind durch
+semantische Abschnitte, tatsächliche übergeordnete Nachweise oder begründete
+Entfernung ohne Ersatzkapitel ersetzt. 57 Katalogalias-Ziele und 69 verbliebene
+Routen-/Fixture-Übergaben wurden gesondert abgeglichen.
+
+Sieben maschinell genutzte Inventare/Baselines/Parity-Ledger bleiben als
+`expand` am bestehenden Ort, einschließlich IDs und ihrer Cutover-Verbraucher.
+Ausführbare Fixtures erhalten konkrete Testpfade und benannte Leser, Wrapper
+oder Importpflichten. Historische Ausgabeschreiber zählen nicht automatisch als
+Leser alter Dateien. Originalbytes und notwendige Testbelege dürfen erst nach
+Abnahme der konkreten Verbraucherumstellung entfallen.
+
+Das künftige `docs/site/status/open-issues.json` ist die einzelne maschinenlesbare
+Autorität offener Befunde; `open-issues.md` ist ihre erzeugte Darstellung.
+Live-Abnahmen gehören nach `docs/site/status/acceptance.md`, D12 und die kompakte
+ID-/Abschlussprovenienz der ursprünglichen 154 Befunde plus fünf zusätzlichen
+Integrationsabschlüssen nach `docs/site/decisions/acceptance.md`. Es entsteht
+kein vollständiges Ersatzarchiv der Reviewhistorie. AP04 muss diese Übergaben
+erst umsetzen; die ursprünglichen Register bleiben bis dahin erhalten.
+
+### Abgleich mit main und Quellenstand
+
+main wurde bis `1e50167fcb4355dfce4110d612ab360828c64394` konfliktfrei in den
+Dokumentationsbranch integriert. Die sechs geänderten Dokumente, zwei neuen
+Dokumente und die entfernte Bootstrap-Anleitung wurden ausdrücklich abgeglichen;
+drei zusätzlich betroffene Betriebs-/Infrastrukturtexte wurden nachgeprüft.
+Geänderte Quellen führen den tatsächlich geprüften `reviewed_commit` und
+`reviewed_blob`, ohne den ursprünglichen `source_blob` zu überschreiben.
+
+Die aktualisierten Entscheidungen erfassen insbesondere Ops-Pod-ServiceAccount,
+Kubeconfig und Exec-RBAC, die Grenze zwischen schreibgeschützten MCP-Werkzeugen
+und der Kubernetes-Identität, Helm-/GitOps-Verantwortung, manuelle Child-Syncs,
+aktuelle Workflow-/Versionsquellen und Worker-/Nova-Ressourcengrenzen. Ein
+zusätzlicher technischer Befund ist ausdrücklich offenzuhalten: Der Continuous-
+GitOps-Pfad setzt `targetRevision: main`, während die strenge Runtime-
+Healthprüfung die aufgelöste Revision mit dem wörtlichen Branchwert vergleicht.
+Das ist ein quellbestätigter Folgepunkt außerhalb der ursprünglichen 154 Befunde,
+keine Behauptung eines beobachteten Live-Ausfalls oder einer bereits erfolgten
+Reparatur.
+
+Die sechs neu erfassten AP03-Verwaltungsquellen binden ihren vorliegenden
+Prüfstand an `d0e72581be5152349532b75a33e073a5b01ed4c1`.
+Die Abschlussänderungen dieser Berichte werden im abschließenden Git-Diff separat
+nachgewiesen. Insbesondere bindet die Ledger-Selbstzeile den vorherigen
+committeten Snapshot und behauptet keinen vorausberechneten eigenen Endhash.
+Die ursprüngliche Paketdatei bleibt als historische Zuteilung unverändert;
+die acht Erweiterungen werden gesondert gezählt. Temporäre Verwaltungsunterlagen
+bleiben dem ausdrücklichen AP11-Abgleich unterstellt.
+
+### Gegenprüfung und Aussagegrenzen
+
+Sechs Subagents bearbeiteten getrennte Quellgruppen und anschließende
+Gegenprüfungen; die Hauptsession führte die Entscheidungen zusammen und prüfte
+Originalquellen, Verbraucher und überlappende Änderungen. Zielpfadabgleiche sind
+als solche begrenzt. Nichttextuelle Logs und JSON-Anhänge wurden funktional
+bewertet; dies behauptet keine vollständige erneute Prüfung jedes eingebetteten
+historischen Programms. Die Nacharbeit ist keine zweite vollständige semantische
+Lektüre aller 2.887 Quellen.
+
+Die unabhängigen Gegenprüfungen begrenzten unter anderem überzogene Aussagen zu
+Signaltests, SQL-Testdoubles/PGlite und nativer PostgreSQL-Prüfung. HTTP-Readiness
+vor CRD-Erstellung belegt kein CRD-Establishment. Historische Teilprüfungen,
+fehlgeschlagene oder abgeschnittene Ausgaben behalten ihre tatsächlichen Grenzen.
+
+Die Abschlusskontrolle prüft alle Original- und Prüfblobs gegen Git-Trees,
+Eindeutigkeit und Pflichtfelder, 2.373 unveränderte Paketzuweisungen plus die
+ursprünglichen 506 und acht Erweiterungen sowie alle 1.708 Zeilenverknüpfungen
+zu 47 Quellen plus 381 Einzelzeilen des zusammengeführten Reports. Die
+Zeilengleichheit ist Provenienz, keine zusätzliche Inhaltslektüre.
+Die heuristischen AP02-Dateien unter `generated/` sind keine manuell abgenommenen
+Entscheidungen und keine Abschlussautorität. Ausschließlich
+[review-ledger.jsonl](review-ledger.jsonl) trägt die aktuellen Einzelentscheidungen.
+
+**Nächster Schritt: AP04.** Alle 2.887 Migrationszustände bleiben `pending`.
+Die Dokumentationsnacharbeit hat keine Quelle gelöscht oder verschoben; die
+Bootstrap-Entfernung stammt aus dem eingebundenen main. Die 13 unvollständigen
+Findings bleiben offen, 141 lokale Abschlüsse bleiben lokale Abschlüsse,
+Issue #7 und zusätzliche Arbeit bleiben getrennt sichtbar. AP04–AP11,
+Produktkorrekturen und Live-Abnahmen sind nicht erledigt. Es wurden keine
+historischen Runtime-/Native-/Cluster-Tests erneut ausgeführt und keine
+Deploymentabnahme vorgenommen.
