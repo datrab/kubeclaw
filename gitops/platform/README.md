@@ -23,7 +23,7 @@ kubectl --context "$KUBE_CONTEXT" apply -f gitops/platform/bootstrap/argocd.yaml
 kubectl --context "$KUBE_CONTEXT" -n argocd get application argocd
 ```
 
-Registration does not sync workloads. Review the Application's DIFF before the
+Child registration does not sync workloads. Review the Application's DIFF before the
 first manual Sync. Keep PRUNE and FORCE disabled. Resolve render/permission errors
 before syncing; review changes to Secrets, CRDs, selectors, Services and Pod specs.
 The existing app-of-apps Lua check targets the generated runtime directory apps;
@@ -35,8 +35,18 @@ handover. Helm history remains as historical evidence, not an active reconciler.
 Do not remove release Secrets or live resources as an adoption step.
 
 No deletion finalizer and no automatic sync/prune are enabled for this first step.
-Keep the Application definition under Git review and apply reviewed definition
-changes explicitly until a separate platform root is introduced.
+The root `platform.yaml` can now be created once using Argo's NEW APP / EDIT AS YAML
+screen. It watches only `gitops/platform/bootstrap` on main and automatically syncs
+the project and child Application definitions, with prune disabled. It lives outside
+that directory so it does not manage itself. The existing `infra` project permits
+its Git source and destination. Subsequent child definition changes flow through Git;
+the individual service syncs remain manual. UI edits to child definitions will be
+reverted by the root's self-heal.
+
+`platform` health describes definition delivery, not service availability. Its child
+Applications explicitly use `argocd.argoproj.io/ignore-healthcheck: "true"` for parent
+aggregation only. Check service health in each Application. This avoids blocking the
+root on a pending manual service sync or the runtime-only Lua health customization.
 
 Next independent applications: Ops (Codex + MCP), Tailscale, Cilium after network
 migration, Redis, PostgreSQL, Qdrant, LiteLLM, both registries, Prometheus/Grafana,

@@ -4,6 +4,8 @@ kind: Application
 metadata:
   name: tailscale-operator
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/ignore-healthcheck: 'true'
 spec:
   project: infra
   sources:
