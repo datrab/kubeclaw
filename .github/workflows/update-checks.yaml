@@ -24,6 +24,7 @@ jobs:
           node scripts/check-action-pins.mjs
           node --test tests/verification/contracts/action-pins.test.mjs tests/verification/deployment/upstream-fetch.test.mjs
           node scripts/versions.mjs --check
+          node scripts/argocd-self-management.mjs --check
           node --test tests/verification/deployment/runtime-image-workflows.test.mjs tests/verification/deployment/versions.test.mjs tests/verification/deployment/release-images.test.mjs tests/verification/deployment/oci-image-identity.test.mjs tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/prism-release-evidence.test.mjs
           node --test tests/verification/deployment/gitops-continuous.test.mjs
           node --test tests/verification/deployment/gitops-release.test.mjs

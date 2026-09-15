@@ -120,3 +120,7 @@ key `redis-password` stays external. Do not use the larger/newer bootstrap value
 in `my-values/infra/redis-values.yaml` for this adoption. No automatic sync or prune
 is enabled. Review the live diff before manually syncing, without Force or Prune.
 After adoption, manage Redis through Git/Argo rather than `deploy.sh infra`.
+
+### Redis version updates
+
+`versions.json` (`redisProduction`) selects the production chart version and immutable image digest, separately from the newer bootstrap defaults in `infrastructureCharts.redis` and `infrastructure.redis`. Renovate proposes updates in PRs and its trusted updater regenerates the Redis Application and image values. For manual changes, edit the central selection and run `node scripts/versions.mjs --write`. CI checks version drift and generated platform manifests. After merging, review the Redis diff and sync manually in Argo. Redis automatic sync remains disabled.

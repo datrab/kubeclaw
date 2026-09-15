@@ -110,5 +110,9 @@
       "sha256": "d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b",
       "url": "oci://registry-1.docker.io/bitnamicharts/postgresql@sha256:4e3a4ec010437ba9a9def6306d6db0e1f687193769b51c3146e7608580744977"
     }
+  },
+  "redisProduction": {
+    "chartVersion": "25.3.9",
+    "image": "registry-1.docker.io/bitnami/redis:latest@sha256:fd997c4c52c0a0af686e5af2b671f4e3d538d26f28abd3b83a01ce57eea43752"
   }
 }

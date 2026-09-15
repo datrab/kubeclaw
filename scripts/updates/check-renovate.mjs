@@ -26,6 +26,12 @@ for (const [key, image] of Object.entries(manifest.automation)) {
   assert.equal(`${dep.depName}:${dep.currentValue}@${dep.currentDigest}`, image,
     `Incorrect image extraction for automation pin: ${key}`);
 }
+const redisChart = deps.filter(dep => dep.depName === 'registry-1.docker.io/bitnamicharts/redis');
+assert.equal(redisChart.length, 1);
+assert.equal(redisChart[0].currentValue, manifest.redisProduction.chartVersion);
+const redisImages = deps.filter(dep => dep.depName === 'registry-1.docker.io/bitnami/redis');
+assert.equal(redisImages.length, 1);
+assert.equal(`${redisImages[0].depName}:${redisImages[0].currentValue}@${redisImages[0].currentDigest}`, manifest.redisProduction.image);
 // Exercise Renovate's real replacement engine, including native v-prefixed overrides.
 // Synthetic versions stay in a disposable directory and are never published or built.
 for (const prefix of ['', 'v']) {

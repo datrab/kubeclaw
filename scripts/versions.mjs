@@ -62,6 +62,14 @@ function bindDockerVersions(root, manifest, args, read, outputs) {
 }
 
 function bindInfrastructureVersions(manifest, replaceOne) {
+  const redis = manifest.redisProduction;
+  const image = redis?.image?.match(/^(registry-1\.docker\.io)\/(bitnami\/redis):([a-zA-Z0-9._-]+)@(sha256:[a-f0-9]{64})$/);
+  if (!image || !/^\d+\.\d+\.\d+$/.test(redis?.chartVersion ?? '')) throw new Error('Invalid production Redis chart version or image digest');
+  replaceOne('gitops/platform/values/redis.yaml', /^image:\n  registry: [^\n]+\n  repository: [^\n]+\n  tag: [^\n]+\n  digest: [^\n]+/m,
+    `image:\n  registry: ${image[1]}\n  repository: ${image[2]}\n  tag: ${image[3]}\n  digest: ${image[4]}`);
+  replaceOne('gitops/platform/bootstrap/redis.yaml', /chart: redis\n      targetRevision: [^\n]+/,
+    `chart: redis\n      targetRevision: ${redis.chartVersion}`);
+
   for (const reference of [...Object.values(manifest.infrastructure ?? {}), ...Object.values(manifest.automation ?? {})]) {
     if (typeof reference !== 'string' || !/^[a-z0-9./_-]+:[a-zA-Z0-9._-]+@sha256:[a-f0-9]{64}$/.test(reference))
       throw new Error('Infrastructure and automation images require exact tags and digests');

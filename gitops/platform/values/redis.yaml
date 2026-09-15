@@ -1,7 +1,8 @@
-# Installed release redis, chart 25.3.9; pin the observed running image.
+# Image managed from versions.json redisProduction by scripts/versions.mjs.
 image:
   registry: registry-1.docker.io
   repository: bitnami/redis
+  tag: latest
   digest: sha256:fd997c4c52c0a0af686e5af2b671f4e3d538d26f28abd3b83a01ce57eea43752
 architecture: standalone
 auth:

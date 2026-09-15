@@ -6,6 +6,7 @@ import yaml from 'js-yaml';
 import { validateReleaseReceipt } from './updates/deployment-release.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
+const versions = JSON.parse(fs.readFileSync(path.join(root, 'versions.json'), 'utf8'));
 const repository = 'https://github.com/datrab/kubeclaw.git';
 const health = fs.readFileSync(path.join(root, 'charts/gitops/files/application-health.lua'), 'utf8');
 const opsReceipt = JSON.parse(fs.readFileSync(path.join(root, 'releases/ops-images.json'), 'utf8'));
@@ -102,7 +103,7 @@ const redis = {
     project: 'data-services',
     sources: [
       {
-        repoURL: 'registry-1.docker.io/bitnamicharts', chart: 'redis', targetRevision: '25.3.9',
+        repoURL: 'registry-1.docker.io/bitnamicharts', chart: 'redis', targetRevision: versions.redisProduction.chartVersion,
         helm: { releaseName: 'redis', valueFiles: ['$values/gitops/platform/values/redis.yaml'] },
       },
       { repoURL: repository, targetRevision: 'main', ref: 'values' },
