@@ -1,0 +1,53 @@
+# Adoption of the existing ephemeral registry. Preserve the Pod template:
+# adding storage or changing the image requires a separate data migration.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry-local
+  namespace: kubeclaw
+  labels:
+    app: registry-local
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry-local
+  template:
+    metadata:
+      labels:
+        app: registry-local
+    spec:
+      containers:
+        - name: registry
+          image: registry:2
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: REGISTRY_STORAGE_DELETE_ENABLED
+              value: "true"
+          ports:
+            - containerPort: 5000
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 200m
+              memory: 128Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry-local
+  namespace: kubeclaw
+  labels:
+    app: registry-local
+spec:
+  type: NodePort
+  ports:
+    - port: 5001
+      targetPort: 5000
+      nodePort: 30051
+      protocol: TCP
+  selector:
+    app: registry-local

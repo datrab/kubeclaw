@@ -130,3 +130,7 @@ Platform child Applications use `kubeclaw.io/health-mode: observed`: the shared 
 ### Registry mirror
 
 `registry-mirror` is a manually synchronized Application in project `infra`. It selects only `my-values/infra/registry-mirror.yaml`; it does not apply the local-registry template. Adoption retains the existing `registry-mirror` Service and Deployment and the 5 GiB `registry-mirror-cache` PVC in `kubeclaw`. The first sync replaces the live floating `registry:2` reference with the centrally managed 2.8.3 digest and rolls the Pod. Review the diff before syncing. A healthy Pod verifies the service probes, not whether clients actually use the Docker Hub cache; client configuration remains separate.
+
+### Existing local registry
+
+`registry-local` is a separate manual Application selecting `gitops/platform/registry-local/resources.yaml`. It adopts the observed Deployment and NodePort Service (5001 to container 5000, NodePort 30051). The observed Pod has no persistent storage. Its `registry:2` image and Pod template are deliberately retained for adoption: replacing the Pod can lose stored images. Before syncing, check that the live diff contains no Pod-template changes and do not use Force/Replace. Image pinning, upgrades and PVC storage require a separate migration that preserves or republishes the existing images. The newer `my-values/infra/registry-local.yaml` template is not used by this Application.
