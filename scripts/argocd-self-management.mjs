@@ -115,7 +115,7 @@ const redis = {
 // The platform root deploys definitions, while each service is synced separately.
 // Its health must not wait for a manual child sync or the runtime-only Lua gate.
 for (const child of [application, tailscale, ops, redis]) {
-  child.metadata.annotations = { 'argocd.argoproj.io/ignore-healthcheck': 'true' };
+  child.metadata.annotations = { 'argocd.argoproj.io/ignore-healthcheck': 'true', 'kubeclaw.io/health-mode': 'observed' };
 }
 const platform = {
   apiVersion: 'argoproj.io/v1alpha1', kind: 'Application',

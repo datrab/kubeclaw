@@ -112,7 +112,7 @@
     }
   },
   "redisProduction": {
-    "chartVersion": "25.3.9",
-    "image": "registry-1.docker.io/bitnami/redis:latest@sha256:fd997c4c52c0a0af686e5af2b671f4e3d538d26f28abd3b83a01ce57eea43752"
+    "chartVersion": "28.1.0",
+    "image": "registry-1.docker.io/bitnami/redis:latest@sha256:ffa455a3ad00bccc24dfde113ef55329dde687da242e9feb6ccd2b30eb93e8f3"
   }
 }

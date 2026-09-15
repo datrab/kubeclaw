@@ -6,6 +6,7 @@ metadata:
   namespace: argocd
   annotations:
     argocd.argoproj.io/ignore-healthcheck: 'true'
+    kubeclaw.io/health-mode: observed
 spec:
   project: infra
   source:

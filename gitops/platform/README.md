@@ -124,3 +124,5 @@ After adoption, manage Redis through Git/Argo rather than `deploy.sh infra`.
 ### Redis version updates
 
 `versions.json` (`redisProduction`) selects the production chart version and immutable image digest, separately from the newer bootstrap defaults in `infrastructureCharts.redis` and `infrastructure.redis`. Renovate proposes updates in PRs and its trusted updater regenerates the Redis Application and image values. For manual changes, edit the central selection and run `node scripts/versions.mjs --write`. CI checks version drift and generated platform manifests. After merging, review the Redis diff and sync manually in Argo. Redis automatic sync remains disabled.
+
+Platform child Applications use `kubeclaw.io/health-mode: observed`: the shared Application health customization reports their workload health independently of manual sync status, while comparison/sync failures remain degraded. Runtime Applications without this annotation retain the strict selected-revision health gate. Sync the `argocd` Application after changes to this customization.
