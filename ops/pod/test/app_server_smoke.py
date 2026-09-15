@@ -1,13 +1,12 @@
 """Start the real pinned server without credentials; verify the pairing transport."""
 import os
 from pathlib import Path
-import re
 import socket
 import subprocess
 import tempfile
 import time
 
-with tempfile.TemporaryDirectory(prefix='ops-server-') as directory:
+with tempfile.TemporaryDirectory(prefix='ops-server-', dir=Path.home()) as directory:
     env = {**os.environ, 'CODEX_HOME': directory}
     address = Path(directory) / 'app-server-control/app-server-control.sock'
     with tempfile.TemporaryFile() as log:
@@ -33,7 +32,7 @@ with tempfile.TemporaryDirectory(prefix='ops-server-') as directory:
                                      capture_output=True, text=True, timeout=20)
             output = pairing.stdout + pairing.stderr
             assert pairing.returncode != 0, 'Unexpected unauthenticated pairing success'
-            assert re.search(r'log.?in|authenticat|ChatGPT', output, re.I), output
+            assert 'remoteControl/pairing/start failed: remote control pairing is unavailable until enrollment completes' in output, output
             assert 'failed to connect' not in output.lower(), output
             assert server.poll() is None, 'Pairing failure terminated the app-server'
         finally:
