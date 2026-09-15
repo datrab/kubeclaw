@@ -22,7 +22,7 @@ def documents(text):
 
 def verify(namespace, paths):
     for path in paths:
-        scope = [] if path.endswith(('cilium-cluster-policies.yaml', 'ops-mcp-network-policies.yaml', 'spire-network-policies.yaml')) else ['-n', namespace]
+        scope = [] if path.endswith(('cilium-cluster-policies.yaml', 'spire-network-policies.yaml')) else ['-n', namespace]
         desired = run('kubectl', 'apply', '--dry-run=server', *scope, '-f', path, '-o', 'json')
         # Do not treat the merged dry-run response as desired: it can retain
         # live fields absent from Git and hide drift. Compare against source.

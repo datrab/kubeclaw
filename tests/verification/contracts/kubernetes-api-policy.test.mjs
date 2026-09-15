@@ -6,10 +6,9 @@ import { loadAll } from 'js-yaml';
 
 test('shipped Cilium API grants cover pre/post DNAT only for intended workload identities', () => {
   const policies = loadAll(fs.readFileSync('my-values/infra/network-policies.yaml', 'utf8')).filter(Boolean);
-  policies.push(...loadAll(execFileSync('bash', ['scripts/deploy-ops-mcp.sh', 'policies'], { encoding: 'utf8' })).filter(Boolean));
   const grants = policies.filter(policy => policy.spec?.egress?.some(rule => rule.toEntities?.includes('kube-apiserver')));
   assert.deepEqual(grants.map(policy => policy.metadata.name).sort(), [
-    'kubeclaw-buster-namespace-controller-api-egress', 'kubeclaw-lease-clients-api-egress', 'ops-mcp-kubernetes-api-egress',
+    'kubeclaw-buster-namespace-controller-api-egress', 'kubeclaw-lease-clients-api-egress',
   ]);
   for (const policy of grants) {
     assert.equal(policy.kind, 'CiliumNetworkPolicy');
@@ -23,8 +22,6 @@ test('shipped Cilium API grants cover pre/post DNAT only for intended workload i
   assert.equal(controller.spec.endpointSelector.matchLabels['app.kubernetes.io/component'], 'buster-namespace-controller');
   const agents = grants.find(value => value.metadata.name.includes('lease-clients'));
   assert.deepEqual(agents.spec.endpointSelector.matchExpressions, [{ key: 'app.kubernetes.io/component', operator: 'In', values: ['nova', 'buster'] }]);
-  const ops = grants.find(value => value.metadata.name.startsWith('ops-mcp'));
-  assert.deepEqual(ops.spec.endpointSelector.matchLabels, { 'app.kubernetes.io/name': 'ops-mcp' });
 });
 
 test('actual Ops Helm supports discovered endpoint ports, exact CIDRs and both CNI paths', () => {
