@@ -6,7 +6,7 @@ Git-Tree: `6196b202b295e11c2f3fea870ca4142e26e2f68d`.
 
 ## Ergebnis
 
-Der vollständige Remote-Dateibaum ist erfasst. Vorhandene Inventare werden weiterverwendet, müssen aber in AP02 korrigiert werden. Offene Findings und zusätzliche Arbeiten sind identifiziert. Kein bestehender Text wurde umgeschrieben oder gelöscht; kein Finding geschlossen; kein Deployment ausgeführt.
+Der vollständige Remote-Dateibaum ist erfasst. Vorhandene Inventare werden weiterverwendet. Der Blueprint-Bestand muss aktualisiert und der unterschiedliche Suchumfang der Inventare in AP02 ausdrücklich erklärt werden. Offene Findings und zusätzliche Arbeiten sind identifiziert. Kein bestehender Text wurde umgeschrieben oder gelöscht; kein Finding geschlossen; kein Deployment ausgeführt.
 
 | Bestand | Anzahl | Bedeutung |
 | --- | ---: | --- |
@@ -47,7 +47,7 @@ Die alte Übergabe verweist weiterhin auf PR #6 und dessen Branch. Das ist histo
 
 | Quelle | Befund | Verwendung ab AP02 |
 | --- | --- | --- |
-| `docs/architecture/plugin-system-current-inventory.md` und `docs/generated/inventory/plugin-system.json` | 48 Pipeline-Pakete, eine OpenClaw-Erweiterung, 67 Registrierungen | Wiederverwenden; Suchumfang um Prism und Abgrenzung zu Codex-Plugins ergänzen |
+| `docs/architecture/plugin-system-current-inventory.md` und `docs/generated/inventory/plugin-system.json` | 48 Pipeline-Pakete, eine OpenClaw-Erweiterung, 67 Registrierungen; alle 997 Dateipfade innerhalb seines Suchbereichs aktuell | Wiederverwenden; den engeren Suchumfang dokumentieren und Prism/Codex im Gesamtinventar separat ergänzen |
 | `docs/blueprint/generated/platform-inventory.json` | 48 Manifeste; `kubeclaw.demo-handoff` und `kubeclaw.demo-auth-smoke` fehlen | Gegen aktuelle Manifeste aktualisieren; statische Statusaussagen nicht als Laufzeitbeweis behandeln |
 | `docs/site/extend/plugin-catalogue/` | 50 Paketdetailseiten plus Index; alle 50 Manifest-IDs unter `skills/` besitzen eine Seite | Seiten als Ausgangsmaterial wiederverwenden; Inhalt und Beispiele erst in AP03/AP08 prüfen |
 | `docs/blueprint/generated/migration-ledger.csv` | 374 Einträge; heutiger Bereich desselben Generators umfasst 2.696 Dateien | Vorhandene Zuordnungen nur als Vorschlag übernehmen, expliziten Prüf- und Migrationsstatus ergänzen |
@@ -77,7 +77,7 @@ Das zusätzliche Codex-Plugin ist `plugins/kubeclaw-ops/.codex-plugin/plugin.jso
 
 ## Dokumentationswerkzeuge und Abhängigkeiten
 
-2.092 lokal bereitgestellte Quellen wurden bytegenau gegen Git-Blob-IDs geprüft. Darunter wurden 2.072 Dateien außerhalb `docs/` nach literalen `docs/`-Verweisen durchsucht. Ergebnis: 287 Vorkommen in 80 Verbrauchern. [documentation-consumers.tsv](documentation-consumers.tsv) nennt Datei, Zeile und Referenz.
+2.092 lokal bereitgestellte Quellen wurden bytegenau gegen Git-Blob-IDs geprüft. Darunter wurden 2.072 Dateien außerhalb `docs/` nach literalen `docs/`-Verweisen durchsucht. Ergebnis: 287 Vorkommen in 80 Verbrauchern. [documentation-consumers.tsv](documentation-consumers.tsv) nennt Datei, Zeile, Referenz und Zieltyp (Datei, Verzeichnis oder Muster/nicht aufgelöster Text). Die Existenzspalte prüft das exakte erfasste Token. Ein nicht aufgelöstes Token ist kein automatisch nachgewiesener defekter Link.
 
 Dieser Erstscan umfasst ausgewählte aktuelle Quellformate in Scripts, Workflows, Packaging, Skills, Tests, Contracts und Tools, ohne Fixtures und generierte Unterverzeichnisse. Er ist kein vollständiger Linkgraph: dynamisch zusammengesetzte Pfade, weitere Konfigurationsformate und eingehende Dokument-zu-Dokument-Links werden in AP03 je Datei geprüft. Die vollständige Pfadliste ist vorhanden, nicht sämtliche 5.221 Dateiinhalte lokal.
 
@@ -145,3 +145,16 @@ Weitere Live-Grenzen liegen verteilt in den verlinkten Abschlussberichten, unter
 AP02 beginnt mit den sechs Blueprint-Artefakten. Zuerst Umfang und Prüfstatus korrigieren, dann die drei Leserwege auf zusammenhängende Aufgaben verdichten. Vorhandene Inventare weiterverwenden; Codex-/OpenClaw-/Pipeline-Erweiterungen getrennt erklären. Keine Inhaltsabnahme aus Pfadexistenz ableiten. Die neue Struktur muss die zukünftige Entfernung der Reviews samt Testabhängigkeiten ausdrücklich berücksichtigen.
 
 Die Inventur wird nach Änderungen an main gezielt aktualisiert. Diese AP01-Dateien sind temporäre Migrationsbelege, keine neue öffentliche Produktnavigation und kein zweites dauerhaftes Findingregister.
+
+
+## Nachkontrolle von AP01
+
+AP01 wurde vor AP02 nochmals geprüft. `main`, PR #12 und der AP01-Head von PR #13 waren unverändert. Der vollständige Inventarbestand mit Größen und Blob-IDs, alle 2.092 verfügbaren Quellen, 51 Plugin-Manifeste, 141 Abschlussbelege und 287 Referenzvorkommen wurden erneut abgeglichen.
+
+Korrigiert wurden zwölf Verzeichnisverweise, die der erste Abgleich fälschlich als nicht existent markierte. Ein weiteres Token mit abschließendem Satzpunkt wurde zuvor still gekürzt und deshalb fälschlich als exakt vorhandener Pfad markiert. Die Tabelle unterscheidet jetzt Zieltypen und behandelt solche Tokens als nicht aufgelösten Text. Sie bleibt ein Erstscan, keine vollständige Linkabnahme.
+
+Präzisierung: Das Plugin-System-Inventar stimmt innerhalb seiner eigenen Suchwurzeln vollständig mit allen 997 aktuellen Dateipfaden überein. Der fehlende Prism-Eintrag entsteht durch seinen engeren Umfang, nicht durch veraltete Dateien. Das Blueprint-Inventar ist dagegen tatsächlich veraltet: zwei aktuelle Pipeline-Plugins fehlen.
+
+Zusätzlicher konkreter AP02-Eingang: `docs/site/status/current.md` ordnet Prism weiterhin unter „Designed“ ein und behauptet, Prism liege außerhalb des aktuellen Runtime-Rolleninventars. `packaging/runtime/roles/prism.json` existiert jedoch im gleichen Commit. Die Statusseite muss Implementierung, Rollenpaket und Live-Abnahme sauber trennen. Diese Nachkontrolle stellt damit keine neue Laufzeit- oder Produktionsfreigabe aus.
+
+Die zentralen AP01-Zahlen und die Abschlussentscheidung als Bestandsaufnahme bleiben gültig. Die vollständige Inhaltsprüfung und die deduplizierten Live-Abnahmeaufträge bleiben planmäßig AP03 beziehungsweise AP04.

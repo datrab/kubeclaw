@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 2 · Status: AP01 abgeschlossen; AP02 als Nächstes
+Stand: 15.09.2026 · Version 3 · Status: AP01 abgeschlossen und nachkontrolliert; AP02 als Nächstes
 
 ## 1. Ziel und Ausgangspunkt
 
