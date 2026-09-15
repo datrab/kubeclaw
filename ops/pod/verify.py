@@ -28,7 +28,7 @@ if exec_namespaces:
     import subprocess
     for namespace in exec_namespaces:
         for verb in ['get', 'create']:
-            subprocess.run(['kubectl', 'auth', 'can-i', verb, 'pods/exec', '-n', namespace, '--quiet'], check=True)
+            subprocess.run(['kubectl', 'auth', 'can-i', verb, 'pods', '--subresource=exec', '-n', namespace, '--quiet'], check=True)
 tools = call('tools/list', {})['tools']
 assert any(tool['name'] == 'namespace_overview' for tool in tools)
 call('tools/call', {'name': 'namespace_overview', 'arguments': {'namespace': os.environ['OPS_DEFAULT_NAMESPACE']}})
