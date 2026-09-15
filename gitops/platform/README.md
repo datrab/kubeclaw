@@ -44,3 +44,23 @@ Loki, Promtail, SPIRE, SPIRE CRDs and SMB CSI. Preserve each installed release's
 name, version and non-secret values during handover. Operator-owned children stay
 with their operator. Runtime Buster/Nova/Prism use the existing runtime GitOps
 workflow and require a separate review of existing Helm ownership and readiness.
+
+## Tailscale Operator
+
+`bootstrap/tailscale-operator.yaml` adopts release `tailscale-operator` in namespace
+`tailscale` at installed chart version 1.98.4. Its values were recorded from the
+live Helm release. The newer image pins in `my-values/infra` are deliberately not
+used for this handover. The chart references existing Secret `operator-oauth` and
+does not generate OAuth credentials. Proxy workloads and identity Secrets remain
+operator-owned, not separate Argo resources.
+
+```bash
+kubectl --context "$KUBE_CONTEXT" apply -f gitops/platform/bootstrap/infra-project.yaml
+kubectl --context "$KUBE_CONTEXT" apply -f gitops/platform/bootstrap/tailscale-operator.yaml
+```
+
+Review DIFF, then manually sync without Prune or Force. Server-side apply is enabled
+to handle the chart's CRDs without the client-side annotation size limit. Verify
+the Application is Synced/Healthy, deployment `operator` is available and existing
+tailnet ingresses remain reachable. After handover, update this Application through
+Git/Argo instead of the `deploy.sh tailscale` Helm path.

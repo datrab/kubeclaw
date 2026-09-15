@@ -1,0 +1,21 @@
+# Existing release values recorded during the Argo handover (chart 1.98.4).
+# Keep this separate from newer bootstrap image pins until an explicit upgrade.
+oauth:
+  clientId: ""
+  clientSecret: ""
+installCRDs: true
+ingressClass:
+  enabled: true
+  name: tailscale
+operatorConfig:
+  defaultTags:
+    - tag:k8s-operator
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
+proxyConfig:
+  defaultTags: tag:k8s

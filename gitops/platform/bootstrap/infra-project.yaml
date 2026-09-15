@@ -9,9 +9,12 @@ spec:
   sourceRepos:
     - https://github.com/datrab/kubeclaw.git
     - https://argoproj.github.io/argo-helm
+    - https://pkgs.tailscale.com/helmcharts
   destinations:
     - server: https://kubernetes.default.svc
       namespace: argocd
+    - server: https://kubernetes.default.svc
+      namespace: tailscale
   clusterResourceWhitelist:
     - group: rbac.authorization.k8s.io
       kind: ClusterRole
@@ -19,6 +22,8 @@ spec:
       kind: ClusterRoleBinding
     - group: apiextensions.k8s.io
       kind: CustomResourceDefinition
+    - group: networking.k8s.io
+      kind: IngressClass
   namespaceResourceWhitelist:
     - group: '*'
       kind: '*'
