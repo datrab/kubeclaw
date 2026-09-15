@@ -71,18 +71,22 @@ der feste Nenner darf nicht als vollständiger zukünftiger Repositorybestand ge
 Die laufenden Zahlen und der nächste Einstieg stehen im
 [AP03-Fortschrittsbericht](AP03-progress.md).
 
-## Zusammengeführter Stand
+## Zusammengeführter Stand nach Qualitätsnachprüfung
 
-| Paket | Im Register übernommen | Noch offen |
-| --- | ---: | ---: |
-| AP03-P01 | 64 | 0 |
-| AP03-P02 | 112 | 0 |
-| AP03-P03 | 275 | 0 |
-| AP03-P04 | 149 | 0 |
-| AP03-P05 | 858 | 0 |
-| AP03-P06 | 915 | 0 |
+| Paket | Entscheidungen erfasst | content-reviewed | Übergabe blocked |
+| --- | ---: | ---: | ---: |
+| AP03-P01 | 64 | 64 | 0 |
+| AP03-P02 | 112 | 112 | 0 |
+| AP03-P03 | 275 | 275 | 0 |
+| AP03-P04 | 149 | 149 | 0 |
+| AP03-P05 | 858 | 580 | 278 |
+| AP03-P06 | 915 | 912 | 3 |
+| Ursprüngliche 506 | 506 | 502 | 4 |
+| **Gesamt** | **2.879** | **2.594** | **285** |
 
-Die Zahlen betreffen die Zuteilung nach den ursprünglichen 506 Prüfungen.
-T01/T02 aus P02 wurden von der Hauptsession selbst geprüft. Die letzten 90 Entscheidungen wurden von der Hauptsession ergänzt.
-Alle 2.373 zugeteilten Quellen sind entschieden; zusammen mit den ursprünglichen
-506 ergibt dies 2.879. Die Migration ist weiterhin ausstehend.
+Alle 2.373 zugeteilten Quellen besitzen Entscheidungen; zusammen mit den
+ursprünglichen 506 ergibt dies 2.879. Die [Nachprüfung](AP03-recheck.md) hat
+61 Einträge korrigiert und 285 unzureichende Zielübergaben auf `blocked` gesetzt.
+Das verwirft keine bisherige Lesearbeit und schließt keine technischen Findings.
+AP03 wird erst nach der benannten Nacharbeit erneut abgenommen.
+Die Migration bleibt vollständig ausstehend.

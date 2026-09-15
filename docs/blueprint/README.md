@@ -1,6 +1,6 @@
 # Documentation transformation blueprint
 
-Status: AP02 planning baseline completed and rechecked; AP03 individual review completed for all 2,879 frozen source files.
+Status: AP02 completed and rechecked; AP03 recheck found unresolved decision handoffs (285 blocked, 2,594 content-reviewed).
 Scope: documentation migration; implementation and live acceptance remain separate.
 
 KubeClaw documentation must let a new reader understand the system, an operator complete operational tasks, and a developer build supported extensions without previous conversations. Detail is required where it explains behavior or lets a task finish. More pages are not a measure of completeness.
@@ -14,7 +14,7 @@ KubeClaw documentation must let a new reader understand the system, an operator 
 5. [Decision preservation](05-decision-record-catalogue.md): retain reasoning without confusing acceptance with implementation.
 6. [Tooling and publication](06-automation-and-publication.md): reuse existing tools, add only necessary checks, keep unfinished work visible.
 
-[Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the complete source inventory, plugin comparison, open findings and executable review dependencies. [AP03 is complete](AP03-progress.md): all 2,879 frozen source files have individual content or functional decisions. Migration remains pending; AP04 preserves open work, acceptance requirements, decisions and test dependencies before rewriting.
+[Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the complete source inventory, plugin comparison, open findings and executable review dependencies. [AP03 recheck](AP03-recheck.md): all 2,879 frozen sources retain their individual decisions, but 285 handoffs are blocked pending concrete destinations. AP03 is not yet accepted. Migration remains pending; AP04 follows the corrected handoff and preserves open work, acceptance requirements, decisions and test dependencies before rewriting.
 
 ## Authority and historical outputs
 
@@ -58,10 +58,14 @@ The recheck made engine authoring, configuration-only extension, routine backup 
 
 ## AP03 individual document review
 
-AP03 is complete for all 2,879 frozen source files: 182 expand, 1,898 extract,
-14 keep and 785 remove decisions. Migration and deletion remain pending.
-AP04 is next: preserve open findings, separate live acceptance, durable decisions
-and required test evidence before replacing their sources. See the
-[progress and scope report](AP03-progress.md) and the
-[human-maintained review ledger](review-ledger.jsonl). New or changed sources
-require separate reconciliation; the ledger remains outside generated output.
+All 2,879 frozen source files retain decisions: 182 expand, 1,898 extract,
+14 keep and 785 remove. The independent recheck corrected 61 records and
+reopened the concrete-target acceptance gate: 2,594 records are content-reviewed,
+285 are blocked for decision clarification, and all migrations remain pending.
+These are documentation handoff blockers, not reopened implementation findings.
+
+Next: resolve the exact blockers in `review-ledger.jsonl`, triage the separately
+identified target candidates, and reconcile the nine documentation changes on
+main before claiming a current-source handoff. See the [recheck](AP03-recheck.md)
+for evidence and limits, the [progress report](AP03-progress.md) for history,
+and the [human-maintained ledger](review-ledger.jsonl) for each next action.

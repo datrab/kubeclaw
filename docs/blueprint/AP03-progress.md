@@ -1,18 +1,23 @@
 # AP03 — Einzelprüfung der Dokumentation
 
-Stand: 15.09.2026. **Abgeschlossen für den eingefrorenen Quellumfang.**
+Stand: 15.09.2026. **Nachkontrolle: AP03 noch nicht abgenommen.**
+Die früher dokumentierte Abschlussbewertung wird durch die
+[unabhängige Nachprüfung](AP03-recheck.md) korrigiert: 2.594 `content-reviewed`,
+285 wegen unzureichender Übergabeziele `blocked`; alle 2.879 Entscheidungen bleiben erhalten.
 
 ## Ergebnis der Einzelprüfung
 
-**2.879 von 2.879 Quelldateien sind einzeln inhaltlich bzw. funktional bewertet;
-keine Quelldatei bleibt ungeprüft.** Entscheidungen: **182 erweitern,
+**Für alle 2.879 eingefrorenen Quelldateien sind Inhalts- bzw. funktionale
+Entscheidungen erfasst. Das genügt nach der Qualitätsnachprüfung noch nicht zur
+AP03-Abnahme: 285 Übergaben benötigen konkrete Zielentscheidungen.** Entscheidungen: **182 erweitern,
 1.898 Informationen extrahieren, 14 behalten und
 785 entfernen**. Die funktionale Bewertung betrifft ausdrücklich
 als solche gekennzeichnete nichttextuelle Nachweise; sie ist keine Behauptung,
 jeden eingebetteten historischen Quelltext gelesen zu haben. Automatische
 Erfassung und Paketzuordnung zählen nicht als Inhaltsprüfung.
 Noch kein Ersatztext ist abgenommen und keine Quelldatei wurde gelöscht.
-Die [sechs Arbeitspakete](AP03-work-packages.md) enthalten die genaue Zuteilung.
+Die [sechs Arbeitspakete](AP03-work-packages.md) enthalten die genaue Zuteilung
+und die verbleibenden Übergabesperren.
 
 Das [manuell gepflegte Prüfregister](review-ledger.jsonl) enthält je Quelldatei
 einen Datensatz. Geprüfte Datensätze nennen konkrete Begründungen, Zielabschnitte,
@@ -35,7 +40,7 @@ redaktionellen Migration ausgeschlossen; auch Lizenzen werden nicht als
 redaktionelle Löschkandidaten behandelt. Nichttextuelle Nachweise benötigen eine
 inhaltliche bzw. funktionale Einzelbewertung, keine bloße Dateinamensentscheidung.
 
-| Gruppe | Dateien | Davon inhaltlich/funktional geprüft |
+| Gruppe | Dateien | Davon mit erfasster Inhalts-/Funktionsentscheidung |
 | --- | ---: | ---: |
 | Root- und komponentennahe Dokumentation | 97 | 97 |
 | Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 380 |
@@ -48,16 +53,17 @@ inhaltliche bzw. funktionale Einzelbewertung, keine bloße Dateinamensentscheidu
 
 **Alle 2.879 Dateien besitzen eine Inhaltsentscheidung.**
 Die bereits erfolgte AP02-Blueprint-Abnahme ersetzt diese
-dateibezogene Migrationsentscheidung nicht. Die fünf AP03-Verwaltungsdateien
+dateibezogene Migrationsentscheidung nicht. Die sechs AP03-Verwaltungsdateien
 `review-ledger.jsonl`, `AP03-progress.md`, `AP03-work-packages.md`,
-`AP03-work-packages.json` und `AP03-report-review-map.json` sind Ergebnisse dieser
-Prüfung außerhalb des eingefrorenen Quellumfangs. Sie bleiben bis zur
+`AP03-work-packages.json`, `AP03-report-review-map.json` und der neue
+`AP03-recheck.md` sind Ergebnisse der Prüfung und Nachkontrolle außerhalb
+des eingefrorenen Quellumfangs. Sie bleiben bis zur
 Migrationsabnahme als Arbeitsnachweis erhalten; beim abschließenden
 Bestandsabgleich in AP11 werden sie ausdrücklich einbezogen und gemäß der
 Blueprint-Regel für temporäre Migrationsunterlagen entfernt bzw. abgeschlossen.
 Der feste Nenner ist keine Aussage über sämtliche künftig hinzugefügten Dateien.
 Arbeitsplan und Blueprint-Index wurden einschließlich aller Änderungen bis
-Commit `9dee5aef73403deb9c565c3f1c09135fc2ca46cd` geprüft; ihre Originalblobs
+Commit `d66a2419e82d602d775278f935552489fdd62d4e` nachgeprüft; ihre Originalblobs
 bleiben erhalten und `reviewed_blob` nennt den tatsächlich geprüften Stand.
 Die hier vorgenommenen Fortschrittsaktualisierungen sind separat nachvollziehbar. Keine selbstreferenziellen
 Prüfzahlen oder vorausberechneten Commit-Hashes.
@@ -122,8 +128,8 @@ Prüfstatus beibehalten. Der Quellcommit dieses Berichts bindet auch die
 
 Alle Operations-, Deployment- und Sicherheitsdokumente, die ersten sieben
 Architektureinstiege, alle 51 Katalogseiten und sämtliche 95 weiteren
-Komponententexte/Agentenanweisungen sind einzeln entschieden. Im abgeschlossenen
-eingefrorenen Umfang verbleibt kein Eintrag mit `status: captured`. Bei später
+Komponententexte/Agentenanweisungen sind einzeln entschieden. Im eingefrorenen Umfang verbleibt kein Eintrag mit `status: captured`;
+die Nachprüfung hat 285 Übergaben auf `blocked` gesetzt. Bei später
 ergänzten Quellen kennzeichnet dieser Status weiterhin eine ausstehende Prüfung.
 Bereits gespeicherte Einzelentscheidungen bleiben erhalten.
 
@@ -454,9 +460,8 @@ Neue AP03-Verwaltungsdateien und Änderungen auf neuerem main werden beim
 vorgesehenen Bestandsabgleich berücksichtigt. Der Abschluss gilt ausschließlich
 für die eingefrorenen Quellen, nicht als Gesamtabnahme der neuen Dokumentation.
 
-**Nächster Arbeitsschritt: AP04 — offene Findings, Live-Abnahmen, gültige
-Entscheidungen und erforderliche Testnachweise migrationsfest sichern.**
-AP04–AP11 bleiben offen.
+**Damals vorgesehener nächster Schritt:** AP04. Die nachfolgende unabhängige
+Nachkontrolle öffnet zuvor die AP03-Zielentscheidung erneut. AP04–AP11 bleiben offen.
 
 ## Nachkontrolle bei Wiederaufnahme am 15.09.2026
 
@@ -468,7 +473,23 @@ Die abweichenden Commit-IDs bedeuten hier keinen verlorenen Inhalt.
 Erneut kontrolliert: 2.879 eindeutige Registerpfade, sämtliche Originalblobs
 gegen den eingefrorenen Quellcommit, ausgefüllte Entscheidungsfelder,
 Entscheidungszahlen und die überschneidungsfreie Abdeckung der sechs Pakete.
-Alle Einträge stehen auf `content-reviewed` und `migration_status: pending`.
+Zu diesem früheren Zeitpunkt standen alle Einträge auf `content-reviewed`
+und `migration_status: pending`; der Nachprüfstatus unten ersetzt diese Aussage.
 Dies ist eine Register- und Übergabeprüfung, keine erneute vollständige
 Inhaltsprüfung aller Quellen. Die alten Fortsetzungsabschnitte in Blueprint-Index
 und Arbeitsplan wurden auf den abgeschlossenen AP03-Stand und AP04 korrigiert.
+
+## Unabhängige Qualitätsnachprüfung
+
+Die [Nachprüfung mit fünf Subagents](AP03-recheck.md) bestätigt Umfang,
+Quellidentitäten und Berichtszusammenführung, korrigiert aber die vorherige
+unbedingte Abschlussaussage. 61 Registereinträge sind verbessert; 285 weitere
+Übergaben bleiben konkretisierungsbedürftig und tragen `status: blocked`.
+Alle 2.879 bisherigen Klassifikationen und Originalblobs bleiben erhalten.
+Die frühere Aussage „alle Einträge content-reviewed“ beschreibt den Stand
+vor dieser Nachprüfung. Die aktuellen Paketwerte stehen im Paketbericht.
+
+Nächster Schritt ist die dort benannte AP03-Nacharbeit, anschließend AP04.
+Weitere heuristische Zielkandidaten sind keine pauschal bestätigten Fehler.
+Der aktuelle main-Abgleich ist separat mit neun betroffenen Dokumentationspfaden
+erfasst; es wurde kein Merge und kein Laufzeit-/Live-Test durchgeführt.

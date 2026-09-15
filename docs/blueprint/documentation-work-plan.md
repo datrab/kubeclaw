@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 17 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 abgeschlossen (2.879 von 2.879 Quelldateien geprüft)
+Stand: 15.09.2026 · Version 18 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 nach Qualitätsprüfung wieder offen (2.594 content-reviewed, 285 blockierte Übergaben)
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -27,7 +27,7 @@ Der vorhandene Blueprint wird kritisch überarbeitet. Seine Kategorien, Seitenst
 
 ## 3. Übersicht der Arbeitspakete
 
-AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist **für den eingefrorenen Quellumfang abgeschlossen**, AP04–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
+AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist nach der [Nachkontrolle](AP03-recheck.md) **noch nicht abgenommen**, AP04–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
 
 | ID | Arbeitspaket | Voraussetzung | Greifbares Ergebnis |
 | --- | --- | --- | --- |
@@ -72,21 +72,25 @@ Die Umsetzung erfolgt themenweise in überschaubaren Änderungen. AP10 läuft be
 
 ### AP03 — Jedes Dokument prüfen
 
-**Abschluss:** 2.879 von 2.879 Quelldateien einzeln inhaltlich bzw. funktional
-bewertet (182 erweitern, 1.898 extrahieren, 14 behalten, 785 entfernen).
-Keine ungeprüfte Quelldatei im eingefrorenen Umfang.
-[Prüfbericht](AP03-progress.md), [manuelles Register](review-ledger.jsonl),
-[Arbeitspakete](AP03-work-packages.md). Alle Migrationen bleiben ausstehend;
-neue Verwaltungsdateien und spätere Quelländerungen benötigen den gesonderten
-Bestandsabgleich. Historische Source-Anhänge sind funktional bewertete Nachweise,
-keine Behauptung einer vollständigen erneuten Codeprüfung.
+**Nachkontrolle:** Alle 2.879 eingefrorenen Quellen besitzen weiterhin eine
+inhaltliche bzw. funktionale Entscheidung (182 erweitern, 1.898 extrahieren,
+14 behalten, 785 entfernen). 61 Registereinträge wurden korrigiert. **AP03 ist
+noch nicht abgenommen:** 2.594 Einträge sind `content-reviewed`, 285 Übergaben
+wegen unzureichend bestimmter Extraktionsziele `blocked`. Die bisherigen
+Lesearbeiten bleiben erhalten; die Sperren betreffen die Qualität der Übergabe.
+[Nachprüfbericht](AP03-recheck.md), [Prüfverlauf](AP03-progress.md),
+[manuelles Register](review-ledger.jsonl), [Arbeitspakete](AP03-work-packages.md).
+Alle Migrationen bleiben ausstehend. Weitere Zielkandidaten sind getrennt von
+bestätigten Sperren zu prüfen; neun Dokumentationsänderungen auf neuerem main
+benötigen einen gesonderten Abgleich. Historische Source-Anhänge wurden funktional
+bewertet; daraus folgt keine vollständige erneute Codeprüfung.
 
 - [x] Dateien in thematischen Paketen von etwa 10–20 Dokumenten bearbeiten; umfangreiche Designs entsprechend kleiner bündeln.
 - [x] Jedes Dokument vollständig lesen. Aktuelle Fakten, Entscheidungen, Anleitungen, Beispiele, Pläne, historische Ergebnisse und überholte Aussagen unterscheiden.
 - [x] Technische Kernaussagen mit ihren aktuellen Quellen abgleichen. Nicht prüfbare Aussagen ausdrücklich markieren.
 - [x] Für jedes Dokument eine der vier Hauptentscheidungen festhalten: **behalten**, **entfernen**, **Informationen extrahieren**, **erweitern**.
-- [x] Bei Extraktion konkrete Abschnitte und Zielorte nennen; „später übernehmen“ genügt nicht.
-- [x] Bei Behalten oder Erweitern nötige Korrekturen, Verschiebungen und Zusammenführungen angeben.
+- [ ] Bei Extraktion konkrete Abschnitte und Zielorte nennen; „später übernehmen“ genügt nicht. Die Nachkontrolle hat diesen Abschlussnachweis für 284 Extraktionsübergaben wieder geöffnet.
+- [ ] Bei Behalten oder Erweitern nötige Korrekturen, Verschiebungen und Zusammenführungen angeben. Beim als `expand` geführten Axe-Dokumentationsmanifest fehlt noch der eindeutige Zielentscheid; zusammen mit den 284 Extraktionen sind 285 Übergaben gesperrt.
 - [x] Eingehende Verweise und Abhängigkeiten aus Tests, Skripten und Generatoren erfassen.
 
 **Abgeschlossen, wenn:** Jede Datei im Umfang besitzt eine begründete Inhaltsentscheidung. Keine automatisch vorgeschlagene Zuordnung wird als manuell geprüft gezählt. Inhaltliche Unsicherheiten sind konkreten offenen Arbeiten zugeordnet.
@@ -231,7 +235,7 @@ Bei Wiederaufnahme: aktuellen Commit/PR-Stand abgleichen, den letzten gesicherte
 
 ## 6. Nächster Schritt
 
-**AP04 beginnen:** AP03 ist für alle 2.879 eingefrorenen Quelldateien abgeschlossen. Die Einzelentscheidungen stehen im [Prüfregister](review-ledger.jsonl), Prüfgrenzen und konkrete Übernahmeaufträge im [AP03-Abschlussbericht](AP03-progress.md). Zuerst die 13 unvollständigen Findings und das zusätzliche GitHub-Issue #7 am aktuellen Stand abgleichen; Original-IDs, Problem, Teilstand, verbleibende Arbeit und Abschlusskriterien unabhängig von den alten Reviews sichern. Danach die getrennten Live-Abnahmen, gültigen Entscheidungen und erforderlichen Originalnachweise übernehmen und ihre Verbraucher zuordnen. Keine Reviews löschen, bevor Ersatz und Abhängigkeiten geprüft sind. Alle Migrationen bleiben ausstehend; AP04–AP11 sind offen. Die [AP01-Ergebnisse](ap01-baseline/README.md) bleiben Ausgangspunkt; spätere Quelländerungen und neue Verwaltungsdateien benötigen einen gesonderten Bestandsabgleich.
+**AP03 nachbessern:** Die 285 `blocked`-Einträge im [Prüfregister](review-ledger.jsonl) nennen jeweils den fehlenden Übergabeentscheid. Zuerst konkrete Zielabschnitte, übergeordnete Abnahmen und benötigte Originalnachweise festlegen; keine neuen Sammelregister oder kapitelweisen Logkopien erzeugen. Anschließend die zusätzlichen Zielkandidaten aus der [Nachkontrolle](AP03-recheck.md) prüfen und den aktuellen main-Abgleich für Devbox/Ops, GitOps und Ressourcenänderungen durchführen. Quellenidentitäten und bisherige Bewertungen erhalten. AP03 erst wieder abhaken, wenn diese Nachweise vorliegen; anschließend AP04 mit den 13 unvollständigen Findings, Issue #7, separaten Live-Abnahmen und gültigen Entscheidungen beginnen. Keine Review-Löschung aus einer bloßen Inhaltsentscheidung ableiten.
 
 ## 7. Quellen des Ausgangsstands
 
