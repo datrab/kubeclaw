@@ -13,9 +13,9 @@
     "counting_policy": "Original IDs are unchanged. GitHub #7 and AP03 source follow-ups are separate. Pending live acceptance does not reopen a locally closed finding."
   },
   "status_semantics": {
-    "offen": "The cause, contract or implementation remains open within the stated scope.",
-    "in Bearbeitung": "A bounded partial implementation or analysis exists; the whole finding remains incomplete.",
-    "implementiert": "Inherited original-register status for partial implementation. remaining_work still contains code work; this is not synonymous with locally verified."
+    "open": "The cause, contract or implementation remains open within the stated scope.",
+    "in-progress": "A bounded partial implementation or analysis exists; the whole finding remains incomplete.",
+    "partially-implemented": "Inherited original-register status for partial implementation. remaining_work still contains code work; this is not synonymous with locally verified."
   },
   "verification_policy": "AP04 migrates evidenced states. Reproduction steps and completion criteria describe work to perform unless explicitly identified as historical execution. Native/live status stays separate. Source links are commit-pinned; mutable GitHub issue state has a read date.",
   "issues": [
@@ -24,7 +24,7 @@
       "origin": "original-154",
       "title": "Capability work is missing from the attempt budget",
       "severity": "high",
-      "status": "in Bearbeitung",
+      "status": "in-progress",
       "problem": "The attempt resource receipt measures the provider process but does not exclusively own and account for all capability, browser, adapter and completion work launched by the Buster parent.",
       "impact": "A cheap provider can report low resource usage while its other local work exceeds the claimed CPU, memory or process budget.",
       "components": [
@@ -58,7 +58,7 @@
       ],
       "evidence": {
         "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "nicht ausgeführt",
+        "prior_verification": "Not executed at the recorded source assessment.",
         "implementation_commit": null
       },
       "sources": [
@@ -127,7 +127,7 @@
       "origin": "original-154",
       "title": "Restarted terminal jobs retain source workspaces without a durable quiescence proof",
       "severity": "medium",
-      "status": "implementiert",
+      "status": "partially-implemented",
       "problem": "After a worker or host crash there is no durable proof that every process belonging to a job has stopped. Source and working directories therefore remain retained.",
       "impact": "Repeated interrupted jobs can consume disk and quotas. Deleting from terminal metadata alone could remove inputs still used by live descendants.",
       "components": [
@@ -218,7 +218,7 @@
       "origin": "original-154",
       "title": "Confirmed run history lacks complete connected retirement",
       "severity": "medium",
-      "status": "implementiert",
+      "status": "partially-implemented",
       "problem": "Confirmed history still lacks a complete release protocol understood by every reader and component that can reopen, accept or replay it.",
       "impact": "Partial compaction can leave record, metadata, evidence and blob quotas exhausted. Uncoordinated deletion could lose evidence or protection against repeated external actions.",
       "components": [
@@ -249,7 +249,7 @@
       "dependencies": [],
       "evidence": {
         "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "Teilweise: Telemetrie-, Admission- und importierte Attempt-Resultatkopien mit echter Quotenfreigabe und erhaltenem Replay geprüft. Attempt-v2 unabhängig 19/19; Root integriert 45/45, keine Skips. Zusammenhängende weitere Store-/Referenzretention bleibt offen.",
+        "prior_verification": "Partial: telemetry, admission and imported attempt-result copies were checked with actual quota release and preserved replay. Independent attempt-v2 checks: 19/19. Integrated root checks: 45/45, no skips. Complete retention across the remaining stores and references remains open.",
         "implementation_commit": "27315faad862f71df940ed32bc4e5a98eca72e0d"
       },
       "sources": [
@@ -306,7 +306,7 @@
       "origin": "original-154",
       "title": "Runtime image rebuild inputs are not fully reproducible",
       "severity": "medium",
-      "status": "in Bearbeitung",
+      "status": "in-progress",
       "problem": "A source commit still does not bind all browser archives and time-dependent scanner databases; complete image rebuilds have not been compared.",
       "impact": "The same source can produce different installed content or scan results. Source pinning does not guarantee byte-identical images.",
       "components": [
@@ -334,7 +334,7 @@
       "dependencies": [],
       "evidence": {
         "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "Teilfix lokal verifiziert, Gesamtfinding offen",
+        "prior_verification": "Partial fix locally verified; the complete finding remains open",
         "implementation_commit": "2ed91ef75e4c18b0a6b95b6d2850739b3c38ebf4"
       },
       "sources": [
@@ -379,7 +379,7 @@
       "origin": "original-154",
       "title": "Operator configuration is not fully separated from public examples",
       "severity": "medium",
-      "status": "offen",
+      "status": "open",
       "problem": "Operator-specific values and routing/identity assumptions are not consistently separated from a complete generic public configuration interface.",
       "impact": "Other users may inherit unsuitable operator values. Dockerignore prevents neither Git publication nor historical exposure; this finding does not establish a secret leak.",
       "components": [
@@ -406,7 +406,7 @@
       "dependencies": [],
       "evidence": {
         "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "nicht ausgeführt",
+        "prior_verification": "Not executed at the recorded source assessment.",
         "implementation_commit": null
       },
       "sources": [
@@ -439,7 +439,7 @@
       "origin": "original-154",
       "title": "External Tailnet access and recovery contract is incomplete",
       "severity": "medium",
-      "status": "offen",
+      "status": "open",
       "problem": "Effective external Tailnet ACLs/grants, tag owners and OAuth/HTTPS responsibilities are not established as a complete redacted access contract.",
       "impact": "An Ingress or Tailnet hostname may exist while intended users cannot connect or unintended users have access.",
       "components": [
@@ -464,7 +464,7 @@
       "dependencies": [],
       "evidence": {
         "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "nicht ausgeführt",
+        "prior_verification": "Not executed at the recorded source assessment.",
         "implementation_commit": null
       },
       "sources": [
@@ -503,7 +503,7 @@
       "origin": "original-154",
       "title": "Long-lived rootless BuildKit lacks a job-specific process boundary",
       "severity": "high",
-      "status": "offen",
+      "status": "open",
       "problem": "The long-lived rootless BuildKit uses --net=host and --oci-worker-no-process-sandbox; the missing process sandbox is an unresolved security boundary for untrusted Dockerfile RUN work.",
       "impact": "Project code may affect the shared build process environment or leave processes running. Supervisor secret access or privilege escalation has not been demonstrated.",
       "components": [
@@ -529,7 +529,7 @@
       "dependencies": [],
       "evidence": {
         "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "nicht ausgeführt",
+        "prior_verification": "Not executed at the recorded source assessment.",
         "implementation_commit": null
       },
       "sources": [
@@ -562,7 +562,7 @@
       "origin": "original-154",
       "title": "Host bootstrap and restore prerequisites are incomplete",
       "severity": "medium",
-      "status": "offen",
+      "status": "open",
       "problem": "The repository setup assumes an existing cluster; the effective host/K3s/storage starting environment is not a fully reproducible bootstrap and restore contract.",
       "impact": "After host loss or on a new host, versions, datastore, disk and application dependencies must be reconstructed. The setup name alone can overstate its coverage.",
       "components": [
@@ -588,7 +588,7 @@
       "dependencies": [],
       "evidence": {
         "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "nicht ausgeführt",
+        "prior_verification": "Not executed at the recorded source assessment.",
         "implementation_commit": null
       },
       "sources": [
@@ -627,7 +627,7 @@
       "origin": "original-154",
       "title": "Concrete single-node CNI cutover and independent rollback remain unproved",
       "severity": "high",
-      "status": "offen",
+      "status": "open",
       "problem": "The CNI cutover covering all actual applications and independent host rollback is not demonstrated for the selected environment.",
       "impact": "Incorrect namespace assumptions, missed DaemonSets or cluster-dependent admin access may interrupt both pipeline and Paperless and prevent recovery.",
       "components": [
@@ -654,7 +654,7 @@
       "dependencies": [],
       "evidence": {
         "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "nicht ausgeführt",
+        "prior_verification": "Not executed at the recorded source assessment.",
         "implementation_commit": null
       },
       "sources": [
@@ -693,7 +693,7 @@
       "origin": "original-154",
       "title": "SPIRE persistence, certificate lifetime and recovery contract is incomplete",
       "severity": "medium",
-      "status": "offen",
+      "status": "open",
       "problem": "The effective CA/server persistence and TTL contract and rotation/restore evidence across certificate expiry are incomplete.",
       "impact": "Server, agent or CA loss may interrupt mutual authentication and active jobs. SDS rotation does not establish immediate revocation of already issued SVIDs.",
       "components": [
@@ -719,7 +719,7 @@
       "dependencies": [],
       "evidence": {
         "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "nicht ausgeführt",
+        "prior_verification": "Not executed at the recorded source assessment.",
         "implementation_commit": null
       },
       "sources": [
@@ -758,7 +758,7 @@
       "origin": "original-154",
       "title": "Combined node and disk capacity is not fully budgeted and measured",
       "severity": "medium",
-      "status": "offen",
+      "status": "open",
       "problem": "Actual node/disk capacity and shared reserves for all applications, jobs, caches, backups and upgrades are not completely budgeted and measured.",
       "impact": "Scheduling requests do not prevent shared disk pressure; concurrent builds, restores and browser work may also impair Paperless.",
       "components": [
@@ -785,7 +785,7 @@
       "dependencies": [],
       "evidence": {
         "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "nicht ausgeführt",
+        "prior_verification": "Not executed at the recorded source assessment.",
         "implementation_commit": null
       },
       "sources": [
@@ -824,7 +824,7 @@
       "origin": "original-154",
       "title": "Complete independent application recovery is not yet demonstrated",
       "severity": "high",
-      "status": "in Bearbeitung",
+      "status": "in-progress",
       "problem": "A complete independently recoverable set of database, artifacts, required keys/journals and identities, followed by application recovery, remains incomplete.",
       "impact": "After host or volume loss, database references may be unreadable or recovery identities unavailable. A backup on the same failure-domain PVC is insufficient.",
       "components": [
@@ -922,7 +922,7 @@
       "origin": "original-154",
       "title": "Independent recovery outside the Ops Pod is unproved",
       "severity": "medium",
-      "status": "offen",
+      "status": "open",
       "problem": "The Ops Pod depends on cluster scheduling, API, PVC, CNI and potentially cluster DNS. Independent host/KVM recovery has not been demonstrated.",
       "impact": "When those foundations fail, the Codex devbox may also become unreachable. Pairing or appserver readiness does not establish disaster recovery.",
       "components": [
@@ -948,7 +948,7 @@
       "dependencies": [],
       "evidence": {
         "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "nicht ausgeführt",
+        "prior_verification": "Not executed at the recorded source assessment.",
         "implementation_commit": null
       },
       "sources": [
@@ -987,7 +987,7 @@
       "origin": "github",
       "title": "Release security rescan needs attention",
       "severity": "unassessed",
-      "status": "offen",
+      "status": "open",
       "problem": "The daily release security scan failed. The issue alone does not identify its concrete cause.",
       "impact": "There is no successful current security result for all selected release/input images. A scanner failure is not a pass and does not itself prove a vulnerability.",
       "components": [
@@ -996,13 +996,13 @@
         "Selected runtime/Ops images",
         "Trivy"
       ],
-      "current_state": "Issue #7 is open (read 2026-09-15; updated 2026-09-15T10:28:49Z). Job104344339828 of run34957931173 used commit22fa7cfa6a14cb9fed49a9eb2496d7ab3b64a9d5: versions check passed, scan step failed, release-security-reports upload passed. AP04 did not inspect log/report contents; vulnerability, scanner error and missing release selection remain unresolved possibilities.",
+      "current_state": "Issue #7 is open (read 2026-09-15; updated 2026-09-15T10:28:49Z). Job 104344339828 of run 34957931173 used commit 22fa7cfa6a14cb9fed49a9eb2496d7ab3b64a9d5: versions check passed, scan step failed, release-security-reports upload passed. AP04 did not inspect log/report contents; vulnerability, scanner error and missing release selection remain unresolved possibilities.",
       "remaining_work": [
         "Inspect the linked scan logs and uploaded release-security-reports artifact, then record the actual error and affected immutable image references.",
         "Fix the evidenced cause: complete release selection, scanner/registry error or reviewed dependency/image update. Do not weaken the gate to manufacture a pass."
       ],
       "reproduction": [
-        "Read GitHub run34957931173/job104344339828 and its reports; preserve the execution commit.",
+        "Read GitHub run 34957931173/job104344339828 and its reports; preserve the execution commit.",
         "In a suitable isolated environment with registry access run node scripts/versions.mjs --check and node scripts/updates/scan-releases.mjs against the complete selected runtime/Ops configuration, recording the current advisory database identity."
       ],
       "acceptance_criteria": [
@@ -1018,11 +1018,13 @@
       "sources": [
         {
           "url": "https://github.com/datrab/kubeclaw/issues/7",
-          "scope": "Original issue; mutable status read on2026-09-15."
+          "scope": "Original issue; mutable status read on 2026-09-15.",
+          "observed_at": "2026-09-15"
         },
         {
           "url": "https://github.com/datrab/kubeclaw/actions/runs/34957931173/job/104344339828",
-          "scope": "Specific failed scan job and successful report upload."
+          "scope": "Specific failed scan job and successful report upload.",
+          "observed_at": "2026-09-15"
         },
         {
           "path": ".github/workflows/release-security.yaml",
@@ -1043,7 +1045,7 @@
       "origin": "ap03-source-follow-up",
       "title": "Continuous GitOps health compares a branch name with resolved commit IDs",
       "severity": "unassessed",
-      "status": "offen",
+      "status": "open",
       "problem": "continuousApplications sets runtime child targetRevision=main, but strict application-health.lua requires status.sync.revision and operationState.syncResult.revision to equal that literal targetRevision. A resolved commit SHA does not equal main.",
       "impact": "An actually synchronized healthy runtime child reporting its SHA can remain Progressing in the app-of-apps gate and block later waves. This is a source-confirmed mismatch, not an observed live outage.",
       "components": [
@@ -1069,7 +1071,7 @@
       "dependencies": [],
       "evidence": {
         "assessment": "Both original sources and the existing health test read. Deterministic mismatch follows from string comparison; no Lua/Argo execution in AP04.",
-        "original_scope": "Additional AP03 follow-up; outside the original154 and five separately closed integration findings."
+        "original_scope": "Additional AP03 follow-up; outside the original 154 and five separately closed integration findings."
       },
       "sources": [
         {
@@ -1103,7 +1105,7 @@
       "origin": "ap04-contract-follow-up",
       "title": "Accepted no-decay preference contract conflicts with automatic 180-day decay",
       "severity": "unassessed",
-      "status": "offen",
+      "status": "open",
       "problem": "The accepted prism-preference-learning-v1 document explicitly excludes automatic time decay, while projectPreferences computes score * 0.5^(ageDays/180) and createPreferenceGeneration persists policyVersion=prism.preferences.v1.decay180-project-override.",
       "impact": "Readers cannot determine whether preferences should remain stable with age or weaken automatically. Different contract interpretations can produce different effective preferences for the same event history.",
       "components": [
@@ -1126,7 +1128,7 @@
         "Projection tests, persisted policy identity and published contract agree, including fixed-reference-time replay and event retraction.",
         "Any historical snapshot compatibility or migration rule is explicit; approval and implementation states remain distinguishable."
       ],
-      "live_validation": "This is a contract/implementation alignment task that can be verified locally. It does not assert a deployed incident or reopen an original154 finding.",
+      "live_validation": "This is a contract/implementation alignment task that can be verified locally. It does not assert a deployed incident or reopen an original 154 finding.",
       "dependencies": [],
       "evidence": {
         "assessment": "Bounded source and existing-test inspection; no preference test execution, product change or inferred policy approval.",

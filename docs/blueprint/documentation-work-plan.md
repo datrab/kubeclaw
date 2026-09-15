@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 19 · Status: AP01–AP03 abgeschlossen und nachkontrolliert; 2.887 content-reviewed, keine AP03-Übergabesperre; AP04 begonnen, Zwischenstand gesichert
+Stand: 15.09.2026 · Version 20 · Status: AP01–AP04 abgeschlossen; AP05 ist das nächste Arbeitspaket
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -27,7 +27,7 @@ Der vorhandene Blueprint wird kritisch überarbeitet. Seine Kategorien, Seitenst
 
 ## 3. Übersicht der Arbeitspakete
 
-AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist nach der [Nacharbeit und Gegenprüfung](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) **abgeschlossen**, AP04–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
+AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist nach der [Nacharbeit und Gegenprüfung](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) **abgeschlossen**. AP04 ist nach der [Abschlussprüfung](AP04-checkpoint.md) ebenfalls **abgeschlossen**; AP05–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
 
 | ID | Arbeitspaket | Voraussetzung | Greifbares Ergebnis |
 | --- | --- | --- | --- |
@@ -93,14 +93,14 @@ Einzelentscheidungen im [manuellen Register](review-ledger.jsonl).
 
 ### AP04 — Offene Arbeit und Entscheidungen sichern
 
-**In Bearbeitung:** [Gesicherter Zwischenstand und offene Nacharbeit](AP04-checkpoint.md). Keine AP04-Abnahme; die Checkliste bleibt offen.
+**Abgeschlossen:** [Ergebnis, Zuordnungen und Prüfgrenzen](AP04-checkpoint.md). Technische Findings und Live-Abnahmen bleiben entsprechend ihrem eigenen Status offen.
 
-- [ ] Alle weiterhin offenen Findings mit Original-ID, Problem, Auswirkung, aktuellem Teilstand, betroffenen Komponenten, verbleibender Arbeit und Abschlusskriterium übernehmen.
-- [ ] Benötigte Reproduktionen und Nachweise erhalten oder an geeignete Test-/Issue-Orte verschieben. Offene Issues müssen ohne gelöschte Review-Dateien bearbeitbar bleiben.
-- [ ] Ausstehende Live-Abnahmen geschlossener Findings separat mit Voraussetzungen, Prüfschritten und erwarteten Ergebnissen erfassen; nicht pauschal alle 141 lokalen Abschlüsse wieder öffnen.
-- [ ] Dauerhafte Entscheidungen aus Reviews, Designs und Übergaben extrahieren: Entscheidung, Anlass, Alternativen, Begründung, Konsequenzen, Gültigkeit und Quellen.
-- [ ] Überholte Entscheidungen als ersetzt kennzeichnen; keine historischen Zwischenstände als aktuelle Regeln übernehmen.
-- [ ] Ein kanonisches Register für offene Issues bestimmen und vorhandene Verbraucher darauf umstellen. Kein paralleles manuell gepflegtes Vollregister aller alten Findings.
+- [x] Alle weiterhin offenen Findings mit Original-ID, Problem, Auswirkung, aktuellem Teilstand, betroffenen Komponenten, verbleibender Arbeit und Abschlusskriterium übernehmen.
+- [x] Benötigte Reproduktionen und Nachweise erhalten oder an geeignete Test-/Issue-Orte verschieben. Offene Issues müssen ohne gelöschte Review-Dateien bearbeitbar bleiben.
+- [x] Ausstehende Live-Abnahmen geschlossener Findings separat mit Voraussetzungen, Prüfschritten und erwarteten Ergebnissen erfassen; nicht pauschal alle 141 lokalen Abschlüsse wieder öffnen.
+- [x] Dauerhafte Entscheidungen aus Reviews, Designs und Übergaben extrahieren: Entscheidung, Anlass, Alternativen, Begründung, Konsequenzen, Gültigkeit und Quellen.
+- [x] Überholte Entscheidungen als ersetzt kennzeichnen; keine historischen Zwischenstände als aktuelle Regeln übernehmen.
+- [x] Ein kanonisches Register für offene Issues bestimmen und vorhandene Verbraucher darauf umstellen. Kein paralleles manuell gepflegtes Vollregister aller alten Findings.
 
 **Abgeschlossen, wenn:** Offene Arbeit und gültige Entscheidungen sind unabhängig von den zu löschenden Reviews vollständig verständlich. Die aktuelle Zahl offener Findings ist konsistent; Original-IDs bleiben erhalten.
 
@@ -233,7 +233,7 @@ Bei Wiederaufnahme: aktuellen Commit/PR-Stand abgleichen, den letzten gesicherte
 
 ## 6. Nächster Schritt
 
-**Mit AP04 fortsetzen:** Die konkreten Übergaben stehen im [Prüfregister](review-ledger.jsonl). Die 13 unvollständigen Findings, Issue #7 und zusätzliche technische Folgearbeit, separate Live-Abnahmen sowie gültige Entscheidungen sichern. Ein einzelnes maschinenlesbares Register offener Issues mit erzeugter Darstellung, getrennte Live-Abnahme und kompakte Abschluss-/ID-Provenienz umsetzen; kein zweites vollständiges Reviewarchiv. Die Quell- und Verbraucherumstellung abnehmen, bevor spätere APs ursprüngliche Materialien entfernen. AP03-Abschluss bedeutet keine erledigte Migration oder Produktabnahme.
+**Mit AP05 fortsetzen:** Aus dem Prüfledger und dem Dokumentationsstandard eine priorisierte Lückenliste mit eindeutigen Kapitelzuständigkeiten ableiten. AP04 hat Status, Entscheidungen und Abnahmepflichten gesichert. AP06–AP09 müssen die endgültigen Architektur-, Betriebs-, Erweiterungs- und Referenzkapitel liefern; AP11 prüft ASD-STE100 und die Leseraufgaben. Den Prism-Benchmarkkonflikt (250/300 ms), die beiden unauflösbaren historischen Kurzreferenzen und die veraltete AP02-Generatoranbindung als konkrete Dokumentationslücken berücksichtigen.
 
 ## 7. Quellen des Ausgangsstands
 
@@ -263,18 +263,7 @@ vollständige Betriebsabläufe und reproduzierbare Erweiterungsanleitungen.
 | AP10 | Keine benötigten Entscheidungsgründe, Nachweise oder Verbraucher beim Entfernen verlieren |
 | AP11 | Alle Qualitätsgates, STE-Prüfung und Leserproben; Pflegevertrag für einen späteren Dokumentationsagenten |
 
-Gesicherter Wiederaufnahmestand: PR #13, Branch `docs/documentation-overhaul`,
-Commit `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`.
-Der veröffentlichte Arbeitsplan und AP03-Bericht nennen AP04 als nächsten Schritt.
-Der rekursive Tree enthält keinen AP04-Fortschrittsbericht.
-Der Nutzer berichtet, dass AP04 im abgebrochenen Chat begonnen wurde.
-Nicht veröffentlichte Änderungen der vorherigen Devbox sind in dieser Sitzung nicht einsehbar.
-Deshalb bedeutet dieser Befund nicht, dass dort keine Arbeit existiert.
-
-AP04 bleibt offen: 13 unvollständige Findings, Issue #7, zusätzliche technische
-Folgepunkte, getrennte Live-Abnahmen und dauerhafte Entscheidungen sichern.
-Die 141 lokalen Abschlüsse werden dadurch nicht wieder geöffnet.
-Die Qualitätsanforderungen sind festgelegt; ihre Umsetzung in allen Produktseiten
-und die formale STE-Prüfung sind noch nicht abgeschlossen.
-Vor Fortsetzung in der bisherigen Devbox zuerst deren Git-Status und lokale AP04-Arbeit
-mit dem aktualisierten PR abgleichen; ungesicherte Arbeit nicht überschreiben.
+Aktueller Abschlussstand: AP04 ist im bestehenden PR #13 auf `docs/documentation-overhaul` gesichert.
+Der [AP04-Abschlussbericht](AP04-checkpoint.md) ersetzt die frühere Zwischenstandsbeschreibung.
+Er enthält den genauen Prüfumfang und die noch offenen globalen Dokumentationsgates.
+Die Anforderungen an Tiefe, Begründung, Sprache und Nachvollziehbarkeit gelten unverändert für AP05–AP11.

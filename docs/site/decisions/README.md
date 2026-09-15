@@ -1,6 +1,6 @@
 # Decisions and their authority
 
-> AP04 working draft. Extraction and source migration are incomplete; see the [checkpoint](../../blueprint/AP04-checkpoint.md).
+> AP04 extraction complete. See the [completion report](../../blueprint/AP04-checkpoint.md) for evidence and remaining documentation work.
 Status: current documentation extraction
 Audience: maintainer, architecture reader, operator
 Owner: platform-architecture
@@ -19,6 +19,8 @@ A local finding closure does not prove deployment or human product acceptance.
 | [Test-gate decisions](test-gate.md) | Which original test-gate decisions govern providers, evidence, remote jobs and Worker Core? |
 | [Runtime and operations](runtime-and-operations.md) | Which runtime, observability, operator, retention, configuration and recovery constraints apply? |
 | [Echo decisions](echo.md) | Which original Echo decisions govern proposals, deterministic evidence, reduction and policy? |
+| [Prism decisions](prism.md) | How do product, editor, retrieval, preference, publication and recovery choices fit together? |
+| [Implementation decisions](implementation.md) | How do native ownership, signed human decisions, versioned data and integration history refine the core rules? |
 | [Acceptance and closure provenance](acceptance.md) | What does D12 close locally, and how do the original finding IDs remain traceable? |
 
 Original identifiers remain attached to their decisions.
@@ -31,3 +33,5 @@ Maintain unfinished work in [open issues](../status/open-issues.md), not a secon
 Maintain environmental proof in [live acceptance](../status/acceptance.md).
 When a decision changes, record the new authority, rationale and successor.
 Do not rewrite old approval evidence or silently turn an implementation workaround into an accepted rule.
+
+The `ap04_extraction` fields in the [existing review ledger](../../blueprint/review-ledger.jsonl) resolve the 128 AP03 decision handoffs to these records. Original target names remain as historical planning data. Full source-document migration remains pending for AP06–AP10.

@@ -1,6 +1,6 @@
 # Observability retention assessment
 
-PCR-OBS-002 remains partial/open. D01 and D07 settle the retention policy but do
+PCR-OBS-002 remains partial/open. [D01](../../../site/decisions/runtime-and-operations.md#d01) and [D07](../../../site/decisions/runtime-and-operations.md#d07) settle the retention policy but do
 not supply the missing safe quota-release mechanism identified in the original
 foundation.observability review. D09 independently requires durable worker
 recovery without depending on Clawdeck. No runtime source, limit, current data,

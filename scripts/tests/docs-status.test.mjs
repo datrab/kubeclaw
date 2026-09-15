@@ -1,9 +1,16 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
-import { renderStatus, validateStatus } from '../docs-status.mjs';
+import { originalFindingIds, renderStatus, validateStatus } from '../docs-status.mjs';
 
 const load = () => JSON.parse(fs.readFileSync(new URL('../../docs/site/status/open-issues.json', import.meta.url), 'utf8'));
+
+test('closure provenance cannot replace an original identity while preserving all counts', () => {
+  const provenance = fs.readFileSync(new URL('../../docs/site/decisions/acceptance.md', import.meta.url), 'utf8');
+  assert.equal(originalFindingIds(provenance).size, 154);
+  assert.throws(() => originalFindingIds(provenance.replace('| IFR-29-001 |', '| IFR-29-999 |')), /fixed 154 IDs/);
+  assert.throws(() => originalFindingIds(provenance.replace('| F-T14-01 |', '| F-T14-02 |')), /fixed 154 IDs/);
+});
 
 test('each open finding retains actionable work and an evidence boundary in the rendered view', () => {
   const data = load();
@@ -72,4 +79,32 @@ test('additional evidence fields and counting policy survive publication', () =>
   assert.ok(page.includes(data.scope.counting_policy));
   assert.ok(page.includes(data.issues[0].evidence.source_run_commit));
   assert.ok(page.includes(data.issues[0].evidence.original_scope));
+});
+
+test('invented or reclassified original IDs cannot preserve apparently valid counts', () => {
+  const data = load();
+  data.issues.find(issue => issue.id === 'IFR-29-001').id = 'INVENTED-REPLACEMENT';
+  assert.throws(() => validateStatus(data), /membership/);
+});
+
+test('mutable evidence requires a real observation date and publishes it', () => {
+  const data = load();
+  const source = data.issues.find(issue => issue.id === 'GITHUB-7').sources[0];
+  delete source.observed_at;
+  assert.throws(() => validateStatus(data), /observation date/);
+  for (const invalid of ['2026-02-30', '2026-13-01', '2026-9-1', '9999-01-01']) {
+    source.observed_at = invalid;
+    assert.throws(() => validateStatus(data), /observation date/);
+  }
+  source.observed_at = data.updated_at;
+  assert.ok(renderStatus(data).includes(`Observed: ${data.updated_at}.`));
+});
+
+test('a genuine later local closure can leave the fixed original universe', () => {
+  const data = load();
+  data.issues = data.issues.filter(issue => issue.id !== 'IFR-29-001');
+  data.scope.original_incomplete--;
+  data.scope.original_locally_verified++;
+  data.scope.total_open--;
+  validateStatus(data);
 });

@@ -23,36 +23,36 @@ Original IDs are unchanged. GitHub #7 and AP03 source follow-ups are separate. P
 
 ## Status meanings
 
-- **offen:** The cause, contract or implementation remains open within the stated scope.
-- **in Bearbeitung:** A bounded partial implementation or analysis exists; the whole finding remains incomplete.
-- **implementiert:** Inherited original-register status for partial implementation. remaining_work still contains code work; this is not synonymous with locally verified.
+- **open:** The cause, contract or implementation remains open within the stated scope.
+- **in-progress:** A bounded partial implementation or analysis exists; the whole finding remains incomplete.
+- **partially-implemented:** Inherited original-register status for partial implementation. remaining_work still contains code work; this is not synonymous with locally verified.
 
 ## Issue index
 
 | ID | Issue | Origin | Status |
 | --- | --- | --- | --- |
-| [PCR-BUSTER-ENGINE-001](#pcr-buster-engine-001) | Capability work is missing from the attempt budget | original-154 | in Bearbeitung |
-| [PCR-BUSTER-ENGINE-004](#pcr-buster-engine-004) | Restarted terminal jobs retain source workspaces without a durable quiescence proof | original-154 | implementiert |
-| [PCR-OBS-002](#pcr-obs-002) | Confirmed run history lacks complete connected retirement | original-154 | implementiert |
-| [IFR-21-001](#ifr-21-001) | Runtime image rebuild inputs are not fully reproducible | original-154 | in Bearbeitung |
-| [IFR-29-001](#ifr-29-001) | Operator configuration is not fully separated from public examples | original-154 | offen |
-| [IFR-04-001](#ifr-04-001) | External Tailnet access and recovery contract is incomplete | original-154 | offen |
-| [IFR-10-001](#ifr-10-001) | Long-lived rootless BuildKit lacks a job-specific process boundary | original-154 | offen |
-| [IFR-01-001](#ifr-01-001) | Host bootstrap and restore prerequisites are incomplete | original-154 | offen |
-| [IFR-02-001](#ifr-02-001) | Concrete single-node CNI cutover and independent rollback remain unproved | original-154 | offen |
-| [IFR-06-001](#ifr-06-001) | SPIRE persistence, certificate lifetime and recovery contract is incomplete | original-154 | offen |
-| [IFR-16-001](#ifr-16-001) | Combined node and disk capacity is not fully budgeted and measured | original-154 | offen |
-| [IFR-26-001](#ifr-26-001) | Complete independent application recovery is not yet demonstrated | original-154 | in Bearbeitung |
-| [IFR-28-001](#ifr-28-001) | Independent recovery outside the Ops Pod is unproved | original-154 | offen |
-| [GITHUB-7](#github-7) | Release security rescan needs attention | github | offen |
-| [DOC-AP03-GITOPS-001](#doc-ap03-gitops-001) | Continuous GitOps health compares a branch name with resolved commit IDs | ap03-source-follow-up | offen |
-| [DOC-AP04-PREFERENCE-001](#doc-ap04-preference-001) | Accepted no-decay preference contract conflicts with automatic 180-day decay | ap04-contract-follow-up | offen |
+| [PCR-BUSTER-ENGINE-001](#pcr-buster-engine-001) | Capability work is missing from the attempt budget | original-154 | in-progress |
+| [PCR-BUSTER-ENGINE-004](#pcr-buster-engine-004) | Restarted terminal jobs retain source workspaces without a durable quiescence proof | original-154 | partially-implemented |
+| [PCR-OBS-002](#pcr-obs-002) | Confirmed run history lacks complete connected retirement | original-154 | partially-implemented |
+| [IFR-21-001](#ifr-21-001) | Runtime image rebuild inputs are not fully reproducible | original-154 | in-progress |
+| [IFR-29-001](#ifr-29-001) | Operator configuration is not fully separated from public examples | original-154 | open |
+| [IFR-04-001](#ifr-04-001) | External Tailnet access and recovery contract is incomplete | original-154 | open |
+| [IFR-10-001](#ifr-10-001) | Long-lived rootless BuildKit lacks a job-specific process boundary | original-154 | open |
+| [IFR-01-001](#ifr-01-001) | Host bootstrap and restore prerequisites are incomplete | original-154 | open |
+| [IFR-02-001](#ifr-02-001) | Concrete single-node CNI cutover and independent rollback remain unproved | original-154 | open |
+| [IFR-06-001](#ifr-06-001) | SPIRE persistence, certificate lifetime and recovery contract is incomplete | original-154 | open |
+| [IFR-16-001](#ifr-16-001) | Combined node and disk capacity is not fully budgeted and measured | original-154 | open |
+| [IFR-26-001](#ifr-26-001) | Complete independent application recovery is not yet demonstrated | original-154 | in-progress |
+| [IFR-28-001](#ifr-28-001) | Independent recovery outside the Ops Pod is unproved | original-154 | open |
+| [GITHUB-7](#github-7) | Release security rescan needs attention | github | open |
+| [DOC-AP03-GITOPS-001](#doc-ap03-gitops-001) | Continuous GitOps health compares a branch name with resolved commit IDs | ap03-source-follow-up | open |
+| [DOC-AP04-PREFERENCE-001](#doc-ap04-preference-001) | Accepted no-decay preference contract conflicts with automatic 180-day decay | ap04-contract-follow-up | open |
 
 ## PCR-BUSTER-ENGINE-001
 
 **Capability work is missing from the attempt budget**
 
-Origin: original-154. Status: in Bearbeitung. Source severity: high.
+Origin: original-154. Status: in-progress. Source severity: high.
 
 ### Problem and impact
 
@@ -102,7 +102,7 @@ Actual delegated cgroups and real providers/browsers are required. Acceptance in
 
 AP04 source reconciliation; no test rerun and no live acceptance performed.
 
-- **prior verification:** nicht ausgeführt
+- **prior verification:** Not executed at the recorded source assessment.
 - **implementation commit:** Not established.
 
 ### Sources
@@ -122,7 +122,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 
 **Restarted terminal jobs retain source workspaces without a durable quiescence proof**
 
-Origin: original-154. Status: implementiert. Source severity: medium.
+Origin: original-154. Status: partially-implemented. Source severity: medium.
 
 ### Problem and impact
 
@@ -187,7 +187,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 
 **Confirmed run history lacks complete connected retirement**
 
-Origin: original-154. Status: implementiert. Source severity: medium.
+Origin: original-154. Status: partially-implemented. Source severity: medium.
 
 ### Problem and impact
 
@@ -236,7 +236,7 @@ No dependency on another entry in this register is established.
 
 AP04 source reconciliation; no test rerun and no live acceptance performed.
 
-- **prior verification:** Teilweise: Telemetrie-, Admission- und importierte Attempt-Resultatkopien mit echter Quotenfreigabe und erhaltenem Replay geprüft. Attempt-v2 unabhängig 19/19; Root integriert 45/45, keine Skips. Zusammenhängende weitere Store-/Referenzretention bleibt offen.
+- **prior verification:** Partial: telemetry, admission and imported attempt-result copies were checked with actual quota release and preserved replay. Independent attempt-v2 checks: 19/19. Integrated root checks: 45/45, no skips. Complete retention across the remaining stores and references remains open.
 - **implementation commit:** 27315faad862f71df940ed32bc4e5a98eca72e0d
 
 ### Sources
@@ -254,7 +254,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 
 **Runtime image rebuild inputs are not fully reproducible**
 
-Origin: original-154. Status: in Bearbeitung. Source severity: medium.
+Origin: original-154. Status: in-progress. Source severity: medium.
 
 ### Problem and impact
 
@@ -300,7 +300,7 @@ No dependency on another entry in this register is established.
 
 AP04 source reconciliation; no test rerun and no live acceptance performed.
 
-- **prior verification:** Teilfix lokal verifiziert, Gesamtfinding offen
+- **prior verification:** Partial fix locally verified; the complete finding remains open
 - **implementation commit:** 2ed91ef75e4c18b0a6b95b6d2850739b3c38ebf4
 
 ### Sources
@@ -316,7 +316,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 
 **Operator configuration is not fully separated from public examples**
 
-Origin: original-154. Status: offen. Source severity: medium.
+Origin: original-154. Status: open. Source severity: medium.
 
 ### Problem and impact
 
@@ -361,7 +361,7 @@ No dependency on another entry in this register is established.
 
 AP04 source reconciliation; no test rerun and no live acceptance performed.
 
-- **prior verification:** nicht ausgeführt
+- **prior verification:** Not executed at the recorded source assessment.
 - **implementation commit:** Not established.
 
 ### Sources
@@ -375,7 +375,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 
 **External Tailnet access and recovery contract is incomplete**
 
-Origin: original-154. Status: offen. Source severity: medium.
+Origin: original-154. Status: open. Source severity: medium.
 
 ### Problem and impact
 
@@ -418,7 +418,7 @@ No dependency on another entry in this register is established.
 
 AP04 source reconciliation; no test rerun and no live acceptance performed.
 
-- **prior verification:** nicht ausgeführt
+- **prior verification:** Not executed at the recorded source assessment.
 - **implementation commit:** Not established.
 
 ### Sources
@@ -433,7 +433,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 
 **Long-lived rootless BuildKit lacks a job-specific process boundary**
 
-Origin: original-154. Status: offen. Source severity: high.
+Origin: original-154. Status: open. Source severity: high.
 
 ### Problem and impact
 
@@ -477,7 +477,7 @@ No dependency on another entry in this register is established.
 
 AP04 source reconciliation; no test rerun and no live acceptance performed.
 
-- **prior verification:** nicht ausgeführt
+- **prior verification:** Not executed at the recorded source assessment.
 - **implementation commit:** Not established.
 
 ### Sources
@@ -491,7 +491,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 
 **Host bootstrap and restore prerequisites are incomplete**
 
-Origin: original-154. Status: offen. Source severity: medium.
+Origin: original-154. Status: open. Source severity: medium.
 
 ### Problem and impact
 
@@ -535,7 +535,7 @@ No dependency on another entry in this register is established.
 
 AP04 source reconciliation; no test rerun and no live acceptance performed.
 
-- **prior verification:** nicht ausgeführt
+- **prior verification:** Not executed at the recorded source assessment.
 - **implementation commit:** Not established.
 
 ### Sources
@@ -550,7 +550,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 
 **Concrete single-node CNI cutover and independent rollback remain unproved**
 
-Origin: original-154. Status: offen. Source severity: high.
+Origin: original-154. Status: open. Source severity: high.
 
 ### Problem and impact
 
@@ -595,7 +595,7 @@ No dependency on another entry in this register is established.
 
 AP04 source reconciliation; no test rerun and no live acceptance performed.
 
-- **prior verification:** nicht ausgeführt
+- **prior verification:** Not executed at the recorded source assessment.
 - **implementation commit:** Not established.
 
 ### Sources
@@ -610,7 +610,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 
 **SPIRE persistence, certificate lifetime and recovery contract is incomplete**
 
-Origin: original-154. Status: offen. Source severity: medium.
+Origin: original-154. Status: open. Source severity: medium.
 
 ### Problem and impact
 
@@ -654,7 +654,7 @@ No dependency on another entry in this register is established.
 
 AP04 source reconciliation; no test rerun and no live acceptance performed.
 
-- **prior verification:** nicht ausgeführt
+- **prior verification:** Not executed at the recorded source assessment.
 - **implementation commit:** Not established.
 
 ### Sources
@@ -669,7 +669,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 
 **Combined node and disk capacity is not fully budgeted and measured**
 
-Origin: original-154. Status: offen. Source severity: medium.
+Origin: original-154. Status: open. Source severity: medium.
 
 ### Problem and impact
 
@@ -714,7 +714,7 @@ No dependency on another entry in this register is established.
 
 AP04 source reconciliation; no test rerun and no live acceptance performed.
 
-- **prior verification:** nicht ausgeführt
+- **prior verification:** Not executed at the recorded source assessment.
 - **implementation commit:** Not established.
 
 ### Sources
@@ -729,7 +729,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 
 **Complete independent application recovery is not yet demonstrated**
 
-Origin: original-154. Status: in Bearbeitung. Source severity: high.
+Origin: original-154. Status: in-progress. Source severity: high.
 
 ### Problem and impact
 
@@ -796,7 +796,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 
 **Independent recovery outside the Ops Pod is unproved**
 
-Origin: original-154. Status: offen. Source severity: medium.
+Origin: original-154. Status: open. Source severity: medium.
 
 ### Problem and impact
 
@@ -840,7 +840,7 @@ No dependency on another entry in this register is established.
 
 AP04 source reconciliation; no test rerun and no live acceptance performed.
 
-- **prior verification:** nicht ausgeführt
+- **prior verification:** Not executed at the recorded source assessment.
 - **implementation commit:** Not established.
 
 ### Sources
@@ -855,7 +855,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 
 **Release security rescan needs attention**
 
-Origin: github. Status: offen. Source severity: unassessed.
+Origin: github. Status: open. Source severity: unassessed.
 
 ### Problem and impact
 
@@ -870,7 +870,7 @@ There is no successful current security result for all selected release/input im
 - Selected runtime/Ops images
 - Trivy
 
-Issue #7 is open (read 2026-09-15; updated 2026-09-15T10:28:49Z). Job104344339828 of run34957931173 used commit22fa7cfa6a14cb9fed49a9eb2496d7ab3b64a9d5: versions check passed, scan step failed, release-security-reports upload passed. AP04 did not inspect log/report contents; vulnerability, scanner error and missing release selection remain unresolved possibilities.
+Issue #7 is open (read 2026-09-15; updated 2026-09-15T10:28:49Z). Job 104344339828 of run 34957931173 used commit 22fa7cfa6a14cb9fed49a9eb2496d7ab3b64a9d5: versions check passed, scan step failed, release-security-reports upload passed. AP04 did not inspect log/report contents; vulnerability, scanner error and missing release selection remain unresolved possibilities.
 
 ### Remaining work
 
@@ -879,7 +879,7 @@ Issue #7 is open (read 2026-09-15; updated 2026-09-15T10:28:49Z). Job10434433982
 
 ### Reproduction and verification procedure
 
-- Read GitHub run34957931173/job104344339828 and its reports; preserve the execution commit.
+- Read GitHub run 34957931173/job104344339828 and its reports; preserve the execution commit.
 - In a suitable isolated environment with registry access run node scripts/versions.mjs --check and node scripts/updates/scan-releases.mjs against the complete selected runtime/Ops configuration, recording the current advisory database identity.
 
 ### Completion criteria
@@ -903,8 +903,8 @@ GitHub issue and job/step metadata read live; no logs or scanner reports inspect
 
 ### Sources
 
-- [https://github.com/datrab/kubeclaw/issues/7](https://github.com/datrab/kubeclaw/issues/7) — Original issue; mutable status read on2026-09-15.
-- [https://github.com/datrab/kubeclaw/actions/runs/34957931173/job/104344339828](https://github.com/datrab/kubeclaw/actions/runs/34957931173/job/104344339828) — Specific failed scan job and successful report upload.
+- [https://github.com/datrab/kubeclaw/issues/7](https://github.com/datrab/kubeclaw/issues/7) — Original issue; mutable status read on 2026-09-15. Observed: 2026-09-15.
+- [https://github.com/datrab/kubeclaw/actions/runs/34957931173/job/104344339828](https://github.com/datrab/kubeclaw/actions/runs/34957931173/job/104344339828) — Specific failed scan job and successful report upload. Observed: 2026-09-15.
 - [.github/workflows/release-security.yaml](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/.github/workflows/release-security.yaml) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [scripts/updates/scan-releases.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/updates/scan-releases.mjs) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 
@@ -912,7 +912,7 @@ GitHub issue and job/step metadata read live; no logs or scanner reports inspect
 
 **Continuous GitOps health compares a branch name with resolved commit IDs**
 
-Origin: ap03-source-follow-up. Status: offen. Source severity: unassessed.
+Origin: ap03-source-follow-up. Status: open. Source severity: unassessed.
 
 ### Problem and impact
 
@@ -956,7 +956,7 @@ No dependency on another entry in this register is established.
 
 Both original sources and the existing health test read. Deterministic mismatch follows from string comparison; no Lua/Argo execution in AP04.
 
-- **original scope:** Additional AP03 follow-up; outside the original154 and five separately closed integration findings.
+- **original scope:** Additional AP03 follow-up; outside the original 154 and five separately closed integration findings.
 
 ### Sources
 
@@ -969,7 +969,7 @@ Both original sources and the existing health test read. Deterministic mismatch 
 
 **Accepted no-decay preference contract conflicts with automatic 180-day decay**
 
-Origin: ap04-contract-follow-up. Status: offen. Source severity: unassessed.
+Origin: ap04-contract-follow-up. Status: open. Source severity: unassessed.
 
 ### Problem and impact
 
@@ -1004,7 +1004,7 @@ Both current implementation files and the accepted no-decay statements were insp
 
 ### Separate environment acceptance
 
-This is a contract/implementation alignment task that can be verified locally. It does not assert a deployed incident or reopen an original154 finding.
+This is a contract/implementation alignment task that can be verified locally. It does not assert a deployed incident or reopen an original 154 finding.
 
 ### Dependencies
 

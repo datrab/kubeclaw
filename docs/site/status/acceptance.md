@@ -87,7 +87,7 @@ The procedures below require an environment approved for their actual effects. D
 
 ### Executed quality gates and eleven production receipts
 
-**Scope:** WP06; additional Echo promotion under G15.
+**Scope:** WP06; local Echo policy, reducer, report, audit, and supervisor contracts; additional model promotion under G15. A deterministic contract check does not measure model quality.
 
 **Prerequisites:** Registered Buster providers, attested source, authenticated Nova/Buster route and real suite dependencies. Install Chromium from the locked Playwright package and record its actual executable path/version. BuildKit, registry, Kubernetes, Tailnet, scanner database and target application must actually be available.
 
@@ -123,6 +123,8 @@ The procedures below require an environment approved for their actual effects. D
 
 **Pass conditions:** One transaction owner with atomic consistent writes, no leaked pool connection, duplicated external agent effect or lost decision. Service drain waits for owned work and releases capacity within bounds. A `/readyz` response before CRD installation proves that point only, not Established/migration readiness. PGlite and query doubles do not prove pooled native PostgreSQL. Existing native subtests retain their actual scope without automatically proving a full service/session journey.
 
+**Retrieval acceptance:** Use the declared 10,000-reference corpus, rights filters, hardware and query set. Report precision at 10, recall at 20, rights leaks and p95 latency. The spike specifies 250 ms; the implementation plan and server benchmark specify 300 ms. Report both limits. A result below 300 ms does not resolve the undocumented relaxation from 250 ms. Record a decision before treating either as the sole approved gate. The other recorded targets are precision 0.70, recall 0.80 and zero rights leaks. See [retrieval decisions](../decisions/prism.md#retrieval-and-preferences).
+
 ## G08
 
 ### Prism browser, Studio, artifacts and retained memory
@@ -134,6 +136,8 @@ The procedures below require an environment approved for their actual effects. D
 **Procedure:** Run `npm run test:studio-remediation --workspace @kubeclaw/prism` for iframe, navigation/pagination, actions, image decoding and errors. Use `node skills/prism/integration/worker-browser-cancellation.mts` for owned browser cancellation/drain. Run `npm run test:engine:native-retention --workspace @kubeclaw/prism -- --max-retained-growth-bytes=BYTES --captures-per-window=32` only after selecting a real BYTES value. Exercise descendant moves, recursive duplication, variants and state patches through the real UI; tamper with assets and restart Control.
 
 **Pass conditions:** Correct visible interactions, authenticated artifact bytes/digests/sizes and controlled failures. Native capture produces real PNG/ARIA output. Completed cache entries obey count/byte limits; coalescing preserves active ownership. Retained heap is distinct from browser child-process memory and complete Worker/Control persistence, which require G03/G07. Renderer or baseline-codec checks do not approve a new real browser baseline.
+
+**Device scope:** Browser automation does not prove the physical-device workflow. Record the actual desktop and mobile devices, viewport, input method and browser. Complete direction selection, editing without drag, undo/redo, review and publication. Reopen the exact approved baseline and verify its identity. Missing devices remain unexecuted prerequisites.
 
 ## G09
 
@@ -225,13 +229,59 @@ The first requires `PRISM_CONTROL_URL`, `PRISM_AGENT_URL`, `PRISM_E2E_INGRESS_SE
 
 **Pass conditions:** Two complete batches show no new failure class, no false P0 on clean code and no missed seeded P0. Continue shadow evaluation until then. This documentation migration does not enable Echo as a production blocker.
 
+## Explicit inherited live obligations
+
+The original register contains 36 explicit `pending_live_validation` fields.
+Each obligation remains below, including obligations attached to locally closed findings.
+These rows add precision to G01–G15; they do not create 36 new findings or claim 36 executed tests.
+The [pinned original register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) retains the full original text and earlier results.
+
+| Original ID | Gate | Required evidence or preserved limit |
+| --- | --- | --- |
+| PCR-ISOLATION-002 | [G03](#g03) | Run the actual process tree with credential drop, host SIGKILL, readable procfs and delegated cgroups. A blocked kernel prerequisite is not a pass. |
+| PCR-ISOLATION-004 | [G03](#g03) | Cause a real cgroup memory limit failure and read the kernel result. Simulated memory counters are insufficient. |
+| PCR-NOVA-GATE-005 | [G03](#g03) | Restart the real remote process and read its state through the graph reader. A compiled graph is preparation only. |
+| PATH-T11-001 | [G06](#g06) | Run the actual sandbox and import its executed JUnit results. Preserve the historical EPIPE/exit-70 failure separately. |
+| PATH-T13-001 | [G06](#g06), [G14](#g14) | Execute cumulative pipeline checks and deliver the resulting Ready candidate. A final-module-only result is insufficient. |
+| PCR-CONTAINER-BUILD-001 | [G06](#g06) | Build through the actual BuildKit runner. Local HTTP protocol checks do not prove a container build. |
+| PCR-CONTAINER-BUILD-002 | [G06](#g06) | Exercise the real build deadline and final evidence path through BuildKit. Preserve timeout and failure results. |
+| PCR-DIRECT-COMMAND-001 | [G03](#g03), [G06](#g06) | Run the original native command runner and verify its executed result artifact and ownership. |
+| PCR-VISUAL-001 | [G06](#g06), [G08](#g08) | Approve a real browser baseline, detect a mismatch and perform an authorized refresh. Old blocked v1 checks do not prove this path. |
+| PATH-T02-002 | [G07](#g07), [G08](#g08) | Use native PostgreSQL, the real browser and the actual agent route together. |
+| PCR-PRISM-AGENT-BRIDGE-001 | [G07](#g07) | Restart the actual bound OpenClaw session and reconcile an uncertain external call without duplication. |
+| PCR-PRISM-AGENT-BRIDGE-002 | [G07](#g07) | Exercise session collision, restart and unknown response through the real agent service. |
+| PCR-PRISM-CONTROL-001 | [G07](#g07) | Verify commit and rollback through actual Control services and native PostgreSQL. |
+| PCR-PRISM-CONTROL-002 | [G07](#g07) | Use real pooled connections and lose a successful response. Confirm the committed result on retry. |
+| PCR-PRISM-CORPUS-001 | [G07](#g07) | Exercise multiple connections against native PostgreSQL. PGlite does not prove a server connection pool. |
+| PCR-PRISM-WORKER-001 | [G07](#g07) | Restart the actual Worker against a migrated PostgreSQL service. A TCP peer alone is not database readiness. |
+| PCR-PRISM-WORKER-003 | [G03](#g03), [G07](#g07), [G08](#g08) | Prove owned browser cleanup and native recovery. Already uploaded artifact bytes are not rolled back with a SQL transaction. |
+| PCR-PRISM-ENGINE-001 | [G08](#g08) | Measure sustained Chromium capture and retained heap; restart Control. Keep parent heap and child-process memory distinct. |
+| PCR-PRISM-RENDERER-002 | [G08](#g08) | Perform the real iframe click and verify the resulting action and visible state. |
+| PCR-PRISM-STUDIO-002 | [G08](#g08) | Decode actual image bytes under the intended content security policy and verify controlled error display. |
+| F-T14-01 | [G10](#g10), [G14](#g14) | Open the delivered application through the actual Tailnet route and log in with the intended recipient credentials. |
+| F-T14-02 | [G10](#g10), [G14](#g14) | Record authenticated human acceptance and extension for the exact delivered version. |
+| IFR-08-001 | [G11](#g11) | Push from BuildKit and pull through uncached CRI for a real pod using the registry storage. |
+| IFR-09-001 | [G11](#g11) | Test both BuildKit and CRI mirrors for a cache hit, miss and defined upstream outage. |
+| IFR-19-001 | [G11](#g11) | Compare the selected receipt, OCI descriptor, deployed imageID and bundle. Compare the correct digest types; they need not be identical strings. |
+| IFR-22-001 | [G11](#g11) | Verify effective token permissions in actual fork and internal PR jobs, separately from publication. |
+| PCR-SCAFFOLD-OPS-001 | [G03](#g03) | Run adopted pipeline status errors and durable whole-process ownership. The stale pre-closure subrecord does not reopen the locally closed finding. |
+| IFR-07-001 | [G12](#g12), [G13](#g13) | Exercise actual Envoy rollout and peer revocation. A local self-probe is bounded evidence only. |
+| IFR-12-001 | [G13](#g13) | Execute the LiteLLM PostgreSQL recovery procedure in an isolated real environment and verify restored state. |
+| IFR-14-001 | [G12](#g12), [G13](#g13) | Exercise Envoy peer failure, LiteLLM database faults and Prism active-write cross-node recovery. |
+| IFR-15-001 | [G13](#g13) | Execute the Prism database transition procedure, including its failure and rollback limits. |
+| IFR-20-001 | [G03](#g03), [G13](#g13) | Measure combined host CPU, memory, disk and real-pod OOM behavior. Do not replace measurements with guessed capacity. |
+| IFR-20-002 | [G12](#g12), [G13](#g13) | Verify the real service and cross-node failure sequence also required by IFR-14-001. |
+| IFR-25-001 | [G12](#g12) | Exercise SPIRE gRPC/UDS failure, real database/BuildKit probes and actual alarm delivery. Keep the native Envoy 1.39 certificate checks at their measured scope. |
+| T01-F02 | [G10](#g10), [G14](#g14) | Complete the authenticated product delivery and human decision path also required by F-T14-01 and F-T14-02. |
+| T15-F01 | [G14](#g14) | Use actual OpenClaw/ACP writer tools, token configuration and model execution. Fixtures marked modelExecution:false cannot prove this journey. |
+
 ## Existing automation and its scope
 
 `.github/workflows/remediation-native.yaml` checks static Knip/integration types, isolated native PostgreSQL suites, Studio in a real browser and supervisor operations. PostgreSQL follows `versions.json` → `automation.prismTestPostgres`; the wrapper creates and cleans a fresh database per suite. These jobs do not replace cgroup/OOM tests, actual cloud/Tailnet/registry privileges or the full release/backup/operator journey. A green workflow is not a blanket pass for this page.
 
 ## Provenance and local proof boundaries
 
-The 995 AP03 source decisions targeting these acceptance pages include local subtests and historical failed runs; each source does not create a new live test. They are consolidated by obligation: contracts/codecs G01; journals/replay G02; workers/supervisors G03; approvals G04; Git/workspaces G05; providers/compiler/lint G06; Prism SQL/sessions/resources G07; browsers/caches G08; delivery/retention G09; admission/demo G10; builds/registry/CI G11; trust G12; operations/restore G13; complete journeys/reports G14; Echo promotion G15.
+The 995 AP03 source decisions targeting these acceptance pages include local subtests and historical failed runs; each source does not create a new live test. The `ap04_extraction.acceptance` field in the [existing review ledger](../../blueprint/review-ledger.jsonl) maps every one to specific gates or this provenance section. It retains each AP03 obligation and original source blob. The mapping uses AP03 content review and AP04 obligation reconciliation; AP04 did not reread or rerun every raw historical log. They are consolidated by obligation: contracts/codecs G01; journals/replay G02; workers/supervisors G03; approvals G04; Git/workspaces G05; providers/compiler/lint G06; Prism SQL/sessions/resources G07; browsers/caches G08; delivery/retention G09; admission/demo G10; builds/registry/CI G11; trust G12; operations/restore G13; complete journeys/reports G14; Echo promotion G15.
 
 No raw log alone grants acceptance. The selected current local dispositions and original finding identities are retained in the [compact provenance index](../decisions/acceptance.md). Historical failures remain reachable at immutable source references. Earlier and final release/Buster/registry test counts are not additive; truncated captures, failed diagnostic chains, timing instability, inherited lint/type failures and zero-execution preparation matrices remain limited evidence. A filename containing “native”, “final” or “independent” does not extend the scope actually executed.
 

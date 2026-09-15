@@ -21,7 +21,7 @@ D12 replaces the earlier requirement to run every operational check before closi
 
 ## Reading the index
 
-The pinned register contains **141 locally verified**, **2 implemented but incomplete**, **3 in progress** and **8 open** original findings. Five additional integration findings are locally verified separately. GitHub issue #7 and the later GitOps revision mismatch are outside the original 154. Historical 39/47/84-item working sets are overlapping checkpoints, not additional findings.
+The pinned register contains **141 locally verified**, **2 implemented but incomplete**, **3 in progress** and **8 open** original findings. Five additional integration findings are locally verified separately. GitHub issue #7, the later GitOps revision mismatch and the preference-decay approval conflict are outside the original 154. Historical 39/47/84-item working sets are overlapping checkpoints, not additional findings.
 
 Each row preserves ID, local disposition, implementation reference and one selected documented evidence source. The [pinned original register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) retains the full original finding text, previous evidence and its limitations. A commit or report is provenance, not a claim that AP04 reran its tests. An implementation reference for an incomplete finding identifies an intermediate change.
 
@@ -146,7 +146,7 @@ Operational evidence: [G07](../status/acceptance.md#g07). This gate groups the r
 
 | Finding | Local disposition | Implementation reference | Selected evidence |
 | --- | --- | --- | --- |
-| PATH-T02-001 | Locally verified | [ac6f673](https://github.com/datrab/kubeclaw/commit/ac6f673) | [Evidence](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/wave49-prism-control-independent-review.md) |
+| PATH-T02-001 | Locally verified | `ac6f673` (historical short reference; not resolvable) | [Evidence](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/wave49-prism-control-independent-review.md) |
 | PATH-T02-002 | Locally verified | [d109cfd9](https://github.com/datrab/kubeclaw/commit/d109cfd917514e3cc526135c4df70b98a9f766f0) | [Evidence](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/pr6-local-acceptance.md) |
 | PATH-T02-003 | Locally verified | [d109cfd9](https://github.com/datrab/kubeclaw/commit/d109cfd917514e3cc526135c4df70b98a9f766f0) | [Evidence](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/wave47-root-review.md) |
 | PCR-PRISM-AGENT-BRIDGE-001 | Locally verified | [06fbf800](https://github.com/datrab/kubeclaw/commit/06fbf800e7070597c5d481bda6e9dad2aedd653e) | [Evidence](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/pr6-local-acceptance.md) |
@@ -275,7 +275,7 @@ Operational evidence: [G14](../status/acceptance.md#g14). This gate groups the r
 | PCR-PREFLIGHT-001 | Locally verified | [45259142](https://github.com/datrab/kubeclaw/commit/452591423dd19e987454137193a50d6afe615b5f) | [Evidence](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/preflight-declarations.md) |
 | PCR-PREPORT-001 | Locally verified | [2e17a3d0](https://github.com/datrab/kubeclaw/commit/2e17a3d04cc460851031234890c0accfaff78b09) | [Evidence](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/report-identity.md) |
 | PCR-SCAFFOLD-001 | Locally verified | [800cba40](https://github.com/datrab/kubeclaw/commit/800cba4033c11337e31d34de11dc6cf66ca10282) | [Evidence](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/scaffold-publication.md) |
-| T01-F01 | Locally verified | [48320e8](https://github.com/datrab/kubeclaw/commit/48320e8) | [Finding and checkpoint](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) |
+| T01-F01 | Locally verified | `48320e8` (historical short reference; not resolvable) | [Finding and checkpoint](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) |
 | T01-F02 | Locally verified | [5b7f8c69](https://github.com/datrab/kubeclaw/commit/5b7f8c694dc3aa2c05edb45ad8d88483bcdc36b2) | [Evidence](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/pr6-local-acceptance.md) |
 | T15-F01 | Locally verified | [86b11c0c](https://github.com/datrab/kubeclaw/commit/86b11c0c7e58cbb7f87ef35bd67bbbccdfad6b37) | [Evidence](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/pr6-local-acceptance.md) |
 
@@ -298,3 +298,5 @@ Real local processes, Git operations, HTTP servers, Helm renders, the Distributi
 Earlier failures, skips, missing browsers or shell tools, truncated logs, unchanged timing failures and inherited lint/type failures are not retroactively successes. A later correction closes only the demonstrated cause. Limited readiness, cache, supervisor or resource tests do not automatically prove complete orphan cleanup, whole-process CPU ownership or recovery across services.
 
 AP04 migrates status and provenance. It does not run new runtime, cluster, browser, PostgreSQL or receiver acceptance tests and closes none of the 13 incomplete implementation findings.
+
+The inherited implementation references `48320e8` (T01-F01) and `ac6f673` (PATH-T02-001) cannot be resolved in the checkout or GitHub (checked 2026-09-15). They are retained as historical text, not presented as a valid commit link. The pinned selected evidence and original D12 disposition remain available; this does not invent replacement proof or reopen the finding.

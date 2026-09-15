@@ -1,6 +1,6 @@
 # Documentation transformation blueprint
 
-Status: AP01–AP03 completed and rechecked; 2,887 content-reviewed decisions, no open AP03 handoff. AP04 is in progress; see the [saved checkpoint](AP04-checkpoint.md).
+Status: AP01–AP03 completed and rechecked; 2,887 content-reviewed decisions, no open AP03 handoff. AP04 extraction is complete; see the [completion report](AP04-checkpoint.md). AP05 is next.
 Scope: documentation migration; implementation and live acceptance remain separate.
 
 KubeClaw documentation must let a new reader understand the system, an operator complete operational tasks, and a developer build supported extensions without previous conversations. Detail is required where it explains behavior or lets a task finish. More pages are not a measure of completeness.
@@ -15,7 +15,7 @@ KubeClaw documentation must let a new reader understand the system, an operator 
 6. [Tooling and publication](06-automation-and-publication.md): reuse existing tools, add only necessary checks, keep unfinished work visible.
 7. [Documentation quality standard](07-documentation-quality-standard.md): depth, decision reasons, ASD-STE100, source evidence, task acceptance and a future documentation agent.
 
-[Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the original inventory and executable dependencies. The [AP03 completion report](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) resolves the 285 former handoff blockers and additional candidates. Migration remains pending; AP04 preserves open work, separate live acceptance, decisions and test dependencies before rewriting.
+[Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the original inventory and executable dependencies. The [AP03 completion report](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) resolves the 285 former handoff blockers and additional candidates. Full source-document migration remains pending. AP04 has preserved open work, separate live acceptance, decisions and evidence boundaries before rewriting. Its extraction fields are additions to the existing ledger, not a new full register.
 
 ## Authority and historical outputs
 

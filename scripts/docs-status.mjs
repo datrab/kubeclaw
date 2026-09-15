@@ -2,16 +2,31 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source = 'docs/site/status/open-issues.json';
 const output = 'docs/site/status/open-issues.md';
 const requiredText = ['id', 'origin', 'title', 'severity', 'status', 'problem', 'impact', 'current_state', 'live_validation'];
 const requiredLists = ['components', 'remaining_work', 'reproduction', 'acceptance_criteria'];
+const provenanceFile = path.join(root, 'docs/site/decisions/acceptance.md');
+// The original identity universe is fixed; local dispositions can change.
+const originalIdentityDigest = 'a2c2dc18c31f88a34b15b54a5922839f62816d8e86de0a1cbe8e6da43daa77d7';
+const validDate = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/u.test(value) &&
+  Number.isFinite(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value;
+
+export function originalFindingIds(provenance = fs.readFileSync(provenanceFile, 'utf8')) {
+  const ids = [...provenance.matchAll(/^\| ([A-Z0-9-]+) \|/gmu)].map(match => match[1]).filter(id => id !== '---' && !id.startsWith('INT-')).sort();
+  if (ids.length !== 154 || new Set(ids).size !== 154 || createHash('sha256').update(ids.join('\n')).digest('hex') !== originalIdentityDigest) {
+    throw new Error('Original finding provenance does not match the fixed 154 IDs');
+  }
+  return new Set(ids);
+}
 
 export function validateStatus(data) {
+  const originalIds = originalFindingIds();
   if (data.schema_version !== 1 || !Array.isArray(data.issues)) throw new Error('Unsupported issue register schema');
-  if (!/^\d{4}-\d{2}-\d{2}$/u.test(data.updated_at ?? '') || !/^[a-f0-9]{40}$/u.test(data.source_baseline ?? '')) throw new Error('Dated immutable source baseline required');
+  if (!validDate(data.updated_at) || !/^[a-f0-9]{40}$/u.test(data.source_baseline ?? '')) throw new Error('Dated immutable source baseline required');
   if (typeof data.purpose !== 'string' || !data.purpose.trim() || typeof data.verification_policy !== 'string' || !data.verification_policy.trim()) throw new Error('Register purpose and verification policy required');
   const ids = new Set();
   for (const issue of data.issues) {
@@ -20,8 +35,9 @@ export function validateStatus(data) {
     }
     if (ids.has(issue.id)) throw new Error(`Duplicate issue: ${issue.id}`);
     ids.add(issue.id);
+    if (originalIds.has(issue.id) !== (issue.origin === 'original-154')) throw new Error(`${issue.id}: original membership/counts mismatch`);
     if (!Object.hasOwn(data.status_semantics, issue.status)) throw new Error(`${issue.id}: status has no defined semantics`);
-    if (!['offen', 'in Bearbeitung', 'implementiert'].includes(issue.status)) throw new Error(`${issue.id}: closed finding belongs in closure provenance`);
+    if (!['open', 'in-progress', 'partially-implemented'].includes(issue.status)) throw new Error(`${issue.id}: closed finding belongs in closure provenance`);
     for (const field of requiredLists) {
       if (!Array.isArray(issue[field]) || !issue[field].length || issue[field].some(item => typeof item !== 'string' || !item.trim())) {
         throw new Error(`${issue.id}: incomplete ${field}`);
@@ -33,6 +49,8 @@ export function validateStatus(data) {
       const externalRecord = /^https:\/\/github\.com\/datrab\/kubeclaw\/(?:issues\/\d+|actions\/runs\/\d+)(?:[/#?].*)?$/u.test(ref.url);
       if (!pinned && !externalRecord) throw new Error(`${issue.id}: source must be immutable or an explicitly dated issue/run`);
       if (!ref.scope) throw new Error(`${issue.id}: source scope required`);
+      if (externalRecord && (!validDate(ref.observed_at) || ref.observed_at > data.updated_at)) throw new Error(`${issue.id}: valid source observation date required`);
+      if (pinned && ref.commit && !ref.url.includes(`/blob/${ref.commit}/`)) throw new Error(`${issue.id}: source commit mismatch`);
     }
     if (!Array.isArray(issue.dependencies)) throw new Error(`${issue.id}: dependencies must be explicit`);
   }
@@ -85,7 +103,7 @@ export function renderStatus(data) {
       '### Dependencies', '', issue.dependencies.length ? list(issue.dependencies.map(id => `[${id}](#${anchor(id)})`)) : 'No dependency on another entry in this register is established.', '',
       '### Evidence boundary', '', issue.evidence.assessment, '',
       ...Object.entries(issue.evidence).filter(([key]) => key !== 'assessment').map(([key, value]) => `- **${key.replaceAll('_', ' ')}:** ${value === null ? 'Not established.' : typeof value === 'object' ? JSON.stringify(value) : value}`), '',
-      '### Sources', '', list(issue.sources.map(ref => `[${ref.path ?? ref.url}](${ref.url}) — ${ref.scope}`)), '');
+      '### Sources', '', list(issue.sources.map(ref => `[${ref.path ?? ref.url}](${ref.url}) — ${ref.scope}${ref.observed_at ? ` Observed: ${ref.observed_at}.` : ''}`)), '');
   }
   return `${lines.join('\n')}\n`;
 }
