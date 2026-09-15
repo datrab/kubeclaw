@@ -1,6 +1,6 @@
 # Documentation transformation blueprint
 
-Status: AP02 planning baseline, revised after the AP01 recheck.
+Status: AP02 planning baseline completed and rechecked; AP03 individual review in progress.
 Scope: documentation migration; implementation and live acceptance remain separate.
 
 KubeClaw documentation must let a new reader understand the system, an operator complete operational tasks, and a developer build supported extensions without previous conversations. Detail is required where it explains behavior or lets a task finish. More pages are not a measure of completeness.
@@ -14,7 +14,7 @@ KubeClaw documentation must let a new reader understand the system, an operator 
 5. [Decision preservation](05-decision-record-catalogue.md): retain reasoning without confusing acceptance with implementation.
 6. [Tooling and publication](06-automation-and-publication.md): reuse existing tools, add only necessary checks, keep unfinished work visible.
 
-[Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the complete source inventory, plugin comparison, open findings and executable review dependencies. AP03 is next: review every document, using this blueprint; do not treat AP01 classifications as completed content review.
+[Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the complete source inventory, plugin comparison, open findings and executable review dependencies. AP03 is in progress: review every document, using this blueprint; do not treat AP01 classifications as completed content review.
 
 ## Authority and historical outputs
 
@@ -36,7 +36,7 @@ The current baseline is commit `6979bced8e5bbca90568276256e7328d93a1e072`. PR #1
 
 The six artifacts now agree on scope, chapter identifiers, review states, evidence rules, decision status and migration gates. Prism is represented as a real source/package/role surface with separately assessed integration and live status. Pipeline, OpenClaw and Codex plugins have distinct coverage. Operations includes complete recovery and loss-of-access scenarios. Examples and readable fallback diagrams suffice; a new website framework is not a prerequisite.
 
-This revision changes the blueprint and work plan only. It does not regenerate old inventories, migrate product pages, delete reviews, fix runtime findings, or claim that existing full documentation CI is green. Those tasks retain their explicit work-package ownership.
+The AP02 revision changed the blueprint and work plan only. It does not regenerate old inventories, migrate product pages, delete reviews, fix runtime findings, or claim that existing full documentation CI is green. Those tasks retain their explicit work-package ownership.
 
 
 ## AP02 recheck
@@ -54,4 +54,11 @@ Rechecked against the AP02 work-package checklist and the user's end goal. All s
 | Keep examples usable outside the original operator environment | Artifacts 2 and 4 public/private configuration separation, prerequisites and effective-result checks |
 | Avoid duplicate documentation over time | Artifact 3 per-topic deletion; artifact 6 maintenance ownership and final removal of temporary migration records |
 
-The recheck made engine authoring, configuration-only extension, routine backup operation and portable operator examples explicit. It also assigned ongoing ownership and the disposition of these temporary migration records. These are strengthened acceptance requirements, not newly implemented product features. AP03 has not started.
+The recheck made engine authoring, configuration-only extension, routine backup operation and portable operator examples explicit. It also assigned ongoing ownership and the disposition of these temporary migration records. These are strengthened acceptance requirements, not newly implemented product features. AP03 was not yet started at that recheck; its current progress is recorded below.
+
+## AP03 individual document review
+
+AP03 is in progress: 52 documents have individual content decisions; migration
+and deletion are still pending. See the [progress and scope report](AP03-progress.md)
+and the [human-maintained review ledger](review-ledger.jsonl). Captured files are
+not content-reviewed. The ledger is outside the old generated output directory.

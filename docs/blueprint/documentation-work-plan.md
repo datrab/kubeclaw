@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 5 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 als Nächstes
+Stand: 15.09.2026 · Version 6 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 in Arbeit (52 Dokumente geprüft)
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -27,7 +27,7 @@ Der vorhandene Blueprint wird kritisch überarbeitet. Seine Kategorien, Seitenst
 
 ## 3. Übersicht der Arbeitspakete
 
-AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
+AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist **in Arbeit**, AP04–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
 
 | ID | Arbeitspaket | Voraussetzung | Greifbares Ergebnis |
 | --- | --- | --- | --- |
@@ -71,6 +71,11 @@ Die Umsetzung erfolgt themenweise in überschaubaren Änderungen. AP10 läuft be
 **Abgeschlossen, wenn:** Der Blueprint beschreibt eine umsetzbare, zusammenhängende Dokumentation, klare Prüfregeln und einen Informations-erhaltenden Löschprozess. Jede geplante Seite hat einen Zweck und eine Zielgruppe; die Struktur darf nach AP03 begründet korrigiert werden.
 
 ### AP03 — Jedes Dokument prüfen
+
+**Zwischenstand:** 52 Dokumente einzeln geprüft (35 erweitern, 17 extrahieren);
+2.827 Quelldateien noch ungeprüft. [Prüfbericht und nächstes Themenpaket](AP03-progress.md),
+[manuelles Register](review-ledger.jsonl). Die folgenden Gesamtaufgaben bleiben
+bis zur Prüfung des vollständigen Umfangs offen.
 
 - [ ] Dateien in thematischen Paketen von etwa 10–20 Dokumenten bearbeiten; umfangreiche Designs entsprechend kleiner bündeln.
 - [ ] Jedes Dokument vollständig lesen. Aktuelle Fakten, Entscheidungen, Anleitungen, Beispiele, Pläne, historische Ergebnisse und überholte Aussagen unterscheiden.
@@ -222,7 +227,7 @@ Bei Wiederaufnahme: aktuellen Commit/PR-Stand abgleichen, den letzten gesicherte
 
 ## 6. Nächster Schritt
 
-**AP01 und AP02 sind abgeschlossen. Als Nächstes AP03 beginnen:** den human-gepflegten Prüfledger getrennt von alten Generatorausgaben anlegen, den aktuellen Bestand abgleichen und die Dokumente themenweise vollständig lesen und entscheiden. Die AP01-Ergebnisse liegen unter [ap01-baseline/](ap01-baseline/README.md). Bestehende Dokumente und Reviews wurden noch nicht verändert oder gelöscht.
+**AP03 fortsetzen:** Die ersten 52 Einzelentscheidungen sind im [Prüfregister](review-ledger.jsonl) gesichert. Als Nächstes die fünf verbleibenden Operations-Dokumente zu Worker-Hosts, Registry, Versionen/Images, Worker-Trust und Prism-Betrieb prüfen; danach Deployment, Sicherheit und die Architektur-/Plugin-Inventare. Umfang, Prüfgrenzen und Folgeaufträge stehen im [AP03-Zwischenbericht](AP03-progress.md). Die AP01-Ergebnisse liegen unter [ap01-baseline/](ap01-baseline/README.md). Bestehende Dokumente und Reviews wurden noch nicht verändert oder gelöscht.
 
 ## 7. Quellen des Ausgangsstands
 
