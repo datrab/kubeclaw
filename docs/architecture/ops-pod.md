@@ -117,14 +117,15 @@ storage does not provide recovery from loss of the storage node.
    It checks `codex login status`, with a 15-second timeout and five-second waits
    while unauthenticated.
 4. The operator runs device login through `kubectl exec`. The running supervisor
-   notices the persistent login and runs `codex remote-control start`. It waits up
+   notices the persistent login and runs `codex app-server --remote-control --listen unix://`. It waits up
    to twenty seconds for the local control socket used by `pair` to accept connections.
 5. Pairing is a separate CLI action. A process being alive does not prove that a
    mobile client is connected or that the remote service is reachable.
-6. A lost control socket causes `codex remote-control stop` followed by a retry
-   after ten seconds. SIGTERM interrupts startup/waits and stops the daemon. Stop
-   has a ten-second limit; failed cleanup exits the supervisor so Kubernetes
-   disposes of the container. The Pod termination grace period is 30 seconds.
+6. A lost control socket causes the supervisor to terminate and reap the app-server,
+   then retry after ten seconds. SIGTERM interrupts startup/waits and stops the child.
+   Shutdown has a ten-second limit before killing and reaping the child.
+   The Pod termination grace period is 30 seconds. The standalone daemon and its
+   automatic updater are not used; the server runs from the pinned image.
 
 Interactive access through the deployment helper uses `/opt/codex/shell.sh` to
 load and export the mounted bearer for the new shell. It does not depend on

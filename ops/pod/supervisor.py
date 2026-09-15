@@ -50,9 +50,11 @@ def wait_for_control(address, timeout=20):
         stop.wait(0.2)
     return False
 
-def run_control(command, env, timeout=20):
+def run_control(command, env, timeout=20, quiet=False):
     global child
-    child = subprocess.Popen(command, env=env)
+    child = subprocess.Popen(command, env=env,
+                             stdout=subprocess.DEVNULL if quiet else None,
+                             stderr=subprocess.DEVNULL if quiet else None)
     try:
         return child.wait(timeout=timeout)
     except subprocess.TimeoutExpired:
@@ -63,6 +65,7 @@ def run_control(command, env, timeout=20):
         child = None
 
 def main():
+    global child
     home = Path.home()
     config_dir = home / '.codex'
     config_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
@@ -77,15 +80,15 @@ def main():
     if len(env['KUBECLAW_MCP_TOKEN']) < 32:
         raise RuntimeError('MCP bearer token must contain at least 32 characters')
     control_socket = config_dir / 'app-server-control' / 'app-server-control.sock'
-    # Both start and stop address the same persistent home as remote-control pair.
+    # Use the daemon's app-server transport directly under container supervision.
+    # remote-control start requires a standalone install and launches an updater.
     command = ['codex', '-c', 'mcp_servers.kubeclaw_ops.url="http://127.0.0.1:8080/mcp"',
                '-c', 'mcp_servers.kubeclaw_ops.bearer_token_env_var="KUBECLAW_MCP_TOKEN"',
-               'remote-control']
+               'app-server', '--remote-control', '--listen', 'unix://']
     while not stop.is_set():
         status('waiting-for-login')
         try:
-            logged_in = subprocess.run(['codex', 'login', 'status'], stdout=subprocess.DEVNULL,
-                                       stderr=subprocess.DEVNULL, timeout=15, env=env).returncode == 0
+            logged_in = run_control(['codex', 'login', 'status'], env, timeout=15, quiet=True) == 0
         except subprocess.TimeoutExpired:
             logged_in = False
         if not logged_in:
@@ -95,20 +98,25 @@ def main():
             break
         status('remote-process-starting', controlSocketReady=False)
         try:
-            code = run_control([*command, 'start'], env)
-            if code == 0 and wait_for_control(control_socket):
-                print('Codex daemon control socket is reachable; pairing is available.', flush=True)
-                while not stop.is_set() and control_ready(control_socket):
+            child = subprocess.Popen(command, env=env)
+            if wait_for_control(control_socket) and child.poll() is None:
+                print('Codex app-server control socket is reachable; pairing can be attempted.', flush=True)
+                while not stop.is_set() and child.poll() is None and control_ready(control_socket):
                     status('remote-process-running', controlSocketReady=True)
                     stop.wait(2)
             else:
-                print(f'Codex daemon failed to become ready (start exit {code}).', flush=True)
+                print(f'Codex app-server failed to become ready (exit {child.poll()}).', flush=True)
         finally:
             status('remote-process-stopping', controlSocketReady=False)
-            # Stop the daemon, not merely the short-lived start command. If it
-            # cannot be stopped, fail so Kubernetes disposes of the entire container.
-            if run_control([*command, 'stop'], env, timeout=10) != 0:
-                raise RuntimeError('Codex daemon stop failed')
+            if child is not None:
+                if child.poll() is None:
+                    child.terminate()
+                try:
+                    child.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    child.kill()
+                    child.wait()
+                child = None
         status('remote-process-exited', controlSocketReady=False)
         stop.wait(10)
     status('stopped')
