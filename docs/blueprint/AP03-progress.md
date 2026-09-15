@@ -4,9 +4,9 @@ Stand: 15.09.2026. **In Arbeit; nicht abgeschlossen.**
 
 ## Ergebnis dieses Zwischenstands
 
-312 Dokumente wurden vollständig gelesen und einzeln entschieden: sämtliche
-97 Root-/Komponententexte, beide Agentenanweisungen und 213 Dokumentationstexte.
-Die Entscheidungen sind **139 erweitern, 166 Informationen extrahieren,
+364 Dokumente wurden vollständig gelesen und einzeln entschieden: sämtliche
+97 Root-/Komponententexte, beide Agentenanweisungen und 265 Dokumentationstexte.
+Die Entscheidungen sind **139 erweitern, 218 Informationen extrahieren,
 6 behalten und 1 entfernen**. Die Entfernung betrifft einen redundanten
 Projekt-Runtime-Verweis; seine Links und gegebenenfalls benötigten Angaben müssen
 zuerst übernommen werden. Keine automatische Erfassung zählt als Inhaltsprüfung.
@@ -36,15 +36,15 @@ inhaltliche bzw. funktionale Einzelbewertung, keine bloße Dateinamensentscheidu
 | Gruppe | Dateien | Davon inhaltlich geprüft |
 | --- | ---: | ---: |
 | Root- und komponentennahe Dokumentation | 97 | 97 |
-| Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 213 |
+| Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 265 |
 | Dokumentationsunterstützung | 82 | 0 |
 | Neue AP01-/Plan-Verwaltungsdateien | 7 | 0 |
 | Review-Texte | 479 | 0 |
 | Review-Nachweise und Register | 1.832 | 0 |
 | Agentenanweisungen | 2 | 2 |
-| **Gesamt** | **2.879** | **312** |
+| **Gesamt** | **2.879** | **364** |
 
-**2.567 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 648
+**2.515 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 596
 Markdown-Dokumente. Die bereits erfolgte AP02-Blueprint-Abnahme ersetzt diese
 dateibezogene Migrationsentscheidung nicht. Die beiden neuen AP03-Arbeitsdateien
 dieses Zwischenstands sind Verwaltungszugänge nach dem eingefrorenen Quellstand;
@@ -114,7 +114,7 @@ Prüfstatus beibehalten. Der Quellcommit dieses Berichts bindet auch die
 Alle Operations-, Deployment- und Sicherheitsdokumente, die ersten sieben
 Architektureinstiege, alle 51 Katalogseiten und sämtliche 95 weiteren
 Komponententexte/Agentenanweisungen sind jetzt einzeln entschieden. Als Nächstes
-folgen die übrigen 169 Markdown-Texte außerhalb der Reviews und die 479
+folgen die übrigen 117 Markdown-Texte außerhalb der Reviews und die 479
 Review-Texte samt ihren Nachweisen. Verwaltungsdateien und technische
 Dokumentationsunterstützung erhalten ebenfalls Einzelentscheidungen.
 
@@ -196,3 +196,31 @@ mit allen 28 Zeilen gelesen; seine Verweise und benötigten Originalnachweise
 müssen vor der Entfernung zusammen mit dem Generator migriert werden.
 Historische lokale Pass-Ergebnisse und akzeptierte Live-Deferrals werden
 nicht in aktuelle Erfolgsbehauptungen umgedeutet.
+
+## Fortsetzung: Verträge, Unit, Security, Size-Budget und Migration
+
+Weitere 52 Texte wurden vollständig gelesen und entschieden: die Vertrags-,
+Registry-, Resolver-, Runner-, Reportadapter- und Remote-Phasen, sämtliche
+Unit-Phasentexte einschließlich aller 93 Paritätszeilen, Security- und
+Size-Budget-Anleitungen sowie der Migrationsworkflow und die sechs ausführlichen
+Suite-Closeouts. Insgesamt sind jetzt 364 Texte inhaltlich entschieden.
+
+Zu bewahren sind insbesondere exakte Reportzahlen trotz begrenzter Details,
+Originalberichte, die getrennten Budgets für Provider- und normalisierte
+Resultate, unveränderliche Adapterauswahl und sichere Wiederaufnahme von
+Ergebnisübertragungen. Alte Angaben zur Signierung, zum separaten Graph-Writer,
+zu optionalen cgroups und zu aktiven Legacy-Bridges widersprechen neueren
+Quellen; die Entscheidungen nennen jeweils die nötige Auflösung.
+
+Die Unit-Paritätsseite enthält weitgehend generische Begründungen. Vor ihrer
+Entfernung müssen die einzelnen UNIT-IDs gegen die eigentliche Baseline
+aufgelöst werden. Der Size-Budget-Paritätsbericht nennt fälschlich noch 34
+statt 35 Punkte. Die allgemeinen Migrationstemplates werden mit dem verbesserten
+Blueprint zusammengeführt; ihre starren Seitenvorgaben sollen keinen neuen
+Bestand redundanter Phasendokumente erzeugen.
+
+Die 13 abgeschlossenen Suite-Quellumstellungen sind nicht mit den 13 offenen
+Findings zu verwechseln. Elf Suite-Betriebsabnahmen stehen in der historischen
+Migrationsübersicht noch aus; deren aktuellen Nachweisstand übernimmt AP04
+separat. Keine Prüfung in diesem Abschnitt ist eine neu ausgeführte Runtime-,
+Scan-, Native- oder Clusterabnahme.

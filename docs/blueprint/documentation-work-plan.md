@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 9 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 in Arbeit (312 Dokumente geprüft)
+Stand: 15.09.2026 · Version 10 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 in Arbeit (364 Dokumente geprüft)
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -72,8 +72,8 @@ Die Umsetzung erfolgt themenweise in überschaubaren Änderungen. AP10 läuft be
 
 ### AP03 — Jedes Dokument prüfen
 
-**Zwischenstand:** 312 Dokumente einzeln geprüft (139 erweitern, 166 extrahieren, 6 behalten, 1 entfernen);
-2.567 Quelldateien noch ungeprüft. [Prüfbericht und nächstes Themenpaket](AP03-progress.md),
+**Zwischenstand:** 364 Dokumente einzeln geprüft (139 erweitern, 218 extrahieren, 6 behalten, 1 entfernen);
+2.515 Quelldateien noch ungeprüft. [Prüfbericht und nächstes Themenpaket](AP03-progress.md),
 [manuelles Register](review-ledger.jsonl). Die folgenden Gesamtaufgaben bleiben
 bis zur Prüfung des vollständigen Umfangs offen.
 
@@ -227,7 +227,7 @@ Bei Wiederaufnahme: aktuellen Commit/PR-Stand abgleichen, den letzten gesicherte
 
 ## 6. Nächster Schritt
 
-**AP03 fortsetzen:** Die ersten 312 Einzelentscheidungen sind im [Prüfregister](review-ledger.jsonl) gesichert. Operations, Deployment, Sicherheit, alle Katalogseiten und sämtliche Komponenten-/Agententexte sind einzeln bewertet. Als Nächstes die übrigen Architektur-/Referenztexte sowie Reviews und Nachweise prüfen. Umfang, Prüfgrenzen und Folgeaufträge stehen im [AP03-Zwischenbericht](AP03-progress.md). Die AP01-Ergebnisse liegen unter [ap01-baseline/](ap01-baseline/README.md). Bestehende Dokumente und Reviews wurden noch nicht verändert oder gelöscht.
+**AP03 fortsetzen:** Die ersten 364 Einzelentscheidungen sind im [Prüfregister](review-ledger.jsonl) gesichert. Operations, Deployment, Sicherheit, alle Katalogseiten und sämtliche Komponenten-/Agententexte sind einzeln bewertet. Als Nächstes die übrigen Architektur-/Referenztexte sowie Reviews und Nachweise prüfen. Umfang, Prüfgrenzen und Folgeaufträge stehen im [AP03-Zwischenbericht](AP03-progress.md). Die AP01-Ergebnisse liegen unter [ap01-baseline/](ap01-baseline/README.md). Bestehende Dokumente und Reviews wurden noch nicht verändert oder gelöscht.
 
 ## 7. Quellen des Ausgangsstands
 
