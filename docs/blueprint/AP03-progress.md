@@ -4,10 +4,10 @@ Stand: 15.09.2026. **In Arbeit; nicht abgeschlossen.**
 
 ## Ergebnis dieses Zwischenstands
 
-52 Dokumente wurden vollständig gelesen und einzeln entschieden: 42 Einstiegs-,
-Beitrags-, Entwickler-, Operator- und Site-Texte sowie zehn Betriebsdokumente zu
+57 Dokumente wurden vollständig gelesen und einzeln entschieden: 42 Einstiegs-,
+Beitrags-, Entwickler-, Operator- und Site-Texte sowie 15 Betriebsdokumente zu
 Datenhaltung, Migration, Scans und Aufbewahrung. Die Hauptentscheidungen sind
-**35 erweitern und 17 Informationen extrahieren**. Keine automatische Erfassung
+**40 erweitern und 17 Informationen extrahieren**. Keine automatische Erfassung
 zählt als Inhaltsprüfung. Noch kein Ersatztext ist abgenommen und noch keine
 Quelldatei zur Löschung freigegeben.
 
@@ -35,15 +35,15 @@ inhaltliche bzw. funktionale Einzelbewertung, keine bloße Dateinamensentscheidu
 | Gruppe | Dateien | Davon inhaltlich geprüft |
 | --- | ---: | ---: |
 | Root- und komponentennahe Dokumentation | 97 | 4 |
-| Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 48 |
+| Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 53 |
 | Dokumentationsunterstützung | 82 | 0 |
 | Neue AP01-/Plan-Verwaltungsdateien | 7 | 0 |
 | Review-Texte | 479 | 0 |
 | Review-Nachweise und Register | 1.832 | 0 |
 | Agentenanweisungen | 2 | 0 |
-| **Gesamt** | **2.879** | **52** |
+| **Gesamt** | **2.879** | **57** |
 
-**2.827 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 908
+**2.822 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 903
 Markdown-Dokumente. Die bereits erfolgte AP02-Blueprint-Abnahme ersetzt diese
 dateibezogene Migrationsentscheidung nicht. Die beiden neuen AP03-Arbeitsdateien
 dieses Zwischenstands sind Verwaltungszugänge nach dem eingefrorenen Quellstand;
@@ -54,7 +54,7 @@ Prüfzahlen oder vorausberechneten Commit-Hashes.
 
 Für die Verweissuche liegen alle 965 Markdown-Dateien des Quellstands vor. Eine
 Suche über 2.949 anhand ihrer Git-Blobs verifizierte Textquellen erfasst 424
-eingehende Literal-/Markdown-Link-Kandidaten für die 52 geprüften Texte.
+eingehende Literal-/Markdown-Link-Kandidaten für die ersten 52 geprüften Texte.
 Das ist **keine vollständige Abhängigkeitsabnahme**: dynamisch zusammengesetzte
 Pfade, Referenzlinks, Anker, HTML/MDX und weitere Verbraucher müssen vor der
 jeweiligen Migration zusätzlich geprüft werden. Kandidaten in generierten
@@ -110,10 +110,8 @@ eingetragen wird. Nicht stillschweigend den Blob austauschen und den alten
 Prüfstatus beibehalten. Der Quellcommit dieses Berichts bindet auch die
 `captured`-Datensätze; geprüfte Datensätze nennen ihn zusätzlich ausdrücklich.
 
-Als Nächstes die fünf verbleibenden Operations-Dokumente vollständig prüfen:
-`native-worker-host-pools.md`, `registry-clients.md`,
-`runtime-versions-and-images.md`, `worker-trust-runbook.md` und
-`prism-operator-guide.md`. Danach Deployment-/Sicherheitsdokumente und die
+Die fünf verbleibenden Operations-Dokumente sind ebenfalls einzeln geprüft.
+Als Nächstes Deployment-/Sicherheitsdokumente und die
 Architektur-/Plugin-Inventare abgleichen. Das vorhandene Plugin-Inventar wird
 wiederverwendet; die in AP01 gefundenen Scope-Unterschiede und fehlenden
 Manifestzuordnungen bleiben Bestandteil der Prüfung. Anschließend folgen weitere
@@ -123,3 +121,21 @@ inhaltlich abgegrenzten Paketen.
 Die 13 unvollständigen Findings, getrennte Live-Abnahmen und das zusätzliche
 GitHub-Issue #7 bleiben erhalten. Aus diesen Dokumentationsentscheidungen folgt
 keine Schließung technischer Arbeit und keine Löschfreigabe für Review-Nachweise.
+
+## Fortsetzung: Hostbetrieb, Registry, Releases und Prism
+
+Die fünf zusätzlichen Entscheidungen beziehen sich auf Commit
+`a8a5b526efbe26b726f8fd5297c98bcbd2f221b7`; ihre Quellblobs sind gegenüber dem
+eingefrorenen Bestand unverändert. Alle 15 Texte unter `docs/operations/`
+sind damit inhaltlich bewertet, aber noch nicht überarbeitet oder abgenommen.
+Die oben genannten 424 Verweiskandidaten beschreiben den ersten 52er-Stand;
+die zusätzlichen Kandidaten stehen direkt in den fünf neuen Einträgen.
+
+Bestätigt sind der native-only Prism-Einstieg mit verpflichtendem Host-Preflight,
+die veraltete optionale Aktivierungsbeschreibung im Host-Handbuch und die
+unvollständigen alten Helm-Rezepte im Trust-Runbook. Die Versionsdokumentation
+benötigt außerdem eine konsistente Zuständigkeitskarte: Infrastruktur-Pins und
+Chart-Locks werden inzwischen zentral geprüft; der erwähnte Sechserumfang der
+Checksum-Prüfung ist veraltet. Registry-Anweisungen müssen insbesondere den
+privaten Node-Konfigurationsweg und die noch fehlende v2-zu-v3-Migration erklären.
+Keine dieser Inhaltsprüfungen ersetzt Host-, Image- oder Cluster-Abnahmen.

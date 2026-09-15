@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 6 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 in Arbeit (52 Dokumente geprüft)
+Stand: 15.09.2026 · Version 7 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 in Arbeit (57 Dokumente geprüft)
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -72,8 +72,8 @@ Die Umsetzung erfolgt themenweise in überschaubaren Änderungen. AP10 läuft be
 
 ### AP03 — Jedes Dokument prüfen
 
-**Zwischenstand:** 52 Dokumente einzeln geprüft (35 erweitern, 17 extrahieren);
-2.827 Quelldateien noch ungeprüft. [Prüfbericht und nächstes Themenpaket](AP03-progress.md),
+**Zwischenstand:** 57 Dokumente einzeln geprüft (40 erweitern, 17 extrahieren);
+2.822 Quelldateien noch ungeprüft. [Prüfbericht und nächstes Themenpaket](AP03-progress.md),
 [manuelles Register](review-ledger.jsonl). Die folgenden Gesamtaufgaben bleiben
 bis zur Prüfung des vollständigen Umfangs offen.
 
@@ -227,7 +227,7 @@ Bei Wiederaufnahme: aktuellen Commit/PR-Stand abgleichen, den letzten gesicherte
 
 ## 6. Nächster Schritt
 
-**AP03 fortsetzen:** Die ersten 52 Einzelentscheidungen sind im [Prüfregister](review-ledger.jsonl) gesichert. Als Nächstes die fünf verbleibenden Operations-Dokumente zu Worker-Hosts, Registry, Versionen/Images, Worker-Trust und Prism-Betrieb prüfen; danach Deployment, Sicherheit und die Architektur-/Plugin-Inventare. Umfang, Prüfgrenzen und Folgeaufträge stehen im [AP03-Zwischenbericht](AP03-progress.md). Die AP01-Ergebnisse liegen unter [ap01-baseline/](ap01-baseline/README.md). Bestehende Dokumente und Reviews wurden noch nicht verändert oder gelöscht.
+**AP03 fortsetzen:** Die ersten 57 Einzelentscheidungen sind im [Prüfregister](review-ledger.jsonl) gesichert. Alle 15 Operations-Dokumente sind einzeln bewertet. Als Nächstes Deployment, Sicherheit und die Architektur-/Plugin-Inventare prüfen. Umfang, Prüfgrenzen und Folgeaufträge stehen im [AP03-Zwischenbericht](AP03-progress.md). Die AP01-Ergebnisse liegen unter [ap01-baseline/](ap01-baseline/README.md). Bestehende Dokumente und Reviews wurden noch nicht verändert oder gelöscht.
 
 ## 7. Quellen des Ausgangsstands
 
