@@ -1,0 +1,142 @@
+#!/usr/bin/env node
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const source = 'docs/site/status/open-issues.json';
+const output = 'docs/site/status/open-issues.md';
+const requiredText = ['id', 'origin', 'title', 'severity', 'status', 'problem', 'impact', 'current_state', 'live_validation'];
+const requiredLists = ['components', 'remaining_work', 'reproduction', 'acceptance_criteria'];
+const provenanceFile = path.join(root, 'docs/site/decisions/acceptance.md');
+// The original identity universe is fixed; local dispositions can change.
+const originalIdentityDigest = 'a2c2dc18c31f88a34b15b54a5922839f62816d8e86de0a1cbe8e6da43daa77d7';
+const validDate = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/u.test(value) &&
+  Number.isFinite(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value;
+
+export function originalFindingIds(provenance = fs.readFileSync(provenanceFile, 'utf8')) {
+  const ids = [...provenance.matchAll(/^\| ([A-Z0-9-]+) \|/gmu)].map(match => match[1]).filter(id => id !== '---' && !id.startsWith('INT-')).sort();
+  if (ids.length !== 154 || new Set(ids).size !== 154 || createHash('sha256').update(ids.join('\n')).digest('hex') !== originalIdentityDigest) {
+    throw new Error('Original finding provenance does not match the fixed 154 IDs');
+  }
+  return new Set(ids);
+}
+
+export function validateStatus(data, provenance = fs.readFileSync(provenanceFile, 'utf8')) {
+  const originalIds = originalFindingIds(provenance);
+  if (data.schema_version !== 1 || !Array.isArray(data.issues)) throw new Error('Unsupported issue register schema');
+  if (!validDate(data.updated_at) || !/^[a-f0-9]{40}$/u.test(data.source_baseline ?? '')) throw new Error('Dated immutable source baseline required');
+  if (typeof data.purpose !== 'string' || !data.purpose.trim() || typeof data.verification_policy !== 'string' || !data.verification_policy.trim()) throw new Error('Register purpose and verification policy required');
+  const ids = new Set();
+  for (const issue of data.issues) {
+    for (const field of requiredText) {
+      if (typeof issue[field] !== 'string' || !issue[field].trim()) throw new Error(`${issue.id}: missing ${field}`);
+    }
+    if (ids.has(issue.id)) throw new Error(`Duplicate issue: ${issue.id}`);
+    ids.add(issue.id);
+    if (originalIds.has(issue.id) !== (issue.origin === 'original-154')) throw new Error(`${issue.id}: original membership/counts mismatch`);
+    if (!Object.hasOwn(data.status_semantics, issue.status)) throw new Error(`${issue.id}: status has no defined semantics`);
+    if (!['open', 'in-progress', 'partially-implemented'].includes(issue.status)) throw new Error(`${issue.id}: closed finding belongs in closure provenance`);
+    for (const field of requiredLists) {
+      if (!Array.isArray(issue[field]) || !issue[field].length || issue[field].some(item => typeof item !== 'string' || !item.trim())) {
+        throw new Error(`${issue.id}: incomplete ${field}`);
+      }
+    }
+    if (!issue.evidence?.assessment || !Array.isArray(issue.sources) || !issue.sources.length) throw new Error(`${issue.id}: evidence required`);
+    for (const ref of issue.sources) {
+      const pinned = /^https:\/\/github\.com\/datrab\/kubeclaw\/blob\/[a-f0-9]{40}\//u.test(ref.url);
+      const externalRecord = /^https:\/\/github\.com\/datrab\/kubeclaw\/(?:issues\/\d+|actions\/runs\/\d+)(?:[/#?].*)?$/u.test(ref.url);
+      if (!pinned && !externalRecord) throw new Error(`${issue.id}: source must be immutable or an explicitly dated issue/run`);
+      if (!ref.scope) throw new Error(`${issue.id}: source scope required`);
+      if (externalRecord && (!validDate(ref.observed_at) || ref.observed_at > data.updated_at)) throw new Error(`${issue.id}: valid source observation date required`);
+      if (pinned && ref.commit && !ref.url.includes(`/blob/${ref.commit}/`)) throw new Error(`${issue.id}: source commit mismatch`);
+    }
+    if (!Array.isArray(issue.dependencies)) throw new Error(`${issue.id}: dependencies must be explicit`);
+  }
+  for (const issue of data.issues) {
+    for (const id of issue.dependencies) if (!ids.has(id) || id === issue.id) throw new Error(`${issue.id}: unresolved dependency ${id}`);
+  }
+  const original = data.issues.filter(issue => issue.origin === 'original-154').length;
+  const s = data.scope;
+  if (s.original_total !== 154 || !s.counting_policy || !Number.isInteger(s.additional_integration_locally_verified) || s.additional_integration_locally_verified < 0 || original !== s.original_incomplete || original + s.original_locally_verified !== s.original_total ||
+      data.issues.length !== s.total_open || data.issues.length - original !== s.additional_open) {
+    throw new Error('Issue counts do not match their scope');
+  }
+  const dispositions = new Map([...provenance.matchAll(/^\| ([A-Z0-9-]+) \| ([^|]+) \|/gmu)]
+    .filter(match => originalIds.has(match[1])).map(match => [match[1], match[2].trim()]));
+  if (dispositions.size !== originalIds.size) throw new Error('Incomplete local closure provenance');
+  const statusNames = { Open: 'open', 'In progress': 'in-progress', 'Implemented; incomplete': 'partially-implemented' };
+  for (const [id, disposition] of dispositions) {
+    const issue = data.issues.find(entry => entry.id === id);
+    if (disposition === 'Locally verified' ? issue !== undefined :
+      !Object.hasOwn(statusNames, disposition) || issue?.status !== statusNames[disposition]) {
+      throw new Error(`${id}: issue state disagrees with local closure provenance`);
+    }
+  }
+  const integrationIds = [...provenance.matchAll(/^\| (INT-[A-Z0-9-]+) \|/gmu)].map(match => match[1]);
+  if (integrationIds.length !== 5 || new Set(integrationIds).size !== 5 || s.additional_integration_locally_verified !== integrationIds.length) {
+    throw new Error('Integration closure counts disagree with the five inherited provenance rows');
+  }
+}
+
+const cell = value => String(value).replaceAll('|', '\\|').replaceAll('\n', ' ');
+const anchor = id => id.toLowerCase();
+const list = values => values.map(value => `- ${value}`).join('\n');
+
+export function renderStatus(data) {
+  validateStatus(data);
+  const s = data.scope;
+  const lines = [
+    '# Open implementation work', '',
+    'Status: generated from the canonical issue register',
+    'Audience: maintainer, operator, contributing agent',
+    'Owner: platform-maintainers',
+    `Evidence: ${source}`,
+    `Applies to: source baseline ${data.source_baseline}`,
+    `Last verified: ${data.updated_at}, source assessment only; see individual evidence`, '',
+    '<!-- Generated by scripts/docs-status.mjs. Edit open-issues.json, then run npm run docs:status:generate. -->', '',
+    data.purpose, '', data.verification_policy, '', s.counting_policy, '',
+    `${s.original_incomplete} of the original ${s.original_total} findings remain incomplete; ${s.original_locally_verified} are locally closed.`,
+    `${s.additional_open} additional follow-ups remain separate. Total current entries: ${s.total_open}.`,
+    `${s.additional_integration_locally_verified} additional integration findings have local closure provenance.`, '',
+    '[Local closure and original IDs](../decisions/acceptance.md) and [live acceptance](acceptance.md) remain separate.', '',
+    '## Status meanings', '',
+    ...Object.entries(data.status_semantics).map(([status, meaning]) => `- **${status}:** ${meaning}`), '',
+    '## Issue index', '', '| ID | Issue | Origin | Status |', '| --- | --- | --- | --- |',
+    ...data.issues.map(issue => `| [${cell(issue.id)}](#${anchor(issue.id)}) | ${cell(issue.title)} | ${cell(issue.origin)} | ${cell(issue.status)} |`), '',
+  ];
+  for (const issue of data.issues) {
+    lines.push(`## ${issue.id}`, '', `**${issue.title}**`, '',
+      `Origin: ${issue.origin}. Status: ${issue.status}. Source severity: ${issue.severity}.`, '',
+      '### Problem and impact', '', issue.problem, '', issue.impact, '',
+      '### Components and current state', '', list(issue.components), '', issue.current_state, '',
+      '### Remaining work', '', list(issue.remaining_work), '',
+      '### Reproduction and verification procedure', '', list(issue.reproduction), '',
+      '### Completion criteria', '', list(issue.acceptance_criteria), '',
+      '### Separate environment acceptance', '', issue.live_validation, '',
+      '### Dependencies', '', issue.dependencies.length ? list(issue.dependencies.map(id => `[${id}](#${anchor(id)})`)) : 'No dependency on another entry in this register is established.', '',
+      '### Evidence boundary', '', issue.evidence.assessment, '',
+      ...Object.entries(issue.evidence).filter(([key]) => key !== 'assessment').map(([key, value]) => `- **${key.replaceAll('_', ' ')}:** ${value === null ? 'Not established.' : typeof value === 'object' ? JSON.stringify(value) : value}`), '',
+      '### Sources', '', list(issue.sources.map(ref => `[${ref.path === 'docs/review/remediation/register.json' ? 'Pinned historical register' : ref.path ?? ref.url}](${ref.url}) — ${ref.scope}${ref.observed_at ? ` Observed: ${ref.observed_at}.` : ''}`)), '');
+  }
+  return `${lines.join('\n').replace(/\n+$/u, '')}\n`;
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  try {
+    if (process.argv.slice(2).some(arg => arg !== '--check')) throw new Error('Usage: node scripts/docs-status.mjs [--check]');
+    const rendered = renderStatus(JSON.parse(fs.readFileSync(path.join(root, source), 'utf8')));
+    const target = path.join(root, output);
+    if (process.argv.includes('--check')) {
+      if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== rendered) throw new Error('Open-issues view is stale; run npm run docs:status:generate');
+      console.log('Current issue schema, counts, references and generated view agree.');
+    } else {
+      fs.writeFileSync(target, rendered);
+      console.log(`Generated ${output}`);
+    }
+  } catch (error) {
+    console.error(error.message);
+    process.exitCode = 1;
+  }
+}

@@ -38,3 +38,11 @@ published site's explicit allowlist.
 ## Runtime Image Operations
 
 - [Runtime versions and role images](operations/runtime-versions-and-images.md): central version authority, Nova/Prism separation, image acceptance and upgrades.
+
+## Current work and decisions
+
+- [Open issues](site/status/open-issues.md): generated from the single [JSON register](site/status/open-issues.json).
+- [Live acceptance](site/status/acceptance.md): outstanding environment checks, separate from local finding closure.
+- [Decisions](site/decisions/README.md): enduring constraints, approval evidence and supersession.
+
+The review directory is historical migration input. Do not maintain current finding status there.

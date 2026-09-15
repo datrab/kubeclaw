@@ -1,38 +1,68 @@
 # Documentation transformation blueprint
 
-Status: approved planning baseline
+Status: AP01–AP06 complete. The [AP06 checkpoint](AP06-checkpoint.md) proves the new entry and architecture track. AP07 is next.
+Scope: documentation migration; implementation and live acceptance remain separate.
 
-This blueprint defines the complete migration from the current repository documentation to a clean, code-backed website. It does not rewrite or delete the current documentation. Deletion starts only after the migration ledger proves that current facts and durable decisions have replacement homes.
+KubeClaw documentation must let a new reader understand the system, an operator complete operational tasks, and a developer build supported extensions without previous conversations. Detail is required where it explains behavior or lets a task finish. More pages are not a measure of completeness.
 
-The six required artifacts are:
+## Start here
 
-1. [Verified platform inventory](01-platform-inventory.md)
-2. [Three-track site map](02-three-track-site-map.md)
-3. [Old-document migration and deletion ledger](03-migration-and-deletion.md)
-4. [Documentation-to-code evidence matrix](04-evidence-matrix.md)
-5. [Decision-record catalogue](05-decision-record-catalogue.md)
-6. [Automation and publication specification](06-automation-and-publication.md)
+1. [Inventory and evidence rules](01-platform-inventory.md): scope, source authority and implementation boundaries.
+2. [Reader journeys and chapter structure](02-three-track-site-map.md): canonical chapters and measurable outcomes.
+3. [Document decisions and migration](03-migration-and-deletion.md): individual review, extraction, deletion and progress preservation.
+4. [Coverage and verification matrix](04-evidence-matrix.md): source families, task evidence and verification limits.
+5. [Decision preservation](05-decision-record-catalogue.md): retain reasoning without confusing acceptance with implementation.
+6. [Tooling and publication](06-automation-and-publication.md): reuse existing tools, add only necessary checks, keep unfinished work visible.
+7. [Documentation quality standard](07-documentation-quality-standard.md): depth, decision reasons, ASD-STE100, source evidence, task acceptance and a future documentation agent.
+8. [AP05 gap and writing plan](AP05-gap-plan.md): canonical destinations, complete surface coverage, priorities and bounded writing packages.
+9. [AP06 completion checkpoint](AP06-checkpoint.md): architecture outcomes, source display, language review and verification limits.
 
-Generated proof is under [`generated/`](generated/). Run:
+[Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the original inventory and executable dependencies. The [AP03 completion report](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) resolves the 285 former handoff blockers and additional candidates. AP04 preserves open work, separate live acceptance, decisions and evidence boundaries. AP05 converts the reviewed inventory and missing reader outcomes into twelve prioritized writing packages. AP06 delivers the entry and architecture track. Source-document migration remains pending for AP07–AP10; AP11 owns final reader and language acceptance.
 
-```bash
-node scripts/docs-blueprint-generate.mjs
-```
+## Authority and historical outputs
 
-The generator fails if one of the six artifacts is missing, an existing documentation file is unclassified, a plugin manifest is not inventoried, or a contract family has no evidence-matrix entry.
+The six AP02 artifacts and the subsequent documentation quality standard define the migration policy. Only the [human-maintained review ledger](review-ledger.jsonl) is authoritative for current individual decisions. Files in `generated/` are earlier heuristic AP02 output, not accepted manual decisions or current completion evidence. AP01 found that the old ledger omits 2,322 paths in its generator scope; its generator also resets completion prose to pending. Consumer migration belongs to AP09; do not overwrite human decisions with that output.
 
-## Governing rules
+The original AP01 baseline is `6979bced8e5bbca90568276256e7328d93a1e072`; AP03 preserves source identities at `e4ba8b1dd830f38450fcabedf4db7188aaeb6c44`. Current main through `1e50167fcb4355dfce4110d612ab360828c64394` has been integrated and affected documentation reconciled, including the removed standalone ChatGPT bootstrap. Six AP03 administrative sources and two new main documents are explicitly added. No cluster or Devbox live acceptance was performed.
 
-- The public site has three independent entrances: **Understand**, **Use**, and **Extend**.
-- Each track is sufficient for its audience. Optional detail is linked, not required.
-- A fact has one canonical owner. Duplication is limited to the minimum context required to complete a task.
-- Current behavior, proposed behavior, and historical behavior are never mixed.
-- Technical claims link to release-pinned source, contracts, configuration, or verification.
-- Generated facts are not manually copied into prose.
-- Operator instructions use direct technical English that a technically competent reader can understand. The publication gate applies an ASD-STE100-inspired language check.
-- Implementation plans, phase audits, temporary inventories, migration bookkeeping, and internal documentation workflows are not part of the published product documentation.
-- Durable reasoning is retained in concise decision records before source planning documents are removed.
+## Rules that apply across all chapters
 
-## Verified baseline caveat
+- Each topic has one canonical explanation; task pages include the minimum context needed to finish.
+- Current behavior, approved intent, unfinished implementation and live verification are separate facts.
+- Use direct technical English and define unfamiliar terms on first use. Do not maintain duplicate manual translations.
+- Reuse existing inventories and useful prose after checking their scope and correctness.
+- Remove replaced texts after extracting useful facts, decisions, open issues and required test assets. Do not create a replacement archive of old reviews.
+- Check tasks and examples, not just headings or path existence. A generated verification date is not a behavioral test result.
+- Routine migration does not require repeated user approval. Record genuinely unresolved product decisions; continue unrelated work.
 
-The generator records the repository commit and working-tree state. At blueprint creation time, unrelated work introduced unresolved conflicts in several files. Those files are not modified by this blueprint and are listed in the generated inventory. Publication must regenerate and reverify the inventory after the conflicts are resolved.
+## AP02 completion
+
+The six artifacts now agree on scope, chapter identifiers, review states, evidence rules, decision status and migration gates. Prism is represented as a real source/package/role surface with separately assessed integration and live status. Pipeline, OpenClaw and Codex plugins have distinct coverage. Operations includes complete recovery and loss-of-access scenarios. Examples and readable fallback diagrams suffice; a new website framework is not a prerequisite.
+
+The AP02 revision changed the blueprint and work plan only. It does not regenerate old inventories, migrate product pages, delete reviews, fix runtime findings, or claim that existing full documentation CI is green. Those tasks retain their explicit work-package ownership.
+
+
+## AP02 recheck
+
+Rechecked against the AP02 work-package checklist and the user's end goal. All six artifacts were read again; the baseline and PR head were unchanged before this follow-up. No product functionality was retested.
+
+| Requirement | Blueprint coverage |
+| --- | --- |
+| Read and decide every document | Artifact 1 scope; artifact 3 individual decisions, review states and changed-source handling |
+| Reuse inventories without false completeness | Artifact 1 explicit inventory boundaries; artifact 6 generation versus human review |
+| Preserve decisions and open work before deleting reviews | Artifacts 3 and 5; separate D12 local closure and live acceptance |
+| Identify missing topics after review | Artifact 4 inventory/content/journey coverage and AP05 gap priorities |
+| Detailed, understandable operations | Artifact 2 O1–O5 including bootstrap, daily operation, failed runs, backup operation, restore and loss of access |
+| Explain all supported extension paths | Artifact 2 E1–E6 including five registration types, host plugins, a minimal worker engine and configuration-only customization |
+| Keep examples usable outside the original operator environment | Artifacts 2 and 4 public/private configuration separation, prerequisites and effective-result checks |
+| Avoid duplicate documentation over time | Artifact 3 per-topic deletion; artifact 6 maintenance ownership and final removal of temporary migration records |
+
+The recheck made engine authoring, configuration-only extension, routine backup operation and portable operator examples explicit. It also assigned ongoing ownership and the disposition of these temporary migration records. These are strengthened acceptance requirements, not newly implemented product features. AP03 was not yet started at that recheck; its current progress is recorded below.
+
+## AP03 individual document review
+
+All 2,887 sources have concrete decisions: 191 expand, 1,752 extract, 18 keep and 926 remove. The original 2,879 identities remain intact; eight sources are explicitly added. There are 2,886 current files and one historical main removal. All records are content-reviewed, none blocked, and all migrations remain pending.
+
+The six-agent follow-up and independent checks resolved concrete destinations, parent evidence, machine-readable inventories and fixture consumers. Source, functional and target-only checks are distinguished; this does not claim a fresh full reading of every historical source-code attachment. See the [completion report](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) for scope and evidence and the [progress report](AP03-progress.md) for history.
+
+AP04 preserved the 13 incomplete findings, 141 local closures, Issue #7, separate live acceptance and decisions. AP05 then assigned every reader task and product surface to twelve concrete writing packages. AP06 completed W04–W06 with the overview, authority model, request/state/recovery flow and deployment/trust boundaries. Next: AP07. AP07–AP11 and product/live acceptance remain outstanding.

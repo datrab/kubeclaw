@@ -1,0 +1,1171 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-09-15",
+  "source_baseline": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+  "purpose": "Single machine-readable authority for currently incomplete technical work. open-issues.md is generated from this file. Locally closed original findings and later live acceptance are documented separately in decisions/acceptance.md and status/acceptance.md.",
+  "scope": {
+    "original_total": 154,
+    "original_locally_verified": 141,
+    "original_incomplete": 13,
+    "additional_open": 3,
+    "additional_integration_locally_verified": 5,
+    "total_open": 16,
+    "counting_policy": "Original IDs are unchanged. GitHub #7 and AP03 source follow-ups are separate. Pending live acceptance does not reopen a locally closed finding."
+  },
+  "status_semantics": {
+    "open": "The cause, contract or implementation remains open within the stated scope.",
+    "in-progress": "A bounded partial implementation or analysis exists; the whole finding remains incomplete.",
+    "partially-implemented": "Inherited original-register status for partial implementation. remaining_work still contains code work; this is not synonymous with locally verified."
+  },
+  "verification_policy": "AP04 migrates evidenced states. Reproduction steps and completion criteria describe work to perform unless explicitly identified as historical execution. Native/live status stays separate. Source links are commit-pinned; mutable GitHub issue state has a read date.",
+  "issues": [
+    {
+      "id": "PCR-BUSTER-ENGINE-001",
+      "origin": "original-154",
+      "title": "Capability work is missing from the attempt budget",
+      "severity": "high",
+      "status": "in-progress",
+      "problem": "The attempt resource receipt measures the provider process but does not exclusively own and account for all capability, browser, adapter and completion work launched by the Buster parent.",
+      "impact": "A cheap provider can report low resource usage while its other local work exceeds the claimed CPU, memory or process budget.",
+      "components": [
+        "Buster Runner",
+        "Provider process",
+        "Capability RPC",
+        "Report adapters",
+        "Shared Worker Core"
+      ],
+      "current_state": "Core now performs early and final resource observations. runner.measure still reads instance.resources(); moving the observation later does not create exclusive whole-attempt ownership. Related locally closed Prism/Core findings are not reopened. Durable fixture readiness/control, separate readiness/completion promises, a bounded fourth process pipe and native launcher ownership primitives exist as locally tested building blocks. The production runner still constructs LocalWorkerRuntime; the native lifetime API is not its production execution path.",
+      "remaining_work": [
+        "Integrate durable attempt/claim-bound local execution ownership across Core and Buster, including provider work, parent capability execution, browser/command children, adapters, evidence and finalization.",
+        "Define aggregate measurement and hard budget enforcement. Distinguish cumulative CPU from CPU rate and processes from cgroup tasks. Required missing observations must fail. Declare remote BuildKit/Kubernetes work separately.",
+        "Preserve retained fixtures through durable ownership transfer, fences and crash recovery; coordinate with PCR-BUSTER-ENGINE-004.",
+        "Connect the actual Buster attempt host, restricted role-specific launch policy/broker and durable fixture lifetime to the runner. Keep broker and capability work inside the attempt scope. After the verified cutover remove the superseded executable runner, file-capability launch and sampling paths; retain no executable fallback."
+      ],
+      "reproduction": [
+        "Run the original provider in an actual delegated cgroup. Keep its own load small and launch two real capability children whose combined load exceeds the attempt budget although individual limits pass.",
+        "Put load separately in the report adapter and finalization. Compare the original receipt and terminal state with aggregate counters; unrelated concurrent service work must not be charged to this attempt.",
+        "Exercise short-lived children, descendants surviving their leader, missing counters, cancellation and drain failure. Fake cgroup files are not positive containment evidence."
+      ],
+      "acceptance_criteria": [
+        "Every claimed local phase has exclusive ownership or demonstrably non-overlapping equivalent accounting.",
+        "Aggregate overrun or missing required observations prevent completed; successful drain leaves no local work running.",
+        "Original Core/Buster claim, timeout, fixture and evidence guarantees remain covered.",
+        "Fixture readiness is journaled before dependency acknowledgement, teardown fences acknowledgement races, and only the original Core terminal journal seals completion. Historical readiness cannot authorize new dependents."
+      ],
+      "live_validation": "Actual delegated cgroups and real providers/browsers are required. Acceptance in the deployed worker container is separate.",
+      "dependencies": [
+        "PCR-BUSTER-ENGINE-004"
+      ],
+      "evidence": {
+        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "prior_verification": "Not executed at the recorded source assessment.",
+        "implementation_commit": null
+      },
+      "sources": [
+        {
+          "url": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.engine.md",
+          "scope": "Original finding at its historical review commit; not a current operational claim."
+        },
+        {
+          "path": "docs/review/remediation/register.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "skills/buster/engine/test-gates/runner.ts",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/buster/engine/test-gates/runner.ts",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "skills/buster/engine/test-gates/provider-loader.ts",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/buster/engine/test-gates/provider-loader.ts",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "skills/worker/core/worker/attempt-executor.ts",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/worker/core/worker/attempt-executor.ts",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/review/remediation/implementation/attempt-resource-accountability-boundary.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/attempt-resource-accountability-boundary.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "skills/buster/engine/test-gates/native-fixture-control.ts",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/buster/engine/test-gates/native-fixture-control.ts",
+          "scope": "Current integration building block or source-bound design; not proof of production activation."
+        },
+        {
+          "path": "skills/buster/engine/test-gates/native-fixture-lifetime.ts",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/buster/engine/test-gates/native-fixture-lifetime.ts",
+          "scope": "Current integration building block or source-bound design; not proof of production activation."
+        },
+        {
+          "path": "docs/review/remediation/implementation/pr6-buster-fixture-control.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/pr6-buster-fixture-control.md",
+          "scope": "Current integration building block or source-bound design; not proof of production activation."
+        },
+        {
+          "path": "docs/review/remediation/implementation/pr6-buster-launch-authority-decision.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/pr6-buster-launch-authority-decision.md",
+          "scope": "Current integration building block or source-bound design; not proof of production activation."
+        }
+      ]
+    },
+    {
+      "id": "PCR-BUSTER-ENGINE-004",
+      "origin": "original-154",
+      "title": "Restarted terminal jobs retain source workspaces without a durable quiescence proof",
+      "severity": "medium",
+      "status": "partially-implemented",
+      "problem": "After a worker or host crash there is no durable proof that every process belonging to a job has stopped. Source and working directories therefore remain retained.",
+      "impact": "Repeated interrupted jobs can consume disk and quotas. Deleting from terminal metadata alone could remove inputs still used by live descendants.",
+      "components": [
+        "Buster RemotePlanService",
+        "terminal-workspace",
+        "Provider/capability/adapter ownership"
+      ],
+      "current_state": "Normal confirmed execution cleans inputs. Durable status write and read failures stop admission; shutdown waits for pending admission writes. recover() explicitly retains inputs because a terminal record does not prove orphan quiescence.",
+      "remaining_work": [
+        "Publish durable job/attempt/claim ownership before launch and include capability children, adapters and retained fixtures.",
+        "On restart reconcile the exact fenced owner and require authoritative complete termination. Preserve and diagnose unknown ownership instead of guessing.",
+        "Authorize the existing narrow idempotent input cleanup only after that proof; preserve valid result, evidence and log receipts."
+      ],
+      "reproduction": [
+        "Crash and restart the original worker with a live provider plus actual capability/adapter children. Distinguish leader death from complete process termination.",
+        "Exercise crash windows around ownership publication, drain and file removal; reused or namespace-mismatched PIDs must never authorize cleanup.",
+        "Read completed/failed/cancelled job receipts and retained-fixture transitions after restart."
+      ],
+      "acceptance_criteria": [
+        "No active or uncertain owner loses its inputs.",
+        "After complete quiescence is proved, only authorized inputs are removed; repeated recovery is safe.",
+        "Real quota release and retained result/evidence access are demonstrated on original jobs."
+      ],
+      "live_validation": "Native crash and containment tests are required. Log retention and external demo lifetime are independent of extracted source cleanup.",
+      "dependencies": [
+        "PCR-BUSTER-ENGINE-001"
+      ],
+      "evidence": {
+        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "prior_verification": "teilweise; Buster hält jetzt sowohl fehlgeschlagene dauerhafte Endstatusschreibung als auch tatsächliche Statuslesefehler als fatalen Dienstfehler fest; beide Ursachen bleiben erhalten. Shutdown wartet laufende Admission. Echte Quoten-, Sperr- und Korruptionsfälle unabhängig7/7; Root6/6 und Typprüfung bestanden. Daten bleiben unverändert erhalten.",
+        "implementation_commit": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a",
+        "superseded_results": [
+          "Two original corrupt-status-store red runs produced SyntaxError while readiness stayed BUSTER_READY and shutdown fulfilled. Corrupt bytes were preserved; nativeProviderExecuted=false.",
+          "Later AggregateError preserves both durable write and actual status-read failures. The original register records independent7/7 and root6/6 local checks. This fixes swallowed status errors, not durable whole-process orphan ownership or successful native drain."
+        ]
+      },
+      "sources": [
+        {
+          "url": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.engine.md",
+          "scope": "Original finding at its historical review commit; not a current operational claim."
+        },
+        {
+          "path": "docs/review/remediation/register.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/buster/engine/test-gates/remote-plan-service.ts",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "skills/buster/engine/test-gates/terminal-workspace.ts",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/buster/engine/test-gates/terminal-workspace.ts",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/review/remediation/implementation/buster-orphan-recovery-boundary.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/buster-orphan-recovery-boundary.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/review/evidence/resume-84-buster-status-read/red-1.log",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/evidence/resume-84-buster-status-read/red-1.log",
+          "scope": "Historical failed status-read proof; superseded only for the swallowed error."
+        },
+        {
+          "path": "docs/review/evidence/resume-84-buster-status-read/red-2.log",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/evidence/resume-84-buster-status-read/red-2.log",
+          "scope": "Historical failed status-read proof; superseded only for the swallowed error."
+        },
+        {
+          "path": "docs/review/evidence/resume-84-buster-status-read/result.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/evidence/resume-84-buster-status-read/result.json",
+          "scope": "Historical failed status-read proof; superseded only for the swallowed error."
+        }
+      ]
+    },
+    {
+      "id": "PCR-OBS-002",
+      "origin": "original-154",
+      "title": "Confirmed run history lacks complete connected retirement",
+      "severity": "medium",
+      "status": "partially-implemented",
+      "problem": "Confirmed history still lacks a complete release protocol understood by every reader and component that can reopen, accept or replay it.",
+      "impact": "Partial compaction can leave record, metadata, evidence and blob quotas exhausted. Uncoordinated deletion could lose evidence or protection against repeated external actions.",
+      "components": [
+        "RecordStore",
+        "Attempt/Admission",
+        "ArtifactStore",
+        "Buster jobs",
+        "Nova dispatch/import",
+        "Operator delivery"
+      ],
+      "current_state": "Telemetry, admission, imported attempt results, redundant dispatch archive copies and causal operator projections have bounded implementations and local evidence. They do not remove all job counts, evidence objects or shared blobs. The dispatch projection has a real one-POST replay result while retaining logical job, receipt and source blob. Its native provider execution failed; that failure does not invalidate the bounded storage transition or prove successful native execution.",
+      "remaining_work": [
+        "Inventory active/completed owners, all current reopen/accept/read/replay consumers and shared references.",
+        "Implement explicit manual release with durable consumer completion and required idempotency/uncertainty tombstones, atomically across those consumers. Keep every still-required reference resolvable.",
+        "Release actual byte and record quotas rather than moving data into unaccounted sidecars. D07 does not permit automatic age-based log deletion."
+      ],
+      "reproduction": [
+        "Use small real store quotas with active, waiting and completed runs and shared artifacts; measure actual bytes and entries before/after authorized release.",
+        "Replay old deliveries after restart and exercise competing writers and SIGKILL between durable transitions.",
+        "Use original result, evidence, artifact and operator readers on retired and deliberately retained history."
+      ],
+      "acceptance_criteria": [
+        "Only authorized and fully confirmed history is released; active and uncertain work remains intact.",
+        "Released capacity admits new actual writes. Replays do not repeat an external action or fabricate delivery outcomes.",
+        "All affected consumers understand the same retirement state and retain the existing projection guarantees."
+      ],
+      "live_validation": "Original local store/process tests can close this implementation scope. Cleanup of real user data remains a separate operational action.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "prior_verification": "Partial: telemetry, admission and imported attempt-result copies were checked with actual quota release and preserved replay. Independent attempt-v2 checks: 19/19. Integrated root checks: 45/45, no skips. Complete retention across the remaining stores and references remains open.",
+        "implementation_commit": "27315faad862f71df940ed32bc4e5a98eca72e0d"
+      },
+      "sources": [
+        {
+          "url": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.observability.md",
+          "scope": "Original finding at its historical review commit; not a current operational claim."
+        },
+        {
+          "path": "docs/review/remediation/register.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "scripts/observability-retirement-plan.mjs",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/observability-retirement-plan.mjs",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "scripts/retire-nova-dispatch.mjs",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/retire-nova-dispatch.mjs",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "scripts/retire-operator-request.mjs",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/retire-operator-request.mjs",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/review/remediation/implementation/run3-observability-next-package.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/run3-observability-next-package.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/review/remediation/implementation/run5-nova-dispatch-projection-wip.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/run5-nova-dispatch-projection-wip.md",
+          "scope": "Historical intermediate projection; later register evidence determines current status."
+        }
+      ]
+    },
+    {
+      "id": "IFR-21-001",
+      "origin": "original-154",
+      "title": "Runtime image rebuild inputs are not fully reproducible",
+      "severity": "medium",
+      "status": "in-progress",
+      "problem": "A source commit still does not bind all browser archives and time-dependent scanner databases; complete image rebuilds have not been compared.",
+      "impact": "The same source can produce different installed content or scan results. Source pinning does not guarantee byte-identical images.",
+      "components": [
+        "versions.json",
+        "Runtime Dockerfiles",
+        "Playwright downloads",
+        "Trivy databases"
+      ],
+      "current_state": "Python transitive locks, Go modules, binary checksums and apt snapshots have partial fixes backed by real installations/builds. ARM64 wheel resolution is not ARM64 execution. Complete image builds and browser launches remain outstanding.",
+      "remaining_work": [
+        "Bind browser archives to independently verified hashes. Preserve Trivy refresh data as explicit reproducible inputs while recording scan freshness separately.",
+        "Define architecture and builder/provenance inputs, then compare two complete isolated builds from identical selections."
+      ],
+      "reproduction": [
+        "RUNTIME_LOCK_PYTHON=\"$PYTHON_311\" node --test tests/verification/deployment/runtime-tool-locks-native.mjs",
+        "RUNTIME_LOCK_GO=\"$SELECTED_GO\" node --test tests/verification/deployment/go-tool-locks-native.mjs",
+        "Build complete images twice with independent empty caches and identical source, architecture, browser/database bytes and builder settings. Compare package inventory, SBOM and output digests."
+      ],
+      "acceptance_criteria": [
+        "All remaining time-dependent inputs are explicitly bound.",
+        "Two actual complete builds exist; every package/SBOM/digest difference is explained against the selected rebuild contract.",
+        "Actual selected browsers and tools execute. Claim ARM64 runtime support only after actual ARM64 execution."
+      ],
+      "live_validation": "Complete isolated image/browser tests are required. Deployment of verified output digests and ARM64 live acceptance remain separate.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "prior_verification": "Partial fix locally verified; the complete finding remains open",
+        "implementation_commit": "2ed91ef75e4c18b0a6b95b6d2850739b3c38ebf4"
+      },
+      "sources": [
+        {
+          "url": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/runtime-images.md",
+          "scope": "Original finding at its historical review commit; not a current operational claim."
+        },
+        {
+          "path": "docs/review/remediation/register.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/operations/runtime-versions-and-images.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/operations/runtime-versions-and-images.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/review/remediation/implementation/pr6-runtime-tool-locks.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/pr6-runtime-tool-locks.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "tests/verification/deployment/runtime-tool-locks-native.mjs",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/deployment/runtime-tool-locks-native.mjs",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "tests/verification/deployment/go-tool-locks-native.mjs",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/deployment/go-tool-locks-native.mjs",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        }
+      ]
+    },
+    {
+      "id": "IFR-29-001",
+      "origin": "original-154",
+      "title": "Operator configuration is not fully separated from public examples",
+      "severity": "medium",
+      "status": "open",
+      "problem": "Operator-specific values and routing/identity assumptions are not consistently separated from a complete generic public configuration interface.",
+      "impact": "Other users may inherit unsuitable operator values. Dockerignore prevents neither Git publication nor historical exposure; this finding does not establish a secret leak.",
+      "components": [
+        "my-values",
+        "gitops/production/overlays",
+        "Chart values",
+        "Installation documentation"
+      ],
+      "current_state": "The original finding remains open. Its historical future-publication trigger does not make the remaining separation work complete today. Actual values are referenced by path rather than copied into this register.",
+      "remaining_work": [
+        "Separate operator configuration from fully parameterized fictional examples; document namespace, routing, identity and external-secret interfaces.",
+        "Inspect current Git/build/artifact scope and relevant history for sensitive leftovers and report precise search limits. A history rewrite needs its own concrete decision."
+      ],
+      "reproduction": [
+        "Clone the intended public surface without private configuration and render complete examples using fictional IDs and secret placeholders.",
+        "Inspect Git files, relevant history, Docker build context and produced artifacts separately; never copy real secret values into the report."
+      ],
+      "acceptance_criteria": [
+        "A fresh clone supports a usable anonymous configuration path without real operator identities.",
+        "Required parameters and external secrets are complete; retained private values have explicit ownership.",
+        "Secret inspection states its exact scope and outcome; a sample search is not a blanket secret-free conclusion."
+      ],
+      "live_validation": "Configuration and documentation work remains. Approval of actual production configuration is separate.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "prior_verification": "Not executed at the recorded source assessment.",
+        "implementation_commit": null
+      },
+      "sources": [
+        {
+          "url": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/public-config.md",
+          "scope": "Original finding at its historical review commit; not a current operational claim."
+        },
+        {
+          "path": "docs/review/remediation/register.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "my-values/nova-values.yaml",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/my-values/nova-values.yaml",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/review/infrastructure/public-config.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/infrastructure/public-config.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        }
+      ]
+    },
+    {
+      "id": "IFR-04-001",
+      "origin": "original-154",
+      "title": "External Tailnet access and recovery contract is incomplete",
+      "severity": "medium",
+      "status": "open",
+      "problem": "Effective external Tailnet ACLs/grants, tag owners and OAuth/HTTPS responsibilities are not established as a complete redacted access contract.",
+      "impact": "An Ingress or Tailnet hostname may exist while intended users cannot connect or unintended users have access.",
+      "components": [
+        "Tailscale Operator",
+        "Argo/Ops/Prism Ingress",
+        "External Tailnet configuration"
+      ],
+      "current_state": "Repository values, Ingress resources and access documentation exist. Their presence does not prove external ACLs, authorized users or recovery without the operator. Historical unpinned-chart wording is not this finding's remaining scope.",
+      "remaining_work": [
+        "Document each Ingress purpose, authorized identities, tag owners, OAuth permissions, HTTPS/DNS requirements and backend authentication without exposing credentials.",
+        "Record ownership of an existing externally managed operator versus the installer and the independent recovery path."
+      ],
+      "reproduction": [
+        "Test each relevant Ingress with one actually permitted and one forbidden Tailnet client.",
+        "Recreate the proxy and rotate OAuth credentials and certificates, then repeat positive and negative access checks."
+      ],
+      "acceptance_criteria": [
+        "Access matches the documented identity matrix before and after rotation/proxy replacement.",
+        "Backend authentication and Tailnet authorization are separately demonstrated; independent recovery remains available."
+      ],
+      "live_validation": "Real Tailnet clients and actual external ACL/OAuth configuration are required. Rendering alone does not close this finding.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "prior_verification": "Not executed at the recorded source assessment.",
+        "implementation_commit": null
+      },
+      "sources": [
+        {
+          "url": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/tailscale.md",
+          "scope": "Original finding at its historical review commit; not a current operational claim."
+        },
+        {
+          "path": "docs/review/remediation/register.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "my-values/infra/tailscale-operator-values.yaml",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/my-values/infra/tailscale-operator-values.yaml",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/deployment/tailscale-operator.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/deployment/tailscale-operator.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "charts/prism/templates/services.yaml",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/prism/templates/services.yaml",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        }
+      ]
+    },
+    {
+      "id": "IFR-10-001",
+      "origin": "original-154",
+      "title": "Long-lived rootless BuildKit lacks a job-specific process boundary",
+      "severity": "high",
+      "status": "open",
+      "problem": "The long-lived rootless BuildKit uses --net=host and --oci-worker-no-process-sandbox; the missing process sandbox is an unresolved security boundary for untrusted Dockerfile RUN work.",
+      "impact": "Project code may affect the shared build process environment or leave processes running. Supervisor secret access or privilege escalation has not been demonstrated.",
+      "components": [
+        "Buster runtime",
+        "rootlesskit/BuildKit",
+        "Build provider",
+        "Shared cache"
+      ],
+      "current_state": "Both flags remain in docker/buster-runtime-entrypoint.sh. Rootless UID/file permissions and a separate supervisor identity do not by themselves provide the missing job process boundary.",
+      "remaining_work": [
+        "Run untrusted builds in an ephemeral dedicated security/process boundary, outside long-lived control and credential processes.",
+        "Define connected cache/file/network access and cleanup guarantees for the exact pinned runtime image."
+      ],
+      "reproduction": [
+        "Using the real runtime image, execute two distinct build jobs and negatively test unauthorized process visibility, signals and background processes surviving job completion.",
+        "Test cross-job file/cache access and unauthorized network egress. A successful rootless startup probe is insufficient."
+      ],
+      "acceptance_criteria": [
+        "Build jobs cannot influence unrelated control/job processes or continue after confirmed completion.",
+        "Allowed cache/network paths and forbidden cross-job access are demonstrated with real builds."
+      ],
+      "live_validation": "Isolated native security tests on the pinned image are required; accept the actual host/container boundary separately.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "prior_verification": "Not executed at the recorded source assessment.",
+        "implementation_commit": null
+      },
+      "sources": [
+        {
+          "url": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/buildkit.md",
+          "scope": "Original finding at its historical review commit; not a current operational claim."
+        },
+        {
+          "path": "docs/review/remediation/register.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docker/buster-runtime-entrypoint.sh",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/review/infrastructure/buildkit.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/infrastructure/buildkit.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        }
+      ]
+    },
+    {
+      "id": "IFR-01-001",
+      "origin": "original-154",
+      "title": "Host bootstrap and restore prerequisites are incomplete",
+      "severity": "medium",
+      "status": "open",
+      "problem": "The repository setup assumes an existing cluster; the effective host/K3s/storage starting environment is not a fully reproducible bootstrap and restore contract.",
+      "impact": "After host loss or on a new host, versions, datastore, disk and application dependencies must be reconstructed. The setup name alone can overstate its coverage.",
+      "components": [
+        "K3s/host",
+        "scripts/deploy.sh",
+        "Storage provisioner",
+        "Paperless dependencies"
+      ],
+      "current_state": "Installation and setup documents exist. No effective cluster configuration was collected in AP04, and generic K3s defaults are not substituted for actual operator settings.",
+      "remaining_work": [
+        "Record redacted actual host/K3s versions, startup flags, datastore, API requirements, CNI, StorageClass/CSI and cgroup preparation.",
+        "Document host backup, key/credential ownership, Paperless dependencies and independent administration with a restore sequence."
+      ],
+      "reproduction": [
+        "On an isolated empty host, use only the completed documented procedure.",
+        "After restore verify API, DNS, storage, pipeline and required Paperless data; treat every undocumented prerequisite supplied manually as a gap."
+      ],
+      "acceptance_criteria": [
+        "Another operator can rebuild the selected environment and its data from documented inputs.",
+        "Host/cluster ownership, supported version boundaries and verified recovery results are complete."
+      ],
+      "live_validation": "An isolated empty host and real restore media are required. This documentation step does not provision a cluster.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "prior_verification": "Not executed at the recorded source assessment.",
+        "implementation_commit": null
+      },
+      "sources": [
+        {
+          "url": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/cluster-bootstrap.md",
+          "scope": "Original finding at its historical review commit; not a current operational claim."
+        },
+        {
+          "path": "docs/review/remediation/register.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "scripts/deploy.sh",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/deploy.sh",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/deployment/setup-flow.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/deployment/setup-flow.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/review/infrastructure/cluster-bootstrap.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/infrastructure/cluster-bootstrap.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        }
+      ]
+    },
+    {
+      "id": "IFR-02-001",
+      "origin": "original-154",
+      "title": "Concrete single-node CNI cutover and independent rollback remain unproved",
+      "severity": "high",
+      "status": "open",
+      "problem": "The CNI cutover covering all actual applications and independent host rollback is not demonstrated for the selected environment.",
+      "impact": "Incorrect namespace assumptions, missed DaemonSets or cluster-dependent admin access may interrupt both pipeline and Paperless and prevent recovery.",
+      "components": [
+        "Cilium migration",
+        "Global network policies",
+        "Paperless",
+        "Host/CRI rollback"
+      ],
+      "current_state": "Cilium files are now present in the current checkout; the original review's additional-branch-only statement is historical. Integration does not imply that migration or live policy enforcement occurred.",
+      "remaining_work": [
+        "Inventory actual namespaces, pod/DaemonSet/storage/network dependencies, maintenance window and offline images/manifests.",
+        "Prepare staged independent host rollback and saved CNI/K3s/network configuration before cutover."
+      ],
+      "reproduction": [
+        "In the planned isolated or authorized maintenance environment, verify the CNI association of every pod sandbox, pipeline communication and negative network cases.",
+        "Check Paperless upload, OCR and retrieval, then repeat checks after policy cleanup.",
+        "Exercise rollback through independent host access. Set the completion marker only after all required evidence exists."
+      ],
+      "acceptance_criteria": [
+        "All applications and network boundaries work after cutover and cleanup; rollback is executable from concrete retained artifacts.",
+        "Neither an operator flag nor a completion marker substitutes for live evidence."
+      ],
+      "live_validation": "Actual CNI migration and negative network/recovery acceptance are pending. This register does not authorize CNI/policy changes.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "prior_verification": "Not executed at the recorded source assessment.",
+        "implementation_commit": null
+      },
+      "sources": [
+        {
+          "url": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/cilium-migration.md",
+          "scope": "Original finding at its historical review commit; not a current operational claim."
+        },
+        {
+          "path": "docs/review/remediation/register.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "scripts/deploy-cilium.sh",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/deploy-cilium.sh",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "my-values/infra/cilium-cluster-policies.yaml",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/my-values/infra/cilium-cluster-policies.yaml",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/review/infrastructure/cilium-migration.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/infrastructure/cilium-migration.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        }
+      ]
+    },
+    {
+      "id": "IFR-06-001",
+      "origin": "original-154",
+      "title": "SPIRE persistence, certificate lifetime and recovery contract is incomplete",
+      "severity": "medium",
+      "status": "open",
+      "problem": "The effective CA/server persistence and TTL contract and rotation/restore evidence across certificate expiry are incomplete.",
+      "impact": "Server, agent or CA loss may interrupt mutual authentication and active jobs. SDS rotation does not establish immediate revocation of already issued SVIDs.",
+      "components": [
+        "SPIRE server/agent",
+        "CSI workload API",
+        "Envoy SDS",
+        "Worker identities"
+      ],
+      "current_state": "Values and peer bindings are documented. Historical upstream defaults do not establish the effective rendered recommendations or an actual recovery-time guarantee.",
+      "remaining_work": [
+        "Fully render the currently pinned charts and determine server PVC/datastore, CA retention, SVID/CA TTL and effective permissions.",
+        "Specify secured CA/server state, credential authority, tolerated outage and revocation limits."
+      ],
+      "reproduction": [
+        "Test valid and invalid identities against real consumers and observe SVID renewal over multiple intervals.",
+        "Keep server and agent separately unavailable beyond certificate expiry, then restore CA/server state and resume active jobs."
+      ],
+      "acceptance_criteria": [
+        "Only valid peers connect; certificate expiry or an unknown CA never enables fail-open behavior.",
+        "Restore and renewed mutual authentication satisfy the documented operational contract."
+      ],
+      "live_validation": "Actual SPIRE/Envoy/worker execution across certificate expiry is required. Rendering alone does not close this finding.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "prior_verification": "Not executed at the recorded source assessment.",
+        "implementation_commit": null
+      },
+      "sources": [
+        {
+          "url": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/spire.md",
+          "scope": "Original finding at its historical review commit; not a current operational claim."
+        },
+        {
+          "path": "docs/review/remediation/register.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "my-values/infra/spire-values.yaml",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/my-values/infra/spire-values.yaml",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/security/worker-trust.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/security/worker-trust.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/operations/worker-trust-runbook.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/operations/worker-trust-runbook.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        }
+      ]
+    },
+    {
+      "id": "IFR-16-001",
+      "origin": "original-154",
+      "title": "Combined node and disk capacity is not fully budgeted and measured",
+      "severity": "medium",
+      "status": "open",
+      "problem": "Actual node/disk capacity and shared reserves for all applications, jobs, caches, backups and upgrades are not completely budgeted and measured.",
+      "impact": "Scheduling requests do not prevent shared disk pressure; concurrent builds, restores and browser work may also impair Paperless.",
+      "components": [
+        "Node allocatable",
+        "PVC/ephemeral storage",
+        "Runtime caches",
+        "Prism DB/artifacts/backups",
+        "Paperless"
+      ],
+      "current_state": "Stateful image/chart pins and preflight checks have partial fixes. Historical storage-review totals are not current measurements. The optional host-pool profile is a configuration budget, not observed available capacity.",
+      "remaining_work": [
+        "Combine current rendered requests/limits and actual allocatable/disk values, including DaemonSets, surge, jobs and Paperless reserve.",
+        "Budget ephemeral/PVC/cache/backup growth and align quotas with permitted manual retention."
+      ],
+      "reproduction": [
+        "Schedule the entire actually selected configuration with maximum planned concurrent job, upgrade and restore load.",
+        "In an isolated environment, exercise a deliberate disk boundary and measure quota handling, Paperless latency and recovery."
+      ],
+      "acceptance_criteria": [
+        "The complete resource budget matches actual placement and has measured reserve.",
+        "Disk/quota exhaustion is controlled and the critical application and recovery remain within the agreed operating contract."
+      ],
+      "live_validation": "Real scheduling, load and disk measurements are required. Requests alone do not prove free host resources.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "prior_verification": "Not executed at the recorded source assessment.",
+        "implementation_commit": null
+      },
+      "sources": [
+        {
+          "url": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/storage.md",
+          "scope": "Original finding at its historical review commit; not a current operational claim."
+        },
+        {
+          "path": "docs/review/remediation/register.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/operations/native-worker-host-pools.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/operations/native-worker-host-pools.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "charts/prism/templates/workloads.yaml",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/prism/templates/workloads.yaml",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/review/remediation/implementation/pr6-stateful-upgrade-checkpoint.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/pr6-stateful-upgrade-checkpoint.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        }
+      ]
+    },
+    {
+      "id": "IFR-26-001",
+      "origin": "original-154",
+      "title": "Complete independent application recovery is not yet demonstrated",
+      "severity": "high",
+      "status": "in-progress",
+      "problem": "A complete independently recoverable set of database, artifacts, required keys/journals and identities, followed by application recovery, remains incomplete.",
+      "impact": "After host or volume loss, database references may be unreadable or recovery identities unavailable. A backup on the same failure-domain PVC is insufficient.",
+      "components": [
+        "Prism backup job",
+        "PostgreSQL",
+        "Content-addressed ArtifactStore",
+        "Keys/worker journals",
+        "External backup failure domain"
+      ],
+      "current_state": "The job now captures a database dump followed by immutable artifacts into a verified group with quotas and no automatic deletion. Seven real file/process/Helm tests use explicit SQL fixtures; they are not native SQL, DB-reference or full DR evidence.",
+      "remaining_work": [
+        "Run the original pinned PostgreSQL image and schema with the backup program and verify every restored database artifact reference.",
+        "Bind required external keys, journals and identities into an explicit recovery set with defined ownership.",
+        "Configure an independent external failure domain, access, retention and recovery-time contract; demonstrate a full restore to a fresh target."
+      ],
+      "reproduction": [
+        "TMPDIR=/dev/shm HELM_BIN=/path/to/helm node --test tests/verification/deployment/prism-backup.test.mts (existing filesystem/process/render coverage; SQL remains a fixture).",
+        "Restore a real backup group to another namespace/host. Read digest objects with original readers, follow DB references and resume application sessions/jobs and the pipeline path.",
+        "Reject missing/corrupt objects, keys and incomplete groups separately. pg_restore --list alone is insufficient."
+      ],
+      "acceptance_criteria": [
+        "All required data and external recovery identities are bound and usable on a fresh independent target.",
+        "Real PostgreSQL/artifact references and the complete application path work after restore; declared RPO/RTO are demonstrated."
+      ],
+      "live_validation": "Real SQL/image/cross-store/host recovery remains pending. A weekly same-server SQL smoke check is not host-loss evidence.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "prior_verification": "Teilfix lokal geprüft: 7 Dateisystem-/Prozess-/Helmtests; DB-Kommandos explizite Fixtures. Vollständige Recovery noch unvollständig.",
+        "implementation_commit": null,
+        "superseded_results": [
+          "Initial ArtifactStore directory-fsync EIO occurred before backup behavior: four failures; only lock/deadline and Helm credential-isolation cases passed.",
+          "A separate syncfs failure run had three passes and three failures on incomplete backup directories; this is a filesystem durability prerequisite, not database restore evidence.",
+          "Initial SQL proof cleanup run had six passes and one assertion failure (two versus three expected calls). The Bash EXIT-trap cleanup ownership was corrected.",
+          "The final seven passing tests used real tmpfs after scratch fsync/syncfs EIO. Physical power-loss durability remains unproved; SQL commands remain explicit fixtures."
+        ]
+      },
+      "sources": [
+        {
+          "url": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/backup-recovery.md",
+          "scope": "Original finding at its historical review commit; not a current operational claim."
+        },
+        {
+          "path": "docs/review/remediation/register.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "charts/prism/files/prism-backup.sh",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/prism/files/prism-backup.sh",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "tests/verification/deployment/prism-backup.test.mts",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/deployment/prism-backup.test.mts",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/review/remediation/implementation/pr6-prism-backup-groups.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/pr6-prism-backup-groups.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/review/evidence/pr6-prism-backup-groups/initial-artifact-fsync-failure.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/evidence/pr6-prism-backup-groups/initial-artifact-fsync-failure.json",
+          "scope": "Historical initial/final backup evidence, interpreted in superseded_results."
+        },
+        {
+          "path": "docs/review/evidence/pr6-prism-backup-groups/initial-proof-cleanup-failure.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/evidence/pr6-prism-backup-groups/initial-proof-cleanup-failure.json",
+          "scope": "Historical initial/final backup evidence, interpreted in superseded_results."
+        },
+        {
+          "path": "docs/review/evidence/pr6-prism-backup-groups/local-tests.txt",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/evidence/pr6-prism-backup-groups/local-tests.txt",
+          "scope": "Historical initial/final backup evidence, interpreted in superseded_results."
+        },
+        {
+          "path": "docs/review/evidence/pr6-prism-backup-groups/syncfs-filesystem-failure.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/evidence/pr6-prism-backup-groups/syncfs-filesystem-failure.json",
+          "scope": "Historical initial/final backup evidence, interpreted in superseded_results."
+        }
+      ]
+    },
+    {
+      "id": "IFR-28-001",
+      "origin": "original-154",
+      "title": "Independent recovery outside the Ops Pod is unproved",
+      "severity": "medium",
+      "status": "open",
+      "problem": "The Ops Pod depends on cluster scheduling, API, PVC, CNI and potentially cluster DNS. Independent host/KVM recovery has not been demonstrated.",
+      "impact": "When those foundations fail, the Codex devbox may also become unreachable. Pairing or appserver readiness does not establish disaster recovery.",
+      "components": [
+        "Ops Pod/Codex devbox",
+        "Host/KVM/SSH access",
+        "Tailscale",
+        "CNI/API/PVC"
+      ],
+      "current_state": "Independent host access is an operator statement. Current chart defaults use execNamespaces=[kubeclaw] and mount a token/kubeconfig in Codex; the historical observer-only description is not the current permission contract. MCP tool mode and Kubernetes identity must be distinguished.",
+      "remaining_work": [
+        "Document the cluster-dependent convenience path and independent host/KVM/external recovery path with separate credentials, DNS/network prerequisites and responsibilities.",
+        "Capture the actual rendered Codex/MCP permissions. execNamespaces=[] disables optional exec access but does not create independent recovery access."
+      ],
+      "reproduction": [
+        "In an authorized scenario, separately fail Argo, Tailscale/DNS and CNI; authenticate through independent host access and restore the desired configuration.",
+        "Verify PVC/appserver recovery and actual Codex authentication. Pairing status is not proof of host recovery."
+      ],
+      "acceptance_criteria": [
+        "Independent access works when cluster-dependent paths fail, with recovery artifacts and credentials still accessible.",
+        "Actual permission, authentication and recovery boundaries are demonstrated."
+      ],
+      "live_validation": "Independent recovery and real Codex pairing remain pending; this documentation introduces no permission expansion.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "prior_verification": "Not executed at the recorded source assessment.",
+        "implementation_commit": null
+      },
+      "sources": [
+        {
+          "url": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/ops-pod.md",
+          "scope": "Original finding at its historical review commit; not a current operational claim."
+        },
+        {
+          "path": "docs/review/remediation/register.json",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "charts/ops-pod/values.yaml",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/ops-pod/values.yaml",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "charts/ops-pod/templates/workload.yaml",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/ops-pod/templates/workload.yaml",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/review/infrastructure/ops-pod.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/infrastructure/ops-pod.md",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        }
+      ]
+    },
+    {
+      "id": "GITHUB-7",
+      "origin": "github",
+      "title": "Release security rescan needs attention",
+      "severity": "unassessed",
+      "status": "open",
+      "problem": "The daily release security scan failed. The issue alone does not identify its concrete cause.",
+      "impact": "There is no successful current security result for all selected release/input images. A scanner failure is not a pass and does not itself prove a vulnerability.",
+      "components": [
+        "Release security rescan workflow",
+        "scripts/updates/scan-releases.mjs",
+        "Selected runtime/Ops images",
+        "Trivy"
+      ],
+      "current_state": "Issue #7 is open (read 2026-09-15; updated 2026-09-15T10:28:49Z). Job 104344339828 of run 34957931173 used commit 22fa7cfa6a14cb9fed49a9eb2496d7ab3b64a9d5: versions check passed, scan step failed, release-security-reports upload passed. AP04 did not inspect log/report contents; vulnerability, scanner error and missing release selection remain unresolved possibilities.",
+      "remaining_work": [
+        "Inspect the linked scan logs and uploaded release-security-reports artifact, then record the actual error and affected immutable image references.",
+        "Fix the evidenced cause: complete release selection, scanner/registry error or reviewed dependency/image update. Do not weaken the gate to manufacture a pass."
+      ],
+      "reproduction": [
+        "Read GitHub run 34957931173/job104344339828 and its reports; preserve the execution commit.",
+        "In a suitable isolated environment with registry access run node scripts/versions.mjs --check and node scripts/updates/scan-releases.mjs against the complete selected runtime/Ops configuration, recording the current advisory database identity."
+      ],
+      "acceptance_criteria": [
+        "The concrete cause and affected immutable inputs are documented and addressed.",
+        "A complete follow-up scan of all selected release images and pinned inputs passes with retained reports; no missing scan or input counts as passed."
+      ],
+      "live_validation": "External registry/scanner/Actions evidence is required, without cluster deployment. Close the issue only against a successful complete follow-up run.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "GitHub issue and job/step metadata read live; no logs or scanner reports inspected and no scan started.",
+        "source_run_commit": "22fa7cfa6a14cb9fed49a9eb2496d7ab3b64a9d5"
+      },
+      "sources": [
+        {
+          "url": "https://github.com/datrab/kubeclaw/issues/7",
+          "scope": "Original issue; mutable status read on 2026-09-15.",
+          "observed_at": "2026-09-15"
+        },
+        {
+          "url": "https://github.com/datrab/kubeclaw/actions/runs/34957931173/job/104344339828",
+          "scope": "Specific failed scan job and successful report upload.",
+          "observed_at": "2026-09-15"
+        },
+        {
+          "path": ".github/workflows/release-security.yaml",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/.github/workflows/release-security.yaml",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "scripts/updates/scan-releases.mjs",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/updates/scan-releases.mjs",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        }
+      ]
+    },
+    {
+      "id": "DOC-AP03-GITOPS-001",
+      "origin": "ap03-source-follow-up",
+      "title": "Continuous GitOps health compares a branch name with resolved commit IDs",
+      "severity": "unassessed",
+      "status": "open",
+      "problem": "continuousApplications sets runtime child targetRevision=main, but strict application-health.lua requires status.sync.revision and operationState.syncResult.revision to equal that literal targetRevision. A resolved commit SHA does not equal main.",
+      "impact": "An actually synchronized healthy runtime child reporting its SHA can remain Progressing in the app-of-apps gate and block later waves. This is a source-confirmed mismatch, not an observed live outage.",
+      "components": [
+        "scripts/gitops-continuous.mjs",
+        "charts/gitops/files/application-health.lua",
+        "Runtime app-of-apps"
+      ],
+      "current_state": "AP03 identified the mismatch in integrated main. Existing health tests cover exact commit pins, stale-operation rejection and separate observed platform mode, but contain no positive continuous main-with-resolved-SHA case.",
+      "remaining_work": [
+        "Bind the selected and actually synchronized immutable revision consistently while continuous manifests track main.",
+        "Preserve stale-operation, source-path, destination, error and drift checks. Removing revision comparisons or switching runtime children to observed mode is not sufficient."
+      ],
+      "reproduction": [
+        "Invoke the original Lua with spec.source.targetRevision=\"main\", status.sync.status=\"Synced\", status.sync.revision=\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", health.status=\"Healthy\", operationState.phase=\"Succeeded\" and syncResult.revision set to that same SHA. comparedTo.source must match spec.source including main/path/repoURL/directory.include; comparedTo.destination must match spec.destination. Omit observed mode. Current code returns Progressing.",
+        "Use the immutable-SHA positive fixture in tests/verification/deployment/gitops-health.test.mjs and change only spec.source.targetRevision and comparedTo.source.targetRevision to main. Test current and stale operation revisions separately."
+      ],
+      "acceptance_criteria": [
+        "The selected real continuous commit can reach Healthy when sync, source binding, successful operation and workload health all match it.",
+        "Stale or mismatched successful operations remain blocked; ComparisonError, drift, changed paths and destination changes retain their protections.",
+        "Runtime and manually synchronized platform health remain separate contracts."
+      ],
+      "live_validation": "After correction, accept an actual branch-to-SHA rollout with the subsequent wave and a stale operation. Lua fixtures alone do not establish live acceptance.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "Both original sources and the existing health test read. Deterministic mismatch follows from string comparison; no Lua/Argo execution in AP04.",
+        "original_scope": "Additional AP03 follow-up; outside the original 154 and five separately closed integration findings."
+      },
+      "sources": [
+        {
+          "path": "scripts/gitops-continuous.mjs",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/gitops-continuous.mjs",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "charts/gitops/files/application-health.lua",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/gitops/files/application-health.lua",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "tests/verification/deployment/gitops-health.test.mjs",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/deployment/gitops-health.test.mjs",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "docs/blueprint/review-ledger.jsonl",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/blueprint/review-ledger.jsonl",
+          "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        }
+      ]
+    },
+    {
+      "id": "DOC-AP04-PREFERENCE-001",
+      "origin": "ap04-contract-follow-up",
+      "title": "Accepted no-decay preference contract conflicts with automatic 180-day decay",
+      "severity": "unassessed",
+      "status": "open",
+      "problem": "The accepted prism-preference-learning-v1 document explicitly excludes automatic time decay, while projectPreferences computes score * 0.5^(ageDays/180) and createPreferenceGeneration persists policyVersion=prism.preferences.v1.decay180-project-override.",
+      "impact": "Readers cannot determine whether preferences should remain stable with age or weaken automatically. Different contract interpretations can produce different effective preferences for the same event history.",
+      "components": [
+        "Prism preference projection",
+        "Preference generation snapshots",
+        "D11 accepted preference contract"
+      ],
+      "current_state": "Both current implementation files and the accepted no-decay statements were inspected at the source baseline. Tests explicitly cover decay and snapshot policy identity. No authoritative approval superseding the no-decay rule was identified in this bounded reconciliation; that approval state remains unknown rather than inferred from code.",
+      "remaining_work": [
+        "Resolve the contract explicitly: retain the accepted no-decay rule or document an approved replacement specifying the intended temporal policy.",
+        "Align implementation, policyVersion, documentation and regression expectations with that decision. Preserve event provenance, retraction, referenceTime, project-over-personal behavior and deterministic snapshot replay; do not silently reinterpret historical snapshots."
+      ],
+      "reproduction": [
+        "Inspect docs/architecture/prism-preference-learning-v1.md. V1 excludes automatic time decay in the opening scope and time-handling section. Compare skills/prism/preferences/index.ts projectPreferences and skills/prism/control/preference-snapshot.ts.",
+        "Use one valid selected event with a single trait and evaluate the original projector at its last evidence time and 180 days later. Current arithmetic yields score1/effectiveScore1, then score1/effectiveScore0.5. Preserve user/project context and all required event fields; this AP04 review did not execute the probe.",
+        "Existing regression entry points: skills/prism/tests/quality.test.mts (preference projections decay and remain retractable) and skills/prism/tests/control-generation-http.test.mts (persisted decay policy identity)."
+      ],
+      "acceptance_criteria": [
+        "One explicit accepted policy resolves the contradiction without treating implemented behavior as implicit approval.",
+        "Projection tests, persisted policy identity and published contract agree, including fixed-reference-time replay and event retraction.",
+        "Any historical snapshot compatibility or migration rule is explicit; approval and implementation states remain distinguishable."
+      ],
+      "live_validation": "This is a contract/implementation alignment task that can be verified locally. It does not assert a deployed incident or reopen an original 154 finding.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "Bounded source and existing-test inspection; no preference test execution, product change or inferred policy approval.",
+        "approval_status": "unknown: no authoritative superseding approval identified in the reviewed sources"
+      },
+      "sources": [
+        {
+          "path": "docs/architecture/prism-preference-learning-v1.md",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/prism-preference-learning-v1.md",
+          "scope": "Accepted contract, current implementation or existing regression; conflict described above."
+        },
+        {
+          "path": "skills/prism/preferences/index.ts",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/preferences/index.ts",
+          "scope": "Accepted contract, current implementation or existing regression; conflict described above."
+        },
+        {
+          "path": "skills/prism/control/preference-snapshot.ts",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/control/preference-snapshot.ts",
+          "scope": "Accepted contract, current implementation or existing regression; conflict described above."
+        },
+        {
+          "path": "skills/prism/tests/quality.test.mts",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/tests/quality.test.mts",
+          "scope": "Accepted contract, current implementation or existing regression; conflict described above."
+        },
+        {
+          "path": "skills/prism/tests/control-generation-http.test.mts",
+          "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/tests/control-generation-http.test.mts",
+          "scope": "Accepted contract, current implementation or existing regression; conflict described above."
+        }
+      ]
+    }
+  ]
+}

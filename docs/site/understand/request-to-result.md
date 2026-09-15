@@ -1,33 +1,19 @@
 # Request To Result
 
-Status: implemented
+Status: replaced by the complete architecture trace
 Audience: architecture reader, maintainer, operator
-Owner: nova-core
-Evidence: skills/nova/core/execution; skills/nova/core/lifecycle
+Owner: Nova Core
+Evidence: docs/site/understand/request-state-recovery.md
 Applies to: pipeline-plugin-v2
-Last verified: generated during publication
+Last verified: source review on 2026-09-15
 
-## Purpose
+The complete trace is now in [Request, State, and Recovery](request-state-recovery.md).
 
-This page follows one pipeline run from configuration admission to terminal closure.
+That page explains the normal path and the important failure paths.
+It also identifies each owner, durable record, identity, timeout, stop condition, and artifact.
 
-## Flow
+Use these related pages:
 
-1. Core validates project configuration and resolves each stage owner.
-2. Core freezes the graph, registry, policy, and source revision.
-3. Core selects ready stages within the configured concurrency limit.
-4. Core creates a unique attempt and a capability-limited context.
-5. The selected plugin performs its declared work.
-6. Core validates the plugin result and commits the lifecycle event.
-7. Core schedules progress, remediation, retry, wait, or closure.
-8. Recovery replays durable records and rejects stale attempt results.
-
-## Authority
-
-Core alone advances the scheduler and writes canonical lifecycle state. Plugins return typed results and request bounded effects.
-
-Worker services can execute durable plans. Nova imports their validated results and remains the final pipeline authority.
-
-## Failure Boundary
-
-A failed attempt does not silently become a passed stage. Missing evidence, invalid results, and exhausted budgets remain explicit.
+- [Components and Authority](components-and-authority.md) explains who can make each decision.
+- [Deployment and Trust](deployment-and-trust.md) explains where each handoff crosses a process or trust boundary.
+- [Glossary](../reference/glossary.md) defines the terms used in the trace.

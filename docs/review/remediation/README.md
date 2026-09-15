@@ -1,11 +1,13 @@
 # Behebungsplan nach Inventar, Einzelreviews und Traces
 
+> Historical remediation record. Its counts, branch instructions and register references describe that checkpoint. Current work is maintained in [open issues](../../site/status/open-issues.md) and [the canonical JSON](../../site/status/open-issues.json). [Local closure provenance](../../site/decisions/acceptance.md) and [live acceptance](../../site/status/acceptance.md) have separate authority. Original register data remains in [immutable history](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json).
+
 Planungsstand 2026-09-09. **154 historische Finding-Kennungen vollständig erfasst und 14 Arbeitspaketen zugeordnet. Planungsauftrag abgeschlossen; aktive Umsetzung auf `fix/remediation-foundations-20260909`, siehe [Fortschritt](progress.md).** Entscheidungen sind bestätigte Zielvorgaben, keine Beschreibung des gegenwärtigen Implementierungsstands.
 
 - [Bestätigte Entscheidungen D01–D12](decisions.md)
 - [Arbeitspakete, Reihenfolge und Abnahmekriterien](work-packages.md)
 - [Vollständiges Register mit Originalquellen](register.md)
-- [Maschinenlesbarer Prüf- und Fortschrittsstand](register.json)
+- [Maschinenlesbarer Prüf- und Fortschrittsstand](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json)
 - [Fortsetzung und noch fehlende Nachweise](handoff.md)
 
 ## Quellen und unveränderliche Baseline
