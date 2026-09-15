@@ -1,6 +1,6 @@
 # Documentation transformation blueprint
 
-Status: AP02 planning baseline completed and rechecked; AP03 individual review in progress.
+Status: AP02 planning baseline completed and rechecked; AP03 individual review completed for all 2,879 frozen source files.
 Scope: documentation migration; implementation and live acceptance remain separate.
 
 KubeClaw documentation must let a new reader understand the system, an operator complete operational tasks, and a developer build supported extensions without previous conversations. Detail is required where it explains behavior or lets a task finish. More pages are not a measure of completeness.
@@ -14,7 +14,7 @@ KubeClaw documentation must let a new reader understand the system, an operator 
 5. [Decision preservation](05-decision-record-catalogue.md): retain reasoning without confusing acceptance with implementation.
 6. [Tooling and publication](06-automation-and-publication.md): reuse existing tools, add only necessary checks, keep unfinished work visible.
 
-[Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the complete source inventory, plugin comparison, open findings and executable review dependencies. AP03 is in progress: review every document, using this blueprint; do not treat AP01 classifications as completed content review.
+[Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the complete source inventory, plugin comparison, open findings and executable review dependencies. [AP03 is complete](AP03-progress.md): all 2,879 frozen source files have individual content or functional decisions. Migration remains pending; AP04 preserves open work, acceptance requirements, decisions and test dependencies before rewriting.
 
 ## Authority and historical outputs
 
@@ -58,7 +58,7 @@ The recheck made engine authoring, configuration-only extension, routine backup 
 
 ## AP03 individual document review
 
-AP03 is in progress: 2,342 files have individual content decisions; migration
+AP03 is in progress: 2,789 files have individual content decisions; migration
 and deletion are still pending. See the [progress and scope report](AP03-progress.md)
 and the [human-maintained review ledger](review-ledger.jsonl). Captured files are
 not content-reviewed. The ledger is outside the old generated output directory.

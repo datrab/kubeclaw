@@ -1,13 +1,13 @@
 # AP03 — Einzelprüfung der Dokumentation
 
-Stand: 15.09.2026. **In Arbeit; nicht abgeschlossen.**
+Stand: 15.09.2026. **Abgeschlossen für den eingefrorenen Quellumfang.**
 
-## Ergebnis dieses Zwischenstands
+## Ergebnis der Einzelprüfung
 
-**2.342 von 2.879 Quelldateien sind einzeln inhaltlich bzw. funktional bewertet;
-537 bleiben ungeprüft.** Entscheidungen: **182 erweitern,
-1.444 Informationen extrahieren, 14 behalten und
-702 entfernen**. Die funktionale Bewertung betrifft ausdrücklich
+**2.879 von 2.879 Quelldateien sind einzeln inhaltlich bzw. funktional bewertet;
+Keine Quelldatei bleibt ungeprüft.** Entscheidungen: **182 erweitern,
+1.898 Informationen extrahieren, 14 behalten und
+785 entfernen**. Die funktionale Bewertung betrifft ausdrücklich
 als solche gekennzeichnete nichttextuelle Nachweise; sie ist keine Behauptung,
 jeden eingebetteten historischen Quelltext gelesen zu haben. Automatische
 Erfassung und Paketzuordnung zählen nicht als Inhaltsprüfung.
@@ -41,17 +41,22 @@ inhaltliche bzw. funktionale Einzelbewertung, keine bloße Dateinamensentscheidu
 | Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 380 |
 | Dokumentationsunterstützung | 82 | 82 |
 | Neue AP01-/Plan-Verwaltungsdateien | 7 | 7 |
-| Review-Texte | 479 | 325 |
-| Review-Nachweise und Register | 1.832 | 1.449 |
+| Review-Texte | 479 | 479 |
+| Review-Nachweise und Register | 1.832 | 1.832 |
 | Agentenanweisungen | 2 | 2 |
-| **Gesamt** | **2.879** | **2.342** |
+| **Gesamt** | **2.879** | **2.879** |
 
-**537 Dateien bleiben in AP03 erfasst, aber ungeprüft.**
+**Alle 2.879 Dateien besitzen eine Inhaltsentscheidung.**
 Die bereits erfolgte AP02-Blueprint-Abnahme ersetzt diese
-dateibezogene Migrationsentscheidung nicht. Die beiden neuen AP03-Arbeitsdateien
-dieses Zwischenstands sind Verwaltungszugänge nach dem eingefrorenen Quellstand;
-beim nächsten Bestandsabgleich werden sie mit ihrem dann verfügbaren Blob
-ergänzt. Arbeitsplan und Blueprint-Index wurden einschließlich aller Änderungen bis
+dateibezogene Migrationsentscheidung nicht. Die fünf AP03-Verwaltungsdateien
+`review-ledger.jsonl`, `AP03-progress.md`, `AP03-work-packages.md`,
+`AP03-work-packages.json` und `AP03-report-review-map.json` sind Ergebnisse dieser
+Prüfung außerhalb des eingefrorenen Quellumfangs. Sie bleiben bis zur
+Migrationsabnahme als Arbeitsnachweis erhalten; beim abschließenden
+Bestandsabgleich in AP11 werden sie ausdrücklich einbezogen und gemäß der
+Blueprint-Regel für temporäre Migrationsunterlagen entfernt bzw. abgeschlossen.
+Der feste Nenner ist keine Aussage über sämtliche künftig hinzugefügten Dateien.
+Arbeitsplan und Blueprint-Index wurden einschließlich aller Änderungen bis
 Commit `9dee5aef73403deb9c565c3f1c09135fc2ca46cd` geprüft; ihre Originalblobs
 bleiben erhalten und `reviewed_blob` nennt den tatsächlich geprüften Stand.
 Die hier vorgenommenen Fortschrittsaktualisierungen sind separat nachvollziehbar. Keine selbstreferenziellen
@@ -356,7 +361,7 @@ Clusterdiagnose noch eine Produktionsfreigabe. Die Review-Einstiege liefern
 wertvolle Kriterien für Fehlergrenzen und Nachweise; ihre 103 historischen
 Findings sind nicht der aktuelle 154er-Reparaturstand.
 
-Nächster Einstieg: übrige Dokumentationsunterstützung und die Review-Register
+Damals nächster Einstieg: übrige Dokumentationsunterstützung und die Review-Register
 mit den noch offenen Findings. Keine Quelldatei gelöscht, kein technisches
 Finding geschlossen und keine Runtime-/Live-Prüfung ausgeführt.
 
@@ -364,7 +369,7 @@ Finding geschlossen und keine Runtime-/Live-Prüfung ausgeführt.
 
 Ausgangspunkt der sechs Pakete ist Commit
 `e5bc4b951f914b95a39655aa069daaba09ee51a2` mit 506 geprüften Dateien.
-Dieser Zwischenstand integriert 1.836 zusätzliche Entscheidungen.
+Die Zusammenführung integriert insgesamt 2.373 zusätzliche Entscheidungen.
 Paketzugehörigkeit, eindeutige Pfade, unveränderte Originalblobs, Pflichtfelder
 und getrennte Migrationszustände sind kontrolliert. Die Hauptsession hat
 Quelltexte und zugehörige Entscheidungen aus allen sechs Paketen stichprobenartig
@@ -396,5 +401,57 @@ Wichtige Folgeaufträge:
 
 Alle Entscheidungen bleiben `migration_status: pending`. Keine Produktdateien
 oder historischen Nachweise gelöscht, keine technischen Findings geschlossen,
-keine Runtime-, Deployment- oder Live-Tests ausgeführt. Die verbleibenden
-537 Quellen werden im bestehenden Paket weiterbearbeitet.
+keine Runtime-, Deployment- oder Live-Tests ausgeführt. Die letzten 90 Quellen sind in der Abschlussprüfung unten entschieden.
+
+## Abschluss der letzten 90 Quellen
+
+Die Hauptsession hat die verbleibenden 62 Quellen aus P05 und 28 aus P06
+bewertet (`review_batch: ap03-final-90`): 62 Extraktionen und 28 bedingte
+Entfernungen. Jede Quelle besitzt eine eigene Entscheidung mit konkretem
+Zielabschnitt, Befund, erforderlicher Änderung und Migrationsbedingung.
+Die bereits vorhandenen 2.789 Entscheidungen bleiben unverändert.
+
+Strukturierte Matrix-/Manifestdaten wurden vollständig eingelesen und nach
+Fallvarianten, Antworten, Versions-/Identitätsfeldern und Abweichungen verglichen.
+Wiederholte Serverlogs wurden anhand ihrer Meldungen bewertet; Zeitstempel,
+zufällige IDs und temporäre Ports wurden nur für den Vergleich normalisiert.
+Eingebettete historische Quelltexte in Lintausgaben wurden funktional als
+Diagnosebeilagen bewertet, nicht als vollständiges neues Code-Audit.
+Abgeschnittene Originalaufzeichnungen bleiben ausdrücklich unvollständig.
+
+Konkrete Übergaben an AP04 und AP09:
+
+- `run12-prism-reader-first-matrix.txt` ist eine echte Eingabe von
+  `tests/verification/reliability/prism-reader-value.test.mjs:50`.
+  Originalbytes und Testpfad müssen gemeinsam in den Fixture-Bereich umziehen.
+- `run5-native-matrix-2/native-fence-matrix.json` enthält nur 13 statt 38
+  Einträge; die run6-coupled-Matrix ist mitten im JSON abgeschnitten.
+  Das zugehörige API-Serverlog endet ebenfalls vorzeitig. Fehlender Umfang
+  darf nicht aus anderen Läufen ergänzt oder als bestanden gezählt werden.
+- Die native Statusmatrix prüft das CRD-Schema mit künstlichen Signaturen.
+  HTTP201 beim CRD-Anlegen beweist weder Established noch eine echte
+  Nutzerfreigabe oder ein erfolgreiches Anwendungsdeployment.
+- Frühe Envoy-Ablaufproben besitzen ein ungültiges Zertifikatsintervall.
+  Spätere Läufe und der aktuelle Prüfer kontrollieren ein korrekt geordnetes,
+  tatsächlich abgelaufenes Intervall und Readiness nach Installation.
+  SPIRE-gRPC und Operatorlieferung bleiben außerhalb dieser Nachweise.
+- Die ursprünglichen Fehlläufe bleiben mit Ergebnis und Ursache erhalten:
+  100/101 Runtime-Tests (ArtifactStore-ready-Timeout), 7/25 Source-Consumer-Tests
+  (unter anderem verweigerte Artifact-Capability), 14/21 Retirement-Tests
+  (Snapshotintegrität) und 25/28 Infrastrukturtests (fehlender Registry-Endpunkt).
+  Erfolgreiche spätere Teilprüfungen ersetzen diese Ergebnisse nicht rückwirkend.
+- Prism-Matrizen belegen Reader-/Replay-Verhalten, keine Design-Erzeugung.
+  Der Scaffold-Lauf unterscheidet Autorendaten, Kompilierung und eine wegen
+  fehlendem Worker-Secret blockierte Ausführung. Diese Grenzen gehören in
+  verständliche Aufgabenbeschreibungen und den Abnahmestatus.
+
+Geprüft wurden die 90 Originalblobs, eindeutige Pfade, Pflichtfelder,
+Entscheidungszahlen und die vollständige Paketabdeckung. Originaldaten und
+Findingregister bleiben unverändert; alle Migrationszustände stehen auf pending.
+Neue AP03-Verwaltungsdateien und Änderungen auf neuerem main werden beim
+vorgesehenen Bestandsabgleich berücksichtigt. Der Abschluss gilt ausschließlich
+für die eingefrorenen Quellen, nicht als Gesamtabnahme der neuen Dokumentation.
+
+**Nächster Arbeitsschritt: AP04 — offene Findings, Live-Abnahmen, gültige
+Entscheidungen und erforderliche Testnachweise migrationsfest sichern.**
+AP04–AP11 bleiben offen.

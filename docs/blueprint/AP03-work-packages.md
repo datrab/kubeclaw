@@ -49,6 +49,14 @@ Ausgaben können nach der Prüfung ihrer Verbraucher und der übergeordneten
 Nachweise entfernt werden. Ausführbare Testfixtures benötigen gegebenenfalls
 weiterhin Originalbytes und einen kanonischen Testpfad.
 
+Der zusammengefasste Pfadreport verwendet bereits vollständig gelesene
+Komponenten- und Traceabschnitte erneut. Die
+[Prüfzuordnung](AP03-report-review-map.json) bindet 1.708 inhaltsgleiche Zeilen an
+47 Quellblobs; 381 weitere nichtleere Zeilen wurden eigenständig gelesen.
+Nur Markdown-Überschriftenpräfixe wurden beim Gleichheitsvergleich entfernt;
+Gliederung und Kontext wurden gesondert geprüft. Das ist eine nachvollziehbare
+Prüfmethode und kein neues Quelltextarchiv.
+
 ## Wiederaufnahme
 
 Den aktuellen Zustand jeder Quelle liefert ausschließlich `review-ledger.jsonl`.
@@ -68,13 +76,13 @@ Die laufenden Zahlen und der nächste Einstieg stehen im
 | Paket | Im Register übernommen | Noch offen |
 | --- | ---: | ---: |
 | AP03-P01 | 64 | 0 |
-| AP03-P02 | 93 | 19 |
-| AP03-P03 | 146 | 129 |
-| AP03-P04 | 137 | 12 |
-| AP03-P05 | 662 | 196 |
-| AP03-P06 | 734 | 181 |
+| AP03-P02 | 112 | 0 |
+| AP03-P03 | 275 | 0 |
+| AP03-P04 | 149 | 0 |
+| AP03-P05 | 858 | 0 |
+| AP03-P06 | 915 | 0 |
 
 Die Zahlen betreffen die Zuteilung nach den ursprünglichen 506 Prüfungen.
-T01/T02 aus P02 wurden von der Hauptsession selbst geprüft. Noch laufende
-Bearbeiter können weitere Ergebnisse vorbereitet haben; gezählt ist nur der
-zusammengeführte Registerstand.
+T01/T02 aus P02 wurden von der Hauptsession selbst geprüft. Die letzten 90 Entscheidungen wurden von der Hauptsession ergänzt.
+Alle 2.373 zugeteilten Quellen sind entschieden; zusammen mit den ursprünglichen
+506 ergibt dies 2.879. Die Migration ist weiterhin ausstehend.

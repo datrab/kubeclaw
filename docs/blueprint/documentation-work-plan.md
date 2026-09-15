@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 15 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 in Arbeit (2.342 Dateien geprüft)
+Stand: 15.09.2026 · Version 16 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 abgeschlossen (2.879 von 2.879 Quelldateien geprüft)
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -27,7 +27,7 @@ Der vorhandene Blueprint wird kritisch überarbeitet. Seine Kategorien, Seitenst
 
 ## 3. Übersicht der Arbeitspakete
 
-AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist **in Arbeit**, AP04–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
+AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist **für den eingefrorenen Quellumfang abgeschlossen**, AP04–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
 
 | ID | Arbeitspaket | Voraussetzung | Greifbares Ergebnis |
 | --- | --- | --- | --- |
@@ -72,19 +72,22 @@ Die Umsetzung erfolgt themenweise in überschaubaren Änderungen. AP10 läuft be
 
 ### AP03 — Jedes Dokument prüfen
 
-**Zwischenstand:** 2.342 Dateien einzeln geprüft (182 erweitern,
-1.444 extrahieren, 14 behalten, 702 entfernen);
-537 Quelldateien noch ungeprüft. [Prüfbericht](AP03-progress.md),
-[manuelles Register](review-ledger.jsonl), [parallele Arbeitspakete](AP03-work-packages.md).
-Die Gesamtaufgaben bleiben bis zur Prüfung des vollständigen Umfangs offen.
+**Abschluss:** 2.879 von 2.879 Quelldateien einzeln inhaltlich bzw. funktional
+bewertet (182 erweitern, 1.898 extrahieren, 14 behalten, 785 entfernen).
+Keine ungeprüfte Quelldatei im eingefrorenen Umfang.
+[Prüfbericht](AP03-progress.md), [manuelles Register](review-ledger.jsonl),
+[Arbeitspakete](AP03-work-packages.md). Alle Migrationen bleiben ausstehend;
+neue Verwaltungsdateien und spätere Quelländerungen benötigen den gesonderten
+Bestandsabgleich. Historische Source-Anhänge sind funktional bewertete Nachweise,
+keine Behauptung einer vollständigen erneuten Codeprüfung.
 
-- [ ] Dateien in thematischen Paketen von etwa 10–20 Dokumenten bearbeiten; umfangreiche Designs entsprechend kleiner bündeln.
-- [ ] Jedes Dokument vollständig lesen. Aktuelle Fakten, Entscheidungen, Anleitungen, Beispiele, Pläne, historische Ergebnisse und überholte Aussagen unterscheiden.
-- [ ] Technische Kernaussagen mit ihren aktuellen Quellen abgleichen. Nicht prüfbare Aussagen ausdrücklich markieren.
-- [ ] Für jedes Dokument eine der vier Hauptentscheidungen festhalten: **behalten**, **entfernen**, **Informationen extrahieren**, **erweitern**.
-- [ ] Bei Extraktion konkrete Abschnitte und Zielorte nennen; „später übernehmen“ genügt nicht.
-- [ ] Bei Behalten oder Erweitern nötige Korrekturen, Verschiebungen und Zusammenführungen angeben.
-- [ ] Eingehende Verweise und Abhängigkeiten aus Tests, Skripten und Generatoren erfassen.
+- [x] Dateien in thematischen Paketen von etwa 10–20 Dokumenten bearbeiten; umfangreiche Designs entsprechend kleiner bündeln.
+- [x] Jedes Dokument vollständig lesen. Aktuelle Fakten, Entscheidungen, Anleitungen, Beispiele, Pläne, historische Ergebnisse und überholte Aussagen unterscheiden.
+- [x] Technische Kernaussagen mit ihren aktuellen Quellen abgleichen. Nicht prüfbare Aussagen ausdrücklich markieren.
+- [x] Für jedes Dokument eine der vier Hauptentscheidungen festhalten: **behalten**, **entfernen**, **Informationen extrahieren**, **erweitern**.
+- [x] Bei Extraktion konkrete Abschnitte und Zielorte nennen; „später übernehmen“ genügt nicht.
+- [x] Bei Behalten oder Erweitern nötige Korrekturen, Verschiebungen und Zusammenführungen angeben.
+- [x] Eingehende Verweise und Abhängigkeiten aus Tests, Skripten und Generatoren erfassen.
 
 **Abgeschlossen, wenn:** Jede Datei im Umfang besitzt eine begründete Inhaltsentscheidung. Keine automatisch vorgeschlagene Zuordnung wird als manuell geprüft gezählt. Inhaltliche Unsicherheiten sind konkreten offenen Arbeiten zugeordnet.
 
@@ -228,7 +231,7 @@ Bei Wiederaufnahme: aktuellen Commit/PR-Stand abgleichen, den letzten gesicherte
 
 ## 6. Nächster Schritt
 
-**AP03 fortsetzen:** Die bisherigen 1.761 Einzelentscheidungen sind im [Prüfregister](review-ledger.jsonl) gesichert. Operations, Deployment, Sicherheit, alle Katalogseiten und sämtliche Komponenten-/Agententexte sind einzeln bewertet. Sämtliche Markdown-Texte außerhalb der Reviews sind jetzt einzeln bewertet. Als Nächstes die Reviews samt Nachweisen sowie die übrigen Unterstützungs- und Verwaltungsdateien prüfen. Umfang, Prüfgrenzen und Folgeaufträge stehen im [AP03-Zwischenbericht](AP03-progress.md). Die AP01-Ergebnisse liegen unter [ap01-baseline/](ap01-baseline/README.md). Bestehende Dokumente und Reviews wurden noch nicht verändert oder gelöscht.
+**AP03 fortsetzen:** Die bisherigen 2.789 Einzelentscheidungen sind im [Prüfregister](review-ledger.jsonl) gesichert. Operations, Deployment, Sicherheit, alle Katalogseiten und sämtliche Komponenten-/Agententexte sind einzeln bewertet. Sämtliche Markdown-Texte außerhalb der Reviews sind jetzt einzeln bewertet. Als Nächstes die Reviews samt Nachweisen sowie die übrigen Unterstützungs- und Verwaltungsdateien prüfen. Umfang, Prüfgrenzen und Folgeaufträge stehen im [AP03-Zwischenbericht](AP03-progress.md). Die AP01-Ergebnisse liegen unter [ap01-baseline/](ap01-baseline/README.md). Bestehende Dokumente und Reviews wurden noch nicht verändert oder gelöscht.
 
 ## 7. Quellen des Ausgangsstands
 
