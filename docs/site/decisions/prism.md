@@ -58,7 +58,21 @@ The spike proposes p95 at most 250 ms. The implementation plan and executable se
 No separate approval for this relaxation is established here.
 Record both limits. G07 must report results against both and must not call 300 ms an approved replacement without decision evidence.
 The other recorded criteria include precision at 10 of 0.70, recall at 20 of 0.80, zero rights leaks, and declared corpus and hardware.
+The top ten must also contain four product or source families when four are eligible.
+Rights and status filters must have zero false inclusions.
+The same query, corpus snapshot, model, and ranking version must return the same ordered IDs.
+Hybrid search must match or improve the better individual search method on the labelled query set.
+Exact vector search must preserve full vector recall. The optional 100,000-row scale probe does not block v1.
 These are acceptance targets, not measured production results.
+
+Here, p95 is the query time that at least 95% of measured queries meet.
+Precision at 10 measures the share of relevant results in the first ten results.
+Recall at 20 measures the share of the labelled relevant results found in the first twenty.
+Together with diversity and access filters, these checks prevent a fast but unhelpful or unauthorized result from passing.
+
+The [spike criteria](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/spikes/prism-foundation-spikes.md#L245-L266)
+and [implementation-plan criteria](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/implementation/prism-implementation-plan.md#L332-L345)
+are the sources for these requirements. Their different latency limits remain visible.
 
 [D11](runtime-and-operations.md#d11) owns contextual preferences and project overrides.
 The accepted no-decay contract conflicts with implemented 180-day decay.

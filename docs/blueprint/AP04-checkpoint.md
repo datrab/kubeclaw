@@ -1,6 +1,6 @@
 # AP04 completion and handoff
 
-Status: AP04 extraction complete; AP05 is next
+Status: AP04 extraction complete and rechecked; AP05 is next
 Date: 2026-09-15
 Branch: `docs/documentation-overhaul`, existing PR #13
 Starting checkpoint: `ed9c53ba056097254b187123acc44e0f2a30a239`
@@ -56,12 +56,12 @@ The old register is the only source file deleted in AP04 completion.
 
 | Check | Actual result |
 | --- | --- |
-| `node --test scripts/tests/docs-status.test.mjs` | 11 passed, zero failed or skipped. Includes invented original IDs, tampered provenance, invalid dates, mutable-source dates, lost actionable fields, count drift and a legitimate later local closure. |
+| `node --test scripts/tests/docs-status.test.mjs` | Initial completion: 11 passed. Recheck: 13 passed, zero failed or skipped. Includes invented original IDs, tampered provenance, invalid dates, mutable-source dates, lost actionable fields, count drift and a legitimate later local closure. |
 | `node scripts/docs-status.mjs --check` | Passed. The generated view matches the sole JSON authority. |
 | AP03 preservation comparison | All 2,887 previous row values are unchanged after excluding the added `ap04_extraction` field. |
 | Original scope comparison | Exact 154+5 ID sets retained; all 36 explicit live-obligation IDs retained. No implementation finding closed by documentation. |
 | Decision identity comparison | Exact D-001–119, D-ER-001–036, D-ER3-001–019 and D-ER4-001–023 sets retained. |
-| Source and navigation audit | 508 distinct Markdown path/anchor targets on the decision and status pages resolve, including pinned Git blobs and line bounds. All 1,868 ledger extraction targets resolve. All 75 remaining commit links resolve in the Git object store. This is source/link validation, not runtime execution. |
+| Source and navigation audit | 515 distinct Markdown path/anchor targets after recheck on the decision and status pages resolve, including pinned Git blobs and line bounds. All 1,868 ledger extraction targets resolve. All 75 remaining commit links resolve in the Git object store. This is source/link validation, not runtime execution. |
 | `git diff --check` | Passed. |
 | `npm run docs:check` | Status, plugin inventory, documentation inventory and generated reference checks passed. The run then failed at the known stale `docs/blueprint/generated/platform-inventory.json` check. Later commands in that chain did not run. |
 
@@ -73,6 +73,41 @@ No cluster, native runtime, browser, PostgreSQL, model or human product acceptan
 was executed for AP04. Existing test results are attributed to their original source.
 Formal ASD-STE100 vocabulary/rule verification and independent reader trials remain
 AP11 gates. This extraction does not claim that these language gates have passed.
+
+## Recheck of AP04 completion
+
+The recheck starts from `2a2485c928740ec87bb458c704464d810e5bdb7c`.
+It compares all 2,887 ledger records with the pre-extraction snapshot, checks the
+42/128/995 handoff groups and their 1,868 targets, and compares the exact 154+5
+finding identities and 36 explicit live-obligation IDs with the pinned original register.
+The original text of all 36 live obligations and the next actions of all 13 incomplete
+findings were reviewed. Targeted semantic checks cover Prism retrieval criteria,
+Echo governor behavior, and the isolation-kernel command prerequisites.
+This is not a second full reading of all 995 historical acceptance-source files.
+
+The following defects were corrected:
+
+- The status validator accepted a closed original ID in place of an open original ID
+  when counts stayed equal. It also accepted removal with adjusted counts and no
+  corresponding closure record. It now checks the exact disposition of every original
+  ID against the provenance rows. A later closure requires both records to agree.
+- The validator accepted an invented integration-closure count of 999. It now checks
+  the count against the five inherited integration rows.
+- G07 omitted retrieval diversity, repeatable result order, comparison with the better
+  individual search method, full vector recall, and parts of the measurement scope.
+  These criteria are now explicit, including the nonblocking scale probe. The known
+  250/300 ms decision conflict remains unresolved; no approval was invented.
+- The G03 command now states its root-caller prerequisite and nonzero workload UID/GID.
+  The two inherited recovery procedures are directly linked. G11 distinguishes an
+  offline cache miss from an online miss.
+
+Narrow source references now support the Echo governor and Prism acceptance claims
+next to their explanations. The source/anchor audit passes for 515 distinct targets;
+all 1,868 extraction targets remain valid. The register counts and implementation
+statuses are unchanged. The 13 status tests and generated-view check pass.
+The aggregate documentation check still stops at the known AP02 inventory mismatch.
+No runtime or live acceptance was run, and formal STE acceptance remains pending.
+No AP04 extraction blocker remains after these corrections.
 
 ## Next work
 

@@ -197,6 +197,12 @@ A clean last repair can pass only when it remains within scope.
 The governor cannot turn a blocker into a pass or create a new model finding.
 It is an earlier policy threshold; Core still owns the hard lifecycle budget.
 
+Source evidence: [built-in governor profile](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/src/review-policy-profiles.ts#L56)
+sets the limits. [applyReviewGovernor](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/src/review-governor-decision.ts#L20-L35)
+keeps a result that does not request another repair when only the cycle limit is exhausted.
+It separately escalates scope breaches and blocks invalid state. These links support the source behavior;
+this documentation recheck did not execute a repair cycle.
+
 ## Large changes and repository audits
 
 Frozen reviewed source becomes citeable evidence through its digest.

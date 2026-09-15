@@ -23,8 +23,8 @@ export function originalFindingIds(provenance = fs.readFileSync(provenanceFile, 
   return new Set(ids);
 }
 
-export function validateStatus(data) {
-  const originalIds = originalFindingIds();
+export function validateStatus(data, provenance = fs.readFileSync(provenanceFile, 'utf8')) {
+  const originalIds = originalFindingIds(provenance);
   if (data.schema_version !== 1 || !Array.isArray(data.issues)) throw new Error('Unsupported issue register schema');
   if (!validDate(data.updated_at) || !/^[a-f0-9]{40}$/u.test(data.source_baseline ?? '')) throw new Error('Dated immutable source baseline required');
   if (typeof data.purpose !== 'string' || !data.purpose.trim() || typeof data.verification_policy !== 'string' || !data.verification_policy.trim()) throw new Error('Register purpose and verification policy required');
@@ -62,6 +62,21 @@ export function validateStatus(data) {
   if (s.original_total !== 154 || !s.counting_policy || !Number.isInteger(s.additional_integration_locally_verified) || s.additional_integration_locally_verified < 0 || original !== s.original_incomplete || original + s.original_locally_verified !== s.original_total ||
       data.issues.length !== s.total_open || data.issues.length - original !== s.additional_open) {
     throw new Error('Issue counts do not match their scope');
+  }
+  const dispositions = new Map([...provenance.matchAll(/^\| ([A-Z0-9-]+) \| ([^|]+) \|/gmu)]
+    .filter(match => originalIds.has(match[1])).map(match => [match[1], match[2].trim()]));
+  if (dispositions.size !== originalIds.size) throw new Error('Incomplete local closure provenance');
+  const statusNames = { Open: 'open', 'In progress': 'in-progress', 'Implemented; incomplete': 'partially-implemented' };
+  for (const [id, disposition] of dispositions) {
+    const issue = data.issues.find(entry => entry.id === id);
+    if (disposition === 'Locally verified' ? issue !== undefined :
+      !Object.hasOwn(statusNames, disposition) || issue?.status !== statusNames[disposition]) {
+      throw new Error(`${id}: issue state disagrees with local closure provenance`);
+    }
+  }
+  const integrationIds = [...provenance.matchAll(/^\| (INT-[A-Z0-9-]+) \|/gmu)].map(match => match[1]);
+  if (integrationIds.length !== 5 || new Set(integrationIds).size !== 5 || s.additional_integration_locally_verified !== integrationIds.length) {
+    throw new Error('Integration closure counts disagree with the five inherited provenance rows');
   }
 }
 

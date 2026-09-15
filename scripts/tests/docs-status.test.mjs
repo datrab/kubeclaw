@@ -100,11 +100,26 @@ test('mutable evidence requires a real observation date and publishes it', () =>
   assert.ok(renderStatus(data).includes(`Observed: ${data.updated_at}.`));
 });
 
-test('a genuine later local closure can leave the fixed original universe', () => {
+test('a later closure requires matching provenance, not only adjusted counts', () => {
   const data = load();
   data.issues = data.issues.filter(issue => issue.id !== 'IFR-29-001');
   data.scope.original_incomplete--;
   data.scope.original_locally_verified++;
   data.scope.total_open--;
-  validateStatus(data);
+  assert.throws(() => validateStatus(data), /closure provenance/);
+  const provenance = fs.readFileSync(new URL('../../docs/site/decisions/acceptance.md', import.meta.url), 'utf8')
+    .replace('| IFR-29-001 | Open |', '| IFR-29-001 | Locally verified |');
+  validateStatus(data, provenance);
+});
+
+test('a closed original ID cannot replace an open ID with unchanged counts', () => {
+  const data = load();
+  data.issues.find(issue => issue.id === 'IFR-29-001').id = 'IFR-27-001';
+  assert.throws(() => validateStatus(data), /closure provenance/);
+});
+
+test('the five inherited integration closures cannot become an invented count', () => {
+  const data = load();
+  data.scope.additional_integration_locally_verified = 999;
+  assert.throws(() => validateStatus(data), /Integration closure counts/);
 });

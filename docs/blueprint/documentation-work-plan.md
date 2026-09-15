@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 20 · Status: AP01–AP04 abgeschlossen; AP05 ist das nächste Arbeitspaket
+Stand: 15.09.2026 · Version 21 · Status: AP01–AP04 abgeschlossen; AP04 erneut nachgeprüft; AP05 ist das nächste Arbeitspaket
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -93,7 +93,7 @@ Einzelentscheidungen im [manuellen Register](review-ledger.jsonl).
 
 ### AP04 — Offene Arbeit und Entscheidungen sichern
 
-**Abgeschlossen:** [Ergebnis, Zuordnungen und Prüfgrenzen](AP04-checkpoint.md). Technische Findings und Live-Abnahmen bleiben entsprechend ihrem eigenen Status offen.
+**Abgeschlossen und erneut nachgeprüft:** [Ergebnis, Zuordnungen und Prüfgrenzen](AP04-checkpoint.md#recheck-of-ap04-completion). Technische Findings und Live-Abnahmen bleiben entsprechend ihrem eigenen Status offen.
 
 - [x] Alle weiterhin offenen Findings mit Original-ID, Problem, Auswirkung, aktuellem Teilstand, betroffenen Komponenten, verbleibender Arbeit und Abschlusskriterium übernehmen.
 - [x] Benötigte Reproduktionen und Nachweise erhalten oder an geeignete Test-/Issue-Orte verschieben. Offene Issues müssen ohne gelöschte Review-Dateien bearbeitbar bleiben.
