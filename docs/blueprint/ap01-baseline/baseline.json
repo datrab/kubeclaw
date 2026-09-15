@@ -1,0 +1,42 @@
+{
+  "baseline_commit": "6979bced8e5bbca90568276256e7328d93a1e072",
+  "baseline_tree": "6196b202b295e11c2f3fea870ca4142e26e2f68d",
+  "complete_remote_tree": true,
+  "tracked_files": 5221,
+  "docs_files": 2773,
+  "markdown_files": 963,
+  "categories": {
+    "implementation-or-test-data": 1942,
+    "implementation-or-tooling": 275,
+    "component-or-root-documentation": 97,
+    "license": 3,
+    "test-fixture": 129,
+    "documentation-text": 380,
+    "documentation-support": 82,
+    "review-text": 479,
+    "review-evidence-or-register": 1832,
+    "agent-instructions": 2
+  },
+  "verified_local_source_files": 2092,
+  "reference_scan_files": 2072,
+  "literal_reference_occurrences": 287,
+  "literal_reference_consumers": 80,
+  "old_ledger_rows": 374,
+  "current_old_ledger_scope": 2696,
+  "missing_ledger_paths": 2322,
+  "open_findings": 13,
+  "additional_open_github_issues": [
+    7
+  ],
+  "open_prs": [
+    {
+      "number": 12,
+      "title": "Remove legacy ChatGPT MCP tunnel path",
+      "sha": "102a4a70af307af19d683511ca4f4443c42479bb",
+      "head": "cleanup/remove-legacy-chatgpt-mcp",
+      "base": "6979bced8e5bbca90568276256e7328d93a1e072",
+      "body": "Retire the old standalone ChatGPT -> Secure MCP Tunnel -> standalone Ops MCP architecture. The canonical operations path is the persistent Codex Ops Pod/devbox with its loopback-only MCP sidecar.\n\nChanges:\n- remove the ChatGPT MCP tunnel runbook\n- remove standalone ops-mcp and tunnel manifests\n- remove standalone Ops Cilium policies\n- remove standalone deploy/live-verification helpers\n- remove legacy Cilium migration special cases\n- remove standalone-only verification contracts/tests\n- keep tools/ops-mcp, its image build, releases, charts/ops-pod and scripts/deploy-ops-pod.sh because the Codex Ops Pod uses that MCP implementation directly\n\nNo cluster resources are deleted because this path was never deployed.\n\nSecurity review while making the repository public:\n- no committed GitHub PAT, AWS access key, Google API key, OpenSSH/private-key block, or obvious production credential was found in targeted searches\n- production configuration uses Kubernetes Secret references rather than literal credentials\n- public non-secret identifiers remain (for example Discord IDs, service/namespace/secret names and repository architecture)\n- commit author email remains part of normal Git history\n\nHistorical review documents may still describe the retired path as historical evidence; active runtime/deployment code is removed."
+    }
+  ],
+  "review_method": "AP01 inventory only; no document migration decisions, no runtime re-verification"
+}
