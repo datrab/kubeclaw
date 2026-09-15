@@ -39,6 +39,10 @@ const find = (app, kind, name) => {
 };
 const grafana = find('prometheus', 'Deployment', 'prometheus-grafana');
 const grafanaEnv = grafana.spec.template.spec.containers.find(item => item.name === 'grafana').env;
+const memoryLimit = grafanaEnv.filter(item => item.name === 'GOMEMLIMIT');
+assert.equal(memoryLimit.length, 1);
+assert.equal(memoryLimit[0].value, undefined, 'Do not merge a literal GOMEMLIMIT with the existing Helm-owned valueFrom');
+assert.deepEqual(memoryLimit[0].valueFrom, { resourceFieldRef: { divisor: '1', resource: 'limits.memory' } });
 for (const [name, key] of [['GF_SECURITY_ADMIN_USER', 'admin-user'], ['GF_SECURITY_ADMIN_PASSWORD', 'admin-password']]) {
   assert.deepEqual(grafanaEnv.find(item => item.name === name).valueFrom.secretKeyRef, { name: 'prometheus-grafana', key });
 }

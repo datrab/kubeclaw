@@ -1,6 +1,13 @@
 alertmanager:
   enabled: false
 grafana:
+  # Preserve the existing valueFrom field during Helm-to-Argo SSA adoption.
+  # The newer chart otherwise introduces a literal value for the same variable.
+  envValueFrom:
+    GOMEMLIMIT:
+      resourceFieldRef:
+        divisor: "1"
+        resource: limits.memory
   admin:
     existingSecret: prometheus-grafana
     userKey: admin-user
