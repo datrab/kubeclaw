@@ -4,10 +4,10 @@ Stand: 15.09.2026. **In Arbeit; nicht abgeschlossen.**
 
 ## Ergebnis dieses Zwischenstands
 
-444 Dokumente wurden vollständig gelesen und einzeln entschieden: sämtliche
-97 Root-/Komponententexte, beide Agentenanweisungen,
-344 Dokumentationstexte und eine Verwaltungsdatei.
-Die Entscheidungen sind **142 erweitern, 289 Informationen extrahieren,
+490 Dateien wurden vollständig gelesen und einzeln entschieden: sämtliche
+97 Root-/Komponententexte, beide Agentenanweisungen, alle 380
+Dokumentationstexte, neun Unterstützungsdateien und zwei Verwaltungsdateien.
+Die Entscheidungen sind **156 erweitern, 321 Informationen extrahieren,
 10 behalten und 3 entfernen**. Die Entfernung betrifft einen redundanten
 Projekt-Runtime-Verweis und zwei veraltete generierte Zusammenfassungen. Ihre
 Verbraucher müssen zuerst migriert oder nachvollziehbar stillgelegt werden. Keine automatische Erfassung zählt als Inhaltsprüfung.
@@ -37,21 +37,23 @@ inhaltliche bzw. funktionale Einzelbewertung, keine bloße Dateinamensentscheidu
 | Gruppe | Dateien | Davon inhaltlich geprüft |
 | --- | ---: | ---: |
 | Root- und komponentennahe Dokumentation | 97 | 97 |
-| Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 344 |
-| Dokumentationsunterstützung | 82 | 0 |
-| Neue AP01-/Plan-Verwaltungsdateien | 7 | 1 |
+| Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 380 |
+| Dokumentationsunterstützung | 82 | 9 |
+| Neue AP01-/Plan-Verwaltungsdateien | 7 | 2 |
 | Review-Texte | 479 | 0 |
 | Review-Nachweise und Register | 1.832 | 0 |
 | Agentenanweisungen | 2 | 2 |
-| **Gesamt** | **2.879** | **444** |
+| **Gesamt** | **2.879** | **490** |
 
-**2.435 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 516
+**2.389 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 479
 Markdown-Dokumente. Die bereits erfolgte AP02-Blueprint-Abnahme ersetzt diese
 dateibezogene Migrationsentscheidung nicht. Die beiden neuen AP03-Arbeitsdateien
 dieses Zwischenstands sind Verwaltungszugänge nach dem eingefrorenen Quellstand;
 beim nächsten Bestandsabgleich werden sie mit ihrem dann verfügbaren Blob
-ergänzt. Geänderte Bestandsdateien, insbesondere Arbeitsplan und Blueprint-Index,
-werden ebenfalls gegen den neuen Blob abgeglichen. Keine selbstreferenziellen
+ergänzt. Arbeitsplan und Blueprint-Index wurden einschließlich aller Änderungen bis
+Commit `9dee5aef73403deb9c565c3f1c09135fc2ca46cd` geprüft; ihre Originalblobs
+bleiben erhalten und `reviewed_blob` nennt den tatsächlich geprüften Stand.
+Die hier vorgenommenen Fortschrittsaktualisierungen sind separat nachvollziehbar. Keine selbstreferenziellen
 Prüfzahlen oder vorausberechneten Commit-Hashes.
 
 Für die Verweissuche liegen alle 965 Markdown-Dateien des Quellstands vor. Eine
@@ -115,9 +117,9 @@ Prüfstatus beibehalten. Der Quellcommit dieses Berichts bindet auch die
 Alle Operations-, Deployment- und Sicherheitsdokumente, die ersten sieben
 Architektureinstiege, alle 51 Katalogseiten und sämtliche 95 weiteren
 Komponententexte/Agentenanweisungen sind jetzt einzeln entschieden. Als Nächstes
-folgen die übrigen 37 Markdown-Texte außerhalb der Reviews und die 479
-Review-Texte samt ihren Nachweisen. Verwaltungsdateien und technische
-Dokumentationsunterstützung erhalten ebenfalls Einzelentscheidungen.
+folgen die 479 Review-Texte samt ihren 1.832 Nachweisen und Registern.
+73 Unterstützungsdateien und fünf weitere Verwaltungsdateien benötigen
+ebenfalls noch Einzelentscheidungen.
 
 Die 13 unvollständigen Findings, getrennte Live-Abnahmen und das zusätzliche
 GitHub-Issue #7 bleiben erhalten. Aus diesen Dokumentationsentscheidungen folgt
@@ -288,3 +290,35 @@ Der spätere Gate verlangt einen geschützten Live-Nachweis. Dessen HMAC-Vertrag
 ist von den Ed25519-Operatorreceipts anderer Test-Suiten zu unterscheiden.
 Alte Account-, Controller- und Clusterblockaden werden erst nach aktuellem
 Abgleich als noch offene Arbeit übernommen.
+
+## Fortsetzung: Echo, Operations-Referenzen und maschinenlesbare Nachweise
+
+Weitere 46 Einzelentscheidungen schließen sämtliche Markdown-Texte außerhalb
+der Reviews ab und bewerten die ersten neun JSON-Unterstützungsdateien. Darunter
+sind alle 18 Echo-Architekturtexte, die drei großen Zuverlässigkeits-/Test-Gate-
+Pläne, 14 Betriebs-/Referenztexte sowie Blueprint-Index und Arbeitsplan.
+Die 119 nummerierten Test-Gate-Entscheidungen wurden vollständig gelesen.
+
+Die Echo-Roadmap verschiebt den Repository-Audit noch in die Zukunft, während
+der spätere Skalierungsbericht die separate Registrierung und ihren Ablauf
+beschreibt. Die Entscheidungen müssen diese Ablösung ausdrücklich zeigen.
+Dasselbe gilt für Policy-/Reportversionen, Core-zertifizierte Reparaturzyklen,
+begrenzte Kontext-Erweiterungen und spätere Aufteilung großer Reviews. Die
+historische Modellevaluation enthält unvollständige Läufe, falsch als sauber
+markierte Zwischenkorrekturen und eine abgelehnte echte P0-Feststellung. Sie
+belegt keine heutige Produktionsfreigabe.
+
+Die Ops-Pod-Anleitung bleibt der zentrale Betriebsweg. Besonders zu ergänzen
+sind tatsächlich ausführbare Storage-Backup-/Restore-Verfahren, die Grenzen
+von Helm-Rollback und die getrennte Erneuerung von Credentials und Geräteidentität.
+Die CLI-, Konfigurations- und Workflow-Referenzen haben unvollständige Inventare;
+der Workflow-Generator zeigt zudem abgeschnittene Befehlsargumente.
+
+Die ersten JSON-Prüfungen umfassen das Observability-Inventar sowie je vier
+Axe-/API-Baseline-, Cutover-, Dokumentations- und Paritätsdateien. Alle Zeilen
+wurden gelesen. Ihre technischen Verbraucher müssen bei der späteren Migration
+erhalten oder gezielt umgestellt werden. Ein `proved`-Feld bedeutet weder,
+dass AP03 den Test ausgeführt hat, noch dass eine darin ausdrücklich ausstehende
+Clusterabnahme bestanden ist. Die 57 neu bereitgestellten Unterstützungsquellen
+stimmen bytegenau mit den Git-Blobs des Prüfcommits überein; nur neun davon
+sind bislang inhaltlich geprüft.
