@@ -4,12 +4,13 @@ Stand: 15.09.2026. **In Arbeit; nicht abgeschlossen.**
 
 ## Ergebnis dieses Zwischenstands
 
-57 Dokumente wurden vollständig gelesen und einzeln entschieden: 42 Einstiegs-,
-Beitrags-, Entwickler-, Operator- und Site-Texte sowie 15 Betriebsdokumente zu
-Datenhaltung, Migration, Scans und Aufbewahrung. Die Hauptentscheidungen sind
-**40 erweitern und 17 Informationen extrahieren**. Keine automatische Erfassung
-zählt als Inhaltsprüfung. Noch kein Ersatztext ist abgenommen und noch keine
-Quelldatei zur Löschung freigegeben.
+220 Dokumente wurden vollständig gelesen und einzeln entschieden: sämtliche
+97 Root-/Komponententexte, beide Agentenanweisungen und 121 Dokumentationstexte.
+Die Entscheidungen sind **134 erweitern, 79 Informationen extrahieren,
+6 behalten und 1 entfernen**. Die Entfernung betrifft einen redundanten
+Projekt-Runtime-Verweis; seine Links und gegebenenfalls benötigten Angaben müssen
+zuerst übernommen werden. Keine automatische Erfassung zählt als Inhaltsprüfung.
+Noch kein Ersatztext ist abgenommen und keine Quelldatei wurde gelöscht.
 
 Das [manuell gepflegte Prüfregister](review-ledger.jsonl) enthält je Quelldatei
 einen Datensatz. Geprüfte Datensätze nennen konkrete Begründungen, Zielabschnitte,
@@ -34,16 +35,16 @@ inhaltliche bzw. funktionale Einzelbewertung, keine bloße Dateinamensentscheidu
 
 | Gruppe | Dateien | Davon inhaltlich geprüft |
 | --- | ---: | ---: |
-| Root- und komponentennahe Dokumentation | 97 | 4 |
-| Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 53 |
+| Root- und komponentennahe Dokumentation | 97 | 97 |
+| Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 121 |
 | Dokumentationsunterstützung | 82 | 0 |
 | Neue AP01-/Plan-Verwaltungsdateien | 7 | 0 |
 | Review-Texte | 479 | 0 |
 | Review-Nachweise und Register | 1.832 | 0 |
-| Agentenanweisungen | 2 | 0 |
-| **Gesamt** | **2.879** | **57** |
+| Agentenanweisungen | 2 | 2 |
+| **Gesamt** | **2.879** | **220** |
 
-**2.822 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 903
+**2.659 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 740
 Markdown-Dokumente. Die bereits erfolgte AP02-Blueprint-Abnahme ersetzt diese
 dateibezogene Migrationsentscheidung nicht. Die beiden neuen AP03-Arbeitsdateien
 dieses Zwischenstands sind Verwaltungszugänge nach dem eingefrorenen Quellstand;
@@ -110,13 +111,12 @@ eingetragen wird. Nicht stillschweigend den Blob austauschen und den alten
 Prüfstatus beibehalten. Der Quellcommit dieses Berichts bindet auch die
 `captured`-Datensätze; geprüfte Datensätze nennen ihn zusätzlich ausdrücklich.
 
-Die fünf verbleibenden Operations-Dokumente sind ebenfalls einzeln geprüft.
-Als Nächstes Deployment-/Sicherheitsdokumente und die
-Architektur-/Plugin-Inventare abgleichen. Das vorhandene Plugin-Inventar wird
-wiederverwendet; die in AP01 gefundenen Scope-Unterschiede und fehlenden
-Manifestzuordnungen bleiben Bestandteil der Prüfung. Anschließend folgen weitere
-Komponenten-/Referenztexte und die Reviews mitsamt ihren Nachweisen in kleinen,
-inhaltlich abgegrenzten Paketen.
+Alle Operations-, Deployment- und Sicherheitsdokumente, die ersten sieben
+Architektureinstiege, alle 51 Katalogseiten und sämtliche 95 weiteren
+Komponententexte/Agentenanweisungen sind jetzt einzeln entschieden. Als Nächstes
+folgen die übrigen 261 Markdown-Texte außerhalb der Reviews und die 479
+Review-Texte samt ihren Nachweisen. Verwaltungsdateien und technische
+Dokumentationsunterstützung erhalten ebenfalls Einzelentscheidungen.
 
 Die 13 unvollständigen Findings, getrennte Live-Abnahmen und das zusätzliche
 GitHub-Issue #7 bleiben erhalten. Aus diesen Dokumentationsentscheidungen folgt
@@ -139,3 +139,33 @@ Chart-Locks werden inzwischen zentral geprüft; der erwähnte Sechserumfang der
 Checksum-Prüfung ist veraltet. Registry-Anweisungen müssen insbesondere den
 privaten Node-Konfigurationsweg und die noch fehlende v2-zu-v3-Migration erklären.
 Keine dieser Inhaltsprüfungen ersetzt Host-, Image- oder Cluster-Abnahmen.
+
+## Fortsetzung: Deployment, Katalog und Komponenten
+
+Die 163 zusätzlichen Entscheidungen beziehen sich auf Commit
+`5cd9e29e1b426c193d159df04f618a36d320bd47`; die geprüften Quellblobs sind
+gegenüber dem eingefrorenen Bestand unverändert. Der Abgleich verwendet 2.947
+mit diesem Commit übereinstimmende Textquellen für die zusätzlichen
+Verweiskandidaten. Die Suchgrenzen gelten weiterhin.
+
+Der vorhandene Katalog wird wiederverwendet. Seine 50 Paketmanifeste stimmen
+bei den gelisteten Registrierungen überein; die 51 Seiten einschließlich Index
+sind damit aber noch keine verständliche Nutzungsanleitung. Die beiden
+OpenClaw-Manifeste enthalten Inline-Konfigurationsschemata, die der Generator
+als fehlend darstellt. Prism bietet Designänderungswerkzeuge und ist nicht nur
+Beobachtung. Paketlokale Testzahlen sind kein Maß der Repository-Testabdeckung.
+
+Aus den Komponenten-READMEs werden die konkreten Fehler-, Daten- und
+Wiederholungsverträge in den jeweiligen Katalog übernommen. Axe erlaubt keine
+numerischen Fehlerschwellen; Lighthouse behandelt keine Accessibility-Prüfung.
+Der Demo-Login ist nicht sicher wiederholbar. Die Agent-Event-Queue ist flüchtig;
+der Wait-Store autorisiert keine Wiederaufnahme. Core übernimmt diese Autorität.
+Historische JSON-Profile und Originalbytes bleiben bei Artefakten erhalten.
+
+Weitere Korrekturaufträge betreffen alte Common-Overlay-Anleitungen gegenüber
+der aktuellen Paketierung ohne Overlay, v1-Projektfelder gegenüber dem
+v2-Importvertrag, überholte Phase-/Paritätsbehauptungen und pipeline-eigene
+Completion-Identität. Historische Harnesses benötigen weiterhin ihre Original-
+Nachweise; deren Verweise verhindern eine pauschale Review-Löschung.
+Die Einzelentscheidungen nennen jeweils die zu bewahrenden Feinheiten und
+noch zu klärenden Aussagen. Keine Laufzeit- oder Live-Abnahme wurde ausgeführt.
