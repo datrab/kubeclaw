@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 16 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 abgeschlossen (2.879 von 2.879 Quelldateien geprüft)
+Stand: 15.09.2026 · Version 17 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 abgeschlossen (2.879 von 2.879 Quelldateien geprüft)
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -231,7 +231,7 @@ Bei Wiederaufnahme: aktuellen Commit/PR-Stand abgleichen, den letzten gesicherte
 
 ## 6. Nächster Schritt
 
-**AP03 fortsetzen:** Die bisherigen 2.789 Einzelentscheidungen sind im [Prüfregister](review-ledger.jsonl) gesichert. Operations, Deployment, Sicherheit, alle Katalogseiten und sämtliche Komponenten-/Agententexte sind einzeln bewertet. Sämtliche Markdown-Texte außerhalb der Reviews sind jetzt einzeln bewertet. Als Nächstes die Reviews samt Nachweisen sowie die übrigen Unterstützungs- und Verwaltungsdateien prüfen. Umfang, Prüfgrenzen und Folgeaufträge stehen im [AP03-Zwischenbericht](AP03-progress.md). Die AP01-Ergebnisse liegen unter [ap01-baseline/](ap01-baseline/README.md). Bestehende Dokumente und Reviews wurden noch nicht verändert oder gelöscht.
+**AP04 beginnen:** AP03 ist für alle 2.879 eingefrorenen Quelldateien abgeschlossen. Die Einzelentscheidungen stehen im [Prüfregister](review-ledger.jsonl), Prüfgrenzen und konkrete Übernahmeaufträge im [AP03-Abschlussbericht](AP03-progress.md). Zuerst die 13 unvollständigen Findings und das zusätzliche GitHub-Issue #7 am aktuellen Stand abgleichen; Original-IDs, Problem, Teilstand, verbleibende Arbeit und Abschlusskriterien unabhängig von den alten Reviews sichern. Danach die getrennten Live-Abnahmen, gültigen Entscheidungen und erforderlichen Originalnachweise übernehmen und ihre Verbraucher zuordnen. Keine Reviews löschen, bevor Ersatz und Abhängigkeiten geprüft sind. Alle Migrationen bleiben ausstehend; AP04–AP11 sind offen. Die [AP01-Ergebnisse](ap01-baseline/README.md) bleiben Ausgangspunkt; spätere Quelländerungen und neue Verwaltungsdateien benötigen einen gesonderten Bestandsabgleich.
 
 ## 7. Quellen des Ausgangsstands
 

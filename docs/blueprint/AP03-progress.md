@@ -5,7 +5,7 @@ Stand: 15.09.2026. **Abgeschlossen für den eingefrorenen Quellumfang.**
 ## Ergebnis der Einzelprüfung
 
 **2.879 von 2.879 Quelldateien sind einzeln inhaltlich bzw. funktional bewertet;
-Keine Quelldatei bleibt ungeprüft.** Entscheidungen: **182 erweitern,
+keine Quelldatei bleibt ungeprüft.** Entscheidungen: **182 erweitern,
 1.898 Informationen extrahieren, 14 behalten und
 785 entfernen**. Die funktionale Bewertung betrifft ausdrücklich
 als solche gekennzeichnete nichttextuelle Nachweise; sie ist keine Behauptung,
@@ -122,8 +122,10 @@ Prüfstatus beibehalten. Der Quellcommit dieses Berichts bindet auch die
 
 Alle Operations-, Deployment- und Sicherheitsdokumente, die ersten sieben
 Architektureinstiege, alle 51 Katalogseiten und sämtliche 95 weiteren
-Komponententexte/Agentenanweisungen sind jetzt einzeln entschieden. Die noch ungeprüften Quellen sind je Arbeitspaket anhand von `status: captured`
-im Register bestimmt. Bereits gespeicherte Einzelentscheidungen bleiben erhalten.
+Komponententexte/Agentenanweisungen sind einzeln entschieden. Im abgeschlossenen
+eingefrorenen Umfang verbleibt kein Eintrag mit `status: captured`. Bei später
+ergänzten Quellen kennzeichnet dieser Status weiterhin eine ausstehende Prüfung.
+Bereits gespeicherte Einzelentscheidungen bleiben erhalten.
 
 Die 13 unvollständigen Findings, getrennte Live-Abnahmen und das zusätzliche
 GitHub-Issue #7 bleiben erhalten. Aus diesen Dokumentationsentscheidungen folgt
@@ -455,3 +457,18 @@ für die eingefrorenen Quellen, nicht als Gesamtabnahme der neuen Dokumentation.
 **Nächster Arbeitsschritt: AP04 — offene Findings, Live-Abnahmen, gültige
 Entscheidungen und erforderliche Testnachweise migrationsfest sichern.**
 AP04–AP11 bleiben offen.
+
+## Nachkontrolle bei Wiederaufnahme am 15.09.2026
+
+Der veröffentlichte Abschlusscommit `a736fb5dc2f1a19a0d6183ce0243735a15ea36a3`
+und der lokale Abschlusscommit `bb5745d23d8ec479a7bcf63f99d276bf055bc030`
+besitzen denselben Git-Tree `f41048612a8a3b72aed41a210a7a9d23760bc783`.
+Die abweichenden Commit-IDs bedeuten hier keinen verlorenen Inhalt.
+
+Erneut kontrolliert: 2.879 eindeutige Registerpfade, sämtliche Originalblobs
+gegen den eingefrorenen Quellcommit, ausgefüllte Entscheidungsfelder,
+Entscheidungszahlen und die überschneidungsfreie Abdeckung der sechs Pakete.
+Alle Einträge stehen auf `content-reviewed` und `migration_status: pending`.
+Dies ist eine Register- und Übergabeprüfung, keine erneute vollständige
+Inhaltsprüfung aller Quellen. Die alten Fortsetzungsabschnitte in Blueprint-Index
+und Arbeitsplan wurden auf den abgeschlossenen AP03-Stand und AP04 korrigiert.
