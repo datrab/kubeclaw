@@ -117,12 +117,14 @@ storage does not provide recovery from loss of the storage node.
    It checks `codex login status`, with a 15-second timeout and five-second waits
    while unauthenticated.
 4. The operator runs device login through `kubectl exec`. The running supervisor
-   notices the persistent login and starts the real foreground remote-control CLI.
+   notices the persistent login and runs `codex remote-control start`. It waits up
+   to twenty seconds for the local control socket used by `pair` to accept connections.
 5. Pairing is a separate CLI action. A process being alive does not prove that a
    mobile client is connected or that the remote service is reachable.
-6. A remote-control exit is recorded and retried after ten seconds. SIGTERM stops
-   the child; the supervisor allows ten seconds before killing an unresponsive
-   child. The Pod termination grace period is 30 seconds.
+6. A lost control socket causes `codex remote-control stop` followed by a retry
+   after ten seconds. SIGTERM interrupts startup/waits and stops the daemon. Stop
+   has a ten-second limit; failed cleanup exits the supervisor so Kubernetes
+   disposes of the container. The Pod termination grace period is 30 seconds.
 
 Interactive access through the deployment helper uses `/opt/codex/shell.sh` to
 load and export the mounted bearer for the new shell. It does not depend on
@@ -130,7 +132,8 @@ inheriting the supervisor environment and refuses a missing/short credential.
 
 The status file is `/tmp/codex-ops-status.json`. Its `pairingVerified` field is
 always false: the supervisor does not observe or certify pairing. Codex readiness
-checks `remote-process-running`. There is no Codex liveness probe that restarts the
+checks `remote-process-running`, which is only reported while the control socket
+accepts local connections. A leftover socket file alone is insufficient. There is no Codex liveness probe that restarts the
 container simply because login or a remote service is unavailable. MCP has local
 HTTP health checks executed inside its own container.
 

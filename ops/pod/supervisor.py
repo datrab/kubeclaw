@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keep onboarding available before login; supervise the real foreground CLI.
+"""Keep onboarding available before login; supervise the pairable Codex daemon.
 
 The status file describes process state, never successful pairing or relay health.
 Authentication is completed interactively via kubectl exec, on the same PVC.
@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 import shutil
 import signal
+import socket
 import subprocess
 import threading
 import time
@@ -31,8 +32,37 @@ def shutdown(*_):
 signal.signal(signal.SIGTERM, shutdown)
 signal.signal(signal.SIGINT, shutdown)
 
-def main():
+def control_ready(address):
+    """A live local listener is required; a stale socket file is insufficient."""
+    try:
+        with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as connection:
+            connection.settimeout(0.5)
+            connection.connect(str(address))
+        return True
+    except OSError:
+        return False
+
+def wait_for_control(address, timeout=20):
+    deadline = time.monotonic() + timeout
+    while not stop.is_set() and time.monotonic() < deadline:
+        if control_ready(address):
+            return True
+        stop.wait(0.2)
+    return False
+
+def run_control(command, env, timeout=20):
     global child
+    child = subprocess.Popen(command, env=env)
+    try:
+        return child.wait(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        child.kill()
+        child.wait()
+        return 124
+    finally:
+        child = None
+
+def main():
     home = Path.home()
     config_dir = home / '.codex'
     config_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
@@ -46,6 +76,11 @@ def main():
     env['KUBECLAW_MCP_TOKEN'] = Path('/var/run/kubeclaw-ops/bearer/token').read_text().strip()
     if len(env['KUBECLAW_MCP_TOKEN']) < 32:
         raise RuntimeError('MCP bearer token must contain at least 32 characters')
+    control_socket = config_dir / 'app-server-control' / 'app-server-control.sock'
+    # Both start and stop address the same persistent home as remote-control pair.
+    command = ['codex', '-c', 'mcp_servers.kubeclaw_ops.url="http://127.0.0.1:8080/mcp"',
+               '-c', 'mcp_servers.kubeclaw_ops.bearer_token_env_var="KUBECLAW_MCP_TOKEN"',
+               'remote-control']
     while not stop.is_set():
         status('waiting-for-login')
         try:
@@ -56,25 +91,25 @@ def main():
         if not logged_in:
             stop.wait(5)
             continue
-        # Keep the installed MCP connection authoritative while preserving other
-        # user preferences and connections in the persistent Codex config.
-        command = ['codex', '-c', 'mcp_servers.kubeclaw_ops.url="http://127.0.0.1:8080/mcp"',
-                   '-c', 'mcp_servers.kubeclaw_ops.bearer_token_env_var="KUBECLAW_MCP_TOKEN"',
-                   'remote-control']
-        child = subprocess.Popen(command, env=env)
-        status('remote-process-running', pid=child.pid)
-        while child.poll() is None and not stop.wait(2):
-            status('remote-process-running', pid=child.pid)
-        if stop.is_set() and child.poll() is None:
-            child.terminate()
-            try:
-                child.wait(timeout=10)
-            except subprocess.TimeoutExpired:
-                child.kill()
-                child.wait()
-        code = child.wait()
-        status('remote-process-exited', exitCode=code)
-        child = None
+        if stop.is_set():
+            break
+        status('remote-process-starting', controlSocketReady=False)
+        try:
+            code = run_control([*command, 'start'], env)
+            if code == 0 and wait_for_control(control_socket):
+                print('Codex daemon control socket is reachable; pairing is available.', flush=True)
+                while not stop.is_set() and control_ready(control_socket):
+                    status('remote-process-running', controlSocketReady=True)
+                    stop.wait(2)
+            else:
+                print(f'Codex daemon failed to become ready (start exit {code}).', flush=True)
+        finally:
+            status('remote-process-stopping', controlSocketReady=False)
+            # Stop the daemon, not merely the short-lived start command. If it
+            # cannot be stopped, fail so Kubernetes disposes of the entire container.
+            if run_control([*command, 'stop'], env, timeout=10) != 0:
+                raise RuntimeError('Codex daemon stop failed')
+        status('remote-process-exited', controlSocketReady=False)
         stop.wait(10)
     status('stopped')
 

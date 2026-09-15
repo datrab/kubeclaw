@@ -23,6 +23,8 @@ assert actual == expected, (actual, expected)
 ' "$(dirname -- "${BASH_SOURCE[0]}")/../../versions.json"
     docker exec "$container" helm version --short
     docker exec "$container" npm --version
+    docker exec "$container" codex remote-control start --help >/dev/null
+    docker exec "$container" codex remote-control stop --help >/dev/null
     docker exec "$container" codex remote-control pair --help >/dev/null
     docker exec "$container" codex mcp list --json | python3 -c "import json,sys; assert any(x['name']=='kubeclaw_ops' for x in json.load(sys.stdin))"
     docker exec "$container" bash /opt/codex/shell.sh -c 'test "$KUBECLAW_MCP_TOKEN" = "$(cat /var/run/kubeclaw-ops/bearer/token)" && codex mcp list --json' | python3 -c "import json,sys; assert any(x['name']=='kubeclaw_ops' for x in json.load(sys.stdin))"

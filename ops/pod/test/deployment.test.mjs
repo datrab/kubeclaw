@@ -83,6 +83,8 @@ test('the actual pinned Codex CLI accepts the installed MCP config and exposes p
     const run = a => execFileSync(codex, a, { env, encoding: 'utf8', timeout: 15000 });
     assert.match(run(['--version']), /0\.153\.4/);
     assert.match(run(['remote-control', '--help']), /pair/);
+    assert.match(run(['remote-control', 'start', '--help']), /daemon/);
+    assert.match(run(['remote-control', 'stop', '--help']), /daemon/);
     assert.match(run(['login', '--help']), /--device-auth/);
     const servers = JSON.parse(run(['mcp', 'list', '--json']));
     const mcp = servers.find(x => x.name === 'kubeclaw_ops');

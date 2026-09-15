@@ -4,5 +4,5 @@
   "version": "0.1.0",
   "dependencies": { "@openai/codex": "0.153.4" },
   "devDependencies": { "yaml": "2.8.1" },
-  "scripts": { "test": "node --test test/*.test.mjs" }
+  "scripts": { "test": "python3 test/supervisor_test.py && node --test test/*.test.mjs" }
 }
