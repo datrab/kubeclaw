@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 15 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 in Arbeit (1.761 Dateien geprüft)
+Stand: 15.09.2026 · Version 15 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 in Arbeit (2.342 Dateien geprüft)
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -72,9 +72,9 @@ Die Umsetzung erfolgt themenweise in überschaubaren Änderungen. AP10 läuft be
 
 ### AP03 — Jedes Dokument prüfen
 
-**Zwischenstand:** 1.761 Dateien einzeln geprüft (181 erweitern,
-1.005 extrahieren, 13 behalten, 562 entfernen);
-1.118 Quelldateien noch ungeprüft. [Prüfbericht](AP03-progress.md),
+**Zwischenstand:** 2.342 Dateien einzeln geprüft (182 erweitern,
+1.444 extrahieren, 14 behalten, 702 entfernen);
+537 Quelldateien noch ungeprüft. [Prüfbericht](AP03-progress.md),
 [manuelles Register](review-ledger.jsonl), [parallele Arbeitspakete](AP03-work-packages.md).
 Die Gesamtaufgaben bleiben bis zur Prüfung des vollständigen Umfangs offen.
 

@@ -67,12 +67,12 @@ Die laufenden Zahlen und der nächste Einstieg stehen im
 
 | Paket | Im Register übernommen | Noch offen |
 | --- | ---: | ---: |
-| AP03-P01 | 61 | 3 |
-| AP03-P02 | 61 | 51 |
-| AP03-P03 | 82 | 193 |
-| AP03-P04 | 85 | 64 |
-| AP03-P05 | 411 | 447 |
-| AP03-P06 | 555 | 360 |
+| AP03-P01 | 64 | 0 |
+| AP03-P02 | 93 | 19 |
+| AP03-P03 | 146 | 129 |
+| AP03-P04 | 137 | 12 |
+| AP03-P05 | 662 | 196 |
+| AP03-P06 | 734 | 181 |
 
 Die Zahlen betreffen die Zuteilung nach den ursprünglichen 506 Prüfungen.
 T01/T02 aus P02 wurden von der Hauptsession selbst geprüft. Noch laufende

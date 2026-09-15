@@ -4,10 +4,10 @@ Stand: 15.09.2026. **In Arbeit; nicht abgeschlossen.**
 
 ## Ergebnis dieses Zwischenstands
 
-**1.761 von 2.879 Quelldateien sind einzeln inhaltlich bzw. funktional bewertet;
-1.118 bleiben ungeprüft.** Entscheidungen: **181 erweitern,
-1.005 Informationen extrahieren, 13 behalten und
-562 entfernen**. Die funktionale Bewertung betrifft ausdrücklich
+**2.342 von 2.879 Quelldateien sind einzeln inhaltlich bzw. funktional bewertet;
+537 bleiben ungeprüft.** Entscheidungen: **182 erweitern,
+1.444 Informationen extrahieren, 14 behalten und
+702 entfernen**. Die funktionale Bewertung betrifft ausdrücklich
 als solche gekennzeichnete nichttextuelle Nachweise; sie ist keine Behauptung,
 jeden eingebetteten historischen Quelltext gelesen zu haben. Automatische
 Erfassung und Paketzuordnung zählen nicht als Inhaltsprüfung.
@@ -39,14 +39,14 @@ inhaltliche bzw. funktionale Einzelbewertung, keine bloße Dateinamensentscheidu
 | --- | ---: | ---: |
 | Root- und komponentennahe Dokumentation | 97 | 97 |
 | Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 380 |
-| Dokumentationsunterstützung | 82 | 80 |
-| Neue AP01-/Plan-Verwaltungsdateien | 7 | 6 |
-| Review-Texte | 479 | 205 |
-| Review-Nachweise und Register | 1.832 | 991 |
+| Dokumentationsunterstützung | 82 | 82 |
+| Neue AP01-/Plan-Verwaltungsdateien | 7 | 7 |
+| Review-Texte | 479 | 325 |
+| Review-Nachweise und Register | 1.832 | 1.449 |
 | Agentenanweisungen | 2 | 2 |
-| **Gesamt** | **2.879** | **1.761** |
+| **Gesamt** | **2.879** | **2.342** |
 
-**1.118 Dateien bleiben in AP03 erfasst, aber ungeprüft.**
+**537 Dateien bleiben in AP03 erfasst, aber ungeprüft.**
 Die bereits erfolgte AP02-Blueprint-Abnahme ersetzt diese
 dateibezogene Migrationsentscheidung nicht. Die beiden neuen AP03-Arbeitsdateien
 dieses Zwischenstands sind Verwaltungszugänge nach dem eingefrorenen Quellstand;
@@ -364,7 +364,7 @@ Finding geschlossen und keine Runtime-/Live-Prüfung ausgeführt.
 
 Ausgangspunkt der sechs Pakete ist Commit
 `e5bc4b951f914b95a39655aa069daaba09ee51a2` mit 506 geprüften Dateien.
-Dieser Zwischenstand integriert 1.255 zusätzliche Entscheidungen.
+Dieser Zwischenstand integriert 1.836 zusätzliche Entscheidungen.
 Paketzugehörigkeit, eindeutige Pfade, unveränderte Originalblobs, Pflichtfelder
 und getrennte Migrationszustände sind kontrolliert. Die Hauptsession hat
 Quelltexte und zugehörige Entscheidungen aus allen sechs Paketen stichprobenartig
@@ -397,4 +397,4 @@ Wichtige Folgeaufträge:
 Alle Entscheidungen bleiben `migration_status: pending`. Keine Produktdateien
 oder historischen Nachweise gelöscht, keine technischen Findings geschlossen,
 keine Runtime-, Deployment- oder Live-Tests ausgeführt. Die verbleibenden
-1.118 Quellen werden im bestehenden Paket weiterbearbeitet.
+537 Quellen werden im bestehenden Paket weiterbearbeitet.
