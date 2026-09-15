@@ -506,7 +506,7 @@ erfasst; es wurde kein Merge und kein Laufzeit-/Live-Test durchgeführt.
 keine offene Übergabesperre.** Die 2.879 eingefrorenen Quellen bleiben mit ihren
 Originalblobs erhalten; ausdrücklich ergänzt sind sechs AP03-Verwaltungsdateien
 und zwei neue main-Dokumente. 2.886 Quellen sind aktuell vorhanden. Die auf main
-bereits entfernte `docs/ops/chatgpt-ops-bootstrap.md` bleibt als historischer
+bereits entfernte [ChatGPT-Ops-Anleitung](https://github.com/datrab/kubeclaw/blob/6979bced8e5bbca90568276256e7328d93a1e072/docs/ops/chatgpt-ops-bootstrap.md) bleibt als historischer
 Datensatz mit `removed_on_main` und Entfernungskommit nachvollziehbar.
 
 | Entscheidung | Dateien |

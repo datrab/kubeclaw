@@ -1,10 +1,15 @@
 # Core and plugin decisions
 
-Status: extracted decisions; individual approval and implementation states below  
-Audience: maintainers, pipeline developers and plugin authors  
-Owner: KubeClaw maintainers  
-Evidence: `skills/common/plugin-runtime/foundation/registry/build.ts`, `packaging/runtime/roles/nova.json`  
-Applies to: canonical lifecycle, Worker Core and plugin system v2  
+Status: extracted decisions; individual approval and implementation states below
+
+Audience: maintainers, pipeline developers and plugin authors
+
+Owner: KubeClaw maintainers
+
+Evidence: `skills/common/plugin-runtime/foundation/registry/build.ts`, `packaging/runtime/roles/nova.json`
+
+Applies to: canonical lifecycle, Worker Core and plugin system v2
+
 Last verified: 2026-09-15 (source reconciliation; no new runtime or live test execution)
 
 These records preserve ADR-001–ADR-014 from the documentation catalogue. They explain lasting constraints without requiring a reader to retain phase reports. The original test-gate identifiers are `D-001`–`D-119`; they are distinct from the shorter `D01`–`D16` review/remediation decisions.

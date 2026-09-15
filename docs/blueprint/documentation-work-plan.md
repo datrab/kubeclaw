@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 21 · Status: AP01–AP04 abgeschlossen; AP04 erneut nachgeprüft; AP05 ist das nächste Arbeitspaket
+Stand: 15.09.2026 · Version 22 · Status: AP01–AP05 abgeschlossen; AP06 ist das nächste Arbeitspaket
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -27,7 +27,7 @@ Der vorhandene Blueprint wird kritisch überarbeitet. Seine Kategorien, Seitenst
 
 ## 3. Übersicht der Arbeitspakete
 
-AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist nach der [Nacharbeit und Gegenprüfung](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) **abgeschlossen**. AP04 ist nach der [Abschlussprüfung](AP04-checkpoint.md) ebenfalls **abgeschlossen**; AP05–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
+AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist nach der [Nacharbeit und Gegenprüfung](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) **abgeschlossen**. AP04 ist nach der [Abschlussprüfung](AP04-checkpoint.md) ebenfalls **abgeschlossen**. AP05 ordnet im [Lücken- und Schreibplan](AP05-gap-plan.md) jede Leseraufgabe und jeden ermittelten Produktsurface einem konkreten Ziel und einem priorisierten Schreibpaket zu; AP06–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
 
 | ID | Arbeitspaket | Voraussetzung | Greifbares Ergebnis |
 | --- | --- | --- | --- |
@@ -106,13 +106,13 @@ Einzelentscheidungen im [manuellen Register](review-ledger.jsonl).
 
 ### AP05 — Fehlende Inhalte identifizieren
 
-- [ ] Dokumentenprüfung mit Codebestand und tatsächlichen Benutzeraufgaben vergleichen. Ein Thema kann vollständig fehlen und deshalb in keinem Altdokument vorkommen.
-- [ ] Jede Komponente, öffentlich nutzbare Schnittstelle, Konfigurationsgruppe, Pluginart und betriebliche Abhängigkeit einem Dokumentationsort zuordnen.
-- [ ] Lücken nach Wirkung priorisieren: P0 = falsche oder fehlende Anleitung mit möglichem Daten-/Zugriffsverlust; P1 = Aufgabe nicht durchführbar; P2 = Erklärung, Auffindbarkeit oder Komfort unzureichend.
-- [ ] Dokumentationslücken, technische Implementierungslücken und fehlende Live-Nachweise getrennt führen.
-- [ ] Zielstruktur aus AP02 vereinfachen oder ergänzen, wo die Inhaltsprüfung es rechtfertigt.
+- [x] Dokumentenprüfung mit Codebestand und tatsächlichen Benutzeraufgaben vergleichen. Ein Thema kann vollständig fehlen und deshalb in keinem Altdokument vorkommen.
+- [x] Jede Komponente, öffentlich nutzbare Schnittstelle, Konfigurationsgruppe, Pluginart und betriebliche Abhängigkeit einem Dokumentationsort zuordnen.
+- [x] Lücken nach Wirkung priorisieren: P0 = falsche oder fehlende Anleitung mit möglichem Daten-/Zugriffsverlust; P1 = Aufgabe nicht durchführbar; P2 = Erklärung, Auffindbarkeit oder Komfort unzureichend.
+- [x] Dokumentationslücken, technische Implementierungslücken und fehlende Live-Nachweise getrennt führen.
+- [x] Zielstruktur aus AP02 vereinfachen oder ergänzen, wo die Inhaltsprüfung es rechtfertigt.
 
-**Abgeschlossen, wenn:** Jede notwendige Leseraufgabe ist abgedeckt oder besitzt ein konkretes Schreibpaket. Keine bloße Kapitelüberschrift gilt als inhaltliche Abdeckung.
+**Abgeschlossen:** Der [AP05-Lücken- und Schreibplan](AP05-gap-plan.md) weist alle U/O/E/R/S/D-Leseraufgaben sowie Komponenten, Verträge, Schnittstellen, Konfigurationsfamilien, Pluginarten und Betriebsabhängigkeiten zwölf konkreten Schreibpaketen zu. Priorität und DOC/IMP/LIVE-Typ bleiben getrennt; keine bloße Kapitelüberschrift gilt als inhaltliche Abdeckung.
 
 ### AP06 — Einstieg und Architektur
 

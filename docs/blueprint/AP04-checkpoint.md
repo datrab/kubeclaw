@@ -39,7 +39,7 @@ AP04 did not reread or rerun every historical raw log.
 
 ## Old authority retired
 
-The old `docs/review/remediation/register.json` was removed after its incomplete work,
+The [old remediation register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) was removed after its incomplete work,
 identities, local dispositions and explicit live obligations were reconciled.
 The old [Markdown register](../review/remediation/register.md) is a temporary pointer.
 Operative README, handoff, progress and resume entrypoints now identify the canonical
@@ -109,7 +109,14 @@ The aggregate documentation check still stops at the known AP02 inventory mismat
 No runtime or live acceptance was run, and formal STE acceptance remains pending.
 No AP04 extraction blocker remains after these corrections.
 
-## Next work
+## AP05 follow-up
+
+AP05 is complete in the [gap and writing plan](AP05-gap-plan.md). It assigns the
+reviewed obligations and independently missing reader tasks to canonical destinations
+and twelve prioritized writing packages. AP06 is now next. The original AP04 handoff
+below remains as the boundary that AP05 used.
+
+## Original AP04 next work
 
 AP05 must turn the reviewed source obligations into a prioritized chapter gap plan.
 The architecture, operations and extension chapters must explain mechanisms and

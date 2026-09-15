@@ -118,9 +118,9 @@ export function renderStatus(data) {
       '### Dependencies', '', issue.dependencies.length ? list(issue.dependencies.map(id => `[${id}](#${anchor(id)})`)) : 'No dependency on another entry in this register is established.', '',
       '### Evidence boundary', '', issue.evidence.assessment, '',
       ...Object.entries(issue.evidence).filter(([key]) => key !== 'assessment').map(([key, value]) => `- **${key.replaceAll('_', ' ')}:** ${value === null ? 'Not established.' : typeof value === 'object' ? JSON.stringify(value) : value}`), '',
-      '### Sources', '', list(issue.sources.map(ref => `[${ref.path ?? ref.url}](${ref.url}) — ${ref.scope}${ref.observed_at ? ` Observed: ${ref.observed_at}.` : ''}`)), '');
+      '### Sources', '', list(issue.sources.map(ref => `[${ref.path === 'docs/review/remediation/register.json' ? 'Pinned historical register' : ref.path ?? ref.url}](${ref.url}) — ${ref.scope}${ref.observed_at ? ` Observed: ${ref.observed_at}.` : ''}`)), '');
   }
-  return `${lines.join('\n')}\n`;
+  return `${lines.join('\n').replace(/\n+$/u, '')}\n`;
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

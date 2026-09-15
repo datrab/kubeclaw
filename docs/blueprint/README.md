@@ -1,6 +1,6 @@
 # Documentation transformation blueprint
 
-Status: AP01–AP03 completed and rechecked; 2,887 content-reviewed decisions, no open AP03 handoff. AP04 extraction is complete; see the [completion report](AP04-checkpoint.md). AP05 is next.
+Status: AP01–AP05 complete. AP04 preserves status and decisions; the [AP05 gap and writing plan](AP05-gap-plan.md) assigns every reader task and discovered product surface. AP06 is next.
 Scope: documentation migration; implementation and live acceptance remain separate.
 
 KubeClaw documentation must let a new reader understand the system, an operator complete operational tasks, and a developer build supported extensions without previous conversations. Detail is required where it explains behavior or lets a task finish. More pages are not a measure of completeness.
@@ -14,8 +14,9 @@ KubeClaw documentation must let a new reader understand the system, an operator 
 5. [Decision preservation](05-decision-record-catalogue.md): retain reasoning without confusing acceptance with implementation.
 6. [Tooling and publication](06-automation-and-publication.md): reuse existing tools, add only necessary checks, keep unfinished work visible.
 7. [Documentation quality standard](07-documentation-quality-standard.md): depth, decision reasons, ASD-STE100, source evidence, task acceptance and a future documentation agent.
+8. [AP05 gap and writing plan](AP05-gap-plan.md): canonical destinations, complete surface coverage, priorities and bounded writing packages.
 
-[Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the original inventory and executable dependencies. The [AP03 completion report](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) resolves the 285 former handoff blockers and additional candidates. Full source-document migration remains pending. AP04 has preserved open work, separate live acceptance, decisions and evidence boundaries before rewriting. Its extraction fields are additions to the existing ledger, not a new full register.
+[Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the original inventory and executable dependencies. The [AP03 completion report](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) resolves the 285 former handoff blockers and additional candidates. AP04 preserves open work, separate live acceptance, decisions and evidence boundaries. AP05 converts the reviewed inventory and missing reader outcomes into twelve prioritized writing packages. Full source-document migration remains pending for AP06–AP10; AP11 owns final reader and language acceptance.
 
 ## Authority and historical outputs
 
@@ -63,4 +64,4 @@ All 2,887 sources have concrete decisions: 191 expand, 1,752 extract, 18 keep an
 
 The six-agent follow-up and independent checks resolved concrete destinations, parent evidence, machine-readable inventories and fixture consumers. Source, functional and target-only checks are distinguished; this does not claim a fresh full reading of every historical source-code attachment. See the [completion report](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) for scope and evidence and the [progress report](AP03-progress.md) for history.
 
-Next: AP04, preserving the 13 incomplete findings, 141 local closures, Issue #7, separate live acceptance and decisions. The source-confirmed GitOps branch/resolved-revision health-gate discrepancy is an additional technical follow-up, not a closed finding. AP04–AP11 and product/live acceptance remain outstanding.
+AP04 preserved the 13 incomplete findings, 141 local closures, Issue #7, separate live acceptance and decisions. AP05 then assigned every reader task and product surface to twelve concrete writing packages. Next: AP06, starting with the overview, authority model, request/state/recovery flow and deployment/trust boundaries. AP06–AP11 and product/live acceptance remain outstanding.

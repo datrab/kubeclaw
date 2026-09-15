@@ -39,8 +39,8 @@ nach tatsächlicher Lektüre an den oben genannten Prüfcommit gebunden.
 | Betroffene Einträge | Korrektur und Nachweis |
 | --- | --- |
 | 51 Dokumentations-/Supporteinträge | Widersprüchliche Ziele für dasselbe Material zusammengeführt: 42 Katalogzuordnungen verwenden jetzt die bereits zugeordneten punktgetrennten Paketnamen, 47 Statuszuordnungen `docs/site/status/current.md`, vier Katalogindexzuordnungen `README.md`. Die Gruppen überlappen. Beispiel: Container-Build-Baseline und -Anleitungen müssen auf dieselbe Katalogseite führen. Geplante Seiten müssen noch nicht existieren; korrigiert wurde die unbegründete doppelte Zuordnung. |
-| Vier Review-Verwaltungseinträge | `restored-documents.json` verlangt kein zweites `AP03-source-ledger.json` mehr. Die Wiederherstellungsprovenienz wird dem bestehenden Register und einer benannten Entscheidungsseite zugeordnet. `partial-47-progress.json`, `native-followup-39-20260911.json` und `work-items.json` führen in die vereinbarte `docs/site/`-Struktur statt in zusätzliche `docs/operator/`-/`docs/developer/`-Bäume. |
-| `run12-prism-reader-first.txt` | Tatsächlicher Fixture-Leser `tests/verification/reliability/prism-reader-value.test.mjs:8` bestätigt. Ziel ist nun die bytegleiche Testfixture `tests/verification/fixtures/prism-reader-first.txt` mit gleichzeitiger Änderung des Lesers, koordiniert mit der bereits zugeordneten Matrixdatei. Eine Statuszusammenfassung allein hätte den Testinput nicht erhalten. |
+| Vier Review-Verwaltungseinträge | `restored-documents.json` verlangt kein zweites `AP03-source-ledger.json` mehr. Die Wiederherstellungsprovenienz wird dem bestehenden Register und einer benannten Entscheidungsseite zugeordnet. `partial-47-progress.json`, `native-followup-39-20260911.json` und `work-items.json` führen in die vereinbarte `docs/site/`-Struktur statt in zusätzliche Operator-/Entwicklerbäume. |
+| `run12-prism-reader-first.txt` | Tatsächlicher Fixture-Leser `tests/verification/reliability/prism-reader-value.test.mjs:8` bestätigt. Ziel ist nun eine bytegleiche Testfixture namens `prism-reader-first.txt` im vorhandenen Fixture-Baum, mit gleichzeitiger Änderung des Lesers und koordiniert mit der bereits zugeordneten Matrixdatei. Eine Statuszusammenfassung allein hätte den Testinput nicht erhalten. |
 | Zwei Accounting-Einträge | `wave47-store-independent/accounting-final.mjs` und `.txt`: Der Probe prüft nach Replay `newlyRetired=false` und gleiche `releasedBytes`, aber keinen Vorher-/Nachhervergleich der gespeicherten Bytes. `replayedWithoutMutation` ist nur ein aus `!newlyRetired` gebildetes Ausgabefeld. Die Registeraussage wurde auf den tatsächlich erbrachten Nachweis begrenzt; keine Aussage über einen neuen Laufzeitfehler. |
 | `wave47-sdk-source/historical-provenance.json` | Verzeichnisverweis aus `tests/verification/reliability/fixtures/legacy-source-snapshots/README.md:7` ergänzt. Alle vier Fixture-Hashes stimmen; ein reiner Vollpfadscan hatte diesen Verbraucher nicht erfasst. |
 | Blueprint-Index und Arbeitsplan | Fehlende Zielgruppe ergänzt; konkrete dauerhafte Abschnitte in `CONTRIBUTING.md` von vorübergehender Navigation und AP-Abnahme getrennt. |
@@ -58,7 +58,7 @@ Finding-/Abnahmezuordnung durch.
 
 | Gruppe | Einträge | Fehlender Entscheid |
 | --- | ---: | --- |
-| P05: allgemeines Statusziel | 278 | Nach Korrektur der Reader-Fixture verbleiben 278 Extraktionen mit ausschließlich `S1 / docs/site/status.md — current limits and separate live acceptance` als Ziel. Die oft detaillierte Beobachtung ist vorhanden, aber der ausgewählte Zielabschnitt bzw. übergeordnete Abnahmeeintrag fehlt. Pro Beobachtung festlegen, was wohin übernommen wird und ob originale maschinelle Belege benötigt werden. |
+| P05: allgemeines Statusziel | 278 | Nach Korrektur der Reader-Fixture verbleiben 278 Extraktionen mit ausschließlich `S1 / current limits and separate live acceptance` als Ziel. Die oft detaillierte Beobachtung ist vorhanden, aber der ausgewählte Zielabschnitt bzw. übergeordnete Abnahmeeintrag fehlt. Pro Beobachtung festlegen, was wohin übernommen wird und ob originale maschinelle Belege benötigt werden. |
 | API-/Axe-Cutoverinventare | 2 | `pipeline-test-gate-api-cutover-inventory.json` und `pipeline-test-gate-a11y-cutover-inventory.json`: konkreten maschinenlesbaren Ort für 32 bzw. 24 Zuordnungen und ihre ausführbaren Cutover-Verbraucher bestimmen. „Migration verification data“ ist kein bestimmter Zielort. |
 | Axe-Dokumentationsmanifest | 1 | `pipeline-test-gate-a11y-documentation-manifest.json`: ausdrücklich entscheiden, ob der vorhandene Pfad bleibt oder das Manifest umzieht; Dokumentfelder und dynamischen Prüfer gemeinsam zuordnen. |
 | Externe Paketinstallation | 1 | `skills/common/plugin-runtime/foundation/packages/README.md`: kanonischen Ort für Installation, Aktivierung, Drain und Entfernung festlegen; Betrieb und Erweiterungsleitfaden dürfen nicht zwei unabhängige Installer-Erklärungen erhalten. |
@@ -142,7 +142,7 @@ Seit diesem Punkt betreffen main-Änderungen neun Dokumentationspfade:
 | Änderung | Pfade |
 | --- | --- |
 | Geändert | `README.md`, `docs/architecture/ops-pod.md`, `docs/deployment/README.md`, `docs/generated/inventory/workflows.json`, `docs/ops/ops-pod.md`, `docs/reference/workflows.md` |
-| Entfernt | `docs/ops/chatgpt-ops-bootstrap.md` |
+| Entfernt | [Historische ChatGPT-Ops-Anleitung](https://github.com/datrab/kubeclaw/blob/6979bced8e5bbca90568276256e7328d93a1e072/docs/ops/chatgpt-ops-bootstrap.md) |
 | Neu | `docs/deployment/continuous-gitops.md`, `gitops/platform/README.md` |
 
 Hinzu kommen geänderte technische Belege: Ops-Pod-Supervisor/RBAC/Kubeconfig,
@@ -191,7 +191,7 @@ bestanden; dies ist kein vollständiger Dokumentationsbuild oder Runtime-Test.
 keine offene Übergabesperre.** Die 2.879 eingefrorenen Quellen bleiben mit ihren
 Originalblobs erhalten; ausdrücklich ergänzt sind sechs AP03-Verwaltungsdateien
 und zwei neue main-Dokumente. 2.886 Quellen sind aktuell vorhanden. Die auf main
-bereits entfernte `docs/ops/chatgpt-ops-bootstrap.md` bleibt als historischer
+bereits entfernte [ChatGPT-Ops-Anleitung](https://github.com/datrab/kubeclaw/blob/6979bced8e5bbca90568276256e7328d93a1e072/docs/ops/chatgpt-ops-bootstrap.md) bleibt als historischer
 Datensatz mit `removed_on_main` und Entfernungskommit nachvollziehbar.
 
 | Entscheidung | Dateien |

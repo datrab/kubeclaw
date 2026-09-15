@@ -108,7 +108,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 ### Sources
 
 - [https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.engine.md](https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.engine.md) — Original finding at its historical review commit; not a current operational claim.
-- [docs/review/remediation/register.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
+- [Pinned historical register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [skills/buster/engine/test-gates/runner.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/buster/engine/test-gates/runner.ts) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [skills/buster/engine/test-gates/provider-loader.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/buster/engine/test-gates/provider-loader.ts) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [skills/worker/core/worker/attempt-executor.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/worker/core/worker/attempt-executor.ts) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
@@ -175,7 +175,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 ### Sources
 
 - [https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.engine.md](https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.engine.md) — Original finding at its historical review commit; not a current operational claim.
-- [docs/review/remediation/register.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
+- [Pinned historical register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [skills/buster/engine/test-gates/remote-plan-service.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/buster/engine/test-gates/remote-plan-service.ts) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [skills/buster/engine/test-gates/terminal-workspace.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/buster/engine/test-gates/terminal-workspace.ts) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/review/remediation/implementation/buster-orphan-recovery-boundary.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/buster-orphan-recovery-boundary.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
@@ -242,7 +242,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 ### Sources
 
 - [https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.observability.md](https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.observability.md) — Original finding at its historical review commit; not a current operational claim.
-- [docs/review/remediation/register.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
+- [Pinned historical register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [scripts/observability-retirement-plan.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/observability-retirement-plan.mjs) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [scripts/retire-nova-dispatch.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/retire-nova-dispatch.mjs) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [scripts/retire-operator-request.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/retire-operator-request.mjs) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
@@ -306,7 +306,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 ### Sources
 
 - [https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/runtime-images.md](https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/runtime-images.md) — Original finding at its historical review commit; not a current operational claim.
-- [docs/review/remediation/register.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
+- [Pinned historical register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/operations/runtime-versions-and-images.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/operations/runtime-versions-and-images.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/review/remediation/implementation/pr6-runtime-tool-locks.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/pr6-runtime-tool-locks.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [tests/verification/deployment/runtime-tool-locks-native.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/deployment/runtime-tool-locks-native.mjs) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
@@ -367,7 +367,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 ### Sources
 
 - [https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/public-config.md](https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/public-config.md) — Original finding at its historical review commit; not a current operational claim.
-- [docs/review/remediation/register.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
+- [Pinned historical register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [my-values/nova-values.yaml](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/my-values/nova-values.yaml) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/review/infrastructure/public-config.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/infrastructure/public-config.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 
@@ -424,7 +424,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 ### Sources
 
 - [https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/tailscale.md](https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/tailscale.md) — Original finding at its historical review commit; not a current operational claim.
-- [docs/review/remediation/register.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
+- [Pinned historical register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [my-values/infra/tailscale-operator-values.yaml](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/my-values/infra/tailscale-operator-values.yaml) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/deployment/tailscale-operator.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/deployment/tailscale-operator.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [charts/prism/templates/services.yaml](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/prism/templates/services.yaml) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
@@ -483,7 +483,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 ### Sources
 
 - [https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/buildkit.md](https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/buildkit.md) — Original finding at its historical review commit; not a current operational claim.
-- [docs/review/remediation/register.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
+- [Pinned historical register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docker/buster-runtime-entrypoint.sh](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docker/buster-runtime-entrypoint.sh) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/review/infrastructure/buildkit.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/infrastructure/buildkit.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 
@@ -541,7 +541,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 ### Sources
 
 - [https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/cluster-bootstrap.md](https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/cluster-bootstrap.md) — Original finding at its historical review commit; not a current operational claim.
-- [docs/review/remediation/register.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
+- [Pinned historical register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [scripts/deploy.sh](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/deploy.sh) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/deployment/setup-flow.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/deployment/setup-flow.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/review/infrastructure/cluster-bootstrap.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/infrastructure/cluster-bootstrap.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
@@ -601,7 +601,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 ### Sources
 
 - [https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/cilium-migration.md](https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/cilium-migration.md) — Original finding at its historical review commit; not a current operational claim.
-- [docs/review/remediation/register.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
+- [Pinned historical register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [scripts/deploy-cilium.sh](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/deploy-cilium.sh) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [my-values/infra/cilium-cluster-policies.yaml](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/my-values/infra/cilium-cluster-policies.yaml) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/review/infrastructure/cilium-migration.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/infrastructure/cilium-migration.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
@@ -660,7 +660,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 ### Sources
 
 - [https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/spire.md](https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/spire.md) — Original finding at its historical review commit; not a current operational claim.
-- [docs/review/remediation/register.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
+- [Pinned historical register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [my-values/infra/spire-values.yaml](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/my-values/infra/spire-values.yaml) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/security/worker-trust.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/security/worker-trust.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/operations/worker-trust-runbook.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/operations/worker-trust-runbook.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
@@ -720,7 +720,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 ### Sources
 
 - [https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/storage.md](https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/storage.md) — Original finding at its historical review commit; not a current operational claim.
-- [docs/review/remediation/register.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
+- [Pinned historical register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/operations/native-worker-host-pools.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/operations/native-worker-host-pools.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [charts/prism/templates/workloads.yaml](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/prism/templates/workloads.yaml) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/review/remediation/implementation/pr6-stateful-upgrade-checkpoint.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/pr6-stateful-upgrade-checkpoint.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
@@ -783,7 +783,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 ### Sources
 
 - [https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/backup-recovery.md](https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/backup-recovery.md) — Original finding at its historical review commit; not a current operational claim.
-- [docs/review/remediation/register.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
+- [Pinned historical register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [charts/prism/files/prism-backup.sh](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/prism/files/prism-backup.sh) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [tests/verification/deployment/prism-backup.test.mts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/deployment/prism-backup.test.mts) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/review/remediation/implementation/pr6-prism-backup-groups.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/pr6-prism-backup-groups.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
@@ -846,7 +846,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 ### Sources
 
 - [https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/ops-pod.md](https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/ops-pod.md) — Original finding at its historical review commit; not a current operational claim.
-- [docs/review/remediation/register.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
+- [Pinned historical register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [charts/ops-pod/values.yaml](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/ops-pod/values.yaml) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [charts/ops-pod/templates/workload.yaml](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/ops-pod/templates/workload.yaml) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
 - [docs/review/infrastructure/ops-pod.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/infrastructure/ops-pod.md) — Commit-pinned source or historical evidence; current interpretation and limits are stated above.
@@ -992,7 +992,7 @@ Both current implementation files and the accepted no-decay statements were insp
 
 ### Reproduction and verification procedure
 
-- Inspect docs/architecture/prism-preference-learning-v1.md: V1 excludes automatic time decay in the opening scope and time-handling section. Compare skills/prism/preferences/index.ts projectPreferences and skills/prism/control/preference-snapshot.ts.
+- Inspect docs/architecture/prism-preference-learning-v1.md. V1 excludes automatic time decay in the opening scope and time-handling section. Compare skills/prism/preferences/index.ts projectPreferences and skills/prism/control/preference-snapshot.ts.
 - Use one valid selected event with a single trait and evaluate the original projector at its last evidence time and 180 days later. Current arithmetic yields score1/effectiveScore1, then score1/effectiveScore0.5. Preserve user/project context and all required event fields; this AP04 review did not execute the probe.
 - Existing regression entry points: skills/prism/tests/quality.test.mts (preference projections decay and remain retractable) and skills/prism/tests/control-generation-http.test.mts (persisted decay policy identity).
 
@@ -1023,4 +1023,3 @@ Bounded source and existing-test inspection; no preference test execution, produ
 - [skills/prism/control/preference-snapshot.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/control/preference-snapshot.ts) — Accepted contract, current implementation or existing regression; conflict described above.
 - [skills/prism/tests/quality.test.mts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/tests/quality.test.mts) — Accepted contract, current implementation or existing regression; conflict described above.
 - [skills/prism/tests/control-generation-http.test.mts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/tests/control-generation-http.test.mts) — Accepted contract, current implementation or existing regression; conflict described above.
-

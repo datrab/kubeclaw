@@ -3,7 +3,7 @@
 Status: AP04 decision extraction; implementation and acceptance recorded separately
 Audience: maintainer, operator, architecture reader
 Owner: platform maintainers
-Evidence: docs/review/remediation/decisions.md; docs/architecture/05-decision-record-catalogue.md; skills/nova/core/execution/engine-snapshots.ts
+Evidence: docs/review/remediation/decisions.md; docs/blueprint/05-decision-record-catalogue.md; skills/nova/core/execution/engine-snapshots.ts
 Applies to: repository source at ad67f9bb5c75cfa8cc1b926668aec1dd0168452c
 Last verified: 2026-09-15; source review, no runtime or live acceptance executed
 

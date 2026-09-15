@@ -1,10 +1,15 @@
 # Local completion and finding provenance
 
-Status: accepted — D12 confirmed by the requester on 2026-09-12  
-Audience: operators, developers and agents  
-Owner: platform operator  
-Evidence: .github/workflows/remediation-native.yaml; tests/verification/contracts/check-production-receipt-attestation.mjs  
-Applies to: 154 original findings and five separate integration findings  
+Status: accepted — D12 confirmed by the requester on 2026-09-12
+
+Audience: operators, developers and agents
+
+Owner: platform operator
+
+Evidence: .github/workflows/remediation-native.yaml; tests/verification/contracts/check-production-receipt-attestation.mjs
+
+Applies to: 154 original findings and five separate integration findings
+
 Last verified: 2026-09-15 — documentation/source reconciliation; no new test execution
 
 This page preserves the identity and local disposition of the **154 original findings** and **five additional integration findings**. It is a compact provenance index. Maintain current incomplete implementations in the [open issue register](../status/open-issues.md) and outstanding operational checks in the [acceptance plan](../status/acceptance.md). Local completion does not approve a running system.

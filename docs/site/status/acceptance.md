@@ -1,10 +1,15 @@
 # Operational and live acceptance
 
-Status: planned; not executed  
-Audience: operators and executing agents  
-Owner: platform operator  
-Evidence: .github/workflows/remediation-native.yaml; tests/verification/contracts/check-production-receipt-attestation.mjs  
-Applies to: KubeClaw source checkpoint `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`  
+Status: planned; not executed
+
+Audience: operators and executing agents
+
+Owner: platform operator
+
+Evidence: .github/workflows/remediation-native.yaml; tests/verification/contracts/check-production-receipt-attestation.mjs
+
+Applies to: KubeClaw source checkpoint `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`
+
 Last verified: 2026-09-15 — documentation/source reconciliation; no new test execution
 
 **141 of the original 154 findings are locally verified; 13 remain incomplete.** Five additional integration findings are locally verified separately. These counts assess code remediation under [D12](../decisions/acceptance.md#d12--accepted-local-completion-policy), not acceptance of a running system. Current implementation gaps belong in the [open issue register](open-issues.md).

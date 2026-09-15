@@ -966,4 +966,3 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Documentation must explain every field/default/limit/result/error/evidence/security/tradeoff/migration/troubleshooting rule with tested examples. A normal user must not need source inspection or maintainer help to understand use.
 
 **Approval/source.** Accepted, 2026-08-12; [original D-119](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-119-every-suite-migration-uses-one-documented-workflow).
-
