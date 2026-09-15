@@ -5,6 +5,9 @@ separate v1 Buster worker.
 
 ## Deploy
 
+For automatic deployments after a Git PR merge, follow the
+[continuous GitOps setup](continuous-gitops.md).
+
 Use `scripts/deploy.sh` or render `charts/kubeclaw/` with an operator values
 file.
 

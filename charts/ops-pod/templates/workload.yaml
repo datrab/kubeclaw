@@ -52,6 +52,10 @@ spec:
           env:
             - {name: HOME, value: /home/node}
             - {name: OPS_DEFAULT_NAMESPACE, value: {{ .Values.defaultNamespace | quote }}}
+            - {name: OPS_EXEC_NAMESPACES, value: {{ join "," .Values.rbac.execNamespaces | quote }}}
+            {{- if .Values.rbac.execNamespaces }}
+            - {name: KUBECONFIG, value: /var/run/kubeclaw-ops/kubeconfig/config}
+            {{- end }}
             {{- if .Values.githubSecret }}
             - name: GH_TOKEN
               valueFrom:
@@ -67,6 +71,10 @@ spec:
             - {name: workspace, mountPath: /workspace}
             - {name: codex-tmp, mountPath: /tmp}
             - {name: bearer, mountPath: /var/run/kubeclaw-ops/bearer, readOnly: true}
+            {{- if .Values.rbac.execNamespaces }}
+            - {name: kube-api, mountPath: /var/run/secrets/kubernetes.io/serviceaccount, readOnly: true}
+            - {name: kubeconfig, mountPath: /var/run/kubeclaw-ops/kubeconfig, readOnly: true}
+            {{- end }}
           readinessProbe:
             exec:
               command: [python3, -c, "import json; s=json.load(open('/tmp/codex-ops-status.json')); raise SystemExit(0 if s['phase']=='remote-process-running' else 1)"]
@@ -127,6 +135,11 @@ spec:
             - {name: tailscale-tmp, mountPath: /tmp}
         {{- end }}
       volumes:
+        {{- if .Values.rbac.execNamespaces }}
+        - name: kubeconfig
+          configMap:
+            name: {{ $name }}-kubeconfig
+        {{- end }}
         - name: bearer
           secret:
             secretName: {{ .Values.bearerSecret }}
@@ -136,6 +149,10 @@ spec:
             defaultMode: 0440
             sources:
               - serviceAccountToken: {path: token, expirationSeconds: 3600}
+              - downwardAPI:
+                  items:
+                    - path: namespace
+                      fieldRef: {fieldPath: metadata.namespace}
               - configMap:
                   name: kube-root-ca.crt
                   items: [{key: ca.crt, path: ca.crt}]
