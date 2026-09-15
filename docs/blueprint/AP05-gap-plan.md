@@ -1,6 +1,6 @@
 # AP05 documentation gap and writing plan
 
-Status: AP05 complete; AP06 is next
+Status: AP05 complete; AP06 completed W04–W06; AP07 is next
 Date: 2026-09-15
 Branch: `docs/documentation-overhaul`, PR #13
 Assessment revision: `9dab0a1365a367bb2668298d50802a76bd147d91`
@@ -349,5 +349,5 @@ automatic audit fix.
 - W01–W12 specify an observable reader result. No empty page or heading is treated as
   content coverage.
 
-AP05 is complete. AP06 starts with W04–W06; P0 operational packages W01–W03 may be
-prepared in parallel but depend on the terms and boundaries established by AP06.
+AP05 is complete. AP06 completed W04–W06 and established the required terms and
+boundaries. AP07 is next and owns W01–W03 and W07.

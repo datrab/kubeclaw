@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 22 · Status: AP01–AP05 abgeschlossen; AP06 ist das nächste Arbeitspaket
+Stand: 15.09.2026 · Version 23 · Status: AP01–AP06 abgeschlossen; AP07 ist das nächste Arbeitspaket
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -27,7 +27,7 @@ Der vorhandene Blueprint wird kritisch überarbeitet. Seine Kategorien, Seitenst
 
 ## 3. Übersicht der Arbeitspakete
 
-AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist nach der [Nacharbeit und Gegenprüfung](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) **abgeschlossen**. AP04 ist nach der [Abschlussprüfung](AP04-checkpoint.md) ebenfalls **abgeschlossen**. AP05 ordnet im [Lücken- und Schreibplan](AP05-gap-plan.md) jede Leseraufgabe und jeden ermittelten Produktsurface einem konkreten Ziel und einem priorisierten Schreibpaket zu; AP06–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
+AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist nach der [Nacharbeit und Gegenprüfung](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) **abgeschlossen**. AP04 ist nach der [Abschlussprüfung](AP04-checkpoint.md) ebenfalls **abgeschlossen**. AP05 ordnet im [Lücken- und Schreibplan](AP05-gap-plan.md) jede Leseraufgabe und jeden ermittelten Produktsurface einem konkreten Ziel und einem priorisierten Schreibpaket zu. AP06 liefert und prüft im [Abschlussbericht](AP06-checkpoint.md) den Einstieg, das Zuständigkeitsmodell sowie die Ablauf-, Wiederherstellungs-, Deployment- und Vertrauensarchitektur; AP07–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
 
 | ID | Arbeitspaket | Voraussetzung | Greifbares Ergebnis |
 | --- | --- | --- | --- |
@@ -116,14 +116,16 @@ Einzelentscheidungen im [manuellen Register](review-ledger.jsonl).
 
 ### AP06 — Einstieg und Architektur
 
-- [ ] Kurzer Einstieg: Zweck, Zielgruppe, Voraussetzungen, Leistungsumfang und aktuelle Grenzen.
-- [ ] Ein durchgehendes Beispiel vom Auftrag bis zum Ergebnis; beteiligte Rollen, Übergaben und Artefakte erklären.
-- [ ] Nova, Worker-Core, Buster, Prism, Forge, Echo und Plugin-Runtime gemäß tatsächlicher Implementierung erklären; vorhanden, aktiviert und erreichbar unterscheiden.
-- [ ] Zuständigkeiten, Zustände, Datenhaltung, Verträge, Sicherheitsgrenzen und Kommunikationswege beschreiben.
-- [ ] Fehlerpfade erklären: Retry, Reparaturbudgets, Freigaben, Resume, Abbruch, Eskalation und ungewisser Ausgang.
-- [ ] Wenige präzise Diagramme und ein Glossar ergänzen. Diagramme müssen zum Code und zum Text passen.
+- [x] Kurzer Einstieg: Zweck, Zielgruppe, Voraussetzungen, Leistungsumfang und aktuelle Grenzen.
+- [x] Ein durchgehendes Beispiel vom Auftrag bis zum Ergebnis; beteiligte Rollen, Übergaben und Artefakte erklären.
+- [x] Nova, Worker-Core, Buster, Prism, Forge, Echo und Plugin-Runtime gemäß tatsächlicher Implementierung erklären; vorhanden, aktiviert und erreichbar unterscheiden.
+- [x] Zuständigkeiten, Zustände, Datenhaltung, Verträge, Sicherheitsgrenzen und Kommunikationswege beschreiben.
+- [x] Fehlerpfade erklären: Retry, Reparaturbudgets, Freigaben, Resume, Abbruch, Eskalation und ungewisser Ausgang.
+- [x] Wenige präzise Diagramme und ein Glossar ergänzen. Diagramme müssen zum Code und zum Text passen.
 
 **Abgeschlossen, wenn:** Ein neuer Leser kann einen normalen Ablauf und wesentliche Fehlerabläufe erklären, Komponenten unterscheiden und den passenden Betriebs- oder Erweiterungsleitfaden finden.
+
+**Abschlussnachweis:** [AP06 Completion Checkpoint](AP06-checkpoint.md). AP07 ist das nächste Arbeitspaket.
 
 ### AP07 — Vollständiges Operations-Handbuch
 

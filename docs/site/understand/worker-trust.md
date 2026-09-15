@@ -139,6 +139,7 @@ cluster.
 
 ## Read More
 
+- [Deployment and Trust](deployment-and-trust.md) explains the complete workload, network, storage, and failure-domain model.
 - [Operate Worker Trust](../use/worker-trust.md) gives the deployment and proof procedure.
 - The authored implementation reference is `docs/security/worker-trust.md`.
 - The operator runbook is `docs/operations/worker-trust-runbook.md`.
