@@ -58,7 +58,7 @@ The recheck made engine authoring, configuration-only extension, routine backup 
 
 ## AP03 individual document review
 
-AP03 is in progress: 220 documents have individual content decisions; migration
+AP03 is in progress: 312 documents have individual content decisions; migration
 and deletion are still pending. See the [progress and scope report](AP03-progress.md)
 and the [human-maintained review ledger](review-ledger.jsonl). Captured files are
 not content-reviewed. The ledger is outside the old generated output directory.

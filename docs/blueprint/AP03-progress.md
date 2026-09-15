@@ -4,9 +4,9 @@ Stand: 15.09.2026. **In Arbeit; nicht abgeschlossen.**
 
 ## Ergebnis dieses Zwischenstands
 
-220 Dokumente wurden vollständig gelesen und einzeln entschieden: sämtliche
-97 Root-/Komponententexte, beide Agentenanweisungen und 121 Dokumentationstexte.
-Die Entscheidungen sind **134 erweitern, 79 Informationen extrahieren,
+312 Dokumente wurden vollständig gelesen und einzeln entschieden: sämtliche
+97 Root-/Komponententexte, beide Agentenanweisungen und 213 Dokumentationstexte.
+Die Entscheidungen sind **139 erweitern, 166 Informationen extrahieren,
 6 behalten und 1 entfernen**. Die Entfernung betrifft einen redundanten
 Projekt-Runtime-Verweis; seine Links und gegebenenfalls benötigten Angaben müssen
 zuerst übernommen werden. Keine automatische Erfassung zählt als Inhaltsprüfung.
@@ -36,15 +36,15 @@ inhaltliche bzw. funktionale Einzelbewertung, keine bloße Dateinamensentscheidu
 | Gruppe | Dateien | Davon inhaltlich geprüft |
 | --- | ---: | ---: |
 | Root- und komponentennahe Dokumentation | 97 | 97 |
-| Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 121 |
+| Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 213 |
 | Dokumentationsunterstützung | 82 | 0 |
 | Neue AP01-/Plan-Verwaltungsdateien | 7 | 0 |
 | Review-Texte | 479 | 0 |
 | Review-Nachweise und Register | 1.832 | 0 |
 | Agentenanweisungen | 2 | 2 |
-| **Gesamt** | **2.879** | **220** |
+| **Gesamt** | **2.879** | **312** |
 
-**2.659 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 740
+**2.567 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 648
 Markdown-Dokumente. Die bereits erfolgte AP02-Blueprint-Abnahme ersetzt diese
 dateibezogene Migrationsentscheidung nicht. Die beiden neuen AP03-Arbeitsdateien
 dieses Zwischenstands sind Verwaltungszugänge nach dem eingefrorenen Quellstand;
@@ -114,7 +114,7 @@ Prüfstatus beibehalten. Der Quellcommit dieses Berichts bindet auch die
 Alle Operations-, Deployment- und Sicherheitsdokumente, die ersten sieben
 Architektureinstiege, alle 51 Katalogseiten und sämtliche 95 weiteren
 Komponententexte/Agentenanweisungen sind jetzt einzeln entschieden. Als Nächstes
-folgen die übrigen 261 Markdown-Texte außerhalb der Reviews und die 479
+folgen die übrigen 169 Markdown-Texte außerhalb der Reviews und die 479
 Review-Texte samt ihren Nachweisen. Verwaltungsdateien und technische
 Dokumentationsunterstützung erhalten ebenfalls Einzelentscheidungen.
 
@@ -169,3 +169,30 @@ Completion-Identität. Historische Harnesses benötigen weiterhin ihre Original-
 Nachweise; deren Verweise verhindern eine pauschale Review-Löschung.
 Die Einzelentscheidungen nennen jeweils die zu bewahrenden Feinheiten und
 noch zu klärenden Aussagen. Keine Laufzeit- oder Live-Abnahme wurde ausgeführt.
+
+## Fortsetzung: Architektur und Suite-Anleitungen
+
+Weitere 92 Texte sind einzeln entschieden: Roadmap und Architekturindex,
+Ops-Architektur, Observability-Fundament samt sieben Audits, Paketierung samt
+sieben Audits sowie die Anleitungen und Phasentexte zu Axe, API, Container-Build,
+Playwright, HTTP, Kubernetes-Fixtures, Lighthouse und statischer Manifestprüfung.
+Die verwendeten Quellblobs sind weiterhin unverändert; technische Nachprüfung
+umfasst insbesondere alle drei aktuellen Rollenmanifeste und die
+`#target`-/`invoke`-Grenze in `network-http-runtime.ts`.
+
+Die API-/HTTP-Anleitungen erlauben fälschlich reine DNS-Suffix-Freigaben für
+GET/HEAD. Der aktuelle Code verlangt auch für diese Methoden einen exakt
+autorisierten Ursprung. Bei Playwright widerspricht eine alte Portbeschreibung
+der Trennung zwischen Service-Port, Backend-Port und temporärem lokalen Proxy.
+Die Kubernetes-Feldreferenz lässt vorhandene Storage-Grenzen aus und ältere
+Texte berücksichtigen den gezielten Demo-Credential-Vertrag nicht.
+Lighthouse-Texte widersprechen sich beim HTTPS-Tunnelverhalten; der konkrete
+Abgleich mit der Implementierung bleibt als Korrekturauftrag erfasst.
+
+Statische Kubernetes-Prüfung gehört zur Nova-Lint-Erweiterung. Die alten
+Manifest-Phasen werden daher dorthin extrahiert, nicht als zusätzlicher
+Buster-Provider beschrieben. Das generierte Manifest-Paritätsdokument wurde
+mit allen 28 Zeilen gelesen; seine Verweise und benötigten Originalnachweise
+müssen vor der Entfernung zusammen mit dem Generator migriert werden.
+Historische lokale Pass-Ergebnisse und akzeptierte Live-Deferrals werden
+nicht in aktuelle Erfolgsbehauptungen umgedeutet.
