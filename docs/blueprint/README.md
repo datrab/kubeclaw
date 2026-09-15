@@ -1,6 +1,6 @@
 # Documentation transformation blueprint
 
-Status: AP01–AP03 completed and rechecked; 2,887 content-reviewed decisions, no open AP03 handoff. AP04 is next.
+Status: AP01–AP03 completed and rechecked; 2,887 content-reviewed decisions, no open AP03 handoff. AP04 is in progress; see the [saved checkpoint](AP04-checkpoint.md).
 Scope: documentation migration; implementation and live acceptance remain separate.
 
 KubeClaw documentation must let a new reader understand the system, an operator complete operational tasks, and a developer build supported extensions without previous conversations. Detail is required where it explains behavior or lets a task finish. More pages are not a measure of completeness.

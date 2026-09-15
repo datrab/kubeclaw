@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 19 · Status: AP01–AP03 abgeschlossen und nachkontrolliert; 2.887 content-reviewed, keine AP03-Übergabesperre; AP04 als Nächstes
+Stand: 15.09.2026 · Version 19 · Status: AP01–AP03 abgeschlossen und nachkontrolliert; 2.887 content-reviewed, keine AP03-Übergabesperre; AP04 begonnen, Zwischenstand gesichert
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -92,6 +92,8 @@ Einzelentscheidungen im [manuellen Register](review-ledger.jsonl).
 **Abgeschlossen, wenn:** Jede Datei im Umfang besitzt eine begründete Inhaltsentscheidung. Keine automatisch vorgeschlagene Zuordnung wird als manuell geprüft gezählt. Inhaltliche Unsicherheiten sind konkreten offenen Arbeiten zugeordnet.
 
 ### AP04 — Offene Arbeit und Entscheidungen sichern
+
+**In Bearbeitung:** [Gesicherter Zwischenstand und offene Nacharbeit](AP04-checkpoint.md). Keine AP04-Abnahme; die Checkliste bleibt offen.
 
 - [ ] Alle weiterhin offenen Findings mit Original-ID, Problem, Auswirkung, aktuellem Teilstand, betroffenen Komponenten, verbleibender Arbeit und Abschlusskriterium übernehmen.
 - [ ] Benötigte Reproduktionen und Nachweise erhalten oder an geeignete Test-/Issue-Orte verschieben. Offene Issues müssen ohne gelöschte Review-Dateien bearbeitbar bleiben.

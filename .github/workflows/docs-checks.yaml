@@ -4,6 +4,7 @@ on:
     paths:
       - docs/**
       - scripts/docs-*.mjs
+      - scripts/tests/docs-status.test.mjs
       - scripts/deploy.sh
       - package.json
       - package-lock.json
@@ -20,6 +21,7 @@ on:
     paths:
       - docs/**
       - scripts/docs-*.mjs
+      - scripts/tests/docs-status.test.mjs
       - scripts/deploy.sh
       - package.json
       - package-lock.json
@@ -48,6 +50,8 @@ jobs:
           node-version: "24"
       - name: Install repository dependencies
         run: npm ci --ignore-scripts
+      - name: Check canonical open-issue register and generated view
+        run: npm run docs:status:check && node --test scripts/tests/docs-status.test.mjs
       - name: Regenerate docs
         run: npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate
       - name: Reject generated docs drift
@@ -89,6 +93,8 @@ jobs:
           node-version: "24"
       - name: Install repository dependencies
         run: npm ci --ignore-scripts
+      - name: Check canonical open-issue register and generated view
+        run: npm run docs:status:check && node --test scripts/tests/docs-status.test.mjs
       - name: Regenerate docs
         run: npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate
       - name: Check generated docs freshness
