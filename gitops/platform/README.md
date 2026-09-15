@@ -104,3 +104,19 @@ Verify child health and `scripts/deploy-ops-pod.sh verify` after adoption. The h
 login, pair, shell, status and verify commands remain useful; stop using its Helm
 deploy action after adoption. Future Cilium migration must update the Ops network
 policy values in Git as well.
+
+## Redis
+
+Application `redis` belongs to project `data-services`. It uses OCI Helm chart
+`registry-1.docker.io/bitnamicharts/redis` 25.3.9 and the live release's standalone,
+authentication, resource and 2Gi persistence values in `values/redis.yaml`.
+The observed running Redis digest replaces the mutable `latest` reference.
+This Pod template image change can restart the single Redis Pod at the first sync,
+even though the image contents are the same; plan for a brief Redis interruption.
+
+Release name `redis`, StatefulSet `redis-master` and claim template `redis-data`
+retain PVC `redis-data-redis-master-0`. The existing Secret `redis-secrets` with
+key `redis-password` stays external. Do not use the larger/newer bootstrap values
+in `my-values/infra/redis-values.yaml` for this adoption. No automatic sync or prune
+is enabled. Review the live diff before manually syncing, without Force or Prune.
+After adoption, manage Redis through Git/Argo rather than `deploy.sh infra`.

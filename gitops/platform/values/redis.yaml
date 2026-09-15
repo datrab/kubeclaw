@@ -1,0 +1,20 @@
+# Installed release redis, chart 25.3.9; pin the observed running image.
+image:
+  registry: registry-1.docker.io
+  repository: bitnami/redis
+  digest: sha256:fd997c4c52c0a0af686e5af2b671f4e3d538d26f28abd3b83a01ce57eea43752
+architecture: standalone
+auth:
+  enabled: true
+  existingSecret: redis-secrets
+  existingSecretPasswordKey: redis-password
+master:
+  persistence:
+    size: 2Gi
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi
