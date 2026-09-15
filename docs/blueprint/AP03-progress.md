@@ -4,14 +4,15 @@ Stand: 15.09.2026. **In Arbeit; nicht abgeschlossen.**
 
 ## Ergebnis dieses Zwischenstands
 
-506 Dateien wurden vollständig gelesen und einzeln entschieden: sämtliche
-97 Root-/Komponententexte, beide Agentenanweisungen, alle 380
-Dokumentationstexte, 23 Unterstützungsdateien, zwei Review-Texte und zwei Verwaltungsdateien.
-Die Entscheidungen sind **157 erweitern, 336 Informationen extrahieren,
-10 behalten und 3 entfernen**. Die Entfernung betrifft einen redundanten
-Projekt-Runtime-Verweis und zwei veraltete generierte Zusammenfassungen. Ihre
-Verbraucher müssen zuerst migriert oder nachvollziehbar stillgelegt werden. Keine automatische Erfassung zählt als Inhaltsprüfung.
+**1.761 von 2.879 Quelldateien sind einzeln inhaltlich bzw. funktional bewertet;
+1.118 bleiben ungeprüft.** Entscheidungen: **181 erweitern,
+1.005 Informationen extrahieren, 13 behalten und
+562 entfernen**. Die funktionale Bewertung betrifft ausdrücklich
+als solche gekennzeichnete nichttextuelle Nachweise; sie ist keine Behauptung,
+jeden eingebetteten historischen Quelltext gelesen zu haben. Automatische
+Erfassung und Paketzuordnung zählen nicht als Inhaltsprüfung.
 Noch kein Ersatztext ist abgenommen und keine Quelldatei wurde gelöscht.
+Die [sechs Arbeitspakete](AP03-work-packages.md) enthalten die genaue Zuteilung.
 
 Das [manuell gepflegte Prüfregister](review-ledger.jsonl) enthält je Quelldatei
 einen Datensatz. Geprüfte Datensätze nennen konkrete Begründungen, Zielabschnitte,
@@ -34,19 +35,19 @@ redaktionellen Migration ausgeschlossen; auch Lizenzen werden nicht als
 redaktionelle Löschkandidaten behandelt. Nichttextuelle Nachweise benötigen eine
 inhaltliche bzw. funktionale Einzelbewertung, keine bloße Dateinamensentscheidung.
 
-| Gruppe | Dateien | Davon inhaltlich geprüft |
+| Gruppe | Dateien | Davon inhaltlich/funktional geprüft |
 | --- | ---: | ---: |
 | Root- und komponentennahe Dokumentation | 97 | 97 |
 | Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 380 |
-| Dokumentationsunterstützung | 82 | 23 |
-| Neue AP01-/Plan-Verwaltungsdateien | 7 | 2 |
-| Review-Texte | 479 | 2 |
-| Review-Nachweise und Register | 1.832 | 0 |
+| Dokumentationsunterstützung | 82 | 80 |
+| Neue AP01-/Plan-Verwaltungsdateien | 7 | 6 |
+| Review-Texte | 479 | 205 |
+| Review-Nachweise und Register | 1.832 | 991 |
 | Agentenanweisungen | 2 | 2 |
-| **Gesamt** | **2.879** | **506** |
+| **Gesamt** | **2.879** | **1.761** |
 
-**2.373 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 477
-Markdown-Dokumente. Die bereits erfolgte AP02-Blueprint-Abnahme ersetzt diese
+**1.118 Dateien bleiben in AP03 erfasst, aber ungeprüft.**
+Die bereits erfolgte AP02-Blueprint-Abnahme ersetzt diese
 dateibezogene Migrationsentscheidung nicht. Die beiden neuen AP03-Arbeitsdateien
 dieses Zwischenstands sind Verwaltungszugänge nach dem eingefrorenen Quellstand;
 beim nächsten Bestandsabgleich werden sie mit ihrem dann verfügbaren Blob
@@ -116,10 +117,8 @@ Prüfstatus beibehalten. Der Quellcommit dieses Berichts bindet auch die
 
 Alle Operations-, Deployment- und Sicherheitsdokumente, die ersten sieben
 Architektureinstiege, alle 51 Katalogseiten und sämtliche 95 weiteren
-Komponententexte/Agentenanweisungen sind jetzt einzeln entschieden. Als Nächstes
-folgen die übrigen 477 Review-Texte samt ihren 1.832 Nachweisen und Registern.
-59 Unterstützungsdateien und fünf weitere Verwaltungsdateien benötigen
-ebenfalls noch Einzelentscheidungen.
+Komponententexte/Agentenanweisungen sind jetzt einzeln entschieden. Die noch ungeprüften Quellen sind je Arbeitspaket anhand von `status: captured`
+im Register bestimmt. Bereits gespeicherte Einzelentscheidungen bleiben erhalten.
 
 Die 13 unvollständigen Findings, getrennte Live-Abnahmen und das zusätzliche
 GitHub-Issue #7 bleiben erhalten. Aus diesen Dokumentationsentscheidungen folgt
@@ -360,3 +359,42 @@ Findings sind nicht der aktuelle 154er-Reparaturstand.
 Nächster Einstieg: übrige Dokumentationsunterstützung und die Review-Register
 mit den noch offenen Findings. Keine Quelldatei gelöscht, kein technisches
 Finding geschlossen und keine Runtime-/Live-Prüfung ausgeführt.
+
+## Parallelprüfung: kontrollierte Zusammenführung
+
+Ausgangspunkt der sechs Pakete ist Commit
+`e5bc4b951f914b95a39655aa069daaba09ee51a2` mit 506 geprüften Dateien.
+Dieser Zwischenstand integriert 1.255 zusätzliche Entscheidungen.
+Paketzugehörigkeit, eindeutige Pfade, unveränderte Originalblobs, Pflichtfelder
+und getrennte Migrationszustände sind kontrolliert. Die Hauptsession hat
+Quelltexte und zugehörige Entscheidungen aus allen sechs Paketen stichprobenartig
+gegengeprüft, relevante Verbraucher gelesen und T01/T02 selbst vollständig
+bewertet. Zu allgemeine Logentscheidungen, ungenaue Zielorte und missverständliche
+Statusbezeichnungen wurden zur Korrektur zurückgegeben.
+
+Wichtige Folgeaufträge:
+
+- `register.md` enthält noch 140 lokale Abschlüsse und mehrere veraltete Zeilen;
+  `register.json` enthält 141 verifizierte, drei in Bearbeitung, zwei implementierte
+  und acht offene Findings. Die 13 unvollständigen Fälle bleiben bestehen.
+- Historische Komponenten-/Tracereviews beschreiben inzwischen behobene Fehler.
+  T01-F01/F02, die Workspaceübergabe und PATH-T02-001/002/003 sind im aktuellen
+  Register lokal verifiziert. Die neue Leserführung muss sich am aktuellen Code
+  orientieren; vollständige Live-Abnahme wird daraus nicht abgeleitet.
+- Der Suite-Workflow-Checker liest alle Dokumentationsmanifeste dynamisch und
+  kontrolliert Feldmarker. Seitenmigration benötigt daher mehr als Linkkorrekturen.
+- Reliability-Tests führen weiterhin Skripte unter `docs/review/evidence/` aus
+  oder lesen ursprüngliche Resultate als Testfixtures. Originalbytes und archivierte
+  Identitäten dürfen beim Verschieben nicht durch frisch erzeugte Ersatzdaten
+  ausgetauscht werden. Andere Verweise benennen nur eingebettete historische Pfade;
+  diese sind von echten Dateilesern zu unterscheiden.
+- Wiederholte Logs und leere Ausgaben werden nicht zu neuen Produktkapiteln.
+  Notwendige übergeordnete Nachweise, noch offene Akzeptanzbedingungen und
+  ausführbare Verbraucher müssen vor der Entfernung erhalten bzw. migriert sein.
+- Veraltete Diagramme und Inventare verschweigen Komponenten oder zeigen falsche
+  Autorität. SVG-Wiederverwendung setzt die im Register genannten Korrekturen voraus.
+
+Alle Entscheidungen bleiben `migration_status: pending`. Keine Produktdateien
+oder historischen Nachweise gelöscht, keine technischen Findings geschlossen,
+keine Runtime-, Deployment- oder Live-Tests ausgeführt. Die verbleibenden
+1.118 Quellen werden im bestehenden Paket weiterbearbeitet.
