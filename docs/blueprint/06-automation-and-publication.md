@@ -71,3 +71,10 @@ Versioned publication should identify its source revision and preserve useful ol
 AP09 is done when factual regeneration is reproducible, human decisions survive it, every relevant subject is covered, applicable references and examples pass, deleted files are not recreated, and publication contains only intended content. Test the preservation of reviewed ledger entries against unchanged, modified, renamed, removed and new files when implementing ledger refresh.
 
 AP11 checks actual reader outcomes and the final updated inventory. Documentation can be complete while implementation issues and live acceptance remain explicitly open. It cannot be complete if a reader must infer prerequisites, current limitations or recovery steps from deleted reviews.
+
+
+## Ongoing ownership and migration closeout
+
+During AP03/AP05, assign each canonical chapter a component or maintenance role and its source dependencies; a named person is not required and must not be invented. A change to an interface, default, manifest, runtime role or documented procedure triggers review of the affected authored content as well as regeneration of factual tables. AP11 adds this rule to contributor guidance and checks that an ordinary change can identify its documentation owner and verification command.
+
+At AP11, inspect the blueprint, AP01 snapshots, human ledger and evidence indexes themselves. Remove temporary migration material once its durable decisions, unresolved tasks and continuing operational evidence have canonical homes. Keep only records with a concrete continuing purpose. Do not leave this migration's bookkeeping as a new permanent layer of duplicated status or obsolete documentation.

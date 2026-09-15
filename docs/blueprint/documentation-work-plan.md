@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 4 · Status: AP01 nachkontrolliert und AP02 abgeschlossen; AP03 als Nächstes
+Stand: 15.09.2026 · Version 5 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 als Nächstes
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -27,7 +27,7 @@ Der vorhandene Blueprint wird kritisch überarbeitet. Seine Kategorien, Seitenst
 
 ## 3. Übersicht der Arbeitspakete
 
-AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen; AP03–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
+AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
 
 | ID | Arbeitspaket | Voraussetzung | Greifbares Ergebnis |
 | --- | --- | --- | --- |

@@ -37,3 +37,21 @@ The current baseline is commit `6979bced8e5bbca90568276256e7328d93a1e072`. PR #1
 The six artifacts now agree on scope, chapter identifiers, review states, evidence rules, decision status and migration gates. Prism is represented as a real source/package/role surface with separately assessed integration and live status. Pipeline, OpenClaw and Codex plugins have distinct coverage. Operations includes complete recovery and loss-of-access scenarios. Examples and readable fallback diagrams suffice; a new website framework is not a prerequisite.
 
 This revision changes the blueprint and work plan only. It does not regenerate old inventories, migrate product pages, delete reviews, fix runtime findings, or claim that existing full documentation CI is green. Those tasks retain their explicit work-package ownership.
+
+
+## AP02 recheck
+
+Rechecked against the AP02 work-package checklist and the user's end goal. All six artifacts were read again; the baseline and PR head were unchanged before this follow-up. No product functionality was retested.
+
+| Requirement | Blueprint coverage |
+| --- | --- |
+| Read and decide every document | Artifact 1 scope; artifact 3 individual decisions, review states and changed-source handling |
+| Reuse inventories without false completeness | Artifact 1 explicit inventory boundaries; artifact 6 generation versus human review |
+| Preserve decisions and open work before deleting reviews | Artifacts 3 and 5; separate D12 local closure and live acceptance |
+| Identify missing topics after review | Artifact 4 inventory/content/journey coverage and AP05 gap priorities |
+| Detailed, understandable operations | Artifact 2 O1–O5 including bootstrap, daily operation, failed runs, backup operation, restore and loss of access |
+| Explain all supported extension paths | Artifact 2 E1–E6 including five registration types, host plugins, a minimal worker engine and configuration-only customization |
+| Keep examples usable outside the original operator environment | Artifacts 2 and 4 public/private configuration separation, prerequisites and effective-result checks |
+| Avoid duplicate documentation over time | Artifact 3 per-topic deletion; artifact 6 maintenance ownership and final removal of temporary migration records |
+
+The recheck made engine authoring, configuration-only extension, routine backup operation and portable operator examples explicit. It also assigned ongoing ownership and the disposition of these temporary migration records. These are strengthened acceptance requirements, not newly implemented product features. AP03 has not started.

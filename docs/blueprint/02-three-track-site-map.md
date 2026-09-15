@@ -56,9 +56,15 @@ E2 must take a clean checkout from an empty package to a built, tested and activ
 
 Each supported stage, observer, capability adapter, test provider and report adapter gets its contract, lifecycle, input/output/configuration, authority, error semantics and an executable example. Shared sections can supply common packaging and lifecycle behavior; link directly to the relevant steps. Do not manufacture APIs to make an unsupported extension appear available.
 
-E4 separates pipeline plugins from OpenClaw extensions and Codex plugins. Each supported host integration needs its own manifest, loading/activation process, permissions, verification and removal story. Inventory presence alone does not prove a complete authoring workflow. Engine documentation distinguishes the neutral worker contract from engine meaning and integration limitations.
+E4 separates pipeline plugins from OpenClaw extensions and Codex plugins. Each supported host integration needs its own manifest, loading/activation process, permissions, verification and removal story. Inventory presence alone does not prove a complete authoring workflow. Engine documentation distinguishes the neutral worker contract from engine meaning and integration limitations. Include one complete minimal worker-engine example: engine implementation, package/role integration, submission, progress, result import and cancellation. Verify both success and interrupted execution. If a required integration is unfinished, identify the exact blocked step and issue rather than claiming that the end-to-end example works.
 
 Every catalogue entry links to its appropriate extension type, schemas, implementation and checks. Generated tables must not overwrite authored guidance.
+
+Configuration is also an extension path. E1/O2 must explain changing the pipeline graph and project configuration, selecting providers and grants, enabling/disabling plugin behavior, and composing runtime-role bundles and deployment settings. For each supported customization show the authoritative setting, a minimal change, validation, effective result, restart/resume implications and reversal. E4/E5 distinguish these supported changes from a core fork; contribution guidance covers package/contract changes, versioning and the checks required before release.
+
+O3/O4 must cover routine backup operation as well as a one-off restore: schedule and ownership, detection of missed/failed backups, destination capacity, access to encryption/recovery keys where used, and a repeatable restore exercise. Any unknown schedule, alert threshold or operational owner is explicitly unresolved; do not invent deployment-specific values.
+
+O1/R1 must separate portable public examples from private operator settings. List required values and secret references using documented placeholders, explain where the operator supplies them, and verify that the example does not depend on private identifiers or an undocumented local file. This addresses documentation usability and the existing public-configuration finding; it does not itself close that finding.
 
 ## Page quality and task acceptance
 
