@@ -13,12 +13,13 @@ KubeClaw documentation must let a new reader understand the system, an operator 
 4. [Coverage and verification matrix](04-evidence-matrix.md): source families, task evidence and verification limits.
 5. [Decision preservation](05-decision-record-catalogue.md): retain reasoning without confusing acceptance with implementation.
 6. [Tooling and publication](06-automation-and-publication.md): reuse existing tools, add only necessary checks, keep unfinished work visible.
+7. [Documentation quality standard](07-documentation-quality-standard.md): depth, decision reasons, ASD-STE100, source evidence, task acceptance and a future documentation agent.
 
 [Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the original inventory and executable dependencies. The [AP03 completion report](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) resolves the 285 former handoff blockers and additional candidates. Migration remains pending; AP04 preserves open work, separate live acceptance, decisions and test dependencies before rewriting.
 
 ## Authority and historical outputs
 
-The revised six artifacts define the migration policy. Only the [human-maintained review ledger](review-ledger.jsonl) is authoritative for current individual decisions. Files in `generated/` are earlier heuristic AP02 output, not accepted manual decisions or current completion evidence. AP01 found that the old ledger omits 2,322 paths in its generator scope; its generator also resets completion prose to pending. Consumer migration belongs to AP09; do not overwrite human decisions with that output.
+The six AP02 artifacts and the subsequent documentation quality standard define the migration policy. Only the [human-maintained review ledger](review-ledger.jsonl) is authoritative for current individual decisions. Files in `generated/` are earlier heuristic AP02 output, not accepted manual decisions or current completion evidence. AP01 found that the old ledger omits 2,322 paths in its generator scope; its generator also resets completion prose to pending. Consumer migration belongs to AP09; do not overwrite human decisions with that output.
 
 The original AP01 baseline is `6979bced8e5bbca90568276256e7328d93a1e072`; AP03 preserves source identities at `e4ba8b1dd830f38450fcabedf4db7188aaeb6c44`. Current main through `1e50167fcb4355dfce4110d612ab360828c64394` has been integrated and affected documentation reconciled, including the removed standalone ChatGPT bootstrap. Six AP03 administrative sources and two new main documents are explicitly added. No cluster or Devbox live acceptance was performed.
 

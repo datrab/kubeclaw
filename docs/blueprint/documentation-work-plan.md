@@ -241,3 +241,38 @@ Bei Wiederaufnahme: aktuellen Commit/PR-Stand abgleichen, den letzten gesicherte
 - [Findingregister am geprüften Commit](https://github.com/datrab/kubeclaw/blob/6979bced8e5bbca90568276256e7328d93a1e072/docs/review/remediation/register.json)
 
 Diese Quellen dokumentieren den am 14.09.2026 geprüften Ausgangsstand. Den späteren AP03-Quellstand, die ausdrücklichen Erweiterungen und den main-Abgleich dokumentiert der Abschlussbericht.
+
+
+## Qualitätsanforderungen und Wiederaufnahme am 15.09.2026
+
+Verbindlich für AP04–AP11 ist der [Dokumentationsstandard](07-documentation-quality-standard.md).
+Er ergänzt die bisherigen Abnahmekriterien: technische Tiefe in verständlichem Englisch,
+ASD-STE100 mit expliziter Sprachprüfung, belegte Entscheidungsgründe, präzise Codeverweise,
+vollständige Betriebsabläufe und reproduzierbare Erweiterungsanleitungen.
+
+| Paket | Zusätzlicher verbindlicher Nachweis |
+| --- | --- |
+| AP04 | Entscheidungsgrund, Alternativen, Konsequenzen und Quellen; unbekannte Gründe nicht erfinden |
+| AP05 | Abdeckung jeder Leseraufgabe, Modulmechanismen und komponentenübergreifenden Abläufe |
+| AP06 | Vollständige Erfolgs-/Fehlerabläufe, Zustandsänderungen und begründete Verantwortung; Codebelege direkt an Aussagen |
+| AP07 | Logische Betriebsreihenfolge, Ausführungsort, Voraussetzungen, Wirkung, erwartete Ergebnisse, Diagnose und Wiederherstellung |
+| AP08 | Sauberer Checkout bis zur tatsächlichen Einbindung je unterstütztem Erweiterungstyp; Leserprobe ohne Chatwissen |
+| AP09 | Geprüfte Links und Quellrevisionen; Codevorschau aus derselben Quelle im bestehenden Renderer prüfen, keine manuelle Kopie |
+| AP10 | Keine benötigten Entscheidungsgründe, Nachweise oder Verbraucher beim Entfernen verlieren |
+| AP11 | Alle Qualitätsgates, STE-Prüfung und Leserproben; Pflegevertrag für einen späteren Dokumentationsagenten |
+
+Gesicherter Wiederaufnahmestand: PR #13, Branch `docs/documentation-overhaul`,
+Commit `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`.
+Der veröffentlichte Arbeitsplan und AP03-Bericht nennen AP04 als nächsten Schritt.
+Der rekursive Tree enthält keinen AP04-Fortschrittsbericht.
+Der Nutzer berichtet, dass AP04 im abgebrochenen Chat begonnen wurde.
+Nicht veröffentlichte Änderungen der vorherigen Devbox sind in dieser Sitzung nicht einsehbar.
+Deshalb bedeutet dieser Befund nicht, dass dort keine Arbeit existiert.
+
+AP04 bleibt offen: 13 unvollständige Findings, Issue #7, zusätzliche technische
+Folgepunkte, getrennte Live-Abnahmen und dauerhafte Entscheidungen sichern.
+Die 141 lokalen Abschlüsse werden dadurch nicht wieder geöffnet.
+Die Qualitätsanforderungen sind festgelegt; ihre Umsetzung in allen Produktseiten
+und die formale STE-Prüfung sind noch nicht abgeschlossen.
+Vor Fortsetzung in der bisherigen Devbox zuerst deren Git-Status und lokale AP04-Arbeit
+mit dem aktualisierten PR abgleichen; ungesicherte Arbeit nicht überschreiben.
