@@ -4,9 +4,9 @@ Stand: 15.09.2026. **In Arbeit; nicht abgeschlossen.**
 
 ## Ergebnis dieses Zwischenstands
 
-364 Dokumente wurden vollständig gelesen und einzeln entschieden: sämtliche
-97 Root-/Komponententexte, beide Agentenanweisungen und 265 Dokumentationstexte.
-Die Entscheidungen sind **139 erweitern, 218 Informationen extrahieren,
+408 Dokumente wurden vollständig gelesen und einzeln entschieden: sämtliche
+97 Root-/Komponententexte, beide Agentenanweisungen und 309 Dokumentationstexte.
+Die Entscheidungen sind **139 erweitern, 262 Informationen extrahieren,
 6 behalten und 1 entfernen**. Die Entfernung betrifft einen redundanten
 Projekt-Runtime-Verweis; seine Links und gegebenenfalls benötigten Angaben müssen
 zuerst übernommen werden. Keine automatische Erfassung zählt als Inhaltsprüfung.
@@ -36,15 +36,15 @@ inhaltliche bzw. funktionale Einzelbewertung, keine bloße Dateinamensentscheidu
 | Gruppe | Dateien | Davon inhaltlich geprüft |
 | --- | ---: | ---: |
 | Root- und komponentennahe Dokumentation | 97 | 97 |
-| Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 265 |
+| Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 309 |
 | Dokumentationsunterstützung | 82 | 0 |
 | Neue AP01-/Plan-Verwaltungsdateien | 7 | 0 |
 | Review-Texte | 479 | 0 |
 | Review-Nachweise und Register | 1.832 | 0 |
 | Agentenanweisungen | 2 | 2 |
-| **Gesamt** | **2.879** | **364** |
+| **Gesamt** | **2.879** | **408** |
 
-**2.515 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 596
+**2.471 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 552
 Markdown-Dokumente. Die bereits erfolgte AP02-Blueprint-Abnahme ersetzt diese
 dateibezogene Migrationsentscheidung nicht. Die beiden neuen AP03-Arbeitsdateien
 dieses Zwischenstands sind Verwaltungszugänge nach dem eingefrorenen Quellstand;
@@ -114,7 +114,7 @@ Prüfstatus beibehalten. Der Quellcommit dieses Berichts bindet auch die
 Alle Operations-, Deployment- und Sicherheitsdokumente, die ersten sieben
 Architektureinstiege, alle 51 Katalogseiten und sämtliche 95 weiteren
 Komponententexte/Agentenanweisungen sind jetzt einzeln entschieden. Als Nächstes
-folgen die übrigen 117 Markdown-Texte außerhalb der Reviews und die 479
+folgen die übrigen 73 Markdown-Texte außerhalb der Reviews und die 479
 Review-Texte samt ihren Nachweisen. Verwaltungsdateien und technische
 Dokumentationsunterstützung erhalten ebenfalls Einzelentscheidungen.
 
@@ -203,7 +203,7 @@ Weitere 52 Texte wurden vollständig gelesen und entschieden: die Vertrags-,
 Registry-, Resolver-, Runner-, Reportadapter- und Remote-Phasen, sämtliche
 Unit-Phasentexte einschließlich aller 93 Paritätszeilen, Security- und
 Size-Budget-Anleitungen sowie der Migrationsworkflow und die sechs ausführlichen
-Suite-Closeouts. Insgesamt sind jetzt 364 Texte inhaltlich entschieden.
+Suite-Closeouts. Insgesamt sind jetzt 408 Texte inhaltlich entschieden.
 
 Zu bewahren sind insbesondere exakte Reportzahlen trotz begrenzter Details,
 Originalberichte, die getrennten Budgets für Provider- und normalisierte
@@ -224,3 +224,37 @@ Findings zu verwechseln. Elf Suite-Betriebsabnahmen stehen in der historischen
 Migrationsübersicht noch aus; deren aktuellen Nachweisstand übernimmt AP04
 separat. Keine Prüfung in diesem Abschnitt ist eine neu ausgeführte Runtime-,
 Scan-, Native- oder Clusterabnahme.
+
+## Fortsetzung: Tailscale, Unit-Baseline, Visual, Worker und Plugin-/Prism-Architektur
+
+Weitere 44 vollständige Einzelprüfungen erfassen Tailscale-Anleitungen, die
+eigentliche 93-ID-Unit-Baseline samt Nutzer-/Betriebsanleitung, Visual-Anleitungen,
+Worker-Core-Audits sowie sämtliche sieben Plugin-System- und vierzehn Prism-
+Architekturtexte dieses Themenblocks. Alle Quellblobs stimmen weiterhin mit dem
+angegebenen Prüfcommit überein.
+
+Die Unit-Baseline erklärt jetzt auch die zuvor nur generisch begründeten
+Paritäts-IDs. Ihre historischen Defekte sind keine Anforderungen an den heutigen
+Betrieb. Visual-Konfiguration und Nutzerführung müssen die verpflichtenden
+v2-Baselines und die tatsächliche Browserversion aufnehmen. Die dokumentierte
+Migration des alten Preflight-Baselines bleibt ein zu überprüfender offener Punkt.
+
+Das vorhandene Plugin-Inventar wird weiterverwendet. Die langen historischen
+Pläne liefern dafür Vertragsentscheidungen, aber keine aktuellen Paketanzahlen
+oder Betriebsfreigaben. Insbesondere sind Paket-, Registrierungs-, Invocation-
+und Core-Autorität getrennt zu erklären. Observer-Retries benötigen stabile
+Payloads; ein separater erforderlicher Audit-Observer ist kein normaler
+Benachrichtigungsversand. Alte v1-/Overlay-/Buster-Topologien werden anhand der
+heutigen Quellen korrigiert.
+
+Die Prism-Texte enthalten vollständige konzeptionelle Verträge für Bundles,
+Engine, Ingestion, Storage, Retrieval, Präferenzen, Runtime-Packs, Studio und
+Qualitätsprüfung. Ihre Implementierungsbehauptungen bleiben einzeln zu prüfen.
+Konkrete Konflikte betreffen PITR versus tägliche Backups, native Host-Anforderungen
+versus pauschales HostPath-Verbot, entfernte Visual-Kompatibilität,
+Approval-Autorität und unterschiedliche Finding-Formate. Genehmigte Bundle-
+Nachweise dürfen nicht als beliebig neu erzeugbare Derivate behandelt werden.
+
+Es wurden keine Runtime-, Browser-, Datenbank-, Deployment- oder Live-Tests
+ausgeführt. Die 13 offenen Findings und getrennte Produktionsabnahmen bleiben
+unverändert; sämtliche redaktionellen Migrationen stehen weiterhin aus.
