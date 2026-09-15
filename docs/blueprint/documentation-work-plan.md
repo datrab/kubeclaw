@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 3 · Status: AP01 abgeschlossen und nachkontrolliert; AP02 als Nächstes
+Stand: 15.09.2026 · Version 4 · Status: AP01 nachkontrolliert und AP02 abgeschlossen; AP03 als Nächstes
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -27,7 +27,7 @@ Der vorhandene Blueprint wird kritisch überarbeitet. Seine Kategorien, Seitenst
 
 ## 3. Übersicht der Arbeitspakete
 
-AP01 ist als Bestandsaufnahme abgeschlossen; AP02–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
+AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen; AP03–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
 
 | ID | Arbeitspaket | Voraussetzung | Greifbares Ergebnis |
 | --- | --- | --- | --- |
@@ -60,13 +60,13 @@ Die Umsetzung erfolgt themenweise in überschaubaren Änderungen. AP10 läuft be
 
 ### AP02 — Blueprint verbessern
 
-- [ ] Alle sechs vorhandenen Blueprint-Artefakte lesen und auf Aktualität, Überschneidungen und unnötige Komplexität prüfen.
-- [ ] Tatsächliche Leseraufgaben festlegen: verstehen, installieren, betreiben, Fehler beheben, wiederherstellen, erweitern.
-- [ ] Bestehende drei Einstiege beibehalten, soweit sie helfen: Verstehen, Betreiben, Erweitern. Referenzen, Entscheidungen und Status werden unterstützend verlinkt.
-- [ ] Seiten nach zusammenhängenden Aufgaben strukturieren. Große Themen gezielt aufteilen; kurze zusammengehörige Texte zusammenführen.
-- [ ] Veraltete Aussagen insbesondere zu Prism, Worker-Ausführung, Devbox und Ops-Zugriff gegen den aktuellen Code prüfen. Gewünschten und tatsächlich eingerichteten Zugangsweg getrennt behandeln.
-- [ ] Pro Dokumenttyp Mindestinhalte und konkrete Leseraufgaben zur Abnahme definieren.
-- [ ] Bestehende automatisierte Klassifikation von tatsächlicher Prüfung und erfolgreicher Migration unterscheiden.
+- [x] Alle sechs vorhandenen Blueprint-Artefakte lesen und auf Aktualität, Überschneidungen und unnötige Komplexität prüfen.
+- [x] Tatsächliche Leseraufgaben festlegen: verstehen, installieren, betreiben, Fehler beheben, wiederherstellen, erweitern.
+- [x] Bestehende drei Einstiege beibehalten, soweit sie helfen: Verstehen, Betreiben, Erweitern. Referenzen, Entscheidungen und Status werden unterstützend verlinkt.
+- [x] Seiten nach zusammenhängenden Aufgaben strukturieren. Große Themen gezielt aufteilen; kurze zusammengehörige Texte zusammenführen.
+- [x] Veraltete Aussagen insbesondere zu Prism, Worker-Ausführung, Devbox und Ops-Zugriff gegen den aktuellen Code prüfen. Gewünschten und tatsächlich eingerichteten Zugangsweg getrennt behandeln.
+- [x] Pro Dokumenttyp Mindestinhalte und konkrete Leseraufgaben zur Abnahme definieren.
+- [x] Bestehende automatisierte Klassifikation von tatsächlicher Prüfung und erfolgreicher Migration unterscheiden.
 
 **Abgeschlossen, wenn:** Der Blueprint beschreibt eine umsetzbare, zusammenhängende Dokumentation, klare Prüfregeln und einen Informations-erhaltenden Löschprozess. Jede geplante Seite hat einen Zweck und eine Zielgruppe; die Struktur darf nach AP03 begründet korrigiert werden.
 
@@ -222,7 +222,7 @@ Bei Wiederaufnahme: aktuellen Commit/PR-Stand abgleichen, den letzten gesicherte
 
 ## 6. Nächster Schritt
 
-**AP01 ist abgeschlossen. Als Nächstes AP02 vollständig abschließen.** Erst danach startet die systematische Einzelprüfung nach dem verbesserten Blueprint. Die AP01-Ergebnisse liegen unter [ap01-baseline/](ap01-baseline/README.md). Bestehende Dokumente und Reviews wurden noch nicht verändert oder gelöscht.
+**AP01 und AP02 sind abgeschlossen. Als Nächstes AP03 beginnen:** den human-gepflegten Prüfledger getrennt von alten Generatorausgaben anlegen, den aktuellen Bestand abgleichen und die Dokumente themenweise vollständig lesen und entscheiden. Die AP01-Ergebnisse liegen unter [ap01-baseline/](ap01-baseline/README.md). Bestehende Dokumente und Reviews wurden noch nicht verändert oder gelöscht.
 
 ## 7. Quellen des Ausgangsstands
 

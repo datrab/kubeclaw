@@ -1,246 +1,69 @@
-# 2. Three-track site map
+# 2. Reader journeys and chapter structure
 
-## Navigation contract
+Status: AP02 target structure; product pages will be migrated in AP06–AP09.
 
-The home page gives readers three explicit entrances:
+## Structure rules
 
-- **Understand the platform** — architecture readers and evaluators.
-- **Operate the platform** — deployers and operators.
-- **Extend the platform** — plugin, engine, integration, and core developers.
+Keep three entrances: Understand, Operate and Extend. Reference, decisions, status and a glossary support all three. Keep the existing source root `docs/site/`; the operator route remains `use/` to avoid gratuitous route churn.
 
-Each track contains its own orientation, prerequisites, tasks, troubleshooting, and glossary context. Cross-track links are optional “Learn why” or “See the contract” links. A reader must not leave their track to complete its core job.
+The identifiers below are coverage identifiers, not a requirement to create one file per row. A chapter can contain several sections or split when independent tasks need different prerequisites. AP03/AP05 may refine grouping with a recorded reason. Do not create empty pages or duplicate explanations to match this table. Record concrete destinations when content is migrated; existing published routes get redirects where needed.
 
-Facts have one canonical page. A task page may repeat a one-sentence definition or a required value, but it links to the canonical explanation or generated reference. Inventories, option tables, schemas, and compatibility data are embedded from shared generated sources rather than copied.
+| ID | Chapter and audience | Required content and reader outcome |
+| --- | --- | --- |
+| U1 | Overview — new reader | Purpose, capabilities, limits, vocabulary and one complete example; reader can explain what KubeClaw does |
+| U2 | Components and authority — architecture reader | Nova, Foundation/SDK, Worker Core, Buster, Prism, Forge, Echo, roles and plugin types; reader identifies who owns each decision |
+| U3 | Request, state and recovery — architecture reader | Graph, effects, stores, artifacts, dispatch, waits, approval, retries, repair budgets, cancellation, resume and terminal closure; trace both normal and failed runs |
+| U4 | Deployment and trust — architecture reader | Process/pod boundaries, identities, grants, network, data and observability flows; explain isolation and failure domains |
+| O1 | Plan and install — operator | Supported topology, capacity, storage, DNS/network, access, secrets, dependency order, configuration and first verification |
+| O2 | Configure and operate — operator | Defaults/overrides, roles, projects, plugins/providers, start/inspect/approve/resume/cancel, results, Prism workflow and demo access |
+| O3 | Observe and diagnose — operator | Health, logs/events/metrics, queues/storage growth, symptom-to-check index, known failures and evidence collection |
+| O4 | Backup and recover — operator | Complete persistent-data inventory, consistent backup, restore and verification; lost state, nodes, cluster and administrative access |
+| O5 | Maintain and retire — operator | Version authority, builds/images, upgrades/migrations, rollback limits, secrets/certificates, retention and controlled decommission |
+| E1 | Choose and prepare — developer | Configuration versus pipeline plugin, OpenClaw extension, Codex plugin, provider/adapter, engine or core change; setup and first check |
+| E2 | Build a pipeline plugin — developer | Complete minimal plugin, manifest, lifecycle, configuration, grants, registration, packaging and real integration |
+| E3 | Extension contracts and reliability — developer | Five registration surfaces; state/effects, idempotence, cancellation, failure, retries, waits/resume and cleanup; practical stateful/effectful example |
+| E4 | Engines and host integrations — developer | Worker contract, Buster/Prism boundaries, local/remote execution, runtime roles; separate OpenClaw and Codex host requirements |
+| E5 | Test and maintain extensions — developer | Unit/contract/integration checks, failure injection, debugging, install/activate/update/replace/disable/remove and compatibility |
+| E6 | Plugin catalogue — developer/operator | Reuse existing pages; generated identity and contracts plus authored purpose, examples, limits, operations and tests |
+| R1 | Reference — all readers | Commands, configuration/defaults/precedence, environment, secrets, roles, capabilities, contracts, telemetry and compatibility |
+| S1 | Current limits and acceptance — all readers | Implemented/partial/planned distinctions, remaining issues and separate live acceptance; no false production guarantee |
+| D1 | Decisions — maintainers | Durable reasoning, acceptance state, implementation state, consequences and supersession |
 
-## Global website structure
+The glossary is one shared resource, with short definitions repeated where needed to finish a task. Required steps must be readable directly in the task; reference links may supply exhaustive tables. Cross-track links explain why or offer deeper detail, not hidden prerequisites.
 
-```text
-/
-├── understand/                 Platform and architecture
-├── use/                        Operator documentation
-├── extend/                     Developer documentation
-├── reference/                  Generated and normative facts
-├── decisions/                  Durable design reasoning
-├── examples/                   Verified end-to-end examples
-├── status/                     Current support and compatibility
-└── search/                     Full-site search with track filters
-```
+## Mandatory operations coverage
 
-Global pages:
+The five operator chapters must collectively cover every applicable task below. Use component-specific sections only when behavior differs; avoid copying generic instructions for every service.
 
-- `/glossary` — canonical terminology shared through links and tooltips.
-- `/status/current` — implemented, experimental, designed, deprecated, and removed surfaces.
-- `/reference/source-index` — release-pinned source links by component and symbol.
-- `/reference/compatibility` — API, plugin, contract, runtime, and deployment compatibility.
-- `/decisions` — accepted, proposed, superseded, and rejected decisions.
+| Task group | Required scenario |
+| --- | --- |
+| Bootstrap | Build a supported environment from prerequisites; verify dependency readiness and handle a failed first installation |
+| Access | Establish the supported Devbox/Ops Pod path; recover access independently if that path fails; distinguish pending PR #12 changes |
+| Infrastructure | K3s, CNI/Cilium, GitOps, registry/BuildKit, Tailscale, identities/SPIRE, storage, databases, queues and model routing where present |
+| Configuration | Show source of truth, required values, defaults, override order and how to verify the effective configuration |
+| Workloads | Operate Nova, Buster and Prism; explain Forge/Echo dispatch and enabled/disabled plugin behavior |
+| Failed run | Diagnose hanging work, lost responses, Git conflicts, failed gates, uncertain effects and cancellation; identify safe retry versus reconciliation |
+| Data protection | Inventory databases, queues, journals, artifacts, keys and other persistent state; consistent groups, destination independence, retention and integrity |
+| Restore | Recover an individual service and the whole environment; restore identity/access without requiring the failed service; verify application data |
+| Upgrade | Identify compatible image/chart/config/data versions, migration order, rollback point and irreversible changes |
+| Lifecycle | Rotate credentials/certificates, manage capacity/retention, export data and decommission resources without unowned leftovers |
 
-## Track 1: Understand
+For each procedure provide objective, prerequisites and access, expected impact, exact steps, expected results, checks, stop conditions, failure diagnosis, recovery/rollback and evidence to retain. Explain placeholders and execution location. If no complete safe recovery exists, say which part is missing and link the implementation issue; do not invent a working procedure. Recovery-time and data-loss targets must be demonstrated or explicitly undecided.
 
-Primary promise: **Understand what KubeClaw is, what it can and cannot do, and how every implemented layer interacts.**
+## Mandatory extension coverage
 
-```text
-/understand/
-├── platform-overview
-├── capabilities-and-boundaries
-├── architecture/
-│   ├── interactive-platform-map
-│   ├── request-to-result
-│   ├── nova-core/
-│   │   ├── responsibilities-and-non-responsibilities
-│   │   ├── pipeline-graph-and-run-lifecycle
-│   │   ├── scheduling-remediation-waits-and-resume
-│   │   ├── effects-state-artifacts-and-authority
-│   │   └── reconciliation-and-terminal-closure
-│   ├── plugin-foundation/
-│   │   ├── discovery-registration-and-freeze
-│   │   ├── grants-capabilities-and-isolation
-│   │   ├── activation-execution-and-cleanup
-│   │   └── failure-and-recovery-model
-│   ├── worker-core/
-│   │   ├── boundary-and-contract
-│   │   ├── attempt-lifecycle
-│   │   ├── capacity-progress-and-results
-│   │   └── local-and-remote-operation
-│   ├── worker-engines/
-│   │   ├── engine-contract
-│   │   ├── buster
-│   │   └── prism-designed
-│   ├── specialists/
-│   │   ├── forge
-│   │   └── echo
-│   ├── communication-and-telemetry/
-│   │   ├── capability-routing
-│   │   ├── event-and-evidence-flow
-│   │   ├── durable-delivery
-│   │   └── observability-and-reconciliation
-│   ├── security/
-│   │   ├── trust-boundaries
-│   │   ├── package-and-process-isolation
-│   │   ├── capability-containment
-│   │   └── secrets-network-and-workspaces
-│   └── deployment-topologies/
-│       ├── local-composition
-│       ├── nova-and-buster-on-kubernetes
-│       └── future-engine-topology
-├── use-cases/
-│   ├── application-delivery
-│   ├── verified-test-execution
-│   ├── governed-agent-review
-│   └── custom-pipeline-composition
-└── boundaries/
-    ├── supported-now
-    ├── designed-not-implemented
-    └── explicit-non-goals
-```
+E2 must take a clean checkout from an empty package to a built, tested and activated pipeline plugin. Include a concrete successful result and an intentional failure. E3 then extends an example with state or an external effect and verifies replay, interruption and cleanup.
 
-The interactive map is the primary visual explanation. Every node links to its canonical page and can switch between logical layers, runtime packaging, deployment topology, a single-run flow, telemetry flow, and failure flow.
+Each supported stage, observer, capability adapter, test provider and report adapter gets its contract, lifecycle, input/output/configuration, authority, error semantics and an executable example. Shared sections can supply common packaging and lifecycle behavior; link directly to the relevant steps. Do not manufacture APIs to make an unsupported extension appear available.
 
-## Track 2: Use
+E4 separates pipeline plugins from OpenClaw extensions and Codex plugins. Each supported host integration needs its own manifest, loading/activation process, permissions, verification and removal story. Inventory presence alone does not prove a complete authoring workflow. Engine documentation distinguishes the neutral worker contract from engine meaning and integration limitations.
 
-Primary promise: **Install, configure, operate, observe, troubleshoot, recover, upgrade, and safely customize KubeClaw without learning plugin development or internal architecture.**
+Every catalogue entry links to its appropriate extension type, schemas, implementation and checks. Generated tables must not overwrite authored guidance.
 
-```text
-/use/
-├── operator-overview
-├── quickstart
-├── plan/
-│   ├── requirements
-│   ├── capacity-and-storage
-│   ├── network-and-dns
-│   └── security-prerequisites
-├── deploy/
-│   ├── infrastructure
-│   ├── secrets
-│   ├── litellm
-│   ├── tailscale
-│   ├── nova
-│   ├── buster
-│   └── verify-deployment
-├── configure/
-│   ├── platform
-│   ├── runtime-roles
-│   ├── capability-providers
-│   ├── pipeline-and-projects
-│   ├── plugins
-│   ├── telemetry-and-notifications
-│   └── customization-boundaries
-├── operate/
-│   ├── start-inspect-resume-and-stop-runs
-│   ├── approvals-and-signals
-│   ├── artifacts-results-and-evidence
-│   ├── buster-jobs
-│   ├── forge-and-echo-sessions
-│   └── preview-access
-├── observe/
-│   ├── health-and-readiness
-│   ├── run-status
-│   ├── logs-events-and-telemetry
-│   └── degraded-observability
-├── troubleshoot/
-│   ├── diagnostic-entrypoint
-│   ├── deployment
-│   ├── pipeline-runs
-│   ├── plugins-and-capabilities
-│   ├── buster
-│   ├── forge-and-echo
-│   └── telemetry
-├── recover/
-│   ├── safe-retry-and-resume
-│   ├── process-and-pod-restart
-│   ├── failed-dispatch-and-import
-│   ├── state-and-artifact-recovery
-│   └── disaster-recovery
-├── maintain/
-│   ├── backup-and-restore
-│   ├── upgrade
-│   ├── compatibility-check
-│   └── decommission
-└── runbooks/
-    ├── symptoms-index
-    └── verified-runbooks
-```
+## Page quality and task acceptance
 
-Operator page template: objective, safety/impact, prerequisites, exact procedure, expected result, verification, rollback/recovery, failures, escalation evidence, and optional architecture link.
+Start with the reader's objective and a short explanation. Define terms before using them. Keep ordered steps actionable; use tables for comparisons and diagrams for relationships. Avoid phase names, internal review IDs as unexplained concepts, and claims such as “fully supported” without a defined scope.
 
-## Track 3: Extend
+A chapter passes when a reader using only its required pages can finish the listed task and identify the result. A reader must not need chat history. A locally verified example and a pending live exercise have different statuses. Automated link checks cannot certify this outcome.
 
-Primary promise: **Build and verify every supported extension without first studying the architecture track.**
-
-```text
-/extend/
-├── developer-overview
-├── setup-and-first-verification
-├── choose-an-extension/
-│   ├── configuration-or-plugin-or-engine-or-core
-│   └── compatibility-and-maintenance-cost
-├── plugins/
-│   ├── mental-model-and-package-anatomy
-│   ├── first-plugin
-│   ├── manifest-schemas-and-provenance
-│   ├── configuration-and-validation
-│   ├── capabilities-and-grants
-│   ├── lifecycle-effects-idempotency-and-cancellation
-│   ├── state-artifacts-waits-and-resume
-│   ├── errors-retries-remediation-and-cleanup
-│   ├── install-replace-remove-and-version
-│   └── test-package-and-publish
-├── extension-points/
-│   ├── stage
-│   ├── observer
-│   ├── capability-adapter
-│   ├── test-provider
-│   ├── report-adapter
-│   └── core-only-authority
-├── plugin-catalogue/
-│   └── one generated-plus-authored page per installed plugin
-├── engines/
-│   ├── engine-boundary
-│   ├── first-worker-engine
-│   ├── worker-core-contract
-│   ├── attempts-progress-results-and-evidence
-│   ├── local-runtime
-│   ├── remote-service-and-recovery
-│   └── packaging-and-role-integration
-├── integrations/
-│   ├── runtime-dispatch-provider
-│   ├── transport-and-telemetry
-│   ├── secrets-network-and-repositories
-│   └── operator-messaging
-├── customize/
-│   ├── pipeline-graph
-│   ├── provider-selection-and-grants
-│   ├── plugin-configuration
-│   ├── runtime-role-bundle
-│   ├── deployment
-│   └── core-fork-boundary
-├── test-and-debug/
-│   ├── unit-contract-live-and-e2e-tests
-│   ├── fixtures-and-golden-contracts
-│   ├── failure-injection-and-restart
-│   └── package-and-boundary-verification
-└── contribute/
-    ├── code
-    ├── contracts-and-versioning
-    ├── documentation
-    └── release-checklist
-```
-
-Each extension-point page contains: when to use it, when not to use it, complete contract, lifecycle, capability access, configuration, minimal example, production example, failure behavior, testing, packaging, compatibility, security, and links to every installed implementation.
-
-Each plugin page contains generated identity/registrations/schemas/capabilities plus authored purpose, behavior, inputs/results, configuration examples, use cases, boundaries, failures, operations, extension guidance, and verified source/test links.
-
-## Interlinking rules
-
-- Task text contains the minimum facts needed to finish the task.
-- “Why” links go to Understand; “contract” links go to Reference; “operate” links go to Use; “implement” links go to Extend.
-- Definitions use glossary tooltips and one canonical glossary URL.
-- Every architecture node has incoming links from affected operator/developer tasks.
-- Every plugin catalogue page links to its extension-point page, configuration reference, source manifest, implementation, and verification.
-- Related links are curated and typed; pages do not rely on search for required navigation.
-
-## Track acceptance tests
-
-- An operator can deploy, run, diagnose, recover, and upgrade without opening Understand or Extend.
-- A developer can author, test, package, install, replace, and remove each extension type without opening Understand or Use.
-- An architecture reader can explain platform layers, authority, data flow, boundaries, deployment, and current versus designed components without reading procedural tracks.
-- No generated fact is manually duplicated between tracks.
+Use compact diagrams with text explanations. Existing accurate SVGs may be retained; Mermaid or ordinary diagrams are sufficient. An interactive architecture map is optional after the content is coherent, never a migration or deletion prerequisite.

@@ -1,38 +1,39 @@
 # Documentation transformation blueprint
 
-Status: approved planning baseline
+Status: AP02 planning baseline, revised after the AP01 recheck.
+Scope: documentation migration; implementation and live acceptance remain separate.
 
-This blueprint defines the complete migration from the current repository documentation to a clean, code-backed website. It does not rewrite or delete the current documentation. Deletion starts only after the migration ledger proves that current facts and durable decisions have replacement homes.
+KubeClaw documentation must let a new reader understand the system, an operator complete operational tasks, and a developer build supported extensions without previous conversations. Detail is required where it explains behavior or lets a task finish. More pages are not a measure of completeness.
 
-The six required artifacts are:
+## Start here
 
-1. [Verified platform inventory](01-platform-inventory.md)
-2. [Three-track site map](02-three-track-site-map.md)
-3. [Old-document migration and deletion ledger](03-migration-and-deletion.md)
-4. [Documentation-to-code evidence matrix](04-evidence-matrix.md)
-5. [Decision-record catalogue](05-decision-record-catalogue.md)
-6. [Automation and publication specification](06-automation-and-publication.md)
+1. [Inventory and evidence rules](01-platform-inventory.md): scope, source authority and implementation boundaries.
+2. [Reader journeys and chapter structure](02-three-track-site-map.md): canonical chapters and measurable outcomes.
+3. [Document decisions and migration](03-migration-and-deletion.md): individual review, extraction, deletion and progress preservation.
+4. [Coverage and verification matrix](04-evidence-matrix.md): source families, task evidence and verification limits.
+5. [Decision preservation](05-decision-record-catalogue.md): retain reasoning without confusing acceptance with implementation.
+6. [Tooling and publication](06-automation-and-publication.md): reuse existing tools, add only necessary checks, keep unfinished work visible.
 
-Generated proof is under [`generated/`](generated/). Run:
+[Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the complete source inventory, plugin comparison, open findings and executable review dependencies. AP03 is next: review every document, using this blueprint; do not treat AP01 classifications as completed content review.
 
-```bash
-node scripts/docs-blueprint-generate.mjs
-```
+## Authority and historical outputs
 
-The generator fails if one of the six artifacts is missing, an existing documentation file is unclassified, a plugin manifest is not inventoried, or a contract family has no evidence-matrix entry.
+The revised six artifacts define the migration policy. The files in `generated/` remain earlier mechanical output and are not current completion evidence. AP01 demonstrated that the old ledger omits 2,322 paths in its present generator scope. The old generator also overwrites completion text with a pending value. Do not write human review decisions into its generated CSV.
 
-## Governing rules
+The current baseline is commit `6979bced8e5bbca90568276256e7328d93a1e072`. PR #12's removal of the standalone ChatGPT tunnel remains pending at this revision. Recheck affected paths after it merges. No cluster or Devbox configuration was inspected by this blueprint revision.
 
-- The public site has three independent entrances: **Understand**, **Use**, and **Extend**.
-- Each track is sufficient for its audience. Optional detail is linked, not required.
-- A fact has one canonical owner. Duplication is limited to the minimum context required to complete a task.
-- Current behavior, proposed behavior, and historical behavior are never mixed.
-- Technical claims link to release-pinned source, contracts, configuration, or verification.
-- Generated facts are not manually copied into prose.
-- Operator instructions use direct technical English that a technically competent reader can understand. The publication gate applies an ASD-STE100-inspired language check.
-- Implementation plans, phase audits, temporary inventories, migration bookkeeping, and internal documentation workflows are not part of the published product documentation.
-- Durable reasoning is retained in concise decision records before source planning documents are removed.
+## Rules that apply across all chapters
 
-## Verified baseline caveat
+- Each topic has one canonical explanation; task pages include the minimum context needed to finish.
+- Current behavior, approved intent, unfinished implementation and live verification are separate facts.
+- Use direct technical English and define unfamiliar terms on first use. Do not maintain duplicate manual translations.
+- Reuse existing inventories and useful prose after checking their scope and correctness.
+- Remove replaced texts after extracting useful facts, decisions, open issues and required test assets. Do not create a replacement archive of old reviews.
+- Check tasks and examples, not just headings or path existence. A generated verification date is not a behavioral test result.
+- Routine migration does not require repeated user approval. Record genuinely unresolved product decisions; continue unrelated work.
 
-The generator records the repository commit and working-tree state. At blueprint creation time, unrelated work introduced unresolved conflicts in several files. Those files are not modified by this blueprint and are listed in the generated inventory. Publication must regenerate and reverify the inventory after the conflicts are resolved.
+## AP02 completion
+
+The six artifacts now agree on scope, chapter identifiers, review states, evidence rules, decision status and migration gates. Prism is represented as a real source/package/role surface with separately assessed integration and live status. Pipeline, OpenClaw and Codex plugins have distinct coverage. Operations includes complete recovery and loss-of-access scenarios. Examples and readable fallback diagrams suffice; a new website framework is not a prerequisite.
+
+This revision changes the blueprint and work plan only. It does not regenerate old inventories, migrate product pages, delete reviews, fix runtime findings, or claim that existing full documentation CI is green. Those tasks retain their explicit work-package ownership.
