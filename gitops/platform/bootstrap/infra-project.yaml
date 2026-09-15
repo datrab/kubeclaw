@@ -17,6 +17,16 @@ spec:
       namespace: argocd
     - server: https://kubernetes.default.svc
       namespace: tailscale
+    - server: https://kubernetes.default.svc
+      namespace: kubeclaw-ops
+    - server: https://kubernetes.default.svc
+      namespace: kubeclaw
+    - server: https://kubernetes.default.svc
+      namespace: kube-system
+    - server: https://kubernetes.default.svc
+      namespace: spire-server
+    - server: https://kubernetes.default.svc
+      namespace: spire-system
   clusterResourceWhitelist:
     - group: rbac.authorization.k8s.io
       kind: ClusterRole

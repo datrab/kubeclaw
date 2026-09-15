@@ -85,3 +85,22 @@ actual tailnet URL access, not only Application health.
 
 References: [release notes](https://tailscale.com/changelog#2026-08-19),
 [version compatibility](https://tailscale.com/docs/kubernetes-operator/reference/compatibility).
+
+## Codex Ops + MCP
+
+`bootstrap/codex-ops.yaml` adopts Helm release `codex-ops` in `kubeclaw-ops`.
+Chart revision and both image digests are generated from the selected verified
+`releases/ops-images.json` receipt. Non-secret cluster settings are recorded in
+`values/codex-ops.yaml` and embedded into the generated Application, because the
+chart is pinned to the image source commit rather than moving with main.
+When intentionally selecting a new Ops release or editing these cluster settings,
+regenerate and review the Application with `node scripts/argocd-self-management.mjs`.
+
+The platform root installs the definition automatically. Review the child DIFF and
+manually sync without Prune or Force. The existing home/workspace PVCs, bearer,
+registry credentials and persistent Codex/GitHub logins must be retained. This
+chart renders no Secrets. No network migration is included (`cilium: false`).
+Verify child health and `scripts/deploy-ops-pod.sh verify` after adoption. The helper's
+login, pair, shell, status and verify commands remain useful; stop using its Helm
+deploy action after adoption. Future Cilium migration must update the Ops network
+policy values in Git as well.

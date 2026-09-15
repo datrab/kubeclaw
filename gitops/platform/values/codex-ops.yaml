@@ -1,0 +1,17 @@
+# Non-secret cluster configuration from the installed codex-ops release.
+# Images and chart revision come from releases/ops-images.json in the generator.
+networkPolicy:
+  apiServerCIDRs:
+    - 10.43.0.1/32
+    - 100.97.157.101/32
+  apiServerPort: 6443
+  cilium: false
+rbac:
+  namespaces:
+    - kubeclaw-ops
+    - kubeclaw
+    - argocd
+    - kube-system
+    - tailscale
+    - spire-server
+    - spire-system
