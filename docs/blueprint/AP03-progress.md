@@ -4,10 +4,10 @@ Stand: 15.09.2026. **In Arbeit; nicht abgeschlossen.**
 
 ## Ergebnis dieses Zwischenstands
 
-490 Dateien wurden vollständig gelesen und einzeln entschieden: sämtliche
+506 Dateien wurden vollständig gelesen und einzeln entschieden: sämtliche
 97 Root-/Komponententexte, beide Agentenanweisungen, alle 380
-Dokumentationstexte, neun Unterstützungsdateien und zwei Verwaltungsdateien.
-Die Entscheidungen sind **156 erweitern, 321 Informationen extrahieren,
+Dokumentationstexte, 23 Unterstützungsdateien, zwei Review-Texte und zwei Verwaltungsdateien.
+Die Entscheidungen sind **157 erweitern, 336 Informationen extrahieren,
 10 behalten und 3 entfernen**. Die Entfernung betrifft einen redundanten
 Projekt-Runtime-Verweis und zwei veraltete generierte Zusammenfassungen. Ihre
 Verbraucher müssen zuerst migriert oder nachvollziehbar stillgelegt werden. Keine automatische Erfassung zählt als Inhaltsprüfung.
@@ -38,14 +38,14 @@ inhaltliche bzw. funktionale Einzelbewertung, keine bloße Dateinamensentscheidu
 | --- | ---: | ---: |
 | Root- und komponentennahe Dokumentation | 97 | 97 |
 | Dokumentationstexte unter `docs/` außerhalb der Reviews | 380 | 380 |
-| Dokumentationsunterstützung | 82 | 9 |
+| Dokumentationsunterstützung | 82 | 23 |
 | Neue AP01-/Plan-Verwaltungsdateien | 7 | 2 |
-| Review-Texte | 479 | 0 |
+| Review-Texte | 479 | 2 |
 | Review-Nachweise und Register | 1.832 | 0 |
 | Agentenanweisungen | 2 | 2 |
-| **Gesamt** | **2.879** | **490** |
+| **Gesamt** | **2.879** | **506** |
 
-**2.389 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 479
+**2.373 Dateien bleiben in AP03 erfasst, aber ungeprüft**, darunter 477
 Markdown-Dokumente. Die bereits erfolgte AP02-Blueprint-Abnahme ersetzt diese
 dateibezogene Migrationsentscheidung nicht. Die beiden neuen AP03-Arbeitsdateien
 dieses Zwischenstands sind Verwaltungszugänge nach dem eingefrorenen Quellstand;
@@ -117,8 +117,8 @@ Prüfstatus beibehalten. Der Quellcommit dieses Berichts bindet auch die
 Alle Operations-, Deployment- und Sicherheitsdokumente, die ersten sieben
 Architektureinstiege, alle 51 Katalogseiten und sämtliche 95 weiteren
 Komponententexte/Agentenanweisungen sind jetzt einzeln entschieden. Als Nächstes
-folgen die 479 Review-Texte samt ihren 1.832 Nachweisen und Registern.
-73 Unterstützungsdateien und fünf weitere Verwaltungsdateien benötigen
+folgen die übrigen 477 Review-Texte samt ihren 1.832 Nachweisen und Registern.
+59 Unterstützungsdateien und fünf weitere Verwaltungsdateien benötigen
 ebenfalls noch Einzelentscheidungen.
 
 Die 13 unvollständigen Findings, getrennte Live-Abnahmen und das zusätzliche
@@ -322,3 +322,41 @@ dass AP03 den Test ausgeführt hat, noch dass eine darin ausdrücklich ausstehen
 Clusterabnahme bestanden ist. Die 57 neu bereitgestellten Unterstützungsquellen
 stimmen bytegenau mit den Git-Blobs des Prüfcommits überein; nur neun davon
 sind bislang inhaltlich geprüft.
+
+
+## Wiederaufnahme nach hängender Session: Beispiele, Verträge und Review-Einstieg
+
+Der gesicherte Remote-Stand `2078b09ddbaf094c969ff0bae33a2482e7804da6`
+wurde in einem sauberen Checkout übernommen. Der einzige zuvor gefundene lokale
+Git-Checkout gehörte zu einer älteren Reparatursession und blieb unverändert.
+Ungepushte Änderungen der hängenden Doku-Session sind damit nicht nachgewiesen.
+Die PR-Beschreibung nannte noch AP01–AP02; maßgeblich ist dieses Prüfregister.
+
+16 weitere Dateien sind vollständig gelesen und einzeln entschieden: sieben
+JSON-Beispiele, vier Plugin-Vertrags-/Nachweisdateien, drei Prism-Statusdateien
+und die beiden Review-Einstiege. Ihre Originalblobs stimmen mit dem Register
+überein. Alle Code-/Test-/Deploymentpfade der beiden Prism-Matrizen existieren;
+das beweist weder ihre fachliche Aktualität noch eine bestandene Abnahme.
+
+Die beiden Projektbeispiele sind v1-Autorendaten, keine aktuellen Erfolgsbelege.
+Das ausführliche Beispiel enthält eine Gate-Abhängigkeit, die der explizite
+Legacy-Importer nicht als Modulabhängigkeit akzeptiert. Neue v2-Beispiele müssen
+die Architektur, Blueprints und Gateentscheidungen ausdrücklich modellieren.
+Die kompakten Swarm-Beispiele entsprechen nicht dem geschlossenen v2-
+Plattformschema; ihre drei Reparaturrunden dürfen nicht ungeprüft die vereinbarte
+Zwei-Runden-Regel ersetzen.
+
+Die Capability-Matrix ist weiterhin eine Testeingabe. Der Phase-6-Test verlangt
+sogar ausdrücklich die historische v1-Produktionsautorität. Inhalt und Verbraucher
+müssen deshalb gemeinsam migriert werden. Die Phase-11-Isolationsbeschreibung
+benötigt die inzwischen verpflichtenden cgroup-v2-Hostvoraussetzungen.
+
+Die Prism-Dateien dokumentieren einen fehlgeschlagenen Controller-Versuch vom
+22. August und übersprungene Folgeprüfungen. Sie sind weder eine heutige
+Clusterdiagnose noch eine Produktionsfreigabe. Die Review-Einstiege liefern
+wertvolle Kriterien für Fehlergrenzen und Nachweise; ihre 103 historischen
+Findings sind nicht der aktuelle 154er-Reparaturstand.
+
+Nächster Einstieg: übrige Dokumentationsunterstützung und die Review-Register
+mit den noch offenen Findings. Keine Quelldatei gelöscht, kein technisches
+Finding geschlossen und keine Runtime-/Live-Prüfung ausgeführt.

@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 13 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 in Arbeit (490 Dateien geprüft)
+Stand: 15.09.2026 · Version 14 · Status: AP01 und AP02 abgeschlossen und nachkontrolliert; AP03 in Arbeit (506 Dateien geprüft)
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -72,8 +72,8 @@ Die Umsetzung erfolgt themenweise in überschaubaren Änderungen. AP10 läuft be
 
 ### AP03 — Jedes Dokument prüfen
 
-**Zwischenstand:** 490 Dateien einzeln geprüft (156 erweitern, 321 extrahieren, 10 behalten, 3 entfernen);
-2.389 Quelldateien noch ungeprüft. [Prüfbericht und nächstes Themenpaket](AP03-progress.md),
+**Zwischenstand:** 506 Dateien einzeln geprüft (157 erweitern, 336 extrahieren, 10 behalten, 3 entfernen);
+2.373 Quelldateien noch ungeprüft. [Prüfbericht und nächstes Themenpaket](AP03-progress.md),
 [manuelles Register](review-ledger.jsonl). Die folgenden Gesamtaufgaben bleiben
 bis zur Prüfung des vollständigen Umfangs offen.
 
@@ -227,7 +227,7 @@ Bei Wiederaufnahme: aktuellen Commit/PR-Stand abgleichen, den letzten gesicherte
 
 ## 6. Nächster Schritt
 
-**AP03 fortsetzen:** Die ersten 490 Einzelentscheidungen sind im [Prüfregister](review-ledger.jsonl) gesichert. Operations, Deployment, Sicherheit, alle Katalogseiten und sämtliche Komponenten-/Agententexte sind einzeln bewertet. Sämtliche Markdown-Texte außerhalb der Reviews sind jetzt einzeln bewertet. Als Nächstes die Reviews samt Nachweisen sowie die übrigen Unterstützungs- und Verwaltungsdateien prüfen. Umfang, Prüfgrenzen und Folgeaufträge stehen im [AP03-Zwischenbericht](AP03-progress.md). Die AP01-Ergebnisse liegen unter [ap01-baseline/](ap01-baseline/README.md). Bestehende Dokumente und Reviews wurden noch nicht verändert oder gelöscht.
+**AP03 fortsetzen:** Die ersten 506 Einzelentscheidungen sind im [Prüfregister](review-ledger.jsonl) gesichert. Operations, Deployment, Sicherheit, alle Katalogseiten und sämtliche Komponenten-/Agententexte sind einzeln bewertet. Sämtliche Markdown-Texte außerhalb der Reviews sind jetzt einzeln bewertet. Als Nächstes die Reviews samt Nachweisen sowie die übrigen Unterstützungs- und Verwaltungsdateien prüfen. Umfang, Prüfgrenzen und Folgeaufträge stehen im [AP03-Zwischenbericht](AP03-progress.md). Die AP01-Ergebnisse liegen unter [ap01-baseline/](ap01-baseline/README.md). Bestehende Dokumente und Reviews wurden noch nicht verändert oder gelöscht.
 
 ## 7. Quellen des Ausgangsstands
 
