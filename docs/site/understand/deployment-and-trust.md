@@ -215,6 +215,28 @@ The runtime must also constrain how untrusted code reaches the host.
 
 The main durable stores have different owners and recovery needs.
 
+```mermaid
+flowchart LR
+    Nova[Nova] --> NovaStore[(Run snapshots, journals, signals, and imports)]
+    Buster[Buster] --> BusterStore[(Jobs, source archives, results, and evidence)]
+    Control[Prism Control] --> Database[(PostgreSQL state)]
+    Control --> Artifacts[(Content-addressed artifact PVC)]
+    Worker[Prism Worker] --> Native[(Native ownership and process journal)]
+    Roles[Applicable role deployments] --> OpenClaw[(OpenClaw state PVCs)]
+    Database --> Backup[Matched Prism backup group]
+    Artifacts --> Backup
+    Backup --> Restore[Restore and digest verification]
+    Restore --> Database
+    Restore --> Artifacts
+```
+
+Text version: Nova owns its run records, and Buster owns its remote-job and evidence records.
+Prism Control owns relational state and content-addressed artifacts.
+Prism Worker keeps separate native ownership and process records.
+Applicable role deployments also keep separate OpenClaw state.
+Prism backup and restore must treat its database and artifacts as one matched group.
+Restore verification must complete before Prism enables new writes.
+
 | Store | Owner | Data | Failure effect |
 | --- | --- | --- | --- |
 | Nova run storage | Nova | Snapshots, events, effects, signals, decisions, imports. | Nova cannot safely recover or prove prior authority. |

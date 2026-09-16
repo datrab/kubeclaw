@@ -2,6 +2,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -133,6 +134,68 @@ function checkDiagrams() {
   }
 }
 
+function sourceLineCount(revision, sourcePath) {
+  const source = execFileSync('git', ['show', `${revision}:${sourcePath}`], {
+    cwd: root,
+    encoding: 'utf8',
+  });
+  return source.endsWith('\n') ? source.slice(0, -1).split('\n').length : source.split('\n').length;
+}
+
+function checkArchitecturePresentation() {
+  const pages = [
+    'docs/site/understand/README.md',
+    'docs/site/understand/components-and-authority.md',
+    'docs/site/understand/request-state-recovery.md',
+    'docs/site/understand/deployment-and-trust.md',
+  ];
+  const sourceLink = /https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\/([^\s)#]+)#L(\d+)(?:-L(\d+))?/gu;
+  let diagrams = 0;
+  let evidenceBoxes = 0;
+  let codeLinks = 0;
+  for (const page of pages) {
+    const filePath = path.join(root, page);
+    const text = fs.readFileSync(filePath, 'utf8');
+    const pageDiagrams = [...text.matchAll(/^```mermaid\n[\s\S]*?^```$/gmu)];
+    diagrams += pageDiagrams.length;
+    for (const diagram of pageDiagrams) {
+      const remainder = text.slice(diagram.index + diagram[0].length);
+      if (!/^\n\nText version: /u.test(remainder)) {
+        errors.push(`${page} has a Mermaid diagram without a direct Text version`);
+      }
+    }
+    const lines = text.split('\n');
+    for (let index = 0; index < lines.length; index += 1) {
+      if (!lines[index].startsWith('> **Source evidence')) continue;
+      evidenceBoxes += 1;
+      const box = [];
+      for (let cursor = index; cursor < lines.length && lines[cursor].startsWith('>'); cursor += 1) box.push(lines[cursor]);
+      if (!box.join('\n').includes('https://github.com/datrab/kubeclaw/blob/')) {
+        errors.push(`${page} has a source-evidence box without a revision-bound code link`);
+      }
+    }
+    for (const match of text.matchAll(sourceLink)) {
+      codeLinks += 1;
+      const revision = match[1];
+      const sourcePath = decodeURIComponent(match[2]);
+      const first = Number(match[3]);
+      const last = Number(match[4] ?? match[3]);
+      try {
+        const lineCount = sourceLineCount(revision, sourcePath);
+        if (first < 1 || last < first || last > lineCount) {
+          errors.push(`${page} cites invalid source lines ${sourcePath}#L${first}-L${last}; file has ${lineCount} lines at ${revision}`);
+        }
+      } catch {
+        errors.push(`${page} cannot resolve source ${sourcePath} at ${revision}`);
+      }
+    }
+  }
+  if (diagrams === 0) errors.push('architecture pages contain no Mermaid diagrams');
+  if (evidenceBoxes === 0) errors.push('architecture pages contain no source-evidence boxes');
+  if (codeLinks === 0) errors.push('architecture pages contain no revision-bound code links');
+  return { diagrams, evidenceBoxes, codeLinks };
+}
+
 function main() {
   const files = activeMarkdownFiles();
   checkLocalLinks(files);
@@ -140,12 +203,14 @@ function main() {
   checkCoreOperatorSections();
   checkCurrentPagesDoNotContainTargetStateSections(files);
   checkDiagrams();
+  const presentation = checkArchitecturePresentation();
 
   if (errors.length) {
     console.error('docs check failed:');
     for (const error of errors) console.error(`- ${error}`);
     process.exit(1);
   }
+  console.log(`architecture presentation check passed (${presentation.diagrams} diagrams, ${presentation.evidenceBoxes} evidence boxes, ${presentation.codeLinks} code links)`);
   console.log(`docs check passed (${files.length} active markdown files)`);
 }
 

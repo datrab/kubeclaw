@@ -266,6 +266,32 @@ Network and service configuration decide what a running component can reach.
 
 ## How Authority Moves Through One Stage
 
+```mermaid
+flowchart LR
+    Manifest[Plugin manifest] --> Registry[Validated fixed registry]
+    Config[Platform configuration] --> Activation[Selected activation]
+    Registry --> Activation
+    Nova[Nova Core] -->|attempt and revocable lease| Context[Bounded invocation context]
+    Activation --> Plugin[Active plugin registration]
+    Context --> Plugin
+    Plugin -->|typed result| Nova
+    Plugin -->|capability request| Context
+    Context -->|grant and resource check| Adapter[Selected capability adapter]
+    Adapter -->|external operation| External[External resource]
+    External -->|known outcome| Adapter
+    Adapter -->|durable receipt| Journal[Effect journal]
+    Journal --> Nova
+```
+
+Text version: The manifest enters a validated registry.
+Platform configuration selects registrations from that registry for activation.
+Nova gives an active plugin one attempt and one revocable lease through a bounded context.
+The plugin returns a typed result to Nova.
+For an external operation, the plugin must request a capability through the same context.
+The context checks the grant and the requested resource before it calls the selected adapter.
+The adapter performs the operation and records its known outcome as a durable receipt.
+Nova uses the typed result and durable evidence to make the lifecycle decision.
+
 1. The graph names a stage type and fixed limits.
 2. The registry resolves exactly one package as the stage owner.
 3. Platform configuration enables the required registration and adapters.
@@ -277,6 +303,14 @@ Network and service configuration decide what a running component can reach.
 9. Core maps that result to one lifecycle action.
 
 The plugin never receives a direct method that changes the canonical stage state.
+
+> **Source evidence — bounded plugin invocation**
+>
+> [`activateRegistry()` activates only configured registrations after package-integrity and import checks](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137).
+>
+> [`createPluginInvocationContext()` checks the lease, grant, and requested resource](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/context.ts#L34-L79).
+>
+> [`DurableInvocation` records requests and receipts around the selected adapter](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/effects/durable-invocation.ts#L39-L117).
 
 ## Read Next
 

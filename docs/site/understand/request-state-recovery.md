@@ -203,6 +203,37 @@ A terminal run rejects normal recovery and stale wait signals.
 Failure handling is not one generic retry.
 KubeClaw separates technical failure, product repair, human decision, interruption, and uncertain external state.
 
+```mermaid
+flowchart TD
+    Pending[Pending] -->|dependencies complete and capacity available| Scheduled[Scheduled]
+    Scheduled -->|attempt recorded and invocation starts| Running[Running]
+    Running -->|passed| Succeeded[Succeeded]
+    Running -->|retry within limits| Retrying[Retrying]
+    Retrying -->|new bounded attempt| Scheduled
+    Running -->|rate limit, signal, approval, or orchestrator decision| Waiting[Waiting]
+    Waiting -->|valid matching signal or expired cooldown| Pending
+    Running -->|declared product defect| Repair{Repair budget}
+    Repair -->|order allowed| RepairStage[Declared repair stage]
+    RepairStage -->|repair completes| Pending
+    Repair -->|extra order needs approval| Waiting
+    Repair -->|budget exhausted| Blocked[Blocked]
+    Running -->|known terminal failure or timeout| Failed[Failed]
+    Running -->|cancellation| Cancelled[Cancelled]
+    Running -->|external outcome cannot be reconciled| Blocked
+```
+
+Text version: Nova moves a ready stage from pending to scheduled.
+Nova records the attempt and moves the stage to running when invocation starts.
+A passing result succeeds the stage.
+A permitted technical retry creates another bounded attempt.
+A cooldown, approval, or external signal puts the stage in waiting.
+A declared product defect uses a separate repair budget and repair stage.
+Nova blocks progress when a repair budget is exhausted or an external result remains uncertain.
+A known terminal error fails the stage, and cancellation moves it to cancelled.
+
+The diagram shows control decisions, not every journal event.
+Recovery reconstructs these decisions from the journal before it permits the next transition.
+
 ### Technical Retry
 
 A technical retry repeats the same class of work after a retryable failure.
@@ -339,6 +370,7 @@ The architecture only defines why the control exists.
 | State | Plain meaning | Normal next action |
 | --- | --- | --- |
 | `pending` | Dependencies or scheduling still prevent a start. | Nova selects it when ready. |
+| `scheduled` | Nova selected the stage but has not recorded a running result. | Start the bounded attempt. |
 | `running` | One recorded attempt is active. | Accept one validated result. |
 | `retrying` | A retryable result remains within budget. | Schedule another attempt. |
 | `waiting` | A repair, signal, approval, or cooldown must complete. | Resume only through the matching route. |
