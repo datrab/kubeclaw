@@ -37,9 +37,10 @@ The [glossary](../reference/glossary.md) defines all KubeClaw terms used in this
 
 ## The Short Architecture Story
 
-Nova compiles the project into a fixed graph.
+The Nova runtime role contains the project compiler, Nova Core, and selected plugins.
+The project compiler turns the declared project into a fixed graph.
 Each graph stage names its owner, inputs, limits, and permitted actions.
-Nova then selects ready stages and gives each stage a short-lived lease.
+Nova Core then selects ready stages and gives each stage a short-lived lease.
 
 Forge can implement the requested change.
 Echo can review the result and propose findings.
@@ -52,7 +53,7 @@ It checks attempt identity, capacity, deadlines, cancellation, resources, and re
 The plugin runtime connects these parts.
 It discovers packages, validates declarations, activates selected registrations, and checks capability grants.
 
-Nova alone changes the canonical pipeline state.
+Nova Core alone changes the canonical pipeline state.
 A specialist returns a typed result, but cannot declare the full run successful.
 
 > **Source evidence — one lifecycle authority**
@@ -138,7 +139,9 @@ AP11 still owns the formal language review and the human-reader acceptance revie
 
 - [Components and authority](components-and-authority.md) explains each part and each decision boundary.
 - [Request, state, and recovery](request-state-recovery.md) follows success, retry, repair, wait, cancellation, and uncertain effects.
+- [Pipeline dependencies](pipeline-dependencies.md) explains Git, Redis, PostgreSQL, BuildKit, registries, mirrors, and Tailscale.
 - [Deployment and trust](deployment-and-trust.md) maps processes, identities, storage, grants, networks, and failure domains.
+- [Platform and operations architecture](platform-and-operations.md) explains K3s, Cilium, Argo CD, and the optional Ops Pod.
 - [Worker Trust](worker-trust.md) gives the detailed SPIFFE and Envoy trust path.
 - [Operate KubeClaw](../use/README.md) contains the complete operator procedure track and its stated limits.
 - [Extend KubeClaw](../extend/README.md) contains plugin guidance. AP08 will complete this track.

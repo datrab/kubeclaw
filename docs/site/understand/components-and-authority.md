@@ -43,7 +43,49 @@ Nova makes the canonical lifecycle decision.
 Buster and Prism use Worker Core.
 The plugin runtime loads declared extension points for each applicable role.
 
-## Nova: The Process Authority
+## Nova and Nova Core
+
+Nova and Nova Core are related, but they are not two names for the same thing.
+
+**Nova** is the complete runtime role.
+It is the process that an operator deploys and starts.
+The role contains Nova Core, the project compiler, shared contracts, and selected plugins.
+It also contains adapters for repositories, artifacts, dispatch, waits, secrets, telemetry, and transport.
+
+**Nova Core** is the deterministic control engine inside that role.
+Core owns graph execution, lifecycle state, effects, recovery, waits, and final run closure.
+Core starts without product-specific stages.
+The configured plugin registry supplies those stages and their bounded capabilities.
+
+This distinction prevents two common mistakes.
+A Nova deployment is not only the scheduler code.
+Installing a Nova plugin also does not make that plugin part of Core.
+
+```mermaid
+flowchart TB
+    Role[Nova runtime role] --> Entry[Pipeline entry point]
+    Entry --> Project[Project compiler and CLI]
+    Entry --> Core[Nova Core]
+    Role --> Runtime[Plugin runtime]
+    Runtime --> Plugins[Selected plugins and adapters]
+    Project -->|fixed graph| Core
+    Core -->|bounded invocation| Plugins
+    Plugins -->|typed facts and receipts| Core
+```
+
+Text version: The Nova role contains the entry point, project compiler, Nova Core, plugin runtime, and selected extensions.
+The compiler gives Core a fixed graph.
+Core invokes plugins and interprets their typed results.
+
+> **Source evidence — role and engine boundary**
+>
+> [The Nova role lists Core, project code, shared contracts, and its selected plugins](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/nova.json#L1-L61).
+>
+> [The Nova entry point exports Core and starts the separate project CLI](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/pipeline.ts#L1-L14).
+>
+> [A new Core run freezes the graph, prepares plugins, writes snapshots, and starts the runner](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L36-L43).
+
+### Nova Core: The Process Authority
 
 Nova owns the pipeline graph and the canonical run state.
 It decides which stage is ready.

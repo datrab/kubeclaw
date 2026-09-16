@@ -148,6 +148,8 @@ function checkArchitecturePresentation() {
     'docs/site/understand/components-and-authority.md',
     'docs/site/understand/request-state-recovery.md',
     'docs/site/understand/deployment-and-trust.md',
+    'docs/site/understand/pipeline-dependencies.md',
+    'docs/site/understand/platform-and-operations.md',
   ];
   const sourceLink = /https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\/([^\s)#]+)#L(\d+)(?:-L(\d+))?/gu;
   let diagrams = 0;

@@ -71,6 +71,26 @@ Acceptance: the inventory accounts for all operator settings; production
 consumers use the central resolved values; regressions detect hardcoded setting
 drift; operator documentation covers defaults and overrides in one place.
 
+### Resilient Git source acquisition
+
+Status: planned after the current direct-origin path receives production evidence.
+The repository does not currently provide a shared Git mirror service.
+
+The planned capability must reduce dependence on one upstream Git endpoint.
+It must not weaken the exact-revision and source-identity rules.
+
+- Define whether the service is a read-through cache, a managed mirror, or a replicated authoritative origin.
+- Keep repository authentication separate from pipeline-authored data.
+- Bind every checkout to the requested commit and verify that the mirror returns the same Git object.
+- Define freshness, lag, upstream loss, corruption, credential rotation, and failback behavior.
+- Prevent a stale mirror from replacing a required commit with a newer branch head.
+- Record which origin supplied each source snapshot without making the mirror a lifecycle authority.
+- Provide capacity, garbage collection, backup, restore, monitoring, and incident procedures.
+- Test cold fetch, cache hit, stale reference, upstream outage, mirror outage, and digest mismatch paths.
+
+Acceptance requires a complete pipeline run through the mirror at an exact revision.
+The same test must prove safe failure when the mirror cannot provide that revision.
+
 ### Other themes
 
 These are candidate roadmap themes, not current behavior claims:

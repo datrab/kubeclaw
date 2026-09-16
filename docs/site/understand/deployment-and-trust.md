@@ -13,6 +13,10 @@ Last verified: source review on 2026-09-15
 This page maps the software boundaries to running workloads.
 It explains identity, network, storage, permissions, observability, and failure domains.
 
+It does not treat supporting services as an unnamed infrastructure box.
+[Pipeline Dependencies](pipeline-dependencies.md) explains the Git, Redis, PostgreSQL, BuildKit, registry, mirror, and Tailscale paths.
+[Platform and Operations Architecture](platform-and-operations.md) explains K3s, Cilium, Argo CD, and the optional Ops Pod.
+
 A rendered chart proves intended Kubernetes resources.
 It does not prove that a live cluster applies or enforces them.
 Use the linked operations checks for that proof.
@@ -338,6 +342,8 @@ The entry route still needs human authentication, authorization, and network con
 
 ## Continue With Operations
 
+- [Pipeline Dependencies](pipeline-dependencies.md) explains every direct and conditional pipeline service.
+- [Platform and Operations Architecture](platform-and-operations.md) explains the surrounding platform and optional operations tool.
 - [Operate Worker Trust](../use/worker-trust.md) gives the deployment and live proof procedure.
 - [Operate KubeClaw](../use/README.md) is the operations entry point.
 - [Current status](../status/current.md) separates source implementation from live acceptance.
