@@ -5,7 +5,6 @@
     "my-values/buster-values.yaml",
     "my-values/infra/redis-values.yaml",
     "my-values/infra/postgresql-values.yaml",
-    "my-values/infra/qdrant-values.yaml",
     "my-values/infra/litellm-values.yaml",
     "my-values/infra/litellm-config.yaml",
     "my-values/infra/litellm-deployment.yaml",
@@ -37,7 +36,6 @@
         "discordWebhook",
         "agent",
         "redis",
-        "qdrant",
         "workspace",
         "service",
         "persistence",
@@ -231,29 +229,6 @@
           "key": "existingSecret",
           "value": "postgresql-secrets",
           "line": 10
-        }
-      ]
-    },
-    {
-      "path": "my-values/infra/qdrant-values.yaml",
-      "topLevelKeys": [
-        "replicaCount",
-        "args",
-        "env",
-        "image",
-        "persistence",
-        "snapshotPersistence",
-        "config",
-        "additionalVolumes",
-        "additionalVolumeMounts",
-        "resources",
-        "chartTests"
-      ],
-      "secretReferences": [
-        {
-          "key": "secretName",
-          "value": "qdrant-tls",
-          "line": 41
         }
       ]
     },

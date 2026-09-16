@@ -100,5 +100,4 @@ workspace:
 probes:
   dependencies:
     redis: { enabled: false }
-    qdrant: { enabled: false }
     registries: { enabled: false, endpoints: [] }

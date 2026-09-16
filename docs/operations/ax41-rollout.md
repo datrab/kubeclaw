@@ -139,3 +139,31 @@ Restarting the native pool service kills its worker subtree: drain/fence active
 work first. Do not claim idempotent host installation until reruns, interrupted
 installation and recovery have been exercised on a host. Capture the verified
 activation commands here as this rollout progresses.
+
+## Retire unused vector database
+
+Qdrant was removed from active deployment, agent probes, dependency packages,
+network policies and version/update inputs on 2026-09-16. The owner explicitly
+approved deletion of its cluster data. It must not be adopted into Argo.
+Historical review evidence remains historical; it is not an installation input.
+
+After pulling main on the control node, run:
+
+```bash
+export KUBE_CONTEXT="$(kubectl config current-context)"
+bash scripts/remove-qdrant.sh --delete-data
+```
+
+The command is specific to the former `kubeclaw/qdrant` release. It verifies
+bound PV claim identities, removes the Helm release and known residual
+resources, deletes selected claims, and waits for the provisioner to remove
+their PVs using the Delete reclaim policy. This deletes storage; it is not a
+backup or a secure-erasure guarantee. A timeout must be investigated before
+claiming completion. Updated agent manifests remove the old health checks on
+the next rollout. Successful cluster removal has not yet been observed.
+
+For the next Argo adoption, the observed LiteLLM PostgreSQL release is
+`postgresql-18.5.15` in `kubeclaw`: standalone, database/user `litellm`, existing
+Secret `postgresql-secrets` (keys `postgres-password` and `litellm-password`),
+1-GiB PVC, requests 50m/128Mi, limits 250m/256Mi. This is observed configuration,
+not permission to overwrite the separate desired infrastructure defaults.

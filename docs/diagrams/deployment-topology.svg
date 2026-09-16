@@ -38,8 +38,6 @@
   <text x="715" y="154">LiteLLM</text>
   <rect x="690" y="210" width="100" height="52" class="box infra"/>
   <text x="708" y="240">Postgres</text>
-  <rect x="520" y="300" width="130" height="52" class="box infra"/>
-  <text x="561" y="330">Qdrant</text>
   <rect x="690" y="300" width="100" height="52" class="box infra"/>
   <text x="718" y="330">Registry</text>
   <rect x="310" y="390" width="160" height="52" class="box"/>
@@ -66,7 +64,6 @@
   <path d="M790 416 C835 416 835 300 870 300" class="line"/>
   <path d="M960 322 L960 360" class="line"/>
   <path d="M390 176 L390 210" class="line"/>
-  <path d="M470 236 C505 260 520 285 585 300" class="line"/>
   <path d="M790 150 C835 150 835 206 870 206" class="line"/>
   <path d="M470 150 C670 70 720 116 870 116" class="line dash"/>
   <text x="236" y="132" class="label">install / upgrade</text>

@@ -230,15 +230,6 @@ redis:
   secretName: "redis-secrets"
   secretKey: "redis-password"
 
-# -- Qdrant (confidence-weighted vector memory)
-qdrant:
-  # Empty selects the Qdrant Service in this release's namespace.
-  url: ""
-  authSecretName: qdrant-auth
-  readOnlyKey: read-only-api-key
-  tlsSecretName: qdrant-tls
-  caKey: ca.crt
-
 # =============================================================================
 # =============================================================================
 # WORKSPACE FILES
@@ -349,8 +340,6 @@ probes:
       stream: ""
       maxLen: 1000
     litellm:
-      enabled: true
-    qdrant:
       enabled: true
     registries:
       enabled: true

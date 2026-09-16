@@ -9,7 +9,7 @@ import { renderStatefulNetworkPolicies } from '../../../scripts/render-stateful-
 const file = 'my-values/infra/network-policies.yaml';
 const helm = process.env.HELM_BIN ?? 'helm';
 
-test('real chart service names, destination selectors and translated ports bind all three migrated database policies', () => {
+test('real chart service names, destination selectors and translated ports bind both migrated database policies', () => {
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'stateful-network-'));
   try {
     const values = {};
@@ -23,7 +23,6 @@ test('real chart service names, destination selectors and translated ports bind 
     const docs = renderStatefulNetworkPolicies(file, 'migration-test', {
       redis: { release: 'redis-migrated', values: values.redis },
       postgresql: { release: 'postgresql-migrated', values: values.postgresql },
-      qdrant: { release: 'qdrant-migrated', values: 'my-values/infra/qdrant-values.yaml' },
     }, helm);
     const byName = new Map(docs.map(document => [document.metadata.name, document]));
     for (const [profile, consumer, target, service] of [
@@ -39,12 +38,6 @@ test('real chart service names, destination selectors and translated ports bind 
         endpoint.matchLabels?.['app.kubernetes.io/instance'] === `${profile}-migrated`));
       assert.deepEqual(rule.toPorts[0].ports, [{ port: String(service), protocol: 'TCP' }, { port: String(target), protocol: 'TCP' }]);
     }
-    const qdrant = byName.get('kubeclaw-qdrant-ingress').spec;
-    assert.equal(qdrant.endpointSelector.matchLabels['app.kubernetes.io/instance'], 'qdrant-migrated');
-    assert.equal(qdrant.endpointSelector.matchLabels.app, 'qdrant');
-    assert.deepEqual(qdrant.ingress[0].toPorts[0].ports, [{ port: '6333', protocol: 'TCP' }, { port: '6334', protocol: 'TCP' }]);
-    const qdrantEgress = byName.get('kubeclaw-agents-egress').spec.egress.find(rule => rule.toEndpoints?.some(endpoint => endpoint.matchLabels?.['app.kubernetes.io/instance'] === 'qdrant-migrated'));
-    assert.deepEqual(qdrantEgress.toPorts[0].ports, qdrant.ingress[0].toPorts[0].ports);
     const original = loadAll(fs.readFileSync(file, 'utf8')).filter(Boolean);
     const originalWorld = original.find(document => document.metadata.name === 'kubeclaw-litellm-egress').spec.egress[1];
     assert.deepEqual(byName.get('kubeclaw-litellm-egress').spec.egress[1], originalWorld);

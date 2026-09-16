@@ -8,15 +8,15 @@ import { bindInfrastructureImages } from '../../../scripts/infrastructure-image-
 import { requireCompatibleStatefulRelease, requireRedisAofPolicy } from '../../../scripts/stateful-release-preflight.mjs';
 
 const helm = process.env.HELM_BIN ?? 'helm';
-for (const name of ['redis', 'postgresql', 'qdrant']) {
+for (const name of ['redis', 'postgresql']) {
   test(`${name} actual locked install/upgrade Helm render binds every image and protects retained claims`, { timeout: 30000 }, () => {
     const values = `my-values/infra/${name}-values.yaml`;
     const archive = prepareInfrastructureRelease(name, name, 'stateful-test', values, helm);
     const lock = infrastructureChart(name);
     const metadata = verifyInfrastructureChart(name, archive);
-    const expectedVersion = name === 'qdrant' ? '1.19.1' : lock.appVersion;
+    const expectedVersion = lock.appVersion;
     assert.equal(String(metadata.appVersion).replace(/^v/, ''), expectedVersion);
-    if (name !== 'qdrant') assert.match(lock.url, /@sha256:[a-f0-9]{64}$/u);
+    assert.match(lock.url, /@sha256:[a-f0-9]{64}$/u);
     assert.match(lock.sha256, /^[a-f0-9]{64}$/u);
     const manifests = loadAll(renderInfrastructureChart(name, name, 'stateful-test', archive, values, helm, true)).filter(Boolean);
     const bound = bindInfrastructureImages(name, manifests);

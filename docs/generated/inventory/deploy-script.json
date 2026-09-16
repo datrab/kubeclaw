@@ -13,7 +13,7 @@
     },
     {
       "invocation": "./scripts/deploy.sh infra",
-      "description": "Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM"
+      "description": "Deploy required infra plus optional PostgreSQL/LiteLLM"
     },
     {
       "invocation": "./scripts/deploy.sh tailscale",
@@ -187,10 +187,6 @@
       "description": "true|false (default: true)"
     },
     {
-      "name": "KUBECLAW_DEPLOY_QDRANT",
-      "description": "true|false (default: true)"
-    },
-    {
       "name": "KUBECLAW_DEPLOY_LITELLM",
       "description": "true|false (default: true)"
     },
@@ -231,7 +227,6 @@
     "KUBECLAW_RUN_SECRET_SETUP": null,
     "KUBECLAW_WORKSPACE_PROMPT": "auto",
     "KUBECLAW_DEPLOY_POSTGRESQL": "true",
-    "KUBECLAW_DEPLOY_QDRANT": "true",
     "KUBECLAW_DEPLOY_LITELLM": "true",
     "LITELLM_NODE_PORT": "30050",
     "KUBECLAW_DEPLOY_SPIRE": "true",
@@ -336,18 +331,17 @@
   ],
   "componentFlags": [
     "KUBECLAW_DEPLOY_POSTGRESQL",
-    "KUBECLAW_DEPLOY_QDRANT",
     "KUBECLAW_DEPLOY_LITELLM",
     "TAILSCALE_OPERATOR_ENABLED",
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 884,
-    "secrets": 921,
-    "tailscale": 1012,
-    "infra": 1107,
-    "agents": 1484,
-    "smoke": 1609,
-    "teardown": 2854
+    "setup": 878,
+    "secrets": 915,
+    "tailscale": 1006,
+    "infra": 1101,
+    "agents": 1458,
+    "smoke": 1583,
+    "teardown": 2828
   }
 }

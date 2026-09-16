@@ -49,7 +49,7 @@ aggregation only. Check service health in each Application. This avoids blocking
 root on a pending manual service sync or the runtime-only Lua health customization.
 
 Next independent applications: Ops (Codex + MCP), Tailscale, Cilium after network
-migration, Redis, PostgreSQL, Qdrant, LiteLLM, both registries, Prometheus/Grafana,
+migration, Redis, PostgreSQL, LiteLLM, both registries, Prometheus/Grafana,
 Loki, Promtail, SPIRE, SPIRE CRDs and SMB CSI. Preserve each installed release's
 name, version and non-secret values during handover. Operator-owned children stay
 with their operator. Runtime Buster/Nova/Prism use the existing runtime GitOps

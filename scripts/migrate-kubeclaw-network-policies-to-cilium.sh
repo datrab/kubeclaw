@@ -43,7 +43,6 @@ legacy_policies=(
   kubeclaw-nova-prism-agent-trust
   kubeclaw-redis-ingress
   kubeclaw-clawdeck-redis-egress
-  kubeclaw-qdrant-ingress
   kubeclaw-litellm-ingress
   kubeclaw-litellm-egress
   kubeclaw-postgresql-ingress

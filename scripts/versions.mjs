@@ -81,7 +81,7 @@ function bindInfrastructureVersions(manifest, replaceOne) {
     if (typeof reference !== 'string' || !/^[a-z0-9./_-]+:[a-zA-Z0-9._-]+@sha256:[a-f0-9]{64}$/.test(reference))
       throw new Error('Infrastructure and automation images require exact tags and digests');
   }
-  for (const name of ['tailscale', 'qdrant', 'redis', 'postgresql']) validateInfrastructureChartLock(manifest.infrastructureCharts?.[name]);
+  for (const name of ['tailscale', 'redis', 'postgresql']) validateInfrastructureChartLock(manifest.infrastructureCharts?.[name]);
   for (const name of ['redis', 'postgresql']) {
     const reference = manifest.infrastructure[name].match(/^([^/]+)\/(.+):([^:@]+)@(sha256:[a-f0-9]{64})$/);
     replaceOne(`my-values/infra/${name}-values.yaml`, /^image:\n  registry: [^\n]+\n  repository: [^\n]+\n  tag: [^\n]+\n  digest: [^\n]+/m,
@@ -93,10 +93,6 @@ function bindInfrastructureVersions(manifest, replaceOne) {
       new RegExp(`^${section}:\\n  image:\\n    repository: [^\\n]+\\n    digest: [^\\n]+`, 'm'),
       `${section}:\n  image:\n    repository: ${reference[1]}\n    digest: ${reference[3]}`);
   }
-  const qdrant = manifest.infrastructure.qdrant.match(/^(.+):([^:@]+)@(sha256:[a-f0-9]{64})$/);
-  replaceOne('my-values/infra/qdrant-values.yaml', /^  repository: [^\n]+$/m, `  repository: ${qdrant[1]}`);
-  replaceOne('my-values/infra/qdrant-values.yaml', /^  tag: [^\n]+$/m, `  tag: ${qdrant[2]}`);
-  replaceOne('my-values/infra/qdrant-values.yaml', /^    image: [^\n]+$/m, `    image: ${manifest.infrastructure.qdrantTest}`);
   replaceOne('my-values/infra/registry-mirror.yaml', /^          image: [^\n]+$/m,
     `          image: ${manifest.infrastructure.registryMirror}`);
   const envoy = manifest.infrastructure.envoy.match(/^(.+):([^:@]+)@(sha256:[a-f0-9]{64})$/);

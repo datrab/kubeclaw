@@ -5,7 +5,7 @@ Audience: documentation authors
 
 ## Purpose
 
-Use this template for component deployment pages such as Redis, PostgreSQL, Qdrant, LiteLLM, Tailscale, registries, and agents.
+Use this template for component deployment pages such as Redis, PostgreSQL, LiteLLM, Tailscale, registries, and agents.
 
 ```text
 # Component name

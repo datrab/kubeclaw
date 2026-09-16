@@ -6,7 +6,7 @@ import { statefulDatabaseService } from './stateful-database-service.mjs';
 
 function profile(selector) {
   const name = selector?.matchLabels?.['app.kubernetes.io/name'];
-  return ['redis', 'postgresql', 'qdrant'].includes(name) && selector.matchLabels['app.kubernetes.io/instance'] === name ? name : undefined;
+  return ['redis', 'postgresql'].includes(name) && selector.matchLabels['app.kubernetes.io/instance'] === name ? name : undefined;
 }
 
 function bindSelector(selector, service) {
@@ -14,7 +14,7 @@ function bindSelector(selector, service) {
 }
 
 function defaultPorts(name) {
-  return { redis: [6379], postgresql: [5432], qdrant: [6333, 6334] }[name];
+  return { redis: [6379], postgresql: [5432] }[name];
 }
 
 function bindPorts(rule, original, ports) {
@@ -37,7 +37,7 @@ function bindEgress(rule, services) {
 
 export function renderStatefulNetworkPolicies(file, namespace, selections, helm = 'helm') {
   const documents = loadAll(fs.readFileSync(file, 'utf8')).filter(Boolean);
-  const services = Object.fromEntries(['redis', 'postgresql', 'qdrant'].map(name =>
+  const services = Object.fromEntries(['redis', 'postgresql'].map(name =>
     [name, statefulDatabaseService(name, selections[name].release, namespace, selections[name].values, helm)]));
   const seen = Object.fromEntries(Object.keys(services).map(name => [name, { ingress: 0, egress: 0 }]));
   for (const document of documents) {
@@ -60,11 +60,10 @@ export function renderStatefulNetworkPolicies(file, namespace, selections, helm 
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  if (process.argv.length !== 10) throw new Error('Usage: render-stateful-network-policies.mjs POLICY NAMESPACE REDIS_RELEASE REDIS_VALUES POSTGRESQL_RELEASE POSTGRESQL_VALUES QDRANT_RELEASE QDRANT_VALUES');
-  const [file, namespace, redisRelease, redisValues, postgresRelease, postgresValues, qdrantRelease, qdrantValues] = process.argv.slice(2);
+  if (process.argv.length !== 8) throw new Error('Usage: render-stateful-network-policies.mjs POLICY NAMESPACE REDIS_RELEASE REDIS_VALUES POSTGRESQL_RELEASE POSTGRESQL_VALUES');
+  const [file, namespace, redisRelease, redisValues, postgresRelease, postgresValues] = process.argv.slice(2);
   const documents = renderStatefulNetworkPolicies(file, namespace, {
     redis: { release: redisRelease, values: redisValues }, postgresql: { release: postgresRelease, values: postgresValues },
-    qdrant: { release: qdrantRelease, values: qdrantValues },
   });
   process.stdout.write(documents.map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\n'));
 }

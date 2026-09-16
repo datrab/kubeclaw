@@ -7,16 +7,13 @@ import { loadAll, dump } from 'js-yaml';
 const root = fileURLToPath(new URL('../', import.meta.url));
 
 export function bindInfrastructureImages(name, documents) {
-  if (!['qdrant', 'tailscale', 'redis', 'postgresql'].includes(name)) throw new Error('INFRASTRUCTURE_IMAGE_PROFILE_INVALID');
+  if (!['tailscale', 'redis', 'postgresql'].includes(name)) throw new Error('INFRASTRUCTURE_IMAGE_PROFILE_INVALID');
   const images = JSON.parse(fs.readFileSync(path.join(root, 'versions.json'), 'utf8')).infrastructure;
-  const bindings = new Map([[images.qdrant.split('@')[0], images.qdrant]]);
   const result = structuredClone(documents);
   for (const document of result) {
     const pod = podSpec(document);
     if (!pod) continue;
     for (const container of [...(pod.initContainers ?? []), ...(pod.containers ?? [])]) {
-      const target = bindings.get(container.image);
-      if (target && name === 'qdrant') container.image = target;
       if (!/^\S+@sha256:[a-f0-9]{64}$/.test(container.image)) throw new Error('INFRASTRUCTURE_IMAGE_NOT_PINNED');
       verifyReservedImage(name, container, images);
     }
@@ -36,9 +33,6 @@ function verifyReservedImage(name, container, images) {
   if (new Set(variables.map(variable => variable.name)).size !== variables.length) throw new Error('INFRASTRUCTURE_DUPLICATE_ENVIRONMENT');
   if (['redis', 'postgresql'].includes(name) && container.image !== images[name].replace(/:[^:@]+@/, '@')) {
     throw new Error('INFRASTRUCTURE_DATABASE_IMAGE_OVERRIDE');
-  }
-  if (name === 'qdrant' && ['qdrant', 'ensure-dir-ownership'].includes(container.name) && container.image !== images.qdrant) {
-    throw new Error('INFRASTRUCTURE_QDRANT_IMAGE_OVERRIDE');
   }
   if (name === 'tailscale' && container.name === 'operator') {
     const proxy = variables.find(variable => variable.name === 'PROXY_IMAGE');

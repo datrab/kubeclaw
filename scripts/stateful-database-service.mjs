@@ -5,11 +5,11 @@ import { stageInfrastructureChart } from './infrastructure-chart.mjs';
 import { renderInfrastructureChart } from './infrastructure-release.mjs';
 
 export function statefulDatabaseService(profile, release, namespace, values, helm = 'helm') {
-  if (!['redis', 'postgresql', 'qdrant'].includes(profile)) throw new Error('STATEFUL_SERVICE_PROFILE_INVALID');
+  if (!['redis', 'postgresql'].includes(profile)) throw new Error('STATEFUL_SERVICE_PROFILE_INVALID');
   for (const [value, maximum] of [[release, 53], [namespace, 63]]) {
     if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(value) || value.length > maximum) throw new Error('STATEFUL_SERVICE_IDENTITY_INVALID');
   }
-  const portName = profile === 'qdrant' ? 'http' : `tcp-${profile}`;
+  const portName = `tcp-${profile}`;
   const archive = stageInfrastructureChart(profile);
   const rendered = loadAll(renderInfrastructureChart(profile, release, namespace, archive, values, helm, true));
   const services = rendered.filter(value => value?.kind === 'Service' && value.spec.clusterIP !== 'None'
@@ -19,7 +19,7 @@ export function statefulDatabaseService(profile, release, namespace, values, hel
   const workloads = rendered.filter(value => value?.kind === 'StatefulSet'
     && Object.entries(service.spec.selector).every(([key, label]) => value.spec.template.metadata.labels[key] === label));
   if (workloads.length !== 1) throw new Error('STATEFUL_SERVICE_WORKLOAD_AMBIGUOUS');
-  const names = profile === 'qdrant' ? ['http', 'grpc'] : [portName];
+  const names = [portName];
   const ports = names.map(name => {
     const selected = service.spec.ports.filter(port => port.name === name);
     if (selected.length !== 1) throw new Error('STATEFUL_SERVICE_PORT_AMBIGUOUS');
