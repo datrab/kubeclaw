@@ -112,6 +112,29 @@ The helper has a shell syntax check locally; actual systemd/cgroup behavior
 must be verified on the production host. It is not yet a tested one-click
 installer with rollback or interrupted-install recovery.
 
+#### Pool lifetime correction
+
+On AX41 the initial oneshot service exited successfully, then systemd removed
+its empty delegated cgroup. `active (exited)` with an empty ControlGroup is not
+a prepared pool. The corrected service uses Type=notify: after verifying both
+pools, the Node setup process signals readiness via systemd-notify and remains
+in the delegated setup subgroup. NotifyAccess=all permits that notification
+helper; the service is root-owned. It has no automatic restart policy because
+restarting it would kill the complete worker subtree.
+
+For this exact initial failure, with no workers running and no service cgroup:
+
+```bash
+bash scripts/repair-native-worker-pools-lifetime.sh
+```
+
+The repair refuses a populated/running service, checks generated policies
+against installed copies, backs up the old setup and unit, and replaces only
+those two files. It starts the corrected service and requires `running`, the
+expected ControlGroup and readable pool limits. It does not restart K3s or
+enable native workloads. If it fails, retain the printed backup and inspect the
+service journal; do not rerun the initial installation or delete policies.
+
 ## Migration and activation stages
 
 1. Read actual Node capacity, effective kubelet configuration, Pod requests,

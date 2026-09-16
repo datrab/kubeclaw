@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
 
 const root = '/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service';
 const read = file => fs.readFileSync(file, 'utf8').trim();
@@ -108,5 +109,13 @@ function prepare(policy) {
   process.stdout.write('NATIVE_HOST_POOLS_PREPARED_NODE_CAPACITY_PREFLIGHT_REQUIRED\n');
 }
 
-if (process.argv.length !== 3) throw new Error('Usage: prepare-native-worker-pools.mjs ROOT_OWNED_GENERATED_POLICY_JSON');
+const serve = process.argv.length === 4 && process.argv[3] === '--serve';
+if (process.argv.length !== 3 && !serve) throw new Error('Usage: prepare-native-worker-pools.mjs ROOT_OWNED_GENERATED_POLICY_JSON [--serve]');
 prepare(configuration(process.argv[2]));
+if (serve) {
+  // RemainAfterExit retains the unit state, not an empty delegated cgroup.
+  // Keep the setup subgroup populated for the entire pool lifetime. Notify only
+  // after both pools and their identities have been successfully verified.
+  execFileSync('/usr/bin/systemd-notify', ['--ready', '--status=Native worker pools prepared; capacity preflight still required'], { stdio: 'inherit' });
+  setInterval(() => {}, 60_000);
+}

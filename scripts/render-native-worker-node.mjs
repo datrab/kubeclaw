@@ -47,12 +47,12 @@ Before=k3s.service k3s-agent.service
 After=local-fs.target
 
 [Service]
-Type=oneshot
-RemainAfterExit=yes
+Type=notify
+NotifyAccess=all
 Slice=kubeclaw.slice
 Delegate=cpu memory pids
 DelegateSubgroup=setup
-ExecStart=/usr/bin/env node /opt/kubeclaw/native/prepare-native-worker-pools.mjs /etc/kubeclaw/native-node-policy.json
+ExecStart=/usr/bin/env node /opt/kubeclaw/native/prepare-native-worker-pools.mjs /etc/kubeclaw/native-node-policy.json --serve
 NoNewPrivileges=yes
 UMask=0077
 TasksMax=infinity
