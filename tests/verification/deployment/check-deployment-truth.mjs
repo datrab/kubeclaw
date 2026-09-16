@@ -88,8 +88,13 @@ assert.match(
 );
 assert.doesNotMatch(busterValues, /mountPath:\s*\/sys\/fs\/cgroup\s*$/m,
   'Buster must not mount the host cgroup root');
-assert.match(networkPolicies, /name:\s*kubeclaw-agents-egress[\s\S]*port:\s*"?6379[\s\S]*port:\s*"?6333/,
-  'lease policies must remain additive to the shared worker service egress baseline');
+const sharedEgress = loadAll(networkPolicies).find(policy => policy?.metadata?.name === 'kubeclaw-agents-egress').spec.egress;
+for (const [label, value, port] of [['app.kubernetes.io/name', 'redis', '6379'], ['app', 'litellm', '4000']]) {
+  assert.ok(sharedEgress.some(rule => rule.toEndpoints?.some(endpoint => endpoint.matchLabels?.[label] === value)
+    && rule.toPorts?.some(group => group.ports?.some(entry => entry.port === port && entry.protocol === 'TCP'))),
+  'lease policies must remain additive to the shared ' + value + ' service egress baseline');
+}
+assert.doesNotMatch(networkPolicies, /qdrant|port:\s*["']?633[34]/i, 'retired Qdrant must not retain network access');
 assert.match(deploy, /Prism \$\{kind\} image digest is missing or invalid; set PRISM_\$\{upper\}_IMAGE_DIGEST or images\.\$\{kind\}\.digest/,
   'Prism deployment must require immutable image digests from an override or production values');
 assert.doesNotMatch(deploy, /rollout restart deployment\/"\$prism_workload"/,
