@@ -1,6 +1,6 @@
 # AP08 extension documentation plan
 
-Status: AP08.10 evaluated; strictly scoped read-only repeat review pending
+Status: scoped repeat review completed; two documentation findings corrected; focused closure confirmation pending
 Date: 2026-09-16
 Scope: W08-W11 and reader outcomes E1-E6
 Assessment revision: `bcf032f241b432bf920baa9ee5f727947921447d`
@@ -286,3 +286,16 @@ and unavailable tools do not automatically block a documentation package.
 External-effect reconciliation and unresolved runtime failures require canonical
 product triage. The repeat reviewer must assess only the named AP08 documentation
 paths and must not change repository content.
+
+The strictly scoped repeat review then inspected all 69 allowed files and 491
+pinned evidence objects at `f29921db7b5cd323334fc0e6c03c6007458b3e48`.
+It passed all reader journeys and 50 catalogue entries. It rejected the
+`kubeclaw.project-summary` entry because its authored operation note used the
+artifact encoding marker as a configuration value. It also found one non-blocking
+sentence that incorrectly assigned deployed submission evidence to AP08.
+
+Both documentation findings are corrected in the next branch revision. The
+catalogue checker now derives the project-summary configuration literal from its
+schema and requires the prose to distinguish that literal from the artifact
+encoding marker. AP08 remains open only for focused read-only confirmation of
+these two corrections.

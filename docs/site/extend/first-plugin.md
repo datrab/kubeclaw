@@ -346,8 +346,8 @@ Buster quality-gate import boundary is corrected.
 An end-to-end pipeline exercise requires a project or explicit pipeline definition,
 submission through the supported command path, a running Nova service, transport,
 and result observation. The tutorial currently proves local harness activation,
-not submission to a deployed Nova service. A complete service submission and
-observation procedure remains an AP08 acceptance gap.
+not submission to a deployed Nova service. Service submission and observation
+remain a separate deployed-environment evidence boundary.
 
 ## Common Failures
 

@@ -1521,14 +1521,14 @@
         "nova"
       ],
       "authoredGuide": "skills/nova/plugins/project-summary/README.md",
-      "authoredGuideWords": 307,
+      "authoredGuideWords": 318,
       "testScript": "node ../../../../tests/verification/integration/project-summary.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
       "testFiles": [
         "skills/nova/plugins/project-summary/tests/live-function.test.ts",
         "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
-      "catalogueWords": 568,
+      "catalogueWords": 579,
       "auditStatus": "content-written"
     },
     {

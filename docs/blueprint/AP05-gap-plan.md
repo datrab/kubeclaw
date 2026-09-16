@@ -1,6 +1,6 @@
 # AP05 documentation gap and writing plan
 
-Status: AP05 complete; AP06 and AP07 complete; AP08.10 evaluated and a scoped repeat review remains
+Status: AP05 complete; AP06 and AP07 complete; scoped AP08 repeat review evaluated and focused closure confirmation remains
 Date: 2026-09-15
 Branch: `docs/documentation-overhaul`, PR #13
 Assessment revision: `9dab0a1365a367bb2668298d50802a76bd147d91`
@@ -356,4 +356,5 @@ the minimal pipeline-plugin journey. AP08.3–AP08.6 delivered the shared contra
 effectful path, Buster path, and Nova path. AP08.7–AP08.9 delivered the host, engine,
 lifecycle, and 51-package catalogue work. AP08.10 completed one independent review,
 found documentation defects, and recorded separate product and live limits. A
-strictly scoped repeat review remains before AP08 acceptance.
+strictly scoped repeat review found two documentation findings. Both are corrected;
+focused read-only confirmation remains before AP08 acceptance.

@@ -95,6 +95,23 @@ for (const item of guidance.records) {
   }
 }
 
+const projectSummaryGuidance = guidance.records.find((item) => item.id === 'kubeclaw.project-summary');
+const projectSummaryConfig = JSON.parse(read('skills/nova/plugins/project-summary/schemas/config.schema.json'));
+const deliveryManifestEncoding = projectSummaryConfig.properties.deliveryManifestEncoding.const;
+assert(
+  projectSummaryGuidance.operationNote.includes(`deliveryManifestEncoding to ${deliveryManifestEncoding}`),
+  'project-summary guidance must use the configuration schema value for deliveryManifestEncoding',
+);
+assert(
+  projectSummaryGuidance.operationNote.includes('kubeclaw-json.utf16.v1 encoding marker'),
+  'project-summary guidance must distinguish the artifact encoding marker from the configuration value',
+);
+const projectSummaryGuide = read('skills/nova/plugins/project-summary/README.md');
+assert(
+  projectSummaryGuide.includes(`deliveryManifestEncoding\` to \`${deliveryManifestEncoding}`),
+  'project-summary package guide must use the configuration schema value',
+);
+
 const catalogueRoot = path.join(root, 'docs/site/extend/plugin-catalogue');
 const packagePages = fs.readdirSync(catalogueRoot)
   .filter((name) => name.endsWith('.md') && name !== 'README.md')

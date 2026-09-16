@@ -91,7 +91,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The default output is delivery-manifest.v2. Setting deliveryManifestEncoding to kubeclaw-json.utf16.v1 selects v3. Final source, lint, test, coverage, and optional review evidence must agree; incompatible evidence blocks the stage.
+The default output is delivery-manifest.v2. Set deliveryManifestEncoding to delivery-manifest.utf16-v1 to select v3. The stored artifact then uses the separate kubeclaw-json.utf16.v1 encoding marker. Final source, lint, test, coverage, and optional review evidence must agree; incompatible evidence blocks the stage.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports; discovery does not import package code.
