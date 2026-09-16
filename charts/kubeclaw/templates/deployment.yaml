@@ -1016,6 +1016,9 @@ spec:
                 process.exit(1);
               });
               NODE
+                if [ -n "${CODE_BUNDLE_SHA256}" ]; then
+                  printf '%s  %s\n' "$CODE_BUNDLE_SHA256" "$BUNDLE_ARCHIVE" | sha256sum -c - || exit 1
+                fi
                 tar -xzf "$BUNDLE_ARCHIVE" -C "$BUNDLE_TMP_ROOT/extracted"
                 BUNDLE_TMP_ROOT="$BUNDLE_TMP_ROOT" node <<'NODE'
               const fs = require('fs');
@@ -1156,6 +1159,8 @@ spec:
               value: {{ .Values.codeBundle.enabled | default false | quote }}
             - name: CODE_BUNDLE_ARCHIVE_URL
               value: {{ .Values.codeBundle.archiveUrl | default "" | quote }}
+            - name: CODE_BUNDLE_SHA256
+              value: {{ .Values.codeBundle.sha256 | default "" | quote }}
             - name: CODE_BUNDLE_EXPECTED_COMMIT
               value: {{ .Values.codeBundle.expectedCommit | default "" | quote }}
             - name: CODE_BUNDLE_CONTRACT_VERSION

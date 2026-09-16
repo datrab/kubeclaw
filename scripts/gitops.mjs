@@ -50,6 +50,7 @@ export function readCommittedBundle(repository, directory, revision) {
     || bundle.groups.map(group => group.role).join(',') !== 'buster,prism,nova') throw new Error('GITOPS_BUNDLE_SCHEMA_INVALID');
   validateReleaseReceipt(bundle.receipt, 'runtime');
   const selected = JSON.parse(gitFile(repository, revision, 'releases/runtime-images.json'));
+  if (bundle.receipt.code) selected.code = JSON.parse(gitFile(repository, revision, 'releases/runtime-code.json'));
   if (JSON.stringify(selected) !== JSON.stringify(bundle.receipt)) throw new Error('GITOPS_SELECTED_RECEIPT_MISMATCH');
   const owned = new Set(), names = new Set();
   for (const group of bundle.groups) {

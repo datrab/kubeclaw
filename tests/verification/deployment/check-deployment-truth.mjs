@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { isImageInput } from '../../../scripts/updates/runtime-inputs.mjs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -316,16 +317,8 @@ assert.doesNotMatch(
   /tests\/verification\/live\/buster-buildkit-production-smoke\.mjs/,
   'the BuildKit command must not reference the retired direct-container smoke script',
 );
-assert.match(
-  workflow,
-  /image_inputs:\s*\n\s+- '\.dockerignore'/,
-  'Docker context policy changes must trigger image builds',
-);
-assert.match(
-  workflow,
-  /image_inputs:[\s\S]*- 'tsconfig\.base\.json'/,
-  'shared TypeScript configuration changes must trigger image builds',
-);
+assert.ok(isImageInput('.dockerignore'), 'Docker context policy changes must trigger image builds');
+assert.ok(isImageInput('tsconfig.base.json'), 'shared TypeScript configuration changes must trigger image builds');
 assert.doesNotMatch(chart, /execution-buildkit|execution-api-token|executionRuntime/);
 assert.doesNotMatch(values, /executionRuntime|moby\/buildkit/);
 assert.doesNotMatch(novaValues, /BUILDKIT_HOST|executionRuntime|moby\/buildkit/);

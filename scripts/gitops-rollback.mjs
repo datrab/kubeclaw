@@ -42,9 +42,12 @@ export function planGitOpsRollback(root, url, requested = 'previous') {
     if (read(root, 'HEAD', file) !== read(root, revision, file)) throw new Error(`ROLLBACK_BUNDLE_CHANGED:${file}`);
   }
   const files = { 'releases/runtime-images.json': read(root, revision, 'releases/runtime-images.json') };
+  const remove = [];
+  if (result.bundle.receipt.code) files['releases/runtime-code.json'] = read(root, revision, 'releases/runtime-code.json');
+  else if (current.receipt.code) remove.push('releases/runtime-code.json');
   for (const role of ['buster', 'prism', 'prism-agent', 'nova']) files[`releases/values/${role}.yaml`] = read(root, revision, `releases/values/${role}.yaml`);
   for (const [name, bytes] of Object.entries(generated)) files[`gitops/production/${name}`] = bytes;
-  return { revision, directory, files };
+  return { revision, directory, files, remove };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
@@ -58,6 +61,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
       const file = path.join(root, relative);
       fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, bytes);
     }
+    for (const relative of plan.remove) fs.rmSync(path.join(root, relative), { force: true });
     process.stdout.write(JSON.stringify({ revision: plan.revision, directory: plan.directory }) + '\n');
   } catch (error) { process.stderr.write(`${error.message}\n`); process.exitCode = 1; }
 }

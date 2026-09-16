@@ -36,13 +36,17 @@ test('parsed job guards keep PRs and non-main dispatches read-only',()=>{
   }
 });
 
-test('read-only jobs cannot publish, persist checkout credentials or pass artifacts forward',()=>{
+test('read-only jobs publish only diagnostic reports and cannot persist credentials or pass release artifacts forward',()=>{
   for(const workflow of [ops,docs]){
     const job=workflow.jobs.validate;
     assert.deepEqual(job.permissions,{contents:'read'});
     const text=JSON.stringify(job);
-    assert.doesNotMatch(text,/secrets\.|github\.token|login-action|upload-artifact|git push/u);
+    assert.doesNotMatch(text,/secrets\.|github\.token|login-action|git push/u);
     for(const step of job.steps){
+      if(step.uses?.startsWith('actions/upload-artifact@')){
+        assert.equal(step.with.name,'security-${{ matrix.image }}');
+        assert.equal(step.with.path,'dist/trivy/');
+      }
       if(step.uses?.startsWith('actions/checkout@'))assert.equal(step.with['persist-credentials'],false);
       assert.notEqual(step.with?.push,true);
     }
@@ -63,7 +67,7 @@ test('trusted publication rebuilds source and retains digest smoke and receipt a
   const smoke=job.steps.find(s=>s.name==='Exercise the exact published artifact and record its receipt');
   assert(smoke.env.IMAGE.endsWith('@${{ steps.publish.outputs.digest }}'));
   for(const command of ['docker pull "$IMAGE"','bash ops/pod/test-image.sh "$IMAGE"','bash tools/ops-mcp/test-image.sh "$IMAGE"','commit:process.env.GITHUB_SHA'])assert(smoke.run.includes(command));
-  const upload=job.steps.find(s=>s.uses?.startsWith('actions/upload-artifact@'));
+  const upload=job.steps.find(s=>s.uses?.startsWith('actions/upload-artifact@')&&s.with?.name==='image-receipt-${{ matrix.image }}');
   assert(job.steps.indexOf(upload)>job.steps.indexOf(smoke));assert.equal(upload.with['if-no-files-found'],'error');
   assert.equal(ops.jobs['preserve-receipts'].needs,'publish');assert.equal(ops.jobs['preserve-receipts'].if,job.if);
   assert.equal(ops.jobs['preserve-receipts'].uses,'./.github/workflows/publish-image-receipts.yaml');
