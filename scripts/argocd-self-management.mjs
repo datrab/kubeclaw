@@ -195,7 +195,7 @@ const extraServices = platformServices(versions, repository);
 // The platform root deploys definitions, while each service is synced separately.
 // Its health must not wait for a manual child sync or the runtime-only Lua gate.
 for (const child of [application, tailscale, ops, redis, postgresql, registryMirror, registryLocal, ...monitoringApplications, ...extraServices.filter(object => object.kind === 'Application')]) {
-  child.metadata.annotations = { 'argocd.argoproj.io/ignore-healthcheck': 'true', 'kubeclaw.io/health-mode': 'observed' };
+  child.metadata.annotations = { ...child.metadata.annotations, 'argocd.argoproj.io/ignore-healthcheck': 'true', 'kubeclaw.io/health-mode': 'observed' };
 }
 const platform = {
   apiVersion: 'argoproj.io/v1alpha1', kind: 'Application',

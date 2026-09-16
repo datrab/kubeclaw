@@ -247,6 +247,13 @@ configuration: it requires existing healthy webhooks with `Fail` policies and
 is not a fresh-install recipe. Changes to those policies require a separate
 review; Argo does not enforce them while this exception is present.
 
+SPIRE uses server-side diff so Kubernetes resolves the webhook list by its
+schema rather than displaying a positional reorder as drift. For the existing
+StatefulSet, only `apiVersion` and `kind` inside volumeClaimTemplates are ignored;
+PVC names, storage requests and storage classes remain part of the comparison.
+After this Application-definition change, refresh `platform`, wait for its
+sync, then hard-refresh `spire`. No forced StatefulSet replacement is needed.
+
 On the controlnode, before syncing any of these services:
 
 ```bash

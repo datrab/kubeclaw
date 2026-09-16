@@ -56,6 +56,11 @@ find('spire', 'CSIDriver', 'csi.spiffe.io');
 find('csi-driver-smb', 'CSIDriver', 'smb.csi.k8s.io');
 assert.equal(find('csi-driver-smb', 'Deployment', 'csi-smb-controller').spec.replicas, 1);
 const spireApp = read('gitops/platform/bootstrap/spire.yaml');
+assert.equal(spireApp.metadata.annotations['argocd.argoproj.io/compare-options'], 'ServerSideDiff=true');
+assert.deepEqual(spireApp.spec.ignoreDifferences[1], {
+  group: 'apps', kind: 'StatefulSet', name: 'spire-server', namespace: 'spire-server',
+  jqPathExpressions: ['.spec.volumeClaimTemplates[]?.apiVersion', '.spec.volumeClaimTemplates[]?.kind'],
+});
 assert.ok(spireApp.spec.syncPolicy.syncOptions.includes('RespectIgnoreDifferences=true'));
 assert.deepEqual(spireApp.spec.ignoreDifferences[0].jqPathExpressions, ['.webhooks[]?.clientConfig.caBundle', '.webhooks[]?.failurePolicy']);
 const litellm = find('litellm', 'Deployment', 'litellm').spec;

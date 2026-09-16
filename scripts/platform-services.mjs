@@ -40,6 +40,8 @@ export function platformServices(versions, repository) {
     },
   }));
   const spire = applications.find(app => app.metadata.name === 'spire');
+  // Let the API server compare its associative webhook list and defaulted fields.
+  spire.metadata.annotations = { 'argocd.argoproj.io/compare-options': 'ServerSideDiff=true' };
   // Adoption only: the existing webhook must already have a CA and Fail policies.
   // The chart emits Ignore for one webhook even with hooks disabled. Preserve
   // live admission enforcement instead of reapplying that bootstrap default.
@@ -47,6 +49,10 @@ export function platformServices(versions, repository) {
     group: 'admissionregistration.k8s.io', kind: 'ValidatingWebhookConfiguration',
     name: 'spire-server-spire-controller-manager-webhook',
     jqPathExpressions: ['.webhooks[]?.clientConfig.caBundle', '.webhooks[]?.failurePolicy'],
+  }, {
+    group: 'apps', kind: 'StatefulSet', name: 'spire-server', namespace: 'spire-server',
+    // API-added TypeMeta only; keep PVC metadata and the entire storage spec visible.
+    jqPathExpressions: ['.spec.volumeClaimTemplates[]?.apiVersion', '.spec.volumeClaimTemplates[]?.kind'],
   }];
   spire.spec.syncPolicy.syncOptions.push('RespectIgnoreDifferences=true');
   const litellm = {

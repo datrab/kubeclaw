@@ -5,6 +5,7 @@ metadata:
   name: spire
   namespace: argocd
   annotations:
+    argocd.argoproj.io/compare-options: ServerSideDiff=true
     argocd.argoproj.io/ignore-healthcheck: 'true'
     kubeclaw.io/health-mode: observed
 spec:
@@ -36,3 +37,10 @@ spec:
       jqPathExpressions:
         - .webhooks[]?.clientConfig.caBundle
         - .webhooks[]?.failurePolicy
+    - group: apps
+      kind: StatefulSet
+      name: spire-server
+      namespace: spire-server
+      jqPathExpressions:
+        - .spec.volumeClaimTemplates[]?.apiVersion
+        - .spec.volumeClaimTemplates[]?.kind
