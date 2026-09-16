@@ -182,3 +182,38 @@ then manually sync without Force, Replace or Prune. Verify the Application is
 Synced/Healthy, the StatefulSet is Ready, the claim remains bound to its original
 volume and LiteLLM still connects. Do not uninstall the old Helm release or use
 Helm upgrade/rollback after Argo takes ownership; its history is historical.
+
+### Selected 18.6 update (2026-09-16)
+
+After recording the original 18.1 installation, the selected production chart is
+18.11.3 and the image digest is
+`sha256:b69d1fca390fb131639e86e820f248acfc5d911339dc884796f8009260c598d7`.
+Docker registry image metadata identifies it as 18.6.0; live binary validation
+remains required after sync. The registry chart was pulled and rendered; its
+StatefulSet selector, serviceName, volumeClaimTemplates and podManagementPolicy
+match the original 18.5.15 render. The new chart additionally supplies a Pod-level
+RuntimeDefault seccomp profile and the image's FIPS provider configuration path.
+The existing secret, 1-GiB claim, database name and resource requests/limits stay.
+
+Run `KUBE_CONTEXT=... bash scripts/prepare-postgresql-production-upgrade.sh`
+on the control node before syncing. It saves a private SQL cluster dump and
+prints extension/index/replication metadata for the upgrade review. A completed
+dump is not a tested restore. Keep the directory outside Git and do not paste its
+SQL contents. After inspecting relevant release-note follow-ups, manually sync
+PostgreSQL without Force/Replace/Prune and verify the binary version, StatefulSet,
+PVC identity and LiteLLM connectivity.
+
+PostgreSQL 18.x does not require pg_upgrade or dump/restore to apply 18.6, but
+extension/index follow-up can be required when skipping from 18.1. Review the
+[18.2 migration notes](https://www.postgresql.org/docs/18/release-18-2.html) and
+[18.6 migration notes](https://www.postgresql.org/docs/release/18.6/).
+
+Renovate discovers production chart and image pins from `versions.json`, and its
+trusted updater writes the generated values/Application fields. The workflow
+is scheduled daily at 04:15 UTC, with updates proposed for review; this service
+has no automatic Argo sync. At inspection on 2026-09-16, both repository variable
+`DEPENDENCY_APP_ID` and secret `DEPENDENCY_APP_PRIVATE_KEY` were absent and the
+last workflow failed at `Require updater identity`. Configure the updater GitHub
+App (installed on this repository with contents/pull-request write permissions),
+then rerun `Dependency updates` and verify success before claiming monitoring is
+operational. Never commit its private key.
