@@ -1,6 +1,6 @@
 # AP08 extension documentation plan
 
-Status: scoped repeat review completed; two documentation findings corrected; focused closure confirmation pending
+Status: complete; scoped repeat review findings corrected and independently confirmed
 Date: 2026-09-16
 Scope: W08-W11 and reader outcomes E1-E6
 Assessment revision: `bcf032f241b432bf920baa9ee5f727947921447d`
@@ -274,8 +274,8 @@ or cluster acceptance. The decision below records the later AP08.10 result.
 ## Independent AP08.10 decision
 
 The [independent reader checkpoint](AP08.10-checkpoint.md) supersedes the earlier
-completion claims for overall acceptance. AP08 remains open for one path-bounded
-read-only repeat review.
+completion claims for overall acceptance. AP08 required a path-bounded read-only
+repeat review and a focused confirmation of its final corrections.
 The reader found and corrected broken procedures, a non-executing observer check,
 source-reference errors, and inaccurate package guidance. The catalogue now has
 51 individually reviewed pages, but page coverage is not task acceptance.
@@ -294,8 +294,14 @@ It passed all reader journeys and 50 catalogue entries. It rejected the
 artifact encoding marker as a configuration value. It also found one non-blocking
 sentence that incorrectly assigned deployed submission evidence to AP08.
 
-Both documentation findings are corrected in the next branch revision. The
+Both documentation findings were corrected in the next branch revision. The
 catalogue checker now derives the project-summary configuration literal from its
 schema and requires the prose to distinguish that literal from the artifact
-encoding marker. AP08 remains open only for focused read-only confirmation of
-these two corrections.
+encoding marker.
+
+The focused closure review evaluated only the two corrected pages and the two
+authorized pinned evidence objects at
+`037f7b1116c6116c8cbd762759c7fd04b81dc8f3`. Both permitted checks passed. The
+review closed `AP08-DOC-001` and `AP08-DOC-002` and returned `ACCEPTED`. AP08 is
+complete for its documentation scope. Product implementation work, deployed
+acceptance, and formal Issue 9 language review remain separate work.
