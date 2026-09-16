@@ -72,9 +72,7 @@
     "envoy": "envoyproxy/envoy:v1.39.0@sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66",
     "tailscaleOperator": "docker.io/tailscale/k8s-operator:v1.102.3@sha256:d86a8be7ad9d38714968f5d4e010ba8dad30c8f672736ef94eda9b250febeb12",
     "tailscaleProxy": "docker.io/tailscale/tailscale:v1.102.3@sha256:8c42c4574ab066384fcb72f69e086a2ff1dd3652eb6f56856cee34bcf0d2f680",
-    "qdrant": "docker.io/qdrant/qdrant:v1.19.1@sha256:12364fe851b9f17356fc88189fc06d1b521262e04659ec7345975b00c9246a10",
     "registryMirror": "docker.io/library/registry:2.8.3@sha256:a3d8aaa63ed8681a604f1dea0aa03f100d5895b6a58ace528858a7b332415373",
-    "qdrantTest": "registry.suse.com/bci/bci-base:latest@sha256:3e961532089c1ca792d004250b56f02af782ee909f5543086166d89730d8eaab",
     "redis": "registry-1.docker.io/bitnami/redis:latest@sha256:ffa455a3ad00bccc24dfde113ef55329dde687da242e9feb6ccd2b30eb93e8f3",
     "postgresql": "registry-1.docker.io/bitnami/postgresql:latest@sha256:65d7506622ce2649914947b698d822d56c208295ba7ee80c1b34e48b251ba0c1"
   },
@@ -89,12 +87,6 @@
       "version": "1.102.3",
       "url": "https://pkgs.tailscale.com/helmcharts/tailscale-operator-1.102.3-1787221603-c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a.tgz",
       "sha256": "c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a"
-    },
-    "qdrant": {
-      "name": "qdrant",
-      "version": "1.19.1",
-      "url": "https://github.com/qdrant/qdrant-helm/releases/download/qdrant-1.19.1/qdrant-1.19.1.tgz",
-      "sha256": "4562eb295c2d98ad9dbb625a729fcb593d315f2538d0200035aac37521f12b17"
     },
     "redis": {
       "name": "redis",
@@ -128,5 +120,23 @@
     "promtail": {
       "version": "6.17.1"
     }
+  },
+  "postgresqlProduction": {
+    "chartVersion": "18.11.3",
+    "image": "registry-1.docker.io/bitnami/postgresql:latest@sha256:b69d1fca390fb131639e86e820f248acfc5d911339dc884796f8009260c598d7"
+  },
+  "platformCharts": {
+    "spire": {
+      "version": "0.30.0"
+    },
+    "spire-crds": {
+      "version": "0.6.0"
+    },
+    "csi-driver-smb": {
+      "version": "1.20.0"
+    }
+  },
+  "litellmProduction": {
+    "image": "ghcr.io/berriai/litellm:main-latest@sha256:a79320760af8df488074ab3fbc830883856c7f952976aad00f039d3a43ffe4b2"
   }
 }

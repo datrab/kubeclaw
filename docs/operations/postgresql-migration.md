@@ -98,14 +98,13 @@ capacity or execute a deployment automatically.
 
    ```sh
    node scripts/render-stateful-network-policies.mjs my-values/infra/network-policies.yaml "$NAMESPACE" \
-     "$REDIS_RELEASE" "$REDIS_VALUES_FILE" "$POSTGRESQL_RELEASE" "$POSTGRESQL_VALUES_FILE" \
-     "$QDRANT_RELEASE" "$QDRANT_VALUES_FILE" | kubectl apply --namespace "$NAMESPACE" -f -
+     "$REDIS_RELEASE" "$REDIS_VALUES_FILE" "$POSTGRESQL_RELEASE" "$POSTGRESQL_VALUES_FILE" | kubectl apply --namespace "$NAMESPACE" -f -
    ```
 
-   All three release selections must be explicit here. The renderer derives actual
+   Both release selections must be explicit here. The renderer derives actual
    Service selectors and service/container ports from the locked charts; it
    updates the corresponding ingress/egress edges together. It also preserves
-   separately migrated Redis and Qdrant selections. Other policy edges are unchanged.
+   separately migrated Redis selection. Other policy edges are unchanged.
    Normal `deploy.sh infra` uses the same renderer and prepares it before
    mutations. Scheduled recovery is bound to this destination Service/selector.
 6. Resume clients only after acceptance. Obtain and verify a new destination

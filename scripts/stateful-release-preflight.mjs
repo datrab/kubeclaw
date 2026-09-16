@@ -60,7 +60,6 @@ function kube(namespace, args) {
 
 function runtimeVersion(name, namespace, workload) {
   const target = `statefulset/${workload}`;
-  if (name === 'qdrant') return kube(namespace, ['exec', target, '--', '/qdrant/qdrant', '--version']).trim().match(/^qdrant (\d+\.\d+\.\d+)$/)?.[1] ?? null;
   if (name === 'postgresql') {
     const version = kube(namespace, ['exec', target, '--', 'postgres', '--version']).match(/PostgreSQL\) (\d+\.\d+)/)?.[1];
     return version ? `${version}.0` : null;
@@ -73,7 +72,7 @@ function runtimeVersion(name, namespace, workload) {
 }
 
 export function preflightStatefulRelease(name, namespace, archive, values, helm = 'helm', release = name) {
-  if (!['redis', 'postgresql', 'qdrant'].includes(name) || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(namespace)) throw new Error('STATEFUL_PREFLIGHT_IDENTITY_INVALID');
+  if (!['redis', 'postgresql'].includes(name) || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(namespace)) throw new Error('STATEFUL_PREFLIGHT_IDENTITY_INVALID');
   if (!/^[a-z0-9](?:[a-z0-9-]{0,51}[a-z0-9])?$/.test(release)) throw new Error('STATEFUL_PREFLIGHT_RELEASE_INVALID');
   const verified = verifyInfrastructureChart(name, archive);
   const desired = bindInfrastructureImages(name, loadAll(renderInfrastructureChart(name, release, namespace, archive, values, helm, true))

@@ -118,7 +118,6 @@ function buildDeployScriptInventory() {
     functions: parseFunctions(text),
     componentFlags: [
       'KUBECLAW_DEPLOY_POSTGRESQL',
-      'KUBECLAW_DEPLOY_QDRANT',
       'KUBECLAW_DEPLOY_LITELLM',
       'TAILSCALE_OPERATOR_ENABLED',
       'ALLOW_PARTIAL_INFRA',
@@ -151,7 +150,6 @@ function buildHelmValuesInventory() {
     'my-values/buster-values.yaml',
     'my-values/infra/redis-values.yaml',
     'my-values/infra/postgresql-values.yaml',
-    'my-values/infra/qdrant-values.yaml',
     'my-values/infra/litellm-values.yaml',
     'my-values/infra/litellm-config.yaml',
     'my-values/infra/litellm-deployment.yaml',

@@ -176,7 +176,7 @@ above with the actual deployment's credentials and storage provider.
 ## Network policy after a release-name change
 
 `deploy.sh infra` now derives stateful ingress and consumer egress from the
-actual selected Redis, PostgreSQL and Qdrant charts. Before resuming clients in
+actual selected Redis and PostgreSQL charts. Before resuming clients in
 a manual cutover, render/apply `scripts/render-stateful-network-policies.mjs`
 with the policy file, namespace and all three release/value-file pairs, as shown
 in the [PostgreSQL migration procedure](postgresql-migration.md). Preserve the

@@ -123,18 +123,6 @@ workspace:
     redis.ts --action send --target <forge|buster|echo> --type <TYPE> --payload '<JSON>'
     redis.ts --action read
 
-    ## Memory (Qdrant)
-    memory.js remember --text "fact" --tags "t1,t2" [--scope project|global|agent] [--module <ID>] [--supersedes <old-id>]
-    memory.js recall --query "search text" [--tags "t1"] [--module <ID>] [--min-confidence 0.4] [--limit 5]
-    memory.js forget --id "<ID>"
-    memory.js boost --id "<ID>" [--amount 0.2]
-    memory.js dispute --id "<ID>"
-    memory.js feedback --module <ID> --outcome <pass|fail|blocked> [--reason "..."]
-    memory.js stats
-
-    Confidence: ★★★ ≥0.75 (validated), ★★☆ 0.45-0.74 (neutral), ★☆☆ <0.45 (unverified).
-    Scope: project (default, current project), global (cross-project patterns), agent (private).
-
     ## Boundary Enforcement
     verify-task.js --project <P>  — validates agent file changes, reverts violations, auto-pushes
 
@@ -146,7 +134,7 @@ workspace:
     ## Git & Shell
     Standard: bash, curl, jq, grep, git pull/push/diff/log, cat, tree
 
-    All scripts at /app/skills/. All env vars (REDIS_HOST, QDRANT_URL, etc.) set by Helm.
+    All scripts at /app/skills/. All env vars (REDIS_HOST, etc.) set by Helm.
 
   user: |
     Timezone: CET. Side project — be efficient. Escalate via Discord, keep messages concise.

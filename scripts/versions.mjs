@@ -62,6 +62,15 @@ function bindDockerVersions(root, manifest, args, read, outputs) {
 }
 
 function bindInfrastructureVersions(manifest, replaceOne) {
+  for (const name of ['spire', 'spire-crds', 'csi-driver-smb']) {
+    const version = manifest.platformCharts?.[name]?.version;
+    if (!/^\d+\.\d+\.\d+$/.test(version ?? '')) throw new Error('Invalid platform chart version: ' + name);
+    replaceOne('gitops/platform/bootstrap/' + name + '.yaml', new RegExp('chart: ' + name + '\\n      targetRevision: [^\\n]+'),
+      'chart: ' + name + '\n      targetRevision: ' + version);
+  }
+  if (!/^ghcr\.io\/berriai\/litellm:[a-zA-Z0-9._-]+@sha256:[a-f0-9]{64}$/.test(manifest.litellmProduction?.image ?? '')) throw new Error('Invalid production LiteLLM image');
+  replaceOne('gitops/platform/litellm/resources.yaml', /^          image: [^\n]+$/m, '          image: ' + manifest.litellmProduction.image);
+
   for (const [name, chart] of Object.entries({ prometheus: 'kube-prometheus-stack', loki: 'loki', alloy: 'alloy', promtail: 'promtail' })) {
     const version = manifest.monitoringCharts?.[name]?.version;
     if (!/^\d+\.\d+\.\d+$/.test(version ?? '')) throw new Error(`Invalid monitoring chart version: ${name}`);
@@ -69,19 +78,21 @@ function bindInfrastructureVersions(manifest, replaceOne) {
       `chart: ${chart}\n      targetRevision: ${version}`);
   }
 
-  const redis = manifest.redisProduction;
-  const image = redis?.image?.match(/^(registry-1\.docker\.io)\/(bitnami\/redis):([a-zA-Z0-9._-]+)@(sha256:[a-f0-9]{64})$/);
-  if (!image || !/^\d+\.\d+\.\d+$/.test(redis?.chartVersion ?? '')) throw new Error('Invalid production Redis chart version or image digest');
-  replaceOne('gitops/platform/values/redis.yaml', /^image:\n  registry: [^\n]+\n  repository: [^\n]+\n  tag: [^\n]+\n  digest: [^\n]+/m,
-    `image:\n  registry: ${image[1]}\n  repository: ${image[2]}\n  tag: ${image[3]}\n  digest: ${image[4]}`);
-  replaceOne('gitops/platform/bootstrap/redis.yaml', /chart: redis\n      targetRevision: [^\n]+/,
-    `chart: redis\n      targetRevision: ${redis.chartVersion}`);
+  for (const name of ['redis', 'postgresql']) {
+    const selected = manifest[`${name}Production`];
+    const image = selected?.image?.match(/^(registry-1\.docker\.io)\/(bitnami\/(?:redis|postgresql)):([a-zA-Z0-9._-]+)@(sha256:[a-f0-9]{64})$/);
+    if (!image || image[2] !== `bitnami/${name}` || !/^\d+\.\d+\.\d+$/.test(selected?.chartVersion ?? '')) throw new Error(`Invalid production ${name} chart version or image digest`);
+    replaceOne(`gitops/platform/values/${name}.yaml`, /^image:\n  registry: [^\n]+\n  repository: [^\n]+\n  tag: [^\n]+\n  digest: [^\n]+/m,
+      `image:\n  registry: ${image[1]}\n  repository: ${image[2]}\n  tag: ${image[3]}\n  digest: ${image[4]}`);
+    replaceOne(`gitops/platform/bootstrap/${name}.yaml`, new RegExp(`chart: ${name}\\n      targetRevision: [^\\n]+`),
+      `chart: ${name}\n      targetRevision: ${selected.chartVersion}`);
+  }
 
   for (const reference of [...Object.values(manifest.infrastructure ?? {}), ...Object.values(manifest.automation ?? {})]) {
     if (typeof reference !== 'string' || !/^[a-z0-9./_-]+:[a-zA-Z0-9._-]+@sha256:[a-f0-9]{64}$/.test(reference))
       throw new Error('Infrastructure and automation images require exact tags and digests');
   }
-  for (const name of ['tailscale', 'qdrant', 'redis', 'postgresql']) validateInfrastructureChartLock(manifest.infrastructureCharts?.[name]);
+  for (const name of ['tailscale', 'redis', 'postgresql']) validateInfrastructureChartLock(manifest.infrastructureCharts?.[name]);
   for (const name of ['redis', 'postgresql']) {
     const reference = manifest.infrastructure[name].match(/^([^/]+)\/(.+):([^:@]+)@(sha256:[a-f0-9]{64})$/);
     replaceOne(`my-values/infra/${name}-values.yaml`, /^image:\n  registry: [^\n]+\n  repository: [^\n]+\n  tag: [^\n]+\n  digest: [^\n]+/m,
@@ -93,10 +104,6 @@ function bindInfrastructureVersions(manifest, replaceOne) {
       new RegExp(`^${section}:\\n  image:\\n    repository: [^\\n]+\\n    digest: [^\\n]+`, 'm'),
       `${section}:\n  image:\n    repository: ${reference[1]}\n    digest: ${reference[3]}`);
   }
-  const qdrant = manifest.infrastructure.qdrant.match(/^(.+):([^:@]+)@(sha256:[a-f0-9]{64})$/);
-  replaceOne('my-values/infra/qdrant-values.yaml', /^  repository: [^\n]+$/m, `  repository: ${qdrant[1]}`);
-  replaceOne('my-values/infra/qdrant-values.yaml', /^  tag: [^\n]+$/m, `  tag: ${qdrant[2]}`);
-  replaceOne('my-values/infra/qdrant-values.yaml', /^    image: [^\n]+$/m, `    image: ${manifest.infrastructure.qdrantTest}`);
   replaceOne('my-values/infra/registry-mirror.yaml', /^          image: [^\n]+$/m,
     `          image: ${manifest.infrastructure.registryMirror}`);
   const envoy = manifest.infrastructure.envoy.match(/^(.+):([^:@]+)@(sha256:[a-f0-9]{64})$/);

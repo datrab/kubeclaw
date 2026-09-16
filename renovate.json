@@ -489,6 +489,74 @@
       "depNameTemplate": "alloy",
       "datasourceTemplate": "helm",
       "registryUrlTemplate": "https://grafana.github.io/helm-charts"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"postgresqlProduction\": \\{\\s*\"chartVersion\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "registry-1.docker.io/bitnamicharts/postgresql",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"postgresqlProduction\": \\{\\s*\"chartVersion\": \"[^\"\\n]+\",\\s*\"image\": \"(?<depName>[^\"@]+?):(?<currentValue>[^\"@]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
+      ],
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"spire\": \\{\\s*\"version\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "spire",
+      "datasourceTemplate": "helm",
+      "registryUrlTemplate": "https://spiffe.github.io/helm-charts-hardened/"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"spire-crds\": \\{\\s*\"version\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "spire-crds",
+      "datasourceTemplate": "helm",
+      "registryUrlTemplate": "https://spiffe.github.io/helm-charts-hardened/"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"csi-driver-smb\": \\{\\s*\"version\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "csi-driver-smb",
+      "datasourceTemplate": "helm",
+      "registryUrlTemplate": "https://kubernetes-csi.github.io/csi-driver-smb"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"litellmProduction\": \\{\\s*\"image\": \"(?<depName>[^\"@]+?):(?<currentValue>[^\"@]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
+      ],
+      "datasourceTemplate": "docker"
     }
   ],
   "timezone": "Etc/UTC",
@@ -509,6 +577,16 @@
   ],
   "packageRules": [
     {
+      "description": "Identity images follow the selected chart; retain the installed CSI override during adoption.",
+      "matchManagers": [
+        "helm-values"
+      ],
+      "matchFileNames": [
+        "gitops/platform/values/spire.yaml"
+      ],
+      "enabled": false
+    },
+    {
       "description": "Monitoring images follow the selected chart releases; Promtail remains frozen for retirement.",
       "matchManagers": [
         "helm-values"
@@ -527,7 +605,8 @@
         "helm-values"
       ],
       "matchFileNames": [
-        "gitops/platform/values/redis.yaml"
+        "gitops/platform/values/redis.yaml",
+        "gitops/platform/values/postgresql.yaml"
       ],
       "enabled": false
     },
@@ -578,7 +657,13 @@
           "gitops/platform/bootstrap/prometheus.yaml",
           "gitops/platform/bootstrap/loki.yaml",
           "gitops/platform/bootstrap/alloy.yaml",
-          "gitops/platform/bootstrap/promtail.yaml"
+          "gitops/platform/bootstrap/promtail.yaml",
+          "gitops/platform/values/postgresql.yaml",
+          "gitops/platform/bootstrap/postgresql.yaml",
+          "gitops/platform/bootstrap/spire.yaml",
+          "gitops/platform/bootstrap/spire-crds.yaml",
+          "gitops/platform/bootstrap/csi-driver-smb.yaml",
+          "gitops/platform/litellm/resources.yaml"
         ],
         "executionMode": "branch"
       }

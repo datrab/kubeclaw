@@ -56,7 +56,7 @@ storage are checked before mutations. TLS validation uses the actual selected
 Service DNS. The migration renderer derives fresh storage/snapshot PVCs and a
 bounded network-isolated transfer Pod from the locked chart. The explicit first
 restore installation is documented; ordinary orphaned-PVC checks stay enabled.
-See [Qdrant migration](../../../operations/qdrant-migration.md).
+The Qdrant migration implementation described here was retired on 2026-09-16; the evidence below is historical.
 
 ## Shared chart/network gate and raw evidence
 

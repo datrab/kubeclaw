@@ -49,7 +49,7 @@ aggregation only. Check service health in each Application. This avoids blocking
 root on a pending manual service sync or the runtime-only Lua health customization.
 
 Next independent applications: Ops (Codex + MCP), Tailscale, Cilium after network
-migration, Redis, PostgreSQL, Qdrant, LiteLLM, both registries, Prometheus/Grafana,
+migration, Redis, PostgreSQL, LiteLLM, both registries, Prometheus/Grafana,
 Loki, Promtail, SPIRE, SPIRE CRDs and SMB CSI. Preserve each installed release's
 name, version and non-secret values during handover. Operator-owned children stay
 with their operator. Runtime Buster/Nova/Prism use the existing runtime GitOps
@@ -154,3 +154,131 @@ Grafana uses the verified existing `prometheus-grafana` Secret keys `admin-user`
 5. If Alloy cannot ingest, stop its DaemonSet before temporarily removing the retirement selector from Promtail; the Argo applications have no self-heal. Review positions before a later retry because Alloy only imports legacy positions when its own positions do not exist. After successful cutover, Promtail stays as a visible, disabled legacy Application until separately cleaned up. Do not prune/delete Alloy positions or the monitoring PVCs as part of that cleanup.
 
 The collector configuration was converted from the installed Promtail 6.17.1 defaults plus the provided client values using Alloy v1.19.2 and validated with that binary. It retains CRI parsing, relabel rules and log paths. `HOSTNAME` is explicitly the Kubernetes node name to restrict discovery to the local node. Promtail EOL: https://grafana.com/docs/grafana-cloud/observe-and-act/send-data/alloy/set-up/migrate/from-promtail/ . Loki upgrade notes: https://github.com/grafana-community/helm-charts/tree/main/charts/loki#upgrading .
+
+## PostgreSQL adoption
+
+`bootstrap/postgresql.yaml` adopts release `postgresql` in namespace `kubeclaw`
+with manual sync, no prune and no deletion finalizer. The platform root registers
+this Application automatically; inspect its diff before syncing the service.
+
+The chart remains 18.5.15. Its appVersion label says 18.3.0, but the operator
+verified `postgres --version` reports 18.1 in the running container. The selected
+image digest is therefore the observed running digest, not the newer bootstrap
+image. `versions.json` holds the separate `postgresqlProduction` selection;
+version generation and Renovate update proposals target the adoption values.
+Review database compatibility and backups before accepting future image changes,
+particularly updates of the historical `latest` tag. Argo never auto-syncs this
+Application.
+
+The values retain standalone mode, the `litellm` database/user, existing Secret
+`postgresql-secrets`, its password key names, a 1-GiB `data` claim template and
+requests 50m/128Mi with limits 250m/256Mi. The resulting StatefulSet remains
+`postgresql`, with Service `postgresql` and headless Service `postgresql-hl`.
+The existing claim is `data-postgresql-0`. No password is generated or committed.
+
+Pinning the image changes the Pod template from `:latest` to the same observed
+digest and can restart the single database Pod. Review the StatefulSet diff,
+then manually sync without Force, Replace or Prune. Verify the Application is
+Synced/Healthy, the StatefulSet is Ready, the claim remains bound to its original
+volume and LiteLLM still connects. Do not uninstall the old Helm release or use
+Helm upgrade/rollback after Argo takes ownership; its history is historical.
+
+### Selected 18.6 update (2026-09-16)
+
+After recording the original 18.1 installation, the selected production chart is
+18.11.3 and the image digest is
+`sha256:b69d1fca390fb131639e86e820f248acfc5d911339dc884796f8009260c598d7`.
+Docker registry image metadata identifies it as 18.6.0; live binary validation
+remains required after sync. The registry chart was pulled and rendered; its
+StatefulSet selector, serviceName, volumeClaimTemplates and podManagementPolicy
+match the original 18.5.15 render. The new chart additionally supplies a Pod-level
+RuntimeDefault seccomp profile and the image's FIPS provider configuration path.
+The existing secret, 1-GiB claim, database name and resource requests/limits stay.
+
+Run `KUBE_CONTEXT=... bash scripts/prepare-postgresql-production-upgrade.sh`
+on the control node before syncing. It saves a private SQL cluster dump and
+prints extension/index/replication metadata for the upgrade review. A completed
+dump is not a tested restore. Keep the directory outside Git and do not paste its
+SQL contents. After inspecting relevant release-note follow-ups, manually sync
+PostgreSQL without Force/Replace/Prune and verify the binary version, StatefulSet,
+PVC identity and LiteLLM connectivity.
+
+PostgreSQL 18.x does not require pg_upgrade or dump/restore to apply 18.6, but
+extension/index follow-up can be required when skipping from 18.1. Review the
+[18.2 migration notes](https://www.postgresql.org/docs/18/release-18-2.html) and
+[18.6 migration notes](https://www.postgresql.org/docs/release/18.6/).
+
+Renovate discovers production chart and image pins from `versions.json`, and its
+trusted updater writes the generated values/Application fields. The workflow
+is scheduled daily at 04:15 UTC, with updates proposed for review; this service
+has no automatic Argo sync. At inspection on 2026-09-16, both repository variable
+`DEPENDENCY_APP_ID` and secret `DEPENDENCY_APP_PRIVATE_KEY` were absent and the
+last workflow failed at `Require updater identity`. Configure the updater GitHub
+App (installed on this repository with contents/pull-request write permissions),
+then rerun `Dependency updates` and verify success before claiming monitoring is
+operational. Never commit its private key.
+# LiteLLM, SPIRE and SMB adoption
+
+These four Applications use manual sync: `litellm`, `spire-crds`, `spire`,
+and `csi-driver-smb`. The `platform` root registers their definitions only.
+Identity and storage drivers have separate AppProjects. Cilium is not installed
+by this handover.
+
+The installed charts are preserved: SPIRE 0.30.0, SPIRE CRDs 0.6.0, SMB CSI
+1.20.0. SPIRE's top-level chart reports appVersion 1.14.5, but its bundled
+server/agent charts render 1.15.2; the live server and agent were confirmed as
+1.15.2. Controller Manager remains 0.7.0, SPIFFE CSI 0.2.13 and its registrar
+v2.15.0. `versions.json` owns the chart selections and LiteLLM image digest;
+Renovate proposes changes through the existing dependency workflow. That
+workflow requires its configured GitHub App credentials to be operational.
+
+LiteLLM adopts only Deployment and Service, retaining NodePort 30050 and the
+observed running image digest. The existing `litellm-config`, `litellm-secrets`
+and `google-sa-key` remain externally managed. The repository's older LiteLLM
+ConfigMap must not be applied as part of this handover. Pinning the image causes
+one Recreate rollout; there is a brief proxy interruption.
+
+SPIRE's existing `spire-data-spire-server-0` PVC remains 1Gi. Helm lifecycle hooks
+are disabled for Argo rendering. This chart emits an `Ignore` webhook bootstrap
+default even with hooks disabled. Argo therefore preserves the existing
+webhook failure policies and controller-maintained CA bundles using scoped
+ignoreDifferences plus RespectIgnoreDifferences. This is an **adoption-only**
+configuration: it requires existing healthy webhooks with `Fail` policies and
+is not a fresh-install recipe. Changes to those policies require a separate
+review; Argo does not enforce them while this exception is present.
+
+SPIRE uses server-side diff for API defaulting. The existing webhook list can
+still retain its earlier order after server-side apply. If its only remaining
+difference is the order of the two entries, run
+`python3 scripts/align-spire-webhook-order.py --apply` on the controlnode with
+KUBE_CONTEXT set, then hard-refresh SPIRE. This performs an atomic JSON Patch
+move guarded by resourceVersion and both webhook names, preserving the entire
+entry contents including CA bundles. No Pod restart or resource replacement is
+needed. The script is idempotent; an unexpected webhook set fails closed. For the existing
+StatefulSet, only `apiVersion` and `kind` inside volumeClaimTemplates are ignored;
+PVC names, storage requests and storage classes remain part of the comparison.
+After this Application-definition change, refresh `platform`, wait for its
+sync, then hard-refresh `spire`. No forced StatefulSet replacement is needed.
+
+On the controlnode, before syncing any of these services:
+
+```bash
+cd ~/kubeclaw
+git pull --ff-only
+export KUBE_CONTEXT="$(kubectl config current-context)"
+python3 scripts/check-platform-adoption-live.py
+```
+
+If the check fails, stop and investigate its reported prerequisite. Otherwise
+refresh `platform` in Argo, then sync `spire-crds` first. After it succeeds,
+sync `spire`, `csi-driver-smb` and `litellm` individually; the latter two have no
+ordering dependency on SPIRE. Leave Prune, Force and Replace disabled. Review
+each diff before sync. Do not uninstall the old Helm releases: that would
+delete resources now managed by Argo.
+
+Verify all four Applications are Synced/Healthy, the existing SPIRE PVC is still
+Bound, server/agent/CSI Pods are ready, and LiteLLM can serve a request using its
+existing database and model configuration. The repository check
+`node scripts/check-platform-services.mjs` renders real charts and verifies
+resource ownership, project permissions, storage and external config references;
+it does not substitute for these live checks.

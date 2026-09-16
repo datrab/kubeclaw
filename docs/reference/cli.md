@@ -17,7 +17,7 @@ Generated from: `scripts/deploy.sh`
 | --- | --- |
 | `./scripts/deploy.sh setup` | Create namespace + secrets + helm repos |
 | `./scripts/deploy.sh secrets` | Create/copy/prompt required Kubernetes secrets |
-| `./scripts/deploy.sh infra` | Deploy required infra plus optional Qdrant/PostgreSQL/LiteLLM |
+| `./scripts/deploy.sh infra` | Deploy required infra plus optional PostgreSQL/LiteLLM |
 | `./scripts/deploy.sh tailscale` | Deploy Tailscale Kubernetes Operator |
 | `./scripts/deploy.sh nova-production-preflights <image>` | Run all required proofs after all source cutovers |
 | `./scripts/deploy.sh agents` | Deploy agents (Nova + Buster) |
@@ -77,7 +77,6 @@ Generated from: `scripts/deploy.sh`
 ## Component Flags
 
 - `KUBECLAW_DEPLOY_POSTGRESQL`
-- `KUBECLAW_DEPLOY_QDRANT`
 - `KUBECLAW_DEPLOY_LITELLM`
 - `TAILSCALE_OPERATOR_ENABLED`
 - `ALLOW_PARTIAL_INFRA`
@@ -96,7 +95,7 @@ Generated from: `scripts/deploy.sh`
 | Command group | Runtime owner | Expected artifacts or resources | Failure signals |
 | --- | --- | --- | --- |
 | setup and secrets | `scripts/deploy.sh`; `my-values/setup-secrets.sh` | namespace, required Kubernetes Secrets, Helm repositories, optional workspace namespace record | missing command, invalid secret setup mode, missing required Secret keys |
-| infra | `scripts/deploy.sh`; `my-values/infra/*.yaml` | Redis, optional PostgreSQL/Qdrant/LiteLLM, registry helpers, NetworkPolicies, namespace fence | rollout timeout, Helm repo failure, invalid manifest, partial infra warning when `ALLOW_PARTIAL_INFRA=true` |
+| infra | `scripts/deploy.sh`; `my-values/infra/*.yaml` | Redis, optional PostgreSQL/LiteLLM, registry helpers, NetworkPolicies, namespace fence | rollout timeout, Helm repo failure, invalid manifest, partial infra warning when `ALLOW_PARTIAL_INFRA=true` |
 | agents | `charts/kubeclaw/templates/*.yaml`; `my-values/nova-values.yaml`; `my-values/buster-values.yaml` | `Deployment/agent-nova`, `Deployment/agent-buster`, Services, PVCs, runtime ConfigMaps | Helm render failure, image pull failure, init-container Git/config/skill error |
 | image, code, and smoke | `scripts/deploy.sh`; chart health script | targeted rollouts, bundle/image selection, pod smoke output | rollout timeout, bundle download failure, gateway health failure, Redis/LiteLLM dependency failure |
 | teardown | `scripts/deploy.sh` | removed Helm releases/resources according to selected teardown scope | confirmation prompt mismatch, retained PVCs or Secrets that need manual review |

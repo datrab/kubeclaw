@@ -9,7 +9,7 @@ export const nativeTests = [
   'worker-observation-durability.test.mts',
 ];
 export const serviceTests = [
-  'archviewer-native.test.mjs', 'qdrant-native.test.mjs',
+  'archviewer-native.test.mjs',
   'redis-durability.test.mts', 'redis-migration.test.mts', 'redis-transport.test.mts',
 ];
 export function selectTests(files, group, shard = 1, shards = 1) {
@@ -30,7 +30,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
   const files = selectTests(fs.readdirSync(directory).filter(file => /\.test\.(mts|mjs)$/.test(file)), group, Number(shard), Number(shards));
   if (files.length === 0) throw new Error('Empty reliability shard');
   if (group === 'services') {
-    for (const name of ['ARCHVIEWER_TEST_NGINX', 'QDRANT_TEST_BINARY', 'REDIS_SERVER', 'REDIS_SOURCE_SERVER']) {
+    for (const name of ['ARCHVIEWER_TEST_NGINX', 'REDIS_SERVER', 'REDIS_SOURCE_SERVER']) {
       if (!process.env[name]) throw new Error(`Missing native test prerequisite: ${name}`);
       fs.accessSync(process.env[name], fs.constants.X_OK);
     }

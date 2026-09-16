@@ -20,7 +20,6 @@
 #   TAILSCALE_OAUTH_CLIENT_ID         Optional bootstrap value for tailscale/operator-oauth
 #   TAILSCALE_OAUTH_CLIENT_SECRET     Optional bootstrap value for tailscale/operator-oauth
 #   KUBECLAW_DEPLOY_POSTGRESQL        true|false (default: true)
-#   KUBECLAW_DEPLOY_QDRANT            true|false (default: true; qdrant-tls must be provisioned first)
 #   KUBECLAW_DEPLOY_LITELLM           true|false (default: true)
 #   TAILSCALE_OPERATOR_ENABLED        true|false (default: true)
 # =============================================================================
@@ -35,7 +34,6 @@ SECRET_NAME="openclaw-shared-secrets"
 SECRET_SETUP_MODE="${KUBECLAW_SECRET_SETUP_MODE:-auto}"
 SECRETS_OVERWRITE="${KUBECLAW_SECRETS_OVERWRITE:-false}"
 KUBECLAW_DEPLOY_POSTGRESQL="${KUBECLAW_DEPLOY_POSTGRESQL:-true}"
-KUBECLAW_DEPLOY_QDRANT="${KUBECLAW_DEPLOY_QDRANT:-true}"
 KUBECLAW_DEPLOY_LITELLM="${KUBECLAW_DEPLOY_LITELLM:-true}"
 TAILSCALE_OPERATOR_ENABLED="${TAILSCALE_OPERATOR_ENABLED:-true}"
 POSTGRES_LITELLM_PASSWORD=""
@@ -1058,9 +1056,6 @@ main() {
   setup_pipeline_source_attestation_secret
   setup_redis_secret
 
-  if component_enabled "$KUBECLAW_DEPLOY_QDRANT"; then
-    node "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/scripts/qdrant-secrets.mjs" ensure-auth "$NAMESPACE"
-  fi
 
   if component_enabled "$KUBECLAW_DEPLOY_POSTGRESQL"; then
     setup_postgresql_secret

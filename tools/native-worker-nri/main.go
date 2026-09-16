@@ -82,7 +82,9 @@ func validateConfiguration(config configuration) error {
 }
 
 func (p *plugin) Configure(_ context.Context, extra, runtime, version string) (api.EventMask, error) {
-	if strings.TrimSpace(extra) != "" || runtime != "containerd" || version != p.config.ContainerdVersion {
+	// Kubernetes and NRI may report the same containerd build with or without v.
+	// Preserve the entire release/build suffix when comparing the selected version.
+	if strings.TrimSpace(extra) != "" || runtime != "containerd" || strings.TrimPrefix(version, "v") != strings.TrimPrefix(p.config.ContainerdVersion, "v") {
 		return 0, errors.New("NATIVE_NRI_SELECTED_RUNTIME_REQUIRED")
 	}
 	return 0, nil // Subscribe to the implemented CreateContainer event through the original SDK.
@@ -108,6 +110,28 @@ func (p *plugin) CreateContainer(_ context.Context, pod *api.PodSandbox, contain
 	return adjustment, nil, nil
 }
 
+func newPluginStub(config configuration) (stub.Stub, error) {
+	// The launcher supplies identity through the environment. The SDK rejects
+	// setting it again through options, even when the values are identical.
+	var options []stub.Option
+	for _, identity := range []struct {
+		environment string
+		expected string
+		fallback stub.Option
+	}{
+		{api.PluginNameEnvVar, "kubeclaw-native", stub.WithPluginName("kubeclaw-native")},
+		{api.PluginIdxEnvVar, "10", stub.WithPluginIdx("10")},
+	} {
+		value := os.Getenv(identity.environment)
+		if value == "" {
+			options = append(options, identity.fallback)
+		} else if value != identity.expected {
+			return nil, errors.New("NATIVE_NRI_PLUGIN_IDENTITY_INVALID")
+		}
+	}
+	return stub.New(&plugin{config: config}, options...)
+}
+
 func run() error {
 	if os.Getuid() != 0 {
 		return errors.New("NATIVE_NRI_HOST_ROOT_REQUIRED")
@@ -116,7 +140,7 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	client, err := stub.New(&plugin{config: config}, stub.WithPluginName("kubeclaw-native"), stub.WithPluginIdx("10"))
+	client, err := newPluginStub(config)
 	if err != nil {
 		return err
 	}

@@ -1,0 +1,55 @@
+global:
+  k8s:
+    clusterDomain: cluster.local
+  spire:
+    caSubject:
+      commonName: kubeclaw.internal
+      country: DE
+      organization: KubeClaw
+    clusterName: kubeclaw-cluster2
+    namespaces:
+      create: false
+      server:
+        create: false
+        name: spire-server
+      system:
+        create: true
+        name: spire-system
+    recommendations:
+      enabled: true
+      namespaceLayout: true
+      namespacePSS: true
+      priorityClassName: true
+      prometheus: false
+      securityContexts: true
+      strictMode: true
+    trustDomain: kubeclaw.internal
+  installAndUpgradeHooks:
+    enabled: false
+  deleteHooks:
+    enabled: false
+spiffe-csi-driver:
+  image:
+    tag: 0.2.13
+spiffe-oidc-discovery-provider:
+  enabled: false
+spire-server:
+  controllerManager:
+    identities:
+      clusterSPIFFEIDs:
+        default:
+          enabled: true
+          namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              kubeclaw.dev/worker-trust: 'true'
+          spiffeIDTemplate: spiffe://{{ .TrustDomain }}/ns/{{ .PodMeta.Namespace }}/sa/{{ .PodSpec.ServiceAccountName }}
+        oidc-discovery-provider:
+          enabled: false
+        test-keys:
+          enabled: false
+    installAndUpgradeHook:
+      enabled: false
+  jwtSVIDSupport: false
+tornjak-frontend:
+  enabled: false

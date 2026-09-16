@@ -23,6 +23,6 @@ maintainers:
     url: https://github.com/datrab
 icon: https://raw.githubusercontent.com/datrab/kubeclaw/main/docs/logo.png
 
-# Infrastructure (Redis, Qdrant, PostgreSQL, LiteLLM) is deployed separately
+# Infrastructure (Redis, PostgreSQL, LiteLLM) is deployed separately
 # via deploy.sh using their official Helm charts. No subchart dependencies needed.
 # This keeps the agent chart lightweight and avoids duplicate installs per agent.

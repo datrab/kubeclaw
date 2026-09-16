@@ -13,6 +13,16 @@ import { readNativeWorkerPoolPolicy } from '../../../skills/worker/core/worker/n
 const source = load(fs.readFileSync('my-values/infra/native-worker-pools.yaml', 'utf8'));
 const policy = { ...source, nodeName: 'native-policy-test', runtime: { containerdVersion: 'v2.2.0-k3s1' } };
 
+test('pool service retains a process and waits for setup readiness', () => {
+  const unit = renderNativeWorkerNode(policy)['kubeclaw-native-pools.service'];
+  assert.match(unit, /^Type=notify$/m);
+  assert.match(unit, /^NotifyAccess=all$/m);
+  assert.match(unit, /^ExecStart=.*native-node-policy.json --serve$/m);
+  assert.match(unit, /^DelegateSubgroup=setup$/m);
+  assert.match(unit, /^KillMode=control-group$/m);
+  assert.doesNotMatch(unit, /RemainAfterExit|Type=oneshot|Restart=always/);
+});
+
 test('real generated bundle binds both role readers, selected runtime and actual systemd unit parser', () => {
   assert.throws(() => validateNativeNodePolicy(source), /NATIVE_NODE_IDENTITY_REQUIRED/);
   assert.throws(() => renderNativeWorkerNode({ ...source, nodeName: policy.nodeName }), /SELECTED_CONTAINERD_VERSION_REQUIRED/);
