@@ -100,7 +100,7 @@ It uses three scopes so that infrastructure does not look like pipeline authorit
 | Scope | Included systems | Requirement |
 | --- | --- | --- |
 | Pipeline control and work | Nova, Nova Core, plugins, Forge, Echo, Buster, Prism, and Worker Core. | Required for their declared roles and stages. |
-| Showcase baseline | Git, durable stores, Redis, PostgreSQL, BuildKit, local OCI registry, Docker Hub mirror, and Tailscale. | Required before the complete lab claims readiness. |
+| Showcase baseline | Kubernetes, storage, DNS, SPIRE, Git, Redis, Qdrant, PostgreSQL, BuildKit, both registries, and Tailscale. | Required before the complete lab claims readiness. |
 | Optional platform extensions | Argo CD, Cilium, monitoring, and the Ops Pod. | Valuable platform capabilities, but not pipeline prerequisites. |
 
 Kubernetes networking remains required.

@@ -42,7 +42,7 @@ This preserves incoming links without maintaining a second lifecycle explanation
 | Important failures | The lifecycle page explains retry, repair budgets, approval, resume, restart, cancellation, escalation, and uncertain effects. |
 | Precise diagrams | Nine diagrams have direct text alternatives. They cover authority, execution, dependencies, platform layers, trust, storage, and recovery. |
 | Glossary | The glossary defines component, lifecycle, identity, trust, and evidence terms. It also separates similar terms. |
-| Code evidence | Forty-two source-evidence boxes link claims to revision-bound code ranges and applicable decision records. |
+| Code evidence | Forty-three source-evidence boxes link claims to revision-bound code ranges and applicable decision records. |
 | Reader routing | Each architecture page links to the matching operations, extension, status, issue, or decision page. |
 
 ## Decision Explanation Standard
@@ -88,10 +88,10 @@ AP06 therefore does not claim final formal certification.
 | `npm run docs:check:refs` | Pass: 1,749 local links and 823 repository-path references. |
 | `npm run docs:check:coverage` | Pass. The topic-map references remain current. |
 | `npm run verify:docs:controlled-language` | Pass. |
-| Revision-bound source audit | Pass: all 98 checked architecture code links resolve to existing files and valid line ranges. |
+| Revision-bound source audit | Pass: all 101 checked architecture code links resolve to existing files and valid line ranges. |
 | Local link audit | Pass through `npm run docs:check:refs`; linked files exist. |
 | Architecture presentation check | Pass: all nine Mermaid diagrams have a direct text alternative; all source-evidence boxes contain a revision-bound code link. |
-| AP06 content measures | Pass: 2,052 lines, 13,706 words, 42 source-evidence boxes, nine diagrams, and 55 glossary terms. |
+| AP06 content measures | Pass: 2,085 lines, 13,981 words, 43 source-evidence boxes, nine diagrams, and 55 glossary terms. |
 | `npm run docs:publication:check` | No AP06 page error. The complete check remains red for pre-existing catalogue and legacy-page findings assigned to AP08, AP09, and AP11. |
 
 The verification does not claim a fresh runtime or live-cluster test.

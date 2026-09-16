@@ -41,10 +41,13 @@ The complete KubeClaw learning lab requires these pipeline-facing services:
 
 | Service | Why the baseline requires it | Active consumer |
 | --- | --- | --- |
+| Kubernetes, DNS, network, and storage | Supply execution, service discovery, traffic boundaries, and durable volumes. | All deployed roles and services. |
+| SPIRE and Envoy | Supply exact workload identity and protected service routes. | Nova, Buster, and Prism worker paths. |
 | Git source origin | Supplies exact source revisions. | Nova workspaces and source adapters. |
 | Nova durable storage | Preserves canonical run state and recovery evidence. | Nova Core. |
 | Redis | Supplies shared transport, health, telemetry, and observer paths. | Nova role and selected integrations. |
-| Model gateway and its PostgreSQL | Supplies the selected model and embedding path. | Role gateways and model-backed specialists. |
+| Qdrant | Stores confidence-weighted vector memory. | Role gateways and memory search. |
+| LiteLLM and its PostgreSQL | Supply the selected embedding path and gateway state. | OpenClaw memory search. |
 | Prism PostgreSQL | Preserves design and approval state. | Prism Control and bounded Prism clients. |
 | Rootless BuildKit | Builds project images in the Buster boundary. | Buster container-build provider. |
 | Writable local OCI registry | Stores produced images by immutable digest. | BuildKit, Buster, and Kubernetes nodes. |
@@ -61,9 +64,10 @@ This difference is a deployment profile, not a change to Nova Core semantics.
 flowchart LR
     Git[Git source origin] -->|fixed revision| Nova[Nova role]
     Nova --> Core[Nova Core]
-    Nova -->|model requests| Model[LiteLLM or another model gateway]
+    Nova -->|embedding requests| Model[LiteLLM gateway]
     Model --> ModelDB[(LiteLLM PostgreSQL)]
     Nova -->|events or messages| Redis[(Redis)]
+    Nova -->|memory search| Qdrant[(Qdrant vector memory)]
     Core -->|fixed test plan| Buster[Buster role]
     Buster -->|container build| BuildKit[Rootless BuildKit]
     BuildKit -->|push image| Registry[(Writable OCI registry)]
@@ -78,7 +82,7 @@ flowchart LR
 
 Text version: Git supplies a fixed source revision to Nova.
 Nova Core controls the run.
-The showcase platform provides Redis, model services, Prism, BuildKit, both registry services, and Tailscale.
+The showcase platform provides Redis, Qdrant, LiteLLM, Prism, BuildKit, both registry services, and Tailscale.
 The active graph determines which service receives work during one run.
 Buster and Prism return bounded results to Core.
 
@@ -174,6 +178,33 @@ Do not infer missing pipeline events from an empty Redis stream.
 > [The adapter accepts bounded publish operations and resolves its password through a secret capability](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugins/redis-transport/src/adapter.ts#L57-L84).
 >
 > [Nova writes its canonical run journal before the runner controls stage progress](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L36-L43).
+
+## Qdrant: Vector Memory, Not Run State
+
+Qdrant is mandatory in the showcase deployment.
+It stores the vector collections used for confidence-weighted memory search.
+It does not store Nova lifecycle state, Buster evidence, or Prism approvals.
+
+The selected service requires TLS and two distinct API keys.
+The workload health path uses the read-only key.
+It rejects a non-HTTPS endpoint and verifies the configured certificate authority.
+
+**Why this design exists:** Semantic memory search needs a vector index.
+Keeping it separate prevents search data from becoming an undeclared pipeline journal.
+
+**Failure effect:** Memory search and its readiness check fail.
+The complete showcase baseline is not ready, but existing Nova journals remain authoritative.
+
+**Recovery rule:** Restore the expected collections and aliases from a verified snapshot.
+Then verify TLS, read-only access, collection identity, and application queries.
+
+> **Source evidence — bounded vector-memory service**
+>
+> [The chart names Qdrant as confidence-weighted vector memory and selects separate trust inputs](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/kubeclaw/values.yaml#L227-L240).
+>
+> [The health path requires HTTPS, a read-only key, and certificate verification](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/kubeclaw/templates/deployment.yaml#L850-L862).
+>
+> [The selected service configuration requires distinct administrative and read-only keys plus TLS](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/my-values/infra/qdrant-values.yaml#L1-L44).
 
 ## PostgreSQL: Two Different Data Owners
 
@@ -305,6 +336,7 @@ Do not create a second exposure for an uncertain attempt.
 | Git origin unavailable | Required source revision can be unavailable. | Restore the same revision or use a verified existing snapshot. |
 | Nova run storage unavailable | Canonical state cannot be proved. | Stop mutation and restore the authoritative store. |
 | Redis unavailable | Required transport and projection paths stop. | Restore Redis and replay derived delivery. |
+| Qdrant unavailable | Memory search and required showcase readiness stop. | Restore verified collections and aliases, then test read-only queries. |
 | LiteLLM PostgreSQL unavailable | Selected model gateway can fail. | Restore its matched database before model-backed work. |
 | Prism PostgreSQL unavailable | Prism state work stops. | Restore the matched Prism database and artifacts. |
 | BuildKit unavailable | Image-build stages stop. | Restore the same configured builder and resume by attempt identity. |
@@ -318,6 +350,7 @@ A replacement is safe only when it preserves the contract at the boundary.
 
 - A Git service must return the exact required revision and repository bytes.
 - A Redis service must preserve authentication, stream identity, and deduplication behavior.
+- A Qdrant service must preserve collection identity, aliases, vector data, TLS, and read-only access.
 - A PostgreSQL replacement must preserve the data owner's supported backup and migration contract.
 - A BuildKit replacement must return a verifiable immutable image result.
 - A registry replacement must preserve digest reads, authentication, trust, and retained manifests.

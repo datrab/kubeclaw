@@ -49,10 +49,11 @@ Stop if the environment depends on an item in the second list and no operator ow
 | CNI | Existing cluster dependency; Flannel and Cilium are separate architecture choices | Selected implementation, DNS, policy enforcement, and rollback path |
 | Argo CD | Optional deployment owner | Repository access, tracking mode, revision, health, and exclusive ownership |
 | Storage | Existing StorageClass and CSI | Binding, reclaim behavior, capacity, snapshot or backup, and restore |
+| Redis, Qdrant, and PostgreSQL | Required showcase data services | Authentication, TLS where selected, persistence, capacity, backup, migration, and restore |
 | Registry, mirror, and BuildKit | Required showcase services | Authenticated push, uncached pull, cache behavior, storage, isolation, and garbage collection |
 | DNS and Tailscale | Required showcase access and exposure layers | Positive and negative identity checks plus independent recovery |
 | Monitoring | Optional platform evidence layer | Metric retention, log delivery, dashboard access, capacity, and recovery |
-| SPIRE | Installed by the infrastructure command when enabled | Server persistence, agents, CSI, SVID, and expiry ownership |
+| SPIRE | Required showcase workload-identity service | Server persistence, agents, CSI, SVID, and expiry ownership |
 
 Use [Continuous GitOps](../../deployment/continuous-gitops.md) when Argo owns deployment.
 Use [Registry Clients](../../operations/registry-clients.md) for registry and BuildKit preparation.
