@@ -167,3 +167,21 @@ For the next Argo adoption, the observed LiteLLM PostgreSQL release is
 Secret `postgresql-secrets` (keys `postgres-password` and `litellm-password`),
 1-GiB PVC, requests 50m/128Mi, limits 250m/256Mi. This is observed configuration,
 not permission to overwrite the separate desired infrastructure defaults.
+
+## Inspect the remaining platform services together
+
+Before adopting LiteLLM, SPIRE, SPIRE CRDs and SMB CSI, run on the control node:
+
+```bash
+export KUBE_CONTEXT="$(kubectl config current-context)"
+python3 scripts/inspect-platform-adoption.py
+```
+
+The command reads the three Helm releases, LiteLLM workload/service references,
+a hash of its configuration, SPIRE PVC bindings and installed CSI driver names.
+It does not query Secret objects or mutate the cluster. Common credential fields
+in Helm values are redacted, and multiline values and literal container environment
+values are omitted. ConfigMap content is hashed rather than printed. The output
+is an adoption inventory, not a deployable manifest. All four Applications will
+remain manually synced, and SPIRE CRDs must be established before the SPIRE chart
+is synced. Do not mix the storage/identity handover with the Cilium migration.
