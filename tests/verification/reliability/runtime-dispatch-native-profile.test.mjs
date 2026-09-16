@@ -123,6 +123,9 @@ if(process.argv[2]==='--child'){
     let result,error;
     try{result=await(mode==='pipeline'?engine.runPipelineV2(p,definition,runId):engine.recoverPipelineV2(p,definition,runId));}
     catch(e){error=e.message;}
+    if(mode==='pipeline')assert.equal(error,undefined,`pipeline setup failed: ${error}`);
+    if(mode==='pipeline'&&result.status!=='blocked')assert.fail(JSON.stringify({result,
+      events:fs.readFileSync(path.join(location,'events.jsonl'),'utf8').trim().split('\n').slice(-5).map(line=>JSON.parse(line))}));
     const snapshot=snapshots.readRunSnapshot(location);
     const journal=new core.FileEffectJournal(path.join(location,'effects.jsonl'));
     const request=(await journal.recoveryEntries()).find(x=>x.request.capability==='runtime.dispatch')?.request;
@@ -185,7 +188,7 @@ if(process.argv[2]==='--child'){
   }
   for(const version of ['v1','v2','v3','v4'])test(`actual ${version} run creation carries frozen transport choice; terminal reopen preserves prefix`,async t=>{
     const f=await fixture(t),directory=path.join(f.root,'pipeline');
-    const first=await f.child(directory,version,'pipeline');assert.equal(first.result.status,'blocked');assert.equal(f.requests.length,1);
+    const first=await f.child(directory,version,'pipeline');assert.equal(first.result.status,'blocked',JSON.stringify(first.result));assert.equal(f.requests.length,1);
     assert.equal(first.snapshotVersion,`run-snapshot.${version}`);assert.equal(f.requests[0].body.tool,'sessions_spawn');
     const file=path.join(first.location,'effects.jsonl'),prefix=fs.readFileSync(file);
     const reopened=await f.child(directory,version,'recover','none',version==='v1'?'en_US.UTF-8':'sv_SE.UTF-8');
