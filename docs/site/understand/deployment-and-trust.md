@@ -103,7 +103,7 @@ Protected routes fail closed when those dependencies fail.
 
 > **Source evidence — application identity check**
 >
-> [Worker Core parses and authorizes proxied SPIFFE identities](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/worker/core/worker/trust.ts#L1-L53).
+> [Worker Core parses and authorizes proxied SPIFFE identities](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/worker/core/worker/trust.ts#L1-L52).
 >
 > [Prism workloads receive separate trusted caller identities](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/workloads.yaml#L127-L138).
 >

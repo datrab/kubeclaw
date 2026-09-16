@@ -173,7 +173,7 @@ Its current result path does not have Buster's Ed25519 artifact signature.
 
 > **Source evidence — baseline handoff**
 >
-> [`toBusterPlan()` and `toForgeAssignments()` derive bounded handoffs from one baseline](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/prism/pipeline-adapter/index.ts#L20-L68).
+> [`toBusterPlan()` and `toForgeAssignments()` derive bounded handoffs from one baseline](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/prism/pipeline-adapter/index.ts#L20-L57).
 >
 > [The Prism role includes Worker Core and the Prism engine](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/prism.json#L1-L28).
 >

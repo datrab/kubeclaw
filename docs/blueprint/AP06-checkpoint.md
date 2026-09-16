@@ -1,6 +1,7 @@
 # AP06 Completion Checkpoint
 
 Date: 2026-09-15
+Rechecked: 2026-09-16
 Status: complete
 Scope: W04, W05, and W06
 Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
@@ -77,9 +78,12 @@ AP06 therefore does not claim final formal certification.
 | Check | Result |
 | --- | --- |
 | `git diff --check` | Pass. |
-| `npm run docs:check:refs` | Pass: 1,621 local links and 797 repository-path references. |
+| `npm run docs:check:refs` | Pass: 1,631 local links and 797 repository-path references. |
 | `npm run docs:check:coverage` | Pass. The topic-map references remain current. |
 | `npm run verify:docs:controlled-language` | Pass. |
+| Revision-bound source audit | Pass: all 59 code links resolve to existing files and valid line ranges. |
+| Local section-anchor audit | Pass: all seven local section links resolve to headings. |
+| AP06 content measures | Pass: 1,211 lines, 8,587 words, 29 source-evidence boxes, three diagrams with text alternatives, and 55 glossary terms. |
 | `npm run docs:publication:check` | No AP06 page error. The complete check remains red for pre-existing catalogue and legacy-page findings assigned to AP08, AP09, and AP11. |
 
 The verification does not claim a fresh runtime or live-cluster test.
