@@ -15,6 +15,12 @@ Finish only after application readers verify the restored data.
 This page does not declare an environment-wide RPO or RTO.
 Those targets lack complete measured evidence.
 
+## Supported Versions
+
+Use the [shared version rules](README.md#supported-versions-and-tools).
+A restore supports only a source, application, schema, backup format, and database-client combination that the component procedure declares compatible.
+If that declaration is absent, restore into an isolated target and stop before cutover until the data owner accepts the tested combination.
+
 ## Prerequisites
 
 - Independent administration works without the target application Pods.
@@ -172,11 +178,17 @@ They remain in the same cluster failure domain until an operator copies them ext
 
 > **Source evidence — Prism consistency group**
 >
-> [The backup script creates one immutable database-and-artifact group and verifies its checksums](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/files/prism-backup.sh#L44-L117).
+> **Claim:** Prism protects one database snapshot and the immutable artifact superset as a single published group. Verification rebuilds the artifact index from the stored bytes.
 >
-> [The database proof restores one temporary database and queries core application tables](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/files/prism-backup.sh#L126-L153).
+> **Implementation:** [The backup script creates and verifies the immutable database-and-artifact group](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/files/prism-backup.sh#L44-L117). [The database proof restores a temporary database and queries core tables](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/files/prism-backup.sh#L126-L153).
 >
-> Limit: The proof does not restore an external target or verify the complete application path.
+> **Contract or setting:** [The chart runs separate backup, verification, and database-proof CronJobs against the backup PVC](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/backup.yaml#L1-L80).
+>
+> **Test evidence:** [The backup test checks publication limits, rendered commands, read-only artifact access, and the database proof](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/deployment/prism-backup.test.mts#L100-L135). The AP07 follow-up ran it on 2026-09-16. It failed before a positive backup proof because this host supplied BusyBox-incompatible utilities and the current chart fixture failed its native-worker precondition. No fresh backup success is claimed.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
+>
+> **Limit:** The proof uses the same database service. It does not restore an external target or verify the complete application path.
 
 ## Recovery
 

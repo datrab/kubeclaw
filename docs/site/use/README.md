@@ -59,6 +59,25 @@ Do not treat source checks as live acceptance.
 Never paste a placeholder without replacing it.
 Never store credentials in `<evidence-dir>`.
 
+## Supported Versions and Tools
+
+Use the tools from the same reviewed release set as the source checkout.
+The repository does not define a broad compatibility range for Kubernetes, K3s,
+Helm, or kubectl.
+
+| Tool or component | Version rule | Operator action |
+| --- | --- | --- |
+| Node.js | Use major version 24 for repository documentation and runtime checks | Stop if `node --version` does not start with `v24.` |
+| npm | Use the npm version supplied with the selected Node.js 24 installation | Use `npm ci`; do not regenerate the lockfile during an operator procedure |
+| kubectl | `versions.json` records `1.35.6`; the Ops image records `1.34.11` | Record the client and server versions; stop for an unreviewed client/server compatibility difference |
+| Helm | `versions.json` records `3.18.4`; the Ops image records `3.22.0` | Record the active Helm version; use the version from the selected operator environment |
+| Kubernetes and K3s | No supported range is established | Record the real version and stop until the platform owner accepts it |
+| Runtime images and charts | Use only the immutable selected release receipts and generated values | Do not replace a missing selection with a mutable tag or a hand-written digest |
+
+The version values above identify current repository inputs.
+They do not establish a compatibility range.
+[IFR-01-001](../status/open-issues.md#ifr-01-001) tracks the missing automated host bootstrap and verified host-version contract.
+
 ## Current Limits
 
 The repository does not provide a complete host or K3s bootstrap.

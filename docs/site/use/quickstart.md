@@ -18,9 +18,15 @@ Use [Configure and Operate](operate.md) to start a governed run.
 ## Prerequisites
 
 - Use a clean KubeClaw checkout.
-- Install the Node.js version required by the repository.
+- Install Node.js major version 24 and its supplied npm version.
 - Run commands from the repository root.
 - Keep network access for dependency installation when the package cache is incomplete.
+
+## Supported Versions
+
+Use the [shared version rules](README.md#supported-versions-and-tools).
+This portable quickstart requires Node.js 24.
+It does not require Kubernetes, Helm, kubectl, or a delegated cgroup.
 
 ## Procedure
 
@@ -37,17 +43,17 @@ git rev-parse HEAD
 npm ci --ignore-scripts
 ```
 
-3. Check generated documentation and plugin contracts.
+3. Check generated documentation and the installed plugin inventory.
 
 ```bash
 npm run docs:check:generated
-npm run verify:plugin-system-v2
+npm run plugin-system:inventory:check
 ```
 
-4. Display the current pipeline interface.
+4. Confirm the pipeline entry point.
 
 ```bash
-npm run pipeline -- --help
+npm pkg get scripts.pipeline
 ```
 
 ## Expected Result
@@ -55,12 +61,15 @@ npm run pipeline -- --help
 The worktree output contains no unexpected change.
 Both checks exit with code zero.
 
-The final command prints the required platform and project or pipeline arguments.
+The final command prints `"node skills/nova/pipeline.ts"`.
 It does not start a run.
+
+The pipeline command does not implement a `--help` option.
+Use the exact project and explicit-graph forms in [Configure and Operate](operate.md#understand-the-two-command-forms).
 
 ## Verification
 
-Confirm that the plugin check validates every installed manifest and registration.
+Confirm that the inventory check matches every installed manifest and registration.
 Confirm that generated documentation matches its source inventories.
 
 Keep the source commit before continuing to installation or operation.
@@ -73,7 +82,22 @@ Keep the source commit before continuing to installation or operation.
 | `npm ci` fails | Lockfile, registry, network, or runtime mismatch | Correct the named prerequisite |
 | Generated file drift | Source inventory changed | Run the named generator and review its diff |
 | Plugin validation fails | Manifest, module, schema, export, trust, or grant error | Repair the exact reported boundary |
-| Help command returns an argument error | Unsupported or incomplete command form | Use the syntax on [Configure and Operate](operate.md) |
+| Pipeline entry point differs | The checkout and documentation do not describe the same command | Stop and review the selected source revision |
+
+## Full Isolation Contract Verification
+
+The full plugin-system verifier is not a portable quickstart check.
+It requires a host administrator to provide a real writable and delegated cgroup-v2 subtree.
+
+On a prepared verification host, use:
+
+```bash
+export KUBECLAW_TEST_CGROUP_ROOT="<delegated-cgroup-v2-root>"
+npm run verify:plugin-system-v2
+```
+
+The variable alone does not create the delegation.
+Use [Testing and CI](../../developers/testing-and-ci.md) for the required controllers, files, and stop conditions.
 
 ## Recovery
 

@@ -12,6 +12,12 @@ Last verified: 2026-09-16, source inspection and local documentation checks
 Change software, data, credentials, certificates, or capacity without losing rollback evidence.
 Remove KubeClaw only after data and access have named owners.
 
+## Supported Versions
+
+Use the [shared version rules](README.md#supported-versions-and-tools).
+Every maintenance plan must name the old and new source, image, chart, configuration, schema, and data versions.
+An absent compatibility statement means that rollback or mixed-version operation is not approved.
+
 ## Maintenance Principles
 
 - Change one governed release set, not isolated image tags.
@@ -372,18 +378,28 @@ Keep credentials in their separate authority.
 
 ### 4. Remove Workloads by Scope
 
-Use the least destructive command first:
+Choose one command for the intended scope.
+Do not run these commands as a sequence.
+
+| Command | Removes | Keeps | Required decision |
+| --- | --- | --- | --- |
+| `./scripts/deploy.sh teardown-agents` | Nova and Buster Helm releases | Infrastructure, namespace, Secrets, and PVCs | Confirm that no run or external effect remains active or uncertain |
+| `./scripts/deploy.sh teardown-prism` | Prism and Prism-agent Helm releases | Namespace, Secrets, and kept Prism PVCs | Confirm that Prism admission and writes have stopped |
+| `./scripts/deploy.sh teardown` | Agents, selected infrastructure, Prism when enabled, and **every PVC left in the application namespace** | Namespace and Secrets only | Confirm final verified backups and approve application-data deletion |
+| `./scripts/deploy.sh teardown-all` | The complete application namespace and every resource in it | Nothing in that namespace | Approve final namespace, Secret, and remaining-state deletion |
+
+`teardown` is destructive even though it keeps the namespace and Secrets.
+It enumerates and deletes all remaining PVCs, including PVCs retained by a Helm keep policy.
+Stop before confirmation if any PVC lacks a verified final backup and a named destruction approval.
+
+After `teardown`, verify that no PVC remains and review the retained Secrets:
 
 ```bash
-./scripts/deploy.sh teardown-agents
-./scripts/deploy.sh teardown-prism
-./scripts/deploy.sh teardown
+kubectl -n "<namespace>" get pvc
+kubectl -n "<namespace>" get secrets
 ```
 
-`teardown` keeps the namespace and Secrets.
-Review retained PVCs and Secrets after it completes.
-
-Do not run this command until final deletion has explicit approval:
+Run `teardown-all` only when final namespace deletion has separate explicit approval:
 
 ```bash
 ./scripts/deploy.sh teardown-all
@@ -391,11 +407,25 @@ Do not run this command until final deletion has explicit approval:
 
 That command destroys the namespace and included state.
 
+> **Source evidence — teardown scopes**
+>
+> **Claim:** `teardown-agents` and `teardown-prism` remove bounded workload releases. `teardown` keeps the namespace and Secrets but deletes every remaining PVC. `teardown-all` deletes the namespace.
+>
+> **Implementation:** [The bounded agent teardown uninstalls only Nova and Buster](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L2718-L2738). [The destructive teardown enumerates and deletes all remaining PVCs](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L2806-L2864). [The namespace teardown deletes every resource in the namespace](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L2867-L2878).
+>
+> **Contract or setting:** [`KUBECLAW_DEPLOY_PRISM` decides whether the broad teardown first uninstalls Prism](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L2854-L2864).
+>
+> **Test evidence:** No repository test executes destructive PVC deletion against a live namespace. The AP07 follow-up inspected the command paths and added a documentation regression check on 2026-09-16.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
+>
+> **Limit:** Source inspection does not prove successful cleanup, backup integrity, external-resource removal, or data-destruction approval in a live environment.
+
 ### 5. Remove External Resources
 
 Remove retained resources only after backup verification:
 
-- Kept PVCs and snapshots.
+- PVCs kept by a narrower command, external volumes, and snapshots.
 - Tailnet Ingress, DNS, and OAuth grants.
 - Registry repositories and BuildKit caches.
 - GitHub Apps, deploy keys, and tokens.

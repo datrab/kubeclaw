@@ -38,7 +38,7 @@ Original IDs are unchanged. GitHub #7 and AP03 source follow-ups are separate. P
 | [IFR-29-001](#ifr-29-001) | Operator configuration is not fully separated from public examples | original-154 | open |
 | [IFR-04-001](#ifr-04-001) | External Tailnet access and recovery contract is incomplete | original-154 | open |
 | [IFR-10-001](#ifr-10-001) | Long-lived rootless BuildKit lacks a job-specific process boundary | original-154 | open |
-| [IFR-01-001](#ifr-01-001) | Host bootstrap and restore prerequisites are incomplete | original-154 | open |
+| [IFR-01-001](#ifr-01-001) | Automated host bootstrap and restore prerequisites are incomplete | original-154 | open |
 | [IFR-02-001](#ifr-02-001) | Concrete single-node CNI cutover and independent rollback remain unproved | original-154 | open |
 | [IFR-06-001](#ifr-06-001) | SPIRE persistence, certificate lifetime and recovery contract is incomplete | original-154 | open |
 | [IFR-16-001](#ifr-16-001) | Combined node and disk capacity is not fully budgeted and measured | original-154 | open |
@@ -489,7 +489,7 @@ AP04 source reconciliation; no test rerun and no live acceptance performed.
 
 ## IFR-01-001
 
-**Host bootstrap and restore prerequisites are incomplete**
+**Automated host bootstrap and restore prerequisites are incomplete**
 
 Origin: original-154. Status: open. Source severity: medium.
 
@@ -502,15 +502,20 @@ After host loss or on a new host, versions, datastore, disk and application depe
 ### Components and current state
 
 - K3s/host
+- Host bootstrap automation
 - scripts/deploy.sh
 - Storage provisioner
 - Paperless dependencies
 
-Installation and setup documents exist. No effective cluster configuration was collected in AP04, and generic K3s defaults are not substituted for actual operator settings.
+Installation and setup documents start from an existing cluster. The repository has no supported empty-host automation. It cannot install and configure K3s, establish storage and independent access, or emit a reproducible host record. No effective cluster configuration was collected in AP04, and generic K3s defaults are not substituted for actual operator settings.
 
 ### Remaining work
 
 - Record redacted actual host/K3s versions, startup flags, datastore, API requirements, CNI, StorageClass/CSI and cgroup preparation.
+- Implement one reviewed, idempotent host-bootstrap entry point with prerequisite checks, a dry-run or plan view, explicit stop conditions and bounded rollback before irreversible changes.
+- Automate the selected K3s, datastore, DNS, CNI, storage and independent-administration preparation without storing credentials in Git or combining an unproved CNI migration with application deployment.
+- Emit a redacted machine-readable record of effective versions, flags, network ranges, storage ownership and recovery inputs.
+- Hand off to scripts/deploy.sh only after the platform checks pass.
 - Document host backup, key/credential ownership, Paperless dependencies and independent administration with a restore sequence.
 
 ### Reproduction and verification procedure
@@ -520,12 +525,14 @@ Installation and setup documents exist. No effective cluster configuration was c
 
 ### Completion criteria
 
-- Another operator can rebuild the selected environment and its data from documented inputs.
-- Host/cluster ownership, supported version boundaries and verified recovery results are complete.
+- Another operator can use the reviewed automation and documented external inputs to build the selected cluster from an empty supported host without undocumented manual preparation.
+- A repeated run is safe, the plan and effective host record are reviewable, and every irreversible action has a stated stop and recovery boundary.
+- The automated handoff deploys no application until API, DNS, storage, identity prerequisites and independent administration pass.
+- An isolated host-loss exercise restores the selected environment and its data; host/cluster ownership, supported version boundaries and verified recovery results are complete.
 
 ### Separate environment acceptance
 
-An isolated empty host and real restore media are required. This documentation step does not provision a cluster.
+An isolated empty host and real restore media are required. The current repository does not provision this cluster; the future automation and restore exercise must provide the evidence.
 
 ### Dependencies
 

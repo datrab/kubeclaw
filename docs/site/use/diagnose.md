@@ -12,6 +12,12 @@ Last verified: 2026-09-16, source inspection and local documentation checks
 Classify a failure without destroying its evidence or repeating an uncertain effect.
 Finish with one cause class, one safe next action, and retained evidence.
 
+## Supported Versions
+
+Use the [shared version rules](README.md#supported-versions-and-tools).
+Diagnose with clients from the selected operator environment.
+When client and server versions differ from the recorded release inputs, preserve that fact as a possible cause instead of assuming compatibility.
+
 ## Diagnosis Order
 
 Use the same order for every incident:

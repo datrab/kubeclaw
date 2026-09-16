@@ -198,11 +198,11 @@ function checkArchitecturePresentation() {
 
 function checkOperationsEvidence() {
   const pages = new Map([
-    ['docs/site/use/install.md', ['Supported Topology and Limits', 'Prerequisites', 'Install in Dependency Order', 'Failed First Installation', 'Recovery and Rollback', 'Evidence to Retain']],
-    ['docs/site/use/operate.md', ['Configure the Platform', 'Start a Project Run', 'Inspect a Run', 'Approve or Resume a Wait', 'Recover After Interruption', 'Cancellation Boundary', 'Safe Retry Decision']],
-    ['docs/site/use/diagnose.md', ['Diagnosis Order', 'Durable Run Inspection', 'Capacity and Growth', 'Symptom Index', 'Lost Responses and Uncertain Effects', 'Escalation Conditions', 'Recovery and Cleanup']],
-    ['docs/site/use/recovery.md', ['State Inventory', 'Procedure', 'Recovery', 'Node or Cluster Loss', 'Recover Administrative Access', 'Verification', 'Rollback Boundary']],
-    ['docs/site/use/maintenance.md', ['Version Authorities', 'GitOps Operation', 'Upgrade Order', 'Stateful Service Upgrade', 'Rollback Decision', 'Credential Rotation', 'Controlled Retirement']],
+    ['docs/site/use/install.md', ['Supported Versions', 'Supported Topology and Limits', 'Prerequisites', 'Install in Dependency Order', 'Failed First Installation', 'Recovery and Rollback', 'Evidence to Retain']],
+    ['docs/site/use/operate.md', ['Supported Versions', 'Configure the Platform', 'Start a Project Run', 'Inspect a Run', 'Approve or Resume a Wait', 'Recover After Interruption', 'Cancellation Boundary', 'Safe Retry Decision']],
+    ['docs/site/use/diagnose.md', ['Supported Versions', 'Diagnosis Order', 'Durable Run Inspection', 'Capacity and Growth', 'Symptom Index', 'Lost Responses and Uncertain Effects', 'Escalation Conditions', 'Recovery and Cleanup']],
+    ['docs/site/use/recovery.md', ['Supported Versions', 'State Inventory', 'Procedure', 'Recovery', 'Node or Cluster Loss', 'Recover Administrative Access', 'Verification', 'Rollback Boundary']],
+    ['docs/site/use/maintenance.md', ['Supported Versions', 'Version Authorities', 'GitOps Operation', 'Upgrade Order', 'Stateful Service Upgrade', 'Rollback Decision', 'Credential Rotation', 'Controlled Retirement']],
   ]);
   const sourceLink = /https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\/([^\s)#]+)#L(\d+)(?:-L(\d+))?/gu;
   let evidenceBoxes = 0;
@@ -223,8 +223,12 @@ function checkOperationsEvidence() {
       evidenceBoxes += 1;
       const box = [];
       for (let cursor = index; cursor < lines.length && lines[cursor].startsWith('>'); cursor += 1) box.push(lines[cursor]);
-      if (!box.join('\n').includes('https://github.com/datrab/kubeclaw/blob/')) {
+      const evidence = box.join('\n');
+      if (!evidence.includes('https://github.com/datrab/kubeclaw/blob/')) {
         errors.push(`${page} has a source-evidence box without a revision-bound code link`);
+      }
+      for (const field of ['Claim', 'Implementation', 'Contract or setting', 'Test evidence', 'Revision', 'Limit']) {
+        if (!evidence.includes(`**${field}:**`)) errors.push(`${page} source-evidence box lacks required field: ${field}`);
       }
     }
     for (const match of text.matchAll(sourceLink)) {
@@ -245,6 +249,24 @@ function checkOperationsEvidence() {
   }
   if (evidenceBoxes === 0) errors.push('operations pages contain no source-evidence boxes');
   if (codeLinks === 0) errors.push('operations pages contain no revision-bound code links');
+
+  const quickstart = fs.readFileSync(path.join(root, 'docs/site/use/quickstart.md'), 'utf8');
+  if (quickstart.includes('npm run pipeline -- --help')) errors.push('operator quickstart must not present the unsupported pipeline --help form');
+  if (!quickstart.includes('KUBECLAW_TEST_CGROUP_ROOT="<delegated-cgroup-v2-root>"')) errors.push('operator quickstart lacks the full-verifier cgroup prerequisite');
+  if (!quickstart.includes('npm run plugin-system:inventory:check')) errors.push('operator quickstart lacks the portable plugin inventory check');
+
+  const install = fs.readFileSync(path.join(root, 'docs/site/use/install.md'), 'utf8');
+  if (!/KUBECLAW_RUN_SECRET_SETUP=true[\s\S]*KUBECLAW_SECRET_SETUP_MODE=noninteractive[\s\S]*\.\/scripts\/deploy\.sh setup/u.test(install)) {
+    errors.push('noninteractive installation does not run setup with secret setup enabled');
+  }
+
+  const operate = fs.readFileSync(path.join(root, 'docs/site/use/operate.md'), 'utf8');
+  if (operate.includes('npm run pipeline -- --help')) errors.push('operate guide must not present the unsupported pipeline --help form');
+
+  const maintenance = fs.readFileSync(path.join(root, 'docs/site/use/maintenance.md'), 'utf8');
+  for (const statement of ['Do not run these commands as a sequence.', 'every PVC left in the application namespace', 'enumerates and deletes all remaining PVCs']) {
+    if (!maintenance.includes(statement)) errors.push(`maintenance teardown warning lacks required statement: ${statement}`);
+  }
   return { evidenceBoxes, codeLinks };
 }
 

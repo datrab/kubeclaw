@@ -29,6 +29,12 @@ Record these inputs:
 Do not start work while the project repository contains uncommitted changes.
 The project command rejects a changed baseline or dirty worktree.
 
+## Supported Versions
+
+Use the [shared version rules](README.md#supported-versions-and-tools).
+This procedure applies to `pipeline-platform.v2` and the pipeline command at the recorded source revision.
+Start a new governed run when a platform, project, graph, package, or state format is not compatible with that revision.
+
 ## Understand the Two Command Forms
 
 KubeClaw accepts a project document or an explicit pipeline graph.
@@ -41,19 +47,22 @@ KubeClaw accepts a project document or an explicit pipeline graph.
 Both forms require `--platform`.
 Do not mix their recovery syntax.
 
-Display the exact current interface:
-
-```bash
-npm run pipeline -- --help
-```
+The command does not implement `--help`.
+The runnable forms in this page are the interface reference.
 
 > **Source evidence — command surface**
 >
-> [The project CLI validates arguments, compiles projects, checks the baseline, and selects start, recover, or signal](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/project/cli.ts#L15-L59).
+> **Claim:** The dispatcher selects the project form only when `--project` is present. Otherwise, it uses the explicit-graph Core CLI. The two forms support the commands shown on this page.
 >
-> [The Core CLI supports run, recover, signal, and audit operations for explicit graphs](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/cli.ts#L12-L70).
+> **Implementation:** [The project dispatcher validates project arguments and selects compile, start, recover, or signal](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/project/cli.ts#L13-L59). [The Core CLI supports start, recover, signal, and audit for explicit graphs](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/cli.ts#L16-L70).
 >
-> Limit: Neither CLI defines a separate cancel command.
+> **Contract or setting:** [The npm `pipeline` script selects the dispatcher](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/package.json#L40-L44).
+>
+> **Test evidence:** [The project compiler test starts the real dispatcher and checks compilation](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/contracts/check-project-compiler.mts#L166-L184). The AP07 follow-up ran this test successfully on 2026-09-16.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
+>
+> **Limit:** Neither CLI defines a `--help` option or a separate cancel command.
 
 ## Configure the Platform
 
@@ -80,9 +89,17 @@ This prevents the shell working directory from changing their meaning.
 
 > **Source evidence — platform authority**
 >
-> [The platform schema requires trust, providers, grants, adapters, observers, storage, and issuer fields](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugin-runtime/foundation/config/platform.schema.json#L5-L110).
+> **Claim:** The operator-owned platform document selects trusted package roots, providers, grants, adapters, observers, durable storage, and decision issuers. Relative paths use the platform file directory.
 >
-> [The loader validates the complete document and resolves paths from its directory](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugin-runtime/foundation/config/platform.ts#L53-L69).
+> **Implementation:** [The platform schema declares the authority fields](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugin-runtime/foundation/config/platform.schema.json#L5-L110). [The loader validates the document and resolves paths from its directory](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugin-runtime/foundation/config/platform.ts#L53-L69).
+>
+> **Contract or setting:** [`pipeline-platform.v2` is the required schema version](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugin-runtime/foundation/config/platform.schema.json#L5-L9).
+>
+> **Test evidence:** [The platform test checks path resolution, immutability, validation, and rejection of project-controlled installation roots](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L32-L65). The AP07 follow-up ran this test successfully on 2026-09-16.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
+>
+> **Limit:** Schema validation does not prove that a configured provider, adapter, observer, or storage service is reachable.
 
 Keep credentials outside the JSON file.
 Use adapter-supported secret references or the intended secret resolver.

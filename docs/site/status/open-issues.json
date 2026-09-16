@@ -560,20 +560,25 @@
     {
       "id": "IFR-01-001",
       "origin": "original-154",
-      "title": "Host bootstrap and restore prerequisites are incomplete",
+      "title": "Automated host bootstrap and restore prerequisites are incomplete",
       "severity": "medium",
       "status": "open",
       "problem": "The repository setup assumes an existing cluster; the effective host/K3s/storage starting environment is not a fully reproducible bootstrap and restore contract.",
       "impact": "After host loss or on a new host, versions, datastore, disk and application dependencies must be reconstructed. The setup name alone can overstate its coverage.",
       "components": [
         "K3s/host",
+        "Host bootstrap automation",
         "scripts/deploy.sh",
         "Storage provisioner",
         "Paperless dependencies"
       ],
-      "current_state": "Installation and setup documents exist. No effective cluster configuration was collected in AP04, and generic K3s defaults are not substituted for actual operator settings.",
+      "current_state": "Installation and setup documents start from an existing cluster. The repository has no supported empty-host automation. It cannot install and configure K3s, establish storage and independent access, or emit a reproducible host record. No effective cluster configuration was collected in AP04, and generic K3s defaults are not substituted for actual operator settings.",
       "remaining_work": [
         "Record redacted actual host/K3s versions, startup flags, datastore, API requirements, CNI, StorageClass/CSI and cgroup preparation.",
+        "Implement one reviewed, idempotent host-bootstrap entry point with prerequisite checks, a dry-run or plan view, explicit stop conditions and bounded rollback before irreversible changes.",
+        "Automate the selected K3s, datastore, DNS, CNI, storage and independent-administration preparation without storing credentials in Git or combining an unproved CNI migration with application deployment.",
+        "Emit a redacted machine-readable record of effective versions, flags, network ranges, storage ownership and recovery inputs.",
+        "Hand off to scripts/deploy.sh only after the platform checks pass.",
         "Document host backup, key/credential ownership, Paperless dependencies and independent administration with a restore sequence."
       ],
       "reproduction": [
@@ -581,10 +586,12 @@
         "After restore verify API, DNS, storage, pipeline and required Paperless data; treat every undocumented prerequisite supplied manually as a gap."
       ],
       "acceptance_criteria": [
-        "Another operator can rebuild the selected environment and its data from documented inputs.",
-        "Host/cluster ownership, supported version boundaries and verified recovery results are complete."
+        "Another operator can use the reviewed automation and documented external inputs to build the selected cluster from an empty supported host without undocumented manual preparation.",
+        "A repeated run is safe, the plan and effective host record are reviewable, and every irreversible action has a stated stop and recovery boundary.",
+        "The automated handoff deploys no application until API, DNS, storage, identity prerequisites and independent administration pass.",
+        "An isolated host-loss exercise restores the selected environment and its data; host/cluster ownership, supported version boundaries and verified recovery results are complete."
       ],
-      "live_validation": "An isolated empty host and real restore media are required. This documentation step does not provision a cluster.",
+      "live_validation": "An isolated empty host and real restore media are required. The current repository does not provision this cluster; the future automation and restore exercise must provide the evidence.",
       "dependencies": [],
       "evidence": {
         "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",

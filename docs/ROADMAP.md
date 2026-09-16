@@ -14,9 +14,32 @@ This page keeps future direction separate from current operator behavior. Items 
 3. Use that real project to identify operational and extension-boundary pressure rather than inventing abstractions in isolation.
 4. Exercise third-party plugin installation, replacement, and removal against real operator workloads.
 5. Complete the deeper operator/reference documentation pass after the first production workload exposes the remaining practical gaps.
-6. Finish clean-cluster bootstrap verification before promising a one-command first deployment.
+6. Implement and verify automated empty-host bootstrap and recovery preparation before promising a one-command first deployment.
 
 ## Product And Platform Direction
+
+### Automated host bootstrap and recovery
+
+Status: planned and tracked by [IFR-01-001](site/status/open-issues.md#ifr-01-001).
+The repository does not currently create a complete supported host from an empty machine.
+
+The planned capability must provide one reviewed automation entry point that can prepare a supported Linux host and produce an auditable configuration record.
+It must cover these responsibilities:
+
+- Check CPU architecture, storage, networking, kernel features, cgroup v2, time synchronization, and required operating-system packages before mutation.
+- Install and configure the selected K3s version with explicit API, datastore, CNI, DNS, and startup settings.
+- Prepare the selected StorageClass or connect an external CSI implementation without inventing a local durability guarantee.
+- Configure the independent administration and recovery path before in-cluster access becomes necessary.
+- Produce redacted machine-readable output for versions, flags, network ranges, storage ownership, and recovery inputs.
+- Support an idempotent rerun, a dry-run or plan view, bounded rollback before the irreversible point, and explicit stop conditions.
+- Keep credentials, host keys, recovery keys, and private values outside Git while recording their owners and required references.
+- Verify a new-host build and a host-loss restore in an isolated environment before the project calls the path supported.
+
+The automation must not combine an unproved CNI migration with application deployment.
+It must hand off to `scripts/deploy.sh` only after the cluster, storage, DNS, identity prerequisites, and independent access checks pass.
+
+Acceptance requires a second operator to start with an empty supported host and the documented external inputs.
+That operator must reproduce the selected cluster, restore its authoritative data, and pass API, DNS, storage, identity, pipeline, and application checks without undocumented manual repair.
 
 ### Central operator configuration audit
 

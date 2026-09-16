@@ -61,11 +61,17 @@ Complete an explicit ownership transfer before enabling reconciliation.
 
 > **Source evidence — deployment ownership**
 >
-> [`cmd_setup()` creates the namespace, adds chart repositories, and can start secret setup](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L884-L965).
+> **Claim:** `setup` owns application namespace creation, Helm repository preparation, and optional Secret preparation. `infra` owns the ordered identity and stateful-service deployment.
 >
-> [`cmd_infra()` installs identity and stateful dependencies in a fixed order](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L1107-L1207).
+> **Implementation:** [`cmd_setup()` creates the namespace, prepares chart repositories, and selects Secret setup](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L884-L965). [`cmd_infra()` installs SPIRE and the selected stateful services in dependency order](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L1107-L1207).
 >
-> Limit: These commands do not prove host bootstrap, CNI safety, storage durability, or external access.
+> **Contract or setting:** [Deployment variables select the namespace, optional components, Secret mode, and partial-infrastructure behavior](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L48-L68).
+>
+> **Test evidence:** [The deployment truth check inspects the real deployment script and its required safety properties](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/deployment/check-deployment-truth.mjs#L41-L66). The AP07 follow-up ran this check successfully on 2026-09-16. This was a source check, not a cluster deployment.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
+>
+> **Limit:** These commands do not install or prove the host, K3s, CNI, durable storage, or independent external access.
 
 ## Execution Locations
 
@@ -100,6 +106,13 @@ Record these values:
 
 Do not invent capacity values.
 [IFR-16-001](../status/open-issues.md#ifr-16-001) tracks the missing combined capacity proof.
+
+## Supported Versions
+
+Use the [shared version rules](README.md#supported-versions-and-tools).
+This procedure has no accepted Kubernetes or K3s compatibility range.
+Record the actual server, kubectl, and Helm versions and obtain platform-owner acceptance before the first mutation.
+Use only the selected runtime receipt and generated values for workload images.
 
 ## Prerequisites
 
@@ -225,12 +238,16 @@ Noninteractive installation must pre-create or copy every required Secret.
 Then use:
 
 ```bash
+export KUBECLAW_RUN_SECRET_SETUP=true
 export KUBECLAW_SECRET_SETUP_MODE=noninteractive
-./scripts/deploy.sh secrets
+./scripts/deploy.sh setup
 ```
 
-Expected observation: setup reports the namespace and Helm repositories as ready.
+Expected observation: `setup` reports the namespace and Helm repositories as ready.
 Secret setup must report no missing required value.
+
+Do not replace `setup` with `secrets` on a new administration machine.
+The `secrets` command prepares Secrets but does not prepare Helm repositories.
 
 Never save Secret contents in the change record.
 Record names, key names, owners, and creation times only.
@@ -285,9 +302,17 @@ The smoke commands check the gateway, startup state, readiness, skills, and runt
 
 > **Source evidence — role readiness**
 >
-> [`deploy_agent()` uses atomic upgrades and waits for the selected role](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L1453-L1481).
+> **Claim:** A role deployment renders the selected immutable release before mutation. It uses an atomic Helm change, waits for readiness, and supports a role-specific smoke check.
 >
-> [`cmd_smoke_agent()` checks the deployed gateway and runtime health](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L1583-L1606).
+> **Implementation:** [`deploy_agent()` uses atomic upgrades and waits for the selected role](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L1453-L1481). [`cmd_smoke_agent()` checks the deployed gateway and runtime health](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L1583-L1606).
+>
+> **Contract or setting:** [The release materializer binds role values to a selected runtime receipt](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/updates/materialize-release.mjs#L1-L35).
+>
+> **Test evidence:** [The deployment release test exercises render and fail-closed selection paths](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/deployment/deployment-release.test.mjs#L45-L80). The follow-up did not rerun that test. It ran the deployment truth check successfully on 2026-09-16. The separate Prism command check failed because its canonical-schema assertion does not match the current source. No Prism test success is claimed.
+>
+> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
+>
+> **Limit:** Source tests do not prove image pulls, scheduling, dependencies, or readiness in the target cluster.
 
 ### 5. Install Prism When Selected
 

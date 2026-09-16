@@ -8,7 +8,7 @@ Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
 ## Result
 
 AP07 replaces the short operator entry with one ordered lifecycle.
-The operations track contains 2,101 lines and approximately 11,060 words.
+The operations track contains 2,234 lines and approximately 12,420 words.
 
 The sequence is:
 
@@ -87,8 +87,11 @@ The operations entry defines their meaning and required properties.
 
 ## Source Evidence
 
-Five source-evidence boxes contain ten revision-bound code links.
+Six source-evidence boxes contain 24 revision-bound code links.
 The links cover deployment order, role readiness, CLI behavior, platform authority, and Prism consistency groups.
+
+Each operations evidence box now records the claim, implementation, contract or setting,
+test status, source revision, and evidence limit.
 
 The documentation check resolves every link at its stated revision.
 It rejects a missing file or invalid line range.
@@ -115,16 +118,34 @@ AP07 does not claim that later acceptance.
 | --- | --- |
 | `git diff --check` | Pass. |
 | `node scripts/docs-check.mjs` | Pass: 887 active Markdown files. |
-| Operations evidence check | Pass: five evidence boxes and ten valid revision-bound code links. |
-| `npm run docs:check:refs` | Pass: 1,713 local links and 812 repository-path references. |
+| Operations evidence check | Pass: six complete evidence boxes and 24 valid revision-bound code links. |
+| `npm run docs:check:refs` | Pass: 1,724 local links and 816 repository-path references. |
 | `npm run docs:check:coverage` | Pass. The topic-map references remain current. |
 | `npm run verify:docs:controlled-language` | Pass. |
-| AP07 content measures | Pass: 2,101 lines and approximately 11,060 words across eight operations pages. |
+| AP07 content measures | Pass: 2,234 lines and approximately 12,420 words across eight operations pages. |
 | `npm run docs:publication:check` | No AP07 page error. Existing AP08, AP09, and AP11 findings remain. |
 | `npm run docs:blueprint:check` | Known pre-existing AP02 generated inventory drift; no AP07 output owns that file. |
 
 The verification does not claim a new cluster deployment, backup, restore, upgrade, browser session, or failure injection.
 All complete live gates in [Operational and Live Acceptance](../site/status/acceptance.md) remain open.
+
+## Follow-up Review on 2026-09-16
+
+A manual command-to-source review found gaps that the original structural checks did not detect.
+This follow-up made these corrections:
+
+- The portable quickstart now uses the plugin inventory check. It separates the full verifier and its required delegated cgroup-v2 host.
+- The guide no longer presents unsupported `pipeline --help` behavior. It points to the exact project and explicit-graph forms.
+- Interactive and noninteractive first installation both run `setup`, so namespace, Helm repositories, and selected Secret handling use one path.
+- The retirement procedure treats teardown commands as alternative scopes. It states that broad `teardown` deletes every remaining application-namespace PVC.
+- The operations entry records current tool inputs and states that Kubernetes and K3s have no accepted compatibility range.
+- Every operations evidence box uses the required evidence fields. The checker now rejects missing fields and the four corrected command hazards.
+- [IFR-01-001](../site/status/open-issues.md#ifr-01-001) and the [roadmap](../ROADMAP.md#automated-host-bootstrap-and-recovery) now require automated, idempotent host bootstrap and recovery preparation from an empty supported host.
+
+The follow-up ran the project compiler, platform configuration, and deployment truth checks successfully.
+The Prism command check failed because its canonical-schema assertion does not match the current source.
+The Prism backup test failed before positive proof because of incompatible local utilities and a chart-fixture precondition.
+The product documentation records those failures and does not turn them into AP07 success evidence.
 
 ## Completion Decision
 
