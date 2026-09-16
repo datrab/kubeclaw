@@ -11,6 +11,9 @@ import {once} from 'node:events';
 import {spawn} from 'node:child_process';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 
+// These tests exercise real I/O and crash recovery, not sub-second deadlines.
+// Keep operation budgets below the 30-second child watchdog on loaded CI runners.
+const ioTimeoutMs=5000,lockTtlMs=10000;
 const source=path.resolve('.'),self=fileURLToPath(import.meta.url);
 const fixtures=path.join(source,'tests/verification/reliability/fixtures');
 const runId='run:transport-profile',key='dispatch:profile-boundary';
@@ -30,11 +33,11 @@ function platform(root,origin,kind){
       [runtimeId]:{'network.http':{allowedOrigins:[origin]},'secrets.read':{allowedNames:['runtime.token']},...(kind==='generic'?{}:{'git.repository.read':{allowedPrefixes:['.']}})}},
     adapters:{[runtimeId]:{targets:{agent:kind==='generic'?{endpoint:origin+'/ack',tokenSecret:'runtime.token'}:
       {endpoint:origin+'/fault',tokenSecret:'runtime.token',runtime:'acp',agentId:'audit',agentRole:'architecture',model:'audit/model',cwd:root,
-        repositoryRoot:root,resultPathPrefix:'results',spawnIntervalMs:0,pollMs:10,maxPollMs:10,maxPolls:1,sessionTimeoutMs:80}}},
-      'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['authorization','content-type','idempotency-key','x-kubeclaw-signature'],timeoutMs:1000},
+        repositoryRoot:root,resultPathPrefix:'results',spawnIntervalMs:0,pollMs:10,maxPollMs:10,maxPolls:1,sessionTimeoutMs:ioTimeoutMs}}},
+      'kubeclaw.network-http:http':{allowedOrigins:[origin],allowedMethods:['POST'],allowedHeaders:['authorization','content-type','idempotency-key','x-kubeclaw-signature'],timeoutMs:ioTimeoutMs},
       'kubeclaw.secret-resolver:secrets':{environment:{'runtime.token':'KUBECLAW_PROFILE_LOCAL_TOKEN'}},
       'kubeclaw.repository-adapter:repository':{repositoryRoot:root},'kubeclaw.artifact-store:artifact-store':{artifactRoot:path.join(root,'artifacts')}},
-    activeAdapters:[],observers:{},storageRoot:path.join(root,'state'),shutdownTimeoutMs:100,effectLockTtlMs:100,
+    activeAdapters:[],observers:{},storageRoot:path.join(root,'state'),shutdownTimeoutMs:ioTimeoutMs,effectLockTtlMs:lockTtlMs,
     orchestratorIssuerId:'nova',administrativeDecisionIssuers:[]};
 }
 function archivedCore(root,version){
@@ -92,7 +95,7 @@ if(process.argv[2]==='--child'){
     const verificationJobs=verification.buildScalableVerificationJobs({proposals:[proposal],integrityIssues:[],incompleteJobs:[]},jobs,sdk.sha256Text('policy'));
     const prepared=await prepareRuntime(p,definition),journal=new core.FileEffectJournal(path.join(root,'helper-effects.jsonl'));
     const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(p.adapters)),
-      effects:new core.EffectCoordinator(journal,undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks')),100),shutdownTimeoutMs:100,
+      effects:new core.EffectCoordinator(journal,undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks')),lockTtlMs),shutdownTimeoutMs:ioTimeoutMs,
       async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
     await runtime.start();const checked=[];
     try{
@@ -144,8 +147,8 @@ if(process.argv[2]==='--child'){
       }
     }]));
     const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(p.adapters)),
-      effects:new core.EffectCoordinator(new core.FileEffectJournal(journalPath),undefined,audit,new core.FileResourceLockManager(path.join(root,'locks')),100),
-      shutdownTimeoutMs:100,async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
+      effects:new core.EffectCoordinator(new core.FileEffectJournal(journalPath),undefined,audit,new core.FileResourceLockManager(path.join(root,'locks')),lockTtlMs),
+      shutdownTimeoutMs:ioTimeoutMs,async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
     await runtime.start();let result,error;
     const payload=buildArchitectureRequest('agent',definition.stages[0].input,undefined);
     try{result=await runtime.invoke('runtime.dispatch',{runId,stageId:'architecture',attemptId:'attempt:profile',attemptNumber:1},key,

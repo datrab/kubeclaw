@@ -15,6 +15,9 @@ import {readRunSnapshot} from '../../../skills/nova/core/execution/engine-snapsh
 import {prepareRuntime} from '../../../skills/nova/core/execution/engine-runtime.ts';
 import {AdapterRuntime,EffectCoordinator,FileEffectJournal,FileResourceLockManager} from '../../../skills/nova/core/src/index.ts';
 
+// These tests exercise real I/O and crash recovery, not sub-second deadlines.
+// Keep operation budgets below the 30-second child watchdog on loaded CI runners.
+const ioTimeoutMs=5000,lockTtlMs=10000;
 const source=path.resolve('.'),self=fileURLToPath(import.meta.url),fixtures=path.join(source,'tests/verification/reliability/fixtures');
 const archived=path.join(fixtures,'legacy-review-cache');
 function verify(file,sha){const bytes=fs.readFileSync(file);assert.equal(crypto.createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex'),sha);}
@@ -55,7 +58,7 @@ function platform(root){
     providers:{'artifacts.read':'kubeclaw.artifact-store:artifact-store','artifacts.write':'kubeclaw.artifact-store:artifact-store'},
     grants:{'test.review-cache:cache':{'artifacts.read':{allowedNamespaces:['kubeclaw.review']},'artifacts.write':{allowedNamespaces:['kubeclaw.review']}}},
     adapters:{'kubeclaw.artifact-store:artifact-store':{artifactRoot:path.join(root,'artifacts')}},activeAdapters:[],observers:{},storageRoot:path.join(root,'state'),
-    shutdownTimeoutMs:100,effectLockTtlMs:100,orchestratorIssuerId:'nova',administrativeDecisionIssuers:[]};
+    shutdownTimeoutMs:ioTimeoutMs,effectLockTtlMs:lockTtlMs,orchestratorIssuerId:'nova',administrativeDecisionIssuers:[]};
 }
 const definition={schemaVersion:'pipeline-definition.v2',id:'test:cache-prefix',maxConcurrency:1,stages:[{id:'review',type:'test.review-cache',dependsOn:[],
   config:{crashAttempts:[],rewriteAttempts:[]},input:{},execution:{maxAttempts:3,maxRemediationCycles:0,timeoutMs:10000}}]};
@@ -69,7 +72,7 @@ if(process.argv[2]==='--child'){
     if(phase===boundary){fs.writeSync(1,`CACHE_AUDIT:${phase}\n`);process.kill(process.pid,'SIGKILL');}
   }]));
   const journal=new FileEffectJournal(journalFile),runtime=new AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(p.adapters)),
-    effects:new EffectCoordinator(journal,undefined,audit,new FileResourceLockManager(path.join(root,'locks')),100),shutdownTimeoutMs:100,async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
+    effects:new EffectCoordinator(journal,undefined,audit,new FileResourceLockManager(path.join(root,'locks')),lockTtlMs),shutdownTimeoutMs:ioTimeoutMs,async emitDomainEvent(){throw Error('UNEXPECTED_EVENT');}});
   await runtime.start();
   const {job,identity,value}=admittedCacheValue(),record=m.records.buildReviewCacheRecord(job,identity,value,profile);
   const attempt={runId:'run:cache-prefix',stageId:'review',attemptId:operation==='read'?'attempt:read':'attempt:write',attemptNumber:operation==='read'?2:1};
