@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/nova/plugins/human-approval/plugin.json; skills/nova/plugins/human-approval/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
 
 ## Authored Guidance
 
@@ -60,6 +60,7 @@ the contract and lifecycle rules that apply to this package.
 ## stage: approval
 
 Public identifier: `kubeclaw.decision.human-approval`.
+Global registration ID: `kubeclaw.human-approval:approval`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `operator.request`, `signal.wait`
 
@@ -67,11 +68,11 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/human-approval/schemas/config.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
-- `target` (string; required)
-- `issuerId` (string; required)
-- `timeoutMinutes` (integer; optional; default `60`)
+- `target` (string; required; minLength `1`; maxLength `1024`; pattern `^(?![\s\S]*[\r\n\u0000])\S(?:[\s\S]*\S)?$`)
+- `issuerId` (string; required; minLength `1`; maxLength `1024`; pattern `^(?![\s\S]*[\r\n\u0000])\S(?:[\s\S]*\S)?$`)
+- `timeoutMinutes` (integer; optional; default `60`; minimum `1`; maximum `525600`)
 
 Input schema: [schemas/input.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/human-approval/schemas/input.schema.json)
 
@@ -93,6 +94,7 @@ Declared manifest facts:
 ## stage: architecture-approval
 
 Public identifier: `kubeclaw.decision.architecture-approval`.
+Global registration ID: `kubeclaw.human-approval:architecture-approval`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `artifacts.read`, `operator.request`, `signal.wait`, `git.repository.read`, `artifacts.write`
 
@@ -100,11 +102,11 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/human-approval/schemas/config.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
-- `target` (string; required)
-- `issuerId` (string; required)
-- `timeoutMinutes` (integer; optional; default `60`)
+- `target` (string; required; minLength `1`; maxLength `1024`; pattern `^(?![\s\S]*[\r\n\u0000])\S(?:[\s\S]*\S)?$`)
+- `issuerId` (string; required; minLength `1`; maxLength `1024`; pattern `^(?![\s\S]*[\r\n\u0000])\S(?:[\s\S]*\S)?$`)
+- `timeoutMinutes` (integer; optional; default `60`; minimum `1`; maximum `525600`)
 
 Input schema: [schemas/architecture-input.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/human-approval/schemas/architecture-input.schema.json)
 
@@ -125,14 +127,17 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-Registry validation rejects a missing module, export, schema, or capability declaration.
+General and architecture approval are separate stage registrations. Architecture approval checks the passed validation report and requires a reason. Core validates the external signal and resumes the wait.
+
+Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 Nova or Buster records a bounded failure without giving the package lifecycle authority.
 
 ## Verification Record
 
 Audit status: `content-written`.
-Local command result on 2026-09-16: `unavailable`.
+Earlier AP08.7–AP08.9 local command result on 2026-09-16: `unavailable`.
 
 The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
 
@@ -142,10 +147,16 @@ Run the package command:
 npm test --prefix skills/nova/plugins/human-approval
 ```
 
-Package tests found: 3.
+Package test files found: 3. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+node tests/package-boundary.test.mjs && node tests/approval.unit.test.mjs && node ../../../../tests/verification/integration/architecture-approval.test.mts && node tests/live-function.test.ts
+```
 
 The audit status does not claim live host or cluster acceptance. See the AP08
-checkpoint for the exact local result and unavailable environment boundaries.
+[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
 
 ## Source Evidence
 

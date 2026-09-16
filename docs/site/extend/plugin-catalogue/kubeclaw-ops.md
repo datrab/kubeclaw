@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: plugins/kubeclaw-ops/.codex-plugin/plugin.json; plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md
 Applies to: codex-plugin; package 0.2.0
-Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
 
 ## Authored Guidance
 
@@ -65,13 +65,13 @@ Provided capabilities: None.
 
 Configuration schema: None.
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
 Not applicable.
 
-Input schema: None.
+Input schema: Natural-language skill trigger; no JSON input schema.
 
-Result schema: None.
+Result schema: The host owns the response contract.
 
 Declared manifest facts:
 
@@ -83,13 +83,15 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-Codex cannot use the skill when the plugin is absent or its external tools are unavailable.
+The package supplies instructions and a read-only interface, not an MCP server. Missing Ops connections prevent evidence collection. Removal does not delete Kubernetes resources, logs, or tool-side history.
+
+An absent plugin prevents skill discovery. Missing external tools prevent the diagnostic workflow, not discovery.
 The current package has no package-local automated acceptance test.
 
 ## Verification Record
 
 Audit status: `content-written`.
-Local command result on 2026-09-16: `not-run`.
+Earlier AP08.7–AP08.9 local command result on 2026-09-16: `not-run`.
 
 The Codex package declares no package-local automated test; connected-tool and missing-tool reader exercises remain required.
 
@@ -97,10 +99,10 @@ Run the package command:
 
 No package-local automated command is declared.
 
-Package tests found: 0.
+Package test files found: 0. This is file discovery, not an executed test count.
 
 The audit status does not claim live host or cluster acceptance. See the AP08
-checkpoint for the exact local result and unavailable environment boundaries.
+[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
 
 ## Source Evidence
 

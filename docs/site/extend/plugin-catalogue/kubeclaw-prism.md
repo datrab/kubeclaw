@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/prism/openclaw-plugin/openclaw.plugin.json; skills/prism/openclaw-plugin/README.md
 Applies to: openclaw-plugin; package 0.1.0
-Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
 
 ## Authored Guidance
 
@@ -21,7 +21,7 @@ Do not use it as a general HTTP client or a Nova pipeline stage.
 
 ## Most Important Limit
 
-It requires the Prism control service and accepts exactly the declared tool schemas.
+It requires Prism control. The tools constrain the design count, but do not bound all text or document sizes. The HTTP request has no explicit timeout or cancellation signal; test the real host before acceptance.
 
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
@@ -65,13 +65,13 @@ Provided capabilities: None.
 
 Configuration schema: [Inline host schema in the manifest](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/openclaw.plugin.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
 - `controlUrl` (string; optional)
 
-Input schema: None.
+Input schema: Hook or tool input belongs to the host and module; absence of a manifest field does not mean unrestricted input.
 
-Result schema: None.
+Result schema: The host owns the response contract.
 
 Declared manifest facts:
 
@@ -83,13 +83,15 @@ Declared manifest facts:
 
 ## Failure Behavior
 
+The two operations commit a three-design set or one revision. Prism control errors become tool errors. Registration tests check names and the design count, not a live control-service commit.
+
 OpenClaw rejects invalid host configuration or an unavailable extension module.
 External dependency failure appears in the extension result or bounded diagnostics.
 
 ## Verification Record
 
 Audit status: `locally-verified`.
-Local command result on 2026-09-16: `passed`.
+Earlier AP08.7–AP08.9 local command result on 2026-09-16: `passed`.
 
 The package-local command completed with exit code 0.
 
@@ -99,10 +101,10 @@ Run the package command:
 node --test skills/prism/openclaw-plugin/index.test.mjs
 ```
 
-Package tests found: 1.
+Package test files found: 1. This is file discovery, not an executed test count.
 
 The audit status does not claim live host or cluster acceptance. See the AP08
-checkpoint for the exact local result and unavailable environment boundaries.
+[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
 
 ## Source Evidence
 

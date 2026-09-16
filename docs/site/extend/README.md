@@ -8,6 +8,11 @@ Evidence revision: `bcf032f241b432bf920baa9ee5f727947921447d`
 Applies to: pipeline-plugin-v2, current OpenClaw and Codex manifests, Worker Core contracts
 Last verified: source and focused local checks on 2026-09-16
 
+The design explanations below describe the current contract tradeoffs. A linked
+ADR supplies historical decision evidence where available. Other benefits, costs,
+and alternatives are inferences from the current boundaries, not a claim about
+the original authors' motives.
+
 ## Purpose
 
 Use this guide before you create a package or change Core.
@@ -146,7 +151,7 @@ Combining both powers would let a repository approve its own executable dependen
 >
 > **Negative test:** [The platform check rejects project-controlled installation roots](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L44-L63).
 >
-> **Decision:** [ADR-007 explains the separate operator grant](../decisions/core-and-plugins.md#adr-007-require-closed-capabilities-and-separate-operator-grants).
+> **Decision:** [ADR-007 explains the separate operator grant](../decisions/core-and-plugins.md#adr-007-grant-bounded-capabilities-instead-of-ambient-authority).
 >
 > **Local result:** The focused platform-configuration check passed on 2026-09-16.
 

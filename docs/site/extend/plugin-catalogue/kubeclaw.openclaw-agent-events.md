@@ -5,23 +5,23 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/common/plugins/openclaw-agent-events/plugin.json; skills/common/plugins/openclaw-agent-events/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
 
 ## Authored Guidance
 
-Read bounded OpenClaw agent-event records for Nova consumers.
+Bridge live OpenClaw hooks into namespaced plugin events.
 
 ## When To Use It
 
-Use it when a pipeline stage needs approved agent evidence from the event source.
+Use it when an OpenClaw SDK host must feed hook events to the pipeline event boundary.
 
 ## When Not To Use It
 
-Do not use it to install OpenClaw hooks or write arbitrary Redis data.
+Do not use it to read historical agent records or as a standalone Redis ingestion service.
 
 ## Most Important Limit
 
-It reads through its declared source capability and configured record bounds.
+Its exposed capability reports bridge status. Queued events are volatile until accepted by the event journal; the host must provide OpenClaw hooks.
 
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
@@ -59,6 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## capability adapter: source
 
 Public identifier: `source`.
+Global registration ID: `kubeclaw.openclaw-agent-events:source`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: None.
 
@@ -66,16 +67,16 @@ Provided capabilities: `agent.events.subscribe`
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-events/schemas/config.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
-- `hooks` (array; required)
-- `maxQueueEvents` (integer; optional; default `256`)
-- `maxQueueBytes` (integer; optional; default `1048576`)
-- `drainTimeoutMs` (integer; optional; default `5000`)
+- `hooks` (array; required; minItems `1`)
+- `maxQueueEvents` (integer; optional; default `256`; minimum `1`; maximum `10000`)
+- `maxQueueBytes` (integer; optional; default `1048576`; minimum `1`; maximum `16777216`)
+- `drainTimeoutMs` (integer; optional; default `5000`; minimum `1`; maximum `60000`)
 
-Input schema: None.
+Input schema: No package-specific inputSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
-Result schema: None.
+Result schema: No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
 Declared manifest facts:
 
@@ -90,14 +91,17 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-Registry validation rejects a missing module, export, schema, or capability declaration.
+Activation requires the OpenClaw on-hook API. The capability exposes status, not arbitrary event-history reads. Cancellation or an unsupported operation is an error.
+
+Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 Nova or Buster records a bounded failure without giving the package lifecycle authority.
 
 ## Verification Record
 
 Audit status: `content-written`.
-Local command result on 2026-09-16: `unavailable`.
+Earlier AP08.7–AP08.9 local command result on 2026-09-16: `unavailable`.
 
 The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
 
@@ -107,10 +111,16 @@ Run the package command:
 npm test --prefix skills/common/plugins/openclaw-agent-events
 ```
 
-Package tests found: 2.
+Package test files found: 2. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+```
 
 The audit status does not claim live host or cluster acceptance. See the AP08
-checkpoint for the exact local result and unavailable environment boundaries.
+[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
 
 ## Source Evidence
 

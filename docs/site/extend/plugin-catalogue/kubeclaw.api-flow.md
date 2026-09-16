@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/buster/plugins/api-flow/plugin.json; skills/buster/plugins/api-flow/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
 
 ## Authored Guidance
 
@@ -59,6 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## test provider: flow
 
 Public identifier: `kubeclaw.api-flow@1`.
+Global registration ID: `kubeclaw.api-flow:flow`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `network.http`
 
@@ -66,18 +67,18 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/api-flow/schemas/config.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
-- `flowFile` (string; required)
-- `url` (string; optional)
-- `endpointName` (string; optional)
-- `requestTimeoutMs` (integer; optional; default `10000`)
-- `maximumResponseBytes` (integer; optional; default `1048576`)
-- `maximumSteps` (integer; optional; default `64`)
+- `flowFile` (string; required; minLength `1`; maxLength `1024`; pattern `^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+$`)
+- `url` (string; optional; minLength `1`; maxLength `2048`)
+- `endpointName` (string; optional; pattern `^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$`)
+- `requestTimeoutMs` (integer; optional; default `10000`; minimum `1`; maximum `300000`)
+- `maximumResponseBytes` (integer; optional; default `1048576`; minimum `1`; maximum `16777216`)
+- `maximumSteps` (integer; optional; default `64`; minimum `1`; maximum `256`)
 
-Input schema: None.
+Input schema: No package-specific inputSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
-Result schema: None.
+Result schema: No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
 Declared manifest facts:
 
@@ -104,14 +105,17 @@ Inputs:
 
 ## Failure Behavior
 
-Registry validation rejects a missing module, export, schema, or capability declaration.
+Steps can use HTTP requests or WebSocket messages. Missing variables, unknown steps, and cross-origin paths fail validation. The report distinguishes failed and skipped steps.
+
+Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 Nova or Buster records a bounded failure without giving the package lifecycle authority.
 
 ## Verification Record
 
 Audit status: `locally-verified`.
-Local command result on 2026-09-16: `passed`.
+Earlier AP08.7–AP08.9 local command result on 2026-09-16: `passed`.
 
 The package-local command completed with exit code 0.
 
@@ -121,10 +125,16 @@ Run the package command:
 npm test --prefix skills/buster/plugins/api-flow
 ```
 
-Package tests found: 2.
+Package test files found: 2. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+node tests/live-function.test.ts && node tests/remediation.test.ts
+```
 
 The audit status does not claim live host or cluster acceptance. See the AP08
-checkpoint for the exact local result and unavailable environment boundaries.
+[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
 
 ## Source Evidence
 

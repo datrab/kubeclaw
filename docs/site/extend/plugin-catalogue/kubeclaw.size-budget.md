@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/buster/plugins/size-budget/plugin.json; skills/buster/plugins/size-budget/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
 
 ## Authored Guidance
 
@@ -59,6 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## test provider: artifact
 
 Public identifier: `kubeclaw.size-budget@1`.
+Global registration ID: `kubeclaw.size-budget:artifact`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: None.
 
@@ -66,19 +67,19 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/size-budget/schemas/config.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
-- `format` (schema-defined; optional)
-- `maximumTotalBytes` (integer; optional)
-- `maximumFileCount` (integer; optional)
-- `matchingFiles` (array; optional)
-- `maximumGrowthBytes` (integer; optional)
-- `maximumGrowthPercent` (number; optional)
-- `largestFiles` (integer; optional)
+- `format` (enumeration; optional; allowed `["auto","file","tar","tar-gzip"]`)
+- `maximumTotalBytes` (integer; optional; minimum `0`; maximum `9007199254740991`)
+- `maximumFileCount` (integer; optional; minimum `0`; maximum `100000`)
+- `matchingFiles` (array; optional; maxItems `32`)
+- `maximumGrowthBytes` (integer; optional; minimum `0`; maximum `9007199254740991`)
+- `maximumGrowthPercent` (number; optional; minimum `0`; maximum `1000000`)
+- `largestFiles` (integer; optional; minimum `1`; maximum `100`)
 
-Input schema: None.
+Input schema: No package-specific inputSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
-Result schema: None.
+Result schema: No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
 Declared manifest facts:
 
@@ -109,14 +110,17 @@ Outputs:
 
 ## Failure Behavior
 
-Registry validation rejects a missing module, export, schema, or capability declaration.
+The provider measures declared build-output files against absolute or baseline limits. It checks baseline availability, input names, evidence paths, and artifact budgets; it does not perform the build.
+
+Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 Nova or Buster records a bounded failure without giving the package lifecycle authority.
 
 ## Verification Record
 
 Audit status: `content-written`.
-Local command result on 2026-09-16: `unavailable`.
+Earlier AP08.7–AP08.9 local command result on 2026-09-16: `unavailable`.
 
 The command requires GNU tar --format=ustar, which BusyBox tar does not provide.
 
@@ -126,10 +130,16 @@ Run the package command:
 npm test --prefix skills/buster/plugins/size-budget
 ```
 
-Package tests found: 1.
+Package test files found: 1. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+node tests/live-function.test.ts
+```
 
 The audit status does not claim live host or cluster acceptance. See the AP08
-checkpoint for the exact local result and unavailable environment boundaries.
+[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
 
 ## Source Evidence
 

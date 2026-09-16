@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/nova/plugins/review/plugin.json; skills/nova/plugins/review/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
 
 ## Authored Guidance
 
@@ -61,6 +61,7 @@ the contract and lifecycle rules that apply to this package.
 ## stage: review
 
 Public identifier: `kubeclaw.decision.review`.
+Global registration ID: `kubeclaw.review:review`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `runtime.dispatch`, `git.repository.read`, `artifacts.read`, `artifacts.write`
 
@@ -68,12 +69,12 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/review/schemas/config.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
-- `reviewSemanticEncoding` (schema-defined; optional)
-- `reportArtifactEncoding` (schema-defined; optional)
-- `agent` (string; required)
-- `profile` (schema-defined; optional; default `"gate"`)
+- `reviewSemanticEncoding` (constant; optional; value `review-semantics.utf16-v1`)
+- `reportArtifactEncoding` (constant; optional; value `kubeclaw-json.utf16.v1`)
+- `agent` (string; required; minLength `1`)
+- `profile` (enumeration; optional; default `"gate"`; allowed `["gate","lean","audit"]`)
 - `policy` (object; optional)
 
 Input schema: [schemas/input.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/review/schemas/input.schema.json)
@@ -96,6 +97,7 @@ Declared manifest facts:
 ## stage: repository-audit
 
 Public identifier: `kubeclaw.audit.repository-review`.
+Global registration ID: `kubeclaw.review:repository-audit`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `runtime.dispatch`, `git.repository.read`, `artifacts.read`, `artifacts.write`
 
@@ -103,14 +105,14 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/repository-audit-config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/review/schemas/repository-audit-config.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
-- `agent` (string; required)
-- `reviewerModel` (string; required)
-- `reviewerRuntime` (schema-defined; optional; default `"subagent"`)
-- `reviewerAgentId` (string; optional; default `"codex"`)
-- `reviewerThinking` (string; optional; default `"high"`)
-- `profile` (schema-defined; optional; default `"audit"`)
+- `agent` (string; required; minLength `1`)
+- `reviewerModel` (string; required; minLength `1`)
+- `reviewerRuntime` (enumeration; optional; default `"subagent"`; allowed `["acp","subagent"]`)
+- `reviewerAgentId` (string; optional; default `"codex"`; minLength `1`)
+- `reviewerThinking` (string; optional; default `"high"`; minLength `1`)
+- `profile` (enumeration; optional; default `"audit"`; allowed `["gate","lean","audit"]`)
 - `policy` (object; optional)
 
 Input schema: [schemas/repository-audit-input.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/review/schemas/repository-audit-input.schema.json)
@@ -133,6 +135,7 @@ Declared manifest facts:
 ## stage: repository-revalidation
 
 Public identifier: `kubeclaw.audit.repository-review-revalidation`.
+Global registration ID: `kubeclaw.review:repository-revalidation`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `runtime.dispatch`, `git.repository.read`, `artifacts.read`, `artifacts.write`
 
@@ -140,14 +143,14 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/repository-audit-config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/review/schemas/repository-audit-config.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
-- `agent` (string; required)
-- `reviewerModel` (string; required)
-- `reviewerRuntime` (schema-defined; optional; default `"subagent"`)
-- `reviewerAgentId` (string; optional; default `"codex"`)
-- `reviewerThinking` (string; optional; default `"high"`)
-- `profile` (schema-defined; optional; default `"audit"`)
+- `agent` (string; required; minLength `1`)
+- `reviewerModel` (string; required; minLength `1`)
+- `reviewerRuntime` (enumeration; optional; default `"subagent"`; allowed `["acp","subagent"]`)
+- `reviewerAgentId` (string; optional; default `"codex"`; minLength `1`)
+- `reviewerThinking` (string; optional; default `"high"`; minLength `1`)
+- `profile` (enumeration; optional; default `"audit"`; allowed `["gate","lean","audit"]`)
 - `policy` (object; optional)
 
 Input schema: [schemas/repository-revalidation-input.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json)
@@ -169,14 +172,17 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-Registry validation rejects a missing module, export, schema, or capability declaration.
+The stage freezes source and policy, verifies proposed findings, and stores immutable reports. Repository-audit jobs have recovery checkpoints; revalidation does not promise per-finding resume. Local tests do not prove live reviewer quality.
+
+Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 Nova or Buster records a bounded failure without giving the package lifecycle authority.
 
 ## Verification Record
 
 Audit status: `content-written`.
-Local command result on 2026-09-16: `unavailable`.
+Earlier AP08.7–AP08.9 local command result on 2026-09-16: `unavailable`.
 
 The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
 
@@ -186,10 +192,16 @@ Run the package command:
 npm test --prefix skills/nova/plugins/review
 ```
 
-Package tests found: 57.
+Package test files found: 57. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+npm run test:cluster && npm run schema:check && node tests/repository-review-profile.unit.test.mjs && node tests/review-prompt-budget.unit.test.mjs && node tests/review-quality-corpus.unit.test.mjs && node tests/review-snapshot-inventory.unit.test.mjs && node tests/review-map-artifacts.unit.test.mjs && node tests/review-fact-extractors.unit.test.mjs && node tests/review-graph.unit.test.mjs && node tests/review-scale-slicing.unit.test.mjs && node tests/scalable-review-topology.unit.test.mjs && node tests/scalable-review-jobs.unit.test.mjs && node tests/scalable-review-verification.unit.test.mjs && node tests/review-content-cache.unit.test.mjs && node tests/scalable-review-compiler.unit.test.mjs && node tests/review-governor.unit.test.mjs && node tests/review-report-contract.unit.test.mjs && node tests/review-report-builder.unit.test.mjs && node tests/simplification-contract.unit.test.mjs && node tests/simplification-miner.unit.test.mjs && node tests/simplification-manifest.unit.test.mjs && node tests/review-bundle-contract.unit.test.mjs && node tests/review-bundle-snapshot.unit.test.mjs && node tests/review-context-selection.unit.test.mjs && node tests/review-context-production.unit.test.mjs && node tests/review-slicing.unit.test.mjs && node tests/echo-review-output.unit.test.mjs && node tests/echo-review-verification.unit.test.mjs && node tests/review-proposal-preflight.unit.test.mjs && node tests/review-verification-reconciliation.unit.test.mjs && node tests/review-verdict-policy.unit.test.mjs && node tests/review-verified-findings.unit.test.mjs && node tests/review-policy-contract.unit.test.mjs && node tests/review-invariants.unit.test.mjs && node tests/review-policy-resolver.unit.test.mjs && node tests/review-policy-profiles.unit.test.mjs && node tests/review-reducer.unit.test.mjs && node tests/review-decision-matrix.unit.test.mjs && node tests/review-contract-parity.unit.test.mjs && node tests/review-evaluation-metadata.unit.test.mjs && node tests/review-stage-input.unit.test.mjs && node tests/review-stage-verification.unit.test.mjs && node tests/protocol.unit.test.mjs && node tests/stage.unit.test.mjs && node tests/live-function.test.ts && node --test tests/review-evidence-encoding-independent.test.mjs tests/review-evidence-live-locales.test.mjs tests/review-evidence-schema-independent.test.mjs && node tests/package-boundary.test.mjs && node tests/remediation.test.mjs && node tests/repository-review-io.test.ts && npm run test:coverage
+```
 
 The audit status does not claim live host or cluster acceptance. See the AP08
-checkpoint for the exact local result and unavailable environment boundaries.
+[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
 
 ## Source Evidence
 

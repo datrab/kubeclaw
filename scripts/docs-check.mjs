@@ -32,7 +32,7 @@ function activeMarkdownFiles() {
 function checkLocalLinks(files) {
   const linkRe = /\[[^\]]*]\(([^)]+)\)/g;
   for (const file of files) {
-    const text = fs.readFileSync(file, 'utf8');
+    const text = fs.readFileSync(file, 'utf8').replace(/`[^`\n]*`/gu, 'code');
     let match;
     while ((match = linkRe.exec(text))) {
       let target = match[1].trim();

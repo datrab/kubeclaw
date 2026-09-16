@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/buster/plugins/container-build/plugin.json; skills/buster/plugins/container-build/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
 
 ## Authored Guidance
 
@@ -59,6 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## test provider: buildkit
 
 Public identifier: `kubeclaw.container-build@1`.
+Global registration ID: `kubeclaw.container-build:buildkit`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `container.build`
 
@@ -66,16 +67,16 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/container-build/schemas/config.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
-- `buildContext` (schema-defined; required)
+- `buildContext` (referenced schema; required; reference `#/$defs/path`)
 - `definition` (schema-defined; required)
-- `outputName` (schema-defined; optional)
-- `platform` (string; optional)
+- `outputName` (referenced schema; optional; reference `#/$defs/name`)
+- `platform` (string; optional; maxLength `64`; pattern `^linux/[a-z0-9_+-]+(?:/[a-z0-9._+-]+)?$`)
 
-Input schema: None.
+Input schema: No package-specific inputSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
-Result schema: None.
+Result schema: No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
 Declared manifest facts:
 
@@ -101,14 +102,17 @@ Outputs:
 
 ## Failure Behavior
 
-Registry validation rejects a missing module, export, schema, or capability declaration.
+The capability operation is build_push_verify: this can push an image, not merely compile a local Dockerfile. The provider validates output names and platforms. Package tests do not prove a live BuildKit deployment.
+
+Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 Nova or Buster records a bounded failure without giving the package lifecycle authority.
 
 ## Verification Record
 
 Audit status: `locally-verified`.
-Local command result on 2026-09-16: `passed`.
+Earlier AP08.7–AP08.9 local command result on 2026-09-16: `passed`.
 
 The package-local command completed with exit code 0.
 
@@ -118,10 +122,16 @@ Run the package command:
 npm test --prefix skills/buster/plugins/container-build
 ```
 
-Package tests found: 2.
+Package test files found: 2. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+node tests/deadline.test.mts && node tests/live-function.test.ts
+```
 
 The audit status does not claim live host or cluster acceptance. See the AP08
-checkpoint for the exact local result and unavailable environment boundaries.
+[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
 
 ## Source Evidence
 

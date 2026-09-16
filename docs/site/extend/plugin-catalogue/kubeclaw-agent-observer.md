@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json; skills/common/plugins/openclaw-agent-observer/README.md
 Applies to: openclaw-plugin; package 0.0.0
-Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
 
 ## Authored Guidance
 
@@ -64,7 +64,7 @@ Provided capabilities: None.
 
 Configuration schema: [Inline host schema in the manifest](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
 - `enabled` (boolean; optional)
 - `redisHost` (string; optional)
@@ -84,9 +84,9 @@ Configuration fields:
 - `hookPriority` (number; optional)
 - `hookTimeoutMs` (number; optional)
 
-Input schema: None.
+Input schema: Hook or tool input belongs to the host and module; absence of a manifest field does not mean unrestricted input.
 
-Result schema: None.
+Result schema: The host owns the response contract.
 
 Declared manifest facts:
 
@@ -98,13 +98,15 @@ Declared manifest facts:
 
 ## Failure Behavior
 
+OpenClaw hooks enter a bounded queue before Redis publication. Queue admission and durable delivery are different events; removing the extension does not remove Redis records.
+
 OpenClaw rejects invalid host configuration or an unavailable extension module.
 External dependency failure appears in the extension result or bounded diagnostics.
 
 ## Verification Record
 
 Audit status: `locally-verified`.
-Local command result on 2026-09-16: `passed`.
+Earlier AP08.7–AP08.9 local command result on 2026-09-16: `passed`.
 
 The package-local command completed with exit code 0.
 
@@ -114,10 +116,16 @@ Run the package command:
 npm test --prefix skills/common/plugins/openclaw-agent-observer
 ```
 
-Package tests found: 5.
+Package test files found: 5. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+node tests/clean-build.test.mjs && node --check scripts/build.mjs && node --check scripts/sync-contract.mjs && npm run typecheck && node tests/config.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node --test tests/remediation.test.ts
+```
 
 The audit status does not claim live host or cluster acceptance. See the AP08
-checkpoint for the exact local result and unavailable environment boundaries.
+[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
 
 ## Source Evidence
 

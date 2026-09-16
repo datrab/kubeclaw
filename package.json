@@ -56,7 +56,7 @@
     "docs:ap08:minimal-plugin:check": "node scripts/check-ap08-minimal-plugin.mjs",
     "docs:ap08:advanced-guides:check": "node scripts/check-ap08-advanced-guides.mjs",
     "docs:ap08:effectful:check": "node scripts/check-ap08-effectful-guide.mjs",
-    "docs:ap08:host-lifecycle-catalogue:check": "node scripts/check-ap08-host-lifecycle-catalogue.mjs",
+    "docs:ap08:host-lifecycle-catalogue:check": "node scripts/check-ap08-host-lifecycle-catalogue.mjs && node scripts/check-ap08-observers.mjs && node scripts/check-ap08-reader-references.mjs",
     "knip:generate": "node scripts/generate-knip-config.mjs",
     "knip:config:check": "node scripts/generate-knip-config.mjs --check",
     "knip:check": "npm run knip:config:check && npx --no-install knip --config charts/kubeclaw/files/config/knip.json --no-progress --no-config-hints --no-tag-hints",

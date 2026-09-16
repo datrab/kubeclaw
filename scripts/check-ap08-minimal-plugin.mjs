@@ -168,17 +168,27 @@ try {
   });
   assert.equal(packageTest.status, 0, packageTest.stderr || packageTest.stdout);
 
+  // A separate probe identity allows this check while the tutorial is installed.
+  const roleProbe = path.join(temporary, 'role-probe');
+  fs.cpSync(fixtureRoot, roleProbe, { recursive: true });
+  const probeManifest = JSON.parse(fs.readFileSync(path.join(roleProbe, 'plugin.json'), 'utf8'));
+  probeManifest.id = 'example.ap08-role-probe';
+  fs.writeFileSync(path.join(roleProbe, 'plugin.json'), JSON.stringify(probeManifest));
+  const probePackage = JSON.parse(fs.readFileSync(path.join(roleProbe, 'package.json'), 'utf8'));
+  probePackage.name = '@example/ap08-role-probe';
+  fs.writeFileSync(path.join(roleProbe, 'package.json'), JSON.stringify(probePackage));
+
   const omittedRoleCheck = spawnSync(process.execPath, [
     path.join(root, 'scripts/check-runtime-role-manifests.mjs'),
-    '--additional-plugin', 'nova=docs/site/extend/examples/minimal-stage/plugin.json',
+    '--additional-plugin', `nova=${path.join(roleProbe, 'plugin.json')}`,
   ], { cwd: root, encoding: 'utf8' });
   assert.notEqual(omittedRoleCheck.status, 0, 'role check must reject an owned plugin before Nova selects it');
-  assert.match(omittedRoleCheck.stderr, /nova omits its plugin: example\.greeting/u);
+  assert.match(omittedRoleCheck.stderr, /nova omits its plugin: example\.ap08-role-probe/u);
 
   const roleCheck = spawnSync(process.execPath, [
     path.join(root, 'scripts/check-runtime-role-manifests.mjs'),
-    '--additional-plugin', 'nova=docs/site/extend/examples/minimal-stage/plugin.json',
-    '--role-addition', 'nova=example.greeting',
+    '--additional-plugin', `nova=${path.join(roleProbe, 'plugin.json')}`,
+    '--role-addition', 'nova=example.ap08-role-probe',
   ], { cwd: root, encoding: 'utf8' });
   assert.equal(roleCheck.status, 0, roleCheck.stderr || roleCheck.stdout);
   const roleResult = JSON.parse(roleCheck.stdout.trim());
@@ -222,7 +232,7 @@ try {
     invalidInput: 'rejected',
     removal: 'stage-owner-missing',
     retainedRunJournals: retainedJournals.length,
-    persistenceBoundary: 'in-memory journal because local BusyBox flock lacks GNU --timeout',
+    persistenceBoundary: 'in-memory journal; persistent recovery requires separate checks',
   }));
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });

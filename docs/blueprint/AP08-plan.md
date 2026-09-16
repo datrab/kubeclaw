@@ -1,6 +1,6 @@
 # AP08 extension documentation plan
 
-Status: AP08.0 through AP08.9 complete; AP08.10 acceptance is next
+Status: AP08.10 reviewed with blockers; AP08 is not complete
 Date: 2026-09-16
 Scope: W08-W11 and reader outcomes E1-E6
 Assessment revision: `bcf032f241b432bf920baa9ee5f727947921447d`
@@ -28,7 +28,7 @@ The repository contains 51 installable extension manifests:
 
 The 48 pipeline packages declare 67 registrations: 21 stages, five observers, 21 adapters, 19 test providers, and one report adapter.
 
-The current catalogue has 50 package pages. It does not contain `kubeclaw-ops`. The existing pipeline-system inventory has a narrower search scope and reports 49 package roots. AP08 uses the new 51-manifest baseline for complete extension-documentation coverage. It retains the narrower inventory for its pipeline-runtime purpose until AP09 reconciles inventory ownership.
+At the AP08.0 baseline, the catalogue had 50 package pages. That baseline did not contain `kubeclaw-ops`. The existing pipeline-system inventory has a narrower search scope and reports 49 package roots. AP08 uses the new 51-manifest baseline for complete extension-documentation coverage. It retains the narrower inventory for its pipeline-runtime purpose until AP09 reconciles inventory ownership.
 
 The current publication generator creates the catalogue pages from manifests. It also replaces the complete content of each page. This design mixes mechanical facts with generic prose and prevents maintainers from keeping detailed authored explanations on those pages. AP08.9 must separate generated facts from authored content before it can claim catalogue completion.
 
@@ -264,8 +264,23 @@ package results, and exact environment limits.
 
 The catalogue keeps authored guidance, generated facts, and dated verification
 results in separate authorities. Eighteen local commands passed. Thirty-two package
-commands remain unavailable on this host because named external tools or GNU userland
+commands were unavailable on the earlier checkpoint host because named external tools or GNU userland
 features are absent. The Codex package has no package-local automated command.
 
 AP08.10 remains open for independent reader acceptance. These parts do not claim live
 host, browser, Trivy, Kubernetes, image, or cluster acceptance.
+
+## Independent AP08.10 decision
+
+The [independent reader checkpoint](AP08.10-checkpoint.md) supersedes the earlier
+completion claims for overall acceptance. AP08.10 and AP08 remain open.
+The reader found and corrected broken procedures, a non-executing observer check,
+source-reference errors, and inaccurate package guidance. The catalogue now has
+51 individually reviewed pages, but page coverage is not task acceptance.
+
+Open paths include deployed tutorial submission, external-effect reconciliation,
+Codex host installation, new-role integration, and live host/image acceptance.
+Provider execution, report-adapter runtime, transport publication, and isolation
+also have failed local checks. The checkpoint separates missing tools from
+failures whose cause is not established. Earlier AP08.0–AP08.9 statuses are
+historical reports, not evidence that these reader paths passed.

@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/common/plugins/artifact-store/plugin.json; skills/common/plugins/artifact-store/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
 
 ## Authored Guidance
 
@@ -13,7 +13,7 @@ Provide controlled artifact reads and writes through the capability boundary.
 
 ## When To Use It
 
-Use it when a stage or provider must exchange durable bounded artifacts.
+Use it when a pipeline capability consumer must exchange durable bounded artifacts.
 
 ## When Not To Use It
 
@@ -59,6 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## capability adapter: artifact-store
 
 Public identifier: `artifact-store`.
+Global registration ID: `kubeclaw.artifact-store:artifact-store`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: None.
 
@@ -66,16 +67,16 @@ Provided capabilities: `artifacts.read`, `artifacts.write`
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/artifact-store/schemas/config.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
-- `artifactRoot` (string; required)
-- `maxArtifactBytes` (integer; optional)
-- `maximumRecords` (integer; optional; default `100000`)
-- `maximumStoreBytes` (integer; optional; default `268435456`)
+- `artifactRoot` (string; required; minLength `1`)
+- `maxArtifactBytes` (integer; optional; minimum `1`)
+- `maximumRecords` (integer; optional; default `100000`; minimum `1`)
+- `maximumStoreBytes` (integer; optional; default `268435456`; minimum `1`)
 
-Input schema: None.
+Input schema: No package-specific inputSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
-Result schema: None.
+Result schema: No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
 Declared manifest facts:
 
@@ -90,14 +91,17 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-Registry validation rejects a missing module, export, schema, or capability declaration.
+Consumers write JSON or read through artifact references. Digest, reference, and store-budget failures are errors. Package removal leaves the configured artifact store and run references intact.
+
+Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 Nova or Buster records a bounded failure without giving the package lifecycle authority.
 
 ## Verification Record
 
 Audit status: `content-written`.
-Local command result on 2026-09-16: `unavailable`.
+Earlier AP08.7–AP08.9 local command result on 2026-09-16: `unavailable`.
 
 The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
 
@@ -107,10 +111,16 @@ Run the package command:
 npm test --prefix skills/common/plugins/artifact-store
 ```
 
-Package tests found: 2.
+Package test files found: 2. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+node tests/package-boundary.test.mjs && node tests/live-function.test.ts
+```
 
 The audit status does not claim live host or cluster acceptance. See the AP08
-checkpoint for the exact local result and unavailable environment boundaries.
+[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
 
 ## Source Evidence
 

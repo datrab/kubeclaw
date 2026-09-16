@@ -95,8 +95,8 @@ fixtures. `retrySafe` is a contract claim, not a request from the project.
 | Deployment fixture | `kubeclaw.kubernetes-fixture@1` | Not retry-safe fixture |
 | Exposure fixture | `kubeclaw.tailscale-exposure@1` | Not retry-safe fixture |
 
-The complete per-package purpose and configuration audit remains AP08.9 work. This
-page explains how their shared host and contracts work.
+The [package catalogue](plugin-catalogue/README.md) supplies per-package guidance.
+This page explains the shared host and contracts.
 
 ## Suite Templates
 

@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/buster/plugins/lighthouse/plugin.json; skills/buster/plugins/lighthouse/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
 
 ## Authored Guidance
 
@@ -59,6 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## test provider: lighthouse
 
 Public identifier: `kubeclaw.lighthouse@1`.
+Global registration ID: `kubeclaw.lighthouse:lighthouse`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `browser.lighthouse`
 
@@ -66,22 +67,22 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/lighthouse/schemas/config.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
-- `purpose` (schema-defined; required)
-- `url` (string; optional)
-- `endpointName` (string; optional)
-- `routes` (array; required)
-- `settingsFile` (string; required)
-- `profile` (string; required)
-- `budget` (string; optional)
-- `runs` (schema-defined; optional)
-- `acceptances` (array; optional; default `[]`)
-- `timeoutMs` (integer; optional; default `120000`)
+- `purpose` (enumeration; required; allowed `["performance","seo","best-practices"]`)
+- `url` (string; optional; maxLength `2048`; pattern `^https?://`)
+- `endpointName` (string; optional; maxLength `64`; pattern `^[A-Za-z0-9][A-Za-z0-9._-]*$`)
+- `routes` (array; required; minItems `1`; maxItems `16`)
+- `settingsFile` (string; required; minLength `1`; maxLength `4096`; pattern `^(?!/)(?!.*(?:^|/)\.\.(?:/|$)).+$`)
+- `profile` (string; required; maxLength `64`; pattern `^[A-Za-z0-9][A-Za-z0-9._-]*$`)
+- `budget` (string; optional; maxLength `64`; pattern `^[A-Za-z0-9][A-Za-z0-9._-]*$`)
+- `runs` (enumeration; optional; allowed `[1,3,5]`)
+- `acceptances` (array; optional; default `[]`; maxItems `128`)
+- `timeoutMs` (integer; optional; default `120000`; minimum `10000`; maximum `180000`)
 
-Input schema: None.
+Input schema: No package-specific inputSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
-Result schema: None.
+Result schema: No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
 Declared manifest facts:
 
@@ -108,14 +109,17 @@ Inputs:
 
 ## Failure Behavior
 
-Registry validation rejects a missing module, export, schema, or capability declaration.
+The provider invokes browser.lighthouse and validates the returned runs and category data. Missing categories or audit execution errors fail the operation. Its package test requires real Chromium.
+
+Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 Nova or Buster records a bounded failure without giving the package lifecycle authority.
 
 ## Verification Record
 
 Audit status: `content-written`.
-Local command result on 2026-09-16: `unavailable`.
+Earlier AP08.7–AP08.9 local command result on 2026-09-16: `unavailable`.
 
 The command requires a configured real Chromium or Playwright browser that is absent on this host.
 
@@ -125,10 +129,16 @@ Run the package command:
 npm test --prefix skills/buster/plugins/lighthouse
 ```
 
-Package tests found: 1.
+Package test files found: 1. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+node tests/live-function.test.ts
+```
 
 The audit status does not claim live host or cluster acceptance. See the AP08
-checkpoint for the exact local result and unavailable environment boundaries.
+[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
 
 ## Source Evidence
 

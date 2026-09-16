@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/buster/plugins/direct-command/plugin.json; skills/buster/plugins/direct-command/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
 
 ## Authored Guidance
 
@@ -21,7 +21,7 @@ Do not use it for long-lived services or unrestricted shell sessions.
 
 ## Most Important Limit
 
-Retry safety depends on the command behavior declared by the plan.
+The provider declares retrySafe, but it cannot prove that an arbitrary command is idempotent. Set retry count to zero for effects that cannot be safely repeated.
 
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
@@ -59,6 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## test provider: command
 
 Public identifier: `kubeclaw.direct-command@1`.
+Global registration ID: `kubeclaw.direct-command:command`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `command.execute`
 
@@ -66,20 +67,20 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/direct-command/schemas/config.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
-- `executable` (string; required)
-- `args` (array; optional)
-- `workingDirectory` (string; optional)
+- `executable` (string; required; pattern `^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$`)
+- `args` (array; optional; maxItems `256`)
+- `workingDirectory` (string; optional; minLength `1`; maxLength `1024`)
 - `environment` (object; optional)
-- `resultMode` (schema-defined; required)
-- `reports` (array; optional)
-- `coverage` (array; optional)
-- `artifacts` (array; optional)
+- `resultMode` (enumeration; required; allowed `["junit-required","exit-code"]`)
+- `reports` (array; optional; maxItems `16`)
+- `coverage` (array; optional; maxItems `8`)
+- `artifacts` (array; optional; maxItems `8`)
 
-Input schema: None.
+Input schema: No package-specific inputSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
-Result schema: None.
+Result schema: No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
 Declared manifest facts:
 
@@ -120,14 +121,17 @@ Outputs:
 
 ## Failure Behavior
 
-Registry validation rejects a missing module, export, schema, or capability declaration.
+The provider runs the resolved command and imports bounded evidence files. Command errors and excess artifact counts fail execution. The manifest retrySafe flag does not inspect command side effects.
+
+Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 Nova or Buster records a bounded failure without giving the package lifecycle authority.
 
 ## Verification Record
 
 Audit status: `locally-verified`.
-Local command result on 2026-09-16: `passed`.
+Earlier AP08.7–AP08.9 local command result on 2026-09-16: `passed`.
 
 The package-local command completed with exit code 0.
 
@@ -137,10 +141,16 @@ Run the package command:
 npm test --prefix skills/buster/plugins/direct-command
 ```
 
-Package tests found: 1.
+Package test files found: 1. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+node ../../../../tests/verification/integration/direct-command-output-contract.test.mts && node tests/live-function.test.ts
+```
 
 The audit status does not claim live host or cluster acceptance. See the AP08
-checkpoint for the exact local result and unavailable environment boundaries.
+[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
 
 ## Source Evidence
 

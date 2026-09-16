@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/nova/plugins/architecture-validator/plugin.json; skills/nova/plugins/architecture-validator/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
 
 ## Authored Guidance
 
@@ -59,6 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## stage: architecture
 
 Public identifier: `kubeclaw.validate.architecture`.
+Global registration ID: `kubeclaw.architecture-validator:architecture`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `runtime.dispatch`, `artifacts.write`, `git.repository.read`, `artifacts.read`
 
@@ -66,10 +67,10 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/architecture-validator/schemas/config.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
-- `agent` (string; required)
-- `agentRole` (string; optional)
+- `agent` (string; required; minLength `1`)
+- `agentRole` (string; optional; minLength `1`)
 
 Input schema: [schemas/input.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/architecture-validator/schemas/input.schema.json)
 
@@ -90,14 +91,17 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-Registry validation rejects a missing module, export, schema, or capability declaration.
+The stage dispatches a validation task, checks that the response covers the required files, and stores an architecture-validation artifact. Invalid or incomplete responses block the stage.
+
+Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 Nova or Buster records a bounded failure without giving the package lifecycle authority.
 
 ## Verification Record
 
 Audit status: `content-written`.
-Local command result on 2026-09-16: `unavailable`.
+Earlier AP08.7–AP08.9 local command result on 2026-09-16: `unavailable`.
 
 The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
 
@@ -107,10 +111,16 @@ Run the package command:
 npm test --prefix skills/nova/plugins/architecture-validator
 ```
 
-Package tests found: 3.
+Package test files found: 3. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+node tests/protocol.unit.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs
+```
 
 The audit status does not claim live host or cluster acceptance. See the AP08
-checkpoint for the exact local result and unavailable environment boundaries.
+[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
 
 ## Source Evidence
 

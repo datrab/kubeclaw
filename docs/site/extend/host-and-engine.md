@@ -106,7 +106,7 @@ The role manifest must select it. Source presence alone is not activation.
 
 ## Build An OpenClaw Tool Extension
 
-Use `kubeclaw-prism` when OpenClaw must expose a bounded tool to the Prism control
+Use `kubeclaw-prism` when OpenClaw must expose a tool to the Prism control
 service. The extension registers two tools. One commits a three-design set. The
 other commits a complete revision.
 
@@ -117,6 +117,12 @@ request. Prism control validates and persists the request after transport.
 > **Tool manifest:** [The Prism manifest declares two tool contracts and one strict control URL field](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/openclaw.plugin.json#L1-L17).
 >
 > **Tool registration:** [The extension defines the complete design-set and revision parameter contracts and posts them to Prism control](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/index.mjs#L22-L80).
+
+The current Prism tools bound the design count, but not every text or document
+size. Their HTTP request has no explicit timeout or cancellation signal. The
+registration test does not prove parameter validation by a real OpenClaw host.
+The limits below are requirements for a new extension, not proof that Prism
+already implements every limit.
 
 Build a new tool extension as follows:
 
@@ -312,6 +318,16 @@ scaling, and operational lifecycle over several releases.
 
 Follow this path:
 
+The current builder accepts only `nova`, `buster`, and `prism`. A fourth role
+requires changes to the builder, checker, images, and deployment templates.
+Adding a role manifest alone is not supported. The extension catalogue in the
+role checker also lists only `kubeclaw-agent-observer`; a new host extension
+requires an explicit packaging integration.
+
+> **Fixed role and extension sets:** [The checker lists supported identities](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/scripts/check-runtime-role-manifests.mjs#L6-L85), and [the builder rejects other roles](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/scripts/build-runtime-role-bundle.mjs#L7-L14).
+
+For an existing role:
+
 1. Add package ownership before the role selects a package.
 2. Define the entrypoint package, source path, output, and import.
 3. List every required package, plugin, and host extension once.
@@ -325,6 +341,10 @@ Follow this path:
 
 > **Three role shapes:** [The ownership map assigns shared, Nova, Worker, Buster, and Prism packages to allowed roles](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/packaging/runtime/package-ownership.json#L8-L26).
 >
+The role checker collects required capabilities from stages, observers, and
+adapters. It does not prove Buster test-provider capability closure; run the
+provider registry, plan resolver, and provider execution checks separately.
+
 > **Role closure:** [The role checker validates ownership, dependency closure, capability providers, and complete owned-plugin selection](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/scripts/check-runtime-role-manifests.mjs#L77-L145).
 >
 > **Bundle selection:** [The builder copies only role-selected plugin packages and preserves their source digests](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/scripts/build-runtime-role-bundle.mjs#L169-L187).

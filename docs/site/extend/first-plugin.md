@@ -25,7 +25,7 @@ Create one small stage plugin and take it through the complete local plugin path
 The example does not access a network, filesystem, secret, process, or database.
 It requests no capabilities and creates no external state.
 This design keeps the first journey focused on package and runtime mechanics.
-The `effectful-plugin` guide is planned for AP08.4.
+Continue with [the effectful plugin guide](effectful-plugin.md) for external state.
 
 ## Scope Boundary
 
@@ -77,7 +77,8 @@ project adds a dedicated development-only runtime role.
 
 ## Prerequisites
 
-- Start from a clean checkout of the reviewed revision.
+- Start from a clean checkout of the current documentation branch.
+  The older evidence revision identifies production source, not the tutorial files.
 - Install Node.js major version 24.
 - Run `npm ci --ignore-scripts` if dependencies are not present.
 - Use a branch. The procedure changes one role manifest and creates one package copy.
@@ -210,12 +211,12 @@ Then build into a new temporary child path:
 
 ```bash
 npm run plugin-system:sandbox:build
-export KUBECLAW_TUTORIAL_TEMP=/tmp/kubeclaw-ap08-plugin
+export KUBECLAW_TUTORIAL_TEMP="$(mktemp -d /tmp/kubeclaw-ap08-plugin.XXXXXX)"
 node scripts/build-runtime-role-bundle.mjs nova "$KUBECLAW_TUTORIAL_TEMP/nova" 0000000000000000000000000000000000000000 v2 2026-09-16T00:00:00Z
 rg -n 'example.greeting' "$KUBECLAW_TUTORIAL_TEMP/nova/manifest.json"
 ```
 
-Use a different empty `KUBECLAW_TUTORIAL_TEMP` path if that path already exists.
+The command creates a unique temporary parent. Keep this variable for cleanup.
 The builder refuses an existing output directory.
 
 Expected result: the bundle manifest contains one plugin record for
@@ -237,6 +238,7 @@ The check performs these operations with the real KubeClaw components:
 3. build the registry and resolve the empty capability grant set;
 4. reject the owned package before the Nova role selects it;
 5. accept a Nova role addition through the normal role checker;
+   the role probe uses a separate ID so the installed tutorial cannot collide;
 6. activate exactly one stage through Foundation;
 7. invoke that stage through a local Nova `PipelineRunner` harness;
 8. inspect the successful decision fact;
@@ -256,8 +258,8 @@ Expected output includes these fields:
 ```
 
 The journey check uses an in-memory event journal.
-The current local BusyBox `flock` lacks GNU `flock --timeout`, which the persistent
-file journal requires. Registry, grants, activation, schema checks, `PipelineRunner`,
+The original AP08.2 host used BusyBox `flock` without timeout support.
+The persistent file journal requires `flock --timeout`. Registry, grants, activation, schema checks, `PipelineRunner`,
 stage execution, lifecycle reduction, and role validation use production code.
 Persistent file-lock and recovery verification remain outside this local result.
 
@@ -343,8 +345,9 @@ Buster quality-gate import boundary is corrected.
 
 An end-to-end pipeline exercise requires a project or explicit pipeline definition,
 submission through the supported command path, a running Nova service, transport,
-and result observation. AP08.2 did not perform or document those steps because they
-are outside this plugin-authoring task.
+and result observation. The tutorial currently proves local harness activation,
+not submission to a deployed Nova service. A complete service submission and
+observation procedure remains an AP08 acceptance gap.
 
 ## Common Failures
 
@@ -376,7 +379,7 @@ Example commands after you have removed the role entry:
 
 ```bash
 rm -r skills/nova/plugins/tutorial-greeting
-rm -r /tmp/kubeclaw-ap08-plugin
+rm -r "$KUBECLAW_TUTORIAL_TEMP"
 npm run verify:runtime-packaging:roles
 npm run docs:ap08:minimal-plugin:check
 git status --short

@@ -1,6 +1,6 @@
 # Project delivery manifest
 
-The summary stage produces `delivery-manifest.v2` from immutable artifacts supplied by the core. Input declares module implementation/test stage identities and the final implementation/lint/test identities and optional enabled-review identity, with independently expected module and cumulative coverage policies. Run identity comes from the invocation lease.
+The summary stage produces `delivery-manifest.v2` by default from immutable artifacts supplied by the core. Setting `deliveryManifestEncoding` to `kubeclaw-json.utf16.v1` selects `delivery-manifest.v3`; downstream consumers must support that version. Input declares module implementation/test stage identities and the final implementation/lint/test identities and optional enabled-review identity, with independently expected module and cumulative coverage policies. Run identity comes from the invocation lease.
 
 Every selected artifact must belong to this run and the latest producer attempt. Reads verify digest and byte count within an aggregate 8 MiB bound. Module quality decisions and final lint/quality and any enabled review evidence must pass and refer to the corresponding implementation commit. The manifest records source revisions and evidence references and has its own canonical digest. Missing, conflicting, corrupt or stale evidence blocks publication.
 

@@ -134,10 +134,16 @@ function schemaFacts(directory, schemaPath, inlineSchema, manifestFile) {
   const schema = inlineSchema ?? readJson(target);
   const required = new Set(schema.required ?? []);
   const fields = Object.entries(schema.properties ?? {}).map(([name, value]) => {
-    const type = Array.isArray(value.type) ? value.type.join(' or ') : value.type ?? 'schema-defined';
+    const type = Array.isArray(value.type) ? value.type.join(' or ') : value.type ?? (value.const !== undefined ? 'constant' : value.enum ? 'enumeration' : value.$ref ? 'referenced schema' : 'schema-defined');
     const flags = [required.has(name) ? 'required' : 'optional'];
     if (Object.hasOwn(value, 'default')) flags.push(`default \`${JSON.stringify(value.default)}\``);
     if (value.writeOnly) flags.push('sensitive write-only value');
+    if (value.enum) flags.push(`allowed ${manifestValue(value.enum)}`);
+    if (Object.hasOwn(value, 'const')) flags.push(`value ${manifestValue(value.const)}`);
+    for (const bound of ['minimum', 'maximum', 'minLength', 'maxLength', 'minItems', 'maxItems', 'pattern']) {
+      if (Object.hasOwn(value, bound)) flags.push(`${bound} ${manifestValue(value[bound])}`);
+    }
+    if (value.$ref) flags.push(`reference ${manifestValue(value.$ref)}`);
     return `\`${name}\` (${type}; ${flags.join('; ')})`;
   });
   return {
@@ -164,7 +170,7 @@ function pluginPage(plugin) {
     'Owner: plugin-foundation',
     `Evidence: ${rel(file)}; ${rel(guide)}`,
     `Applies to: ${manifest.apiVersion}; package ${manifest.packageVersion}`,
-    `Last verified: authored guidance and generated facts reviewed at ${guidance.evidenceRevision}`,
+    `Last verified: see the separate verification record; source evidence revision ${guidance.evidenceRevision}`,
     '',
     '## Authored Guidance',
     '',
@@ -232,6 +238,7 @@ function pluginPage(plugin) {
       `## ${registration.kind}: ${registration.id}`,
       '',
       `Public identifier: \`${registrationName(registration)}\`.`,
+      ...(pipeline ? [`Global registration ID: \`${manifest.id}:${registration.id}\`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.`] : []),
       '',
       `${codex ? 'Codex interface capabilities' : 'Required capabilities'}: ${list(registration.requiredCapabilities)}`,
       '',
@@ -239,13 +246,14 @@ function pluginPage(plugin) {
       '',
       `Configuration schema: ${schemaFacts(directory, registration.configSchema, registration.configSchemaObject, file).link}`,
       '',
-      'Configuration fields:',
+      'Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):',
       '',
       schemaFacts(directory, registration.configSchema, registration.configSchemaObject, file).fields,
       '',
-      `Input schema: ${schemaFacts(directory, registration.inputSchema, undefined, file).link}`,
+      `Input schema: ${registration.inputSchema ? schemaFacts(directory, registration.inputSchema, undefined, file).link : pipeline ? 'No package-specific inputSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).' : openclaw ? 'Hook or tool input belongs to the host and module; absence of a manifest field does not mean unrestricted input.' : 'Natural-language skill trigger; no JSON input schema.'}`,
       '',
-      `Result schema: ${schemaFacts(directory, registration.resultSchema, undefined, file).link}`,
+      `Result schema: ${registration.resultSchema ? schemaFacts(directory, registration.resultSchema, undefined, file).link : pipeline ? 'No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).' : 'The host owns the response contract.'}`,
+      ...(registration.checkpointSchema ? ['', `Checkpoint schema: ${schemaFacts(directory, registration.checkpointSchema, undefined, file).link}`] : []),
       '',
       'Declared manifest facts:',
       '',
@@ -266,22 +274,24 @@ function pluginPage(plugin) {
     '',
     '## Failure Behavior',
     '',
+    ...(authored?.operationNote ? [authored.operationNote, ''] : []),
     ...(pipeline ? [
-      'Registry validation rejects a missing module, export, schema, or capability declaration.',
+      'Registry validation checks declared paths, schemas, and capability names.',
+      'Activation or the Buster loader checks executable exports; discovery does not import package code.',
       'The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.',
       'Nova or Buster records a bounded failure without giving the package lifecycle authority.',
     ] : openclaw ? [
       'OpenClaw rejects invalid host configuration or an unavailable extension module.',
       'External dependency failure appears in the extension result or bounded diagnostics.',
     ] : [
-      'Codex cannot use the skill when the plugin is absent or its external tools are unavailable.',
+      'An absent plugin prevents skill discovery. Missing external tools prevent the diagnostic workflow, not discovery.',
       'The current package has no package-local automated acceptance test.',
     ]),
     '',
     '## Verification Record',
     '',
     `Audit status: \`${mechanical?.auditStatus ?? 'pending'}\`.`,
-    `Local command result on ${localVerification.date}: \`${localResult?.result ?? 'not-run'}\`.`,
+    `Earlier AP08.7–AP08.9 local command result on ${localVerification.date}: \`${localResult?.result ?? 'not-run'}\`.`,
     '',
     localResult?.reason ?? 'No local verification result exists.',
     '',
@@ -289,10 +299,11 @@ function pluginPage(plugin) {
     '',
     ...(verification.startsWith('No ') ? [verification] : ['```bash', verification, '```']),
     '',
-    `Package tests found: ${tests.length}.`,
+    `Package test files found: ${tests.length}. This is file discovery, not an executed test count.`,
+    ...(packageValue.scripts?.test ? ['', 'Exact package test script (run from the package directory):', '', '```text', packageValue.scripts.test, '```'] : []),
     '',
     'The audit status does not claim live host or cluster acceptance. See the AP08',
-    'checkpoint for the exact local result and unavailable environment boundaries.',
+    '[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.',
     '',
     '## Source Evidence',
     '',
@@ -445,7 +456,7 @@ function checkSite() {
       if (!fs.existsSync(path.join(root, item))) errors.push(`${rel(file)} cites missing evidence: ${item}`);
     }
     checkLanguage(file, text);
-    for (const match of text.matchAll(/\[[^\]]+\]\(([^)]+)\)/gu)) {
+    for (const match of text.replace(/`[^`\n]*`/gu, 'code').matchAll(/\[[^\]]+\]\(([^)]+)\)/gu)) {
       const target = match[1];
       if (target.startsWith('http') || target.startsWith('#')) continue;
       const local = path.resolve(path.dirname(file), target.split('#')[0]);

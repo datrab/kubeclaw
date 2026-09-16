@@ -291,7 +291,7 @@ tool implementations to execution.
 >
 > **Tool registration:** [The registry assembles language, dependency, container, Kubernetes, Go, Terraform, and architecture tool families](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/lint/src/engine/tool-registry.ts#L1-L18).
 >
-> **Current policy:** [The deployed policy declares its version, projects, language evidence, Kubernetes inputs, and architecture layers](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/charts/kubeclaw/files/config/lint-policy.json#L1-L130).
+> **Current policy:** [The chart policy declares its version, projects, language evidence, Kubernetes inputs, and architecture layers](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/charts/kubeclaw/files/config/lint-policy.json#L1-L130).
 
 **Why this order matters:** Policy changes reuse tested execution code. Engine
 changes expand trusted behavior and need wider tests. A stage change is necessary
@@ -357,7 +357,7 @@ Run focused checks first:
 npm run verify:runtime-packaging:roles
 npm run verify:runtime-packaging:builder
 npm run verify:plugin-packages
-node tests/verification/contracts/plugin-system-v2-observer-expectations.mjs
+node scripts/check-ap08-observers.mjs
 node tests/verification/reliability/observer-recovery.test.mts
 npm test --prefix skills/nova/plugins/lint
 ```
@@ -376,7 +376,7 @@ Current local results are:
 | --- | --- | --- |
 | Runtime-role manifests | Passed: three roles and 48 plugins | Current role ownership and capability closure agree |
 | Runtime bundle builder | Unavailable | This host has no `cc`, so sandbox assembly stops first |
-| Observer contract expectations | Passed | Delivery contract behavior agrees |
+| Observer contract expectations | Original result withdrawn | The old command executed no assertions; use the corrected command above |
 | Observer recovery | Unavailable | BusyBox `flock` rejects the persistent journal command |
 | Lint unit, boundary, discovery, discipline, type-evidence, and remediation checks | Passed | Lint selection, evidence, timeout, cancellation, and process cleanup agree |
 | Lint live-function test | Unavailable | BusyBox `flock` stops `FileEffectJournal` before the domain exercise |

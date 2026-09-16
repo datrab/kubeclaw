@@ -39,6 +39,7 @@
         "kubeclaw.container-build",
         "kubeclaw.coverage-budget",
         "kubeclaw.direct-command",
+        "kubeclaw.demo-auth-smoke",
         "kubeclaw.junit-report",
         "kubeclaw.kubernetes-fixture",
         "kubeclaw.tailscale-exposure",
@@ -71,6 +72,7 @@
         "nova-core",
         "nova-runtime",
         "agent-observability-contract",
+        "delivery-manifest-contract",
         "telemetry-contract",
         "pipeline-test-gate-contract",
         "pipeline-worker-core-contract",
@@ -98,6 +100,7 @@
         "kubeclaw.buster-quality-gate",
         "kubeclaw.case-study",
         "kubeclaw.delivery-lint",
+        "kubeclaw.demo-handoff",
         "kubeclaw.human-approval",
         "kubeclaw.implementation-agent",
         "kubeclaw.lint",
@@ -485,6 +488,74 @@
       ]
     },
     {
+      "id": "kubeclaw.demo-auth-smoke",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "file": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+      "docsTarget": "/extend/plugin-catalogue/kubeclaw.demo-auth-smoke",
+      "bundledBy": [
+        "buster"
+      ],
+      "registrations": [
+        {
+          "id": "session",
+          "contractId": "kubeclaw.demo-auth-smoke@1",
+          "kind": "test provider",
+          "module": "src/provider.js",
+          "export": "provider",
+          "configSchema": "schemas/config.schema.json",
+          "inputs": [
+            {
+              "name": "deployment",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+            },
+            {
+              "name": "credentials",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.generated-demo-credentials@1"
+            },
+            {
+              "name": "exposure",
+              "kind": "value",
+              "required": true,
+              "schemaId": "kubeclaw.public-endpoint-fixture@1"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "authentication",
+              "kind": "value",
+              "schemaId": "kubeclaw.demo-auth-evidence@1",
+              "required": true
+            }
+          ],
+          "requiredCapabilities": [
+            "network.http"
+          ],
+          "retrySafe": false,
+          "matrixFields": [],
+          "reportFormats": [],
+          "evidenceTypes": [
+            "log"
+          ],
+          "evidenceDefaults": {
+            "onPass": [
+              "log"
+            ],
+            "onFail": [
+              "log"
+            ],
+            "onError": [
+              "log"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "id": "kubeclaw.direct-command",
       "version": "1.0.0",
       "kind": "pipeline-plugin",
@@ -588,7 +659,9 @@
                 "application/octet-stream",
                 "application/x-tar",
                 "application/gzip",
-                "application/vnd.kubeclaw.build-output.tar"
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
               ]
             },
             {
@@ -599,7 +672,9 @@
                 "application/octet-stream",
                 "application/x-tar",
                 "application/gzip",
-                "application/vnd.kubeclaw.build-output.tar"
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
               ]
             },
             {
@@ -610,7 +685,9 @@
                 "application/octet-stream",
                 "application/x-tar",
                 "application/gzip",
-                "application/vnd.kubeclaw.build-output.tar"
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
               ]
             },
             {
@@ -621,7 +698,9 @@
                 "application/octet-stream",
                 "application/x-tar",
                 "application/gzip",
-                "application/vnd.kubeclaw.build-output.tar"
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
               ]
             },
             {
@@ -632,7 +711,9 @@
                 "application/octet-stream",
                 "application/x-tar",
                 "application/gzip",
-                "application/vnd.kubeclaw.build-output.tar"
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
               ]
             },
             {
@@ -643,7 +724,9 @@
                 "application/octet-stream",
                 "application/x-tar",
                 "application/gzip",
-                "application/vnd.kubeclaw.build-output.tar"
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
               ]
             },
             {
@@ -654,7 +737,9 @@
                 "application/octet-stream",
                 "application/x-tar",
                 "application/gzip",
-                "application/vnd.kubeclaw.build-output.tar"
+                "application/vnd.kubeclaw.build-output.tar",
+                "application/vnd.kubeclaw.checked-kubernetes-yaml",
+                "application/vnd.kubeclaw.size-budget-baseline+json"
               ]
             }
           ],
@@ -811,6 +896,12 @@
             }
           ],
           "outputs": [
+            {
+              "name": "demo-credentials",
+              "kind": "value",
+              "required": false,
+              "schemaId": "kubeclaw.generated-demo-credentials@1"
+            },
             {
               "name": "deployment",
               "kind": "value",
@@ -1724,7 +1815,8 @@
           "module": "src/adapter.ts",
           "export": "activate",
           "providesCapabilities": [
-            "operator.request"
+            "operator.request",
+            "operator.receipt"
           ],
           "requiredCapabilities": [
             "network.http",
@@ -2016,7 +2108,9 @@
           "export": "execute",
           "requiredCapabilities": [
             "runtime.dispatch",
-            "artifacts.write"
+            "artifacts.write",
+            "git.repository.read",
+            "artifacts.read"
           ],
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
@@ -2044,7 +2138,8 @@
             "git.sync",
             "git.commit",
             "state.append",
-            "artifacts.write"
+            "artifacts.write",
+            "artifacts.read"
           ],
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
@@ -2098,7 +2193,8 @@
           "export": "execute",
           "requiredCapabilities": [
             "runtime.dispatch",
-            "artifacts.write"
+            "artifacts.write",
+            "report.evidence.read"
           ],
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
@@ -2134,6 +2230,76 @@
       ]
     },
     {
+      "id": "kubeclaw.demo-handoff",
+      "version": "1.0.0",
+      "kind": "pipeline-plugin",
+      "file": "skills/nova/plugins/demo-handoff/plugin.json",
+      "docsTarget": "/extend/plugin-catalogue/kubeclaw.demo-handoff",
+      "bundledBy": [
+        "nova"
+      ],
+      "registrations": [
+        {
+          "id": "candidate",
+          "type": "kubeclaw.demo.candidate",
+          "module": "src/candidate.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "test.plan.evidence",
+            "artifacts.write"
+          ],
+          "configSchema": "schemas/empty.schema.json",
+          "inputSchema": "schemas/candidate.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "kind": "stage"
+        },
+        {
+          "id": "delivery",
+          "type": "kubeclaw.demo.delivery",
+          "module": "src/delivery.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "demo.handoff",
+            "artifacts.write"
+          ],
+          "configSchema": "schemas/empty.schema.json",
+          "inputSchema": "schemas/delivery.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "kind": "stage"
+        },
+        {
+          "id": "ready",
+          "type": "kubeclaw.demo.ready",
+          "module": "src/ready.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "demo.handoff",
+            "artifacts.write"
+          ],
+          "configSchema": "schemas/empty.schema.json",
+          "inputSchema": "schemas/ready.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "kind": "stage"
+        },
+        {
+          "id": "handoff",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "providesCapabilities": [
+            "demo.handoff"
+          ],
+          "requiredCapabilities": [
+            "artifacts.read",
+            "test.plan.evidence",
+            "operator.request",
+            "operator.receipt"
+          ],
+          "configSchema": "schemas/adapter.schema.json",
+          "kind": "adapter"
+        }
+      ]
+    },
+    {
       "id": "kubeclaw.human-approval",
       "version": "1.0.0",
       "kind": "pipeline-plugin",
@@ -2165,7 +2331,9 @@
           "requiredCapabilities": [
             "artifacts.read",
             "operator.request",
-            "signal.wait"
+            "signal.wait",
+            "git.repository.read",
+            "artifacts.write"
           ],
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/architecture-input.schema.json",
@@ -2275,12 +2443,26 @@
           "export": "execute",
           "requiredCapabilities": [
             "runtime.dispatch",
-            "artifacts.write"
+            "artifacts.write",
+            "report.evidence.read"
           ],
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
           "resultSchema": "schemas/result.schema.json",
           "kind": "stage"
+        },
+        {
+          "id": "evidence",
+          "module": "src/evidence-adapter.ts",
+          "export": "activate",
+          "providesCapabilities": [
+            "report.evidence.read"
+          ],
+          "requiredCapabilities": [
+            "artifacts.read"
+          ],
+          "configSchema": "schemas/evidence-config.schema.json",
+          "kind": "adapter"
         }
       ]
     },
@@ -2305,6 +2487,20 @@
           ],
           "configSchema": "schemas/config.schema.json",
           "inputSchema": "schemas/input.schema.json",
+          "resultSchema": "schemas/result.schema.json",
+          "kind": "stage"
+        },
+        {
+          "id": "source",
+          "type": "kubeclaw.validate.source-preflight",
+          "module": "src/source-stage.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "git.repository.read",
+            "artifacts.write"
+          ],
+          "configSchema": "schemas/config.schema.json",
+          "inputSchema": "schemas/source-input.schema.json",
           "resultSchema": "schemas/result.schema.json",
           "kind": "stage"
         }
@@ -2386,6 +2582,19 @@
             "secrets.read"
           ],
           "configSchema": "schemas/config.schema.json",
+          "kind": "adapter"
+        },
+        {
+          "id": "evidence",
+          "module": "src/evidence-adapter.ts",
+          "export": "activate",
+          "providesCapabilities": [
+            "test.plan.evidence"
+          ],
+          "requiredCapabilities": [
+            "artifacts.read"
+          ],
+          "configSchema": "schemas/evidence-config.schema.json",
           "kind": "adapter"
         }
       ]
@@ -2484,13 +2693,14 @@
     }
   ],
   "registrationCounts": {
-    "stage": 17,
+    "stage": 21,
     "observer": 5,
-    "adapter": 18,
-    "test provider": 18,
+    "adapter": 21,
+    "test provider": 19,
     "report adapter": 1
   },
   "capabilityIds": [
+    "report.evidence.read",
     "state.read",
     "state.append",
     "artifacts.read",
@@ -2503,6 +2713,8 @@
     "git.merge",
     "git.sync",
     "signal.wait",
+    "operator.receipt",
+    "demo.handoff",
     "operator.request",
     "telemetry.emit",
     "secrets.read",
@@ -2512,6 +2724,7 @@
     "kubernetes.fixture",
     "kubernetes.exposure",
     "lint.execute",
+    "test.plan.evidence",
     "test.plan.execute",
     "transport.publish",
     "agent.events.subscribe"
@@ -2529,6 +2742,13 @@
         "v1"
       ],
       "path": "contracts/agent-observability"
+    },
+    {
+      "id": "delivery-manifest",
+      "versions": [
+        "v3"
+      ],
+      "path": "contracts/delivery-manifest"
     },
     {
       "id": "pipeline-observability",
@@ -2715,6 +2935,17 @@
           "nova",
           "buster",
           "prism"
+        ],
+        "bundle": {
+          "kind": "node-package"
+        }
+      },
+      {
+        "id": "delivery-manifest-contract",
+        "source": "contracts/delivery-manifest/v3",
+        "owner": "shared",
+        "roles": [
+          "nova"
         ],
         "bundle": {
           "kind": "node-package"

@@ -70,9 +70,10 @@ For each command, record these facts:
 - the first relevant error and the retained evidence location;
 - the boundary that the command did not reach.
 
-Do not change `unavailable` to `passed`. For example, this host has BusyBox `flock`.
-It cannot run checks that require GNU `flock --timeout`. This host also has no C
-compiler for the sandbox helper.
+Do not change `unavailable` to `passed` without running the check.
+The original AP08.7-AP08.9 host lacked timeout-capable `flock` and a C compiler.
+Check the current host before reusing that result.
+The [AP08.10 checkpoint](../../blueprint/AP08.10-checkpoint.md) records the new environment and results.
 
 ## Test A Pipeline Stage
 

@@ -2,56 +2,415 @@
   "schemaVersion": "ap08-catalogue-guidance.v1",
   "evidenceRevision": "bcf032f241b432bf920baa9ee5f727947921447d",
   "records": [
-    {"id":"kubeclaw-agent-observer","purpose":"Move OpenClaw agent events into bounded Redis observability streams.","useWhen":"Use it when OpenClaw hook activity must become durable agent evidence.","avoidWhen":"Do not use it for Nova pipeline events or lifecycle control.","criticalLimit":"It depends on configured Redis streams and does not own pipeline state."},
-    {"id":"kubeclaw-ops","purpose":"Guide read-only diagnosis across Kubernetes, Argo CD, logs, and Hubble evidence.","useWhen":"Use it when a Codex operator must correlate platform symptoms without making changes.","avoidWhen":"Do not use it to deploy, restart, patch, or delete platform resources.","criticalLimit":"The plugin supplies a skill, but it does not supply the external read-only tools.","deploymentNote":"Codex installs this package separately; KubeClaw runtime-role manifests do not contain it."},
-    {"id":"kubeclaw-prism","purpose":"Expose Prism design-set and revision commits as OpenClaw tools.","useWhen":"Use it when the Prism agent must submit validated design output to Prism control.","avoidWhen":"Do not use it as a general HTTP client or a Nova pipeline stage.","criticalLimit":"It requires the Prism control service and accepts exactly the declared tool schemas.","deploymentNote":"The Prism agent image copies this extension directly; the runtime-role manifest does not list it."},
-    {"id":"kubeclaw.agent-observability","purpose":"Project agent-observability records into ingestion and evidence observer flows.","useWhen":"Use it when committed agent records must enter the pipeline observability boundary.","avoidWhen":"Do not use it to collect OpenClaw hooks directly.","criticalLimit":"It observes committed records and cannot change canonical lifecycle state."},
-    {"id":"kubeclaw.api-flow","purpose":"Run ordered API flow checks as a Buster test provider.","useWhen":"Use it when several HTTP operations form one stateful test scenario.","avoidWhen":"Do not use it for one independent request or OpenAPI-wide operation discovery.","criticalLimit":"Flow state exists only inside the bounded provider execution."},
-    {"id":"kubeclaw.architecture-validator","purpose":"Validate architecture deliverables before later pipeline work uses them.","useWhen":"Use it when a graph needs an explicit architecture acceptance step.","avoidWhen":"Do not use it to create the architecture or replace human approval.","criticalLimit":"It evaluates declared architecture input and does not inspect undeclared repository context."},
-    {"id":"kubeclaw.artifact-store","purpose":"Provide controlled artifact reads and writes through the capability boundary.","useWhen":"Use it when a stage or provider must exchange durable bounded artifacts.","avoidWhen":"Do not use it as arbitrary filesystem access or as canonical pipeline state.","criticalLimit":"Every operation remains subject to the granted artifact capability constraints."},
-    {"id":"kubeclaw.axe","purpose":"Run Axe accessibility checks through the Buster provider contract.","useWhen":"Use it when rendered web content needs automated accessibility findings.","avoidWhen":"Do not use it as a complete manual accessibility review.","criticalLimit":"Its result covers Axe-detectable rules in the tested page state only."},
-    {"id":"kubeclaw.blueprint-sync","purpose":"Synchronize approved blueprint content into the implementation workspace.","useWhen":"Use it when an approved blueprint must become a bounded repository change.","avoidWhen":"Do not use it to approve unreviewed architecture or arbitrary files.","criticalLimit":"The stage is constrained by its declared blueprint and repository inputs."},
-    {"id":"kubeclaw.buster-quality-gate","purpose":"Request and interpret a Buster quality result in the Nova graph.","useWhen":"Use it when later Nova work must wait for an exact remote test plan result.","avoidWhen":"Do not use it to execute provider tests inside Nova.","criticalLimit":"Buster owns test execution; Nova imports only the bound result and evidence."},
-    {"id":"kubeclaw.case-study","purpose":"Create the case-study deliverable at its ordered pipeline point.","useWhen":"Use it when a completed delivery needs the declared showcase narrative.","avoidWhen":"Do not use it as general documentation generation.","criticalLimit":"It produces only the outputs declared by its stage contract."},
-    {"id":"kubeclaw.command-runner","purpose":"Provide bounded command execution to granted consumers.","useWhen":"Use it when an installed extension must run an approved local command.","avoidWhen":"Do not use it to expose an unrestricted shell to project input.","criticalLimit":"Command, environment, duration, and output remain inside operator grants."},
-    {"id":"kubeclaw.container-build","purpose":"Run a BuildKit container build as a Buster provider.","useWhen":"Use it when a test plan must prove that a declared image can build.","avoidWhen":"Do not use it for untracked deployment or arbitrary daemon control.","criticalLimit":"It depends on the configured BuildKit service and bounded build context."},
-    {"id":"kubeclaw.coverage-budget","purpose":"Compare LCOV coverage facts with declared quality budgets.","useWhen":"Use it when a test plan must enforce measurable coverage thresholds.","avoidWhen":"Do not use it to run tests or infer coverage without an LCOV report.","criticalLimit":"The decision is only as complete as the supplied LCOV data."},
-    {"id":"kubeclaw.delivery-lint","purpose":"Check delivery metadata and files before release-oriented work continues.","useWhen":"Use it when a graph needs a dedicated delivery-contract lint step.","avoidWhen":"Do not use it for source-code lint rules owned by the main lint plugin.","criticalLimit":"It checks the declared delivery surface, not every repository convention."},
-    {"id":"kubeclaw.demo-auth-smoke","purpose":"Exercise the demo authentication session as a Buster provider.","useWhen":"Use it when the demo path needs a focused authenticated smoke check.","avoidWhen":"Do not use it as a general identity-provider security assessment.","criticalLimit":"It validates the configured demo session path and its available environment only."},
-    {"id":"kubeclaw.demo-handoff","purpose":"Move demo candidates through readiness, delivery, and handoff boundaries.","useWhen":"Use it when the Nova graph needs the complete declared demo handoff flow.","avoidWhen":"Do not use it as a generic transport or approval mechanism.","criticalLimit":"Its three stages and adapter share one package-specific handoff contract."},
-    {"id":"kubeclaw.direct-command","purpose":"Run one declared command as a Buster test provider.","useWhen":"Use it when a test plan needs a bounded command and its evidence.","avoidWhen":"Do not use it for long-lived services or unrestricted shell sessions.","criticalLimit":"Retry safety depends on the command behavior declared by the plan."},
-    {"id":"kubeclaw.git-workspace","purpose":"Provide controlled Git workspace operations to pipeline extensions.","useWhen":"Use it when a stage needs an approved repository read or change operation.","avoidWhen":"Do not use it to bypass repository grants or package installation controls.","criticalLimit":"Repository root, operation, and writable scope remain grant-bound."},
-    {"id":"kubeclaw.http","purpose":"Run one bounded HTTP request as a Buster provider.","useWhen":"Use it for an independent endpoint check with explicit expectations.","avoidWhen":"Do not use it for a multi-step stateful API flow.","criticalLimit":"Network reach and request behavior remain inside the resolved provider plan."},
-    {"id":"kubeclaw.human-approval","purpose":"Pause a graph for general or architecture-specific human approval.","useWhen":"Use it when policy requires a recorded person to approve continuation.","avoidWhen":"Do not use it as automated validation or as a hidden default approval.","criticalLimit":"The stage waits for an external decision and cannot manufacture approval."},
-    {"id":"kubeclaw.implementation-agent","purpose":"Run the declared implementation-agent work at the implementation stage.","useWhen":"Use it when an approved plan is ready for bounded agent implementation.","avoidWhen":"Do not use it before required design and approval evidence exists.","criticalLimit":"The stage receives only its declared context and capability grants."},
-    {"id":"kubeclaw.junit-report","purpose":"Normalize JUnit XML into the Buster report contract.","useWhen":"Use it when a provider emits JUnit-compatible test results.","avoidWhen":"Do not use it to execute tests or decide quality policy.","criticalLimit":"Malformed, oversized, or unsupported JUnit input must fail normalization."},
-    {"id":"kubeclaw.kubernetes-fixture","purpose":"Prepare and clean a Kubernetes fixture for Buster tests.","useWhen":"Use it when a test requires a bounded temporary Kubernetes deployment.","avoidWhen":"Do not use it for permanent application deployment.","criticalLimit":"Fixture ownership and cleanup apply only to the resolved test plan scope."},
-    {"id":"kubeclaw.lighthouse","purpose":"Run Lighthouse web-quality checks as a Buster provider.","useWhen":"Use it when a rendered page needs performance and quality measurements.","avoidWhen":"Do not use it as a load test or server-capacity measure.","criticalLimit":"Results depend on the tested page, runner environment, and configured categories."},
-    {"id":"kubeclaw.lint","purpose":"Run pre-check and full lint stages through a controlled lint executor.","useWhen":"Use it when Nova must apply the installed repository lint rule set.","avoidWhen":"Do not use it for delivery-only checks or arbitrary command execution.","criticalLimit":"Rule coverage follows the installed lint configuration and executor grant."},
-    {"id":"kubeclaw.network-http","purpose":"Provide grant-controlled HTTP effects to pipeline extensions.","useWhen":"Use it when a stage or observer needs an approved outbound HTTP call.","avoidWhen":"Do not use it as a Buster HTTP test provider.","criticalLimit":"Destinations, methods, payloads, and response bounds follow operator grants."},
-    {"id":"kubeclaw.notification-observer","purpose":"Deliver selected committed events to notification and preview targets.","useWhen":"Use it when operators need asynchronous lifecycle notifications.","avoidWhen":"Do not use it to block or alter the source pipeline event.","criticalLimit":"Delivery failure affects the observer attempt, not canonical pipeline history."},
-    {"id":"kubeclaw.openapi","purpose":"Check declared OpenAPI operations through the Buster provider boundary.","useWhen":"Use it when API behavior must agree with an OpenAPI description.","avoidWhen":"Do not use it for an unrelated HTTP smoke request.","criticalLimit":"Coverage includes only selected operations and supplied runtime access."},
-    {"id":"kubeclaw.openclaw-agent-events","purpose":"Read bounded OpenClaw agent-event records for Nova consumers.","useWhen":"Use it when a pipeline stage needs approved agent evidence from the event source.","avoidWhen":"Do not use it to install OpenClaw hooks or write arbitrary Redis data.","criticalLimit":"It reads through its declared source capability and configured record bounds."},
-    {"id":"kubeclaw.operator-messaging","purpose":"Provide controlled messages from pipeline work to an operator channel.","useWhen":"Use it when a stage must request or report operator-visible information.","avoidWhen":"Do not use it as canonical approval state or general transport.","criticalLimit":"Delivery authority and destination remain operator-controlled."},
-    {"id":"kubeclaw.pipeline-review","purpose":"Run the pipeline review stage and retrieve its bounded review evidence.","useWhen":"Use it when the graph needs the installed pipeline-specific review workflow.","avoidWhen":"Do not use it for the broader repository audit stages.","criticalLimit":"Its stage and evidence adapter share one review-specific contract."},
-    {"id":"kubeclaw.playwright","purpose":"Run browser scenarios through Playwright in a Buster provider.","useWhen":"Use it when behavior requires a real browser and page interaction.","avoidWhen":"Do not use it for a simple HTTP status or API-only check.","criticalLimit":"Browser, evidence, network, and execution time remain plan-bound."},
-    {"id":"kubeclaw.preflight-contract","purpose":"Validate preflight inputs and resolve their approved source before work starts.","useWhen":"Use it when the graph must reject incomplete or inconsistent initial contracts.","avoidWhen":"Do not use it for later repository quality or delivery lint.","criticalLimit":"The two stages validate only the declared preflight and source contracts."},
-    {"id":"kubeclaw.prism-design","purpose":"Request and import Prism design work as an ordered Nova stage.","useWhen":"Use it when the graph requires a Prism design result before implementation.","avoidWhen":"Do not use it to expose Prism OpenClaw tools directly.","criticalLimit":"The stage depends on the configured Prism service and versioned result contract."},
-    {"id":"kubeclaw.project-summary","purpose":"Create the declared project summary from completed pipeline evidence.","useWhen":"Use it when the graph needs a final bounded summary artifact.","avoidWhen":"Do not use it as a substitute for source evidence or detailed reports.","criticalLimit":"It summarizes the inputs supplied by the graph and cannot recover omitted facts."},
-    {"id":"kubeclaw.redis-transport","purpose":"Publish transport and telemetry records through configured Redis channels.","useWhen":"Use it when Nova extensions need the installed Redis transport boundary.","avoidWhen":"Do not use it as a general Redis client or canonical state store.","criticalLimit":"Channel, payload, timeout, and credential behavior follow adapter configuration."},
-    {"id":"kubeclaw.remote-test-gate","purpose":"Submit exact remote test plans and retrieve their evidence for Nova.","useWhen":"Use it when Nova delegates test execution to the Buster boundary.","avoidWhen":"Do not use it to run provider code inside the Nova process.","criticalLimit":"Plan and evidence identities must remain bound across remote execution."},
-    {"id":"kubeclaw.repository-adapter","purpose":"Provide repository operations for Nova through an explicit adapter contract.","useWhen":"Use it when Nova stages need the installed repository abstraction.","avoidWhen":"Do not use it for arbitrary host filesystem access.","criticalLimit":"It exposes only declared repository operations and granted roots."},
-    {"id":"kubeclaw.review","purpose":"Run review, repository audit, and repository revalidation stages.","useWhen":"Use it when the graph needs the full installed review lifecycle.","avoidWhen":"Do not use it for the narrower pipeline-review contract.","criticalLimit":"Each stage has a distinct type and must appear at the correct graph point."},
-    {"id":"kubeclaw.runtime-dispatch","purpose":"Dispatch bounded runtime and OpenClaw work through approved runtime targets.","useWhen":"Use it when an extension must call an installed specialist runtime.","avoidWhen":"Do not use it to let project input select arbitrary processes.","criticalLimit":"Target identity, request, timeout, and result remain capability-bound."},
-    {"id":"kubeclaw.secret-resolver","purpose":"Resolve secret references without exposing the backing secret store.","useWhen":"Use it when an extension needs an approved secret value at runtime.","avoidWhen":"Do not use it to place literal secrets in project or plugin configuration.","criticalLimit":"Callers receive only secrets allowed by their exact grant."},
-    {"id":"kubeclaw.security-providers","purpose":"Run HTTP, dependency, image, policy, and runtime security checks in Buster.","useWhen":"Use it when a test plan needs one of the five declared security contracts.","avoidWhen":"Do not treat one provider result as a complete security assessment.","criticalLimit":"Each provider covers a separate evidence source and execution environment."},
-    {"id":"kubeclaw.size-budget","purpose":"Compare artifact size facts with a declared Buster budget.","useWhen":"Use it when release quality depends on a bounded artifact size.","avoidWhen":"Do not use it to measure runtime memory or container resource use.","criticalLimit":"It evaluates only the supplied artifact and configured size threshold."},
-    {"id":"kubeclaw.state-store","purpose":"Provide controlled reads and writes for extension-owned state.","useWhen":"Use it when a pipeline extension needs durable bounded state.","avoidWhen":"Do not use it to replace Core's canonical journal.","criticalLimit":"Keys, values, ownership, and operations remain grant-bound."},
-    {"id":"kubeclaw.tailscale-exposure","purpose":"Create a bounded Tailscale exposure for a Buster test target.","useWhen":"Use it when a remote test must reach an otherwise private fixture.","avoidWhen":"Do not use it for permanent ingress or unrelated network access.","criticalLimit":"It depends on Tailscale authority and must clean up the temporary exposure."},
-    {"id":"kubeclaw.telemetry-observer","purpose":"Deliver committed lifecycle telemetry through the configured telemetry path.","useWhen":"Use it when pipeline events need an asynchronous telemetry projection.","avoidWhen":"Do not use it to store canonical pipeline state or gate execution.","criticalLimit":"Telemetry delivery can fail without changing the committed source event."},
-    {"id":"kubeclaw.telemetry-store","purpose":"Provide bounded telemetry storage operations to approved consumers.","useWhen":"Use it when runtime roles must persist or query declared telemetry records.","avoidWhen":"Do not use it as a general database or pipeline journal.","criticalLimit":"Record shape, query scope, and retention depend on adapter grants and configuration."},
-    {"id":"kubeclaw.transport-publisher","purpose":"Publish bounded messages through the selected transport capability.","useWhen":"Use it when a Nova extension needs transport-neutral message publication.","avoidWhen":"Do not use it when a package requires Redis-specific telemetry behavior.","criticalLimit":"The selected provider and grant determine the real transport authority."},
-    {"id":"kubeclaw.visual","purpose":"Run visual comparison checks and produce bounded image evidence in Buster.","useWhen":"Use it when a test plan must detect changes against approved visual baselines.","avoidWhen":"Do not use it for functional browser interaction without visual comparison.","criticalLimit":"Results depend on stable rendering conditions and the selected baseline."},
-    {"id":"kubeclaw.wait-store","purpose":"Persist and resolve durable wait records for Nova stages.","useWhen":"Use it when a stage pauses for an external condition or decision.","avoidWhen":"Do not use it as a general state database or busy-wait mechanism.","criticalLimit":"Wait identity and resolution remain bound to the owning pipeline context."}
+    {
+      "id": "kubeclaw-agent-observer",
+      "purpose": "Move OpenClaw agent events into bounded Redis observability streams.",
+      "useWhen": "Use it when OpenClaw hook activity must become durable agent evidence.",
+      "avoidWhen": "Do not use it for Nova pipeline events or lifecycle control.",
+      "criticalLimit": "It depends on configured Redis streams and does not own pipeline state.",
+      "operationNote": "OpenClaw hooks enter a bounded queue before Redis publication. Queue admission and durable delivery are different events; removing the extension does not remove Redis records."
+    },
+    {
+      "id": "kubeclaw-ops",
+      "purpose": "Guide read-only diagnosis across Kubernetes, Argo CD, logs, and Hubble evidence.",
+      "useWhen": "Use it when a Codex operator must correlate platform symptoms without making changes.",
+      "avoidWhen": "Do not use it to deploy, restart, patch, or delete platform resources.",
+      "criticalLimit": "The plugin supplies a skill, but it does not supply the external read-only tools.",
+      "deploymentNote": "Codex installs this package separately; KubeClaw runtime-role manifests do not contain it.",
+      "operationNote": "The package supplies instructions and a read-only interface, not an MCP server. Missing Ops connections prevent evidence collection. Removal does not delete Kubernetes resources, logs, or tool-side history."
+    },
+    {
+      "id": "kubeclaw-prism",
+      "purpose": "Expose Prism design-set and revision commits as OpenClaw tools.",
+      "useWhen": "Use it when the Prism agent must submit validated design output to Prism control.",
+      "avoidWhen": "Do not use it as a general HTTP client or a Nova pipeline stage.",
+      "criticalLimit": "It requires Prism control. The tools constrain the design count, but do not bound all text or document sizes. The HTTP request has no explicit timeout or cancellation signal; test the real host before acceptance.",
+      "deploymentNote": "The Prism agent image copies this extension directly; the runtime-role manifest does not list it.",
+      "operationNote": "The two operations commit a three-design set or one revision. Prism control errors become tool errors. Registration tests check names and the design count, not a live control-service commit."
+    },
+    {
+      "id": "kubeclaw.agent-observability",
+      "purpose": "Project agent-observability records into ingestion and evidence observer flows.",
+      "useWhen": "Use it when committed agent records must enter the pipeline observability boundary.",
+      "avoidWhen": "Do not use it to collect OpenClaw hooks directly.",
+      "criticalLimit": "It observes committed records and cannot change canonical lifecycle state.",
+      "operationNote": "The ingester appends records and the evidence observer writes JSON artifacts. Both consume event data; neither can turn an observed record into a lifecycle decision."
+    },
+    {
+      "id": "kubeclaw.api-flow",
+      "purpose": "Run ordered API flow checks as a Buster test provider.",
+      "useWhen": "Use it when several HTTP operations form one stateful test scenario.",
+      "avoidWhen": "Do not use it for one independent request or OpenAPI-wide operation discovery.",
+      "criticalLimit": "Flow state exists only inside the bounded provider execution.",
+      "operationNote": "Steps can use HTTP requests or WebSocket messages. Missing variables, unknown steps, and cross-origin paths fail validation. The report distinguishes failed and skipped steps."
+    },
+    {
+      "id": "kubeclaw.architecture-validator",
+      "purpose": "Validate architecture deliverables before later pipeline work uses them.",
+      "useWhen": "Use it when a graph needs an explicit architecture acceptance step.",
+      "avoidWhen": "Do not use it to create the architecture or replace human approval.",
+      "criticalLimit": "It evaluates declared architecture input and does not inspect undeclared repository context.",
+      "operationNote": "The stage dispatches a validation task, checks that the response covers the required files, and stores an architecture-validation artifact. Invalid or incomplete responses block the stage."
+    },
+    {
+      "id": "kubeclaw.artifact-store",
+      "purpose": "Provide controlled artifact reads and writes through the capability boundary.",
+      "useWhen": "Use it when a pipeline capability consumer must exchange durable bounded artifacts.",
+      "avoidWhen": "Do not use it as arbitrary filesystem access or as canonical pipeline state.",
+      "criticalLimit": "Every operation remains subject to the granted artifact capability constraints.",
+      "operationNote": "Consumers write JSON or read through artifact references. Digest, reference, and store-budget failures are errors. Package removal leaves the configured artifact store and run references intact."
+    },
+    {
+      "id": "kubeclaw.axe",
+      "purpose": "Run Axe accessibility checks through the Buster provider contract.",
+      "useWhen": "Use it when rendered web content needs automated accessibility findings.",
+      "avoidWhen": "Do not use it as a complete manual accessibility review.",
+      "criticalLimit": "Its result covers Axe-detectable rules in the tested page state only.",
+      "operationNote": "The provider invokes browser.axe with resolved target and profile limits. It rejects ambiguous targets and malformed capability results. A browser is required for the package execution test."
+    },
+    {
+      "id": "kubeclaw.blueprint-sync",
+      "purpose": "Synchronize blueprint content into the implementation workspace.",
+      "useWhen": "Use it when an approved blueprint must become a bounded repository change.",
+      "avoidWhen": "Do not use it to approve unreviewed architecture or arbitrary files.",
+      "criticalLimit": "Approval checks depend on supplied ancestor evidence. Source-less execution is supported and does not prove approval; the graph must require the intended approval step.",
+      "operationNote": "The stage synchronizes control paths, commits the workspace change, appends state, and stores an artifact. Supplied approval evidence must match the source paths and revision."
+    },
+    {
+      "id": "kubeclaw.buster-quality-gate",
+      "purpose": "Request and interpret a Buster quality result in the Nova graph.",
+      "useWhen": "Use it when later Nova work must wait for an exact remote test plan result.",
+      "avoidWhen": "Do not use it to execute provider tests inside Nova.",
+      "criticalLimit": "Buster owns test execution; Nova imports only the bound result and evidence.",
+      "operationNote": "The stage checks a bound Buster result and stores decision evidence; an optional evaluator uses runtime.dispatch. Missing expected coverage or a mismatched run identity is an error."
+    },
+    {
+      "id": "kubeclaw.case-study",
+      "purpose": "Create the case-study deliverable at its ordered pipeline point.",
+      "useWhen": "Use it when a completed delivery needs the declared showcase narrative.",
+      "avoidWhen": "Do not use it as general documentation generation.",
+      "criticalLimit": "It produces only the outputs declared by its stage contract.",
+      "operationNote": "The stage reads a report-evidence snapshot, dispatches the narrative task, and stores the result. It rejects output whose artifact identity does not match the producing attempt."
+    },
+    {
+      "id": "kubeclaw.command-runner",
+      "purpose": "Provide bounded command execution to granted consumers.",
+      "useWhen": "Use it when an installed extension must run an approved local command.",
+      "avoidWhen": "Do not use it to expose an unrestricted shell to project input.",
+      "criticalLimit": "Command, environment, duration, and output remain inside operator grants.",
+      "operationNote": "The adapter runs granted commands and stops owned processes under duration, output, and termination limits. New work is rejected after shutdown starts. Process-group tests do not prove isolation on every host."
+    },
+    {
+      "id": "kubeclaw.container-build",
+      "purpose": "Run a BuildKit container build as a Buster provider.",
+      "useWhen": "Use it when a test plan must prove that a declared image can build.",
+      "avoidWhen": "Do not use it for untracked deployment or arbitrary daemon control.",
+      "criticalLimit": "It depends on the configured BuildKit service and bounded build context.",
+      "operationNote": "The capability operation is build_push_verify: this can push an image, not merely compile a local Dockerfile. The provider validates output names and platforms. Package tests do not prove a live BuildKit deployment."
+    },
+    {
+      "id": "kubeclaw.coverage-budget",
+      "purpose": "Compare LCOV coverage facts with declared quality budgets.",
+      "useWhen": "Use it when a test plan must enforce measurable coverage thresholds.",
+      "avoidWhen": "Do not use it to run tests or infer coverage without an LCOV report.",
+      "criticalLimit": "The decision is only as complete as the supplied LCOV data.",
+      "operationNote": "The provider verifies LCOV input sizes and digests before reducing coverage budgets. Duplicate content, missing files, or changed bytes fail validation; it does not create coverage measurements."
+    },
+    {
+      "id": "kubeclaw.delivery-lint",
+      "purpose": "Check delivery metadata and files before release-oriented work continues.",
+      "useWhen": "Use it when a graph needs a dedicated delivery-contract lint step.",
+      "avoidWhen": "Do not use it for source-code lint rules owned by the main lint plugin.",
+      "criticalLimit": "It checks the declared delivery surface, not every repository convention.",
+      "operationNote": "Configuration is the closed empty object. The artifact namespace is fixed to `kubeclaw.delivery-lint`; it is not a configurable report namespace. Input selects the Dockerfile and delivery paths. A passing lexical check does not prove COPY source existence or the final image filesystem. See the configuration schema and registration module above."
+    },
+    {
+      "id": "kubeclaw.demo-auth-smoke",
+      "purpose": "Exercise the demo authentication session as a Buster provider.",
+      "useWhen": "Use it when the demo path needs a focused authenticated smoke check.",
+      "avoidWhen": "Do not use it as a general identity-provider security assessment.",
+      "criticalLimit": "It validates the configured demo session path and its available environment only.",
+      "operationNote": "The test requires an unauthenticated negative control, successful login, and protected business assertions. Its local integration command builds the credential producer with Go."
+    },
+    {
+      "id": "kubeclaw.demo-handoff",
+      "purpose": "Move demo candidates through readiness, delivery, and handoff boundaries.",
+      "useWhen": "Use it when the Nova graph needs the complete declared demo handoff flow.",
+      "avoidWhen": "Do not use it as a generic transport or approval mechanism.",
+      "criticalLimit": "Its three stages and adapter share one package-specific handoff contract.",
+      "operationNote": "The delivery adapter compares recovered receipts with the authoritative operator receipt before announcing readiness. Lost-response recovery must not create a second external delivery."
+    },
+    {
+      "id": "kubeclaw.direct-command",
+      "purpose": "Run one declared command as a Buster test provider.",
+      "useWhen": "Use it when a test plan needs a bounded command and its evidence.",
+      "avoidWhen": "Do not use it for long-lived services or unrestricted shell sessions.",
+      "criticalLimit": "The provider declares retrySafe, but it cannot prove that an arbitrary command is idempotent. Set retry count to zero for effects that cannot be safely repeated.",
+      "operationNote": "The provider runs the resolved command and imports bounded evidence files. Command errors and excess artifact counts fail execution. The manifest retrySafe flag does not inspect command side effects."
+    },
+    {
+      "id": "kubeclaw.git-workspace",
+      "purpose": "Provide controlled Git workspace operations to pipeline extensions.",
+      "useWhen": "Use it for granted worktree creation, synchronization, commit, or merge operations. Use kubeclaw.repository-adapter for bounded repository inspection.",
+      "avoidWhen": "Do not use it to bypass repository grants or package installation controls.",
+      "criticalLimit": "Repository root, operation, and writable scope remain grant-bound.",
+      "operationNote": "Workspace mutations use configured Git author identity and execution limits. Keep ordinary repository inspection on the repository-adapter surface and do not infer mutation authority from a read grant."
+    },
+    {
+      "id": "kubeclaw.http",
+      "purpose": "Run one bounded HTTP request as a Buster provider.",
+      "useWhen": "Use it for an independent endpoint check with explicit expectations.",
+      "avoidWhen": "Do not use it for a multi-step stateful API flow.",
+      "criticalLimit": "Network reach and request behavior remain inside the resolved provider plan.",
+      "operationNote": "The provider validates the capability response and evaluates explicit HTTP expectations. Timeouts produce a failed provider result; transport and malformed-response errors remain distinguishable."
+    },
+    {
+      "id": "kubeclaw.human-approval",
+      "purpose": "Pause a graph for general or architecture-specific human approval.",
+      "useWhen": "Use it when policy requires a recorded person to approve continuation.",
+      "avoidWhen": "Do not use it as automated validation or as a hidden default approval.",
+      "criticalLimit": "The stage waits for an external decision and cannot manufacture approval.",
+      "operationNote": "General and architecture approval are separate stage registrations. Architecture approval checks the passed validation report and requires a reason. Core validates the external signal and resumes the wait."
+    },
+    {
+      "id": "kubeclaw.implementation-agent",
+      "purpose": "Run the declared implementation-agent work at the implementation stage.",
+      "useWhen": "Use it when an approved plan is ready for bounded agent implementation.",
+      "avoidWhen": "Do not use it before required design and approval evidence exists.",
+      "criticalLimit": "The stage receives only its declared context and capability grants.",
+      "operationNote": "The stage dispatches implementation work and stores attempt-bound artifacts. Invalid evidence or output blocks execution. A configured agent name alone does not establish approval or a usable agent host."
+    },
+    {
+      "id": "kubeclaw.junit-report",
+      "purpose": "Normalize JUnit XML into the Buster report contract.",
+      "useWhen": "Use it when a provider emits JUnit-compatible test results.",
+      "avoidWhen": "Do not use it to execute tests or decide quality policy.",
+      "criticalLimit": "Malformed, oversized, or unsupported JUnit input must fail normalization.",
+      "operationNote": "Normalization rejects unsupported media types, invalid UTF-8, and invalid byte-order marks. It imports reports from bounded files; it does not execute the test command or set Nova policy."
+    },
+    {
+      "id": "kubeclaw.kubernetes-fixture",
+      "purpose": "Prepare and clean a Kubernetes fixture for Buster tests.",
+      "useWhen": "Use it when a test requires a bounded temporary Kubernetes deployment.",
+      "avoidWhen": "Do not use it for permanent application deployment.",
+      "criticalLimit": "Fixture ownership and cleanup apply only to the resolved test plan scope.",
+      "operationNote": "Preparation returns deployment evidence and, when requested, credential provenance. Cleanup calls release and requires a successful response. Provider-level tests do not prove deletion in a real cluster."
+    },
+    {
+      "id": "kubeclaw.lighthouse",
+      "purpose": "Run Lighthouse web-quality checks as a Buster provider.",
+      "useWhen": "Use it when a rendered page needs performance and quality measurements.",
+      "avoidWhen": "Do not use it as a load test or server-capacity measure.",
+      "criticalLimit": "Results depend on the tested page, runner environment, and configured categories.",
+      "operationNote": "The provider invokes browser.lighthouse and validates the returned runs and category data. Missing categories or audit execution errors fail the operation. Its package test requires real Chromium."
+    },
+    {
+      "id": "kubeclaw.lint",
+      "purpose": "Run pre-check and full lint stages through a controlled lint executor.",
+      "useWhen": "Use it when Nova must apply the installed repository lint rule set.",
+      "avoidWhen": "Do not use it for delivery-only checks or arbitrary command execution.",
+      "criticalLimit": "Rule coverage follows the installed lint configuration and executor grant.",
+      "operationNote": "The adapter accepts lint.execute/run_report and validates any source revision. The stage stores a report and reduces its findings. Missing shellcheck or shfmt appears as a tool failure, not a clean lint result."
+    },
+    {
+      "id": "kubeclaw.network-http",
+      "purpose": "Provide grant-controlled HTTP effects to pipeline extensions.",
+      "useWhen": "Use it when a stage or observer needs an approved outbound HTTP call.",
+      "avoidWhen": "Do not use it as a Buster HTTP test provider.",
+      "criticalLimit": "Destinations, methods, payloads, and response bounds follow operator grants.",
+      "operationNote": "The adapter checks configured origins, methods, credentials, and request-size bounds before transport. A denied origin or oversized request is an error; a grant is not an unrestricted HTTP client."
+    },
+    {
+      "id": "kubeclaw.notification-observer",
+      "purpose": "Deliver selected committed events to notification and preview targets.",
+      "useWhen": "Use it when operators need asynchronous lifecycle notifications.",
+      "avoidWhen": "Do not use it to block or alter the source pipeline event.",
+      "criticalLimit": "Delivery failure affects the observer attempt, not canonical pipeline history.",
+      "operationNote": "The two observers publish notifications through an operator target. Delivery failure belongs to observer processing and cannot rewrite the event that triggered it."
+    },
+    {
+      "id": "kubeclaw.openapi",
+      "purpose": "Check declared OpenAPI operations through the Buster provider boundary.",
+      "useWhen": "Use it when API behavior must agree with an OpenAPI description.",
+      "avoidWhen": "Do not use it for an unrelated HTTP smoke request.",
+      "criticalLimit": "Coverage includes only selected operations and supplied runtime access.",
+      "operationNote": "The provider resolves selected operation IDs and path parameters from the supplied specification. Unknown operations, missing parameters, or paths outside the selected origin fail before the request."
+    },
+    {
+      "id": "kubeclaw.openclaw-agent-events",
+      "purpose": "Bridge live OpenClaw hooks into namespaced plugin events.",
+      "useWhen": "Use it when an OpenClaw SDK host must feed hook events to the pipeline event boundary.",
+      "avoidWhen": "Do not use it to read historical agent records or as a standalone Redis ingestion service.",
+      "criticalLimit": "Its exposed capability reports bridge status. Queued events are volatile until accepted by the event journal; the host must provide OpenClaw hooks.",
+      "operationNote": "Activation requires the OpenClaw on-hook API. The capability exposes status, not arbitrary event-history reads. Cancellation or an unsupported operation is an error."
+    },
+    {
+      "id": "kubeclaw.operator-messaging",
+      "purpose": "Provide controlled messages from pipeline work to an operator channel.",
+      "useWhen": "Use it when a stage must request or report operator-visible information.",
+      "avoidWhen": "Do not use it as canonical approval state or general transport.",
+      "criticalLimit": "Delivery authority and destination remain operator-controlled.",
+      "operationNote": "Publication uses an approved target; receipt lookup has its own operation and target constraints. Unknown targets and malformed receipt queries fail. A lost response must be reconciled before publication repeats."
+    },
+    {
+      "id": "kubeclaw.pipeline-review",
+      "purpose": "Run the pipeline review stage and retrieve its bounded review evidence.",
+      "useWhen": "Use it when the graph needs the installed pipeline-specific review workflow.",
+      "avoidWhen": "Do not use it for the broader repository audit stages.",
+      "criticalLimit": "Its stage and evidence adapter share one review-specific contract.",
+      "operationNote": "The evidence reader binds snapshots to a run identity, checks for source changes, and enforces the bundle byte budget. It fails on mismatched runs or changed evidence rather than returning a partial authoritative snapshot."
+    },
+    {
+      "id": "kubeclaw.playwright",
+      "purpose": "Run browser scenarios through Playwright in a Buster provider.",
+      "useWhen": "Use it when behavior requires a real browser and page interaction.",
+      "avoidWhen": "Do not use it for a simple HTTP status or API-only check.",
+      "criticalLimit": "Browser, evidence, network, and execution time remain plan-bound.",
+      "operationNote": "The provider runs the selected browser test and imports its report and artifacts. Malformed reports and excess artifact counts fail. The package test needs an absolute PLAYWRIGHT_BROWSERS_PATH."
+    },
+    {
+      "id": "kubeclaw.preflight-contract",
+      "purpose": "Validate preflight inputs and resolve their approved source before work starts.",
+      "useWhen": "Use it when the graph must reject incomplete or inconsistent initial contracts.",
+      "avoidWhen": "Do not use it for later repository quality or delivery lint.",
+      "criticalLimit": "The two stages validate only the declared preflight and source contracts.",
+      "operationNote": "The stage validates the declared source contract and stores source-preflight evidence. Invalid input or failed validation blocks the stage. It does not replace later implementation tests."
+    },
+    {
+      "id": "kubeclaw.prism-design",
+      "purpose": "Request and import Prism design work as an ordered Nova stage.",
+      "useWhen": "Use it when the graph requires a Prism design result before implementation.",
+      "avoidWhen": "Do not use it to expose Prism OpenClaw tools directly.",
+      "criticalLimit": "The stage depends on the configured Prism service and versioned result contract.",
+      "operationNote": "The stage waits for an approved Prism baseline and stores the returned bundle under its digest. Dispatch errors block the stage; a waiting result is not an approved design."
+    },
+    {
+      "id": "kubeclaw.project-summary",
+      "purpose": "Create the declared project summary from completed pipeline evidence.",
+      "useWhen": "Use it when the graph needs a final bounded summary artifact.",
+      "avoidWhen": "Do not use it as a substitute for source evidence or detailed reports.",
+      "criticalLimit": "It summarizes the inputs supplied by the graph and cannot recover omitted facts.",
+      "operationNote": "The default output is delivery-manifest.v2. Setting deliveryManifestEncoding to kubeclaw-json.utf16.v1 selects v3. Final source, lint, test, coverage, and optional review evidence must agree; incompatible evidence blocks the stage."
+    },
+    {
+      "id": "kubeclaw.redis-transport",
+      "purpose": "Publish transport and telemetry records through configured Redis channels.",
+      "useWhen": "Use it when Nova extensions need the installed Redis transport boundary.",
+      "avoidWhen": "Do not use it as a general Redis client or canonical state store.",
+      "criticalLimit": "Channel, payload, timeout, and credential behavior follow adapter configuration.",
+      "operationNote": "The adapter resolves its Redis secret and publishes through the Redis transport. Missing secrets, unsupported operations, and payloads above the byte limit fail. Disabling publication does not delete existing stream entries."
+    },
+    {
+      "id": "kubeclaw.remote-test-gate",
+      "purpose": "Submit exact remote test plans and retrieve their evidence for Nova.",
+      "useWhen": "Use it when Nova delegates test execution to the Buster boundary.",
+      "avoidWhen": "Do not use it to run provider code inside the Nova process.",
+      "criticalLimit": "Plan and evidence identities must remain bound across remote execution.",
+      "operationNote": "The package imports remote evidence through its configured manifest and gate-stage bindings. It validates the evidence store and stops on cancellation; fixture envelopes alone do not prove a remote Buster job."
+    },
+    {
+      "id": "kubeclaw.repository-adapter",
+      "purpose": "Provide repository operations for Nova through an explicit adapter contract.",
+      "useWhen": "Use it when Nova stages need the installed repository abstraction.",
+      "avoidWhen": "Do not use it for arbitrary host filesystem access.",
+      "criticalLimit": "It exposes only declared repository operations and granted roots.",
+      "operationNote": "Repository reads use the configured root and limits on file bytes and changed paths. The adapter validates the root and optional expected HEAD. This is not the workspace mutation adapter."
+    },
+    {
+      "id": "kubeclaw.review",
+      "purpose": "Run review, repository audit, and repository revalidation stages.",
+      "useWhen": "Use it when the graph needs the full installed review lifecycle.",
+      "avoidWhen": "Do not use it for the narrower pipeline-review contract.",
+      "criticalLimit": "Each stage has a distinct type and must appear at the correct graph point.",
+      "operationNote": "The stage freezes source and policy, verifies proposed findings, and stores immutable reports. Repository-audit jobs have recovery checkpoints; revalidation does not promise per-finding resume. Local tests do not prove live reviewer quality."
+    },
+    {
+      "id": "kubeclaw.runtime-dispatch",
+      "purpose": "Dispatch bounded runtime and OpenClaw work through approved runtime targets.",
+      "useWhen": "Use it when an extension must call an installed specialist runtime.",
+      "avoidWhen": "Do not use it to let project input select arbitrary processes.",
+      "criticalLimit": "Target identity, request, timeout, and result remain capability-bound.",
+      "operationNote": "Dispatch selects an operator-configured target and validates its payload limits. OpenClaw result import checks the authoritative result path. Local process tests do not establish a connected production agent."
+    },
+    {
+      "id": "kubeclaw.secret-resolver",
+      "purpose": "Resolve secret references without exposing the backing secret store.",
+      "useWhen": "Use it when an extension needs an approved secret value at runtime.",
+      "avoidWhen": "Do not use it to place literal secrets in project or plugin configuration.",
+      "criticalLimit": "Callers receive only secrets allowed by their exact grant.",
+      "operationNote": "The resolve operation maps a logical secret ID to an allowed environment variable. An unmapped ID is denied and an empty or missing variable is unavailable. Removal does not erase the external secret."
+    },
+    {
+      "id": "kubeclaw.security-providers",
+      "purpose": "Run HTTP, dependency, image, policy, and runtime security checks in Buster.",
+      "useWhen": "Use it when a test plan needs one of the five declared security contracts.",
+      "avoidWhen": "Do not treat one provider result as a complete security assessment.",
+      "criticalLimit": "Each provider covers a separate evidence source and execution environment.",
+      "operationNote": "Each security registration has its own inputs and capability. Unknown rules and malformed capability results fail validation. Trivy tests require a usable local vulnerability database; no database means no vulnerability verdict."
+    },
+    {
+      "id": "kubeclaw.size-budget",
+      "purpose": "Compare artifact size facts with a declared Buster budget.",
+      "useWhen": "Use it when release quality depends on a bounded artifact size.",
+      "avoidWhen": "Do not use it to measure runtime memory or container resource use.",
+      "criticalLimit": "It evaluates only the supplied artifact and configured size threshold.",
+      "operationNote": "The provider measures declared build-output files against absolute or baseline limits. It checks baseline availability, input names, evidence paths, and artifact budgets; it does not perform the build."
+    },
+    {
+      "id": "kubeclaw.state-store",
+      "purpose": "Provide controlled reads and writes for extension-owned state.",
+      "useWhen": "Use it when a pipeline extension needs durable bounded state.",
+      "avoidWhen": "Do not use it to replace Core's canonical journal.",
+      "criticalLimit": "State operations read or append namespaced records. The adapter has no update, delete, or retention operation.",
+      "operationNote": "Read returns namespaced records; append uses an idempotency key. Reusing that key with different content fails with STATE_IDEMPOTENCY_CONFLICT. No operation updates or deletes an existing record."
+    },
+    {
+      "id": "kubeclaw.tailscale-exposure",
+      "purpose": "Create a bounded Tailscale exposure for a Buster test target.",
+      "useWhen": "Use it when a remote test must reach an otherwise private fixture.",
+      "avoidWhen": "Do not use it for permanent ingress or unrelated network access.",
+      "criticalLimit": "It depends on Tailscale authority and must clean up the temporary exposure.",
+      "operationNote": "Preparation supports release or await-readiness retention. The latter requires a valid handoff generation. Cleanup calls release; package tests do not prove a real Tailscale endpoint or cluster cleanup."
+    },
+    {
+      "id": "kubeclaw.telemetry-observer",
+      "purpose": "Deliver committed lifecycle telemetry through the configured telemetry path.",
+      "useWhen": "Use it when pipeline events need an asynchronous telemetry projection.",
+      "avoidWhen": "Do not use it to store canonical pipeline state or gate execution.",
+      "criticalLimit": "Telemetry delivery can fail without changing the committed source event.",
+      "operationNote": "The observer appends selected telemetry through telemetry.emit. It does not own the telemetry storage implementation or canonical lifecycle state."
+    },
+    {
+      "id": "kubeclaw.telemetry-store",
+      "purpose": "Append telemetry records through the telemetry.emit capability.",
+      "useWhen": "Use it when an observer must write bounded telemetry to the configured durable record store.",
+      "avoidWhen": "Do not use it to query, delete, or rotate telemetry records.",
+      "criticalLimit": "The adapter appends records; it supplies no query or retention-management operation.",
+      "operationNote": "Only telemetry.emit/append is supported. It enforces record and store budgets and rejects cancellation. Rotation, queries, and deletion require a separate storage-management procedure."
+    },
+    {
+      "id": "kubeclaw.transport-publisher",
+      "purpose": "Publish granted events through the configured HTTP transport.",
+      "useWhen": "Use it when a Nova extension needs transport-neutral message publication.",
+      "avoidWhen": "Do not use it for Redis publication; select kubeclaw.redis-transport for that transport.",
+      "criticalLimit": "The selected provider and grant determine the real transport authority.",
+      "operationNote": "Publication reserves durable delivery state, resolves secrets, and invokes network.http. Unknown external outcomes must not become blind retries. The current local execution check fails canonical effect-request validation; see AP08.10."
+    },
+    {
+      "id": "kubeclaw.visual",
+      "purpose": "Run visual comparison checks and produce bounded image evidence in Buster.",
+      "useWhen": "Use it when a test plan must detect changes against approved visual baselines.",
+      "avoidWhen": "Do not use it for functional browser interaction without visual comparison.",
+      "criticalLimit": "Results depend on stable rendering conditions and the selected baseline.",
+      "operationNote": "The provider captures the selected page and compares image bytes with a baseline. It validates image digests and evidence budgets. A browser is required; this is not a manual visual assessment."
+    },
+    {
+      "id": "kubeclaw.wait-store",
+      "purpose": "Create and read durable wait records through signal.wait.",
+      "useWhen": "Use it when Core needs storage for a wait owned by a pipeline attempt.",
+      "avoidWhen": "Do not use it to authorize a signal or decide that a waiting stage can continue.",
+      "criticalLimit": "The adapter stores waits. Core validates signals and owns wait resolution and continuation.",
+      "operationNote": "Create checks typed wait fields and expiry; read retrieves a stored wait. Reusing a key with different wait content fails with WAIT_IDEMPOTENCY_CONFLICT. Signal authorization and continuation remain Core responsibilities."
+    }
   ]
 }

@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/nova/plugins/demo-handoff/plugin.json; skills/nova/plugins/demo-handoff/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
 
 ## Authored Guidance
 
@@ -62,6 +62,7 @@ the contract and lifecycle rules that apply to this package.
 ## stage: candidate
 
 Public identifier: `kubeclaw.demo.candidate`.
+Global registration ID: `kubeclaw.demo-handoff:candidate`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `test.plan.evidence`, `artifacts.write`
 
@@ -69,7 +70,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/empty.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/schemas/empty.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
 The schema declares no top-level fields.
 
@@ -93,6 +94,7 @@ Declared manifest facts:
 ## stage: delivery
 
 Public identifier: `kubeclaw.demo.delivery`.
+Global registration ID: `kubeclaw.demo-handoff:delivery`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `demo.handoff`, `artifacts.write`
 
@@ -100,7 +102,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/empty.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/schemas/empty.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
 The schema declares no top-level fields.
 
@@ -124,6 +126,7 @@ Declared manifest facts:
 ## stage: ready
 
 Public identifier: `kubeclaw.demo.ready`.
+Global registration ID: `kubeclaw.demo-handoff:ready`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `demo.handoff`, `artifacts.write`
 
@@ -131,7 +134,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/empty.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/schemas/empty.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
 The schema declares no top-level fields.
 
@@ -155,6 +158,7 @@ Declared manifest facts:
 ## capability adapter: handoff
 
 Public identifier: `handoff`.
+Global registration ID: `kubeclaw.demo-handoff:handoff`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `artifacts.read`, `test.plan.evidence`, `operator.request`, `operator.receipt`
 
@@ -162,22 +166,22 @@ Provided capabilities: `demo.handoff`
 
 Configuration schema: [schemas/adapter.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/schemas/adapter.schema.json)
 
-Configuration fields:
+Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
-- `candidateStageId` (string; required)
-- `deliveryStageId` (string; required)
-- `readyStageId` (string; required)
-- `manifestStageId` (string; required)
-- `endpoint` (string; required)
-- `tokenPath` (string; required)
-- `caPath` (string; required)
-- `stateRoot` (string; required)
-- `operatorTarget` (string; required)
-- `timeoutMs` (integer; required)
+- `candidateStageId` (string; required; minLength `1`; maxLength `2048`)
+- `deliveryStageId` (string; required; minLength `1`; maxLength `2048`)
+- `readyStageId` (string; required; minLength `1`; maxLength `2048`)
+- `manifestStageId` (string; required; minLength `1`; maxLength `2048`)
+- `endpoint` (string; required; minLength `1`; maxLength `2048`)
+- `tokenPath` (string; required; minLength `1`; maxLength `2048`)
+- `caPath` (string; required; minLength `1`; maxLength `2048`)
+- `stateRoot` (string; required; minLength `1`; maxLength `2048`)
+- `operatorTarget` (string; required; pattern `^[a-z0-9][a-z0-9._:-]{0,127}$`)
+- `timeoutMs` (integer; required; minimum `100`; maximum `60000`)
 
-Input schema: None.
+Input schema: No package-specific inputSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
-Result schema: None.
+Result schema: No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
 Declared manifest facts:
 
@@ -192,14 +196,17 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-Registry validation rejects a missing module, export, schema, or capability declaration.
+The delivery adapter compares recovered receipts with the authoritative operator receipt before announcing readiness. Lost-response recovery must not create a second external delivery.
+
+Registry validation checks declared paths, schemas, and capability names.
+Activation or the Buster loader checks executable exports; discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 Nova or Buster records a bounded failure without giving the package lifecycle authority.
 
 ## Verification Record
 
 Audit status: `content-written`.
-Local command result on 2026-09-16: `unavailable`.
+Earlier AP08.7–AP08.9 local command result on 2026-09-16: `unavailable`.
 
 The command requires the OpenSSL executable, which is absent on this host.
 
@@ -209,10 +216,16 @@ Run the package command:
 npm test --prefix skills/nova/plugins/demo-handoff
 ```
 
-Package tests found: 3.
+Package test files found: 3. This is file discovery, not an executed test count.
+
+Exact package test script (run from the package directory):
+
+```text
+cd ../../../.. && node --test skills/nova/plugins/demo-handoff/tests/*.test.mts skills/nova/plugins/demo-handoff/tests/*.test.mjs
+```
 
 The audit status does not claim live host or cluster acceptance. See the AP08
-checkpoint for the exact local result and unavailable environment boundaries.
+[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
 
 ## Source Evidence
 

@@ -169,7 +169,7 @@ attempt, even when a receipt exists.
 
 > **Durable coordination:** [The coordinator delegates ordinary calls to the durable effect protocol and keeps confidential calls separate](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/effects/coordinator.ts#L13-L52).
 >
-> **Recovery stop:** [Recovery rejects accepted effects without receipts and external effects whose attempt did not finish](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/effect-recovery.ts#L6-L25).
+> **Recovery stop:** [Recovery rejects accepted effects without receipts and external effects whose attempt did not finish](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/effect-recovery.ts#L14-L28).
 
 ## Retry And Resume
 
@@ -180,12 +180,19 @@ only after this check. Do not convert uncertainty into a retry.
 Resume continues a recorded run. Before Nova resumes stage work, effect recovery
 checks durable request, acceptance, receipt, and attempt completion. If it reports
 `RECOVERY_EFFECT_OUTCOME_UNRESOLVED`, inspect the external system using the recorded
-resource identity and effect ID. Record an operator decision through the supported
-continuation path. Do not edit journals.
+resource identity and effect ID. Preserve the evidence and stop automatic retries.
+Do not edit journals. This checkout provides no documented effect-reconciliation
+operation that clears this recovery stop.
 
 If recovery reports `RECOVERY_EXTERNAL_CONTINUATION_REQUIRED`, the receipt exists but
 the original attempt did not reach its terminal lifecycle event. Decide whether the
-recorded result can be imported or whether compensating work is necessary.
+recorded result needs reconciliation or compensating work. This is an operator
+decision requirement, not an implemented result-import procedure. Administrative
+retry and remediation call `executePrepared`, which applies the same recovery
+guard. They do not bypass this stop. A supported reconciliation API and its
+reader procedure are still required before this path can pass acceptance.
+
+> **No retry bypass:** [Execution checks effects before starting adapters](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/engine-run.ts#L21-L32); [administrative retry returns to the same execution path](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/engine-admin.ts#L90-L98).
 
 ## Cancellation
 
@@ -234,7 +241,7 @@ rule requires one record across runs, use an external system and adapter operati
 that supports an atomic business key. The current state-store interface does not
 provide that guarantee.
 
-> **State append behavior:** [The adapter returns an existing equal entry, rejects conflicting key reuse, and appends otherwise](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/state-store/src/adapter.ts#L44-L86).
+> **State append behavior:** [The adapter returns an existing equal entry, rejects conflicting key reuse, and appends otherwise](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/state-store/src/adapter.ts#L44-L85).
 
 ## Failure And Recovery Table
 
@@ -244,7 +251,7 @@ provide that guarantee.
 | Adapter readiness fails | No complete adapter runtime started | Correct configuration; verify cleanup; start again |
 | Request exists, acceptance absent | Mutation did not receive coordinator ownership | Retry through the same recovery path |
 | Acceptance exists, receipt absent | External outcome is unknown | Reconcile externally; do not repeat automatically |
-| Completed receipt exists, attempt terminal event absent | Mutation result exists but lifecycle import is incomplete | Use explicit continuation or compensation |
+| Completed receipt exists, attempt terminal event absent | Mutation result exists but lifecycle import is incomplete | Stop; the reconciliation/import procedure is not available in this checkout |
 | Adapter returns a normal failure receipt | External operation failed with recorded evidence | Apply the operation-specific retry rule |
 | Stage times out or is cancelled | Local execution stopped | Inspect effect records before retry or cleanup |
 | Same state key has different payload | Caller reused identity for different intent | Stop and correct identity; never overwrite history |

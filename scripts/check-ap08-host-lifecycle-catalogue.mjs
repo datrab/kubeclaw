@@ -89,7 +89,7 @@ assert.deepEqual(
   'catalogue guidance and extension inventory differ',
 );
 for (const item of guidance.records) {
-  for (const field of ['purpose', 'useWhen', 'avoidWhen', 'criticalLimit']) {
+  for (const field of ['purpose', 'useWhen', 'avoidWhen', 'criticalLimit', 'operationNote']) {
     assert.equal(typeof item[field], 'string', `${item.id} lacks ${field}`);
     assert(item[field].length >= 24, `${item.id} has an incomplete ${field}`);
   }
@@ -112,8 +112,19 @@ for (const name of packagePages) {
   const source = fs.readFileSync(path.join(catalogueRoot, name), 'utf8');
   for (const section of expectedSections) assert(source.includes(section), `${name} lacks ${section}`);
   assert(source.includes(`Audit status: \`${auditStatuses.get(id)}\`.`), `${name} has a stale audit status`);
-  assert(source.includes(`Local command result on ${verification.date}: \`${verificationById.get(id).result}\`.`),
+  assert(source.includes(`Earlier AP08.7–AP08.9 local command result on ${verification.date}: \`${verificationById.get(id).result}\`.`),
     `${name} has a stale local result`);
+  const item = inventory.packages.find(entry => entry.id === id);
+  const manifest = JSON.parse(read(item.manifest));
+  if (item.host === 'pipeline-runtime') {
+    for (const kind of ['stages', 'adapters', 'observers', 'testProviders', 'reportAdapters']) {
+      for (const registration of manifest[kind] ?? []) {
+        assert(source.includes(`Global registration ID: \`${id}:${registration.id}\``), `${id} lacks a global registration identity`);
+        if (registration.checkpointSchema) assert(source.includes(registration.checkpointSchema), `${id} lacks its checkpoint schema`);
+      }
+    }
+    assert(!/^Input schema: None\.|^Result schema: None\./mu.test(source), `${id} hides its shared contract`);
+  }
   assert(!source.includes('Authored guidance is missing.'), `${name} lacks authored guidance`);
   assert(source.includes('/blob/' + revision + '/'), `${name} lacks revision-pinned source evidence`);
   assert(source.includes('[Install and activate](../testing.md#install-and-activate-by-surface)'), `${name} lacks the activation link`);

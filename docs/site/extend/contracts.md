@@ -336,7 +336,7 @@ Run the focused checks that match the contract you changed:
 node tests/verification/contracts/check-plugin-system-v2-contracts.mjs
 node tests/verification/contracts/check-plugin-system-v2-registry.mjs
 node tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs
-node tests/verification/contracts/plugin-system-v2-observer-expectations.mjs
+node scripts/check-ap08-observers.mjs
 node tests/verification/contracts/check-pipeline-test-provider-registry.mts
 node tests/verification/contracts/check-pipeline-report-adapter-registry.mts
 ```
@@ -344,8 +344,10 @@ node tests/verification/contracts/check-pipeline-report-adapter-registry.mts
 These are local contract checks. They do not deploy a role or perform an end-to-end
 pipeline run. Package-specific behavior needs its own test and boundary check.
 
-All six listed checks passed on 2026-09-16. The observer check produced no console
-text and returned exit code zero. These results prove contract and registry behavior.
+The original observer command only loaded assertion definitions. It did not execute them.
+The corrected observer command checks registry identities, role inclusion, and activation.
+Run observer recovery separately to test delivery behavior.
+The other recorded checks cover contract and registry behavior.
 They do not prove package-specific effects, persistent recovery, or deployment.
 
 ## Continue
