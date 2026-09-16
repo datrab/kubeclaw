@@ -15,6 +15,7 @@ This page keeps future direction separate from current operator behavior. Items 
 4. Exercise third-party plugin installation, replacement, and removal against real operator workloads.
 5. Complete the deeper operator/reference documentation pass after the first production workload exposes the remaining practical gaps.
 6. Implement and verify automated empty-host bootstrap and recovery preparation before promising a one-command first deployment.
+7. Replace the anonymous HTTP lab registry with the reviewed authenticated HTTPS registry path.
 
 ## Product And Platform Direction
 
@@ -90,6 +91,33 @@ It must not weaken the exact-revision and source-identity rules.
 
 Acceptance requires a complete pipeline run through the mirror at an exact revision.
 The same test must prove safe failure when the mirror cannot provide that revision.
+
+### Production-grade local OCI registry
+
+Status: planned.
+The current `registry-local` manifest is an anonymous HTTP laboratory service.
+It is not the final security boundary for the complete showcase platform.
+
+The planned service must preserve the existing immutable-digest contract.
+It must also add the controls required for a durable multi-client registry:
+
+- Serve HTTPS with a reviewed certificate authority and explicit certificate rotation.
+- Require authenticated push and pull access with separate least-authority credentials where practical.
+- Keep credentials outside Git and distribute only the required Secret references.
+- Configure BuildKit, Buster, scanners, and every Kubernetes node from one validated client contract.
+- Preserve image manifests and layers across Pod, node, and service restarts.
+- Define storage capacity, inode monitoring, expansion, backup, restore, and corruption handling.
+- Keep garbage collection offline, reviewable, writer-exclusive, and safe for every retained digest.
+- Define migration from the current registry data without losing accepted image digests.
+- Reject anonymous clients, wrong credentials, untrusted certificates, mutable substitutions, and foreign registry authorities.
+- Record audit evidence without logging registry passwords or private keys.
+
+Acceptance requires a real BuildKit push to the authenticated HTTPS endpoint.
+Buster must verify the pushed manifest digest.
+A Kubernetes node must then perform an uncached pull of that exact digest.
+
+The acceptance exercise must also cover unauthorized access, certificate rotation, registry restart, node restart, backup restore, storage exhaustion, and offline garbage collection.
+The separate Docker Hub pull-through mirror remains a cache and does not replace this writable registry.
 
 ### Other themes
 
