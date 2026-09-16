@@ -217,3 +217,55 @@ last workflow failed at `Require updater identity`. Configure the updater GitHub
 App (installed on this repository with contents/pull-request write permissions),
 then rerun `Dependency updates` and verify success before claiming monitoring is
 operational. Never commit its private key.
+# LiteLLM, SPIRE and SMB adoption
+
+These four Applications use manual sync: `litellm`, `spire-crds`, `spire`,
+and `csi-driver-smb`. The `platform` root registers their definitions only.
+Identity and storage drivers have separate AppProjects. Cilium is not installed
+by this handover.
+
+The installed charts are preserved: SPIRE 0.30.0, SPIRE CRDs 0.6.0, SMB CSI
+1.20.0. SPIRE's top-level chart reports appVersion 1.14.5, but its bundled
+server/agent charts render 1.15.2; the live server and agent were confirmed as
+1.15.2. Controller Manager remains 0.7.0, SPIFFE CSI 0.2.13 and its registrar
+v2.15.0. `versions.json` owns the chart selections and LiteLLM image digest;
+Renovate proposes changes through the existing dependency workflow. That
+workflow requires its configured GitHub App credentials to be operational.
+
+LiteLLM adopts only Deployment and Service, retaining NodePort 30050 and the
+observed running image digest. The existing `litellm-config`, `litellm-secrets`
+and `google-sa-key` remain externally managed. The repository's older LiteLLM
+ConfigMap must not be applied as part of this handover. Pinning the image causes
+one Recreate rollout; there is a brief proxy interruption.
+
+SPIRE's existing `spire-data-spire-server-0` PVC remains 1Gi. Helm lifecycle hooks
+are disabled for Argo rendering. This chart emits an `Ignore` webhook bootstrap
+default even with hooks disabled. Argo therefore preserves the existing
+webhook failure policies and controller-maintained CA bundles using scoped
+ignoreDifferences plus RespectIgnoreDifferences. This is an **adoption-only**
+configuration: it requires existing healthy webhooks with `Fail` policies and
+is not a fresh-install recipe. Changes to those policies require a separate
+review; Argo does not enforce them while this exception is present.
+
+On the controlnode, before syncing any of these services:
+
+```bash
+cd ~/kubeclaw
+git pull --ff-only
+export KUBE_CONTEXT="$(kubectl config current-context)"
+python3 scripts/check-platform-adoption-live.py
+```
+
+If the check fails, stop and investigate its reported prerequisite. Otherwise
+refresh `platform` in Argo, then sync `spire-crds` first. After it succeeds,
+sync `spire`, `csi-driver-smb` and `litellm` individually; the latter two have no
+ordering dependency on SPIRE. Leave Prune, Force and Replace disabled. Review
+each diff before sync. Do not uninstall the old Helm releases: that would
+delete resources now managed by Argo.
+
+Verify all four Applications are Synced/Healthy, the existing SPIRE PVC is still
+Bound, server/agent/CSI Pods are ready, and LiteLLM can serve a request using its
+existing database and model configuration. The repository check
+`node scripts/check-platform-services.mjs` renders real charts and verifies
+resource ownership, project permissions, storage and external config references;
+it does not substitute for these live checks.

@@ -1,0 +1,3 @@
+# Existing installation values; reviewed for manual Argo adoption.
+controller:
+  replicas: 1

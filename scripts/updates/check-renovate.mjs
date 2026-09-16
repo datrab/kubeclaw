@@ -43,6 +43,14 @@ for (const [name, chart] of Object.entries({ prometheus: 'kube-prometheus-stack'
   assert.equal(found.length, 1, `Expected one central monitoring chart: ${chart}`);
   assert.equal(found[0].currentValue, manifest.monitoringCharts[name].version);
 }
+for (const name of ['spire', 'spire-crds', 'csi-driver-smb']) {
+  const found = deps.filter(dep => dep.depName === name && dep.datasource === 'helm');
+  assert.equal(found.length, 1, 'Expected one platform chart pin: ' + name);
+  assert.equal(found[0].currentValue, manifest.platformCharts[name].version);
+}
+const litellm = deps.filter(dep => dep.depName === 'ghcr.io/berriai/litellm');
+assert.equal(litellm.length, 1);
+assert.equal(litellm[0].depName + ':' + litellm[0].currentValue + '@' + litellm[0].currentDigest, manifest.litellmProduction.image);
 // Exercise Renovate's real replacement engine, including native v-prefixed overrides.
 // Synthetic versions stay in a disposable directory and are never published or built.
 for (const prefix of ['', 'v']) {

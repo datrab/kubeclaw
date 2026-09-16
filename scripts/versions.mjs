@@ -62,6 +62,15 @@ function bindDockerVersions(root, manifest, args, read, outputs) {
 }
 
 function bindInfrastructureVersions(manifest, replaceOne) {
+  for (const name of ['spire', 'spire-crds', 'csi-driver-smb']) {
+    const version = manifest.platformCharts?.[name]?.version;
+    if (!/^\d+\.\d+\.\d+$/.test(version ?? '')) throw new Error('Invalid platform chart version: ' + name);
+    replaceOne('gitops/platform/bootstrap/' + name + '.yaml', new RegExp('chart: ' + name + '\\n      targetRevision: [^\\n]+'),
+      'chart: ' + name + '\n      targetRevision: ' + version);
+  }
+  if (!/^ghcr\.io\/berriai\/litellm:[a-zA-Z0-9._-]+@sha256:[a-f0-9]{64}$/.test(manifest.litellmProduction?.image ?? '')) throw new Error('Invalid production LiteLLM image');
+  replaceOne('gitops/platform/litellm/resources.yaml', /^          image: [^\n]+$/m, '          image: ' + manifest.litellmProduction.image);
+
   for (const [name, chart] of Object.entries({ prometheus: 'kube-prometheus-stack', loki: 'loki', alloy: 'alloy', promtail: 'promtail' })) {
     const version = manifest.monitoringCharts?.[name]?.version;
     if (!/^\d+\.\d+\.\d+$/.test(version ?? '')) throw new Error(`Invalid monitoring chart version: ${name}`);

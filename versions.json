@@ -124,5 +124,19 @@
   "postgresqlProduction": {
     "chartVersion": "18.11.3",
     "image": "registry-1.docker.io/bitnami/postgresql:latest@sha256:b69d1fca390fb131639e86e820f248acfc5d911339dc884796f8009260c598d7"
+  },
+  "platformCharts": {
+    "spire": {
+      "version": "0.30.0"
+    },
+    "spire-crds": {
+      "version": "0.6.0"
+    },
+    "csi-driver-smb": {
+      "version": "1.20.0"
+    }
+  },
+  "litellmProduction": {
+    "image": "ghcr.io/berriai/litellm:main-latest@sha256:a79320760af8df488074ab3fbc830883856c7f952976aad00f039d3a43ffe4b2"
   }
 }
