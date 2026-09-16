@@ -32,6 +32,12 @@ assert.equal(redisChart[0].currentValue, manifest.redisProduction.chartVersion);
 const redisImages = deps.filter(dep => dep.depName === 'registry-1.docker.io/bitnami/redis');
 assert.equal(redisImages.length, 1);
 assert.equal(`${redisImages[0].depName}:${redisImages[0].currentValue}@${redisImages[0].currentDigest}`, manifest.redisProduction.image);
+const postgresqlChart = deps.filter(dep => dep.depName === 'registry-1.docker.io/bitnamicharts/postgresql');
+assert.equal(postgresqlChart.length, 1);
+assert.equal(postgresqlChart[0].currentValue, manifest.postgresqlProduction.chartVersion);
+const postgresqlImages = deps.filter(dep => dep.depName === 'registry-1.docker.io/bitnami/postgresql');
+assert.equal(postgresqlImages.length, 1);
+assert.equal(`${postgresqlImages[0].depName}:${postgresqlImages[0].currentValue}@${postgresqlImages[0].currentDigest}`, manifest.postgresqlProduction.image);
 for (const [name, chart] of Object.entries({ prometheus: 'kube-prometheus-stack', loki: 'loki', alloy: 'alloy' })) {
   const found = deps.filter(dep => dep.depName === chart && dep.datasource === 'helm');
   assert.equal(found.length, 1, `Expected one central monitoring chart: ${chart}`);

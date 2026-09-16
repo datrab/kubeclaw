@@ -1,0 +1,25 @@
+# Adoption values: preserve the running PostgreSQL 18.1 image and existing PVC.
+# Image selection is managed by versions.json postgresqlProduction.
+image:
+  registry: registry-1.docker.io
+  repository: bitnami/postgresql
+  tag: latest
+  digest: sha256:8c7f26a8ba4257fcbf4445bd50e156cbc7d8114942fb3d6523320c7732781b54
+architecture: standalone
+auth:
+  database: litellm
+  username: litellm
+  existingSecret: postgresql-secrets
+  secretKeys:
+    adminPasswordKey: postgres-password
+    userPasswordKey: litellm-password
+primary:
+  persistence:
+    size: 1Gi
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi

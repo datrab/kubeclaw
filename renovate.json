@@ -489,6 +489,28 @@
       "depNameTemplate": "alloy",
       "datasourceTemplate": "helm",
       "registryUrlTemplate": "https://grafana.github.io/helm-charts"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"postgresqlProduction\": \\{\\s*\"chartVersion\": \"(?<currentValue>[^\"\\n]+)\""
+      ],
+      "depNameTemplate": "registry-1.docker.io/bitnamicharts/postgresql",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"postgresqlProduction\": \\{\\s*\"chartVersion\": \"[^\"\\n]+\",\\s*\"image\": \"(?<depName>[^\"@]+?):(?<currentValue>[^\"@]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
+      ],
+      "datasourceTemplate": "docker"
     }
   ],
   "timezone": "Etc/UTC",
@@ -527,7 +549,8 @@
         "helm-values"
       ],
       "matchFileNames": [
-        "gitops/platform/values/redis.yaml"
+        "gitops/platform/values/redis.yaml",
+        "gitops/platform/values/postgresql.yaml"
       ],
       "enabled": false
     },
@@ -578,7 +601,9 @@
           "gitops/platform/bootstrap/prometheus.yaml",
           "gitops/platform/bootstrap/loki.yaml",
           "gitops/platform/bootstrap/alloy.yaml",
-          "gitops/platform/bootstrap/promtail.yaml"
+          "gitops/platform/bootstrap/promtail.yaml",
+          "gitops/platform/values/postgresql.yaml",
+          "gitops/platform/bootstrap/postgresql.yaml"
         ],
         "executionMode": "branch"
       }

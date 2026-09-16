@@ -69,13 +69,15 @@ function bindInfrastructureVersions(manifest, replaceOne) {
       `chart: ${chart}\n      targetRevision: ${version}`);
   }
 
-  const redis = manifest.redisProduction;
-  const image = redis?.image?.match(/^(registry-1\.docker\.io)\/(bitnami\/redis):([a-zA-Z0-9._-]+)@(sha256:[a-f0-9]{64})$/);
-  if (!image || !/^\d+\.\d+\.\d+$/.test(redis?.chartVersion ?? '')) throw new Error('Invalid production Redis chart version or image digest');
-  replaceOne('gitops/platform/values/redis.yaml', /^image:\n  registry: [^\n]+\n  repository: [^\n]+\n  tag: [^\n]+\n  digest: [^\n]+/m,
-    `image:\n  registry: ${image[1]}\n  repository: ${image[2]}\n  tag: ${image[3]}\n  digest: ${image[4]}`);
-  replaceOne('gitops/platform/bootstrap/redis.yaml', /chart: redis\n      targetRevision: [^\n]+/,
-    `chart: redis\n      targetRevision: ${redis.chartVersion}`);
+  for (const name of ['redis', 'postgresql']) {
+    const selected = manifest[`${name}Production`];
+    const image = selected?.image?.match(/^(registry-1\.docker\.io)\/(bitnami\/(?:redis|postgresql)):([a-zA-Z0-9._-]+)@(sha256:[a-f0-9]{64})$/);
+    if (!image || image[2] !== `bitnami/${name}` || !/^\d+\.\d+\.\d+$/.test(selected?.chartVersion ?? '')) throw new Error(`Invalid production ${name} chart version or image digest`);
+    replaceOne(`gitops/platform/values/${name}.yaml`, /^image:\n  registry: [^\n]+\n  repository: [^\n]+\n  tag: [^\n]+\n  digest: [^\n]+/m,
+      `image:\n  registry: ${image[1]}\n  repository: ${image[2]}\n  tag: ${image[3]}\n  digest: ${image[4]}`);
+    replaceOne(`gitops/platform/bootstrap/${name}.yaml`, new RegExp(`chart: ${name}\\n      targetRevision: [^\\n]+`),
+      `chart: ${name}\n      targetRevision: ${selected.chartVersion}`);
+  }
 
   for (const reference of [...Object.values(manifest.infrastructure ?? {}), ...Object.values(manifest.automation ?? {})]) {
     if (typeof reference !== 'string' || !/^[a-z0-9./_-]+:[a-zA-Z0-9._-]+@sha256:[a-f0-9]{64}$/.test(reference))

@@ -154,3 +154,31 @@ Grafana uses the verified existing `prometheus-grafana` Secret keys `admin-user`
 5. If Alloy cannot ingest, stop its DaemonSet before temporarily removing the retirement selector from Promtail; the Argo applications have no self-heal. Review positions before a later retry because Alloy only imports legacy positions when its own positions do not exist. After successful cutover, Promtail stays as a visible, disabled legacy Application until separately cleaned up. Do not prune/delete Alloy positions or the monitoring PVCs as part of that cleanup.
 
 The collector configuration was converted from the installed Promtail 6.17.1 defaults plus the provided client values using Alloy v1.19.2 and validated with that binary. It retains CRI parsing, relabel rules and log paths. `HOSTNAME` is explicitly the Kubernetes node name to restrict discovery to the local node. Promtail EOL: https://grafana.com/docs/grafana-cloud/observe-and-act/send-data/alloy/set-up/migrate/from-promtail/ . Loki upgrade notes: https://github.com/grafana-community/helm-charts/tree/main/charts/loki#upgrading .
+
+## PostgreSQL adoption
+
+`bootstrap/postgresql.yaml` adopts release `postgresql` in namespace `kubeclaw`
+with manual sync, no prune and no deletion finalizer. The platform root registers
+this Application automatically; inspect its diff before syncing the service.
+
+The chart remains 18.5.15. Its appVersion label says 18.3.0, but the operator
+verified `postgres --version` reports 18.1 in the running container. The selected
+image digest is therefore the observed running digest, not the newer bootstrap
+image. `versions.json` holds the separate `postgresqlProduction` selection;
+version generation and Renovate update proposals target the adoption values.
+Review database compatibility and backups before accepting future image changes,
+particularly updates of the historical `latest` tag. Argo never auto-syncs this
+Application.
+
+The values retain standalone mode, the `litellm` database/user, existing Secret
+`postgresql-secrets`, its password key names, a 1-GiB `data` claim template and
+requests 50m/128Mi with limits 250m/256Mi. The resulting StatefulSet remains
+`postgresql`, with Service `postgresql` and headless Service `postgresql-hl`.
+The existing claim is `data-postgresql-0`. No password is generated or committed.
+
+Pinning the image changes the Pod template from `:latest` to the same observed
+digest and can restart the single database Pod. Review the StatefulSet diff,
+then manually sync without Force, Replace or Prune. Verify the Application is
+Synced/Healthy, the StatefulSet is Ready, the claim remains bound to its original
+volume and LiteLLM still connects. Do not uninstall the old Helm release or use
+Helm upgrade/rollback after Argo takes ownership; its history is historical.
