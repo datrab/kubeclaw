@@ -97,7 +97,7 @@ AP06 changed documentation only.
 
 ## Remaining Work
 
-- AP07 must complete operator procedures, recovery, backup, restore, upgrades, and loss-of-access work.
+- AP07 completed operator procedures, recovery, backup, restore, upgrades, and loss-of-access boundaries.
 - AP08 must complete extension guidance and regenerate the plugin catalogue.
 - AP09 must complete publication integration and can add inline source previews.
 - AP10 must remove replaced historical pages after their content migration.

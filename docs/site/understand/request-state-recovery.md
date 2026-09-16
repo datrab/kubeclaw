@@ -391,7 +391,7 @@ It does not prove that an optional or disabled stage ran.
 
 ## Continue With Operations or Extension
 
-- [Operate KubeClaw](../use/README.md) explains commands and recovery actions. AP07 will complete all procedures.
+- [Operate KubeClaw](../use/README.md) explains commands, diagnosis, backup, recovery, maintenance, and stated implementation limits.
 - [Worker Trust operations](../use/worker-trust.md) explains live identity checks.
 - [Extend KubeClaw](../extend/README.md) explains supported extension points. AP08 will complete that guide.
 - [Deployment and Trust](deployment-and-trust.md) explains the process and network boundaries behind this flow.

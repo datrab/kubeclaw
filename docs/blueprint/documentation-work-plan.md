@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 15.09.2026 · Version 23 · Status: AP01–AP06 abgeschlossen; AP07 ist das nächste Arbeitspaket
+Stand: 16.09.2026 · Version 24 · Status: AP01–AP07 abgeschlossen; AP08 ist das nächste Arbeitspaket
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -27,7 +27,7 @@ Der vorhandene Blueprint wird kritisch überarbeitet. Seine Kategorien, Seitenst
 
 ## 3. Übersicht der Arbeitspakete
 
-AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist nach der [Nacharbeit und Gegenprüfung](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) **abgeschlossen**. AP04 ist nach der [Abschlussprüfung](AP04-checkpoint.md) ebenfalls **abgeschlossen**. AP05 ordnet im [Lücken- und Schreibplan](AP05-gap-plan.md) jede Leseraufgabe und jeden ermittelten Produktsurface einem konkreten Ziel und einem priorisierten Schreibpaket zu. AP06 liefert und prüft im [Abschlussbericht](AP06-checkpoint.md) den Einstieg, das Zuständigkeitsmodell sowie die Ablauf-, Wiederherstellungs-, Deployment- und Vertrauensarchitektur; AP07–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
+AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist nach der [Nacharbeit und Gegenprüfung](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) **abgeschlossen**. AP04 ist nach der [Abschlussprüfung](AP04-checkpoint.md) ebenfalls **abgeschlossen**. AP05 ordnet im [Lücken- und Schreibplan](AP05-gap-plan.md) jede Leseraufgabe und jeden ermittelten Produktsurface einem konkreten Ziel und einem priorisierten Schreibpaket zu. AP06 liefert und prüft im [Abschlussbericht](AP06-checkpoint.md) den Einstieg und die Architektur. AP07 liefert und prüft im [Abschlussbericht](AP07-checkpoint.md) das vollständige Operations-Handbuch; AP08–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
 
 | ID | Arbeitspaket | Voraussetzung | Greifbares Ergebnis |
 | --- | --- | --- | --- |
@@ -125,7 +125,7 @@ Einzelentscheidungen im [manuellen Register](review-ledger.jsonl).
 
 **Abgeschlossen, wenn:** Ein neuer Leser kann einen normalen Ablauf und wesentliche Fehlerabläufe erklären, Komponenten unterscheiden und den passenden Betriebs- oder Erweiterungsleitfaden finden.
 
-**Abschlussnachweis:** [AP06 Completion Checkpoint](AP06-checkpoint.md). AP07 ist das nächste Arbeitspaket.
+**Abschlussnachweis:** [AP06 Completion Checkpoint](AP06-checkpoint.md).
 
 ### AP07 — Vollständiges Operations-Handbuch
 
@@ -144,13 +144,15 @@ Folgende Aufgaben werden einzeln gegen den Bestand geprüft und vollständig dok
 | Wartung | Versionsquelle, Images, Kompatibilität, Migration, Upgrade, Rollbackgrenzen, Credentialrotation und Zertifikate |
 | Stilllegung | Aufträge beenden, Daten exportieren/sichern, Ressourcen und Zugriffe kontrolliert entfernen |
 
-- [ ] Für jeden Ablauf Zweck, Voraussetzungen, Wirkung, konkrete Schritte, erwartete Ergebnisse, Verifikation, Fehlerbehandlung und Wiederherstellungsweg angeben.
-- [ ] Platzhalter erklären; Befehle, Pfade und Konfigurationsnamen aus dem aktuellen Repository ableiten.
-- [ ] Bei noch unvollständigen Betriebsfunktionen präzise beschreiben, was möglich ist, was fehlt und welches Issue die Lücke verfolgt. Keine erfundene Ersatzprozedur.
-- [ ] Wiederherstellung auch ohne laufende Plattform planen; keine zirkuläre Voraussetzung „Ops-Dienst reparieren über denselben ausgefallenen Ops-Dienst“.
-- [ ] Erreichbare Wiederherstellungszeiten und tolerierbaren Datenverlust nur angeben, wenn belegt; sonst als noch zu bestimmende Betriebsziele kennzeichnen.
+- [x] Für jeden Ablauf Zweck, Voraussetzungen, Wirkung, konkrete Schritte, erwartete Ergebnisse, Verifikation, Fehlerbehandlung und Wiederherstellungsweg angeben.
+- [x] Platzhalter erklären; Befehle, Pfade und Konfigurationsnamen aus dem aktuellen Repository ableiten.
+- [x] Bei noch unvollständigen Betriebsfunktionen präzise beschreiben, was möglich ist, was fehlt und welches Issue die Lücke verfolgt. Keine erfundene Ersatzprozedur.
+- [x] Wiederherstellung auch ohne laufende Plattform planen; keine zirkuläre Voraussetzung „Ops-Dienst reparieren über denselben ausgefallenen Ops-Dienst“.
+- [x] Erreichbare Wiederherstellungszeiten und tolerierbaren Datenverlust nur angeben, wenn belegt; sonst als noch zu bestimmende Betriebsziele kennzeichnen.
 
 **Abgeschlossen, wenn:** Jeder Betriebsablauf ist durchführbar oder seine konkrete Implementierungsgrenze ist vollständig erklärt. Live-Prüfungen haben getrennte, ausführbare Abnahmeaufträge; ihre Nichtausführung wird nicht als Erfolg ausgegeben.
+
+**Abschlussnachweis:** [AP07 Completion Checkpoint](AP07-checkpoint.md). AP08 ist das nächste Arbeitspaket.
 
 ### AP08 — Plugins und Erweiterungen
 

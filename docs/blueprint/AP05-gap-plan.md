@@ -1,6 +1,6 @@
 # AP05 documentation gap and writing plan
 
-Status: AP05 complete; AP06 completed W04–W06; AP07 is next
+Status: AP05 complete; AP06 completed W04–W06; AP07 completed W01–W03 and W07; AP08 is next
 Date: 2026-09-15
 Branch: `docs/documentation-overhaul`, PR #13
 Assessment revision: `9dab0a1365a367bb2668298d50802a76bd147d91`
@@ -350,4 +350,4 @@ automatic audit fix.
   content coverage.
 
 AP05 is complete. AP06 completed W04–W06 and established the required terms and
-boundaries. AP07 is next and owns W01–W03 and W07.
+boundaries. AP07 completed W01–W03 and W07. AP08 is next and owns W08–W09.

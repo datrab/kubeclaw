@@ -196,6 +196,58 @@ function checkArchitecturePresentation() {
   return { diagrams, evidenceBoxes, codeLinks };
 }
 
+function checkOperationsEvidence() {
+  const pages = new Map([
+    ['docs/site/use/install.md', ['Supported Topology and Limits', 'Prerequisites', 'Install in Dependency Order', 'Failed First Installation', 'Recovery and Rollback', 'Evidence to Retain']],
+    ['docs/site/use/operate.md', ['Configure the Platform', 'Start a Project Run', 'Inspect a Run', 'Approve or Resume a Wait', 'Recover After Interruption', 'Cancellation Boundary', 'Safe Retry Decision']],
+    ['docs/site/use/diagnose.md', ['Diagnosis Order', 'Durable Run Inspection', 'Capacity and Growth', 'Symptom Index', 'Lost Responses and Uncertain Effects', 'Escalation Conditions', 'Recovery and Cleanup']],
+    ['docs/site/use/recovery.md', ['State Inventory', 'Procedure', 'Recovery', 'Node or Cluster Loss', 'Recover Administrative Access', 'Verification', 'Rollback Boundary']],
+    ['docs/site/use/maintenance.md', ['Version Authorities', 'GitOps Operation', 'Upgrade Order', 'Stateful Service Upgrade', 'Rollback Decision', 'Credential Rotation', 'Controlled Retirement']],
+  ]);
+  const sourceLink = /https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\/([^\s)#]+)#L(\d+)(?:-L(\d+))?/gu;
+  let evidenceBoxes = 0;
+  let codeLinks = 0;
+  for (const [page, requiredSections] of pages) {
+    const filePath = path.join(root, page);
+    if (!fs.existsSync(filePath)) {
+      errors.push(`${page} is missing from the operations journey`);
+      continue;
+    }
+    const text = fs.readFileSync(filePath, 'utf8');
+    for (const section of requiredSections) {
+      if (!text.includes(`## ${section}\n`)) errors.push(`${page} lacks required operations section: ${section}`);
+    }
+    const lines = text.split('\n');
+    for (let index = 0; index < lines.length; index += 1) {
+      if (!lines[index].startsWith('> **Source evidence')) continue;
+      evidenceBoxes += 1;
+      const box = [];
+      for (let cursor = index; cursor < lines.length && lines[cursor].startsWith('>'); cursor += 1) box.push(lines[cursor]);
+      if (!box.join('\n').includes('https://github.com/datrab/kubeclaw/blob/')) {
+        errors.push(`${page} has a source-evidence box without a revision-bound code link`);
+      }
+    }
+    for (const match of text.matchAll(sourceLink)) {
+      codeLinks += 1;
+      const revision = match[1];
+      const sourcePath = decodeURIComponent(match[2]);
+      const first = Number(match[3]);
+      const last = Number(match[4] ?? match[3]);
+      try {
+        const lineCount = sourceLineCount(revision, sourcePath);
+        if (first < 1 || last < first || last > lineCount) {
+          errors.push(`${page} cites invalid source lines ${sourcePath}#L${first}-L${last}; file has ${lineCount} lines at ${revision}`);
+        }
+      } catch {
+        errors.push(`${page} cannot resolve source ${sourcePath} at ${revision}`);
+      }
+    }
+  }
+  if (evidenceBoxes === 0) errors.push('operations pages contain no source-evidence boxes');
+  if (codeLinks === 0) errors.push('operations pages contain no revision-bound code links');
+  return { evidenceBoxes, codeLinks };
+}
+
 function main() {
   const files = activeMarkdownFiles();
   checkLocalLinks(files);
@@ -204,6 +256,7 @@ function main() {
   checkCurrentPagesDoNotContainTargetStateSections(files);
   checkDiagrams();
   const presentation = checkArchitecturePresentation();
+  const operations = checkOperationsEvidence();
 
   if (errors.length) {
     console.error('docs check failed:');
@@ -211,6 +264,7 @@ function main() {
     process.exit(1);
   }
   console.log(`architecture presentation check passed (${presentation.diagrams} diagrams, ${presentation.evidenceBoxes} evidence boxes, ${presentation.codeLinks} code links)`);
+  console.log(`operations evidence check passed (${operations.evidenceBoxes} evidence boxes, ${operations.codeLinks} code links)`);
   console.log(`docs check passed (${files.length} active markdown files)`);
 }
 

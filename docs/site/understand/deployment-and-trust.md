@@ -334,12 +334,12 @@ The entry route still needs human authentication, authorization, and network con
 - A runtime role does not prove activation or reachability in a target cluster.
 - Prism Control currently has a single-replica limit for its `ReadWriteOnce` artifact volume.
 - Some Buster native-runner and fixture-lifetime integration remains in the open implementation issues.
-- AP07 must complete backup, restore, upgrade, incident, and daily-operation procedures.
+- The operations track supplies backup, restore, upgrade, incident, and daily-operation procedures.
 
 ## Continue With Operations
 
 - [Operate Worker Trust](../use/worker-trust.md) gives the deployment and live proof procedure.
-- [Operate KubeClaw](../use/README.md) is the operations entry point. AP07 will complete its procedures.
+- [Operate KubeClaw](../use/README.md) is the operations entry point.
 - [Current status](../status/current.md) separates source implementation from live acceptance.
 - [Open issues](../status/open-issues.md) lists remaining implementation work.
 - [Request, State, and Recovery](request-state-recovery.md) explains how these failures affect a run.

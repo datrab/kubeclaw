@@ -140,6 +140,6 @@ AP11 still owns the formal language review and the human-reader acceptance revie
 - [Request, state, and recovery](request-state-recovery.md) follows success, retry, repair, wait, cancellation, and uncertain effects.
 - [Deployment and trust](deployment-and-trust.md) maps processes, identities, storage, grants, networks, and failure domains.
 - [Worker Trust](worker-trust.md) gives the detailed SPIFFE and Envoy trust path.
-- [Operate KubeClaw](../use/README.md) contains operator procedures. AP07 will complete this track.
+- [Operate KubeClaw](../use/README.md) contains the complete operator procedure track and its stated limits.
 - [Extend KubeClaw](../extend/README.md) contains plugin guidance. AP08 will complete this track.
 - [Current status](../status/current.md) separates implemented work from open and live acceptance work.
