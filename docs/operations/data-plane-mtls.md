@@ -30,6 +30,31 @@ implicitly in scope.
 
 ## Required transport boundary
 
+The 2026-09-16 Controlnode inventory contains 95 Pod/workload entries (not 95
+distinct clients). Buster and Nova Deployments reference Redis configuration.
+Both registry Deployments use the namespace's shared `default` ServiceAccount;
+introduce dedicated identities before authorization. Redis uses `redis-master`.
+Both `redis-master` and `redis-headless` Services target the Redis container port,
+so both must be included in bypass testing. Argo and Paperless have separate Redis
+Services. No complete client graph or actual transport protection is proven by
+these observations.
+
+From the Controlnode, inspect the host's default registry configuration without
+printing credentials:
+
+```sh
+ssh deploy@ax41 'sudo -n bash -s' <<'BASH'
+set -euo pipefail
+cd /root/kubeclaw-native-build.SyUV3D/repo
+git pull --ff-only
+/usr/local/bin/node scripts/inspect-node-registry.mjs
+BASH
+```
+
+This reports only sanitized endpoint origins and boolean configuration facts.
+It does not prove containerd's effective settings, fallback behavior or CRI
+connectivity. A custom K3s `--private-registry` location requires separate review.
+
 Use existing SPIRE workload identities and Envoy SDS for certificate delivery.
 Each service must have an explicit peer identity allowlist; membership in the
 trust domain alone is insufficient. Clients also verify the exact service
