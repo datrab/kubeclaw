@@ -42,6 +42,24 @@ func TestPluginStubLauncherIdentity(t *testing.T) {
 	}
 }
 
+func TestConfigureOptionalVersionPrefix(t *testing.T) {
+	for _, selected := range []string{"2.3.4-k3s1.36", "v2.3.4-k3s1.36"} {
+		config := testConfig()
+		config.ContainerdVersion = selected
+		p := &plugin{config: config}
+		for _, reported := range []string{"2.3.4-k3s1.36", "v2.3.4-k3s1.36"} {
+			if _, err := p.Configure(context.Background(), "", "containerd", reported); err != nil {
+				t.Fatalf("selected %q, reported %q: %v", selected, reported, err)
+			}
+		}
+		for _, reported := range []string{"v2.3.5-k3s1.36", "v2.3.4-k3s1.35", "v2.3.4", "vv2.3.4-k3s1.36", " v2.3.4-k3s1.36", ""} {
+			if _, err := p.Configure(context.Background(), "", "containerd", reported); err == nil {
+				t.Fatalf("accepted different runtime version %q for %q", reported, selected)
+			}
+		}
+	}
+}
+
 func testConfig() configuration {
 	return configuration{SchemaVersion: 1, ContainerdVersion: "v2.2.0-k3s1", Roles: map[string]selection{
 		"buster": {Namespace: "kubeclaw", Container: "buster-v2-runtime", PolicyDigest: strings.Repeat("a", 64)},

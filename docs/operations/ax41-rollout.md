@@ -33,6 +33,15 @@ presence alone does not prove successful adjustment of a real worker container.
 The original executable is retained in the printed repair directory. Containerd
 logs are at `/var/lib/rancher/k3s/agent/containerd/containerd.log`.
 
+The next live attempt registered successfully but failed runtime validation:
+containerd reported `v2.3.4-k3s1.36`, while the selected policy contained
+`2.3.4-k3s1.36`. The comparison now removes a single optional leading `v` on
+each side, retaining exact patch and K3s build matching. Regression cases cover
+both spellings and reject changed versions, suffixes and malformed prefixes.
+Run the same repair command after pulling this fix; it runs the Go tests before
+replacement and restarts K3s. Do not edit the installed policies to work around
+the version spelling, because they are generated from the selected node profile.
+
 - `my-values/infra/native-worker-pools-ax41.yaml`: native pool limits, host
   identity, exact containerd version, daemon reservations and safety buffer.
 - `my-values/nova-values.yaml`: Nova container requests and limits.

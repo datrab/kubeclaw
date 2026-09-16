@@ -82,7 +82,9 @@ func validateConfiguration(config configuration) error {
 }
 
 func (p *plugin) Configure(_ context.Context, extra, runtime, version string) (api.EventMask, error) {
-	if strings.TrimSpace(extra) != "" || runtime != "containerd" || version != p.config.ContainerdVersion {
+	// Kubernetes and NRI may report the same containerd build with or without v.
+	// Preserve the entire release/build suffix when comparing the selected version.
+	if strings.TrimSpace(extra) != "" || runtime != "containerd" || strings.TrimPrefix(version, "v") != strings.TrimPrefix(p.config.ContainerdVersion, "v") {
 		return 0, errors.New("NATIVE_NRI_SELECTED_RUNTIME_REQUIRED")
 	}
 	return 0, nil // Subscribe to the implemented CreateContainer event through the original SDK.
