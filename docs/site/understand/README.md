@@ -92,6 +92,21 @@ Forge then implements against that fixed baseline.
 
 The detailed [request, state, and recovery guide](request-state-recovery.md) follows this example through normal and failed paths.
 
+## Architecture Scope
+
+The architecture covers the complete learning-lab platform, not only the stage graph.
+It uses three scopes so that infrastructure does not look like pipeline authority.
+
+| Scope | Included systems | Requirement |
+| --- | --- | --- |
+| Pipeline control and work | Nova, Nova Core, plugins, Forge, Echo, Buster, Prism, and Worker Core. | Required for their declared roles and stages. |
+| Showcase baseline | Git, durable stores, Redis, PostgreSQL, BuildKit, local OCI registry, Docker Hub mirror, and Tailscale. | Required before the complete lab claims readiness. |
+| Optional platform extensions | Argo CD, Cilium, monitoring, and the Ops Pod. | Valuable platform capabilities, but not pipeline prerequisites. |
+
+Kubernetes networking remains required.
+The platform can use Flannel without Cilium when it preserves the documented network boundaries.
+Direct Helm deployment can replace Argo CD when one controller retains exclusive ownership.
+
 ## Three Questions That Prevent False Claims
 
 KubeClaw uses three separate status questions.

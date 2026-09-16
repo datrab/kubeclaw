@@ -13,8 +13,9 @@ The pipeline needs a place to run, but it must not own the complete platform.
 This page explains the surrounding platform and operations systems.
 
 K3s hosts the workloads.
-Cilium can enforce network policy.
-Argo CD can reconcile deployments from Git.
+Cilium can replace the default Flannel network and enforce advanced policy.
+Argo CD can replace direct Helm ownership with Git reconciliation.
+Monitoring can collect metrics, logs, and dashboards.
 The Ops Pod gives a separate security and analysis surface.
 
 These systems affect availability and security.
@@ -25,32 +26,37 @@ They do not decide whether a Nova stage succeeds.
 ```mermaid
 flowchart TB
     Host[Linux host and recovery access] --> K3s[K3s and Kubernetes API]
-    K3s --> Cilium[Cilium network and policy layer]
+    K3s --> Network[Required Kubernetes network layer]
+    Cilium[Optional Cilium implementation] -.-> Network
+    Flannel[Valid Flannel implementation] -.-> Network
     K3s --> Storage[Storage and CSI layer]
     K3s --> DNS[Cluster DNS]
     Argo[Argo CD deployment reconciler] -->|desired resources| K3s
     K3s --> SPIRE[SPIRE workload identity]
-    Cilium --> Runtime[Nova, Buster, and Prism]
+    Network --> Runtime[Nova, Buster, and Prism]
     Storage --> Runtime
     DNS --> Runtime
     SPIRE --> Runtime
     Tail[Tailscale private access] --> User[Human and operator entry]
     User --> Runtime
     Ops[Optional Ops Pod] -->|read and bounded exec| K3s
+    Monitor[Optional monitoring stack] -.->|observes| Runtime
 ```
 
 Text version: The host supports K3s.
 K3s supplies the API used by networking, storage, DNS, identity, and runtime workloads.
+Flannel or Cilium can provide the required network layer.
 Argo CD can reconcile resources into K3s.
 Tailscale supplies selected private entry routes.
 The optional Ops Pod inspects the platform through bounded Kubernetes rights.
+The optional monitoring stack observes workloads without controlling their verdicts.
 
 ## Platform Boundary
 
 The application architecture defines required behavior at each boundary.
 The platform can replace an implementation when the replacement preserves that behavior.
 
-For example, the pipeline needs service discovery and enforced network policy.
+For example, the pipeline needs service discovery and enforced traffic boundaries.
 It does not require Nova Core to know the Cilium API.
 
 The same rule applies to deployment ownership.
@@ -86,14 +92,18 @@ Do not use a cluster-dependent Ops Pod as the only recovery path.
 >
 > [The roadmap defines the required host-bootstrap and restore outcome](../../ROADMAP.md#automated-host-bootstrap-and-recovery).
 
-## Cilium
+## Kubernetes Networking, Flannel, and Cilium
 
-Cilium is the selected advanced network and policy implementation.
+Cilium is an optional advanced network and policy implementation.
 It can enforce traffic rules below the application and provide Cilium policy types.
 
 Cilium is not part of Nova Core.
-A different conforming network layer can support the pipeline.
+A conforming Flannel deployment can support the pipeline without Cilium.
 It must enforce the required default-deny and allowed paths.
+
+Flannel provides a smaller networking layer for the current cluster topology.
+Cilium adds richer identity, observation, and policy features for the learning lab.
+Neither implementation may change the meaning of a Nova stage result.
 
 The current migration script treats first installation as a guarded cutover.
 It checks old network sandboxes before installation.
@@ -113,6 +123,8 @@ Verify allowed and denied paths before the node returns to service.
 > [The Cilium installer distinguishes first cutover from later upgrades](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy-cilium.sh#L7-L32).
 >
 > [The script installs Cilium, applies baseline policy, and keeps acceptance separate](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy-cilium.sh#L33-L54).
+>
+> [The selected Cilium values explicitly replace the normal K3s Flannel CNI](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/my-values/infra/cilium-values.yaml#L24-L31).
 >
 > **Current limit:** Live cutover and negative connectivity evidence remain environment-specific acceptance work.
 
@@ -148,6 +160,62 @@ Do not let direct Helm and Argo CD reconcile the same resource.
 > [The generated tree declares separate Tailscale, Ops, Redis, registry, and monitoring applications](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/argocd-self-management.mjs#L55-L139).
 >
 > [The root platform enables self-heal, disables prune, and rejects shared ownership](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/argocd-self-management.mjs#L182-L195).
+
+## Monitoring
+
+Monitoring is an optional platform layer.
+The pipeline can run without Prometheus, Grafana, Loki, and Alloy.
+Their absence reduces operational evidence and learning value.
+It does not transfer pipeline authority.
+
+The current stack separates four responsibilities:
+
+| Component | Responsibility | Explicit non-responsibility |
+| --- | --- | --- |
+| Prometheus | Stores and queries platform metrics. | Does not own Nova lifecycle state. |
+| Grafana | Presents metrics and Loki logs. | Does not prove a pipeline transition. |
+| Loki | Stores retained workload logs. | Does not replace journals, receipts, or artifacts. |
+| Alloy | Discovers Pod logs and sends them to Loki. | Does not decide log retention or run success. |
+
+Prometheus uses a retained volume and a 15-day metric retention setting.
+Loki uses a single retained filesystem volume and a 30-day log retention setting.
+Alloy runs on each selected node and reads CRI logs.
+It preserves the prior Promtail position file and sends records to Loki.
+
+Grafana reads its administrator identity from an existing Secret.
+Its current Service uses NodePort `30030`.
+The platform operator must restrict that node route outside the chart.
+
+Loki disables application authentication in the selected internal topology.
+Network policy and namespace controls must therefore protect its service.
+Alloy runs as root because it reads node log paths.
+That host access makes Alloy a privileged observation boundary.
+
+Alertmanager is disabled in the selected values.
+The stack therefore does not claim a complete paging or incident-notification path.
+
+Promtail remains declared only for a controlled handover.
+Its node selector schedules no collector Pods after Alloy takes ownership.
+This prevents two collectors from sending the same files during normal operation.
+
+**Why this design exists:** Metrics, logs, and dashboards need different storage and query behavior.
+Separating them also keeps displayed observations outside the canonical pipeline state.
+
+**Failure effect:** Dashboards, alerts, queries, or new log delivery can stop.
+Nova journals and Buster evidence remain authoritative when their own stores remain healthy.
+
+**Recovery rule:** Restore collectors after their backends can accept data.
+Use canonical run records to reconcile gaps instead of inventing missing lifecycle events.
+
+> **Source evidence — optional monitoring stack**
+>
+> [Prometheus and Grafana declare retained storage, credentials, and metric retention](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/gitops/platform/values/prometheus.yaml#L1-L50).
+>
+> [Loki declares one retained filesystem deployment and its log retention period](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/gitops/platform/values/loki.yaml#L1-L33).
+>
+> [Alloy discovers node-local Pod logs, parses CRI records, and writes to Loki](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/gitops/platform/values/alloy.yaml#L30-L130).
+>
+> [The monitoring check verifies chart pins, storage, retention, and the collector handover](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/check-monitoring.mjs#L12-L87).
 
 ## Ops Pod
 
@@ -191,16 +259,18 @@ Both uses need independent identity, DNS, route, and recovery checks.
 A healthy operator does not prove that an application route is authorized.
 A reachable route also does not prove that Nova can complete a pipeline run.
 
-See [Pipeline Dependencies](pipeline-dependencies.md#tailscale-conditional-pipeline-service-and-access-layer) for the stage-level use.
+The showcase baseline requires Tailscale even when one run has no exposure stage.
+See [Pipeline Dependencies](pipeline-dependencies.md#tailscale-required-platform-service-with-two-consumers) for the stage-level use.
 
 ## Ownership Matrix
 
 | System | Primary owner | May stop pipeline work? | Owns pipeline verdict? |
 | --- | --- | --- | --- |
 | Host and K3s | Platform operator | Yes, for in-cluster work. | No. |
-| Cilium | Network operator | Yes, when required traffic fails. | No. |
-| Argo CD | Deployment operator | Yes, when a required deployment cannot reconcile. | No. |
-| Tailscale operator | Access operator | Only for selected exposure or access paths. | No. |
+| Flannel or Cilium | Network operator | Yes, when required traffic fails. | No. |
+| Argo CD | Deployment operator | Only when it owns the required deployment. | No. |
+| Monitoring | Observability operator | No direct requirement. | No. |
+| Tailscale operator | Access operator | Yes, in the showcase baseline. | No. |
 | Ops Pod | Operations and security owner | No direct requirement. | No. |
 | Nova Core | Pipeline owner | Yes. | Yes. |
 
@@ -226,4 +296,3 @@ Automation can compose reviewed layers without hiding their authority or failure
 - [Install and Bootstrap](../use/install.md) gives the current deployment procedure and its prerequisites.
 - [Recovery](../use/recovery.md) explains cluster loss and independent access.
 - [Roadmap](../../ROADMAP.md) records the planned empty-host automation.
-

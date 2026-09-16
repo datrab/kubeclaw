@@ -322,7 +322,7 @@ The ordered checks prevent that partial state from becoming an acceptance claim.
 ## Independent Access
 
 Operator and human access must not depend on an active agent conversation.
-Prism Studio can use a private Tailscale route.
+Prism Studio uses a private Tailscale route in the complete showcase topology.
 Operational access uses its own controlled path and credentials.
 
 This separation helps during an incident.

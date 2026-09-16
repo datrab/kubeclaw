@@ -1,6 +1,6 @@
 # Pipeline Dependencies
 
-Status: implemented with stated conditional paths and gaps
+Status: documented showcase baseline; implementation and live-proof gaps are stated
 Audience: architecture reader, operator, maintainer, security reviewer
 Owner: platform architecture and pipeline owners
 Evidence: packaging/runtime/roles; skills/nova/core; skills/common/plugins/redis-transport; skills/buster/engine; charts/kubeclaw; charts/prism
@@ -13,22 +13,47 @@ A pipeline is more than its sequence of stages.
 It also needs source, state, model access, build services, image storage, and selected exposure paths.
 
 This page explains those dependencies as one system.
-It separates a permanent Core rule from a dependency that only one selected stage needs.
-That distinction makes failure impact and replacement work clear.
+It separates Core authority from the mandatory showcase deployment baseline.
+It also identifies the stage that actively consumes each service.
 
 ## Dependency Classes
 
-KubeClaw uses four dependency classes.
+KubeClaw uses five dependency classes.
 
 | Class | Meaning | Example |
 | --- | --- | --- |
 | Core | Every durable run needs it. | Nova run storage. |
+| Showcase baseline | Every complete learning-lab deployment provides it. | Redis, Tailscale, registries, and BuildKit. |
 | Role | A deployed role needs it. | Prism needs its PostgreSQL database. |
 | Stage | A selected stage needs it. | Container build needs BuildKit and a writable registry. |
 | Access | A user or operator path needs it. | A private Tailscale route. |
 
 An unavailable stage dependency can block one path without corrupting Nova state.
 An unavailable Core dependency can stop safe progress for every run.
+
+The showcase baseline is stricter than the smallest executable graph.
+A run might not call every baseline service.
+The platform still proves each service before it claims full readiness.
+
+## Required Showcase Baseline
+
+The complete KubeClaw learning lab requires these pipeline-facing services:
+
+| Service | Why the baseline requires it | Active consumer |
+| --- | --- | --- |
+| Git source origin | Supplies exact source revisions. | Nova workspaces and source adapters. |
+| Nova durable storage | Preserves canonical run state and recovery evidence. | Nova Core. |
+| Redis | Supplies shared transport, health, telemetry, and observer paths. | Nova role and selected integrations. |
+| Model gateway and its PostgreSQL | Supplies the selected model and embedding path. | Role gateways and model-backed specialists. |
+| Prism PostgreSQL | Preserves design and approval state. | Prism Control and bounded Prism clients. |
+| Rootless BuildKit | Builds project images in the Buster boundary. | Buster container-build provider. |
+| Writable local OCI registry | Stores produced images by immutable digest. | BuildKit, Buster, and Kubernetes nodes. |
+| Docker Hub pull-through mirror | Caches reviewed public base-image pulls. | BuildKit and configured node runtimes. |
+| Tailscale | Supplies private access and pipeline exposure fixtures. | Users, operators, and Buster exposure stages. |
+
+The chart still permits reduced developer configurations.
+Those configurations do not represent the complete showcase baseline.
+This difference is a deployment profile, not a change to Nova Core semantics.
 
 ## Complete Pipeline Map
 
@@ -53,11 +78,12 @@ flowchart LR
 
 Text version: Git supplies a fixed source revision to Nova.
 Nova Core controls the run.
-Selected stages can use Redis, model services, Prism, BuildKit, registries, mirrors, and Tailscale.
+The showcase platform provides Redis, model services, Prism, BuildKit, both registry services, and Tailscale.
+The active graph determines which service receives work during one run.
 Buster and Prism return bounded results to Core.
 
-The diagram shows possible paths, not one mandatory path for every run.
-The project graph and active platform configuration select the actual path.
+The complete lab deploys and verifies every solid-line dependency shown here.
+One individual graph can leave a service idle when it has no matching stage.
 
 ## Nova, Nova Core, and Their Host Role
 
@@ -119,7 +145,8 @@ Do not replace it with a newer branch head during recovery.
 
 ## Redis: Transport and Projection, Not Lifecycle Authority
 
-Redis supports selected message, health, telemetry, and observer paths.
+Redis is mandatory in the showcase deployment.
+It supports message, health, telemetry, and observer paths.
 The Nova role includes a bounded Redis transport adapter.
 The deployment health checks can verify Redis and a Redis stream.
 
@@ -182,17 +209,28 @@ Neither failure proves that Nova lost its run journal.
 >
 > [The Prism chart gives that database its own persistent volume](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/postgresql.yaml#L54-L73).
 
-## BuildKit, Writable Registry, and Registry Mirror
+## BuildKit, Local OCI Registry, and Pull-Through Mirror
 
 The container-build stage is one chain with three different responsibilities.
 
 1. Rootless BuildKit creates the image.
-2. The writable OCI registry stores the produced image.
-3. The Docker Hub mirror can cache public base-image pulls.
+2. The writable local OCI registry stores the produced image.
+3. The Docker Hub mirror caches public base-image pulls.
+
+The complete showcase baseline requires all three services.
+An individual run uses them when its graph contains an image build or an uncached pull.
 
 The mirror cannot replace the writable registry.
 The writable registry cannot silently act as the public mirror.
 Their trust, retention, and failure behavior differ.
+
+The checked-in `registry-local` service is an anonymous HTTP lab implementation.
+It proves storage and image-lifetime mechanics, but it is not an authenticated production registry.
+The complete secure path needs an authenticated HTTPS registry through the same client contract.
+
+The checked-in Docker Hub mirror is a cache, not an offline source guarantee.
+A cache miss still needs its upstream unless the requested content already exists locally.
+Readiness must test a hit, a miss, and an upstream outage separately.
 
 Buster starts its colocated rootless BuildKit process before it accepts build work.
 The provider passes the selected Dockerfile and bounded build arguments to BuildKit.
@@ -219,8 +257,12 @@ Do not claim success from a tag, a BuildKit exit code, or a registry health resp
 > [The container runtime sends the build to BuildKit with its bounded environment](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/buster/engine/test-gates/container-build-runtime.ts#L236-L270).
 >
 > [One contract generates matching node, BuildKit, and runtime registry configuration](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/registry-client-config.mjs#L57-L104).
+>
+> [The lab OCI registry uses retained storage and one writer during service replacement](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/my-values/infra/registry-local.yaml#L1-L45).
+>
+> [The separate mirror caches Docker Hub content and keeps its own cache volume](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/my-values/infra/registry-mirror.yaml#L14-L78).
 
-## Tailscale: Conditional Pipeline Service and Access Layer
+## Tailscale: Required Platform Service With Two Consumers
 
 Tailscale has two separate uses.
 
@@ -232,9 +274,12 @@ The second use is private human or operator access.
 Prism Studio, Argo CD, and the Ops Pod can use private routes.
 Those routes do not own pipeline state.
 
-Tailscale is therefore not a Core dependency.
-It is a stage dependency when a test plan selects the exposure provider.
-It is an access dependency when the chosen operating topology uses its private routes.
+Tailscale is mandatory in the showcase deployment.
+It is still not part of Nova Core and does not own lifecycle state.
+
+A test plan consumes it when the plan selects the exposure provider.
+Humans consume it through the private access routes.
+The platform readiness check must prove both uses separately.
 
 **Why this design exists:** Public exposure must remain explicit and temporary.
 The provider receives a bounded exposure capability instead of cluster credentials.
@@ -259,13 +304,13 @@ Do not create a second exposure for an uncertain attempt.
 | --- | --- | --- |
 | Git origin unavailable | Required source revision can be unavailable. | Restore the same revision or use a verified existing snapshot. |
 | Nova run storage unavailable | Canonical state cannot be proved. | Stop mutation and restore the authoritative store. |
-| Redis unavailable | Selected transport and projections stop. | Restore Redis and replay derived delivery. |
+| Redis unavailable | Required transport and projection paths stop. | Restore Redis and replay derived delivery. |
 | LiteLLM PostgreSQL unavailable | Selected model gateway can fail. | Restore its matched database before model-backed work. |
 | Prism PostgreSQL unavailable | Prism state work stops. | Restore the matched Prism database and artifacts. |
 | BuildKit unavailable | Image-build stages stop. | Restore the same configured builder and resume by attempt identity. |
 | Writable registry unavailable | Push, verification, or uncached pulls stop. | Restore retained digests and verify a real pull. |
-| Docker Hub mirror unavailable | Uncached public base pulls can stop. | Restore the mirror or use the reviewed direct-pull policy. |
-| Tailscale unavailable | Selected exposure and private access paths stop. | Restore the route and reconcile its owner before retry. |
+| Docker Hub mirror unavailable | The showcase baseline is not ready; uncached public pulls can stop. | Restore the mirror and verify cache misses and hits. |
+| Tailscale unavailable | The showcase baseline is not ready; exposure and private access stop. | Restore the route and reconcile its owner before retry. |
 
 ## Replacement Rules
 

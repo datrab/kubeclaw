@@ -30,7 +30,7 @@ The deployment path can install these components:
 - Redis, PostgreSQL, Qdrant, and LiteLLM.
 - Nova and Buster role deployments.
 - Prism and its PostgreSQL, Control, Studio, Worker, and agent workloads.
-- The Tailscale operator when selected.
+- The Tailscale operator for the complete showcase baseline.
 
 The deployment path does not establish these platform services:
 
@@ -46,11 +46,12 @@ Stop if the environment depends on an item in the second list and no operator ow
 | Platform layer | Repository role | Required operator proof |
 | --- | --- | --- |
 | Host and K3s | Existing prerequisite | Independent login, API recovery, version, and restart procedure |
-| CNI | Existing cluster dependency | Selected implementation, DNS, policy enforcement, and rollback path |
+| CNI | Existing cluster dependency; Flannel and Cilium are separate architecture choices | Selected implementation, DNS, policy enforcement, and rollback path |
 | Argo CD | Optional deployment owner | Repository access, tracking mode, revision, health, and exclusive ownership |
 | Storage | Existing StorageClass and CSI | Binding, reclaim behavior, capacity, snapshot or backup, and restore |
-| Registry and BuildKit | Selected external or deployed services | Authenticated push, uncached pull, storage, isolation, and garbage collection |
-| DNS and Tailscale | Cluster and external access layers | Positive and negative identity checks plus independent recovery |
+| Registry, mirror, and BuildKit | Required showcase services | Authenticated push, uncached pull, cache behavior, storage, isolation, and garbage collection |
+| DNS and Tailscale | Required showcase access and exposure layers | Positive and negative identity checks plus independent recovery |
+| Monitoring | Optional platform evidence layer | Metric retention, log delivery, dashboard access, capacity, and recovery |
 | SPIRE | Installed by the infrastructure command when enabled | Server persistence, agents, CSI, SVID, and expiry ownership |
 
 Use [Continuous GitOps](../../deployment/continuous-gitops.md) when Argo owns deployment.
