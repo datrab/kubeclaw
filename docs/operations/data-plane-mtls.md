@@ -1,6 +1,8 @@
 # Redis and registry mTLS migration
 
-Status: inventory and acceptance requirements only. Redis and registry traffic
+Status: deferred by operator on 2026-09-16 until Argo and Cilium are completed;
+tracked in [the roadmap](../ROADMAP.md#redis-and-registry-transport-protection).
+Inventory and acceptance requirements only. Redis and registry traffic
 has **not** been migrated by adding this document or running the inventory.
 Existing worker Envoy protection does not establish protection for these services.
 
