@@ -13,13 +13,15 @@ import {fileURLToPath,pathToFileURL} from 'node:url';
 
 // These tests exercise real I/O and crash recovery, not sub-second deadlines.
 // Keep operation budgets below the 30-second child watchdog on loaded CI runners.
-const ioTimeoutMs=5000,lockTtlMs=10000;
+// A rejected ACP spawn has no session identity. Its cleanup allowance must
+// expire before the stage deadline; otherwise we test cancellation, not replay.
+const ioTimeoutMs=5000,stageTimeoutMs=15000,lockTtlMs=20000;
 const source=path.resolve('.'),self=fileURLToPath(import.meta.url);
 const fixtures=path.join(source,'tests/verification/reliability/fixtures');
 const runId='run:transport-profile',key='dispatch:profile-boundary';
 const definition={schemaVersion:'pipeline-definition.v2',id:'pipeline:profile',maxConcurrency:1,stages:[{
   id:'architecture',type:'kubeclaw.validate.architecture',dependsOn:[],config:{agent:'agent'},
-  input:{task:'Review the scores.',architecture:{ä:1,z:2}},execution:{maxAttempts:1,maxRemediationCycles:0,timeoutMs:5000},
+  input:{task:'Review the scores.',architecture:{ä:1,z:2}},execution:{maxAttempts:1,maxRemediationCycles:0,timeoutMs:stageTimeoutMs},
 }]};
 function platform(root,origin,kind){
   const runtimeId=`kubeclaw.runtime-dispatch:${kind==='generic'?'runtime':'openclaw'}`;
@@ -132,7 +134,8 @@ if(process.argv[2]==='--child'){
     assert.ok(request,'actual original stage dispatched');
     assert.equal(Object.hasOwn(request,'runtimeDispatchProfile'),['v3','v4'].includes(version));
     assert.equal(Object.hasOwn(request.payload,'runtimeDispatchProfile'),false);
-    process.stdout.write(JSON.stringify({result,error,snapshotVersion:snapshot.schemaVersion,request,location}));
+    const receipt=await journal.receipt(request.idempotencyKey);
+    process.stdout.write(JSON.stringify({result,error,snapshotVersion:snapshot.schemaVersion,request,receipt,location}));
   }else{
     fs.mkdirSync(location,{recursive:true});
     if(!fs.existsSync(path.join(location,'run-snapshot.json'))){
@@ -189,6 +192,9 @@ if(process.argv[2]==='--child'){
   for(const version of ['v1','v2','v3','v4'])test(`actual ${version} run creation carries frozen transport choice; terminal reopen preserves prefix`,async t=>{
     const f=await fixture(t),directory=path.join(f.root,'pipeline');
     const first=await f.child(directory,version,'pipeline');assert.equal(first.result.status,'blocked',JSON.stringify(first.result));assert.equal(f.requests.length,1);
+    assert.equal(first.receipt.status,'failed');
+    assert.match(first.receipt.error.message,/HTTP_503:.*OPENCLAW_SESSION_CLEANUP_UNRESOLVED:.*ADAPTER_CLEANUP_TIMEOUT/);
+    assert.doesNotMatch(first.receipt.error.message,/PLUGIN_ATTEMPT_TIMEOUT|ADAPTER_RUNTIME_SHUTDOWN/);
     assert.equal(first.snapshotVersion,`run-snapshot.${version}`);assert.equal(f.requests[0].body.tool,'sessions_spawn');
     const file=path.join(first.location,'effects.jsonl'),prefix=fs.readFileSync(file);
     const reopened=await f.child(directory,version,'recover','none',version==='v1'?'en_US.UTF-8':'sv_SE.UTF-8');
