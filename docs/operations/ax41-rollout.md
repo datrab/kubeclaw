@@ -1,0 +1,141 @@
+# AX41 rollout and future installer contract
+
+This runbook records the selected single-node configuration and the migration
+sequence. It is not evidence that the native host setup has been activated.
+Last reviewed: 2026-09-16.
+
+## Configuration sources
+
+- `my-values/infra/native-worker-pools-ax41.yaml`: native pool limits, host
+  identity, exact containerd version, daemon reservations and safety buffer.
+- `my-values/nova-values.yaml`: Nova container requests and limits.
+- `versions.json`: selected build tool versions; do not install unpinned latest
+  Node or Go as part of host preparation.
+- `gitops/platform/bootstrap` and `gitops/platform/values`: platform Application
+  definitions and values. Infrastructure and Codex Ops remain manually synced.
+- `gitops/production/config.json`: runtime GitOps configuration. Runtime release
+  selection, host binding and deployment preflight are separate required steps.
+
+Generated host files are derived from the YAML profile, not another editable
+source of truth. Never commit credentials, kubeconfigs, host backups, pairing
+codes or generated machine/boot identity files.
+
+## Selected resource plan
+
+| Scope | CPU ceiling/budget | RAM ceiling/budget |
+| --- | ---: | ---: |
+| Nova main container | 4 | 16 GiB |
+| Buster native worker pool | 1.5 | 8 GiB |
+| Prism native worker pool | 2 | 16 GiB |
+| Existing host/Kubernetes daemon budget | 1 | 1.5 GiB |
+| Additional host safety buffer | 0.5 | 2 GiB |
+| Remaining planning budget for other containers | 3 | approximately 19 GiB |
+
+The last row is arithmetic headroom on the observed 12-CPU, approximately
+62.7-GiB host, not an enforced namespace quota or a capacity guarantee. It
+includes all agent sidecars/supervisors, pipeline services and databases,
+monitoring, Argo, Tailscale, Ops, future Cilium, websites and HomeOS. Paperless
+belongs to the future HomeOS budget; do not count it again as an extra system.
+Nova's main-container request remains 1 CPU / 12 GiB; its limit is not a
+reservation of four CPUs. Whole-Pod requests include additional containers.
+
+The native pools are outside Kubernetes Pod accounting. Together with daemon
+reservations and the extra buffer, the profile withholds 5 CPUs / 27.5 GiB from
+Pod allocation. The resulting Pod budget is approximately 7 CPUs / 35 GiB,
+including Nova. The buffer is folded into `systemReserve`; it is not a separate
+cgroup guaranteed to remain physically idle. Both native pools currently admit
+one active scope per role. Pool limits are not measured workload requirements.
+Native pool swap is disabled; the host's swap must not be added to RAM capacity.
+
+## Last observed state
+
+- K3s was upgraded to `v1.36.4+k3s1`, with containerd `2.3.4-k3s1.36`.
+- Flannel remains the active CNI. Cilium has not been deployed.
+- Node and Go were installed and the native NRI executable was built on the
+  host. An earlier generated policy passed `--check-policy`.
+- Updated resource settings are committed. Activation of the final profile,
+  pool service, NRI plugin and new Nova limit has not been confirmed.
+- The latest Pod inventory requested 8.478 CPUs / 41389 MiB before migration.
+  Old Buster and Nova Pods accounted for 3.05 CPUs / 20544 MiB and
+  1.1 CPUs / 12416 MiB respectively. Re-read live state before using these figures.
+- Buster's full native startup/chart/fixture integration remains unfinished,
+  as documented in [the host pool contract](native-worker-host-pools.md).
+  Preparing the host does not establish agent readiness.
+
+## Repeatable preparation
+
+Run from the repository on the selected host after fetching the intended main
+revision and installing its pinned Node/Go dependencies. Existing scripts resolve
+the repository themselves; no temporary checkout name is required.
+
+```bash
+set -euo pipefail
+umask 077
+
+npm ci --ignore-scripts --no-audit --no-fund
+bundle="$(mktemp -d /root/kubeclaw-native-rollout.XXXXXX)"
+git rev-parse HEAD > "$bundle/source-commit.txt"
+
+node scripts/render-native-worker-node.mjs \
+  my-values/infra/native-worker-pools-ax41.yaml "$bundle/generated"
+node scripts/build-native-worker-nri.mjs "$bundle/10-kubeclaw-native"
+"$bundle/10-kubeclaw-native" --check-policy "$bundle/generated/native-nri.json"
+
+cat "$bundle/generated/kubelet-reservations.json"
+printf '\nPrepared bundle: %s\n' "$bundle"
+```
+
+This produces a fresh private bundle and validates its policy. It does not
+install host files, restart K3s, scale workloads or apply Kubernetes resources.
+Do not reuse a previously rendered bundle after changing the selected profile.
+
+## Migration and activation stages
+
+1. Read actual Node capacity, effective kubelet configuration, Pod requests,
+   kernel task limits and current K3s configuration sources. Preserve K3s
+   configuration, binary and an etcd snapshot before the host transition.
+   Etcd snapshots do not back up PVC data.
+2. Reconcile old workload reservations before reducing Node Allocatable. The
+   migration plan retires the old broken Buster/Nova Deployments by saving their
+   manifests privately and scaling them to zero; it does not delete their PVCs.
+   This is a migration action, not something a future installer should repeat
+   on every run. Confirm replica changes and actual remaining requests.
+3. Install the generated root-owned files and NRI executable at the paths
+   specified in [the host pool contract](native-worker-host-pools.md). Merge
+   reservations into the effective kubelet configuration, preserving unrelated
+   settings and larger existing reservations. Configure persistent aggregate
+   Pod PID enforcement as required by the preflight.
+4. Extend the supported K3s containerd template with the NRI fragment; never edit
+   generated `config.toml` as the configuration authority. Preserve networking
+   and existing validators. Perform the planned K3s transition and start the
+   pool service in the required order. Exact installation/rollback commands
+   remain to be recorded after inspecting the host configuration.
+5. Run on the actual host with its kubeconfig:
+
+   ```bash
+   node scripts/native-worker-node-preflight.mjs \
+     my-values/infra/native-worker-pools-ax41.yaml
+   ```
+
+   Require Node Ready, actual reserved capacity, exact runtime/host identity,
+   correctly enforced pool limits and successful NRI integration. A rendered
+   manifest or NRI policy syntax check alone is insufficient.
+6. Select verified runtime images, wire the generated Prism overlay into the
+   production configuration, and finish the agent Argo handover. Only the
+   KubeClaw runtime is intended to auto-sync. Check Pod readiness and real work.
+7. Migrate Flannel to Cilium in its own maintenance step after host/runtime
+   checks. Merely syncing a Cilium Application is not the migration procedure.
+
+## Requirements for a future one-click installer
+
+Use the existing renderer and preflight instead of duplicating their policy
+logic. Expose explicit prepare, inspect, apply, verify and recovery stages.
+Record source revision and completed stages on the host, and inspect actual
+state before resuming. Refuse incompatible existing files or runtime versions.
+Save original configuration before mutation and define recovery for each
+changed file/service. Never reset PVCs or credentials to make a rerun succeed.
+
+Restarting the native pool service kills its worker subtree: drain/fence active
+work first. Do not claim idempotent host installation until reruns, interrupted
+installation and recovery have been exercised on a host. Capture the verified
+activation commands here as this rollout progresses.

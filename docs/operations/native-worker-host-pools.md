@@ -1,5 +1,8 @@
 # Native worker host pools
 
+For the selected production sizing, rollout state and future installer stages,
+see the [AX41 rollout runbook](ax41-rollout.md).
+
 D16 selects fixed host-managed role pools for Buster and Prism. Generic Core
 owns process/resource accounting; Buster owns fixture policy. A host pool is
 outside the supervisor Pod's resource hierarchy. Its capacity must therefore
