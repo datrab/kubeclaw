@@ -137,6 +137,45 @@ service journal; do not rerun the initial installation or delete policies.
 
 ## Migration and activation stages
 
+For the inspected AX41 state (only the K3s default kubelet drop-in, no containerd
+template, old Buster/Nova scaled to zero, native pools running), the initial
+activation helper implements the reservation/template transition:
+
+```bash
+bash scripts/activate-native-worker-ax41.sh
+```
+
+This **restarts K3s**. Keep host SSH access open. It refuses existing target
+files, unexpected config authorities, runtime/policy differences and current
+Pod memory usage above the new allocation. It merges reservations from configz,
+preserving larger existing values and other reservation keys, and leaves the
+default kubelet file intact. An etcd snapshot and private config backup precede
+the writes. A K3s service dependency starts the pool service first on boot.
+The containerd template extends the K3s `base` template with the generated NRI
+fragment; no CNI setting is changed. Kubelet enforces aggregate Pod PIDs from
+the configured PID reservations, rather than an independent systemd override.
+
+After restart the helper waits for the API and Node, runs the actual host
+capacity preflight and looks for the NRI process. A plugin process is not proof
+that a real worker received the correct namespace adjustment: that smoke test
+and worker readiness remain separate. Local validation covers shell syntax;
+this host transition still requires observing the actual command result.
+
+If startup fails, preserve the printed `/root/kubeclaw-native-activation.*`
+directory and inspect `journalctl -u k3s -b --no-pager -n 100`. Configuration
+recovery consists of moving these three newly created files into that private
+backup, running `systemctl daemon-reload`, and restarting K3s:
+
+- `/var/lib/rancher/k3s/agent/etc/kubelet.conf.d/90-kubeclaw-native.conf`
+- `/var/lib/rancher/k3s/agent/etc/containerd/config-v3.toml.tmpl`
+- `/etc/systemd/system/k3s.service.d/90-kubeclaw-native.conf`
+
+If the NRI executable itself prevents startup, move
+`/opt/nri/plugins/10-kubeclaw-native` into the private backup before restarting.
+Do not restore etcd or delete PVCs for a configuration failure. Leave the pool
+service running; stopping it is not part of this recovery. Inspect actual
+configuration and reservations again before any subsequent activation attempt.
+
 1. Read actual Node capacity, effective kubelet configuration, Pod requests,
    kernel task limits and current K3s configuration sources. Preserve K3s
    configuration, binary and an etcd snapshot before the host transition.
