@@ -6,6 +6,33 @@ Last reviewed: 2026-09-16.
 
 ## Configuration sources
 
+### NRI launcher identity repair (2026-09-16)
+
+The live reservation preflight passed after removing the legacy K3s command-line
+reservation arguments. Containerd subsequently discovered `10-kubeclaw-native`,
+but reported `failed to register plugin, connection closed`. The NRI SDK reads
+the launcher-provided name and index from environment variables before applying
+options; passing the same identity through options again causes stub creation
+to fail. The plugin now retains and validates the launcher identity, supplying
+defaults only when those variables are absent. A regression test exercises the
+real SDK with launcher, standalone, partial and mismatched identities.
+
+On AX41, with the pool service and reservations already active:
+
+```bash
+cd /root/kubeclaw-native-build.SyUV3D/repo
+git pull --ff-only &&
+bash scripts/repair-native-nri-launch.sh
+```
+
+This repair refuses an already-running plugin, checks capacity, backs up the
+installed executable and runs the Go tests before replacing it. It restarts K3s
+and checks readiness, reservations and the plugin process. Keep SSH access open.
+Inspect the displayed containerd registration/configuration messages; process
+presence alone does not prove successful adjustment of a real worker container.
+The original executable is retained in the printed repair directory. Containerd
+logs are at `/var/lib/rancher/k3s/agent/containerd/containerd.log`.
+
 - `my-values/infra/native-worker-pools-ax41.yaml`: native pool limits, host
   identity, exact containerd version, daemon reservations and safety buffer.
 - `my-values/nova-values.yaml`: Nova container requests and limits.

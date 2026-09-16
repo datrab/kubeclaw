@@ -16,6 +16,32 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
+func TestPluginStubLauncherIdentity(t *testing.T) {
+	for _, tc := range []struct {
+		name, index string
+		valid bool
+	}{
+		{"kubeclaw-native", "10", true},
+		{"", "", true},
+		{"kubeclaw-native", "", true},
+		{"", "10", true},
+		{"other", "10", false},
+		{"kubeclaw-native", "11", false},
+	} {
+		t.Run(tc.name+"/"+tc.index, func(t *testing.T) {
+			t.Setenv(api.PluginNameEnvVar, tc.name)
+			t.Setenv(api.PluginIdxEnvVar, tc.index)
+			client, err := newPluginStub(testConfig())
+			if tc.valid && (err != nil || client == nil) {
+				t.Fatalf("SDK stub creation failed: %v", err)
+			}
+			if !tc.valid && (err == nil || err.Error() != "NATIVE_NRI_PLUGIN_IDENTITY_INVALID") {
+				t.Fatalf("unexpected identity was not rejected: %v", err)
+			}
+		})
+	}
+}
+
 func testConfig() configuration {
 	return configuration{SchemaVersion: 1, ContainerdVersion: "v2.2.0-k3s1", Roles: map[string]selection{
 		"buster": {Namespace: "kubeclaw", Container: "buster-v2-runtime", PolicyDigest: strings.Repeat("a", 64)},
