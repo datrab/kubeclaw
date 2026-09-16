@@ -1,6 +1,6 @@
 # AP08 extension documentation plan
 
-Status: AP08.10 reviewed with blockers; AP08 is not complete
+Status: AP08.10 evaluated; strictly scoped read-only repeat review pending
 Date: 2026-09-16
 Scope: W08-W11 and reader outcomes E1-E6
 Assessment revision: `bcf032f241b432bf920baa9ee5f727947921447d`
@@ -267,20 +267,22 @@ results in separate authorities. Eighteen local commands passed. Thirty-two pack
 commands were unavailable on the earlier checkpoint host because named external tools or GNU userland
 features are absent. The Codex package has no package-local automated command.
 
-AP08.10 remains open for independent reader acceptance. These parts do not claim live
-host, browser, Trivy, Kubernetes, image, or cluster acceptance.
+At the AP08.7–AP08.9 checkpoint, AP08.10 still remained open for independent reader
+acceptance. Those parts did not claim live host, browser, Trivy, Kubernetes, image,
+or cluster acceptance. The decision below records the later AP08.10 result.
 
 ## Independent AP08.10 decision
 
 The [independent reader checkpoint](AP08.10-checkpoint.md) supersedes the earlier
-completion claims for overall acceptance. AP08.10 and AP08 remain open.
+completion claims for overall acceptance. AP08 remains open for one path-bounded
+read-only repeat review.
 The reader found and corrected broken procedures, a non-executing observer check,
 source-reference errors, and inaccurate package guidance. The catalogue now has
 51 individually reviewed pages, but page coverage is not task acceptance.
 
-Open paths include deployed tutorial submission, external-effect reconciliation,
-Codex host installation, new-role integration, and live host/image acceptance.
-Provider execution, report-adapter runtime, transport publication, and isolation
-also have failed local checks. The checkpoint separates missing tools from
-failures whose cause is not established. Earlier AP08.0–AP08.9 statuses are
-historical reports, not evidence that these reader paths passed.
+The checkpoint now classifies its observations as documentation, implementation,
+environment, or live work. Deployed tutorial submission, host/image acceptance,
+and unavailable tools do not automatically block a documentation package.
+External-effect reconciliation and unresolved runtime failures require canonical
+product triage. The repeat reviewer must assess only the named AP08 documentation
+paths and must not change repository content.

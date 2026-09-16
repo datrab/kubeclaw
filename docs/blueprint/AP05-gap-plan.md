@@ -1,6 +1,6 @@
 # AP05 documentation gap and writing plan
 
-Status: AP05 complete; AP06 completed W04–W06; AP07 completed W01–W03 and W07; AP08.0–AP08.6 are complete and AP08.7 is next
+Status: AP05 complete; AP06 and AP07 complete; AP08.10 evaluated and a scoped repeat review remains
 Date: 2026-09-15
 Branch: `docs/documentation-overhaul`, PR #13
 Assessment revision: `9dab0a1365a367bb2668298d50802a76bd147d91`
@@ -353,5 +353,7 @@ AP05 is complete. AP06 completed W04–W06 and established the required terms an
 boundaries. AP07 completed W01–W03 and W07. AP08.0 established the extension
 baseline. AP08.1 delivered the extension choice and boundary guide. AP08.2 delivered
 the minimal pipeline-plugin journey. AP08.3–AP08.6 delivered the shared contracts,
-effectful path, Buster path, and Nova path. AP08.7 is next; AP08 owns W08–W10 and the AP08
-portion of W11.
+effectful path, Buster path, and Nova path. AP08.7–AP08.9 delivered the host, engine,
+lifecycle, and 51-package catalogue work. AP08.10 completed one independent review,
+found documentation defects, and recorded separate product and live limits. A
+strictly scoped repeat review remains before AP08 acceptance.

@@ -55,7 +55,6 @@ Assign one owner and one protection method to every applicable row.
 | Buster job storage | Buster operator | Jobs, source archives, results, receipts, and evidence | Quiesced storage backup with ownership evidence | Orphan quiescence remains incomplete |
 | Redis | Platform owner | Selected transport and service data | AOF-aware migration or storage backup | Role and authority depend on actual configuration |
 | LiteLLM PostgreSQL | Database owner | LiteLLM relational state | Completed logical backup group plus credential authority | Off-node replication remains operator work |
-| Qdrant | Search-data owner | Vector collections and aliases | Full snapshot and verified restore | Snapshot destination independence remains operator work |
 | Prism PostgreSQL and artifacts | Prism owner | Projects, designs, baselines, and referenced immutable objects | One matched database-and-artifact group | External failure-domain restore remains unproved |
 | Prism derived data | Prism owner | Embeddings, indexes, thumbnails, projections | Rebuild from restored authority | Rebuild time has no accepted RTO |
 | OpenClaw and role PVCs | Role owner | Gateway state, role configuration, and workspaces | Storage backup under a quiesced workload | Content and rebuildability differ by mount |
@@ -115,7 +114,6 @@ Use the existing procedures for supported stateful services:
 
 - [LiteLLM PostgreSQL Recovery](../../operations/litellm-postgresql-recovery.md).
 - [Redis Migration](../../operations/redis-migration.md).
-- [Qdrant Migration](../../operations/qdrant-migration.md).
 - [Prism recovery details](../../runbooks/prism-recovery.md).
 - [Ops Pod backup and restore](../../ops/ops-pod.md#backup-and-restore).
 

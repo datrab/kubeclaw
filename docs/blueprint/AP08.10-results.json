@@ -4,6 +4,12 @@
   "sourceRevision": "8b1ce24b38b5e628dc03a88c6af0b8124848c5de",
   "branch": "docs/documentation-overhaul",
   "boundary": "Local command output; test names containing live do not establish deployed-system acceptance.",
+  "interpretation": {
+    "record_type": "immutable chronological command log",
+    "passed": "The command exited with status zero. This does not widen its declared evidence scope.",
+    "failed": "The command exited nonzero at that point in the review. The checkpoint classifies expected negative probes, corrected intermediate failures, unavailable prerequisites, product failures, and publication failures separately.",
+    "authority": "docs/blueprint/AP08.10-checkpoint.md supplies the reviewed classification. Do not total raw failed records as unresolved AP08 documentation defects."
+  },
   "preparation": [
     {
       "command": "npm ci --ignore-scripts",

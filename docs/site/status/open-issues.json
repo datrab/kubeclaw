@@ -7,9 +7,9 @@
     "original_total": 154,
     "original_locally_verified": 141,
     "original_incomplete": 13,
-    "additional_open": 5,
+    "additional_open": 8,
     "additional_integration_locally_verified": 5,
-    "total_open": 18,
+    "total_open": 21,
     "counting_policy": "Original IDs are unchanged. GitHub #7 and later source follow-ups are separate. Pending live acceptance does not reopen a locally closed finding."
   },
   "status_semantics": {
@@ -1284,6 +1284,170 @@
           "commit": "bcf032f241b432bf920baa9ee5f727947921447d",
           "url": "https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/buster-quality-gate/package.json",
           "scope": "The package declares the test-gate contract dependency used by the stage."
+        }
+      ]
+    },
+    {
+      "id": "DOC-AP08-EFFECT-RECONCILIATION-002",
+      "origin": "ap08-source-follow-up",
+      "title": "Uncertain external effects have no supported reconciliation and result-import operation",
+      "severity": "high",
+      "status": "open",
+      "problem": "Effect recovery correctly stops when an external request was accepted without a trustworthy receipt or when a receipt exists without terminal attempt evidence. The current platform supplies no supported operation that records reconciliation and imports the authoritative result.",
+      "impact": "An operator can identify an uncertain effect but cannot continue the run through a documented, validated state transition. Blind retry can duplicate an external mutation, while journal editing would bypass lifecycle authority.",
+      "components": [
+        "Nova effect recovery",
+        "Administrative retry and remediation",
+        "External capability adapters",
+        "AP08 effectful extension path"
+      ],
+      "current_state": "AP08.10 traced the recovery guard through normal execution and administrative retry. Both paths stop on unresolved external outcomes. The effectful guide now states this limit and does not invent a continuation command.",
+      "remaining_work": [
+        "Define a versioned reconciliation request and result contract with actor identity, effect identity, evidence, idempotency and authorization.",
+        "Implement one Core-owned operation that records the decision and imports or compensates the result without editing journals.",
+        "Add failure, duplicate, cancellation, restart and audit tests, then document the supported operator and extension behavior."
+      ],
+      "reproduction": [
+        "Run the persistent external-effect recovery tests named in the AP08.10 command ledger.",
+        "Create an accepted external effect without a receipt, then attempt normal resume and administrative retry. Observe that both paths return the unresolved-outcome guard.",
+        "Inspect skills/nova/core/execution/effect-recovery.ts, engine-run.ts and engine-admin.ts. Confirm that no supported reconciliation import operation follows the stop."
+      ],
+      "acceptance_criteria": [
+        "An authorized operator can reconcile one uncertain effect through a supported API without direct journal changes.",
+        "The operation rejects mismatched effect, attempt, actor and evidence identities and remains idempotent after restart.",
+        "The effectful extension guide includes the exact operation, observations, failure paths and retained evidence."
+      ],
+      "live_validation": "Local contract and restart tests can prove the state transition. A real external service remains a separate live acceptance exercise.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "Independent AP08.10 source trace and local recovery exercises; no reconciliation implementation was added.",
+        "prior_verification": "The review confirmed that normal, retry and remediation paths preserve the recovery stop."
+      },
+      "sources": [
+        {
+          "path": "skills/nova/core/execution/effect-recovery.ts",
+          "commit": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "url": "https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/effect-recovery.ts",
+          "scope": "The recovery guard rejects unresolved and externally incomplete effects."
+        },
+        {
+          "path": "docs/blueprint/AP08.10-checkpoint.md",
+          "commit": "4ccb21b79cd45d205163692f43e4940e60e28a19",
+          "url": "https://github.com/datrab/kubeclaw/blob/4ccb21b79cd45d205163692f43e4940e60e28a19/docs/blueprint/AP08.10-checkpoint.md",
+          "scope": "The independent review records the exercised stop and the missing continuation operation."
+        }
+      ]
+    },
+    {
+      "id": "DOC-AP08-RUNTIME-CHECKS-003",
+      "origin": "ap08-source-follow-up",
+      "title": "Four AP08 runtime verification paths fail before they prove their contracts",
+      "severity": "medium",
+      "status": "open",
+      "problem": "The AP08.10 supported-host run observed failures in the test-plan runner, report-adapter runtime, runtime-bundle isolation and transport-publisher checks. The failures are distinct, but their product or host root causes are not yet established.",
+      "impact": "The extension guide can document intended contracts and exact observed limits, but it cannot use these commands as successful local evidence until each failure is diagnosed and rerun.",
+      "components": [
+        "Buster test-plan runner",
+        "Buster report-adapter runtime",
+        "Runtime bundle isolation",
+        "Transport publisher"
+      ],
+      "current_state": "AP08.10 preserved exact command output. The plan runner returned errored instead of timed_out, the report adapter ended with EPIPE, isolation could not open task children, and transport publication rejected the canonical effect request. Later environments can expose different prerequisite failures; those do not erase the supported-host observations.",
+      "remaining_work": [
+        "Reproduce every command in its declared supported environment with all build prerequisites present.",
+        "Diagnose and fix each root cause independently. Split this tracking entry if fixes require unrelated owners or releases.",
+        "Rerun the exact commands and update package verification evidence without weakening assertions."
+      ],
+      "reproduction": [
+        "Run node tests/verification/contracts/check-pipeline-test-plan-runner.mts.",
+        "Build the plugin sandbox, then run node tests/verification/contracts/check-pipeline-report-adapter-runtime.mts and npm run verify:runtime-packaging:isolation.",
+        "Run npm test --prefix skills/common/plugins/transport-publisher and compare the result with commands C023, C025, C029 and C079 in AP08.10-results.json."
+      ],
+      "acceptance_criteria": [
+        "Each command exits with status zero in its documented supported environment, or an approved host restriction replaces the unsupported expectation.",
+        "Timeout, stdin failure, process-tree isolation and canonical effect-request assertions remain effective.",
+        "AP08 verification records distinguish successful product checks from unavailable prerequisites and live acceptance."
+      ],
+      "live_validation": "These are local contract and isolation checks. Service and cluster behavior remains in the separate live acceptance plan.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "Independent AP08.10 command execution with exact output retained; root causes remain unconfirmed.",
+        "prior_verification": "Commands C023, C025, C029 and C079 exited with status 1 on the AP08.10 host."
+      },
+      "sources": [
+        {
+          "path": "docs/blueprint/AP08.10-results.json",
+          "commit": "4ccb21b79cd45d205163692f43e4940e60e28a19",
+          "url": "https://github.com/datrab/kubeclaw/blob/4ccb21b79cd45d205163692f43e4940e60e28a19/docs/blueprint/AP08.10-results.json",
+          "scope": "Commands C023, C025, C029 and C079 preserve the exact failures, environment and duration."
+        },
+        {
+          "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+          "commit": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "url": "https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+          "scope": "The plan-runner contract includes the failed timeout assertion."
+        },
+        {
+          "path": "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts",
+          "commit": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "url": "https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/tests/verification/contracts/check-pipeline-report-adapter-runtime.mts",
+          "scope": "The report-adapter contract exercise produced the recorded stdin failure."
+        },
+        {
+          "path": "tests/verification/contracts/check-runtime-bundle-isolation.mjs",
+          "commit": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "url": "https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/tests/verification/contracts/check-runtime-bundle-isolation.mjs",
+          "scope": "The isolation check produced the recorded task-children failure."
+        }
+      ]
+    },
+    {
+      "id": "DOC-AP08-PRISM-TOOL-LIMITS-004",
+      "origin": "ap08-source-follow-up",
+      "title": "Prism OpenClaw tools lack general payload and request-lifetime limits",
+      "severity": "medium",
+      "status": "open",
+      "problem": "The Prism OpenClaw extension bounds the number of designs but does not define general text or document size limits. Its HTTP request also has no explicit timeout or cancellation signal.",
+      "impact": "A large request or stalled Prism control connection can retain host resources for an undefined period. Extension authors cannot copy a complete bounded-call pattern from this package.",
+      "components": [
+        "Prism OpenClaw extension",
+        "Prism control client",
+        "Host extension guidance"
+      ],
+      "current_state": "AP08.10 corrected the guide so it no longer describes the existing Prism tools as fully bounded. The guide distinguishes requirements for a new extension from behavior that Prism currently implements.",
+      "remaining_work": [
+        "Approve explicit request-size, text-size and document-size limits for both Prism tools.",
+        "Add an explicit timeout and cancellation propagation contract to the HTTP call.",
+        "Test boundary values, cancellation, timeout, host registration and error mapping, then update the package page."
+      ],
+      "reproduction": [
+        "Inspect skills/prism/openclaw-plugin/index.mjs and identify the design-count constraint.",
+        "Confirm that the parameter schemas do not set complete text/document bounds and that the fetch call has no timeout or cancellation signal.",
+        "Run the current registration tests and observe that they check names and design count, not a real host request lifetime."
+      ],
+      "acceptance_criteria": [
+        "Approved schemas bound all request-controlled payloads or record a justified alternative resource boundary.",
+        "The client enforces a documented timeout and propagates cancellation without committing a partial revision.",
+        "Tests exercise limits and real host registration, and the host-extension guide states the verified behavior."
+      ],
+      "live_validation": "Local schema and cancellation tests are required first. A real OpenClaw-to-Prism call remains separate live evidence.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "Independent AP08.10 source review and registration-test inspection; no product implementation changed.",
+        "prior_verification": "The package registration test passed but did not establish a bounded real-host request."
+      },
+      "sources": [
+        {
+          "path": "skills/prism/openclaw-plugin/index.mjs",
+          "commit": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "url": "https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/index.mjs",
+          "scope": "The tool schemas and HTTP request show the current count, payload and request-lifetime behavior."
+        },
+        {
+          "path": "docs/blueprint/AP08.10-checkpoint.md",
+          "commit": "4ccb21b79cd45d205163692f43e4940e60e28a19",
+          "url": "https://github.com/datrab/kubeclaw/blob/4ccb21b79cd45d205163692f43e4940e60e28a19/docs/blueprint/AP08.10-checkpoint.md",
+          "scope": "Finding D08 records the corrected documentation claim and evidence boundary."
         }
       ]
     }

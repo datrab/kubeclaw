@@ -199,7 +199,6 @@ Each stateful service requires its own migration procedure:
 
 - [PostgreSQL Migration](../../operations/postgresql-migration.md).
 - [Redis Migration](../../operations/redis-migration.md).
-- [Qdrant Migration](../../operations/qdrant-migration.md).
 - [Prism Database Transitions](../../operations/prism-database-transitions.md).
 - [Stateful Infrastructure Upgrades](../../operations/stateful-infrastructure-upgrades.md).
 
@@ -328,7 +327,6 @@ Monitor these stores independently:
 - Application PVCs.
 - Nova and Buster durable roots.
 - Prism database, artifacts, and backups.
-- Qdrant snapshots and collections.
 - Ops Pod home and workspace.
 - Telemetry, results, and evidence.
 

@@ -27,7 +27,7 @@ The default Ops Pod namespace is `kubeclaw-ops`.
 The deployment path can install these components:
 
 - SPIRE and its CSI driver.
-- Redis, PostgreSQL, Qdrant, and LiteLLM.
+- Redis, PostgreSQL, and LiteLLM.
 - Nova and Buster role deployments.
 - Prism and its PostgreSQL, Control, Studio, Worker, and agent workloads.
 - The Tailscale operator for the complete showcase baseline.
@@ -49,7 +49,7 @@ Stop if the environment depends on an item in the second list and no operator ow
 | CNI | Existing cluster dependency; Flannel and Cilium are separate architecture choices | Selected implementation, DNS, policy enforcement, and rollback path |
 | Argo CD | Optional deployment owner | Repository access, tracking mode, revision, health, and exclusive ownership |
 | Storage | Existing StorageClass and CSI | Binding, reclaim behavior, capacity, snapshot or backup, and restore |
-| Redis, Qdrant, and PostgreSQL | Required showcase data services | Authentication, TLS where selected, persistence, capacity, backup, migration, and restore |
+| Redis and PostgreSQL | Required showcase data services | Authentication, TLS where selected, persistence, capacity, backup, migration, and restore |
 | Registry, mirror, and BuildKit | Required showcase services | Authenticated push, uncached pull, cache behavior, storage, isolation, and garbage collection |
 | DNS and Tailscale | Required showcase access and exposure layers | Positive and negative identity checks plus independent recovery |
 | Monitoring | Optional platform evidence layer | Metric retention, log delivery, dashboard access, capacity, and recovery |
