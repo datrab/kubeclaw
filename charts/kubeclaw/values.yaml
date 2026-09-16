@@ -32,6 +32,7 @@ imagePullSecrets: []
   # - name: ghcr-secret
 
 codeBundle:
+  sha256: ""
   enabled: false
   # Concrete archive download URL resolved by deploy tooling or CI.
   archiveUrl: ""

@@ -42,6 +42,26 @@ It must hand off to `scripts/deploy.sh` only after the cluster, storage, DNS, id
 Acceptance requires a second operator to start with an empty supported host and the documented external inputs.
 That operator must reproduce the selected cluster, restore its authoritative data, and pass API, DNS, storage, identity, pipeline, and application checks without undocumented manual repair.
 
+### Redis and registry transport protection
+
+Status: deferred by operator on 2026-09-16. Finish Argo adoption and the Cilium
+migration first. Inventory scripts and requirements exist; mTLS is not deployed.
+
+- Reuse Envoy/SPIRE identities for KubeClaw Redis and registry connections;
+  assign dedicated registry ServiceAccounts and explicit peer permissions.
+- Include Buster/BuildKit, manifest verification, Trivy and host containerd.
+  The observed containerd route maps the registry Service name to
+  `http://127.0.0.1:30051`; the existing NodePort is not mTLS protection.
+- Close network plaintext bypasses, including Redis headless access, after
+  clients are migrated. Preserve the intentionally ephemeral local registry.
+- Require real positive/negative client tests, certificate rotation, restart
+  and rollback evidence. Argo/Paperless Redis instances are separate scope.
+
+See [inventory and acceptance requirements](operations/data-plane-mtls.md).
+Deferral does not relax existing runtime HTTPS checks or make the HTTP image
+scan path supported; resolve that deployment prerequisite before promising a
+working Buster image pipeline.
+
 ### Central operator configuration audit
 
 Status: planned, requested 2026-09-12; follows completion of the four remaining

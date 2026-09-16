@@ -3,6 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import yaml from 'js-yaml';
+import { selectedCode, validateCodeReceipt } from './code-release.mjs';
 
 const families = {
   runtime: ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'],
@@ -26,6 +27,7 @@ export function validateReleaseReceipt(receipt, family) {
       throw new Error(`Invalid selected image slot: ${name}`);
     }
   }
+  if (receipt.code) validateCodeReceipt(receipt.code);
   return receipt;
 }
 
@@ -37,7 +39,8 @@ export function selectedRelease(root, family) {
   const receipt = JSON.parse(fs.readFileSync(file, 'utf8'));
   validateReleaseReceipt(receipt, family);
   execFileSync(process.execPath, [path.join(import.meta.dirname, 'materialize-release.mjs'), `--family=${family}`, '--check'], { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] });
-  return receipt;
+  const code = family === 'runtime' ? selectedCode(root, receipt) : undefined;
+  return code ? { ...receipt, code } : receipt;
 }
 
 function containerSlots(manifest) {
@@ -83,7 +86,7 @@ function validateBundleVariableShape(actual, expected, slot) {
   }
 }
 
-function validateBundle(container, baseline, slot, commit, requireBundle) {
+function validateBundle(container, baseline, slot, receipt, requireBundle) {
   const actual = bundleVariables(container);
   const expected = bundleVariables(baseline);
   validateBundleVariableShape(actual, expected, slot);
@@ -91,11 +94,19 @@ function validateBundle(container, baseline, slot, commit, requireBundle) {
   for (const name of ['CODE_BUNDLE_ENABLED', 'KUBECLAW_CODE_BUNDLE_ENABLED']) {
     if (!expected.has(name)) continue;
     const enabled = actual.get(name)?.value;
-    if (!['true', 'false'].includes(enabled) || (requireBundle && enabled !== 'true')) throw new Error(`Canonical bundle consumer disabled: ${slot}/${name}`);
+    if (!['true', 'false'].includes(enabled) || ((requireBundle || receipt.code) && enabled !== 'true')) throw new Error(`Canonical bundle consumer disabled: ${slot}/${name}`);
     const prefix = name.slice(0, -'ENABLED'.length);
+    const commit = receipt.code?.commit ?? receipt.commit;
     const revision = actual.get(`${prefix}EXPECTED_COMMIT`)?.value;
     if ((enabled === 'true' || revision !== '') && revision !== commit) throw new Error(`Bundle commit differs from selected runtime: ${slot}`);
     if (actual.get(`${prefix}CONTRACT_VERSION`)?.value !== 'v2') throw new Error(`Unsupported bundle contract: ${slot}`);
+    if (enabled === 'true' && receipt.code && prefix === 'CODE_BUNDLE_') {
+      const url = actual.get(`${prefix}ARCHIVE_URL`)?.value;
+      const bundle = Object.values(receipt.code.bundles).find(item => item.url === url);
+      if (!bundle || actual.get(`${prefix}SHA256`)?.value !== bundle.sha256) throw new Error(`Unselected code bundle: ${slot}`);
+      const role = container.env?.find(item => item.name === 'AGENT_NAME')?.value;
+      if (!receipt.code.bundles[role] || receipt.code.bundles[role].url !== url) throw new Error(`Wrong code bundle role: ${slot}`);
+    }
     consumers += 1;
   }
   return consumers;
@@ -115,7 +126,7 @@ export function validateRenderedRelease(baseline, rendered, receipt, requireBund
     if (/\/kubeclaw-[^/]+(?:@|:)/u.test(container.image ?? '') && !refs.has(container.image)) {
       throw new Error(`Unselected first-party image: ${slot}`);
     }
-    bundleConsumers += validateBundle(container, expected.get(slot), slot, receipt.commit, requireBundle);
+    bundleConsumers += validateBundle(container, expected.get(slot), slot, receipt, requireBundle);
   }
   if (requireBundle && bundleConsumers === 0) throw new Error('Selected code bundle is missing from rendered workload');
 }
@@ -152,7 +163,7 @@ function validateOverlays(args, root, role, baseline, render, receipt) {
     const file = args[index + 1];
     const values = yaml.load(fs.readFileSync(file, 'utf8'));
     const commit = values?.codeBundle?.expectedCommit;
-    if (commit && commit !== receipt.commit) throw new Error('Overlay bundle commit differs from selected runtime');
+    if (commit && commit !== (receipt.code?.commit ?? receipt.commit)) throw new Error('Overlay bundle commit differs from selected runtime');
     if (selectedSeen) validateRenderedRelease(baseline, render(args.slice(0, index + 2)), receipt);
     selectedSeen ||= path.resolve(file) === path.join(root, `releases/values/${role}.yaml`);
     index += 1;
@@ -163,7 +174,7 @@ function validateOverlays(args, root, role, baseline, render, receipt) {
 if (process.argv[1] === import.meta.filename) {
   const [command, root, family, role, release, namespace, ...options] = process.argv.slice(2);
   const receipt = selectedRelease(root, family);
-  if (command === 'verify') process.stdout.write(`${receipt.commit}\n`);
+  if (command === 'verify') process.stdout.write(`${receipt.code?.commit ?? receipt.commit}\n`);
   else if (command === 'render') {
     const separator = options.indexOf('--');
     if (separator < 0) throw new Error('Helm values argument separator required');

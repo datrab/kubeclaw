@@ -53,8 +53,8 @@ test('bundle publication rejects failed or cancelled image proofs while allowing
     for (const changed of ['true', 'false']) {
       for (const event of ['push', 'workflow_dispatch']) {
         const needs = { build: { result }, reliability: { result: 'success' },
-          'update-policy': { result: 'success' }, 'detect-build-inputs': { outputs: { image_inputs_changed: changed } } };
-        const allowed = result === 'success' || (result === 'skipped' && changed === 'false' && event === 'push');
+          'update-policy': { result: 'success' }, 'detect-build-inputs': { outputs: { image_inputs_changed: changed, deployment_inputs_changed: 'true' } } };
+        const allowed = result === 'success' || (result === 'skipped' && changed === 'false');
         assert.equal(evaluate(needs, { event_name: event }, () => true), allowed);
         needs.reliability.result = 'failure';
         assert.equal(evaluate(needs, { event_name: event }, () => true), false);

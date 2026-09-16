@@ -1,4 +1,4 @@
-name: Propose production deployment
+name: Publish production deployment
 on:
   workflow_run:
     workflows: [Build Runtime Images And Skill Bundles]
@@ -6,32 +6,56 @@ on:
     branches: [main]
 permissions:
   contents: read
-  actions: write
+concurrency:
+  group: runtime-production-selection
+  cancel-in-progress: false
 jobs:
-  propose:
+  publish:
     if: >-
       vars.GITOPS_ENABLED == 'true' &&
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.head_repository.full_name == github.repository &&
       (github.event.workflow_run.event == 'push' || github.event.workflow_run.event == 'workflow_dispatch')
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
+      SOURCE_RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
     steps:
-      - name: Promote only builds with a preserved runtime receipt
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4
+        with:
+          version: v3.18.4
+      - name: Select verified compatible images and bundles
+        id: selection
+        run: node scripts/updates/select-runtime-deployment.mjs
+      - name: Materialize and validate Argo deployment
+        if: steps.selection.outputs.selected == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-          RUN_ID: ${{ github.event.workflow_run.id }}
-          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+          BUNDLE_DIRECTORY: ${{ steps.selection.outputs.directory }}
         run: |
           set -euo pipefail
-          # Code-only runs can succeed with image publication skipped.
-          # Do not turn such runs (including promotion merges) into release loops.
-          gh api "repos/$GH_REPO/actions/runs/$RUN_ID" > "$RUNNER_TEMP/run.json"
-          jq -e '.path == ".github/workflows/build-images.yaml" and .head_branch == "main" and .conclusion == "success"' "$RUNNER_TEMP/run.json"
-          gh api "repos/$GH_REPO/actions/runs/$RUN_ID/attempts/$RUN_ATTEMPT/jobs" --paginate --jq '.jobs[] | select(.name == "preserve-receipts / preserve") | .conclusion' > "$RUNNER_TEMP/receipt-job.txt"
-          if ! grep -qx success "$RUNNER_TEMP/receipt-job.txt"; then
-            echo 'No successful receipt publication in this attempt; no deployment proposed.'
-            exit 0
-          fi
-          gh release view "runtime-images-$RUN_ID-$RUN_ATTEMPT" --json assets --jq '.assets[].name' | grep -qx runtime-images.json
-          gh workflow run promote-runtime.yaml --ref main -f family=runtime -f "source_run_id=$RUN_ID"
+          node scripts/updates/verify-release-source.mjs
+          node scripts/updates/materialize-release.mjs --family=runtime
+          node scripts/gitops-continuous.mjs export "$BUNDLE_DIRECTORY"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add releases
+          git commit -m "Select verified runtime deployment $SOURCE_RUN_ID/$SOURCE_RUN_ATTEMPT"
+          node scripts/gitops-continuous.mjs prepare "$BUNDLE_DIRECTORY" "https://github.com/$GITHUB_REPOSITORY.git" "$(git rev-parse HEAD)"
+          git add gitops/production
+          git commit -m 'Update production Argo applications'
+          node scripts/gitops-continuous.mjs check "$BUNDLE_DIRECTORY" "https://github.com/$GITHUB_REPOSITORY.git" "$(git rev-parse HEAD)"
+          # A concurrent push fails safely; never overwrite or rebase over newer code.
+          # GITHUB_TOKEN pushes do not trigger a build loop; Argo observes Git directly.
+          git push origin HEAD:main

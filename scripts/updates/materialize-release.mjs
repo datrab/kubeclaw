@@ -1,10 +1,12 @@
 import fs from 'node:fs';
 import yaml from 'js-yaml';
+import { selectedCode } from './code-release.mjs';
 import { verifyReleaseConfiguration } from './release-configuration.mjs';
 const family = process.argv.includes('--family=ops') ? 'ops' : 'runtime';
 const release = JSON.parse(fs.readFileSync(`releases/${family}-images.json`, 'utf8'));
 if (release.schemaVersion !== 1 || !/^[a-f0-9]{40}$/.test(release.commit)) throw new Error('Invalid release manifest');
-verifyReleaseConfiguration(process.cwd(), release.commit, family);
+const code = family === 'runtime' ? selectedCode(process.cwd(), release) : undefined;
+verifyReleaseConfiguration(process.cwd(), code?.commit ?? release.commit, family);
 const reference = name => {
   const image = release.images[name];
   if (typeof image !== 'string' || !/^ghcr\.io\/[a-z0-9_-]+\/kubeclaw-[a-z0-9-]+@sha256:[a-f0-9]{64}$/.test(image)) throw new Error(`Missing immutable image: ${name}`);
@@ -27,6 +29,11 @@ for (const role of family === 'ops' ? ['ops'] : ['nova', 'buster', 'prism-agent'
     values.image = object(role === 'buster' ? 'buster-gateway' : role);
     bindSidecarImages(values);
     if (values.busterNamespaceBroker?.controller?.image) values.busterNamespaceBroker.controller.image = object('namespace-controller');
+  }
+  if (code && ['nova', 'buster', 'prism-agent'].includes(role)) {
+    const bundle = code.bundles[role === 'prism-agent' ? 'prism' : role];
+    values.codeBundle = { ...values.codeBundle, enabled: true, archiveUrl: bundle.url, expectedCommit: code.commit,
+      sha256: bundle.sha256, contractVersion: bundle.contractVersion };
   }
   const output = `# Generated from release ${release.commit} and byte-matched source configuration; do not edit.\n${yaml.dump(values, { lineWidth: 120, noRefs: true })}`;
   const file = `releases/values/${role}.yaml`;

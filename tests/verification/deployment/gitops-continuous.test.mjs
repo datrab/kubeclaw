@@ -5,6 +5,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import test from 'node:test';
 import yaml from 'js-yaml';
+import { isImageInput, isDeploymentInput } from '../../../scripts/updates/runtime-inputs.mjs';
 import { continuousDocuments, continuousApplications, renderContinuousEnvironment } from '../../../scripts/gitops-continuous.mjs';
 import { gitOpsDigest, inspectGitOpsResources } from '../../../scripts/gitops-bundle.mjs';
 import { planGitOpsRollback, rollbackRevision } from '../../../scripts/gitops-rollback.mjs';
@@ -35,24 +36,28 @@ test('child applications survive squash merges and retain immutable bundle direc
   assert.deepEqual(docs, [project, { ...app, spec: { ...app.spec, source: { ...app.spec.source, targetRevision: 'main' } } }]);
 });
 
-test('automatic promotion gates privileged dispatch and avoids image-less promotion loops', () => {
+test('automatic deployment requires successful main provenance and explicit bootstrap', () => {
   const workflow = yaml.load(fs.readFileSync('.github/workflows/auto-promote-runtime.yaml', 'utf8'));
   assert.deepEqual(workflow.on.workflow_run.branches, ['main']);
-  assert.match(workflow.jobs.propose.if, /head_repository.full_name == github.repository/);
-  assert.match(workflow.jobs.propose.if, /conclusion == 'success'/);
-  assert.match(workflow.jobs.propose.if, /GITOPS_ENABLED == 'true'/);
-  const step = workflow.jobs.propose.steps[0];
-  assert.ok(step.run.indexOf('grep -qx success') < step.run.indexOf('gh workflow run'));
-  assert.ok(step.run.indexOf('gh release view') < step.run.indexOf('gh workflow run'));
-  assert.ok(!workflow.jobs.propose.steps.some(item => item.uses?.startsWith('actions/checkout')));
+  assert.match(workflow.jobs.publish.if, /head_repository.full_name == github.repository/);
+  assert.match(workflow.jobs.publish.if, /conclusion == 'success'/);
+  assert.match(workflow.jobs.publish.if, /GITOPS_ENABLED == 'true'/);
+  assert.equal(workflow.concurrency['cancel-in-progress'], false);
+  assert.ok(workflow.jobs.publish.steps.some(step => step.run === 'node scripts/updates/select-runtime-deployment.mjs'));
+  const publish = workflow.jobs.publish.steps.at(-1).run;
+  assert.ok(publish.indexOf('verify-release-source') < publish.indexOf('git push'));
+  assert.doesNotMatch(publish, /git push.*--force/);
 });
 
-test('configuration changes build matching images while generated deployments do not rebuild', () => {
-  const workflow = yaml.load(fs.readFileSync('.github/workflows/build-images.yaml', 'utf8'));
-  const filter = workflow.jobs['detect-build-inputs'].steps.find(step => step.id === 'filter');
-  const paths = yaml.load(filter.with.filters).image_inputs;
-  for (const file of ['charts/kubeclaw/**', 'charts/prism/**', 'my-values/**', 'gitops/production/config.json', 'gitops/production/overlays/**']) assert.ok(paths.includes(file));
-  assert.ok(!paths.some(file => file.startsWith('releases/') || ['gitops/**', 'gitops/production/**'].includes(file)));
+test('configuration and agent code select bundles while generated deployments do not rebuild', () => {
+  for (const file of ['charts/kubeclaw/templates/deployment.yaml', 'charts/prism/values.yaml',
+    'my-values/nova-values.yaml', 'gitops/production/config.json', 'gitops/production/overlays/prism.yaml', 'skills/nova/core/engine.ts']) {
+    assert.equal(isImageInput(file), false, file);
+    assert.equal(isDeploymentInput(file), true, file);
+  }
+  for (const file of ['releases/runtime-code.json', 'releases/gitops/x/nova/resources.yaml', 'gitops/production/apps/applications.yaml']) {
+    assert.equal(isImageInput(file), false); assert.equal(isDeploymentInput(file), false);
+  }
 });
 
 test('real Helm environment rendering remains identical after the bundle commit is replaced by a merge commit', () => {

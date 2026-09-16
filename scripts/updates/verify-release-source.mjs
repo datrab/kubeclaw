@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { validateCodeReceipt } from './code-release.mjs';
 const repo = process.env.GITHUB_REPOSITORY;
 const token = process.env.GITHUB_TOKEN;
 if (!repo || !token) throw new Error('Read-only GitHub identity required to verify release provenance');
@@ -7,6 +8,25 @@ async function get(url, accept = 'application/vnd.github+json') {
   const response = await fetch(url, { headers: { Authorization: `Bearer ${token}`, Accept: accept }, signal: AbortSignal.timeout(60000) });
   if (!response.ok) throw new Error(`Release evidence unavailable: HTTP ${response.status}`);
   return response;
+}
+if (fs.existsSync('releases/runtime-code.json')) {
+  const selected = validateCodeReceipt(JSON.parse(fs.readFileSync('releases/runtime-code.json', 'utf8')));
+  const run = await (await get(`https://api.github.com/repos/${repo}/actions/runs/${selected.sourceRunId}/attempts/${selected.sourceRunAttempt}`)).json();
+  if (run.conclusion !== 'success' || run.head_branch !== 'main' || run.head_sha !== selected.commit
+    || run.head_repository?.full_name !== repo || run.path !== '.github/workflows/build-images.yaml'
+    || !['push', 'workflow_dispatch'].includes(run.event)) throw new Error('Code source is not a successful matching main run');
+  const release = await (await get(`https://api.github.com/repos/${repo}/releases/tags/code-bundles-${selected.sourceRunId}-${selected.sourceRunAttempt}`)).json();
+  if (release.target_commitish !== selected.commit) throw new Error('Code release source mismatch');
+  const assets = release.assets.filter(asset => asset.name === 'runtime-code.json');
+  if (assets.length !== 1 || assets[0].size > 65536) throw new Error('Missing code receipt');
+  const bytes = await (await get(`https://api.github.com/repos/${repo}/releases/assets/${assets[0].id}`, 'application/octet-stream')).text();
+  if (Buffer.byteLength(bytes) > 65536) throw new Error('Oversized code receipt');
+  assert.deepEqual(selected, JSON.parse(bytes), 'Code receipt does not match successful source');
+  for (const [role, bundle] of Object.entries(selected.bundles)) {
+    const matches = release.assets.filter(asset => asset.name === `${role}-${selected.commit}.tgz`);
+    if (matches.length !== 1 || matches[0].browser_download_url !== bundle.url || matches[0].digest !== `sha256:${bundle.sha256}`) throw new Error('Code asset digest mismatch');
+  }
+  console.log(`runtime code: verified source ${selected.sourceRunId}/${selected.sourceRunAttempt}`);
 }
 for (const family of ['runtime', 'ops']) {
   const file = `releases/${family}-images.json`;
