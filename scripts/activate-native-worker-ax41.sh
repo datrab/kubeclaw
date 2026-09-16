@@ -36,6 +36,9 @@ import {execFileSync} from 'node:child_process';
 import {nativeNodeQuantity} from './scripts/native-worker-node-capacity.mjs';
 const backup=process.argv[2];
 const pid=execFileSync('systemctl',['show','k3s','-p','MainPID','--value'],{encoding:'utf8'}).trim();
+// K3s can rewrite its process title; /proc alone loses original CLI arguments.
+const unitExec=execFileSync('systemctl',['show','k3s','-p','ExecStart','--value'],{encoding:'utf8'});
+if(/(?:system-reserved|kube-reserved)=/.test(unitExec)) throw Error('Legacy kubelet reservation arguments in systemd unit override drop-ins; review before activation');
 const args=fs.readFileSync(`/proc/${pid}/cmdline`,'utf8').split('\0');
 const env=fs.readFileSync(`/proc/${pid}/environ`,'utf8').split('\0');
 if(args.some(a=>/^(--config(?:=|$)|-c$|--data-dir(?:=|$)|--kubelet-arg(?:=|$))/.test(a))

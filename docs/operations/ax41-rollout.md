@@ -176,6 +176,29 @@ Do not restore etcd or delete PVCs for a configuration failure. Leave the pool
 service running; stopping it is not part of this recovery. Inspect actual
 configuration and reservations again before any subsequent activation attempt.
 
+The first AX41 activation exposed legacy `--kubelet-arg` CPU/memory reservation
+flags in `/etc/systemd/system/k3s.service`. These overrode the new drop-in maps
+and removed their PID reservations from effective configz. Inspecting only
+`/proc/<k3s-pid>/cmdline` missed them; inspect systemd ExecStart and the logged
+kubelet arguments as well. The initial activation helper now rejects these
+legacy unit arguments before changing configuration.
+
+For the observed old values (system 500m/1024Mi, kube 500m/512Mi), with the
+complete native reservation drop-in already installed:
+
+```bash
+python3 scripts/repair-k3s-reservation-arguments.py
+```
+
+This narrowly removes both complete kubelet-arg options from ExecStart, retaining
+all other bytes/arguments and saving the original unit in a private root backup.
+Unexpected values or ambiguous matches stop the repair. It validates the unit
+but does not restart K3s. Follow with `systemctl daemon-reload` and
+`systemctl restart k3s`, wait for API/node readiness, then rerun host preflight.
+Do not rerun the initial activation helper. Restoring the backed-up unit and
+reloading/restarting K3s restores the previous arguments if recovery is needed;
+native workers must remain disabled until effective reservations pass preflight.
+
 1. Read actual Node capacity, effective kubelet configuration, Pod requests,
    kernel task limits and current K3s configuration sources. Preserve K3s
    configuration, binary and an etcd snapshot before the host transition.
