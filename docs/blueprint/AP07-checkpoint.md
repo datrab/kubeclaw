@@ -8,7 +8,7 @@ Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
 ## Result
 
 AP07 replaces the short operator entry with one ordered lifecycle.
-The operations track contains 2,234 lines and approximately 12,420 words.
+The operations track contains 2,238 lines and approximately 12,451 words.
 
 The sequence is:
 
@@ -119,10 +119,10 @@ AP07 does not claim that later acceptance.
 | `git diff --check` | Pass. |
 | `node scripts/docs-check.mjs` | Pass: 887 active Markdown files. |
 | Operations evidence check | Pass: six complete evidence boxes and 24 valid revision-bound code links. |
-| `npm run docs:check:refs` | Pass: 1,724 local links and 816 repository-path references. |
+| `npm run docs:check:refs` | Pass: 1,728 local links and 820 repository-path references. |
 | `npm run docs:check:coverage` | Pass. The topic-map references remain current. |
 | `npm run verify:docs:controlled-language` | Pass. |
-| AP07 content measures | Pass: 2,234 lines and approximately 12,420 words across eight operations pages. |
+| AP07 content measures | Pass: 2,238 lines and approximately 12,451 words across eight operations pages. |
 | `npm run docs:publication:check` | No AP07 page error. Existing AP08, AP09, and AP11 findings remain. |
 | `npm run docs:blueprint:check` | Known pre-existing AP02 generated inventory drift; no AP07 output owns that file. |
 
@@ -144,6 +144,7 @@ This follow-up made these corrections:
 
 The follow-up ran the project compiler, platform configuration, and deployment truth checks successfully.
 The Prism command check failed because its canonical-schema assertion does not match the current source.
+[DOC-AP07-PRISM-CHECK-001](../site/status/open-issues.md#doc-ap07-prism-check-001) tracks the exact source-check repair.
 The Prism backup test failed before positive proof because of incompatible local utilities and a chart-fixture precondition.
 The product documentation records those failures and does not turn them into AP07 success evidence.
 

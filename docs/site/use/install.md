@@ -189,6 +189,10 @@ npm run verify:prism:deploy-script
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 ```
 
+The Prism source check currently stops at a stale prompt-ownership assertion.
+[DOC-AP07-PRISM-CHECK-001](../status/open-issues.md#doc-ap07-prism-check-001) tracks that exact check repair.
+Do not report the Prism preflight as passed until the unchanged command exits with status zero.
+
 Render each selected role before mutation:
 
 ```bash
@@ -308,7 +312,7 @@ The smoke commands check the gateway, startup state, readiness, skills, and runt
 >
 > **Contract or setting:** [The release materializer binds role values to a selected runtime receipt](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/updates/materialize-release.mjs#L1-L35).
 >
-> **Test evidence:** [The deployment release test exercises render and fail-closed selection paths](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/deployment/deployment-release.test.mjs#L45-L80). The follow-up did not rerun that test. It ran the deployment truth check successfully on 2026-09-16. The separate Prism command check failed because its canonical-schema assertion does not match the current source. No Prism test success is claimed.
+> **Test evidence:** [The deployment release test exercises render and fail-closed selection paths](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/deployment/deployment-release.test.mjs#L45-L80). The follow-up did not rerun that test. It ran the deployment truth check successfully on 2026-09-16. [DOC-AP07-PRISM-CHECK-001](../status/open-issues.md#doc-ap07-prism-check-001) records the failed Prism command check. No Prism test success is claimed.
 >
 > **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
 >

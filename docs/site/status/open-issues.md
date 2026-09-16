@@ -16,7 +16,7 @@ AP04 migrates evidenced states. Reproduction steps and completion criteria descr
 Original IDs are unchanged. GitHub #7 and AP03 source follow-ups are separate. Pending live acceptance does not reopen a locally closed finding.
 
 13 of the original 154 findings remain incomplete; 141 are locally closed.
-3 additional follow-ups remain separate. Total current entries: 16.
+4 additional follow-ups remain separate. Total current entries: 17.
 5 additional integration findings have local closure provenance.
 
 [Local closure and original IDs](../decisions/acceptance.md) and [live acceptance](acceptance.md) remain separate.
@@ -47,6 +47,7 @@ Original IDs are unchanged. GitHub #7 and AP03 source follow-ups are separate. P
 | [GITHUB-7](#github-7) | Release security rescan needs attention | github | open |
 | [DOC-AP03-GITOPS-001](#doc-ap03-gitops-001) | Continuous GitOps health compares a branch name with resolved commit IDs | ap03-source-follow-up | open |
 | [DOC-AP04-PREFERENCE-001](#doc-ap04-preference-001) | Accepted no-decay preference contract conflicts with automatic 180-day decay | ap04-contract-follow-up | open |
+| [DOC-AP07-PRISM-CHECK-001](#doc-ap07-prism-check-001) | Prism deployment source check is stale after prompt ownership moved | ap07-source-follow-up | open |
 
 ## PCR-BUSTER-ENGINE-001
 
@@ -1030,3 +1031,61 @@ Bounded source and existing-test inspection; no preference test execution, produ
 - [skills/prism/control/preference-snapshot.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/control/preference-snapshot.ts) — Accepted contract, current implementation or existing regression; conflict described above.
 - [skills/prism/tests/quality.test.mts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/tests/quality.test.mts) — Accepted contract, current implementation or existing regression; conflict described above.
 - [skills/prism/tests/control-generation-http.test.mts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/tests/control-generation-http.test.mts) — Accepted contract, current implementation or existing regression; conflict described above.
+
+## DOC-AP07-PRISM-CHECK-001
+
+**Prism deployment source check is stale after prompt ownership moved**
+
+Origin: ap07-source-follow-up. Status: open. Source severity: medium.
+
+### Problem and impact
+
+The Prism deployment source check requires the canonical contract paths as literal text in both the values file and agent-bridge.mjs. The bridge now delegates prompt construction to agent-prompt.mjs, which owns those paths.
+
+npm run verify:prism:deploy-script fails before installation even though the active prompt owner contains the required paths. The documented installation preflight therefore stops until the check follows the current ownership boundary.
+
+### Components and current state
+
+- Prism deployment verification
+- Prism agent bridge
+- Prism agent prompt
+- AP07 installation preflight
+
+The AP07 follow-up reproduced the failure on 2026-09-16. The assertion reads agent-bridge.mjs directly and does not follow its AgentJobRunner and prompt-module boundary. The documentation reports the failed check and does not claim Prism preflight success.
+
+### Remaining work
+
+- Update the source check to inspect the active prompt owner and its wiring from the bridge without duplicating production prompt text in the test.
+- Keep the negative check that rejects project-checkout contract paths and preserve all unrelated deployment assertions.
+- Run the complete verify:prism:deploy-script command and refresh the AP07 evidence status only after it passes.
+
+### Reproduction and verification procedure
+
+- Run npm run verify:prism:deploy-script at the recorded source. Observe the canonical-schema assertion failure.
+- Compare tests/verification/contracts/check-deploy-prism-command.mts with skills/prism/server/agent-bridge.mjs and skills/prism/server/agent-prompt.mjs.
+
+### Completion criteria
+
+- The source check follows the real prompt ownership boundary and verifies both canonical bundle paths.
+- npm run verify:prism:deploy-script exits with status zero without weakening its deployment, image, Secret, migration, or negative-path assertions.
+- The installation guide records the successful rerun and retains the distinction between source verification and live deployment.
+
+### Separate environment acceptance
+
+This check can close through source verification. It does not establish a successful Prism deployment or replace the separate live acceptance gates.
+
+### Dependencies
+
+No dependency on another entry in this register is established.
+
+### Evidence boundary
+
+Reproduced during the AP07 documentation follow-up; no product or test implementation changed.
+
+- **prior verification:** npm run verify:prism:deploy-script exited with status 1 on 2026-09-16 at the canonical-schema assertion.
+
+### Sources
+
+- [tests/verification/contracts/check-deploy-prism-command.mts](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/contracts/check-deploy-prism-command.mts) — The failing literal-path assertion and the surrounding deployment checks.
+- [skills/prism/server/agent-bridge.mjs](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/prism/server/agent-bridge.mjs) — The current bridge delegates durable agent work and does not own prompt text.
+- [skills/prism/server/agent-prompt.mjs](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/prism/server/agent-prompt.mjs) — The active prompt owner contains the canonical schema and fixture paths.
