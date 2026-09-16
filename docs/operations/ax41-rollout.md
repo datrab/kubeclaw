@@ -89,6 +89,29 @@ This produces a fresh private bundle and validates its policy. It does not
 install host files, restart K3s, scale workloads or apply Kubernetes resources.
 Do not reuse a previously rendered bundle after changing the selected profile.
 
+### Initial host-file installation stage
+
+After preparing a fresh reviewed bundle, run on AX41 as root:
+
+```bash
+bash scripts/install-native-worker-pools-stage.sh "$bundle"
+```
+
+This initial-install helper refuses existing destination files and an active
+pool service. It installs the generated policies, NRI binary and pool setup
+program, pins the service executable to the verified `/usr/local/bin/node`,
+and starts the pools for the current boot. It does not enable the service for
+boot, edit kubelet/containerd configuration, restart K3s or deploy workers.
+Inspect its printed limits and complete the activation stages below before
+enabling any native worker. On failure, retain the bundle and installed files
+for diagnosis; do not remove policy files or restart a running pool blindly.
+Installing the binary puts it on the NRI discovery path, so coordinate any
+subsequent containerd/K3s restart with the remaining activation steps.
+
+The helper has a shell syntax check locally; actual systemd/cgroup behavior
+must be verified on the production host. It is not yet a tested one-click
+installer with rollback or interrupted-install recovery.
+
 ## Migration and activation stages
 
 1. Read actual Node capacity, effective kubelet configuration, Pod requests,
