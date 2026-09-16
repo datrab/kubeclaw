@@ -247,8 +247,14 @@ configuration: it requires existing healthy webhooks with `Fail` policies and
 is not a fresh-install recipe. Changes to those policies require a separate
 review; Argo does not enforce them while this exception is present.
 
-SPIRE uses server-side diff so Kubernetes resolves the webhook list by its
-schema rather than displaying a positional reorder as drift. For the existing
+SPIRE uses server-side diff for API defaulting. The existing webhook list can
+still retain its earlier order after server-side apply. If its only remaining
+difference is the order of the two entries, run
+`python3 scripts/align-spire-webhook-order.py --apply` on the controlnode with
+KUBE_CONTEXT set, then hard-refresh SPIRE. This performs an atomic JSON Patch
+move guarded by resourceVersion and both webhook names, preserving the entire
+entry contents including CA bundles. No Pod restart or resource replacement is
+needed. The script is idempotent; an unexpected webhook set fails closed. For the existing
 StatefulSet, only `apiVersion` and `kind` inside volumeClaimTemplates are ignored;
 PVC names, storage requests and storage classes remain part of the comparison.
 After this Application-definition change, refresh `platform`, wait for its

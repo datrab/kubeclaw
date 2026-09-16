@@ -47,6 +47,7 @@ const find = (app, kind, name) => {
   assert.ok(result, `Missing ${app}: ${kind}/${name}`);
   return result;
 };
+assert.deepEqual(find('spire', 'ValidatingWebhookConfiguration', 'spire-server-spire-controller-manager-webhook').webhooks.map(h => h.name), ['vclusterfederatedtrustdomain.kb.io', 'vclusterspiffeid.kb.io'], 'Review the one-time ordering script if the upstream chart changes its webhook order');
 const stateful = find('spire', 'StatefulSet', 'spire-server');
 assert.equal(stateful.spec.volumeClaimTemplates[0].metadata.name, 'spire-data');
 assert.equal(stateful.spec.volumeClaimTemplates[0].spec.resources.requests.storage, '1Gi');
