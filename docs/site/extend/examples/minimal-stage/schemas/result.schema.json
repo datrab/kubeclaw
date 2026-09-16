@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "outcome", "artifacts", "facts"],
+      "properties": {
+        "schemaVersion": { "const": "stage-result.v2" },
+        "outcome": { "const": "passed" },
+        "artifacts": { "type": "array", "maxItems": 0 },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["tutorial.greeting"],
+          "properties": {
+            "tutorial.greeting": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "outcome", "reason", "artifacts"],
+      "properties": {
+        "schemaVersion": { "const": "stage-result.v2" },
+        "outcome": { "const": "failed" },
+        "reason": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["code", "message"],
+          "properties": {
+            "code": { "const": "tutorial.requested_failure" },
+            "message": { "type": "string", "minLength": 1, "maxLength": 200 }
+          }
+        },
+        "artifacts": { "type": "array", "maxItems": 0 }
+      }
+    }
+  ]
+}

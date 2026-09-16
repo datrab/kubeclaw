@@ -154,4 +154,7 @@ Every AP07 operational task now has a runnable path or an exact implementation b
 The pages separate source verification, component smoke, application verification, and live acceptance.
 
 AP07 is complete.
-AP08 is next and owns W08 and W09 for plugin choice, construction, contracts, and reliability.
+AP08 follows this checkpoint and owns W08–W10 and the AP08 portion of W11. AP08.0
+established its extension baseline, AP08.1 delivered the choice and boundary guide,
+and AP08.2 delivered the minimal pipeline-plugin journey. AP08.3 through AP08.6
+delivered the shared contracts, effectful, Buster, and Nova guides. AP08.7 is next.

@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-15",
+  "updated_at": "2026-09-16",
   "source_baseline": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
   "purpose": "Single machine-readable authority for currently incomplete technical work. open-issues.md is generated from this file. Locally closed original findings and later live acceptance are documented separately in decisions/acceptance.md and status/acceptance.md.",
   "scope": {
     "original_total": 154,
     "original_locally_verified": 141,
     "original_incomplete": 13,
-    "additional_open": 4,
+    "additional_open": 5,
     "additional_integration_locally_verified": 5,
-    "total_open": 17,
-    "counting_policy": "Original IDs are unchanged. GitHub #7 and AP03 source follow-ups are separate. Pending live acceptance does not reopen a locally closed finding."
+    "total_open": 18,
+    "counting_policy": "Original IDs are unchanged. GitHub #7 and later source follow-ups are separate. Pending live acceptance does not reopen a locally closed finding."
   },
   "status_semantics": {
     "open": "The cause, contract or implementation remains open within the stated scope.",
@@ -1227,6 +1227,63 @@
           "commit": "85e73b1885f04a9494f388cf6622ad0bde2db447",
           "url": "https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/prism/server/agent-prompt.mjs",
           "scope": "The active prompt owner contains the canonical schema and fixture paths."
+        }
+      ]
+    },
+    {
+      "id": "DOC-AP08-BOUNDARY-CHECK-001",
+      "origin": "ap08-source-follow-up",
+      "title": "Buster quality stage uses a package-root import that its boundary check forbids",
+      "severity": "medium",
+      "status": "open",
+      "problem": "The Buster quality-gate stage imports assertion functions from the root of @kubeclaw/pipeline-test-gate-contract. The plugin boundary check deliberately permits only audited exact exports for stage dependency graphs and includes a negative test that rejects this package-root import.",
+      "impact": "The complete plugin boundary verification stops before it can certify the current extension boundary. Documentation can describe the intended exact-export rule, but it cannot claim that every installed stage currently complies with that rule.",
+      "components": [
+        "Buster quality-gate stage",
+        "Pipeline test-gate contract",
+        "Plugin-system v2 boundary verification",
+        "AP08 extension documentation"
+      ],
+      "current_state": "AP08.1 reproduced the failure on 2026-09-16 after generating the required OpenClaw contract output. The focused platform-configuration, contract, registry and runtime-role checks pass. The boundary check then fails at skills/nova/plugins/buster-quality-gate/src/stage.ts line 1. The same stage already uses the approved gate-decision subpath for other functions.",
+      "remaining_work": [
+        "Expose the required coverage assertion API through an audited exact contract export. If needed, define another narrow boundary that preserves the test's authority controls.",
+        "Change the quality-gate stage to use the accepted narrow entry point. Do not weaken the negative package-root test merely to make the check pass.",
+        "Run the complete plugin-system v2 boundary check and update AP08 evidence only after it exits with status zero."
+      ],
+      "reproduction": [
+        "Run npm run build --workspace @kubeclaw/openclaw-agent-observer so that the boundary check can inspect its generated contract module.",
+        "Run node tests/verification/contracts/check-plugin-system-v2-boundaries.mjs. Observe: stage cannot import an unapproved runtime package: skills/nova/plugins/buster-quality-gate/src/stage.ts:1 -> @kubeclaw/pipeline-test-gate-contract.",
+        "Compare the root import in skills/nova/plugins/buster-quality-gate/src/stage.ts with the exact-export allowlist and package-root negative assertions in tests/verification/contracts/check-plugin-system-v2-boundaries.mjs."
+      ],
+      "acceptance_criteria": [
+        "The quality-gate stage imports its runtime contract only through explicitly audited exact exports.",
+        "The package-root negative tests remain effective and the complete plugin-system v2 boundary check exits with status zero.",
+        "AP08 documentation links to the resulting supported boundary and does not turn an implementation exception into a documented feature."
+      ],
+      "live_validation": "This source-boundary issue can close with local source and contract verification. It does not establish runtime activation or a live pipeline execution.",
+      "dependencies": [],
+      "evidence": {
+        "assessment": "Reproduced during the AP08.1 source review; documentation, source and verification were compared, but no product or test implementation was changed.",
+        "prior_verification": "The boundary command exited with status 1 on 2026-09-16 after the required generated OpenClaw contract became available."
+      },
+      "sources": [
+        {
+          "path": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+          "commit": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "url": "https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/buster-quality-gate/src/stage.ts",
+          "scope": "The installed stage uses the forbidden package-root import and an approved exact subpath import."
+        },
+        {
+          "path": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+          "commit": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "url": "https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+          "scope": "The allowlist, dependency-graph check and negative package-root assertions define and enforce the intended narrow boundary."
+        },
+        {
+          "path": "skills/nova/plugins/buster-quality-gate/package.json",
+          "commit": "bcf032f241b432bf920baa9ee5f727947921447d",
+          "url": "https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/buster-quality-gate/package.json",
+          "scope": "The package declares the test-gate contract dependency used by the stage."
         }
       ]
     }

@@ -1,0 +1,158 @@
+#!/usr/bin/env node
+
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+
+const root = path.resolve(import.meta.dirname, '..');
+const revision = 'bcf032f241b432bf920baa9ee5f727947921447d';
+
+function read(relative) {
+  return fs.readFileSync(path.join(root, relative), 'utf8');
+}
+
+function pinnedLinks(relative, minimum) {
+  const source = read(relative);
+  const links = [...source.matchAll(/https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\/([^#)]+)#L([0-9]+)-L([0-9]+)/gu)];
+  assert(links.length >= minimum, `${relative} has only ${links.length} pinned line links`);
+  for (const [, linkRevision, repositoryPath, firstValue, lastValue] of links) {
+    assert.equal(linkRevision, revision, `${relative} uses another revision for ${repositoryPath}`);
+    const value = execFileSync('git', ['-C', root, 'show', `${revision}:${repositoryPath}`], { encoding: 'utf8' });
+    const first = Number(firstValue);
+    const last = Number(lastValue);
+    assert(first >= 1 && last >= first && last <= value.split('\n').length,
+      `${relative} has an invalid line range for ${repositoryPath}`);
+  }
+  return links.length;
+}
+
+const host = read('docs/site/extend/host-and-engine.md');
+for (const required of [
+  '## Build An OpenClaw Hook Extension',
+  '## Build An OpenClaw Tool Extension',
+  '## Build A Codex Plugin Or Skill',
+  '## Extend Worker Core With A Specialist Engine',
+  '## Follow One Real Prism Worker Attempt',
+  '## Create Or Change A Runtime Role',
+  '## Compatibility And Replacement',
+  '**Benefit:**', '**Cost:**', '**Rejected alternative:**', '**Reconsider when:**',
+]) assert(host.includes(required), `host-and-engine.md lacks ${required}`);
+for (const required of [
+  'Persist the idempotency key and envelope before dispatch.',
+  'Propagate cancellation to all owned work.',
+  'Emit progress without making it the result authority.',
+  'Store the result before evidence hydration or later projection.',
+  'Validate the result against the original attempt.',
+]) assert(host.includes(required), `host-and-engine.md lacks Worker journey step: ${required}`);
+
+const lifecycle = read('docs/site/extend/testing.md');
+for (const required of [
+  '## Use A Proof Ladder', '## Record A Reproducible Result',
+  '## Test A Pipeline Stage', '## Test An Observer', '## Test A Capability Adapter',
+  '## Test A Provider Or Report Adapter', '## Test An OpenClaw Or Codex Extension',
+  '## Test A Worker Engine Or Runtime Role', '## Install And Activate By Surface',
+  '## Update Or Replace', '## Disable Safely', '## Remove And Inspect Remaining State',
+  '## Diagnose A Failure', '**Benefit:**', '**Cost:**', '**Rejected alternative:**',
+  '**Reconsider when:**',
+]) assert(lifecycle.includes(required), `testing.md lacks ${required}`);
+
+for (const [relative, source] of [
+  ['docs/site/extend/host-and-engine.md', host],
+  ['docs/site/extend/testing.md', lifecycle],
+]) {
+  assert(source.includes(`Evidence revision: \`${revision}\``), `${relative} lacks the evidence revision`);
+  const codeBlocks = [...source.matchAll(/^```([^\n]*)$/gmu)]
+    .map((match) => match[1].trim().toLowerCase())
+    .filter((language) => language && !['bash', 'text', 'mermaid'].includes(language));
+  assert.deepEqual(codeBlocks, [], `${relative} copies maintained production code`);
+}
+
+const guidance = JSON.parse(read('docs/blueprint/AP08-catalogue-guidance.json'));
+const verification = JSON.parse(read('docs/blueprint/AP08-local-verification.json'));
+const inventory = JSON.parse(read('docs/blueprint/generated/ap08-extension-inventory.json'));
+assert.equal(guidance.schemaVersion, 'ap08-catalogue-guidance.v1');
+assert.equal(guidance.evidenceRevision, revision);
+assert.equal(guidance.records.length, 51, 'catalogue guidance must contain 51 records');
+assert.equal(inventory.packages.length, 51, 'extension inventory must contain 51 packages');
+assert.equal(new Set(guidance.records.map((item) => item.id)).size, 51, 'catalogue guidance contains duplicate IDs');
+const verificationRecords = verification.groups.flatMap((group) =>
+  group.packages.map((id) => ({ id, result: group.result, reason: group.reason })));
+assert.equal(verificationRecords.length, 51, 'local verification must contain 51 results');
+assert.equal(new Set(verificationRecords.map((item) => item.id)).size, 51, 'local verification contains duplicate IDs');
+assert.deepEqual(verificationRecords.map((item) => item.id).sort(), inventory.packages.map((item) => item.id).sort(),
+  'local verification and extension inventory differ');
+const verificationById = new Map(verificationRecords.map((item) => [item.id, item]));
+assert.deepEqual(
+  guidance.records.map((item) => item.id).sort(),
+  inventory.packages.map((item) => item.id).sort(),
+  'catalogue guidance and extension inventory differ',
+);
+for (const item of guidance.records) {
+  for (const field of ['purpose', 'useWhen', 'avoidWhen', 'criticalLimit']) {
+    assert.equal(typeof item[field], 'string', `${item.id} lacks ${field}`);
+    assert(item[field].length >= 24, `${item.id} has an incomplete ${field}`);
+  }
+}
+
+const catalogueRoot = path.join(root, 'docs/site/extend/plugin-catalogue');
+const packagePages = fs.readdirSync(catalogueRoot)
+  .filter((name) => name.endsWith('.md') && name !== 'README.md')
+  .sort();
+assert.equal(packagePages.length, 51, 'published catalogue must contain 51 package pages');
+const expectedSections = [
+  '## Authored Guidance', '## When To Use It', '## When Not To Use It',
+  '## Most Important Limit', '## Generated Package Facts', '## Boundaries',
+  '## Registration Summary', '## Failure Behavior', '## Verification Record',
+  '## Source Evidence',
+];
+const auditStatuses = new Map(inventory.packages.map((item) => [item.id, item.auditStatus]));
+for (const name of packagePages) {
+  const id = name.slice(0, -3);
+  const source = fs.readFileSync(path.join(catalogueRoot, name), 'utf8');
+  for (const section of expectedSections) assert(source.includes(section), `${name} lacks ${section}`);
+  assert(source.includes(`Audit status: \`${auditStatuses.get(id)}\`.`), `${name} has a stale audit status`);
+  assert(source.includes(`Local command result on ${verification.date}: \`${verificationById.get(id).result}\`.`),
+    `${name} has a stale local result`);
+  assert(!source.includes('Authored guidance is missing.'), `${name} lacks authored guidance`);
+  assert(source.includes('/blob/' + revision + '/'), `${name} lacks revision-pinned source evidence`);
+  assert(source.includes('[Install and activate](../testing.md#install-and-activate-by-surface)'), `${name} lacks the activation link`);
+  assert(source.includes('[Remove and inspect remaining state](../testing.md#remove-and-inspect-remaining-state)'), `${name} lacks the removal link`);
+  assert(source.includes('Declared manifest facts:'), `${name} lacks complete manifest facts`);
+  assert(source.includes('The separate AP08 guidance file owns'), `${name} does not state content authority`);
+}
+assert(fs.existsSync(path.join(catalogueRoot, 'kubeclaw-ops.md')), 'Codex package page is missing');
+const prismCatalogue = fs.readFileSync(path.join(catalogueRoot, 'kubeclaw-prism.md'), 'utf8');
+assert(prismCatalogue.includes('The Prism agent image copies this extension directly'),
+  'Prism catalogue page does not explain direct image packaging');
+assert(![...auditStatuses.values()].includes('pending'), 'catalogue contains a pending package audit');
+
+const generatedIndex = read('docs/site/extend/plugin-catalogue/README.md');
+assert(generatedIndex.includes('The catalogue contains 51 packages.'));
+assert(generatedIndex.includes('AP08-catalogue-guidance.json'));
+
+const sourceTargets = new Set();
+for (const name of ['README.md', ...packagePages]) {
+  const source = fs.readFileSync(path.join(catalogueRoot, name), 'utf8');
+  for (const match of source.matchAll(new RegExp(`https://github\\.com/datrab/kubeclaw/blob/${revision}/([^#)]+)`, 'gu'))) {
+    sourceTargets.add(match[1]);
+  }
+}
+for (const target of sourceTargets) {
+  execFileSync('git', ['-C', root, 'cat-file', '-e', `${revision}:${target}`]);
+}
+
+const hostLinks = pinnedLinks('docs/site/extend/host-and-engine.md', 25);
+const lifecycleLinks = pinnedLinks('docs/site/extend/testing.md', 10);
+console.log(JSON.stringify({
+  ok: true,
+  pages: packagePages.length + 3,
+  packages: inventory.packages.length,
+  authoredRecords: guidance.records.length,
+  sourceTargets: sourceTargets.size,
+  pinnedLineLinks: hostLinks + lifecycleLinks,
+  auditStatuses: Object.fromEntries([...new Set(auditStatuses.values())]
+    .map((status) => [status, [...auditStatuses.values()].filter((value) => value === status).length])),
+  localResults: Object.fromEntries(verification.groups.map((group) => [group.result,
+    verificationRecords.filter((item) => item.result === group.result).length])),
+}));

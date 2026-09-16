@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 16.09.2026 · Version 24 · Status: AP01–AP07 abgeschlossen; AP08 ist das nächste Arbeitspaket
+Stand: 16.09.2026 · Version 29 · Status: AP01–AP07 abgeschlossen; AP08.0–AP08.9 abgeschlossen, AP08.10 als Nächstes
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -27,7 +27,7 @@ Der vorhandene Blueprint wird kritisch überarbeitet. Seine Kategorien, Seitenst
 
 ## 3. Übersicht der Arbeitspakete
 
-AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist nach der [Nacharbeit und Gegenprüfung](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) **abgeschlossen**. AP04 ist nach der [Abschlussprüfung](AP04-checkpoint.md) ebenfalls **abgeschlossen**. AP05 ordnet im [Lücken- und Schreibplan](AP05-gap-plan.md) jede Leseraufgabe und jeden ermittelten Produktsurface einem konkreten Ziel und einem priorisierten Schreibpaket zu. AP06 liefert und prüft im [Abschlussbericht](AP06-checkpoint.md) den Einstieg und die Architektur. AP07 liefert und prüft im [Abschlussbericht](AP07-checkpoint.md) das vollständige Operations-Handbuch; AP08–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
+AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitung abgeschlossen und nachkontrolliert; AP03 ist nach der [Nacharbeit und Gegenprüfung](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) **abgeschlossen**. AP04 ist nach der [Abschlussprüfung](AP04-checkpoint.md) ebenfalls **abgeschlossen**. AP05 ordnet im [Lücken- und Schreibplan](AP05-gap-plan.md) jede Leseraufgabe und jeden ermittelten Produktsurface einem konkreten Ziel und einem priorisierten Schreibpaket zu. AP06 liefert und prüft im [Abschlussbericht](AP06-checkpoint.md) den Einstieg und die Architektur. AP07 liefert und prüft im [Abschlussbericht](AP07-checkpoint.md) das vollständige Operations-Handbuch. [AP08.0](AP08-plan.md) legt Inventar, Prüfmethode, Seitenverantwortung und Abnahmegates für Erweiterungen fest. [AP08.1](AP08.1-checkpoint.md) liefert die Entscheidungshilfe und die aktuelle Grenze zwischen unterstützten und nicht unterstützten Änderungen. [AP08.2](AP08.2-checkpoint.md) liefert das minimale Pipeline-Plugin vom Paket bis zu Aktivierung, beobachtetem Ergebnis, Fehler und Rücknahme. [AP08.3–AP08.6](AP08.3-AP08.6-checkpoint.md) liefern die fünf Pipeline-Verträge, den effektbehafteten Weg sowie die Buster- und Nova-Erweiterungswege. [AP08.7–AP08.9](AP08.7-AP08.9-checkpoint.md) liefern Host-, Engine- und Lebenszyklus-Anleitungen sowie den vollständigen 51-Paket-Katalog. AP08.10 ist als unabhängige Leserabnahme als Nächstes offen. AP09–AP11 sind **offen**. Ein Paket ist erst abgeschlossen, wenn sein Ergebnis vorhanden und sein Abschlusskriterium nachgewiesen ist.
 
 | ID | Arbeitspaket | Voraussetzung | Greifbares Ergebnis |
 | --- | --- | --- | --- |
@@ -152,18 +152,20 @@ Folgende Aufgaben werden einzeln gegen den Bestand geprüft und vollständig dok
 
 **Abgeschlossen, wenn:** Jeder Betriebsablauf ist durchführbar oder seine konkrete Implementierungsgrenze ist vollständig erklärt. Live-Prüfungen haben getrennte, ausführbare Abnahmeaufträge; ihre Nichtausführung wird nicht als Erfolg ausgegeben.
 
-**Abschlussnachweis:** [AP07 Completion Checkpoint](AP07-checkpoint.md). AP08 ist das nächste Arbeitspaket.
+**Abschlussnachweis:** [AP07 Completion Checkpoint](AP07-checkpoint.md). AP08 läuft; AP08.0 bis AP08.9 sind abgeschlossen.
 
 ### AP08 — Plugins und Erweiterungen
 
-- [ ] Entscheidungshilfe: Wann genügt Konfiguration, wann braucht es ein Plugin, einen Provider/Adapter, eine Engine oder eine Core-Änderung?
-- [ ] Unterstützte Erweiterungspunkte aus dem Code erfassen; Grenzen und nicht unterstützte Varianten ausdrücklich nennen.
-- [ ] Ein vollständiges minimales Plugin vom neuen Paket über Manifest, Registrierung, Konfiguration und Berechtigungen bis zum Test und zur tatsächlichen Einbindung erstellen und prüfen.
-- [ ] Ein praxisnahes Beispiel mit externem Effekt oder Zustand durchgehend erklären: Fehler, Retry, Idempotenz, Abbruch, Resume und Cleanup.
-- [ ] Lebenszyklus, Eingaben/Ausgaben, Schemas, Capabilities/Grants, Artefakte und Versionskompatibilität erklären.
-- [ ] Installation, Aktivierung, Austausch, Update, Deaktivierung und Entfernung inklusive verbleibender Zustände beschreiben.
-- [ ] Eigene Testprovider, Reportadapter, Observer, Integrationen und Worker-Engines anhand der tatsächlich unterstützten Verträge erläutern.
-- [ ] Plugin-Katalog vollständig abgleichen: Zweck, Einsatz, Konfiguration, Grenzen, Fehlerverhalten, Tests und Quellverweise. Gleichartige mechanische Fakten aus vorhandenen Manifesten generieren.
+**In Arbeit:** [AP08.0](AP08-plan.md) ist abgeschlossen. Die reproduzierbare Baseline erfasst 51 installierbare Manifeste, 67 Pipeline-Registrierungen und die zusätzlichen Erweiterungsflächen ohne eigenes Installationsmanifest. [AP08.1](AP08.1-checkpoint.md) liefert die Entscheidungshilfe. [AP08.2](AP08.2-checkpoint.md) liefert den vollständigen minimalen Pipeline-Plugin-Weg mit seinen lokalen Prüfgrenzen. [AP08.3–AP08.6](AP08.3-AP08.6-checkpoint.md) erklären die fünf gemeinsamen Verträge, Effekte und Zustand sowie die Buster- und Nova-Erweiterungen. [AP08.7–AP08.9](AP08.7-AP08.9-checkpoint.md) ergänzen Host- und Engine-Erweiterungen, den vollständigen Lebenszyklus und den geprüften 51-Paket-Katalog. AP08.10 führt als Nächstes die unabhängige Leserabnahme durch.
+
+- [x] Entscheidungshilfe: Wann genügt Konfiguration, wann braucht es ein Plugin, einen Provider/Adapter, eine Engine oder eine Core-Änderung?
+- [x] Unterstützte Erweiterungspunkte aus dem Code erfassen; Grenzen und nicht unterstützte Varianten ausdrücklich nennen.
+- [x] Ein vollständiges minimales Plugin vom neuen Paket über Manifest, Registrierung, Konfiguration und Berechtigungen bis zum Test und zur tatsächlichen Einbindung erstellen und prüfen.
+- [x] Ein praxisnahes Beispiel mit externem Effekt oder Zustand durchgehend erklären: Fehler, Retry, Idempotenz, Abbruch, Resume und Cleanup.
+- [x] Lebenszyklus, Eingaben/Ausgaben, Schemas, Capabilities/Grants, Artefakte und Versionskompatibilität erklären.
+- [x] Installation, Aktivierung, Austausch, Update, Deaktivierung und Entfernung inklusive verbleibender Zustände beschreiben.
+- [x] Eigene Testprovider, Reportadapter, Observer, Integrationen und Worker-Engines anhand der tatsächlich unterstützten Verträge erläutern.
+- [x] Plugin-Katalog vollständig abgleichen: Zweck, Einsatz, Konfiguration, Grenzen, Fehlerverhalten, Tests und Quellverweise. Gleichartige mechanische Fakten aus vorhandenen Manifesten generieren.
 
 **Abgeschlossen, wenn:** Ein Entwickler oder Agent kann die dokumentierten Beispiele ohne verborgenes Projektwissen bauen, testen und einbinden. Für jeden unterstützten Erweiterungstyp existiert eine ausreichende Anleitung; geplante Erweiterungspunkte sind klar markiert.
 

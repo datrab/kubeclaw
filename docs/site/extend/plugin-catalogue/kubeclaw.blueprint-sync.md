@@ -2,24 +2,52 @@
 
 Status: implemented
 Audience: plugin author, operator, maintainer
-Owner: kubeclaw.blueprint-sync
-Evidence: skills/nova/plugins/blueprint-sync/plugin.json
+Owner: plugin-foundation
+Evidence: skills/nova/plugins/blueprint-sync/plugin.json; skills/nova/plugins/blueprint-sync/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: generated during publication
+Last verified: authored guidance and generated facts reviewed at bcf032f241b432bf920baa9ee5f727947921447d
 
-## Purpose
+## Authored Guidance
 
-This package provides 1 registered extension through the canonical plugin runtime.
+Synchronize approved blueprint content into the implementation workspace.
 
 ## When To Use It
 
-Use this package when a pipeline graph needs one of its declared stage types.
+Use it when an approved blueprint must become a bounded repository change.
+
+## When Not To Use It
+
+Do not use it to approve unreviewed architecture or arbitrary files.
+
+## Most Important Limit
+
+The stage is constrained by its declared blueprint and repository inputs.
+
+The package guide explains package-specific behavior. The shared guides explain
+the contract and lifecycle rules that apply to this package.
+
+- [Package guide](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/blueprint-sync/README.md)
+- [Shared extension contracts](../contracts.md)
+- [Proof and failure exercises](../testing.md#use-a-proof-ladder)
+- [Install and activate](../testing.md#install-and-activate-by-surface)
+- [Update or replace](../testing.md#update-or-replace)
+- [Disable safely](../testing.md#disable-safely)
+- [Remove and inspect remaining state](../testing.md#remove-and-inspect-remaining-state)
+- [Host and engine boundaries](../host-and-engine.md)
+
+## Generated Package Facts
+
+- Host: `pipeline-runtime`.
+- Package identity: `kubeclaw.blueprint-sync@1.0.0`.
+- Runtime-role manifest inclusion: `nova`
+- Manifest: [skills/nova/plugins/blueprint-sync/plugin.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/blueprint-sync/plugin.json)
 
 ## Boundaries
 
 - The manifest declares extension identity and requested authority.
-- Platform policy grants authority separately.
-- Core validates lifecycle effects and owns canonical pipeline state.
+- Nova and Buster apply the selection rules for each declared surface.
+- Platform grants or resolved plans supply authority separately from package code.
+- Pipeline Core keeps canonical lifecycle authority.
 - The package cannot use undeclared capabilities.
 
 ## Registration Summary
@@ -36,30 +64,62 @@ Required capabilities: `git.sync`, `git.commit`, `state.append`, `artifacts.writ
 
 Provided capabilities: None.
 
-Configuration schema: `schemas/config.schema.json`
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/blueprint-sync/schemas/config.schema.json)
 
-Input schema: `schemas/input.schema.json`
+Configuration fields:
 
-Result schema: `schemas/result.schema.json`
+The schema declares no top-level fields.
+
+Input schema: [schemas/input.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/blueprint-sync/schemas/input.schema.json)
+
+Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/blueprint-sync/schemas/result.schema.json)
+
+Declared manifest facts:
+
+| Field | Exact declared value |
+| --- | --- |
+| `id` | `sync` |
+| `type` | `kubeclaw.generate.blueprint-sync` |
+| `module` | `src/stage.ts` |
+| `export` | `execute` |
+| `requiredCapabilities` | `["git.sync","git.commit","state.append","artifacts.write","artifacts.read"]` |
+| `configSchema` | `schemas/config.schema.json` |
+| `inputSchema` | `schemas/input.schema.json` |
+| `resultSchema` | `schemas/result.schema.json` |
 
 ## Failure Behavior
 
 Registry validation rejects a missing module, export, schema, or capability declaration.
-Runtime policy rejects authority that the operator did not grant.
-Core records a validated failure without giving the plugin lifecycle authority.
+The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
+Nova or Buster records a bounded failure without giving the package lifecycle authority.
 
-## Verification
+## Verification Record
 
-Run:
+Audit status: `content-written`.
+Local command result on 2026-09-16: `unavailable`.
+
+The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+
+Run the package command:
 
 ```bash
 npm test --prefix skills/nova/plugins/blueprint-sync
 ```
 
-Package tests found: 0.
+Package tests found: 2.
+
+The audit status does not claim live host or cluster acceptance. See the AP08
+checkpoint for the exact local result and unavailable environment boundaries.
 
 ## Source Evidence
 
-- Manifest: `skills/nova/plugins/blueprint-sync/plugin.json`
-- Package root: `skills/nova/plugins/blueprint-sync`
-- Authored package guide: `skills/nova/plugins/blueprint-sync/README.md`
+- Manifest: [skills/nova/plugins/blueprint-sync/plugin.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/blueprint-sync/plugin.json)
+- Authored package guide: [skills/nova/plugins/blueprint-sync/README.md](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/blueprint-sync/README.md)
+- Module for `sync`: [src/stage.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/blueprint-sync/src/stage.ts)
+- Test: [skills/nova/plugins/blueprint-sync/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/blueprint-sync/tests/live-function.test.ts)
+- Test: [skills/nova/plugins/blueprint-sync/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/blueprint-sync/tests/package-boundary.test.mjs)
+
+Generated facts come from the manifest, package metadata, runtime-role inventory,
+schemas, and test-file discovery. The separate AP08 guidance file owns the purpose,
+use, exclusion, and limit text. Publication can refresh facts without inventing or
+silently replacing those explanations.

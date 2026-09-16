@@ -3,6 +3,25 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
+const roleNames = new Set(['nova', 'buster', 'prism']);
+const additionalPlugins = [];
+const roleAdditions = new Map();
+for (let index = 0; index < process.argv.slice(2).length; index += 2) {
+  const option = process.argv.slice(2)[index];
+  const value = process.argv.slice(2)[index + 1];
+  if (!value || !['--additional-plugin', '--role-addition'].includes(option)) {
+    throw new Error('Usage: check-runtime-role-manifests.mjs [--additional-plugin <role=manifest>] [--role-addition <role=plugin-id>]');
+  }
+  const separator = value.indexOf('=');
+  const role = value.slice(0, separator);
+  const item = value.slice(separator + 1);
+  if (separator < 1 || !roleNames.has(role) || !item) throw new Error(`Invalid ${option} value: ${value}`);
+  if (option === '--additional-plugin') additionalPlugins.push({ role, manifestPath: item });
+  else roleAdditions.set(role, [...(roleAdditions.get(role) ?? []), item]);
+}
+for (const [role, additions] of roleAdditions) {
+  assert.equal(new Set(additions).size, additions.length, `${role} has duplicate role additions`);
+}
 const ownership = JSON.parse(fs.readFileSync(path.join(root, 'packaging/runtime/package-ownership.json'), 'utf8'));
 const externalCatalog = JSON.parse(fs.readFileSync(path.join(root, 'packaging/runtime/external-capabilities.json'), 'utf8'));
 assert.equal(externalCatalog.schemaVersion, 'pipeline-runtime-external-capabilities.v1');
@@ -29,6 +48,13 @@ function pluginCatalog() {
       assert(!result.has(manifest.id), `duplicate plugin ID: ${manifest.id}`);
       result.set(manifest.id, { owner, root: path.dirname(manifestPath), manifest });
     }
+  }
+  for (const entry of additionalPlugins) {
+    const manifestPath = path.resolve(root, entry.manifestPath);
+    assert(fs.existsSync(manifestPath), `additional plugin manifest is missing: ${entry.manifestPath}`);
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+    assert(!result.has(manifest.id), `duplicate plugin ID: ${manifest.id}`);
+    result.set(manifest.id, { owner: entry.role, root: path.dirname(manifestPath), manifest });
   }
   return result;
 }
@@ -57,7 +83,8 @@ for (const [pluginId, plugin] of plugins) {
 
 for (const role of ['nova', 'buster', 'prism']) {
   const manifestPath = path.join(root, `packaging/runtime/roles/${role}.json`);
-  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  const sourceManifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  const manifest = { ...sourceManifest, plugins: [...sourceManifest.plugins, ...(roleAdditions.get(role) ?? [])] };
   assert.equal(manifest.schemaVersion, 'pipeline-runtime-role.v1');
   assert.equal(manifest.role, role);
   for (const field of ['packages', 'plugins', 'extensions', 'externalCapabilities']) {
@@ -157,4 +184,9 @@ for (const [directory, expectedRoles] of Object.entries(ownership.sharedPlugins)
   assert.deepEqual([...expectedRoles].sort(), actualRoles, `role manifests disagree with shared package inventory: ${directory}`);
 }
 
-console.log(JSON.stringify({ ok: true, phase: '5.6-C', roles: 3, plugins: plugins.size }));
+for (const entry of additionalPlugins) {
+  const manifest = JSON.parse(fs.readFileSync(path.resolve(root, entry.manifestPath), 'utf8'));
+  assert(roleAdditions.get(entry.role)?.includes(manifest.id), `${entry.role} omits its plugin: ${manifest.id}`);
+}
+console.log(JSON.stringify({ ok: true, phase: '5.6-C', roles: 3, plugins: plugins.size,
+  ...(roleAdditions.size > 0 ? { simulatedRoleAdditions: [...roleAdditions.values()].reduce((sum, values) => sum + values.length, 0) } : {}) }));

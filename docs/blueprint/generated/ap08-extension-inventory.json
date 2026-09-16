@@ -1,0 +1,2232 @@
+{
+  "schemaVersion": "ap08-extension-inventory.v1",
+  "generatedBy": "scripts/ap08-extension-inventory.mjs",
+  "scope": {
+    "installableManifests": [
+      "skills/**/plugin.json",
+      "skills/**/openclaw.plugin.json",
+      "plugins/**/.codex-plugin/plugin.json"
+    ],
+    "separateAuthoringSurfaces": [
+      "configuration-only changes",
+      "pipeline runtime packages and registrations",
+      "OpenClaw host extensions",
+      "Codex plugins and skills",
+      "Worker Core engines and runtime-role inclusion",
+      "core changes"
+    ],
+    "limit": "This file inventories installable manifests. AP08 must audit non-manifest authoring surfaces separately."
+  },
+  "summary": {
+    "installablePackages": 51,
+    "hosts": {
+      "pipeline-runtime": 48,
+      "openclaw": 2,
+      "codex": 1
+    },
+    "registrations": {
+      "stage": 21,
+      "observer": 5,
+      "adapter": 21,
+      "test-provider": 19,
+      "report-adapter": 1,
+      "openclaw-extension": 2,
+      "codex-plugin": 1
+    },
+    "cataloguePages": 51,
+    "cataloguePagesForPackages": 51,
+    "missingCataloguePages": [],
+    "orphanCataloguePages": [],
+    "roleReferencesWithoutManifest": [],
+    "packagesWithoutDetectedTestFiles": [
+      "kubeclaw-ops",
+      "kubeclaw.demo-auth-smoke",
+      "kubeclaw.http"
+    ],
+    "packagesWithoutPackageTestScript": [
+      "kubeclaw-ops",
+      "kubeclaw-prism"
+    ],
+    "packagesWithoutDetectedTestEntry": [
+      "kubeclaw-ops"
+    ],
+    "packagesWithoutDetectedGuide": [],
+    "auditStatuses": {
+      "pending": 0,
+      "source-reviewed": 0,
+      "content-written": 33,
+      "locally-verified": 18,
+      "reader-accepted": 0
+    }
+  },
+  "roleManifests": [
+    {
+      "role": "buster",
+      "manifest": "packaging/runtime/roles/buster.json",
+      "plugins": [
+        "kubeclaw.agent-observability",
+        "kubeclaw.artifact-store",
+        "kubeclaw.api-flow",
+        "kubeclaw.axe",
+        "kubeclaw.lighthouse",
+        "kubeclaw.visual",
+        "kubeclaw.playwright",
+        "kubeclaw.security-providers",
+        "kubeclaw.command-runner",
+        "kubeclaw.network-http",
+        "kubeclaw.openapi",
+        "kubeclaw.runtime-dispatch",
+        "kubeclaw.secret-resolver",
+        "kubeclaw.telemetry-store",
+        "kubeclaw.container-build",
+        "kubeclaw.coverage-budget",
+        "kubeclaw.direct-command",
+        "kubeclaw.demo-auth-smoke",
+        "kubeclaw.junit-report",
+        "kubeclaw.kubernetes-fixture",
+        "kubeclaw.tailscale-exposure",
+        "kubeclaw.http",
+        "kubeclaw.size-budget"
+      ],
+      "extensions": [
+        "kubeclaw-agent-observer"
+      ]
+    },
+    {
+      "role": "nova",
+      "manifest": "packaging/runtime/roles/nova.json",
+      "plugins": [
+        "kubeclaw.agent-observability",
+        "kubeclaw.artifact-store",
+        "kubeclaw.git-workspace",
+        "kubeclaw.network-http",
+        "kubeclaw.notification-observer",
+        "kubeclaw.openclaw-agent-events",
+        "kubeclaw.operator-messaging",
+        "kubeclaw.redis-transport",
+        "kubeclaw.runtime-dispatch",
+        "kubeclaw.secret-resolver",
+        "kubeclaw.state-store",
+        "kubeclaw.telemetry-observer",
+        "kubeclaw.telemetry-store",
+        "kubeclaw.transport-publisher",
+        "kubeclaw.wait-store",
+        "kubeclaw.architecture-validator",
+        "kubeclaw.blueprint-sync",
+        "kubeclaw.buster-quality-gate",
+        "kubeclaw.case-study",
+        "kubeclaw.delivery-lint",
+        "kubeclaw.demo-handoff",
+        "kubeclaw.human-approval",
+        "kubeclaw.implementation-agent",
+        "kubeclaw.lint",
+        "kubeclaw.pipeline-review",
+        "kubeclaw.preflight-contract",
+        "kubeclaw.prism-design",
+        "kubeclaw.project-summary",
+        "kubeclaw.remote-test-gate",
+        "kubeclaw.repository-adapter",
+        "kubeclaw.review"
+      ],
+      "extensions": [
+        "kubeclaw-agent-observer"
+      ]
+    },
+    {
+      "role": "prism",
+      "manifest": "packaging/runtime/roles/prism.json",
+      "plugins": [
+        "kubeclaw.agent-observability",
+        "kubeclaw.artifact-store",
+        "kubeclaw.network-http",
+        "kubeclaw.runtime-dispatch",
+        "kubeclaw.secret-resolver",
+        "kubeclaw.telemetry-store"
+      ],
+      "extensions": [
+        "kubeclaw-agent-observer"
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "id": "kubeclaw-agent-observer",
+      "host": "openclaw",
+      "version": "0.0.0",
+      "root": "skills/common/plugins/openclaw-agent-observer",
+      "manifest": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+      "packageManifest": "skills/common/plugins/openclaw-agent-observer/package.json",
+      "registrations": [
+        {
+          "kind": "openclaw-extension",
+          "id": "kubeclaw-agent-observer",
+          "module": "./src/index.ts"
+        }
+      ],
+      "includedRoles": [
+        "buster",
+        "nova",
+        "prism"
+      ],
+      "authoredGuide": "skills/common/plugins/openclaw-agent-observer/README.md",
+      "authoredGuideWords": 154,
+      "testScript": "node tests/clean-build.test.mjs && node --check scripts/build.mjs && node --check scripts/sync-contract.mjs && npm run typecheck && node tests/config.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node --test tests/remediation.test.ts",
+      "testFiles": [
+        "skills/common/plugins/openclaw-agent-observer/tests/clean-build.test.mjs",
+        "skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs",
+        "skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts",
+        "skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs",
+        "skills/common/plugins/openclaw-agent-observer/tests/remediation.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+      "catalogueWords": 461,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw-ops",
+      "host": "codex",
+      "version": "0.2.0",
+      "root": "plugins/kubeclaw-ops",
+      "manifest": "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+      "packageManifest": null,
+      "registrations": [
+        {
+          "kind": "codex-plugin",
+          "id": "kubeclaw-ops",
+          "skills": "./skills/"
+        }
+      ],
+      "includedRoles": [],
+      "authoredGuide": "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md",
+      "authoredGuideWords": 443,
+      "testScript": null,
+      "testFiles": [],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+      "catalogueWords": 413,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw-prism",
+      "host": "openclaw",
+      "version": "0.1.0",
+      "root": "skills/prism/openclaw-plugin",
+      "manifest": "skills/prism/openclaw-plugin/openclaw.plugin.json",
+      "packageManifest": "skills/prism/openclaw-plugin/package.json",
+      "registrations": [
+        {
+          "kind": "openclaw-extension",
+          "id": "kubeclaw-prism",
+          "module": "./index.mjs"
+        }
+      ],
+      "includedRoles": [],
+      "authoredGuide": "skills/prism/openclaw-plugin/README.md",
+      "authoredGuideWords": 82,
+      "testScript": null,
+      "testFiles": [
+        "skills/prism/openclaw-plugin/index.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+      "catalogueWords": 419,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.agent-observability",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/agent-observability",
+      "manifest": "skills/common/plugins/agent-observability/plugin.json",
+      "packageManifest": "skills/common/plugins/agent-observability/package.json",
+      "registrations": [
+        {
+          "kind": "observer",
+          "id": "ingester",
+          "publicType": "ingester",
+          "module": "src/observers.ts",
+          "export": "ingest",
+          "requiredCapabilities": [
+            "telemetry.emit"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "observer",
+          "id": "evidence",
+          "publicType": "evidence",
+          "module": "src/observers.ts",
+          "export": "recordEvidence",
+          "requiredCapabilities": [
+            "artifacts.write"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster",
+        "nova",
+        "prism"
+      ],
+      "authoredGuide": "skills/common/plugins/agent-observability/README.md",
+      "authoredGuideWords": 50,
+      "testScript": "node tests/observers.unit.test.mjs && node tests/parity.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/common/plugins/agent-observability/tests/live-function.test.ts",
+        "skills/common/plugins/agent-observability/tests/observers.unit.test.mjs",
+        "skills/common/plugins/agent-observability/tests/package-boundary.test.mjs",
+        "skills/common/plugins/agent-observability/tests/parity.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+      "catalogueWords": 546,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.api-flow",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/api-flow",
+      "manifest": "skills/buster/plugins/api-flow/plugin.json",
+      "packageManifest": "skills/buster/plugins/api-flow/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "flow",
+          "publicType": "kubeclaw.api-flow@1",
+          "module": "src/provider.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "network.http"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/api-flow/README.md",
+      "authoredGuideWords": 168,
+      "testScript": "node tests/live-function.test.ts && node tests/remediation.test.ts",
+      "testFiles": [
+        "skills/buster/plugins/api-flow/tests/live-function.test.ts",
+        "skills/buster/plugins/api-flow/tests/remediation.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+      "catalogueWords": 499,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.architecture-validator",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/architecture-validator",
+      "manifest": "skills/nova/plugins/architecture-validator/plugin.json",
+      "packageManifest": "skills/nova/plugins/architecture-validator/package.json",
+      "registrations": [
+        {
+          "kind": "stage",
+          "id": "architecture",
+          "publicType": "kubeclaw.validate.architecture",
+          "module": "src/stage.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "runtime.dispatch",
+            "artifacts.write",
+            "git.repository.read",
+            "artifacts.read"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/architecture-validator/README.md",
+      "authoredGuideWords": 218,
+      "testScript": "node tests/protocol.unit.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
+        "skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+      "catalogueWords": 453,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.artifact-store",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/artifact-store",
+      "manifest": "skills/common/plugins/artifact-store/plugin.json",
+      "packageManifest": "skills/common/plugins/artifact-store/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "artifact-store",
+          "publicType": "artifact-store",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [],
+          "providedCapabilities": [
+            "artifacts.read",
+            "artifacts.write"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "buster",
+        "nova",
+        "prism"
+      ],
+      "authoredGuide": "skills/common/plugins/artifact-store/README.md",
+      "authoredGuideWords": 464,
+      "testScript": "node tests/package-boundary.test.mjs && node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/common/plugins/artifact-store/tests/live-function.test.ts",
+        "skills/common/plugins/artifact-store/tests/package-boundary.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+      "catalogueWords": 453,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.axe",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/axe",
+      "manifest": "skills/buster/plugins/axe/plugin.json",
+      "packageManifest": "skills/buster/plugins/axe/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "axe",
+          "publicType": "kubeclaw.axe@1",
+          "module": "src/provider.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "browser.axe"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/axe/README.md",
+      "authoredGuideWords": 92,
+      "testScript": "node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/buster/plugins/axe/tests/live-function.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+      "catalogueWords": 516,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.blueprint-sync",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/blueprint-sync",
+      "manifest": "skills/nova/plugins/blueprint-sync/plugin.json",
+      "packageManifest": "skills/nova/plugins/blueprint-sync/package.json",
+      "registrations": [
+        {
+          "kind": "stage",
+          "id": "sync",
+          "publicType": "kubeclaw.generate.blueprint-sync",
+          "module": "src/stage.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "git.sync",
+            "git.commit",
+            "state.append",
+            "artifacts.write",
+            "artifacts.read"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/blueprint-sync/README.md",
+      "authoredGuideWords": 126,
+      "testScript": "node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
+        "skills/nova/plugins/blueprint-sync/tests/package-boundary.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+      "catalogueWords": 449,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.buster-quality-gate",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/buster-quality-gate",
+      "manifest": "skills/nova/plugins/buster-quality-gate/plugin.json",
+      "packageManifest": "skills/nova/plugins/buster-quality-gate/package.json",
+      "registrations": [
+        {
+          "kind": "stage",
+          "id": "quality",
+          "publicType": "kubeclaw.test.quality-evaluation",
+          "module": "src/stage.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "test.plan.execute",
+            "runtime.dispatch",
+            "artifacts.write",
+            "artifacts.read"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/buster-quality-gate/README.md",
+      "authoredGuideWords": 78,
+      "testScript": "node tests/protocol.test.ts && node tests/suite-first.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts",
+        "skills/nova/plugins/buster-quality-gate/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts",
+        "skills/nova/plugins/buster-quality-gate/tests/suite-first.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+      "catalogueWords": 466,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.case-study",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/case-study",
+      "manifest": "skills/nova/plugins/case-study/plugin.json",
+      "packageManifest": "skills/nova/plugins/case-study/package.json",
+      "registrations": [
+        {
+          "kind": "stage",
+          "id": "case-study",
+          "publicType": "kubeclaw.report.case-study",
+          "module": "src/stage.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "runtime.dispatch",
+            "artifacts.write",
+            "report.evidence.read"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/case-study/README.md",
+      "authoredGuideWords": 394,
+      "testScript": "node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/nova/plugins/case-study/tests/live-function.test.ts",
+        "skills/nova/plugins/case-study/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/case-study/tests/protocol.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+      "catalogueWords": 442,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.command-runner",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/command-runner",
+      "manifest": "skills/common/plugins/command-runner/plugin.json",
+      "packageManifest": "skills/common/plugins/command-runner/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "command",
+          "publicType": "command",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [],
+          "providedCapabilities": [
+            "command.execute"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/common/plugins/command-runner/README.md",
+      "authoredGuideWords": 340,
+      "testScript": "node tests/package-boundary.test.mjs && node tests/live-function.test.ts && node tests/process-group.test.ts && node tests/process-group-exit.test.ts",
+      "testFiles": [
+        "skills/common/plugins/command-runner/tests/live-function.test.ts",
+        "skills/common/plugins/command-runner/tests/package-boundary.test.mjs",
+        "skills/common/plugins/command-runner/tests/process-group-exit.test.ts",
+        "skills/common/plugins/command-runner/tests/process-group.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+      "catalogueWords": 448,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.container-build",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/container-build",
+      "manifest": "skills/buster/plugins/container-build/plugin.json",
+      "packageManifest": "skills/buster/plugins/container-build/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "buildkit",
+          "publicType": "kubeclaw.container-build@1",
+          "module": "src/provider.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "container.build"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/container-build/README.md",
+      "authoredGuideWords": 101,
+      "testScript": "node tests/deadline.test.mts && node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/buster/plugins/container-build/tests/deadline.test.mts",
+        "skills/buster/plugins/container-build/tests/live-function.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+      "catalogueWords": 474,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.coverage-budget",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/coverage-budget",
+      "manifest": "skills/buster/plugins/coverage-budget/plugin.json",
+      "packageManifest": "skills/buster/plugins/coverage-budget/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "lcov",
+          "publicType": "kubeclaw.coverage-budget@1",
+          "module": "src/provider.js",
+          "export": "provider",
+          "requiredCapabilities": [],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/coverage-budget/README.md",
+      "authoredGuideWords": 112,
+      "testScript": "node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/buster/plugins/coverage-budget/tests/live-function.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+      "catalogueWords": 541,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.delivery-lint",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/delivery-lint",
+      "manifest": "skills/nova/plugins/delivery-lint/plugin.json",
+      "packageManifest": "skills/nova/plugins/delivery-lint/package.json",
+      "registrations": [
+        {
+          "kind": "stage",
+          "id": "delivery-lint",
+          "publicType": "kubeclaw.lint.delivery",
+          "module": "src/stage.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "git.repository.read",
+            "artifacts.write"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/delivery-lint/README.md",
+      "authoredGuideWords": 361,
+      "testScript": "node tests/package-boundary.test.mjs && node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
+        "skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+      "catalogueWords": 445,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.demo-auth-smoke",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/demo-auth-smoke",
+      "manifest": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+      "packageManifest": "skills/buster/plugins/demo-auth-smoke/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "session",
+          "publicType": "kubeclaw.demo-auth-smoke@1",
+          "module": "src/provider.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "network.http"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/demo-auth-smoke/README.md",
+      "authoredGuideWords": 294,
+      "testScript": "node --test ../../../../tests/verification/integration/demo-auth-smoke-live.test.ts",
+      "testFiles": [],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+      "catalogueWords": 516,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.demo-handoff",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/demo-handoff",
+      "manifest": "skills/nova/plugins/demo-handoff/plugin.json",
+      "packageManifest": "skills/nova/plugins/demo-handoff/package.json",
+      "registrations": [
+        {
+          "kind": "stage",
+          "id": "candidate",
+          "publicType": "kubeclaw.demo.candidate",
+          "module": "src/candidate.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "test.plan.evidence",
+            "artifacts.write"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "stage",
+          "id": "delivery",
+          "publicType": "kubeclaw.demo.delivery",
+          "module": "src/delivery.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "demo.handoff",
+            "artifacts.write"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "stage",
+          "id": "ready",
+          "publicType": "kubeclaw.demo.ready",
+          "module": "src/ready.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "demo.handoff",
+            "artifacts.write"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "adapter",
+          "id": "handoff",
+          "publicType": "handoff",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [
+            "artifacts.read",
+            "test.plan.evidence",
+            "operator.request",
+            "operator.receipt"
+          ],
+          "providedCapabilities": [
+            "demo.handoff"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/demo-handoff/README.md",
+      "authoredGuideWords": 587,
+      "testScript": "cd ../../../.. && node --test skills/nova/plugins/demo-handoff/tests/*.test.mts skills/nova/plugins/demo-handoff/tests/*.test.mjs",
+      "testFiles": [
+        "skills/nova/plugins/demo-handoff/tests/compiler.test.mjs",
+        "skills/nova/plugins/demo-handoff/tests/controller-client.test.mts",
+        "skills/nova/plugins/demo-handoff/tests/handoff.test.mts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+      "catalogueWords": 678,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.direct-command",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/direct-command",
+      "manifest": "skills/buster/plugins/direct-command/plugin.json",
+      "packageManifest": "skills/buster/plugins/direct-command/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "command",
+          "publicType": "kubeclaw.direct-command@1",
+          "module": "src/provider.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "command.execute"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/direct-command/README.md",
+      "authoredGuideWords": 143,
+      "testScript": "node ../../../../tests/verification/integration/direct-command-output-contract.test.mts && node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/buster/plugins/direct-command/tests/live-function.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+      "catalogueWords": 705,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.git-workspace",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/git-workspace",
+      "manifest": "skills/common/plugins/git-workspace/plugin.json",
+      "packageManifest": "skills/common/plugins/git-workspace/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "git",
+          "publicType": "git",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [],
+          "providedCapabilities": [
+            "git.workspace.create",
+            "git.workspace.remove",
+            "git.commit",
+            "git.merge",
+            "git.sync"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/common/plugins/git-workspace/README.md",
+      "authoredGuideWords": 292,
+      "testScript": "node tests/package-boundary.test.mjs && node tests/live-function.test.ts && node tests/sync-disposition.test.ts",
+      "testFiles": [
+        "skills/common/plugins/git-workspace/tests/live-function.test.ts",
+        "skills/common/plugins/git-workspace/tests/package-boundary.test.mjs",
+        "skills/common/plugins/git-workspace/tests/sync-disposition.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+      "catalogueWords": 459,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.http",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/http",
+      "manifest": "skills/buster/plugins/http/plugin.json",
+      "packageManifest": "skills/buster/plugins/http/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "request",
+          "publicType": "kubeclaw.http@1",
+          "module": "src/provider.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "network.http"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/http/README.md",
+      "authoredGuideWords": 92,
+      "testScript": "node ../../../../tests/verification/integration/http-provider-live.test.ts",
+      "testFiles": [],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+      "catalogueWords": 498,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.human-approval",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/human-approval",
+      "manifest": "skills/nova/plugins/human-approval/plugin.json",
+      "packageManifest": "skills/nova/plugins/human-approval/package.json",
+      "registrations": [
+        {
+          "kind": "stage",
+          "id": "approval",
+          "publicType": "kubeclaw.decision.human-approval",
+          "module": "src/stage.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "operator.request",
+            "signal.wait"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "stage",
+          "id": "architecture-approval",
+          "publicType": "kubeclaw.decision.architecture-approval",
+          "module": "src/architecture-approval.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "artifacts.read",
+            "operator.request",
+            "signal.wait",
+            "git.repository.read",
+            "artifacts.write"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/human-approval/README.md",
+      "authoredGuideWords": 236,
+      "testScript": "node tests/package-boundary.test.mjs && node tests/approval.unit.test.mjs && node ../../../../tests/verification/integration/architecture-approval.test.mts && node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/nova/plugins/human-approval/tests/approval.unit.test.mjs",
+        "skills/nova/plugins/human-approval/tests/live-function.test.ts",
+        "skills/nova/plugins/human-approval/tests/package-boundary.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+      "catalogueWords": 535,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.implementation-agent",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/implementation-agent",
+      "manifest": "skills/nova/plugins/implementation-agent/plugin.json",
+      "packageManifest": "skills/nova/plugins/implementation-agent/package.json",
+      "registrations": [
+        {
+          "kind": "stage",
+          "id": "implementation",
+          "publicType": "kubeclaw.agent.implementation",
+          "module": "src/stage.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "runtime.dispatch",
+            "git.workspace.create",
+            "git.workspace.remove",
+            "git.commit",
+            "git.merge",
+            "artifacts.read",
+            "artifacts.write"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/implementation-agent/README.md",
+      "authoredGuideWords": 240,
+      "testScript": "node tests/protocol.test.ts && node tests/package-boundary.test.mjs && node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
+        "skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/implementation-agent/tests/protocol.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+      "catalogueWords": 457,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.junit-report",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/junit-report-adapter",
+      "manifest": "skills/buster/plugins/junit-report-adapter/plugin.json",
+      "packageManifest": "skills/buster/plugins/junit-report-adapter/package.json",
+      "registrations": [
+        {
+          "kind": "report-adapter",
+          "id": "junit",
+          "publicType": "junit",
+          "module": "src/adapter.js",
+          "export": "adapt",
+          "requiredCapabilities": [],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/junit-report-adapter/README.md",
+      "authoredGuideWords": 263,
+      "testScript": "node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs",
+        "skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+      "catalogueWords": 421,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.kubernetes-fixture",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/kubernetes-fixture",
+      "manifest": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+      "packageManifest": "skills/buster/plugins/kubernetes-fixture/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "deployment",
+          "publicType": "kubeclaw.kubernetes-fixture@1",
+          "module": "src/provider.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "kubernetes.fixture"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/kubernetes-fixture/README.md",
+      "authoredGuideWords": 152,
+      "testScript": "node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+      "catalogueWords": 527,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.lighthouse",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/lighthouse",
+      "manifest": "skills/buster/plugins/lighthouse/plugin.json",
+      "packageManifest": "skills/buster/plugins/lighthouse/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "lighthouse",
+          "publicType": "kubeclaw.lighthouse@1",
+          "module": "src/provider.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "browser.lighthouse"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/lighthouse/README.md",
+      "authoredGuideWords": 89,
+      "testScript": "node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/buster/plugins/lighthouse/tests/live-function.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+      "catalogueWords": 514,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.lint",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/lint",
+      "manifest": "skills/nova/plugins/lint/plugin.json",
+      "packageManifest": "skills/nova/plugins/lint/package.json",
+      "registrations": [
+        {
+          "kind": "stage",
+          "id": "pre-check",
+          "publicType": "kubeclaw.lint.pre-check",
+          "module": "src/stage.ts",
+          "export": "executePreCheck",
+          "requiredCapabilities": [
+            "lint.execute",
+            "artifacts.write",
+            "artifacts.read"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "stage",
+          "id": "full",
+          "publicType": "kubeclaw.lint.full",
+          "module": "src/stage.ts",
+          "export": "executeFull",
+          "requiredCapabilities": [
+            "lint.execute",
+            "artifacts.write",
+            "artifacts.read"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "adapter",
+          "id": "executor",
+          "publicType": "executor",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [],
+          "providedCapabilities": [
+            "lint.execute"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/lint/README.md",
+      "authoredGuideWords": 693,
+      "testScript": "node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node tests/adapter-boundary.test.mjs && node tests/discovery.test.mjs && node tests/eslint-discipline.test.mjs && node tests/eslint-type-evidence.test.mjs && node --test tests/remediation.test.mjs && node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/nova/plugins/lint/tests/adapter-boundary.test.mjs",
+        "skills/nova/plugins/lint/tests/discovery.test.mjs",
+        "skills/nova/plugins/lint/tests/eslint-discipline.test.mjs",
+        "skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs",
+        "skills/nova/plugins/lint/tests/live-function.test.ts",
+        "skills/nova/plugins/lint/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/lint/tests/remediation.test.mjs",
+        "skills/nova/plugins/lint/tests/stage.unit.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+      "catalogueWords": 626,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.network-http",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/network-http",
+      "manifest": "skills/common/plugins/network-http/plugin.json",
+      "packageManifest": "skills/common/plugins/network-http/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "http",
+          "publicType": "http",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [],
+          "providedCapabilities": [
+            "network.http"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "buster",
+        "nova",
+        "prism"
+      ],
+      "authoredGuide": "skills/common/plugins/network-http/README.md",
+      "authoredGuideWords": 177,
+      "testScript": "node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node tests/streaming.test.ts",
+      "testFiles": [
+        "skills/common/plugins/network-http/tests/live-function.test.ts",
+        "skills/common/plugins/network-http/tests/package-boundary.test.mjs",
+        "skills/common/plugins/network-http/tests/streaming.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+      "catalogueWords": 457,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.notification-observer",
+      "host": "pipeline-runtime",
+      "version": "1.1.0",
+      "root": "skills/common/plugins/notification-observer",
+      "manifest": "skills/common/plugins/notification-observer/plugin.json",
+      "packageManifest": "skills/common/plugins/notification-observer/package.json",
+      "registrations": [
+        {
+          "kind": "observer",
+          "id": "notifications",
+          "publicType": "notifications",
+          "module": "src/observer.ts",
+          "export": "observe",
+          "requiredCapabilities": [
+            "operator.request"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "observer",
+          "id": "preview-delivery",
+          "publicType": "preview-delivery",
+          "module": "src/observer.ts",
+          "export": "deliverPreview",
+          "requiredCapabilities": [
+            "operator.request"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/common/plugins/notification-observer/README.md",
+      "authoredGuideWords": 154,
+      "testScript": "node tests/observer.unit.test.mjs && node tests/parity.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/common/plugins/notification-observer/tests/live-function.test.ts",
+        "skills/common/plugins/notification-observer/tests/observer.unit.test.mjs",
+        "skills/common/plugins/notification-observer/tests/package-boundary.test.mjs",
+        "skills/common/plugins/notification-observer/tests/parity.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+      "catalogueWords": 565,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.openapi",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/openapi",
+      "manifest": "skills/buster/plugins/openapi/plugin.json",
+      "packageManifest": "skills/buster/plugins/openapi/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "operations",
+          "publicType": "kubeclaw.openapi@1",
+          "module": "src/provider.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "network.http"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/openapi/README.md",
+      "authoredGuideWords": 215,
+      "testScript": "node tests/live-function.test.ts && node tests/remediation.test.ts",
+      "testFiles": [
+        "skills/buster/plugins/openapi/tests/live-function.test.ts",
+        "skills/buster/plugins/openapi/tests/remediation.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+      "catalogueWords": 497,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.openclaw-agent-events",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/openclaw-agent-events",
+      "manifest": "skills/common/plugins/openclaw-agent-events/plugin.json",
+      "packageManifest": "skills/common/plugins/openclaw-agent-events/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "source",
+          "publicType": "source",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [],
+          "providedCapabilities": [
+            "agent.events.subscribe"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/common/plugins/openclaw-agent-events/README.md",
+      "authoredGuideWords": 191,
+      "testScript": "node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts",
+        "skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+      "catalogueWords": 452,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.operator-messaging",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/operator-messaging",
+      "manifest": "skills/common/plugins/operator-messaging/plugin.json",
+      "packageManifest": "skills/common/plugins/operator-messaging/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "operator",
+          "publicType": "operator",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [
+            "network.http",
+            "secrets.read"
+          ],
+          "providedCapabilities": [
+            "operator.request",
+            "operator.receipt"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/common/plugins/operator-messaging/README.md",
+      "authoredGuideWords": 610,
+      "testScript": "node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
+        "skills/common/plugins/operator-messaging/tests/package-boundary.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+      "catalogueWords": 445,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.pipeline-review",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/pipeline-review",
+      "manifest": "skills/nova/plugins/pipeline-review/plugin.json",
+      "packageManifest": "skills/nova/plugins/pipeline-review/package.json",
+      "registrations": [
+        {
+          "kind": "stage",
+          "id": "review",
+          "publicType": "kubeclaw.report.pipeline-review",
+          "module": "src/stage.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "runtime.dispatch",
+            "artifacts.write",
+            "report.evidence.read"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "adapter",
+          "id": "evidence",
+          "publicType": "evidence",
+          "module": "src/evidence-adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [
+            "artifacts.read"
+          ],
+          "providedCapabilities": [
+            "report.evidence.read"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/pipeline-review/README.md",
+      "authoredGuideWords": 390,
+      "testScript": "node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/nova/plugins/pipeline-review/tests/live-function.test.ts",
+        "skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/pipeline-review/tests/protocol.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+      "catalogueWords": 519,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.playwright",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/playwright",
+      "manifest": "skills/buster/plugins/playwright/plugin.json",
+      "packageManifest": "skills/buster/plugins/playwright/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "playwright",
+          "publicType": "kubeclaw.playwright@1",
+          "module": "src/provider.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "browser.playwright"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/playwright/README.md",
+      "authoredGuideWords": 133,
+      "testScript": "node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/buster/plugins/playwright/tests/fixture/specs/home.spec.ts",
+        "skills/buster/plugins/playwright/tests/live-function.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+      "catalogueWords": 519,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.preflight-contract",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/preflight-contract",
+      "manifest": "skills/nova/plugins/preflight-contract/plugin.json",
+      "packageManifest": "skills/nova/plugins/preflight-contract/package.json",
+      "registrations": [
+        {
+          "kind": "stage",
+          "id": "validate",
+          "publicType": "kubeclaw.validate.preflight-contract",
+          "module": "src/stage.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "git.repository.read",
+            "artifacts.write"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "stage",
+          "id": "source",
+          "publicType": "kubeclaw.validate.source-preflight",
+          "module": "src/source-stage.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "git.repository.read",
+            "artifacts.write"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/preflight-contract/README.md",
+      "authoredGuideWords": 404,
+      "testScript": "node tests/package-boundary.test.mjs && node tests/declarations.unit.test.mjs && node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs",
+        "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
+        "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+      "catalogueWords": 520,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.prism-design",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/prism-design",
+      "manifest": "skills/nova/plugins/prism-design/plugin.json",
+      "packageManifest": "skills/nova/plugins/prism-design/package.json",
+      "registrations": [
+        {
+          "kind": "stage",
+          "id": "design",
+          "publicType": "kubeclaw.design.prism",
+          "module": "src/stage.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "runtime.dispatch",
+            "artifacts.read",
+            "artifacts.write",
+            "operator.request",
+            "signal.wait"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/prism-design/README.md",
+      "authoredGuideWords": 182,
+      "testScript": "node tests/live-function.test.ts && node ../../../../tests/verification/integration/prism-wait.test.mts && node ../../../../tests/verification/integration/prism-archive.test.mts",
+      "testFiles": [
+        "skills/nova/plugins/prism-design/tests/live-function.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+      "catalogueWords": 454,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.project-summary",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/project-summary",
+      "manifest": "skills/nova/plugins/project-summary/plugin.json",
+      "packageManifest": "skills/nova/plugins/project-summary/package.json",
+      "registrations": [
+        {
+          "kind": "stage",
+          "id": "summary",
+          "publicType": "kubeclaw.report.project-summary",
+          "module": "src/stage.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "artifacts.read",
+            "artifacts.write"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/project-summary/README.md",
+      "authoredGuideWords": 293,
+      "testScript": "node ../../../../tests/verification/integration/project-summary.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+        "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+      "catalogueWords": 447,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.redis-transport",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/redis-transport",
+      "manifest": "skills/common/plugins/redis-transport/plugin.json",
+      "packageManifest": "skills/common/plugins/redis-transport/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "publisher",
+          "publicType": "publisher",
+          "module": "src/adapter.ts",
+          "export": "activatePublisher",
+          "requiredCapabilities": [
+            "secrets.read"
+          ],
+          "providedCapabilities": [
+            "transport.publish"
+          ]
+        },
+        {
+          "kind": "adapter",
+          "id": "telemetry",
+          "publicType": "telemetry",
+          "module": "src/adapter.ts",
+          "export": "activateTelemetry",
+          "requiredCapabilities": [
+            "secrets.read"
+          ],
+          "providedCapabilities": [
+            "telemetry.emit"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/common/plugins/redis-transport/README.md",
+      "authoredGuideWords": 275,
+      "testScript": "node tests/live-function.test.ts && node tests/package-boundary.test.ts",
+      "testFiles": [
+        "skills/common/plugins/redis-transport/tests/live-function.test.ts",
+        "skills/common/plugins/redis-transport/tests/package-boundary.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+      "catalogueWords": 515,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.remote-test-gate",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/remote-test-gate",
+      "manifest": "skills/nova/plugins/remote-test-gate/plugin.json",
+      "packageManifest": "skills/nova/plugins/remote-test-gate/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "plan",
+          "publicType": "plan",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [
+            "secrets.read"
+          ],
+          "providedCapabilities": [
+            "test.plan.execute"
+          ]
+        },
+        {
+          "kind": "adapter",
+          "id": "evidence",
+          "publicType": "evidence",
+          "module": "src/evidence-adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [
+            "artifacts.read"
+          ],
+          "providedCapabilities": [
+            "test.plan.evidence"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/remote-test-gate/README.md",
+      "authoredGuideWords": 37,
+      "testScript": "node tests/live-function.test.ts && node --test tests/evidence-projection.test.ts",
+      "testFiles": [
+        "skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts",
+        "skills/nova/plugins/remote-test-gate/tests/live-function.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+      "catalogueWords": 515,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.repository-adapter",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/repository-adapter",
+      "manifest": "skills/nova/plugins/repository-adapter/plugin.json",
+      "packageManifest": "skills/nova/plugins/repository-adapter/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "repository",
+          "publicType": "repository",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [],
+          "providedCapabilities": [
+            "git.repository.read"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/repository-adapter/README.md",
+      "authoredGuideWords": 331,
+      "testScript": "node tests/package-boundary.test.mjs && node tests/live-function.test.ts && node tests/path-safety.test.ts",
+      "testFiles": [
+        "skills/nova/plugins/repository-adapter/tests/live-function.test.ts",
+        "skills/nova/plugins/repository-adapter/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/repository-adapter/tests/path-safety.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+      "catalogueWords": 436,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.review",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/nova/plugins/review",
+      "manifest": "skills/nova/plugins/review/plugin.json",
+      "packageManifest": "skills/nova/plugins/review/package.json",
+      "registrations": [
+        {
+          "kind": "stage",
+          "id": "review",
+          "publicType": "kubeclaw.decision.review",
+          "module": "src/stage.ts",
+          "export": "execute",
+          "requiredCapabilities": [
+            "runtime.dispatch",
+            "git.repository.read",
+            "artifacts.read",
+            "artifacts.write"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "stage",
+          "id": "repository-audit",
+          "publicType": "kubeclaw.audit.repository-review",
+          "module": "src/repository-audit-stage.ts",
+          "export": "executeRepositoryAudit",
+          "requiredCapabilities": [
+            "runtime.dispatch",
+            "git.repository.read",
+            "artifacts.read",
+            "artifacts.write"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "stage",
+          "id": "repository-revalidation",
+          "publicType": "kubeclaw.audit.repository-review-revalidation",
+          "module": "src/repository-revalidation-stage.ts",
+          "export": "executeRepositoryRevalidation",
+          "requiredCapabilities": [
+            "runtime.dispatch",
+            "git.repository.read",
+            "artifacts.read",
+            "artifacts.write"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/nova/plugins/review/README.md",
+      "authoredGuideWords": 2117,
+      "testScript": "npm run test:cluster && npm run schema:check && node tests/repository-review-profile.unit.test.mjs && node tests/review-prompt-budget.unit.test.mjs && node tests/review-quality-corpus.unit.test.mjs && node tests/review-snapshot-inventory.unit.test.mjs && node tests/review-map-artifacts.unit.test.mjs && node tests/review-fact-extractors.unit.test.mjs && node tests/review-graph.unit.test.mjs && node tests/review-scale-slicing.unit.test.mjs && node tests/scalable-review-topology.unit.test.mjs && node tests/scalable-review-jobs.unit.test.mjs && node tests/scalable-review-verification.unit.test.mjs && node tests/review-content-cache.unit.test.mjs && node tests/scalable-review-compiler.unit.test.mjs && node tests/review-governor.unit.test.mjs && node tests/review-report-contract.unit.test.mjs && node tests/review-report-builder.unit.test.mjs && node tests/simplification-contract.unit.test.mjs && node tests/simplification-miner.unit.test.mjs && node tests/simplification-manifest.unit.test.mjs && node tests/review-bundle-contract.unit.test.mjs && node tests/review-bundle-snapshot.unit.test.mjs && node tests/review-context-selection.unit.test.mjs && node tests/review-context-production.unit.test.mjs && node tests/review-slicing.unit.test.mjs && node tests/echo-review-output.unit.test.mjs && node tests/echo-review-verification.unit.test.mjs && node tests/review-proposal-preflight.unit.test.mjs && node tests/review-verification-reconciliation.unit.test.mjs && node tests/review-verdict-policy.unit.test.mjs && node tests/review-verified-findings.unit.test.mjs && node tests/review-policy-contract.unit.test.mjs && node tests/review-invariants.unit.test.mjs && node tests/review-policy-resolver.unit.test.mjs && node tests/review-policy-profiles.unit.test.mjs && node tests/review-reducer.unit.test.mjs && node tests/review-decision-matrix.unit.test.mjs && node tests/review-contract-parity.unit.test.mjs && node tests/review-evaluation-metadata.unit.test.mjs && node tests/review-stage-input.unit.test.mjs && node tests/review-stage-verification.unit.test.mjs && node tests/protocol.unit.test.mjs && node tests/stage.unit.test.mjs && node tests/live-function.test.ts && node --test tests/review-evidence-encoding-independent.test.mjs tests/review-evidence-live-locales.test.mjs tests/review-evidence-schema-independent.test.mjs && node tests/package-boundary.test.mjs && node tests/remediation.test.mjs && node tests/repository-review-io.test.ts && npm run test:coverage",
+      "testFiles": [
+        "skills/nova/plugins/review/tests/echo-review-output.unit.test.mjs",
+        "skills/nova/plugins/review/tests/echo-review-verification.unit.test.mjs",
+        "skills/nova/plugins/review/tests/live-function.test.ts",
+        "skills/nova/plugins/review/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/review/tests/protocol.unit.test.mjs",
+        "skills/nova/plugins/review/tests/remediation.test.mjs",
+        "skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs",
+        "skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs",
+        "skills/nova/plugins/review/tests/repository-review-io.test.ts",
+        "skills/nova/plugins/review/tests/repository-review-profile.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-bundle-contract.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-bundle-snapshot.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-cluster-contract.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-cluster-identity.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-content-cache.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-context-production.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-context-selection.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-contract-parity.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-coverage.test.mts",
+        "skills/nova/plugins/review/tests/review-decision-matrix.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-evaluation-metadata.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-evidence-authority.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs",
+        "skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs",
+        "skills/nova/plugins/review/tests/review-evidence-schema-independent.test.mjs",
+        "skills/nova/plugins/review/tests/review-fact-extractors.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-governor.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-graph.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-invariants.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-map-artifacts.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-policy-contract.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-policy-profiles.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-policy-resolver.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-prompt-budget.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-proposal-preflight.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-quality-corpus.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-reducer.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-report-builder.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-report-contract.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-report-encoding.test.mjs",
+        "skills/nova/plugins/review/tests/review-scale-slicing.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-slicing.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-snapshot-inventory.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-stage-input.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-stage-verification.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-verdict-policy.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-verification-reconciliation.unit.test.mjs",
+        "skills/nova/plugins/review/tests/review-verified-findings.unit.test.mjs",
+        "skills/nova/plugins/review/tests/scalable-review-compiler.unit.test.mjs",
+        "skills/nova/plugins/review/tests/scalable-review-jobs.unit.test.mjs",
+        "skills/nova/plugins/review/tests/scalable-review-topology.unit.test.mjs",
+        "skills/nova/plugins/review/tests/scalable-review-verification.unit.test.mjs",
+        "skills/nova/plugins/review/tests/simplification-contract.unit.test.mjs",
+        "skills/nova/plugins/review/tests/simplification-fact-producer.unit.test.mjs",
+        "skills/nova/plugins/review/tests/simplification-manifest.unit.test.mjs",
+        "skills/nova/plugins/review/tests/simplification-miner.unit.test.mjs",
+        "skills/nova/plugins/review/tests/stage.unit.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+      "catalogueWords": 872,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.runtime-dispatch",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/runtime-dispatch",
+      "manifest": "skills/common/plugins/runtime-dispatch/plugin.json",
+      "packageManifest": "skills/common/plugins/runtime-dispatch/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "runtime",
+          "publicType": "runtime",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [
+            "network.http",
+            "secrets.read"
+          ],
+          "providedCapabilities": [
+            "runtime.dispatch"
+          ]
+        },
+        {
+          "kind": "adapter",
+          "id": "openclaw",
+          "publicType": "openclaw",
+          "module": "src/openclaw-adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [
+            "git.repository.read",
+            "network.http",
+            "secrets.read"
+          ],
+          "providedCapabilities": [
+            "runtime.dispatch"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "buster",
+        "nova",
+        "prism"
+      ],
+      "authoredGuide": "skills/common/plugins/runtime-dispatch/README.md",
+      "authoredGuideWords": 382,
+      "testScript": "node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node ../../../../tests/verification/reliability/repository-result-paths.test.mjs",
+      "testFiles": [
+        "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+        "skills/common/plugins/runtime-dispatch/tests/package-boundary.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+      "catalogueWords": 497,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.secret-resolver",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/secret-resolver",
+      "manifest": "skills/common/plugins/secret-resolver/plugin.json",
+      "packageManifest": "skills/common/plugins/secret-resolver/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "secrets",
+          "publicType": "secrets",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [],
+          "providedCapabilities": [
+            "secrets.read"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "buster",
+        "nova",
+        "prism"
+      ],
+      "authoredGuide": "skills/common/plugins/secret-resolver/README.md",
+      "authoredGuideWords": 44,
+      "testScript": "node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/common/plugins/secret-resolver/tests/live-function.test.ts",
+        "skills/common/plugins/secret-resolver/tests/package-boundary.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+      "catalogueWords": 430,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.security-providers",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/security-providers",
+      "manifest": "skills/buster/plugins/security-providers/plugin.json",
+      "packageManifest": "skills/buster/plugins/security-providers/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "headers",
+          "publicType": "kubeclaw.security-headers@1",
+          "module": "src/headers.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "network.http"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "test-provider",
+          "id": "dependency-trivy",
+          "publicType": "kubeclaw.dependency-scan-trivy@1",
+          "module": "src/dependency.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "security.scan"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "test-provider",
+          "id": "image-trivy",
+          "publicType": "kubeclaw.image-scan-trivy@1",
+          "module": "src/image.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "security.scan"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "test-provider",
+          "id": "kubernetes-policy",
+          "publicType": "kubeclaw.kubernetes-policy-security@1",
+          "module": "src/kubernetes-policy.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "security.scan"
+          ],
+          "providedCapabilities": []
+        },
+        {
+          "kind": "test-provider",
+          "id": "kubernetes-runtime",
+          "publicType": "kubeclaw.kubernetes-runtime-security@1",
+          "module": "src/kubernetes-runtime.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "kubernetes.runtime-security"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/security-providers/README.md",
+      "authoredGuideWords": 158,
+      "testScript": "node --test tests/live-function.test.ts tests/database-freshness.test.mts",
+      "testFiles": [
+        "skills/buster/plugins/security-providers/tests/database-freshness.test.mts",
+        "skills/buster/plugins/security-providers/tests/live-function.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+      "catalogueWords": 883,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.size-budget",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/size-budget",
+      "manifest": "skills/buster/plugins/size-budget/plugin.json",
+      "packageManifest": "skills/buster/plugins/size-budget/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "artifact",
+          "publicType": "kubeclaw.size-budget@1",
+          "module": "src/provider.js",
+          "export": "provider",
+          "requiredCapabilities": [],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/size-budget/README.md",
+      "authoredGuideWords": 56,
+      "testScript": "node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/buster/plugins/size-budget/tests/live-function.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+      "catalogueWords": 514,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.state-store",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/state-store",
+      "manifest": "skills/common/plugins/state-store/plugin.json",
+      "packageManifest": "skills/common/plugins/state-store/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "state",
+          "publicType": "state",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [],
+          "providedCapabilities": [
+            "state.read",
+            "state.append"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/common/plugins/state-store/README.md",
+      "authoredGuideWords": 81,
+      "testScript": "node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/common/plugins/state-store/tests/live-function.test.ts",
+        "skills/common/plugins/state-store/tests/package-boundary.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+      "catalogueWords": 443,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.tailscale-exposure",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/tailscale-exposure",
+      "manifest": "skills/buster/plugins/tailscale-exposure/plugin.json",
+      "packageManifest": "skills/buster/plugins/tailscale-exposure/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "exposure",
+          "publicType": "kubeclaw.tailscale-exposure@1",
+          "module": "src/provider.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "kubernetes.exposure"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/tailscale-exposure/README.md",
+      "authoredGuideWords": 220,
+      "testScript": "node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+      "catalogueWords": 485,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.telemetry-observer",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/telemetry-observer",
+      "manifest": "skills/common/plugins/telemetry-observer/plugin.json",
+      "packageManifest": "skills/common/plugins/telemetry-observer/package.json",
+      "registrations": [
+        {
+          "kind": "observer",
+          "id": "telemetry",
+          "publicType": "telemetry",
+          "module": "src/observer.ts",
+          "export": "observe",
+          "requiredCapabilities": [
+            "telemetry.emit"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/common/plugins/telemetry-observer/README.md",
+      "authoredGuideWords": 55,
+      "testScript": "node tests/parity.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/common/plugins/telemetry-observer/tests/live-function.test.ts",
+        "skills/common/plugins/telemetry-observer/tests/package-boundary.test.mjs",
+        "skills/common/plugins/telemetry-observer/tests/parity.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+      "catalogueWords": 471,
+      "auditStatus": "locally-verified"
+    },
+    {
+      "id": "kubeclaw.telemetry-store",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/telemetry-store",
+      "manifest": "skills/common/plugins/telemetry-store/plugin.json",
+      "packageManifest": "skills/common/plugins/telemetry-store/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "telemetry",
+          "publicType": "telemetry",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [],
+          "providedCapabilities": [
+            "telemetry.emit"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "buster",
+        "nova",
+        "prism"
+      ],
+      "authoredGuide": "skills/common/plugins/telemetry-store/README.md",
+      "authoredGuideWords": 320,
+      "testScript": "node ../../../../tests/verification/integration/telemetry-store-projection.test.mts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/common/plugins/telemetry-store/tests/live-function.test.ts",
+        "skills/common/plugins/telemetry-store/tests/package-boundary.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+      "catalogueWords": 451,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.transport-publisher",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/transport-publisher",
+      "manifest": "skills/common/plugins/transport-publisher/plugin.json",
+      "packageManifest": "skills/common/plugins/transport-publisher/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "publisher",
+          "publicType": "publisher",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [
+            "network.http",
+            "secrets.read"
+          ],
+          "providedCapabilities": [
+            "transport.publish"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/common/plugins/transport-publisher/README.md",
+      "authoredGuideWords": 219,
+      "testScript": "node tests/config-validation.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/common/plugins/transport-publisher/tests/config-validation.test.mjs",
+        "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
+        "skills/common/plugins/transport-publisher/tests/package-boundary.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+      "catalogueWords": 448,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.visual",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/buster/plugins/visual",
+      "manifest": "skills/buster/plugins/visual/plugin.json",
+      "packageManifest": "skills/buster/plugins/visual/package.json",
+      "registrations": [
+        {
+          "kind": "test-provider",
+          "id": "visual",
+          "publicType": "kubeclaw.visual@1",
+          "module": "src/provider.js",
+          "export": "provider",
+          "requiredCapabilities": [
+            "browser.visual"
+          ],
+          "providedCapabilities": []
+        }
+      ],
+      "includedRoles": [
+        "buster"
+      ],
+      "authoredGuide": "skills/buster/plugins/visual/README.md",
+      "authoredGuideWords": 133,
+      "testScript": "node tests/live-function.test.ts",
+      "testFiles": [
+        "skills/buster/plugins/visual/tests/browser-identity.test.mjs",
+        "skills/buster/plugins/visual/tests/live-function.test.ts"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+      "catalogueWords": 526,
+      "auditStatus": "content-written"
+    },
+    {
+      "id": "kubeclaw.wait-store",
+      "host": "pipeline-runtime",
+      "version": "1.0.0",
+      "root": "skills/common/plugins/wait-store",
+      "manifest": "skills/common/plugins/wait-store/plugin.json",
+      "packageManifest": "skills/common/plugins/wait-store/package.json",
+      "registrations": [
+        {
+          "kind": "adapter",
+          "id": "waits",
+          "publicType": "waits",
+          "module": "src/adapter.ts",
+          "export": "activate",
+          "requiredCapabilities": [],
+          "providedCapabilities": [
+            "signal.wait"
+          ]
+        }
+      ],
+      "includedRoles": [
+        "nova"
+      ],
+      "authoredGuide": "skills/common/plugins/wait-store/README.md",
+      "authoredGuideWords": 90,
+      "testScript": "node tests/live-function.test.ts && node tests/package-boundary.test.mjs",
+      "testFiles": [
+        "skills/common/plugins/wait-store/tests/live-function.test.ts",
+        "skills/common/plugins/wait-store/tests/package-boundary.test.mjs"
+      ],
+      "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+      "catalogueWords": 450,
+      "auditStatus": "content-written"
+    }
+  ]
+}
