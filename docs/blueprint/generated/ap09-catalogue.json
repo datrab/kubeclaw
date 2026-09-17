@@ -14,7 +14,7 @@
       "name": "Truth, authority, and reader journeys",
       "owner": "documentation architecture",
       "target": "docs/site/README.md",
-      "requirementCount": 17
+      "requirementCount": 14
     },
     {
       "id": "AP09.2",
@@ -70,7 +70,7 @@
       "name": "Pipeline and workflows",
       "owner": "Nova pipeline maintainers",
       "target": "docs/site/use/pipeline-workflows.md",
-      "requirementCount": 16
+      "requirementCount": 17
     },
     {
       "id": "AP09.10",
@@ -84,14 +84,14 @@
       "name": "Exhaustive reference and drift control",
       "owner": "documentation automation",
       "target": "docs/site/reference/README.md",
-      "requirementCount": 35
+      "requirementCount": 36
     },
     {
       "id": "AP09.12",
       "name": "Publication and reader experience",
       "owner": "documentation publication",
       "target": "docs/site/README.md",
-      "requirementCount": 9
+      "requirementCount": 10
     },
     {
       "id": "AP09.13",
@@ -124,7 +124,7 @@
       "finding": "`docs/DOCUMENTATION_TOPIC_MAP.md` enthält nur zehn grobe Themen. Plugin- und Dateiinventare existieren, aber keine gemeinsame Abdeckungsmenge für Konfigurationen, CLIs, Schemas, Events, Fehlercodes, Protokolle, Stores und Endpunkte.",
       "workPackage": "AP09.1",
       "owner": "documentation architecture",
-      "canonicalTarget": "docs/site/README.md",
+      "canonicalTarget": "docs/site/product-surfaces.md",
       "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L95"
     },
@@ -137,7 +137,7 @@
       "finding": "`docs/README.md` erklärt `docs/site` zur Veröffentlichungsquelle. Die Topic Map bezeichnet trotzdem alte Architektur- und Developer-Seiten als kanonisch. AP10 hat die parallelen Bestände noch nicht entfernt oder umgeleitet.",
       "workPackage": "AP09.1",
       "owner": "documentation architecture",
-      "canonicalTarget": "docs/site/README.md",
+      "canonicalTarget": "docs/site/reference/documentation-governance.md",
       "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L96"
     },
@@ -161,9 +161,9 @@
       "baselineStatus": "E",
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "`06-automation-and-publication.md` definiert die Trennung, und der AP08-Katalog setzt sie um. Konfigurationen, CLI-Flags, Fehlercodes, Events und weitere Referenzflächen besitzen diesen getrennten Pflegeweg noch nicht.",
-      "workPackage": "AP09.1",
+      "workPackage": "AP09.11",
       "owner": "documentation architecture",
-      "canonicalTarget": "docs/site/README.md",
+      "canonicalTarget": "docs/site/reference/documentation-governance.md",
       "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L98"
     },
@@ -176,7 +176,7 @@
       "finding": "Alle 90 veröffentlichten Seiten enthalten Status, Audience, Owner, Applies-to und Last-verified. Drei Decision-Seiten besitzen kein `Evidence`-Feld. Eine vollständige maschinenlesbare Zuordnung von Seiten zu Quellabhängigkeiten und Checks fehlt.",
       "workPackage": "AP09.1",
       "owner": "documentation architecture",
-      "canonicalTarget": "docs/site/README.md",
+      "canonicalTarget": "docs/site/reference/documentation-governance.md",
       "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L99"
     },
@@ -187,9 +187,9 @@
       "baselineStatus": "E",
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Glossar, Decision-Supersession-Regeln und AP10-Migrationsregeln existieren. `scripts/docs-publication.mjs` implementiert jedoch keine Redirect- oder Deprecation-Liste; alte öffentliche Routen sind nicht vollständig zugeordnet.",
-      "workPackage": "AP09.1",
+      "workPackage": "AP09.12",
       "owner": "documentation architecture",
-      "canonicalTarget": "docs/site/README.md",
+      "canonicalTarget": "docs/site/reference/documentation-governance.md",
       "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L100"
     },
@@ -265,7 +265,7 @@
       "baselineStatus": "E",
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Der Understand-Einstieg führt Architekturleser. `use/quickstart.md` prüft nur den lokalen Checkout, und `extend/first-plugin.md` führt ein Plugin durch. Ein ausführbarer erster Pipeline-Workflow mit Beispiel-`pipeline.json`, Ergebnisprüfung und Fehlerweg fehlt.",
-      "workPackage": "AP09.1",
+      "workPackage": "AP09.9",
       "owner": "product documentation",
       "canonicalTarget": "docs/site/understand/README.md",
       "targetState": "current",

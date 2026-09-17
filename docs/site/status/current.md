@@ -9,6 +9,10 @@ Last verified: 2026-09-17, source and documentation checks only
 
 ## Where to find current work
 
+This page is a source-reviewed snapshot. It is not a live service dashboard.
+The `Last verified` field states its evidence limit. Runtime health, availability,
+and successful delivery need the environment checks in [live acceptance](acceptance.md).
+
 The [open-issues view](open-issues.md) comes from the canonical machine-readable register.
 Update `docs/status/open-issues.json`, then run `npm run docs:status:generate`.
 The generated page contains the remaining implementation work and its completion criteria.
@@ -17,6 +21,20 @@ It separates current implementation issues from later additions to their scope.
 [Live acceptance](acceptance.md) records environment prerequisites, procedures and expected results.
 A local finding closure does not assert that those procedures ran.
 The [decision index](../decisions/README.md) explains enduring constraints and their authority.
+
+## Status Authority
+
+| Question | Authority | Meaning |
+| --- | --- | --- |
+| What does repository source implement? | This page and linked implementation sources | Source-backed behavior at the verified revision |
+| Which implementation work remains open? | `docs/status/open-issues.json` through [open issues](open-issues.md) | Current technical gaps with stable IDs |
+| What work is planned? | [Roadmap](roadmap.md) | Intended work, not current behavior |
+| Did the system pass in a real environment? | [Live acceptance](acceptance.md) | Recorded procedure, environment, and result |
+| Why does a constraint exist? | [Decision records](../decisions/README.md) | Decision authority, reason, and supersession |
+
+Update the machine-readable issue register before its generated page. Do not add
+a second issue list to an architecture or operator page. A closed source issue
+does not close its separate live-acceptance gate.
 
 ## Source-backed runtime boundaries
 

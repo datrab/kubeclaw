@@ -35,6 +35,18 @@ You should know these basic ideas:
 
 The [glossary](../reference/glossary.md) defines all KubeClaw terms used in this track.
 
+## Start With Your Question
+
+| Question | Read this page first |
+| --- | --- |
+| What does KubeClaw control, and what stays outside it? | This page, then [Components and authority](components-and-authority.md) |
+| How does one request become a result? | [Request, state, and recovery](request-state-recovery.md) |
+| Why does a retry differ from recovery? | [Request, state, and recovery](request-state-recovery.md#failure-paths) |
+| Which required services support the pipeline? | [Pipeline dependencies](pipeline-dependencies.md) |
+| Where do identities, processes, and trust boundaries sit? | [Deployment and trust](deployment-and-trust.md) |
+| Which infrastructure is optional? | [Platform and operations architecture](platform-and-operations.md) |
+| How do I operate or extend the system? | [Documentation entry](../README.md#start-with-your-task) |
+
 ## The Short Architecture Story
 
 The Nova runtime role contains the project compiler, Nova Core, and selected plugins.
@@ -106,6 +118,29 @@ It uses three scopes so that infrastructure does not look like pipeline authorit
 Kubernetes networking remains required.
 The platform can use Flannel without Cilium when it preserves the documented network boundaries.
 Direct Helm deployment can replace Argo CD when one controller retains exclusive ownership.
+
+## Role Words Have Exact Meanings
+
+| Term | Meaning in this documentation | Example |
+| --- | --- | --- |
+| Pipeline | One declared graph and its durable execution state | A compiled project run |
+| Platform | Services, configuration, trust, and deployment around the pipeline | Kubernetes, Redis, PostgreSQL, registries, and Tailscale |
+| Runtime role | One deployable package set with one operational identity | Nova, Buster, or Prism |
+| Core | Code that owns shared control rules inside a runtime | Nova Core or Worker Core |
+| Engine | Code that interprets one specialist attempt type | Buster Engine or Prism Engine |
+| Specialist | A bounded worker that performs one kind of work | Forge, Echo, Buster, or Prism |
+| Plugin | An installed extension selected through a public host contract | A stage, observer, adapter, provider, or host extension |
+
+Forge and Echo are specialists that run through Nova plugins.
+They are not separate runtime roles in the current package inventory.
+
+> **Source evidence — role and package boundary**
+>
+> **Role declarations:** [Nova](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/nova.json), [Buster](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/buster.json), and [Prism](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles/prism.json) define the deployable identities.
+>
+> **Package ownership:** [The ownership file assigns packages to their runtime roles](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/package-ownership.json).
+>
+> **Limit:** A role declaration proves intended package assembly. It does not prove deployment or reachability.
 
 ## Three Questions That Prevent False Claims
 

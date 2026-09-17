@@ -89,6 +89,14 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "charts/ops-pod/templates/workload.yaml"
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "charts/ops-pod/values.yaml"
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "contracts/pipeline-test-gate/v1/suites/a11y.v1.json"
     },
     {

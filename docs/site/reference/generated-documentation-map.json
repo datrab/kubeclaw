@@ -1,0 +1,1971 @@
+{
+  "schemaVersion": "kubeclaw-documentation-map.v1",
+  "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
+  "generatedBy": "scripts/docs-governance.mjs",
+  "routeRegistry": "docs/site/reference/documentation-route-registry.json",
+  "pageCount": 100,
+  "pages": [
+    {
+      "page": "docs/site/README.md",
+      "route": "/",
+      "contentKind": "authored",
+      "status": "implemented",
+      "audience": "operator, plugin author, maintainer, architecture reader",
+      "owner": "documentation",
+      "appliesTo": "current supported release",
+      "lastVerified": "generated during publication",
+      "sourceDependencies": [
+        "packaging/runtime/package-ownership.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/decisions/README.md",
+      "route": "/decisions/",
+      "contentKind": "authored",
+      "status": "current",
+      "audience": "maintainer, architecture reader, operator",
+      "owner": "platform-architecture",
+      "appliesTo": "current architecture and product policy",
+      "lastVerified": "2026-09-17",
+      "sourceDependencies": [
+        "packaging/runtime/package-ownership.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/decisions/acceptance.md",
+      "route": "/decisions/acceptance/",
+      "contentKind": "authored",
+      "status": "current decision",
+      "audience": "operator, maintainer, architecture reader",
+      "owner": "platform-maintainers",
+      "appliesTo": "implementation status and operational acceptance",
+      "lastVerified": "2026-09-17",
+      "sourceDependencies": [
+        "scripts/docs-status.mjs",
+        "tests/verification/contracts/check-production-receipt-attestation.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/decisions/core-and-plugins.md",
+      "route": "/decisions/core-and-plugins/",
+      "contentKind": "authored",
+      "status": "current decisions with individual approval and implementation states",
+      "audience": "maintainers, pipeline developers and plugin authors",
+      "owner": "KubeClaw maintainers",
+      "appliesTo": "canonical lifecycle, Worker Core and plugin system v2",
+      "lastVerified": "2026-09-17 (source inspection; no new runtime or live test execution)",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/registry/build.ts",
+        "packaging/runtime/roles/nova.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/decisions/echo.md",
+      "route": "/decisions/echo/",
+      "contentKind": "authored",
+      "status": "current decisions; implementation and live acceptance are separate",
+      "audience": "developers, operators, and architecture readers",
+      "owner": "review-plugin maintainers",
+      "appliesTo": "source revision `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`",
+      "lastVerified": "2026-09-15; source inspection, not model execution",
+      "sourceDependencies": [
+        "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "skills/nova/plugins/review/src/review-governor-decision.ts",
+        "skills/nova/plugins/review/src/repository-audit-stage.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/decisions/implementation.md",
+      "route": "/decisions/implementation/",
+      "contentKind": "authored",
+      "status": "current decisions with individual approval and implementation states",
+      "audience": "maintainers and architecture readers",
+      "owner": "platform maintainers",
+      "appliesTo": "source revision `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`",
+      "lastVerified": "2026-09-17; source inspection, no new runtime acceptance",
+      "sourceDependencies": [
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/worker/core/worker/native-worker-launcher.c",
+        "cmd/buster-namespace-controller/demo-product.go"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/decisions/prism.md",
+      "route": "/decisions/prism/",
+      "contentKind": "authored",
+      "status": "current decisions with bounded approval and proof",
+      "audience": "architecture readers, developers, and operators",
+      "owner": "Prism maintainers",
+      "appliesTo": "source revision `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`",
+      "lastVerified": "2026-09-17; source inspection, no new live acceptance",
+      "sourceDependencies": [
+        "skills/prism/domain/index.ts",
+        "skills/prism/corpus/index.ts",
+        "spikes/prism/postgres-retrieval/verify.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/decisions/runtime-and-operations.md",
+      "route": "/decisions/runtime-and-operations/",
+      "contentKind": "authored",
+      "status": "current decisions; implementation and acceptance recorded separately",
+      "audience": "maintainer, operator, architecture reader",
+      "owner": "platform maintainers",
+      "appliesTo": "repository source at ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+      "lastVerified": "2026-09-17; source inspection, no runtime or live acceptance executed",
+      "sourceDependencies": [
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "packaging/runtime/roles/prism.json",
+        "scripts/docs-publication.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/decisions/test-gate.md",
+      "route": "/decisions/test-gate/",
+      "contentKind": "authored",
+      "status": "current decision record; implementation and acceptance tracked separately",
+      "audience": "maintainers, pipeline authors, provider authors",
+      "owner": "KubeClaw maintainers",
+      "appliesTo": "pipeline test-gate architecture and provider contracts",
+      "lastVerified": "2026-09-15 (source inspection; no runtime or live tests)",
+      "sourceDependencies": [
+        "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+        "contracts/pipeline-test-gate/v1/src/index.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/README.md",
+      "route": "/extend/",
+      "contentKind": "authored",
+      "status": "implemented with the verification limits stated in each guide",
+      "audience": "plugin author, engine author, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2, current OpenClaw and Codex manifests, Worker Core contracts",
+      "lastVerified": "source and focused local checks on 2026-09-16",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/common/plugin-runtime/foundation/registry",
+        "packaging/runtime/roles",
+        "packaging/runtime/package-ownership.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/buster.md",
+      "route": "/extend/buster/",
+      "contentKind": "authored",
+      "status": "implemented with stated execution limits",
+      "audience": "test provider author, suite maintainer, report adapter author",
+      "owner": "buster",
+      "appliesTo": "Buster test providers, fixtures, suite templates, and report adapters",
+      "lastVerified": "registry, resolver, runner, provider, and report checks on 2026-09-16",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "contracts/pipeline-test-gate/v1/suites",
+        "skills/nova/core/test-gates/resolver.ts",
+        "skills/buster/engine/test-gates/provider-loader.ts",
+        "skills/buster/engine/test-gates/runner.ts",
+        "skills/buster/engine/test-gates/report-adapter-runtime.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/contracts.md",
+      "route": "/extend/contracts/",
+      "contentKind": "authored",
+      "status": "implemented with stated local verification limits",
+      "audience": "plugin author, runtime maintainer, reviewer",
+      "owner": "plugin-foundation",
+      "appliesTo": "`pipeline-plugin-v2`",
+      "lastVerified": "source and contract checks on 2026-09-16",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/common/plugin-runtime/foundation/registry/build.ts",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "skills/buster/engine/test-gates/provider-loader.ts",
+        "skills/buster/engine/test-gates/report-adapter-runtime.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/effectful-plugin.md",
+      "route": "/extend/effectful-plugin/",
+      "contentKind": "authored",
+      "status": "implemented to the locally verified platform limits",
+      "audience": "stage and adapter author, runtime maintainer, reviewer",
+      "owner": "plugin-foundation",
+      "appliesTo": "stages and adapters that create external state or effects",
+      "lastVerified": "focused effect, recovery, state, and cleanup checks on 2026-09-16",
+      "sourceDependencies": [
+        "skills/nova/plugins/blueprint-sync/src/stage.ts",
+        "skills/nova/core/effects/coordinator.ts",
+        "skills/nova/core/effects/journal.ts",
+        "skills/nova/core/execution/effect-recovery.ts",
+        "skills/common/plugins/state-store/src/adapter.ts",
+        "skills/common/plugin-runtime/sdk/src/runtime.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/first-plugin.md",
+      "route": "/extend/first-plugin/",
+      "contentKind": "authored",
+      "status": "implemented with stated verification limits",
+      "audience": "plugin author, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "one capability-free `pipeline-plugin-v2` stage in the Nova role",
+      "lastVerified": "source and local journey check on 2026-09-16",
+      "sourceDependencies": [
+        "docs/site/extend/examples/minimal-stage",
+        "package.json",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "packaging/runtime/roles/nova.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/host-and-engine.md",
+      "route": "/extend/host-and-engine/",
+      "contentKind": "authored",
+      "status": "implemented with stated local limits",
+      "audience": "host-extension author, Worker engine maintainer, runtime packager",
+      "owner": "plugin-foundation",
+      "appliesTo": "OpenClaw extensions, Codex plugins and skills, Worker Core engines, runtime roles",
+      "lastVerified": "source, package, role, and focused host checks on 2026-09-17",
+      "sourceDependencies": [
+        "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+        "skills/prism/openclaw-plugin/openclaw.plugin.json",
+        "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+        "charts/ops-pod",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "contracts/pipeline-worker-core/v1/src/types.ts",
+        "packaging/runtime/roles"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/nova.md",
+      "route": "/extend/nova/",
+      "contentKind": "authored",
+      "status": "implemented with stated verification limits",
+      "audience": "Nova plugin author, lint-policy maintainer, runtime maintainer",
+      "owner": "nova",
+      "appliesTo": "Nova-owned and shared `pipeline-plugin-v2` registrations",
+      "lastVerified": "source, role, package, runtime, and lint checks on 2026-09-16",
+      "sourceDependencies": [
+        "packaging/runtime/roles/nova.json",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/core/execution/adapters.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "skills/nova/plugins/lint/plugin.json",
+        "skills/nova/plugins/lint/src/stage.ts",
+        "skills/nova/plugins/lint/src/adapter.ts",
+        "skills/nova/plugins/lint/src/engine/policy-version.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/README.md",
+      "route": "/extend/plugin-catalogue/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2, OpenClaw extensions, Codex plugins",
+      "lastVerified": "generated during publication",
+      "sourceDependencies": [
+        "scripts/docs-publication.mjs"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+      "route": "/extend/plugin-catalogue/kubeclaw-agent-observer/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "openclaw-plugin; package 0.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+        "skills/common/plugins/openclaw-agent-observer/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+      "route": "/extend/plugin-catalogue/kubeclaw-ops/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "codex-plugin; package 0.2.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+        "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+      "route": "/extend/plugin-catalogue/kubeclaw-prism/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "openclaw-plugin; package 0.1.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/prism/openclaw-plugin/openclaw.plugin.json",
+        "skills/prism/openclaw-plugin/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.agent-observability/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/agent-observability/plugin.json",
+        "skills/common/plugins/agent-observability/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.api-flow/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/api-flow/plugin.json",
+        "skills/buster/plugins/api-flow/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.architecture-validator/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/architecture-validator/plugin.json",
+        "skills/nova/plugins/architecture-validator/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.artifact-store/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/artifact-store/plugin.json",
+        "skills/common/plugins/artifact-store/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.axe/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/axe/plugin.json",
+        "skills/buster/plugins/axe/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.blueprint-sync/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/blueprint-sync/plugin.json",
+        "skills/nova/plugins/blueprint-sync/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.buster-quality-gate/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/buster-quality-gate/plugin.json",
+        "skills/nova/plugins/buster-quality-gate/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.case-study/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/case-study/plugin.json",
+        "skills/nova/plugins/case-study/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.command-runner/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/command-runner/plugin.json",
+        "skills/common/plugins/command-runner/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.container-build/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/container-build/plugin.json",
+        "skills/buster/plugins/container-build/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.coverage-budget/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/coverage-budget/plugin.json",
+        "skills/buster/plugins/coverage-budget/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.delivery-lint/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/delivery-lint/plugin.json",
+        "skills/nova/plugins/delivery-lint/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.demo-auth-smoke/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/demo-auth-smoke/plugin.json",
+        "skills/buster/plugins/demo-auth-smoke/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.demo-handoff/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/demo-handoff/plugin.json",
+        "skills/nova/plugins/demo-handoff/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.direct-command/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/direct-command/plugin.json",
+        "skills/buster/plugins/direct-command/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.git-workspace/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/git-workspace/plugin.json",
+        "skills/common/plugins/git-workspace/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.http/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/http/plugin.json",
+        "skills/buster/plugins/http/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.human-approval/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/human-approval/plugin.json",
+        "skills/nova/plugins/human-approval/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.implementation-agent/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/implementation-agent/plugin.json",
+        "skills/nova/plugins/implementation-agent/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.junit-report/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "skills/buster/plugins/junit-report-adapter/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.kubernetes-fixture/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/kubernetes-fixture/plugin.json",
+        "skills/buster/plugins/kubernetes-fixture/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.lighthouse/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/lighthouse/plugin.json",
+        "skills/buster/plugins/lighthouse/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.lint/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/lint/plugin.json",
+        "skills/nova/plugins/lint/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.network-http/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/network-http/plugin.json",
+        "skills/common/plugins/network-http/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.notification-observer/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.1.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/notification-observer/plugin.json",
+        "skills/common/plugins/notification-observer/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.openapi/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/openapi/plugin.json",
+        "skills/buster/plugins/openapi/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.openclaw-agent-events/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/openclaw-agent-events/plugin.json",
+        "skills/common/plugins/openclaw-agent-events/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.operator-messaging/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/operator-messaging/plugin.json",
+        "skills/common/plugins/operator-messaging/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.pipeline-review/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/pipeline-review/plugin.json",
+        "skills/nova/plugins/pipeline-review/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.playwright/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/playwright/plugin.json",
+        "skills/buster/plugins/playwright/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.preflight-contract/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/preflight-contract/plugin.json",
+        "skills/nova/plugins/preflight-contract/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.prism-design/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/prism-design/plugin.json",
+        "skills/nova/plugins/prism-design/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.project-summary/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/project-summary/plugin.json",
+        "skills/nova/plugins/project-summary/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.redis-transport/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/redis-transport/plugin.json",
+        "skills/common/plugins/redis-transport/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.remote-test-gate/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/remote-test-gate/plugin.json",
+        "skills/nova/plugins/remote-test-gate/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.repository-adapter/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/repository-adapter/plugin.json",
+        "skills/nova/plugins/repository-adapter/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.review/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/nova/plugins/review/plugin.json",
+        "skills/nova/plugins/review/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.runtime-dispatch/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/runtime-dispatch/plugin.json",
+        "skills/common/plugins/runtime-dispatch/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.secret-resolver/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/secret-resolver/plugin.json",
+        "skills/common/plugins/secret-resolver/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.security-providers/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/security-providers/plugin.json",
+        "skills/buster/plugins/security-providers/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.size-budget/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/size-budget/plugin.json",
+        "skills/buster/plugins/size-budget/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.state-store/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/state-store/plugin.json",
+        "skills/common/plugins/state-store/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.tailscale-exposure/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/tailscale-exposure/plugin.json",
+        "skills/buster/plugins/tailscale-exposure/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.telemetry-observer/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/telemetry-observer/plugin.json",
+        "skills/common/plugins/telemetry-observer/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.telemetry-store/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/telemetry-store/plugin.json",
+        "skills/common/plugins/telemetry-store/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.transport-publisher/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/transport-publisher/plugin.json",
+        "skills/common/plugins/transport-publisher/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.visual/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/buster/plugins/visual/plugin.json",
+        "skills/buster/plugins/visual/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+      "route": "/extend/plugin-catalogue/kubeclaw.wait-store/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2; package 1.0.0",
+      "lastVerified": "see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d",
+      "sourceDependencies": [
+        "skills/common/plugins/wait-store/plugin.json",
+        "skills/common/plugins/wait-store/README.md"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/testing.md",
+      "route": "/extend/testing/",
+      "contentKind": "authored",
+      "status": "implemented with stated local limits",
+      "audience": "extension author, operator, maintainer",
+      "owner": "plugin-foundation",
+      "appliesTo": "pipeline-plugin-v2, OpenClaw extensions, Codex plugins, Worker engines, runtime roles",
+      "lastVerified": "source and focused local checks on 2026-09-16",
+      "sourceDependencies": [
+        "scripts/verify-plugin-packages.mjs",
+        "skills/common/plugin-runtime/foundation/registry",
+        "packaging/runtime/roles"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/product-surfaces.md",
+      "route": "/product-surfaces/",
+      "contentKind": "authored",
+      "status": "implemented inventory with stated depth limits",
+      "audience": "reader, operator, plugin author, maintainer, documentation owner",
+      "owner": "documentation architecture",
+      "appliesTo": "current repository product and platform surfaces",
+      "lastVerified": "source inspection on 2026-09-17",
+      "sourceDependencies": [
+        "package.json",
+        "packaging/runtime/package-ownership.json",
+        "packaging/runtime/roles",
+        "skills/common/plugin-runtime",
+        "skills/nova",
+        "skills/worker",
+        "skills/buster",
+        "skills/prism",
+        "contracts",
+        "charts",
+        "scripts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/README.md",
+      "route": "/reference/",
+      "contentKind": "authored",
+      "status": "current",
+      "audience": "operator, plugin author, maintainer, developer",
+      "owner": "documentation",
+      "appliesTo": "current repository source and generated inventories",
+      "lastVerified": "2026-09-17",
+      "sourceDependencies": [
+        "scripts/docs-generate.mjs",
+        "scripts/docs-publication.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/capabilities.md",
+      "route": "/reference/capabilities/",
+      "contentKind": "generated",
+      "status": "implemented",
+      "audience": "plugin author, operator, security reviewer",
+      "owner": "plugin-foundation",
+      "appliesTo": "Nova pipeline-plugin-v2 grants and Buster test-provider runtime capabilities",
+      "lastVerified": "generated during publication",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "skills/buster/engine/test-gates/remote-plan-service.ts"
+      ],
+      "checks": [
+        "npm run docs:publication:check",
+        "npm run docs:governance:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/cli.md",
+      "route": "/reference/cli/",
+      "contentKind": "generated",
+      "status": "generated reference",
+      "audience": "reference reader, operator, developer",
+      "owner": "platform-operations",
+      "appliesTo": "deployment command surface",
+      "lastVerified": "generated from current inventory",
+      "sourceDependencies": [
+        "docs/generated/inventory/deploy-script.json",
+        "scripts/docs-generate.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/documentation-governance.md",
+      "route": "/reference/documentation-governance/",
+      "contentKind": "authored",
+      "status": "current maintenance contract",
+      "audience": "documentation contributor, maintainer, reviewer",
+      "owner": "documentation",
+      "appliesTo": "all reader-facing files below docs/site",
+      "lastVerified": "2026-09-17; source inspection and local documentation checks",
+      "sourceDependencies": [
+        "scripts/docs-governance.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-status.mjs",
+        "docs/status/open-issues.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/environment-variables.md",
+      "route": "/reference/environment-variables/",
+      "contentKind": "generated",
+      "status": "generated reference",
+      "audience": "reference reader, operator",
+      "owner": "platform-operations",
+      "appliesTo": "deployment and secret-setup commands",
+      "lastVerified": "generated from current inventory",
+      "sourceDependencies": [
+        "docs/generated/inventory/deploy-script.json",
+        "docs/generated/inventory/secret-setup.json",
+        "scripts/docs-generate.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/glossary.md",
+      "route": "/reference/glossary/",
+      "contentKind": "authored",
+      "status": "implemented for the architecture track",
+      "audience": "all readers",
+      "owner": "documentation",
+      "appliesTo": "current documentation",
+      "lastVerified": "source inspection on 2026-09-15",
+      "sourceDependencies": [
+        "docs/site/understand/components-and-authority.md",
+        "docs/site/understand/request-state-recovery.md",
+        "docs/site/understand/deployment-and-trust.md"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/helm-values.md",
+      "route": "/reference/helm-values/",
+      "contentKind": "generated",
+      "status": "generated reference",
+      "audience": "reference reader, operator",
+      "owner": "platform-operations",
+      "appliesTo": "checked-in Helm and infrastructure configuration",
+      "lastVerified": "generated from current inventory",
+      "sourceDependencies": [
+        "docs/generated/inventory/helm-values.json",
+        "scripts/docs-generate.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/secrets.md",
+      "route": "/reference/secrets/",
+      "contentKind": "generated",
+      "status": "generated reference",
+      "audience": "reference reader, operator",
+      "owner": "platform-security",
+      "appliesTo": "Kubernetes secret setup",
+      "lastVerified": "generated from current inventory",
+      "sourceDependencies": [
+        "docs/generated/inventory/secret-setup.json",
+        "scripts/docs-generate.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/verification-commands.md",
+      "route": "/reference/verification-commands/",
+      "contentKind": "generated",
+      "status": "generated reference",
+      "audience": "operator, developer",
+      "owner": "platform-maintainers",
+      "appliesTo": "local and deployment verification",
+      "lastVerified": "generated from current inventory",
+      "sourceDependencies": [
+        "docs/generated/inventory/deploy-script.json",
+        "scripts/docs-generate.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/workflows.md",
+      "route": "/reference/workflows/",
+      "contentKind": "generated",
+      "status": "generated reference",
+      "audience": "maintainer, developer",
+      "owner": "platform-maintainers",
+      "appliesTo": "repository automation",
+      "lastVerified": "generated from current inventory",
+      "sourceDependencies": [
+        "docs/generated/inventory/workflows.json",
+        "scripts/docs-generate.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/status/acceptance.md",
+      "route": "/status/acceptance/",
+      "contentKind": "authored",
+      "status": "planned; not executed",
+      "audience": "operators and executing agents",
+      "owner": "platform operator",
+      "appliesTo": "KubeClaw source revision `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`",
+      "lastVerified": "2026-09-17 — source inspection; no live execution",
+      "sourceDependencies": [
+        ".github/workflows/remediation-native.yaml",
+        "tests/verification/contracts/check-production-receipt-attestation.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/status/current.md",
+      "route": "/status/current/",
+      "contentKind": "authored",
+      "status": "current implementation status with separate live-acceptance limits",
+      "audience": "operator, plugin author, architecture reader",
+      "owner": "platform-architecture",
+      "appliesTo": "current repository roles and documented product boundaries",
+      "lastVerified": "2026-09-17, source and documentation checks only",
+      "sourceDependencies": [
+        "packaging/runtime/roles/nova.json",
+        "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/prism.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/status/open-issues.md",
+      "route": "/status/open-issues/",
+      "contentKind": "generated",
+      "status": "generated from the canonical issue register",
+      "audience": "maintainer, operator, contributing agent",
+      "owner": "platform-maintainers",
+      "appliesTo": "source baseline ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+      "lastVerified": "2026-09-16, source inspection only; see individual evidence",
+      "sourceDependencies": [
+        "docs/status/open-issues.json"
+      ],
+      "checks": [
+        "npm run docs:status:check",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/status/roadmap.md",
+      "route": "/status/roadmap/",
+      "contentKind": "authored",
+      "status": "planned direction",
+      "audience": "operator, maintainer, developer",
+      "owner": "platform-maintainers",
+      "appliesTo": "planned KubeClaw product and platform work",
+      "lastVerified": "2026-09-17",
+      "sourceDependencies": [
+        "docs/status/open-issues.json",
+        "packaging/runtime/package-ownership.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/README.md",
+      "route": "/understand/",
+      "contentKind": "authored",
+      "status": "implemented with stated limits",
+      "audience": "new reader, operator, maintainer, security reviewer, plugin author",
+      "owner": "platform architecture",
+      "appliesTo": "current source and declared runtime roles",
+      "lastVerified": "source inspection on 2026-09-15",
+      "sourceDependencies": [
+        "packaging/runtime/roles",
+        "skills/nova/core",
+        "skills/worker/core"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/components-and-authority.md",
+      "route": "/understand/components-and-authority/",
+      "contentKind": "authored",
+      "status": "implemented with stated limits",
+      "audience": "new reader, architecture reader, maintainer, security reviewer",
+      "owner": "platform architecture",
+      "appliesTo": "current source and declared runtime roles",
+      "lastVerified": "source inspection on 2026-09-15",
+      "sourceDependencies": [
+        "skills/nova/core",
+        "skills/worker/core",
+        "packaging/runtime/roles"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/deployment-and-trust.md",
+      "route": "/understand/deployment-and-trust/",
+      "contentKind": "authored",
+      "status": "implemented design; live acceptance remains separate",
+      "audience": "operator, architecture reader, security reviewer, maintainer",
+      "owner": "platform architecture and operations",
+      "appliesTo": "current Helm charts and runtime-role declarations",
+      "lastVerified": "source inspection on 2026-09-15",
+      "sourceDependencies": [
+        "packaging/runtime/roles",
+        "charts/kubeclaw",
+        "charts/prism"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/pipeline-dependencies.md",
+      "route": "/understand/pipeline-dependencies/",
+      "contentKind": "authored",
+      "status": "documented showcase baseline; implementation and live-proof gaps are stated",
+      "audience": "architecture reader, operator, maintainer, security reviewer",
+      "owner": "platform architecture and pipeline owners",
+      "appliesTo": "current source, role declarations, charts, and selected infrastructure",
+      "lastVerified": "source inspection on 2026-09-16",
+      "sourceDependencies": [
+        "packaging/runtime/roles",
+        "skills/nova/core",
+        "skills/common/plugins/redis-transport",
+        "skills/buster/engine",
+        "charts/kubeclaw",
+        "charts/prism"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/platform-and-operations.md",
+      "route": "/understand/platform-and-operations/",
+      "contentKind": "authored",
+      "status": "implemented in parts; host automation and live acceptance remain open",
+      "audience": "architecture reader, platform operator, maintainer, security reviewer",
+      "owner": "platform architecture and operations",
+      "appliesTo": "current Kubernetes deployment and operations tooling",
+      "lastVerified": "source inspection on 2026-09-17",
+      "sourceDependencies": [
+        "scripts/deploy.sh",
+        "scripts/deploy-cilium.sh",
+        "scripts/argocd-self-management.mjs",
+        "charts/ops-pod",
+        "gitops/platform"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/request-state-recovery.md",
+      "route": "/understand/request-state-recovery/",
+      "contentKind": "authored",
+      "status": "implemented with stated limits",
+      "audience": "new reader, operator, maintainer, incident responder",
+      "owner": "Nova Core",
+      "appliesTo": "`nova-project.v2` and pipeline-plugin-v2",
+      "lastVerified": "source inspection on 2026-09-15",
+      "sourceDependencies": [
+        "skills/nova/project/compiler.ts",
+        "skills/nova/core/execution",
+        "skills/nova/core/lifecycle"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/request-to-result.md",
+      "route": "/understand/request-to-result/",
+      "contentKind": "authored",
+      "status": "replaced by the complete architecture trace",
+      "audience": "architecture reader, maintainer, operator",
+      "owner": "Nova Core",
+      "appliesTo": "pipeline-plugin-v2",
+      "lastVerified": "source inspection on 2026-09-15",
+      "sourceDependencies": [
+        "docs/site/understand/request-state-recovery.md"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/worker-trust.md",
+      "route": "/understand/worker-trust/",
+      "contentKind": "authored",
+      "status": "implemented; live cluster proof pending",
+      "audience": "architecture reader, maintainer, security reviewer",
+      "owner": "Worker Core and platform operations",
+      "appliesTo": "current supported release",
+      "lastVerified": "source checks on 2026-09-01",
+      "sourceDependencies": [
+        "skills/worker/core/worker/trust.ts",
+        "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "charts/prism/templates/configmap-worker-trust.yaml"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/README.md",
+      "route": "/use/",
+      "contentKind": "authored",
+      "status": "implemented procedures with stated implementation and live-proof limits",
+      "audience": "platform operator, product operator, incident responder, release maintainer",
+      "owner": "platform operations",
+      "appliesTo": "current repository and selected release manifests",
+      "lastVerified": "2026-09-16, source and local documentation checks",
+      "sourceDependencies": [
+        "scripts/deploy.sh",
+        "skills/nova/core/cli.ts",
+        "docs/status/open-issues.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/diagnose.md",
+      "route": "/use/diagnose/",
+      "contentKind": "authored",
+      "status": "implemented source-backed diagnosis path; complete live alert delivery remains open",
+      "audience": "operator, incident responder",
+      "owner": "platform operations",
+      "appliesTo": "current runtime roles and durable pipeline state",
+      "lastVerified": "2026-09-16, source inspection and local documentation checks",
+      "sourceDependencies": [
+        "scripts/deploy.sh",
+        "skills/nova/core/telemetry/audit.ts",
+        "docs/operations/observability-retention.md"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/install.md",
+      "route": "/use/install/",
+      "contentKind": "authored",
+      "status": "implemented repository deployment path; host bootstrap and complete live acceptance remain open",
+      "audience": "Kubernetes platform operator, security operator",
+      "owner": "platform operations",
+      "appliesTo": "current selected runtime release",
+      "lastVerified": "2026-09-16, source inspection and local checks",
+      "sourceDependencies": [
+        "scripts/deploy.sh",
+        "docs/generated/inventory/deploy-script.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/maintenance.md",
+      "route": "/use/maintenance/",
+      "contentKind": "authored",
+      "status": "implemented release and migration procedures with stated live-proof limits",
+      "audience": "release maintainer, platform operator, security operator",
+      "owner": "release engineering and platform operations",
+      "appliesTo": "current release-selection and deployment contracts",
+      "lastVerified": "2026-09-16, source inspection and local documentation checks",
+      "sourceDependencies": [
+        "versions.json",
+        "releases/ops-images.json",
+        "docs/operations/runtime-versions-and-images.md"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/operate.md",
+      "route": "/use/operate/",
+      "contentKind": "authored",
+      "status": "implemented command paths with explicit missing operator controls",
+      "audience": "product operator, pipeline operator, Prism operator",
+      "owner": "Nova Core and platform operations",
+      "appliesTo": "pipeline-platform.v2 and current Prism deployment",
+      "lastVerified": "2026-09-17, source inspection, schema validation, and command-help execution",
+      "sourceDependencies": [
+        "skills/nova/project/cli.ts",
+        "skills/nova/core/cli.ts",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/engine-run.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/quickstart.md",
+      "route": "/use/quickstart/",
+      "contentKind": "authored",
+      "status": "implemented local preflight; deployment and live execution require an operator environment",
+      "audience": "operator",
+      "owner": "platform operations",
+      "appliesTo": "current repository checkout",
+      "lastVerified": "2026-09-16, local command execution",
+      "sourceDependencies": [
+        "package.json",
+        "scripts/deploy.sh"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/recovery.md",
+      "route": "/use/recovery/",
+      "contentKind": "authored",
+      "status": "partial implementation; complete independent environment recovery remains open",
+      "audience": "platform operator, database operator, incident responder",
+      "owner": "platform operations and data owners",
+      "appliesTo": "current selected runtime and state formats",
+      "lastVerified": "2026-09-16, source inspection and local documentation checks",
+      "sourceDependencies": [
+        "charts/prism/files/prism-backup.sh",
+        "scripts/postgresql-recovery.sh",
+        "docs/status/open-issues.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/worker-trust.md",
+      "route": "/use/worker-trust/",
+      "contentKind": "authored",
+      "status": "implemented; live cluster execution pending",
+      "audience": "Kubernetes operator, security operator",
+      "owner": "platform operations",
+      "appliesTo": "current supported release",
+      "lastVerified": "source checks on 2026-08-29",
+      "sourceDependencies": [
+        "scripts/deploy.sh",
+        "tests/verification/live/worker-trust-cluster-e2e.sh"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    }
+  ]
+}

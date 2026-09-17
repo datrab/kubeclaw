@@ -3,9 +3,9 @@
 Status: implemented command paths with explicit missing operator controls
 Audience: product operator, pipeline operator, Prism operator
 Owner: Nova Core and platform operations
-Evidence: skills/nova/project/cli.ts; skills/nova/core/cli.ts
+Evidence: skills/nova/project/cli.ts; skills/nova/core/cli.ts; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; skills/nova/core/execution/engine-snapshots.ts; skills/nova/core/execution/engine-run.ts
 Applies to: pipeline-platform.v2 and current Prism deployment
-Last verified: 2026-09-16, source inspection and command-help execution
+Last verified: 2026-09-17, source inspection, schema validation, and command-help execution
 
 ## Objective
 
@@ -201,13 +201,57 @@ It does not provide a separate `approve` verb.
 Before creating a signal, read the active wait from durable evidence.
 Copy no identity from an earlier wait.
 
-The signal must match:
+Create the signal as the identity named by `authorizedIssuer`. Do not let an
+unrelated operator or adapter copy that identity. Read `waitId`, `signalType`,
+`authorizedIssuer`, `expiresAt`, and the payload requirements from the active
+`wait-request.v2` record. The signal must contain all eight fields in this
+example:
 
-- `waitId`.
-- `signalType`.
-- Authorized issuer type and ID.
-- Required payload for that wait.
-- Current source and decision identity when the payload requires them.
+```json
+{
+  "schemaVersion": "resume-signal.v2",
+  "signalId": "signal:approval-2026-09-17T120000Z",
+  "idempotencyKey": "approval:wait-7:decision-1",
+  "waitId": "wait:7",
+  "signalType": "approval.resolved",
+  "issuer": {
+    "type": "operator",
+    "id": "operator:release"
+  },
+  "issuedAt": "2026-09-17T12:00:00.000Z",
+  "payload": {
+    "decision": "approved",
+    "issuer": {
+      "type": "operator",
+      "id": "operator:release"
+    },
+    "reason": "Approved the exact source and report in wait:7."
+  }
+}
+```
+
+This example is valid for the shared envelope schema. Its payload is the
+approval payload used by the approval path. Another wait type can require a
+different payload. Never copy this payload without checking the active wait.
+
+Apply these identity rules:
+
+- Create a new `signalId` for one decision event. Nova uses it as the cause of
+  the `wait.resolved` event.
+- Create one `idempotencyKey` for the exact signal content. Reuse that key only
+  to retry the same bytes. Signal storage treats an identical stored record as
+  a no-op and rejects the same key with different content. A retry after wait
+  resolution is stale and stops before this storage check.
+- Copy `waitId` and `signalType` from the active wait.
+- Copy the authorized issuer type and ID. Do not substitute another identity.
+- Set `issuedAt` to a valid date-time at or after creation of the active wait.
+- Build `payload` from that wait's request and plugin contract. Include the
+  current source, decision, or repair digest when that contract requires it.
+
+Nova validates the closed envelope schema before it changes state. It rejects
+unknown fields, a stale or unknown wait, an expired wait, a mismatched type or
+issuer, and a signal issued before wait creation. After Nova records one signal
+for a wait, a different signal cannot resolve that wait again.
 
 Use an operator-controlled file with restricted permissions.
 Then resume a project run:
@@ -234,6 +278,20 @@ The resumed stage receives a new attempt identity when execution continues.
 
 Stop after an issuer mismatch, expired wait, digest mismatch, or stale signal.
 Do not edit the journal or change the signal identity to force acceptance.
+
+> **Source evidence — signal contract and replay rules**
+>
+> **Claim:** A resume signal uses a closed eight-field envelope. Nova accepts only the active wait's type and issuer. An identical retry has no second effect, and a conflicting retry fails.
+>
+> **Implementation:** [Nova validates wait identity, signal type, issuer, expiry, and issue time](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/execution/engine-snapshots.ts#L137-L144). [Nova makes identical retries idempotent and permits only one recorded signal for each wait](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/execution/engine-run.ts#L109-L122).
+>
+> **Contract or setting:** [The contract requires all eight envelope fields and rejects extra fields](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L783-L811).
+>
+> **Test evidence:** [The recovery test exercises accepted, repeated, stale, and expired signals](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/tests/verification/reliability/attempt-projection-recovery.test.mjs#L43-L76). The publication check also validates the example on this page against the canonical schema.
+>
+> **Revision:** `d8c38328ae305d431574aed008c4e1333e4b49f5`.
+>
+> **Limit:** These repository checks do not prove that an external identity provider issued the operator identity in a live environment.
 
 ## Recover After Interruption
 

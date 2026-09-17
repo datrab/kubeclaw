@@ -6,6 +6,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
+import addFormats from 'ajv-formats';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const siteRoot = path.join(root, 'docs', 'site');
@@ -351,30 +352,72 @@ function catalogueIndex() {
 }
 
 function capabilityPage() {
-  const vocabulary = fs.readFileSync(path.join(root, 'skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts'), 'utf8');
-  const capabilities = [...vocabulary.matchAll(/^\s{2}'([^']+)': definition\(/gmu)].map((match) => match[1]);
-  const users = new Map(capabilities.map((id) => [id, []]));
+  const vocabularyPath = path.join(root, 'skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts');
+  const busterRuntimePath = path.join(root, 'skills/buster/engine/test-gates/remote-plan-service.ts');
+  const vocabulary = fs.readFileSync(vocabularyPath, 'utf8');
+  const busterRuntime = fs.readFileSync(busterRuntimePath, 'utf8');
+  const quoted = (source) => [...source.matchAll(/'([^']+)'/gu)].map((match) => match[1]);
+  const novaDefinitions = [...vocabulary.matchAll(/^\s{2}'([^']+)': definition\(\s*\[([^\]]*)\],\s*\[([^\]]*)\],\s*\[([^\]]*)\]/gmsu)]
+    .map((match) => ({ id: match[1], operations: quoted(match[2]), resources: quoted(match[3]), constraints: quoted(match[4]) }));
+  const declaredNovaIds = [...vocabulary.matchAll(/^\s{2}'([^']+)': definition\(/gmu)].map((match) => match[1]);
+  if (novaDefinitions.length !== declaredNovaIds.length) errors.push('Capability catalogue cannot parse every Nova capability definition');
+  if (new Set(declaredNovaIds).size !== declaredNovaIds.length) errors.push('Nova capability vocabulary contains a duplicate identifier');
+  const novaUsers = new Map(novaDefinitions.map(({ id }) => [id, []]));
+  const busterCapabilities = [...new Set(
+    [...busterRuntime.matchAll(/routes\.set\('([^']+)'/gu)].map((match) => match[1]),
+  )].sort();
+  if (busterCapabilities.length === 0) errors.push('Capability catalogue found no Buster runtime routes');
+  const busterUsers = new Map(busterCapabilities.map((id) => [id, []]));
   for (const plugin of plugins.filter((item) => item.pipeline)) {
     for (const registration of plugin.registrations) {
-      for (const id of [...(registration.requiredCapabilities ?? []), ...(registration.providesCapabilities ?? [])]) {
-        if (!users.has(id)) users.set(id, []);
-        users.get(id).push(`${plugin.manifest.id}:${registration.id}`);
+      const declared = [...(registration.requiredCapabilities ?? []), ...(registration.providesCapabilities ?? [])];
+      const users = registration.kind === 'test provider' ? busterUsers
+        : registration.kind === 'report adapter' ? null : novaUsers;
+      for (const id of declared) {
+        if (!users?.has(id)) {
+          errors.push(`${rel(plugin.file)} registration ${registration.id} declares unknown ${registration.kind === 'test provider' ? 'Buster runtime' : 'Nova grant'} capability: ${id}`);
+          continue;
+        }
+        users.get(id).push(`[\`${plugin.manifest.id}:${registration.id}\`](${sourceBase}/${rel(plugin.file)})`);
       }
     }
   }
+  const novaRows = novaDefinitions.sort((a, b) => a.id.localeCompare(b.id)).map((definition) =>
+    `| \`${definition.id}\` | ${definition.operations.map((item) => `\`${item}\``).join(', ')} | ${definition.resources.map((item) => `\`${item}\``).join(', ')} | ${definition.constraints.map((item) => `\`${item}\``).join(', ')} | ${[...new Set(novaUsers.get(definition.id))].join('<br>') || 'No installed Nova registration.'} |`);
+  const busterRows = busterCapabilities.map((id) =>
+    `| \`${id}\` | ${[...new Set(busterUsers.get(id))].join('<br>') || 'No installed test provider.'} |`);
   return `${[
     '# Capability Catalogue', '',
     'Status: implemented',
     'Audience: plugin author, operator, security reviewer',
     'Owner: plugin-foundation',
-    'Evidence: skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts',
-    'Applies to: pipeline-plugin-v2',
+    'Evidence: skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts; skills/buster/engine/test-gates/remote-plan-service.ts',
+    'Applies to: Nova pipeline-plugin-v2 grants and Buster test-provider runtime capabilities',
     'Last verified: generated during publication', '',
     '## Purpose', '',
-    'This catalogue lists each grantable capability and every registration that declares it.', '',
-    '| Capability | Declared by |',
+    'Use this catalogue to identify the authority system that interprets a capability name.',
+    'Nova grants and Buster runtime capabilities are separate allowlists.',
+    'A shared name does not transfer a Nova grant into Buster or a Buster route into Nova.', '',
+    '> **Source evidence — separate authority systems**', '>',
+    `> ${sourceLink('Nova defines operations, resource types, and grant constraints', vocabularyPath)}.`, '>',
+    `> ${sourceLink('Buster builds explicit runtime routes for allowed test-provider capabilities', busterRuntimePath)}.`, '',
+    '## Nova Grant Vocabulary', '',
+    'Nova validates these names when it compiles platform grants and dispatches capability calls.',
+    'The operation, resource, and constraint columns are part of that Nova contract.', '',
+    '| Nova capability | Operations | Resource types | Required constraint lists | Declared by |',
+    '| --- | --- | --- | --- | --- |',
+    ...novaRows, '',
+    '## Buster Test-Provider Runtime Capabilities', '',
+    'Buster checks these names when it resolves and runs a test-provider node.',
+    'The production runtime must also configure a concrete route for each allowed name.',
+    'The test-provider contract owns request details; this table does not define Nova grant constraints.', '',
+    '| Buster runtime capability | Requested by |',
     '| --- | --- |',
-    ...[...users].sort(([a], [b]) => a.localeCompare(b)).map(([id, registrations]) => `| \`${id}\` | ${[...new Set(registrations)].map((item) => `\`${item}\``).join('<br>') || 'No installed registration.'} |`),
+    ...busterRows, '',
+    '## Names Used By Both Systems', '',
+    'Some names occur in both tables because both systems describe the same external action.',
+    'Each system still performs its own admission check and uses its own request contract.',
+    'Configure and verify both boundaries when Nova submits work that Buster later executes.',
   ].join('\n')}\n`;
 }
 
@@ -466,6 +509,7 @@ function checkSite() {
   for (const plugin of plugins) if (!fs.existsSync(plugin.guide)) errors.push(`${rel(plugin.directory)} has no detected authored guide`);
   const requiredPages = [
     'docs/site/README.md',
+    'docs/site/product-surfaces.md',
     'docs/site/understand/README.md',
     'docs/site/understand/request-to-result.md',
     'docs/site/use/README.md',
@@ -477,6 +521,20 @@ function checkSite() {
     'docs/site/status/current.md',
   ];
   for (const page of requiredPages) if (!fs.existsSync(path.join(root, page))) errors.push(`${page} is required by a reader journey`);
+  const entry = fs.readFileSync(path.join(siteRoot, 'README.md'), 'utf8');
+  for (const route of [
+    'understand/README.md',
+    'use/quickstart.md',
+    'use/operate.md',
+    'extend/first-plugin.md',
+    'product-surfaces.md',
+  ]) {
+    if (!entry.includes(`](${route}`)) errors.push(`docs/site/README.md does not expose reader route ${route}`);
+  }
+  const surfaceMap = fs.readFileSync(path.join(siteRoot, 'product-surfaces.md'), 'utf8');
+  for (const family of ['SUR-CTL-', 'SUR-SPC-', 'SUR-CFG-', 'SUR-API-', 'SUR-COM-', 'SUR-DAT-', 'SUR-TEL-', 'SUR-SEC-', 'SUR-DEP-', 'SUR-OPT-', 'SUR-OPS-', 'SUR-EXT-']) {
+    if (!surfaceMap.includes(`| ${family}`)) errors.push(`docs/site/product-surfaces.md lacks surface family ${family}`);
+  }
   const taskSections = ['## Objective', '## Prerequisites', '## Procedure', '## Expected Result', '## Verification', '## Common Failures', '## Recovery'];
   for (const relative of ['docs/site/use/quickstart.md', 'docs/site/use/recovery.md', 'docs/site/extend/first-plugin.md']) {
     if (!fs.existsSync(path.join(root, relative))) continue;
@@ -492,6 +550,7 @@ function checkSite() {
   }
   const schema = readJson(path.join(root, 'skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json'));
   const ajv = new Ajv2020({ allErrors: true, strict: true });
+  addFormats(ajv);
   ajv.addSchema(schema);
   const validateManifest = ajv.compile({ $ref: `${schema.$id}#/$defs/pluginManifest` });
   const tutorial = fs.readFileSync(path.join(root, 'docs/site/extend/first-plugin.md'), 'utf8');
@@ -501,6 +560,24 @@ function checkSite() {
       if (!validateManifest(value)) errors.push(`first-plugin JSON block ${index + 1} fails the canonical schema: ${ajv.errorsText(validateManifest.errors)}`);
     } catch (error) {
       errors.push(`first-plugin JSON block ${index + 1} is invalid JSON: ${error.message}`);
+    }
+  }
+  const operate = fs.readFileSync(path.join(root, 'docs/site/use/operate.md'), 'utf8');
+  const resumeSignals = [];
+  for (const [index, block] of [...operate.matchAll(/```json\n([\s\S]+?)\n```/gu)].entries()) {
+    try {
+      const value = JSON.parse(block[1]);
+      if (value.schemaVersion === 'resume-signal.v2') resumeSignals.push({ index, value });
+    } catch {
+      // Other checks report malformed examples. This check selects only valid resume-signal JSON.
+    }
+  }
+  if (resumeSignals.length !== 1) {
+    errors.push(`docs/site/use/operate.md must contain exactly one resume-signal.v2 JSON example; found ${resumeSignals.length}`);
+  } else {
+    const validateResumeSignal = ajv.compile({ $ref: `${schema.$id}#/$defs/resumeSignal` });
+    if (!validateResumeSignal(resumeSignals[0].value)) {
+      errors.push(`operate resume-signal JSON block ${resumeSignals[0].index + 1} fails the canonical schema: ${ajv.errorsText(validateResumeSignal.errors)}`);
     }
   }
   if (pages.some((file) => /(?:phase|audit|implementation-plan)/u.test(path.basename(file)))) errors.push('Published site contains an internal planning page');
@@ -530,13 +607,20 @@ function build() {
     fs.mkdirSync(path.dirname(target), { recursive: true });
     fs.writeFileSync(target, text);
   }
+  const governanceMap = path.join(siteRoot, 'reference', 'generated-documentation-map.json');
+  const governanceTarget = path.join(outputRoot, 'reference', 'generated-documentation-map.json');
+  fs.mkdirSync(path.dirname(governanceTarget), { recursive: true });
+  fs.copyFileSync(governanceMap, governanceTarget);
+  const routeRegistry = path.join(siteRoot, 'reference', 'documentation-route-registry.json');
+  const routeRegistryTarget = path.join(outputRoot, 'reference', 'documentation-route-registry.json');
+  fs.copyFileSync(routeRegistry, routeRegistryTarget);
   const report = {
     schemaVersion: 'kubeclaw-docs-publication.v1',
     revision,
     pageCount: pages.length,
     pluginCount: plugins.length,
     pageDigest: crypto.createHash('sha256').update(pages.map((file) => fs.readFileSync(file)).join('')).digest('hex'),
-    checks: ['metadata', 'controlled-language', 'links', 'reader-journeys', 'plugin-coverage', 'release-pinned-evidence'],
+    checks: ['metadata', 'controlled-language', 'links', 'reader-journeys', 'plugin-coverage', 'release-pinned-evidence', 'documentation-ownership-map', 'route-registry'],
   };
   fs.writeFileSync(path.join(outputRoot, 'build-report.json'), `${JSON.stringify(report, null, 2)}\n`);
   console.log(`built ${pages.length} publication pages for ${revision}`);

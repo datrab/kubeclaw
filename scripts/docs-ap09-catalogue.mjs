@@ -136,6 +136,7 @@ const namespaceDefinitions = {
 };
 
 const packageOverrides = {
+  'GOV-005': 'AP09.11', 'GOV-007': 'AP09.12', 'ENT-005': 'AP09.9',
   'SPC-001': 'AP09.5', 'SPC-008': 'AP09.5', 'CFG-006': 'AP09.5',
   'FLW-011': 'AP09.5', 'EXT-005': 'AP09.5', 'CDV-008': 'AP09.5',
   'CFG-016': 'AP09.6', 'EXT-006': 'AP09.6',
@@ -157,6 +158,11 @@ const ownerOverrides = {
 };
 
 const targetOverrides = {
+  'GOV-002': 'docs/site/product-surfaces.md',
+  'GOV-003': 'docs/site/reference/documentation-governance.md',
+  'GOV-005': 'docs/site/reference/documentation-governance.md',
+  'GOV-006': 'docs/site/reference/documentation-governance.md',
+  'GOV-007': 'docs/site/reference/documentation-governance.md',
   'NVC-001': 'docs/site/understand/components-and-authority.md',
   'WKC-001': 'docs/site/understand/components-and-authority.md',
   'PLG-001': 'docs/site/extend/contracts.md',

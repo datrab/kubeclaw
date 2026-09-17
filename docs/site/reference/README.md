@@ -32,6 +32,12 @@ procedures. This section gives exact names and source-backed facts.
 
 - [Glossary](glossary.md) defines the terms used across the documentation.
 
+## Documentation Maintenance
+
+- [Documentation governance](documentation-governance.md) defines canonical ownership, source authority, metadata, decision, status, and route-lifecycle rules.
+- [Generated documentation map](generated-documentation-map.json) maps every reader page to its owner, sources, status, and required checks.
+- [Route registry](documentation-route-registry.json) records public redirects, deprecated terms, and their successors.
+
 ## Known Coverage Limit
 
 These references do not yet form an exhaustive catalogue of every schema, event,

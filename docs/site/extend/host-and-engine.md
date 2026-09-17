@@ -3,10 +3,10 @@
 Status: implemented with stated local limits
 Audience: host-extension author, Worker engine maintainer, runtime packager
 Owner: plugin-foundation
-Evidence: skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json; skills/prism/openclaw-plugin/openclaw.plugin.json; plugins/kubeclaw-ops/.codex-plugin/plugin.json; skills/worker/core/worker/attempt-executor.ts; contracts/pipeline-worker-core/v1/src/types.ts; packaging/runtime/roles
+Evidence: skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json; skills/prism/openclaw-plugin/openclaw.plugin.json; plugins/kubeclaw-ops/.codex-plugin/plugin.json; charts/ops-pod; skills/worker/core/worker/attempt-executor.ts; contracts/pipeline-worker-core/v1/src/types.ts; packaging/runtime/roles
 Evidence revision: `bcf032f241b432bf920baa9ee5f727947921447d`
 Applies to: OpenClaw extensions, Codex plugins and skills, Worker Core engines, runtime roles
-Last verified: source, package, role, and focused host checks on 2026-09-16
+Last verified: source, package, role, and focused host checks on 2026-09-17
 
 ## Objective
 
@@ -147,13 +147,24 @@ Build a new tool extension as follows:
 
 The current `kubeclaw-ops` package is a Codex plugin. Its manifest points to a skill
 directory and declares a read-only interface. The skill tells Codex how to combine
-Argo CD, Kubernetes, logs, and Hubble observations.
+Argo CD, Kubernetes, logs, and Hubble observations. This declaration describes the
+plugin workflow. It does not restrict the operating-system process, a connected
+tool provider, or the Kubernetes ServiceAccount.
 
 The package contains no pipeline manifest and no OpenClaw manifest. It also contains
 no MCP server declaration. The required read-only Ops tools must already be
 available through the Codex environment. The skill cannot create that connection.
+In the deployed Ops Pod, Codex and MCP share a ServiceAccount. The chart enables
+namespace-scoped Pod execution for Codex by default. Treat the chart RBAC and
+credential mounts as the effective authority, even though the plugin interface and
+the MCP tool surface are read-only. Set `rbac.execNamespaces` to `[]` to remove the
+Codex token, kubeconfig, and exec binding.
 
 > **Codex manifest:** [The Ops manifest declares the skill directory, read capability, interface text, and example prompts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/plugins/kubeclaw-ops/.codex-plugin/plugin.json#L1-L26).
+>
+> **Deployment authority:** [The chart mounts Kubernetes credentials into Codex when an exec namespace is configured](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/charts/ops-pod/templates/workload.yaml#L51-L76).
+>
+> [The default value selects `kubeclaw`](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/charts/ops-pod/values.yaml#L21-L28).
 
 Use this authoring path:
 
@@ -258,8 +269,12 @@ binary values from the specialist result.
 > **Specialist operation:** [The Prism operation implements prepare, execute, terminate, measurement, artifact input, and bounded evidence output](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/server/worker-operation.ts#L9-L98).
 
 Worker Core emits ordered progress for acceptance, start, operation completion, and
-cleanup. Progress delivery is best effort. The signed terminal result remains the
-authority when a progress consumer is unavailable.
+cleanup. Progress delivery is best effort. The terminal result remains the authority
+when a progress consumer is unavailable. Worker Core hashes the result content and
+adds a local receipt derived from a namespace, a generated receipt ID, and that
+digest. This receipt detects accidental duplication or mutation. It has no key and
+is not a cryptographic signature. Caller authentication and result durability come
+from the transport and control store, not from this local receipt.
 
 Cancellation aborts the operation signal. Core calls `terminate`, bounds settlement,
 measures resources, and runs cleanup. It reports unresolved execution or failed
@@ -268,6 +283,8 @@ cleanup instead of detaching owned work.
 > **Execution and cancellation:** [Worker Core applies deadlines, races cancellation, terminates work, measures resources, and runs cleanup](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/worker/core/worker/attempt-executor.ts#L360-L465).
 >
 > **Progress and terminal result:** [Worker Core emits best-effort progress and creates a digest-bound authoritative result](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/worker/core/worker/attempt-executor.ts#L590-L689).
+>
+> **Receipt limit:** [The executor states that its local receipt detects accidental duplication or mutation and relies on authenticated transport for identity](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/worker/core/worker/attempt-executor.ts#L658-L680).
 
 Control validates the result against the original attempt before it reads evidence.
 It checks attempt identity, claim generation, result digest, state, and specialist

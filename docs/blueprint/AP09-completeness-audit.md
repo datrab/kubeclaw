@@ -480,7 +480,7 @@ geschrieben, wenn kein belegter Fehler vorliegt.
 
 | Paket | Primärer Umfang | Ergebnis und Reihenfolge |
 | --- | --- | --- |
-| AP09.1 — Wahrheit und Leserwege | `GOV-*`, `ENT-*`, `DEC-*`, `STA-*` | Status, Source Authority und Navigation zuerst vereinheitlichen. |
+| AP09.1 — Wahrheit und Leserwege | `GOV-001`–`GOV-004`, `GOV-006`, `GOV-008`, `ENT-001`–`ENT-004`, `DEC-*`, `STA-*` | Status, Source Authority und Navigation zuerst vereinheitlichen. Nachgewiesene Falschaussagen in später verantworteten Punkten werden als Voraussetzung korrigiert, ohne deren vollständigen Abschluss vorzutäuschen. |
 | AP09.2 — Nova Core und Plugin Runtime | `ARC-*`, `NVC-*`, `PLG-*` | Nova Core, Registry, Plugin-Laufzeit, Zustände und Autoritätsgrenzen vollständig erklären. |
 | AP09.3 — Worker Core und native Ausführung | `WKC-*` | Worker-Verträge, native Prozesse, Ressourcen, Persistenz, Recovery und Result-Seal als eigenen tiefen Pfad dokumentieren. |
 | AP09.4 — Prism in Depth | Prism-Anteile aus `SPC-*`, `OPR-*` und `CDV-*` | Control, Worker, Studio, Datenmodell, Storage, Retrieval, Rendering, Operatorreise und Erweiterung zusammenführen. |
@@ -488,10 +488,10 @@ geschrieben, wenn kein belegter Fehler vorliegt.
 | AP09.6 — Lint | Lint-Anteile aus `CFG-*` und den Developer-Anforderungen | Engine, Regeln, Tools, Policy Packs, Konfiguration und alle Erweiterungswege als eigenes Paket behandeln. |
 | AP09.7 — Plattform, Spezialisten und Sicherheit | `COM-*`, `DAT-*`, `TEL-*`, `INF-*`, `SEC-*` sowie nicht separat geführte `SPC-*` | Pflicht- und optionale Infrastruktur, Kommunikation, Daten, Telemetrie, Forge, Echo, Hosts, Ops MCP und Archviewer integrieren. |
 | AP09.8 — Operator und Konfiguration | verbleibende `OPR-*`, `OPL-*`, `CFG-*` | Installation, Betrieb, Recovery und jede Konfigurationsquelle mit Defaults und Präzedenz liefern. |
-| AP09.9 — Pipeline und Workflows | verbleibende `FLW-*` | Alle `pipeline.json`-Möglichkeiten und repräsentative Normal-, Fehler-, Resume- und Cleanup-Wege dokumentieren. |
+| AP09.9 — Pipeline und Workflows | `ENT-005` und verbleibende `FLW-*` | Den vollständigen ersten Pipeline-Weg, alle `pipeline.json`-Möglichkeiten und repräsentative Normal-, Fehler-, Resume- und Cleanup-Wege dokumentieren. |
 | AP09.10 — Developer-Handbuch und komplexe Plugins | `DEV-*`, `EXT-*`, `CDV-*` ohne Prism-/Buster-Sonderzuordnung | Setup, Build, Test, Release, Change-to-check und tiefe komplexe Plugin-Guides erstellen. |
-| AP09.11 — Exhaustive Reference und Drift | `REF-*`, `MNT-*` | Generierte Faktenkataloge, SDK-Referenz, Source-to-doc-Matrix, Ownership, CI und Wartungsvertrag aufbauen. |
-| AP09.12 — Veröffentlichung | `PUB-*` | Explizite Allowlist, Suche, Code-Evidence-Boxen, gezielte Diagramme, Accessibility und CI-Publication integrieren. |
+| AP09.11 — Exhaustive Reference und Drift | `GOV-005`, `REF-*`, `MNT-*` | Die Trennung generierter Fakten und redaktioneller Erklärungen auf alle exhaustive Referenzfamilien anwenden; Faktenkataloge, SDK-Referenz, CI und Wartungsvertrag aufbauen. |
+| AP09.12 — Veröffentlichung | `GOV-007`, `PUB-*` | Die vorhandene Redirect-/Deprecation-Registry in wirksame Publication-Ausgaben umsetzen; Allowlist, Suche, Code-Evidence-Boxen, Diagramme und Accessibility integrieren. |
 | AP09.13 — Gesamtprüfung | `QUA-*` | Sprache, Begründungen, Belege, Reader-Proben und Mutation-Test nach Abschluss aller Inhalte durchführen. |
 
 AP09.1 bis AP09.11 liefern Inhalt und mechanische Wahrheit. AP09.12 darf erst dann

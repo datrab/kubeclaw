@@ -68,6 +68,9 @@ Quellen und Rechenweg.
 
 ### AP09.1 — Wahrheit, Autorität und Leserwege
 
+**Status:** Intern abgeschlossen am 17. September 2026. Die unabhängige
+Read-only-Abnahme des Gesamtplans bleibt offen.
+
 - Nachgewiesene Falschaussagen zuerst korrigieren: Ops-Pod-Rechte,
   Resume-Signal, Worker-Result-Authentizität und Capability-Arten. Die
   zuständigen späteren Pakete schließen weiterhin die vollständigen
@@ -77,8 +80,32 @@ Quellen und Rechenweg.
 - Für jede Kernaufgabe den kürzesten vollständigen Weg festlegen.
 - Tatsächliche Produktgrenzen klar von fehlender Live-Abnahme trennen.
 
+Die Regeln, das Oberflächeninventar und die maschinenlesbare Seiten-Ownership
+entstehen in AP09.1. Exhaustive Faktengeneratoren bleiben bei AP09.11. Die
+Publication muss die Redirect-Registry in AP09.12 noch wirksam anwenden. Der
+vollständig ausführbare erste Pipeline-Weg bleibt bei AP09.9. AP09.1 verlinkt
+diese Ziele ehrlich und behauptet ihren Abschluss nicht vorzeitig.
+
 **Gate:** Kein bekannter falscher Satz bleibt als aktuelle Produktwahrheit
 sichtbar. Alle Hauptaufgaben sind vom Site-Einstieg erreichbar.
+
+**Geliefertes Ergebnis:** Die 14 Anforderungen `GOV-001` bis `GOV-004`,
+`GOV-006`, `GOV-008`, `ENT-001` bis `ENT-004`, `DEC-001`, `DEC-002`,
+`STA-001` und `STA-002` haben nun kanonische Leserziele. Die Site besitzt ein
+vollständiges Oberflächeninventar, zusammenhängende Architektur-, Operator-
+und Entwicklerpfade, einen dokumentierten Authority- und Ownership-Vertrag
+sowie eine maschinenlesbare Seitenkarte. Generatoren prüfen Metadaten,
+Ownership, Reader-Routen, Capability-Namespaces und das Resume-Signal-
+Beispiel. Zusätzlich sind die vier oben genannten Falschaussagen korrigiert.
+
+`GOV-005`, `GOV-007` und `ENT-005` bleiben bewusst bei AP09.11, AP09.12 und
+AP09.9. Damit verwechselt AP09.1 weder die Governance-Regel mit ihrer
+vollständigen Anwendung noch eine Redirect-Registry mit wirksamen Redirects
+oder einen Leserpfad mit einem ausführbaren ersten Pipeline-Beispiel.
+
+**Interne Prüfung:** `docs:check:generated`, `docs:blueprint:check`,
+`docs:check:refs`, `docs:site-boundary:check`, `docs:check:coverage`,
+`docs:publication:check` und `docs:publication:build` müssen erfolgreich sein.
 
 ### AP09.2 — Nova Core und Plugin Runtime
 
@@ -266,6 +293,8 @@ Komplexe Plugins sind nicht auf eine generierte Top-Level-Schematabelle reduzier
 
 ### AP09.11 — Exhaustive Reference und automatische Driftkontrolle
 
+- Die vorhandene Trennung generierter Fakten und redaktioneller Erklärungen
+  auf jede exhaustive Referenzfamilie anwenden.
 - Rekursive Schema-, Config-, CLI-, Contract-, Event-, Error-, Endpoint-,
   Store-, Capability- und Workflow-Inventare erstellen.
 - Nova-Grants, Buster-Runtime-Capabilities und andere Namespaces klar trennen.
@@ -280,6 +309,8 @@ Teilresultate.
 
 ### AP09.12 — Publication und Reader Experience
 
+- Die vorhandene Deprecation-/Redirect-Registry in der Publication wirksam
+  anwenden und ihren statischen Fallback prüfen.
 - Endgültige Navigation, Suche, Code-Evidence-Boxen und zielgerichtete
   Diagramme integrieren.
 - Responsive Darstellung, Accessibility und stabile Links prüfen.

@@ -5,7 +5,7 @@ Audience: architecture reader, platform operator, maintainer, security reviewer
 Owner: platform architecture and operations
 Evidence: scripts/deploy.sh; scripts/deploy-cilium.sh; scripts/argocd-self-management.mjs; charts/ops-pod; gitops/platform
 Applies to: current Kubernetes deployment and operations tooling
-Last verified: source inspection on 2026-09-16
+Last verified: source inspection on 2026-09-17
 
 ## Purpose
 
@@ -223,8 +223,22 @@ The Ops Pod is an optional security, analysis, and administration tool.
 It is not a pipeline stage and does not own Nova lifecycle state.
 
 The Pod can inspect selected namespaces, workloads, events, policies, Argo applications, and nodes.
-Its default Kubernetes rights are read-only.
-An operator can grant bounded Pod execution in explicitly listed namespaces.
+Its local MCP service exposes read-only investigation tools. This tool policy is
+not the Kubernetes permission boundary for the complete Pod.
+
+Both containers use the same ServiceAccount. The MCP container receives a
+rotating Kubernetes token for its read calls. By default, the chart also sets
+`rbac.execNamespaces` to `[kubeclaw]`. This setting mounts a token and generated
+kubeconfig into the Codex container and gives that ServiceAccount `get`, `list`,
+and `create` access for Pod execution in `kubeclaw`. Code that runs in the Codex
+container can therefore start commands in Pods in that namespace. It receives
+the data and effective authority of the selected target container.
+
+Set `rbac.execNamespaces` to `[]` when Codex must not receive this execution
+path. This setting removes the namespace exec Role and RoleBinding. It also
+removes the Kubernetes token and kubeconfig mounts from Codex. The MCP container
+keeps its read token and selected read bindings. A prompt, a Codex plugin
+capability label, or the MCP read-only tool list does not reduce Kubernetes RBAC.
 
 The Ops Pod also depends on the cluster that it inspects.
 It cannot serve as the only recovery tool for cluster loss or network-layer failure.
@@ -240,9 +254,11 @@ Restore the Ops Pod only after the cluster can schedule and mount it.
 
 > **Source evidence — optional bounded analysis**
 >
-> [The default role permits read access to workloads, logs, services, events, policies, and Argo applications](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/ops-pod/templates/rbac.yaml#L6-L27).
+> [The chart defaults enable Codex Pod execution in `kubeclaw`](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/charts/ops-pod/values.yaml#L21-L28).
 >
-> [Pod execution rights apply only to explicitly selected namespaces](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/ops-pod/templates/rbac.yaml#L63-L92).
+> [The shared ServiceAccount has read bindings and namespace-scoped exec bindings](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/charts/ops-pod/templates/rbac.yaml#L1-L92).
+>
+> [The workload mounts separate projected credentials into MCP and, when exec is enabled, Codex](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/charts/ops-pod/templates/workload.yaml#L34-L103).
 >
 > [The network policy limits cluster API and external HTTPS access](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/ops-pod/templates/network.yaml#L1-L36).
 

@@ -2,13 +2,17 @@
 
 | Topic | Canonical pages | Source evidence |
 | --- | --- | --- |
-| Runtime architecture | `docs/architecture/README.md`; `docs/pipeline/architecture.md` | `skills/common/plugin-runtime/foundation/`; `skills/nova/core/`; `skills/worker/core/`; `skills/buster/engine/` |
-| Test-suite migration | `docs/architecture/pipeline-test-gate-suite-migration-playbook.md`; `docs/architecture/pipeline-test-gate-suite-migration-templates.md`; `docs/architecture/pipeline-test-gate-suite-migration-status.md`; `docs/architecture/pipeline-test-gate-container-build-user-guide.md`; `docs/architecture/pipeline-test-gate-container-build-operator-guide.md` | `contracts/pipeline-test-gate/`; `skills/nova/core/test-gates/`; `skills/buster/engine/test-gates/`; `tests/verification/contracts/check-pipeline-container-build-cutover.mts` |
-| Echo review governance | `docs/architecture/echo-review-governance-implementation-plan.md`; `docs/architecture/echo-review-phase-1-baseline.md`; `docs/architecture/echo-review-phase-2-design.md`; `docs/architecture/echo-review-phase-3-design.md`; `docs/architecture/echo-review-phase-4-design.md`; `docs/architecture/echo-review-phase-5-design.md`; `docs/architecture/echo-review-phase-6-design.md`; `docs/architecture/echo-review-phase-7-design.md`; `docs/architecture/echo-review-phase-8-design.md`; `docs/architecture/echo-review-roadmap.md` | `skills/nova/plugins/review/` |
-| Plugin inventory | `docs/architecture/plugin-system-current-inventory.md` | `docs/generated/inventory/plugin-system.json` |
-| Security and isolation | `docs/architecture/security-model.md`; `docs/operators/external-pipeline-plugins.md` | `skills/common/plugin-runtime/foundation/isolation/`; `skills/common/plugin-runtime/foundation/packages/install.ts` |
+| Runtime architecture | `docs/site/understand/README.md`; `docs/site/understand/components-and-authority.md`; `docs/site/understand/request-state-recovery.md` | `skills/common/plugin-runtime/foundation/`; `skills/nova/core/`; `skills/worker/core/`; `skills/buster/engine/` |
+| Test suites and Buster | `docs/site/extend/buster.md`; `docs/site/product-surfaces.md` | `contracts/pipeline-test-gate/`; `skills/nova/core/test-gates/`; `skills/buster/engine/test-gates/` |
+| Echo decisions and current boundary | `docs/site/decisions/echo.md`; `docs/site/understand/components-and-authority.md`; `docs/site/status/current.md` | `skills/nova/plugins/review/` |
+| Plugin inventory | `docs/site/extend/plugin-catalogue/README.md`; `docs/site/reference/capabilities.md` | `docs/generated/inventory/plugin-system.json`; `skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts` |
+| Security and isolation | `docs/site/understand/deployment-and-trust.md`; `docs/site/understand/worker-trust.md`; `docs/site/extend/testing.md` | `skills/common/plugin-runtime/foundation/isolation/`; `skills/common/plugin-runtime/foundation/packages/install.ts` |
 | Deployment | `docs/site/use/install.md`; `docs/site/understand/deployment-and-trust.md` | `charts/kubeclaw/templates/deployment.yaml`; `scripts/deploy.sh` |
 | Operations | `docs/site/use/README.md`; `docs/site/use/operate.md`; `docs/site/use/diagnose.md`; `docs/site/use/recovery.md`; `docs/site/use/maintenance.md` | `skills/nova/core/cli.ts`; `skills/nova/project/cli.ts`; `charts/prism/files/prism-backup.sh` |
-| Extension authoring | `docs/developers/README.md`; `docs/developers/authoring-plugin-pipelines.md`; `docs/developers/authoring-plugin-observers.md` | `skills/common/plugin-runtime/sdk/` |
-| Cutover history | `docs/architecture/plugin-system-phase12-changelog.md`; `docs/architecture/plugin-system-implementation-plan.md` | `tests/verification/contracts/check-plugin-system-v2-phase12.mts` |
-| Codex operations workspace | `docs/architecture/ops-pod.md`; `docs/ops/ops-pod.md` | `charts/ops-pod/`; `ops/pod/`; `tools/ops-mcp/src/`; `scripts/deploy-ops-pod.sh` |
+| Extension authoring | `docs/site/extend/README.md`; `docs/site/extend/first-plugin.md`; `docs/site/extend/contracts.md`; `docs/site/extend/testing.md` | `skills/common/plugin-runtime/sdk/` |
+| Current implementation and compatibility | `docs/site/status/current.md`; `docs/site/status/open-issues.md`; `docs/site/decisions/README.md` | `docs/status/open-issues.json`; `packaging/runtime/package-ownership.json` |
+| Codex operations workspace | `docs/site/understand/platform-and-operations.md`; `docs/site/extend/host-and-engine.md` | `charts/ops-pod/`; `plugins/kubeclaw-ops/`; `tools/ops-mcp/src/`; `scripts/deploy-ops-pod.sh` |
+
+Only paths below `docs/site` are canonical reader documentation. Other files can
+remain implementation evidence or temporary migration sources until cleanup.
+They do not define a second reader-facing authority.
