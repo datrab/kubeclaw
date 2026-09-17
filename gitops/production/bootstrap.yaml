@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: kubeclaw-bootstrap
+  namespace: argocd
+  labels:
+    kubeclaw.dev/gitops-root: kubeclaw
+spec:
+  description: 'Administrative bootstrap: only this reviewed repository may define runtime Applications and their Project.'
+  sourceRepos:
+    - https://github.com/datrab/kubeclaw.git
+  destinations:
+    - namespace: argocd
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist: []
+  namespaceResourceWhitelist:
+    - group: argoproj.io
+      kind: Application
+    - group: argoproj.io
+      kind: AppProject
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubeclaw
+  namespace: argocd
+  labels:
+    kubeclaw.dev/gitops-root: kubeclaw
+  annotations:
+    kubeclaw.dev/runtime-namespaces: '["kubeclaw"]'
+spec:
+  project: kubeclaw-bootstrap
+  source:
+    repoURL: https://github.com/datrab/kubeclaw.git
+    targetRevision: main
+    path: gitops/production/apps
+    directory:
+      include: applications.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    syncOptions:
+      - FailOnSharedResource=true

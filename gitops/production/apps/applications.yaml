@@ -1,0 +1,150 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: kubeclaw
+  labels:
+    kubeclaw.dev/gitops-root: kubeclaw
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '-1'
+spec:
+  sourceRepos:
+    - https://github.com/datrab/kubeclaw.git
+  destinations:
+    - namespace: kubeclaw
+      server: https://kubernetes.default.svc
+    - namespace: tailscale
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRole
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+    - group: admissionregistration.k8s.io
+      kind: ValidatingAdmissionPolicy
+    - group: admissionregistration.k8s.io
+      kind: ValidatingAdmissionPolicyBinding
+  namespaceResourceWhitelist:
+    - group: ''
+      kind: ServiceAccount
+    - group: ''
+      kind: ConfigMap
+    - group: ''
+      kind: PersistentVolumeClaim
+    - group: rbac.authorization.k8s.io
+      kind: Role
+    - group: rbac.authorization.k8s.io
+      kind: RoleBinding
+    - group: ''
+      kind: Service
+    - group: apps
+      kind: Deployment
+    - group: networking.k8s.io
+      kind: NetworkPolicy
+    - group: policy
+      kind: PodDisruptionBudget
+    - group: apps
+      kind: StatefulSet
+    - group: batch
+      kind: CronJob
+    - group: networking.k8s.io
+      kind: Ingress
+    - group: batch
+      kind: Job
+  orphanedResources:
+    warn: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubeclaw-buster
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '0'
+    kubeclaw.dev/helm-releases: '["agent-buster"]'
+  labels:
+    kubeclaw.dev/gitops-project: kubeclaw
+spec:
+  project: kubeclaw
+  source:
+    repoURL: https://github.com/datrab/kubeclaw.git
+    targetRevision: main
+    path: releases/gitops/runtime-35231644743-1/buster
+    directory:
+      include: resources.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kubeclaw
+  syncPolicy:
+    syncOptions:
+      - FailOnSharedResource=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 1m
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubeclaw-prism
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '0'
+    kubeclaw.dev/helm-releases: '["prism","agent-prism"]'
+  labels:
+    kubeclaw.dev/gitops-project: kubeclaw
+spec:
+  project: kubeclaw
+  source:
+    repoURL: https://github.com/datrab/kubeclaw.git
+    targetRevision: main
+    path: releases/gitops/runtime-35231644743-1/prism
+    directory:
+      include: resources.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kubeclaw
+  syncPolicy:
+    syncOptions:
+      - FailOnSharedResource=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 1m
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubeclaw-nova
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '0'
+    kubeclaw.dev/helm-releases: '["agent-nova"]'
+  labels:
+    kubeclaw.dev/gitops-project: kubeclaw
+spec:
+  project: kubeclaw
+  source:
+    repoURL: https://github.com/datrab/kubeclaw.git
+    targetRevision: main
+    path: releases/gitops/runtime-35231644743-1/nova
+    directory:
+      include: resources.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kubeclaw
+  syncPolicy:
+    syncOptions:
+      - FailOnSharedResource=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 1m
