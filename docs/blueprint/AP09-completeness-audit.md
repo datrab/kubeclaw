@@ -1,7 +1,7 @@
 # AP09 Masterprüfung der Dokumentationsvollständigkeit
 
 Stand: 17.09.2026  
-Status: Prüfkatalog erstellt; 72 von 251 Punkten einzeln geprüft; inhaltliche Umsetzung offen
+Status: Prüfkatalog erstellt; 118 von 251 Punkten einzeln geprüft; inhaltliche Umsetzung offen
 Scope: aktive Produktdokumentation, Referenzen, Veröffentlichung und Pflegeautomation
 
 ## Zweck
@@ -15,6 +15,14 @@ verwendet einen breiteren Maßstab: Die veröffentlichte Dokumentation muss alle
 unterstützten Aufgaben und öffentlichen Oberflächen des aktuellen Produkts erklären.
 Eine präzise erklärte Produktgrenze kann dokumentarisch vollständig sein. Eine nicht
 erwähnte Grenze ist eine Dokumentationslücke.
+
+Der endgültige Leserbestand liegt zentral unter `docs/site`. Ein Leser darf für das
+Verständnis, den Betrieb oder die Erweiterung nicht auf historische Reviews,
+Migrationsberichte oder verteilte Package-READMEs angewiesen sein. Code-nahe READMEs
+können kurze Maintainer-Hinweise behalten, sind aber keine zweite Produktdokumentation.
+AP10 entfernt temporäre und ersetzte Dateien erst, nachdem alle weiterhin benötigten
+Informationen, Entscheidungen und offenen Arbeiten im zentralen Bestand angekommen
+sind.
 
 ## Verbindliche Zustände
 
@@ -44,6 +52,7 @@ zutreffenden Fragen mit Ja beantwortet sind:
 8. Kann ein Leser die Aufgabe ohne verborgenes Projektwissen abschließen?
 9. Ist der Inhalt vom passenden Einstieg erreichbar?
 10. Erkennt CI spätere Änderungen an der zugehörigen öffentlichen Oberfläche?
+11. Liegt die vollständige Erklärung im zentralen Leserbestand und nicht nur in einem Package-README, Review oder Migrationsbericht?
 
 ## Prüfreihenfolge
 
@@ -56,9 +65,9 @@ zutreffenden Fragen mit Ja beantwortet sind:
 7. Navigation, Darstellung und Veröffentlichung
 8. unabhängige Leser- und Wartbarkeitsabnahme
 
-Aktueller Prüfstand: `GOV-001` bis `PLG-014` sind einzeln geprüft. Davon sind
-16 Punkte vollständig vorhanden, 47 zu erweitern und 9 fehlen komplett. Die
-verbleibenden 179 Einstufungen sind weiterhin vorläufig.
+Aktueller Prüfstand: `GOV-001` bis `SEC-007` sind einzeln geprüft. Davon sind
+24 Punkte vollständig vorhanden, 77 zu erweitern und 17 fehlen komplett. Die
+verbleibenden 133 Einstufungen sind weiterhin vorläufig.
 
 ## A. Umfang und Governance
 
@@ -71,7 +80,7 @@ verbleibenden 179 Einstufungen sind weiterhin vorläufig.
 | GOV-005 | Trennung generierter Fakten und redaktioneller Erklärungen | Muss erweitert/überarbeitet werden | `06-automation-and-publication.md` definiert die Trennung, und der AP08-Katalog setzt sie um. Konfigurationen, CLI-Flags, Fehlercodes, Events und weitere Referenzflächen besitzen diesen getrennten Pflegeweg noch nicht. |
 | GOV-006 | Owner, Gültigkeitsbereich, letzte Prüfung und Check je Seite | Muss erweitert/überarbeitet werden | Alle 90 veröffentlichten Seiten enthalten Status, Audience, Owner, Applies-to und Last-verified. Drei Decision-Seiten besitzen kein `Evidence`-Feld. Eine vollständige maschinenlesbare Zuordnung von Seiten zu Quellabhängigkeiten und Checks fehlt. |
 | GOV-007 | Begriffs-, Deprecation-, Redirect- und Supersession-Regeln | Muss erweitert/überarbeitet werden | Glossar, Decision-Supersession-Regeln und AP10-Migrationsregeln existieren. `scripts/docs-publication.mjs` implementiert jedoch keine Redirect- oder Deprecation-Liste; alte öffentliche Routen sind nicht vollständig zugeordnet. |
-| GOV-008 | Messbare Definition von „vollständig“ | Vollständig vorhanden | Der Qualitätsstandard definiert zehn Abnahme-Gates. Dieses Dokument ergänzt zehn Fragen je Prüfpunkt und verbietet Abschluss durch Seitenzahl oder grünen Build allein. |
+| GOV-008 | Messbare Definition von „vollständig“ | Vollständig vorhanden | Der Qualitätsstandard definiert zehn Abnahme-Gates. Dieses Dokument ergänzt elf Fragen je Prüfpunkt und verbietet Abschluss durch Seitenzahl oder grünen Build allein. |
 
 ## B. Einstieg und Produktverständnis
 
@@ -169,59 +178,59 @@ verbleibenden 179 Einstufungen sind weiterhin vorläufig.
 
 ## H. Architektur: Kommunikation, Daten und Telemetrie
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| COM-001 | Exhaustive Kommunikationsmatrix | Fehlt komplett | Sender, Empfänger, Schema, Auth, Persistenz, Retry und Fehler fehlen als Gesamtmatrix. |
-| COM-002 | Nova zu Buster Dispatch und Result Import | Muss erweitert/überarbeitet werden | Teile sind dokumentiert; vollständiges Wire-, Store- und Recoverymodell fehlt. |
-| COM-003 | Nova zu Prism und zurück | Muss erweitert/überarbeitet werden | Handoffs vorhanden; Endpunkte, Identität und Recovery sind verteilt. |
-| COM-004 | Nova zu Forge/Echo | Muss erweitert/überarbeitet werden | Dispatch-Plugins vorhanden; vollständiger Transportpfad fehlt. |
-| COM-005 | Core zu Stage, Adapter und Observer | Muss erweitert/überarbeitet werden | Invocation und Delivery erklärt; vollständige Request-/Result-/Abortsemantik fehlt. |
-| COM-006 | Worker Control Channel | Fehlt komplett | Siehe WKC-007. |
-| COM-007 | Redis Streams, Kanäle und Deduplizierung | Muss erweitert/überarbeitet werden | Rolle und Konfiguration vorhanden; Consumer- und Replaysemantik fehlt. |
-| COM-008 | Interne HTTP- und Service-Endpunkte | Fehlt komplett | Kein Endpunkt-, Auth-, Timeout- und Fehlerkatalog. |
-| COM-009 | Tailscale private routes und Test-Exposure | Muss erweitert/überarbeitet werden | Anwendungen getrennt; Identität, DNS und Cleanup brauchen eine Matrix. |
-| COM-010 | Git-, OCI-, Registry- und BuildKit-Datenwege | Muss erweitert/überarbeitet werden | Kette erklärt; Protokoll, Auth und Failure-Recovery brauchen Details. |
-| COM-011 | SPIFFE/SPIRE- und mTLS-Pfade | Muss erweitert/überarbeitet werden | Workerpfad vorhanden; vollständige Plattformmatrix fehlt. |
-| COM-012 | Timeout, Retry, Ordering und Backpressure je Verbindung | Fehlt komplett | Aktuell über Implementierungen und Plugins verteilt. |
-| DAT-001 | Exhaustive Datenbesitz- und Persistenzmatrix | Muss erweitert/überarbeitet werden | Recovery bietet Basis; alle Stores und Verträge fehlen als Gesamtinventar. |
-| DAT-002 | Nova-Journals, Effects und Snapshots | Muss erweitert/überarbeitet werden | Autorität klar; logisches und physisches Modell nicht vollständig. |
-| DAT-003 | Worker-Journals, Ownership und Spools | Fehlt komplett | Kein integriertes Datenmodell. |
-| DAT-004 | Buster-Pläne, Attempts, Evidence und Reports | Muss erweitert/überarbeitet werden | Extension Guide stark; Persistenz und Retention verteilt. |
-| DAT-005 | Prism PostgreSQL, Artefakte und Revisionen | Muss erweitert/überarbeitet werden | Alte Details existieren; aktive Site fehlt. |
-| DAT-006 | LiteLLM PostgreSQL | Muss erweitert/überarbeitet werden | Besitzer genannt; Schema, Migration und Betrieb fehlen. |
-| DAT-007 | Redis als Transport, nicht als Autorität | Muss erweitert/überarbeitet werden | Grenze klar; Datenformen, Retention und Replay fehlen. |
-| DAT-008 | Artefaktspeicher, Digests, Encoding und Retention | Muss erweitert/überarbeitet werden | Teile vorhanden; vollständiger Lebenszyklus fehlt. |
-| DAT-009 | Backupgruppen und Restore-Reihenfolge | Vollständig vorhanden | Operator-Recovery behandelt Gruppen und Grenzen. |
-| TEL-001 | Telemetriearchitektur und Autoritätsgrenze | Muss erweitert/überarbeitet werden | Grundgrenze vorhanden; vollständiger Datenweg fehlt. |
-| TEL-002 | Event- und Payload-Katalog | Fehlt komplett | 128 Telemetrie-Schemas sind nicht aktiv erschlossen. |
-| TEL-003 | Produzenten und Konsumenten je Event | Fehlt komplett | Keine exhaustive Matrix. |
-| TEL-004 | Identität, Ordering, Deduplizierung und Redaction | Muss erweitert/überarbeitet werden | Einzelregeln vorhanden; globales Modell fehlt. |
-| TEL-005 | Observer Checkpoints, Retry und Recovery | Muss erweitert/überarbeitet werden | AP08 erklärt Observer; Zustands- und Fehlerreferenz fehlt. |
-| TEL-006 | Evidence versus Redis, Logs und Metriken | Vollständig vorhanden | Architektur trennt kanonische Evidenz und Beobachtung. |
-| TEL-007 | Retention, Kapazität und Backpressure | Fehlt komplett | Kein durchgehender Betriebsvertrag. |
+| COM-001 | Vollständige Kommunikationsmatrix | Fehlt komplett | Keine zentrale Matrix nennt für jede Verbindung Sender, Empfänger, Zweck, Schema, Transport, Endpoint, Authentisierung, Autorisierung, Timeout, Ordering, Retry, Persistenz, Deduplizierung, Backpressure und Fehlerwirkung. Einzelne Diagramme ersetzen dieses Inventar nicht. |
+| COM-002 | Nova zu Buster Dispatch und Result Import | Muss erweitert/überarbeitet werden | Request Trace und Buster Guide erklären festen Plan, Job Admission, gespeichertes Resultat und einmaligen Import. Wire Envelope, Endpoint, Source Snapshot, Statuspolling, Store Records, Attestation, Deadlines, Transportfehler und Reconciliation sind über Nova-, Buster- und Trust-Quellen verteilt. |
+| COM-003 | Nova zu Prism und zurück | Muss erweitert/überarbeitet werden | Components und Prism Worker Example zeigen Design-Handoff, Worker-Request und gebundenes Resultat. Nova-Stage zu Control, Control zu Worker, Studio/Service-Routen, exakte Identitäten, Timeouts, Operation Store und Restart-Reconciliation bilden keinen zentralen Ende-zu-Ende-Pfad. |
+| COM-004 | Nova zu Forge/Echo | Muss erweitert/überarbeitet werden | Components beschreibt bounded tasks und Rückgaben; Plugin-Katalog belegt Runtime Dispatch, Implementation und Review. Transportadapter, Message Envelope, Model-/Agent-Host, Correlation, Timeout, Streaming, Result Import, Lost Response und Retry sind nicht zusammenhängend dokumentiert. |
+| COM-005 | Core zu Stage, Adapter und Observer | Muss erweitert/überarbeitet werden | Contracts erklärt alle drei Invocation-Typen, Authority und Recovery. Nova- und Effect-Guides ergänzen Context, Effect und Observer Delivery. Vollständige Request-/Result-/Abortschemas, In-process-versus-isolated Transport, Deadline-Propagation und Error Mapping fehlen als ein Core-Kommunikationsmodell. |
+| COM-006 | Worker Control Channel | Fehlt komplett | Wie bei `WKC-007` fehlt eine aktive kanonische Erklärung zu Nachrichten, Framing, Identität, Zuständen, Timeouts und Fehlern des nativen Channels. |
+| COM-007 | Redis Streams, Kanäle und Deduplizierung | Muss erweitert/überarbeitet werden | Pipeline Dependencies erklärt Redis als Transport statt Lifecycle Authority; der Plugin-Katalog dokumentiert URL, Stream Prefix und Grenzen. Stream-Namensbildung, Writer/Consumer-Paare, RESP-Grenzen, MAXLEN, Dedup-TTL, Replay, Migration und Consumerfehler stehen nur in Package-READMEs und Code. |
+| COM-008 | Interne HTTP- und Service-Endpunkte | Fehlt komplett | Es gibt keinen zentralen Katalog für Nova-, Buster-, Prism-, Worker-, Monitoring-, Registry- und Ops-Endpunkte mit Method, Pfad, Port, Schema, Peer Identity, Auth, Größenlimit, Timeout und Fehlerantwort. |
+| COM-009 | Tailscale private routes und Test-Exposure | Muss erweitert/überarbeitet werden | Pipeline Dependencies trennt privaten Plattformzugang und Buster-Test-Exposure und erklärt Retention/Release. Route Owner, DNS, Zertifikat/TLS, Caller Identity, ACL, Endpoint, Readiness, Lease, Cleanup und Fehlerwirkung fehlen als vollständige Kommunikationsmatrix. |
+| COM-010 | Git-, OCI-, Registry- und BuildKit-Datenwege | Muss erweitert/überarbeitet werden | Pipeline Dependencies zeigt Source Revision, Build, Push, Manifestprüfung, Pull und Mirror-Hit/Miss mit Gründen und Failure Summary. Protokolle, Endpoints, Credentials, Digest-Bindungen, Cache-/Mirror-Regeln und Recovery je Übergang fehlen im zentralen Bestand. |
+| COM-011 | SPIFFE/SPIRE- und mTLS-Pfade | Muss erweitert/überarbeitet werden | Worker Trust erklärt Identitätsformat, Proxy Pattern, geschützte Routen, Provenance und Fail-closed-Verhalten. Eine vollständige Plattformmatrix aller Workload-IDs, Ports, SANs, Issuer, Peer-Allowlist, NetworkPolicy und Rotation verweist noch auf nicht zentrale Security-/Operationsseiten. |
+| COM-012 | Timeout, Retry, Ordering und Backpressure je Verbindung | Fehlt komplett | Werte und Regeln liegen in Schemas, Plugins und Runtime-Code. Keine zentrale Matrix macht sichtbar, welche Schicht retryt, welche Reihenfolge gilt, wie Queue-/Byte-Limits wirken und wann Druck den Producer, Consumer oder gesamten Run stoppt. |
+| DAT-001 | Vollständige Datenbesitz- und Persistenzmatrix | Muss erweitert/überarbeitet werden | `use/recovery.md` besitzt eine starke 15-zeilige State Inventory mit Owner, Authority, Protection und Limit. Schema/Format, physischer Ort, Writer, Reader, Konsistenzgruppe, Verschlüsselung, Retention, Kapazität, Migration und Löschung fehlen für viele Stores. |
+| DAT-002 | Nova-Journals, Effects und Snapshots | Muss erweitert/überarbeitet werden | Request Trace, Recovery und Effect Guide erklären Autorität, Zustände und unsichere Effects. Dateinamen, Record-Schemas, Hash Chain, Commit-Grenzen, Run Root, Snapshot Pair, Locking, Größe, Retention, Corruption und Migration stehen überwiegend in internen Core-READMEs. |
+| DAT-003 | Worker-Journals, Ownership und Spools | Fehlt komplett | Keine aktive zentrale Seite verbindet Attempt Journal, Ownership Store, Output Spool, Resource Records und sealed result mit Schema, Pfad, Writer, Replay, Corruption, Retention und Cleanup. |
+| DAT-004 | Buster-Pläne, Attempts, Evidence und Reports | Muss erweitert/überarbeitet werden | Buster Guide erklärt Plan, Provider, Ports, Evidence und Reports fachlich tief. Physische Stores, Record- und Artifact-Schemas, Result Signing, Retention, Kapazität, Garbage Collection, Backup und Remote Recovery bleiben verteilt. |
+| DAT-005 | Prism PostgreSQL, Artefakte und Revisionen | Muss erweitert/überarbeitet werden | Deployment und Recovery nennen Owner, Tabellenarten, Artifact PVC und matched backup group. Vollständiges Datenmodell für Projects, Revisions, Documents, Operations, Approvals, Preferences, Derived Data und Publication sowie Migration/Retention fehlt in der aktiven Site. |
+| DAT-006 | LiteLLM PostgreSQL | Muss erweitert/überarbeitet werden | Pipeline Dependencies und Recovery nennen den getrennten Owner und Backup. Schema-/Migrationsauthority, Credentials, Connection Pool, Startup, Upgrade, Retention, Kapazität, Backupdetails und Restore-Verifikation liegen außerhalb des zentralen Leserbestands. |
+| DAT-007 | Redis als Transport, nicht als Autorität | Muss erweitert/überarbeitet werden | Autoritätsgrenze, Failure Effect und Recovery Rule sind klar. Streams/Keys, Producer, Consumer, Payload, Dedup Records, MAXLEN, TTL, AOF, Migration, Replay und Datenlöschung sind nicht als vollständiges Datenmodell zentral dokumentiert. |
+| DAT-008 | Artefaktspeicher, Digests, Encoding und Retention | Muss erweitert/überarbeitet werden | Contracts, Buster Guide, Effect Guide und Recovery erklären bounded artifacts und Digest-Prüfung. Namespace, ID, Media Types, Encoding, Sidecars, Checkpoints, Visibility, Limits, Retention, Collision, Garbage Collection und Restore sind nicht in einem kanonischen Lifecycle vereint. |
+| DAT-009 | Backupgruppen und Restore-Reihenfolge | Muss erweitert/überarbeitet werden | Zentrale Recovery-Seite erklärt State Inventory, Writer Fence, Group Integrity, unabhängiges Ziel und Prism-Reihenfolge sehr gut. Für Redis, LiteLLM und Ops verweist sie jedoch auf alte Operationsseiten außerhalb `docs/site`; vollständige zentrale Verfahren und mehrere Live-Proofs fehlen. |
+| TEL-001 | Telemetriearchitektur und Autoritätsgrenze | Muss erweitert/überarbeitet werden | Deployment and Trust trennt kanonische Events von Observer Delivery, Redis, Logs und Metriken. Produzent bis Schema, Observer, Adapter, Transport, Sink, Query/Projection, Fehler und Replay sind nicht als vollständiger Datenweg dargestellt. |
+| TEL-002 | Event- und Payload-Katalog | Fehlt komplett | `contracts/telemetry/v1` enthält 124 Schema-Dateien und ein 132-Dateien-Manifest, ist laut eigenem README aber ein retained v1 asset ohne aktiven Producer/Consumer. Die aktive Site veröffentlicht weder diesen Status vollständig noch einen generierten Katalog der aktiven v2 Events und Payloads. |
+| TEL-003 | Produzenten und Konsumenten je Event | Fehlt komplett | Keine zentrale oder generierte Matrix verbindet Event Type und Version mit Producer, Authority, Schema, Subscriber, Filter, Delivery Policy, Sink und Status. Die Plugin-Manifeste decken nur registrierte Subscriptions ab. |
+| TEL-004 | Identität, Ordering, Deduplizierung und Redaction | Muss erweitert/überarbeitet werden | Contracts und Nova Guide erklären Event Identity, at-least-once, per-run ordering, externe Deduplizierung und ein Redaction-Beispiel. V1/V2-Grenze, globale Correlation, Timestamp-/Sequence-Semantik, sensitive Felder und Sink-spezifische Redaction sind nicht als ein Modell dokumentiert. |
+| TEL-005 | Observer Checkpoints, Retry und Recovery | Vollständig vorhanden | `extend/contracts.md` erklärt Delivery Journal, Checkpoint nach Erfolg, required/best-effort, Exhaustion und Restart. `extend/nova.md` ergänzt Timeout, Recovery State, Deduplizierung, Redaction, konkrete Tests und direkte Quellen für Delivery und Recovery. |
+| TEL-006 | Evidence versus Redis, Logs und Metriken | Vollständig vorhanden | Deployment and Trust erklärt, dass Lifecycle Event, Effect Receipt, Artifact Digest und Remote Result autoritativ sind. Es grenzt Redis-Projektion, Observer Delivery, Logs und Monitoring ausdrücklich davon ab und nennt Failure-/Replay-Folgen. |
+| TEL-007 | Retention, Kapazität und Backpressure | Fehlt komplett | Einzelne Komponenten nennen MAXLEN, TTL, Queue-, Payload-, Retry- oder Monitoring-Retention. Es gibt keinen durchgehenden Vertrag für Kapazitätsbudget, Druckweitergabe, Drop/Block-Verhalten, Alerting, Retirement und Löschung aller Telemetriepfade. |
 
 ## I. Architektur: Plattform und Sicherheit
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| INF-001 | Host, K3s und fehlende Hostautomation | Vollständig vorhanden | Grenze und Roadmap sind dokumentiert. |
-| INF-002 | DNS, Storage und Scheduling | Muss erweitert/überarbeitet werden | Eingeordnet; Auswahl- und Fehlerdetails fehlen. |
-| INF-003 | Flannel und Cilium | Vollständig vorhanden | Austauschbarkeit und Cutoverrisiko erklärt. |
-| INF-004 | Argo CD und exklusive Resource Ownership | Vollständig vorhanden | Helm- und GitOps-Pfad getrennt. |
-| INF-005 | BuildKit | Muss erweitert/überarbeitet werden | Abhängigkeit erklärt; Konfiguration und Fehlerreferenz fehlen. |
-| INF-006 | Lokale OCI Registry | Muss erweitert/überarbeitet werden | HTTP-Laborstatus und Roadmap vorhanden; Betrieb und Hardening fehlen. |
-| INF-007 | OCI Pull-Through Mirror | Muss erweitert/überarbeitet werden | Architektur vorhanden; Cache- und Recoveryreferenz fehlt. |
-| INF-008 | Git Mirror | Vollständig vorhanden | Das Fehlen eines unterstützten Mirrors ist ausdrücklich dokumentiert. |
-| INF-009 | Redis, PostgreSQL und Tailscale | Muss erweitert/überarbeitet werden | Architekturrolle vorhanden; Detailarchitektur bleibt offen. |
-| INF-010 | Monitoring | Vollständig vorhanden | Verantwortungen, Retention und Grenzen detailliert beschrieben. |
-| INF-011 | Ops Pod | Vollständig vorhanden | Zweck, Rechte, Netzwerk und Recoverygrenze dokumentiert. |
-| SEC-001 | Threat Model und Trust Boundaries | Muss erweitert/überarbeitet werden | Trustseiten vorhanden; Bedrohungs-/Gegenmaßnahmenmatrix fehlt. |
-| SEC-002 | Human und Workload Identity | Muss erweitert/überarbeitet werden | Trennung erklärt; vollständige Credential-Flows fehlen. |
-| SEC-003 | SPIRE, Attestation und mTLS | Muss erweitert/überarbeitet werden | Workerpfad vorhanden; alle Verbindungen fehlen. |
-| SEC-004 | Secrets, Resolver, Rotation und Recovery | Muss erweitert/überarbeitet werden | Abläufe vorhanden; Consumer- und Rotationmatrix fehlt. |
-| SEC-005 | Network Policies und negative Pfade | Muss erweitert/überarbeitet werden | Checks vorhanden; exhaustive Verbindungsreferenz fehlt. |
-| SEC-006 | Supply Chain, Images, Digests und Attestations | Muss erweitert/überarbeitet werden | Einzelpfade vorhanden; Gesamtmodell fehlt. |
-| SEC-007 | Least Privilege | Muss erweitert/überarbeitet werden | Grundregeln vorhanden; Berechtigungsmatrix fehlt. |
+| INF-001 | Host, K3s und fehlende Hostautomation | Vollständig vorhanden | Platform Architecture erklärt Host-/K3s-Verantwortung, Voraussetzungen, Failure Domain, unabhängigen Recoverypfad und die fehlende Empty-host-Automation. `docs/ROADMAP.md` definiert Eingaben, Plan/Dry-run, Idempotenz, Rollback, Output und Acceptance des geplanten Automationspfads. |
+| INF-002 | DNS, Storage und Scheduling | Muss erweitert/überarbeitet werden | Layer Map und Installationsreihenfolge ordnen DNS, CSI/StorageClass und Scheduling korrekt vor den Runtimes ein. Unterstützte Implementierungen, Storage-/Topology-Entscheidungen, Capacity, Affinity/Taints, DNS-Ausfälle, Volume-Recovery und Acceptance fehlen als zentrale Detailarchitektur. |
+| INF-003 | Flannel und Cilium | Vollständig vorhanden | Platform Architecture erklärt Cilium als optionale Implementation, Flannel als gültige Alternative, erforderliche Traffic Boundaries, exklusive CNI-Ownership, Cutoverrisiko, Cordoning, positive/negative Tests und Recoveryzugang. Source- und Live-Proof-Grenze sind getrennt. |
+| INF-004 | Argo CD und exklusive Resource Ownership | Vollständig vorhanden | Die aktive Seite trennt direkte Helm- und Argo-Ownership, verbietet Doppelbesitz, erklärt Git Desired State, Projektgrenzen, Self-heal/Prune, Commit-Nachweis, Failure Effect und Handover-Recovery mit gepinnten Quellen. |
+| INF-005 | BuildKit | Muss erweitert/überarbeitet werden | Pipeline Dependencies erklärt Rootless BuildKit, Buster-Ownership, Startreihenfolge, Registry Push und Digestprüfung. Socket/Endpoint, Rootless-Prerequisites, Worker, Config, Cache, Credentials, Limits, Parallelität, Logs, Shutdown und Fehlerdiagnosen fehlen zentral. |
+| INF-006 | Lokale OCI Registry | Muss erweitert/überarbeitet werden | Architektur bezeichnet `registry-local` korrekt als anonymen HTTP-Labordienst und verlinkt die Production-grade-Roadmap mit HTTPS, Auth, Rotation, Backup, GC und Acceptance. Der aktuelle Lab-Betrieb, Limits, Storage, Ausfälle und die künftige sichere Bedienreferenz sind noch nicht vollständig zentral dokumentiert. |
+| INF-007 | OCI Pull-Through Mirror | Muss erweitert/überarbeitet werden | Architektur trennt Mirror und writable Registry, erklärt Cache-Hit/Miss, Upstreamabhängigkeit, eigenes Volume und Replacement-Anforderungen. Clientkonfiguration, Cache-Key/TTL, Auth, Capacity, GC, Corruption, Cold Miss, Outage, Backup und Recovery fehlen als zentrale Referenz. |
+| INF-008 | Git Mirror | Vollständig vorhanden | Pipeline Dependencies sagt ausdrücklich, dass kein unterstützter Git Mirror existiert, grenzt ihn vom OCI Mirror ab und erklärt die sichere Exact-revision-Grenze. Die Roadmap definiert Cache-/Mirror-Optionen, Freshness, Corruption, Failback, Capacity, Recovery und Acceptance ohne gegenwärtige Verfügbarkeit vorzutäuschen. |
+| INF-009 | Redis, PostgreSQL und Tailscale | Muss erweitert/überarbeitet werden | Pflicht- und Role-Abhängigkeiten, Owner, Autoritätsgrenzen und Failure Effects sind zentral eingeordnet. Die bei `COM`, `DAT` und `SEC` ermittelten Lücken zu Protokollen, Stores, Migration, Retention, Credentials, Routen und Recovery verhindern eine vollständige Detailarchitektur. |
+| INF-010 | Monitoring | Vollständig vorhanden | Platform Architecture trennt Prometheus, Grafana, Loki und Alloy, nennt Nicht-Autorität, Storage, 15-/30-Tage-Retention, NodePort, fehlende Loki-Auth, privilegierten Logzugriff, Promtail-Handover, Failure/Recovery und direkte Werte-/Checkquellen. Monitoring bleibt korrekt optional. |
+| INF-011 | Ops Pod | Vollständig vorhanden | Die zentrale Architektur erklärt den optionalen Sicherheits-/Analysezweck, read-only RBAC, bounded exec, NetworkPolicy, Clusterabhängigkeit, unabhängigen Recoveryweg und Nicht-Autorität mit direkten Chartquellen. Detaillierte Bedienmigration bleibt ein Operator-Thema, nicht eine fehlende Architekturgrenze. |
+| SEC-001 | Threat Model und Trust Boundaries | Muss erweitert/überarbeitet werden | Deployment and Trust trennt Package Integrity, Route Protection, Workload Source und Operation Grant sowie Prozess-, Netzwerk- und Speichergrenzen. Assets, Angreifer, Entry Points, Threats, Mitigations, Residual Risks und Verification sind nicht in einer zentralen Threat-/Control-Matrix verbunden. |
+| SEC-002 | Human und Workload Identity | Muss erweitert/überarbeitet werden | Aktive Trustseiten trennen Keycloak-Human-Identity, SPIFFE Workload Identity, forwarded identity und Artifact Signature korrekt. Login/Issuer, Token-/Certificate-Flows, Session, Groups/Roles, Shared Users, Rotation, Revocation, Audit und Recovery fehlen als vollständiges Credential-Modell. |
+| SEC-003 | SPIRE, Attestation und mTLS | Muss erweitert/überarbeitet werden | Worker Trust dokumentiert SVID-Format, Proxy Pattern, geschützte Caller-Paare, Nova-Buster-Provenance, leased namespaces und fail-closed Proof Levels. Vollständige Registration-, CSI-/SDS-, Listener-, SAN-, Trust-Domain-, Rotation- und Recoverydetails liegen noch in nicht zentralen Security-/Operationsseiten. |
+| SEC-004 | Secrets, Resolver, Rotation und Recovery | Muss erweitert/überarbeitet werden | Capability Grants, Secret Resolver Plugin und Recovery State Inventory erklären externe Secret Authority und bounded names. Ein generiertes Inventar jedes Secrets mit Owner, Producer, Consumer, Mount/Env/API, Namespace Copy, Rotation, Revocation, Backup und Leak Response fehlt im zentralen Bestand. |
+| SEC-005 | Network Policies und negative Pfade | Muss erweitert/überarbeitet werden | Deployment and Trust zeigt Default Deny, wichtige Caller/Destination/Ports und direkte Policyquellen; Worker Trust trennt Contract, Render und Live Proof. Eine vollständige Connection-Allowlist für alle Charts sowie automatischer Abgleich zwischen Service, Policy, SVID und Negativtest fehlt. |
+| SEC-006 | Supply Chain, Images, Digests und Attestations | Muss erweitert/überarbeitet werden | Package Digests, Registry Manifest Verification, Nova-Buster Source Signature und Release Selections sind einzeln erklärt. Source-to-build-to-image-to-deploy Provenance, Builder Trust, SBOM/Scan, Attestation Issuer, Verification Policy, Key Rotation und Incident Recovery bilden kein zentrales Gesamtmodell. |
+| SEC-007 | Least Privilege | Muss erweitert/überarbeitet werden | Architektur erklärt Capability Grants, Resource Matching, Role ServiceAccounts, NetworkPolicy und bounded Ops rights. Eine maschinenlesbare Berechtigungsmatrix für Kubernetes RBAC, SPIFFE Peers, Network Paths, Plugin Grants, Secrets, Filesystem, Processes und externe Systeme fehlt. |
 
 ## J. Operator-Handbuch
 
@@ -402,7 +411,7 @@ verbleibenden 179 Einstufungen sind weiterhin vorläufig.
 | Aktive Reference | nur Capabilities und Glossar |
 | Plugin-Konfigurationsschemas | 45 |
 | Schema-Dateien unter Skills, Contracts und Charts | 246 |
-| Telemetrie-Schemadateien | 128; keine vollständige aktive Referenz |
+| Telemetrie-Schemadateien | 124 JSON-Schemas in 134 Contract-Dateien; keine vollständige aktive Referenz |
 | Values-/Values-Schemaquellen | 17; vorhandenes Helm-Inventar deckt 7 ab |
 | Publication Check | fehlgeschlagen; fehlende Belege, entfernte Contract-Terme und Sprachfindings |
 | Blueprint Check | fehlgeschlagen; generierte Migration-Ledger-Ausgabe veraltet |
@@ -421,6 +430,8 @@ verbleibenden 179 Einstufungen sind weiterhin vorläufig.
 | 17.09.2026 | WKC-001–WKC-014 | Aktive Components-, Trust- und Engine-Seiten; 38 Dateien unter `skills/worker/core`; Worker-Verträge; historische Phase-5.5-Audits nur als Leads | 1 vollständig; 6 zu erweitern; 7 fehlen | Neutrale Grenze und Engine-Integration sind vorhanden; native Runtime, Persistenz, Ownership, Ressourcen und Referenz benötigen kanonische Dokumentation | Quell-/Dokumentinventar; aktive Source-Link-Abdeckung; manuelle Vertrags- und Grenzprüfung am Stand `51cda627` |
 | 17.09.2026 | SPC-001–SPC-007 | Aktive Components-, Deployment-, Trust-, Buster-, Nova-, Host-/Engine- und Decision-Seiten; Buster-, Prism-, Forge-, Echo-, OpenClaw- und Codex-Quellen | 0 vollständig; 7 zu erweitern; 0 fehlen | Gute Autoritäts- und Extension-Inhalte vorhanden; keine Spezialisten- oder Hostkomponente besitzt bereits eine vollständige kanonische Produktarchitektur | Seiten-/Quellinventar und manuelle Flow-, Daten-, Recovery- und Betriebsprüfung am Stand `8df232e1` |
 | 17.09.2026 | PLG-001–PLG-014 | Choice Guide; Contracts; Testing and Lifecycle; Deployment and Trust; Capability Reference; Foundation Registry, Package, Config und Isolation Sources | 4 vollständig; 9 zu erweitern; 1 fehlt | Authoring, immutable Replacement und Lifecycle sind stark; Registry-Interna, Trust, Config und Isolation brauchen Tiefe; Import Audit fehlt als kanonischer Inhalt | AP08-Checks; 51-Package-Inventar; direkte Source-Link-Prüfung; manuelle Contract-/Lifecycle-Prüfung am Stand `8df232e1` |
+| 17.09.2026 | COM-001–COM-012; DAT-001–DAT-009; TEL-001–TEL-007 | Aktive Architecture-, Trust-, Recovery-, Diagnose-, Contracts-, Buster-, Nova- und Effect-Seiten; Transport-, Store-, Journal- und Telemetriequellen | 2 vollständig; 18 zu erweitern; 8 fehlen | Zentrale Kommunikations-, Endpoint-, Daten- und Eventmatrizen fehlen; Observer-Lifecycle und Authority-vs-Observability sind vollständig; externe Recovery-Verweise verletzen das Zentralitätsziel | 124 Schema-/134 Contract-Dateien gezählt; aktive Quellverweise geprüft; Stores/Transporte inventarisiert; manuelle Flow-/Recovery-Prüfung am Stand `a3bcc527` |
+| 17.09.2026 | INF-001–INF-011; SEC-001–SEC-007 | Platform and Operations; Pipeline Dependencies; Deployment and Trust; Worker Trust; Install/Recovery; Roadmap; Charts, GitOps values, deploy/config/check scripts; alte Security/Ops-Seiten nur als Migrationsquellen | 6 vollständig; 12 zu erweitern; 0 fehlen | Pflicht/optional-Einordnung, CNI, Argo, Monitoring, Ops und geplante Grenzen sind stark; Querschnittsmatrizen für Threats, Identity, Secrets, Network, Supply Chain und Rechte fehlen | Direkte Source-/Roadmap-Prüfung; aktive-versus-alte Zielprüfung; manuelle Failure-/Recovery-/Security-Prüfung am Stand `a3bcc527` |
 
 ## Abschluss von AP09.0
 
