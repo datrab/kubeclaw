@@ -19,7 +19,11 @@ if annotations["kubeclaw.io/health-mode"] == "observed" then
 end
 if obj.spec.source == nil then return pending end
 local sync = status.sync
-if sync == nil or sync.status ~= "Synced" or sync.revision ~= obj.spec.source.targetRevision then return pending end
+if sync == nil or sync.status ~= "Synced" or sync.revision == nil then return pending end
+-- Continuous children follow main at an immutable bundle path. Argo reports
+-- the resolved commit in status, not the literal branch name. The compared
+-- source/path checks below still reject a previous bundle's Healthy status.
+if obj.spec.source.targetRevision ~= "main" and sync.revision ~= obj.spec.source.targetRevision then return pending end
 local compared = sync.comparedTo
 if compared == nil or compared.source == nil or compared.destination == nil then return pending end
 for _, key in ipairs({"repoURL", "path", "targetRevision"}) do
@@ -35,5 +39,5 @@ if status.health == nil or status.health.status ~= "Healthy" then
 end
 if status.operationState == nil or status.operationState.phase ~= "Succeeded"
   or status.operationState.syncResult == nil
-  or status.operationState.syncResult.revision ~= obj.spec.source.targetRevision then return pending end
+  or status.operationState.syncResult.revision ~= sync.revision then return pending end
 return {status = "Healthy", message = "Selected child revision synced and healthy"}
