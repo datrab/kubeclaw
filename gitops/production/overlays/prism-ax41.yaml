@@ -1,0 +1,8 @@
+# Matches the installed native-worker-pools-ax41.yaml policy.
+# The 2 CPU / 16 GiB host pool is separate from supervisor/service Pod budgets.
+worker:
+  replicas: 1
+  native:
+    nodeName: ax41-production
+    namespace: kubeclaw
+    policyDigest: b16f8b792c92629ba761597ccc38bc5056d135072d1bed2da2e88e1c0022c6af

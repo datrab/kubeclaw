@@ -1,0 +1,9 @@
+# AX41 ordinary Pod budget; this is not a host-pool allocation.
+# Sidecars have separate limits. Production capacity validation must include them.
+resources:
+  requests:
+    cpu: 1000m
+    memory: 12Gi
+  limits:
+    cpu: '4'
+    memory: 16Gi
