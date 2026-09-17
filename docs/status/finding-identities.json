@@ -1,0 +1,645 @@
+{
+  "schema_version": 1,
+  "purpose": "Stable identities and local dispositions for the established technical finding set.",
+  "original_findings": [
+    {
+      "id": "PCR-AGENT-CONTRACT-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-CONTRACT-PLUGIN-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PACKAGES-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-CONTRACT-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-CONTRACT-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PROMPT-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-REGISTRY-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-REGISTRY-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-SDK-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-SDK-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-TELEMETRY-CONTRACT-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-TELEMETRY-CONTRACT-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-TEST-CONTRACT-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-TEST-CONTRACT-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-EFFECT-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-EXEC-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-EXEC-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-OBS-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-STATE-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-STATE-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-BUSTER-ENGINE-001",
+      "disposition": "In progress"
+    },
+    {
+      "id": "PCR-BUSTER-ENGINE-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-BUSTER-ENGINE-003",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-BUSTER-ENGINE-004",
+      "disposition": "Implemented; incomplete"
+    },
+    {
+      "id": "PCR-COMMAND-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-ISOLATION-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-ISOLATION-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-ISOLATION-003",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-ISOLATION-004",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-KUBERNETES-FIXTURE-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-NETWORK-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-NETWORK-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-NOVA-GATE-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-NOVA-GATE-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-NOVA-GATE-003",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-NOVA-GATE-004",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-NOVA-GATE-005",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-RUNTIME-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-WORKER-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PATH-T04-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PATH-T04-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PATH-T04-003",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-APPROVAL-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PTR-T05-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PATH-T07-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-GIT-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-IMPLEMENTATION-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-REPOSITORY-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "T06-F01",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PATH-T11-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PATH-T11-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PATH-T13-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-APIFLOW-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-CONTAINER-BUILD-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-CONTAINER-BUILD-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-DELIVERY-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-DIRECT-COMMAND-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-HTTP-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-JUNIT-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-LINT-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-LINT-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-LINT-003",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-OPENAPI-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-OPENAPI-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-REVIEW-AUDIT-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-REVIEW-AUDIT-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-REVIEW-AUDIT-003",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-REVIEW-AUDIT-004",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-REVIEW-POLICY-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-REVIEW-POLICY-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-VISUAL-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PATH-T02-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PATH-T02-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PATH-T02-003",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-AGENT-BRIDGE-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-AGENT-BRIDGE-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-CONTROL-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-CONTROL-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-CORPUS-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-INGESTION-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-PREFERENCES-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-STORAGE-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-WORKER-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-WORKER-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-WORKER-003",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-DOMAIN-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-DOMAIN-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-DOMAIN-003",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-ENGINE-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-RENDERER-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-RENDERER-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-STUDIO-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-STUDIO-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PRISM-STUDIO-SERVICE-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-AGENTSOURCE-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-HOSTOBSERVER-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-HOSTOBSERVER-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-NOTIFY-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-OBS-002",
+      "disposition": "Implemented; incomplete"
+    },
+    {
+      "id": "PCR-OPERATOR-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-REDISTRANSPORT-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-REDISTRANSPORT-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-TELEM-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-TSTORE-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-TSTORE-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "F-T14-01",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "F-T14-02",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-BUSTER-NS-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-BUSTER-NS-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-BUSTER-NS-003",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-KUBERNETES-FIXTURE-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-TAILSCALE-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-TAILSCALE-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-08-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-08-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-09-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-19-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-19-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-21-001",
+      "disposition": "In progress"
+    },
+    {
+      "id": "IFR-22-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-23-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-24-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-24-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-29-001",
+      "disposition": "Open"
+    },
+    {
+      "id": "PCR-SCAFFOLD-OPS-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-03-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-03-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-04-001",
+      "disposition": "Open"
+    },
+    {
+      "id": "IFR-07-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-10-001",
+      "disposition": "Open"
+    },
+    {
+      "id": "IFR-17-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-18-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-27-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-01-001",
+      "disposition": "Open"
+    },
+    {
+      "id": "IFR-02-001",
+      "disposition": "Open"
+    },
+    {
+      "id": "IFR-05-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-06-001",
+      "disposition": "Open"
+    },
+    {
+      "id": "IFR-11-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-12-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-13-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-14-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-15-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-16-001",
+      "disposition": "Open"
+    },
+    {
+      "id": "IFR-20-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-20-002",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-25-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "IFR-26-001",
+      "disposition": "In progress"
+    },
+    {
+      "id": "IFR-28-001",
+      "disposition": "Open"
+    },
+    {
+      "id": "PCR-PREFLIGHT-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-PREPORT-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "PCR-SCAFFOLD-001",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "T01-F01",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "T01-F02",
+      "disposition": "Locally verified"
+    },
+    {
+      "id": "T15-F01",
+      "disposition": "Locally verified"
+    }
+  ],
+  "integration_findings": [
+    {
+      "id": "INT-BOUNDARY001",
+      "disposition": "[b5143cf6](https://github.com/datrab/kubeclaw/commit/b5143cf6d099af0f9af683cb596b9640e3a58946)"
+    },
+    {
+      "id": "INT-STARTUP-LATENCY001",
+      "disposition": "[8ea0cc2d](https://github.com/datrab/kubeclaw/commit/8ea0cc2d4c4446e25a08a32ee1e52e2cc1efb932)"
+    },
+    {
+      "id": "INT-REVIEW-UNCERTAIN001",
+      "disposition": "[10440ac1](https://github.com/datrab/kubeclaw/commit/10440ac1e20e3744cfe78e70182c2dd17bacd801)"
+    },
+    {
+      "id": "INT-OBSERVER-BUILD001",
+      "disposition": "[e3ae22ba](https://github.com/datrab/kubeclaw/commit/e3ae22ba92c533fbbadd6ec744f9db32051234a0)"
+    },
+    {
+      "id": "INT-DEPENDENCY-OWNER001",
+      "disposition": "[6967d056](https://github.com/datrab/kubeclaw/commit/6967d056e2ae1eaa8277f51fd95394a1ef8df83d)"
+    }
+  ]
+}
+

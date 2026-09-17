@@ -12,7 +12,10 @@ Last verified: generated during publication
 Choose one track for your task. Each track contains the information required for its primary reader.
 
 - [Understand](understand/README.md) explains architecture, authority, runtime flow, and system boundaries.
-- [Use](use/README.md) explains deployment, operation, verification, and recovery.
+- [Operate](use/README.md) explains planning, installation, daily operation, diagnosis, recovery, maintenance, and retirement.
 - [Extend](extend/README.md) explains plugin authoring, testing, packaging, and supported extension points.
-- [Reference](reference/capabilities.md) contains generated facts from current source.
-- [Current Status](status/current.md) separates implemented behavior from designed behavior.
+- [Reference](reference/README.md) contains generated facts from current source, configuration references, and the glossary.
+- [Current Status](status/current.md) links current work, local closure and separate live acceptance.
+- [Open issues](status/open-issues.md) lists remaining implementation work and completion criteria.
+- [Roadmap](status/roadmap.md) explains planned platform improvements and why they matter.
+- [Decisions](decisions/README.md) records enduring constraints, their rationale and approval evidence.

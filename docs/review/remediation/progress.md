@@ -1,5 +1,7 @@
 # Aktueller Umsetzungsstand
 
+> Historical remediation record. Its counts, branch instructions and register references describe that checkpoint. Current work is maintained in [open issues](../../site/status/open-issues.md) and [the canonical JSON](../../status/open-issues.json). [Local closure provenance](../../site/decisions/acceptance.md) and [live acceptance](../../site/status/acceptance.md) have separate authority. Original register data remains in [immutable history](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json).
+
 IFR-24-001 zusätzlich lokal abgeschlossen: echte PostgreSQL17→18- und
 Qdrant1.18.2→1.19.1-Migration, Erhalt der Altdaten, frische Ziel-Releases/PVCs,
 Recovery-/TLS-/Netzwerkbindung und zehn Helm-/Manifestgates.
@@ -31,7 +33,7 @@ Stand 2026-09-13: **136 lokal verifiziert / 18 unvollständig** (3 teilweise imp
 
 Aktueller Folgecheckpoint: **131 lokal verifiziert / 3 teilweise / 1 in Bearbeitung / 19 offen**. Von den zuletzt angefragten7 sind3 abgeschlossen;4 bleiben. SDK-Nachweis: implementation/pr6-sdk-local-verification.md. [Risiko-/Registry-Nachweise](implementation/pr6-risk-and-registry.md). Ältere Zähler unten sind historische Stände.
 
-Aktueller Stand nach D12 (2026-09-12): **128 lokal verifiziert / 5 teilweise / 2 in Bearbeitung / 19 offen**. Von den39 sind34 lokal abgeschlossen. Live-Abnahmen folgen separat durch den Auftraggeber nach Open-Sourcing. Maßgeblich sind [D12](decisions.md#d12--lokaler-abschluss-und-separate-live-abnahme), [Einzelbewertung](implementation/pr6-local-acceptance.md) und [Register](register.json). Ausschließlich im bestehenden PR #6 und dessen Branch weiterarbeiten; frühere Anweisungen zu weiteren Fixbranches gelten nicht. Die folgenden älteren Stände bleiben historischer Verlauf.
+Aktueller Stand nach D12 (2026-09-12): **128 lokal verifiziert / 5 teilweise / 2 in Bearbeitung / 19 offen**. Von den39 sind34 lokal abgeschlossen. Live-Abnahmen folgen separat durch den Auftraggeber nach Open-Sourcing. Maßgeblich sind [D12](decisions.md#d12--lokaler-abschluss-und-separate-live-abnahme), [Einzelbewertung](implementation/pr6-local-acceptance.md) und [Register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json). Ausschließlich im bestehenden PR #6 und dessen Branch weiterarbeiten; frühere Anweisungen zu weiteren Fixbranches gelten nicht. Die folgenden älteren Stände bleiben historischer Verlauf.
 
 ## Fortsetzung 2026-09-12 auf konsolidiertem main
 

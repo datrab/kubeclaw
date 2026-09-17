@@ -1,5 +1,7 @@
 # Aktuelle Übergabe PR #6
 
+> Historical remediation record. Its counts, branch instructions and register references describe that checkpoint. Current work is maintained in [open issues](../../site/status/open-issues.md) and [the canonical JSON](../../status/open-issues.json). [Local closure provenance](../../site/decisions/acceptance.md) and [live acceptance](../../site/status/acceptance.md) have separate authority. Original register data remains in [immutable history](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json).
+
 GitOps IFR-05-001 ist am 2026-09-14 nach D12 lokal abgeschlossen.
 27 Tests ohne Skips, Lint, Shellsyntax und Versionsprüfung bestanden.
 Implementierung: `0663807443b42e3222d52ff02486f959d7b7acf0`.
@@ -81,4 +83,3 @@ D12: vollständige Implementierung plus ausreichende echte lokale Tests reichen
 zum lokalen Abschluss; Live-Abnahme folgt separat durch den Auftraggeber.
 Keine Deployments, kein Merge und keine History-Bereinigung in dieser Fortsetzung.
 Fortschritt nach überprüften Teilschritten sichern, PR und Register synchron halten.
-

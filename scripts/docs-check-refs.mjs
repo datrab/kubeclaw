@@ -114,6 +114,7 @@ function existsRepoReference(ref) {
 }
 
 function checkMarkdownLinks(filePath, text) {
+  text = text.replace(/`[^`\n]*`/gu, '');
   const linkRe = /!?\[[^\]]*]\(([^)]+)\)/g;
   let match;
   while ((match = linkRe.exec(text))) {

@@ -23,12 +23,12 @@ function stableWriteMap() {
   const workflows = readJson('docs/generated/inventory/workflows.json');
 
   return new Map([
-    ['docs/reference/cli.md', renderCli(deploy)],
-    ['docs/reference/secrets.md', renderSecrets(secrets)],
-    ['docs/reference/helm-values.md', renderHelmValues(helm)],
-    ['docs/reference/environment-variables.md', renderEnvironment(deploy, secrets)],
-    ['docs/reference/verification-commands.md', renderVerification(deploy)],
-    ['docs/reference/workflows.md', renderWorkflows(workflows)],
+    ['docs/site/reference/cli.md', renderCli(deploy)],
+    ['docs/site/reference/secrets.md', renderSecrets(secrets)],
+    ['docs/site/reference/helm-values.md', renderHelmValues(helm)],
+    ['docs/site/reference/environment-variables.md', renderEnvironment(deploy, secrets)],
+    ['docs/site/reference/verification-commands.md', renderVerification(deploy)],
+    ['docs/site/reference/workflows.md', renderWorkflows(workflows)],
   ]);
 }
 
@@ -37,6 +37,10 @@ function renderHelmValues(helm) {
 
 Status: generated reference
 Audience: reference reader, operator
+Owner: platform-operations
+Evidence: docs/generated/inventory/helm-values.json; scripts/docs-generate.mjs
+Applies to: checked-in Helm and infrastructure configuration
+Last verified: generated from current inventory
 
 ## Summary
 
@@ -55,9 +59,9 @@ ${table(['File', 'Top-level keys', 'Secret references'], helm.files.map((file) =
 ${generatedEnd()}
 ## Used by
 
-- \`../deployment/README.md\`
-- \`../deployment/secrets.md\`
-- \`../deployment/agent-deployments.md\`
+- [Install and Bootstrap](../use/install.md)
+- [Maintain and Upgrade](../use/maintenance.md)
+- [Secrets Reference](secrets.md)
 
 ## Runtime Meaning
 
@@ -102,10 +106,14 @@ function renderEnvironment(deploy, secrets) {
 
 Status: generated reference
 Audience: reference reader, operator
+Owner: platform-operations
+Evidence: docs/generated/inventory/deploy-script.json; docs/generated/inventory/secret-setup.json; scripts/docs-generate.mjs
+Applies to: deployment and secret-setup commands
+Last verified: generated from current inventory
 
 ## Summary
 
-This page lists deployment and secret setup environment variables extracted from the first generated inventory slice.
+This page lists deployment and secret-setup environment variables found in the current source inventory.
 
 ${generatedNotice([...deploy.generatedFrom, ...secrets.generatedFrom])}
 ## Variables
@@ -131,7 +139,7 @@ ${generatedEnd()}
 - Invalid boolean-like values can skip expected component paths or keep optional setup enabled; use the exact values listed in this table.
 - Noninteractive secret setup warns when a required source is unavailable instead of inventing credentials.
 - \`ALLOW_PARTIAL_INFRA=true\` is for troubleshooting only; the default infra path should fail closed on required rollout failures.
-- Code deploy requires the expected commit for each targeted agent and, for private repositories, a bundle auth Secret the pod can use to fetch GitHub release assets.
+- Code deploy requires the expected commit for each targeted agent. Private repositories also require a bundle auth Secret for GitHub release assets.
 
 ## Checks
 
@@ -155,6 +163,10 @@ function renderVerification(deploy) {
 
 Status: generated reference
 Audience: operator, developer
+Owner: platform-maintainers
+Evidence: docs/generated/inventory/deploy-script.json; scripts/docs-generate.mjs
+Applies to: local and deployment verification
+Last verified: generated from current inventory
 
 ## Summary
 
@@ -204,6 +216,10 @@ function renderWorkflows(workflows) {
 
 Status: generated reference
 Audience: maintainer, developer
+Owner: platform-maintainers
+Evidence: docs/generated/inventory/workflows.json; scripts/docs-generate.mjs
+Applies to: repository automation
+Last verified: generated from current inventory
 
 ## Summary
 

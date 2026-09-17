@@ -4,6 +4,7 @@ on:
     paths:
       - docs/**
       - scripts/docs-*.mjs
+      - scripts/tests/docs-status.test.mjs
       - scripts/deploy.sh
       - package.json
       - package-lock.json
@@ -20,6 +21,7 @@ on:
     paths:
       - docs/**
       - scripts/docs-*.mjs
+      - scripts/tests/docs-status.test.mjs
       - scripts/deploy.sh
       - package.json
       - package-lock.json
@@ -41,6 +43,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          fetch-depth: 0
           persist-credentials: false
       - name: Set up Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
@@ -48,6 +51,8 @@ jobs:
           node-version: "24"
       - name: Install repository dependencies
         run: npm ci --ignore-scripts
+      - name: Check canonical open-issue register and generated view
+        run: npm run docs:status:check && node --test scripts/tests/docs-status.test.mjs
       - name: Regenerate docs
         run: npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate
       - name: Reject generated docs drift
@@ -68,6 +73,8 @@ jobs:
         run: node --test tests/verification/deployment/docs-reference-scope.test.mjs
       - name: Check cited repository references
         run: npm run docs:check:refs
+      - name: Check reader-site boundary
+        run: npm run docs:site-boundary:check
       - name: Check documentation topic map
         run: npm run docs:check:coverage
       - name: Check whitespace
@@ -82,6 +89,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          fetch-depth: 0
           ref: ${{ github.sha }}
       - name: Set up Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
@@ -89,6 +97,8 @@ jobs:
           node-version: "24"
       - name: Install repository dependencies
         run: npm ci --ignore-scripts
+      - name: Check canonical open-issue register and generated view
+        run: npm run docs:status:check && node --test scripts/tests/docs-status.test.mjs
       - name: Regenerate docs
         run: npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate
       - name: Check generated docs freshness
@@ -99,6 +109,8 @@ jobs:
         run: node --test tests/verification/deployment/docs-reference-scope.test.mjs
       - name: Check cited repository references
         run: npm run docs:check:refs
+      - name: Check reader-site boundary
+        run: npm run docs:site-boundary:check
       - name: Check documentation topic map
         run: npm run docs:check:coverage
       - name: Check whitespace
