@@ -56,3 +56,23 @@ The observed registry is HTTP. BuildKit/containerd HTTP configuration is already
 supported, but the image scanner explicitly rejects `http-lab`. HTTP scanning
 requires a separately tested implementation; never bypass the scan or change
 the error to a passing result. Envoy/mTLS remains on the roadmap.
+
+The initial AX41 manifests are exported under
+`releases/gitops/ax41-initial-35208467907`. They are review inputs, not a live
+Application selection; no automatic sync is enabled by adding that directory.
+Generated bundle archive URLs must be parsed as YAML (including folded strings),
+not extracted as single lines.
+
+Before adoption, from the Controlnode run:
+
+```sh
+python3 scripts/check-runtime-adoption-live.py releases/gitops/ax41-initial-35208467907
+```
+
+This checks Secret objects and required key presence without printing their
+contents, then asks the API to dry-run each manifest. It applies nothing and
+continues across groups to collect failures. It does not validate available disk,
+Pod scheduling, native execution or transfer of ownership. Existing Helm releases
+must not be uninstalled. Buster adds a new 64Gi runtime-state PVC; Nova requires
+`nova-archviewer-auth` with an `htpasswd` key in addition to existing credentials.
+Resolve reported prerequisites before creating or syncing worker Applications.
