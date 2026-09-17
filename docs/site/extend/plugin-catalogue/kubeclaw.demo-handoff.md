@@ -205,8 +205,8 @@ Nova or Buster records a bounded failure without giving the package lifecycle au
 
 ## Verification Record
 
-Audit status: `content-written`.
-Earlier AP08.7–AP08.9 local command result on 2026-09-16: `unavailable`.
+Catalogue status: `content-written`.
+Recorded local command result on 2026-09-16: `unavailable`.
 
 The command requires the OpenSSL executable, which is absent on this host.
 
@@ -224,8 +224,8 @@ Exact package test script (run from the package directory):
 cd ../../../.. && node --test skills/nova/plugins/demo-handoff/tests/*.test.mts skills/nova/plugins/demo-handoff/tests/*.test.mjs
 ```
 
-The audit status does not claim live host or cluster acceptance. See the AP08
-[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
+The catalogue status does not claim live host or cluster acceptance.
+The result above states the exact local limit. Run the package command in the target environment before activation.
 
 ## Source Evidence
 
@@ -240,6 +240,6 @@ The audit status does not claim live host or cluster acceptance. See the AP08
 - Test: [skills/nova/plugins/demo-handoff/tests/handoff.test.mts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/tests/handoff.test.mts)
 
 Generated facts come from the manifest, package metadata, runtime-role inventory,
-schemas, and test-file discovery. The separate AP08 guidance file owns the purpose,
+schemas, and test-file discovery. Maintained guidance data owns the purpose,
 use, exclusion, and limit text. Publication can refresh facts without inventing or
 silently replacing those explanations.

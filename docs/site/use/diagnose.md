@@ -127,7 +127,7 @@ Do not delete history merely because a filesystem is full.
 The current system lacks complete connected history retirement.
 [PCR-OBS-002](../status/open-issues.md#pcr-obs-002) tracks that implementation gap.
 
-Use [Observability Retention](../../operations/observability-retention.md) for supported narrow compaction paths.
+Use [Capacity and Retention](maintenance.md#capacity-and-retention) for supported narrow compaction paths.
 Those paths do not authorize broad run deletion.
 
 ## Queue and Delivery Checks
@@ -226,7 +226,7 @@ Check in this order:
 6. Studio Service or Ingress access.
 7. Tailnet authorization for external access.
 
-Use [Prism Database Transitions](../../operations/prism-database-transitions.md) for migration failures.
+Use [Prism Upgrade](maintenance.md#prism-upgrade) for database transition failures.
 Use [Back Up and Recover](recovery.md) for data corruption or loss.
 
 ## Worker Trust Diagnosis

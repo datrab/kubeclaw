@@ -14,7 +14,7 @@ The [quality standard](07-documentation-quality-standard.md) remains binding for
 
 | Result | Canonical location | Completion evidence |
 | --- | --- | --- |
-| Incomplete implementation work | [JSON register](../site/status/open-issues.json), [generated readable view](../site/status/open-issues.md) | 16 entries: 13 original incomplete findings and three separate follow-ups. Each retains problem, impact, current state, components, remaining work, reproduction, completion criteria and evidence limits. |
+| Incomplete implementation work | [JSON register](../status/open-issues.json), [generated readable view](../site/status/open-issues.md) | 16 entries: 13 original incomplete findings and three separate follow-ups. Each retains problem, impact, current state, components, remaining work, reproduction, completion criteria and evidence limits. |
 | Original identity and local closure | [Compact provenance](../site/decisions/acceptance.md) | All 154 original IDs and five separate integration IDs retained. Original local state remains 141 closed and 13 incomplete. |
 | Operational acceptance | [Gate plan](../site/status/acceptance.md) | G01–G15 retain prerequisites, procedures and pass conditions. All 36 explicit inherited live obligations are individually mapped. Complete gates remain unexecuted. |
 | Durable decisions | [Decision index](../site/decisions/README.md) | Core/plugin records, all 119 test-gate IDs, all 78 Echo phase-2/3/4 IDs, later Echo supersession, runtime/operations, Prism and implementation decisions. Approval gaps remain explicit. |

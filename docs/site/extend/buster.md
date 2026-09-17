@@ -1,6 +1,6 @@
 # Extend Buster Tests, Fixtures, Suites, And Reports
 
-Status: AP08.5 Buster extension guide implemented with stated execution limits
+Status: implemented with stated execution limits
 Audience: test provider author, suite maintainer, report adapter author
 Owner: buster
 Evidence: skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; contracts/pipeline-test-gate/v1/suites; skills/nova/core/test-gates/resolver.ts; skills/buster/engine/test-gates/provider-loader.ts; skills/buster/engine/test-gates/runner.ts; skills/buster/engine/test-gates/report-adapter-runtime.ts
@@ -37,7 +37,7 @@ The extension path has separate compilation and execution phases:
 8. Report adapters normalize selected report artifacts.
 9. Buster stores attempts and produces a gate decision from actual node results.
 
-AP8.5 explains the extension contracts in that path. It does not teach the complete
+The extension contract guide explains the supported contracts in that path. It does not teach the complete
 project-file syntax or claim a deployed end-to-end pipeline run.
 
 > **Scope loader:** [Nova reads only tests, fixtures, suites, coverage, and concurrency from the selected module or gate](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/test-gates/pipeline.ts#L12-L53).
@@ -350,7 +350,7 @@ npm test --prefix skills/buster/plugins/junit-report-adapter
 
 Provider-specific packages can require browsers, BuildKit, Kubernetes, scanners,
 network targets, or delegated cgroups. A skipped prerequisite is not a passed live
-test. AP08.9 records the exact command and environment for each package.
+test. Each catalogue page records the exact command and known environment limit.
 
 Current local results keep successful checks separate from unavailable ones:
 

@@ -40,7 +40,7 @@ published site's explicit allowlist.
 
 ## Current work and decisions
 
-- [Open issues](site/status/open-issues.md): generated from the single [JSON register](site/status/open-issues.json).
+- [Open issues](site/status/open-issues.md): generated from the single machine-readable register at `docs/status/open-issues.json`.
 - [Live acceptance](site/status/acceptance.md): outstanding environment checks, separate from local finding closure.
 - [Decisions](site/decisions/README.md): enduring constraints, approval evidence and supersession.
 

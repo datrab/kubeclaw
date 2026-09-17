@@ -1,9 +1,9 @@
 # Create And Activate A First Pipeline Plugin
 
-Status: AP08.2 minimal stage journey implemented with stated verification limits
+Status: implemented with stated verification limits
 Audience: plugin author, maintainer
 Owner: plugin-foundation
-Evidence: docs/site/extend/examples/minimal-stage; scripts/check-ap08-minimal-plugin.mjs; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; packaging/runtime/roles/nova.json
+Evidence: docs/site/extend/examples/minimal-stage; package.json; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; packaging/runtime/roles/nova.json
 Evidence revision: `bcf032f241b432bf920baa9ee5f727947921447d`
 Applies to: one capability-free `pipeline-plugin-v2` stage in the Nova role
 Last verified: source and local journey check on 2026-09-16
@@ -90,7 +90,7 @@ Confirm the starting state:
 ```bash
 git status --short
 node --version
-npm run docs:ap08:minimal-plugin:check
+npm run docs:extensions:minimal-plugin:check
 ```
 
 The last command uses a temporary installation root.
@@ -211,7 +211,7 @@ Then build into a new temporary child path:
 
 ```bash
 npm run plugin-system:sandbox:build
-export KUBECLAW_TUTORIAL_TEMP="$(mktemp -d /tmp/kubeclaw-ap08-plugin.XXXXXX)"
+export KUBECLAW_TUTORIAL_TEMP="$(mktemp -d /tmp/kubeclaw-plugin-tutorial.XXXXXX)"
 node scripts/build-runtime-role-bundle.mjs nova "$KUBECLAW_TUTORIAL_TEMP/nova" 0000000000000000000000000000000000000000 v2 2026-09-16T00:00:00Z
 rg -n 'example.greeting' "$KUBECLAW_TUTORIAL_TEMP/nova/manifest.json"
 ```
@@ -228,7 +228,7 @@ cluster runs the new bundle.
 Run the maintained journey check:
 
 ```bash
-npm run docs:ap08:minimal-plugin:check
+npm run docs:extensions:minimal-plugin:check
 ```
 
 The check performs these operations with the real KubeClaw components:
@@ -258,7 +258,7 @@ Expected output includes these fields:
 ```
 
 The journey check uses an in-memory event journal.
-The original AP08.2 host used BusyBox `flock` without timeout support.
+The first recorded verification host used BusyBox `flock` without timeout support.
 The persistent file journal requires `flock --timeout`. Registry, grants, activation, schema checks, `PipelineRunner`,
 stage execution, lifecycle reduction, and role validation use production code.
 Persistent file-lock and recovery verification remain outside this local result.
@@ -303,8 +303,8 @@ Use these sources when the observed result differs from the expected result:
 >
 > **Bundle selection:** [The bundle builder copies only plugins listed by the selected role](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/scripts/build-runtime-role-bundle.mjs#L117-L183).
 
-The links above use the AP08 assessment revision.
-The tutorial fixture and journey checker are new AP08.2 sources.
+The links above use the assessment revision in this page metadata.
+The tutorial fixture and journey checker are maintained documentation sources.
 Use their relative links until a later commit can supply immutable GitHub links.
 
 ## Expected Result
@@ -328,8 +328,8 @@ Run the focused checks after the exercise:
 ```bash
 npm test --prefix skills/nova/plugins/tutorial-greeting
 npm run verify:runtime-packaging:roles
-npm run docs:ap08:minimal-plugin:check
-npm run docs:ap08:choice:check
+npm run docs:extensions:minimal-plugin:check
+npm run docs:extensions:choice:check
 npm run docs:check:refs
 ```
 
@@ -340,7 +340,7 @@ npm run verify:plugin-packages
 ```
 
 The full plugin-system verifier currently reaches the separately tracked
-`DOC-AP08-BOUNDARY-CHECK-001` failure. Do not report that suite as green until the
+open plugin-boundary failure. Do not report that suite as green until the
 Buster quality-gate import boundary is corrected.
 
 An end-to-end pipeline exercise requires a project or explicit pipeline definition,
@@ -373,7 +373,7 @@ Reverse the tutorial changes as one reviewed change:
 1. Remove `example.greeting` from `packaging/runtime/roles/nova.json`.
 2. Remove only `skills/nova/plugins/tutorial-greeting`.
 3. Remove the temporary bundle directory that you created.
-4. Run the role and AP08 journey checks again.
+4. Run the role and documented journey checks again.
 
 Example commands after you have removed the role entry:
 
@@ -381,7 +381,7 @@ Example commands after you have removed the role entry:
 rm -r skills/nova/plugins/tutorial-greeting
 rm -r "$KUBECLAW_TUTORIAL_TEMP"
 npm run verify:runtime-packaging:roles
-npm run docs:ap08:minimal-plugin:check
+npm run docs:extensions:minimal-plugin:check
 git status --short
 ```
 
@@ -390,9 +390,9 @@ Do not remove a released bundle that a nonterminal run still needs for recovery.
 
 Removing the package prevents new discovery and activation.
 It does not erase old event journals, snapshots, logs, artifacts, or released images.
-The AP08 journey check confirms that its earlier success and failure evidence remains
+The journey check confirms that its earlier success and failure evidence remains
 readable after it removes the temporary package.
 
 This example creates no external effect and no persistent plugin-owned state.
 Therefore, it needs no adapter reconciliation or plugin cleanup operation.
-AP08.4 owns those lifecycle concerns for an effectful example.
+The [effectful plugin guide](effectful-plugin.md) explains those lifecycle concerns.

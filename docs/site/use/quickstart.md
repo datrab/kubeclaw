@@ -97,7 +97,7 @@ npm run verify:plugin-system-v2
 ```
 
 The variable alone does not create the delegation.
-Use [Testing and CI](../../developers/testing-and-ci.md) for the required controllers, files, and stop conditions.
+Use [Verification Commands](../reference/verification-commands.md) for the required checks and their evidence boundaries.
 
 ## Recovery
 

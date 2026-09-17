@@ -30,6 +30,7 @@ For an authored task or technical claim record: chapter/section, audience, preci
 | Build and upgrade | `versions.json`; `docker/`; `packaging/`; deployment/update scripts | Version authority, reproducibility limits, chart/image/config/data compatibility, upgrade and rollback boundary; open image and security-scan work | O5, R1, S1 |
 | CLI and project configuration | `package.json`; `skills/nova/core/cli.ts`; `skills/nova/project_setup/`; `docs/examples/` | Actual command, execution location, prerequisites, config precedence, graph/provider/grant changes, portable public examples and effective values; validate and reverse each supported customization | O1, O2, E1, E2, R1 |
 | Contracts and compatibility | All families under `contracts/` plus the plugin v2 contract | Inventory each family/version, producer/consumer, compatibility and executable examples; discover new families rather than freezing a count | E3, E4, E5, R1 |
+| Delivery manifest | `contracts/delivery-manifest/v3` | Delivery identity, source and evidence binding, schema compatibility, and executable contract checks | U3, O3, E3, R1 |
 | Decisions and unfinished work | Historical decisions, finding register, GitHub issues and closure evidence | Acceptance source, implementation state, remaining tasks and independent live acceptance | D1, S1 |
 
 ## Task verification levels

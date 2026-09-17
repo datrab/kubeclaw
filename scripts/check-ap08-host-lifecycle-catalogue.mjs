@@ -128,8 +128,8 @@ for (const name of packagePages) {
   const id = name.slice(0, -3);
   const source = fs.readFileSync(path.join(catalogueRoot, name), 'utf8');
   for (const section of expectedSections) assert(source.includes(section), `${name} lacks ${section}`);
-  assert(source.includes(`Audit status: \`${auditStatuses.get(id)}\`.`), `${name} has a stale audit status`);
-  assert(source.includes(`Earlier AP08.7–AP08.9 local command result on ${verification.date}: \`${verificationById.get(id).result}\`.`),
+  assert(source.includes(`Catalogue status: \`${auditStatuses.get(id)}\`.`), `${name} has a stale catalogue status`);
+  assert(source.includes(`Recorded local command result on ${verification.date}: \`${verificationById.get(id).result}\`.`),
     `${name} has a stale local result`);
   const item = inventory.packages.find(entry => entry.id === id);
   const manifest = JSON.parse(read(item.manifest));
@@ -147,7 +147,7 @@ for (const name of packagePages) {
   assert(source.includes('[Install and activate](../testing.md#install-and-activate-by-surface)'), `${name} lacks the activation link`);
   assert(source.includes('[Remove and inspect remaining state](../testing.md#remove-and-inspect-remaining-state)'), `${name} lacks the removal link`);
   assert(source.includes('Declared manifest facts:'), `${name} lacks complete manifest facts`);
-  assert(source.includes('The separate AP08 guidance file owns'), `${name} does not state content authority`);
+  assert(source.includes('Maintained guidance data owns'), `${name} does not state content authority`);
 }
 assert(fs.existsSync(path.join(catalogueRoot, 'kubeclaw-ops.md')), 'Codex package page is missing');
 const prismCatalogue = fs.readFileSync(path.join(catalogueRoot, 'kubeclaw-prism.md'), 'utf8');
@@ -157,7 +157,7 @@ assert(![...auditStatuses.values()].includes('pending'), 'catalogue contains a p
 
 const generatedIndex = read('docs/site/extend/plugin-catalogue/README.md');
 assert(generatedIndex.includes('The catalogue contains 51 packages.'));
-assert(generatedIndex.includes('AP08-catalogue-guidance.json'));
+assert(generatedIndex.includes('Maintainers write the practical'));
 
 const sourceTargets = new Set();
 for (const name of ['README.md', ...packagePages]) {

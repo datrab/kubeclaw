@@ -220,7 +220,7 @@ oder Importpflichten. Historische Ausgabeschreiber zählen nicht automatisch als
 Leser alter Dateien. Originalbytes und notwendige Testbelege dürfen erst nach
 Abnahme der konkreten Verbraucherumstellung entfallen.
 
-Das künftige `docs/site/status/open-issues.json` ist die einzelne maschinenlesbare
+Das künftige `docs/status/open-issues.json` ist die einzelne maschinenlesbare
 Autorität offener Befunde; `open-issues.md` ist ihre erzeugte Darstellung.
 Live-Abnahmen gehören nach `docs/site/status/acceptance.md`, D12 und die kompakte
 ID-/Abschlussprovenienz der ursprünglichen 154 Befunde plus fünf zusätzlichen

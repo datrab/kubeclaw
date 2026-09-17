@@ -3,7 +3,7 @@
 Status: partial implementation; complete independent environment recovery remains open
 Audience: platform operator, database operator, incident responder
 Owner: platform operations and data owners
-Evidence: charts/prism/files/prism-backup.sh; scripts/postgresql-recovery.sh; docs/site/status/open-issues.json
+Evidence: charts/prism/files/prism-backup.sh; scripts/postgresql-recovery.sh; docs/status/open-issues.json
 Applies to: current selected runtime and state formats
 Last verified: 2026-09-16, source inspection and local documentation checks
 
@@ -110,12 +110,11 @@ Record the exact fence and its start time.
 
 ### 3. Run the Owned Backup Mechanism
 
-Use the existing procedures for supported stateful services:
+Use the service-owned paths on this page:
 
-- [LiteLLM PostgreSQL Recovery](../../operations/litellm-postgresql-recovery.md).
-- [Redis Migration](../../operations/redis-migration.md).
-- [Prism recovery details](../../runbooks/prism-recovery.md).
-- [Ops Pod backup and restore](../../ops/ops-pod.md#backup-and-restore).
+- [Single-Service Restore](#single-service-restore) for Redis and LiteLLM PostgreSQL.
+- [Prism Restore](#prism-restore) for the Prism database and artifacts.
+- [Recover Administrative Access](#recover-administrative-access) for the optional Ops Pod and independent access.
 
 For Nova, Buster, and role PVCs, use the approved storage backup product.
 The repository provides no universal backup command for those stores.
@@ -182,7 +181,7 @@ They remain in the same cluster failure domain until an operator copies them ext
 >
 > **Contract or setting:** [The chart runs separate backup, verification, and database-proof CronJobs against the backup PVC](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/backup.yaml#L1-L80).
 >
-> **Test evidence:** [The backup test checks publication limits, rendered commands, read-only artifact access, and the database proof](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/deployment/prism-backup.test.mts#L100-L135). The AP07 follow-up ran it on 2026-09-16. It failed before a positive backup proof because this host supplied BusyBox-incompatible utilities and the current chart fixture failed its native-worker precondition. [IFR-26-001](../status/open-issues.md#ifr-26-001) retains the required independent recovery proof. No fresh backup success is claimed.
+> **Test evidence:** [The backup test checks publication limits, rendered commands, read-only artifact access, and the database proof](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/deployment/prism-backup.test.mts#L100-L135). A documentation verification run executed it on 2026-09-16. It failed before positive backup proof because the host supplied BusyBox-incompatible utilities and the chart fixture failed its native-worker precondition. [IFR-26-001](../status/open-issues.md#ifr-26-001) retains the required independent recovery proof. No fresh backup success is claimed.
 >
 > **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
 >

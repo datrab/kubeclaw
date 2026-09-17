@@ -1,6 +1,6 @@
 # Extend Hosts, Worker Engines, And Runtime Roles
 
-Status: AP08.7 host and engine guide implemented with stated local limits
+Status: implemented with stated local limits
 Audience: host-extension author, Worker engine maintainer, runtime packager
 Owner: plugin-foundation
 Evidence: skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json; skills/prism/openclaw-plugin/openclaw.plugin.json; plugins/kubeclaw-ops/.codex-plugin/plugin.json; skills/worker/core/worker/attempt-executor.ts; contracts/pipeline-worker-core/v1/src/types.ts; packaging/runtime/roles

@@ -179,7 +179,7 @@
         "skills/common/plugins/openclaw-agent-observer/tests/remediation.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
-      "catalogueWords": 571,
+      "catalogueWords": 568,
       "auditStatus": "locally-verified"
     },
     {
@@ -202,7 +202,7 @@
       "testScript": null,
       "testFiles": [],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
-      "catalogueWords": 482,
+      "catalogueWords": 479,
       "auditStatus": "content-written"
     },
     {
@@ -227,7 +227,7 @@
         "skills/prism/openclaw-plugin/index.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
-      "catalogueWords": 525,
+      "catalogueWords": 522,
       "auditStatus": "locally-verified"
     },
     {
@@ -276,7 +276,7 @@
         "skills/common/plugins/agent-observability/tests/parity.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
-      "catalogueWords": 761,
+      "catalogueWords": 758,
       "auditStatus": "content-written"
     },
     {
@@ -310,7 +310,7 @@
         "skills/buster/plugins/api-flow/tests/remediation.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
-      "catalogueWords": 660,
+      "catalogueWords": 657,
       "auditStatus": "locally-verified"
     },
     {
@@ -348,7 +348,7 @@
         "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
-      "catalogueWords": 573,
+      "catalogueWords": 570,
       "auditStatus": "content-written"
     },
     {
@@ -385,7 +385,7 @@
         "skills/common/plugins/artifact-store/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
-      "catalogueWords": 597,
+      "catalogueWords": 594,
       "auditStatus": "content-written"
     },
     {
@@ -418,7 +418,7 @@
         "skills/buster/plugins/axe/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
-      "catalogueWords": 685,
+      "catalogueWords": 682,
       "auditStatus": "content-written"
     },
     {
@@ -456,7 +456,7 @@
         "skills/nova/plugins/blueprint-sync/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
-      "catalogueWords": 574,
+      "catalogueWords": 571,
       "auditStatus": "content-written"
     },
     {
@@ -495,7 +495,7 @@
         "skills/nova/plugins/buster-quality-gate/tests/suite-first.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
-      "catalogueWords": 589,
+      "catalogueWords": 586,
       "auditStatus": "content-written"
     },
     {
@@ -532,7 +532,7 @@
         "skills/nova/plugins/case-study/tests/protocol.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
-      "catalogueWords": 560,
+      "catalogueWords": 557,
       "auditStatus": "content-written"
     },
     {
@@ -568,7 +568,7 @@
         "skills/common/plugins/command-runner/tests/process-group.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
-      "catalogueWords": 603,
+      "catalogueWords": 600,
       "auditStatus": "locally-verified"
     },
     {
@@ -602,7 +602,7 @@
         "skills/buster/plugins/container-build/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
-      "catalogueWords": 628,
+      "catalogueWords": 625,
       "auditStatus": "locally-verified"
     },
     {
@@ -633,7 +633,7 @@
         "skills/buster/plugins/coverage-budget/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
-      "catalogueWords": 680,
+      "catalogueWords": 677,
       "auditStatus": "locally-verified"
     },
     {
@@ -668,7 +668,7 @@
         "skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
-      "catalogueWords": 583,
+      "catalogueWords": 580,
       "auditStatus": "content-written"
     },
     {
@@ -699,7 +699,7 @@
       "testScript": "node --test ../../../../tests/verification/integration/demo-auth-smoke-live.test.ts",
       "testFiles": [],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
-      "catalogueWords": 678,
+      "catalogueWords": 675,
       "auditStatus": "content-written"
     },
     {
@@ -775,7 +775,7 @@
         "skills/nova/plugins/demo-handoff/tests/handoff.test.mts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
-      "catalogueWords": 987,
+      "catalogueWords": 984,
       "auditStatus": "content-written"
     },
     {
@@ -808,7 +808,7 @@
         "skills/buster/plugins/direct-command/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
-      "catalogueWords": 879,
+      "catalogueWords": 876,
       "auditStatus": "locally-verified"
     },
     {
@@ -847,7 +847,7 @@
         "skills/common/plugins/git-workspace/tests/sync-disposition.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
-      "catalogueWords": 637,
+      "catalogueWords": 634,
       "auditStatus": "locally-verified"
     },
     {
@@ -878,7 +878,7 @@
       "testScript": "node ../../../../tests/verification/integration/http-provider-live.test.ts",
       "testFiles": [],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
-      "catalogueWords": 675,
+      "catalogueWords": 672,
       "auditStatus": "locally-verified"
     },
     {
@@ -929,7 +929,7 @@
         "skills/nova/plugins/human-approval/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
-      "catalogueWords": 763,
+      "catalogueWords": 760,
       "auditStatus": "content-written"
     },
     {
@@ -970,7 +970,7 @@
         "skills/nova/plugins/implementation-agent/tests/protocol.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
-      "catalogueWords": 580,
+      "catalogueWords": 577,
       "auditStatus": "content-written"
     },
     {
@@ -1002,7 +1002,7 @@
         "skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
-      "catalogueWords": 557,
+      "catalogueWords": 554,
       "auditStatus": "locally-verified"
     },
     {
@@ -1035,7 +1035,7 @@
         "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
-      "catalogueWords": 682,
+      "catalogueWords": 679,
       "auditStatus": "locally-verified"
     },
     {
@@ -1068,7 +1068,7 @@
         "skills/buster/plugins/lighthouse/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
-      "catalogueWords": 691,
+      "catalogueWords": 688,
       "auditStatus": "content-written"
     },
     {
@@ -1134,7 +1134,7 @@
         "skills/nova/plugins/lint/tests/stage.unit.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
-      "catalogueWords": 881,
+      "catalogueWords": 878,
       "auditStatus": "content-written"
     },
     {
@@ -1171,7 +1171,7 @@
         "skills/common/plugins/network-http/tests/streaming.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
-      "catalogueWords": 608,
+      "catalogueWords": 605,
       "auditStatus": "locally-verified"
     },
     {
@@ -1218,7 +1218,7 @@
         "skills/common/plugins/notification-observer/tests/parity.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
-      "catalogueWords": 810,
+      "catalogueWords": 807,
       "auditStatus": "content-written"
     },
     {
@@ -1252,7 +1252,7 @@
         "skills/buster/plugins/openapi/tests/remediation.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
-      "catalogueWords": 665,
+      "catalogueWords": 662,
       "auditStatus": "locally-verified"
     },
     {
@@ -1286,7 +1286,7 @@
         "skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
-      "catalogueWords": 614,
+      "catalogueWords": 611,
       "auditStatus": "content-written"
     },
     {
@@ -1324,7 +1324,7 @@
         "skills/common/plugins/operator-messaging/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
-      "catalogueWords": 591,
+      "catalogueWords": 588,
       "auditStatus": "content-written"
     },
     {
@@ -1374,7 +1374,7 @@
         "skills/nova/plugins/pipeline-review/tests/protocol.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
-      "catalogueWords": 723,
+      "catalogueWords": 720,
       "auditStatus": "content-written"
     },
     {
@@ -1408,7 +1408,7 @@
         "skills/buster/plugins/playwright/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
-      "catalogueWords": 687,
+      "catalogueWords": 684,
       "auditStatus": "content-written"
     },
     {
@@ -1456,7 +1456,7 @@
         "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
-      "catalogueWords": 680,
+      "catalogueWords": 677,
       "auditStatus": "content-written"
     },
     {
@@ -1493,7 +1493,7 @@
         "skills/nova/plugins/prism-design/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
-      "catalogueWords": 583,
+      "catalogueWords": 580,
       "auditStatus": "content-written"
     },
     {
@@ -1528,7 +1528,7 @@
         "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
-      "catalogueWords": 579,
+      "catalogueWords": 576,
       "auditStatus": "content-written"
     },
     {
@@ -1577,7 +1577,7 @@
         "skills/common/plugins/redis-transport/tests/package-boundary.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
-      "catalogueWords": 776,
+      "catalogueWords": 773,
       "auditStatus": "locally-verified"
     },
     {
@@ -1626,7 +1626,7 @@
         "skills/nova/plugins/remote-test-gate/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
-      "catalogueWords": 744,
+      "catalogueWords": 741,
       "auditStatus": "content-written"
     },
     {
@@ -1661,7 +1661,7 @@
         "skills/nova/plugins/repository-adapter/tests/path-safety.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
-      "catalogueWords": 589,
+      "catalogueWords": 586,
       "auditStatus": "locally-verified"
     },
     {
@@ -1781,7 +1781,7 @@
         "skills/nova/plugins/review/tests/stage.unit.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
-      "catalogueWords": 1225,
+      "catalogueWords": 1222,
       "auditStatus": "content-written"
     },
     {
@@ -1835,7 +1835,7 @@
         "skills/common/plugins/runtime-dispatch/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
-      "catalogueWords": 703,
+      "catalogueWords": 700,
       "auditStatus": "content-written"
     },
     {
@@ -1871,7 +1871,7 @@
         "skills/common/plugins/secret-resolver/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
-      "catalogueWords": 573,
+      "catalogueWords": 570,
       "auditStatus": "locally-verified"
     },
     {
@@ -1949,7 +1949,7 @@
         "skills/buster/plugins/security-providers/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
-      "catalogueWords": 1334,
+      "catalogueWords": 1331,
       "auditStatus": "content-written"
     },
     {
@@ -1980,7 +1980,7 @@
         "skills/buster/plugins/size-budget/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
-      "catalogueWords": 677,
+      "catalogueWords": 674,
       "auditStatus": "content-written"
     },
     {
@@ -2015,7 +2015,7 @@
         "skills/common/plugins/state-store/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
-      "catalogueWords": 596,
+      "catalogueWords": 593,
       "auditStatus": "content-written"
     },
     {
@@ -2048,7 +2048,7 @@
         "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
-      "catalogueWords": 641,
+      "catalogueWords": 638,
       "auditStatus": "locally-verified"
     },
     {
@@ -2083,7 +2083,7 @@
         "skills/common/plugins/telemetry-observer/tests/parity.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
-      "catalogueWords": 607,
+      "catalogueWords": 604,
       "auditStatus": "locally-verified"
     },
     {
@@ -2119,7 +2119,7 @@
         "skills/common/plugins/telemetry-store/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
-      "catalogueWords": 594,
+      "catalogueWords": 591,
       "auditStatus": "content-written"
     },
     {
@@ -2157,7 +2157,7 @@
         "skills/common/plugins/transport-publisher/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
-      "catalogueWords": 596,
+      "catalogueWords": 601,
       "auditStatus": "content-written"
     },
     {
@@ -2191,7 +2191,7 @@
         "skills/buster/plugins/visual/tests/live-function.test.ts"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
-      "catalogueWords": 697,
+      "catalogueWords": 694,
       "auditStatus": "content-written"
     },
     {
@@ -2225,7 +2225,7 @@
         "skills/common/plugins/wait-store/tests/package-boundary.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
-      "catalogueWords": 604,
+      "catalogueWords": 601,
       "auditStatus": "content-written"
     }
   ]

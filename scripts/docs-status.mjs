@@ -2,29 +2,28 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createHash } from 'node:crypto';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const source = 'docs/site/status/open-issues.json';
+const source = 'docs/status/open-issues.json';
 const output = 'docs/site/status/open-issues.md';
+const identityFile = path.join(root, 'docs/status/finding-identities.json');
 const requiredText = ['id', 'origin', 'title', 'severity', 'status', 'problem', 'impact', 'current_state', 'live_validation'];
 const requiredLists = ['components', 'remaining_work', 'reproduction', 'acceptance_criteria'];
-const provenanceFile = path.join(root, 'docs/site/decisions/acceptance.md');
-// The original identity universe is fixed; local dispositions can change.
-const originalIdentityDigest = 'a2c2dc18c31f88a34b15b54a5922839f62816d8e86de0a1cbe8e6da43daa77d7';
 const validDate = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/u.test(value) &&
   Number.isFinite(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value;
 
-export function originalFindingIds(provenance = fs.readFileSync(provenanceFile, 'utf8')) {
-  const ids = [...provenance.matchAll(/^\| ([A-Z0-9-]+) \|/gmu)].map(match => match[1]).filter(id => id !== '---' && !id.startsWith('INT-')).sort();
-  if (ids.length !== 154 || new Set(ids).size !== 154 || createHash('sha256').update(ids.join('\n')).digest('hex') !== originalIdentityDigest) {
-    throw new Error('Original finding provenance does not match the fixed 154 IDs');
+const loadIdentities = () => JSON.parse(fs.readFileSync(identityFile, 'utf8'));
+
+export function originalFindingIds(identities = loadIdentities()) {
+  const ids = identities.original_findings.map(item => item.id);
+  if (identities.schema_version !== 1 || ids.length !== 154 || new Set(ids).size !== 154) {
+    throw new Error('Stable finding identities must contain 154 unique original IDs');
   }
   return new Set(ids);
 }
 
-export function validateStatus(data, provenance = fs.readFileSync(provenanceFile, 'utf8')) {
-  const originalIds = originalFindingIds(provenance);
+export function validateStatus(data, identities = loadIdentities()) {
+  const originalIds = originalFindingIds(identities);
   if (data.schema_version !== 1 || !Array.isArray(data.issues)) throw new Error('Unsupported issue register schema');
   if (!validDate(data.updated_at) || !/^[a-f0-9]{40}$/u.test(data.source_baseline ?? '')) throw new Error('Dated immutable source baseline required');
   if (typeof data.purpose !== 'string' || !data.purpose.trim() || typeof data.verification_policy !== 'string' || !data.verification_policy.trim()) throw new Error('Register purpose and verification policy required');
@@ -63,25 +62,33 @@ export function validateStatus(data, provenance = fs.readFileSync(provenanceFile
       data.issues.length !== s.total_open || data.issues.length - original !== s.additional_open) {
     throw new Error('Issue counts do not match their scope');
   }
-  const dispositions = new Map([...provenance.matchAll(/^\| ([A-Z0-9-]+) \| ([^|]+) \|/gmu)]
-    .filter(match => originalIds.has(match[1])).map(match => [match[1], match[2].trim()]));
-  if (dispositions.size !== originalIds.size) throw new Error('Incomplete local closure provenance');
+  const dispositions = new Map(identities.original_findings.map(item => [item.id, item.disposition]));
   const statusNames = { Open: 'open', 'In progress': 'in-progress', 'Implemented; incomplete': 'partially-implemented' };
   for (const [id, disposition] of dispositions) {
     const issue = data.issues.find(entry => entry.id === id);
     if (disposition === 'Locally verified' ? issue !== undefined :
       !Object.hasOwn(statusNames, disposition) || issue?.status !== statusNames[disposition]) {
-      throw new Error(`${id}: issue state disagrees with local closure provenance`);
+      throw new Error(`${id}: issue state disagrees with local disposition data`);
     }
   }
-  const integrationIds = [...provenance.matchAll(/^\| (INT-[A-Z0-9-]+) \|/gmu)].map(match => match[1]);
+  const integrationIds = identities.integration_findings.map(item => item.id);
   if (integrationIds.length !== 5 || new Set(integrationIds).size !== 5 || s.additional_integration_locally_verified !== integrationIds.length) {
-    throw new Error('Integration closure counts disagree with the five inherited provenance rows');
+    throw new Error('Integration closure counts disagree with stable identity data');
   }
 }
 
 const cell = value => String(value).replaceAll('|', '\\|').replaceAll('\n', ' ');
-const anchor = id => id.toLowerCase();
+const publicIds = new Map([
+  ['DOC-AP03-GITOPS-001', 'GITOPS-REVISION-001'],
+  ['DOC-AP04-PREFERENCE-001', 'PRISM-PREFERENCE-001'],
+  ['DOC-AP07-PRISM-CHECK-001', 'PRISM-DEPLOY-CHECK-001'],
+  ['DOC-AP08-BOUNDARY-CHECK-001', 'PLUGIN-BOUNDARY-001'],
+  ['DOC-AP08-EFFECT-RECONCILIATION-002', 'EFFECT-RECONCILIATION-001'],
+  ['DOC-AP08-RUNTIME-CHECKS-003', 'RUNTIME-VERIFICATION-001'],
+  ['DOC-AP08-PRISM-TOOL-LIMITS-004', 'PRISM-TOOL-LIMITS-001'],
+]);
+const publicId = id => publicIds.get(id) ?? id;
+const anchor = id => publicId(id).toLowerCase();
 const list = values => values.map(value => `- ${value}`).join('\n');
 
 export function renderStatus(data) {
@@ -94,21 +101,20 @@ export function renderStatus(data) {
     'Owner: platform-maintainers',
     `Evidence: ${source}`,
     `Applies to: source baseline ${data.source_baseline}`,
-    `Last verified: ${data.updated_at}, source assessment only; see individual evidence`, '',
-    '<!-- Generated by scripts/docs-status.mjs. Edit open-issues.json, then run npm run docs:status:generate. -->', '',
-    data.purpose, '', data.verification_policy, '', s.counting_policy, '',
-    `${s.original_incomplete} of the original ${s.original_total} findings remain incomplete; ${s.original_locally_verified} are locally closed.`,
-    `${s.additional_open} additional follow-ups remain separate. Total current entries: ${s.total_open}.`,
-    `${s.additional_integration_locally_verified} additional integration findings have local closure provenance.`, '',
-    '[Local closure and original IDs](../decisions/acceptance.md) and [live acceptance](acceptance.md) remain separate.', '',
+    `Last verified: ${data.updated_at}, source inspection only; see individual evidence`, '',
+    '<!-- Generated by scripts/docs-status.mjs. Edit docs/status/open-issues.json, then run npm run docs:status:generate. -->', '',
+    data.purpose, '', data.verification_policy, '',
+    `The register contains ${s.total_open} current implementation issues.`, '',
+    '[Evidence and acceptance policy](../decisions/acceptance.md) and [live acceptance](acceptance.md) remain separate.', '',
     '## Status meanings', '',
     ...Object.entries(data.status_semantics).map(([status, meaning]) => `- **${status}:** ${meaning}`), '',
-    '## Issue index', '', '| ID | Issue | Origin | Status |', '| --- | --- | --- | --- |',
-    ...data.issues.map(issue => `| [${cell(issue.id)}](#${anchor(issue.id)}) | ${cell(issue.title)} | ${cell(issue.origin)} | ${cell(issue.status)} |`), '',
+    '## Issue index', '', '| ID | Issue | Status |', '| --- | --- | --- |',
+    ...data.issues.map(issue => `| [${cell(publicId(issue.id))}](#${anchor(issue.id)}) | ${cell(issue.title)} | ${cell(issue.status)} |`), '',
   ];
   for (const issue of data.issues) {
-    lines.push(`## ${issue.id}`, '', `**${issue.title}**`, '',
-      `Origin: ${issue.origin}. Status: ${issue.status}. Source severity: ${issue.severity}.`, '',
+    const sources = issue.sources.filter(ref => !ref.url.includes('/docs/'));
+    lines.push(`## ${publicId(issue.id)}`, '', `**${issue.title}**`, '',
+      `Status: ${issue.status}. Severity: ${issue.severity}.`, '',
       '### Problem and impact', '', issue.problem, '', issue.impact, '',
       '### Components and current state', '', list(issue.components), '', issue.current_state, '',
       '### Remaining work', '', list(issue.remaining_work), '',
@@ -117,8 +123,8 @@ export function renderStatus(data) {
       '### Separate environment acceptance', '', issue.live_validation, '',
       '### Dependencies', '', issue.dependencies.length ? list(issue.dependencies.map(id => `[${id}](#${anchor(id)})`)) : 'No dependency on another entry in this register is established.', '',
       '### Evidence boundary', '', issue.evidence.assessment, '',
-      ...Object.entries(issue.evidence).filter(([key]) => key !== 'assessment').map(([key, value]) => `- **${key.replaceAll('_', ' ')}:** ${value === null ? 'Not established.' : typeof value === 'object' ? JSON.stringify(value) : value}`), '',
-      '### Sources', '', list(issue.sources.map(ref => `[${ref.path === 'docs/review/remediation/register.json' ? 'Pinned historical register' : ref.path ?? ref.url}](${ref.url}) — ${ref.scope}${ref.observed_at ? ` Observed: ${ref.observed_at}.` : ''}`)), '');
+      ...Object.entries(issue.evidence).filter(([key]) => ['prior_verification', 'implementation_commit', 'source_run_commit'].includes(key)).map(([key, value]) => `- **${key === 'prior_verification' ? 'recorded verification' : key.replaceAll('_', ' ')}:** ${value === null ? 'Not established.' : typeof value === 'object' ? JSON.stringify(value) : value}`), '',
+      '### Sources', '', list(sources.map(ref => `[${ref.path ?? ref.url}](${ref.url}) — ${ref.scope}${ref.observed_at ? ` Observed: ${ref.observed_at}.` : ''}`)), '');
   }
   return `${lines.join('\n').replace(/\n+$/u, '')}\n`;
 }

@@ -1,6 +1,6 @@
 # Extend KubeClaw
 
-Status: AP08.1 through AP08.9 implemented; independent reader acceptance remains
+Status: implemented with the verification limits stated in each guide
 Audience: plugin author, engine author, maintainer
 Owner: plugin-foundation
 Evidence: skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; skills/common/plugin-runtime/foundation/config/platform.ts; skills/common/plugin-runtime/foundation/registry; packaging/runtime/roles; packaging/runtime/package-ownership.json
@@ -444,7 +444,7 @@ Review a Core, Foundation, engine, or role change instead.
 
 ## Current Verification Boundary
 
-The focused AP08.1 source review used the revision in this page metadata.
+The focused source inspection used the revision in this page metadata.
 
 | Check | Result on 2026-09-16 | Meaning |
 | --- | --- | --- |
@@ -459,7 +459,7 @@ The check rejects `@kubeclaw/pipeline-test-gate-contract` in `buster-quality-gat
 This result prevents a claim that the complete import-boundary suite passes.
 It does not change the narrower contract, registry, configuration, or role results above.
 
-No target cluster, OpenClaw host, Codex host, or external package installation ran for AP08.1.
+The assessment did not use a target cluster, OpenClaw host, Codex host, or external package installation.
 
 ## Continue With The Correct Guide
 
@@ -475,5 +475,5 @@ No target cluster, OpenClaw host, Codex host, or external package installation r
 - [Core And Plugin Decisions](../decisions/core-and-plugins.md) preserves the design reasons and their evidence limits.
 
 The linked pipeline, effect, Buster, Nova, host, lifecycle, and catalogue guides add detailed procedures.
-AP08.10 still owns the independent reader acceptance exercise.
+Independent reader acceptance remains a separate publication gate.
 This page remains the authority for selecting the correct extension class.

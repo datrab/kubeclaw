@@ -6,7 +6,7 @@ Owner: platform architecture and operations
 Evidence: packaging/runtime/roles; charts/kubeclaw; charts/prism
 Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
 Applies to: current Helm charts and runtime-role declarations
-Last verified: source review on 2026-09-15
+Last verified: source inspection on 2026-09-15
 
 ## Purpose
 

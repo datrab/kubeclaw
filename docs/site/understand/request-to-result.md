@@ -5,7 +5,7 @@ Audience: architecture reader, maintainer, operator
 Owner: Nova Core
 Evidence: docs/site/understand/request-state-recovery.md
 Applies to: pipeline-plugin-v2
-Last verified: source review on 2026-09-15
+Last verified: source inspection on 2026-09-15
 
 The complete trace is now in [Request, State, and Recovery](request-state-recovery.md).
 

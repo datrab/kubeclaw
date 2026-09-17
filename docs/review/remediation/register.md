@@ -1,6 +1,6 @@
 # Remediation register: migration pointer
 
-The current machine-readable authority is [open-issues.json](../../site/status/open-issues.json).
+The current machine-readable authority is [open-issues.json](../../status/open-issues.json).
 The [readable issue list](../../site/status/open-issues.md) is generated from it.
 Do not maintain status in this historical location.
 

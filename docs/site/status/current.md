@@ -1,24 +1,22 @@
-# Current platform status
+# Current Platform Status
 
-> AP04 working draft. Extraction and source migration are incomplete; see the [checkpoint](../../blueprint/AP04-checkpoint.md).
-Status: partial
+Status: current implementation status with separate live-acceptance limits
 Audience: operator, plugin author, architecture reader
 Owner: platform-architecture
 Evidence: packaging/runtime/roles/nova.json; packaging/runtime/roles/buster.json; packaging/runtime/roles/prism.json
-Applies to: source baseline 1e50167fcb4355dfce4110d612ab360828c64394 and AP04 documentation extraction
-Last verified: 2026-09-15, source and documentation checks only
+Applies to: current repository roles and documented product boundaries
+Last verified: 2026-09-17, source and documentation checks only
 
 ## Where to find current work
 
-The [open-issues view](open-issues.md) comes from one [JSON register](open-issues.json).
-Update the JSON, then run `npm run docs:status:generate`.
+The [open-issues view](open-issues.md) comes from the canonical machine-readable register.
+Update `docs/status/open-issues.json`, then run `npm run docs:status:generate`.
 The generated page contains the remaining implementation work and its completion criteria.
-It separates original review findings from later technical follow-ups.
+It separates current implementation issues from later additions to their scope.
 
 [Live acceptance](acceptance.md) records environment prerequisites, procedures and expected results.
 A local finding closure does not assert that those procedures ran.
-[Acceptance decisions and provenance](../decisions/acceptance.md) preserve D12 and the original finding identities.
-The [decision index](../decisions/README.md) explains enduring constraints and their approval evidence.
+The [decision index](../decisions/README.md) explains enduring constraints and their authority.
 
 ## Source-backed runtime boundaries
 
@@ -28,7 +26,7 @@ The [decision index](../decisions/README.md) explains enduring constraints and t
 - Prism has an implemented native execution path; it is not merely a design outside the role inventory.
 - Buster's remaining native-runner and fixture-lifetime integration belongs to the open issues.
 - Forge and Echo are dispatched specialists. A registered package does not prove activation or reachability.
-- Plugin API v2 is the extension contract. This does not imply that every unrelated runtime migration is complete.
+- Plugin API v2 is the extension contract. This does not imply that every runtime and deployment path has completed live acceptance.
 
 These statements describe repository sources. They do not confirm a deployed cluster, successful operator delivery or product acceptance.
 Use the issue-specific code references and acceptance gates before making a stronger claim.

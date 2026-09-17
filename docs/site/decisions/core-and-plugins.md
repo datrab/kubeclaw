@@ -1,20 +1,20 @@
 # Core and plugin decisions
 
-Status: extracted decisions; individual approval and implementation states below
+Status: current decisions with individual approval and implementation states
 
 Audience: maintainers, pipeline developers and plugin authors
 
 Owner: KubeClaw maintainers
 
-Evidence: `skills/common/plugin-runtime/foundation/registry/build.ts`, `packaging/runtime/roles/nova.json`
+Evidence: skills/common/plugin-runtime/foundation/registry/build.ts; packaging/runtime/roles/nova.json
 
 Applies to: canonical lifecycle, Worker Core and plugin system v2
 
-Last verified: 2026-09-15 (source reconciliation; no new runtime or live test execution)
+Last verified: 2026-09-17 (source inspection; no new runtime or live test execution)
 
-These records preserve ADR-001–ADR-014 from the documentation catalogue. They explain lasting constraints without requiring a reader to retain phase reports. The original test-gate identifiers are `D-001`–`D-119`; they are distinct from the shorter `D01`–`D16` review/remediation decisions.
+These records define ADR-001–ADR-014. They explain lasting constraints. The test-gate identifiers are `D-001`–`D-119`; they are distinct from product decisions `D01`–`D16`.
 
-Evidence baseline: `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`. Extracted on 2026-09-15. Immutable source links below preserve the reviewed text even after migration removes an old document. A source that says it records “agreed decisions” supports agreement, but does not supply a missing date or named approver. The catalogue itself is not approval evidence. “Unconfirmed” is used where the source has no acceptance label.
+Evidence baseline: `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`. The immutable source links below preserve the exact implementation evidence. A source that says it records “agreed decisions” supports agreement, but does not supply a missing date or named approver. This catalogue is not approval evidence. “Unconfirmed” is used where the source has no acceptance label.
 
 The original Plugin System Vision, Test-Gate Design, Runtime Packaging and Plugin Security Model were read completely. Implementation source was inspected selectively at the boundaries described below. Linked test definitions identify applicable checks; they were not all reread or run. Implementation status is assessed separately and is bounded by the stated subsystem. Source inspection and existing test definitions are not a fresh test execution, whole-system completion or live acceptance. Remaining implementation work belongs in the [canonical issue register](../status/open-issues.md); environment acceptance belongs in [acceptance gates](../status/acceptance.md). These records do not create another task register. [Acceptance policy](acceptance.md) preserves D12 and the distinction between local completion and live proof.
 
@@ -24,15 +24,15 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Context.** A pipeline can have several agents, providers and transports. Letting each advance its own pipeline state would create conflicting owners during retries and recovery.
 
-**Decision.** Core alone owns the frozen execution graph, scheduling, canonical lifecycle events, retries, remediation, waits, cancellation and terminal closure. Plugins return validated typed results; they never write scheduler state. Plugin-specific phases stay in namespaced domain state. A graph is validated before a run; remediation follows declared edges. Conditional activation can skip a declared ordinary stage using an immutable ancestor fact, but cannot insert work or redirect a remediation-only target.
+**Decision.** Core alone owns the frozen execution graph, scheduling, canonical lifecycle events, retries, remediation, waits, cancellation and terminal closure. Plugins return typed results that passed validation; they never write scheduler state. Plugin-specific phases stay in namespaced domain state. Core validates a graph before a run; remediation follows declared edges. Conditional activation can skip a declared ordinary stage using an immutable ancestor fact, but cannot insert work or redirect a remediation-only target.
 
 **Actual alternatives.** The source rejects a second Testkube workflow authority, plugin-owned pipeline history, and speculative lifecycle policy hooks. Testkube is a design reference, not a runtime dependency.
 
 **Reason and consequences.** One transition authority makes ordering and replay understandable. It requires core-owned generic policies and explicit stages for domain judgments; plugins cannot silently extend the graph. Retry repeats failed execution; request_fix follows a declared repair path. Orchestrator intervention resets neither budget, while blocked requires an audited administrative continuation.
 
-**Approval and provenance.** Accepted: [Test-Gate Design](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md) D-001/D-002 (2026-08-04), D-087/D-091/D-096 (2026-08-05). [Plugin System Vision](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/plugin-system-vision.md) states that it records agreed decisions, but gives no acceptance date or approver for its finer lifecycle rules; those details have source-attested agreement, date/approver unknown.
+**Approval and provenance.** Test-Gate Design accepts D-001/D-002 on 2026-08-04 and D-087/D-091/D-096 on 2026-08-05. Plugin System Vision states agreement for its finer lifecycle rules. It gives no acceptance date or approver for those details.
 
-**Implementation.** Partial at the complete architectural scope. Current lifecycle reducer, recovery and repair-budget modules implement the canonical state path; this extraction does not assert all connected pipeline flows are accepted.
+**Implementation.** Partial at the complete architectural scope. Current lifecycle reducer, recovery and repair-budget modules implement the canonical state path. This source inspection does not claim acceptance for all connected pipeline flows.
 
 **Evidence.** [skills/nova/core/lifecycle/reducer.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/lifecycle/reducer.ts), [skills/nova/core/lifecycle/recovery.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/lifecycle/recovery.ts), [skills/nova/core/lifecycle/repair-budget.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/lifecycle/repair-budget.ts), [tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs).
 
@@ -48,7 +48,7 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Reason and consequences.** Shared mechanics can be fixed once and reused. The protocol must remain small: each field needs a real execution, recovery or proof consumer. A language change must preserve provider, result and evidence contracts. Shared source does not imply one process, image or capacity pool.
 
-**Approval and provenance.** Accepted: [Test-Gate Design](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md) D-096–D-104, 2026-08-05; no named individual approver is recorded.
+**Approval and provenance.** Test-Gate Design D-096–D-104 records acceptance on 2026-08-05. It names no individual approver.
 
 **Implementation.** Partial for the whole distributed-worker vision. Shared core source and Buster/Prism role dependencies exist. Queue topology, worker-loss behavior and actual host containment require their own evidence; role membership alone cannot prove them.
 
@@ -64,9 +64,9 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Actual alternatives.** The sources reject embedding specialist providers in Nova, executable suites, and a second independent test workflow/control plane. Reusable tools live in packages; project tests and suites are data.
 
-**Reason and consequences.** A provider can be replaced without changing Nova or neutral core. Dependencies and typed outputs must be validated before execution. Fixtures own preparation and cleanup, not product quality; independent work can continue after another independent test fails.
+**Reason and consequences.** A provider can change without changing Nova or neutral core. The runtime must validate dependencies and typed outputs before execution. Fixtures own preparation and cleanup, not product quality. Independent work can continue after another independent test fails.
 
-**Approval and provenance.** Accepted: [Test-Gate Design](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md) D-001 (2026-08-04), D-068/D-087/D-091/D-095–D-097 (2026-08-05), D-105 (2026-08-09).
+**Approval and provenance.** Accepted: Test-Gate Design D-001 (2026-08-04), D-068/D-087/D-091/D-095–D-097 (2026-08-05), D-105 (2026-08-09).
 
 **Implementation.** Partial for the complete test-gate design. Current Buster engine and explicit role package sets establish the source boundary. Complete provider behavior, migration parity and production operation are separate proof scopes.
 
@@ -84,13 +84,13 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Reason and consequences.** One contract reduces long-term complexity, but cutovers require complete consumer inventories and negative absence checks. A temporary not-yet-migrated suite bridge never authorizes the same successor test and must disappear when migration completes.
 
-**Approval and provenance.** Source-attested agreement in [Plugin System Vision](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/plugin-system-vision.md); explicit approval date and individual approver are unknown. The bounded suite-migration decisions D-083/D-095 are accepted in [Test-Gate Design](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md) on 2026-08-05; D-112 has no separate acceptance/date label.
+**Approval and provenance.** Plugin System Vision states an agreement but gives no approval date or individual approver. Test-Gate Design accepts the bounded suite-migration decisions D-083/D-095 on 2026-08-05. D-112 has no separate acceptance or date label.
 
-**Implementation.** Partial at repository-wide migration scope. v2 registry/contracts and the connected remote-test-gate path exist. This record does not certify every historical or generated reference absent; source deletion follows the migration ledger.
+**Implementation.** Partial across the complete repository. The v2 registry, contracts, and connected remote-test-gate path exist. This record does not certify every legacy consumer as removed.
 
 **Evidence.** [skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json), [skills/common/plugin-runtime/foundation/registry/schema.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/schema.ts), [skills/nova/plugins/remote-test-gate/README.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/remote-test-gate/README.md), [tests/verification/contracts/check-plugin-system-v2-phase12.mts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-phase12.mts).
 
-**Supersession and related decisions.** v2 replaces v1 and needs_nova with orchestrator_required. Historical suite bridge permission is time/suite bounded, not a permanent exception to one authority. D-119 reiterates single gate authority during comparison/cutover.
+**Supersession and related decisions.** v2 replaces v1 and `needs_nova` with `orchestrator_required`. Historical suite bridge permission is time/suite bounded, not a permanent exception to one authority. D-119 reiterates single gate authority during comparison/cutover.
 
 ## ADR-005: Discover inert manifests and freeze exact registrations
 
@@ -102,9 +102,9 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Reason and consequences.** Startup can fail before any plugin work begins. Upgrades affect later runs; exact package bytes must remain available for resume. Private locked dependencies avoid shared mutable roots, and package-controlled install scripts cannot execute on the trusted host.
 
-**Approval and provenance.** Source-attested agreement in [Plugin System Vision](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/plugin-system-vision.md) (date/approver unknown). Frozen provider selection and locked packages are explicitly accepted in [Test-Gate Design](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md) D-067/D-069/D-081 on 2026-08-05.
+**Approval and provenance.** Source-attested agreement in Plugin System Vision (date/approver unknown). Frozen provider selection and locked packages are explicitly accepted in Test-Gate Design D-067/D-069/D-081 on 2026-08-05.
 
-**Implementation.** Implemented for the inspected registry substrate; end-to-end installation and every possible external-package deployment are not certified by this source review.
+**Implementation.** Implemented for the inspected registry substrate. Source inspection does not certify end-to-end installation or every possible external-package deployment.
 
 **Evidence.** [skills/common/plugin-runtime/foundation/registry/README.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/README.md), [skills/common/plugin-runtime/foundation/registry/discovery.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/discovery.ts), [skills/common/plugin-runtime/foundation/registry/build.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/build.ts), [skills/common/plugin-runtime/foundation/registry/activation.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/activation.ts), [tests/verification/contracts/check-plugin-system-v2-registry.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-registry.mjs).
 
@@ -120,7 +120,7 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Reason and consequences.** Each surface needs explicit ordering, failure, timeout, replay and shutdown behavior. Package is the trust/version/removal unit; registration is the contract/permission-request unit; invocation gets effective grants. One stage per package is the default; cohesive multi-registration packages must share ownership, trust and atomic release, with no union of sibling authority.
 
-**Approval and provenance.** The three foundational surfaces are source-attested agreed in [Plugin System Vision](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/plugin-system-vision.md) (date/approver unknown). [Test-Gate Design](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md) accepts D-054/D-090 on 2026-08-05 and D-108/D-109 on 2026-08-09. The combined five-surface ADR is an extraction of these sources, not a newly approved count or inventory.
+**Approval and provenance.** Current contracts define the three foundational surfaces. The provider decisions add test providers and report adapters. The combined five-surface ADR records those established boundaries; it does not grant new authority.
 
 **Implementation.** Implemented in the inspected registry: build.ts defines and indexes all five surface types. This structural check does not verify all installed registrations or provider behavior.
 
@@ -138,7 +138,7 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Reason and consequences.** Concrete stage types remain open while privileged operations require an intentional security-contract change. Secret references, path/repository scope, allowed hosts, commands and runtime targets need enforcement in both context and execution boundary. Package trust is not permission.
 
-**Approval and provenance.** Source-attested agreement in [Plugin System Vision](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/plugin-system-vision.md) (date/approver unknown). Provider access constrained by operator limits is accepted in [Test-Gate Design](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md) D-082 on 2026-08-05; current [Plugin Security Model](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/security-model.md) describes implementation, not a separate approval event.
+**Approval and provenance.** Plugin System Vision states an agreement but gives no date or approver. Test-Gate Design D-082 accepts operator-limited provider access on 2026-08-05. The current Plugin Security Model describes implementation, not a separate approval event.
 
 **Implementation.** Implemented in the inspected stage/observer/adapter grant resolver; test providers use their separately resolved plan and isolated execution path. Universal enforcement across every host is outside this verification scope.
 
@@ -156,13 +156,13 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Reason and consequences.** Deployment must provide the actual Linux/cgroup/UID/GID prerequisites. Native isolation needs delegated cgroup-v2, exact memory-limit readback, swap disabled, an external supervisor and verified group cleanup. Missing prerequisites or cleanup failure fail closed.
 
-**Approval and provenance.** Source-attested agreement in [Plugin System Vision](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/plugin-system-vision.md) (date/approver unknown). [Plugin Security Model](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/security-model.md) supplies current implementation constraints; its existence does not establish an additional dated acceptance.
+**Approval and provenance.** Source-attested agreement in Plugin System Vision (date/approver unknown). Plugin Security Model supplies current implementation constraints; its existence does not establish an additional dated acceptance.
 
 **Implementation.** Partial for the deployed guarantee. The isolated runner and native supervisor implementation exist. Kernel/resource containment remains conditional on a provisioned host and acceptance evidence.
 
-**Evidence.** [skills/common/plugin-runtime/foundation/isolation/runner.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/isolation/runner.ts), [docs/architecture/security-model.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/security-model.md), [tests/verification/contracts/check-plugin-system-v2-isolation.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-isolation.mjs), [tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs).
+**Evidence.** [skills/common/plugin-runtime/foundation/isolation/runner.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/isolation/runner.ts), docs/architecture/security-model.md, [tests/verification/contracts/check-plugin-system-v2-isolation.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-isolation.mjs), [tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs).
 
-**Supersession and related decisions.** The initial trusted-only extraction restriction is historical once a supported isolated runner is configured; it is not permission to run arbitrary external code in-process. ADR-007 grants still apply inside isolation.
+**Supersession and related decisions.** A configured isolated runner can execute supported external packages. This does not permit arbitrary external code in-process. ADR-007 grants still apply inside isolation.
 
 ## ADR-009: Use durable idempotent effects and canonical resource locks
 
@@ -174,9 +174,9 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Reason and consequences.** Journal and receipt durability are part of correctness, not optional logging. Large results use verified content-addressed sidecars. Lock cleanup remains explicit even when the primary operation fails; lease expiry alone cannot justify taking a resource from an executing owner.
 
-**Approval and provenance.** Source-attested agreement in [Plugin System Vision](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/plugin-system-vision.md) (date/approver unknown). The current effect ownership document records more precise implementation behavior without a separate dated approval.
+**Approval and provenance.** Source-attested agreement in Plugin System Vision (date/approver unknown). The current effect ownership document records more precise implementation behavior without a separate dated approval.
 
-**Implementation.** Implemented in the inspected effect subsystem. Its durability/receipt/fencing design is source-backed; this AP04 extraction did not execute a crash/recovery matrix or prove every external adapter receipt implementation.
+**Implementation.** Implemented in the inspected effect subsystem. Its durability, receipt, and fencing design is source-backed. No complete crash-and-recovery matrix proves every external adapter receipt implementation.
 
 **Evidence.** [skills/nova/core/effects/README.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/effects/README.md), [skills/nova/core/effects/coordinator.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/effects/coordinator.ts), [skills/nova/core/effects/journal.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/effects/journal.ts), [skills/nova/core/effects/locks.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/effects/locks.ts).
 
@@ -188,11 +188,11 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Decision.** A wait records expected signal/condition, identities, authorized issuer and expiry. Core persists and validates signal acceptance, rejects duplicate/stale authority, and resumes with a new attempt identity. Approval maps approved to passed, pending to wait and rejected to blocked. Orchestrator-required means an orchestrating agent must evaluate; it is not automatically a human approval request.
 
-**Actual alternatives.** The source rejects needs_nova/action_required aliases, ordinary automatic continuation from blocked, and coupling durable waiting to an active process. Architecture/visual approval uses the existing wait mechanism instead of another approval system.
+**Actual alternatives.** The source rejects `needs_nova` and `action_required` aliases. It also rejects automatic continuation from blocked and coupling durable waiting to an active process. Architecture and visual approval use the existing wait mechanism instead of another approval system.
 
 **Reason and consequences.** Wait persistence does not itself authorize a response: the wait-store adapter stores intent; core owns expiry, signal authorization and lifecycle resume. Architecture approval is bound to the report and source subject, so changed source/plan cannot reuse old approval. Source-less approval is report-only evidence.
 
-**Approval and provenance.** Source-attested agreement in [Plugin System Vision](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/plugin-system-vision.md) (date/approver unknown). Conditional visual approval is explicitly accepted in [Test-Gate Design](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md) D-040 on 2026-08-04.
+**Approval and provenance.** Source-attested agreement in Plugin System Vision (date/approver unknown). Conditional visual approval is explicitly accepted in Test-Gate Design D-040 on 2026-08-04.
 
 **Implementation.** Implemented in the inspected wait/approval path, with connected transport and recovery acceptance assessed separately. The 60-minute human-approval default is a package setting, not a universal expiry for all waits.
 
@@ -210,7 +210,7 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Reason and consequences.** Display delivery failures and canonical evidence integrity are distinct. Notification shortening must remain marked and retain event identity. Existing runs pinned to the retired audit registration must drain on their original runtime; replay does not need to re-send observer messages to reconstruct audit.
 
-**Approval and provenance.** Source-attested agreement in [Plugin System Vision](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/plugin-system-vision.md) (date/approver unknown). The audit-observer retirement is implementation/source evidence in the notification package; no separate approval date or actor is established.
+**Approval and provenance.** Source-attested agreement in Plugin System Vision (date/approver unknown). The audit-observer retirement is implementation/source evidence in the notification package; no separate approval date or actor is established.
 
 **Implementation.** Implemented for the inspected observer delivery and notification/audit boundary. This does not claim successful external message delivery or production sink availability.
 
@@ -228,7 +228,7 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Reason and consequences.** The builder must reject missing/undeclared packages, cross-role imports, runtime-path conflicts and digest mismatch. Shared libraries need explicit ownership; dual OpenClaw/pipeline hosts remain one atomic package boundary and cannot use the other manifest to escape package isolation.
 
-**Approval and provenance.** Accepted: [Test-Gate Design](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md) D-105, 2026-08-09. [Runtime Packaging](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-runtime-packaging.md) states implemented and authoritative. No named individual approver is recorded.
+**Approval and provenance.** Test-Gate Design D-105 records acceptance on 2026-08-09. Runtime Packaging states implemented and authoritative. The record names no individual approver.
 
 **Implementation.** Implemented for the inspected role manifests and bundle-assembly boundary. Current roles are Nova, Buster and Prism; DeepSec remains a design example until an actual declared role exists. Image build and deployment acceptance are separate.
 
@@ -246,7 +246,7 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Reason and consequences.** Cancellation/timeouts need bounded reconciliation: a 404 can race a previously in-flight submit and is not cancellation proof. Evidence identity and exactly-once authority are separate from successful HTTP delivery. Nova applies blocking/advisory rules only after verified import.
 
-**Approval and provenance.** D-110–D-113 in [Test-Gate Design](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md) contain decisions but no individual accepted/date labels: approval status unconfirmed, date/approver unknown. Related queue/identity design D-098–D-102 is explicitly accepted on 2026-08-05. Implementation does not silently promote the unlabeled additions to accepted.
+**Approval and provenance.** D-110–D-113 in Test-Gate Design contain decisions but no individual accepted/date labels: approval status unconfirmed, date/approver unknown. Related queue/identity design D-098–D-102 is explicitly accepted on 2026-08-05. Implementation does not silently promote the unlabeled additions to accepted.
 
 **Implementation.** Implemented in the inspected connected dispatch/import source. This is not a fresh end-to-end authenticated service, PostgreSQL or cluster acceptance result.
 
@@ -264,7 +264,7 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Reason and consequences.** Evidence remains inspectable independently of policy. A passing report cannot override failed execution, and successful execution cannot override failing required evidence. Moving a quality plugin into Nova proves ownership, not completion of task publication, session recovery, fix/retest or transcript behavior.
 
-**Approval and provenance.** Accepted: [Test-Gate Design](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md) D-080/D-089/D-090 (2026-08-05), D-108/D-109 (2026-08-09), D-115 (2026-08-12). D-111 elaborates import policy but has unconfirmed acceptance/date.
+**Approval and provenance.** Accepted: Test-Gate Design D-080/D-089/D-090 (2026-08-05), D-108/D-109 (2026-08-09), D-115 (2026-08-12). D-111 elaborates import policy but has unconfirmed acceptance/date.
 
 **Implementation.** Partial for the full quality-gate parity scope. The Nova-owned buster-quality-gate protocol implements evaluation boundaries; its README explicitly lists system parity blockers and must not be read as a complete suite execution claim.
 
@@ -276,13 +276,13 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Context and decision.** Canonical JSON was ordered using localeCompare, so distinct locales could produce different bytes and digests. Composed and decomposed Unicode keys could also compare equal while remaining distinct keys. A global in-place serializer change would silently change existing effect, wait, artifact, worktree and review identities. Use explicit versioned portable encoding for new paths, preserve original historical bytes and select historical verification by recorded format. Never try several codecs until a digest happens to match, normalize distinct keys into one, or silently rehash accepted work.
 
-**Approval and supersession.** The original SDK portability plan explicitly authorized read/design only. Its proposed new-run/storage epoch and names such as sdk-json-utf16.v2 were a proposal, not a separately approved migration instruction. Current implementation uses **kubeclaw-json.utf16.v1**, explicit source/report/review-semantic/delivery choices for new projects, and stored selections for recovery. PCR-SDK-001 is recorded locally complete under D12 in the later SDK verification report. That closure does not retroactively approve every proposed step of the old plan or authorize a new storage migration.
+**Approval and supersession.** The SDK portability plan authorized read and design only. Its proposed new-run/storage epoch was not an approved migration instruction. Current implementation uses **kubeclaw-json.utf16.v1** and explicit encoding choices for new projects. It stores the selections for recovery. D12 records PCR-SDK-001 as locally complete. That closure does not approve every proposed step or authorize a new storage migration.
 
 **Actual alternatives and rationale.** Do not replace historical canonicalJson in place, rewrite journals/blobs/worktrees, or derive old semantic provenance from a guessed locale. UTF-16 code-unit ordering removes locale dependence without claiming full RFC 8785 compliance. Array order and ordinary JSON scalar spelling remain significant. Raw content hashes and independent observability/worker/signature codecs retain their own contracts and must not be resigned or migrated merely because an SDK helper changes. A digest is byte integrity, not an asymmetric signature.
 
-**Implementation and evidence limits.** Source inspection confirms portableJson and its named encoding, retained historical canonicalJson, the explicit new-project CLI choices, and original-byte/digest/reference verification before artifact JSON consumption. The later report documents local semantic, historical-reader and delivery-consumer verification. It does not claim a complete registered model/review/browser/cluster run. One initial parallel delivery run failed two cases; later serial reruns passed those cases with unchanged limits, and the initial failure cause was not established. AP04 did not rerun these tests. Existing old Unicode provenance that cannot be verified remains an explicit limitation, never converted to purportedly verified new history.
+**Implementation and evidence limits.** Source inspection confirms portableJson and its named encoding, retained historical canonicalJson, explicit new-project choices, and original-byte verification before artifact consumption. Local checks cover semantic, historical-reader, and delivery consumers. They do not prove a complete model, browser, or cluster run. One parallel run failed two cases; later serial reruns passed. The initial failure cause remains unknown. Existing Unicode provenance that cannot be verified remains an explicit limitation.
 
-**Pinned sources.** [original proposal](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/sdk-portability-plan.md), [later local verification and limitations](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/pr6-sdk-local-verification.md), [codec implementation](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/sdk/src/values.ts), [authenticated artifact bytes](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/sdk/src/artifact-json.ts), [new-project and recovery selection](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/project/cli.ts). Finding disposition is retained in [acceptance provenance](acceptance.md#wp01--contracts-sdk-and-package-registration); this is not a second open finding.
+**Pinned sources.** [Codec implementation](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/sdk/src/values.ts), [authenticated artifact bytes](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/sdk/src/artifact-json.ts), and [new-project selection](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/project/cli.ts). The [evidence policy](acceptance.md#d12--accepted-local-completion-policy) defines the verification limit.
 
 ## Integration evidence: asynchronous lint execution
 
@@ -290,4 +290,4 @@ The two historical lint integration logs establish an interface-integration fail
 
 Current source awaits safeExec in evidence-file-partition.ts, and the empty-target test awaits adapter.run before asserting its result. This is a targeted source check, not a newly passing whole-lint run. The lasting consequence under ADR-008 is that moving execution behind an asynchronous bounded boundary requires updating all consumers; a renamed “fixed” log cannot establish completion. No new approval is inferred from these diagnostics.
 
-**Pinned sources.** [first failed integration](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/branch-cleanup-20260912/validation/lint-integration.log), [second failed integration](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/branch-cleanup-20260912/validation/lint-integration-fixed.log), [awaited Git execution](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/lint/src/engine/evidence-file-partition.ts), [awaited test consumer](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs).
+**Pinned sources.** first failed integration, second failed integration, [awaited Git execution](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/lint/src/engine/evidence-file-partition.ts), [awaited test consumer](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs).

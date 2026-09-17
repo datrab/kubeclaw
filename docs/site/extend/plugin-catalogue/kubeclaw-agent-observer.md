@@ -105,8 +105,8 @@ External dependency failure appears in the extension result or bounded diagnosti
 
 ## Verification Record
 
-Audit status: `locally-verified`.
-Earlier AP08.7–AP08.9 local command result on 2026-09-16: `passed`.
+Catalogue status: `locally-verified`.
+Recorded local command result on 2026-09-16: `passed`.
 
 The package-local command completed with exit code 0.
 
@@ -124,8 +124,8 @@ Exact package test script (run from the package directory):
 node tests/clean-build.test.mjs && node --check scripts/build.mjs && node --check scripts/sync-contract.mjs && npm run typecheck && node tests/config.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node --test tests/remediation.test.ts
 ```
 
-The audit status does not claim live host or cluster acceptance. See the AP08
-[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
+The catalogue status does not claim live host or cluster acceptance.
+The result above states the exact local limit. Run the package command in the target environment before activation.
 
 ## Source Evidence
 
@@ -139,6 +139,6 @@ The audit status does not claim live host or cluster acceptance. See the AP08
 - Test: [skills/common/plugins/openclaw-agent-observer/tests/remediation.test.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/tests/remediation.test.ts)
 
 Generated facts come from the manifest, package metadata, runtime-role inventory,
-schemas, and test-file discovery. The separate AP08 guidance file owns the purpose,
+schemas, and test-file discovery. Maintained guidance data owns the purpose,
 use, exclusion, and limit text. Publication can refresh facts without inventing or
 silently replacing those explanations.

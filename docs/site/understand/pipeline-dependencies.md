@@ -5,7 +5,7 @@ Audience: architecture reader, operator, maintainer, security reviewer
 Owner: platform architecture and pipeline owners
 Evidence: packaging/runtime/roles; skills/nova/core; skills/common/plugins/redis-transport; skills/buster/engine; charts/kubeclaw; charts/prism
 Applies to: current source, role declarations, charts, and selected infrastructure
-Last verified: source review on 2026-09-16
+Last verified: source inspection on 2026-09-16
 
 ## Purpose
 
@@ -229,7 +229,7 @@ Their trust, retention, and failure behavior differ.
 The checked-in `registry-local` service is an anonymous HTTP lab implementation.
 It proves storage and image-lifetime mechanics, but it is not an authenticated production registry.
 The complete secure path needs an authenticated HTTPS registry through the same client contract.
-The [roadmap](../../ROADMAP.md#production-grade-local-oci-registry) defines that replacement and its acceptance conditions.
+The [roadmap](../status/roadmap.md#production-grade-local-oci-registry) defines that replacement and its acceptance conditions.
 
 The checked-in Docker Hub mirror is a cache, not an offline source guarantee.
 A cache miss still needs its upstream unless the requested content already exists locally.

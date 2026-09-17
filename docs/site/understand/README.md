@@ -6,7 +6,7 @@ Owner: platform architecture
 Evidence: packaging/runtime/roles; skills/nova/core; skills/worker/core
 Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
 Applies to: current source and declared runtime roles
-Last verified: source review on 2026-09-15
+Last verified: source inspection on 2026-09-15
 
 ## What KubeClaw Does
 
@@ -148,7 +148,7 @@ It does not turn a test result into operator acceptance.
 
 The writing follows ASD-STE100 Issue 9 principles.
 It uses short sentences, active voice, defined technical nouns, and one meaning per sentence.
-AP11 still owns the formal language review and the human-reader acceptance review.
+Formal language validation and human-reader acceptance remain required publication checks.
 
 ## Choose Your Next Page
 
@@ -159,5 +159,5 @@ AP11 still owns the formal language review and the human-reader acceptance revie
 - [Platform and operations architecture](platform-and-operations.md) explains K3s, Cilium, Argo CD, and the optional Ops Pod.
 - [Worker Trust](worker-trust.md) gives the detailed SPIFFE and Envoy trust path.
 - [Operate KubeClaw](../use/README.md) contains the complete operator procedure track and its stated limits.
-- [Extend KubeClaw](../extend/README.md) contains plugin guidance. AP08 will complete this track.
+- [Extend KubeClaw](../extend/README.md) contains the supported plugin and extension guidance.
 - [Current status](../status/current.md) separates implemented work from open and live acceptance work.

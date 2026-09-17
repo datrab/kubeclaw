@@ -1,6 +1,6 @@
 # Build A Plugin That Uses External State Or Effects
 
-Status: AP08.4 effectful authoring guide implemented to locally verified platform limits
+Status: implemented to the locally verified platform limits
 Audience: stage and adapter author, runtime maintainer, reviewer
 Owner: plugin-foundation
 Evidence: skills/nova/plugins/blueprint-sync/src/stage.ts; skills/nova/core/effects/coordinator.ts; skills/nova/core/effects/journal.ts; skills/nova/core/execution/effect-recovery.ts; skills/common/plugins/state-store/src/adapter.ts; skills/common/plugin-runtime/sdk/src/runtime.ts
@@ -261,7 +261,7 @@ provide that guarantee.
 Run the focused effect and state checks:
 
 ```bash
-npm run docs:ap08:effectful:check
+npm run docs:extensions:effectful:check
 node tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs
 node tests/verification/contracts/check-plugin-system-v2-phase7.mjs
 node tests/verification/reliability/external-effect-recovery.test.mts
@@ -269,7 +269,7 @@ npm test --prefix skills/common/plugins/state-store
 npm test --prefix skills/nova/plugins/blueprint-sync
 ```
 
-The AP08 check invokes the real Blueprint Sync stage with a controlled capability
+The documentation check invokes the real Blueprint Sync stage with a controlled capability
 context. It verifies the capability order, duplicate suppression for one effect
 identity, and reuse of the resource after lock release. It also verifies that a
 recorded failure does not repeat the mutation. It creates an accepted effect without

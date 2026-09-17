@@ -5,7 +5,7 @@ Audience: architecture reader, platform operator, maintainer, security reviewer
 Owner: platform architecture and operations
 Evidence: scripts/deploy.sh; scripts/deploy-cilium.sh; scripts/argocd-self-management.mjs; charts/ops-pod; gitops/platform
 Applies to: current Kubernetes deployment and operations tooling
-Last verified: source review on 2026-09-16
+Last verified: source inspection on 2026-09-16
 
 ## Purpose
 
@@ -90,7 +90,7 @@ Do not use a cluster-dependent Ops Pod as the only recovery path.
 >
 > [IFR-01-001 tracks the missing empty-host automation](../status/open-issues.md#ifr-01-001).
 >
-> [The roadmap defines the required host-bootstrap and restore outcome](../../ROADMAP.md#automated-host-bootstrap-and-recovery).
+> [The roadmap defines the required host-bootstrap and restore outcome](../status/roadmap.md#automated-host-bootstrap-and-recovery).
 
 ## Kubernetes Networking, Flannel, and Cilium
 
@@ -295,4 +295,4 @@ Automation can compose reviewed layers without hiding their authority or failure
 - [Pipeline Dependencies](pipeline-dependencies.md) explains services used directly by selected pipeline paths.
 - [Install and Bootstrap](../use/install.md) gives the current deployment procedure and its prerequisites.
 - [Recovery](../use/recovery.md) explains cluster loss and independent access.
-- [Roadmap](../../ROADMAP.md) records the planned empty-host automation.
+- [Roadmap](../status/roadmap.md) records planned product and platform work.

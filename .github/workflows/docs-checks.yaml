@@ -73,6 +73,8 @@ jobs:
         run: node --test tests/verification/deployment/docs-reference-scope.test.mjs
       - name: Check cited repository references
         run: npm run docs:check:refs
+      - name: Check reader-site boundary
+        run: npm run docs:site-boundary:check
       - name: Check documentation topic map
         run: npm run docs:check:coverage
       - name: Check whitespace
@@ -107,6 +109,8 @@ jobs:
         run: node --test tests/verification/deployment/docs-reference-scope.test.mjs
       - name: Check cited repository references
         run: npm run docs:check:refs
+      - name: Check reader-site boundary
+        run: npm run docs:site-boundary:check
       - name: Check documentation topic map
         run: npm run docs:check:coverage
       - name: Check whitespace

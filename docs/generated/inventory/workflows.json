@@ -173,6 +173,7 @@
         "npm run docs:check:coverage",
         "npm run docs:check:generated",
         "npm run docs:check:refs",
+        "npm run docs:site-boundary:check",
         "npm run docs:status:check && node --test scripts/tests/docs-status.test.mjs",
         "npm run plugin-system:inventory && npm run docs:inventory && npm run docs:generate",
         "uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262",

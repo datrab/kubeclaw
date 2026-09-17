@@ -181,8 +181,8 @@ Nova or Buster records a bounded failure without giving the package lifecycle au
 
 ## Verification Record
 
-Audit status: `content-written`.
-Earlier AP08.7–AP08.9 local command result on 2026-09-16: `unavailable`.
+Catalogue status: `content-written`.
+Recorded local command result on 2026-09-16: `unavailable`.
 
 The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
 
@@ -200,8 +200,8 @@ Exact package test script (run from the package directory):
 npm run test:cluster && npm run schema:check && node tests/repository-review-profile.unit.test.mjs && node tests/review-prompt-budget.unit.test.mjs && node tests/review-quality-corpus.unit.test.mjs && node tests/review-snapshot-inventory.unit.test.mjs && node tests/review-map-artifacts.unit.test.mjs && node tests/review-fact-extractors.unit.test.mjs && node tests/review-graph.unit.test.mjs && node tests/review-scale-slicing.unit.test.mjs && node tests/scalable-review-topology.unit.test.mjs && node tests/scalable-review-jobs.unit.test.mjs && node tests/scalable-review-verification.unit.test.mjs && node tests/review-content-cache.unit.test.mjs && node tests/scalable-review-compiler.unit.test.mjs && node tests/review-governor.unit.test.mjs && node tests/review-report-contract.unit.test.mjs && node tests/review-report-builder.unit.test.mjs && node tests/simplification-contract.unit.test.mjs && node tests/simplification-miner.unit.test.mjs && node tests/simplification-manifest.unit.test.mjs && node tests/review-bundle-contract.unit.test.mjs && node tests/review-bundle-snapshot.unit.test.mjs && node tests/review-context-selection.unit.test.mjs && node tests/review-context-production.unit.test.mjs && node tests/review-slicing.unit.test.mjs && node tests/echo-review-output.unit.test.mjs && node tests/echo-review-verification.unit.test.mjs && node tests/review-proposal-preflight.unit.test.mjs && node tests/review-verification-reconciliation.unit.test.mjs && node tests/review-verdict-policy.unit.test.mjs && node tests/review-verified-findings.unit.test.mjs && node tests/review-policy-contract.unit.test.mjs && node tests/review-invariants.unit.test.mjs && node tests/review-policy-resolver.unit.test.mjs && node tests/review-policy-profiles.unit.test.mjs && node tests/review-reducer.unit.test.mjs && node tests/review-decision-matrix.unit.test.mjs && node tests/review-contract-parity.unit.test.mjs && node tests/review-evaluation-metadata.unit.test.mjs && node tests/review-stage-input.unit.test.mjs && node tests/review-stage-verification.unit.test.mjs && node tests/protocol.unit.test.mjs && node tests/stage.unit.test.mjs && node tests/live-function.test.ts && node --test tests/review-evidence-encoding-independent.test.mjs tests/review-evidence-live-locales.test.mjs tests/review-evidence-schema-independent.test.mjs && node tests/package-boundary.test.mjs && node tests/remediation.test.mjs && node tests/repository-review-io.test.ts && npm run test:coverage
 ```
 
-The audit status does not claim live host or cluster acceptance. See the AP08
-[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
+The catalogue status does not claim live host or cluster acceptance.
+The result above states the exact local limit. Run the package command in the target environment before activation.
 
 ## Source Evidence
 
@@ -269,6 +269,6 @@ The audit status does not claim live host or cluster acceptance. See the AP08
 - Test: [skills/nova/plugins/review/tests/stage.unit.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/review/tests/stage.unit.test.mjs)
 
 Generated facts come from the manifest, package metadata, runtime-role inventory,
-schemas, and test-file discovery. The separate AP08 guidance file owns the purpose,
+schemas, and test-file discovery. Maintained guidance data owns the purpose,
 use, exclusion, and limit text. Publication can refresh facts without inventing or
 silently replacing those explanations.

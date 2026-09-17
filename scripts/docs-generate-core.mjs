@@ -25,10 +25,14 @@ export function renderCli(deploy) {
 
 Status: generated reference
 Audience: reference reader, operator, developer
+Owner: platform-operations
+Evidence: docs/generated/inventory/deploy-script.json; scripts/docs-generate.mjs
+Applies to: deployment command surface
+Last verified: generated from current inventory
 
 ## Summary
 
-This page lists deployment CLI commands currently extracted from source inventory. Pipeline and Buster CLI references will be added in later inventory slices.
+This page lists deployment CLI commands found in the current source inventory. It covers the commands that the repository exposes today.
 
 ${generatedNotice(deploy.generatedFrom)}
 ## Deployment Commands
@@ -48,9 +52,9 @@ ${deploy.componentFlags.map((flag) => `- \`${flag}\``).join('\n')}
 ${generatedEnd()}
 ## Used by
 
-- \`../deployment/setup-flow.md\`
-- \`../deployment/deployment-verification.md\`
-- \`../operators/recovery-runbook.md\`
+- [Install and Bootstrap](../use/install.md)
+- [Operate a Pipeline](../use/operate.md)
+- [Recover the Platform](../use/recovery.md)
 
 ## Command Expectations
 
@@ -85,6 +89,10 @@ export function renderSecrets(secrets) {
 
 Status: generated reference
 Audience: reference reader, operator
+Owner: platform-security
+Evidence: docs/generated/inventory/secret-setup.json; scripts/docs-generate.mjs
+Applies to: Kubernetes secret setup
+Last verified: generated from current inventory
 
 ## Summary
 

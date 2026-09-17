@@ -58,7 +58,7 @@ The runnable forms in this page are the interface reference.
 >
 > **Contract or setting:** [The npm `pipeline` script selects the dispatcher](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/package.json#L40-L44).
 >
-> **Test evidence:** [The project compiler test starts the real dispatcher and checks compilation](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/contracts/check-project-compiler.mts#L166-L184). The AP07 follow-up ran this test successfully on 2026-09-16.
+> **Test evidence:** [The project compiler test starts the real dispatcher and checks compilation](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/contracts/check-project-compiler.mts#L166-L184). A documentation verification run passed this test on 2026-09-16.
 >
 > **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
 >
@@ -95,7 +95,7 @@ This prevents the shell working directory from changing their meaning.
 >
 > **Contract or setting:** [`pipeline-platform.v2` is the required schema version](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugin-runtime/foundation/config/platform.schema.json#L5-L9).
 >
-> **Test evidence:** [The platform test checks path resolution, immutability, validation, and rejection of project-controlled installation roots](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L32-L65). The AP07 follow-up ran this test successfully on 2026-09-16.
+> **Test evidence:** [The platform test checks path resolution, immutability, validation, and rejection of project-controlled installation roots](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/contracts/check-plugin-system-v2-platform-config.mjs#L32-L65). A documentation verification run passed this test on 2026-09-16.
 >
 > **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
 >
@@ -291,7 +291,7 @@ Check result artifacts through their owning store.
 Verify content digests before sharing or importing them.
 
 For final Tailnet exposure, use the registered pipeline stage and its receipt.
-The short [Final Preview guide](../../operators/final-preview-tailscale.md) gives the legacy entry point.
+The [result and demo-readiness procedure](#inspect-results-and-demo-readiness) defines the supported entry point.
 
 ## Operate Prism
 
@@ -313,8 +313,7 @@ kubectl -n "$PRISM_NAMESPACE" get ingress,svc prism-studio
 Do not infer external access from an Ingress hostname alone.
 Tailnet grants and identity remain separate controls.
 
-Prism decisions, another design round, and native worker handling have specialized procedures.
-Use the [Prism operator guide](../../operations/prism-operator-guide.md).
+This section defines the supported Prism operating boundary. Use [diagnosis](diagnose.md#prism-diagnosis) and [recovery](recovery.md#prism-restore) for failure handling.
 
 ## Operate Role Deployments
 

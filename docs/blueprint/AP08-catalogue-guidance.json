@@ -394,7 +394,7 @@
       "useWhen": "Use it when a Nova extension needs transport-neutral message publication.",
       "avoidWhen": "Do not use it for Redis publication; select kubeclaw.redis-transport for that transport.",
       "criticalLimit": "The selected provider and grant determine the real transport authority.",
-      "operationNote": "Publication reserves durable delivery state, resolves secrets, and invokes network.http. Unknown external outcomes must not become blind retries. The current local execution check fails canonical effect-request validation; see AP08.10."
+      "operationNote": "Publication reserves durable delivery state, resolves secrets, and invokes network.http. Unknown external outcomes must not become blind retries. The current local execution check fails canonical effect-request validation. Treat the package as locally unavailable until that check passes."
     },
     {
       "id": "kubeclaw.visual",

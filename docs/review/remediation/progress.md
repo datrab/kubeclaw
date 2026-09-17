@@ -1,6 +1,6 @@
 # Aktueller Umsetzungsstand
 
-> Historical remediation record. Its counts, branch instructions and register references describe that checkpoint. Current work is maintained in [open issues](../../site/status/open-issues.md) and [the canonical JSON](../../site/status/open-issues.json). [Local closure provenance](../../site/decisions/acceptance.md) and [live acceptance](../../site/status/acceptance.md) have separate authority. Original register data remains in [immutable history](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json).
+> Historical remediation record. Its counts, branch instructions and register references describe that checkpoint. Current work is maintained in [open issues](../../site/status/open-issues.md) and [the canonical JSON](../../status/open-issues.json). [Local closure provenance](../../site/decisions/acceptance.md) and [live acceptance](../../site/status/acceptance.md) have separate authority. Original register data remains in [immutable history](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json).
 
 IFR-24-001 zusätzlich lokal abgeschlossen: echte PostgreSQL17→18- und
 Qdrant1.18.2→1.19.1-Migration, Erhalt der Altdaten, frische Ziel-Releases/PVCs,

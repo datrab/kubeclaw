@@ -1,11 +1,11 @@
 # Prism: design ownership and implementation choices
 
-Status: extracted decisions; approval and proof are bounded below
+Status: current decisions with bounded approval and proof
 Audience: architecture readers, developers, and operators
 Owner: Prism maintainers
+Evidence: skills/prism/domain/index.ts; skills/prism/corpus/index.ts; spikes/prism/postgres-retrieval/verify.mjs
 Applies to: source revision `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`
-Last verified: 2026-09-15; source reconciliation, no new live acceptance
-Language: English editorial review; full ASD-STE100 verification remains an AP11 gate
+Last verified: 2026-09-17; source inspection, no new live acceptance
 
 ## Product and data ownership
 
@@ -16,7 +16,7 @@ This keeps design exploration independent from production credentials and deploy
 
 The original architecture marks these boundaries accepted; an individual approver and date are not recorded for every clause.
 Its diagrams and provider names describe design intent, not installed services.
-The three storage responsibilities are separate: the Design Document owns editable design, PostgreSQL owns durable relational state, and the platform artifact store owns large immutable objects.
+The three storage responsibilities are separate. The Design Document owns editable design. PostgreSQL owns durable relational state. The platform artifact store owns large immutable objects.
 Generated previews and editor projections do not become canonical state.
 Published evidence needed by an approved bundle must remain available even if draft projections can be rebuilt.
 
@@ -52,7 +52,7 @@ These restrictions cost adapter work but prevent framework state or rendered cod
 Use PostgreSQL full-text search plus exact pgvector search first, with rights filters and deterministic rank combination.
 Keep one combined embedding before adding separate facets or another vector store.
 Only measured limits justify the extra operational and consistency cost of HNSW, replicas, or a specialist service.
-The phase-0 decision permits local implementation with PGlite evidence; it does not establish native-server or physical-device acceptance.
+Local PGlite evidence supports development only. It does not establish native-server or physical-device acceptance.
 
 The spike proposes p95 at most 250 ms. The implementation plan and executable server benchmark use 300 ms at 10,000 references.
 No separate approval for this relaxation is established here.
@@ -70,13 +70,13 @@ Precision at 10 measures the share of relevant results in the first ten results.
 Recall at 20 measures the share of the labelled relevant results found in the first twenty.
 Together with diversity and access filters, these checks prevent a fast but unhelpful or unauthorized result from passing.
 
-The [spike criteria](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/spikes/prism-foundation-spikes.md#L245-L266)
-and [implementation-plan criteria](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/implementation/prism-implementation-plan.md#L332-L345)
+The spike criteria
+and implementation-plan criteria
 are the sources for these requirements. Their different latency limits remain visible.
 
 [D11](runtime-and-operations.md#d11) owns contextual preferences and project overrides.
 The accepted no-decay contract conflicts with implemented 180-day decay.
-[DOC-AP04-PREFERENCE-001](../status/open-issues.md#doc-ap04-preference-001) preserves that unresolved approval boundary.
+[PRISM-PREFERENCE-001](../status/open-issues.md#prism-preference-001) preserves that unresolved product boundary.
 Do not silently rewrite either history or stored preference snapshots to hide the conflict.
 
 ## Durable operations and publication
@@ -100,8 +100,8 @@ Quarantine cleanup failure must not authorize publication or erase its cause.
 The accepted recovery contract in [runtime decisions](runtime-and-operations.md#prism-recovery-policy) qualifies the earlier unconditional PITR proposal.
 Later native host-pool decisions qualify the earlier workload-only/no-host-path direction.
 Prism continues to use neutral Worker Core contracts; these changes do not put Prism types in Core.
-The thirteen original workstreams are covered through product, state, editor, retrieval, preferences, providers, workers, integration, access, publication, recovery, observability, and acceptance.
-Historical phase completion does not certify every deployed workstream.
+Product coverage includes state, editor, retrieval, preferences, providers, workers, integration, access, publication, recovery, observability, and acceptance.
+Completion in one area does not certify every deployed path.
 
 ## Evidence and remaining proof
 
@@ -114,16 +114,8 @@ An August controller failure is historical evidence, not a current cluster diagn
 Use G07 for native PostgreSQL and service state, G08 for browser/mobile behaviour, G10 for human/controller authority,
 G13 for recovery, and G14 for the complete project journey.
 Physical-device, real database, clean namespace, failure recovery, and protected receipt checks retain their actual prerequisites.
-The compact original finding index preserves local closures; old phase task counts do not reopen them.
+The current issue register contains remaining implementation work. Past task counts do not change current product status.
 
-- [prism-design-engine-architecture.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/prism-design-engine-architecture.md)
-- [prism-design-document-v1-review.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/prism-design-document-v1-review.md)
-- [prism-foundation-spikes.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/spikes/prism-foundation-spikes.md)
-- [phase-0-audit.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/implementation/prism/phase-0-audit.md)
-- [prism-implementation-plan.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/implementation/prism-implementation-plan.md)
-- [phase-16-correction-audit.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/implementation/prism/phase-16-correction-audit.md)
-- [phase-17-remediation-audit.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/implementation/prism/phase-17-remediation-audit.md)
-- [phase-18-completion-audit.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/implementation/prism/phase-18-completion-audit.md)
 - [index.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/domain/index.ts)
 - [index.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/corpus/index.ts)
 - [verify.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/spikes/prism/postgres-retrieval/verify.mjs)

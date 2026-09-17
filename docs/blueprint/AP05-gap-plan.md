@@ -309,7 +309,7 @@ and verification command for every canonical page.
 
 AP05 creates no second issue list. The 13 incomplete original findings and three
 additional follow-ups remain the sole current IMP authority in
-`docs/site/status/open-issues.json`. Writing packages must link the relevant entry at
+`docs/status/open-issues.json`. Writing packages must link the relevant entry at
 the first blocked step. A documentation package can finish when it accurately explains
 that limitation; it cannot mark the implementation complete.
 

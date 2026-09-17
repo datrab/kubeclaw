@@ -8,19 +8,20 @@ Owner: platform operator
 
 Evidence: .github/workflows/remediation-native.yaml; tests/verification/contracts/check-production-receipt-attestation.mjs
 
-Applies to: KubeClaw source checkpoint `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`
+Applies to: KubeClaw source revision `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`
 
-Last verified: 2026-09-15 — documentation/source reconciliation; no new test execution
+Last verified: 2026-09-17 — source inspection; no live execution
 
-**141 of the original 154 findings are locally verified; 13 remain incomplete.** Five additional integration findings are locally verified separately. These counts assess code remediation under [D12](../decisions/acceptance.md#d12--accepted-local-completion-policy), not acceptance of a running system. Current implementation gaps belong in the [open issue register](open-issues.md).
-
-This page defines outstanding operational evidence and preserves the limits of inherited local evidence. **All complete gates planned here remain open.** Existing native subtests retain their documented value; they do not establish a complete operational pass. AP04 executed none of these tests. G01–G14 follow the original work packages; the [provenance index](../decisions/acceptance.md) maps all original 154 and five additional finding IDs. Gate groups are not additional findings. G15 carries the separate Echo promotion requirement.
+This page defines the evidence required before KubeClaw can claim operational or
+production acceptance. **All complete gates on this page remain open.** Existing
+local and native tests keep their stated scope. They do not establish a complete
+operational pass. Current implementation gaps belong in the [open issue register](open-issues.md).
 
 ## Prerequisites and result contract
 
-Before execution, the operator selects an isolated environment, immutable repository commit, release/bundle commit and actual running image digests. Node/npm, database, browser and tool versions follow that checkpoint's lockfiles and `versions.json`. Missing capacity, endpoints, identities, signing keys, cgroup delegation or a justified measurement threshold are missing prerequisites. Do not guess them or substitute test doubles.
+Before execution, the operator selects an isolated environment, immutable repository commit, release/bundle commit and actual running image digests. Node/npm, database, browser and tool versions follow that revision's lockfiles and `versions.json`. Missing capacity, endpoints, identities, signing keys, cgroup delegation or a justified measurement threshold are missing prerequisites. Do not guess them or substitute test doubles.
 
-Each execution record includes gate and finding IDs, UTC timestamp, environment, source commit, release/image/browser identities, exact command and nonsecret parameters, exit status, executed/skipped counts, unchanged original outputs and result artifacts with digests. Mutating tests also record the test project/namespace, responsible operator, prior backup, injected failure and verified cleanup. Secrets stay in the intended private access mechanism; public evidence must not contain platform tokens.
+Each execution record includes gate and finding IDs, UTC timestamp, environment, and source commit. It also includes release, image, and browser identities. Record the exact command, nonsecret parameters, exit status, and executed or skipped counts. Preserve original outputs and result artifacts with digests. Mutating tests also record the test project or namespace, responsible operator, prior backup, injected failure, and verified cleanup. Secrets stay in the intended private access mechanism. Public evidence must not contain platform tokens.
 
 Record **passed**, **failed**, **blocked** or **not executed** per gate. Exit code zero counts only when the intended scope actually ran. Zero cases, all-skipped suites, empty reports, file existence, schema validation, model-written reports and compiled graphs are not execution evidence. Preserve failed runs separately from successful retries. Changes to source, browser baseline, required scope or identity invalidate the affected acceptance result.
 
@@ -30,7 +31,7 @@ The procedures below require an environment approved for their actual effects. D
 
 ### Contracts, SDK and installable packages
 
-**Scope:** WP01; also INT-BOUNDARY001, INT-STARTUP-LATENCY001 and INT-OBSERVER-BUILD001.
+**Scope:** contracts, SDK, package registration, startup, and observer builds.
 
 **Prerequisites:** Clean checkout, original workspace packages and lockfiles, real generators and build/install tools. Use registered consumers, without substitute registrations or stale generated caches.
 
@@ -42,7 +43,7 @@ The procedures below require an environment approved for their actual effects. D
 
 ### Durable state, effects and recovery
 
-**Scope:** WP02, particularly PCR-STATE-001/002 and PCR-EFFECT-001; external review reconciliation also INT-REVIEW-UNCERTAIN001.
+**Scope:** durable state, effects, replay, and uncertain external results.
 
 **Prerequisites:** Original stores, multiple real processes on the intended filesystem, isolated data and a controlled external receiver for uncertain effects.
 
@@ -54,7 +55,7 @@ The procedures below require an environment approved for their actual effects. D
 
 ### Workers, kernel limits, supervisors and cancellation
 
-**Scope:** WP03; also PCR-SCAFFOLD-OPS-001 and Prism resources under G07.
+**Scope:** workers, supervisors, process ownership, cancellation, and resource release.
 
 **Prerequisites:** Original compiled sandbox; Linux with readable process-tree procfs, writable delegated cgroup v2, legitimate credential drop to nonprivileged UID/GID and measurable CPU/memory enforcement. A production acceptance run must use the actual runner integrated with the attempt host, including capability/broker work. PCR-BUSTER-ENGINE-001 and -004 remain incomplete.
 
@@ -70,7 +71,7 @@ The procedures below require an environment approved for their actual effects. D
 
 ### Approvals, repair budgets and risk acceptance
 
-**Scope:** WP04.
+**Scope:** approvals, waits, repair budgets, and escalation.
 
 **Prerequisites:** Real project, source/plan/module identities and authorized operator route. Lint, enabled review and tests have explicit required scopes.
 
@@ -82,7 +83,7 @@ The procedures below require an environment approved for their actual effects. D
 
 ### Forge, Git concurrency and workspace ownership
 
-**Scope:** WP05.
+**Scope:** Git workspaces, locks, synchronization, and cleanup.
 
 **Prerequisites:** Two independent authorized worktrees and a controlled Git remote; production branches are not failure fixtures.
 
@@ -94,7 +95,7 @@ The procedures below require an environment approved for their actual effects. D
 
 ### Executed quality gates and eleven production receipts
 
-**Scope:** WP06; local Echo policy, reducer, report, audit, and supervisor contracts; additional model promotion under G15. A deterministic contract check does not measure model quality.
+**Scope:** mandatory quality checks, Buster evidence, Echo policy, reports, and supervisor contracts. G15 covers separate model promotion. A deterministic contract check does not measure model quality.
 
 **Prerequisites:** Registered Buster providers, attested source, authenticated Nova/Buster route and real suite dependencies. Install Chromium from the locked Playwright package and record its actual executable path/version. BuildKit, registry, Kubernetes, Tailnet, scanner database and target application must actually be available.
 
@@ -116,13 +117,13 @@ The procedures below require an environment approved for their actual effects. D
 
 `manifest → lint:kubernetes-policy` and `bundle → kubeclaw.size-budget@1` have complete local parity in the pinned suite inventory and require no separate production receipt there. Their required checks still apply. For the other eleven, completed source cutover is not completed production acceptance.
 
-**Pass conditions:** Every successful suite has its complete authenticated receipt and executed scope. Schema checks alone do not attest an executing worker. Expected defect cases remain failures in the appropriate result field. Missing Chromium, ESLint configuration, shell tools or complete reports must not be hidden with stub tests. `tests/verification/contracts/check-production-receipt-attestation.mjs` checks the local receipt contract; real signing and execution identity come from the actual production run.
+**Pass conditions:** Every successful suite has its complete authenticated receipt and executed scope. Schema checks alone do not attest an executing worker. Expected defect cases remain failures in the specified result field. Stub tests must not hide missing Chromium, ESLint configuration, shell tools, or complete reports. `tests/verification/contracts/check-production-receipt-attestation.mjs` checks the local receipt contract. The actual production run supplies real signing and execution identity.
 
 ## G07
 
 ### Prism database, jobs, sessions and resources
 
-**Scope:** WP07.
+**Scope:** Prism databases, jobs, sessions, and resources.
 
 **Prerequisites:** Isolated native PostgreSQL with pgvector and multiple connections; intended migrations, actual Control/Agent/Worker processes and bound OpenClaw sessions. The test owner may create/drop temporary databases. For the existing wrapper, `PRISM_TEST_PG_URL` must identify a dedicated loopback service.
 
@@ -136,7 +137,7 @@ The procedures below require an environment approved for their actual effects. D
 
 ### Prism browser, Studio, artifacts and retained memory
 
-**Scope:** WP08.
+**Scope:** Prism browser execution, Studio, artifacts, and retained memory.
 
 **Prerequisites:** Locked real Chromium, original built Studio assets, authenticated CAS and actual browser/baseline identity. Declare and justify the retained-growth byte limit before measurement; do not adjust it after seeing results.
 
@@ -150,7 +151,7 @@ The procedures below require an environment approved for their actual effects. D
 
 ### Observability, retention and operator delivery
 
-**Scope:** WP09; also INT-DEPENDENCY-OWNER001.
+**Scope:** observability, retention, operator delivery, and dependency ownership.
 
 **Prerequisites:** Original state/artifact/telemetry stores, actual authorized Clawdeck/receiver route and verifiable delivery receipt. PCR-OBS-002 remains incomplete implementation work.
 
@@ -162,11 +163,11 @@ The procedures below require an environment approved for their actual effects. D
 
 ### Demo, Kubernetes admission, Tailnet and human acceptance
 
-**Scope:** WP10; also T01-F02 from WP14.
+**Scope:** demo namespaces, Kubernetes admission, Tailnet exposure, and human acceptance.
 
 **Prerequisites:** Isolated cluster, actual namespace controller, CRDs, DNS and Tailnet authentication; bound Ready producer, real operator identity and demo credentials from the intended producer. Signing keys stay private.
 
-**Procedure:** Create namespace and exposure for the exact tested source/run/attempt. Execute positive and negative native admission cases for decision/status/generation, including stale/foreign decisions and forbidden additional fields. Open the application through DNS/Tailnet, log in and verify credential delivery. Lose and replay the Ready response. Test the default week of retention starting at Ready for Acceptance, extension, expiry warning, early cleanup and expired demo behavior; clean up namespace, URL and credentials together. Record explicit human acceptance and later change requests against the exact version.
+**Procedure:** Create namespace and exposure for the exact tested source, run, and attempt. Execute positive and negative native admission cases for decision, status, and generation. Include stale or foreign decisions and forbidden additional fields. Open the application through DNS or Tailnet. Log in and verify credential delivery. Lose and replay the Ready response. Test the default retention week from Ready for Acceptance. Test extension, expiry warning, early cleanup, and expired demo behavior. Clean up the namespace, URL, and credentials together. Record explicit human acceptance and later change requests against the exact version.
 
 **Pass conditions:** Ready means tested and delivered; accepted requires the human. Old acceptance remains historically valid but does not authorize a new version. Generation/UID/receipt bindings reject stale cleanup and Ready acknowledgements. Tailnet execution revision and cleanup proof come from independent authenticated receipts. Schema/CEL/CAS fixtures and 24 operation/status combinations do not prove a running controller. Historical 384-domain plus 384-extra-field checks must not be described indiscriminately as 768 negative live cases. Faulty historical stale-cleanup/expiry fixtures are not demonstrated product defects.
 
@@ -174,7 +175,7 @@ The procedures below require an environment approved for their actual effects. D
 
 ### Release identity, registry, mirrors and GitHub permissions
 
-**Scope:** WP11.
+**Scope:** release identity, registry, mirrors, and GitHub permissions.
 
 **Prerequisites:** Controlled registry with actual PVC/CSI, BuildKit/CRI clients, configured CA/auth, immutable release bundle and reproducible builds. GitHub checks use actual PR/publication jobs. IFR-21-001 and IFR-29-001 remain incomplete.
 
@@ -186,7 +187,7 @@ The procedures below require an environment approved for their actual effects. D
 
 ### Networking, identities, Envoy and access boundaries
 
-**Scope:** WP12; SPIRE operations and Cilium migration also G13.
+**Scope:** networking, workload identity, Envoy, access boundaries, and Cilium coordination with G13.
 
 **Prerequisites:** Test cluster using the actual selected CNI, real SPIRE/Envoy identities, Tailnet route, namespace/secret RBAC and intended BuildKit isolation. Unresolved Tailnet/BuildKit decisions remain implementation issues.
 
@@ -198,23 +199,23 @@ The procedures below require an environment approved for their actual effects. D
 
 ### GitOps, stateful services, restore and capacity
 
-**Scope:** WP13. The later “main versus resolved SHA” GitOps health mismatch is separate from the original 154 and is tracked in the open register.
+**Scope:** GitOps, stateful services, restore, and capacity. The “main versus resolved SHA” health mismatch remains in the open register.
 
 **Prerequisites:** Isolated cluster with real storage class/PVCs, declared capacity, backed-up state and selected immutable bundle commit. Existing Helm resources require a checked ownership transfer. Helm and Argo must not concurrently manage the same resources.
 
 **Procedure:** Bootstrap with WaitForFirstConsumer, first sync and readiness. A failed migration must block subsequent waves. Exercise drift/self-heal, Git failure and registry failure with uncached images. For runtime Applications compare actual `spec.source.targetRevision`, `status.sync.revision` and `status.operationState.syncResult.revision`: branch selection must resolve to the intended immutable revision and be evaluated correctly. Roll back only to a tested compatible bundle, preserving PVC UIDs and test data.
 
-For Redis, PostgreSQL/pgvector and LiteLLM, write data, execute the documented migration and replace service/pod and, where required, node; verify integrity and restart. Create matching database/artifact backup groups using real scheduled jobs, validate them and restore into an empty isolated target. Test wrong keys, corrupt/missing members, quotas and premature deletion of previous backups. Record upgrade/rollback versions and tools in the actual image. Measure capacity, recovery access and SPIRE failure with real resources. Accept Cilium only after its migration/rollback plan is resolved, separately from the current Flannel deployment. Qdrant is no longer a platform dependency. A cluster that still has the former release must use the explicit destructive retirement procedure and verify that its workloads, credentials, policies, claims and volumes are gone.
+For Redis, PostgreSQL/pgvector, and LiteLLM, write data and execute the documented migration. Replace the service or pod and, where required, the node. Verify integrity and restart. Create matching database and artifact backup groups with real scheduled jobs. Validate them and restore into an empty isolated target. Test wrong keys, corrupt or missing members, quotas, and premature deletion of previous backups. Record upgrade and rollback versions and tools in the actual image. Measure capacity, recovery access, and SPIRE failure with real resources. Accept Cilium only after resolving its migration and rollback plan, separately from the current Flannel deployment. Qdrant is no longer a platform dependency. A cluster with the former release must use the explicit destructive retirement procedure. Verify removal of its workloads, credentials, policies, claims, and volumes.
 
 **Pass conditions:** No success at the wrong revision, data loss or implicit database downgrade/restore. The current combination of `targetRevision: main` and literal comparison with resolved status SHAs is a source-confirmed technical gap, not a demonstrated live outage. Platform autosync and manual child/runtime sync are distinct. Application-server readiness does not establish Devbox pairing.
 
-Local GitOps evidence uses real Git/Helm/Lua/filesystem operations but fixture cluster responses, digests and SQL commands. Native Redis checks and PostgreSQL cryptographic restores retain their actual scope. Historical Qdrant snapshot evidence does not make the retired service part of the current gate. Real scheduling, installed CSI, complete cross-service restore and unresolved infrastructure prerequisites remain separate. IFR-26-001 stays incomplete until missing full recovery coverage is implemented.
+Local GitOps evidence uses real Git/Helm/Lua/filesystem operations but fixture cluster responses, digests and SQL commands. Native Redis checks and PostgreSQL cryptographic restores retain their actual scope. Historical Qdrant snapshot evidence does not make the retired service part of the current gate. Real scheduling, installed CSI, complete cross-service restore and unresolved infrastructure prerequisites remain separate. IFR-26-001 stays incomplete until the platform has full recovery coverage.
 
 ## G14
 
 ### Complete user journey and evidence-backed final report
 
-**Scope:** WP14, integrating G01–G13.
+**Scope:** complete user journey and final evidence, integrating G01–G13.
 
 **Prerequisites:** Actual Nova→Forge→Buster→Prism/product/operator route, bound source, registered engines/providers and mandatory prechecks. Model/review functions use their intended real services. Echo defaults off; Buster defaults on. The separately optional test agent does not replace mandatory deterministic tests.
 
@@ -228,20 +229,19 @@ The first requires `PRISM_CONTROL_URL`, `PRISM_AGENT_URL`, `PRISM_E2E_INGRESS_SE
 
 ### Echo promotion as a separate product decision
 
-**Scope:** Additional acceptance obligation from Echo phase 9; no new original finding ID. Connects review requirements in WP06.
+**Scope:** Echo model promotion after the deterministic quality controls in G06.
 
-**Prerequisites:** Corrected paired corpus of genuinely defective and proven final fixed revisions, stable actual model/transport execution and independent adjudication. Historically four of twelve pairs were incomplete due to transport failures, three “clean” controls still had defects, one genuine P0 was rejected and one claim used requirements instead of source proof. Those data cannot establish a reliable promotion percentage.
+**Prerequisites:** Use a corrected paired corpus of defective and proven final fixed revisions. Use stable model and transport execution with independent adjudication. Earlier results had incomplete pairs, defective controls, a rejected genuine P0, and a claim without source proof. Those data cannot establish a reliable promotion percentage.
 
 **Procedure:** Correct each pair's ground truth before measurement. Execute at least two complete batches. Require direct source evidence, inspect the full enclosing guard and explain every rejected P0 identity/authority finding. Keep P1 nonblocking in shadow runs. Do not extrapolate from incomplete batches.
 
-**Pass conditions:** Two complete batches show no new failure class, no false P0 on clean code and no missed seeded P0. Continue shadow evaluation until then. This documentation migration does not enable Echo as a production blocker.
+**Pass conditions:** Two complete batches show no new failure class, no false P0 on clean code and no missed seeded P0. Continue shadow evaluation until then. These checks do not enable Echo as a production blocker.
 
-## Explicit inherited live obligations
+## Outstanding Live Obligations
 
-The original register contains 36 explicit `pending_live_validation` fields.
-Each obligation remains below, including obligations attached to locally closed findings.
-These rows add precision to G01–G15; they do not create 36 new findings or claim 36 executed tests.
-The [pinned original register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json) retains the full original text and earlier results.
+The following obligations add precise environment proof to G01–G15. They do not
+claim that any listed test has run. The stable IDs connect each obligation to the
+current implementation issue or product boundary that requires the evidence.
 
 | Original ID | Gate | Required evidence or preserved limit |
 | --- | --- | --- |
@@ -273,9 +273,9 @@ The [pinned original register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5
 | IFR-22-001 | [G11](#g11) | Verify effective token permissions in actual fork and internal PR jobs, separately from publication. |
 | PCR-SCAFFOLD-OPS-001 | [G03](#g03) | Run adopted pipeline status errors and durable whole-process ownership. The stale pre-closure subrecord does not reopen the locally closed finding. |
 | IFR-07-001 | [G12](#g12), [G13](#g13) | Exercise actual Envoy rollout and peer revocation. A local self-probe is bounded evidence only. |
-| IFR-12-001 | [G13](#g13) | Execute the [LiteLLM PostgreSQL recovery procedure](../../operations/litellm-postgresql-recovery.md) in an isolated real environment and verify restored state. |
+| IFR-12-001 | [G13](#g13) | Execute the [single-service recovery procedure](../use/recovery.md#single-service-restore) in an isolated real environment and verify restored state. |
 | IFR-14-001 | [G12](#g12), [G13](#g13) | Exercise Envoy peer failure, LiteLLM database faults and Prism active-write cross-node recovery. |
-| IFR-15-001 | [G13](#g13) | Execute the [Prism database transition procedure](../../operations/prism-database-transitions.md), including its failure and rollback limits. |
+| IFR-15-001 | [G13](#g13) | Execute the [Prism restore procedure](../use/recovery.md#prism-restore), including its failure and rollback limits. |
 | IFR-20-001 | [G03](#g03), [G13](#g13) | Measure combined host CPU, memory, disk and real-pod OOM behavior. Do not replace measurements with guessed capacity. |
 | IFR-20-002 | [G12](#g12), [G13](#g13) | Verify the real service and cross-node failure sequence also required by IFR-14-001. |
 | IFR-25-001 | [G12](#g12) | Exercise SPIRE gRPC/UDS failure, real database/BuildKit probes and actual alarm delivery. Keep the native Envoy 1.39 certificate checks at their measured scope. |
@@ -286,17 +286,9 @@ The [pinned original register](https://github.com/datrab/kubeclaw/blob/ad67f9bb5
 
 `.github/workflows/remediation-native.yaml` checks static Knip/integration types, isolated native PostgreSQL suites, Studio in a real browser and supervisor operations. PostgreSQL follows `versions.json` → `automation.prismTestPostgres`; the wrapper creates and cleans a fresh database per suite. These jobs do not replace cgroup/OOM tests, actual cloud/Tailnet/registry privileges or the full release/backup/operator journey. A green workflow is not a blanket pass for this page.
 
-## Provenance and local proof boundaries
+## Evidence Boundary
 
-The 995 AP03 source decisions targeting these acceptance pages include local subtests and historical failed runs; each source does not create a new live test. The `ap04_extraction.acceptance` field in the [existing review ledger](../../blueprint/review-ledger.jsonl) maps every one to specific gates or this provenance section. It retains each AP03 obligation and original source blob. The mapping uses AP03 content review and AP04 obligation reconciliation; AP04 did not reread or rerun every raw historical log. They are consolidated by obligation: contracts/codecs G01; journals/replay G02; workers/supervisors G03; approvals G04; Git/workspaces G05; providers/compiler/lint G06; Prism SQL/sessions/resources G07; browsers/caches G08; delivery/retention G09; admission/demo G10; builds/registry/CI G11; trust G12; operations/restore G13; complete journeys/reports G14; Echo promotion G15.
-
-No raw log alone grants acceptance. The selected current local dispositions and original finding identities are retained in the [compact provenance index](../decisions/acceptance.md). Historical failures remain reachable at immutable source references. Earlier and final release/Buster/registry test counts are not additive; truncated captures, failed diagnostic chains, timing instability, inherited lint/type failures and zero-execution preparation matrices remain limited evidence. A filename containing “native”, “final” or “independent” does not extend the scope actually executed.
-
-Sources pinned to the AP03 completion checkpoint:
-
-- [D12 and accepted target decisions](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/decisions.md).
-- [Original 154-finding register and five separate integration findings](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json).
-- [Historical native matrix: preparation, not execution](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/resume/native-followup-39-20260911.json) and [later path reconciliation](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/resume/native-followup-current-resolution.json).
-- [Suite cutover and eleven outstanding production receipts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-suite-migration-status.md).
-- [Echo promotion and corpus limitations](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/echo-review-phase-9-evaluation.md).
-- [GitOps handoff: 141/154 and separate cluster acceptance](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/implementation/resume-20260914-gitops-handoff.md).
+No raw log alone grants acceptance. A successful retry does not erase a failed
+run. Test names such as “native”, “final”, or “independent” do not increase the
+scope that actually ran. Keep exact commands, inputs, identities, outputs, and
+failure records with each acceptance result.

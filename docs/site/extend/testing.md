@@ -1,6 +1,6 @@
 # Test And Manage An Extension
 
-Status: AP08.8 lifecycle guide implemented with stated local limits
+Status: implemented with stated local limits
 Audience: extension author, operator, maintainer
 Owner: plugin-foundation
 Evidence: scripts/verify-plugin-packages.mjs; skills/common/plugin-runtime/foundation/registry; packaging/runtime/roles
@@ -71,9 +71,9 @@ For each command, record these facts:
 - the boundary that the command did not reach.
 
 Do not change `unavailable` to `passed` without running the check.
-The original AP08.7-AP08.9 host lacked timeout-capable `flock` and a C compiler.
+The first recorded verification host lacked timeout-capable `flock` and a C compiler.
 Check the current host before reusing that result.
-The [AP08.10 checkpoint](../../blueprint/AP08.10-checkpoint.md) records the new environment and results.
+The catalogue pages state the current local result and its environment limit.
 
 ## Test A Pipeline Stage
 

@@ -14,7 +14,7 @@ Use this catalogue to find every installable extension package and its declared 
 The catalogue contains 51 packages.
 
 Each package page combines two separate authorities. Maintainers write the practical
-guidance in `docs/blueprint/AP08-catalogue-guidance.json`. The publication generator
+guidance separately from generated facts. The publication generator
 reads manifests, schemas, role inclusion, and tests for mechanical facts. A generated
 refresh cannot replace the authored purpose, use, exclusion, or limit with generic prose.
 

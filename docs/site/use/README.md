@@ -3,7 +3,7 @@
 Status: implemented procedures with stated implementation and live-proof limits
 Audience: platform operator, product operator, incident responder, release maintainer
 Owner: platform operations
-Evidence: scripts/deploy.sh; skills/nova/core/cli.ts; docs/site/status/open-issues.json
+Evidence: scripts/deploy.sh; skills/nova/core/cli.ts; docs/status/open-issues.json
 Applies to: current repository and selected release manifests
 Last verified: 2026-09-16, source and local documentation checks
 

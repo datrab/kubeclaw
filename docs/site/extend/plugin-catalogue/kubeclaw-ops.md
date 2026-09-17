@@ -90,8 +90,8 @@ The current package has no package-local automated acceptance test.
 
 ## Verification Record
 
-Audit status: `content-written`.
-Earlier AP08.7–AP08.9 local command result on 2026-09-16: `not-run`.
+Catalogue status: `content-written`.
+Recorded local command result on 2026-09-16: `not-run`.
 
 The Codex package declares no package-local automated test; connected-tool and missing-tool reader exercises remain required.
 
@@ -101,8 +101,8 @@ No package-local automated command is declared.
 
 Package test files found: 0. This is file discovery, not an executed test count.
 
-The audit status does not claim live host or cluster acceptance. See the AP08
-[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.
+The catalogue status does not claim live host or cluster acceptance.
+The result above states the exact local limit. Run the package command in the target environment before activation.
 
 ## Source Evidence
 
@@ -111,6 +111,6 @@ The audit status does not claim live host or cluster acceptance. See the AP08
 - Module for `kubeclaw-ops`: [./skills/](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/plugins/kubeclaw-ops/skills)
 
 Generated facts come from the manifest, package metadata, runtime-role inventory,
-schemas, and test-file discovery. The separate AP08 guidance file owns the purpose,
+schemas, and test-file discovery. Maintained guidance data owns the purpose,
 use, exclusion, and limit text. Publication can refresh facts without inventing or
 silently replacing those explanations.

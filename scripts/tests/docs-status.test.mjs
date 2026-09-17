@@ -3,20 +3,21 @@ import fs from 'node:fs';
 import test from 'node:test';
 import { originalFindingIds, renderStatus, validateStatus } from '../docs-status.mjs';
 
-const load = () => JSON.parse(fs.readFileSync(new URL('../../docs/site/status/open-issues.json', import.meta.url), 'utf8'));
+const load = () => JSON.parse(fs.readFileSync(new URL('../../docs/status/open-issues.json', import.meta.url), 'utf8'));
+const loadIdentities = () => JSON.parse(fs.readFileSync(new URL('../../docs/status/finding-identities.json', import.meta.url), 'utf8'));
 
 test('closure provenance cannot replace an original identity while preserving all counts', () => {
-  const provenance = fs.readFileSync(new URL('../../docs/site/decisions/acceptance.md', import.meta.url), 'utf8');
-  assert.equal(originalFindingIds(provenance).size, 154);
-  assert.throws(() => originalFindingIds(provenance.replace('| IFR-29-001 |', '| IFR-29-999 |')), /fixed 154 IDs/);
-  assert.throws(() => originalFindingIds(provenance.replace('| F-T14-01 |', '| F-T14-02 |')), /fixed 154 IDs/);
+  const identities = loadIdentities();
+  assert.equal(originalFindingIds(identities).size, 154);
+  identities.original_findings[1].id = identities.original_findings[0].id;
+  assert.throws(() => originalFindingIds(identities), /154 unique original IDs/);
 });
 
 test('each open finding retains actionable work and an evidence boundary in the rendered view', () => {
   const data = load();
   const page = renderStatus(data);
   for (const issue of data.issues) {
-    assert.ok(page.includes(`## ${issue.id}\n`));
+    assert.ok(page.includes(`**${issue.title}**`));
     for (const field of ['problem', 'impact', 'current_state', 'live_validation']) assert.ok(page.includes(issue[field]));
     for (const field of ['remaining_work', 'reproduction', 'acceptance_criteria']) {
       for (const value of issue[field]) assert.ok(page.includes(value));
@@ -71,14 +72,14 @@ test('metadata and the original 154-finding denominator cannot drift', () => {
   assert.throws(() => validateStatus(disguisedClosure), /closed finding/);
 });
 
-test('additional evidence fields and counting policy survive publication', () => {
+test('reader status keeps useful evidence without publishing migration accounting', () => {
   const data = load();
   data.issues[0].evidence.source_run_commit = 'a'.repeat(40);
   data.issues[0].evidence.original_scope = 'Only the selected original run';
   const page = renderStatus(data);
-  assert.ok(page.includes(data.scope.counting_policy));
   assert.ok(page.includes(data.issues[0].evidence.source_run_commit));
-  assert.ok(page.includes(data.issues[0].evidence.original_scope));
+  assert.ok(!page.includes(data.scope.counting_policy));
+  assert.ok(!page.includes(data.issues[0].evidence.original_scope));
 });
 
 test('invented or reclassified original IDs cannot preserve apparently valid counts', () => {
@@ -106,16 +107,16 @@ test('a later closure requires matching provenance, not only adjusted counts', (
   data.scope.original_incomplete--;
   data.scope.original_locally_verified++;
   data.scope.total_open--;
-  assert.throws(() => validateStatus(data), /closure provenance/);
-  const provenance = fs.readFileSync(new URL('../../docs/site/decisions/acceptance.md', import.meta.url), 'utf8')
-    .replace('| IFR-29-001 | Open |', '| IFR-29-001 | Locally verified |');
-  validateStatus(data, provenance);
+  assert.throws(() => validateStatus(data), /local disposition/);
+  const identities = loadIdentities();
+  identities.original_findings.find(item => item.id === 'IFR-29-001').disposition = 'Locally verified';
+  validateStatus(data, identities);
 });
 
 test('a closed original ID cannot replace an open ID with unchanged counts', () => {
   const data = load();
   data.issues.find(issue => issue.id === 'IFR-29-001').id = 'IFR-27-001';
-  assert.throws(() => validateStatus(data), /closure provenance/);
+  assert.throws(() => validateStatus(data), /membership|local disposition/);
 });
 
 test('the five inherited integration closures cannot become an invented count', () => {

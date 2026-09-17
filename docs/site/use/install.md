@@ -55,8 +55,8 @@ Stop if the environment depends on an item in the second list and no operator ow
 | Monitoring | Optional platform evidence layer | Metric retention, log delivery, dashboard access, capacity, and recovery |
 | SPIRE | Required showcase workload-identity service | Server persistence, agents, CSI, SVID, and expiry ownership |
 
-Use [Continuous GitOps](../../deployment/continuous-gitops.md) when Argo owns deployment.
-Use [Registry Clients](../../operations/registry-clients.md) for registry and BuildKit preparation.
+Use the [GitOps operation](maintenance.md#gitops-operation) when Argo owns deployment.
+Use [Registry and BuildKit maintenance](maintenance.md#registry-and-buildkit-maintenance) for client preparation.
 
 Helm and Argo must not manage the same resource at the same time.
 Complete an explicit ownership transfer before enabling reconciliation.
@@ -69,7 +69,7 @@ Complete an explicit ownership transfer before enabling reconciliation.
 >
 > **Contract or setting:** [Deployment variables select the namespace, optional components, Secret mode, and partial-infrastructure behavior](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L48-L68).
 >
-> **Test evidence:** [The deployment truth check inspects the real deployment script and its required safety properties](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/deployment/check-deployment-truth.mjs#L41-L66). The AP07 follow-up ran this check successfully on 2026-09-16. This was a source check, not a cluster deployment.
+> **Test evidence:** [The deployment truth check inspects the real deployment script and its required safety properties](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/deployment/check-deployment-truth.mjs#L41-L66). A documentation verification run passed this check on 2026-09-16. This was a source check, not a cluster deployment.
 >
 > **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
 >
@@ -151,10 +151,10 @@ Private operator values must use separate files.
 
 Use these references before editing values:
 
-- [Environment Variables](../../reference/environment-variables.md).
-- [Helm Values](../../reference/helm-values.md).
-- [Secrets](../../reference/secrets.md).
-- [Runtime Versions and Images](../../operations/runtime-versions-and-images.md).
+- [Environment Variables](../reference/environment-variables.md).
+- [Helm Values](../reference/helm-values.md).
+- [Secrets](../reference/secrets.md).
+- [Version Authorities](maintenance.md#version-authorities).
 
 The effective order for runtime role values is:
 
@@ -192,7 +192,7 @@ node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PW
 ```
 
 The Prism source check currently stops at a stale prompt-ownership assertion.
-[DOC-AP07-PRISM-CHECK-001](../status/open-issues.md#doc-ap07-prism-check-001) tracks that exact check repair.
+[PRISM-DEPLOY-CHECK-001](../status/open-issues.md#prism-deploy-check-001) tracks that exact check repair.
 Do not report the Prism preflight as passed until the unchanged command exits with status zero.
 
 Render each selected role before mutation:
@@ -224,7 +224,7 @@ Do not count Tailscale inside the target cluster as the only second route.
 A CNI or cluster failure can remove that route.
 
 The optional Ops Pod supports routine operations after cluster readiness.
-Follow the [Ops Pod runbook](../../ops/ops-pod.md) for its separate deployment.
+The [platform boundary](../understand/platform-and-operations.md#ops-pod) explains the optional Ops Pod. Treat its installation and credentials as a separate administrative surface.
 
 [IFR-01-001](../status/open-issues.md#ifr-01-001) tracks missing host bootstrap and restore prerequisites.
 
@@ -314,7 +314,7 @@ The smoke commands check the gateway, startup state, readiness, skills, and runt
 >
 > **Contract or setting:** [The release materializer binds role values to a selected runtime receipt](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/updates/materialize-release.mjs#L1-L35).
 >
-> **Test evidence:** [The deployment release test exercises render and fail-closed selection paths](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/deployment/deployment-release.test.mjs#L45-L80). The follow-up did not rerun that test. It ran the deployment truth check successfully on 2026-09-16. [DOC-AP07-PRISM-CHECK-001](../status/open-issues.md#doc-ap07-prism-check-001) records the failed Prism command check. No Prism test success is claimed.
+> **Test evidence:** [The deployment release test exercises render and fail-closed selection paths](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/deployment/deployment-release.test.mjs#L45-L80). The latest documentation verification did not rerun that test. It ran the deployment truth check successfully on 2026-09-16. [PRISM-DEPLOY-CHECK-001](../status/open-issues.md#prism-deploy-check-001) records the failed Prism command check. No Prism test success is claimed.
 >
 > **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
 >

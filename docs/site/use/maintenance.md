@@ -75,7 +75,7 @@ node --test tests/verification/deployment/versions.test.mjs
 Review every generated diff with the version change.
 Do not edit generated digests to make a check pass.
 
-Use [Runtime Versions and Images](../../operations/runtime-versions-and-images.md) for promotion and receipt details.
+Keep promotion and receipt evidence with the version authorities in this section.
 
 ## Change Plan
 
@@ -140,7 +140,7 @@ Confirm that the resolved commit equals the intended immutable source.
 
 The current platform health script can compare a branch name with a resolved commit.
 That comparison can report a false unhealthy result.
-[DOC-AP03-GITOPS-001](../status/open-issues.md#doc-ap03-gitops-001) tracks the correction.
+[GITOPS-REVISION-001](../status/open-issues.md#gitops-revision-001) tracks the correction.
 
 Do not bypass that gap by accepting any revision.
 Resolve the branch to the intended commit and record both values.
@@ -195,12 +195,7 @@ Still verify application health and durable state.
 
 ## Stateful Service Upgrade
 
-Each stateful service requires its own migration procedure:
-
-- [PostgreSQL Migration](../../operations/postgresql-migration.md).
-- [Redis Migration](../../operations/redis-migration.md).
-- [Prism Database Transitions](../../operations/prism-database-transitions.md).
-- [Stateful Infrastructure Upgrades](../../operations/stateful-infrastructure-upgrades.md).
+Each stateful service requires its own recorded plan. Apply the common sequence below, then use the service-specific verification and rollback boundary in [Recovery](recovery.md).
 
 The common safe sequence is:
 
@@ -294,14 +289,14 @@ The current design needs a maintenance window.
 Observe SVID and CA expiry before the maintenance window.
 Verify SPIRE server persistence and CSI readiness.
 
-Use the [Worker Trust runbook](../../operations/worker-trust-runbook.md) for the detailed sequence.
+Use the [Worker Trust runbook](worker-trust.md) for the detailed sequence.
 
 The complete expiry and restore contract remains open.
 [IFR-06-001](../status/open-issues.md#ifr-06-001) tracks that work.
 
 ## Registry and BuildKit Maintenance
 
-Use [Registry Clients and Image Lifetime](../../operations/registry-clients.md).
+Use the client and image-lifetime procedure in this section.
 
 Before garbage collection:
 
@@ -333,7 +328,7 @@ Monitor these stores independently:
 Do not use age alone to delete confirmed history.
 Some history protects idempotency and external-effect reconciliation.
 
-Follow only the implemented narrow cleanup procedures in [Observability Retention](../../operations/observability-retention.md).
+Follow only the implemented narrow cleanup procedures in this section.
 Keep [PCR-OBS-002](../status/open-issues.md#pcr-obs-002) open for connected retirement.
 
 ## Security Rescan
@@ -413,7 +408,7 @@ That command destroys the namespace and included state.
 >
 > **Contract or setting:** [`KUBECLAW_DEPLOY_PRISM` decides whether the broad teardown first uninstalls Prism](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/scripts/deploy.sh#L2854-L2864).
 >
-> **Test evidence:** No repository test executes destructive PVC deletion against a live namespace. The AP07 follow-up inspected the command paths and added a documentation regression check on 2026-09-16.
+> **Test evidence:** No repository test executes destructive PVC deletion against a live namespace. Source inspection covered the command paths, and a documentation regression check protects them.
 >
 > **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
 >

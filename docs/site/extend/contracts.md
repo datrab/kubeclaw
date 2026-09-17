@@ -1,6 +1,6 @@
 # Understand The Five Pipeline Extension Contracts
 
-Status: AP08.3 contract guide implemented with local verification limits
+Status: implemented with stated local verification limits
 Audience: plugin author, runtime maintainer, reviewer
 Owner: plugin-foundation
 Evidence: skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; skills/common/plugin-runtime/foundation/registry/build.ts; skills/nova/core/execution/stage-executor.ts; skills/nova/core/telemetry/observers.ts; skills/buster/engine/test-gates/provider-loader.ts; skills/buster/engine/test-gates/report-adapter-runtime.ts
@@ -336,7 +336,7 @@ Run the focused checks that match the contract you changed:
 node tests/verification/contracts/check-plugin-system-v2-contracts.mjs
 node tests/verification/contracts/check-plugin-system-v2-registry.mjs
 node tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs
-node scripts/check-ap08-observers.mjs
+npm run docs:extensions:observers:check
 node tests/verification/contracts/check-pipeline-test-provider-registry.mts
 node tests/verification/contracts/check-pipeline-report-adapter-registry.mts
 ```

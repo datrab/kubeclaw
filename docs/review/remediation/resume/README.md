@@ -1,6 +1,6 @@
 # Resuming the frozen 47 repairs
 
-> Historical remediation record. Its counts, branch instructions and register references describe that checkpoint. Current work is maintained in [open issues](../../../site/status/open-issues.md) and [the canonical JSON](../../../site/status/open-issues.json). [Local closure provenance](../../../site/decisions/acceptance.md) and [live acceptance](../../../site/status/acceptance.md) have separate authority. Original register data remains in [immutable history](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json).
+> Historical remediation record. Its counts, branch instructions and register references describe that checkpoint. Current work is maintained in [open issues](../../../site/status/open-issues.md) and [the canonical JSON](../../../status/open-issues.json). [Local closure provenance](../../../site/decisions/acceptance.md) and [live acceptance](../../../site/status/acceptance.md) have separate authority. Original register data remains in [immutable history](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/register.json).
 
 Aktueller Folgecheckpoint: **131 lokal verifiziert / 3 teilweise / 1 in Bearbeitung / 19 offen**. Von den zuletzt angefragten7 sind3 abgeschlossen;4 bleiben. SDK-Nachweis: ../implementation/pr6-sdk-local-verification.md. [Risiko-/Registry-Nachweise](../implementation/pr6-risk-and-registry.md). Ältere Zähler unten sind historische Stände.
 

@@ -6,7 +6,7 @@ Owner: Nova Core
 Evidence: skills/nova/project/compiler.ts; skills/nova/core/execution; skills/nova/core/lifecycle
 Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
 Applies to: `nova-project.v2` and pipeline-plugin-v2
-Last verified: source review on 2026-09-15
+Last verified: source inspection on 2026-09-15
 
 ## Purpose
 
@@ -393,6 +393,6 @@ It does not prove that an optional or disabled stage ran.
 
 - [Operate KubeClaw](../use/README.md) explains commands, diagnosis, backup, recovery, maintenance, and stated implementation limits.
 - [Worker Trust operations](../use/worker-trust.md) explains live identity checks.
-- [Extend KubeClaw](../extend/README.md) explains supported extension points. AP08 will complete that guide.
+- [Extend KubeClaw](../extend/README.md) explains the supported extension points.
 - [Deployment and Trust](deployment-and-trust.md) explains the process and network boundaries behind this flow.
 - [Current status](../status/current.md) identifies remaining implementation and live acceptance work.

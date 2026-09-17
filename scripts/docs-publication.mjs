@@ -290,8 +290,8 @@ function pluginPage(plugin) {
     '',
     '## Verification Record',
     '',
-    `Audit status: \`${mechanical?.auditStatus ?? 'pending'}\`.`,
-    `Earlier AP08.7–AP08.9 local command result on ${localVerification.date}: \`${localResult?.result ?? 'not-run'}\`.`,
+    `Catalogue status: \`${mechanical?.auditStatus ?? 'pending'}\`.`,
+    `Recorded local command result on ${localVerification.date}: \`${localResult?.result ?? 'not-run'}\`.`,
     '',
     localResult?.reason ?? 'No local verification result exists.',
     '',
@@ -302,8 +302,8 @@ function pluginPage(plugin) {
     `Package test files found: ${tests.length}. This is file discovery, not an executed test count.`,
     ...(packageValue.scripts?.test ? ['', 'Exact package test script (run from the package directory):', '', '```text', packageValue.scripts.test, '```'] : []),
     '',
-    'The audit status does not claim live host or cluster acceptance. See the AP08',
-    '[AP08.10 checkpoint](../../../blueprint/AP08.10-checkpoint.md) for the independent rerun and current boundaries. Earlier results are historical.',
+    'The catalogue status does not claim live host or cluster acceptance.',
+    'The result above states the exact local limit. Run the package command in the target environment before activation.',
     '',
     '## Source Evidence',
     '',
@@ -313,7 +313,7 @@ function pluginPage(plugin) {
     ...tests.map((target) => `- Test: ${sourceLink(rel(target), target)}`),
     '',
     'Generated facts come from the manifest, package metadata, runtime-role inventory,',
-    'schemas, and test-file discovery. The separate AP08 guidance file owns the purpose,',
+    'schemas, and test-file discovery. Maintained guidance data owns the purpose,',
     'use, exclusion, and limit text. Publication can refresh facts without inventing or',
     'silently replacing those explanations.',
   );
@@ -338,7 +338,7 @@ function catalogueIndex() {
     `The catalogue contains ${plugins.length} packages.`,
     '',
     'Each package page combines two separate authorities. Maintainers write the practical',
-    'guidance in `docs/blueprint/AP08-catalogue-guidance.json`. The publication generator',
+    'guidance separately from generated facts. The publication generator',
     'reads manifests, schemas, role inclusion, and tests for mechanical facts. A generated',
     'refresh cannot replace the authored purpose, use, exclusion, or limit with generic prose.',
   ];
@@ -503,7 +503,7 @@ function checkSite() {
       errors.push(`first-plugin JSON block ${index + 1} is invalid JSON: ${error.message}`);
     }
   }
-  if (pages.some((file) => /(?:phase|audit|implementation-plan|roadmap)/u.test(path.basename(file)))) errors.push('Published site contains an internal planning page');
+  if (pages.some((file) => /(?:phase|audit|implementation-plan)/u.test(path.basename(file)))) errors.push('Published site contains an internal planning page');
   if (plugins.length !== walk(catalogueRoot).filter((file) => file.endsWith('.md') && path.basename(file) !== 'README.md').length) errors.push('Plugin catalogue coverage is incomplete');
   return pages;
 }

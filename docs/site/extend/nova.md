@@ -1,6 +1,6 @@
 # Extend Nova Stages, Adapters, Observers, And Lint
 
-Status: AP08.6 Nova extension guide implemented with stated verification limits
+Status: implemented with stated verification limits
 Audience: Nova plugin author, lint-policy maintainer, runtime maintainer
 Owner: nova
 Evidence: packaging/runtime/roles/nova.json; skills/nova/core/execution/stage-executor.ts; skills/nova/core/execution/adapters.ts; skills/nova/core/telemetry/observers.ts; skills/nova/plugins/lint/plugin.json; skills/nova/plugins/lint/src/stage.ts; skills/nova/plugins/lint/src/adapter.ts; skills/nova/plugins/lint/src/engine/policy-version.ts
@@ -249,7 +249,7 @@ authority stays in the adapter.
 
 The current policy schema version is `pipeline_lint_policy.v7`. Policy selects tools,
 paths, severity behavior, debt and experimental handling, Kubernetes inputs, and
-governance controls. The exact reference belongs to AP09, but authoring follows these
+governance controls. The exhaustive reference is not yet available, but authoring follows these
 rules:
 
 1. Change policy when an existing tool or rule already expresses the requirement.
@@ -357,13 +357,13 @@ Run focused checks first:
 npm run verify:runtime-packaging:roles
 npm run verify:runtime-packaging:builder
 npm run verify:plugin-packages
-node scripts/check-ap08-observers.mjs
+npm run docs:extensions:observers:check
 node tests/verification/reliability/observer-recovery.test.mts
 npm test --prefix skills/nova/plugins/lint
 ```
 
 The complete `verify:plugin-system-v2` suite currently reaches the tracked
-`DOC-AP08-BOUNDARY-CHECK-001` failure in the Buster quality-gate stage. Do not report
+The open plugin-boundary finding in the Buster quality-gate stage. Do not report
 that full suite as green until the package-root import is corrected.
 
 Package tests and local runtime checks do not prove a rebuilt Nova deployment. Keep
@@ -380,7 +380,7 @@ Current local results are:
 | Observer recovery | Unavailable | BusyBox `flock` rejects the persistent journal command |
 | Lint unit, boundary, discovery, discipline, type-evidence, and remediation checks | Passed | Lint selection, evidence, timeout, cancellation, and process cleanup agree |
 | Lint live-function test | Unavailable | BusyBox `flock` stops `FileEffectJournal` before the domain exercise |
-| Complete plugin-system v2 check | Existing failure | `DOC-AP08-BOUNDARY-CHECK-001` remains open |
+| Complete plugin-system v2 check | Existing failure | The plugin-boundary finding remains open |
 
 Repeat unavailable checks with GNU `flock` and a C compiler. Do not classify their
 current host-prerequisite failures as Nova behavior failures.

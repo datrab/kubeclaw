@@ -6,7 +6,7 @@ Owner: platform architecture
 Evidence: skills/nova/core; skills/worker/core; packaging/runtime/roles
 Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
 Applies to: current source and declared runtime roles
-Last verified: source review on 2026-09-15
+Last verified: source inspection on 2026-09-15
 
 ## Purpose
 

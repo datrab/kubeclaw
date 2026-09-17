@@ -2,7 +2,7 @@
   "schema_version": 1,
   "updated_at": "2026-09-16",
   "source_baseline": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
-  "purpose": "Single machine-readable authority for currently incomplete technical work. open-issues.md is generated from this file. Locally closed original findings and later live acceptance are documented separately in decisions/acceptance.md and status/acceptance.md.",
+  "purpose": "Single machine-readable authority for currently incomplete technical work. The status generator creates the reader-facing page from this file.",
   "scope": {
     "original_total": 154,
     "original_locally_verified": 141,
@@ -17,7 +17,7 @@
     "in-progress": "A bounded partial implementation or analysis exists; the whole finding remains incomplete.",
     "partially-implemented": "Inherited original-register status for partial implementation. remaining_work still contains code work; this is not synonymous with locally verified."
   },
-  "verification_policy": "AP04 migrates evidenced states. Reproduction steps and completion criteria describe work to perform unless explicitly identified as historical execution. Native/live status stays separate. Source links are commit-pinned; mutable GitHub issue state has a read date.",
+  "verification_policy": "Reproduction steps and completion criteria describe work to perform unless a record explicitly identifies completed execution. Native and live status stay separate. Source links are commit-pinned; mutable GitHub issue state has a read date.",
   "issues": [
     {
       "id": "PCR-BUSTER-ENGINE-001",
@@ -25,7 +25,7 @@
       "title": "Capability work is missing from the attempt budget",
       "severity": "high",
       "status": "in-progress",
-      "problem": "The attempt resource receipt measures the provider process but does not exclusively own and account for all capability, browser, adapter and completion work launched by the Buster parent.",
+      "problem": "The attempt resource receipt measures the provider process. It does not exclusively own and account for all capability, browser, adapter, and completion work that Buster launches.",
       "impact": "A cheap provider can report low resource usage while its other local work exceeds the claimed CPU, memory or process budget.",
       "components": [
         "Buster Runner",
@@ -57,8 +57,8 @@
         "PCR-BUSTER-ENGINE-004"
       ],
       "evidence": {
-        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "Not executed at the recorded source assessment.",
+        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
+        "prior_verification": "No execution occurred during the recorded source inspection.",
         "implementation_commit": null
       },
       "sources": [
@@ -151,12 +151,12 @@
         "After complete quiescence is proved, only authorized inputs are removed; repeated recovery is safe.",
         "Real quota release and retained result/evidence access are demonstrated on original jobs."
       ],
-      "live_validation": "Native crash and containment tests are required. Log retention and external demo lifetime are independent of extracted source cleanup.",
+      "live_validation": "Native crash and containment tests are required. Log retention and external demo lifetime are independent of source-workspace cleanup.",
       "dependencies": [
         "PCR-BUSTER-ENGINE-001"
       ],
       "evidence": {
-        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
         "prior_verification": "teilweise; Buster hält jetzt sowohl fehlgeschlagene dauerhafte Endstatusschreibung als auch tatsächliche Statuslesefehler als fatalen Dienstfehler fest; beide Ursachen bleiben erhalten. Shutdown wartet laufende Admission. Echte Quoten-, Sperr- und Korruptionsfälle unabhängig7/7; Root6/6 und Typprüfung bestanden. Daten bleiben unverändert erhalten.",
         "implementation_commit": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a",
         "superseded_results": [
@@ -248,7 +248,7 @@
       "live_validation": "Original local store/process tests can close this implementation scope. Cleanup of real user data remains a separate operational action.",
       "dependencies": [],
       "evidence": {
-        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
         "prior_verification": "Partial: telemetry, admission and imported attempt-result copies were checked with actual quota release and preserved replay. Independent attempt-v2 checks: 19/19. Integrated root checks: 45/45, no skips. Complete retention across the remaining stores and references remains open.",
         "implementation_commit": "27315faad862f71df940ed32bc4e5a98eca72e0d"
       },
@@ -333,7 +333,7 @@
       "live_validation": "Complete isolated image/browser tests are required. Deployment of verified output digests and ARM64 live acceptance remain separate.",
       "dependencies": [],
       "evidence": {
-        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
         "prior_verification": "Partial fix locally verified; the complete finding remains open",
         "implementation_commit": "2ed91ef75e4c18b0a6b95b6d2850739b3c38ebf4"
       },
@@ -405,8 +405,8 @@
       "live_validation": "Configuration and documentation work remains. Approval of actual production configuration is separate.",
       "dependencies": [],
       "evidence": {
-        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "Not executed at the recorded source assessment.",
+        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
+        "prior_verification": "No execution occurred during the recorded source inspection.",
         "implementation_commit": null
       },
       "sources": [
@@ -463,8 +463,8 @@
       "live_validation": "Real Tailnet clients and actual external ACL/OAuth configuration are required. Rendering alone does not close this finding.",
       "dependencies": [],
       "evidence": {
-        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "Not executed at the recorded source assessment.",
+        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
+        "prior_verification": "No execution occurred during the recorded source inspection.",
         "implementation_commit": null
       },
       "sources": [
@@ -528,8 +528,8 @@
       "live_validation": "Isolated native security tests on the pinned image are required; accept the actual host/container boundary separately.",
       "dependencies": [],
       "evidence": {
-        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "Not executed at the recorded source assessment.",
+        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
+        "prior_verification": "No execution occurred during the recorded source inspection.",
         "implementation_commit": null
       },
       "sources": [
@@ -572,7 +572,7 @@
         "Storage provisioner",
         "Paperless dependencies"
       ],
-      "current_state": "Installation and setup documents start from an existing cluster. The repository has no supported empty-host automation. It cannot install and configure K3s, establish storage and independent access, or emit a reproducible host record. No effective cluster configuration was collected in AP04, and generic K3s defaults are not substituted for actual operator settings.",
+      "current_state": "Installation and setup documents start from an existing cluster. The repository has no supported empty-host automation. It cannot install and configure K3s, establish storage and independent access, or emit a reproducible host record. The repository records no effective cluster configuration, and generic K3s defaults do not replace actual operator settings.",
       "remaining_work": [
         "Record redacted actual host/K3s versions, startup flags, datastore, API requirements, CNI, StorageClass/CSI and cgroup preparation.",
         "Implement one reviewed, idempotent host-bootstrap entry point with prerequisite checks, a dry-run or plan view, explicit stop conditions and bounded rollback before irreversible changes.",
@@ -594,8 +594,8 @@
       "live_validation": "An isolated empty host and real restore media are required. The current repository does not provision this cluster; the future automation and restore exercise must provide the evidence.",
       "dependencies": [],
       "evidence": {
-        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "Not executed at the recorded source assessment.",
+        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
+        "prior_verification": "No execution occurred during the recorded source inspection.",
         "implementation_commit": null
       },
       "sources": [
@@ -643,7 +643,7 @@
         "Paperless",
         "Host/CRI rollback"
       ],
-      "current_state": "Cilium files are now present in the current checkout; the original review's additional-branch-only statement is historical. Integration does not imply that migration or live policy enforcement occurred.",
+      "current_state": "Cilium files are present in the current checkout. Earlier branch-only status no longer applies. Integration does not imply that migration or live policy enforcement occurred.",
       "remaining_work": [
         "Inventory actual namespaces, pod/DaemonSet/storage/network dependencies, maintenance window and offline images/manifests.",
         "Prepare staged independent host rollback and saved CNI/K3s/network configuration before cutover."
@@ -660,8 +660,8 @@
       "live_validation": "Actual CNI migration and negative network/recovery acceptance are pending. This register does not authorize CNI/policy changes.",
       "dependencies": [],
       "evidence": {
-        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "Not executed at the recorded source assessment.",
+        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
+        "prior_verification": "No execution occurred during the recorded source inspection.",
         "implementation_commit": null
       },
       "sources": [
@@ -725,8 +725,8 @@
       "live_validation": "Actual SPIRE/Envoy/worker execution across certificate expiry is required. Rendering alone does not close this finding.",
       "dependencies": [],
       "evidence": {
-        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "Not executed at the recorded source assessment.",
+        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
+        "prior_verification": "No execution occurred during the recorded source inspection.",
         "implementation_commit": null
       },
       "sources": [
@@ -791,8 +791,8 @@
       "live_validation": "Real scheduling, load and disk measurements are required. Requests alone do not prove free host resources.",
       "dependencies": [],
       "evidence": {
-        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "Not executed at the recorded source assessment.",
+        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
+        "prior_verification": "No execution occurred during the recorded source inspection.",
         "implementation_commit": null
       },
       "sources": [
@@ -859,7 +859,7 @@
       "live_validation": "Real SQL/image/cross-store/host recovery remains pending. A weekly same-server SQL smoke check is not host-loss evidence.",
       "dependencies": [],
       "evidence": {
-        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
+        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
         "prior_verification": "Teilfix lokal geprüft: 7 Dateisystem-/Prozess-/Helmtests; DB-Kommandos explizite Fixtures. Vollständige Recovery noch unvollständig.",
         "implementation_commit": null,
         "superseded_results": [
@@ -954,8 +954,8 @@
       "live_validation": "Independent recovery and real Codex pairing remain pending; this documentation introduces no permission expansion.",
       "dependencies": [],
       "evidence": {
-        "assessment": "AP04 source reconciliation; no test rerun and no live acceptance performed.",
-        "prior_verification": "Not executed at the recorded source assessment.",
+        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
+        "prior_verification": "No execution occurred during the recorded source inspection.",
         "implementation_commit": null
       },
       "sources": [
@@ -1003,20 +1003,20 @@
         "Selected runtime/Ops images",
         "Trivy"
       ],
-      "current_state": "Issue #7 is open (read 2026-09-15; updated 2026-09-15T10:28:49Z). Job 104344339828 of run 34957931173 used commit 22fa7cfa6a14cb9fed49a9eb2496d7ab3b64a9d5: versions check passed, scan step failed, release-security-reports upload passed. AP04 did not inspect log/report contents; vulnerability, scanner error and missing release selection remain unresolved possibilities.",
+      "current_state": "Issue #7 is open (read 2026-09-15; updated 2026-09-15T10:28:49Z). Job 104344339828 of run 34957931173 used commit 22fa7cfa6a14cb9fed49a9eb2496d7ab3b64a9d5: versions check passed, scan step failed, release-security-reports upload passed. Source inspection did not include log or report contents. Vulnerability, scanner error, and missing release selection remain unresolved possibilities.",
       "remaining_work": [
         "Inspect the linked scan logs and uploaded release-security-reports artifact, then record the actual error and affected immutable image references.",
         "Fix the evidenced cause: complete release selection, scanner/registry error or reviewed dependency/image update. Do not weaken the gate to manufacture a pass."
       ],
       "reproduction": [
         "Read GitHub run 34957931173/job104344339828 and its reports; preserve the execution commit.",
-        "In a suitable isolated environment with registry access run node scripts/versions.mjs --check and node scripts/updates/scan-releases.mjs against the complete selected runtime/Ops configuration, recording the current advisory database identity."
+        "Use a suitable isolated environment with registry access. Run node scripts/versions.mjs --check and node scripts/updates/scan-releases.mjs against the complete selected runtime and Ops configuration. Record the current advisory database identity."
       ],
       "acceptance_criteria": [
         "The concrete cause and affected immutable inputs are documented and addressed.",
-        "A complete follow-up scan of all selected release images and pinned inputs passes with retained reports; no missing scan or input counts as passed."
+        "A complete scan of all selected release images and pinned inputs passes with retained reports. A missing scan or input does not count as passed."
       ],
-      "live_validation": "External registry/scanner/Actions evidence is required, without cluster deployment. Close the issue only against a successful complete follow-up run.",
+      "live_validation": "External registry, scanner, and Actions evidence is required without cluster deployment. Close the issue only after a successful complete run.",
       "dependencies": [],
       "evidence": {
         "assessment": "GitHub issue and job/step metadata read live; no logs or scanner reports inspected and no scan started.",
@@ -1060,7 +1060,7 @@
         "charts/gitops/files/application-health.lua",
         "Runtime app-of-apps"
       ],
-      "current_state": "AP03 identified the mismatch in integrated main. Existing health tests cover exact commit pins, stale-operation rejection and separate observed platform mode, but contain no positive continuous main-with-resolved-SHA case.",
+      "current_state": "Source inspection identified the mismatch in integrated main. Existing health tests cover exact commit pins, stale-operation rejection and separate observed platform mode, but contain no positive continuous main-with-resolved-SHA case.",
       "remaining_work": [
         "Bind the selected and actually synchronized immutable revision consistently while continuous manifests track main.",
         "Preserve stale-operation, source-path, destination, error and drift checks. Removing revision comparisons or switching runtime children to observed mode is not sufficient."
@@ -1077,7 +1077,7 @@
       "live_validation": "After correction, accept an actual branch-to-SHA rollout with the subsequent wave and a stale operation. Lua fixtures alone do not establish live acceptance.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Both original sources and the existing health test read. Deterministic mismatch follows from string comparison; no Lua/Argo execution in AP04.",
+        "assessment": "The inspection covered both original sources and the existing health test. Deterministic mismatch follows from string comparison. No Lua or Argo execution occurred.",
         "original_scope": "Additional AP03 follow-up; outside the original 154 and five separately closed integration findings."
       },
       "sources": [
@@ -1127,7 +1127,7 @@
       ],
       "reproduction": [
         "Inspect docs/architecture/prism-preference-learning-v1.md. V1 excludes automatic time decay in the opening scope and time-handling section. Compare skills/prism/preferences/index.ts projectPreferences and skills/prism/control/preference-snapshot.ts.",
-        "Use one valid selected event with a single trait and evaluate the original projector at its last evidence time and 180 days later. Current arithmetic yields score1/effectiveScore1, then score1/effectiveScore0.5. Preserve user/project context and all required event fields; this AP04 review did not execute the probe.",
+        "Use one valid selected event with a single trait and evaluate the original projector at its last evidence time and 180 days later. Current arithmetic yields score1/effectiveScore1, then score1/effectiveScore0.5. Preserve user and project context with all required event fields. The source inspection did not execute the probe.",
         "Existing regression entry points: skills/prism/tests/quality.test.mts (preference projections decay and remain retractable) and skills/prism/tests/control-generation-http.test.mts (persisted decay policy identity)."
       ],
       "acceptance_criteria": [
@@ -1186,13 +1186,13 @@
         "Prism deployment verification",
         "Prism agent bridge",
         "Prism agent prompt",
-        "AP07 installation preflight"
+        "Prism installation preflight"
       ],
-      "current_state": "The AP07 follow-up reproduced the failure on 2026-09-16. The assertion reads agent-bridge.mjs directly and does not follow its AgentJobRunner and prompt-module boundary. The documentation reports the failed check and does not claim Prism preflight success.",
+      "current_state": "A documentation verification run reproduced the failure on 2026-09-16. The assertion reads agent-bridge.mjs directly and does not follow its AgentJobRunner and prompt-module boundary. The documentation reports the failed check and does not claim Prism preflight success.",
       "remaining_work": [
         "Update the source check to inspect the active prompt owner and its wiring from the bridge without duplicating production prompt text in the test.",
         "Keep the negative check that rejects project-checkout contract paths and preserve all unrelated deployment assertions.",
-        "Run the complete verify:prism:deploy-script command and refresh the AP07 evidence status only after it passes."
+        "Run the complete verify:prism:deploy-script command and refresh the evidence status only after it passes."
       ],
       "reproduction": [
         "Run npm run verify:prism:deploy-script at the recorded source. Observe the canonical-schema assertion failure.",
@@ -1206,7 +1206,7 @@
       "live_validation": "This check can close through source verification. It does not establish a successful Prism deployment or replace the separate live acceptance gates.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Reproduced during the AP07 documentation follow-up; no product or test implementation changed.",
+        "assessment": "Reproduced during documentation verification; no product or test implementation changed.",
         "prior_verification": "npm run verify:prism:deploy-script exited with status 1 on 2026-09-16 at the canonical-schema assertion."
       },
       "sources": [
@@ -1242,13 +1242,13 @@
         "Buster quality-gate stage",
         "Pipeline test-gate contract",
         "Plugin-system v2 boundary verification",
-        "AP08 extension documentation"
+        "Extension documentation"
       ],
-      "current_state": "AP08.1 reproduced the failure on 2026-09-16 after generating the required OpenClaw contract output. The focused platform-configuration, contract, registry and runtime-role checks pass. The boundary check then fails at skills/nova/plugins/buster-quality-gate/src/stage.ts line 1. The same stage already uses the approved gate-decision subpath for other functions.",
+      "current_state": "A focused verification run reproduced the failure on 2026-09-16 after generating the required OpenClaw contract output. The platform-configuration, contract, registry and runtime-role checks pass. The boundary check then fails at skills/nova/plugins/buster-quality-gate/src/stage.ts line 1. The same stage already uses the approved gate-decision subpath for other functions.",
       "remaining_work": [
         "Expose the required coverage assertion API through an audited exact contract export. If needed, define another narrow boundary that preserves the test's authority controls.",
         "Change the quality-gate stage to use the accepted narrow entry point. Do not weaken the negative package-root test merely to make the check pass.",
-        "Run the complete plugin-system v2 boundary check and update AP08 evidence only after it exits with status zero."
+        "Run the complete plugin-system v2 boundary check and update the evidence only after it exits with status zero."
       ],
       "reproduction": [
         "Run npm run build --workspace @kubeclaw/openclaw-agent-observer so that the boundary check can inspect its generated contract module.",
@@ -1258,12 +1258,12 @@
       "acceptance_criteria": [
         "The quality-gate stage imports its runtime contract only through explicitly audited exact exports.",
         "The package-root negative tests remain effective and the complete plugin-system v2 boundary check exits with status zero.",
-        "AP08 documentation links to the resulting supported boundary and does not turn an implementation exception into a documented feature."
+        "Extension documentation links to the resulting supported boundary and does not turn an implementation exception into a documented feature."
       ],
       "live_validation": "This source-boundary issue can close with local source and contract verification. It does not establish runtime activation or a live pipeline execution.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Reproduced during the AP08.1 source review; documentation, source and verification were compared, but no product or test implementation was changed.",
+        "assessment": "A focused source inspection reproduced the issue. It compared documentation, source, and verification without changing product or test implementation.",
         "prior_verification": "The boundary command exited with status 1 on 2026-09-16 after the required generated OpenClaw contract became available."
       },
       "sources": [
@@ -1293,22 +1293,22 @@
       "title": "Uncertain external effects have no supported reconciliation and result-import operation",
       "severity": "high",
       "status": "open",
-      "problem": "Effect recovery correctly stops when an external request was accepted without a trustworthy receipt or when a receipt exists without terminal attempt evidence. The current platform supplies no supported operation that records reconciliation and imports the authoritative result.",
+      "problem": "Effect recovery correctly stops when an external service accepts a request without returning a trustworthy receipt. It also stops when a receipt exists without terminal attempt evidence. The current platform supplies no supported operation that records reconciliation and imports the authoritative result.",
       "impact": "An operator can identify an uncertain effect but cannot continue the run through a documented, validated state transition. Blind retry can duplicate an external mutation, while journal editing would bypass lifecycle authority.",
       "components": [
         "Nova effect recovery",
         "Administrative retry and remediation",
         "External capability adapters",
-        "AP08 effectful extension path"
+        "Effectful extension path"
       ],
-      "current_state": "AP08.10 traced the recovery guard through normal execution and administrative retry. Both paths stop on unresolved external outcomes. The effectful guide now states this limit and does not invent a continuation command.",
+      "current_state": "Source tracing followed the recovery guard through normal execution and administrative retry. Both paths stop on unresolved external outcomes. The effectful guide states this limit and does not invent a continuation command.",
       "remaining_work": [
         "Define a versioned reconciliation request and result contract with actor identity, effect identity, evidence, idempotency and authorization.",
         "Implement one Core-owned operation that records the decision and imports or compensates the result without editing journals.",
         "Add failure, duplicate, cancellation, restart and audit tests, then document the supported operator and extension behavior."
       ],
       "reproduction": [
-        "Run the persistent external-effect recovery tests named in the AP08.10 command ledger.",
+        "Run the persistent external-effect recovery tests in the verification record.",
         "Create an accepted external effect without a receipt, then attempt normal resume and administrative retry. Observe that both paths return the unresolved-outcome guard.",
         "Inspect skills/nova/core/execution/effect-recovery.ts, engine-run.ts and engine-admin.ts. Confirm that no supported reconciliation import operation follows the stop."
       ],
@@ -1320,7 +1320,7 @@
       "live_validation": "Local contract and restart tests can prove the state transition. A real external service remains a separate live acceptance exercise.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Independent AP08.10 source trace and local recovery exercises; no reconciliation implementation was added.",
+        "assessment": "Independent source trace and local recovery exercises; no reconciliation implementation was added.",
         "prior_verification": "The review confirmed that normal, retry and remediation paths preserve the recovery stop."
       },
       "sources": [
@@ -1341,18 +1341,18 @@
     {
       "id": "DOC-AP08-RUNTIME-CHECKS-003",
       "origin": "ap08-source-follow-up",
-      "title": "Four AP08 runtime verification paths fail before they prove their contracts",
+      "title": "Four runtime verification paths fail before they prove their contracts",
       "severity": "medium",
       "status": "open",
-      "problem": "The AP08.10 supported-host run observed failures in the test-plan runner, report-adapter runtime, runtime-bundle isolation and transport-publisher checks. The failures are distinct, but their product or host root causes are not yet established.",
-      "impact": "The extension guide can document intended contracts and exact observed limits, but it cannot use these commands as successful local evidence until each failure is diagnosed and rerun.",
+      "problem": "A supported-host run observed failures in the test-plan runner, report-adapter runtime, runtime-bundle isolation and transport-publisher checks. The failures are distinct, but their product or host root causes are not yet established.",
+      "impact": "The extension guide can document intended contracts and exact observed limits. It cannot use these commands as successful local evidence before diagnosis and a successful rerun.",
       "components": [
         "Buster test-plan runner",
         "Buster report-adapter runtime",
         "Runtime bundle isolation",
         "Transport publisher"
       ],
-      "current_state": "AP08.10 preserved exact command output. The plan runner returned errored instead of timed_out, the report adapter ended with EPIPE, isolation could not open task children, and transport publication rejected the canonical effect request. Later environments can expose different prerequisite failures; those do not erase the supported-host observations.",
+      "current_state": "The verification record contains exact command output. The plan runner returned errored instead of timed_out. The report adapter ended with EPIPE. Isolation could not open task children. Transport publication rejected the canonical effect request. Later environments can expose different prerequisite failures; those do not erase the supported-host observations.",
       "remaining_work": [
         "Reproduce every command in its declared supported environment with all build prerequisites present.",
         "Diagnose and fix each root cause independently. Split this tracking entry if fixes require unrelated owners or releases.",
@@ -1361,18 +1361,18 @@
       "reproduction": [
         "Run node tests/verification/contracts/check-pipeline-test-plan-runner.mts.",
         "Build the plugin sandbox, then run node tests/verification/contracts/check-pipeline-report-adapter-runtime.mts and npm run verify:runtime-packaging:isolation.",
-        "Run npm test --prefix skills/common/plugins/transport-publisher and compare the result with commands C023, C025, C029 and C079 in AP08.10-results.json."
+        "Run npm test --prefix skills/common/plugins/transport-publisher and compare the result with retained commands C023, C025, C029 and C079."
       ],
       "acceptance_criteria": [
         "Each command exits with status zero in its documented supported environment, or an approved host restriction replaces the unsupported expectation.",
         "Timeout, stdin failure, process-tree isolation and canonical effect-request assertions remain effective.",
-        "AP08 verification records distinguish successful product checks from unavailable prerequisites and live acceptance."
+        "Verification records distinguish successful product checks from unavailable prerequisites and live acceptance."
       ],
       "live_validation": "These are local contract and isolation checks. Service and cluster behavior remains in the separate live acceptance plan.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Independent AP08.10 command execution with exact output retained; root causes remain unconfirmed.",
-        "prior_verification": "Commands C023, C025, C029 and C079 exited with status 1 on the AP08.10 host."
+        "assessment": "Independent command execution with exact output retained; root causes remain unconfirmed.",
+        "prior_verification": "Commands C023, C025, C029 and C079 exited with status 1 on the recorded verification host."
       },
       "sources": [
         {
@@ -1414,7 +1414,7 @@
         "Prism control client",
         "Host extension guidance"
       ],
-      "current_state": "AP08.10 corrected the guide so it no longer describes the existing Prism tools as fully bounded. The guide distinguishes requirements for a new extension from behavior that Prism currently implements.",
+      "current_state": "The guide no longer describes the existing Prism tools as fully bounded. It distinguishes requirements for a new extension from behavior that Prism currently implements.",
       "remaining_work": [
         "Approve explicit request-size, text-size and document-size limits for both Prism tools.",
         "Add an explicit timeout and cancellation propagation contract to the HTTP call.",
@@ -1433,7 +1433,7 @@
       "live_validation": "Local schema and cancellation tests are required first. A real OpenClaw-to-Prism call remains separate live evidence.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Independent AP08.10 source review and registration-test inspection; no product implementation changed.",
+        "assessment": "Independent source and registration-test inspection; no product implementation changed.",
         "prior_verification": "The package registration test passed but did not establish a bounded real-host request."
       },
       "sources": [
