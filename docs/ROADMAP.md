@@ -18,6 +18,35 @@ This page keeps future direction separate from current operator behavior. Items 
 
 ## Product And Platform Direction
 
+### Controlnode installer and repeatable node onboarding
+
+Status: required operator experience, agreed 2026-09-17; not implemented as a
+complete installer. Finish the current worker adoption and Cilium work while
+capturing reusable steps, rather than requiring operators to replay repair scripts.
+
+- One Controlnode entry point must orchestrate cluster inspection, node preparation,
+  Argo bootstrap and verification. Operators must not log into each host and build
+  binaries manually. SSH/sudo is an implementation detail for node-level work;
+  Kubernetes API operations use the selected kubeconfig context.
+- Support an existing compatible K3s/Kubernetes cluster first. Later add explicit
+  cluster creation; never reinstall an existing cluster based on failed discovery.
+- Make adding a node an inventory change and a targeted installer run: validate
+  capacity/runtime, join if required, configure only its assigned roles, verify
+  readiness, and reconcile placement. Keep the operator configuration audit's
+  single-source requirement; do not add another competing configuration file.
+- Native pools are installed only on nodes assigned native execution. Render
+  per-node identities, policies and resource budgets; AX41 paths, names, digests
+  and build directories must not become global defaults. Additional nodes do not
+  automatically increase application concurrency or move local-path PVC data.
+- Preserve current sync policy: platform root may reconcile Application definitions;
+  infrastructure/Codex Ops children stay manual, while validated KubeClaw runtime
+  releases may autosync. Bootstrap completion is not an image-release selection.
+- Acceptance requires fresh setup, unchanged rerun, interrupted-run recovery,
+  adding a second node without restarting unrelated workloads, and a real workload
+  smoke test. Print completed/pending steps without exposing credentials.
+
+See the [installer contract](operations/ax41-rollout.md#requirements-for-a-future-one-click-installer).
+
 ### Redis and registry transport protection
 
 Status: deferred by operator on 2026-09-16. Finish Argo adoption and the Cilium
