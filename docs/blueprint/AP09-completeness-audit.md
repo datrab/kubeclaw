@@ -1,7 +1,7 @@
 # AP09 Masterprüfung der Dokumentationsvollständigkeit
 
 Stand: 17.09.2026  
-Status: Prüfkatalog erstellt; 118 von 251 Punkten einzeln geprüft; inhaltliche Umsetzung offen
+Status: Prüfkatalog erstellt; 147 von 251 Punkten einzeln geprüft; inhaltliche Umsetzung offen
 Scope: aktive Produktdokumentation, Referenzen, Veröffentlichung und Pflegeautomation
 
 ## Zweck
@@ -23,6 +23,22 @@ können kurze Maintainer-Hinweise behalten, sind aber keine zweite Produktdokume
 AP10 entfernt temporäre und ersetzte Dateien erst, nachdem alle weiterhin benötigten
 Informationen, Entscheidungen und offenen Arbeiten im zentralen Bestand angekommen
 sind.
+
+## Clean-Room-Migrationsregel
+
+`docs/site` ist der bereits angelegte frische Zielort. Es wird kein weiterer
+Dokumentationsbaum eröffnet.
+
+1. Einen Prüfpunkt gegen Code, Verträge, Konfiguration, Tests und alle alten Quellen prüfen.
+2. Vollständig gute zentrale Seiten in `docs/site` behalten und nur belegte Fehler korrigieren.
+3. Teilweise gute Inhalte nicht als ganze Altdatei kopieren. Nur weiterhin gültige Fakten, Gründe und Verfahren in die kanonische Zielseite integrieren.
+4. Fehlende Inhalte direkt in der geplanten zentralen Zielseite erstellen.
+5. Mechanische Fakten aus Schemas, Manifests und Code generieren; Erklärungen redaktionell daneben pflegen.
+6. Navigation, Quellenlinks, Beispiele, Checks und Leserweg am Ziel prüfen.
+7. Erst danach alle ersetzten Reviews, Pläne, Runbooks, doppelten Referenzen und temporären Migrationsdateien des Themas in AP10 löschen.
+
+Eine alte Datei bleibt während der Migration eine Quelle, aber niemals ein zweiter
+kanonischer Leserpfad. Kein neuer Produkttext wird außerhalb `docs/site` angelegt.
 
 ## Verbindliche Zustände
 
@@ -65,9 +81,9 @@ zutreffenden Fragen mit Ja beantwortet sind:
 7. Navigation, Darstellung und Veröffentlichung
 8. unabhängige Leser- und Wartbarkeitsabnahme
 
-Aktueller Prüfstand: `GOV-001` bis `SEC-007` sind einzeln geprüft. Davon sind
-24 Punkte vollständig vorhanden, 77 zu erweitern und 17 fehlen komplett. Die
-verbleibenden 133 Einstufungen sind weiterhin vorläufig.
+Aktueller Prüfstand: `GOV-001` bis `CFG-015` sind einzeln geprüft. Davon sind
+31 Punkte vollständig vorhanden, 91 zu erweitern und 25 fehlen komplett. Die
+verbleibenden 104 Einstufungen sind weiterhin vorläufig.
 
 ## A. Umfang und Governance
 
@@ -234,35 +250,35 @@ verbleibenden 133 Einstufungen sind weiterhin vorläufig.
 
 ## J. Operator-Handbuch
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
 | OPR-001 | Logischer Operator-Lifecycle | Vollständig vorhanden | Use-Index führt von Installation bis Retirement. |
 | OPR-002 | Voraussetzungen, Versionen, Preflight und Topologie | Vollständig vorhanden | Grenzen werden ehrlich benannt. |
-| OPR-003 | Helm-Installation, GitOps-Handover und Erstverifikation | Vollständig vorhanden | Unterstützte Abläufe sind vorhanden. |
-| OPR-004 | Start, Audit, Wait/Resume und Recovery | Vollständig vorhanden | CLI-Wege sind dokumentiert. |
-| OPR-005 | Cancellation-Grenze | Vollständig vorhanden | Fehlender Operator-Cancel ist klar. |
-| OPR-006 | Diagnose nach Symptom und Autorität | Vollständig vorhanden | Diagnose-Handbuch besitzt Reihenfolge und Stops. |
-| OPR-007 | Backup, Restore und unabhängiger Zugang | Vollständig vorhanden | Detailliert mit Implementierungsgrenzen. |
-| OPR-008 | Upgrade, Rollback, Rotation und Retirement | Vollständig vorhanden | Maintenance deckt die Lebenszyklen ab. |
-| OPR-009 | Kapazität, Retention und Schwellenwerte | Muss erweitert/überarbeitet werden | Werte existieren; exhaustive Servicebudgets fehlen. |
-| OPL-001 | Inventar, Zweck, Funktionen und Konfiguration aller 51 Plugins | Vollständig vorhanden | AP08-Katalog wurde akzeptiert. |
+| OPR-003 | Helm-Installation, GitOps-Handover und Erstverifikation | Muss erweitert/überarbeitet werden | `use/install.md` besitzt Reihenfolge, Preflight, Render, Stopbedingungen und Belege. Registry-/BuildKit-Vorbereitung und vollständiges GitOps-Handover liegen jedoch in alten `operations/`- und `deployment/`-Seiten; der zentrale Ablauf ist nicht selbstgenügsam. |
+| OPR-004 | Start, Audit, Wait/Resume und Recovery | Vollständig vorhanden | `use/operate.md` erklärt beide CLI-Formen, Compile, Start, Audit, Signal und Recovery mit Voraussetzungen, Ergebnissen, Stops und direkten CLI-/Testquellen. Fehlende Cancel- und Admin-Funktionen werden nicht erfunden. |
+| OPR-005 | Cancellation-Grenze | Vollständig vorhanden | Das Operator-Handbuch sagt ausdrücklich, dass kein separater Cancel-Befehl existiert, trennt Prozessunterbrechung von Run-Cancellation und verweist auf sichere Diagnose statt eines erfundenen Commands. |
+| OPR-006 | Diagnose nach Symptom und Autorität | Vollständig vorhanden | `use/diagnose.md` führt von Incident Record über Cluster, Health, Journal, Capacity und Delivery zu einem Symptomindex. Es trennt Logs, Projektionen, kanonische Evidence, unsichere Effects und Eskalationsstops. |
+| OPR-007 | Backup, Restore und unabhängiger Zugang | Muss erweitert/überarbeitet werden | Die zentrale Recovery-Seite ist detailliert und erklärt Gruppen, Fences, Checks, Restore Scopes, Clusterverlust und unabhängigen Zugang. Redis-, LiteLLM-, Ops- und Worker-Trust-Details verweisen noch auf alte Runbooks; mehrere Live-Proofs bleiben offen. |
+| OPR-008 | Upgrade, Rollback, Rotation und Retirement | Muss erweitert/überarbeitet werden | `use/maintenance.md` erklärt Change Plan, Rendering, Upgrade Order, Rollback Decision, Credential Rotation und Retirement. Stateful-Service-, Registry-, SPIRE- und Ops-Verfahren hängen noch von alten Operationsseiten ab und verletzen den zentralen Leserpfad. |
+| OPR-009 | Kapazität, Retention und Schwellenwerte | Muss erweitert/überarbeitet werden | Install, Diagnose, Recovery und Maintenance verlangen Capacity Records und nennen einzelne Retentionwerte. Ein vollständiges Servicebudget mit Messwert, Warn-/Stopgrenze, Wachstum, Owner und Reaktion fehlt. |
+| OPL-001 | Inventar, Zweck, Funktionen und Konfiguration aller 51 Plugins | Vollständig vorhanden | Der zentrale AP08-Katalog enthält 51 Paketseiten plus Index und generiert Manifest-, Registration-, Schema-, Role- und Testfakten. Authored Purpose, Use/Do-not-use, Limit und Verification Boundary wurden unabhängig geprüft. |
 | OPL-002 | Operative Auswahlmatrix über alle Plugins | Fehlt komplett | Nach Aufgabe, Rolle und Abhängigkeit filterbare Sicht fehlt. |
-| OPL-003 | Aktivierung und Erfolgsprüfung je Oberfläche | Muss erweitert/überarbeitet werden | Shared Lifecycle vorhanden; Operatorlinks und konkrete Beispiele fehlen. |
-| OPL-004 | Diagnose, Upgrade, Disable, Replace und Remove | Muss erweitert/überarbeitet werden | Shared Guide vorhanden; operative Paketmatrix fehlt. |
-| OPL-005 | Externe Abhängigkeiten und Secrets je Plugin | Fehlt komplett | Keine exhaustive Consumer-Matrix. |
+| OPL-003 | Aktivierung und Erfolgsprüfung je Oberfläche | Muss erweitert/überarbeitet werden | Shared Lifecycle nennt Install-/Activation-Aktion und positive Observation für Pipeline, Buster, OpenClaw, Codex, Engine und Role. Operator-Einstieg, konkrete Konfiguration und reproduzierbare Aktivierungsbeispiele je Oberfläche fehlen. |
+| OPL-004 | Diagnose, Upgrade, Disable, Replace und Remove | Muss erweitert/überarbeitet werden | `extend/testing.md` besitzt einen starken gemeinsamen Lifecycle einschließlich Drain und Restzustand. Operatorzentrierte Commands, paketbezogene State Owner, Abhängigkeiten, Rollback und Health Evidence fehlen als Matrix. |
+| OPL-005 | Externe Abhängigkeiten und Secrets je Plugin | Fehlt komplett | Keine zentrale generierte Matrix ordnet jedem Plugin Services, Endpoints, Capabilities, Secret References, Datenowner, Reachability Check und Ausfallwirkung zu. |
 | CFG-001 | Kanonischer Konfigurationsindex | Fehlt komplett | Aktive Reference besitzt keinen Index. |
-| CFG-002 | `pipeline-platform.v2` Referenz | Muss erweitert/überarbeitet werden | Gruppen genannt; Typen, Defaults, Beispiele und Fehler fehlen. |
-| CFG-003 | `nova-project.v2` Referenz | Muss erweitert/überarbeitet werden | Detailliertes Package-README nicht aktiv integriert. |
-| CFG-004 | `pipeline-definition.v2` Referenz | Muss erweitert/überarbeitet werden | Altes Beispiel vorhanden; exhaustive aktive Referenz fehlt. |
+| CFG-002 | `pipeline-platform.v2` Referenz | Muss erweitert/überarbeitet werden | Operate erklärt Authority Groups und Relative-path-Regel mit Schemaquellen. Vollständige Felder, Typen, Defaults, Constraints, Precedence, sichere Beispiele, sensitive values und Fehler fehlen. |
+| CFG-003 | `nova-project.v2` Referenz | Muss erweitert/überarbeitet werden | Das Package-README ist tief, liegt aber außerhalb des zentralen Bestands. Felder, Source Admission, Modules, Gates, Coverage, Demo, Legacy Import und Diagnosen müssen in die zentrale Reference migrieren. |
+| CFG-004 | `pipeline-definition.v2` Referenz | Muss erweitert/überarbeitet werden | Operate erklärt die explizite Graphform; ältere Beispiele und Schemas existieren. Eine zentrale vollständige Feld-, Edge-, Input-, Budget-, Activation-, Result- und Fehlerreferenz fehlt. |
 | CFG-005 | `.swarm/pipeline.json` Referenz | Fehlt komplett | Größte Operatorlücke. |
-| CFG-006 | Suites, Tests, Fixtures, Overrides und Coverage | Muss erweitert/überarbeitet werden | Developererklärung vorhanden; Operatorreferenz fehlt. |
-| CFG-007 | Plugin-Konfiguration | Vollständig vorhanden | Katalog generiert Schemafelder. |
+| CFG-006 | Suites, Tests, Fixtures, Overrides und Coverage | Muss erweitert/überarbeitet werden | Buster Extension Guide erklärt Authoring und Resolution tiefgehend. Operatoren erhalten keine zentrale vollständige Syntax, Auswahlwirkung, Override-Reihenfolge, Coverage-Regel und effektive Planansicht. |
+| CFG-007 | Plugin-Konfiguration | Vollständig vorhanden | Jede zentrale Katalogseite generiert Schema-Link, Pflicht/Optional, Typ, Default, Enum und Bounds aus dem aktuellen Manifest-/Schema-Inventar und verbindet sie mit Package-Zweck und Grenze. |
 | CFG-008 | Worker-Profile, Engines und Rollen | Fehlt komplett | Keine exhaustive Operatorreferenz. |
-| CFG-009 | Helm-, GitOps- und Infrastrukturwerte | Muss erweitert/überarbeitet werden | Referenz ist Top-Level-Teilmenge und lässt 10 von 17 Values-/Schemaquellen aus. |
-| CFG-010 | Prism-, OpenClaw- und Codex-Konfiguration | Muss erweitert/überarbeitet werden | Teilreferenzen existieren; aktive exhaustive Integration fehlt. |
-| CFG-011 | Umgebungsvariablen und Secrets | Muss erweitert/überarbeitet werden | Nur Deployment-/Secret-Setup-Slice, keine vollständige Consumer-Matrix. |
+| CFG-009 | Helm-, GitOps- und Infrastrukturwerte | Muss erweitert/überarbeitet werden | Alte Helm-Referenz und aktive Installseite decken nur einen Ausschnitt. Zehn von 17 Values-/Schemaquellen sowie Nested Defaults, Profile, Ownership, Restartwirkung und effektive Werte fehlen zentral. |
+| CFG-010 | Prism-, OpenClaw- und Codex-Konfiguration | Muss erweitert/überarbeitet werden | Katalog und Host Guide dokumentieren Pluginfelder; alte Prism-/Ops-Seiten enthalten weitere Einstellungen. Vollständige zentrale Config Sources, Defaults, Secrets, Precedence, Consumer und Verification fehlen. |
+| CFG-011 | Umgebungsvariablen und Secrets | Muss erweitert/überarbeitet werden | Generierte alte Inventare und Secret-Seiten liefern Teilmengen. Eine vollständige zentrale Variable-/Secret-Consumer-Matrix mit Default, Sensitivity, Source, Scope, Rotation und Restartwirkung fehlt. |
 | CFG-012 | Ports, Services, Endpunkte und Ingress | Fehlt komplett | Kein generierter Katalog. |
-| CFG-013 | Precedence und Effective Values | Muss erweitert/überarbeitet werden | Teilweise erklärt; nicht für alle Familien. |
+| CFG-013 | Precedence und Effective Values | Muss erweitert/überarbeitet werden | Install nennt fünf Runtime-Value-Schichten; Platform Loader erklärt relative Pfade. Pipeline-, Host-, Helm-, GitOps-, Env- und Secret-Familien besitzen kein gemeinsames Precedence-Modell und keine sichere Effective-config-Ausgabe. |
 | CFG-014 | Änderungsauswirkung: Hot, Restart, New Run oder Migration | Fehlt komplett | Keine Matrix. |
 | CFG-015 | Validierungs- und Konfigurationsfehler | Fehlt komplett | Über Code und alte Dokumente verteilt. |
 
@@ -432,6 +448,7 @@ verbleibenden 133 Einstufungen sind weiterhin vorläufig.
 | 17.09.2026 | PLG-001–PLG-014 | Choice Guide; Contracts; Testing and Lifecycle; Deployment and Trust; Capability Reference; Foundation Registry, Package, Config und Isolation Sources | 4 vollständig; 9 zu erweitern; 1 fehlt | Authoring, immutable Replacement und Lifecycle sind stark; Registry-Interna, Trust, Config und Isolation brauchen Tiefe; Import Audit fehlt als kanonischer Inhalt | AP08-Checks; 51-Package-Inventar; direkte Source-Link-Prüfung; manuelle Contract-/Lifecycle-Prüfung am Stand `8df232e1` |
 | 17.09.2026 | COM-001–COM-012; DAT-001–DAT-009; TEL-001–TEL-007 | Aktive Architecture-, Trust-, Recovery-, Diagnose-, Contracts-, Buster-, Nova- und Effect-Seiten; Transport-, Store-, Journal- und Telemetriequellen | 2 vollständig; 18 zu erweitern; 8 fehlen | Zentrale Kommunikations-, Endpoint-, Daten- und Eventmatrizen fehlen; Observer-Lifecycle und Authority-vs-Observability sind vollständig; externe Recovery-Verweise verletzen das Zentralitätsziel | 124 Schema-/134 Contract-Dateien gezählt; aktive Quellverweise geprüft; Stores/Transporte inventarisiert; manuelle Flow-/Recovery-Prüfung am Stand `a3bcc527` |
 | 17.09.2026 | INF-001–INF-011; SEC-001–SEC-007 | Platform and Operations; Pipeline Dependencies; Deployment and Trust; Worker Trust; Install/Recovery; Roadmap; Charts, GitOps values, deploy/config/check scripts; alte Security/Ops-Seiten nur als Migrationsquellen | 6 vollständig; 12 zu erweitern; 0 fehlen | Pflicht/optional-Einordnung, CNI, Argo, Monitoring, Ops und geplante Grenzen sind stark; Querschnittsmatrizen für Threats, Identity, Secrets, Network, Supply Chain und Rechte fehlen | Direkte Source-/Roadmap-Prüfung; aktive-versus-alte Zielprüfung; manuelle Failure-/Recovery-/Security-Prüfung am Stand `a3bcc527` |
+| 17.09.2026 | OPR-001–OPR-009; OPL-001–OPL-005; CFG-001–CFG-015 | Zentraler Use-Track und Plugin-Katalog; CLI-/Config-Schemas; alte Deployment-, Operations-, Reference- und Ops-Seiten als Migrationsquellen | 7 vollständig; 14 zu erweitern; 8 fehlen | Lifecycle und Kern-CLI sind stark; drei zuvor vollständige Operatorbereiche wegen notwendiger Altverweise herabgestuft; zentrale Config-, Dependency-, Port- und Change-impact-Referenzen fehlen | Zentralitätsprüfung aller notwendigen Links; Command-/Schemaquellen und AP07/AP08-Checks geprüft; manuelle Task-Prüfung am Stand `2bf6c7ac` |
 
 ## Abschluss von AP09.0
 
