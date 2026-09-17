@@ -1,7 +1,7 @@
 # AP09 Masterprüfung der Dokumentationsvollständigkeit
 
 Stand: 17.09.2026  
-Status: Prüfkatalog erstellt; 194 von 251 Punkten einzeln geprüft; inhaltliche Umsetzung offen
+Status: 251 von 251 Punkten intern einzeln geprüft; unabhängige Katalogprüfung und inhaltliche Umsetzung offen
 Scope: aktive Produktdokumentation, Referenzen, Veröffentlichung und Pflegeautomation
 
 ## Zweck
@@ -81,9 +81,10 @@ zutreffenden Fragen mit Ja beantwortet sind:
 7. Navigation, Darstellung und Veröffentlichung
 8. unabhängige Leser- und Wartbarkeitsabnahme
 
-Aktueller Prüfstand: `GOV-001` bis `CDV-013` sind einzeln geprüft. Davon sind
-40 Punkte vollständig vorhanden, 103 zu erweitern und 51 fehlen komplett. Die
-verbleibenden 57 Einstufungen sind weiterhin vorläufig.
+Aktueller Prüfstand: Alle 251 Punkte sind einzeln gegen den aktuellen Bestand
+geprüft. Davon sind 51 Punkte vollständig vorhanden, 128 zu erweitern und 72
+fehlen komplett. Die interne Erstprüfung ist damit vollständig. Die unabhängige
+Prüfung der Katalogvollständigkeit aus der Abschlussregel bleibt offen.
 
 ## A. Umfang und Governance
 
@@ -341,80 +342,80 @@ verbleibenden 57 Einstufungen sind weiterhin vorläufig.
 
 ## M. Exhaustive Referenz
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| REF-001 | Reference-Index | Fehlt komplett | Aktive Reference enthält nur Capabilities und Glossar. |
-| REF-002 | Alle CLI-Kommandos und Flags | Muss erweitert/überarbeitet werden | Deployment-Slice vorhanden; alle CLIs fehlen. |
-| REF-003 | Alle Konfigurationsfamilien | Fehlt komplett | Kein gemeinsamer Index. |
-| REF-004 | Alle Schemas, Constraints und Defaults | Fehlt komplett | 246 Schema-Dateien, kein globaler Katalog. |
-| REF-005 | Alle Fehlercodes mit Ursache, Wirkung und Recovery | Fehlt komplett | Teilcheck meldet mindestens 17 undokumentierte Suite-Fehler. |
-| REF-006 | Alle Event- und Payloadtypen | Fehlt komplett | Telemetrie-Schemas nicht erschlossen. |
-| REF-007 | Capabilities | Vollständig vorhanden | Aktive generierte Seite existiert. |
-| REF-008 | Plugins und Registrierungen | Vollständig vorhanden | AP08-Katalog und Inventar existieren. |
-| REF-009 | Rollen und Package Ownership | Muss erweitert/überarbeitet werden | Daten vorhanden; aktive Reference-Seite fehlt. |
-| REF-010 | Contracts, Versionen und Kompatibilität | Fehlt komplett | Kein zentraler Katalog. |
-| REF-011 | Ports, Endpunkte und Netzwerkpfade | Fehlt komplett | Kein zentraler Katalog. |
-| REF-012 | Secrets, Umgebungsvariablen und Consumer | Muss erweitert/überarbeitet werden | Teilgeneratoren vorhanden; vollständige Abdeckung fehlt. |
-| REF-013 | Helm- und GitOps-Werte | Muss erweitert/überarbeitet werden | Top-Level-Teilmenge vorhanden. |
-| REF-014 | Stores, Pfade und Retention | Fehlt komplett | Recovery erklärt Aufgaben, keine exhaustive Referenz. |
-| REF-015 | Images, Versionen und Digests | Muss erweitert/überarbeitet werden | Einzelreferenz vorhanden; aktive Integration fehlt. |
-| REF-016 | Verifikationscommands und CI-Workflows | Muss erweitert/überarbeitet werden | Generatoren vorhanden; Scope und Environment teils unklar. |
-| REF-017 | Glossar | Vollständig vorhanden | Nach neuen Referenzen erneut ergänzen. |
+| REF-001 | Reference-Index | Fehlt komplett | `docs/site/reference` enthält nur `capabilities.md` und `glossary.md`; es gibt keinen Einstieg, der Referenzfamilien, Leserfragen oder Zuständigkeiten erschließt. |
+| REF-002 | Alle CLI-Kommandos und Flags | Muss erweitert/überarbeitet werden | `use/deployment.md` erklärt einen wichtigen Deploy-Pfad und dessen Flags. Andere ausführbare Einstiegspunkte und Skripte besitzen keine gemeinsame, generierte CLI-Referenz mit Defaults, Voraussetzungen, Exit-Verhalten und Beispielen. |
+| REF-003 | Alle Konfigurationsfamilien | Fehlt komplett | Konfiguration liegt in Schemas, Rollen, Charts, Deploy-Dateien und Pluginseiten verteilt. Keine zentrale Seite inventarisiert Familien, Präzedenz, Owner, Consumer, Reload-Verhalten und sensible Werte. |
+| REF-004 | Alle Schemas, Constraints und Defaults | Fehlt komplett | Aktuell existieren 245 `*.schema.json`-Dateien unter `skills`, `contracts` und `charts`. Kein globaler Katalog ordnet sie Produktoberflächen, Versionen, Consumer, Constraints und Defaults zu. |
+| REF-005 | Alle Fehlercodes mit Ursache, Wirkung und Recovery | Fehlt komplett | Alte Suite-Fehlerreferenzen sind keine kanonische Gesamtreferenz. `verify:docs:error-codes` meldet bereits in dieser Teilmenge 17 undokumentierte Codes; Core, Dienste und Infrastruktur sind nicht gemeinsam inventarisiert. |
+| REF-006 | Alle Event- und Payloadtypen | Fehlt komplett | Allein `contracts/telemetry` enthält 124 JSON-Schemas in 134 Dateien. Es fehlt eine aktive Referenz für Producer, Consumer, Version, Korrelation, Reihenfolge, Wiederholung, Retention und Recovery je Event oder Payload. |
+| REF-007 | Capabilities | Vollständig vorhanden | `reference/capabilities.md` wird aus `capability-vocabulary.ts` und allen aktuellen Registrierungen erzeugt. Der Publication-Generator prüft die registrierten Namen und ihre deklarierenden Plugins. |
+| REF-008 | Plugins und Registrierungen | Vollständig vorhanden | Der AP08-Katalog besitzt 51 Paketseiten plus Index. Inventar-, Coverage-, Source-Range- und Reader-Checks verbinden Pakete, Registrierungen, Schemas, Rollen, Tests und authored guidance. |
+| REF-009 | Rollen und Package Ownership | Muss erweitert/überarbeitet werden | Rollenmanifeste und `packaging/runtime/package-ownership.json` liefern mechanische Fakten. Rollen erscheinen teilweise in Architektur und Plugin-Katalog, aber eine zentrale Reference mit Bundle-Inhalt, Entrypoint, Consumer, Grenzen und Änderungswirkung fehlt. |
+| REF-010 | Contracts, Versionen und Kompatibilität | Fehlt komplett | Vertragsdateien und einzelne Erklärungen existieren, jedoch keine zentrale Matrix für Contract-ID, Schema-Version, Producer, Consumer, Kompatibilitätsrichtung, Migrationsregel und Retirement. |
+| REF-011 | Ports, Endpunkte und Netzwerkpfade | Fehlt komplett | Endpunkte stehen verteilt in Code, Charts und Operationsquellen. Es gibt keine exhaustive Referenz für Bind-Adresse, Port, Protokoll, Authentisierung, Aufrufer, Netzwerkgrenze, Health und Exposure. |
+| REF-012 | Secrets, Umgebungsvariablen und Consumer | Muss erweitert/überarbeitet werden | Pluginseiten, Helm-Slices und Deploymenttexte erklären Teilmengen. Es fehlt ein vollständiges, sicher redigiertes Inventar für Name, Quelle, Consumer, Pflichtstatus, Default, Rotation, Reload und Fehlerwirkung. |
+| REF-013 | Helm- und GitOps-Werte | Muss erweitert/überarbeitet werden | Das vorhandene Helm-Inventar deckt nur sieben von 17 Values-/Schemaquellen ab. GitOps-Werte, Präzedenz, generierte Übergaben, sensible Felder, Upgrade-Wirkung und konkrete Consumer sind nicht lückenlos erschlossen. |
+| REF-014 | Stores, Pfade und Retention | Fehlt komplett | `use/recovery.md` erklärt Aufgaben und Grenzen, ersetzt aber kein Inventar. Es fehlt die Zuordnung von Store oder Pfad zu Owner, Daten, Autorität, Lebensdauer, Quota, Cleanup, Backup, Restore und Verlustwirkung. |
+| REF-015 | Images, Versionen und Digests | Muss erweitert/überarbeitet werden | Build- und Releasequellen dokumentieren einzelne Identitäten. Eine aktive Reference, die Image-Quelle, Version, Plattform, Digest, Rolle, Promotion, Deployment und Prüfung verbindet, fehlt. |
+| REF-016 | Verifikationscommands und CI-Workflows | Muss erweitert/überarbeitet werden | `package.json` und zwölf Workflowdateien enthalten viele Checks; Guides nennen relevante Teilmengen. Es fehlt ein Index mit Zweck, Scope, Umgebung, Schreibwirkung, erwarteter Ausgabe, Owner und Change-to-check-Routing. |
+| REF-017 | Glossar | Vollständig vorhanden | `reference/glossary.md` definiert zentrale Begriffe und grenzt ähnliche Begriffe ausdrücklich ab. Neue AP09-Seiten müssen neue Fachbegriffe ergänzen und der globale Reader-Review muss Konsistenz erneut prüfen. |
 
 ## N. Entscheidungen, Status und Veröffentlichung
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| DEC-001 | Entscheidungen mit stabilen IDs | Vollständig vorhanden | Decision-Bereich existiert. |
-| DEC-002 | Gründe, Alternativen, Konsequenzen und Supersession | Muss erweitert/überarbeitet werden | Publication-Check meldet Probleme in alten Seiten. |
-| STA-001 | Aktueller Status, offene Implementierung und Live-Gates | Vollständig vorhanden | Current, Open Issues und Acceptance sind getrennt. |
-| STA-002 | Öffentliche Statusangaben stimmen mit Registern überein | Muss erweitert/überarbeitet werden | Publication- und Blueprint-Checks sind nicht grün. |
-| PUB-001 | Navigation erreicht jede Kernaufgabe | Muss erweitert/überarbeitet werden | Reference und Platform Developer fehlen. |
-| PUB-002 | Suchindex und Allowlist | Muss erweitert/überarbeitet werden | AP09-Arbeit offen. |
-| PUB-003 | Links, Anker und revisionsgebundene Codebelege | Muss erweitert/überarbeitet werden | AP06–AP08 stark; neue Referenzen und alte Seiten offen. |
-| PUB-004 | Codevorschau aus derselben Quelle | Fehlt komplett | Gewünschte Rendererfunktion fehlt. |
-| PUB-005 | Diagramme mit Textalternative | Muss erweitert/überarbeitet werden | Neun geprüfte Diagramme vorhanden; Detailarchitektur braucht gezielte Ergänzungen. |
-| PUB-006 | Interaktivität mit statischem Fallback | Fehlt komplett | Nur bei konkretem Lesernutzen umsetzen. |
-| PUB-007 | Mobile, Tastatur und Accessibility | Muss erweitert/überarbeitet werden | Globale Renderabnahme offen. |
-| PUB-008 | Lokaler Build und CI-Publication-Gates | Muss erweitert/überarbeitet werden | Publication-Check ist rot; CI prüft nur Teilmengen. |
-| PUB-009 | Keine parallelen widersprüchlichen Altpfade | Muss erweitert/überarbeitet werden | AP10 muss alte Bäume nach Informationsübernahme entfernen. |
+| DEC-001 | Entscheidungen mit stabilen IDs | Vollständig vorhanden | Der Decision-Bereich bewahrt ADR-001–ADR-022, D-001–D-119, D01–D16, D12 sowie ursprüngliche Finding-IDs. Der Index erklärt die getrennten Namensräume und verbietet stilles Umschreiben von Autorität. |
+| DEC-002 | Gründe, Alternativen, Konsequenzen und Supersession | Muss erweitert/überarbeitet werden | Viele ADRs enthalten diese Felder detailliert. Drei Decision-Seiten haben jedoch kein `Evidence`-Metadatum; der Publication-Check findet ungültige Belegpfade, entfernte Contract-Terme und weitere redaktionelle Fehler. Nicht jede abgeleitete Entscheidung besitzt dieselbe strukturierte Tiefe. |
+| STA-001 | Aktueller Status, offene Implementierung und Live-Gates | Vollständig vorhanden | `status/current.md`, der aus JSON generierte offene Registerbestand und `status/acceptance.md` trennen Source-Status, offene Implementierung, lokale Verifikation und Live-Abnahme. Stable IDs und Acceptance-Gates verbinden die Sichten. |
+| STA-002 | Öffentliche Statusangaben stimmen mit Registern überein | Muss erweitert/überarbeitet werden | Der generierte Issue-Bestand ist frisch, aber `status/current.md` nennt den Stand weiterhin einen AP04-Arbeitsentwurf. Zwei Understand-Seiten kündigen AP08 trotz Abschluss als Zukunft an. Publication- und Blueprint-Check sind ebenfalls rot. |
+| PUB-001 | Navigation erreicht jede Kernaufgabe | Muss erweitert/überarbeitet werden | Die drei Einstiege Understand, Operate und Extend sind klar. Exhaustive Reference, Platform/Core Development, vollständige Workflows und mehrere Infrastrukturaufgaben fehlen oder sind nur über alte Quellen erreichbar. |
+| PUB-002 | Suchindex und Allowlist | Muss erweitert/überarbeitet werden | Ein Verzeichnis-Boundary begrenzt die Veröffentlichung auf `docs/site`. Entgegen `docs/README.md` besitzt `scripts/docs-publication.mjs` aber keine explizite Seiten-Allowlist; es läuft rekursiv über alle Markdownseiten. Ein Suchindex fehlt. |
+| PUB-003 | Links, Anker und revisionsgebundene Codebelege | Muss erweitert/überarbeitet werden | AP06–AP08 besitzen viele direkte und gepinnte Belege sowie strukturelle Checks. Der Publication-Check findet dennoch ungültige Evidence-Pfade; neue Reference- und Developer-Seiten benötigen erst ihre Quellenlinks. |
+| PUB-004 | Codevorschau aus derselben Quelle | Fehlt komplett | Der Build wandelt Evidence-Pfade in revisionsgebundene Links um, rendert aber keinen Quellausschnitt. Es gibt keine Komponente, die Link und automatisch aus derselben Revision gelesenen Code in einem Kasten verbindet. |
+| PUB-005 | Diagramme mit Textalternative | Muss erweitert/überarbeitet werden | Neun geprüfte Diagramme besitzen textliche Erklärungen und Belege. Die Detailarchitektur für noch fehlende Core-, Kommunikation-, Daten- und Plattformthemen benötigt weitere gezielte Diagramme; eine gerenderte visuelle Abnahme fehlt. |
+| PUB-006 | Interaktivität mit statischem Fallback | Fehlt komplett | Der aktuelle Build kopiert Markdown und erzeugt einen Bericht. Es gibt weder interaktive Architekturansicht noch statischen Export einer solchen Ansicht. Umsetzung bleibt optional und braucht einen konkreten Lesernutzen. |
+| PUB-007 | Mobile, Tastatur und Accessibility | Muss erweitert/überarbeitet werden | Markdown ist grundsätzlich portabel und Diagramme haben Textalternativen. Es gibt jedoch keinen finalen Renderer und keine dokumentierte Abnahme für schmale Viewports, Tastatur, Fokus, Kontrast oder Screenreader. |
+| PUB-008 | Lokaler Build und CI-Publication-Gates | Muss erweitert/überarbeitet werden | Lokale Generate-, Check- und Build-Kommandos existieren. `docs:publication:check` ist rot, und `.github/workflows/docs-checks.yaml` führt weder Publication-/Blueprint- noch Suite-Dokumentationschecks aus. Der Build kopiert Markdown statt eine Leserpräsentation zu rendern. |
+| PUB-009 | Keine parallelen widersprüchlichen Altpfade | Muss erweitert/überarbeitet werden | `docs/site` ist als Ziel erklärt, doch aktive Seiten verlinken noch notwendige alte Architektur-, Deployment-, Operations- und Reviewquellen. AP10 darf sie erst nach validierter Informationsübernahme entfernen. |
 
 ## O. Wartbarkeit und Drift-Erkennung
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| MNT-001 | Eine Quelle der Wahrheit je mechanischem Fakt | Muss erweitert/überarbeitet werden | Für Plugins erfüllt; übrige Referenzen offen. |
-| MNT-002 | Generierte Pluginfakten | Vollständig vorhanden | Manifest-, Schema-, Rollen- und Testfakten werden generiert. |
-| MNT-003 | Generierte Konfigurationen und Defaults | Fehlt komplett | Helmreferenz ist nur ein Slice. |
-| MNT-004 | Generierte CLI-Flags | Fehlt komplett | Deploymentcommand-Inventar ist nicht vollständig. |
-| MNT-005 | Generierte Fehlercodes | Fehlt komplett | Kein zentraler Katalog. |
-| MNT-006 | Generierte Events und Payloads | Fehlt komplett | Telemetrie-Schemas nicht veröffentlicht. |
-| MNT-007 | Generierte Rollen, Packages und Registrierungen | Vollständig vorhanden | Rollen- und AP08-Inventare existieren. |
-| MNT-008 | Generierte Ports, Endpunkte, Stores und Retention | Fehlt komplett | Keine Inventare. |
-| MNT-009 | Source-to-Doc-Abdeckungsmatrix | Fehlt komplett | Kein Checker verlangt eine Zielseite je öffentlicher Oberfläche. |
-| MNT-010 | Driftcheck für Schemafelder | Muss erweitert/überarbeitet werden | Teilcheck meldet drei Lücken; globale Abdeckung fehlt. |
-| MNT-011 | Driftcheck für Fehlercodes | Muss erweitert/überarbeitet werden | Teilcheck meldet 17 Lücken; globale Abdeckung fehlt. |
-| MNT-012 | Driftcheck für Plugins und Registrierungen | Vollständig vorhanden | AP08-Checks sind grün. |
-| MNT-013 | Driftcheck für Links, Anker und Quellbereiche | Vollständig vorhanden | Lokale und gepinnte Checks existieren. |
-| MNT-014 | Ausführbare, schema-validierte Beispiele | Muss erweitert/überarbeitet werden | AP08-Beispiel vorhanden; Operatorbeispiele fehlen. |
-| MNT-015 | Owner und Reviewpflicht bei Codeänderungen | Fehlt komplett | Keine vollständige maschinenlesbare Matrix. |
-| MNT-016 | Generatoren überschreiben keine Erklärungen | Vollständig vorhanden | AP08-Muster soll für AP09 gelten. |
-| MNT-017 | Pflegeanleitung für Dokumentationsagenten | Fehlt komplett | AP11 muss den Vertrag erstellen. |
+| MNT-001 | Eine Quelle der Wahrheit je mechanischem Fakt | Muss erweitert/überarbeitet werden | Manifest-, Registration- und Capability-Fakten folgen bereits Quellgeneratoren. Konfiguration, CLI, Contracts, Events, Fehler, Endpunkte und Stores werden dagegen noch mehrfach oder gar nicht redaktionell abgebildet. |
+| MNT-002 | Generierte Pluginfakten | Vollständig vorhanden | AP08 erzeugt 51 Paketdatensätze und Katalogseiten aus Manifesten, Package-Metadaten, Schemas, Rollen und Testdateien. Separates Guidance-JSON schützt die redaktionellen Erklärungen. |
+| MNT-003 | Generierte Konfigurationen und Defaults | Fehlt komplett | Es gibt Plugin- und Helm-Teilgeneratoren, aber kein Inventar über alle Config-Schemas, Values, Rollen und Dienste. Defaults, Präzedenz und Consumer können daher außerhalb der Teilmengen driften. |
+| MNT-004 | Generierte CLI-Flags | Fehlt komplett | Kein Generator extrahiert alle Commands, Subcommands, Optionen, Defaults und Exitcodes aus Skripten und Entrypoints. Das Deployment-Inventar deckt nur einen Bedienpfad ab. |
+| MNT-005 | Generierte Fehlercodes | Fehlt komplett | Der Suite-Check vergleicht eine alte Teilreferenz, erzeugt aber keinen kanonischen Gesamtkatalog. Für Core, Services, Plugins und Infrastruktur gibt es keinen gemeinsamen Extractor. |
+| MNT-006 | Generierte Events und Payloads | Fehlt komplett | Telemetrie- und weitere Contract-Schemas liegen maschinenlesbar vor, werden aber nicht zu einer aktiven Event-/Payloadreferenz mit Producer- und Consumerbeziehungen erzeugt. |
+| MNT-007 | Generierte Rollen, Packages und Registrierungen | Vollständig vorhanden | Rollenmanifeste, Package-Ownership, Plugin-Inventar und Publication-Generator erfassen Rollenaufnahme, Host und Registrierungen. AP08-Checks erkennen fehlende oder zusätzliche Pakete. |
+| MNT-008 | Generierte Ports, Endpunkte, Stores und Retention | Fehlt komplett | Es gibt keinen maschinenlesbaren Gesamtbestand oder Generator für diese Betriebsflächen. Werte bleiben über Charts, Code, Config und Runbooks verteilt. |
+| MNT-009 | Source-to-Doc-Abdeckungsmatrix | Fehlt komplett | Topic Map und dieses Audit listen Themen, aber kein Checker ordnet jede entdeckte öffentliche Oberfläche einer kanonischen Zielseite, einem Owner und einem Driftcheck zu. |
+| MNT-010 | Driftcheck für Schemafelder | Muss erweitert/überarbeitet werden | `verify:docs:schema-fields` erkennt Drift in einer Suite-Teilmenge und meldet aktuell `minimumExecutedTests`, `requiredTests` und `retentionMode`. Die übrigen 245 Schemas besitzen keine gleichwertige globale Abdeckung. |
+| MNT-011 | Driftcheck für Fehlercodes | Muss erweitert/überarbeitet werden | `verify:docs:error-codes` erkennt aktuelle Suite-Drift und meldet 17 konkrete Codes. Der Check deckt nicht alle Fehlerproduzenten ab und die geprüften Seiten liegen noch außerhalb der zentralen Site. |
+| MNT-012 | Driftcheck für Plugins und Registrierungen | Vollständig vorhanden | Inventory-, Publication-, Choice-, Minimal-, Advanced-, Effectful-, Observer- und Reader-Reference-Checks decken die 51 Plugins und ihre Registrierungen ab. |
+| MNT-013 | Driftcheck für Links, Anker und Quellbereiche | Vollständig vorhanden | `docs:check:refs` prüft lokale Ziele und Anker; der AP08-Reader-Check prüft zusätzlich gepinnte Git-Quellbereiche. Die Checks trennen strukturelle Gültigkeit ausdrücklich von semantischer Review. |
+| MNT-014 | Ausführbare, schema-validierte Beispiele | Muss erweitert/überarbeitet werden | Das minimale Pluginbeispiel wird ausgeführt, und `verify:docs:examples` besteht für seine Suite-Teilmenge. Vollständige Operator-, Pipeline-, Config-, Failure- und Infrastrukturbeispiele fehlen. |
+| MNT-015 | Owner und Reviewpflicht bei Codeänderungen | Fehlt komplett | Seiten nennen Owner, doch es existiert keine vollständige maschinenlesbare Zuordnung von Quelloberfläche zu Dokumentseite, Owner, Reviewer und erforderlichem Check. |
+| MNT-016 | Generatoren überschreiben keine Erklärungen | Vollständig vorhanden | AP08 trennt mechanisches Inventar, lokale Verifikation und authored guidance. Die Generatoren bauen Faktenblöcke neu, ohne die redaktionelle Begründung aus Quellcode abzuleiten oder zu überschreiben. |
+| MNT-017 | Pflegeanleitung für Dokumentationsagenten | Fehlt komplett | Der Qualitätsstandard beschreibt Ziele, aber es gibt noch keinen ausführbaren zentralen Wartungsvertrag für Discovery, Änderungsauswirkung, Generierung, Review, Leserprobe und sichere Altdatei-Entfernung. AP11 muss ihn liefern. |
 
 ## P. Qualitäts- und Leserabnahme
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| QUA-001 | Verständliches technisches Englisch und technische Tiefe | Muss erweitert/überarbeitet werden | AP06–AP08 erfüllen das Ziel überwiegend; globale Prüfung offen. |
-| QUA-002 | Formale ASD-STE100-Prüfung | Muss erweitert/überarbeitet werden | Issue-9-Prüfung bleibt AP11. |
-| QUA-003 | Jede wichtige Entscheidung begründet | Muss erweitert/überarbeitet werden | Gute Basis; nicht für alle neuen Core- und Referenzthemen. |
-| QUA-004 | Jede technische Behauptung passend belegt | Muss erweitert/überarbeitet werden | Publication-Check meldet fehlende Decision-Belege. |
-| QUA-005 | Keine falschen Live- oder Vollständigkeitsclaims | Vollständig vorhanden | Qualitätsstandard trennt Evidenzgrenzen. |
-| QUA-006 | Leserprobe neuer technischer Leser | Muss erweitert/überarbeitet werden | Gesamtsite folgt in AP11. |
-| QUA-007 | Leserprobe Operator | Fehlt komplett | Muss Workflow, Fehler und Recovery ohne Chatwissen ausführen. |
-| QUA-008 | Leserprobe Extension Developer | Vollständig vorhanden | AP08 unabhängig akzeptiert. |
-| QUA-009 | Leserprobe Platform/Core Developer | Fehlt komplett | Developer-Handbook fehlt. |
-| QUA-010 | Wartbarkeitsprobe mit künstlicher Oberflächenänderung | Fehlt komplett | CI muss neues Feld, Event, Plugin, Flag und Fehlercode erkennen. |
+| QUA-001 | Verständliches technisches Englisch und technische Tiefe | Muss erweitert/überarbeitet werden | AP06–AP08 erklären viele schwierige Grenzen in klarem technischem Englisch. Die fehlenden Architektur-, Operator-, Workflow-, Developer- und Reference-Bereiche verhindern eine globale Abnahme; Decision- und Statusseiten enthalten noch schwer lesbare Sätze. |
+| QUA-002 | Formale ASD-STE100-Prüfung | Muss erweitert/überarbeitet werden | Ein eigener Controlled-Language-Check und redaktionelle Regeln existieren. Der aktuelle Publication-Check meldet Passiv, vage Wörter und zu lange Sätze; die formale ASD-STE100-Issue-9-Abnahme bleibt AP11. |
+| QUA-003 | Jede wichtige Entscheidung begründet | Muss erweitert/überarbeitet werden | ADRs erklären häufig Grund, Alternativen, Folge und Supersession. Noch fehlende Core-, Daten-, Konfigurations-, Operations- und Developer-Themen besitzen diese Erklärung nicht durchgängig im zentralen Leserpfad. |
+| QUA-004 | Jede technische Behauptung passend belegt | Muss erweitert/überarbeitet werden | Evidence-Metadaten und direkte Source-Links sind Standard in AP06–AP08. Drei Decision-Seiten besitzen kein Evidence-Feld, zwei Seiten nennen nicht vorhandene Quellpfade, und die noch fehlenden Seiten können noch keine Belegabnahme bestehen. |
+| QUA-005 | Keine falschen Live- oder Vollständigkeitsclaims | Muss erweitert/überarbeitet werden | Der Qualitätsstandard und die Statusstruktur trennen Source, lokal geprüft und live abgenommen. Trotzdem nennen `status/current.md` und zwei Understand-Seiten AP04/AP08 falsch oder veraltet; globale Vollständigkeit darf daher noch nicht behauptet werden. |
+| QUA-006 | Leserprobe neuer technischer Leser | Muss erweitert/überarbeitet werden | Understand besitzt einen guten Einstieg und Systemfluss. Eine dokumentierte unabhängige End-to-End-Leserprobe über Navigation, Begriffe, Workflow, Reference und Fehlerweg der gesamten Site fehlt. |
+| QUA-007 | Leserprobe Operator | Fehlt komplett | Es gibt keine unabhängige Abnahme, in der ein Operator Installation, Konfiguration, Beispielpipeline, Diagnose, Recovery und Cleanup ausschließlich mit der zentralen Dokumentation ausführt. |
+| QUA-008 | Leserprobe Extension Developer | Vollständig vorhanden | AP08 wurde mit festem Scope unabhängig geprüft. Katalog, Choice Guide, Minimal- und Advanced-Pfade sowie Referenzen wurden akzeptiert; die festgestellten Runtime-Probleme stehen getrennt im offenen Register. |
+| QUA-009 | Leserprobe Platform/Core Developer | Fehlt komplett | Das zentrale Developer-Handbook und seine komponentenspezifischen Change-Workflows fehlen. Deshalb kann noch kein unabhängiger Leser eine Core-/Platformänderung ohne Package- oder Chatwissen ausführen. |
+| QUA-010 | Wartbarkeitsprobe mit künstlicher Oberflächenänderung | Fehlt komplett | Es gibt keine Mutation-Abnahme, die je ein neues Config-Feld, Event, Plugin, Flag und Fehlercode einführt und beweist, dass CI die jeweils fehlende Dokumentation erkennt. |
 
 ## Bereits bestätigte globale Befunde
 
@@ -426,7 +427,7 @@ verbleibenden 57 Einstufungen sind weiterhin vorläufig.
 | Plugin-Katalog | 51 Paketseiten plus Index; 8.078 Zeilen |
 | Aktive Reference | nur Capabilities und Glossar |
 | Plugin-Konfigurationsschemas | 45 |
-| Schema-Dateien unter Skills, Contracts und Charts | 246 |
+| Schema-Dateien unter Skills, Contracts und Charts | 245 |
 | Telemetrie-Schemadateien | 124 JSON-Schemas in 134 Contract-Dateien; keine vollständige aktive Referenz |
 | Values-/Values-Schemaquellen | 17; vorhandenes Helm-Inventar deckt 7 ab |
 | Publication Check | fehlgeschlagen; fehlende Belege, entfernte Contract-Terme und Sprachfindings |
@@ -451,6 +452,35 @@ verbleibenden 57 Einstufungen sind weiterhin vorläufig.
 | 17.09.2026 | OPR-001–OPR-009; OPL-001–OPL-005; CFG-001–CFG-015 | Zentraler Use-Track und Plugin-Katalog; CLI-/Config-Schemas; alte Deployment-, Operations-, Reference- und Ops-Seiten als Migrationsquellen | 7 vollständig; 14 zu erweitern; 8 fehlen | Lifecycle und Kern-CLI sind stark; drei zuvor vollständige Operatorbereiche wegen notwendiger Altverweise herabgestuft; zentrale Config-, Dependency-, Port- und Change-impact-Referenzen fehlen | Zentralitätsprüfung aller notwendigen Links; Command-/Schemaquellen und AP07/AP08-Checks geprüft; manuelle Task-Prüfung am Stand `2bf6c7ac` |
 | 17.09.2026 | FLW-001–FLW-016 | Zentraler Quickstart, Operate, Recovery, Architecture, Buster, Effect und Plugin Lifecycle; aktive Beispiele; Compiler-/Reliability-/E2E-Fixtures nur als Quellen | 0 vollständig; 7 zu erweitern; 9 fehlen | Nur das minimale Plugin besitzt eine gepflegte Beispielressource; vollständige Pipeline-, Config-, Failure- und Infrastructure-Workflows fehlen | Zentralen Beispielbestand und alle Pipeline-Dateiverweise inventarisiert; CLI-/Compiler-/Testquellen manuell geprüft am Stand `e63c533b` |
 | 17.09.2026 | DEV-001–DEV-009; EXT-001–EXT-009; CDV-001–CDV-013 | Zentraler Extend-Track; alter Developer-Baum; Package-/Core-READMEs; Scripts und CI; Core-, Worker-, Foundation-, Buster-, Prism-, Service-, UI-, Infrastructure- und Migrationquellen | 9 vollständig; 5 zu erweitern; 17 fehlen | Extensionentwicklung ist vollständig; Plattform-/Core-Entwicklung, Setup, Builds, Check-Routing, Release und alle komponentenspezifischen Change-Workflows fehlen zentral | Developer-/Scriptinventar; AP08-Reader-/Harnesschecks; manuelle Change-to-check-/Consumerprüfung am Stand `e63c533b` |
+| 17.09.2026 | REF-001–REF-017 | Aktive Reference; Plugin-Katalog; Schemas; Contracts; Rollen; Package-Ownership; Config-, Deploy-, Release- und Workflowquellen | 3 vollständig; 6 zu erweitern; 8 fehlen | Capabilities, Plugins und Glossar sind belastbar; ein Index und exhaustive CLI-, Config-, Schema-, Error-, Event-, Contract-, Endpoint- und Store-Referenzen fehlen | 245 Schemas gezählt; 124 Telemetrie-Schemas in 134 Dateien bestätigt; Reference-Bestand und Publication-Generator manuell geprüft am Stand `da471405` |
+| 17.09.2026 | DEC-001–DEC-002; STA-001–STA-002; PUB-001–PUB-009 | Decision- und Statusbestand; Site-Navigation; Publication-Skript und Docs-CI; Blueprint-Publikationsregeln | 2 vollständig; 9 zu erweitern; 2 fehlen | Stable IDs und Statussichten sind vorhanden; Statussätze sind veraltet, Allowlist-Versprechen und Implementierung widersprechen sich, Codevorschau und Interaktivität fehlen | `docs:publication:check` rot; rekursive Publication-Auswahl und Build-Ausgabe geprüft; zwölf Workflowdateien inventarisiert am Stand `da471405` |
+| 17.09.2026 | MNT-001–MNT-017 | Package-Scripts; Docs-Generatoren; AP08-Inventare und Checks; Schema-/Error-/Example-Checks; Docs-CI | 5 vollständig; 4 zu erweitern; 8 fehlen | Pluginpflege ist stark; globale Generatoren, Surface-to-Doc-Matrix, Ownership-Matrix und Agenten-Pflegevertrag fehlen | Schema-Check rot mit 3 Feldern; Error-Check rot mit 17 Codes; Example-Check grün; Blueprint-Check rot wegen stale Ledger am Stand `da471405` |
+| 17.09.2026 | QUA-001–QUA-010 | Qualitätsstandard; aktive Site; Publication-Sprachcheck; AP08-Abnahme; Status- und Evidence-Grenzen | 1 vollständig; 6 zu erweitern; 3 fehlen | Nur die unabhängige Extension-Developer-Probe ist abgeschlossen; globale Sprache, Begründung, Belege und Wahrheitsgrenzen brauchen Nacharbeit; drei Reader-/Mutation-Proben fehlen | Publication-Sprach- und Evidence-Findings geprüft; AP08-Acceptance abgeglichen; veraltete AP04-/AP08-Claims direkt bestätigt am Stand `da471405` |
+
+## Verbindliche AP09-Umsetzungspakete
+
+Die Pakete bauen ausschließlich den zentralen Bestand unter `docs/site` aus. Alte
+Dateien bleiben bis zur validierten Übernahme Quellen. AP10 entfernt sie danach.
+Jede ID mit Überarbeitungsbedarf oder fehlendem Inhalt gehört genau einem primären
+Paket. Vollständige Punkte dienen als Abnahmeabhängigkeit und werden nicht neu
+geschrieben, wenn kein belegter Fehler vorliegt.
+
+| Paket | Primärer Umfang | Ergebnis und Reihenfolge |
+| --- | --- | --- |
+| AP09.1 — Wahrheit und Leserwege | `GOV-*`, `ENT-*`, `DEC-*`, `STA-*` | Statuswidersprüche, Source-Authority und Navigation zuerst korrigieren. Dies schafft eine ehrliche Basis für alle neuen Seiten. |
+| AP09.2 — Core und Ausführung | `ARC-*`, `NVC-*`, `WKC-*`, `SPC-*`, `PLG-*` | Nova Core, Worker Core, Spezialisten, Registry und Plugin-Laufzeit tief und zusammenhängend erklären. |
+| AP09.3 — Kommunikation und Plattform | `COM-*`, `DAT-*`, `TEL-*`, `INF-*`, `SEC-*` | Kommunikation, Daten, Telemetrie, Pflichtdienste, optionale Plattformdienste und Trust-Grenzen integrieren. |
+| AP09.4 — Operator und Konfiguration | `OPR-*`, `OPL-*`, `CFG-*` | Vollständige Konfigurations-, Installations-, Diagnose-, Recovery- und Änderungswirkung für Operatoren liefern. |
+| AP09.5 — Workflows und Pipeline | `FLW-*` | Einen vollständigen Beispielweg und alle `pipeline.json`-Möglichkeiten mit Fehler-, Resume- und Cleanup-Pfaden dokumentieren. |
+| AP09.6 — Platform Developer | `DEV-*`, `CDV-*` | Setup, Build, Tests, Release und komponentenspezifische Änderungswege zentral erstellen. `EXT-*` bleibt Referenz und Regressionsgrenze. |
+| AP09.7 — Exhaustive Reference und Drift | `REF-*`, `MNT-*` | Generierte Faktenkataloge, Source-to-Doc-Matrix, Ownership, CI und Wartungsvertrag aufbauen. |
+| AP09.8 — Veröffentlichung | `PUB-*` | Explizite Allowlist, Suche, Codevorschau, gezielte Diagramme, Renderer, Accessibility und CI-Publication integrieren. |
+| AP09.9 — Gesamtprüfung | `QUA-*` | Sprache, Begründungen, Belege, Reader-Proben und Mutation-Test nach Abschluss aller Inhalte durchführen. |
+
+AP09.1 bis AP09.7 liefern Inhalt und mechanische Wahrheit. AP09.8 darf erst dann
+die endgültige Navigation und Darstellung einfrieren. AP09.9 prüft das integrierte
+Ergebnis. Diese Reihenfolge verhindert, dass ein schöner Renderer unvollständigen
+oder widersprüchlichen Inhalt verdeckt.
 
 ## Abschluss von AP09.0
 
@@ -465,3 +495,7 @@ AP09.0 ist abgeschlossen, wenn:
 
 Erst danach beginnt die inhaltliche Abarbeitung. Ein grüner Link- oder Buildcheck
 ersetzt diese Prüfung nicht.
+
+Interner Stand: Bedingungen 1 bis 5 sind erfüllt. Bedingung 6, die unabhängige
+Prüfung der Katalogvollständigkeit, bleibt offen. AP09.0 ist deshalb noch nicht
+formal abgeschlossen.

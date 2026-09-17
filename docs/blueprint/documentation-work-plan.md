@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 16.09.2026 · Version 32 · Status: AP01–AP08 abgeschlossen; AP09–AP11 offen
+Stand: 17.09.2026 · Version 33 · Status: AP01–AP08 abgeschlossen; AP09 intern vollständig inventarisiert; AP09–AP11 offen
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -171,7 +171,7 @@ Folgende Aufgaben werden einzeln gegen den Bestand geprüft und vollständig dok
 
 ### AP09 — Vollständigkeit, Referenzen und Navigation
 
-- [ ] Die [AP09-Masterprüfung](AP09-completeness-audit.md) Punkt für Punkt gegen Code, Konfiguration, Schemas, Tests und aktive Dokumentation bearbeiten. Die vorläufige Einstufung allein gilt nicht als Abschluss.
+- [x] Die [AP09-Masterprüfung](AP09-completeness-audit.md) Punkt für Punkt gegen Code, Konfiguration, Schemas, Tests und aktive Dokumentation bearbeiten. Alle 251 Punkte besitzen einen intern geprüften Zustand und Nachweis; die unabhängige Katalogprüfung bleibt offen.
 - [ ] Konfigurationswerte, Defaults, Pflichtfelder, Befehle, Verträge und Fehlercodes vollständig zuordnen; vorhandene Generierung nutzen.
 - [ ] Einstieg, Aufgaben, Referenzen, Entscheidungen und Status sinnvoll verlinken. Erforderliche Schritte nicht hinter optionalen Architekturverweisen verstecken.
 - [ ] Veröffentlichungs-Allowlist und Suchindex auf die neuen Inhalte aktualisieren.
