@@ -4,8 +4,8 @@ This runbook records the selected single-node configuration and the migration
 sequence. It is not evidence that the native host setup has been activated.
 Last reviewed: 2026-09-16.
 
-Execution order updated by the operator on 2026-09-17: required Pods running ->
-Argo adoption and automatic KubeClaw code/image rollout -> open issues -> central
+Execution order updated by the operator on 2026-09-17: Argo adoption and automatic
+KubeClaw code/image rollout -> required Pods running through Argo -> open issues -> central
 operator configuration -> real pipeline verification and completed docs -> Cilium
 -> HTTPS/mTLS. See the [current roadmap](../ROADMAP.md#near-term-sequence).
 Historical migration/repair instructions below do not override this order.

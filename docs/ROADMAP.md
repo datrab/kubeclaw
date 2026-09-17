@@ -12,17 +12,22 @@ This page keeps future direction separate from current operator behavior. Items 
 Operator-selected order, updated 2026-09-17. This supersedes earlier suggestions
 to migrate Cilium before starting the workers. Current priority is stage 1.
 
-1. **Get the required Pods running.** Start and verify Buster, Nova and Prism with
-   their dependencies on the existing network. Require Ready containers and stable
-   restarts; Pod readiness alone is not pipeline acceptance. Resolve immediate
-   startup blockers here. Optional UI networking must not silently force a CNI
-   migration or lose access controls.
-2. **Finish Argo adoption and automatic runtime deployment.** Put intended
+1. **Finish Argo adoption and automatic runtime deployment.** Put intended
    workloads/infrastructure under Argo with separate Applications. KubeClaw code
    merges publish verified bundles and update the selected deployment; image-input
    changes build/verify images before selection and rollout. Prove both paths.
    Keep infrastructure and Codex Ops child syncs manual as previously requested;
    platform root reconciliation may remain automatic. Preserve PVCs and Secrets.
+   Establish the KubeClaw parent and individual Buster, Nova and Prism Applications
+   before stabilizing their Pods. Review adoption diffs and ownership before the
+   first sync; an Application being registered is not evidence of runtime health.
+   Routine deployment changes should flow through Git and Argo. Host-level K3s,
+   NRI and cgroup maintenance still needs the existing host management path.
+2. **Get the required Pods running through Argo.** Start and verify Buster, Nova
+   and Prism with their dependencies on the existing network. Require Ready
+   containers and stable restarts; Pod readiness alone is not pipeline acceptance.
+   Resolve immediate startup blockers here. Optional UI networking must not
+   silently force a CNI migration or lose access controls.
 3. **Resolve the open issues.** Inventory and triage the current tracker (operator
    estimate around 15, not a verified count), fix defects and verify their actual
    behavior. Do not postpone a stage-1/2 blocking defect merely to preserve this
