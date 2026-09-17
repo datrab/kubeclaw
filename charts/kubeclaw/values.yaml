@@ -527,6 +527,8 @@ extraContainers: []
 # Supply Secret/<existingSecret> with an htpasswd key outside the repository.
 archviewer:
   enabled: false
+  # Both providers require active enforcement; policies are additive.
+  networkPolicyProvider: cilium
   existingSecret: ""
   hostname: nova-architecture
   tailscaleOperatorNamespace: tailscale

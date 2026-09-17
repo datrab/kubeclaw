@@ -90,8 +90,20 @@ Prepare missing Archviewer credentials with
 `htpasswd`, supplied by `apache2-utils` on Debian/Ubuntu). This is create-only and
 prompts locally; do not paste credentials into deployment logs or chat.
 
-Nova's selected Archviewer manifests include a CiliumNetworkPolicy. The live
-cluster does not yet have the corresponding CRD, so Nova remains blocked pending
-the planned, verified Cilium migration or a separately reviewed equivalent access
-policy. Installing CRDs alone does not provide network enforcement. Do not drop
-the policy or start Nova merely because the other adoption errors are fixed.
+The archived exports above include a CiliumNetworkPolicy for Nova Archviewer.
+The AX41 Nova overlay now selects `archviewer.networkPolicyProvider: kubernetes`
+so a new export can use the current cluster without installing Cilium first.
+The standard NetworkPolicy combines the Tailscale namespace and the dedicated
+Ingress proxy labels in a single peer and permits TCP 3456 only. The ClusterIP
+Service, Tailscale Ingress and existing HTTP-auth Secret remain required.
+The chart default remains `cilium` for existing deployments; unknown providers
+fail rendering. Do not edit archived exports: select a code release containing
+the chart change, materialize it and render a new export before live adoption.
+
+Before starting Nova, verify that the cluster actually enforces NetworkPolicy
+and inspect all policies selecting the Nova Pod. Allow rules are additive;
+another broad policy can allow access that this policy does not. Verify allowed
+Tailscale access and denied ordinary Pod access to port 3456 after startup.
+Rendering and API dry-run alone do not prove network isolation. A future Cilium
+migration can also enforce the standard policy; it does not require changing
+this provider simply because Cilium is installed.

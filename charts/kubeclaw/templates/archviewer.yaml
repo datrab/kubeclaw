@@ -2,6 +2,10 @@
 {{- if ne .Values.agentRole "nova" }}
 {{- fail "archviewer is a Nova-only sidecar" }}
 {{- end }}
+{{- $policyProvider := .Values.archviewer.networkPolicyProvider | default "cilium" }}
+{{- if not (has $policyProvider (list "cilium" "kubernetes")) }}
+{{- fail "archviewer.networkPolicyProvider must be cilium or kubernetes" }}
+{{- end }}
 {{- range .Values.service.extraPorts }}
 {{- if or (eq .name "archviewer") (eq (int .port) 3456) (eq (toString .targetPort) "archviewer") (eq (toString .targetPort) "3456") }}
 {{- fail "Remove legacy archviewer service.extraPorts; the dedicated private Service owns this port" }}
@@ -32,6 +36,30 @@ spec:
   tls:
     - hosts: [{{ required "archviewer.hostname is required" .Values.archviewer.hostname | quote }}]
 ---
+{{- if eq $policyProvider "kubernetes" }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ $name }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "kubeclaw.selectorLabels" . | nindent 6 }}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ required "archviewer.tailscaleOperatorNamespace is required" .Values.archviewer.tailscaleOperatorNamespace | quote }}
+          podSelector:
+            matchLabels:
+              tailscale.com/managed: "true"
+              tailscale.com/parent-resource-type: ingress
+              tailscale.com/parent-resource: {{ $name | quote }}
+              tailscale.com/parent-resource-ns: {{ .Release.Namespace | quote }}
+      ports:
+        - {port: 3456, protocol: TCP}
+{{- else }}
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
@@ -50,4 +78,5 @@ spec:
             tailscale.com/parent-resource-ns: {{ .Release.Namespace | quote }}
       toPorts:
         - ports: [{port: "3456", protocol: TCP}]
+{{- end }}
 {{- end }}

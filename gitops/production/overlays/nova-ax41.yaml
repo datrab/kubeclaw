@@ -1,5 +1,7 @@
 # AX41 ordinary Pod budget; this is not a host-pool allocation.
 # Sidecars have separate limits. Production capacity validation must include them.
+archviewer:
+  networkPolicyProvider: kubernetes
 resources:
   requests:
     cpu: 1000m
