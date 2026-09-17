@@ -16,6 +16,6 @@ backup="$(mktemp -d /root/kubeclaw-buster-browser.XXXXXX)"
 cp -a /opt/kubeclaw/native/prepare-native-worker-pools.mjs "$backup/prepare-native-worker-pools.mjs"
 printf 'Backup: %s\n' "$backup"
 # Run checked repository code first; persist it only when preparation succeeds.
-/usr/local/bin/node "$repository/scripts/prepare-native-worker-pools.mjs" /etc/kubeclaw/native-node-policy.json
+/usr/local/bin/node "$repository/scripts/prepare-native-worker-pools.mjs" /etc/kubeclaw/native-node-policy.json --browser-only
 install -o root -g root -m 0644 "$repository/scripts/prepare-native-worker-pools.mjs" /opt/kubeclaw/native/prepare-native-worker-pools.mjs
 echo 'Browser subtree prepared; persistent setup updated. No service restarted.'

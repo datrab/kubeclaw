@@ -1,5 +1,7 @@
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
+import path from 'node:path';
 
 const root = '/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service';
 const read = file => fs.readFileSync(file, 'utf8').trim();
@@ -106,6 +108,11 @@ function prepare(policy) {
     fs.writeFileSync(`${directory}/cgroup.subtree_control`, required.map(controller => `+${controller}`).join(' '));
     verifyExisting(role, pool);
   }
+  prepareBrowser();
+  process.stdout.write('NATIVE_HOST_POOLS_PREPARED_NODE_CAPACITY_PREFLIGHT_REQUIRED\n');
+}
+
+function prepareBrowser() {
   // Browser delegation must never chown the role pool itself: its limits and
   // ownership belong to the host. Descendants remain bounded by that pool.
   const browser = `${root}/buster/browser`;
@@ -113,16 +120,47 @@ function prepare(policy) {
   if (fs.lstatSync(browser).isSymbolicLink() || fs.statfsSync(browser).type !== 0x63677270
     || read(`${browser}/cgroup.procs`)) throw new Error('NATIVE_BROWSER_SUBTREE_INVALID');
   fs.writeFileSync(`${browser}/cgroup.subtree_control`, required.map(controller => `+${controller}`).join(' '));
-  process.stdout.write('NATIVE_HOST_POOLS_PREPARED_NODE_CAPACITY_PREFLIGHT_REQUIRED\n');
 }
 
+export function requireRunningPoolService(facts) {
+  if (facts.uid !== 0 || facts.subState !== 'running'
+    || facts.controlGroup !== root.slice('/sys/fs/cgroup'.length)
+    || !Number.isSafeInteger(facts.mainPid) || facts.mainPid <= 0
+    || !facts.mainCgroup.split('\n').includes(`0::${root.slice('/sys/fs/cgroup'.length)}/setup`)
+    || !facts.hostNamespaceMatches) throw new Error('NATIVE_BROWSER_RUNNING_POOL_REQUIRED');
+}
+
+function prepareBrowserOnly(policy) {
+  const show = key => execFileSync('systemctl', ['show', 'kubeclaw-native-pools.service', '-p', key, '--value'], {encoding:'utf8'}).trim();
+  const mainPid = Number(show('MainPID'));
+  if (!Number.isSafeInteger(mainPid) || mainPid <= 0) throw new Error('NATIVE_BROWSER_RUNNING_POOL_REQUIRED');
+  const own = fs.statSync('/proc/self/ns/cgroup', {bigint:true});
+  const host = fs.statSync('/proc/1/ns/cgroup', {bigint:true});
+  requireRunningPoolService({uid:process.getuid(), subState:show('SubState'), controlGroup:show('ControlGroup'),
+    mainPid, mainCgroup:read(`/proc/${mainPid}/cgroup`), hostNamespaceMatches:own.dev===host.dev && own.ino===host.ino});
+  // Never call prepare(): an administrator shell is intentionally not inside
+  // the service's setup subgroup. Inspect existing pools without rewriting them.
+  if (fs.statfsSync(root).type !== 0x63677270 || fs.realpathSync(root)!==root
+    || read(`${root}/cgroup.procs`)) throw new Error('NATIVE_BROWSER_RUNNING_POOL_REQUIRED');
+  for (const [role,pool] of Object.entries(policy.pools)) {
+    if (!verifyExisting(role,pool)) throw new Error('NATIVE_BROWSER_EXISTING_POOL_REQUIRED');
+  }
+  prepareBrowser();
+  process.stdout.write('NATIVE_BROWSER_SUBTREE_PREPARED_EXISTING_POOLS_UNCHANGED\n');
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
 const serve = process.argv.length === 4 && process.argv[3] === '--serve';
-if (process.argv.length !== 3 && !serve) throw new Error('Usage: prepare-native-worker-pools.mjs ROOT_OWNED_GENERATED_POLICY_JSON [--serve]');
-prepare(configuration(process.argv[2]));
+const browserOnly = process.argv.length === 4 && process.argv[3] === '--browser-only';
+if (process.argv.length !== 3 && !serve && !browserOnly) throw new Error('Usage: prepare-native-worker-pools.mjs ROOT_OWNED_GENERATED_POLICY_JSON [--serve|--browser-only]');
+const selected = configuration(process.argv[2]);
+if (browserOnly) prepareBrowserOnly(selected);
+else prepare(selected);
 if (serve) {
   // RemainAfterExit retains the unit state, not an empty delegated cgroup.
   // Keep the setup subgroup populated for the entire pool lifetime. Notify only
   // after both pools and their identities have been successfully verified.
   execFileSync('/usr/bin/systemd-notify', ['--ready', '--status=Native worker pools prepared; capacity preflight still required'], { stdio: 'inherit' });
   setInterval(() => {}, 60_000);
+}
 }

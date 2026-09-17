@@ -36,6 +36,10 @@ BASH
 ```
 
 This requires stopped Buster replicas and a successful existing host preflight.
+The live operation uses `--browser-only`: it verifies the running pool service,
+its main process in the setup subgroup, host cgroup namespace and both existing
+pool limits. It does not invoke full initialization from the administrator shell;
+full initialization still requires membership in the delegated service subgroup.
 It creates the browser child, backs up the installed pool preparation script,
 and updates it for subsequent service starts without restarting K3s or the pool
 service. It does not change pool limits. Linux host execution and browser jobs
