@@ -11,13 +11,13 @@ runAsRoot: false
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-35208467907-1/prism-42166567be4938e21c2e194fd81e0a974154071e.tgz
-  expectedCommit: 42166567be4938e21c2e194fd81e0a974154071e
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-35231644743-1/prism-045db17d9f6df8c54e61dba3689a9ed497e15918.tgz
+  expectedCommit: 045db17d9f6df8c54e61dba3689a9ed497e15918
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: 4c3d4ef40d6969624af8d850c484d99a0aa907044f77d8c6b7a6bfad3136bd4f
+  sha256: aba4d01a421ad221a17d846e1ac6ef1e39ec3bda8d9d80cb5e92a0cbe506f3a4
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-prism
