@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Installer-Step: native.prepare-browser-delegation; category: maintenance-ax41. See scripts/install/README.md.
 # Extend the existing delegated pool without restarting K3s or its pool service.
 set -euo pipefail
 umask 077

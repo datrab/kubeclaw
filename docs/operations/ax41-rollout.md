@@ -272,6 +272,10 @@ native workers must remain disabled until effective reservations pass preflight.
 
 ## Requirements for a future one-click installer
 
+Existing scripts have stable `Installer-Step` identifiers and are classified in
+the [installer step catalog](../../scripts/install/README.md), including historical
+repair scripts that must not be replayed on every installation.
+
 Operator requirement confirmed 2026-09-17: one entry point runs on the Controlnode,
 including adding subsequent nodes. The current commands below are rollout and
 repair procedures, not that completed installer.

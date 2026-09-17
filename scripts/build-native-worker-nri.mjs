@@ -1,3 +1,4 @@
+// Installer-Step: native.build; category: prepare. See scripts/install/README.md.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

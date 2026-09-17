@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Installer-Step: repair.native-pool-lifetime; category: repair-only. See scripts/install/README.md.
 # Repair only the observed initial active(exited), empty-cgroup installation.
 set -euo pipefail
 umask 077

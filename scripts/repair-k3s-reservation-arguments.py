@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Installer-Step: repair.k3s-reservation-arguments; category: repair-only. See scripts/install/README.md.
 """Remove exactly the two observed legacy kubelet reservation arguments."""
 import pathlib
 import json

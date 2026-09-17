@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Installer-Step: native.install; category: initial-install. See scripts/install/README.md.
 # Initial host-file installation only. Does not restart K3s or activate NRI.
 set -euo pipefail
 umask 077

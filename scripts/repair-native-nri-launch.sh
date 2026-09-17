@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Installer-Step: repair.native-nri-launch; category: repair-only. See scripts/install/README.md.
 # Repair the pre-registration SDK identity failure on an activated AX41 node.
 set -euo pipefail
 umask 077
