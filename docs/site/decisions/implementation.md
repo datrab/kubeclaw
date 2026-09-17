@@ -7,6 +7,21 @@ Evidence: skills/nova/core/execution/engine-snapshots.ts; skills/worker/core/wor
 Applies to: source revision `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`
 Last verified: 2026-09-17; source inspection, no new runtime acceptance
 
+## Derived Record Accountability
+
+These records refine accepted architecture with later implementation evidence.
+They do not create approval when the source records only implementation. Each
+row makes the shared fields explicit; the sections below give the detailed rule
+and linked source.
+
+| Decision group | Context and decision | Alternatives and reason | Consequences | Approval | Implementation and verification | Supersession |
+| --- | --- | --- | --- | --- | --- | --- |
+| Repository history | Integrate reviewed changes into the primary history and prove remote reachability before deleting a source ref. | A permanent backup branch, blind replacement, and deletion inferred from an incomplete checkout are rejected. | Integration needs an explicit content and ancestry comparison. | This is an established recovery method; no new approval is claimed here. | Repository procedures and retained history are the proof boundary. This page authorizes no branch deletion. | It refines repository recovery without changing the single-runtime decision in ADR-004. |
+| Versioned JSON | Select explicit encoding profiles and preserve each historical producer's bytes and authority. | Silent normalization and one simultaneous rewrite of all historical records are rejected. | Consumers must select and verify the correct profile. Historical compatibility remains explicit. | D12 governs local closure. No new product approval is inferred from matching source. | SDK and consumer source were inspected. Whole-retention work remains separate. | Explicit producer profiles replace the broad initial epoch proposal. They do not rewrite old identities. |
+| Native admission | Admit native work before execution and retain one accountable scope through termination and cleanup. | Delayed Node admission, shared-process CPU accounting, and arbitrary caller-selected launch identity are rejected. | The trusted boundary becomes stricter and needs a capable host or bounded broker. | D13, D14, and D16 retain their recorded authority. The broker recommendation is not a new exposed user choice. | Prism has a native path. Complete Buster integration and deployed containment remain open. | Native per-attempt accounting replaces Prism's shared-process CPU method. |
+| Human decisions | Bind a signed human action to the exact lease, source, revision, expiry, actor, and reason. | ServiceAccount identity alone and replay that changes content are rejected. | Lost successful responses can be replayed safely. Expired or deleting leases stay closed. | D02 and D06 retain the accepted human-authority and lifetime rules. | Controller source and local tests exist. Authenticated end-to-end delivery remains a live gate. | The signed extend path replaces the earlier missing-controller-extension statement. |
+| Reliable delivery | Preserve frozen identities and reconcile uncertain effects from receipts before retry. | Current configuration substitution, blind replay, and detached cleanup are rejected. | Recovery retains more evidence and can stop for explicit reconciliation. | These rules refine ADR-001, ADR-009, ADR-011, and D08; they are not new approval events. | Local crash, compiler, report, and receipt tests cover bounded paths. G14 and whole-store retention remain open. | The refinements qualify earlier broad promises without creating a second lifecycle authority. |
+
 ## Preserve history without retaining parallel implementations
 
 Integrate intended changes into the primary branch even when live acceptance remains open.

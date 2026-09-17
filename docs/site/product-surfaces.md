@@ -136,30 +136,30 @@ The pipeline does not require them when another supported component supplies the
 
 ## Operator Lifecycle
 
-| ID | Surface | Primary reading | Coverage |
-| --- | --- | --- | --- |
-| SUR-OPS-01 | Prerequisites, sizing, versions, and installation | [Plan and Install](use/install.md) | Partial |
-| SUR-OPS-02 | Configuration, start, audit, signal, and result inspection | [Configure and Operate](use/operate.md) | Partial |
-| SUR-OPS-03 | Health, telemetry, diagnosis, and incident evidence | [Observe and Diagnose](use/diagnose.md) | Partial |
-| SUR-OPS-04 | Backup, restore, failover, and state reconciliation | [Back Up and Recover](use/recovery.md) | Partial |
-| SUR-OPS-05 | Upgrade, credential rotation, retention, rollback, and retirement | [Maintain and Retire](use/maintenance.md) | Partial |
-| SUR-OPS-06 | Current implementation and live acceptance | [Current Status](status/current.md) | Detailed |
+| ID | Surface | Primary reading | Source authority | Coverage |
+| --- | --- | --- | --- | --- |
+| SUR-OPS-01 | Prerequisites, sizing, versions, and installation | [Plan and Install](use/install.md) | [Deployment entry](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/scripts/deploy.sh) | Partial |
+| SUR-OPS-02 | Configuration, start, audit, signal, and result inspection | [Configure and Operate](use/operate.md) | [Nova project CLI](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/project/cli.ts) | Partial |
+| SUR-OPS-03 | Health, telemetry, diagnosis, and incident evidence | [Observe and Diagnose](use/diagnose.md) | [Telemetry contracts](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/contracts/telemetry/v1) | Partial |
+| SUR-OPS-04 | Backup, restore, failover, and state reconciliation | [Back Up and Recover](use/recovery.md) | [Nova state implementation](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/state) | Partial |
+| SUR-OPS-05 | Upgrade, credential rotation, retention, rollback, and retirement | [Maintain and Retire](use/maintenance.md) | [Deployment and maintenance scripts](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/scripts) | Partial |
+| SUR-OPS-06 | Current implementation and live acceptance | [Current Status](status/current.md) | [Status publication generator](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/scripts/docs-status.mjs) | Detailed |
 
 ## Extension Surfaces
 
-| ID | Surface | Primary reading | Coverage |
-| --- | --- | --- | --- |
-| SUR-EXT-01 | Pipeline stages | [Extension decision guide](extend/README.md#stage) | Detailed |
-| SUR-EXT-02 | Event observers | [Extension decision guide](extend/README.md#observer) | Detailed |
-| SUR-EXT-03 | Capability adapters | [Extension decision guide](extend/README.md#capability-adapter) | Detailed |
-| SUR-EXT-04 | Buster test providers | [Buster extension guide](extend/buster.md) | Detailed |
-| SUR-EXT-05 | Buster report adapters | [Buster extension guide](extend/buster.md) | Detailed |
-| SUR-EXT-06 | OpenClaw extensions | [Host and engine boundaries](extend/host-and-engine.md) | Detailed |
-| SUR-EXT-07 | Codex plugins and skills | [Host and engine boundaries](extend/host-and-engine.md) | Detailed |
-| SUR-EXT-08 | Specialist engines | [Host and engine boundaries](extend/host-and-engine.md) | Partial |
-| SUR-EXT-09 | Runtime roles and deployable package sets | [Host and engine boundaries](extend/host-and-engine.md) | Partial |
-| SUR-EXT-10 | Core and Foundation changes | [Extension decision guide](extend/README.md) | Partial |
-| SUR-EXT-11 | Installed extension packages and registrations | [Plugin catalogue](extend/plugin-catalogue/README.md) | Detailed |
+| ID | Surface | Primary reading | Source authority | Coverage |
+| --- | --- | --- | --- | --- |
+| SUR-EXT-01 | Pipeline stages | [Extension decision guide](extend/README.md#stage) | [Registry builder](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation/registry/build.ts) | Detailed |
+| SUR-EXT-02 | Event observers | [Extension decision guide](extend/README.md#observer) | [Registry builder](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation/registry/build.ts) | Detailed |
+| SUR-EXT-03 | Capability adapters | [Extension decision guide](extend/README.md#capability-adapter) | [Registry builder](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation/registry/build.ts) | Detailed |
+| SUR-EXT-04 | Buster test providers | [Buster extension guide](extend/buster.md) | [Buster plugin SDK](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/buster/plugin-sdk) | Detailed |
+| SUR-EXT-05 | Buster report adapters | [Buster extension guide](extend/buster.md) | [Buster report adapter contracts](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/buster/plugin-sdk) | Detailed |
+| SUR-EXT-06 | OpenClaw extensions | [Host and engine boundaries](extend/host-and-engine.md) | [Installed OpenClaw manifests](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills) | Detailed |
+| SUR-EXT-07 | Codex plugins and skills | [Host and engine boundaries](extend/host-and-engine.md) | [Installed Codex plugins](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/plugins) | Detailed |
+| SUR-EXT-08 | Specialist engines | [Host and engine boundaries](extend/host-and-engine.md) | [Worker attempt contract](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/contracts/pipeline-worker-core) | Partial |
+| SUR-EXT-09 | Runtime roles and deployable package sets | [Host and engine boundaries](extend/host-and-engine.md) | [Runtime role manifests](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles) | Partial |
+| SUR-EXT-10 | Core and Foundation changes | [Extension decision guide](extend/README.md) | [Plugin foundation](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation) | Partial |
+| SUR-EXT-11 | Installed extension packages and registrations | [Plugin catalogue](extend/plugin-catalogue/README.md) | [Installed package manifests](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills) | Detailed |
 
 ## Known Depth Limits
 

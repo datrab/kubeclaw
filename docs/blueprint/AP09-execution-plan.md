@@ -96,7 +96,10 @@ vollständiges Oberflächeninventar, zusammenhängende Architektur-, Operator-
 und Entwicklerpfade, einen dokumentierten Authority- und Ownership-Vertrag
 sowie eine maschinenlesbare Seitenkarte. Generatoren prüfen Metadaten,
 Ownership, Reader-Routen, Capability-Namespaces und das Resume-Signal-
-Beispiel. Zusätzlich sind die vier oben genannten Falschaussagen korrigiert.
+Beispiel. Die Publication prüft außerdem alle 84 Surface-IDs mit ihren
+Leserzielen, Quellautoritäten und Coverage-Werten sowie die strukturellen
+Pflichtfelder der nummerierten und gruppierten Decision Records. Zusätzlich
+sind die vier oben genannten Falschaussagen korrigiert.
 
 `GOV-005`, `GOV-007` und `ENT-005` bleiben bewusst bei AP09.11, AP09.12 und
 AP09.9. Damit verwechselt AP09.1 weder die Governance-Regel mit ihrer

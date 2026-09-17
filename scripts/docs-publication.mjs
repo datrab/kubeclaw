@@ -476,8 +476,71 @@ function checkLanguage(file, text) {
   }
 }
 
+function numberedIds(prefix, first, last, width) {
+  return Array.from({ length: last - first + 1 }, (_, index) => `${prefix}${String(first + index).padStart(width, '0')}`);
+}
+
+function checkDecisionContracts() {
+  const decisionRoot = path.join(siteRoot, 'decisions');
+  const core = fs.readFileSync(path.join(decisionRoot, 'core-and-plugins.md'), 'utf8');
+  const coreIds = [...core.matchAll(/^## (ADR-\d{3}):/gmu)].map((match) => match[1]);
+  const expectedCoreIds = numberedIds('ADR-', 1, 14, 3);
+  if (JSON.stringify(coreIds) !== JSON.stringify(expectedCoreIds)) errors.push('core-and-plugins decision IDs must contain ADR-001 through ADR-014 in order');
+  for (const [index, id] of coreIds.entries()) {
+    const start = core.indexOf(`## ${id}:`);
+    const end = index + 1 < coreIds.length ? core.indexOf(`## ${coreIds[index + 1]}:`, start) : core.length;
+    const record = core.slice(start, end);
+    for (const field of ['**Context.**', '**Decision.**', '**Actual alternatives.**', '**Reason and consequences.**', '**Approval and provenance.**', '**Implementation.**', '**Evidence.**', '**Supersession and related decisions.**']) {
+      if (!record.includes(field)) errors.push(`docs/site/decisions/core-and-plugins.md ${id} lacks ${field}`);
+    }
+  }
+
+  const testGate = fs.readFileSync(path.join(decisionRoot, 'test-gate.md'), 'utf8');
+  const testGateIds = [...testGate.matchAll(/^## (D-\d{3}):/gmu)].map((match) => match[1]);
+  const expectedTestGateIds = numberedIds('D-', 1, 119, 3);
+  if (JSON.stringify(testGateIds) !== JSON.stringify(expectedTestGateIds)) errors.push('test-gate decision IDs must contain D-001 through D-119 in order');
+  for (const [index, id] of testGateIds.entries()) {
+    const start = testGate.indexOf(`## ${id}:`);
+    const end = index + 1 < testGateIds.length ? testGate.indexOf(`## ${testGateIds[index + 1]}:`, start) : testGate.length;
+    const record = testGate.slice(start, end);
+    for (const field of ['**Decision.**', '**Reason, consequences and actual alternatives.**', '**Approval/source.**']) {
+      if (!record.includes(field)) errors.push(`docs/site/decisions/test-gate.md ${id} lacks ${field}`);
+    }
+  }
+  for (const shared of ['**Implementation and verification for every record.**', '**Alternatives and supersession.**']) {
+    if (!testGate.includes(shared)) errors.push(`docs/site/decisions/test-gate.md lacks shared record field ${shared}`);
+  }
+
+  const runtime = fs.readFileSync(path.join(decisionRoot, 'runtime-and-operations.md'), 'utf8');
+  for (const id of [...numberedIds('ADR-', 15, 22, 3), ...numberedIds('D', 1, 16, 2)]) {
+    if (!runtime.includes(`## ${id}\n`)) errors.push(`docs/site/decisions/runtime-and-operations.md lacks ${id}`);
+  }
+
+  const groupedRecords = new Map([
+    ['echo.md', ['## Grouped Record Contract', '| Authority and policy |', '| Evidence verification |', '| Governor and repair |', '| Simplification and reporting |', '| Repair history |', '| Large changes and audit |']],
+    ['prism.md', ['## Decision Group Accountability', '| Product and data ownership |', '| Design Document and editor |', '| Retrieval and preferences |', '| Durable operations and publication |']],
+    ['implementation.md', ['## Derived Record Accountability', '| Repository history |', '| Versioned JSON |', '| Native admission |', '| Human decisions |', '| Reliable delivery |']],
+  ]);
+  for (const [page, required] of groupedRecords) {
+    const text = fs.readFileSync(path.join(decisionRoot, page), 'utf8');
+    for (const token of required) {
+      if (!text.includes(token)) {
+        errors.push(`docs/site/decisions/${page} lacks grouped record ${token}`);
+        continue;
+      }
+      if (!token.startsWith('| ')) continue;
+      const row = text.split('\n').find((line) => line.startsWith(token));
+      const cells = row?.split('|').slice(1, -1).map((cell) => cell.trim()) ?? [];
+      if (cells.length !== 7 || cells.some((cell) => cell.length < 12)) {
+        errors.push(`docs/site/decisions/${page} grouped record ${token} must supply all seven decision fields`);
+      }
+    }
+  }
+}
+
 function checkSite() {
   compareGenerated();
+  checkDecisionContracts();
   if (plugins.length !== 51) errors.push(`Catalogue expected 51 packages but found ${plugins.length}`);
   const pluginIds = new Set(plugins.map((plugin) => plugin.manifest.id));
   if (guidance.records.length !== 51) errors.push(`Catalogue guidance expected 51 records but found ${guidance.records.length}`);
@@ -532,8 +595,30 @@ function checkSite() {
     if (!entry.includes(`](${route}`)) errors.push(`docs/site/README.md does not expose reader route ${route}`);
   }
   const surfaceMap = fs.readFileSync(path.join(siteRoot, 'product-surfaces.md'), 'utf8');
-  for (const family of ['SUR-CTL-', 'SUR-SPC-', 'SUR-CFG-', 'SUR-API-', 'SUR-COM-', 'SUR-DAT-', 'SUR-TEL-', 'SUR-SEC-', 'SUR-DEP-', 'SUR-OPT-', 'SUR-OPS-', 'SUR-EXT-']) {
-    if (!surfaceMap.includes(`| ${family}`)) errors.push(`docs/site/product-surfaces.md lacks surface family ${family}`);
+  const expectedSurfaceCounts = { CTL: 7, SPC: 6, CFG: 8, API: 11, COM: 4, DAT: 6, TEL: 3, SEC: 7, DEP: 10, OPT: 5, OPS: 6, EXT: 11 };
+  const surfaceRows = [...surfaceMap.matchAll(/^\| (SUR-([A-Z]+)-(\d{2})) \| ([^|]+) \| ([^|]+) \| ([^|]+) \| (Detailed|Partial|Indexed) \|$/gmu)]
+    .map((match) => ({ id: match[1], family: match[2], ordinal: Number(match[3]), surface: match[4].trim(), reading: match[5].trim(), authority: match[6].trim(), coverage: match[7] }));
+  const apparentSurfaceRows = [...surfaceMap.matchAll(/^\| SUR-[A-Z]+-\d{2} \|/gmu)].length;
+  if (surfaceRows.length !== apparentSurfaceRows) {
+    errors.push(`docs/site/product-surfaces.md has ${apparentSurfaceRows - surfaceRows.length} malformed surface rows; each row needs ID, surface, primary reading, source authority, and coverage`);
+  }
+  const surfaceIds = new Set();
+  for (const row of surfaceRows) {
+    if (!Object.hasOwn(expectedSurfaceCounts, row.family)) errors.push(`docs/site/product-surfaces.md contains unknown surface family SUR-${row.family}`);
+    if (surfaceIds.has(row.id)) errors.push(`docs/site/product-surfaces.md contains duplicate surface ID ${row.id}`);
+    surfaceIds.add(row.id);
+    if (!row.surface) errors.push(`docs/site/product-surfaces.md ${row.id} has no surface description`);
+    if (!/\]\((?!https?:)[^)]+\)/u.test(row.reading)) errors.push(`docs/site/product-surfaces.md ${row.id} has no local primary-reading link`);
+    if (!/https:\/\/github\.com\/datrab\/kubeclaw\/(?:blob|tree)\/[0-9a-f]{40}\//u.test(row.authority)) {
+      errors.push(`docs/site/product-surfaces.md ${row.id} has no revision-pinned source-authority link`);
+    }
+  }
+  for (const [family, count] of Object.entries(expectedSurfaceCounts)) {
+    const actual = surfaceRows.filter((row) => row.family === family).map((row) => row.ordinal).sort((a, b) => a - b);
+    const expected = Array.from({ length: count }, (_, index) => index + 1);
+    if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+      errors.push(`docs/site/product-surfaces.md SUR-${family} inventory must contain the continuous range 01-${String(count).padStart(2, '0')}; found ${actual.map((value) => String(value).padStart(2, '0')).join(', ') || 'none'}`);
+    }
   }
   const taskSections = ['## Objective', '## Prerequisites', '## Procedure', '## Expected Result', '## Verification', '## Common Failures', '## Recovery'];
   for (const relative of ['docs/site/use/quickstart.md', 'docs/site/use/recovery.md', 'docs/site/extend/first-plugin.md']) {

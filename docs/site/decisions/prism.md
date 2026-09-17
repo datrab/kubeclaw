@@ -7,6 +7,19 @@ Evidence: skills/prism/domain/index.ts; skills/prism/corpus/index.ts; spikes/pri
 Applies to: source revision `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`
 Last verified: 2026-09-17; source inspection, no new live acceptance
 
+## Decision Group Accountability
+
+Prism's source decisions describe connected product areas rather than a numbered
+ADR for every sentence. Each row below states the shared record fields for one
+group. The detailed sections retain the exact constraints and measurable limits.
+
+| Decision group | Context and decision | Alternatives and reason | Consequences | Approval | Implementation and verification | Supersession |
+| --- | --- | --- | --- | --- | --- | --- |
+| Product and data ownership | Nova owns product architecture. Prism owns design exploration, revisions, approval evidence, and publication inside that boundary. | A second orchestrator and one undifferentiated data store are rejected because they obscure authority and recovery. | Design Document, PostgreSQL, and immutable artifacts have separate recovery and retention duties. | The original architecture marks the boundary accepted. It does not record one approver and date for every clause. | Domain and storage source were inspected. Deployment and human product acceptance remain separate. | Later native-host and recovery decisions refine deployment and storage details without moving product authority. |
+| Design Document and editor | A typed operation model changes canonical design state. Editor frameworks and previews remain replaceable clients. | Whole-state replacement, arbitrary expressions, executable terminal content, and same-origin preview trust are rejected. | The adapter requires more work, but mobile, undo, recovery, and preview messages use one controlled model. | The August schema review records acceptance. Individual clause approvers are not recorded. | Current domain source and fixtures implement inspected parts. Browser and physical-device proof remain open. | The typed schema and current node catalogue replace older candidate shapes. A future deferred node needs a new contract and capability proof. |
+| Retrieval and preferences | Start with PostgreSQL full-text search and exact vectors. Preserve explicit preference provenance and project override. | A separate vector service, approximate indexes, automatic decay, and passive taste evidence need measured or approved justification. | The first system stays operationally small. Exact search can cost more at larger scale. | The architecture accepts the no-decay preference contract. No approval establishes the implemented 180-day decay or the relaxed latency target. | Local retrieval evidence exists. Native PostgreSQL, production scale, and preference reconciliation remain open. | The accepted no-decay contract conflicts with current decay and remains tracked. A measured limit can later justify an index or service. |
+| Durable operations and publication | Bind replay, approval, publication, and worker evidence to exact identities and digests. | Header-derived identity, reusable approval after edits, and a separate Prism orchestration platform are rejected. | Retries become safe and publication stays auditable, with stricter storage and cleanup duties. | Accepted architecture and recovery sources govern the boundary; not every refinement has a named approver. | Source and local contract evidence exist. G07, G08, G10, G13, and G14 retain live proof. | The accepted recovery contract qualifies unconditional PITR wording. Native host-pool decisions qualify the earlier workload-only direction. |
+
 ## Product and data ownership
 
 Nova owns the product architecture and module plan. Prism designs an experience inside those constraints.
