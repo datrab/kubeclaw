@@ -9,12 +9,44 @@ This page keeps future direction separate from current operator behavior. Items 
 
 ## Near-Term Sequence
 
-1. Keep current docs aligned with source and generated inventory; expand automated references where exact contracts remain manually maintained.
-2. Redeploy the latest code bundles and use ClawDeck as the first production project built by the validated pipeline.
-3. Use that real project to identify operational and extension-boundary pressure rather than inventing abstractions in isolation.
-4. Exercise third-party plugin installation, replacement, and removal against real operator workloads.
-5. Complete the deeper operator/reference documentation pass after the first production workload exposes the remaining practical gaps.
-6. Finish clean-cluster bootstrap verification before promising a one-command first deployment.
+Operator-selected order, updated 2026-09-17. This supersedes earlier suggestions
+to migrate Cilium before starting the workers. Current priority is stage 1.
+
+1. **Get the required Pods running.** Start and verify Buster, Nova and Prism with
+   their dependencies on the existing network. Require Ready containers and stable
+   restarts; Pod readiness alone is not pipeline acceptance. Resolve immediate
+   startup blockers here. Optional UI networking must not silently force a CNI
+   migration or lose access controls.
+2. **Finish Argo adoption and automatic runtime deployment.** Put intended
+   workloads/infrastructure under Argo with separate Applications. KubeClaw code
+   merges publish verified bundles and update the selected deployment; image-input
+   changes build/verify images before selection and rollout. Prove both paths.
+   Keep infrastructure and Codex Ops child syncs manual as previously requested;
+   platform root reconciliation may remain automatic. Preserve PVCs and Secrets.
+3. **Resolve the open issues.** Inventory and triage the current tracker (operator
+   estimate around 15, not a verified count), fix defects and verify their actual
+   behavior. Do not postpone a stage-1/2 blocking defect merely to preserve this
+   ordering. Include the known HTTP registry scanner compatibility gap without
+   converting a failed security scan into success.
+4. **Centralize operator configuration.** Remove hardcoded deployment-specific
+   settings from code and resolve them from configuration files through the single
+   operator configuration audit below. Keep versions in `versions.json`, Secrets
+   external, and protocol/security invariants in code. No duplicated editable
+   sources; prove configuration reaches each runtime consumer.
+5. **Exercise the full pipeline and finish documentation together.** Use a real
+   project (ClawDeck is the existing candidate), verify success/failure/cleanup
+   paths and document actual operations and recovery. Fix findings rather than
+   treating green Pods or CI as an end-to-end pass.
+6. **Migrate to Cilium.** Plan the network maintenance separately, cover every
+   existing application and verify connectivity, policy enforcement and recovery.
+7. **Deploy HTTPS/mTLS transport protection.** Reuse the planned Envoy/SPIRE
+   architecture for Redis/registry and required clients, then close plaintext
+   bypasses and verify rotation and negative access tests.
+
+Throughout these stages, label reusable installation steps, keep their contracts
+and docs current, and build toward Controlnode-driven node onboarding. Finish
+fresh-install, rerun and recovery verification before calling the installer
+one-click. Cilium/HTTPS are deferred work, not implied prerequisites for stage 1.
 
 ## Product And Platform Direction
 
