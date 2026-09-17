@@ -1,7 +1,7 @@
 # AP09 Masterprüfung der Dokumentationsvollständigkeit
 
 Stand: 17.09.2026  
-Status: Prüfkatalog erstellt; Einzelprüfungen und endgültige Einstufungen offen  
+Status: Prüfkatalog erstellt; 51 von 251 Punkten einzeln geprüft; inhaltliche Umsetzung offen
 Scope: aktive Produktdokumentation, Referenzen, Veröffentlichung und Pflegeautomation
 
 ## Zweck
@@ -24,9 +24,10 @@ erwähnte Grenze ist eine Dokumentationslücke.
 | **Muss erweitert/überarbeitet werden** | Verwertbarer Inhalt existiert, aber mindestens ein notwendiger Aspekt fehlt, ist veraltet, widersprüchlich, schlecht auffindbar oder nicht ausreichend belegt. |
 | **Fehlt komplett** | Es gibt keinen geeigneten kanonischen Inhalt. Verstreute Quelltexte, historische Reviews oder Implementierungsdateien zählen nicht als Dokumentation. |
 
-Die Zustände unten sind eine **vorläufige Triage**. Ein Punkt wird erst endgültig
-abgeschlossen, wenn sein Einzelprüfprotokoll Quellen, Seiten, Ergebnis und Checks
-nennt.
+Die Zustände unten sind eine **vorläufige Triage**, solange eine Tabelle ihre
+Statusspalte nicht ausdrücklich als „Geprüfter Zustand“ bezeichnet. Ein Punkt wird
+erst endgültig abgeschlossen, wenn sein Einzelprüfprotokoll Quellen, Seiten,
+Ergebnis und Checks nennt.
 
 ## Abschlussregel pro Prüfpunkt
 
@@ -55,81 +56,85 @@ zutreffenden Fragen mit Ja beantwortet sind:
 7. Navigation, Darstellung und Veröffentlichung
 8. unabhängige Leser- und Wartbarkeitsabnahme
 
+Aktueller Prüfstand: `GOV-001` bis `WKC-014` sind einzeln geprüft. Davon sind
+12 Punkte vollständig vorhanden, 31 zu erweitern und 8 fehlen komplett. Die
+verbleibenden 200 Einstufungen sind weiterhin vorläufig.
+
 ## A. Umfang und Governance
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| GOV-001 | Kanonischer Einstieg und getrennte Leserwege | Vollständig vorhanden | `docs/site/README.md` trennt Understand, Operate, Extend, Reference, Decisions und Status. |
-| GOV-002 | Vollständiges Inventar aller dokumentationspflichtigen Produktoberflächen | Muss erweitert/überarbeitet werden | Dateien und Plugins sind inventarisiert; Konfigurationen, CLIs, Events, Fehlercodes und Protokolle noch nicht als eine Abdeckungsmenge. |
-| GOV-003 | Eindeutiger kanonischer Ort je Thema | Muss erweitert/überarbeitet werden | Aktive Site und alte Architektur-, Operator-, Developer- und Reference-Bäume bestehen parallel. |
-| GOV-004 | Regeln für Quellautorität und revisionsgebundene Belege | Vollständig vorhanden | Blueprint und Qualitätsstandard definieren Evidenzgrenzen. |
-| GOV-005 | Trennung generierter Fakten und authored guidance | Vollständig vorhanden | AP08 setzt das Muster; AP09 muss es auf alle Referenzen ausweiten. |
-| GOV-006 | Owner, Gültigkeitsbereich, letzte Prüfung und Check je Seite | Muss erweitert/überarbeitet werden | Neue Seiten besitzen viele Metadaten; die gesamte veröffentlichte Menge ist nicht vollständig zugeordnet. |
-| GOV-007 | Begriffs-, Deprecation-, Redirect- und Supersession-Regeln | Muss erweitert/überarbeitet werden | Glossar und AP10-Regeln existieren; vollständiger Veröffentlichungsvertrag fehlt. |
-| GOV-008 | Messbare Definition von „vollständig“ | Vollständig vorhanden | Dieses Dokument und der Qualitätsstandard definieren die Abnahme. |
+| GOV-001 | Kanonischer Einstieg und getrennte Leserwege | Vollständig vorhanden | `docs/site/README.md` trennt Understand, Operate, Extend, Reference, Decisions und Status. `scripts/docs-publication.mjs` verlangt die drei zentralen Leserwege. |
+| GOV-002 | Vollständiges Inventar aller dokumentationspflichtigen Produktoberflächen | Muss erweitert/überarbeitet werden | `docs/DOCUMENTATION_TOPIC_MAP.md` enthält nur zehn grobe Themen. Plugin- und Dateiinventare existieren, aber keine gemeinsame Abdeckungsmenge für Konfigurationen, CLIs, Schemas, Events, Fehlercodes, Protokolle, Stores und Endpunkte. |
+| GOV-003 | Eindeutiger kanonischer Ort je Thema | Muss erweitert/überarbeitet werden | `docs/README.md` erklärt `docs/site` zur Veröffentlichungsquelle. Die Topic Map bezeichnet trotzdem alte Architektur- und Developer-Seiten als kanonisch. AP10 hat die parallelen Bestände noch nicht entfernt oder umgeleitet. |
+| GOV-004 | Regeln für Quellautorität und revisionsgebundene Belege | Vollständig vorhanden | `07-documentation-quality-standard.md` verlangt enge, revisionsgebundene Quellenlinks neben jeder Behauptung und trennt Quell-, Test- und Live-Nachweise. Die aktiven AP06- bis AP08-Seiten wenden diese Regel an. |
+| GOV-005 | Trennung generierter Fakten und redaktioneller Erklärungen | Muss erweitert/überarbeitet werden | `06-automation-and-publication.md` definiert die Trennung, und der AP08-Katalog setzt sie um. Konfigurationen, CLI-Flags, Fehlercodes, Events und weitere Referenzflächen besitzen diesen getrennten Pflegeweg noch nicht. |
+| GOV-006 | Owner, Gültigkeitsbereich, letzte Prüfung und Check je Seite | Muss erweitert/überarbeitet werden | Alle 90 veröffentlichten Seiten enthalten Status, Audience, Owner, Applies-to und Last-verified. Drei Decision-Seiten besitzen kein `Evidence`-Feld. Eine vollständige maschinenlesbare Zuordnung von Seiten zu Quellabhängigkeiten und Checks fehlt. |
+| GOV-007 | Begriffs-, Deprecation-, Redirect- und Supersession-Regeln | Muss erweitert/überarbeitet werden | Glossar, Decision-Supersession-Regeln und AP10-Migrationsregeln existieren. `scripts/docs-publication.mjs` implementiert jedoch keine Redirect- oder Deprecation-Liste; alte öffentliche Routen sind nicht vollständig zugeordnet. |
+| GOV-008 | Messbare Definition von „vollständig“ | Vollständig vorhanden | Der Qualitätsstandard definiert zehn Abnahme-Gates. Dieses Dokument ergänzt zehn Fragen je Prüfpunkt und verbietet Abschluss durch Seitenzahl oder grünen Build allein. |
 
 ## B. Einstieg und Produktverständnis
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| ENT-001 | Produktzweck, Systemgrenze und Zielgruppen | Vollständig vorhanden | Understand-Einstieg erklärt Zweck und Grenzen. |
-| ENT-002 | Repräsentative Anfrage vom Eingang bis zum Ergebnis | Vollständig vorhanden | Request-State-Recovery-Trace ist vorhanden. |
-| ENT-003 | Pipeline, Plattform, Rolle, Engine, Spezialist und Plugin unterscheiden | Vollständig vorhanden | Components-and-Authority und Glossar behandeln die Grenzen. |
-| ENT-004 | Aktueller Funktionsumfang und Nicht-Funktionen | Muss erweitert/überarbeitet werden | Statusseiten existieren; parallele alte Aussagen bleiben ein Risiko. |
-| ENT-005 | Schnellstart für Leser, Operator und Entwickler | Muss erweitert/überarbeitet werden | Operator-Preflight und erstes Plugin existieren; vollständiger Produktworkflow fehlt. |
+| ENT-001 | Produktzweck, Systemgrenze und Zielgruppen | Vollständig vorhanden | `docs/site/understand/README.md` erklärt Problem, Zielgruppen, drei Architekturscopes, Statusgrenzen und nächste Leserwege in verständlichem technischem Englisch. |
+| ENT-002 | Repräsentative Anfrage vom Eingang bis zum Ergebnis | Vollständig vorhanden | `request-state-recovery.md` verfolgt den Normalpfad sowie Retry, Repair, Wait, Cancellation, Recovery und unsichere externe Effekte. Der Einstieg fasst denselben Ablauf in zwölf Schritten zusammen. |
+| ENT-003 | Pipeline, Plattform, Rolle, Engine, Spezialist und Plugin unterscheiden | Vollständig vorhanden | `components-and-authority.md` definiert Verantwortung und verbotene Autorität. `reference/glossary.md` grenzt die ähnlichen Begriffe gegeneinander ab. |
+| ENT-004 | Aktueller Funktionsumfang und Nicht-Funktionen | Muss erweitert/überarbeitet werden | Ehrliche Grenzen sind vorhanden. `status/current.md` bezeichnet den Stand jedoch noch als „AP04 working draft“, und der Understand-Einstieg sagt noch, AP08 werde Extend erst abschließen. Beide Aussagen widersprechen dem abgeschlossenen AP08-Stand. |
+| ENT-005 | Schnellstart für Leser, Operator und Entwickler | Muss erweitert/überarbeitet werden | Der Understand-Einstieg führt Architekturleser. `use/quickstart.md` prüft nur den lokalen Checkout, und `extend/first-plugin.md` führt ein Plugin durch. Ein ausführbarer erster Pipeline-Workflow mit Beispiel-`pipeline.json`, Ergebnisprüfung und Fehlerweg fehlt. |
 
 ## C. Architektur: System und Autorität
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| ARC-001 | Gesamtsystem, externe Akteure und Komponentenkarte | Vollständig vorhanden | Understand-Seiten und Diagramme bilden den Kontext ab. |
-| ARC-002 | Erlaubte und verbotene Autorität je Komponente | Vollständig vorhanden | Components-and-Authority erklärt beide Seiten. |
-| ARC-003 | Runtime-Rollen, Engines, Spezialisten und Package Ownership | Vollständig vorhanden | Rollen und Paketgrenzen sind beschrieben und belegt. |
-| ARC-004 | Ende-zu-Ende-Normal-, Fehler-, Wait-, Retry- und Recoverypfade | Vollständig vorhanden | Der zentrale Trace ist vorhanden; Subsystemdetails folgen separat. |
-| ARC-005 | Entscheidungen mit Gründen, Kosten und Alternativen | Muss erweitert/überarbeitet werden | Viele Entscheidungen existieren; Publication-Check und alte Belege sind noch fehlerhaft. |
-| ARC-006 | Vollständige Failure-Domain-, Abhängigkeits- und Datenkarte | Muss erweitert/überarbeitet werden | Gute Basis; Kommunikations- und Datenmatrix fehlen. |
+| ARC-001 | Gesamtsystem, externe Akteure und Komponentenkarte | Vollständig vorhanden | Understand-Einstieg, Authority Map, Pipeline Map, Deployment Map und Platform Layer Map verbinden den aufrufenden Menschen mit Nova, Spezialisten, Worker Core, Daten- und Plattformdiensten. Jedes Diagramm besitzt eine Textalternative. |
+| ARC-002 | Erlaubte und verbotene Autorität je Komponente | Vollständig vorhanden | `components-and-authority.md` nennt für Nova, Foundation, Worker Core, Buster, Prism, Forge, Echo und Plugin Runtime sowohl Besitz als auch verbotene Entscheidungen. `deployment-and-trust.md` ergänzt Identitäts-, Netzwerk-, Grant-, Prozess- und Speichergrenzen. |
+| ARC-003 | Runtime-Rollen, Engines, Spezialisten und Package Ownership | Vollständig vorhanden | `components-and-authority.md` trennt Rolle, Engine, Spezialist und Plugin. Gepinnte Role-Manifeste und Package-Ownership-Belege stützen die aktuelle Zusammensetzung und nennen die Grenze zwischen Vorhandensein, Aktivierung und Erreichbarkeit. |
+| ARC-004 | Ende-zu-Ende-Normal-, Fehler-, Wait-, Retry- und Recoverypfade | Vollständig vorhanden | `request-state-recovery.md` zeigt Aufnahme, Graph, Scheduling, Effects, Resultate, Buster-Handoff und Abschluss. Eigene Abschnitte behandeln technischen Retry, Product Repair, Wait, Restart, Cancellation, unsichere Effects und Administrative Repair. |
+| ARC-005 | Entscheidungen mit Gründen, Kosten und Alternativen | Muss erweitert/überarbeitet werden | Architekturtexte erklären viele Gründe und Kosten; Decision-Seiten bewahren Alternativen und Supersession. `docs:publication:check` findet jedoch fehlende Evidence-Metadaten, falsch formatierte Evidence-Pfade, entfernte Contract-Terme und Sprachfehler in diesen kanonischen Entscheidungsseiten. |
+| ARC-006 | Vollständige Failure-Domain-, Abhängigkeits- und Datenkarte | Muss erweitert/überarbeitet werden | `deployment-and-trust.md` enthält Stores und Failure Domains; `pipeline-dependencies.md` enthält erforderliche Dienste und Recovery; `platform-and-operations.md` enthält optionale Infrastruktur. Eine gemeinsame, exhaustive Kommunikations- und Datenmatrix mit Producer, Consumer, Vertrag, Transport, Persistenz, Retention und Ausfallwirkung fehlt. |
 
 ## D. Architektur: Nova und Nova Core
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| NVC-001 | Nova-Rolle versus Nova Core | Vollständig vorhanden | Grenze ist klar erklärt. |
-| NVC-002 | CLI, Projektaufnahme und `nova-project.v2` Compiler | Muss erweitert/überarbeitet werden | Package-README ist detailliert, aber nicht als kanonische Site-Architektur integriert. |
-| NVC-003 | Immutable Source Admission und Baseline-Bindung | Muss erweitert/überarbeitet werden | Teile sind erklärt; zusammenhängender Architekturpfad fehlt. |
-| NVC-004 | Graph-Aufbau, Kanten, Validierung und Freeze | Muss erweitert/überarbeitet werden | Ablauf vorhanden; exhaustive Regeln und Fehler fehlen. |
-| NVC-005 | Scheduling, Readiness und Concurrency | Muss erweitert/überarbeitet werden | Autorität ist erklärt; Algorithmus und Grenzen brauchen eine Detailseite. |
-| NVC-006 | Stage-Aktivierung, Eingabeauflösung und Ausführung | Muss erweitert/überarbeitet werden | Extension-Vertrag existiert; Core-seitige Kette fehlt im Detail. |
-| NVC-007 | Attempt-Identität und Lease-Lifecycle | Muss erweitert/überarbeitet werden | Begriffe vorhanden; Zustände und Fehlerreferenz fehlen. |
-| NVC-008 | Retryarten, Repair und Budgets | Muss erweitert/überarbeitet werden | Verhalten auf hoher Ebene vorhanden; exhaustive Felder und Entscheidungen fehlen. |
-| NVC-009 | Wait, Approval, Signal und Resume | Muss erweitert/überarbeitet werden | Operatorablauf existiert; Signalverträge und Issuer-Regeln fehlen als Referenz. |
-| NVC-010 | Cancellation und Shutdown | Muss erweitert/überarbeitet werden | Produktgrenze ist dokumentiert; interne Semantik braucht mehr Tiefe. |
-| NVC-011 | Effects, Identity, Locks, Requests und Receipts | Muss erweitert/überarbeitet werden | Effectful Guide ist stark; vollständige Core-Architektur fehlt. |
-| NVC-012 | Artifact Checkpoints und Sichtbarkeit | Muss erweitert/überarbeitet werden | Im Ablauf erwähnt; vollständiges Daten- und Recoverymodell fehlt. |
-| NVC-013 | Journal, Snapshots, Dateisperren und Run Root | Muss erweitert/überarbeitet werden | Autorität ist klar; physische Struktur und Transaktionsgrenzen fehlen. |
-| NVC-014 | Lifecycle Reducer und vollständige Transitionstabelle | Muss erweitert/überarbeitet werden | Resultate sind beschrieben; Transitionstabelle fehlt. |
-| NVC-015 | Administrative Repair und Recovery Stops | Muss erweitert/überarbeitet werden | Grenzen sind ehrlich beschrieben; Entscheidungs- und Fehlerkatalog fehlt. |
-| NVC-016 | Test-Gate Resolution, Dispatch, Import und Authority Check | Muss erweitert/überarbeitet werden | Buster-Erweiterung ist erklärt; Nova-Orchestrierung braucht eine Detailseite. |
-| NVC-017 | Auditprojektion und Read Model | Muss erweitert/überarbeitet werden | Operator nutzt Audit; Herleitung und Felder sind nicht exhaustiv dokumentiert. |
-| NVC-018 | Nova-Core-Fehlerkatalog | Fehlt komplett | Kein kanonischer, aus Code erzeugter Katalog. |
+| NVC-001 | Nova-Rolle versus Nova Core | Vollständig vorhanden | `components-and-authority.md` trennt den deploybaren Nova-Role-Bundle vom deterministischen Core und zeigt Compiler, Entry Point, Plugin Runtime und Core in einem eigenen Diagramm. Gepinnte Role- und Engine-Quellen stützen die Grenze. |
+| NVC-002 | CLI, Projektaufnahme und `nova-project.v2` Compiler | Muss erweitert/überarbeitet werden | `skills/nova/project/README.md` beschreibt Commands, Felder, Scheduling und Migration sehr detailliert. Die aktive Site bindet diese Erklärung nicht als kanonische Architektur oder vollständige Referenz ein; das Operator-Handbuch zeigt nur die beiden grundlegenden Command-Formen. |
+| NVC-003 | Immutable Source Admission und Baseline-Bindung | Muss erweitert/überarbeitet werden | `request-state-recovery.md` erklärt Projektaufnahme und fixen Graph. Die vollständige Auswahl der Control-Dateien, Digest-Bindung, Limits, Approval-Verknüpfung und Ablehnungsfälle stehen nur im Package-README und in `skills/nova/project/*`. |
+| NVC-004 | Graph-Aufbau, Kanten, Validierung und Freeze | Muss erweitert/überarbeitet werden | Die aktive Architektur erklärt Topologieprüfung und unveränderlichen Graph. Sie enthält keine vollständige Kantenart-, Aktivierungs-, Validierungs- und Fehlerübersicht aus `graph-build.ts`, `graph.ts` und den Compilerregeln. |
+| NVC-005 | Scheduling, Readiness und Concurrency | Muss erweitert/überarbeitet werden | Nova als einzige Scheduling-Autorität, Readiness und terminale Schließung sind erklärt. Auswahlreihenfolge, Concurrency-Grenzen, Fan-in/Fan-out, Blockierbedingungen und Schedulerfehler sind nicht als zusammenhängender Mechanismus dokumentiert. |
+| NVC-006 | Stage-Aktivierung, Eingabeauflösung und Ausführung | Muss erweitert/überarbeitet werden | Extension-Seiten erklären den Plugin-Vertrag, und der Trace zeigt eine bounded invocation. Die Core-Kette aus Activation, Input Resolution, Authorization, Context, Adapter Startup, Stage Execution und Cleanup fehlt als kanonischer Ablauf. |
+| NVC-007 | Attempt-Identität und Lease-Lifecycle | Muss erweitert/überarbeitet werden | Der Trace nennt Attempt und Lease und verlinkt `stage-executor.ts`. Er dokumentiert weder vollständige Lease-Zustände und Identitäten noch Erwerb, Erneuerung, Verlust, Fencing, Cleanup und zugehörige Fehler. |
+| NVC-008 | Retryarten, Repair und Budgets | Muss erweitert/überarbeitet werden | Technischer Retry, Product Repair, Attempt Budget und Repair Budget sind verständlich getrennt. Feldquellen, Default-/Override-Regeln, Graph-Reparaturbudget, Invalidation und alle Budget-Endzustände fehlen als vollständige Referenz. |
+| NVC-009 | Wait, Approval, Signal und Resume | Muss erweitert/überarbeitet werden | Architektur und Operator-Handbuch erklären Wait, gespeicherte Signalidentität und Resume. Vollständige Signaltypen, Payload-Schemas, Issuer- und Freshness-Regeln, Ablaufzeiten, Single-use-Verhalten und Fehlercodes fehlen. |
+| NVC-010 | Cancellation und Shutdown | Muss erweitert/überarbeitet werden | `request-state-recovery.md` erklärt, dass Cancellation lokale Arbeit stoppt, aber externe Effekte nicht zurückdreht. Pipeline-Loop-, Runner-, Adapter- und Observer-Shutdown, Zeitgrenzen, Drain-Reihenfolge und Fehlerpriorität sind nicht vollständig erklärt. |
+| NVC-011 | Effects, Identity, Locks, Requests und Receipts | Muss erweitert/überarbeitet werden | `extend/effectful-plugin.md` erklärt Identität, Locking, Fencing, Zustände, Retry, Resume, Cancellation, Cleanup und Verifikation tiefgehend. Der passende Architekturabschnitt verlinkt diesen kanonischen Deep Dive nicht direkt; Core-Defaults und alle Persistenzgrenzen bleiben zudem verteilt. |
+| NVC-012 | Artifact Checkpoints und Sichtbarkeit | Muss erweitert/überarbeitet werden | Architekturseiten erklären Artifact Store und Ergebnisbelege. Das Verhalten von `artifact-checkpoints.ts` bei Mid-attempt-Commit, Deduplizierung, Konflikt, Wiederherstellung und Sichtbarkeit steht nur im internen Execution-README. |
+| NVC-013 | Journal, Snapshots, Dateisperren und Run Root | Muss erweitert/überarbeitet werden | Die Site nennt append-only Journal, Snapshot und langlebigen Store. Hash-Kette, JSON-Grenzen, FileMutex-/`flock`-Semantik, Transaktionsgrenzen, Snapshot-Provenienz, Run-Root-Struktur und Upgrade-Regeln stehen nur in internen Core-Dokumenten und Code. |
+| NVC-014 | Lifecycle Reducer und vollständige Transitionstabelle | Muss erweitert/überarbeitet werden | Der Trace listet zehn Zustände und erklärt die Result-Mappings. Er zeigt nicht jede erlaubte Aktion je Ausgangszustand, Invalidation, Repair-Rückweg, Terminalisierung und Ablehnung illegaler Übergänge als vollständige Transitionstabelle. |
+| NVC-015 | Administrative Repair und Recovery Stops | Muss erweitert/überarbeitet werden | Die aktive Architektur trennt gewöhnliches Resume von administrativem Reopen und verbietet Journaländerung. Decision-Schema, Authenticator-Bindung, Issuer-Allowlist, Idempotenz, Continuations und jeder Recovery Stop sind nicht in einer vollständigen Bedien- und Fehlerreferenz vereint. |
+| NVC-016 | Test-Gate Resolution, Dispatch, Import und Authority Check | Muss erweitert/überarbeitet werden | Buster-Guides erklären Provider- und Report-Erweiterungen; der Architektur-Trace zeigt Dispatch und Import. Nova-seitige Plan Resolution, Source Snapshot, sichere Endpoint-Prüfung, Dispatch Store, Deadline, Result Authority, einmaliger Import und Transportfehler sind nicht vollständig beschrieben. |
+| NVC-017 | Auditprojektion und Read Model | Muss erweitert/überarbeitet werden | Das Operator-Handbuch verwendet `audit`, und Telemetrieabschnitte erklären kanonische Events. Projektion, Feldherkunft, Sortierung, Redaction, beschädigte Journale, unvollständige Runs und Stabilitätsvertrag der Audit-Ausgabe fehlen als Referenz. |
+| NVC-018 | Nova-Core-Fehlerkatalog | Fehlt komplett | Es gibt keinen kanonischen, aus den Nova-Core-Fehlerstellen erzeugten Katalog mit Code, Auslöser, Lifecycle-Auswirkung, Retry-Regel und Operatoraktion. |
 
 ## E. Architektur: Worker Core
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| WKC-001 | Zweck und neutrale Autoritätsgrenze | Vollständig vorhanden | Components-and-Authority erklärt den neutralen Core. |
-| WKC-002 | Profile, Engine-Identität und Protokollversionen | Muss erweitert/überarbeitet werden | Integrationsweg vorhanden; vollständige Vertragsreferenz fehlt. |
-| WKC-003 | Readiness, Kapazität, Admission und Claims | Muss erweitert/überarbeitet werden | Zusammenfassung vorhanden; Zustandsautomat und Fehler fehlen. |
-| WKC-004 | Attempt-Identität, Replay und Duplikatschutz | Muss erweitert/überarbeitet werden | Grundprinzip vorhanden; exakte Bindungen fehlen. |
-| WKC-005 | Supervisor Authority und Prozessbesitz | Fehlt komplett | Kein kanonischer Detailtext. |
-| WKC-006 | Process Launch, Process Group und Sandbox | Muss erweitert/überarbeitet werden | Trustseiten behandeln Teile; interner Ablauf fehlt. |
-| WKC-007 | Native Control Channel | Fehlt komplett | Nachrichten, Framing, Identität und Fehler fehlen. |
-| WKC-008 | Output Spool und Log-Decoding | Fehlt komplett | Format, Grenzen, Retention und Recovery fehlen. |
-| WKC-009 | Ressourcenpool, Reservation, Accounting und Observation | Fehlt komplett | Keine vollständige Architektur- oder Referenzseite. |
-| WKC-010 | Deadlines, Termination und Cancellation | Muss erweitert/überarbeitet werden | Allgemeine Grenzen existieren; native Details fehlen. |
-| WKC-011 | Attempt Journal und Recovery | Fehlt komplett | Persistenz, Replay, Zustände und Stops fehlen. |
-| WKC-012 | Ownership Store und Ownership Recovery | Fehlt komplett | Kein kanonischer Detailtext. |
-| WKC-013 | Cleanup und Ergebnisversiegelung | Muss erweitert/überarbeitet werden | Kurz belegt, aber nicht durchgehend erklärt. |
-| WKC-014 | Worker-Core-Vertrags- und Fehlerreferenz | Fehlt komplett | Drei Vertragsversionen existieren; integrierte Referenz fehlt. |
+| WKC-001 | Zweck und neutrale Autoritätsgrenze | Vollständig vorhanden | `components-and-authority.md` erklärt Zweck, Besitz, Nicht-Besitz, Nutzen und Kosten des neutralen Cores. `host-and-engine.md` zeigt, welche Spezialistenlogik in der Engine bleiben muss. |
+| WKC-002 | Profile, Engine-Identität und Protokollversionen | Muss erweitert/überarbeitet werden | `host-and-engine.md` erklärt Profile, immutable Engine Identity, Envelope und Versionierung mit direkten Vertragslinks. Eine vollständige Feld-, Versions-, Kompatibilitäts- und Migrationsreferenz für alle Worker-Core-Verträge fehlt. |
+| WKC-003 | Readiness, Kapazität, Admission und Claims | Muss erweitert/überarbeitet werden | Die Components-Seite nennt diese Kontrollen, und der Engine-Guide beschreibt Admission grob. Readiness-Zustände, Kapazitätsberechnung, Claim-Generationen, Übergänge, Reject-Gründe und Operatorbeobachtung fehlen als kompletter Ablauf. |
+| WKC-004 | Attempt-Identität, Replay und Duplikatschutz | Muss erweitert/überarbeitet werden | Der Engine-Guide bindet Pipeline, Node, Attempt, Claim, Profil, Package, Capability und Limits und fordert Duplicate-Claim-Tests. Replay-Regeln, gespeicherte Bindungen, Konfliktfälle und Recoveryentscheidungen sind nicht vollständig erklärt. |
+| WKC-005 | Supervisor Authority und Prozessbesitz | Fehlt komplett | Keine aktive kanonische Seite erklärt `native-supervisor-authority.ts`, Prozessbesitz, Authority-Nachweis, Fencing und Verlust der Supervisor-Autorität. Historische Audittexte zählen nicht als Produktdokumentation. |
+| WKC-006 | Process Launch, Process Group und Sandbox | Muss erweitert/überarbeitet werden | Deployment and Trust erklärt den nativen Prozess als zusätzliche Isolationsgrenze. Launch-Handshake, Launcher-Binary, UID/GID, Process Group, Ressourcen-Scope, erlaubte Dateien, Exitpfade und Sandbox-Grenzen fehlen. |
+| WKC-007 | Native Control Channel | Fehlt komplett | Keine aktive Seite erklärt Nachrichten, Framing, Endpoint, Peer-Identität, Größenlimits, Timeouts, Reihenfolge, Authentisierung oder Fehler von `native-control-channel.ts`. |
+| WKC-008 | Output Spool und Log-Decoding | Fehlt komplett | Keine aktive Seite erklärt Spool-Dateien, stdout/stderr-Zuordnung, Encoding, Abschneidung, Größenlimits, Flush, Retention, Wiederaufnahme und Decode-Fehler. |
+| WKC-009 | Ressourcenpool, Reservation, Accounting und Observation | Fehlt komplett | Die aktive Architektur nennt Limits und Observations nur als Verantwortung. Pool-Identität, Policy, Reservation, Scope, Accounting, Messzeitpunkte, Überbuchung, Release und nicht messbare Ressourcen fehlen vollständig. |
+| WKC-010 | Deadlines, Termination und Cancellation | Muss erweitert/überarbeitet werden | Der Engine-Guide erklärt Deadline-Race, Cancellation-Propagation, Termination und Cleanup auf Vertragsebene. Native Phasen-Deadlines, Signalreihenfolge, Grace Period, Process-Group-Verhalten, Supervisor Stop und unvollständige Beendigung fehlen. |
+| WKC-011 | Attempt Journal und Recovery | Fehlt komplett | Keine aktive Seite erklärt Journalformat, Commit-Grenze, Zustände, Replay, beschädigte Einträge, in-flight Recovery, Recovery Stops oder Upgrade-Kompatibilität der nativen Attempts. |
+| WKC-012 | Ownership Store und Ownership Recovery | Fehlt komplett | Deployment and Trust nennt nur den Store und die Regel „fence rather than guess“. Schema, Besitzerwechsel, Generationen, Heartbeats, stale ownership, Wiederherstellung und Fehlerpfade fehlen. |
+| WKC-013 | Cleanup und Ergebnisversiegelung | Muss erweitert/überarbeitet werden | Components and Authority belegt persistierte Admission und versiegeltes Resultat; der Engine-Guide nennt Hook-Reihenfolge und Result-Bindung. Cleanup bei jedem Terminalpfad, Fehlerpriorität, verbleibende Prozesse/Dateien und vollständige Seal-Validierung fehlen. |
+| WKC-014 | Worker-Core-Vertrags- und Fehlerreferenz | Fehlt komplett | Versionierte Verträge und direkte Einzelbelege existieren. Es gibt keine integrierte Referenz für alle Felder, Versionen, Zustände, Error Codes, Retry-Regeln und Migrationen. |
 
 ## F. Architektur: Spezialisten und Produktkomponenten
 
@@ -410,6 +415,10 @@ zutreffenden Fragen mit Ja beantwortet sind:
 | Datum | IDs | Geprüfte Quellen und Seiten | Ergebnis | Änderungen oder verbleibende Lücke | Checks |
 | --- | --- | --- | --- | --- | --- |
 | 17.09.2026 | gesamter Katalog | Erste strukturelle und quantitative Sichtung | Triage erstellt | Einzelprüfungen offen | Publication-, Blueprint- und Suite-Dokumentationschecks; Bestandszählungen |
+| 17.09.2026 | GOV-001–GOV-008; ENT-001–ENT-005 | `docs/README.md`; Site-Einstiege; Understand-Trace; Glossar; Topic Map; Blueprint-Regeln; Publication-Skript | 6 vollständig; 7 zu erweitern; 0 fehlen | `GOV-005` herabgestuft; widersprüchliche AP04-/AP08-Statussätze und fehlender erster Pipeline-Workflow bestätigt | Metadatenzählung über 90 Site-Seiten; `docs:status:check`; `docs:check:coverage`; `docs:publication:check`; Link- und Generierungschecks |
+| 17.09.2026 | ARC-001–ARC-006 | Understand-Einstieg; Components and Authority; Request, State, and Recovery; Pipeline Dependencies; Deployment and Trust; Platform and Operations; Decisions | 4 vollständig; 2 zu erweitern; 0 fehlen | Systemfluss und Autorität bestätigt; Decision-Qualität und gemeinsame Kommunikations-/Datenmatrix bleiben offen | Diagramm- und Evidence-Check; `docs:publication:check`; Linkprüfung; manuelle Quellenprüfung am Stand `51cda627` |
+| 17.09.2026 | NVC-001–NVC-018 | Aktive Understand-, Use- und Extend-Seiten; 84 Dateien unter `skills/nova/core`; sieben interne Core-Dokumente; Nova-Project-README | 1 vollständig; 16 zu erweitern; 1 fehlt | Rollengrenze vollständig; tiefe Core-Erklärungen müssen aus internen Quellen in kanonische Architektur und Referenz integriert werden; Fehlerkatalog fehlt | Quell-/Dokumentinventar; aktive Source-Link-Abdeckung; manuelle Ablauf- und Grenzprüfung am Stand `51cda627` |
+| 17.09.2026 | WKC-001–WKC-014 | Aktive Components-, Trust- und Engine-Seiten; 38 Dateien unter `skills/worker/core`; Worker-Verträge; historische Phase-5.5-Audits nur als Leads | 1 vollständig; 6 zu erweitern; 7 fehlen | Neutrale Grenze und Engine-Integration sind vorhanden; native Runtime, Persistenz, Ownership, Ressourcen und Referenz benötigen kanonische Dokumentation | Quell-/Dokumentinventar; aktive Source-Link-Abdeckung; manuelle Vertrags- und Grenzprüfung am Stand `51cda627` |
 
 ## Abschluss von AP09.0
 
