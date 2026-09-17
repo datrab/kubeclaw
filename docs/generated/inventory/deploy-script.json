@@ -336,12 +336,12 @@
     "ALLOW_PARTIAL_INFRA"
   ],
   "sourceAnchors": {
-    "setup": 878,
-    "secrets": 915,
-    "tailscale": 1006,
-    "infra": 1101,
-    "agents": 1463,
-    "smoke": 1588,
-    "teardown": 2833
+    "setup": 869,
+    "secrets": 906,
+    "tailscale": 997,
+    "infra": 1092,
+    "agents": 1454,
+    "smoke": 1579,
+    "teardown": 2824
   }
 }
