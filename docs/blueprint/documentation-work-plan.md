@@ -1,6 +1,6 @@
 # KubeClaw: Arbeitsplan zur vollständigen Überarbeitung der Dokumentation
 
-Stand: 17.09.2026 · Version 33 · Status: AP01–AP08 abgeschlossen; AP09 intern vollständig inventarisiert; AP09–AP11 offen
+Stand: 17.09.2026 · Version 34 · Status: AP01–AP08 abgeschlossen; AP09-Katalog unabhängig geprüft; Review-Reconciliation und AP09-Umsetzung offen
 
 ## 1. Ziel und Ausgangspunkt
 
@@ -171,7 +171,10 @@ Folgende Aufgaben werden einzeln gegen den Bestand geprüft und vollständig dok
 
 ### AP09 — Vollständigkeit, Referenzen und Navigation
 
-- [x] Die [AP09-Masterprüfung](AP09-completeness-audit.md) Punkt für Punkt gegen Code, Konfiguration, Schemas, Tests und aktive Dokumentation bearbeiten. Alle 251 Punkte besitzen einen intern geprüften Zustand und Nachweis; die unabhängige Katalogprüfung bleibt offen.
+- [x] Die [AP09-Masterprüfung](AP09-completeness-audit.md) Punkt für Punkt gegen Code, Konfiguration, Schemas, Tests und aktive Dokumentation bearbeiten. Alle 251 ursprünglichen Punkte besitzen einen intern geprüften Zustand und Nachweis.
+- [x] Den Katalog unabhängig prüfen lassen. Der Review bestätigt die 251 IDs, korrigiert elf Einstufungen und fordert zehn zusätzliche Produktoberflächen.
+- [ ] Review, aktuelle Site-Änderungen und zehn Ergänzungen in einer verbindlichen 261-Punkte-Baseline zusammenführen.
+- [ ] Den [AP09-Ausführungsplan](AP09-execution-plan.md) in der festgelegten Reihenfolge umsetzen. Prism, zwölf Test-Suites, Lint und komplexe Plugins besitzen darin eigene Tiefen- und Abnahmeanforderungen.
 - [ ] Konfigurationswerte, Defaults, Pflichtfelder, Befehle, Verträge und Fehlercodes vollständig zuordnen; vorhandene Generierung nutzen.
 - [ ] Einstieg, Aufgaben, Referenzen, Entscheidungen und Status sinnvoll verlinken. Erforderliche Schritte nicht hinter optionalen Architekturverweisen verstecken.
 - [ ] Veröffentlichungs-Allowlist und Suchindex auf die neuen Inhalte aktualisieren.

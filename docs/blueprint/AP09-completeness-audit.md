@@ -496,6 +496,15 @@ AP09.0 ist abgeschlossen, wenn:
 Erst danach beginnt die inhaltliche Abarbeitung. Ein grüner Link- oder Buildcheck
 ersetzt diese Prüfung nicht.
 
-Interner Stand: Bedingungen 1 bis 5 sind erfüllt. Bedingung 6, die unabhängige
-Prüfung der Katalogvollständigkeit, bleibt offen. AP09.0 ist deshalb noch nicht
-formal abgeschlossen.
+Der unabhängige Review wurde gegen Commit
+`28a10592256a1a270a9f731f18af03992b53a20c` ausgeführt. Er bestätigte 251
+eindeutige IDs und die damalige Summenrechnung. Er fand elf falsche
+Klassifikationen, mehrere fehlerhafte Nachweise und zehn zusätzliche
+Produktoberflächen. Der aktuelle Commit korrigiert bereits einen Teil der
+mechanischen Befunde, ersetzt aber noch nicht die vollständige
+Review-Reconciliation.
+
+Bedingungen 1 bis 5 waren für den ursprünglichen Katalog erfüllt. Bedingung 6
+hat konkrete Änderungen verlangt und ist deshalb noch nicht als bestanden
+geschlossen. AP09.0 endet erst mit der geprüften 261-Punkte-Baseline. Die
+inhaltliche Umsetzung folgt dem [AP09-Ausführungsplan](AP09-execution-plan.md).
