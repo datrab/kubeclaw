@@ -1,0 +1,142 @@
+# Generated from release 42166567be4938e21c2e194fd81e0a974154071e and byte-matched source configuration; do not edit.
+agentRole: prism
+image:
+  repository: ghcr.io/datrab/kubeclaw-prism-agent
+  digest: sha256:876270dc013e461b72ab273e23c8296bd7e3697909b02bdd29a029e4f9fab528
+  tag: ''
+  pullPolicy: IfNotPresent
+imagePullSecrets:
+  - name: ghcr-secret
+runAsRoot: false
+codeBundle:
+  enabled: true
+  archiveUrl: >-
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-35208467907-1/prism-42166567be4938e21c2e194fd81e0a974154071e.tgz
+  expectedCommit: 42166567be4938e21c2e194fd81e0a974154071e
+  contractVersion: v2
+  auth:
+    existingSecret: github-bundle-reader
+    existingSecretKey: token
+  sha256: 4c3d4ef40d6969624af8d850c484d99a0aa907044f77d8c6b7a6bfad3136bd4f
+auth:
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: gatewayToken-prism
+litellm:
+  endpoint: http://litellm.kubeclaw.svc.cluster.local:4000/v1
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: litellmApiKey
+discord:
+  enabled: false
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: discordToken-prism
+  channelId: ''
+commands:
+  ownerAllowFrom:
+    - discord:849379821536804864
+  allowFromDiscord:
+    - '849379821536804864'
+    - user:849379821536804864
+agent:
+  project: prism
+  model:
+    primary: openai/gpt-5.6-sol
+    fallbacks:
+      - openai/gpt-5.5
+  git:
+    enabled: true
+    secretName: git-deploy-key-nova
+    repoUrl: git@github.com:datrab/kubeclaw.git
+serviceAccount:
+  create: true
+  automount: false
+workerTrust:
+  spiffe:
+    enabled: true
+    trustDomain: kubeclaw.internal
+service:
+  gatewayPort: 8080
+  gatewayTargetPort: prism-dispatch
+  bridgeEnabled: false
+extraEnv:
+  - name: PRISM_CONTROL_URL
+    value: http://127.0.0.1:28080
+  - name: PRISM_STUDIO_PUBLIC_URL
+    value: https://prism-studio
+extraContainers:
+  - name: prism-agent-bridge
+    image: ghcr.io/datrab/kubeclaw-prism-agent@sha256:876270dc013e461b72ab273e23c8296bd7e3697909b02bdd29a029e4f9fab528
+    imagePullPolicy: Always
+    command:
+      - node
+      - /opt/kubeclaw-prism/agent-bridge.mjs
+    env:
+      - name: PORT
+        value: '18080'
+      - name: PRISM_CONTROL_URL
+        value: http://127.0.0.1:28080
+      - name: PRISM_STUDIO_PUBLIC_URL
+        value: https://prism-studio
+      - name: OPENCLAW_GATEWAY_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: openclaw-shared-secrets
+            key: gatewayToken-prism
+    volumeMounts:
+      - name: config
+        mountPath: /home/node/.openclaw
+      - name: tmp
+        mountPath: /tmp
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+          - ALL
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: 18080
+      initialDelaySeconds: 3
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: 18080
+      initialDelaySeconds: 10
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+workspace:
+  enabled: true
+  overrideOnRestart: true
+  soul: >
+    You are Prism, KubeClaw's single design agent. Nova gives you an architecture and product context.
+
+    Produce exactly three materially distinct, complete, accessible Prism designs and commit them with
+    prism_create_design_set.
+
+    When Studio or Discord sends feedback, continue the same project session and commit the complete update with
+    prism_apply_revision.
+
+    Never call a model provider outside OpenClaw. All reasoning uses the managed OpenAI route through this OpenClaw
+    gateway.
+  tools: >
+    prism_create_design_set is mandatory for a new architecture and accepts exactly three designs.
+
+    prism_apply_revision is mandatory for Studio or Discord design changes.
+
+    Read /app/skills/packages/prism-contract/schemas/prism-v1.schema.json for the canonical contract and
+    /app/skills/packages/prism-contract/fixtures/minimal-web.json for a minimal valid example before creating a
+    document.
+probes:
+  dependencies:
+    redis:
+      enabled: false
+    registries:
+      enabled: false
+      endpoints: []

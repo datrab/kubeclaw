@@ -1,0 +1,258 @@
+# Generated from release 42166567be4938e21c2e194fd81e0a974154071e and byte-matched source configuration; do not edit.
+agentRole: buster
+gateway:
+  startupDoctor:
+    enabled: true
+    nodeOptions: '--max-old-space-size=3072'
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: '2'
+        memory: 4Gi
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 12288Mi
+      ephemeral-storage: 1Gi
+    limits:
+      cpu: '6'
+      memory: 24576Mi
+      ephemeral-storage: 50Gi
+initSetup:
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: '2'
+      memory: 8Gi
+image:
+  repository: ghcr.io/datrab/kubeclaw-buster-gateway
+  digest: sha256:ea9fff2872aa2a0d1f10481765f140cddff4eb758b00290e1600bdc88fd18d5b
+  tag: ''
+  pullPolicy: IfNotPresent
+imagePullSecrets:
+  - name: ghcr-secret
+codeBundle:
+  enabled: true
+  archiveUrl: >-
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-35208467907-1/buster-42166567be4938e21c2e194fd81e0a974154071e.tgz
+  expectedCommit: 42166567be4938e21c2e194fd81e0a974154071e
+  contractVersion: v2
+  auth:
+    existingSecret: github-bundle-reader
+    existingSecretKey: token
+  sha256: f62d63823eed099cf2af29a040e493780708fbdb141f9f37f285be9a1dc13cfc
+auth:
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: gatewayToken-buster
+litellm:
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: litellmApiKey
+discord:
+  enabled: true
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: discordToken-buster
+  channelId: '1473692599125540985'
+  execApprovers:
+    - user:849379821536804864
+commands:
+  ownerAllowFrom:
+    - discord:849379821536804864
+  allowFromDiscord:
+    - '849379821536804864'
+    - user:849379821536804864
+discordWebhook:
+  secretName: openclaw-shared-secrets
+  secretKey: discordWebhook
+agent:
+  project: clawdeck
+  git:
+    enabled: true
+    secretName: git-deploy-key-buster
+    repoUrl: git@github.com:datrab/kubeclaw.git
+serviceAccount:
+  create: true
+  automount: false
+workerTrust:
+  spiffe:
+    enabled: true
+    trustDomain: kubeclaw.internal
+service:
+  extraPorts:
+    - name: buster-plan
+      port: 18891
+      targetPort: buster-plan
+extraContainers:
+  - name: buster-v2-runtime
+    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:e60dd2c6ffb5aee3fe1e7b7717935a51b5c62f35ecec03a4b8b42016eff13196
+    imagePullPolicy: Always
+    env:
+      - name: BUSTER_V2_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: openclaw-shared-secrets
+            key: busterV2Token
+      - name: BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY
+        valueFrom:
+          secretKeyRef:
+            name: pipeline-test-gate-source-attestation
+            key: publicKey
+      - name: BUSTER_TRUSTED_PEER_SPIFFE_ID
+        value: spiffe://kubeclaw.internal/ns/kubeclaw/sa/agent-nova
+      - name: BUSTER_PLAN_PORT
+        value: '28891'
+      - name: BUSTER_PLAN_STATE_DIR
+        value: /var/lib/buster-v2/plan-jobs
+      - name: BUSTER_PLAN_RUN_DIR
+        value: /var/lib/buster-v2/runs
+      - name: BUSTER_V2_MAX_ARCHIVE_BYTES
+        value: '67108864'
+      - name: BUSTER_V2_MAX_EXTRACTED_BYTES
+        value: '536870912'
+      - name: BUSTER_V2_RESULT_ROOT
+        value: /workspace/git-repo/.swarm/runtime-results
+      - name: BUSTER_V2_KUBERNETES_CREDENTIALS
+        value: /var/run/buster-worker/kubernetes
+      - name: BUSTER_ALLOWED_SOURCE_SECRETS
+        value: kubeclaw-fixture-preflight,prism-test-provider,prism-test-runtime,prism-test-postgresql-auth,prism-test-ghcr
+      - name: CONTAINER_BUILD_BUILDKIT_HOST
+        value: unix:///run/user/1000/buildkit/buildkitd.sock
+      - name: BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT
+        value: /var/run/kubeclaw-browser-cgroup
+    ports:
+      - name: plan-runtime
+        containerPort: 28891
+        protocol: TCP
+    startupProbe:
+      httpGet:
+        scheme: HTTP
+        path: /bootstrapz
+        port: 28891
+      periodSeconds: 2
+      timeoutSeconds: 2
+      failureThreshold: 60
+    readinessProbe:
+      httpGet:
+        scheme: HTTP
+        path: /readyz
+        port: 28891
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      timeoutSeconds: 2
+      failureThreshold: 6
+    livenessProbe:
+      httpGet:
+        scheme: HTTP
+        path: /healthz
+        port: 28891
+      initialDelaySeconds: 30
+      periodSeconds: 15
+      timeoutSeconds: 2
+      failureThreshold: 3
+    volumeMounts:
+      - name: workspace
+        mountPath: /workspace
+      - name: buster-v2-state
+        mountPath: /var/lib/buster-v2
+      - name: buster-api-token
+        mountPath: /var/run/buster-worker/kubernetes
+        readOnly: true
+      - name: buster-browser-cgroup
+        mountPath: /var/run/kubeclaw-browser-cgroup
+    resources:
+      requests:
+        cpu: '2'
+        memory: 8Gi
+        ephemeral-storage: 8Gi
+      limits:
+        cpu: '8'
+        memory: 24Gi
+        ephemeral-storage: 60Gi
+    securityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      runAsNonRoot: false
+      privileged: false
+      allowPrivilegeEscalation: true
+      appArmorProfile:
+        type: Unconfined
+      seccompProfile:
+        type: Unconfined
+      capabilities:
+        drop:
+          - ALL
+        add:
+          - CHOWN
+          - SETGID
+          - SETPCAP
+          - SETUID
+extraVolumes:
+  - name: buster-v2-state
+    persistentVolumeClaim:
+      claimName: agent-buster-runtime-state
+  - name: buster-api-token
+    projected:
+      defaultMode: 288
+      sources:
+        - serviceAccountToken:
+            path: token
+            expirationSeconds: 3600
+        - configMap:
+            name: kube-root-ca.crt
+            items:
+              - key: ca.crt
+                path: ca.crt
+        - downwardAPI:
+            items:
+              - path: namespace
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+  - name: buster-browser-cgroup
+    hostPath:
+      path: /sys/fs/cgroup/kubeclaw-buster-browser
+      type: DirectoryOrCreate
+busterNamespaceBroker:
+  enabled: true
+  controller:
+    allowedAccess:
+      - subject: kubeclaw/agent-nova
+        modes:
+          - deployer
+      - subject: kubeclaw/agent-buster
+        modes:
+          - deployer
+          - tester
+    allowedSourceSecrets:
+      - kubeclaw-fixture-preflight
+      - prism-test-provider
+      - prism-test-runtime
+      - prism-test-postgresql-auth
+      - prism-test-ghcr
+    image:
+      repository: ghcr.io/datrab/kubeclaw-namespace-controller
+      digest: sha256:c54e47c9cb8a978492b510c213ef553955dbeba1b91647a16c19496d722174ed
+      tag: ''
+      pullPolicy: IfNotPresent
+resources:
+  requests:
+    cpu: 500m
+    memory: 4096Mi
+  limits:
+    cpu: 4000m
+    memory: 24576Mi
+workspace:
+  enabled: false
+  soul: |
+    You are Buster. Hunt for bugs, report exact reproduction evidence, and
+    never repair product code. Pipeline lifecycle authority stays in v2 core.
+  identity: |
+    Buster 💥 — Destructive tester. Cold, precise, relentless.
+busterRuntimePersistence:
+  enabled: true
+  claimName: agent-buster-runtime-state
+  size: 64Gi
+  storageClass: ''

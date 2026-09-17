@@ -1,0 +1,79 @@
+# Generated from release 42166567be4938e21c2e194fd81e0a974154071e and byte-matched source configuration; do not edit.
+images:
+  control:
+    repository: ghcr.io/datrab/kubeclaw-prism-control
+    digest: sha256:c9a76924db9943348b9501eb760e92d1e7080f5e53f2a6f654e0d832a9a8b6f1
+    pullPolicy: IfNotPresent
+  studio:
+    repository: ghcr.io/datrab/kubeclaw-prism-studio
+    digest: sha256:263b00960077cc8e227ad97c98fe729e65a6a56d7943211968a19bc4a455312b
+    pullPolicy: IfNotPresent
+  worker:
+    repository: ghcr.io/datrab/kubeclaw-prism-worker
+    digest: sha256:d0602a158cf610cf90a6c2f1d09326f8b0ed8934f1300bf6accde1b5284c445d
+    pullPolicy: IfNotPresent
+  ingestion:
+    repository: ghcr.io/datrab/kubeclaw-prism-ingestion
+    digest: sha256:aa6e1c6248693d719519e247642d0efd56f6f181bb2fed834a868420f4f20440
+    pullPolicy: IfNotPresent
+imagePullSecrets:
+  - name: ghcr-secret
+control:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: '4'
+      memory: 4Gi
+studio:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: '2'
+      memory: 1Gi
+worker:
+  replicas: 1
+  resources:
+    requests:
+      cpu: '1'
+      memory: 2Gi
+    limits:
+      cpu: '8'
+      memory: 8Gi
+ingestion:
+  enabled: false
+  replicas: 1
+postgresql:
+  enabled: true
+  image: pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f
+  storage: 100Gi
+  storageClass: ''
+  existingSecret: prism-postgresql-auth
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: '4'
+      memory: 8Gi
+secrets:
+  runtime: prism-runtime
+  database: prism-postgresql-auth
+artifactStorage:
+  storage: 100Gi
+  storageClass: ''
+tailscale:
+  enabled: true
+  hostname: prism-studio
+  operatorNamespace: tailscale
+workerTrust:
+  spiffe:
+    enabled: true
+    trustDomain: kubeclaw.internal
+    agentNamespace: kubeclaw
+    agentServiceAccount: agent-prism

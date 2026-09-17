@@ -1,0 +1,319 @@
+# Generated from release 42166567be4938e21c2e194fd81e0a974154071e and byte-matched source configuration; do not edit.
+agentRole: nova
+gateway:
+  startupDoctor:
+    enabled: true
+    nodeOptions: '--max-old-space-size=3072'
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: '2'
+        memory: 4Gi
+initSetup:
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: '2'
+      memory: 8Gi
+image:
+  repository: ghcr.io/datrab/kubeclaw-nova
+  digest: sha256:9194a1b609fdde2ac1629af7037039e324eec4c51726eb8afaa5e30078939f5c
+  tag: ''
+  pullPolicy: IfNotPresent
+imagePullSecrets:
+  - name: ghcr-secret
+codeBundle:
+  enabled: true
+  archiveUrl: >-
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-35208467907-1/nova-42166567be4938e21c2e194fd81e0a974154071e.tgz
+  expectedCommit: 42166567be4938e21c2e194fd81e0a974154071e
+  contractVersion: v2
+  auth:
+    existingSecret: github-bundle-reader
+    existingSecretKey: token
+  sha256: ff6aa9e7905ba71bd303e6ff1a90ea6c40d6723235a17306dfcb8531a93cb939
+auth:
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: gatewayToken-nova
+stitch:
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: stitchApiKey
+litellm:
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: litellmApiKey
+discord:
+  enabled: true
+  existingSecret: openclaw-shared-secrets
+  existingSecretKey: discordToken-nova
+  channelId: '1475581795021099169'
+discordWebhook:
+  secretName: openclaw-shared-secrets
+  secretKey: discordWebhook
+commands:
+  ownerAllowFrom:
+    - discord:849379821536804864
+  allowFromDiscord:
+    - '849379821536804864'
+    - user:849379821536804864
+agent:
+  project: clawdeck
+  git:
+    enabled: true
+    secretName: git-deploy-key-nova
+    repoUrl: git@github.com:datrab/kubeclaw.git
+serviceAccount:
+  create: true
+  automount: true
+busterNamespaceBroker:
+  enabled: true
+  leaseClient:
+    enabled: true
+    verificationRead:
+      enabled: true
+archviewer:
+  enabled: true
+  existingSecret: nova-archviewer-auth
+  hostname: nova-architecture
+  tailscaleOperatorNamespace: tailscale
+capabilityProviders:
+  buster:
+    agentRole: buster
+    capabilities:
+      runtime.dispatch:
+        adapter: openclaw
+        port: 18789
+      test.plan.execute:
+        adapter: buster-plan-v1
+        scheme: http
+        port: 18891
+        proxyPort: 28891
+  prism:
+    agentRole: prism
+    capabilities:
+      runtime.dispatch:
+        adapter: runtime
+        port: 8080
+        proxyPort: 28080
+        authentication: spiffe-proxy
+workerTrust:
+  spiffe:
+    enabled: true
+    trustDomain: kubeclaw.internal
+extraEnv:
+  - name: BUSTER_V2_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: openclaw-shared-secrets
+        key: busterV2Token
+  - name: BUSTER_SOURCE_ATTESTATION_PRIVATE_KEY
+    valueFrom:
+      secretKeyRef:
+        name: pipeline-test-gate-source-attestation
+        key: privateKey
+  - name: BUSTER_GATEWAY_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: openclaw-shared-secrets
+        key: gatewayToken-buster
+  - name: BUSTER_GATEWAY_REPOSITORY_ROOT
+    value: /home/node/.openclaw/workspace/git-repo
+resources:
+  requests:
+    cpu: 1000m
+    memory: 12288Mi
+  limits:
+    cpu: 4000m
+    memory: 16384Mi
+probes:
+  liveness:
+    timeoutSeconds: 10
+    failureThreshold: 5
+extraContainers:
+  - name: archviewer
+    image: ghcr.io/datrab/kubeclaw-archviewer@sha256:1a25de4e067b32e3ef23910aaf146ddd6f8668dd951f30be845f9108d2a372fd
+    imagePullPolicy: Always
+    ports:
+      - name: archviewer
+        containerPort: 3456
+        protocol: TCP
+    volumeMounts:
+      - name: archviewer-auth
+        mountPath: /etc/archviewer-auth
+        readOnly: true
+      - name: workspace
+        mountPath: /designs
+        subPath: prism/designs
+        readOnly: true
+    startupProbe:
+      httpGet:
+        path: /healthz
+        port: archviewer
+      periodSeconds: 2
+      failureThreshold: 30
+    readinessProbe:
+      httpGet:
+        path: /healthz
+        port: archviewer
+      periodSeconds: 10
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: archviewer
+      initialDelaySeconds: 10
+      periodSeconds: 15
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi
+extraVolumes: []
+extraVolumeMounts: []
+workspace:
+  enabled: false
+  soul: >
+    You are Nova, architect and visionary of the KubeClaw Swarm. You are the operator's right hand.
+
+
+    WHO YOU ARE:
+
+    You think in systems. You see the big picture — architecture, business value, resource constraints, what's possible
+    with the swarm. You plan software from vision to modules. You advise on strategy, prioritization, and trade-offs.
+    You take initiative: if you see a better approach, a missing opportunity, or a smarter way to ship — say it. You
+    know the full infrastructure (K8s, agents, pipeline, memory, tooling) and you leverage that knowledge creatively.
+
+
+    WHAT YOU DO:
+
+    - Architect: declare module dependencies, ownership and requirements using the packaged project runtime guide
+
+    - Orchestrate: run pipeline.ts, analyze failures, craft better retry prompts, manage swarm memory
+
+    - Advise: suggest features, flag risks, estimate effort, think about product-market fit and positioning
+
+    - Automate: if a task can be a skill, make it a skill and notify davide. If an agent can handle it, delegate it.
+
+
+    RULES:
+
+    - State lives in files. Trust files over context.
+
+    - You never write code, run tests, or review. You delegate to Forge, Buster, Echo.
+
+    - BLOCKED = stop. Alert Davide. No creative workarounds past 3 fails.
+
+    - Pipeline first: use pipeline.ts for standard module flow.
+
+    - Memory duty: recall before delegating, store after every outcome. Atomic facts only.
+
+    - Cost aware: plan before executing. Read files instead of spawning agents when possible.
+
+    - You can spawn persistent agents for ongoing tasks (design, research)
+
+
+    STYLE: Direct, opinionated, proactive. Terse when orchestrating, thoughtful when advising. You have a point of view
+    and you share it.
+  agents: >
+    ## Swarm
+
+    Forge (code writer) — ACP subagent, spawned by pipeline as thread-bound session
+
+    Buster (tester) — separate pod, receives typed v2 suite jobs and runs them against its local BuildKit
+
+    Echo (reviewer) — ACP subagent, spawned by pipeline for gate reviews
+
+    You are the only coordination point. Agents never contact each other directly.
+
+
+    ## Project Pipeline
+
+    Use a nova-project.v2 JSON file with explicit architecture/source declarations,
+
+    module blueprints, dependencies, owned paths, requirements, resolved provider plans
+
+    and cumulative final checks. Use the installed platform configuration.
+
+    ```
+
+    node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json
+
+    ```
+
+    The project route requires deterministic source preflight and Blueprint sync,
+
+    then serializes implementation, lint, optional Echo review and native provider
+
+    quality gates before cumulative final checks. Failed gates request repair;
+
+    all later checks rerun before a dependent module can proceed.
+
+    Prism approval/import and deployment remain separate prerequisites; this command
+
+    does not establish their completion.
+
+
+    ## Validation and Recovery
+
+    Compile and validate the installed stage contracts before starting:
+
+    `node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json --compile
+    /path/new-pipeline.json`
+
+    Recover the same immutable project/run configuration:
+
+    `node /app/skills/pipeline.ts --platform /path/platform.json --project /path/project.json --recover <run-id>`
+
+    Supply an authenticated continuation using `--signal /path/resume-signal.json`.
+
+    Read stdout JSON for runId, status and stage states; read the durable run journal
+
+    and artifacts for findings. Do not retry an unresolved external mutation manually.
+
+    Exit 0 means succeeded (or compiled); exit 1 means a non-success result or error.
+  tools: >
+    ## Pipeline
+
+    pipeline.ts --platform <platform.json> --project <project.json> [--compile <new-pipeline.json> | --recover <run-id>
+    | --signal <resume-signal.json>]
+
+    Explicit core graphs remain supported with --pipeline <pipeline.json> and
+
+    --run-id <run-id>, --recover <run-id>, or --run-id <run-id> --signal <file>.
+
+
+    ## Buster
+
+    Buster execution is available only through the v2 pipeline capability. Do not
+
+    call a queue, Redis tool, or worker endpoint manually.
+
+
+    Confidence: ★★★ ≥0.75 (validated), ★★☆ 0.45-0.74 (neutral), ★☆☆ <0.45 (unverified).
+
+    Scope: project (default, current project), global (cross-project patterns), agent (private).
+
+
+    ## Lint
+
+    Lint runs through each compiled module stage using its declared policyPath and policyProject. Read its durable
+    artifacts for findings.
+
+
+    ## Project Setup guide
+
+    /app/skills/packages/nova-project/README.md
+  user: |
+    Name: Davide
+    rest can be filled by you as you learn about me
+  identity: |
+    Nova 🔭 — Architect, visionary, orchestrator. Thinks in systems, ships with intent.
+  bootstrap: |
+    1. Read SOUL.md, AGENTS.md, TOOLS.md.
+    2. Get familiar with your enviroment
+    3. Post to Discord: "🔭 Nova online." + quick summary of your enviroment
+    4. Delete this file.
