@@ -3,6 +3,7 @@
   "prismNamespace": "kubeclaw",
   "argoNamespace": "argocd",
   "overlays": {
+    "buster": "gitops/production/overlays/buster-ax41.yaml",
     "nova": "gitops/production/overlays/nova-ax41.yaml",
     "prism": "gitops/production/overlays/prism-ax41.yaml"
   },

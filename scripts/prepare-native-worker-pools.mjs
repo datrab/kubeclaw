@@ -106,6 +106,13 @@ function prepare(policy) {
     fs.writeFileSync(`${directory}/cgroup.subtree_control`, required.map(controller => `+${controller}`).join(' '));
     verifyExisting(role, pool);
   }
+  // Browser delegation must never chown the role pool itself: its limits and
+  // ownership belong to the host. Descendants remain bounded by that pool.
+  const browser = `${root}/buster/browser`;
+  if (!fs.existsSync(browser)) fs.mkdirSync(browser);
+  if (fs.lstatSync(browser).isSymbolicLink() || fs.statfsSync(browser).type !== 0x63677270
+    || read(`${browser}/cgroup.procs`)) throw new Error('NATIVE_BROWSER_SUBTREE_INVALID');
+  fs.writeFileSync(`${browser}/cgroup.subtree_control`, required.map(controller => `+${controller}`).join(' '));
   process.stdout.write('NATIVE_HOST_POOLS_PREPARED_NODE_CAPACITY_PREFLIGHT_REQUIRED\n');
 }
 

@@ -1408,6 +1408,11 @@ deploy_agent() {
 
   helm_args=(--values "$values_file")
   if [[ -n $private_values ]]; then helm_args+=(--values "$private_values"); fi
+  if [[ "$role" == buster && -n "$private_values" ]]; then
+    local runtime_resources
+    runtime_resources="$(node "$REPO_DIR/scripts/buster-resource-overlay.mjs" "$values_file" "$private_values")"
+    if [[ -n "$runtime_resources" ]]; then helm_args+=(--set-json "$runtime_resources"); fi
+  fi
   if ! component_enabled "$KUBECLAW_DEPLOY_LITELLM"; then
     helm_args+=(--set probes.dependencies.litellm.enabled=false)
   fi
