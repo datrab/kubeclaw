@@ -39,7 +39,7 @@ AP01 ist als Bestandsaufnahme nachkontrolliert, AP02 als Blueprint-Überarbeitun
 | AP06 | Einstieg und Architektur überarbeiten | AP05 | Verständlicher Einstieg und vollständige Systemerklärung |
 | AP07 | Operations-Handbuch vervollständigen | AP05; Begriffe aus AP06 | Vollständige Betriebsabläufe und Fehlerbehandlung |
 | AP08 | Plugins und Erweiterungen vollständig erklären | AP05; Grenzen aus AP06 | Entwicklerleitfaden, geprüfte Beispiele und Plugin-Katalog |
-| AP09 | Referenzen, Navigation und Prüfungen integrieren | Beginn ab AP06, Abschluss nach AP06–08 | Konsistente veröffentlichbare Dokumentation |
+| AP09 | Vollständigkeit prüfen; Referenzen, Navigation und Prüfungen integrieren | Beginn ab AP06, Abschluss nach AP06–08 | Vollständig geprüfte, konsistente und veröffentlichbare Dokumentation |
 | AP10 | Ersetzte Dokumente und Reviews entfernen | Je Thema: Ersatz aus AP04/06–09 geprüft | Bereinigter Bestand ohne verlorenen Arbeitskontext |
 | AP11 | Gesamtabnahme und dauerhafte Pflege etablieren | AP06–10 | Nachgewiesene Vollständigkeit und einfache Pflegevorgaben |
 
@@ -169,15 +169,16 @@ Folgende Aufgaben werden einzeln gegen den Bestand geprüft und vollständig dok
 
 **Abgeschlossen, wenn:** Ein Entwickler oder Agent kann die dokumentierten Beispiele ohne verborgenes Projektwissen bauen, testen und einbinden. Für jeden unterstützten Erweiterungstyp existiert eine ausreichende Anleitung; geplante Erweiterungspunkte sind klar markiert.
 
-### AP09 — Referenzen und Navigation
+### AP09 — Vollständigkeit, Referenzen und Navigation
 
+- [ ] Die [AP09-Masterprüfung](AP09-completeness-audit.md) Punkt für Punkt gegen Code, Konfiguration, Schemas, Tests und aktive Dokumentation bearbeiten. Die vorläufige Einstufung allein gilt nicht als Abschluss.
 - [ ] Konfigurationswerte, Defaults, Pflichtfelder, Befehle, Verträge und Fehlercodes vollständig zuordnen; vorhandene Generierung nutzen.
 - [ ] Einstieg, Aufgaben, Referenzen, Entscheidungen und Status sinnvoll verlinken. Erforderliche Schritte nicht hinter optionalen Architekturverweisen verstecken.
 - [ ] Veröffentlichungs-Allowlist und Suchindex auf die neuen Inhalte aktualisieren.
 - [ ] Relative Links, Anker, Bilder, Beispiele und Quellverweise prüfen; releasebezogene Belege an den richtigen Commit binden.
 - [ ] Vorhandene Build-/Publikationsprüfungen an die neue Struktur anpassen. Grüner Build allein beweist keine Verständlichkeit.
 
-**Abgeschlossen, wenn:** Die Dokumentation lässt sich bauen, alle internen Verweise funktionieren und jede Kernaufgabe ist vom passenden Einstieg erreichbar. Öffentlich sichtbare Statusangaben stimmen mit den kanonischen Registern überein.
+**Abgeschlossen, wenn:** Jeder Punkt der AP09-Masterprüfung hat einen geprüften Status und belastbare Belege. Die Dokumentation lässt sich bauen, alle internen Verweise funktionieren und jede Kernaufgabe ist vom passenden Einstieg erreichbar. Öffentlich sichtbare Statusangaben stimmen mit den kanonischen Registern überein.
 
 ### AP10 — Alte Dokumentation bereinigen
 

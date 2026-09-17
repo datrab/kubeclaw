@@ -20,6 +20,7 @@ KubeClaw documentation must let a new reader understand the system, an operator 
 11. [AP08.1 choice-guide checkpoint](AP08.1-checkpoint.md): extension choice, current product boundaries, source evidence and verification limits.
 12. [AP08.2 minimal-plugin checkpoint](AP08.2-checkpoint.md): package, role, activation, result, failure, reversal and verification limits.
 13. [AP08.10 reader checkpoint](AP08.10-checkpoint.md): independent findings, corrections, command results and separated evidence limits.
+14. [AP09 documentation completeness audit](AP09-completeness-audit.md): master checklist, provisional triage, evidence rules and the point-by-point audit log.
 
 [Work plan](documentation-work-plan.md) defines AP01–AP11. [AP01 baseline](ap01-baseline/README.md) records the original inventory and executable dependencies. The [AP03 completion report](AP03-recheck.md#abschluss-der-ap03-nacharbeit-am-15092026) resolves the 285 former handoff blockers and additional candidates. AP04 preserves open work, separate live acceptance, decisions and evidence boundaries. AP05 converts the reviewed inventory and missing reader outcomes into twelve prioritized writing packages. AP06 delivers the entry and architecture track. AP07 delivers the operations track. Source-document migration remains pending for AP08–AP10; AP11 owns final reader and language acceptance.
 
