@@ -12,12 +12,15 @@ const environment = 'gitops/production';
 const root = path.resolve(import.meta.dirname, '..');
 const dump = documents => documents.map(document => yaml.dump(document, { noRefs: true, lineWidth: 120 })).join('---\n');
 
-export function continuousDocuments(result, namespace) {
+export function continuousDocuments(result, namespace, config = {}) {
   const documents = structuredClone(result.documents);
   const application = documents.find(document => document.kind === 'Application');
   application.spec.source = { repoURL: result.values.repository, targetRevision: 'main',
     path: `${environment}/apps`, directory: { include: 'applications.yaml' } };
   if (application.metadata.namespace !== namespace) throw new Error('GITOPS_ARGO_NAMESPACE_MISMATCH');
+  // During registration, apply definitions together without starting a root
+  // sync operation that would wait indefinitely on unsynced manual children.
+  if (config.runtimeAutoSync === false) delete application.spec.syncPolicy.automated;
   return documents;
 }
 
@@ -55,9 +58,9 @@ export function renderContinuousEnvironment(repository, directory, url, revision
     fs.writeFileSync(values, yaml.dump(result.values));
     const rendered = execFileSync('helm', ['template', 'runtime', path.join(repository, 'charts/gitops'),
       '-n', config.argoNamespace, '-f', values], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
-    return { result: { ...result, documents: continuousDocuments(result, config.argoNamespace) },
+    return { result: { ...result, documents: continuousDocuments(result, config.argoNamespace, config) },
       files: { 'apps/applications.yaml': dump(continuousApplications(rendered, config)),
-        'bootstrap.yaml': dump(continuousDocuments(result, config.argoNamespace)),
+        'bootstrap.yaml': dump(continuousDocuments(result, config.argoNamespace, config)),
         'selection.json': JSON.stringify({ directory }, null, 2) + '\n' } };
   } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
 }

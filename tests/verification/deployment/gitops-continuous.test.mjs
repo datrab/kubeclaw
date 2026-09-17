@@ -24,6 +24,7 @@ test('continuous root follows the reviewed production directory without inline f
   assert.deepEqual(docs[1].metadata.annotations, result.documents[1].metadata.annotations);
   assert.deepEqual(docs[1].spec.syncPolicy, result.documents[1].spec.syncPolicy);
   assert.deepEqual(result, original);
+  assert.equal(continuousDocuments(result, 'argocd', {runtimeAutoSync: false})[1].spec.syncPolicy.automated, undefined);
   assert.throws(() => continuousDocuments(result, 'wrong'), /NAMESPACE_MISMATCH/);
 });
 

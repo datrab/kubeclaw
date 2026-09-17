@@ -97,8 +97,9 @@ separately during the AX41 migration.
 
 `runtimeAutoSync: false` in `gitops/production/config.json` is the initial adoption
 stage. The production generator creates all three child Applications in the same
-wave, with no automatic workload sync. The parent can reconcile their definitions
-even while their workloads are not healthy. This is temporary: after reviewing
+wave, with no automatic workload sync. The parent is also manual during this
+stage, so no root operation waits on unsynced children; the registration command
+applies all definitions together. This is temporary: after reviewing
 the resource diffs and completing adoption, set `runtimeAutoSync: true` in Git
 and regenerate the production Applications through the release workflow.
 
