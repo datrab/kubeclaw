@@ -112,6 +112,7 @@
       "workPackage": "AP09.1",
       "owner": "documentation architecture",
       "canonicalTarget": "docs/site/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L94"
     },
     {
@@ -124,6 +125,7 @@
       "workPackage": "AP09.1",
       "owner": "documentation architecture",
       "canonicalTarget": "docs/site/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L95"
     },
     {
@@ -136,6 +138,7 @@
       "workPackage": "AP09.1",
       "owner": "documentation architecture",
       "canonicalTarget": "docs/site/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L96"
     },
     {
@@ -148,6 +151,7 @@
       "workPackage": "AP09.1",
       "owner": "documentation architecture",
       "canonicalTarget": "docs/site/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L97"
     },
     {
@@ -160,6 +164,7 @@
       "workPackage": "AP09.1",
       "owner": "documentation architecture",
       "canonicalTarget": "docs/site/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L98"
     },
     {
@@ -172,6 +177,7 @@
       "workPackage": "AP09.1",
       "owner": "documentation architecture",
       "canonicalTarget": "docs/site/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L99"
     },
     {
@@ -184,6 +190,7 @@
       "workPackage": "AP09.1",
       "owner": "documentation architecture",
       "canonicalTarget": "docs/site/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L100"
     },
     {
@@ -196,6 +203,7 @@
       "workPackage": "AP09.1",
       "owner": "documentation architecture",
       "canonicalTarget": "docs/site/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L101"
     },
     {
@@ -206,8 +214,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "`docs/site/understand/README.md` erklärt Problem, Zielgruppen, drei Architekturscopes, Statusgrenzen und nächste Leserwege in verständlichem technischem Englisch.",
       "workPackage": "AP09.1",
-      "owner": "documentation architecture",
-      "canonicalTarget": "docs/site/README.md",
+      "owner": "product documentation",
+      "canonicalTarget": "docs/site/understand/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L107"
     },
     {
@@ -218,8 +227,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "`request-state-recovery.md` verfolgt den Normalpfad sowie Retry, Repair, Wait, Cancellation, Recovery und unsichere externe Effekte. Der Einstieg fasst denselben Ablauf in zwölf Schritten zusammen.",
       "workPackage": "AP09.1",
-      "owner": "documentation architecture",
-      "canonicalTarget": "docs/site/README.md",
+      "owner": "product documentation",
+      "canonicalTarget": "docs/site/understand/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L108"
     },
     {
@@ -230,8 +240,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "`components-and-authority.md` definiert Verantwortung und verbotene Autorität. `reference/glossary.md` grenzt die ähnlichen Begriffe gegeneinander ab.",
       "workPackage": "AP09.1",
-      "owner": "documentation architecture",
-      "canonicalTarget": "docs/site/README.md",
+      "owner": "product documentation",
+      "canonicalTarget": "docs/site/understand/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L109"
     },
     {
@@ -242,8 +253,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "Understand, Decisions, Roadmap und Status trennen aktuelle Funktionen, geplante Verbesserungen, offene Implementierung und Live-Abnahme. Die früheren AP04-/AP08-Zwischenstände wurden aus dem Reader-Bestand entfernt.",
       "workPackage": "AP09.1",
-      "owner": "documentation architecture",
-      "canonicalTarget": "docs/site/README.md",
+      "owner": "product documentation",
+      "canonicalTarget": "docs/site/understand/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L110"
     },
     {
@@ -254,8 +266,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Der Understand-Einstieg führt Architekturleser. `use/quickstart.md` prüft nur den lokalen Checkout, und `extend/first-plugin.md` führt ein Plugin durch. Ein ausführbarer erster Pipeline-Workflow mit Beispiel-`pipeline.json`, Ergebnisprüfung und Fehlerweg fehlt.",
       "workPackage": "AP09.1",
-      "owner": "documentation architecture",
-      "canonicalTarget": "docs/site/README.md",
+      "owner": "product documentation",
+      "canonicalTarget": "docs/site/understand/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L111"
     },
     {
@@ -266,8 +279,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "Understand-Einstieg, Authority Map, Pipeline Map, Deployment Map und Platform Layer Map verbinden den aufrufenden Menschen mit Nova, Spezialisten, Worker Core, Daten- und Plattformdiensten. Jedes Diagramm besitzt eine Textalternative.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "architecture maintainers",
+      "canonicalTarget": "docs/site/understand/components-and-authority.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L117"
     },
     {
@@ -278,8 +292,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "`components-and-authority.md` nennt für Nova, Foundation, Worker Core, Buster, Prism, Forge, Echo und Plugin Runtime sowohl Besitz als auch verbotene Entscheidungen. `deployment-and-trust.md` ergänzt Identitäts-, Netzwerk-, Grant-, Prozess- und Speichergrenzen.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "architecture maintainers",
+      "canonicalTarget": "docs/site/understand/components-and-authority.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L118"
     },
     {
@@ -290,8 +305,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "`components-and-authority.md` trennt Rolle, Engine, Spezialist und Plugin. Gepinnte Role-Manifeste und Package-Ownership-Belege stützen die aktuelle Zusammensetzung und nennen die Grenze zwischen Vorhandensein, Aktivierung und Erreichbarkeit.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "architecture maintainers",
+      "canonicalTarget": "docs/site/understand/components-and-authority.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L119"
     },
     {
@@ -302,8 +318,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "`request-state-recovery.md` zeigt Aufnahme, Graph, Scheduling, Effects, Resultate, Buster-Handoff und Abschluss. Eigene Abschnitte behandeln technischen Retry, Product Repair, Wait, Restart, Cancellation, unsichere Effects und Administrative Repair.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "architecture maintainers",
+      "canonicalTarget": "docs/site/understand/components-and-authority.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L120"
     },
     {
@@ -314,8 +331,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Architekturtexte erklären viele Gründe und Kosten; Decision-Seiten bewahren Alternativen und Supersession. `docs:publication:check` findet jedoch fehlende Evidence-Metadaten, falsch formatierte Evidence-Pfade, entfernte Contract-Terme und Sprachfehler in diesen kanonischen Entscheidungsseiten.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "architecture maintainers",
+      "canonicalTarget": "docs/site/understand/components-and-authority.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L121"
     },
     {
@@ -326,8 +344,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "`deployment-and-trust.md` enthält Stores und Failure Domains; `pipeline-dependencies.md` enthält erforderliche Dienste und Recovery; `platform-and-operations.md` enthält optionale Infrastruktur. Eine gemeinsame, exhaustive Kommunikations- und Datenmatrix mit Producer, Consumer, Vertrag, Transport, Persistenz, Retention und Ausfallwirkung fehlt.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "architecture maintainers",
+      "canonicalTarget": "docs/site/understand/components-and-authority.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L122"
     },
     {
@@ -338,8 +357,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "`components-and-authority.md` trennt den deploybaren Nova-Role-Bundle vom deterministischen Core und zeigt Compiler, Entry Point, Plugin Runtime und Core in einem eigenen Diagramm. Gepinnte Role- und Engine-Quellen stützen die Grenze.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/components-and-authority.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L128"
     },
     {
@@ -350,8 +370,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "`skills/nova/project/README.md` beschreibt Commands, Felder, Scheduling und Migration sehr detailliert. Die aktive Site bindet diese Erklärung nicht als kanonische Architektur oder vollständige Referenz ein; das Operator-Handbuch zeigt nur die beiden grundlegenden Command-Formen.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L129"
     },
     {
@@ -362,8 +383,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "`request-state-recovery.md` erklärt Projektaufnahme und fixen Graph. Die vollständige Auswahl der Control-Dateien, Digest-Bindung, Limits, Approval-Verknüpfung und Ablehnungsfälle stehen nur im Package-README und in `skills/nova/project/*`.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L130"
     },
     {
@@ -374,8 +396,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Die aktive Architektur erklärt Topologieprüfung und unveränderlichen Graph. Sie enthält keine vollständige Kantenart-, Aktivierungs-, Validierungs- und Fehlerübersicht aus `graph-build.ts`, `graph.ts` und den Compilerregeln.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L131"
     },
     {
@@ -386,8 +409,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Nova als einzige Scheduling-Autorität, Readiness und terminale Schließung sind erklärt. Auswahlreihenfolge, Concurrency-Grenzen, Fan-in/Fan-out, Blockierbedingungen und Schedulerfehler sind nicht als zusammenhängender Mechanismus dokumentiert.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L132"
     },
     {
@@ -398,8 +422,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Extension-Seiten erklären den Plugin-Vertrag, und der Trace zeigt eine bounded invocation. Die Core-Kette aus Activation, Input Resolution, Authorization, Context, Adapter Startup, Stage Execution und Cleanup fehlt als kanonischer Ablauf.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L133"
     },
     {
@@ -410,8 +435,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Der Trace nennt Attempt und Lease und verlinkt `stage-executor.ts`. Er dokumentiert weder vollständige Lease-Zustände und Identitäten noch Erwerb, Erneuerung, Verlust, Fencing, Cleanup und zugehörige Fehler.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L134"
     },
     {
@@ -422,8 +448,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Technischer Retry, Product Repair, Attempt Budget und Repair Budget sind verständlich getrennt. Feldquellen, Default-/Override-Regeln, Graph-Reparaturbudget, Invalidation und alle Budget-Endzustände fehlen als vollständige Referenz.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L135"
     },
     {
@@ -434,8 +461,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Architektur und Operator-Handbuch erklären Wait, gespeicherte Signalidentität und Resume. Vollständige Signaltypen, Payload-Schemas, Issuer- und Freshness-Regeln, Ablaufzeiten, Single-use-Verhalten und Fehlercodes fehlen.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L136"
     },
     {
@@ -446,8 +474,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "`request-state-recovery.md` erklärt, dass Cancellation lokale Arbeit stoppt, aber externe Effekte nicht zurückdreht. Pipeline-Loop-, Runner-, Adapter- und Observer-Shutdown, Zeitgrenzen, Drain-Reihenfolge und Fehlerpriorität sind nicht vollständig erklärt.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L137"
     },
     {
@@ -458,8 +487,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "`extend/effectful-plugin.md` erklärt Identität, Locking, Fencing, Zustände, Retry, Resume, Cancellation, Cleanup und Verifikation tiefgehend. Der passende Architekturabschnitt verlinkt diesen kanonischen Deep Dive nicht direkt; Core-Defaults und alle Persistenzgrenzen bleiben zudem verteilt.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L138"
     },
     {
@@ -470,8 +500,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Architekturseiten erklären Artifact Store und Ergebnisbelege. Das Verhalten von `artifact-checkpoints.ts` bei Mid-attempt-Commit, Deduplizierung, Konflikt, Wiederherstellung und Sichtbarkeit steht nur im internen Execution-README.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L139"
     },
     {
@@ -482,8 +513,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Die Site nennt append-only Journal, Snapshot und langlebigen Store. Hash-Kette, JSON-Grenzen, FileMutex-/`flock`-Semantik, Transaktionsgrenzen, Snapshot-Provenienz, Run-Root-Struktur und Upgrade-Regeln stehen nur in internen Core-Dokumenten und Code.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L140"
     },
     {
@@ -494,8 +526,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Der Trace listet zehn Zustände und erklärt die Result-Mappings. Er zeigt nicht jede erlaubte Aktion je Ausgangszustand, Invalidation, Repair-Rückweg, Terminalisierung und Ablehnung illegaler Übergänge als vollständige Transitionstabelle.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L141"
     },
     {
@@ -506,8 +539,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Die aktive Architektur trennt gewöhnliches Resume von administrativem Reopen und verbietet Journaländerung. Decision-Schema, Authenticator-Bindung, Issuer-Allowlist, Idempotenz, Continuations und jeder Recovery Stop sind nicht in einer vollständigen Bedien- und Fehlerreferenz vereint.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L142"
     },
     {
@@ -518,8 +552,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Buster-Guides erklären Provider- und Report-Erweiterungen; der Architektur-Trace zeigt Dispatch und Import. Nova-seitige Plan Resolution, Source Snapshot, sichere Endpoint-Prüfung, Dispatch Store, Deadline, Result Authority, einmaliger Import und Transportfehler sind nicht vollständig beschrieben.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L143"
     },
     {
@@ -530,8 +565,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Das Operator-Handbuch verwendet `audit`, und Telemetrieabschnitte erklären kanonische Events. Projektion, Feldherkunft, Sortierung, Redaction, beschädigte Journale, unvollständige Runs und Stabilitätsvertrag der Audit-Ausgabe fehlen als Referenz.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L144"
     },
     {
@@ -542,8 +578,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Es gibt keinen kanonischen, aus den Nova-Core-Fehlerstellen erzeugten Katalog mit Code, Auslöser, Lifecycle-Auswirkung, Retry-Regel und Operatoraktion.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "Nova maintainers",
+      "canonicalTarget": "docs/site/understand/nova-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L145"
     },
     {
@@ -555,7 +592,8 @@
       "finding": "`components-and-authority.md` erklärt Zweck, Besitz, Nicht-Besitz, Nutzen und Kosten des neutralen Cores. `host-and-engine.md` zeigt, welche Spezialistenlogik in der Engine bleiben muss.",
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
-      "canonicalTarget": "docs/site/understand/worker-core.md",
+      "canonicalTarget": "docs/site/understand/components-and-authority.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L151"
     },
     {
@@ -568,6 +606,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L152"
     },
     {
@@ -580,6 +619,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L153"
     },
     {
@@ -592,6 +632,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L154"
     },
     {
@@ -604,6 +645,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L155"
     },
     {
@@ -616,6 +658,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L156"
     },
     {
@@ -628,6 +671,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L157"
     },
     {
@@ -640,6 +684,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L158"
     },
     {
@@ -652,6 +697,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L159"
     },
     {
@@ -664,6 +710,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L160"
     },
     {
@@ -676,6 +723,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L161"
     },
     {
@@ -688,6 +736,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L162"
     },
     {
@@ -700,6 +749,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L163"
     },
     {
@@ -712,6 +762,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L164"
     },
     {
@@ -724,6 +775,7 @@
       "workPackage": "AP09.5",
       "owner": "Buster maintainers",
       "canonicalTarget": "docs/site/understand/buster.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L170"
     },
     {
@@ -736,6 +788,7 @@
       "workPackage": "AP09.4",
       "owner": "Prism maintainers",
       "canonicalTarget": "docs/site/understand/prism.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L171"
     },
     {
@@ -748,6 +801,7 @@
       "workPackage": "AP09.4",
       "owner": "Prism maintainers",
       "canonicalTarget": "docs/site/understand/prism-data.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L172"
     },
     {
@@ -758,8 +812,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Components erklärt Forge als Spezialist ohne Pipeline-Autorität und belegt Capability Grants. Plugin-Katalog und Nova-Guide erklären einzelne Registrierungen. Dispatch-Vertrag, Prompt/Input, Workspace-Lifecycle, Git-Baseline, Commit-Auswahl, Merge, Reparatur, Abbruch und Wiederaufnahme fehlen als zusammenhängender Pfad.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "Forge maintainers",
+      "canonicalTarget": "docs/site/understand/forge.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L173"
     },
     {
@@ -770,8 +825,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Components erklärt Echo als beobachtenden Spezialisten; `decisions/echo.md` enthält umfangreiche Governance-Historie. Aktuelle Eingaben, feste Review Subject Identity, Findings-Schema, Evidence, Zertifizierung, Policy-Auswertung, Reparaturschleife und Nova-Entscheidungsgrenze sind nicht als kanonische Laufzeitarchitektur zusammengeführt.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "Echo maintainers",
+      "canonicalTarget": "docs/site/understand/echo.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L174"
     },
     {
@@ -782,8 +838,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "`host-and-engine.md` bietet vollständige Authoring-Pfade für Hook und Tool; der Katalog deckt beide vorhandenen OpenClaw-Pakete ab. Host-Prozess, Discovery, Installation, Allowlist, Activation, Config-Auflösung, Hook-/Tool-Lifecycle, State, Upgrade, Diagnose und Entfernung sind nicht als eine Betriebsarchitektur verbunden.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "OpenClaw integration maintainers",
+      "canonicalTarget": "docs/site/understand/openclaw.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L175"
     },
     {
@@ -794,8 +851,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Der Host-Guide erklärt Manifest, Skill-Datei, Tool-Verfügbarkeit und die Grenze, dass kein Pipeline-Code geladen wird. Für das vorhandene Ops-Plugin fehlen eine vollständige Tool-/MCP-Abhängigkeitskarte, Rechte, Workspace-Grenzen, Connection-Ausfälle, Tests, Betrieb, Update und Removal; der lokale Katalog nennt diese Grenzen ehrlich.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "Codex integration maintainers",
+      "canonicalTarget": "docs/site/understand/codex-integration.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L176"
     },
     {
@@ -808,6 +866,7 @@
       "workPackage": "AP09.5",
       "owner": "Buster maintainers",
       "canonicalTarget": "docs/site/understand/buster-namespace-controller.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L177"
     },
     {
@@ -818,8 +877,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Ops-Seiten erklären Zweck und Sicherheitsgrenze, und der Codex-Katalog nennt die Hostintegration. Eine zentrale Referenz für Tools, Parameter, Defaults, Größenlimits, Namespace-Regeln, Bearer-/Origin-Prüfung, HTTP-/Session-Verhalten, Kubernetes-/Hubble-Abhängigkeiten und Fehlerantworten fehlt.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "Ops MCP maintainers",
+      "canonicalTarget": "docs/site/understand/ops-mcp.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L178"
     },
     {
@@ -830,8 +890,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Chart, Nginx-Konfiguration, Image und Reliability-Test belegen einen vorhandenen Nova-Sidecar. Die aktive Site erklärt Design-Input/-Publikation, URL, Basic Auth, Health-Ausnahme, Tailnet-/Cilium-Grenze, Lifecycle und Einschränkungen nicht als eigenes Produkt.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "Archviewer maintainers",
+      "canonicalTarget": "docs/site/understand/archviewer.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L179"
     },
     {
@@ -842,8 +903,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "Choice Guide und `contracts.md` erklären Package Envelope, Identitäten und alle fünf Pipeline-Verträge mit Input, Output, Persistenz, Authority, Failure und direkten Schema-/Runtime-Quellen. Hostoberflächen und Worker Engines sind klar getrennt.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/extend/contracts.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L185"
     },
     {
@@ -854,8 +916,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Choice Guide und Contracts erklären inert discovery, Digests, Provenance und getrennte Activation mit direkten Links. Installation Roots, Canonicalization, Symlink-/Alias-Regeln, Dateiauswahl, Discovery-Reihenfolge und alle Reject-Klassen fehlen als vollständiger Algorithmus.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/understand/plugin-system.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L186"
     },
     {
@@ -866,8 +929,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Shared Envelope erklärt relative Pfade, Escape-Verbot, Referenzen und Schema-Validierung; das vollständige JSON Schema ist verlinkt. Validierungsreihenfolge, Schema-Lifetime, `$id`-/`$ref`-Grenzen und alle Diagnosen sind nicht als Referenz veröffentlicht.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/understand/plugin-system.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L187"
     },
     {
@@ -878,8 +942,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "`contracts.md` trennt ID, Version, Digest und Registration, erklärt Snapshot-Provenienz und verbietet Byte-Austausch unter recoverable Runs. `testing.md` gibt einen vollständigen Replacement-Ablauf mit Drain, alter Byte-Retention, State Migration, Success/Denial/Recovery und Removal-Gate.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/extend/contracts.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L188"
     },
     {
@@ -890,8 +955,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Deployment-Seite trennt Package Integrity, Registration Authority, Workload Identity und Source Identity. Choice Guide nennt trusted first-party und external paths. Trust Roots, Digest-/Attestation-Policy, Installer, Attestation-Verifikation, Built-in-Ausnahme und Reject-Fälle fehlen als durchgehender Pfad.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/understand/plugin-system.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L189"
     },
     {
@@ -902,8 +968,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Aktive Seiten erwähnen Import Auditing, erklären aber weder Permission Boundary, verbotene APIs, Guards, Digest-Recheck, Child-Prozess, Timeout, Exportprüfung noch Ablehnungsdiagnosen von `import-audit.ts`.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/understand/plugin-system.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L190"
     },
     {
@@ -914,8 +981,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Contracts belegt die fünf immutable Maps und globale Ownership. Vollständige Build-Reihenfolge, Frozen Maps/Sets, Konfliktklassen für IDs, Stage Types, Providers, Reports und Subscriptions sowie Error Codes fehlen.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/understand/plugin-system.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L191"
     },
     {
@@ -926,8 +994,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Die generierte Capability-Referenz ist aktuell; Contracts erklärt Declaration, Provider Selection und Caller Grant als getrennte Kontrollen. Dependency-Auflösung, Ambiguität, Zyklen, genau-ein-Provider-Regel, confidential capabilities und Fehlerpfade fehlen.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/understand/plugin-system.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L192"
     },
     {
@@ -938,8 +1007,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Deployment and Trust erklärt Least Authority und nennt Pfade, Namespaces, Targets, Origins, Commands und Signals. Die vollständige Match-Semantik je Resource Type, Normalisierung, Wildcards, Denials, confidential payloads und Diagnosen fehlen.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/understand/plugin-system.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L193"
     },
     {
@@ -950,8 +1020,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Choice Guide trennt Projekt-, Plattform- und Hostkonfiguration; Contracts erklärt registration-owned validation. Sources, Precedence, Defaults, unbekannte Felder, sensitive values, Observer-/Adapterauflösung und effektive Konfigurationsausgabe fehlen als vollständiger Flow.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/understand/plugin-system.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L194"
     },
     {
@@ -962,8 +1033,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Discovery-/Activation-Tabelle erklärt Surface-Unterschiede, Integrity-Recheck und selektives Laden. Exportform, Import Audit, transactional adapter startup, readiness, rollback, shutdown, partial failures und Activation Error Codes sind nicht vollständig dokumentiert.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/understand/plugin-system.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L195"
     },
     {
@@ -974,8 +1046,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "`testing.md` führt Installation, Update/Replacement, Disablement und Removal für jede Surface durch. Es erklärt Drain, pinned identities, alte Bytes, verbleibende Journale, externe Daten, Credentials, Prozesse und owner-gesteuerte Retention.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/extend/testing.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L196"
     },
     {
@@ -986,8 +1059,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Deployment and Trust erklärt Direct-versus-isolated Activation und die bounded context boundary. IPC-Protokoll, Sessionzustände, Permission Model, cgroup, Memory Limit, Sandbox-C-Boundary, Cancellation, Cleanup und Fehlercodes fehlen.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/understand/plugin-system.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L197"
     },
     {
@@ -998,8 +1072,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "Choice Guide, Activation-Quelle und Testing-Grenzen erklären eindeutig, dass externe Adapter ohne persistent isolated adapter runtime abgelehnt werden. Die Grenze wird nicht als verfügbare Funktion dargestellt.",
       "workPackage": "AP09.2",
-      "owner": "Nova and plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/extend/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L198"
     },
     {
@@ -1010,8 +1085,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Keine zentrale Matrix nennt für jede Verbindung Sender, Empfänger, Zweck, Schema, Transport, Endpoint, Authentisierung, Autorisierung, Timeout, Ordering, Retry, Persistenz, Deduplizierung, Backpressure und Fehlerwirkung. Einzelne Diagramme ersetzen dieses Inventar nicht.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "runtime and platform maintainers",
+      "canonicalTarget": "docs/site/understand/communication.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L204"
     },
     {
@@ -1022,8 +1098,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Request Trace und Buster Guide erklären festen Plan, Job Admission, gespeichertes Resultat und einmaligen Import. Wire Envelope, Endpoint, Source Snapshot, Statuspolling, Store Records, Attestation, Deadlines, Transportfehler und Reconciliation sind über Nova-, Buster- und Trust-Quellen verteilt.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "runtime and platform maintainers",
+      "canonicalTarget": "docs/site/understand/communication.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L205"
     },
     {
@@ -1034,8 +1111,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Components und Prism Worker Example zeigen Design-Handoff, Worker-Request und gebundenes Resultat. Nova-Stage zu Control, Control zu Worker, Studio/Service-Routen, exakte Identitäten, Timeouts, Operation Store und Restart-Reconciliation bilden keinen zentralen Ende-zu-Ende-Pfad.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "runtime and platform maintainers",
+      "canonicalTarget": "docs/site/understand/communication.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L206"
     },
     {
@@ -1046,8 +1124,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Components beschreibt bounded tasks und Rückgaben; Plugin-Katalog belegt Runtime Dispatch, Implementation und Review. Transportadapter, Message Envelope, Model-/Agent-Host, Correlation, Timeout, Streaming, Result Import, Lost Response und Retry sind nicht zusammenhängend dokumentiert.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "runtime and platform maintainers",
+      "canonicalTarget": "docs/site/understand/communication.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L207"
     },
     {
@@ -1058,8 +1137,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Contracts erklärt alle drei Invocation-Typen, Authority und Recovery. Nova- und Effect-Guides ergänzen Context, Effect und Observer Delivery. Vollständige Request-/Result-/Abortschemas, In-process-versus-isolated Transport, Deadline-Propagation und Error Mapping fehlen als ein Core-Kommunikationsmodell.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "runtime and platform maintainers",
+      "canonicalTarget": "docs/site/understand/communication.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L208"
     },
     {
@@ -1070,8 +1150,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Wie bei `WKC-007` fehlt eine aktive kanonische Erklärung zu Nachrichten, Framing, Identität, Zuständen, Timeouts und Fehlern des nativen Channels.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "runtime and platform maintainers",
+      "canonicalTarget": "docs/site/understand/communication.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L209"
     },
     {
@@ -1082,8 +1163,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Pipeline Dependencies erklärt Redis als Transport statt Lifecycle Authority; der Plugin-Katalog dokumentiert URL, Stream Prefix und Grenzen. Stream-Namensbildung, Writer/Consumer-Paare, RESP-Grenzen, MAXLEN, Dedup-TTL, Replay, Migration und Consumerfehler stehen nur in Package-READMEs und Code.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "runtime and platform maintainers",
+      "canonicalTarget": "docs/site/understand/communication.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L210"
     },
     {
@@ -1094,8 +1176,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Es gibt keinen zentralen Katalog für Nova-, Buster-, Prism-, Worker-, Monitoring-, Registry- und Ops-Endpunkte mit Method, Pfad, Port, Schema, Peer Identity, Auth, Größenlimit, Timeout und Fehlerantwort.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "runtime and platform maintainers",
+      "canonicalTarget": "docs/site/understand/communication.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L211"
     },
     {
@@ -1106,8 +1189,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Pipeline Dependencies trennt privaten Plattformzugang und Buster-Test-Exposure und erklärt Retention/Release. Route Owner, DNS, Zertifikat/TLS, Caller Identity, ACL, Endpoint, Readiness, Lease, Cleanup und Fehlerwirkung fehlen als vollständige Kommunikationsmatrix.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "runtime and platform maintainers",
+      "canonicalTarget": "docs/site/understand/communication.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L212"
     },
     {
@@ -1118,8 +1202,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Pipeline Dependencies zeigt Source Revision, Build, Push, Manifestprüfung, Pull und Mirror-Hit/Miss mit Gründen und Failure Summary. Protokolle, Endpoints, Credentials, Digest-Bindungen, Cache-/Mirror-Regeln und Recovery je Übergang fehlen im zentralen Bestand.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "runtime and platform maintainers",
+      "canonicalTarget": "docs/site/understand/communication.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L213"
     },
     {
@@ -1130,8 +1215,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Worker Trust erklärt Identitätsformat, Proxy Pattern, geschützte Routen, Provenance und Fail-closed-Verhalten. Eine vollständige Plattformmatrix aller Workload-IDs, Ports, SANs, Issuer, Peer-Allowlist, NetworkPolicy und Rotation verweist noch auf nicht zentrale Security-/Operationsseiten.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "runtime and platform maintainers",
+      "canonicalTarget": "docs/site/understand/communication.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L214"
     },
     {
@@ -1142,8 +1228,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Werte und Regeln liegen in Schemas, Plugins und Runtime-Code. Keine zentrale Matrix macht sichtbar, welche Schicht retryt, welche Reihenfolge gilt, wie Queue-/Byte-Limits wirken und wann Druck den Producer, Consumer oder gesamten Run stoppt.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "runtime and platform maintainers",
+      "canonicalTarget": "docs/site/understand/communication.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L215"
     },
     {
@@ -1154,8 +1241,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "`use/recovery.md` besitzt eine starke 15-zeilige State Inventory mit Owner, Authority, Protection und Limit. Schema/Format, physischer Ort, Writer, Reader, Konsistenzgruppe, Verschlüsselung, Retention, Kapazität, Migration und Löschung fehlen für viele Stores.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "state-owning component maintainers",
+      "canonicalTarget": "docs/site/understand/data-and-state.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L216"
     },
     {
@@ -1166,8 +1254,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Request Trace, Recovery und Effect Guide erklären Autorität, Zustände und unsichere Effects. Dateinamen, Record-Schemas, Hash Chain, Commit-Grenzen, Run Root, Snapshot Pair, Locking, Größe, Retention, Corruption und Migration stehen überwiegend in internen Core-READMEs.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "state-owning component maintainers",
+      "canonicalTarget": "docs/site/understand/data-and-state.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L217"
     },
     {
@@ -1178,8 +1267,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Keine aktive zentrale Seite verbindet Attempt Journal, Ownership Store, Output Spool, Resource Records und sealed result mit Schema, Pfad, Writer, Replay, Corruption, Retention und Cleanup.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "state-owning component maintainers",
+      "canonicalTarget": "docs/site/understand/data-and-state.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L218"
     },
     {
@@ -1190,8 +1280,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Buster Guide erklärt Plan, Provider, Ports, Evidence und Reports fachlich tief. Physische Stores, Record- und Artifact-Schemas, Result Signing, Retention, Kapazität, Garbage Collection, Backup und Remote Recovery bleiben verteilt.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "state-owning component maintainers",
+      "canonicalTarget": "docs/site/understand/data-and-state.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L219"
     },
     {
@@ -1202,8 +1293,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Deployment und Recovery nennen Owner, Tabellenarten, Artifact PVC und matched backup group. Vollständiges Datenmodell für Projects, Revisions, Documents, Operations, Approvals, Preferences, Derived Data und Publication sowie Migration/Retention fehlt in der aktiven Site.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "state-owning component maintainers",
+      "canonicalTarget": "docs/site/understand/data-and-state.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L220"
     },
     {
@@ -1214,8 +1306,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Pipeline Dependencies und Recovery nennen den getrennten Owner und Backup. Schema-/Migrationsauthority, Credentials, Connection Pool, Startup, Upgrade, Retention, Kapazität, Backupdetails und Restore-Verifikation liegen außerhalb des zentralen Leserbestands.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "state-owning component maintainers",
+      "canonicalTarget": "docs/site/understand/data-and-state.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L221"
     },
     {
@@ -1226,8 +1319,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Autoritätsgrenze, Failure Effect und Recovery Rule sind klar. Streams/Keys, Producer, Consumer, Payload, Dedup Records, MAXLEN, TTL, AOF, Migration, Replay und Datenlöschung sind nicht als vollständiges Datenmodell zentral dokumentiert.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "state-owning component maintainers",
+      "canonicalTarget": "docs/site/understand/data-and-state.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L222"
     },
     {
@@ -1238,8 +1332,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Contracts, Buster Guide, Effect Guide und Recovery erklären bounded artifacts und Digest-Prüfung. Namespace, ID, Media Types, Encoding, Sidecars, Checkpoints, Visibility, Limits, Retention, Collision, Garbage Collection und Restore sind nicht in einem kanonischen Lifecycle vereint.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "state-owning component maintainers",
+      "canonicalTarget": "docs/site/understand/data-and-state.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L223"
     },
     {
@@ -1250,8 +1345,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Zentrale Recovery-Seite erklärt State Inventory, Writer Fence, Group Integrity, unabhängiges Ziel und Prism-Reihenfolge sehr gut. Für Redis, LiteLLM und Ops verweist sie jedoch auf alte Operationsseiten außerhalb `docs/site`; vollständige zentrale Verfahren und mehrere Live-Proofs fehlen.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "state-owning component maintainers",
+      "canonicalTarget": "docs/site/understand/data-and-state.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L224"
     },
     {
@@ -1262,8 +1358,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Deployment and Trust trennt kanonische Events von Observer Delivery, Redis, Logs und Metriken. Produzent bis Schema, Observer, Adapter, Transport, Sink, Query/Projection, Fehler und Replay sind nicht als vollständiger Datenweg dargestellt.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "observability maintainers",
+      "canonicalTarget": "docs/site/understand/telemetry.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L225"
     },
     {
@@ -1274,8 +1371,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "`contracts/telemetry/v1` enthält 124 Schema-Dateien und ein 132-Dateien-Manifest, ist laut eigenem README aber ein retained v1 asset ohne aktiven Producer/Consumer. Die aktive Site veröffentlicht weder diesen Status vollständig noch einen generierten Katalog der aktiven v2 Events und Payloads.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "observability maintainers",
+      "canonicalTarget": "docs/site/understand/telemetry.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L226"
     },
     {
@@ -1286,8 +1384,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Keine zentrale oder generierte Matrix verbindet Event Type und Version mit Producer, Authority, Schema, Subscriber, Filter, Delivery Policy, Sink und Status. Die Plugin-Manifeste decken nur registrierte Subscriptions ab.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "observability maintainers",
+      "canonicalTarget": "docs/site/understand/telemetry.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L227"
     },
     {
@@ -1298,8 +1397,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Contracts und Nova Guide erklären Event Identity, at-least-once, per-run ordering, externe Deduplizierung und ein Redaction-Beispiel. V1/V2-Grenze, globale Correlation, Timestamp-/Sequence-Semantik, sensitive Felder und Sink-spezifische Redaction sind nicht als ein Modell dokumentiert.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "observability maintainers",
+      "canonicalTarget": "docs/site/understand/telemetry.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L228"
     },
     {
@@ -1310,8 +1410,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "`extend/contracts.md` erklärt Delivery Journal, Checkpoint nach Erfolg, required/best-effort, Exhaustion und Restart. `extend/nova.md` ergänzt Timeout, Recovery State, Deduplizierung, Redaction, konkrete Tests und direkte Quellen für Delivery und Recovery.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "observability maintainers",
+      "canonicalTarget": "docs/site/extend/contracts.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L229"
     },
     {
@@ -1322,8 +1423,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "Deployment and Trust erklärt, dass Lifecycle Event, Effect Receipt, Artifact Digest und Remote Result autoritativ sind. Es grenzt Redis-Projektion, Observer Delivery, Logs und Monitoring ausdrücklich davon ab und nennt Failure-/Replay-Folgen.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "observability maintainers",
+      "canonicalTarget": "docs/site/understand/deployment-and-trust.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L230"
     },
     {
@@ -1334,8 +1436,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Einzelne Komponenten nennen MAXLEN, TTL, Queue-, Payload-, Retry- oder Monitoring-Retention. Es gibt keinen durchgehenden Vertrag für Kapazitätsbudget, Druckweitergabe, Drop/Block-Verhalten, Alerting, Retirement und Löschung aller Telemetriepfade.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "observability maintainers",
+      "canonicalTarget": "docs/site/understand/telemetry.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L231"
     },
     {
@@ -1348,6 +1451,7 @@
       "workPackage": "AP09.7",
       "owner": "platform maintainers",
       "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L237"
     },
     {
@@ -1360,6 +1464,7 @@
       "workPackage": "AP09.7",
       "owner": "platform maintainers",
       "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L238"
     },
     {
@@ -1372,6 +1477,7 @@
       "workPackage": "AP09.7",
       "owner": "platform maintainers",
       "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L239"
     },
     {
@@ -1384,6 +1490,7 @@
       "workPackage": "AP09.7",
       "owner": "platform maintainers",
       "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L240"
     },
     {
@@ -1396,6 +1503,7 @@
       "workPackage": "AP09.7",
       "owner": "platform maintainers",
       "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L241"
     },
     {
@@ -1408,6 +1516,7 @@
       "workPackage": "AP09.7",
       "owner": "platform maintainers",
       "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L242"
     },
     {
@@ -1420,6 +1529,7 @@
       "workPackage": "AP09.7",
       "owner": "platform maintainers",
       "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L243"
     },
     {
@@ -1432,6 +1542,7 @@
       "workPackage": "AP09.7",
       "owner": "platform maintainers",
       "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L244"
     },
     {
@@ -1444,6 +1555,7 @@
       "workPackage": "AP09.7",
       "owner": "platform maintainers",
       "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L245"
     },
     {
@@ -1456,6 +1568,7 @@
       "workPackage": "AP09.7",
       "owner": "platform maintainers",
       "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L246"
     },
     {
@@ -1468,6 +1581,7 @@
       "workPackage": "AP09.7",
       "owner": "platform maintainers",
       "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L247"
     },
     {
@@ -1480,6 +1594,7 @@
       "workPackage": "AP09.7",
       "owner": "platform maintainers",
       "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L248"
     },
     {
@@ -1490,8 +1605,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Deployment and Trust trennt Package Integrity, Route Protection, Workload Source und Operation Grant sowie Prozess-, Netzwerk- und Speichergrenzen. Assets, Angreifer, Entry Points, Threats, Mitigations, Residual Risks und Verification sind nicht in einer zentralen Threat-/Control-Matrix verbunden.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "security maintainers",
+      "canonicalTarget": "docs/site/understand/security-and-trust.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L249"
     },
     {
@@ -1502,8 +1618,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Aktive Trustseiten trennen Keycloak-Human-Identity, SPIFFE Workload Identity, forwarded identity und Artifact Signature korrekt. Login/Issuer, Token-/Certificate-Flows, Session, Groups/Roles, Shared Users, Rotation, Revocation, Audit und Recovery fehlen als vollständiges Credential-Modell.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "security maintainers",
+      "canonicalTarget": "docs/site/understand/security-and-trust.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L250"
     },
     {
@@ -1514,8 +1631,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Worker Trust dokumentiert SVID-Format, Proxy Pattern, geschützte Caller-Paare, Nova-Buster-Provenance, leased namespaces und fail-closed Proof Levels. Vollständige Registration-, CSI-/SDS-, Listener-, SAN-, Trust-Domain-, Rotation- und Recoverydetails liegen noch in nicht zentralen Security-/Operationsseiten.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "security maintainers",
+      "canonicalTarget": "docs/site/understand/security-and-trust.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L251"
     },
     {
@@ -1526,8 +1644,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Capability Grants, Secret Resolver Plugin und Recovery State Inventory erklären externe Secret Authority und bounded names. Ein generiertes Inventar jedes Secrets mit Owner, Producer, Consumer, Mount/Env/API, Namespace Copy, Rotation, Revocation, Backup und Leak Response fehlt im zentralen Bestand.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "security maintainers",
+      "canonicalTarget": "docs/site/understand/security-and-trust.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L252"
     },
     {
@@ -1538,8 +1657,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Deployment and Trust zeigt Default Deny, wichtige Caller/Destination/Ports und direkte Policyquellen; Worker Trust trennt Contract, Render und Live Proof. Eine vollständige Connection-Allowlist für alle Charts sowie automatischer Abgleich zwischen Service, Policy, SVID und Negativtest fehlt.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "security maintainers",
+      "canonicalTarget": "docs/site/understand/security-and-trust.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L253"
     },
     {
@@ -1550,8 +1670,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Package Digests, Registry Manifest Verification, Nova-Buster Source Signature und Release Selections sind einzeln erklärt. Source-to-build-to-image-to-deploy Provenance, Builder Trust, SBOM/Scan, Attestation Issuer, Verification Policy, Key Rotation und Incident Recovery bilden kein zentrales Gesamtmodell.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "security maintainers",
+      "canonicalTarget": "docs/site/understand/security-and-trust.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L254"
     },
     {
@@ -1562,8 +1683,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Architektur erklärt Capability Grants, Resource Matching, Role ServiceAccounts, NetworkPolicy und bounded Ops rights. Eine maschinenlesbare Berechtigungsmatrix für Kubernetes RBAC, SPIFFE Peers, Network Paths, Plugin Grants, Secrets, Filesystem, Processes und externe Systeme fehlt.",
       "workPackage": "AP09.7",
-      "owner": "platform maintainers",
-      "canonicalTarget": "docs/site/understand/platform-and-operations.md",
+      "owner": "security maintainers",
+      "canonicalTarget": "docs/site/understand/security-and-trust.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L255"
     },
     {
@@ -1576,6 +1698,7 @@
       "workPackage": "AP09.8",
       "owner": "platform operations",
       "canonicalTarget": "docs/site/use/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L261"
     },
     {
@@ -1588,6 +1711,7 @@
       "workPackage": "AP09.8",
       "owner": "platform operations",
       "canonicalTarget": "docs/site/use/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L262"
     },
     {
@@ -1599,7 +1723,8 @@
       "finding": "`use/install.md` besitzt Reihenfolge, Preflight, Render, Stopbedingungen und Belege. Registry-/BuildKit-Vorbereitung und vollständiges GitOps-Handover liegen jedoch in alten `operations/`- und `deployment/`-Seiten; der zentrale Ablauf ist nicht selbstgenügsam.",
       "workPackage": "AP09.8",
       "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "canonicalTarget": "docs/site/use/install.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L263"
     },
     {
@@ -1611,7 +1736,8 @@
       "finding": "`use/operate.md` erklärt Start, Audit und Recovery. Beim Resume-Signal fehlen jedoch das vollständige `resume-signal.v2`-Envelope, `signalId`, `idempotencyKey`, `issuedAt`, Issuance-Regeln und ein schema-gültiges Beispiel.",
       "workPackage": "AP09.8",
       "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "canonicalTarget": "docs/site/use/operate.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L264"
     },
     {
@@ -1623,7 +1749,8 @@
       "finding": "Das Operator-Handbuch sagt ausdrücklich, dass kein separater Cancel-Befehl existiert, trennt Prozessunterbrechung von Run-Cancellation und verweist auf sichere Diagnose statt eines erfundenen Commands.",
       "workPackage": "AP09.8",
       "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "canonicalTarget": "docs/site/use/operate.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L265"
     },
     {
@@ -1635,7 +1762,8 @@
       "finding": "`use/diagnose.md` führt von Incident Record über Cluster, Health, Journal, Capacity und Delivery zu einem Symptomindex. Es trennt Logs, Projektionen, kanonische Evidence, unsichere Effects und Eskalationsstops.",
       "workPackage": "AP09.8",
       "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "canonicalTarget": "docs/site/use/diagnose.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L266"
     },
     {
@@ -1647,7 +1775,8 @@
       "finding": "Die zentrale Recovery-Seite ist detailliert und erklärt Gruppen, Fences, Checks, Restore Scopes, Clusterverlust und unabhängigen Zugang. Redis-, LiteLLM-, Ops- und Worker-Trust-Details verweisen noch auf alte Runbooks; mehrere Live-Proofs bleiben offen.",
       "workPackage": "AP09.8",
       "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "canonicalTarget": "docs/site/use/recovery.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L267"
     },
     {
@@ -1659,7 +1788,8 @@
       "finding": "`use/maintenance.md` erklärt Change Plan, Rendering, Upgrade Order, Rollback Decision, Credential Rotation und Retirement. Stateful-Service-, Registry-, SPIRE- und Ops-Verfahren hängen noch von alten Operationsseiten ab und verletzen den zentralen Leserpfad.",
       "workPackage": "AP09.8",
       "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "canonicalTarget": "docs/site/use/maintenance.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L268"
     },
     {
@@ -1671,7 +1801,8 @@
       "finding": "Install, Diagnose, Recovery und Maintenance verlangen Capacity Records und nennen einzelne Retentionwerte. Ein vollständiges Servicebudget mit Messwert, Warn-/Stopgrenze, Wachstum, Owner und Reaktion fehlt.",
       "workPackage": "AP09.8",
       "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "canonicalTarget": "docs/site/use/capacity.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L269"
     },
     {
@@ -1684,6 +1815,7 @@
       "workPackage": "AP09.4",
       "owner": "Prism maintainers",
       "canonicalTarget": "docs/site/use/prism-studio.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L270"
     },
     {
@@ -1694,8 +1826,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Der zentrale Katalog inventarisiert alle 51 Pakete. Bei komplexen Plugins reduziert die aktuelle Generierung verschachtelte und bedingte Konfiguration auf Top-Level-Felder und verweist für notwendiges Verhalten auf Package-READMEs. Funktionen und Konfiguration sind deshalb noch nicht vollständig zentral.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "plugin and platform operations",
+      "canonicalTarget": "docs/site/use/plugins.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L271"
     },
     {
@@ -1706,8 +1839,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Nach Aufgabe, Rolle und Abhängigkeit filterbare Sicht fehlt.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "plugin and platform operations",
+      "canonicalTarget": "docs/site/use/plugins.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L272"
     },
     {
@@ -1718,8 +1852,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Shared Lifecycle nennt Install-/Activation-Aktion und positive Observation für Pipeline, Buster, OpenClaw, Codex, Engine und Role. Operator-Einstieg, konkrete Konfiguration und reproduzierbare Aktivierungsbeispiele je Oberfläche fehlen.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "plugin and platform operations",
+      "canonicalTarget": "docs/site/use/plugins.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L273"
     },
     {
@@ -1730,8 +1865,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "`extend/testing.md` besitzt einen starken gemeinsamen Lifecycle einschließlich Drain und Restzustand. Operatorzentrierte Commands, paketbezogene State Owner, Abhängigkeiten, Rollback und Health Evidence fehlen als Matrix.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "plugin and platform operations",
+      "canonicalTarget": "docs/site/use/plugins.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L274"
     },
     {
@@ -1742,8 +1878,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Keine zentrale generierte Matrix ordnet jedem Plugin Services, Endpoints, Capabilities, Secret References, Datenowner, Reachability Check und Ausfallwirkung zu.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "plugin and platform operations",
+      "canonicalTarget": "docs/site/use/plugins.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L275"
     },
     {
@@ -1754,8 +1891,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Aktive Reference besitzt keinen Index.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L276"
     },
     {
@@ -1766,8 +1904,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Operate erklärt Authority Groups und Relative-path-Regel mit Schemaquellen. Vollständige Felder, Typen, Defaults, Constraints, Precedence, sichere Beispiele, sensitive values und Fehler fehlen.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/pipeline-platform.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L277"
     },
     {
@@ -1778,8 +1917,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Das Package-README ist tief, liegt aber außerhalb des zentralen Bestands. Felder, Source Admission, Modules, Gates, Coverage, Demo, Legacy Import und Diagnosen müssen in die zentrale Reference migrieren.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/nova-project.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L278"
     },
     {
@@ -1790,8 +1930,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Operate erklärt die explizite Graphform; ältere Beispiele und Schemas existieren. Eine zentrale vollständige Feld-, Edge-, Input-, Budget-, Activation-, Result- und Fehlerreferenz fehlt.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/pipeline-definition.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L279"
     },
     {
@@ -1802,8 +1943,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Größte Operatorlücke.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/pipeline-json.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L280"
     },
     {
@@ -1816,6 +1958,7 @@
       "workPackage": "AP09.5",
       "owner": "Buster maintainers",
       "canonicalTarget": "docs/site/reference/buster-suites.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L281"
     },
     {
@@ -1826,8 +1969,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Der Katalog erzeugt Top-Level-Felder, Typen und einzelne Bounds. Der Generator traversiert keine verschachtelten `additionalProperties`, Item-Schemas oder bedingten `allOf`-Regeln. Runtime Dispatch zeigt dadurch unter anderem Auth-, Secret-, Endpoint- und Größenregeln nicht zentral.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/plugin-configuration.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L282"
     },
     {
@@ -1838,8 +1982,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Keine exhaustive Operatorreferenz.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/worker-profiles-and-roles.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L283"
     },
     {
@@ -1850,8 +1995,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Das enge Helm-Inventar deckt sieben von 17 Helm-/My-values-Quellen. Der ausdrücklich eingeschlossene GitOps-Scope enthält weitere elf distinct `gitops/platform/values/*.yaml`, damit mindestens 28 Quellen. Nested Defaults, Präzedenz, Ownership, Restartwirkung und effektive Werte bleiben unvollständig.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/helm-values.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L284"
     },
     {
@@ -1862,8 +2008,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Katalog und Host Guide dokumentieren Pluginfelder; alte Prism-/Ops-Seiten enthalten weitere Einstellungen. Vollständige zentrale Config Sources, Defaults, Secrets, Precedence, Consumer und Verification fehlen.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/host-and-prism-configuration.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L285"
     },
     {
@@ -1874,8 +2021,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Generierte alte Inventare und Secret-Seiten liefern Teilmengen. Eine vollständige zentrale Variable-/Secret-Consumer-Matrix mit Default, Sensitivity, Source, Scope, Rotation und Restartwirkung fehlt.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/environment-variables.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L286"
     },
     {
@@ -1886,8 +2034,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Kein generierter Katalog.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/endpoints.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L287"
     },
     {
@@ -1898,8 +2047,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Install nennt fünf Runtime-Value-Schichten; Platform Loader erklärt relative Pfade. Pipeline-, Host-, Helm-, GitOps-, Env- und Secret-Familien besitzen kein gemeinsames Precedence-Modell und keine sichere Effective-config-Ausgabe.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/configuration-precedence.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L288"
     },
     {
@@ -1910,8 +2060,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Keine Matrix.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/configuration-change-impact.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L289"
     },
     {
@@ -1922,8 +2073,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Über Code und alte Dokumente verteilt.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/configuration-errors.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L290"
     },
     {
@@ -1936,6 +2088,7 @@
       "workPackage": "AP09.6",
       "owner": "Lint maintainers",
       "canonicalTarget": "docs/site/reference/lint-policy.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L291"
     },
     {
@@ -1946,8 +2099,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Einzelne Decisions und Pipelinequellen nennen beide Eingaben. Die zentrale Dokumentation erklärt Provenance-/Generation-Identitäten, Scaffolding, atomare Veröffentlichung, Kompatibilität, Partial-Publish-Fehler und unterstützte Reparatur nicht als einen Vertrag.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/project-pipeline-publication.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L292"
     },
     {
@@ -1958,8 +2112,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "`swarm.config.json`, Helm-Overrides und ausgelieferte Lint-/Toolkonfiguration sind teilweise sichtbar. Aktive Consumer, retained/legacy Felder, effektive Präzedenz und Migrationsverhalten sind nicht vollständig klassifiziert.",
       "workPackage": "AP09.8",
-      "owner": "platform operations",
-      "canonicalTarget": "docs/site/use/README.md",
+      "owner": "configuration owners",
+      "canonicalTarget": "docs/site/reference/configuration-compatibility.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L293"
     },
     {
@@ -1970,8 +2125,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Quickstart endet nach Checkout-/Inventar-Preflight; Operate beginnt mit bereits vorhandenen Platform-/Project-Dateien. Kein zentraler Ablauf verbindet sauberen Checkout, Konfiguration, Compile, Start, Beobachtung, Audit, Ergebnis und Cleanup.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L299"
     },
     {
@@ -1982,8 +2138,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "`docs/site` enthält keine redacted `pipeline-platform.v2`-Datei. Tests erzeugen temporäre Konfigurationen, aber kein sicheres, erklärtes und schema-validiertes Operatorbeispiel mit allen notwendigen Provider-/Grant-Beziehungen.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L300"
     },
     {
@@ -1994,8 +2151,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Der zentrale Bestand enthält keine vollständige Project-Datei. Compiler-Tests besitzen eine Fixture im Testcode; sie erklärt weder reale Pfade, Source Admission, Modules, Coverage, Final Gates noch Anpassungsstellen für Leser.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L301"
     },
     {
@@ -2006,8 +2164,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Der zentrale Bestand enthält keine Datei oder vollständigen Codeblock. Alte Setup-Texte verweisen auf die Datei, und Tests konsumieren sie indirekt, aber Syntax, Varianten und Validierung sind nicht als Operatorressource vorhanden.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L302"
     },
     {
@@ -2018,8 +2177,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Operate zeigt den Compile-Befehl und erwartete Summary-Felder; Architektur erklärt den fixed graph. Eine konkrete Project-Datei, der daraus entstehende vollständige Graph, jede erzeugte Stage/Kante und die Gründe der Transformation fehlen.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L303"
     },
     {
@@ -2030,8 +2190,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Commands für Start und Audit existieren getrennt. Kein reproduzierbarer zentraler Run zeigt echte Inputs, erwartete Stage-Zustände, Artifact IDs/Digests, Audit-Ausgabe, Observer/Telemetry-Beobachtung und abschließenden Nachweis.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L304"
     },
     {
@@ -2042,8 +2203,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Architektur erklärt technische Retries und Product Repair; Plugin-Tests üben Teilpfade. Es fehlt ein Operatorworkflow mit absichtlich fehlerhafter Stage, Journal/Audit-Beobachtung, Budgetverbrauch, Retry, Repair Edge, Recheck und Terminalzustand.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L305"
     },
     {
@@ -2054,8 +2216,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Operate dokumentiert Signalbedingungen und beide Resume-Commands; Human-approval-Katalog erklärt Package-Fakten. Vollständige Pipeline-/Wait-/Signaldateien, erwartete Journalereignisse, stale/unauthorized Negativfälle und Cleanup fehlen.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L306"
     },
     {
@@ -2066,8 +2229,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Operate und Recovery erklären sichere Regeln und Commands. Ein ausführbares Beispiel mit kontrolliertem Prozessabbruch, retained run identity, Snapshotprüfung, Recoveryausgabe, in-flight Attempt und finalem Audit fehlt.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L307"
     },
     {
@@ -2078,8 +2242,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Effectful Plugin Guide erklärt accepted-without-receipt, Reconciliation und den lokalen Test sehr tief. Ein operatorzentrierter Ablauf vom Pipeline-Audit über Effect Identity und externen Receipt Check bis autorisiertem Stop/Fortsetzen fehlt.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L308"
     },
     {
@@ -2092,6 +2257,7 @@
       "workPackage": "AP09.5",
       "owner": "Buster maintainers",
       "canonicalTarget": "docs/site/use/workflows/buster-suite.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L309"
     },
     {
@@ -2102,8 +2268,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Architektur und Maintenance erklären Build-/Push-/Manifest-/Pull-Kette sowie Grenzen. Ein zentraler ausführbarer Workflow mit Client Config, Build Context, immutable Tag/Digest, Push, Buster Verification, uncached Node Pull, Failure und Cleanup fehlt.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L310"
     },
     {
@@ -2114,8 +2281,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Architektur trennt Platform Route und Buster Fixture; Katalog nennt Retention Modes und Release. Ein vollständiger Workflow mit Operator/Target, ACL/DNS-Prerequisite, HTTPS Endpoint, Readiness, Handoff Generation, Release und Negativtest fehlt.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L311"
     },
     {
@@ -2126,8 +2294,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "First Plugin und Testing Guide decken Authoring sowie generischen Lifecycle ab. Ein operatorzentriertes Beispiel mit realer Installation Root, Platform Selection, Role/Plan Binding, positiver Observation, Drain, Replacement, Removal und verbleibendem State fehlt.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L312"
     },
     {
@@ -2138,8 +2307,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Diagnose, Recovery und Architektur nennen Stop-/Reconcile-Regeln. Kein fokussierter Ablauf zeigt Stream/Consumer-Baseline, kontrollierten Ausfall, erhaltene kanonische Events, Wiederanlauf, Replay/Dedup und Nachweis ohne Doppelzustellung.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L313"
     },
     {
@@ -2150,8 +2320,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Worker- und Recoverykonzepte existieren verteilt. Kein zentraler Workflow zeigt akzeptierten Attempt, Prozessabbruch, Ownership/Journal/Spool, Supervisor-Recovery, sealed Result oder expliziten Recovery Stop.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L314"
     },
     {
@@ -2162,8 +2333,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Namespace Controller und Demo-Handoff implementieren Candidate-/Source-/Result-Identität, Readiness, Retention und Entscheidungen. Es fehlt ein zentraler Ende-zu-Ende-Ablauf für Handoff, Readiness Receipt, autorisierte signierte Entscheidung, Verlängerung oder Ablauf, Teardown und die klare Trennung von Delivery und Produkt-Acceptance.",
       "workPackage": "AP09.9",
-      "owner": "Nova pipeline maintainers",
-      "canonicalTarget": "docs/site/use/pipeline-workflows.md",
+      "owner": "product integration maintainers",
+      "canonicalTarget": "docs/site/use/workflows/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L315"
     },
     {
@@ -2174,8 +2346,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "`docs/site/extend/README.md` ist ein starker Einstieg für Extensions. Es fehlt ein zentraler Developer-Einstieg für Core, Services, UI, Contracts, Data, Deployment und Release mit Ownership- und Check-Routing.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
+      "owner": "developer experience maintainers",
       "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L321"
     },
     {
@@ -2186,8 +2359,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "`use/quickstart.md` liefert Clean Checkout, Node 24, Root-Arbeitsverzeichnis, Dependency-Installation, Inventarchecks und Pipeline-Einstieg; `extend/first-plugin.md` liefert die erste geprüfte Änderung. Ein gemeinsamer Developer-Setup-Weg für alle Workspaces, optionale Go/C/Container/Kubernetes-Tools, Services und Credentials fehlt.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
+      "owner": "developer experience maintainers",
       "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L322"
     },
     {
@@ -2198,8 +2372,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Build-, Runtime-, Service-, Studio-, Worker-, Chart- und Debugcommands liegen in Package-Scripts, READMEs und Tests. Keine zentrale Component Map nennt Entry Point, Build, Start, Debug, Logs, Test und Cleanup.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
+      "owner": "developer experience maintainers",
       "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L323"
     },
     {
@@ -2210,8 +2385,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Extension Testing erklärt Proof Ladder und paketbezogene Checks sehr gut. Core-, Contract-, Reliability-, Service-, UI-, Deployment-, Live-, E2E- und Release-Gates sind bei mehr als 170 npm-Scripts nicht als Change-to-check-Matrix erschlossen.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
+      "owner": "developer experience maintainers",
       "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L324"
     },
     {
@@ -2222,8 +2398,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Alte Testing-Seite nennt vier Checks und einen model-backed Harness; Workflows und Package-Scripts liefern das reale Inventar. Trigger, Required/Optional, Umgebung, Secrets, Artefakte, Timeout, Retry und Merge-/Releasewirkung fehlen zentral.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
+      "owner": "developer experience maintainers",
       "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L325"
     },
     {
@@ -2234,8 +2411,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Extension Contracts und interne `BOUNDARIES.md` erklären wichtige Grenzen. TypeScript/ESM, Package Exports, Dependency Direction, Generated Code, Schema Evolution, Error Codes, Concurrency und Language-spezifische Regeln sind nicht als zentrales Contributor Contract vereint.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
+      "owner": "developer experience maintainers",
       "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L326"
     },
     {
@@ -2246,8 +2424,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Zahlreiche Security-, Performance-, Scale- und Live-Checks existieren. Es fehlt ein Developerworkflow für Threat Review, Testauswahl, sichere Fixtures, Benchmarkumgebung, Baseline, Budget, Ergebnisinterpretation und Regression Acceptance.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
+      "owner": "developer experience maintainers",
       "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L327"
     },
     {
@@ -2258,8 +2437,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Operator Maintenance erklärt Deploymentänderungen, aber kein Developerweg verbindet Version Source, API/Schema SemVer, Generator, Migration, Compatibility, Changelog, Build Receipt, Promotion, Rollback und Deprecation.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
+      "owner": "developer experience maintainers",
       "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L328"
     },
     {
@@ -2270,8 +2450,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Qualitätsstandard und Clean-Room-Regel definieren die Pflicht. Eine maschinenlesbare Source-to-doc-/Owner-/Generator-/Check-Matrix und ein Contributor-Workflow, der betroffene Seiten zuverlässig findet, fehlen.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
+      "owner": "developer experience maintainers",
       "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L329"
     },
     {
@@ -2282,8 +2463,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "Zentraler Choice Guide bietet Decision Flow, Vergleichstabelle, zwölf Szenarien, Unsupported Shortcuts und 23 geprüfte Source Links.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/extend/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L330"
     },
     {
@@ -2294,8 +2476,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "First Plugin führt Package, Manifest, Schemas, Export, Role, Platform, Test, Activation, Failure und Removal durch; die gepflegte Beispielressource und der Harness prüfen den Weg.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/extend/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L331"
     },
     {
@@ -2306,8 +2489,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "Contracts Guide erklärt Stage, Observer, Adapter, Test Provider und Report Adapter mit Authority, Daten, Failure, Recovery, Compatibility und direkten Quellen.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/extend/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L332"
     },
     {
@@ -2318,8 +2502,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "Effectful Guide erklärt Identity, Ordering, Locks, Fencing, Journalzustände, Retry, Resume, Cancellation, Cleanup, State-Grenzen und verifizierte Failure Exercises.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/extend/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L333"
     },
     {
@@ -2332,6 +2517,7 @@
       "workPackage": "AP09.5",
       "owner": "Buster maintainers",
       "canonicalTarget": "docs/site/extend/buster.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L334"
     },
     {
@@ -2342,8 +2528,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "Nova Guide erklärt alle drei Surfaces, Resultwahl, Capability Selection, Observer Recovery, Lint Engine/Rules, Package-/Role-Integration und passende Checks.",
       "workPackage": "AP09.6",
-      "owner": "Lint maintainers",
-      "canonicalTarget": "docs/site/extend/lint.md",
+      "owner": "Nova and Lint maintainers",
+      "canonicalTarget": "docs/site/extend/nova.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L335"
     },
     {
@@ -2354,8 +2541,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Der Host-and-Engine Guide trennt die Oberflächen und verfolgt einen Prism Attempt. Er bezeichnet das terminale Worker-Resultat jedoch als signiert. `attempt-executor.ts` bindet es über Digest und lokale Receipt; dies ist keine dauerhafte Ed25519-Provenienz.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/extend/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L336"
     },
     {
@@ -2366,8 +2554,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "Testing Guide verbindet Proof Ladder, reproduzierbaren Report, jeden Extensiontyp, Installation, Update, Disable, Removal, State und Diagnose.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/extend/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L337"
     },
     {
@@ -2378,8 +2567,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "51 von 51 Manifests besitzen zentrale Seiten und belastbare Inventarfakten. Verschachtelte Konfiguration, Package-spezifische Funktionen und Erweiterungspunkte komplexer Plugins sind jedoch noch nicht vollständig zentral; Inventarvollständigkeit ist nicht Inhaltsvollständigkeit.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "plugin-runtime maintainers",
+      "canonicalTarget": "docs/site/extend/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L338"
     },
     {
@@ -2390,8 +2580,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Choice Guide nennt die Grenze, aber kein zentraler Workflow erklärt Ownership, lokale Architektur, Change Design, Invariants, Testauswahl, Replay-/Compatibility-Proof und Review für Core-Code.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "component maintainers",
+      "canonicalTarget": "docs/site/extend/platform/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L339"
     },
     {
@@ -2402,8 +2593,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Keine Anleitung verbindet Reducer, Graph, Loop, Budgets, Wait/Signal, Journal, Snapshots, Error Codes, Determinismus-, Crash- und Migrationstests.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "component maintainers",
+      "canonicalTarget": "docs/site/extend/platform/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L340"
     },
     {
@@ -2414,8 +2606,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Plugin-Autoren sind gut geführt; Core-Entwickler erhalten keinen Weg für Effect Contracts, Identity, Journalformat, Locks/Fencing, Receipt Recovery, Corruption, Compatibility und Reliability Gates.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "component maintainers",
+      "canonicalTarget": "docs/site/extend/platform/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L341"
     },
     {
@@ -2426,8 +2619,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Kein zentraler Developerweg erklärt Verträge, native Launcher/Channel, Ownership, Journal/Spool, Resource Pool, Cancellation, Sealing, C-Build, Host-Prerequisites und Recoverytests.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "component maintainers",
+      "canonicalTarget": "docs/site/extend/platform/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L342"
     },
     {
@@ -2438,8 +2632,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Registry-/Isolationquellen und interne READMEs existieren. Discovery, Schema, Import Audit, Activation, Sandbox, cgroup, Threat Review, Negative Tests, Migration und Package Compatibility sind nicht als Change-Workflow dokumentiert.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "component maintainers",
+      "canonicalTarget": "docs/site/extend/platform/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L343"
     },
     {
@@ -2450,8 +2645,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Es fehlt ein zentraler Ablauf für Consumer Inventory, Versionentscheidung, Schema/Types/Exports, Generator, Fixtures, Backward/Forward Compatibility, Migration, Negative Absence und Release Note.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "component maintainers",
+      "canonicalTarget": "docs/site/extend/platform/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L344"
     },
     {
@@ -2462,8 +2658,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Kein Workflow verbindet Vocabulary/Event Catalog, Provider/Consumer, Resource Match, Security Review, Payload/Redaction, Ordering, Docs Generation, Role Grants und End-to-end Verification.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "component maintainers",
+      "canonicalTarget": "docs/site/extend/platform/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L345"
     },
     {
@@ -2476,6 +2673,7 @@
       "workPackage": "AP09.5",
       "owner": "Buster maintainers",
       "canonicalTarget": "docs/site/extend/platform/buster.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L346"
     },
     {
@@ -2488,6 +2686,7 @@
       "workPackage": "AP09.4",
       "owner": "Prism maintainers",
       "canonicalTarget": "docs/site/extend/platform/prism.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L347"
     },
     {
@@ -2498,8 +2697,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Pluginseiten erklären einzelne Registrierungen; ein Developerweg für Dispatch Contract, Host/Model, Input/Result, Lost Response, Policy, Versionierung, Test Harness und Deployment fehlt.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "component maintainers",
+      "canonicalTarget": "docs/site/extend/platform/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L348"
     },
     {
@@ -2510,8 +2710,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Kein zentraler Studio-/Architekturviewer-Weg erklärt Toolchain, State/Flow Contracts, Accessibility, Security, Visual Baseline, Browser Tests, Build und Preview/Release.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "component maintainers",
+      "canonicalTarget": "docs/site/extend/platform/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L349"
     },
     {
@@ -2522,8 +2723,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Operatorseiten erklären Betrieb. Entwickler erhalten keinen Workflow für Chart/Values-Schema, Template, generated GitOps tree, Ownership, Security/Upgrade Review, Render/Policy/Live Checks und Rollbackkompatibilität.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "component maintainers",
+      "canonicalTarget": "docs/site/extend/platform/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L350"
     },
     {
@@ -2534,8 +2736,9 @@
       "baselineStatusLabel": "Fehlt komplett",
       "finding": "Kein gemeinsamer Vertrag erklärt Owner, Schemaänderung, Expand/Contract, Writer/Reader Compatibility, Backfill, Lock/Fence, Backup/Restore, Rollbackgrenze, Data Proof und Retirement.",
       "workPackage": "AP09.10",
-      "owner": "developer experience and component maintainers",
-      "canonicalTarget": "docs/site/extend/developer-handbook.md",
+      "owner": "component maintainers",
+      "canonicalTarget": "docs/site/extend/platform/README.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L351"
     },
     {
@@ -2548,6 +2751,7 @@
       "workPackage": "AP09.11",
       "owner": "documentation automation",
       "canonicalTarget": "docs/site/reference/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L357"
     },
     {
@@ -2559,7 +2763,8 @@
       "finding": "`reference/cli.md`, `use/install.md` und `use/operate.md` erklären zentrale Deploy-, Start-, Audit- und Recovery-Befehle. Andere ausführbare Einstiegspunkte und Skripte besitzen noch keine gemeinsame generierte CLI-Referenz mit Defaults, Voraussetzungen, Exit-Verhalten und Beispielen.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/cli.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L358"
     },
     {
@@ -2571,7 +2776,8 @@
       "finding": "Konfiguration liegt in Schemas, Rollen, Charts, Deploy-Dateien und Pluginseiten verteilt. Keine zentrale Seite inventarisiert Familien, Präzedenz, Owner, Consumer, Reload-Verhalten und sensible Werte.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/configuration.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L359"
     },
     {
@@ -2583,7 +2789,8 @@
       "finding": "Aktuell existieren 245 `*.schema.json`-Dateien unter `skills`, `contracts` und `charts`. Kein globaler Katalog ordnet sie Produktoberflächen, Versionen, Consumer, Constraints und Defaults zu.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/schemas.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L360"
     },
     {
@@ -2595,7 +2802,8 @@
       "finding": "Alte Suite-Fehlerreferenzen sind keine kanonische Gesamtreferenz. `verify:docs:error-codes` meldet bereits in dieser Teilmenge 17 undokumentierte Codes; Core, Dienste und Infrastruktur sind nicht gemeinsam inventarisiert.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/errors.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L361"
     },
     {
@@ -2607,7 +2815,8 @@
       "finding": "Allein `contracts/telemetry` enthält 124 JSON-Schemas in 134 Dateien. Es fehlt eine aktive Referenz für Producer, Consumer, Version, Korrelation, Reihenfolge, Wiederholung, Retention und Recovery je Event oder Payload.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/events.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L362"
     },
     {
@@ -2619,7 +2828,8 @@
       "finding": "`reference/capabilities.md` wird aus Vocabulary und Registrierungen erzeugt, behandelt aber 34 Namen einheitlich als grantable capabilities, obwohl das Nova-Vocabulary nur 28 enthält. Sechs Buster-Runtime-Namen müssen von Nova-Grants getrennt werden; Operations-, Resource- und Constraint-Semantik sowie Generatorvalidierung fehlen.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/capabilities.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L363"
     },
     {
@@ -2631,7 +2841,8 @@
       "finding": "Der AP08-Katalog besitzt 51 Paketseiten plus Index. Inventar-, Coverage-, Source-Range- und Reader-Checks verbinden Pakete, Registrierungen, Schemas, Rollen, Tests und authored guidance.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/plugin-catalogue/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L364"
     },
     {
@@ -2643,7 +2854,8 @@
       "finding": "Rollenmanifeste und `packaging/runtime/package-ownership.json` liefern mechanische Fakten. Rollen erscheinen teilweise in Architektur und Plugin-Katalog, aber eine zentrale Reference mit Bundle-Inhalt, Entrypoint, Consumer, Grenzen und Änderungswirkung fehlt.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/roles-and-package-ownership.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L365"
     },
     {
@@ -2655,7 +2867,8 @@
       "finding": "Vertragsdateien und einzelne Erklärungen existieren, jedoch keine zentrale Matrix für Contract-ID, Schema-Version, Producer, Consumer, Kompatibilitätsrichtung, Migrationsregel und Retirement.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/contracts.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L366"
     },
     {
@@ -2667,7 +2880,8 @@
       "finding": "Endpunkte stehen verteilt in Code, Charts und Operationsquellen. Es gibt keine exhaustive Referenz für Bind-Adresse, Port, Protokoll, Authentisierung, Aufrufer, Netzwerkgrenze, Health und Exposure.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/endpoints.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L367"
     },
     {
@@ -2679,7 +2893,8 @@
       "finding": "Pluginseiten, Helm-Slices und Deploymenttexte erklären Teilmengen. Es fehlt ein vollständiges, sicher redigiertes Inventar für Name, Quelle, Consumer, Pflichtstatus, Default, Rotation, Reload und Fehlerwirkung.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/secrets.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L368"
     },
     {
@@ -2691,7 +2906,8 @@
       "finding": "Das vorhandene Helm-Inventar deckt sieben von 17 engen Helm-/My-values-Quellen und keine der elf zusätzlichen GitOps-Values-Dateien ab. Im ausdrücklich kombinierten Scope sind damit mindestens sieben von 28 Quellen abgedeckt und 21 offen; Präzedenz, sensible Felder, Upgrade-Wirkung und Consumer bleiben lückenhaft.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/helm-values.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L369"
     },
     {
@@ -2703,7 +2919,8 @@
       "finding": "`use/recovery.md` enthält bereits ein zentrales 15-zeiliges State Inventory mit Owner, Authority, Protection Boundary und Grenzen. Für eine exhaustive Referenz fehlen noch konkrete Pfade, Lebensdauer, Quotas, Cleanup, vollständige Backup-/Restore-Verfahren und Verlustwirkung.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/stores-and-retention.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L370"
     },
     {
@@ -2715,7 +2932,8 @@
       "finding": "Build- und Releasequellen dokumentieren einzelne Identitäten. Eine aktive Reference, die Image-Quelle, Version, Plattform, Digest, Rolle, Promotion, Deployment und Prüfung verbindet, fehlt.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/images-and-digests.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L371"
     },
     {
@@ -2727,7 +2945,8 @@
       "finding": "`reference/verification-commands.md` und `reference/workflows.md` erfassen wichtige Checks und alle 13 Workflowdateien; Guides nennen weitere relevante Teilmengen. Eine exhaustive Zuordnung aller Commands zu Zweck, Scope, Umgebung, Schreibwirkung, erwarteter Ausgabe, Owner und Change-to-check-Routing fehlt.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/verification-commands.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L372"
     },
     {
@@ -2739,7 +2958,8 @@
       "finding": "`reference/glossary.md` definiert zentrale Begriffe und grenzt ähnliche Begriffe ausdrücklich ab. Neue AP09-Seiten müssen neue Fachbegriffe ergänzen und der globale Reader-Review muss Konsistenz erneut prüfen.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/glossary.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L373"
     },
     {
@@ -2751,7 +2971,8 @@
       "finding": "SDK-Package, Exports und Implementierungen liefern eine belastbare Quelle; Extension-Guides erklären ausgewählte Nutzung. Eine vollständige Consumer-Referenz für Entry Points, Types, Helpers, Testing API, canonical/portable JSON, Digest-, Approval- und Artifact-Identitäten, Kompatibilität und Reject-Verhalten fehlt.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/sdk.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L374"
     },
     {
@@ -2762,8 +2983,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "Der Decision-Bereich bewahrt ADR-001–ADR-022, D-001–D-119, D01–D16, D12 sowie ursprüngliche Finding-IDs. Der Index erklärt die getrennten Namensräume und verbietet stilles Umschreiben von Autorität.",
       "workPackage": "AP09.1",
-      "owner": "documentation architecture",
-      "canonicalTarget": "docs/site/README.md",
+      "owner": "architecture maintainers",
+      "canonicalTarget": "docs/site/decisions/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L380"
     },
     {
@@ -2774,8 +2996,9 @@
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
       "finding": "Viele ADRs enthalten diese Felder detailliert. Drei Decision-Seiten haben jedoch kein `Evidence`-Metadatum; der Publication-Check findet ungültige Belegpfade, entfernte Contract-Terme und weitere redaktionelle Fehler. Nicht jede abgeleitete Entscheidung besitzt dieselbe strukturierte Tiefe.",
       "workPackage": "AP09.1",
-      "owner": "documentation architecture",
-      "canonicalTarget": "docs/site/README.md",
+      "owner": "architecture maintainers",
+      "canonicalTarget": "docs/site/decisions/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L381"
     },
     {
@@ -2786,8 +3009,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "`status/current.md`, der aus JSON generierte offene Registerbestand und `status/acceptance.md` trennen Source-Status, offene Implementierung, lokale Verifikation und Live-Abnahme. Stable IDs und Acceptance-Gates verbinden die Sichten.",
       "workPackage": "AP09.1",
-      "owner": "documentation architecture",
-      "canonicalTarget": "docs/site/README.md",
+      "owner": "release and documentation maintainers",
+      "canonicalTarget": "docs/site/status/current.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L382"
     },
     {
@@ -2798,8 +3022,9 @@
       "baselineStatusLabel": "Vollständig vorhanden",
       "finding": "`status/current.md`, Understand-Seiten, Roadmap und Acceptance trennen den aktuellen Bestand, abgeschlossene Dokumentationspakete, offene Produktarbeit und Live-Abnahmen. Die früheren AP04-/AP08-Zwischenstände wurden bereinigt; Status- und Blueprint-Generatoren sind aktuell.",
       "workPackage": "AP09.1",
-      "owner": "documentation architecture",
-      "canonicalTarget": "docs/site/README.md",
+      "owner": "release and documentation maintainers",
+      "canonicalTarget": "docs/site/status/current.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L383"
     },
     {
@@ -2811,7 +3036,8 @@
       "finding": "Die drei Einstiege Understand, Operate und Extend sind klar. Exhaustive Reference, Platform/Core Development, vollständige Workflows und mehrere Infrastrukturaufgaben fehlen oder sind nur über alte Quellen erreichbar.",
       "workPackage": "AP09.12",
       "owner": "documentation publication",
-      "canonicalTarget": "docs/site/README.md",
+      "canonicalTarget": "docs/site/reference/documentation-site.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L384"
     },
     {
@@ -2823,7 +3049,8 @@
       "finding": "Ein Verzeichnis-Boundary begrenzt die Veröffentlichung auf `docs/site`. Entgegen `docs/README.md` besitzt `scripts/docs-publication.mjs` aber keine explizite Seiten-Allowlist; es läuft rekursiv über alle Markdownseiten. Ein Suchindex fehlt.",
       "workPackage": "AP09.12",
       "owner": "documentation publication",
-      "canonicalTarget": "docs/site/README.md",
+      "canonicalTarget": "docs/site/reference/documentation-site.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L385"
     },
     {
@@ -2835,7 +3062,8 @@
       "finding": "AP06–AP08 besitzen viele direkte und gepinnte Belege sowie strukturelle Checks. Der Publication-Check findet dennoch ungültige Evidence-Pfade; neue Reference- und Developer-Seiten benötigen erst ihre Quellenlinks.",
       "workPackage": "AP09.12",
       "owner": "documentation publication",
-      "canonicalTarget": "docs/site/README.md",
+      "canonicalTarget": "docs/site/reference/documentation-site.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L386"
     },
     {
@@ -2847,7 +3075,8 @@
       "finding": "Der Build wandelt Evidence-Pfade in revisionsgebundene Links um, rendert aber keinen Quellausschnitt. Es gibt keine Komponente, die Link und automatisch aus derselben Revision gelesenen Code in einem Kasten verbindet.",
       "workPackage": "AP09.12",
       "owner": "documentation publication",
-      "canonicalTarget": "docs/site/README.md",
+      "canonicalTarget": "docs/site/reference/documentation-site.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L387"
     },
     {
@@ -2859,7 +3088,8 @@
       "finding": "Neun geprüfte Diagramme besitzen textliche Erklärungen und Belege. Die Detailarchitektur für noch fehlende Core-, Kommunikation-, Daten- und Plattformthemen benötigt weitere gezielte Diagramme; eine gerenderte visuelle Abnahme fehlt.",
       "workPackage": "AP09.12",
       "owner": "documentation publication",
-      "canonicalTarget": "docs/site/README.md",
+      "canonicalTarget": "docs/site/reference/documentation-site.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L388"
     },
     {
@@ -2871,7 +3101,8 @@
       "finding": "Der aktuelle Build kopiert Markdown und erzeugt einen Bericht. Es gibt weder interaktive Architekturansicht noch statischen Export einer solchen Ansicht. Umsetzung bleibt optional und braucht einen konkreten Lesernutzen.",
       "workPackage": "AP09.12",
       "owner": "documentation publication",
-      "canonicalTarget": "docs/site/README.md",
+      "canonicalTarget": "docs/site/reference/documentation-site.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L389"
     },
     {
@@ -2883,7 +3114,8 @@
       "finding": "Markdown ist grundsätzlich portabel und Diagramme haben Textalternativen. Es gibt jedoch keinen finalen Renderer und keine dokumentierte Abnahme für schmale Viewports, Tastatur, Fokus, Kontrast oder Screenreader.",
       "workPackage": "AP09.12",
       "owner": "documentation publication",
-      "canonicalTarget": "docs/site/README.md",
+      "canonicalTarget": "docs/site/reference/documentation-site.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L390"
     },
     {
@@ -2895,7 +3127,8 @@
       "finding": "Lokale Generate-, Check- und Build-Kommandos existieren. `docs:publication:check` ist rot, und `.github/workflows/docs-checks.yaml` führt weder Publication-/Blueprint- noch Suite-Dokumentationschecks aus. Der Build kopiert Markdown statt eine Leserpräsentation zu rendern.",
       "workPackage": "AP09.12",
       "owner": "documentation publication",
-      "canonicalTarget": "docs/site/README.md",
+      "canonicalTarget": "docs/site/reference/documentation-site.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L391"
     },
     {
@@ -2907,7 +3140,8 @@
       "finding": "`docs/site` ist als Ziel erklärt, doch aktive Seiten verlinken noch notwendige alte Architektur-, Deployment-, Operations- und Reviewquellen. AP10 darf sie erst nach validierter Informationsübernahme entfernen.",
       "workPackage": "AP09.12",
       "owner": "documentation publication",
-      "canonicalTarget": "docs/site/README.md",
+      "canonicalTarget": "docs/site/reference/documentation-site.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L392"
     },
     {
@@ -2919,7 +3153,8 @@
       "finding": "Manifest-, Registration- und Capability-Fakten folgen bereits Quellgeneratoren. Konfiguration, CLI, Contracts, Events, Fehler, Endpunkte und Stores werden dagegen noch mehrfach oder gar nicht redaktionell abgebildet.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L398"
     },
     {
@@ -2931,7 +3166,8 @@
       "finding": "AP08 erzeugt 51 Paketdatensätze und Katalogseiten aus Manifesten, Package-Metadaten, Schemas, Rollen und Testdateien. Separates Guidance-JSON schützt die redaktionellen Erklärungen.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/plugin-catalogue/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L399"
     },
     {
@@ -2943,7 +3179,8 @@
       "finding": "Der Publication-Generator erzeugt bereits Plugin-Konfigurationsfelder und Defaults; das Helm-Inventar erfasst eine weitere Teilmenge. Ein globales Inventar über alle Config-Schemas, Values, Rollen und Dienste samt Präzedenz und Consumern fehlt weiterhin.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L400"
     },
     {
@@ -2955,7 +3192,8 @@
       "finding": "Kein Generator extrahiert alle Commands, Subcommands, Optionen, Defaults und Exitcodes aus Skripten und Entrypoints. Das Deployment-Inventar deckt nur einen Bedienpfad ab.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L401"
     },
     {
@@ -2967,7 +3205,8 @@
       "finding": "Der Suite-Check vergleicht eine alte Teilreferenz, erzeugt aber keinen kanonischen Gesamtkatalog. Für Core, Services, Plugins und Infrastruktur gibt es keinen gemeinsamen Extractor.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L402"
     },
     {
@@ -2979,7 +3218,8 @@
       "finding": "Telemetrie- und weitere Contract-Schemas liegen maschinenlesbar vor, werden aber nicht zu einer aktiven Event-/Payloadreferenz mit Producer- und Consumerbeziehungen erzeugt.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L403"
     },
     {
@@ -2991,7 +3231,8 @@
       "finding": "Rollenmanifeste, Package-Ownership, Plugin-Inventar und Publication-Generator erfassen Rollenaufnahme, Host und Registrierungen. AP08-Checks erkennen fehlende oder zusätzliche Pakete.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/plugin-catalogue/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L404"
     },
     {
@@ -3003,7 +3244,8 @@
       "finding": "Es gibt keinen maschinenlesbaren Gesamtbestand oder Generator für diese Betriebsflächen. Werte bleiben über Charts, Code, Config und Runbooks verteilt.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L405"
     },
     {
@@ -3015,7 +3257,8 @@
       "finding": "Topic Map und dieses Audit listen Themen, aber kein Checker ordnet jede entdeckte öffentliche Oberfläche einer kanonischen Zielseite, einem Owner und einem Driftcheck zu.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L406"
     },
     {
@@ -3027,7 +3270,8 @@
       "finding": "`verify:docs:schema-fields` prüft eine deklarierte Teilmenge von 16 der insgesamt 245 `*.schema.json`-Dateien und meldet aktuell `minimumExecutedTests`, `requiredTests` und `retentionMode`. Die 229 Dateien außerhalb dieser Teilmenge besitzen keine gleichwertige globale Abdeckung; auch innerhalb der Teilmenge ist rekursive Feldabdeckung separat zu beweisen.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L407"
     },
     {
@@ -3039,7 +3283,8 @@
       "finding": "`verify:docs:error-codes` erkennt aktuelle Suite-Drift und meldet 17 konkrete Codes. Der Check deckt nicht alle Fehlerproduzenten ab und die geprüften Seiten liegen noch außerhalb der zentralen Site.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L408"
     },
     {
@@ -3051,7 +3296,8 @@
       "finding": "Inventory-, Publication-, Choice-, Minimal-, Advanced-, Effectful-, Observer- und Reader-Reference-Checks decken die 51 Plugins und ihre Registrierungen ab.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/plugin-catalogue/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L409"
     },
     {
@@ -3063,7 +3309,8 @@
       "finding": "`docs:check:refs` prüft lokale Ziele und Anker; der AP08-Reader-Check prüft zusätzlich gepinnte Git-Quellbereiche. Die Checks trennen strukturelle Gültigkeit ausdrücklich von semantischer Review.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/reference/verification-commands.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L410"
     },
     {
@@ -3075,7 +3322,8 @@
       "finding": "Das minimale Pluginbeispiel wird ausgeführt, und `verify:docs:examples` besteht für seine Suite-Teilmenge. Vollständige Operator-, Pipeline-, Config-, Failure- und Infrastrukturbeispiele fehlen.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L411"
     },
     {
@@ -3087,7 +3335,8 @@
       "finding": "Seiten nennen Owner, doch es existiert keine vollständige maschinenlesbare Zuordnung von Quelloberfläche zu Dokumentseite, Owner, Reviewer und erforderlichem Check.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L412"
     },
     {
@@ -3099,7 +3348,8 @@
       "finding": "AP08 trennt mechanisches Inventar, lokale Verifikation und authored guidance. Die Generatoren bauen Faktenblöcke neu, ohne die redaktionelle Begründung aus Quellcode abzuleiten oder zu überschreiben.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/plugin-catalogue/README.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L413"
     },
     {
@@ -3111,7 +3361,8 @@
       "finding": "Der Qualitätsstandard beschreibt Ziele, aber es gibt noch keinen ausführbaren zentralen Wartungsvertrag für Discovery, Änderungsauswirkung, Generierung, Review, Leserprobe und sichere Altdatei-Entfernung. AP11 muss ihn liefern.",
       "workPackage": "AP09.11",
       "owner": "documentation automation",
-      "canonicalTarget": "docs/site/reference/README.md",
+      "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+      "targetState": "planned",
       "source": "docs/blueprint/AP09-completeness-audit.md#L414"
     },
     {
@@ -3124,6 +3375,7 @@
       "workPackage": "AP09.13",
       "owner": "independent documentation reviewers",
       "canonicalTarget": "docs/site/status/acceptance.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L420"
     },
     {
@@ -3136,6 +3388,7 @@
       "workPackage": "AP09.13",
       "owner": "independent documentation reviewers",
       "canonicalTarget": "docs/site/status/acceptance.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L421"
     },
     {
@@ -3148,6 +3401,7 @@
       "workPackage": "AP09.13",
       "owner": "independent documentation reviewers",
       "canonicalTarget": "docs/site/status/acceptance.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L422"
     },
     {
@@ -3160,6 +3414,7 @@
       "workPackage": "AP09.13",
       "owner": "independent documentation reviewers",
       "canonicalTarget": "docs/site/status/acceptance.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L423"
     },
     {
@@ -3172,6 +3427,7 @@
       "workPackage": "AP09.13",
       "owner": "independent documentation reviewers",
       "canonicalTarget": "docs/site/status/acceptance.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L424"
     },
     {
@@ -3184,6 +3440,7 @@
       "workPackage": "AP09.13",
       "owner": "independent documentation reviewers",
       "canonicalTarget": "docs/site/status/acceptance.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L425"
     },
     {
@@ -3196,6 +3453,7 @@
       "workPackage": "AP09.13",
       "owner": "independent documentation reviewers",
       "canonicalTarget": "docs/site/status/acceptance.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L426"
     },
     {
@@ -3208,6 +3466,7 @@
       "workPackage": "AP09.13",
       "owner": "independent documentation reviewers",
       "canonicalTarget": "docs/site/status/acceptance.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L427"
     },
     {
@@ -3220,6 +3479,7 @@
       "workPackage": "AP09.13",
       "owner": "independent documentation reviewers",
       "canonicalTarget": "docs/site/status/acceptance.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L428"
     },
     {
@@ -3232,6 +3492,7 @@
       "workPackage": "AP09.13",
       "owner": "independent documentation reviewers",
       "canonicalTarget": "docs/site/status/acceptance.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L429"
     }
   ]

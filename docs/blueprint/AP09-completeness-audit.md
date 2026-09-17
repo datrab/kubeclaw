@@ -520,7 +520,9 @@ Klassifikationen, mehrere fehlerhafte Nachweise und zehn zusätzliche
 Produktoberflächen. Diese Review-Reconciliation ist im aktuellen Stand
 vollständig eingearbeitet. Der maschinenlesbare Katalog erzwingt 261
 eindeutige, lückenlose IDs, die Summenrechnung und genau eine Zuordnung zu
-Paket, Owner und kanonischem Ziel.
+Paket, fachlichem Owner und kanonischem Ziel. Er trennt bereits vorhandene von
+geplanten Zielseiten und verbietet einen vollständigen Punkt ohne vorhandenes
+kanonisches Ziel.
 
 Bedingungen 1 bis 5 sind intern erfüllt. Bedingung 6 bleibt bis zu einem neuen
 unabhängigen Read-only-Review der 261-Punkte-Baseline offen. AP09.0 ist deshalb

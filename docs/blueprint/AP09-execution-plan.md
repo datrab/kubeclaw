@@ -57,8 +57,11 @@ Die geprüfte Datei liegt in
 `docs/blueprint/generated/ap09-catalogue.json`. Der Befehl
 `npm run docs:ap09:catalogue:check` erzeugt keine Dateien und verwirft den
 Build bei fehlenden oder doppelten IDs, falschen Summen, unbekannten Zuständen,
-leeren Ownern, Zielen außerhalb von `docs/site` oder einer veralteten Ausgabe.
-`docs:check:generated` und damit der Docs-CI-Weg führen diese Prüfung aus.
+leeren Ownern, nicht kanonisch sortierten Zeilen, fehlenden Paketen im Plan,
+Zielen außerhalb von `docs/site`, fehlenden Zielseiten vollständiger Punkte
+oder einer veralteten Ausgabe. Jedes Ziel ist als `current` oder `planned`
+markiert. `docs:check:generated` und damit der Docs-CI-Weg führen diese Prüfung
+aus.
 
 **Gate:** Ein unabhängiger Read-only-Check bestätigt Katalog, Einstufungen,
 Quellen und Rechenweg.
@@ -66,7 +69,10 @@ Quellen und Rechenweg.
 ### AP09.1 — Wahrheit, Autorität und Leserwege
 
 - Nachgewiesene Falschaussagen zuerst korrigieren: Ops-Pod-Rechte,
-  Resume-Signal, Worker-Result-Authentizität und Capability-Arten.
+  Resume-Signal, Worker-Result-Authentizität und Capability-Arten. Die
+  zuständigen späteren Pakete schließen weiterhin die vollständigen
+  Anforderungen; AP09.1 beseitigt vorab nur Aussagen, die nachweislich falsch
+  sind.
 - Einstieg, Status, Entscheidungen und Evidence-Grenzen vereinheitlichen.
 - Für jede Kernaufgabe den kürzesten vollständigen Weg festlegen.
 - Tatsächliche Produktgrenzen klar von fehlender Live-Abnahme trennen.

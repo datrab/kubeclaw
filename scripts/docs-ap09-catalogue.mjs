@@ -7,8 +7,10 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const sourceRelative = 'docs/blueprint/AP09-completeness-audit.md';
 const targetRelative = 'docs/blueprint/generated/ap09-catalogue.json';
+const planRelative = 'docs/blueprint/AP09-execution-plan.md';
 const sourcePath = path.join(root, sourceRelative);
 const targetPath = path.join(root, targetRelative);
+const planPath = path.join(root, planRelative);
 const checkMode = process.argv.includes('--check');
 
 const expectedRanges = {
@@ -105,6 +107,34 @@ const namespacePackages = {
   PUB: 'AP09.12', QUA: 'AP09.13',
 };
 
+const namespaceDefinitions = {
+  GOV: { owner: 'documentation architecture', target: 'docs/site/README.md' },
+  ENT: { owner: 'product documentation', target: 'docs/site/understand/README.md' },
+  ARC: { owner: 'architecture maintainers', target: 'docs/site/understand/components-and-authority.md' },
+  NVC: { owner: 'Nova maintainers', target: 'docs/site/understand/nova-core.md' },
+  WKC: { owner: 'Worker Core maintainers', target: 'docs/site/understand/worker-core.md' },
+  SPC: { owner: 'component maintainers', target: 'docs/site/understand/specialists.md' },
+  PLG: { owner: 'plugin-runtime maintainers', target: 'docs/site/understand/plugin-system.md' },
+  COM: { owner: 'runtime and platform maintainers', target: 'docs/site/understand/communication.md' },
+  DAT: { owner: 'state-owning component maintainers', target: 'docs/site/understand/data-and-state.md' },
+  TEL: { owner: 'observability maintainers', target: 'docs/site/understand/telemetry.md' },
+  INF: { owner: 'platform maintainers', target: 'docs/site/understand/platform-and-operations.md' },
+  SEC: { owner: 'security maintainers', target: 'docs/site/understand/security-and-trust.md' },
+  OPR: { owner: 'platform operations', target: 'docs/site/use/README.md' },
+  OPL: { owner: 'plugin and platform operations', target: 'docs/site/use/plugins.md' },
+  CFG: { owner: 'configuration owners', target: 'docs/site/reference/configuration.md' },
+  FLW: { owner: 'product integration maintainers', target: 'docs/site/use/workflows/README.md' },
+  DEV: { owner: 'developer experience maintainers', target: 'docs/site/extend/developer-handbook.md' },
+  EXT: { owner: 'plugin-runtime maintainers', target: 'docs/site/extend/README.md' },
+  CDV: { owner: 'component maintainers', target: 'docs/site/extend/platform/README.md' },
+  REF: { owner: 'documentation automation', target: 'docs/site/reference/README.md' },
+  DEC: { owner: 'architecture maintainers', target: 'docs/site/decisions/README.md' },
+  STA: { owner: 'release and documentation maintainers', target: 'docs/site/status/current.md' },
+  PUB: { owner: 'documentation publication', target: 'docs/site/reference/documentation-site.md' },
+  MNT: { owner: 'documentation automation', target: 'docs/site/extend/documentation-maintenance.md' },
+  QUA: { owner: 'independent documentation reviewers', target: 'docs/site/status/acceptance.md' },
+};
+
 const packageOverrides = {
   'SPC-001': 'AP09.5', 'SPC-008': 'AP09.5', 'CFG-006': 'AP09.5',
   'FLW-011': 'AP09.5', 'EXT-005': 'AP09.5', 'CDV-008': 'AP09.5',
@@ -113,18 +143,91 @@ const packageOverrides = {
   'CDV-009': 'AP09.4',
 };
 
+const ownerOverrides = {
+  'SPC-001': 'Buster maintainers', 'SPC-008': 'Buster maintainers',
+  'CFG-006': 'Buster maintainers', 'FLW-011': 'Buster maintainers',
+  'EXT-005': 'Buster maintainers', 'CDV-008': 'Buster maintainers',
+  'CFG-016': 'Lint maintainers', 'EXT-006': 'Nova and Lint maintainers',
+  'SPC-002': 'Prism maintainers', 'SPC-003': 'Prism maintainers',
+  'OPR-010': 'Prism maintainers', 'CDV-009': 'Prism maintainers',
+  'SPC-004': 'Forge maintainers', 'SPC-005': 'Echo maintainers',
+  'SPC-006': 'OpenClaw integration maintainers',
+  'SPC-007': 'Codex integration maintainers', 'SPC-009': 'Ops MCP maintainers',
+  'SPC-010': 'Archviewer maintainers',
+};
+
 const targetOverrides = {
+  'NVC-001': 'docs/site/understand/components-and-authority.md',
+  'WKC-001': 'docs/site/understand/components-and-authority.md',
+  'PLG-001': 'docs/site/extend/contracts.md',
+  'PLG-004': 'docs/site/extend/contracts.md',
+  'PLG-012': 'docs/site/extend/testing.md',
+  'PLG-014': 'docs/site/extend/README.md',
+  'TEL-005': 'docs/site/extend/contracts.md',
+  'TEL-006': 'docs/site/understand/deployment-and-trust.md',
+  'SPC-001': 'docs/site/understand/buster.md',
+  'SPC-002': 'docs/site/understand/prism.md',
+  'SPC-003': 'docs/site/understand/prism-data.md',
+  'SPC-004': 'docs/site/understand/forge.md',
+  'SPC-005': 'docs/site/understand/echo.md',
+  'SPC-006': 'docs/site/understand/openclaw.md',
+  'SPC-007': 'docs/site/understand/codex-integration.md',
   'SPC-008': 'docs/site/understand/buster-namespace-controller.md',
+  'SPC-009': 'docs/site/understand/ops-mcp.md',
+  'SPC-010': 'docs/site/understand/archviewer.md',
+  'OPR-003': 'docs/site/use/install.md',
+  'OPR-004': 'docs/site/use/operate.md',
+  'OPR-005': 'docs/site/use/operate.md',
+  'OPR-006': 'docs/site/use/diagnose.md',
+  'OPR-007': 'docs/site/use/recovery.md',
+  'OPR-008': 'docs/site/use/maintenance.md',
+  'OPR-009': 'docs/site/use/capacity.md',
+  'OPR-010': 'docs/site/use/prism-studio.md',
+  'CFG-001': 'docs/site/reference/README.md',
+  'CFG-002': 'docs/site/reference/pipeline-platform.md',
+  'CFG-003': 'docs/site/reference/nova-project.md',
+  'CFG-004': 'docs/site/reference/pipeline-definition.md',
+  'CFG-005': 'docs/site/reference/pipeline-json.md',
   'CFG-006': 'docs/site/reference/buster-suites.md',
+  'CFG-007': 'docs/site/reference/plugin-configuration.md',
+  'CFG-008': 'docs/site/reference/worker-profiles-and-roles.md',
+  'CFG-009': 'docs/site/reference/helm-values.md',
+  'CFG-010': 'docs/site/reference/host-and-prism-configuration.md',
+  'CFG-011': 'docs/site/reference/environment-variables.md',
+  'CFG-012': 'docs/site/reference/endpoints.md',
+  'CFG-013': 'docs/site/reference/configuration-precedence.md',
+  'CFG-014': 'docs/site/reference/configuration-change-impact.md',
+  'CFG-015': 'docs/site/reference/configuration-errors.md',
   'FLW-011': 'docs/site/use/workflows/buster-suite.md',
   'EXT-005': 'docs/site/extend/buster.md',
   'CDV-008': 'docs/site/extend/platform/buster.md',
   'CFG-016': 'docs/site/reference/lint-policy.md',
-  'EXT-006': 'docs/site/extend/lint.md',
-  'SPC-002': 'docs/site/understand/prism.md',
-  'SPC-003': 'docs/site/understand/prism-data.md',
-  'OPR-010': 'docs/site/use/prism-studio.md',
+  'CFG-017': 'docs/site/reference/project-pipeline-publication.md',
+  'CFG-018': 'docs/site/reference/configuration-compatibility.md',
+  'EXT-006': 'docs/site/extend/nova.md',
+  'MNT-002': 'docs/site/extend/plugin-catalogue/README.md',
+  'MNT-007': 'docs/site/extend/plugin-catalogue/README.md',
+  'MNT-012': 'docs/site/extend/plugin-catalogue/README.md',
+  'MNT-013': 'docs/site/reference/verification-commands.md',
+  'MNT-016': 'docs/site/extend/plugin-catalogue/README.md',
   'CDV-009': 'docs/site/extend/platform/prism.md',
+  'REF-002': 'docs/site/reference/cli.md',
+  'REF-003': 'docs/site/reference/configuration.md',
+  'REF-004': 'docs/site/reference/schemas.md',
+  'REF-005': 'docs/site/reference/errors.md',
+  'REF-006': 'docs/site/reference/events.md',
+  'REF-007': 'docs/site/reference/capabilities.md',
+  'REF-008': 'docs/site/extend/plugin-catalogue/README.md',
+  'REF-009': 'docs/site/reference/roles-and-package-ownership.md',
+  'REF-010': 'docs/site/reference/contracts.md',
+  'REF-011': 'docs/site/reference/endpoints.md',
+  'REF-012': 'docs/site/reference/secrets.md',
+  'REF-013': 'docs/site/reference/helm-values.md',
+  'REF-014': 'docs/site/reference/stores-and-retention.md',
+  'REF-015': 'docs/site/reference/images-and-digests.md',
+  'REF-016': 'docs/site/reference/verification-commands.md',
+  'REF-017': 'docs/site/reference/glossary.md',
+  'REF-018': 'docs/site/reference/sdk.md',
 };
 
 function fail(message) {
@@ -132,6 +235,7 @@ function fail(message) {
 }
 
 const source = fs.readFileSync(sourcePath, 'utf8');
+const plan = fs.readFileSync(planPath, 'utf8');
 const rowPattern = /^\| ([A-Z]+-\d{3}) \| ([^|]+?) \| (Vollständig vorhanden|Muss erweitert\/\u00fcberarbeitet werden|Fehlt komplett) \| ([^\n]+?) \|$/gmu;
 const requirements = [];
 const seen = new Set();
@@ -143,8 +247,11 @@ for (const match of source.matchAll(rowPattern)) {
   const namespace = id.slice(0, 3);
   const workPackage = packageOverrides[id] ?? namespacePackages[namespace];
   const definition = packageDefinitions[workPackage];
+  const namespaceDefinition = namespaceDefinitions[namespace];
   if (!definition) fail(`no work package for ${id}`);
+  if (!namespaceDefinition) fail(`no namespace definition for ${id}`);
   const line = source.slice(0, match.index).split('\n').length;
+  const canonicalTarget = targetOverrides[id] ?? namespaceDefinition.target;
   requirements.push({
     id,
     namespace,
@@ -153,8 +260,9 @@ for (const match of source.matchAll(rowPattern)) {
     baselineStatusLabel: status,
     finding: finding.trim(),
     workPackage,
-    owner: definition.owner,
-    canonicalTarget: targetOverrides[id] ?? definition.target,
+    owner: ownerOverrides[id] ?? namespaceDefinition.owner,
+    canonicalTarget,
+    targetState: fs.existsSync(path.join(root, canonicalTarget)) ? 'current' : 'planned',
     source: `${sourceRelative}#L${line}`,
   });
 }
@@ -186,11 +294,24 @@ for (const requirement of requirements) counts[requirement.baselineStatus] += 1;
 if (JSON.stringify(counts) !== JSON.stringify({ V: 47, E: 144, F: 70 })) {
   fail(`expected V/E/F 47/144/70, found ${counts.V}/${counts.E}/${counts.F}`);
 }
+if (!source.includes('Davon sind 47 Punkte vollständig vorhanden,\n144 zu erweitern und 70 fehlen komplett.')) {
+  fail('human-readable audit summary does not state V/E/F 47/144/70');
+}
+
+for (const packageId of Object.keys(packageDefinitions)) {
+  if (!plan.includes(`### ${packageId} —`)) fail(`${planRelative} has no heading for ${packageId}`);
+}
 
 for (const requirement of requirements) {
   if (!requirement.owner.trim()) fail(`${requirement.id} has no owner`);
   if (!requirement.canonicalTarget.startsWith('docs/site/')) {
     fail(`${requirement.id} target is outside docs/site`);
+  }
+  if (!requirement.canonicalTarget.endsWith('.md')) {
+    fail(`${requirement.id} target is not a Markdown page`);
+  }
+  if (requirement.baselineStatus === 'V' && requirement.targetState !== 'current') {
+    fail(`${requirement.id} is complete but its canonical target does not exist`);
   }
 }
 
