@@ -158,5 +158,13 @@ test('real materialization and Helm render enable pinned bundles for all three a
       validateRenderedRelease(rendered, rendered, selected, true);
       assert.match(rendered, /sha256sum -c/);
     }
+    fs.appendFileSync(path.join(root, 'charts/kubeclaw/values.yaml'), '\n# Next deployment candidate\n');
+    const materialize = flags => spawnSync(process.execPath,
+      [path.join(source, 'scripts/updates/materialize-release.mjs'), ...flags], {cwd: root, encoding: 'utf8'});
+    assert.match(materialize(['--check']).stderr, /RELEASE_CONFIGURATION_CHANGED/);
+    assert.equal(materialize(['--check', '--check-selected-source']).status, 0);
+    assert.match(materialize(['--check-selected-source']).stderr, /SELECTED_SOURCE_CHECK_ONLY/);
+    fs.appendFileSync(path.join(root, 'releases/values/nova.yaml'), '\ntampered: true\n');
+    assert.match(materialize(['--check', '--check-selected-source']).stderr, /Release values drift/);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });

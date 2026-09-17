@@ -40,7 +40,7 @@ jobs:
             bundle="$(node -p 'JSON.parse(require("fs").readFileSync("gitops/production/selection.json", "utf8")).directory')"
             node scripts/gitops-continuous.mjs check "$bundle" "https://github.com/$GITHUB_REPOSITORY.git" "$(git rev-parse HEAD)"
           elif test -f releases/runtime-images.json; then
-            node scripts/updates/materialize-release.mjs --check
+            node scripts/updates/materialize-release.mjs --check --check-selected-source
           fi
           if test -f releases/ops-images.json; then node scripts/updates/materialize-release.mjs --check --family=ops; fi
       - name: Verify selected digests against successful source workflow receipts

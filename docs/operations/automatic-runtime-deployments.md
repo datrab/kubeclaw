@@ -92,3 +92,34 @@ selection. Database and persistent application data are not rolled back.
 Local selection/render tests do not establish that the live cluster has adopted
 these applications. Record the first successful publication and Argo rollout
 separately during the AX41 migration.
+
+## Register all runtime Applications before starting workloads
+
+`runtimeAutoSync: false` in `gitops/production/config.json` is the initial adoption
+stage. The production generator creates all three child Applications in the same
+wave, with no automatic workload sync. The parent can reconcile their definitions
+even while their workloads are not healthy. This is temporary: after reviewing
+the resource diffs and completing adoption, set `runtimeAutoSync: true` in Git
+and regenerate the production Applications through the release workflow.
+
+Once `gitops/production/selection.json`, `bootstrap.yaml` and
+`apps/applications.yaml` have been prepared and committed, run on the Controlnode:
+
+```sh
+export KUBE_CONTEXT="$(kubectl config current-context)"
+node scripts/install/register-runtime-argo.mjs check
+node scripts/install/register-runtime-argo.mjs apply
+```
+
+The registration step validates the committed bundle and generated definitions,
+rejects conflicting existing Application/Project owners, and performs an API
+dry-run before applying only Applications and AppProjects. It does not apply
+workloads, delete Helm releases, modify Secrets/PVCs, or verify host pools.
+Use Argo diffs to review the first workload sync. Registration alone is not a
+completed ownership migration, functioning auto-deployment or pipeline test.
+
+CI checks previously selected values against their recorded source using
+`materialize-release.mjs --check --check-selected-source`. This allows a new
+chart candidate to build without pretending the previous release contains it.
+The option is read-only; ordinary materialization and deployment retain strict
+matching of the current configuration to the selected successful release.

@@ -49,6 +49,17 @@ test('automatic deployment requires successful main provenance and explicit boot
   assert.doesNotMatch(publish, /git push.*--force/);
 });
 
+test('initial registration creates all children without starting workload syncs', () => {
+  const app = {kind: 'Application', metadata: {annotations: {'argocd.argoproj.io/sync-wave': '1'}},
+    spec: {source: {targetRevision: 'a'.repeat(40)}, syncPolicy: {automated: {selfHeal: true}, syncOptions: ['FailOnSharedResource=true']}}};
+  const [manual] = continuousApplications(yaml.dump(app), {runtimeAutoSync: false});
+  assert.equal(manual.spec.syncPolicy.automated, undefined);
+  assert.equal(manual.metadata.annotations['argocd.argoproj.io/sync-wave'], '0');
+  assert.deepEqual(manual.spec.syncPolicy.syncOptions, ['FailOnSharedResource=true']);
+  assert.ok(continuousApplications(yaml.dump(app), {runtimeAutoSync: true})[0].spec.syncPolicy.automated);
+  assert.throws(() => continuousApplications(yaml.dump(app), {runtimeAutoSync: 'false'}), /AUTOSYNC_CONFIG_INVALID/);
+});
+
 test('configuration and agent code select bundles while generated deployments do not rebuild', () => {
   for (const file of ['charts/kubeclaw/templates/deployment.yaml', 'charts/prism/values.yaml',
     'my-values/nova-values.yaml', 'gitops/production/config.json', 'gitops/production/overlays/prism.yaml', 'skills/nova/core/engine.ts']) {

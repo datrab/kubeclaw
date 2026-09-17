@@ -29,6 +29,16 @@ steps must be parameterized and validated before use on another node.
 
 ## Historical repairs: not part of every installation
 
+`runtime.register-argo` (`scripts/install/register-runtime-argo.mjs check|apply`)
+runs on the Controlnode with Node, dependencies, Helm, Git and kubectl. It requires
+an explicit `KUBE_CONTEXT`, committed production selection/definitions, and
+`runtimeAutoSync: false`. Check performs only reads and API dry-run; apply repeats
+the checks and registers the root, workload Project and three manual children.
+Reruns reconcile matching definitions but refuse conflicting owners or children
+with active/automatic sync. No host restart, Helm uninstall or workload mutation
+is performed. Postcondition is registration only; inspect diffs and separately
+verify workload adoption before enabling automatic runtime sync.
+
 `runtime.configure-prism-job-cleanup` (`scripts/configure-prism-job-cleanup.sh`)
 runs on the Controlnode using kubectl and the selected context. It updates only
 history limits on the three named Prism CronJobs that already exist: retain zero

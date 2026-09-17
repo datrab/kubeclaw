@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import yaml from 'js-yaml';
 import { selectedCode } from './code-release.mjs';
 import { verifyReleaseConfiguration } from './release-configuration.mjs';
@@ -6,7 +7,15 @@ const family = process.argv.includes('--family=ops') ? 'ops' : 'runtime';
 const release = JSON.parse(fs.readFileSync(`releases/${family}-images.json`, 'utf8'));
 if (release.schemaVersion !== 1 || !/^[a-f0-9]{40}$/.test(release.commit)) throw new Error('Invalid release manifest');
 const code = family === 'runtime' ? selectedCode(process.cwd(), release) : undefined;
-verifyReleaseConfiguration(process.cwd(), code?.commit ?? release.commit, family);
+const sourceCommit = code?.commit ?? release.commit;
+// CI may validate a previous selection while building its replacement. Actual
+// materialization/deployment must still require byte-matched current sources.
+const checkSelectedSource = process.argv.includes('--check-selected-source');
+if (checkSelectedSource && !process.argv.includes('--check')) throw new Error('SELECTED_SOURCE_CHECK_ONLY');
+if (!checkSelectedSource) verifyReleaseConfiguration(process.cwd(), sourceCommit, family);
+const sourceValues = file => checkSelectedSource
+  ? execFileSync('git', ['show', `${sourceCommit}:${file}`], { encoding: 'utf8' })
+  : fs.readFileSync(file, 'utf8');
 const reference = name => {
   const image = release.images[name];
   if (typeof image !== 'string' || !/^ghcr\.io\/[a-z0-9_-]+\/kubeclaw-[a-z0-9-]+@sha256:[a-f0-9]{64}$/.test(image)) throw new Error(`Missing immutable image: ${name}`);
@@ -21,7 +30,7 @@ function bindSidecarImages(values) {
 }
 fs.mkdirSync('releases/values', { recursive: true });
 for (const role of family === 'ops' ? ['ops'] : ['nova', 'buster', 'prism-agent', 'prism']) {
-  const values = role === 'ops' ? {} : yaml.load(fs.readFileSync(`my-values/${role}-values.yaml`, 'utf8'));
+  const values = role === 'ops' ? {} : yaml.load(sourceValues(`my-values/${role}-values.yaml`));
   if (role === 'ops') { values.codexImage = reference('codex-ops'); values.mcpImage = reference('ops-mcp'); }
   else if (role === 'prism') {
     for (const service of ['control', 'studio', 'worker', 'ingestion']) { const image = object(`prism-${service}`); delete image.tag; values.images[service] = image; }
