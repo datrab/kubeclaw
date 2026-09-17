@@ -17,7 +17,7 @@ metadata:
 spec:
   schedule: {{ if eq $mode "backup" }}{{ $.Values.backup.schedule | quote }}{{ else if eq $mode "verify" }}{{ $.Values.backup.verificationSchedule | quote }}{{ else }}{{ $.Values.backup.databaseProofSchedule | quote }}{{ end }}
   concurrencyPolicy: Forbid
-  successfulJobsHistoryLimit: 2
+  successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 3
   jobTemplate:
     spec:

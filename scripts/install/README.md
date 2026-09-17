@@ -29,6 +29,15 @@ steps must be parameterized and validated before use on another node.
 
 ## Historical repairs: not part of every installation
 
+`runtime.configure-prism-job-cleanup` (`scripts/configure-prism-job-cleanup.sh`)
+runs on the Controlnode using kubectl and the selected context. It updates only
+history limits on the three named Prism CronJobs that already exist: retain zero
+successful jobs and three failed jobs. Reruns converge on the same values; missing
+CronJobs are skipped. Kubernetes cleans up completed Job/Pod objects, not backup
+PVC contents. The chart carries the same policy for future deployments. Already
+exported immutable release directories retain their old settings and must be
+superseded before Argo adoption; do not sync an old export over this maintenance.
+
 Runtime prerequisite step `runtime.prepare-archviewer-auth` is implemented by
 `scripts/prepare-nova-archviewer-auth.sh` on the Controlnode. It requires kubectl,
 Python and `htpasswd` (Debian/Ubuntu package `apache2-utils`). It interactively
