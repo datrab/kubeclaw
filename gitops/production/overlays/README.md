@@ -76,3 +76,22 @@ Pod scheduling, native execution or transfer of ownership. Existing Helm release
 must not be uninstalled. Buster adds a new 64Gi runtime-state PVC; Nova requires
 `nova-archviewer-auth` with an `htpasswd` key in addition to existing credentials.
 Resolve reported prerequisites before creating or syncing worker Applications.
+
+The follow-up export `releases/gitops/ax41-adoption-35208467907-v2` addresses
+the observed adoption failures: absent probe handlers are explicit nulls so old
+TCP handlers do not survive a merge, and Argo lifecycle annotations are kept off
+immutable StatefulSet claim templates. StatefulSets instead receive Argo deletion
+protection and explicit PVC retention on deletion/scaling. Storage sizes and names
+remain unchanged. Use this export for subsequent API dry-runs; neither export
+directory is automatically selected for live sync.
+
+Prepare missing Archviewer credentials with
+`bash scripts/prepare-nova-archviewer-auth.sh` on the Controlnode (requires
+`htpasswd`, supplied by `apache2-utils` on Debian/Ubuntu). This is create-only and
+prompts locally; do not paste credentials into deployment logs or chat.
+
+Nova's selected Archviewer manifests include a CiliumNetworkPolicy. The live
+cluster does not yet have the corresponding CRD, so Nova remains blocked pending
+the planned, verified Cilium migration or a separately reviewed equivalent access
+policy. Installing CRDs alone does not provide network enforcement. Do not drop
+the policy or start Nova merely because the other adoption errors are fixed.

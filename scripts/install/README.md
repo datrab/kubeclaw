@@ -29,6 +29,13 @@ steps must be parameterized and validated before use on another node.
 
 ## Historical repairs: not part of every installation
 
+Runtime prerequisite step `runtime.prepare-archviewer-auth` is implemented by
+`scripts/prepare-nova-archviewer-auth.sh` on the Controlnode. It requires kubectl,
+Python and `htpasswd` (Debian/Ubuntu package `apache2-utils`). It interactively
+creates the missing `kubeclaw/nova-archviewer-auth` Secret with a bcrypt htpasswd
+entry, without printing credentials. Existing nonempty credentials are retained;
+an existing malformed Secret stops the step. It does not deploy Nova or an ingress.
+
 | Step ID | Existing implementation | Apply only when | Effects |
 | --- | --- | --- | --- |
 | `repair.native-pool-lifetime` | `scripts/repair-native-worker-pools-lifetime.sh` | Observed active/exited service with missing pool cgroups and no main process | Replaces the old service/setup and restarts pool service; saves a backup. |
