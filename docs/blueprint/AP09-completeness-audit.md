@@ -1,7 +1,7 @@
 # AP09 Masterprüfung der Dokumentationsvollständigkeit
 
 Stand: 17.09.2026  
-Status: Prüfkatalog erstellt; 51 von 251 Punkten einzeln geprüft; inhaltliche Umsetzung offen
+Status: Prüfkatalog erstellt; 72 von 251 Punkten einzeln geprüft; inhaltliche Umsetzung offen
 Scope: aktive Produktdokumentation, Referenzen, Veröffentlichung und Pflegeautomation
 
 ## Zweck
@@ -56,9 +56,9 @@ zutreffenden Fragen mit Ja beantwortet sind:
 7. Navigation, Darstellung und Veröffentlichung
 8. unabhängige Leser- und Wartbarkeitsabnahme
 
-Aktueller Prüfstand: `GOV-001` bis `WKC-014` sind einzeln geprüft. Davon sind
-12 Punkte vollständig vorhanden, 31 zu erweitern und 8 fehlen komplett. Die
-verbleibenden 200 Einstufungen sind weiterhin vorläufig.
+Aktueller Prüfstand: `GOV-001` bis `PLG-014` sind einzeln geprüft. Davon sind
+16 Punkte vollständig vorhanden, 47 zu erweitern und 9 fehlen komplett. Die
+verbleibenden 179 Einstufungen sind weiterhin vorläufig.
 
 ## A. Umfang und Governance
 
@@ -138,34 +138,34 @@ verbleibenden 200 Einstufungen sind weiterhin vorläufig.
 
 ## F. Architektur: Spezialisten und Produktkomponenten
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| SPC-001 | Buster Engine, Plan, Provider, Evidence und Result Authority | Muss erweitert/überarbeitet werden | Extension Guide ist detailliert; Produktarchitektur und Remote-Kommunikation sind verteilt. |
-| SPC-002 | Prism Control, Worker, Studio, Ingestion und Services | Muss erweitert/überarbeitet werden | Plattformgrenze ist erklärt; aktive Detailarchitektur fehlt. |
-| SPC-003 | Prism-Datenmodell, Revisionen, Approval und Baseline | Muss erweitert/überarbeitet werden | Entscheidungen und alte Texte existieren; Site-Integration fehlt. |
-| SPC-004 | Forge Dispatch, Workspace, Commit und Merge | Muss erweitert/überarbeitet werden | Autoritätsgrenze vorhanden; vollständiger Kommunikations- und Recoverypfad fehlt. |
-| SPC-005 | Echo Review, Findings, Zertifizierung und Policy | Muss erweitert/überarbeitet werden | Autoritätsgrenze vorhanden; zusammenhängende aktuelle Architektur fehlt. |
-| SPC-006 | OpenClaw-Hostintegration | Muss erweitert/überarbeitet werden | Extensionpfad vorhanden; Host-Lifecycle und Betrieb müssen verbunden werden. |
-| SPC-007 | Codex-Plugin und Ops-Skill | Muss erweitert/überarbeitet werden | Extensionpfad vorhanden; Tool-, Rechte- und Betriebsmodell brauchen Detailseiten. |
+| SPC-001 | Buster Engine, Plan, Provider, Evidence und Result Authority | Muss erweitert/überarbeitet werden | `extend/buster.md` erklärt Plans, Suite Resolution, Provider, Evidence, Retry, Cleanup und Report Adapter tiefgehend. Components und Request Trace erklären die Autoritätsgrenze. Job Admission, Remote Store, Source Snapshot, Transport, Statusübergänge, Result Signing, Import und Recovery sind jedoch nicht als eine Buster-Produktarchitektur verbunden. |
+| SPC-002 | Prism Control, Worker, Studio, Ingestion und Services | Muss erweitert/überarbeitet werden | Components, Deployment, Trust und Engine Guide belegen Role, Control, Worker, Studio, Ingestion, Services und einen realen Worker Attempt. Die aktive Site erklärt nicht den vollständigen Request- und Datenfluss zwischen diesen Komponenten, ihre APIs, Startup-Reihenfolge, Zustände und gemeinsamen Fehlerpfade. |
+| SPC-003 | Prism-Datenmodell, Revisionen, Approval und Baseline | Muss erweitert/überarbeitet werden | `decisions/prism.md` bewahrt Ownership-, Document-, Retrieval-, Preference-, Operation- und Publication-Entscheidungen. Kanonische Architektur und Referenz für Projects, Revisions, Operations, Approvals, Artifacts, Baseline-Bindung, Retention und Recovery fehlen; ältere Architekturtexte sind nicht integriert. |
+| SPC-004 | Forge Dispatch, Workspace, Commit und Merge | Muss erweitert/überarbeitet werden | Components erklärt Forge als Spezialist ohne Pipeline-Autorität und belegt Capability Grants. Plugin-Katalog und Nova-Guide erklären einzelne Registrierungen. Dispatch-Vertrag, Prompt/Input, Workspace-Lifecycle, Git-Baseline, Commit-Auswahl, Merge, Reparatur, Abbruch und Wiederaufnahme fehlen als zusammenhängender Pfad. |
+| SPC-005 | Echo Review, Findings, Zertifizierung und Policy | Muss erweitert/überarbeitet werden | Components erklärt Echo als beobachtenden Spezialisten; `decisions/echo.md` enthält umfangreiche Governance-Historie. Aktuelle Eingaben, feste Review Subject Identity, Findings-Schema, Evidence, Zertifizierung, Policy-Auswertung, Reparaturschleife und Nova-Entscheidungsgrenze sind nicht als kanonische Laufzeitarchitektur zusammengeführt. |
+| SPC-006 | OpenClaw-Hostintegration | Muss erweitert/überarbeitet werden | `host-and-engine.md` bietet vollständige Authoring-Pfade für Hook und Tool; der Katalog deckt beide vorhandenen OpenClaw-Pakete ab. Host-Prozess, Discovery, Installation, Allowlist, Activation, Config-Auflösung, Hook-/Tool-Lifecycle, State, Upgrade, Diagnose und Entfernung sind nicht als eine Betriebsarchitektur verbunden. |
+| SPC-007 | Codex-Plugin und Ops-Skill | Muss erweitert/überarbeitet werden | Der Host-Guide erklärt Manifest, Skill-Datei, Tool-Verfügbarkeit und die Grenze, dass kein Pipeline-Code geladen wird. Für das vorhandene Ops-Plugin fehlen eine vollständige Tool-/MCP-Abhängigkeitskarte, Rechte, Workspace-Grenzen, Connection-Ausfälle, Tests, Betrieb, Update und Removal; der lokale Katalog nennt diese Grenzen ehrlich. |
 
 ## G. Architektur: Plugin-System und Registry
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| PLG-001 | Package-, Manifest- und Registrierungsmodell | Vollständig vorhanden | AP08 deckt fünf Pipeline-Verträge und Hostoberflächen ab. |
-| PLG-002 | Discovery ohne Codeausführung | Muss erweitert/überarbeitet werden | Prinzip erklärt; Algorithmus, Pfade und Fehler fehlen. |
-| PLG-003 | Manifest-, Schema- und Pfadvalidierung | Muss erweitert/überarbeitet werden | Vertragsguide vorhanden; exhaustive Fehlerreferenz fehlt. |
-| PLG-004 | Digests, Immutable Snapshots und Package Replacement | Muss erweitert/überarbeitet werden | Prinzip vorhanden; vollständiger Lifecycle fehlt. |
-| PLG-005 | Built-in Trust, External Trust und Attestations | Muss erweitert/überarbeitet werden | Plattformfelder genannt; vollständiger Trustpfad fehlt. |
-| PLG-006 | Import Audit | Fehlt komplett | Kein kanonischer Detailpfad für Imports und Ablehnungen. |
-| PLG-007 | Registry Build und Konflikterkennung | Muss erweitert/überarbeitet werden | Belege vorhanden; Konfliktklassen und Maps fehlen. |
-| PLG-008 | Capability Vocabulary und Providerauflösung | Muss erweitert/überarbeitet werden | Katalog vorhanden; Algorithmus und Fehler fehlen. |
-| PLG-009 | Grants und Resource Matching | Muss erweitert/überarbeitet werden | Prinzip vorhanden; exhaustive Semantik fehlt. |
-| PLG-010 | Konfigurationsauflösung und Schemaanwendung | Muss erweitert/überarbeitet werden | Pluginfelder vorhanden; Registryauflösung und Fehler fehlen. |
-| PLG-011 | Activation und executable exports | Muss erweitert/überarbeitet werden | Phasen erklärt; vollständiger State und Fehlerkatalog fehlen. |
-| PLG-012 | Deactivation, Replacement und Recovery alter Bytes | Muss erweitert/überarbeitet werden | Shared Lifecycle vorhanden; systemweite Regeln fehlen. |
-| PLG-013 | Isolation externer Stages und Observer | Muss erweitert/überarbeitet werden | Grenze erklärt; Protokoll, cgroup und Sessiondetails fehlen. |
-| PLG-014 | Fehlender persistenter Host für externe Adapter | Vollständig vorhanden | Produktgrenze ist klar und getrennt dokumentiert. |
+| PLG-001 | Package-, Manifest- und Registrierungsmodell | Vollständig vorhanden | Choice Guide und `contracts.md` erklären Package Envelope, Identitäten und alle fünf Pipeline-Verträge mit Input, Output, Persistenz, Authority, Failure und direkten Schema-/Runtime-Quellen. Hostoberflächen und Worker Engines sind klar getrennt. |
+| PLG-002 | Discovery ohne Codeausführung | Muss erweitert/überarbeitet werden | Choice Guide und Contracts erklären inert discovery, Digests, Provenance und getrennte Activation mit direkten Links. Installation Roots, Canonicalization, Symlink-/Alias-Regeln, Dateiauswahl, Discovery-Reihenfolge und alle Reject-Klassen fehlen als vollständiger Algorithmus. |
+| PLG-003 | Manifest-, Schema- und Pfadvalidierung | Muss erweitert/überarbeitet werden | Shared Envelope erklärt relative Pfade, Escape-Verbot, Referenzen und Schema-Validierung; das vollständige JSON Schema ist verlinkt. Validierungsreihenfolge, Schema-Lifetime, `$id`-/`$ref`-Grenzen und alle Diagnosen sind nicht als Referenz veröffentlicht. |
+| PLG-004 | Digests, Immutable Snapshots und Package Replacement | Vollständig vorhanden | `contracts.md` trennt ID, Version, Digest und Registration, erklärt Snapshot-Provenienz und verbietet Byte-Austausch unter recoverable Runs. `testing.md` gibt einen vollständigen Replacement-Ablauf mit Drain, alter Byte-Retention, State Migration, Success/Denial/Recovery und Removal-Gate. |
+| PLG-005 | Built-in Trust, External Trust und Attestations | Muss erweitert/überarbeitet werden | Deployment-Seite trennt Package Integrity, Registration Authority, Workload Identity und Source Identity. Choice Guide nennt trusted first-party und external paths. Trust Roots, Digest-/Attestation-Policy, Installer, Attestation-Verifikation, Built-in-Ausnahme und Reject-Fälle fehlen als durchgehender Pfad. |
+| PLG-006 | Import Audit | Fehlt komplett | Aktive Seiten erwähnen Import Auditing, erklären aber weder Permission Boundary, verbotene APIs, Guards, Digest-Recheck, Child-Prozess, Timeout, Exportprüfung noch Ablehnungsdiagnosen von `import-audit.ts`. |
+| PLG-007 | Registry Build und Konflikterkennung | Muss erweitert/überarbeitet werden | Contracts belegt die fünf immutable Maps und globale Ownership. Vollständige Build-Reihenfolge, Frozen Maps/Sets, Konfliktklassen für IDs, Stage Types, Providers, Reports und Subscriptions sowie Error Codes fehlen. |
+| PLG-008 | Capability Vocabulary und Providerauflösung | Muss erweitert/überarbeitet werden | Die generierte Capability-Referenz ist aktuell; Contracts erklärt Declaration, Provider Selection und Caller Grant als getrennte Kontrollen. Dependency-Auflösung, Ambiguität, Zyklen, genau-ein-Provider-Regel, confidential capabilities und Fehlerpfade fehlen. |
+| PLG-009 | Grants und Resource Matching | Muss erweitert/überarbeitet werden | Deployment and Trust erklärt Least Authority und nennt Pfade, Namespaces, Targets, Origins, Commands und Signals. Die vollständige Match-Semantik je Resource Type, Normalisierung, Wildcards, Denials, confidential payloads und Diagnosen fehlen. |
+| PLG-010 | Konfigurationsauflösung und Schemaanwendung | Muss erweitert/überarbeitet werden | Choice Guide trennt Projekt-, Plattform- und Hostkonfiguration; Contracts erklärt registration-owned validation. Sources, Precedence, Defaults, unbekannte Felder, sensitive values, Observer-/Adapterauflösung und effektive Konfigurationsausgabe fehlen als vollständiger Flow. |
+| PLG-011 | Activation und executable exports | Muss erweitert/überarbeitet werden | Discovery-/Activation-Tabelle erklärt Surface-Unterschiede, Integrity-Recheck und selektives Laden. Exportform, Import Audit, transactional adapter startup, readiness, rollback, shutdown, partial failures und Activation Error Codes sind nicht vollständig dokumentiert. |
+| PLG-012 | Deactivation, Replacement und Recovery alter Bytes | Vollständig vorhanden | `testing.md` führt Installation, Update/Replacement, Disablement und Removal für jede Surface durch. Es erklärt Drain, pinned identities, alte Bytes, verbleibende Journale, externe Daten, Credentials, Prozesse und owner-gesteuerte Retention. |
+| PLG-013 | Isolation externer Stages und Observer | Muss erweitert/überarbeitet werden | Deployment and Trust erklärt Direct-versus-isolated Activation und die bounded context boundary. IPC-Protokoll, Sessionzustände, Permission Model, cgroup, Memory Limit, Sandbox-C-Boundary, Cancellation, Cleanup und Fehlercodes fehlen. |
+| PLG-014 | Fehlender persistenter Host für externe Adapter | Vollständig vorhanden | Choice Guide, Activation-Quelle und Testing-Grenzen erklären eindeutig, dass externe Adapter ohne persistent isolated adapter runtime abgelehnt werden. Die Grenze wird nicht als verfügbare Funktion dargestellt. |
 
 ## H. Architektur: Kommunikation, Daten und Telemetrie
 
@@ -419,6 +419,8 @@ verbleibenden 200 Einstufungen sind weiterhin vorläufig.
 | 17.09.2026 | ARC-001–ARC-006 | Understand-Einstieg; Components and Authority; Request, State, and Recovery; Pipeline Dependencies; Deployment and Trust; Platform and Operations; Decisions | 4 vollständig; 2 zu erweitern; 0 fehlen | Systemfluss und Autorität bestätigt; Decision-Qualität und gemeinsame Kommunikations-/Datenmatrix bleiben offen | Diagramm- und Evidence-Check; `docs:publication:check`; Linkprüfung; manuelle Quellenprüfung am Stand `51cda627` |
 | 17.09.2026 | NVC-001–NVC-018 | Aktive Understand-, Use- und Extend-Seiten; 84 Dateien unter `skills/nova/core`; sieben interne Core-Dokumente; Nova-Project-README | 1 vollständig; 16 zu erweitern; 1 fehlt | Rollengrenze vollständig; tiefe Core-Erklärungen müssen aus internen Quellen in kanonische Architektur und Referenz integriert werden; Fehlerkatalog fehlt | Quell-/Dokumentinventar; aktive Source-Link-Abdeckung; manuelle Ablauf- und Grenzprüfung am Stand `51cda627` |
 | 17.09.2026 | WKC-001–WKC-014 | Aktive Components-, Trust- und Engine-Seiten; 38 Dateien unter `skills/worker/core`; Worker-Verträge; historische Phase-5.5-Audits nur als Leads | 1 vollständig; 6 zu erweitern; 7 fehlen | Neutrale Grenze und Engine-Integration sind vorhanden; native Runtime, Persistenz, Ownership, Ressourcen und Referenz benötigen kanonische Dokumentation | Quell-/Dokumentinventar; aktive Source-Link-Abdeckung; manuelle Vertrags- und Grenzprüfung am Stand `51cda627` |
+| 17.09.2026 | SPC-001–SPC-007 | Aktive Components-, Deployment-, Trust-, Buster-, Nova-, Host-/Engine- und Decision-Seiten; Buster-, Prism-, Forge-, Echo-, OpenClaw- und Codex-Quellen | 0 vollständig; 7 zu erweitern; 0 fehlen | Gute Autoritäts- und Extension-Inhalte vorhanden; keine Spezialisten- oder Hostkomponente besitzt bereits eine vollständige kanonische Produktarchitektur | Seiten-/Quellinventar und manuelle Flow-, Daten-, Recovery- und Betriebsprüfung am Stand `8df232e1` |
+| 17.09.2026 | PLG-001–PLG-014 | Choice Guide; Contracts; Testing and Lifecycle; Deployment and Trust; Capability Reference; Foundation Registry, Package, Config und Isolation Sources | 4 vollständig; 9 zu erweitern; 1 fehlt | Authoring, immutable Replacement und Lifecycle sind stark; Registry-Interna, Trust, Config und Isolation brauchen Tiefe; Import Audit fehlt als kanonischer Inhalt | AP08-Checks; 51-Package-Inventar; direkte Source-Link-Prüfung; manuelle Contract-/Lifecycle-Prüfung am Stand `8df232e1` |
 
 ## Abschluss von AP09.0
 
