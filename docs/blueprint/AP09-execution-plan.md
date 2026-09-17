@@ -1,7 +1,7 @@
 # AP09 — Ausführungsplan zur vollständigen zentralen Dokumentation
 
 Stand: 17.09.2026  
-Status: geplant; AP09.0-Review muss zuerst in den Katalog übernommen werden  
+Status: AP09.0 intern abgeschlossen und für unabhängige Abnahme bereit
 Ziel: vollständige, eigenständige und dauerhaft pflegbare Produktdokumentation unter `docs/site`
 
 ## 1. Ausgangslage
@@ -14,8 +14,8 @@ Reference-Einstieg, 13 erkannte Workflows, gültige Evidence-Metadaten, ein
 aktueller Blueprint und die eigenständige Reader-Site-Grenze.
 
 Nach der Review-Reconciliation umfasst der Arbeitskatalog 261 Punkte. Der
-vorläufige Stand ist 45 vollständig, 146 zu erweitern und 70 fehlend. Diese
-Zahlen werden in AP09.0 verbindlich neu erzeugt und geprüft. Ein grüner
+geprüfte Ausgangsstand ist 47 vollständig, 144 zu erweitern und 70 fehlend.
+Diese Zahlen werden aus dem Katalog maschinell geprüft. Ein grüner
 Struktur-, Link- oder Generatorcheck ändert keine inhaltliche Einstufung.
 
 ## 2. Verbindliches Ergebnis
@@ -53,6 +53,13 @@ Gespräch benötigen, um eine unterstützte Aufgabe auszuführen.
 - Den Katalog maschinenlesbar prüfen: eindeutige IDs, lückenlose Nummern,
   Summen, Zielseiten, Owner und Status.
 
+Die geprüfte Datei liegt in
+`docs/blueprint/generated/ap09-catalogue.json`. Der Befehl
+`npm run docs:ap09:catalogue:check` erzeugt keine Dateien und verwirft den
+Build bei fehlenden oder doppelten IDs, falschen Summen, unbekannten Zuständen,
+leeren Ownern, Zielen außerhalb von `docs/site` oder einer veralteten Ausgabe.
+`docs:check:generated` und damit der Docs-CI-Weg führen diese Prüfung aus.
+
 **Gate:** Ein unabhängiger Read-only-Check bestätigt Katalog, Einstufungen,
 Quellen und Rechenweg.
 
@@ -67,23 +74,34 @@ Quellen und Rechenweg.
 **Gate:** Kein bekannter falscher Satz bleibt als aktuelle Produktwahrheit
 sichtbar. Alle Hauptaufgaben sind vom Site-Einstieg erreichbar.
 
-### AP09.2 — Core, Runtime und Spezialistenarchitektur
+### AP09.2 — Nova Core und Plugin Runtime
 
 - Nova Core vollständig erklären: Compile, Graph, Registry Snapshot, State,
   Scheduling, Dispatch, Effects, Wait/Resume, Repair, Cancellation, Recovery,
   Audit und Fehler.
-- Worker Core vollständig erklären: Profile, Claims, native Authority,
-  Control Channel, Process Launch, Spool, Ressourcen, Deadlines, Journal,
-  Ownership, Cleanup und Result Seal.
-- Buster, Forge, Echo, OpenClaw, Codex, Namespace Controller, Ops MCP und
-  Archviewer als zusammenhängende Produkte und nicht nur als Plugin-Einträge
-  dokumentieren.
+- Plugin Discovery, Admission, Activation, Replacement, Isolation, Config,
+  State, Compatibility und Removal bis zur Implementierung verfolgen.
+- Package-, Registration-, Capability- und Role-Identitäten samt Authority
+  und unveränderlichen Digests erklären.
 
-**Gate:** Ein technischer Leser kann für jede Komponente erklären, was sie
-besitzt, was sie nicht besitzt, welche Daten sie austauscht und wie sie nach
-einem Fehler wieder einen sicheren Zustand erreicht.
+**Gate:** Ein technischer Leser kann einen Request und ein Plugin durch Nova
+verfolgen, jede Autoritätsgrenze begründen und die sicheren Fehlerwege nennen.
 
-### AP09.3 — Prism in Depth
+### AP09.3 — Worker Core und native Ausführung
+
+- Profile, Claims, Admission und die neutrale Worker-Authority erklären.
+- Control Channel, Process Launch, Process Groups, Sandbox, Spool und
+  Log-Decoding dokumentieren.
+- Ressourcenreservierung, Deadlines, Cancellation und Termination verfolgen.
+- Attempt Journal, Ownership Store, Restart, Cleanup und Result Seal samt
+  beschädigten oder unklaren Zuständen erklären.
+- Verträge, Fehlercodes, Migrationen und die Integration externer Engines
+  referenzieren.
+
+**Gate:** Ein neuer Worker-Core-Entwickler kann einen nativen Attempt vom Claim
+bis zum versiegelten Ergebnis oder sicheren Recovery Stop verfolgen.
+
+### AP09.4 — Prism in Depth
 
 Prism erhält einen eigenen Teilplan und darf nicht in einer allgemeinen
 Komponentenübersicht verschwinden. Die Dokumentation umfasst mindestens:
@@ -111,7 +129,58 @@ tatsächliche Umgebung nennen.
 alle Komponenten verfolgen, eine unterstützte Änderung planen, die richtigen
 Checks auswählen und Fehler ohne historische Dokumente diagnostizieren.
 
-### AP09.4 — Plattform, Kommunikation, Daten und Sicherheit
+### AP09.5 — Buster und zwölf Test-Suites
+
+- Buster Engine, Plan Resolution, Admission, Remote Store, Source Snapshot,
+  Provider, Evidence, Reports, Result Authority, Signing, Import und Recovery
+  als zusammenhängendes Produkt erklären.
+- Namespace Broker, Controller und Lease API mit CRD-Transitionen, Fencing,
+  Credentials, Retention, Release und Fehlergrenzen dokumentieren.
+- Alle Felder, Defaults, Identitäten, Abhängigkeiten, Matrizen, Gates,
+  Retries, Fixtures, Provider und Reports der Buster-Testplanung erklären.
+
+Die folgenden zwölf Suite-Templates werden einzeln dokumentiert:
+
+1. `unit`
+2. `container-build`
+3. `kubernetes-fixture`
+4. `http`
+5. `tailscale-exposure`
+6. `api`
+7. `a11y`
+8. `perf`
+9. `visual`
+10. `e2e`
+11. `security`
+12. `size-budget`
+
+Jede Suite braucht Zweck, Einsatzgrenze, vollständige Konfiguration, Defaults,
+Provider- und Fixture-Auswahl, Abhängigkeiten, Artefakte, Reports,
+Pass/Fail/Skip-Regeln, Fehlercodes, externe Voraussetzungen, Beispiel,
+Anpassung und Verifikation. Eigene Wege zeigen, wie ein Leser eine vorhandene
+Suite erweitert und eine neue Suite mit Vertrag, Schema, Provider/Fixture,
+Registrierung, Rollenpaket, Resolver, Evidence, Errors, Tests, Kompatibilität
+und Dokumentation hinzufügt.
+
+**Gate:** Ein Leser kann jede Suite konfigurieren, ausführen, diagnostizieren
+und erweitern sowie eine neue Suite ohne verborgenes Wissen integrieren.
+
+### AP09.6 — Lint
+
+- Pre-check, Full Lint, Executor und Report Adapter mit ihrer Autorität erklären.
+- Alle Regeln und Tools als erzeugte Referenz inventarisieren.
+- Discovery, Targets, Scopes, Severity, Policy-Version, Defaults, Präzedenz,
+  Baselines, Waivers, Debt, Fingerprints und Findings erklären.
+- Kubernetes Policy Packs, immutable Pack Identity und Admission abdecken.
+- Tool-Abwesenheit, Timeout, Process Termination, Parsing, Evidence Partition
+  und Reportfehler dokumentieren.
+- Geprüfte Wege für eine neue Regel, ein neues Tool, einen neuen Target-Typ und
+  ein neues Policy Pack liefern.
+
+**Gate:** Ein Leser kann jede Lint-Funktion konfigurieren und verifizieren und
+alle unterstützten Erweiterungsarten ohne verborgenes Wissen integrieren.
+
+### AP09.7 — Plattform, Spezialisten, Kommunikation, Daten und Sicherheit
 
 - Pflichtabhängigkeiten wie Redis, PostgreSQL, Git Mirrors, OCI Registry,
   BuildKit und Tailscale vollständig integrieren.
@@ -122,11 +191,13 @@ Checks auswählen und Fehler ohne historische Dokumente diagnostizieren.
   Supply-Chain-Matrizen erstellen.
 - Backup, Restore, Retention, Quotas, Datenverlust und Authority je Store
   dokumentieren.
+- Forge, Echo, OpenClaw, Codex, Ops MCP und Archviewer als zusammenhängende
+  Produkte und nicht nur als Plugin- oder Chart-Einträge dokumentieren.
 
 **Gate:** Jede Laufzeitabhängigkeit hat Owner, Zweck, Consumer, Protokoll,
 Konfiguration, Ausfallwirkung, Diagnose und Recovery.
 
-### AP09.5 — Operator-Handbuch und vollständige Konfiguration
+### AP09.8 — Operator-Handbuch und vollständige Konfiguration
 
 - Installation, Start, Beobachtung, Signal/Resume, Abbruch, Diagnose,
   Sicherung, Restore, Upgrade, Rollback und Stilllegung vervollständigen.
@@ -142,62 +213,23 @@ Konfiguration, Ausfallwirkung, Diagnose und Recovery.
 **Gate:** Jeder Ablauf besitzt Zweck, Voraussetzungen, Schritte, erwartete
 Beobachtung, Fehler, Stop-Regel und Recovery.
 
-### AP09.6 — Pipeline, zwölf Test-Suites und Lint
-
-#### Pipeline und Buster
+### AP09.9 — Pipeline und Workflows
 
 - Alle Felder, Defaults, Identitäten, Abhängigkeiten, Matrizen, Gates, Retries,
   Fixtures, Provider, Reports, Evidence und Result-Import von `pipeline.json`
   erklären.
 - Die Beziehung zu `.swarm/progress.json`, Scaffolding, atomarer Publikation,
   Kompatibilität und Repair erklären.
+- Einen vollständigen Weg vom Checkout und der Konfiguration über Compile,
+  Run, Audit und Artefakte bis Cleanup bereitstellen.
+- Retry/Repair, Wait/Resume, Restart/Recovery, unklare Effects, Registry/Image,
+  Tailscale, Redis-Ausfall, Worker-Abbruch und Demo Delivery als ausführbare
+  Fehler- und Recoverypfade liefern.
 
-#### Zwölf bestehende Suites
+**Gate:** Alle `pipeline.json`-Möglichkeiten sind referenziert und die
+repräsentativen Workflows lassen sich ohne historische Quellen ausführen.
 
-Die folgenden Suite-Templates werden einzeln dokumentiert:
-
-1. `unit`
-2. `container-build`
-3. `kubernetes-fixture`
-4. `http`
-5. `tailscale-exposure`
-6. `api`
-7. `a11y`
-8. `perf`
-9. `visual`
-10. `e2e`
-11. `security`
-12. `size-budget`
-
-Für jede Suite sind mindestens Zweck, Einsatzgrenze, vollständige
-Konfiguration, Defaults, Provider- und Fixture-Auswahl, Abhängigkeiten,
-Artefakte, Reports, Pass/Fail/Skip-Regeln, Fehlercodes, externe
-Voraussetzungen, Beispiel, Anpassung und Verifikation erforderlich.
-
-Zusätzlich entstehen zwei durchgehende Entwicklerwege:
-
-- eine bestehende Suite sicher um neue Konfiguration oder Tests erweitern;
-- eine vollständig neue Suite mit Vertrag, Schema, Provider/Fixture,
-  Registrierung, Rollenpaket, Resolver, Evidence, Errors, Tests,
-  Kompatibilität und Dokumentation hinzufügen.
-
-#### Lint
-
-- Pre-check, Full Lint, Executor und Report Adapter mit ihrer Autorität erklären.
-- Alle Regeln und Tools als erzeugte Referenz inventarisieren.
-- Discovery, Target-Auswahl, Scope, Severity, Policy-Version, Defaults,
-  Präzedenz, Baselines, Waivers, Debt, Fingerprints und Findings erklären.
-- Kubernetes Policy Packs, immutable Pack Identity und Admission abdecken.
-- Tool-Abwesenheit, Timeout, Process Termination, Parsing, Evidence Partition
-  und Reportfehler dokumentieren.
-- Wege für eine neue Regel, ein neues Tool, einen neuen Target-Typ und ein neues
-  Policy Pack mit Tests und Driftchecks liefern.
-
-**Gate:** Ein Leser kann jede bestehende Suite und Lint-Funktion korrekt
-konfigurieren, erweitern und verifizieren. Er kann außerdem eine neue Suite oder
-Lint-Erweiterung ohne verborgenes Wissen integrieren.
-
-### AP09.7 — Developer-Handbuch und komplexe Plugins
+### AP09.10 — Developer-Handbuch und komplexe Plugins
 
 - Vollständiges Repository-, Workspace-, Toolchain-, Service- und
   Credential-Setup liefern.
@@ -226,7 +258,7 @@ Für jedes komplexe Plugin sind erforderlich:
 **Gate:** Der Katalog verschweigt keine notwendige Package-README-Information.
 Komplexe Plugins sind nicht auf eine generierte Top-Level-Schematabelle reduziert.
 
-### AP09.8 — Exhaustive Reference und automatische Driftkontrolle
+### AP09.11 — Exhaustive Reference und automatische Driftkontrolle
 
 - Rekursive Schema-, Config-, CLI-, Contract-, Event-, Error-, Endpoint-,
   Store-, Capability- und Workflow-Inventare erstellen.
@@ -240,7 +272,7 @@ Dieses Paket wird vor Beginn anhand der fertigen Inventare weiter zerlegt. Eine
 einzige große Generatoränderung ist kein akzeptabler Ersatz für prüfbare
 Teilresultate.
 
-### AP09.9 — Publication und Reader Experience
+### AP09.12 — Publication und Reader Experience
 
 - Endgültige Navigation, Suche, Code-Evidence-Boxen und zielgerichtete
   Diagramme integrieren.
@@ -253,7 +285,7 @@ Dieses Paket wird nach dem vollständigen Inhaltsbestand weiter in
 Navigation/Search, Evidence Rendering, Visualisierung und Accessibility
 aufgeteilt. Darstellung darf keine fehlende Information verdecken.
 
-### AP09.10 — Integrierte Inhaltsabnahme
+### AP09.13 — Integrierte Inhaltsabnahme
 
 - Alle 261 Punkte erneut gegen den fertigen Stand prüfen.
 - Operator-, Extension-, Suite/Lint-, Prism- und Platform/Core-Developer-Proben
@@ -269,10 +301,10 @@ auf ein Schema und kein grüner Build gelten allein als Inhaltsabnahme.
 
 ## 4. Reihenfolge und Änderungsgröße
 
-AP09.0 und AP09.1 kommen zuerst. AP09.2 bis AP09.7 werden danach thematisch in
-kleinen, unabhängig prüfbaren Änderungen umgesetzt. AP09.8 beginnt erst, wenn
-die zu erzeugenden Fakten und ihre Owner bekannt sind. AP09.9 folgt dem
-inhaltlichen Bestand. AP09.10 ist die gemeinsame Abschlussprüfung.
+AP09.0 und AP09.1 kommen zuerst. AP09.2 bis AP09.10 werden danach thematisch in
+kleinen, unabhängig prüfbaren Änderungen umgesetzt. AP09.11 beginnt, sobald
+die zu erzeugenden Fakten und ihre Owner feststehen. AP09.12 folgt dem
+inhaltlichen Bestand. AP09.13 ist die gemeinsame Abschlussprüfung.
 
 Ein Teilpaket darf weitere Unterpakete erhalten, wenn ein einzelner Review sonst
 Prism, Suites, Lint, Konfiguration oder Referenzen nur oberflächlich prüfen
