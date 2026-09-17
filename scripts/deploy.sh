@@ -549,16 +549,7 @@ default_bundle_expected_commit() {
 }
 
 bundle_values_field() {
-  local values="$1" overlay="$2" field="$3" key="${4:-}" result=""
-  if [[ -n $overlay ]]; then
-    if [[ -n $key ]]; then result="$(yaml_get_nested_section_key "$overlay" codeBundle "$field" "$key")";
-    else result="$(yaml_get_section_key "$overlay" codeBundle "$field")"; fi
-  fi
-  if [[ -z $result ]]; then
-    if [[ -n $key ]]; then result="$(yaml_get_nested_section_key "$values" codeBundle "$field" "$key")";
-    else result="$(yaml_get_section_key "$values" codeBundle "$field")"; fi
-  fi
-  printf '%s\n' "$result"
+  node "$REPO_DIR/scripts/bundle-values-field.mjs" "$1" "$2" "$3" "${4:-}"
 }
 
 require_selected_runtime() {
