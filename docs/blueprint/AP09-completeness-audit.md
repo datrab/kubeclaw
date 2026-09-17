@@ -1,7 +1,7 @@
 # AP09 Masterprüfung der Dokumentationsvollständigkeit
 
 Stand: 17.09.2026  
-Status: Prüfkatalog erstellt; 147 von 251 Punkten einzeln geprüft; inhaltliche Umsetzung offen
+Status: Prüfkatalog erstellt; 194 von 251 Punkten einzeln geprüft; inhaltliche Umsetzung offen
 Scope: aktive Produktdokumentation, Referenzen, Veröffentlichung und Pflegeautomation
 
 ## Zweck
@@ -81,9 +81,9 @@ zutreffenden Fragen mit Ja beantwortet sind:
 7. Navigation, Darstellung und Veröffentlichung
 8. unabhängige Leser- und Wartbarkeitsabnahme
 
-Aktueller Prüfstand: `GOV-001` bis `CFG-015` sind einzeln geprüft. Davon sind
-31 Punkte vollständig vorhanden, 91 zu erweitern und 25 fehlen komplett. Die
-verbleibenden 104 Einstufungen sind weiterhin vorläufig.
+Aktueller Prüfstand: `GOV-001` bis `CDV-013` sind einzeln geprüft. Davon sind
+40 Punkte vollständig vorhanden, 103 zu erweitern und 51 fehlen komplett. Die
+verbleibenden 57 Einstufungen sind weiterhin vorläufig.
 
 ## A. Umfang und Governance
 
@@ -284,60 +284,60 @@ verbleibenden 104 Einstufungen sind weiterhin vorläufig.
 
 ## K. Beispielworkflows und `pipeline.json`
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| FLW-001 | Workflow vom Checkout bis zum Ergebnis | Fehlt komplett | Einzelbefehle vorhanden, keine zusammenhängende Story. |
-| FLW-002 | Validierte Beispiel-Plattformkonfiguration | Fehlt komplett | Keine sichere aktive Beispieldatei. |
-| FLW-003 | Validiertes `nova-project.v2` Beispiel | Fehlt komplett | Keine aktive Beispielressource. |
-| FLW-004 | Validiertes `.swarm/pipeline.json` Beispiel | Fehlt komplett | Keine aktive Beispielressource. |
-| FLW-005 | Vorher-/Nachher-Erklärung des kompilierten Graphen | Muss erweitert/überarbeitet werden | Compile-Befehl vorhanden; Transformation nicht vollständig erklärt. |
-| FLW-006 | Erfolgreicher Run mit Audit, Artefakten und Telemetrie | Fehlt komplett | Kein reproduzierbarer Gesamtweg. |
-| FLW-007 | Stage-Fehler, Retry und Repair | Fehlt komplett | Kein operatorzentrierter Gesamtweg. |
-| FLW-008 | Wait, Approval und Resume | Muss erweitert/überarbeitet werden | Befehle vorhanden; vollständige Dateien und Evidenz fehlen. |
-| FLW-009 | Unterbrechung und Recovery | Muss erweitert/überarbeitet werden | Runbook vorhanden; ausführbares Beispiel fehlt. |
-| FLW-010 | Unklarer externer Effekt | Muss erweitert/überarbeitet werden | Konzept vorhanden; praktischer Ablauf fehlt. |
-| FLW-011 | Buster-Suite mit Fixture, Matrix und Report | Fehlt komplett | Developerdetails vorhanden; Operatorworkflow fehlt. |
-| FLW-012 | BuildKit, Registry und Image | Muss erweitert/überarbeitet werden | Einzelguides vorhanden; Gesamtworkflow fehlt. |
-| FLW-013 | Tailscale-Exposure und Cleanup | Muss erweitert/überarbeitet werden | Providerseite vorhanden; vollständiger Workflow fehlt. |
-| FLW-014 | Plugin aktivieren, prüfen, ersetzen und entfernen | Muss erweitert/überarbeitet werden | Developer-Lifecycle vorhanden; Operatorbeispiel fehlt. |
-| FLW-015 | Redis-Ausfall und Wiederanlauf | Fehlt komplett | Kein fokussierter Ablauf. |
-| FLW-016 | Worker-Abbruch und Result Recovery | Fehlt komplett | Kein fokussierter Ablauf. |
+| FLW-001 | Workflow vom Checkout bis zum Ergebnis | Fehlt komplett | Quickstart endet nach Checkout-/Inventar-Preflight; Operate beginnt mit bereits vorhandenen Platform-/Project-Dateien. Kein zentraler Ablauf verbindet sauberen Checkout, Konfiguration, Compile, Start, Beobachtung, Audit, Ergebnis und Cleanup. |
+| FLW-002 | Validierte Beispiel-Plattformkonfiguration | Fehlt komplett | `docs/site` enthält keine redacted `pipeline-platform.v2`-Datei. Tests erzeugen temporäre Konfigurationen, aber kein sicheres, erklärtes und schema-validiertes Operatorbeispiel mit allen notwendigen Provider-/Grant-Beziehungen. |
+| FLW-003 | Validiertes `nova-project.v2` Beispiel | Fehlt komplett | Der zentrale Bestand enthält keine vollständige Project-Datei. Compiler-Tests besitzen eine Fixture im Testcode; sie erklärt weder reale Pfade, Source Admission, Modules, Coverage, Final Gates noch Anpassungsstellen für Leser. |
+| FLW-004 | Validiertes `.swarm/pipeline.json` Beispiel | Fehlt komplett | Der zentrale Bestand enthält keine Datei oder vollständigen Codeblock. Alte Setup-Texte verweisen auf die Datei, und Tests konsumieren sie indirekt, aber Syntax, Varianten und Validierung sind nicht als Operatorressource vorhanden. |
+| FLW-005 | Vorher-/Nachher-Erklärung des kompilierten Graphen | Muss erweitert/überarbeitet werden | Operate zeigt den Compile-Befehl und erwartete Summary-Felder; Architektur erklärt den fixed graph. Eine konkrete Project-Datei, der daraus entstehende vollständige Graph, jede erzeugte Stage/Kante und die Gründe der Transformation fehlen. |
+| FLW-006 | Erfolgreicher Run mit Audit, Artefakten und Telemetrie | Fehlt komplett | Commands für Start und Audit existieren getrennt. Kein reproduzierbarer zentraler Run zeigt echte Inputs, erwartete Stage-Zustände, Artifact IDs/Digests, Audit-Ausgabe, Observer/Telemetry-Beobachtung und abschließenden Nachweis. |
+| FLW-007 | Stage-Fehler, Retry und Repair | Fehlt komplett | Architektur erklärt technische Retries und Product Repair; Plugin-Tests üben Teilpfade. Es fehlt ein Operatorworkflow mit absichtlich fehlerhafter Stage, Journal/Audit-Beobachtung, Budgetverbrauch, Retry, Repair Edge, Recheck und Terminalzustand. |
+| FLW-008 | Wait, Approval und Resume | Muss erweitert/überarbeitet werden | Operate dokumentiert Signalbedingungen und beide Resume-Commands; Human-approval-Katalog erklärt Package-Fakten. Vollständige Pipeline-/Wait-/Signaldateien, erwartete Journalereignisse, stale/unauthorized Negativfälle und Cleanup fehlen. |
+| FLW-009 | Unterbrechung und Recovery | Muss erweitert/überarbeitet werden | Operate und Recovery erklären sichere Regeln und Commands. Ein ausführbares Beispiel mit kontrolliertem Prozessabbruch, retained run identity, Snapshotprüfung, Recoveryausgabe, in-flight Attempt und finalem Audit fehlt. |
+| FLW-010 | Unklarer externer Effekt | Muss erweitert/überarbeitet werden | Effectful Plugin Guide erklärt accepted-without-receipt, Reconciliation und den lokalen Test sehr tief. Ein operatorzentrierter Ablauf vom Pipeline-Audit über Effect Identity und externen Receipt Check bis autorisiertem Stop/Fortsetzen fehlt. |
+| FLW-011 | Buster-Suite mit Fixture, Matrix und Report | Fehlt komplett | Buster Guide erklärt Authoring, Suite Resolution, Ports, Matrix, Evidence und Reports. Es fehlt eine vollständige `.swarm/pipeline.json`, die Fixture, Matrix-Test und Report Adapter kombiniert, auflöst, ausführt und ihr Gate-Ergebnis prüft. |
+| FLW-012 | BuildKit, Registry und Image | Muss erweitert/überarbeitet werden | Architektur und Maintenance erklären Build-/Push-/Manifest-/Pull-Kette sowie Grenzen. Ein zentraler ausführbarer Workflow mit Client Config, Build Context, immutable Tag/Digest, Push, Buster Verification, uncached Node Pull, Failure und Cleanup fehlt. |
+| FLW-013 | Tailscale-Exposure und Cleanup | Muss erweitert/überarbeitet werden | Architektur trennt Platform Route und Buster Fixture; Katalog nennt Retention Modes und Release. Ein vollständiger Workflow mit Operator/Target, ACL/DNS-Prerequisite, HTTPS Endpoint, Readiness, Handoff Generation, Release und Negativtest fehlt. |
+| FLW-014 | Plugin aktivieren, prüfen, ersetzen und entfernen | Muss erweitert/überarbeitet werden | First Plugin und Testing Guide decken Authoring sowie generischen Lifecycle ab. Ein operatorzentriertes Beispiel mit realer Installation Root, Platform Selection, Role/Plan Binding, positiver Observation, Drain, Replacement, Removal und verbleibendem State fehlt. |
+| FLW-015 | Redis-Ausfall und Wiederanlauf | Fehlt komplett | Diagnose, Recovery und Architektur nennen Stop-/Reconcile-Regeln. Kein fokussierter Ablauf zeigt Stream/Consumer-Baseline, kontrollierten Ausfall, erhaltene kanonische Events, Wiederanlauf, Replay/Dedup und Nachweis ohne Doppelzustellung. |
+| FLW-016 | Worker-Abbruch und Result Recovery | Fehlt komplett | Worker- und Recoverykonzepte existieren verteilt. Kein zentraler Workflow zeigt akzeptierten Attempt, Prozessabbruch, Ownership/Journal/Spool, Supervisor-Recovery, sealed Result oder expliziten Recovery Stop. |
 
 ## L. Developer-Handbuch
 
-| ID | Prüfpunkt | Vorläufiger Zustand | Befund oder Ziel |
+| ID | Prüfpunkt | Geprüfter Zustand | Befund und Nachweis |
 | --- | --- | --- | --- |
-| DEV-001 | Kanonischer Developer-Einstieg | Muss erweitert/überarbeitet werden | Extend ist stark, aber kein vollständiges Plattform-Handbuch. |
-| DEV-002 | Repository-, Workspace- und Toolchain-Setup | Fehlt komplett | Keine aktuelle kanonische Entwicklerkarte. |
-| DEV-003 | Build-, Start- und Debugwege je Komponente | Fehlt komplett | Über Scripts und alte READMEs verteilt. |
-| DEV-004 | Testpyramide und Auswahl des richtigen Checks | Muss erweitert/überarbeitet werden | Extension Testing stark; Core, Service, UI und Deployment fehlen. |
-| DEV-005 | CI-Workflows und erforderliche Gates | Muss erweitert/überarbeitet werden | Inventar vorhanden; aktive vollständige Integration fehlt. |
-| DEV-006 | Coding-, Contract- und Dependency-Regeln | Muss erweitert/überarbeitet werden | Über Boundaries und alte Guides verteilt. |
-| DEV-007 | Security-, Performance- und Lastprüfung | Fehlt komplett | Keine gemeinsame Aufgabenfolge. |
-| DEV-008 | Release, Versionierung, Migration und Changelog | Fehlt komplett | Kein vollständiger Workflow. |
-| DEV-009 | Dokumentationspflicht einer Codeänderung | Muss erweitert/überarbeitet werden | Qualitätsregeln vorhanden; Source-to-Doc-Matrix fehlt. |
-| EXT-001 | Auswahl Konfiguration, Plugin, Engine oder Core | Vollständig vorhanden | AP08 Choice Guide akzeptiert. |
-| EXT-002 | Minimaler Pipeline-Stage-Weg | Vollständig vorhanden | AP08 Minimal Plugin akzeptiert. |
-| EXT-003 | Fünf Pipeline-Extension-Verträge | Vollständig vorhanden | Contracts Guide akzeptiert. |
-| EXT-004 | Effects und State | Vollständig vorhanden | Effectful Guide akzeptiert. |
-| EXT-005 | Buster, Suites, Fixtures und Reports | Vollständig vorhanden | Buster Guide akzeptiert. |
-| EXT-006 | Nova Stages, Adapter, Observer und Lint | Vollständig vorhanden | Nova Guide akzeptiert. |
-| EXT-007 | OpenClaw, Codex, Worker Engine und Rollen | Vollständig vorhanden | Host-and-Engine Guide akzeptiert. |
-| EXT-008 | Extension Testing und Lifecycle | Vollständig vorhanden | Testing Guide akzeptiert. |
-| EXT-009 | Vollständiger Plugin-Katalog | Vollständig vorhanden | 51 von 51 nach Korrektur akzeptiert. |
-| CDV-001 | Nova-Core-Änderung | Fehlt komplett | Auswahlgrenze vorhanden; Entwicklungsweg fehlt. |
-| CDV-002 | Lifecycle, Scheduling, Retry, Repair und Wait ändern | Fehlt komplett | Keine detaillierte Anleitung. |
-| CDV-003 | Effects und Recoverysemantik ändern | Fehlt komplett | Keine Core-Anleitung. |
-| CDV-004 | Worker-Core-Protokoll, Supervisor oder Ressourcenmodell ändern | Fehlt komplett | Keine detaillierte Anleitung. |
-| CDV-005 | Foundation Registry, Trust oder Isolation ändern | Fehlt komplett | Keine detaillierte Anleitung. |
-| CDV-006 | SDK oder öffentlichen Contract ändern | Fehlt komplett | Versionierungs-, Generator- und Migrationsweg fehlt. |
-| CDV-007 | Capability oder Telemetrieevent einführen | Fehlt komplett | Consumer-, Security- und Compatibilityweg fehlt. |
-| CDV-008 | Buster Engine ändern | Fehlt komplett | Providerentwicklung ist dokumentiert, Engineentwicklung nicht. |
-| CDV-009 | Prism Control, Worker, Ingestion oder Studio ändern | Fehlt komplett | Alte Architekturtexte ersetzen keinen Workflow. |
-| CDV-010 | Forge-, Echo-, Service- oder API-Integration ändern | Fehlt komplett | Kein vollständiger Developerweg. |
-| CDV-011 | Frontend oder interaktive Oberfläche ändern | Fehlt komplett | Kein Studio-/Archviewer-Entwicklungsweg. |
-| CDV-012 | Helm, GitOps oder Infrastruktur ändern | Fehlt komplett | Operatorseiten ersetzen keine Entwickleranleitung. |
-| CDV-013 | Datenmodell oder Migration ändern | Fehlt komplett | Kein gemeinsamer Migrations- und Rollbackvertrag. |
+| DEV-001 | Kanonischer Developer-Einstieg | Muss erweitert/überarbeitet werden | `docs/site/extend/README.md` ist ein starker Einstieg für Extensions. Es fehlt ein zentraler Developer-Einstieg für Core, Services, UI, Contracts, Data, Deployment und Release mit Ownership- und Check-Routing. |
+| DEV-002 | Repository-, Workspace- und Toolchain-Setup | Fehlt komplett | Kein zentraler Weg erklärt Checkout, Node/npm, optionale Go/C/Container/Kubernetes-Werkzeuge, Workspace-Struktur, generated files, lokale Services, Credentials und erste verifizierte Änderung. Die alte Contributing-Seite umfasst nur wenige Sätze. |
+| DEV-003 | Build-, Start- und Debugwege je Komponente | Fehlt komplett | Build-, Runtime-, Service-, Studio-, Worker-, Chart- und Debugcommands liegen in Package-Scripts, READMEs und Tests. Keine zentrale Component Map nennt Entry Point, Build, Start, Debug, Logs, Test und Cleanup. |
+| DEV-004 | Testpyramide und Auswahl des richtigen Checks | Muss erweitert/überarbeitet werden | Extension Testing erklärt Proof Ladder und paketbezogene Checks sehr gut. Core-, Contract-, Reliability-, Service-, UI-, Deployment-, Live-, E2E- und Release-Gates sind bei mehr als 170 npm-Scripts nicht als Change-to-check-Matrix erschlossen. |
+| DEV-005 | CI-Workflows und erforderliche Gates | Muss erweitert/überarbeitet werden | Alte Testing-Seite nennt vier Checks und einen model-backed Harness; Workflows und Package-Scripts liefern das reale Inventar. Trigger, Required/Optional, Umgebung, Secrets, Artefakte, Timeout, Retry und Merge-/Releasewirkung fehlen zentral. |
+| DEV-006 | Coding-, Contract- und Dependency-Regeln | Muss erweitert/überarbeitet werden | Extension Contracts und interne `BOUNDARIES.md` erklären wichtige Grenzen. TypeScript/ESM, Package Exports, Dependency Direction, Generated Code, Schema Evolution, Error Codes, Concurrency und Language-spezifische Regeln sind nicht als zentrales Contributor Contract vereint. |
+| DEV-007 | Security-, Performance- und Lastprüfung | Fehlt komplett | Zahlreiche Security-, Performance-, Scale- und Live-Checks existieren. Es fehlt ein Developerworkflow für Threat Review, Testauswahl, sichere Fixtures, Benchmarkumgebung, Baseline, Budget, Ergebnisinterpretation und Regression Acceptance. |
+| DEV-008 | Release, Versionierung, Migration und Changelog | Fehlt komplett | Operator Maintenance erklärt Deploymentänderungen, aber kein Developerweg verbindet Version Source, API/Schema SemVer, Generator, Migration, Compatibility, Changelog, Build Receipt, Promotion, Rollback und Deprecation. |
+| DEV-009 | Dokumentationspflicht einer Codeänderung | Muss erweitert/überarbeitet werden | Qualitätsstandard und Clean-Room-Regel definieren die Pflicht. Eine maschinenlesbare Source-to-doc-/Owner-/Generator-/Check-Matrix und ein Contributor-Workflow, der betroffene Seiten zuverlässig findet, fehlen. |
+| EXT-001 | Auswahl Konfiguration, Plugin, Engine oder Core | Vollständig vorhanden | Zentraler Choice Guide bietet Decision Flow, Vergleichstabelle, zwölf Szenarien, Unsupported Shortcuts und 23 geprüfte Source Links. |
+| EXT-002 | Minimaler Pipeline-Stage-Weg | Vollständig vorhanden | First Plugin führt Package, Manifest, Schemas, Export, Role, Platform, Test, Activation, Failure und Removal durch; die gepflegte Beispielressource und der Harness prüfen den Weg. |
+| EXT-003 | Fünf Pipeline-Extension-Verträge | Vollständig vorhanden | Contracts Guide erklärt Stage, Observer, Adapter, Test Provider und Report Adapter mit Authority, Daten, Failure, Recovery, Compatibility und direkten Quellen. |
+| EXT-004 | Effects und State | Vollständig vorhanden | Effectful Guide erklärt Identity, Ordering, Locks, Fencing, Journalzustände, Retry, Resume, Cancellation, Cleanup, State-Grenzen und verifizierte Failure Exercises. |
+| EXT-005 | Buster, Suites, Fixtures und Reports | Vollständig vorhanden | Buster Guide deckt Auswahl, Suite Resolution, Provider, Ports, Matrix, Evidence, Retry, Cleanup, Reports, Failure und Verification ab; vollständige Pipeline-Dateisyntax bleibt korrekt außerhalb dieses Scopes. |
+| EXT-006 | Nova Stages, Adapter, Observer und Lint | Vollständig vorhanden | Nova Guide erklärt alle drei Surfaces, Resultwahl, Capability Selection, Observer Recovery, Lint Engine/Rules, Package-/Role-Integration und passende Checks. |
+| EXT-007 | OpenClaw, Codex, Worker Engine und Rollen | Vollständig vorhanden | Host-and-Engine Guide trennt Hosts, führt Hook/Tool/Skill/Engine/Role-Pfade durch, verfolgt einen realen Prism Attempt und behandelt Compatibility, Replacement und Verification. |
+| EXT-008 | Extension Testing und Lifecycle | Vollständig vorhanden | Testing Guide verbindet Proof Ladder, reproduzierbaren Report, jeden Extensiontyp, Installation, Update, Disable, Removal, State und Diagnose. |
+| EXT-009 | Vollständiger Plugin-Katalog | Vollständig vorhanden | 51 von 51 gefundenen Manifests besitzen zentrale Seiten mit generierten Fakten, authored guidance, Grenzen, Konfiguration, Rollen, Tests und Source Targets; Driftchecks sind grün. |
+| CDV-001 | Nova-Core-Änderung | Fehlt komplett | Choice Guide nennt die Grenze, aber kein zentraler Workflow erklärt Ownership, lokale Architektur, Change Design, Invariants, Testauswahl, Replay-/Compatibility-Proof und Review für Core-Code. |
+| CDV-002 | Lifecycle, Scheduling, Retry, Repair und Wait ändern | Fehlt komplett | Keine Anleitung verbindet Reducer, Graph, Loop, Budgets, Wait/Signal, Journal, Snapshots, Error Codes, Determinismus-, Crash- und Migrationstests. |
+| CDV-003 | Effects und Recoverysemantik ändern | Fehlt komplett | Plugin-Autoren sind gut geführt; Core-Entwickler erhalten keinen Weg für Effect Contracts, Identity, Journalformat, Locks/Fencing, Receipt Recovery, Corruption, Compatibility und Reliability Gates. |
+| CDV-004 | Worker-Core-Protokoll, Supervisor oder Ressourcenmodell ändern | Fehlt komplett | Kein zentraler Developerweg erklärt Verträge, native Launcher/Channel, Ownership, Journal/Spool, Resource Pool, Cancellation, Sealing, C-Build, Host-Prerequisites und Recoverytests. |
+| CDV-005 | Foundation Registry, Trust oder Isolation ändern | Fehlt komplett | Registry-/Isolationquellen und interne READMEs existieren. Discovery, Schema, Import Audit, Activation, Sandbox, cgroup, Threat Review, Negative Tests, Migration und Package Compatibility sind nicht als Change-Workflow dokumentiert. |
+| CDV-006 | SDK oder öffentlichen Contract ändern | Fehlt komplett | Es fehlt ein zentraler Ablauf für Consumer Inventory, Versionentscheidung, Schema/Types/Exports, Generator, Fixtures, Backward/Forward Compatibility, Migration, Negative Absence und Release Note. |
+| CDV-007 | Capability oder Telemetrieevent einführen | Fehlt komplett | Kein Workflow verbindet Vocabulary/Event Catalog, Provider/Consumer, Resource Match, Security Review, Payload/Redaction, Ordering, Docs Generation, Role Grants und End-to-end Verification. |
+| CDV-008 | Buster Engine ändern | Fehlt komplett | Provider-/Suite-Authoring ist dokumentiert; Engine-Plan, Resolver, Runner, Store, Evidence, Report Finalization, Remote Authority, Compatibility und Gate-Auswahl sind nicht als Developerweg vorhanden. |
+| CDV-009 | Prism Control, Worker, Ingestion oder Studio ändern | Fehlt komplett | Alte Architektur-/Implementierungsseiten und viele Component-Scripts enthalten Wissen. Kein zentraler Workflow ordnet Service Ownership, Local Stack, DB/Artifact Migration, API, Worker, UI, Security und Verification. |
+| CDV-010 | Forge-, Echo-, Service- oder API-Integration ändern | Fehlt komplett | Pluginseiten erklären einzelne Registrierungen; ein Developerweg für Dispatch Contract, Host/Model, Input/Result, Lost Response, Policy, Versionierung, Test Harness und Deployment fehlt. |
+| CDV-011 | Frontend oder interaktive Oberfläche ändern | Fehlt komplett | Kein zentraler Studio-/Architekturviewer-Weg erklärt Toolchain, State/Flow Contracts, Accessibility, Security, Visual Baseline, Browser Tests, Build und Preview/Release. |
+| CDV-012 | Helm, GitOps oder Infrastruktur ändern | Fehlt komplett | Operatorseiten erklären Betrieb. Entwickler erhalten keinen Workflow für Chart/Values-Schema, Template, generated GitOps tree, Ownership, Security/Upgrade Review, Render/Policy/Live Checks und Rollbackkompatibilität. |
+| CDV-013 | Datenmodell oder Migration ändern | Fehlt komplett | Kein gemeinsamer Vertrag erklärt Owner, Schemaänderung, Expand/Contract, Writer/Reader Compatibility, Backfill, Lock/Fence, Backup/Restore, Rollbackgrenze, Data Proof und Retirement. |
 
 ## M. Exhaustive Referenz
 
@@ -449,6 +449,8 @@ verbleibenden 104 Einstufungen sind weiterhin vorläufig.
 | 17.09.2026 | COM-001–COM-012; DAT-001–DAT-009; TEL-001–TEL-007 | Aktive Architecture-, Trust-, Recovery-, Diagnose-, Contracts-, Buster-, Nova- und Effect-Seiten; Transport-, Store-, Journal- und Telemetriequellen | 2 vollständig; 18 zu erweitern; 8 fehlen | Zentrale Kommunikations-, Endpoint-, Daten- und Eventmatrizen fehlen; Observer-Lifecycle und Authority-vs-Observability sind vollständig; externe Recovery-Verweise verletzen das Zentralitätsziel | 124 Schema-/134 Contract-Dateien gezählt; aktive Quellverweise geprüft; Stores/Transporte inventarisiert; manuelle Flow-/Recovery-Prüfung am Stand `a3bcc527` |
 | 17.09.2026 | INF-001–INF-011; SEC-001–SEC-007 | Platform and Operations; Pipeline Dependencies; Deployment and Trust; Worker Trust; Install/Recovery; Roadmap; Charts, GitOps values, deploy/config/check scripts; alte Security/Ops-Seiten nur als Migrationsquellen | 6 vollständig; 12 zu erweitern; 0 fehlen | Pflicht/optional-Einordnung, CNI, Argo, Monitoring, Ops und geplante Grenzen sind stark; Querschnittsmatrizen für Threats, Identity, Secrets, Network, Supply Chain und Rechte fehlen | Direkte Source-/Roadmap-Prüfung; aktive-versus-alte Zielprüfung; manuelle Failure-/Recovery-/Security-Prüfung am Stand `a3bcc527` |
 | 17.09.2026 | OPR-001–OPR-009; OPL-001–OPL-005; CFG-001–CFG-015 | Zentraler Use-Track und Plugin-Katalog; CLI-/Config-Schemas; alte Deployment-, Operations-, Reference- und Ops-Seiten als Migrationsquellen | 7 vollständig; 14 zu erweitern; 8 fehlen | Lifecycle und Kern-CLI sind stark; drei zuvor vollständige Operatorbereiche wegen notwendiger Altverweise herabgestuft; zentrale Config-, Dependency-, Port- und Change-impact-Referenzen fehlen | Zentralitätsprüfung aller notwendigen Links; Command-/Schemaquellen und AP07/AP08-Checks geprüft; manuelle Task-Prüfung am Stand `2bf6c7ac` |
+| 17.09.2026 | FLW-001–FLW-016 | Zentraler Quickstart, Operate, Recovery, Architecture, Buster, Effect und Plugin Lifecycle; aktive Beispiele; Compiler-/Reliability-/E2E-Fixtures nur als Quellen | 0 vollständig; 7 zu erweitern; 9 fehlen | Nur das minimale Plugin besitzt eine gepflegte Beispielressource; vollständige Pipeline-, Config-, Failure- und Infrastructure-Workflows fehlen | Zentralen Beispielbestand und alle Pipeline-Dateiverweise inventarisiert; CLI-/Compiler-/Testquellen manuell geprüft am Stand `e63c533b` |
+| 17.09.2026 | DEV-001–DEV-009; EXT-001–EXT-009; CDV-001–CDV-013 | Zentraler Extend-Track; alter Developer-Baum; Package-/Core-READMEs; Scripts und CI; Core-, Worker-, Foundation-, Buster-, Prism-, Service-, UI-, Infrastructure- und Migrationquellen | 9 vollständig; 5 zu erweitern; 17 fehlen | Extensionentwicklung ist vollständig; Plattform-/Core-Entwicklung, Setup, Builds, Check-Routing, Release und alle komponentenspezifischen Change-Workflows fehlen zentral | Developer-/Scriptinventar; AP08-Reader-/Harnesschecks; manuelle Change-to-check-/Consumerprüfung am Stand `e63c533b` |
 
 ## Abschluss von AP09.0
 
