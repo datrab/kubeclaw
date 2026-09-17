@@ -96,6 +96,16 @@ test('real Helm environment rendering remains identical after the bundle commit 
     assert.throws(() => rollbackRevision(root, '--all'), /MUST_BE_FULL_COMMIT/);
     const render = revision => renderContinuousEnvironment(root, directory, 'https://github.com/example/kubeclaw.git', revision, { argoNamespace: 'argocd' });
     const expected = render(first);
+    const named = renderContinuousEnvironment(root, directory, 'https://github.com/example/kubeclaw.git', first,
+      { argoNamespace: 'argocd', naming: { rootName: 'kubeclaw', bootstrapProject: 'kubeclaw-bootstrap', workloadProject: 'kubeclaw' } });
+    const namedBootstrap = yaml.loadAll(named.files['bootstrap.yaml']);
+    assert.equal(namedBootstrap.find(d => d.kind === 'Application').metadata.name, 'kubeclaw');
+    assert.equal(namedBootstrap.find(d => d.kind === 'Application').spec.project, 'kubeclaw-bootstrap');
+    const namedChildren = yaml.loadAll(named.files['apps/applications.yaml']);
+    assert.equal(namedChildren.find(d => d.kind === 'AppProject').metadata.name, 'kubeclaw');
+    assert.equal(namedChildren.filter(d => d.kind === 'Application' && d.spec.project === 'kubeclaw').length, 3);
+    assert.throws(() => renderContinuousEnvironment(root, directory, 'https://github.com/example/kubeclaw.git', first,
+      { argoNamespace: 'argocd', naming: { bootstrapProject: 'kubeclaw', workloadProject: 'kubeclaw' } }), /PROJECT_NAME_INVALID/);
     const apps = yaml.loadAll(expected.files['apps/applications.yaml']).filter(document => document?.kind === 'Application');
     assert.equal(apps.length, 3);
     for (const app of apps) {

@@ -51,6 +51,21 @@ build never publishes a production selection. Generated pushes use
 
 ## Initial adoption and prerequisites
 
+Production naming is configured in `gitops/production/config.json`: the root
+Application is `kubeclaw`, and the workload AppProject is `kubeclaw`. The three
+independently syncable child Applications are `kubeclaw-buster`,
+`kubeclaw-prism` and `kubeclaw-nova`. Prism groups its agent and service resources;
+it does not collapse them into a single Kubernetes Deployment. The administrative
+root uses a separate `kubeclaw-bootstrap` AppProject so workload permissions do
+not include management of Argo Applications. Naming changes do not rename live
+applications automatically; production runtime adoption has not yet occurred.
+
+Initial adoption still requires selected image/bundle receipts, reviewed AX41
+overlays and explicit migration of existing Helm ownership without deleting
+persistent data. Creating empty Applications or bypassing these checks is not
+a deployment. Deferred registry mTLS does not remove Buster's existing HTTPS
+registry requirement for its full build/scan pipeline.
+
 Automatic publication is gated by repository variable `GITOPS_ENABLED=true`.
 Enable it only after the production overlays, existing Secrets, namespace
 ownership and native-worker host prerequisites have been verified and the

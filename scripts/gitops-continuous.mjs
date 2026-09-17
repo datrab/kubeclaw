@@ -42,7 +42,7 @@ function configuration(repository) {
 }
 
 export function renderContinuousEnvironment(repository, directory, url, revision, config) {
-  const result = bootstrapDocuments(repository, directory, url, revision, config.argoNamespace);
+  const result = bootstrapDocuments(repository, directory, url, revision, config.argoNamespace, config.naming);
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'gitops-continuous-'));
   try {
     const values = path.join(temporary, 'values.yaml');

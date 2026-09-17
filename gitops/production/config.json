@@ -2,5 +2,10 @@
   "namespace": "kubeclaw",
   "prismNamespace": "kubeclaw",
   "argoNamespace": "argocd",
-  "overlays": {}
+  "overlays": {},
+  "naming": {
+    "rootName": "kubeclaw",
+    "bootstrapProject": "kubeclaw-bootstrap",
+    "workloadProject": "kubeclaw"
+  }
 }
