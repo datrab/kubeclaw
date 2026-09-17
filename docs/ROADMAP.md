@@ -38,6 +38,10 @@ capturing reusable steps, rather than requiring operators to replay repair scrip
   per-node identities, policies and resource budgets; AX41 paths, names, digests
   and build directories must not become global defaults. Additional nodes do not
   automatically increase application concurrency or move local-path PVC data.
+- Keep role pools independent of executable/browser selection. A compatible
+  browser/tool replacement changes its image or task adapter, not host resource
+  policy. Validate inherited aggregate limits and cleanup across supported tools;
+  distinguish adapter compatibility from resource-pool capability.
 - Preserve current sync policy: platform root may reconcile Application definitions;
   infrastructure/Codex Ops children stay manual, while validated KubeClaw runtime
   releases may autosync. Bootstrap completion is not an image-release selection.
