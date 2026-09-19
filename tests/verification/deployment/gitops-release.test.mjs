@@ -24,7 +24,11 @@ function fixture(run) {
     const policy = yaml.load(fs.readFileSync(path.join(root, 'my-values/infra/native-worker-pools.yaml'), 'utf8'));
     policy.nodeName = 'native-render-test'; policy.pools.buster.namespace = 'agents'; policy.pools.prism.namespace = 'agents';
     fs.writeFileSync(path.join(root, 'my-values/infra/native-worker-pools.yaml'), yaml.dump(policy));
-    git(['init', '-q']); const sourceCommit = commit('Actual source configuration fixture');
+    git(['init', '-q']);
+    // This repository is deleted as soon as the synchronous test finishes.
+    // Detached maintenance can otherwise recreate .git during that deletion.
+    git(['config', 'maintenance.auto', 'false']);
+    const sourceCommit = commit('Actual source configuration fixture');
     fs.mkdirSync(path.join(root, 'releases'));
     const names = ['nova', 'prism-agent', 'buster-gateway', 'buster-runtime', 'namespace-controller', 'archviewer', 'prism-control', 'prism-studio', 'prism-worker', 'prism-ingestion'];
     const images = Object.fromEntries(names.map((name, index) => [name, `ghcr.io/datrab/kubeclaw-${name}@sha256:${index.toString(16).repeat(64)}`]));
