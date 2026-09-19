@@ -4,6 +4,13 @@ Scope: PCR-PRISM-STUDIO-SERVICE-001. Preserve the existing Studio/Control split,
 proxy headers, static root and deployment defaults. No Control authorization or
 new log storage is introduced.
 
+The Studio image copies the server directory as one unit rather than maintaining
+a separate list of imported modules. The final image runs the existing HTTP
+service regression suite as the `node` user with no build dependencies installed.
+This catches missing runtime imports during image construction, including the
+previous omission of `studio-config.ts` and `studio-request.ts`. The test file is
+mounted only for the build check and is not retained in the runtime image.
+
 The HTTP callback observes every asynchronous handler rejection. Refused Control
 connections return a concrete 502 and cause; malformed URL encoding returns 400;
 unavailable static output returns 404. Structured stderr diagnostics include time,

@@ -284,8 +284,13 @@ assert.match(
 );
 assert.match(
   prismStudioDockerfile,
-  /COPY --from=build \/build\/skills\/prism\/server\/proxy-headers\.ts \/app\/prism\/server\/proxy-headers\.ts/,
+  /COPY --from=build \/build\/skills\/prism\/server \/app\/prism\/server/,
   'the Prism Studio image must package every imported server module',
+);
+assert.match(
+  prismStudioDockerfile,
+  /USER node[\s\S]*RUN --mount=type=bind,source=skills\/prism\/tests\/studio-service\.test\.mts,target=\/app\/prism\/tests\/studio-service\.test\.mts\s*\\\n\s*node --test \/app\/prism\/tests\/studio-service\.test\.mts/,
+  'the final Studio image must pass HTTP regression tests as its runtime user',
 );
 
 assert.match(
