@@ -139,7 +139,7 @@ operator-supplied file adds private values but cannot replace selected release t
 | `imagePullSecrets` | `ghcr-secret` | Secret that can pull all selected images. |
 | `control.pipelinePreferenceSubject` | empty | Empty means automated rounds do not use one person's learned preferences. Set only an existing authenticated Prism `userId`. |
 | `control.productDecisions.enabled` | `false` | Enables the separate signed product-decision authority. Configure all issuer, operator, key, controller, and token fields together. |
-| `control.replicas` | `1` | Control process count. Database transactions remain the canonical concurrency boundary. |
+| `control.replicas` | `1` | Fixed at exactly one while artifacts use a ReadWriteOnce claim. The chart rejects every other value. |
 | `studio.replicas` | `1` | Studio proxy and static UI count. Studio does not store canonical design state. |
 | `worker.native.nodeName` | empty | Required selected native worker node. Use generated host-policy output. |
 | `worker.native.namespace` | empty | Required host pool namespace. It must match the host policy. |
@@ -150,7 +150,7 @@ operator-supplied file adds private values but cannot replace selected release t
 | `ingestion.enabled` | `false` | Enables the isolated acquisition service. Control corpus ingestion needs it. |
 | `ingestion.resources` | empty when disabled | Required operator sizing when ingestion is enabled. |
 | `ingestion.quarantineTtlMs` | `3600000` | Temporary acquired content lifetime, clamped by the service to 1 minute through 24 hours. |
-| `postgresql.enabled` | `true` | Deploys the chart-owned PostgreSQL with pgvector. |
+| `postgresql.enabled` | `true` | Deploys chart-owned PostgreSQL with pgvector. Keep it enabled for the maintained deploy, smoke, migration, and backup workflow. |
 | `postgresql.storage` | `100Gi` | Canonical database PVC request. Size from measured growth and backup time. |
 | `postgresql.storageClass` | empty | Cluster default when empty. Set explicitly if restore and topology policy require it. |
 | `postgresql.existingSecret` | empty | Deploy script binds the selected Prism database Secret. |
@@ -188,7 +188,7 @@ An empty value means that selection or activation must supply it when required.
 | `images.ingestion.pullPolicy` | `IfNotPresent` | The schema also permits `Never`. |
 | `imagePullSecrets[0].name` | `ghcr-secret` | Name a Secret that can pull every selected Prism image. |
 | `control.pipelinePreferenceSubject` | empty | Set one valid Prism user subject or keep personal learning disabled. |
-| `control.replicas` | `1` | Size Control independently from the single native Worker. |
+| `control.replicas` | `1` | Fixed at exactly one. The chart stops rendering any other value because Control owns one ReadWriteOnce artifact claim. |
 | `control.resources.requests.cpu`, `control.resources.requests.memory` | `500m`, `1Gi` | Admission request for each Control Pod. |
 | `control.resources.limits.cpu`, `control.resources.limits.memory` | `4`, `4Gi` | Maximum Control Pod resources. |
 | `control.productDecisions.enabled` | `false` | Keep the separate product authority disabled unless every field below is reviewed. |
@@ -222,8 +222,8 @@ An empty value means that selection or activation must supply it when required.
 | `ingestion.resources.requests.cpu`, `ingestion.resources.requests.memory` | empty | Both values become mandatory when ingestion is enabled. |
 | `ingestion.resources.limits.cpu`, `ingestion.resources.limits.memory` | empty | Both values become mandatory when ingestion is enabled. |
 | `ingestion.quarantineTtlMs` | `3600000` | The schema permits one minute through 24 hours. |
-| `postgresql.enabled` | `true` | Disable only when another reviewed PostgreSQL service supplies pgvector. |
-| `postgresql.image` | pinned `pgvector/pgvector:pg17` image | Preserve a digest-bound pgvector image. |
+| `postgresql.enabled` | `true` | The maintained deploy and smoke path requires `true`. The chart can omit PostgreSQL, but the deployment workflow cannot yet complete an external-database mode. |
+| `postgresql.image` | `pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f` | Preserve this digest-bound pgvector image or select another reviewed digest. |
 | `postgresql.storage` | `100Gi` | Size from measured database growth and restore time. |
 | `postgresql.storageClass` | empty | Empty selects the cluster default StorageClass. |
 | `postgresql.existingSecret` | empty | Deploy binds the selected database Secret. |
@@ -252,7 +252,7 @@ An empty value means that selection or activation must supply it when required.
 | `workerTrust.spiffe.csiDriver` | `csi.spiffe.io` | Must match the installed CSI driver. |
 | `workerTrust.spiffe.envoy.repository` | `envoyproxy/envoy` | Keep it paired with the selected digest. |
 | `workerTrust.spiffe.envoy.tag` | `v1.39.0` | Human-readable image version; the digest remains authoritative. |
-| `workerTrust.spiffe.envoy.digest` | pinned SHA-256 digest | Change only through reviewed image selection. |
+| `workerTrust.spiffe.envoy.digest` | `sha256:d59f7f5fa10cff6d5892b6c5e7df5c9297ddfb2c3683e33fbfb82da24de4fa66` | Change only through reviewed image selection. |
 | `workerTrust.spiffe.envoy.pullPolicy` | `IfNotPresent` | The schema also permits `Always` and `Never`. |
 | `workerTrust.spiffe.envoy.resources.requests.cpu`, `workerTrust.spiffe.envoy.resources.requests.memory` | `50m`, `64Mi` | Admission request for each Envoy sidecar. |
 | `workerTrust.spiffe.envoy.resources.limits.cpu`, `workerTrust.spiffe.envoy.resources.limits.memory` | `500m`, `256Mi` | Maximum resources for each Envoy sidecar. |
@@ -264,6 +264,21 @@ objects. It does not close every nested object. For example, `studio`,
 Helm can therefore accept an unknown nested value that no template consumes.
 Compare effective values with this field map and the rendered manifests.
 Do not treat schema acceptance alone as proof that a value has an effect.
+
+The schema also rejects several values before rendering:
+
+| Area | Exact schema boundary |
+| --- | --- |
+| Service images | Repository must be nonempty; digest must be `sha256:` plus 64 lowercase hexadecimal characters; pull policy is `IfNotPresent` or `Never`. |
+| Pull Secrets | At least one entry; every name is nonempty. |
+| Pipeline preference | Empty, or `user-` plus exactly 24 lowercase hexadecimal characters. |
+| Product operators | Zero to 100 unique strings; each is 1 to 512 characters and cannot start or end with whitespace. Enabling the feature requires at least one. |
+| Product token | 600 through 3,600 seconds. |
+| Product authority | Enabled mode requires nonempty authority fields, an HTTPS operator origin, an HTTPS controller on port 8443, Kubernetes-style Secret and namespace names, and safe Secret key names. Text fields have a 2,048-character ceiling. |
+| Native Worker | Exactly one replica; nonempty node and namespace; a 64-character lowercase policy digest; close and shutdown budgets from 1 through 2,147,483,647 ms; termination grace from 1 through 2,147,483 seconds. |
+| Ingestion | Replica count is zero or more; quarantine lifetime is 60,000 through 86,400,000 ms. Enabled mode requires positive CPU and memory requests and limits. |
+| SPIFFE | Lowercase trust-domain syntax, Kubernetes-style namespace and service-account names, an absolute socket path, nonempty CSI driver and Envoy fields, and a full `sha256:` Envoy digest. |
+| Backup | Cron strings are 9 to 128 characters; byte ceilings are positive decimal strings with at most 13 digits; duration is 1 through 86,400 seconds. |
 
 > **Source evidence — Helm values**
 >
@@ -289,6 +304,8 @@ Do not treat schema acceptance alone as proof that a value has an effect.
 | Studio | `STUDIO_ROOT` | Built `dist-studio` directory |
 | Studio | `PRISM_CONTROL_URL` | `http://prism-control:8080` |
 | Studio | `PRISM_CONTROL_TIMEOUT_MS` | `30000` |
+| Agent Bridge and OpenClaw plugin | `PRISM_CONTROL_URL` | `http://127.0.0.1:28080`; the trust sidecar exposes Control on this loopback port. |
+| Agent Bridge | `PORT` | `18080` |
 | Worker | `PORT` | `8080` |
 | Worker | `PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS` | `16` |
 | Worker | `PRISM_WORKER_MAXIMUM_PROBE_REQUESTS` | `4` |
@@ -384,7 +401,8 @@ The deploy script also creates internal variables. Do not supply them as
 operator configuration. `PRISM_VALUES_OVERLAY` and
 `PRISM_AGENT_VALUES_OVERLAY` preserve the two optional file names after the
 script selects its release files. The live-test Job receives
-`PRISM_AGENT_URL`, `PRISM_E2E_IMAGE_REFERENCES`, and
+`PRISM_CONTROL_URL` (`http://127.0.0.1:18443`), `PRISM_AGENT_URL`,
+`PRISM_E2E_IMAGE_REFERENCES`, and
 `PRISM_E2E_INGRESS_SECRET` from the deploy script.
 
 Environment overrides are operational inputs.
@@ -393,30 +411,60 @@ from the committed values files.
 
 ### Prism agent values
 
-The separate `agent-prism` release uses the common KubeClaw agent chart.
-Its selected values must fix these Prism-owned choices:
+#### Complete Prism-specific field map
 
-| Value family | Prism rule |
-| --- | --- |
-| `agentRole` | Must be `prism`. |
-| `image` and `imagePullSecrets` | Must select the reviewed Prism agent image and pull credentials. |
-| `codeBundle` | Must enable the version-matched archive for the selected commit in production. |
-| `auth` | Must read `gatewayToken-prism` from an existing Secret. |
-| `litellm` | Must use the managed endpoint and Secret. Do not copy the key into plain values. |
-| `discord` | Disabled by default. Enable only with a dedicated Prism token, channel, and allowlist. |
-| `commands` | Explicit owner and Discord allowlists. They are authority, not user-interface preferences. |
-| `agent.model` | Selected primary and fallback OpenAI routes for the Prism agent. |
-| `agent.git` | Current deployment can sync an explicit repository with its SSH Secret. Runtime contracts still come from the code bundle. |
-| `workerTrust.spiffe` | Must match the platform trust domain when the agent talks to Control. |
-| `service` and bridge sidecar | Must route Prism dispatch to the colocated bridge without exposing the internal Control path. |
-| `workspace` | Supplies the Prism role and mandatory tool instructions. A prompt does not replace tool-side schema validation. |
+The separate `agent-prism` release uses the common KubeClaw agent chart. This
+table names every Prism-specific leaf in the shipped overlay. A materialized
+release and private overlay can replace these development defaults according to
+the precedence stated above.
 
-The common chart contains other capabilities for other roles.
-Their presence in chart defaults does not make them part of Prism.
+| Field | Shipped Prism overlay | Meaning and safe rule |
+| --- | --- | --- |
+| `agentRole` | `prism` | Fixed role identity. |
+| `image.repository`, `image.tag`, `image.pullPolicy` | `ghcr.io/datrab/kubeclaw-prism-agent`, `latest`, `Always` | Development selection. Production must use the receipt-selected immutable image override. |
+| `imagePullSecrets[0].name` | `ghcr-secret` | Pull credential for the selected agent and bridge image. |
+| `runAsRoot` | `false` | The agent container does not need root. |
+| `codeBundle.enabled` | `false` | The deploy command enables the version-matched archive for production. |
+| `codeBundle.archiveUrl`, `codeBundle.expectedCommit` | empty | Deployment supplies the selected archive and exact commit. |
+| `codeBundle.contractVersion` | `v2` | Bundle wire contract. Change only with producer and consumer support. |
+| `codeBundle.auth.existingSecret`, `existingSecretKey` | `github-bundle-reader`, `token` | Credential used to download a private bundle. |
+| `auth.existingSecret`, `auth.existingSecretKey` | `openclaw-shared-secrets`, `gatewayToken-prism` | OpenClaw gateway token; do not put its value in Helm values. |
+| `litellm.endpoint` | `http://litellm.kubeclaw.svc.cluster.local:4000/v1` | Managed in-cluster model route; deployment can replace it with the selected platform endpoint. |
+| `litellm.existingSecret`, `litellm.existingSecretKey` | `openclaw-shared-secrets`, `litellmApiKey` | Model-route credential reference. |
+| `discord.enabled` | `false` | Keep disabled until the dedicated Prism bot and channel are ready. |
+| `discord.existingSecret`, `existingSecretKey`, `channelId` | `openclaw-shared-secrets`, `discordToken-prism`, empty | Dedicated token reference and required channel selection. |
+| `commands.ownerAllowFrom` | `discord:849379821536804864` | Exact OpenClaw command owner allowlist. Review as authority data. |
+| `commands.allowFromDiscord` | `849379821536804864`, `user:849379821536804864` | Exact Discord caller allowlist. |
+| `agent.project` | `prism` | Stable OpenClaw project and session namespace. |
+| `agent.model.primary`, `agent.model.fallbacks` | `openai/gpt-5.6-sol`, `openai/gpt-5.5` | Managed primary and fallback routes. |
+| `agent.git.enabled`, `secretName`, `repoUrl` | `true`, `git-deploy-key-nova`, `git@github.com:datrab/kubeclaw.git` | Optional repository synchronization. Runtime contracts still come from the selected code bundle. |
+| `serviceAccount.create`, `serviceAccount.automount` | `true`, `false` | Create the role identity without a default Kubernetes API token. |
+| `workerTrust.spiffe.enabled`, `trustDomain` | `true`, `kubeclaw.internal` | Must equal the platform SPIFFE policy. |
+| `service.gatewayPort`, `gatewayTargetPort`, `bridgeEnabled` | `8080`, `prism-dispatch`, `false` | The common Service targets the named Prism bridge port; the chart's generic bridge stays disabled. |
+| `extraEnv[PRISM_CONTROL_URL]` | `http://127.0.0.1:28080` | Loopback Control endpoint exposed by the trust sidecar. |
+| `extraEnv[PRISM_STUDIO_PUBLIC_URL]` | `https://prism-studio` | Link origin returned to users. |
+| `extraContainers[prism-agent-bridge].image`, `imagePullPolicy` | `ghcr.io/datrab/kubeclaw-prism-agent:latest`, `Always` | Development bridge image; deployment must align it with the selected agent image. |
+| `extraContainers[prism-agent-bridge].command` | `node /opt/kubeclaw-prism/agent-bridge.mjs` | Starts only the bounded bridge. |
+| Bridge `PORT`, `PRISM_CONTROL_URL`, `PRISM_STUDIO_PUBLIC_URL` | `18080`, `http://127.0.0.1:28080`, `https://prism-studio` | Listener and loopback/public destinations. |
+| Bridge `OPENCLAW_GATEWAY_TOKEN` | Secret `openclaw-shared-secrets/gatewayToken-prism` | Token reference, not a plain value. |
+| Bridge volume mounts | `config` at `/home/node/.openclaw`; `tmp` at `/tmp` | Required OpenClaw configuration and writable temporary space. |
+| Bridge security context | UID/GID 1000; no privilege escalation; read-only root; all capabilities dropped | Least-privilege sidecar boundary. |
+| Bridge readiness and liveness | `/ready` after 3 seconds; `/health` after 10 seconds; port 18080 | Process probes only. |
+| Bridge resource request and limit | `50m/128Mi`; `500m/512Mi` | Admission and maximum sidecar resources. |
+| `workspace.enabled`, `workspace.overrideOnRestart` | `true`, `true` | Install the reviewed Prism workspace on every restart. |
+| `workspace.soul`, `workspace.tools` | Embedded Prism role and mandatory tool instructions | These guide the model. They do not replace server-side validation or authorization. |
+| `probes.dependencies.redis.enabled` | `false` | Prism Agent does not require the common chart's Redis dependency probe. |
+| `probes.dependencies.registries.enabled`, `endpoints` | `false`, empty list | Prism Agent does not require the common registry dependency probe. |
+
+The common chart contains other capabilities for other roles. They are outside
+this Prism overlay and do not become Prism features merely because the shared
+chart supports them.
 
 > **Source evidence — agent configuration**
 >
 > [The common agent chart defines bundle, auth, trust, LiteLLM, Discord, model, and Git value families](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/kubeclaw/values.yaml#L16-L220).
+>
+> [The shipped Prism overlay fixes the complete role, bridge, model, workspace, and dependency-probe selection](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/my-values/prism-agent-values.yaml#L1-L103).
 >
 > [The deploy command binds the selected Prism bundle and platform LiteLLM endpoint after the private agent overlay](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/scripts/deploy.sh#L1688-L1748).
 
@@ -505,6 +553,13 @@ Confirm that `gatewayToken-prism` exists before deployment.
 ./scripts/deploy.sh prism
 ```
 
+The maintained command currently requires chart-owned PostgreSQL
+(`postgresql.enabled: true`). Although the chart can omit PostgreSQL resources,
+`deploy.sh prism` waits for `statefulset/prism-postgresql`, and `prism-smoke`
+enters it. `prism-status` only lists the resources that exist; it does not make
+external PostgreSQL a supported deployment mode. External PostgreSQL needs
+deployment, migration, backup, and smoke support before it is supported.
+
 The command performs these operations:
 
 1. It verifies the selected images, values, and code bundle.
@@ -524,6 +579,8 @@ until the old workload can no longer return.
 >
 > [The deploy command runs render checks, host preflight, Secret checks, migration-aware Helm install, and agent install](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/scripts/deploy.sh#L1684-L1795).
 >
+> [The maintained deploy waits for the chart-owned PostgreSQL StatefulSet, and smoke enters that StatefulSet](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/scripts/deploy.sh#L1793-L1811).
+>
 > [Migrations take one advisory lock and commit each ordered migration name in one transaction](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L21-L75).
 
 ### 4. Verify status and smoke behavior
@@ -536,10 +593,11 @@ until the old workload can no longer return.
 Also inspect the expected workloads:
 
 ```bash
-kubectl get deploy agent-prism prism-control prism-worker prism-studio -n kubeclaw
-kubectl get statefulset prism-postgresql -n kubeclaw
-kubectl get jobs,cronjobs,pvc,svc,ingress -n kubeclaw
-kubectl exec -n kubeclaw deployment/agent-prism -c kubeclaw -- openclaw gateway status
+prism_namespace="${PRISM_NAMESPACE:-kubeclaw}"
+kubectl get deploy agent-prism prism-control prism-worker prism-studio -n "$prism_namespace"
+kubectl get statefulset prism-postgresql -n "$prism_namespace"
+kubectl get jobs,cronjobs,pvc,svc,ingress -n "$prism_namespace"
+kubectl exec -n "$prism_namespace" deployment/agent-prism -c kubeclaw -- openclaw gateway status
 ```
 
 If the worker is not ready, do not bypass the readiness probe.
@@ -570,7 +628,8 @@ The active request and job have durable identities.
 Find the private Studio address:
 
 ```bash
-kubectl get ingress prism-studio -n kubeclaw
+prism_namespace="${PRISM_NAMESPACE:-kubeclaw}"
+kubectl get ingress prism-studio -n "$prism_namespace"
 ```
 
 Open its HTTPS Tailscale address from an authenticated device.
@@ -765,7 +824,8 @@ Publication later creates independent worker-rendered screenshots and ARIA snaps
 
 Run the design evaluation before approval.
 The worker checks document coverage, references, flows, responsive definitions,
-accessibility metadata, content structure, and visual-quality policy.
+accessibility metadata, and content structure. The finding contract reserves a
+`visual-quality` gate, but the current evaluator does not emit that finding.
 
 Findings have three levels:
 
@@ -774,6 +834,10 @@ Findings have three levels:
 | `blocking` | Correct the document. Approval is not possible. |
 | `review` | Read the exact finding and explicitly accept it only when the remaining trade-off is valid. |
 | `information` | Record or inspect it as useful context. It does not block approval. |
+
+The contract supports `information`, but the current deterministic evaluator
+does not emit that level either. Browser capture performs separate interactive
+label and contrast checks during publication.
 
 Finding IDs are derived from the finding content.
 A document change can create a different finding set.
@@ -1043,6 +1107,16 @@ deletion can still remove namespaced storage objects according to cluster policy
 
 ## Local Development and Verification
 
+Prepare these tools before you treat a local result as complete:
+
+| Tool | Why Prism needs it |
+| --- | --- |
+| Node.js 24 and npm | This is the repository CI runtime for the Prism gates. |
+| Bash | The dependency bootstrap and several verification scripts use Bash. |
+| Helm | Chart lint, render, and Worker readiness tests call the local Helm binary. |
+| OpenSSL | Provider-cancellation and product-controller tests create temporary local certificates. |
+| Compatible Chromium binaries | Studio and the mobile-editor and preview-isolation spikes use Playwright. |
+
 Install the root and Prism spike dependencies with the maintained bootstrap:
 
 ```bash
@@ -1050,7 +1124,22 @@ npm run bootstrap:prism:tests
 ```
 
 The script uses `npm ci`, includes development dependencies, disables package
-scripts, and installs the four Prism spike packages.
+scripts, and installs the four Prism spike packages. Because it uses
+`--ignore-scripts`, it does not install browser binaries. It also does not
+install Helm, OpenSSL, or operating-system browser libraries.
+
+After the bootstrap, install Chromium through each package's local Playwright
+version if the machine does not already have the matching cached browser:
+
+```bash
+(cd skills/prism && npx --no-install playwright install chromium)
+(cd spikes/prism/mobile-editor && npx --no-install playwright install chromium)
+(cd spikes/prism/preview-isolation && npx --no-install playwright install chromium)
+```
+
+Playwright can still report missing system libraries after it downloads the
+browser. Install those libraries with the package method approved for the host;
+do not turn a missing browser or system binary into a skipped pass.
 
 Use the smallest check that proves your change, then run the repository gate.
 

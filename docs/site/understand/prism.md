@@ -69,30 +69,34 @@ flowchart LR
     User[User or agent] --> Control[Prism Control]
     Studio[Prism Studio] --> Control
     Control --> DB[(PostgreSQL and pgvector)]
+    Control --> Agent[Agent Bridge]
+    Agent --> OpenClaw[OpenClaw Agent]
     Control --> Worker[Prism Worker]
     Worker --> Core[Worker Core]
     Core --> Engine[Prism Engine]
-    Engine --> Provider[Design provider]
     Engine --> Render[Renderer and evaluation]
-    Ingest[Ingestion service] --> Control
+    Control --> Ingest[Ingestion service]
     Ingest --> Source[External source]
-    Engine --> Artifacts[Content-addressed artifacts]
+    Worker -->|artifact HTTP| Control
+    Control --> Artifacts[Content-addressed artifacts]
     Control --> Baseline[Approved baseline bundle]
     Baseline --> Adapter[Pipeline adapter]
-    Adapter --> Nova[Nova]
     Adapter --> Buster[Buster]
     Adapter --> Forge[Forge]
 ```
 
 Text version: A user works through Studio or calls Control through an allowed
 agent path. Control validates identity and intent, and stores the durable
-request. Background work goes through the Prism Worker and neutral Worker
-Core before the Prism Engine interprets it. The Engine uses typed operations,
-the renderer, evaluation, retrieval, and an optional design provider. Source
-ingestion enters through a separate service and rights gate. PostgreSQL holds
-relational authority. The artifact store holds immutable bytes. Human approval
-binds one revision and its evidence into a baseline. The pipeline adapter then
-creates digest-bound work for Nova, Buster, or Forge.
+request. Model-driven generation uses a durable Agent job, the Agent Bridge,
+and OpenClaw. Deterministic render, evaluation, embedding, and low-level
+publication work goes through the Prism Worker and neutral Worker Core before
+the Prism Engine interprets it. The production native Worker rejects
+`generate`. Source ingestion enters through a separate service and rights
+gate. PostgreSQL holds relational authority. The Worker reads and writes
+immutable artifact bytes through Control. Human approval binds one revision
+and its evidence into a baseline. The pipeline adapter then creates a
+digest-bound Buster plan or read-only Forge assignments. Nova calls Control
+directly; the adapter does not create a Nova input.
 
 ## Authority Map
 
@@ -143,19 +147,25 @@ artifact cleanup need explicit rules.
 >
 > [The domain applies typed operations to a clone, checks the base revision, and validates the complete result](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/domain/index.ts#L5-L113).
 >
-> [The storage repository uses transactions, row locks, and a current-revision compare-and-swap](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L79-L199).
+> [The storage repository uses transactions and row locks for project and direction transitions](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L79-L179).
 >
-> [The artifact store verifies content identity and publishes with no-replace behavior](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/artifacts.ts).
+> [Revision writes advance the current pointer with a compare-and-swap condition](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L262-L292).
+>
+> [The artifact store verifies content identity and publishes with no-replace behavior](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/artifacts.ts#L39-L67).
 
 ## Five Engine Operations
 
 The Prism Engine accepts five operations in contract major 1:
 
-- `generate` proposes typed document changes;
+- `generate` proposes typed document changes when a caller supplies a design
+  provider; the production native Worker does not admit this operation;
 - `render` creates bounded preview or export output;
 - `evaluate` creates quality findings;
-- `ingest` admits allowed source material; and
-- `publish` creates output only after the input states that approval exists.
+- `ingest` validates text and requests an embedding from the provider; it does
+  not acquire a source or grant rights; and
+- `publish` requires an `approved: true` input and emits a small manifest. It
+  does not perform the governed approval checks or assemble the complete
+  baseline archive.
 
 The Engine validates the request and result identity for each operation.
 The provider does not receive authority to replace the document directly.
@@ -163,6 +173,9 @@ The Engine applies provider operations and validates the resulting document.
 
 This design contains an unreliable or external provider. It can propose work,
 but it cannot bypass document semantics, approval, or result validation.
+The Ingestion, corpus, Control, approval, and baseline paths provide the
+product-level admission and publication boundaries around these lower-level
+Engine operations.
 
 > **Source evidence — engine boundary**
 >
@@ -208,7 +221,7 @@ Prism has distinct answers for different failures:
 | Stale Studio edit | Keep the local intent, load the current revision, and reconcile explicitly. |
 | Duplicate request | Return or reconcile the result only when the stable identity and input fingerprint agree. |
 | Lost worker response | Inspect durable job and attempt state before dispatching again. |
-| Cancellation | Propagate one cancellation through Control, Worker Core, Engine, provider, browser work, and cleanup. |
+| Cancellation | Treat cancellation as boundary-specific. Worker Core propagates its accepted attempt signal into Engine and cleanup. Studio aborts its Control HTTP request, but Control does not currently bind that disconnect to a request-wide operation signal. |
 | Process restart | Reconcile durable intent, ownership, journal, and result state. Do not infer success from process exit. |
 | Database uncertainty | Stop the transition and inspect the transaction outcome through stable record identity. |
 | Missing artifact | Treat the baseline as incomplete. Do not replace content under the expected digest. |

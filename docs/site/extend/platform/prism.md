@@ -115,9 +115,15 @@ Increasing a transport limit does not increase the contract limit.
 
 ## Add or Change a Document Operation
 
-The canonical editor input is a typed operation, not a replacement document.
-Each operation carries `baseRevision`.
-Control applies it only to that revision and creates a new immutable revision.
+The canonical Studio editor input is a typed operation, not a replacement
+document. Each operation carries `baseRevision`. Control applies it only to
+that revision and creates a new immutable revision.
+
+There is one separate whole-document boundary. A fenced Agent job can submit a
+complete next `PrismDocument`. Control validates its job, project, round,
+preference generation, source revision, exact revision increment, and complete
+document before the repository replaces the current pointer. Do not reuse this
+privileged Agent boundary as a browser update shortcut.
 
 The current operation owners are:
 
@@ -145,9 +151,11 @@ unsafe.
 
 > **Source evidence — operation authority**
 >
-> [The Domain union and application path enforce revision compare-and-swap, structural rules, cloning, and full result validation](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/domain/index.ts#L5-L113).
+> [The Domain union checks the supplied base revision and enforces structural rules, cloning, and full result validation](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/domain/index.ts#L5-L113).
 >
 > [The Puck adapter converts supported editor changes into typed Prism operations](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/studio/puck-adapter.ts#L204-L263).
+>
+> [The fenced Agent revision route validates a complete next document before repository replacement](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L265-L277).
 
 ## Add a Node Type or Renderer Feature
 
@@ -260,7 +268,7 @@ Do not replace source events with one mutable preference score.
 
 > **Source evidence — evaluation and preference boundaries**
 >
-> [Deterministic evaluation emits stable findings for coverage, references, flows, responsive behavior, accessibility, content, and visual quality](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/evaluation/index.ts#L4-L180).
+> [The evaluator emits stable findings but does not emit its reserved visual-quality gate](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/evaluation/index.ts#L4-L180).
 >
 > [Preference projection validates events, deduplicates identity, applies retractions, retains origins, and calculates time-dependent effective scores](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/preferences/index.ts#L1-L89).
 
@@ -277,15 +285,26 @@ Use this sequence:
    ingestion-only, or internal artifact traffic.
 2. Select session, CSRF, ingress secret, bearer secret, or SPIFFE identity as
    required by that trust boundary.
-3. Set the request byte and body-time limit before JSON parsing.
-4. Validate the contract and relationship rules.
-5. Put related database changes in one transaction.
-6. Use compare-and-swap for a mutable current pointer.
-7. Commit durable intent before remote dispatch.
-8. Reconcile an uncertain remote response by stable identity.
-9. Add client handling and an operator diagnosis path.
-10. Test wrong method, wrong identity, stale revision, duplicate request,
+3. Define authorization separately from authentication: identify which role or
+   project membership can read or change each resource.
+4. Set the request byte and body-time limit before JSON parsing.
+5. Validate the contract and relationship rules.
+6. Put related database changes in one transaction.
+7. Use compare-and-swap for a mutable current pointer.
+8. Commit durable intent before remote dispatch.
+9. Reconcile an uncertain remote response by stable identity.
+10. Add client handling and an operator diagnosis path.
+11. Test wrong method, wrong identity, unauthorized resource, stale revision, duplicate request,
     conflicting duplicate, cancellation, restart, and storage failure.
+
+The current shared browser-session helper authenticates a Prism audience and
+checks CSRF. It does not enforce stored roles or project membership on the
+general Studio routes. The current JSON body helper also enforces a byte limit,
+but no body-read deadline. New work must close these gaps explicitly; using the
+existing helpers does not satisfy the authorization or body-time requirements.
+Most current Control failures become `422`, including several authentication
+and storage failures, so a stable failure does not yet imply a precise HTTP
+status class.
 
 Do not infer an operator identity from a normal browser header.
 Do not expose internal artifact upload or worker dispatch through the public
@@ -375,11 +394,11 @@ commit the database reference.
 
 > **Source evidence — storage change path**
 >
-> [The migration runner serializes migration application and records each file digest](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L11-L75).
+> [The migration runner serializes migration application and records each migration filename and application time; it does not store a content digest](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L11-L75).
 >
-> [The revision repository uses transactions, row locks, and current-revision compare-and-swap](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L79-L199).
+> [The revision repository creates immutable revisions and advances the current pointer with a compare-and-swap update](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L262-L330).
 >
-> [The content-addressed artifact store verifies bytes and uses no-replace publication](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/artifacts.ts).
+> [The content-addressed artifact store verifies bytes and uses no-replace publication](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/artifacts.ts#L39-L67).
 
 ## Change Publication or Pipeline Handoff
 
@@ -421,7 +440,7 @@ Run the smallest row that covers the change, then run the complete Prism suite.
 | Control route | Control, internal-auth, and focused route tests | Native PostgreSQL and deployed ingress identity |
 | Worker path | Worker service, cancellation, readiness, and binding tests | Native worker, cgroup v2, launcher, browser, and PostgreSQL |
 | Studio | Studio adapter, roundtrip, preview-asset, typecheck, and build | Playwright desktop and compact flows |
-| Migration | Storage, domain-storage, and migration digest tests | New database, upgrade database, backup, and restore |
+| Migration | Storage and domain-storage tests, plus an explicit review that applied filenames match the intended SQL | New database, upgrade database, backup, and restore; add a digest guard before claiming SQL-content drift detection |
 | Pipeline handoff | Pipeline-adapter and Nova-stage contract tests | Complete Nova-to-Prism environment acceptance |
 
 Relevant environment tests can be unavailable on a development machine.

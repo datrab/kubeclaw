@@ -96,7 +96,7 @@ This startup snapshot prevents later environment changes from changing a running
 | `PORT` | `8080` | Standard in-cluster service port. |
 | `PRISM_SESSION_SECRET` | Required | Signs the 15-minute user session. |
 | `PRISM_INGRESS_SECRET` | Required | Trusts only the Studio ingress when it exchanges Tailscale identity. |
-| `PRISM_INGESTION_SECRET` | Required, even when the optional Ingestion workload is disabled | Keeps one fixed Control configuration, but corpus acquisition will not work without the service. |
+| `PRISM_INGESTION_SECRET` | Required, even when the optional Ingestion workload is disabled | The observed startup contract always requires this secret. Corpus acquisition will not work without the service. |
 | `ARTIFACT_ROOT` | `/var/lib/prism/artifacts` | Gives Control one local content-addressed artifact root. |
 | `PRISM_WORKER_URL` | `http://prism-worker:8080` | Selects the deterministic execution service. |
 | `PRISM_INGESTION_URL` | `http://prism-ingestion:8080` | Selects the optional acquisition service. |
@@ -118,7 +118,9 @@ This startup snapshot prevents later environment changes from changing a running
 - `GET /ready` runs `SELECT 1`. It proves that Control can reach PostgreSQL at that moment.
 - Readiness does not probe the Worker, Agent, Ingestion service, artifact volume, or optional product controller.
 
-This narrow meaning is deliberate for service independence, but an operator must not read it as complete Prism readiness.
+This narrow probe keeps the services from becoming one readiness dependency chain.
+That benefit is an architecture inference from the implemented boundary, not a motive recorded in the source.
+An operator must not read the probe as complete Prism readiness.
 
 ### User session and authorization
 
@@ -163,7 +165,7 @@ Worker HMAC requests have a five-minute timestamp window and a PostgreSQL nonce 
 
 ## 2. API Surface and Request Flows
 
-Control has three API classes.
+Control has four API classes.
 They have different trust rules and must not be treated as one public API.
 
 ### Service and pipeline routes
@@ -320,7 +322,12 @@ For this reason, a claim has a random fence and a 16-minute expiry.
 Only `accepted` work can be claimed.
 Once work is `running`, expiry changes it to `needs_nova`.
 It is never returned to the automatic queue.
-The same session blocks later accepted jobs until an operator resolves the uncertain outcome.
+The same session blocks later accepted jobs.
+The current API has no supported transition that resolves a `needs_nova` job.
+An operator can inspect the durable state, but must not mutate the database or
+submit replacement work as an improvised recovery procedure. Restoring service
+requires a future supported reconciliation path or a code change with its own
+migration and acceptance evidence.
 
 The bridge polls once per second and runs only one active job.
 It validates the envelope identity and local profile before launch.
@@ -468,8 +475,10 @@ Call `/ready` when end-to-end Worker admission must be checked.
 | Native poll interval | 20 ms |
 | Native close timeout | 105 seconds |
 
-All numeric environment values must be positive safe integers.
+The listed limit and deadline settings must be positive safe integers.
 Most timer and HTTP limits cannot exceed 2,147,483,647.
+Other numeric settings have their own validators; for example, the Worker
+converts `PORT` without applying this shared limit rule.
 The Helm chart also requires Worker shutdown to exceed native close plus drain time and requires the pod termination grace to exceed Worker shutdown.
 
 > **Source evidence — limits**
@@ -542,7 +551,7 @@ Prism has different recovery contracts for different work.
 | Native engine operation | PostgreSQL envelope and bound result plus native attempt journal | Reuse the original envelope. Replay the same result when complete. Do not create a new attempt for uncertain work. |
 | Native process ownership | Host ownership store and attempt journal | Reconcile scopes and journal before readiness. |
 | Agent job before claim | PostgreSQL `accepted` job | A bridge can claim it once. |
-| Agent job after claim | Fence, runner, expiry, attempt envelope, result, and outcome | Expiry becomes `needs_nova`. No automatic replay. |
+| Agent job after claim | Fence, runner, expiry, attempt envelope, result, and outcome | Expiry becomes `needs_nova`. No automatic replay exists, and the current API has no supported resolution transition. |
 | Baseline | PostgreSQL binding plus content-addressed archive | Return the existing archive for the same approval. |
 | Ingestion quarantine | Ephemeral file named by digest | Startup and periodic reaper delete expired files. Control activates corpus only after Worker processing and cleanup. |
 
@@ -589,7 +598,10 @@ It does not contain database access or session-signing authority.
 The proxy copies only a small header allowlist: Origin, content type, cookies, CSRF, idempotency key, and the three Tailscale identity headers.
 It always adds the ingress secret.
 It limits a request body to 2 MB and uses a 30-second Control timeout by default.
-It cancels upstream work after client disconnect. It blocks redirects and streams the response with backpressure.
+It aborts the Studio-to-Control HTTP request after client disconnect. Control
+can still continue a durable or native operation because it does not convert
+that disconnect into a request-wide operation signal. The proxy blocks
+redirects and streams the response with backpressure.
 
 Static-file resolution decodes the path and proves that it remains under `STUDIO_ROOT`.
 Unknown client routes fall back to `index.html`.
@@ -622,7 +634,14 @@ Stable Studio errors include:
 The Ingestion service is optional and disabled by default in the Helm chart.
 When enabled, it requires explicit CPU and memory sizing and uses a 4 GiB ephemeral quarantine volume.
 
-It accepts `POST /v1/acquisitions` with a bearer secret.
+Its complete HTTP surface is:
+
+| Route | Meaning |
+| --- | --- |
+| `GET /health` | Process liveness only. |
+| `GET /ready` | Process readiness only; it does not test quarantine writes or external access. |
+| `POST /v1/acquisitions` | Acquire and quarantine one bounded source with the bearer secret. |
+| `DELETE /v1/acquisitions/:digest` | Delete one quarantined object with the bearer secret. Control uses this for cleanup. |
 It can process uploaded base64 content, metadata-only content, or an HTTPS public source.
 For public sources it:
 
@@ -672,7 +691,9 @@ Its caller must provide a `BaselineHandoff` with a SHA-256 baseline digest, proj
 It fixes the visual plugin to `kubeclaw.visual@1`, the strict comparison profile, and the two `.swarm` manifest paths.
 
 `toForgeAssignments` gives each module a read-only baseline assignment and rejects an unknown target ID.
-The adapter validates the digest and a nonempty target set.
+Both helpers validate the digest. `toBusterPlan` also requires a nonempty
+target set. `toForgeAssignments` permits empty inputs and validates each
+referenced target ID when assignments are present.
 Its caller must validate project IDs, path safety, duplicate identities, and archive content.
 Those checks remain the caller's responsibility.
 
@@ -720,7 +741,7 @@ The following table separates present behavior from a future or external respons
 | Area | Implemented now | Limit or external responsibility |
 | --- | --- | --- |
 | Pipeline integration | Durable design dispatch and approved archive return | The adapter does not itself wire a complete Nova pipeline. |
-| Design generation | Durable, fenced OpenClaw Agent jobs | An uncertain claimed action needs Nova or operator reconciliation. |
+| Design generation | Durable, fenced OpenClaw Agent jobs | An uncertain claimed action enters `needs_nova`; the current API has no supported resolution transition. |
 | Deterministic engine work | Native Worker with bounded process-tree execution | `generate` is intentionally unavailable in the native engine path. |
 | User entry | Tailscale identity through Studio and signed sessions | General design routes do not use the stored session roles for finer authorization. |
 | Product decisions | Optional signed operator authority and recovery | Disabled by default and dependent on an external controller. |
@@ -740,7 +761,7 @@ A reader can only operate and extend Prism safely when the proof boundary and th
 
 | Code or state | Meaning | Required response |
 | --- | --- | --- |
-| `needs_nova` | A claimed external Agent action has an uncertain outcome, or the session is blocked by one. | Reconcile the same job. Do not submit a replacement automatically. |
+| `needs_nova` | A claimed external Agent action has an uncertain outcome, and that session cannot admit later work. | Do not replay, replace, or edit database state. The current API has no supported resolution transition; escalate this implementation gap. |
 | `PRISM_NATIVE_RECONCILIATION_REQUIRED` | Native ownership recovery is incomplete. | Keep Worker admission closed and inspect the host journal and scope state. |
 | `PRISM_NONCE_DATABASE_UNAVAILABLE` | HMAC admission cannot check its nonce table. | Restore PostgreSQL access or the migration. Do not bypass replay protection. |
 | `PRISM_NATIVE_PROFILE_NOT_ACCEPTED` | A new attempt does not match the installed engine profile. | Align producer and Worker image identity. |

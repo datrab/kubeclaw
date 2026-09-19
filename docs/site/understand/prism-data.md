@@ -322,6 +322,15 @@ interactive-label and contrast findings during baseline publication.
 
 ### Approval is revision authority
 
+Here, “human” means an authenticated Prism Studio session. It does not mean
+that Control proved an operator role or project membership. The session carries
+roles, but the general project, document, approval, baseline, corpus, and
+artifact routes do not enforce those roles or a project access-control list.
+Every authenticated Studio session can currently list all projects and can
+address shared resources when it knows their identifiers. Approval therefore
+binds a person and revision for integrity and audit, but is not an
+authorization boundary between Studio users.
+
 Approval confirms all of these facts:
 
 - project and document ownership match;
@@ -338,7 +347,10 @@ make an approval valid for different bytes by supplying only a label.
 ### A baseline is stronger than an approval
 
 Publication first looks for an existing baseline for the same approval,
-project, and document. An exact repeat returns that record. A new publication
+project, and document. An exact repeat returns that record before Control
+rechecks the current request, round, architecture, warning set, selected
+direction, or current document revision. This is idempotent replay of an old
+publication result, not fresh proof that it remains current. A new publication
 requires the approved revision, architecture digest, accepted warning set,
 and selected direction to remain current.
 
@@ -397,6 +409,10 @@ There is no automatic artifact garbage collector in the current implementation.
 > [It checks references, accessibility, responsive groups, and flows](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/evaluation/index.ts#L37-L235).
 >
 > [Approval binds the current revision, active architecture, quality result, and exact accepted warning IDs](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L521-L565).
+>
+> [The shared Studio guard verifies the session and CSRF value and returns roles, but does not apply a role or project-membership rule](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L108-L123).
+>
+> [Existing-baseline replay returns after the approval, project, and document lookup and before the new-publication checks](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L567-L595).
 >
 > [Publication rechecks revision, digest, architecture, warnings, and selected direction before it assembles evidence](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L567-L645).
 >
@@ -481,9 +497,18 @@ Control uses one ReadWriteOnce persistent volume for these files and therefore
 requires one Control replica. The workload uses `Recreate` so two Control pods
 do not write the single-writer volume during rollout.
 
+The public artifact download route checks only the general Studio session and
+the artifact digest. It does not verify project ownership or membership. A
+digest proves byte identity; it is not an access grant. In the current system,
+however, any authenticated Studio user who knows a digest can fetch that
+artifact. Operators must treat artifact digests as sensitive identifiers until
+Control enforces resource authorization.
+
 > **Source evidence — local CAS**
 >
 > [The artifact store implements pending-file publication, file and directory synchronization, hard-link collision handling, no-follow reads, and digest verification](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/artifacts.ts#L6-L67).
+>
+> [The public artifact route reads by digest after the general session guard and does not perform a project lookup](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L914-L920).
 >
 > [The chart rejects more than one Control replica while artifact storage is ReadWriteOnce](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/templates/workloads.yaml#L1-L9).
 >
@@ -592,12 +617,19 @@ The fixed constant 60 reduces the influence of small rank differences. The
 cost is loss of raw score magnitude.
 
 The final SQL candidate request is `max(limit * 10, 100)`. The public endpoint
-clamps `limit` to 1 through 50, so it can ask SQL for as many as 500 candidates.
-It clamps `sourceFamilyLimit` to 1 through 10, with default 2. Preferred
+intends to clamp `limit` to 1 through 50 and `sourceFamilyLimit` to 1 through
+10, with default 2. Nonnumeric query values currently become `NaN` instead of
+a clean validation error; callers must not rely on them being sanitized. The
+hybrid query creates at most 100 text candidates and 100 vector candidates, so
+the fused set has an effective ceiling of 200 even when the calculated SQL
+limit is 500. Preferred
 metadata moves matching candidates ahead without excluding other candidates.
 The family cap then limits one source family before Prism stops at the caller
-limit. Each result explains its ranking method, preference match, source
-family, and diversity cap. A short result sets a coverage-gap message.
+limit. Each result explains its ranking method, the reported preference match,
+source family, and diversity cap. The current `preferredMatched` value is also
+`true` when no preferred filter was supplied because an absent filter counts as
+a match. Treat it as an ordering explanation, not proof that the caller asked
+for a preference. A short result sets a coverage-gap message.
 
 ### Embedding limits and scaling cost
 
