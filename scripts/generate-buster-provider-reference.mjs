@@ -15,12 +15,23 @@ function resolvePointer(schema, pointer) {
     .reduce((value, part) => value?.[part], schema);
 }
 
-function variants(node, schema) {
+const choiceIds = new WeakMap();
+let nextChoiceId = 1;
+function variants(node, schema, choices = []) {
   if (!node || typeof node !== 'object') return [];
-  if (node.$ref) return variants(resolvePointer(schema, node.$ref), schema);
-  return [node, ...(node.allOf ?? []).flatMap((item) => variants(item, schema)),
-    ...(node.anyOf ?? []).flatMap((item) => variants(item, schema)),
-    ...(node.oneOf ?? []).flatMap((item) => variants(item, schema))];
+  if (node.$ref) return variants(resolvePointer(schema, node.$ref), schema, choices);
+  const result = [{ node, choices }];
+  for (const item of node.allOf ?? []) result.push(...variants(item, schema, choices));
+  for (const keyword of ['anyOf', 'oneOf']) {
+    const branches = node[keyword] ?? [];
+    if (!branches.length) continue;
+    if (!choiceIds.has(node)) choiceIds.set(node, nextChoiceId++);
+    const id = choiceIds.get(node);
+    for (const [index, item] of branches.entries()) {
+      result.push(...variants(item, schema, [...choices, { id, index, count: branches.length }]));
+    }
+  }
+  return result;
 }
 
 function typeText(nodes) {
@@ -49,35 +60,53 @@ function ruleText(nodes) {
 
 function collect(schema) {
   const rows = [];
-  const walk = (raw, fieldPath, required, ancestors) => {
+  const walk = (raw, fieldPath, required, inheritedChoices, ancestors) => {
     const nodes = variants(raw, schema);
-    const identity = nodes.map((node) => node).filter(Boolean);
-    if (fieldPath) rows.push({ path: fieldPath, required, type: typeText(nodes), rules: ruleText(nodes) });
-    for (const node of nodes) {
+    if (fieldPath) rows.push({ path: fieldPath,
+      required, choices: inheritedChoices,
+      type: typeText(nodes.map((entry) => entry.node)),
+      rules: ruleText(nodes.map((entry) => entry.node)) });
+    for (const { node, choices } of nodes) {
       if (ancestors.has(node)) continue;
       const next = new Set(ancestors).add(node);
       const requiredNames = new Set(node.required ?? []);
       for (const [name, child] of Object.entries(node.properties ?? {})) {
-        walk(child, fieldPath ? `${fieldPath}.${name}` : name, requiredNames.has(name), next);
+        walk(child, fieldPath ? `${fieldPath}.${name}` : name, requiredNames.has(name),
+          [...inheritedChoices, ...choices], next);
       }
-      if (node.items) walk(node.items, `${fieldPath}[]`, false, next);
+      if (node.items) walk(node.items, `${fieldPath}[]`, false, [...inheritedChoices, ...choices], next);
       if (node.additionalProperties && typeof node.additionalProperties === 'object') {
-        walk(node.additionalProperties, `${fieldPath}{}`, false, next);
+        walk(node.additionalProperties, `${fieldPath}{}`, false, [...inheritedChoices, ...choices], next);
       }
     }
   };
-  walk(schema, '', true, new Set());
+  walk(schema, '', true, [], new Set());
   const unique = new Map();
   for (const row of rows) {
-    const current = unique.get(row.path) ?? { path: row.path, requiredStates: new Set(), types: new Set(), rules: new Set() };
-    current.requiredStates.add(row.required);
+    const current = unique.get(row.path) ?? { path: row.path, occurrences: [], types: new Set(), rules: new Set() };
+    current.occurrences.push({ required: row.required, choices: row.choices });
     current.types.add(row.type);
     current.rules.add(row.rules);
     unique.set(row.path, current);
   }
+  const presence = (occurrences) => {
+    const unconditional = occurrences.filter((item) => item.choices.length === 0);
+    if (unconditional.some((item) => item.required)) return 'Required';
+    if (unconditional.length) return occurrences.some((item) => item.required) ? 'Conditional' : 'Optional';
+    if (!occurrences.some((item) => item.required)) return 'Optional';
+    const choiceGroups = new Map();
+    for (const occurrence of occurrences) for (const choice of occurrence.choices) {
+      const group = choiceGroups.get(choice.id) ?? { count: choice.count, indexes: new Set(), allRequired: true };
+      group.indexes.add(choice.index);
+      group.allRequired &&= occurrence.required;
+      choiceGroups.set(choice.id, group);
+    }
+    return [...choiceGroups.values()].some((group) => group.allRequired && group.indexes.size === group.count)
+      ? 'Required' : 'Conditional';
+  };
   return [...unique.values()].map((row) => ({
     path: row.path,
-    presence: row.requiredStates.size > 1 ? 'Conditional' : row.requiredStates.has(true) ? 'Required' : 'Optional',
+    presence: presence(row.occurrences),
     type: [...row.types].sort().join(' or '),
     rules: [...row.rules].sort().join('; '),
   })).sort((a, b) => a.path.localeCompare(b.path));
@@ -96,6 +125,15 @@ for (const pluginName of fs.readdirSync(pluginRoot).sort()) {
 }
 providers.sort((a, b) => a.contractId.localeCompare(b.contractId));
 assert.equal(providers.length, 19, 'the provider inventory changed; inspect the new contract before publication');
+const containerBuild = providers.find((provider) => provider.contractId === 'kubeclaw.container-build@1');
+assert(containerBuild, 'container-build provider is absent');
+const containerRows = new Map(collect(containerBuild.schema).map((row) => [row.path, row]));
+assert.equal(containerRows.get('definition.type')?.presence, 'Required',
+  'a field required by every definition choice must remain required');
+assert.equal(containerRows.get('definition.dockerfile')?.presence, 'Conditional',
+  'the Dockerfile must be conditional on its definition choice');
+assert.equal(containerRows.get('definition.template')?.presence, 'Conditional',
+  'the template must be conditional on its definition choice');
 
 const flowFile = 'skills/buster/plugins/api-flow/schemas/flow.schema.json';
 const flow = JSON.parse(fs.readFileSync(path.join(root, flowFile), 'utf8'));
@@ -111,9 +149,11 @@ const lines = [
   'Last verified: generated from current provider schemas on 2026-09-19', '',
   '## How To Read The Tables', '',
   'A dotted name is an object path. `[]` identifies each array item. `{}` identifies',
-  'each value in a map. “Required” applies inside the immediate parent object. A',
-  'choice can make a field conditionally required even when the row says optional.',
-  'Read the choice rules after the table. The JSON Schema remains the validation',
+  'each value in a map. “Required” means that the immediate parent always requires',
+  'the field. “Conditional” means that a `oneOf` or `anyOf` choice introduces the',
+  'field. The selected choice can require it, while another valid choice can omit',
+  'it. “Optional” means that no applicable schema rule requires it. Read the choice',
+  'rules after the table to learn which branch applies. The JSON Schema remains the validation',
   'authority. This page makes that authority visible; it does not replace it.', '',
   'The generator records types, defaults, constants, allowed values, numeric and',
   'size limits, patterns, uniqueness, and closed-object rules. It intentionally does',

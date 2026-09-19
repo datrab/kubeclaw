@@ -189,7 +189,8 @@ It does not turn a test result into operator acceptance.
 
 The writing follows ASD-STE100 Issue 9 principles.
 It uses short sentences, active voice, defined technical nouns, and one meaning per sentence.
-Formal language validation and human-reader acceptance remain required publication checks.
+The project does not require or claim formal ASD-STE100 certification.
+Human-reader acceptance remains a publication check.
 
 ## Choose Your Next Page
 

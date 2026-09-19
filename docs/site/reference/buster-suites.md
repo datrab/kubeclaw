@@ -708,6 +708,46 @@ API and size budget have no live alias. Their right-hand commands are the
 strongest registered production-boundary checks. A successful check does not
 claim that an unrelated external target is healthy.
 
+### Configure, execute, and diagnose each suite
+
+The commands above are maintained verification programs. The `implementation`
+commands use controlled fixtures and prove provider behavior without claiming
+that an external service is ready. A `live` command uses configured external
+dependencies or submits a real remote plan. Read its source before use because
+the source defines required environment variables and safety checks. Never set
+an environment flag only to make a precondition disappear.
+
+For a project run, put the configuration described below in the applicable
+test scope, resolve it, and let Nova submit it as described in the
+[operator workflow](../use/workflows/buster-suite.md#supported-execution-paths).
+The platform operator must first enable the matching capability in the
+[Buster runtime configuration](buster-runtime-configuration.md#capability-blocks).
+For a repository proof, run the exact command from the repository root after
+`npm ci`. A command must exit zero and print its final success record. Keep the
+command, output, Git revision, and external target identity together.
+
+| Suite | Project configuration that makes work explicit | Executable repository proof | What to inspect first when it fails |
+| --- | --- | --- | --- |
+| Unit | Select `kubeclaw.unit-suite@1`; add a `direct-command` node with an operator-catalog executable and a declared JUnit path. Start from `unit-suite-blocking.json`. | `npm run verify:test-gate:phase8`; use `npm run verify:test-gate:unit-live` only with the remote token, source key, and configured Buster route required by its source. | Catalogue denial or process start means runtime policy. A zero exit with missing or invalid JUnit means report production, not transport. |
+| Container build | Add `kubeclaw.container-build@1` to the empty suite; select exactly one Dockerfile or template definition and an allowed Linux platform. | `npm run verify:test-gate:container-build-implementation`; then `npm run verify:test-gate:container-build-live` where BuildKit and the target registry are configured. | Separate BuildKit execution from registry manifest read-back. A pushed digest that cannot be read and matched is an error. |
+| Kubernetes fixture | Add a manifest-producing node and link its checked-manifest output to `kubeclaw.kubernetes-fixture@1`; use an immutable image and bounded retention. | `npm run verify:test-gate:kubernetes-fixture-implementation`; the remote production path is `npm run verify:test-gate:kubernetes-fixture-live`. | Inspect broker authorization, lease phase, manifest/image binding, readiness, and cleanup in that order. Preserve a retained lease expiry. |
+| HTTP | Add `kubeclaw.http@1` with an approved direct target or a typed deployment/exposure input, expected statuses, and bounded response size. | `npm run verify:test-gate:http-implementation`; use `npm run verify:test-gate:http-live` for the complete remote fixture path or the explicitly gated `http-capability-live` check for one in-cluster origin. | Distinguish origin-policy denial and transport error from a received response that violates an assertion. |
+| Tailscale exposure | Link a retained deployment to `kubeclaw.tailscale-exposure@1`; choose `release` or the durable `await-readiness` handoff and an allowed host suffix. | `npm run verify:test-gate:tailscale-exposure-implementation`; use `npm run verify:test-gate:tailscale-exposure-live` only with the cluster, Tailscale operator, immutable image, and remote credentials required by the script. | Inspect deployment ownership, exposure generation, ingress status, handoff, and release. Never delete an object owned by a newer generation. |
+| API | Select `kubeclaw.api-suite@1`; provide `.swarm/api-flow.json` and `.swarm/openapi.json`, then override target selection and operations for the project. | `npm run verify:test-gate:api-implementation`; `npm run verify:test-gate:api-cutover` is the strongest registered boundary check, not a general external API health test. | For flow, inspect the first failed step and cleanup result. For OpenAPI, inspect supported-subset validation and operation selection before network evidence. |
+| Accessibility | Select `kubeclaw.a11y-suite@1`; provide the endpoint and optional project profile, and use only exact, reasoned, expiring acceptances. | `npm run verify:test-gate:a11y-implementation`; use `npm run verify:test-gate:a11y-live` with the configured browser and remote endpoint path. | Separate browser launch or origin denial from Axe violations. An expired acceptance is an error, not an unsuppressed finding. |
+| Performance | Select `kubeclaw.lighthouse-suite@1`; provide the settings file, profile, target, and operator-known budget for blocking performance. | `npm run verify:test-gate:lighthouse-implementation`; use `npm run verify:test-gate:lighthouse-live` with its Chrome, target, and remote-runtime prerequisites. | Inspect Chrome launch and bounded report parsing before score or audit findings. Compare the retained median representative with all run summaries. |
+| Visual | Select `kubeclaw.visual-suite@1`; commit a reviewed baseline manifest, images, browser profile, and exact browser identity. | `npm run verify:test-gate:visual-implementation`; use `npm run verify:test-gate:visual-live` only in an environment with the required browser and target. | Check baseline digest and browser family/version before pixel findings. A provider failure must not update the baseline. |
+| End-to-end | Select `kubeclaw.e2e-suite@1`; commit the Playwright configuration and tests, set a positive blocking test minimum, and declare required test titles where omission matters. | `npm run verify:test-gate:e2e-implementation`; use `npm run verify:test-gate:e2e-live` with the sandbox, browsers, remote endpoint, and credentials declared by the script. | Inspect sandbox/process admission, Playwright JSON, executed-test count, required titles, and attachment limits before individual assertions. |
+| Security | Select `kubeclaw.security-suite@1`; link its deployment, image, and checked manifest; configure strict policies and exact expiring acceptances. | `npm run verify:test-gate:security-implementation`; use `npm run verify:test-gate:security-live` only with Trivy databases, registry access, cluster observation, endpoint, and remote runtime ready. | Route by node. Check database freshness for Trivy, response evidence for headers, immutable input binding for static scans, and observation freshness for runtime security. |
+| Size budget | Add `kubeclaw.size-budget@1` to the empty suite, link one build-output artifact, and set at least one blocking absolute or growth limit. | `npm run verify:test-gate:size-budget-implementation`; `npm run verify:test-gate:size-budget-production` proves the production boundary without an external build service. | Check artifact digest and archive safety before budget findings. A growth rule without a valid baseline is an error. |
+
+The empty suites need an added project node. The composed suites still need
+their project files, targets, and typed inputs. A resolver success with no node
+in an empty suite proves only that the declaration is valid; it does not prove
+that a test ran. The final result must name an attempt for every required node,
+show a passed gate decision, import all evidence, and prove cleanup or bounded
+retention.
+
 For a worked composition and diagnosis path, continue with
 [Run and diagnose a Buster suite](../use/workflows/buster-suite.md). For a new
 provider or suite contract, continue with [Extend Buster](../extend/buster.md).

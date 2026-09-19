@@ -2,7 +2,7 @@
 
 Status: Required by the project owner on 2026-09-15.
 Scope: New and revised documentation, from one module to the complete system.
-Language review: Not yet verified against the full ASD-STE100 Issue 9 rules and dictionary.
+Language review: Apply ASD-STE100 Issue 9 principles through the project review rules below. Formal certification is not required.
 
 ## Purpose and reader
 
@@ -26,10 +26,12 @@ The existing migration plan and progress reports can remain in German.
 Use [ASD-STE100](https://www.asd-ste100.org/) as the required language standard.
 The official site identifies Issue 9, dated 2025-01-15.
 
-Apply the full writing rules and dictionary during language review.
-Do not describe a short style checklist or a readability score as proof of compliance.
-Record the edition, review method, technical vocabulary, unresolved findings, and review scope.
-Until that review is complete, state that STE verification is pending.
+Use the full writing rules and dictionary when they are available to the reviewer.
+Formal or licensed ASD-STE100 certification is not an acceptance requirement.
+Do not claim formal compliance from a short style checklist or a readability
+score. Record the review method, technical vocabulary, unresolved findings,
+and review scope. Describe the result as project controlled-language review,
+not as certified ASD-STE100 compliance.
 
 Apply these project writing requirements during drafting:
 
@@ -207,7 +209,7 @@ Unknown reasons and documentation gaps must remain visible until resolved.
 | Depth | Applicable mechanism, failure, recovery, and consequence questions are answered |
 | Reasons | Significant decisions have evidence, or their missing reasons are explicit |
 | Readability | A new reader explains the flow and terms without chat history |
-| STE | Review against the declared official edition and dictionary; findings resolved or status remains pending |
+| Controlled language | Project review applies the declared ASD-STE100 principles; findings are resolved and no formal certification is claimed |
 | Operations | Required tasks have complete steps, observable results, and recovery paths |
 | Extensions | A clean-environment reader exercise produces the declared result |
 | References | Links and source callouts resolve at the documented revision and in published output |

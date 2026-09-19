@@ -151,7 +151,9 @@ A page is not complete because it exists or because a build passes. Completion r
 - an owner, source dependency, and check protect the page; and
 - source, local-test, deployment, and human-acceptance states remain distinct.
 
-ASD-STE100 verification is a separate gate. Current project language checks help writers, but they do not certify full ASD-STE100 conformance.
+The project controlled-language review applies ASD-STE100 principles. Formal
+ASD-STE100 verification or certification is not an acceptance gate and is not
+claimed by this documentation.
 
 ## Change Procedure
 

@@ -11,9 +11,11 @@ Last verified: generated from current provider schemas on 2026-09-19
 ## How To Read The Tables
 
 A dotted name is an object path. `[]` identifies each array item. `{}` identifies
-each value in a map. “Required” applies inside the immediate parent object. A
-choice can make a field conditionally required even when the row says optional.
-Read the choice rules after the table. The JSON Schema remains the validation
+each value in a map. “Required” means that the immediate parent always requires
+the field. “Conditional” means that a `oneOf` or `anyOf` choice introduces the
+field. The selected choice can require it, while another valid choice can omit
+it. “Optional” means that no applicable schema rule requires it. Read the choice
+rules after the table to learn which branch applies. The JSON Schema remains the validation
 authority. This page makes that authority visible; it does not replace it.
 
 The generator records types, defaults, constants, allowed values, numeric and
@@ -83,9 +85,9 @@ not invent a default when the schema has none.
 | `definition` | Required | object | no unknown fields |
 | `definition.buildArgs` | Optional | object | maximum entries 32 |
 | `definition.buildArgs{}` | Each map value | string | maximum length 4096 |
-| `definition.dockerfile` | Required | string | minimum length 1; maximum length 1024 |
+| `definition.dockerfile` | Conditional | string | minimum length 1; maximum length 1024 |
 | `definition.target` | Optional | string | pattern "^[a-z0-9]&#40;?:[a-z0-9._-]{0,126}[a-z0-9]&#41;?$" |
-| `definition.template` | Required | schema choice | constant "node-static@1" |
+| `definition.template` | Conditional | schema choice | constant "node-static@1" |
 | `definition.type` | Required | schema choice | constant "dockerfile"; constant "template" |
 | `outputName` | Optional | string | pattern "^[a-z0-9]&#40;?:[a-z0-9._-]{0,126}[a-z0-9]&#41;?$" |
 | `platform` | Optional | string | maximum length 64; pattern "^linux/[a-z0-9_+-]+&#40;?:/[a-z0-9._+-]+&#41;?$" |

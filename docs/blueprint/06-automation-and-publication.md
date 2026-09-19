@@ -31,7 +31,7 @@ The checked-in old blueprint output is not regenerated in AP02. Its stale counts
 9. Build publication output and inspect representative rendered pages, code blocks, diagrams and narrow layouts.
 10. Emit a small report with source revision, changed content, actual checks/results and remaining limits. Reuse existing hashes/reports; signed reports are not a new prerequisite.
 
-An automatic checker cannot determine that prose is understandable or that an operator has enough information. AP11 reader journeys remain required. Language checks can flag problems but cannot alone prove ASD-STE100 compliance. Apply the full official rules and dictionary as required by the [documentation quality standard](07-documentation-quality-standard.md). Preserve explanation depth when revising language; do not omit facts to satisfy a checker. Record STE verification as pending until the required review is complete.
+An automatic checker cannot determine that prose is understandable or that an operator has enough information. AP11 reader journeys remain required. Language checks can flag problems but cannot prove formal ASD-STE100 compliance. Apply the project controlled-language rules and the available ASD-STE100 guidance from the [documentation quality standard](07-documentation-quality-standard.md). Preserve explanation depth when revising language; do not omit facts to satisfy a checker. Formal certification is not a publication requirement and must not be claimed.
 
 ## Commands and truthful CI status
 

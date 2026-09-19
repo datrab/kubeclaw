@@ -20,28 +20,64 @@ This separation prevents a test provider from changing the pipeline. A provider
 can report facts about one attempt. It cannot add a test, change a blocking node
 to advisory, or declare the complete pipeline successful.
 
-**Decision:** Freeze the complete plan before remote execution.
+### Decision record: freeze the plan before remote execution
 
-**Reason:** The caller and executor must agree on the same nodes, packages,
-configuration, limits, links, and source revision.
-
-**Rejected alternative:** Send a project file to Buster and let Buster discover
-or select tests at execution time.
-
-**Cost:** A plan cannot absorb a later provider or configuration change. Nova
-must resolve a new plan with a new digest.
+- **Problem and constraints:** Nova can restart and Buster can execute on a
+  different host. Both sides must still agree on the nodes, package bytes,
+  configuration, limits, links, and source revision.
+- **Decision:** Nova resolves the complete test plan and its
+  digest before it submits a remote Buster job. Buster executes that fixed plan.
+- **Rejected alternative:** Let Buster discover or select tests from the project
+  at execution time. [ADR-013](../decisions/core-and-plugins.md#adr-013-use-authenticated-durable-nova-to-buster-plan-jobs)
+  and [D-110](../decisions/test-gate.md#d-110-remote-nova-to-buster-plan-job)
+  retain the actual transport decision and its alternatives.
+- **Reason:** A later discovery step would let caller and executor use different
+  meanings for the same job identity.
+- **Cost:** The plan is traceable and repeatable, but it cannot absorb a
+  later provider or configuration change; Nova must resolve a new plan and digest.
+- **Reconsider when:** Reconsider the transport when the accepted queue target in
+  D-098 replaces the first authenticated service transport. Do not reconsider the
+  fixed-plan identity rule unless a replacement preserves the same authority.
+- **Decision status:** [D-097](../decisions/test-gate.md#d-097-one-immutable-attempt-is-the-worker-unit)
+  accepts the immutable-attempt rule. D-110 records the remote fixed-plan job,
+  but its individual approval and date remain unconfirmed. The implementation
+  does not change that historical status.
+- **Implementation status:** Implemented for the inspected Nova resolver, Buster
+  runner, and remote result path. Live multi-host acceptance is separate.
+- **Supersession:** No successor replaces the fixed-plan rule. D-110 narrows the
+  initial transport relative to D-098; it does not replace plan immutability.
 
 > **Source evidence — authority split**
 >
-> [Nova resolves suite and project declarations into one digest-bound plan](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/resolver.ts#L720-L754).
+> **Claim:** Nova fixes the plan identity; Buster validates that identity; Nova
+> owns the final gate decision after result verification.
 >
-> [Buster checks plan and provider identity before it executes a node](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/runner.ts#L234-L265).
+> **Implementation:** [Nova resolver, `resolveTestPlan`](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/resolver.ts#L720-L754) ·
+> [Buster runner admission](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/runner.ts#L234-L265) ·
+> [Nova result authority](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/remote-result-authority.ts#L109-L190)
 >
-> [Nova derives the gate decision from the verified remote result](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/remote-result-authority.ts#L109-L190).
+> **Contract or setting:** [ADR-013](../decisions/core-and-plugins.md#adr-013-use-authenticated-durable-nova-to-buster-plan-jobs) ·
+> [ADR-014](../decisions/core-and-plugins.md#adr-014-separate-buster-execution-evidence-from-nova-quality-judgment)
+>
+> **Test evidence:** `npm run verify:test-gate:suite-resolver` passed on
+> 2026-09-19. `npm run verify:test-gate:remote-plan` stopped at the durable-store
+> lock because this host has BusyBox `flock`, which does not support the required
+> timeout option. No live multi-host job ran.
+>
+> **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`
+>
+> **Limit:** These sources prove code and contract behavior. They do not prove
+> live dependency readiness or the original reason beyond the decision records.
 
 ## Why Each Boundary Exists
 
-| Decision | Reason | Rejected alternative | Cost and consequence |
+The canonical decision records are [ADR-003, ADR-013, and ADR-014](../decisions/core-and-plugins.md)
+and [D-001 through D-119](../decisions/test-gate.md). The table below is a
+mechanism map. It explains the consequence of current behavior. Its contrast
+column identifies the failure that the mechanism prevents; it does not claim
+that every contrast was a historically considered alternative.
+
+| Current mechanism | Why the flow needs it | Failure it prevents | Cost and consequence |
 | --- | --- | --- | --- |
 | Send one committed Git archive. | Buster must execute the same bytes that Nova identified. | Send the mutable working tree or let Buster clone a moving branch. | The author must commit every required file before execution. |
 | Sign the source statement with Nova's Ed25519 key. | Buster must know which trusted source authority created the archive identity. | Trust a repository name, transport token, or archive digest alone. | Operators must provision, protect, and rotate an asymmetric key pair. |
@@ -51,6 +87,14 @@ must resolve a new plan with a new digest.
 | Run providers through Worker Core capabilities. | A package receives only declared, bounded authority for one attempt. | Let provider code open host processes, sockets, cluster clients, or scanners directly. | Each new authority needs a policy, adapter, limits, tests, and operator configuration. |
 | Keep original evidence and normalized report facts. | Normalization supports common decisions, while original bytes preserve diagnostic detail. | Keep only parsed counts or only raw files. | Evidence storage must account for both forms and their separate limits. |
 | Import a verified result once in Nova. | A retry must continue the same durable import instead of duplicating evidence or changing identity. | Mark the gate complete before every evidence object is present. | Nova needs pending and complete import records plus conflict handling. |
+
+This table is not a decision register. Decision status, implementation status,
+reconsideration conditions, evidence, and supersession remain in the canonical
+records. In particular,
+[ADR-003](../decisions/core-and-plugins.md#adr-003-keep-buster-test-semantics-outside-nova-and-worker-core)
+owns the component split, [ADR-013](../decisions/core-and-plugins.md#adr-013-use-authenticated-durable-nova-to-buster-plan-jobs)
+owns durable remote work, and [ADR-014](../decisions/core-and-plugins.md#adr-014-separate-buster-execution-evidence-from-nova-quality-judgment)
+owns the separation between execution facts and pipeline judgment.
 
 ## Complete Request Path
 

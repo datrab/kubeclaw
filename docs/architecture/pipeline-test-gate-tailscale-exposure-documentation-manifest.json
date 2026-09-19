@@ -3,6 +3,7 @@
   "suite":"tailscale-preview",
   "provider":"kubeclaw.tailscale-exposure@1",
   "projectSchema":"skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+  "canonicalConfigurationReferences":["docs/site/reference/buster-provider-configuration.md","docs/site/reference/buster-runtime-configuration.md"],
   "documents":{
     "userGuide":"docs/architecture/pipeline-test-gate-tailscale-exposure-user-guide.md",
     "operatorGuide":"docs/architecture/pipeline-test-gate-tailscale-exposure-operator-guide.md",

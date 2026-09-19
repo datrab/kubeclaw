@@ -295,12 +295,20 @@ function checkSchemaDocumentation() {
     if (!Array.isArray(projectSchemas) || projectSchemas.length < 1 || projectSchemas.some((schema) => !exists(schema))) {
       errors.push(`${manifestPath}: project schema is missing`); continue;
     }
-    const reference = fs.readFileSync(path.join(root, manifest.documents.configurationReference), 'utf8');
+    const configurationReferences = [manifest.documents.configurationReference,
+      ...(manifest.canonicalConfigurationReferences ?? [])];
+    for (const referencePath of configurationReferences) {
+      if (!exists(referencePath)) errors.push(`${manifestPath}: missing canonical configuration reference ${referencePath}`);
+    }
+    const reference = configurationReferences.filter(exists)
+      .map((referencePath) => fs.readFileSync(path.join(root, referencePath), 'utf8')).join('\n');
+    const referenceLabel = configurationReferences.join(', ');
     for (const projectSchema of projectSchemas) for (const field of schemaLeafPaths(readJson(projectSchema))) {
-      if (!reference.includes(`\`${field}\``)) errors.push(`${manifest.documents.configurationReference}: undocumented project field ${field}`);
+      if (!reference.includes(`\`${field}\``)) errors.push(`${referenceLabel}: undocumented project field ${field}`);
     }
     for (const field of manifest.operatorFields ?? []) {
-      if (!reference.includes(`\`${field}\``)) errors.push(`${manifest.documents.configurationReference}: undocumented operator field ${field}`);
+      const documented = reference.includes(`\`${field}\``) || reference.includes(`\`${field}[]\``);
+      if (!documented) errors.push(`${referenceLabel}: undocumented operator field ${field}`);
     }
   }
 }

@@ -101,6 +101,10 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "contracts/pipeline-test-gate/v1/suites/api.v1.json"
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "contracts/pipeline-worker-core/v1/src/types.ts"
     },
     {
@@ -229,6 +233,10 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/buster/plugins/coverage-budget/package.json"
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/buster/plugins/coverage-budget/plugin.json"
     },
     {
@@ -282,6 +290,10 @@
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/buster/plugins/direct-command/tests/live-function.test.ts"
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "skills/buster/plugins/http/package.json"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
@@ -2050,6 +2062,10 @@
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs"
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "tests/verification/integration/http-provider-live.test.ts"
     }
   ],
   "permittedCommands": [

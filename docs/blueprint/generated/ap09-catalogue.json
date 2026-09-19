@@ -3381,10 +3381,10 @@
     {
       "id": "QUA-002",
       "namespace": "QUA",
-      "title": "Formale ASD-STE100-Prüfung",
+      "title": "Kontrollierte technische Sprache",
       "baselineStatus": "E",
       "baselineStatusLabel": "Muss erweitert/überarbeitet werden",
-      "finding": "Ein eigener Controlled-Language-Check und redaktionelle Regeln existieren. Der aktuelle Publication-Check meldet Passiv, vage Wörter und zu lange Sätze; die formale ASD-STE100-Issue-9-Abnahme bleibt AP11.",
+      "finding": "Ein eigener Controlled-Language-Check und redaktionelle Regeln nach ASD-STE100-Prinzipien existieren. Der Publication-Check meldet Passiv, vage Wörter und zu lange Sätze. AP11 muss die verbleibenden Befunde und Leserproben abschliessen. Eine formale oder lizenzierte ASD-STE100-Zertifizierung ist nicht erforderlich und wird nicht behauptet.",
       "workPackage": "AP09.13",
       "owner": "independent documentation reviewers",
       "canonicalTarget": "docs/site/status/acceptance.md",

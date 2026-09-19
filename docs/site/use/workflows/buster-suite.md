@@ -19,9 +19,40 @@ Tailscale, a browser, or a scanner. The same lifecycle applies to all twelve
 suites. Their additional prerequisites are in the
 [suite reference](../../reference/buster-suites.md).
 
+## Supported Execution Paths
+
+There are two different paths. Do not use them as if they prove the same fact.
+
+1. A deployed pipeline submits work through the configured Nova test-gate
+   integration. This is the supported production path. The repository does not
+   ship a general-purpose `buster run` command or a command that signs an
+   arbitrary job. Nova owns source attestation, durable dispatch, reconnect,
+   result verification, and evidence import. Use the exact compile, start,
+   audit, and recovery commands in this procedure.
+2. A maintainer can run the repository's vertical proof from a clean checkout.
+   This proof creates a temporary project and a local Buster service. It tests
+   the real protocol and execution path, but it does not operate a deployed
+   pipeline or prove an external dependency.
+
+Do not construct a request with `curl`. A valid request needs identities,
+digests, grants, a signed source snapshot, and an idempotency key that Nova
+stores before transmission. A hand-written request bypasses that ownership
+sequence and is not a supported operator procedure.
+
+**Why the distinction matters:** A green repository proof establishes that the
+software path works in its controlled fixture. A production run additionally
+depends on the installation's authentication, package snapshot, stores,
+capability policy, tools, network, and target system.
+
 ## Before You Start
 
-Confirm these facts:
+Run repository proofs from the repository root. Run production work from the
+Nova installation that owns the project and pipeline state. For a production
+run, the operator needs permission to start and inspect that Nova pipeline. The
+Buster service account, token, source key, and capability credentials remain
+service-owned; a project author does not need direct access to them.
+
+Confirm these facts before either path:
 
 - the project is in Git and the revision to test is committed;
 - Nova and Buster use compatible pipeline-test-gate contracts;
@@ -30,6 +61,16 @@ Confirm these facts:
 - the project command creates the declared JUnit file inside its workspace;
 - Nova can authenticate to the Buster endpoint; and
 - Buster has enough state, result, archive, and evidence capacity.
+
+For a repository proof, also confirm that dependencies are installed with
+`npm ci`, the checkout is clean, and the current Node.js version satisfies
+`package.json`. The vertical proof also needs a C compiler, GNU `flock`,
+`/usr/bin/tar`, and permission to start child processes.
+
+Stop before submission when resolution fails, the source revision is not the
+intended committed revision, the Buster readiness endpoint is not ready, or a
+required live dependency is absent. Do not use a smaller check to waive one of
+these conditions.
 
 Do not use an uncommitted working tree as input. Nova sends a `git archive` of
 the committed tree. A local file that is not in that tree cannot appear in the
@@ -120,7 +161,38 @@ A successful resolution freezes suite-template digest, provider package
 digest, node configuration, dependency graph, links, conditions, matrices,
 limits, and plan digest. Changing any one of them requires a new plan identity.
 
-## 5. Submit and Observe
+## 5. Submit and Observe in Production
+
+There is no separate manual Buster submission command. Compile the project
+first. Replace `<platform.json>` with the operator-owned platform file,
+`<project.json>` with the project descriptor, and `<new-pipeline.json>` with a
+path that does not exist:
+
+```text
+npm run pipeline -- \
+  --platform "<platform.json>" \
+  --project "<project.json>" \
+  --compile "<new-pipeline.json>"
+```
+
+Stop if compilation does not return `status: compiled`, or if the graph does
+not contain the intended Buster quality stage and test scope. Record its
+`definitionDigest`, derived `runId`, and completion scope. Compilation checks
+registration and grants. It does not contact Buster.
+
+Start the project run from the project repository while its committed HEAD is
+the intended `baseRevision` and its working tree is clean:
+
+```text
+npm run pipeline -- \
+  --platform "<platform.json>" \
+  --project "<project.json>"
+```
+
+Expected output is one JSON object with `runId`, `status`, `completionScope`,
+`acceptanceReadiness`, and stage states. Preserve that object. Exit zero means
+the returned pipeline status is `succeeded`; it does not by itself prove human
+acceptance or every external live prerequisite.
 
 Nova records dispatch intent before it contacts Buster. Buster verifies source
 signature, archive digest, derived job ID, request digest, plan digest, provider
@@ -132,7 +204,37 @@ mean that every blocking test passed. Nova must fetch the exact result digest,
 verify its identities and receipts, import every referenced evidence digest,
 and then calculate the gate decision.
 
-The repository includes an executable vertical proof for this complete path.
+Audit the durable run with the returned identity:
+
+```text
+npm run pipeline -- \
+  --platform "<platform.json>" \
+  --audit "<run-id>"
+```
+
+Record the Nova run and operation IDs, Buster job ID, plan digest, source revision, and
+submission time. Stop and investigate if the job identity changes for the same
+operation, the state moves outside `accepted`, `running`, and a terminal state,
+or Nova reports an identity or digest mismatch. A transport retry can reuse the
+stored request only when its bytes and idempotency key are unchanged.
+
+After process interruption, recover the same project and run identity:
+
+```text
+npm run pipeline -- \
+  --platform "<platform.json>" \
+  --project "<project.json>" \
+  --recover "<run-id>"
+```
+
+Recovery must use the original graph and package snapshot. It reconnects to
+accepted Buster work through durable Nova state. Start a new run when governed
+configuration must change. The complete core procedure and explicit-pipeline
+forms are in [Operate KubeClaw](../operate.md#validate-before-starting).
+
+## 6. Run the Local Vertical Proof
+
+The repository includes an executable vertical proof for the protocol path.
 It creates a temporary Git repository and resolves a unit-suite plan. It then
 starts a real local Buster service and submits the signed source snapshot. The
 proof runs the provider through Worker Core, parses JUnit, imports evidence, and
@@ -142,12 +244,20 @@ checks the Nova decision.
 npm run verify:test-gate:phase8
 ```
 
-This command needs a C compiler, GNU `flock`, `/usr/bin/tar`, and a sandbox that
-can start child processes. Stop if `plugin-system:sandbox:build` fails. Do not
-treat a smaller registry or resolver check as execution evidence. The
+Run this command from the repository root after `npm ci`. It creates its own
+temporary repository, ports, state, source keys, and service. It does not need
+a deployed Nova or Buster instance. Stop if `plugin-system:sandbox:build`
+fails. Do not treat a smaller registry or resolver check as execution evidence.
+The
 [vertical proof source](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/tests/verification/contracts/check-pipeline-phase8-vertical.mts)
 shows the temporary project, runtime, submission, expected result, and negative
 controls.
+
+Observe the final JSON line. A valid proof has `"ok": true`, `"remote": true`,
+provider `direct-command`, report `junit`, and coverage `lcov`. The command
+must exit zero. Preserve the full terminal output and current Git revision as
+the evidence record. An exit zero without the stated fields is not the expected
+proof.
 
 The fixture-and-matrix example is a configuration template. It proves loading,
 resolution, port links, matrix expansion, and JUnit-adapter binding. It cannot
@@ -158,7 +268,7 @@ and supply the broker described in [Before You Start](#before-you-start).
 >
 > [Nova verifies and imports each result and evidence digest](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/remote-result-import.ts#L156-L207).
 
-## 6. Read The Result In The Correct Order
+## 7. Read The Result In The Correct Order
 
 1. Check job identity, plan digest, source revision, and terminal state.
 2. Check the gate decision and required coverage.
@@ -175,7 +285,7 @@ percentage below its minimum. Common `errored` facts are an unknown executable,
 missing report, invalid XML, unsafe path, timeout, signal, output limit, or
 evidence digest mismatch.
 
-## 7. Diagnose By Boundary
+## 8. Diagnose By Boundary
 
 | Observation | Boundary | Action |
 | --- | --- | --- |
@@ -188,12 +298,29 @@ evidence digest mismatch.
 | Job completed but Nova does not decide | Result/evidence fetch, digest, receipt, or import | Preserve both stores. Repair transport or missing blob; do not rerun under the same identity with different content. |
 | Cancellation appears late | Cooperative stop crossed a terminal transition | Trust the guarded terminal record. Inspect descendant cleanup before another run. |
 
-## 8. Clean Up
+## 9. Recover and Clean Up
+
+For a failed local proof, keep the first error and full output. Correct the
+missing host dependency, run the same command again, and compare the new Git
+revision and output. The proof owns temporary directories and removes them in
+its finalizer. If the process is killed, inspect only operating-system temporary
+storage for a directory with the proof prefix. Do not remove project files.
+
+For production, do not resubmit different content with an existing job ID.
+Reconnect through Nova when Buster has accepted the job. The current pipeline
+CLI has no supported operator cancellation command. Process termination is not
+durable cancellation. For urgent containment, preserve evidence, stop new
+admission at the owning service, follow the approved incident process, and
+reconcile each accepted external effect. Do not claim `cancelled` unless the
+durable lifecycle record says so. See the [cancellation
+boundary](../operate.md#cancellation-boundary).
 
 Direct-command workspaces are attempt-owned and removed through Worker Core
 cleanup. Fixture suites add external resources. Confirm that each fixture
 cleanup is successful or that an intentional retained lease has a bounded
-expiry. Do not call a test run complete while a cleanup result is unknown.
+expiry. Retain the operation and job identities, plan and result digests,
+attempt errors, evidence receipts, cleanup result, and lease expiry. Do not call
+a test run complete while cleanup or retention is unknown.
 
 ## Expected Result
 
@@ -212,5 +339,7 @@ failed test result.
 
 - For API selection, use the [maintained API override example](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/examples/api-suite.json).
 - For all provider fields and live prerequisites, use the [suite reference](../../reference/buster-suites.md).
+- For service authentication, stores, limits, and capability allowlists, use
+  [Buster runtime configuration](../../reference/buster-runtime-configuration.md).
 - For a new provider, fixture, report format, or suite, use [Extend Buster](../../extend/buster.md).
 - For engine or controller changes, use [Develop Buster](../../extend/platform/buster.md).

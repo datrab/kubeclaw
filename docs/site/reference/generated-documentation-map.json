@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 115,
+  "pageCount": 116,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -208,7 +208,7 @@
       "audience": "test provider author, suite maintainer, report adapter author",
       "owner": "buster",
       "appliesTo": "Buster test providers, fixtures, suite templates, and report adapters",
-      "lastVerified": "registry, resolver, runner, provider, and report checks on 2026-09-16",
+      "lastVerified": "source inspection and focused local checks on 2026-09-19",
       "sourceDependencies": [
         "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
         "contracts/pipeline-test-gate/v1/suites",
@@ -1443,41 +1443,10 @@
       "status": "generated reference",
       "audience": "pipeline author, operator, test maintainer",
       "owner": "buster",
-      "appliesTo": "exact errors emitted by shipped Buster providers and their execution adapters",
-      "lastVerified": "generated from current error sources on 2026-09-19",
+      "appliesTo": "stable uppercase error codes constructed by the shipped Buster engine, providers, and execution adapters",
+      "lastVerified": "generated from the complete production source inventory on 2026-09-19",
       "sourceDependencies": [
-        "scripts/generate-buster-error-reference.mjs",
-        "skills/buster/engine/test-gates/browser-axe-runtime.ts",
-        "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
-        "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
-        "skills/buster/engine/test-gates/browser-visual-runtime.ts",
-        "skills/buster/engine/test-gates/container-build-runtime.ts",
-        "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
-        "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
-        "skills/buster/engine/test-gates/network-http-runtime.ts",
-        "skills/buster/engine/test-gates/process-input.ts",
-        "skills/buster/engine/test-gates/production.ts",
-        "skills/buster/engine/test-gates/report-adapter-runtime.ts",
-        "skills/buster/engine/test-gates/runner.ts",
-        "skills/buster/engine/test-gates/security-scan-runtime.ts",
-        "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
-        "skills/buster/plugins/api-flow/src/provider.js",
-        "skills/buster/plugins/axe/src/provider.js",
-        "skills/buster/plugins/container-build/src/provider.js",
-        "skills/buster/plugins/coverage-budget/src/provider.js",
-        "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
-        "skills/buster/plugins/demo-auth-smoke/src/provider.js",
-        "skills/buster/plugins/direct-command/src/provider.js",
-        "skills/buster/plugins/http/src/provider.js",
-        "skills/buster/plugins/junit-report-adapter/src/adapter.js",
-        "skills/buster/plugins/kubernetes-fixture/src/provider.js",
-        "skills/buster/plugins/lighthouse/src/provider.js",
-        "skills/buster/plugins/openapi/src/provider.js",
-        "skills/buster/plugins/playwright/src/provider.js",
-        "skills/buster/plugins/security-providers/src/common.js",
-        "skills/buster/plugins/size-budget/src/provider.js",
-        "skills/buster/plugins/tailscale-exposure/src/provider.js",
-        "skills/buster/plugins/visual/src/provider.js"
+        "scripts/generate-buster-error-reference.mjs"
       ],
       "checks": [
         "npm run docs:buster-guides:check",
@@ -1517,6 +1486,25 @@
         "skills/buster/plugins/size-budget/schemas/config.schema.json",
         "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
         "skills/buster/plugins/visual/schemas/config.schema.json"
+      ],
+      "checks": [
+        "npm run docs:buster-guides:check",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/buster-runtime-configuration.md",
+      "route": "/reference/buster-runtime-configuration/",
+      "contentKind": "authored",
+      "status": "implemented, with installation-specific values required",
+      "audience": "platform operator and Buster maintainer",
+      "owner": "buster",
+      "appliesTo": "`buster-remote-plan-runtime.v1`",
+      "lastVerified": "loader, service, and capability runtime inspection on 2026-09-19",
+      "sourceDependencies": [
+        "skills/buster/engine/test-gates/production.ts"
       ],
       "checks": [
         "npm run docs:buster-guides:check",

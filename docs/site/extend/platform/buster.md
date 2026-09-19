@@ -15,18 +15,48 @@ provider, report adapter, or suite template is sufficient. Use this page when a
 change alters plan meaning, remote wire data, admission, durable state,
 execution authority, evidence rules, result authority, or namespace lifecycle.
 
-**Decision:** Keep common extension work outside the engine.
+### Decision record: keep test semantics outside the engine
 
-**Reason:** A provider package can be versioned and reviewed without changing
-the authority shared by every suite. Core changes have a larger compatibility,
-recovery, and security surface.
+- **Problem and constraints:** New tests need executable meaning, but a change to
+  Buster Core changes the authority and recovery surface shared by all suites.
+- **Decision:** Put test meaning in versioned providers,
+  report parsing in adapters, and composition in suites. Change the engine only
+  when a public extension contract cannot express the required behavior.
+- **Rejected alternative:** Add common test behavior directly to the engine.
+  [ADR-003](../../decisions/core-and-plugins.md#adr-003-keep-buster-test-semantics-outside-nova-and-worker-core)
+  is the canonical decision record.
+- **Reason:** A package can change and be reviewed without silently changing the
+  authority shared by every suite.
+- **Cost:** Core stays neutral, but authors must understand package
+  contracts and can need coordinated registry and role changes.
+- **Reconsider when:** Reconsider the extension boundary when behavior cannot be
+  represented without changing plan meaning, capability vocabulary, scheduling,
+  durable state, or result authority. Such a case is a core change, not an
+  exception that a provider can hide.
+- **Decision status:** Accepted in ADR-003.
+- **Implementation status:** Implemented for the inspected provider, adapter,
+  registry, role, Worker Core, and Buster boundaries. Individual live providers
+  have separate environment acceptance.
+- **Supersession:** No identified successor.
 
-**Rejected alternative:** Add common test behavior directly to the engine when
-an installed provider, adapter, or suite can express it.
-
-**Cost:** Extension authors must learn the package contracts and registration
-path. A feature can require coordinated package and role updates even when the
-engine does not change.
+> **Source evidence — core and extension boundary**
+>
+> **Claim:** Providers and report adapters use public SDK contracts, while the
+> Buster role selects the exact deployable packages.
+>
+> **Implementation:** [provider and adapter SDK types](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/common/plugin-runtime/sdk/src/runtime.ts#L92-L158) ·
+> [Buster role package set](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/packaging/runtime/roles/buster.json#L1-L60)
+>
+> **Contract or setting:** [ADR-003](../../decisions/core-and-plugins.md#adr-003-keep-buster-test-semantics-outside-nova-and-worker-core)
+>
+> **Test evidence:** `npm run verify:test-gate:provider-registry` and
+> `npm run verify:runtime-packaging:roles` passed on 2026-09-19. A live provider
+> check is separate.
+>
+> **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`
+>
+> **Limit:** Registry and role checks prove selection and closure. They do not
+> prove a browser, cluster, scanner, registry, or network dependency.
 
 ## Component Map
 

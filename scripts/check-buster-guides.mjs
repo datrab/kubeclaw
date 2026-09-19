@@ -41,12 +41,21 @@ const specifications = [
   },
   {
     file: 'docs/site/use/workflows/buster-suite.md', minimumLinks: 6, revision,
-    required: ['## Before You Start', '## 1. Start From The Maintained Example',
+    required: ['## Supported Execution Paths', '## Before You Start', '## 1. Start From The Maintained Example',
       'buster-fixture-matrix-report.pipeline.json', '## 2. Make The Decision Explicit',
       '## 3. Link Outputs Instead Of Sharing Paths', '## 4. Resolve Before You Run',
-      '## 5. Submit and Observe', '## 6. Read The Result In The Correct Order',
-      '## 7. Diagnose By Boundary', '## 8. Clean Up', '## Expected Result',
+      '## 5. Submit and Observe in Production', '## 6. Run the Local Vertical Proof',
+      '## 7. Read The Result In The Correct Order', '## 8. Diagnose By Boundary',
+      '## 9. Recover and Clean Up', '## Expected Result',
       'npm run verify:test-gate:phase8', 'vertical proof source'],
+  },
+  {
+    file: 'docs/site/reference/buster-runtime-configuration.md', minimumLinks: 6, revision,
+    required: ['## Load Order and Precedence', '## Required Environment',
+      '## Root Service Fields', '## Minimal Root Configuration', '## Capability Blocks',
+      '## Safe Configuration Procedure', '## Failure, Recovery, and Change Control',
+      'node tests/verification/contracts/check-pipeline-remote-runtime-config.mts',
+      'node skills/buster/engine/remote-plan-cli.ts --config'],
   },
   {
     file: 'docs/site/extend/platform/buster.md', minimumLinks: 6, revision,
@@ -66,7 +75,7 @@ const specifications = [
   {
     file: 'docs/site/reference/buster-error-codes.md', minimumLinks: 20, revision,
     required: ['## How To Use This Reference', '## Unit Command And JUnit Report',
-      '## API', '## Security', '## Errors Outside A Provider'],
+      '## API', '## Security', '## Errors Outside This Inventory'],
   },
   {
     file: 'docs/site/reference/buster-provider-configuration.md', minimumLinks: 20, revision,
@@ -248,12 +257,21 @@ const navigation = [
   ['docs/site/reference/README.md', 'buster-suites.md'],
   ['docs/site/reference/README.md', 'buster-error-codes.md'],
   ['docs/site/reference/README.md', 'buster-provider-configuration.md'],
+  ['docs/site/reference/README.md', 'buster-runtime-configuration.md'],
   ['docs/site/use/README.md', 'workflows/buster-suite.md'],
   ['docs/site/extend/README.md', 'platform/buster.md'],
 ];
 for (const [file, target] of navigation) {
   assert(fs.readFileSync(path.join(root, file), 'utf8').includes(`](${target})`),
     `${file} does not link to ${target}`);
+}
+
+for (const specification of specifications) {
+  const source = fs.readFileSync(path.join(root, specification.file), 'utf8');
+  for (const match of source.matchAll(/npm run ([a-z0-9:_-]+)/gu)) {
+    assert(packageScripts[match[1]],
+      `${specification.file} cites unknown package script: ${match[1]}`);
+  }
 }
 
 const surfaces = fs.readFileSync(path.join(root, 'docs/site/product-surfaces.md'), 'utf8');

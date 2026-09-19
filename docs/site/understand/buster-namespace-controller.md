@@ -15,22 +15,48 @@ asks for a lease. A separate controller validates the request and creates the
 namespace, quota, limits, network policy, role bindings, copied secrets, and
 optional credentials. The fixture receives only the lease result.
 
-**Decision:** Put namespace lifecycle authority in a controller, not in a test
-provider.
+### Decision record: isolate namespace lifecycle authority
 
-**Reason:** A compromised provider can request only the declared resource. It
-cannot silently create an unrelated namespace, grant itself more access, or
-keep a namespace after the lease owner releases it.
-
-**Cost:** Kubernetes 1.30 or later is required when the broker is enabled. The
-controller is another stateful reconciliation boundary, and failed cleanup can
-keep a finalizer and require operator diagnosis.
+- **Problem and constraints:** A test needs a temporary namespace, but provider
+  code must not receive unrestricted cluster lifecycle authority.
+- **Decision:** A provider requests a bounded lease. A
+  separate controller owns namespace creation, safeguards, access, retention,
+  and deletion for Kubernetes-backed Buster fixtures.
+- **Rejected alternative:** Give the fixture or test provider direct namespace
+  authority. [D-014 through D-019](../decisions/test-gate.md#d-014-fixture-is-a-base-system-part)
+  record the fixture, deployment, retention, secret, and exposure boundaries.
+- **Reason:** The separate identity lets policy constrain the requested resource
+  and prevents the provider from silently granting broader access.
+- **Cost:** Providers receive a small lease interface, but the platform
+  must operate another reconciler, preserve its state, and diagnose finalizers.
+  The shipped broker requires Kubernetes 1.30 or later when enabled.
+- **Reconsider when:** Reconsider the controller shape when the platform adopts
+  another isolation boundary that can enforce the same ownership, lease, and
+  cleanup rules. Do not move lifecycle authority into provider code.
+- **Decision status:** Accepted in D-014 through D-019.
+- **Implementation status:** Implemented and disabled by default. Live admission,
+  secret-copy, and Tailscale behavior still require environment acceptance.
+- **Supersession:** No identified successor.
 
 > **Source evidence — enforced authority**
 >
-> [The admission policy denies direct namespace changes by the Buster worker and restricts controller changes to labelled, permitted prefixes](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/charts/kubeclaw/templates/buster-namespace-fence.yaml#L1-L43).
+> **Claim:** The worker cannot manage namespaces directly; the controller uses a
+> separate identity and bounded reconciliation permissions.
 >
-> [The controller has a separate ServiceAccount and the exact cluster permissions needed for reconciliation](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/charts/kubeclaw/templates/buster-namespace-controller.yaml#L1-L118).
+> **Implementation:** [Namespace admission fence](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/charts/kubeclaw/templates/buster-namespace-fence.yaml#L1-L43) ·
+> [controller ServiceAccount and RBAC](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/charts/kubeclaw/templates/buster-namespace-controller.yaml#L1-L118)
+>
+> **Contract or setting:** [Lease CRD](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/charts/kubeclaw/templates/buster-namespace-lease-crd.yaml#L33-L182) ·
+> [D-014 through D-019](../decisions/test-gate.md#d-014-fixture-is-a-base-system-part)
+>
+> **Test evidence:** `go test ./cmd/buster-namespace-controller/...` is the local
+> controller check. It was unavailable on 2026-09-19 because this host has no
+> `go` executable. The page does not claim a live admission-policy result.
+>
+> **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`
+>
+> **Limit:** Rendered policy and unit behavior do not prove a live Kubernetes,
+> secret-copy, DNS, or Tailscale operation.
 
 ## Lease Flow
 
@@ -100,17 +126,46 @@ in `allowedSourceSecrets`. Generated credentials contain only `username` and
 `password`. Existing credentials must list at least one key. Reader subjects
 receive lease-local RBAC; the provider does not receive the controller token.
 
-**Decision:** Use an operator allowlist in addition to Kubernetes RBAC.
+### Local decision: require an operator allowlist in addition to RBAC
 
-**Reason:** Generic RBAC can allow a controller to bind a role, but it cannot
-express which request subjects the product considers valid for each lease.
+- **Problem and constraint:** Kubernetes RBAC controls what the controller can
+  bind. It does not define which requested subjects the product trusts.
+- **Decision:** The controller accepts only subject and access-mode
+  pairs in `controller.allowedAccess`.
+- **Rejected alternative:** Accept each subject that the
+  controller's Kubernetes permissions can bind. No historical source records a
+  wider alternatives discussion.
+- **Reason:** This extra check makes product trust narrower than controller RBAC.
+  This reason is an inference from the implemented fail-closed checks.
+- **Cost:** An unlisted identity cannot gain lease access, but operators
+  must update the allowlist when an approved identity changes.
+- **Reconsider when:** Reconsider the setting source if another authenticated
+  policy authority supplies the same subject-and-mode decision.
+- **Decision status:** Local implemented rule; historical approval metadata is
+  unknown.
+- **Implementation status:** Implemented in chart values and controller checks.
+- **Supersession:** No identified successor.
 
-**Rejected alternative:** Accept any subject that Kubernetes RBAC lets the
-controller bind.
-
-**Cost:** Operators must maintain the allowlist when an approved test identity
-or access mode changes. An omitted identity fails closed until the chart values
-are updated.
+> **Source evidence — access allowlist**
+>
+> **Claim:** The controller rejects a lease access request when its exact
+> ServiceAccount and mode are not in the operator allowlist.
+>
+> **Implementation:** [`accessRequests` checks subject and mode](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/cmd/buster-namespace-controller/main.go#L1068-L1098)
+>
+> **Contract or setting:** [`controller.allowedAccess` shipped values](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/charts/kubeclaw/values.yaml#L425-L433)
+>
+> **Test evidence:** [`TestAllowedAccessAndLeaseRequests` accepts listed pairs and
+> rejects an unlisted subject](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/cmd/buster-namespace-controller/main_test.go#L287-L304).
+> The linked test covers both outcomes. The command
+> `go test ./cmd/buster-namespace-controller/...` was unavailable during the
+> documentation verification on 2026-09-19 because this host has no `go`
+> executable.
+>
+> **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`
+>
+> **Limit:** This proof covers the controller check. It does not prove that a live
+> cluster uses the reviewed Helm values or admission policy.
 
 ## Status and Fencing
 

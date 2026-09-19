@@ -16,6 +16,7 @@ procedures. This section gives exact names and source-backed facts.
 ## Configuration and Operation
 
 - [Buster suites and providers](buster-suites.md) gives the complete twelve-suite surface, provider fields, defaults, ports, evidence, prerequisites, and checks.
+- [Buster runtime configuration](buster-runtime-configuration.md) explains the service, store, authentication, limits, and capability policy that make those providers available.
 - [Buster provider configuration](buster-provider-configuration.md) gives every exact nested field path, type, default, limit, and choice in all shipped provider schemas.
 - [Buster error codes](buster-error-codes.md) lists every exact error emitted by the shipped suite providers and gives the safe action for each boundary.
 - [CLI commands](cli.md) lists the deployment command surface.
