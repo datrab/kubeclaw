@@ -78,6 +78,10 @@ spec:
     server: https://kubernetes.default.svc
     namespace: kubeclaw
   syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+      allowEmpty: false
     syncOptions:
       - FailOnSharedResource=true
     retry:
@@ -109,6 +113,10 @@ spec:
     server: https://kubernetes.default.svc
     namespace: kubeclaw
   syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+      allowEmpty: false
     syncOptions:
       - FailOnSharedResource=true
     retry:
@@ -124,7 +132,7 @@ metadata:
   name: kubeclaw-nova
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: '0'
+    argocd.argoproj.io/sync-wave: '1'
     kubeclaw.dev/helm-releases: '["agent-nova"]'
   labels:
     kubeclaw.dev/gitops-project: kubeclaw
@@ -140,6 +148,10 @@ spec:
     server: https://kubernetes.default.svc
     namespace: kubeclaw
   syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+      allowEmpty: false
     syncOptions:
       - FailOnSharedResource=true
     retry:
