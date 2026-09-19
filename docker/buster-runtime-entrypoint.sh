@@ -64,13 +64,17 @@ done
 # the host cgroup root. Production browser execution cannot use sampled
 # accounting because short-lived descendants could escape a sample.
 test -d "$browser_playwright_cgroup_root"
-test -f "$browser_playwright_cgroup_root/cgroup.controllers"
 canonical_browser_playwright_cgroup_root="$(realpath "$browser_playwright_cgroup_root")"
 expected_browser_playwright_cgroup_root="$(realpath -m /var/run/kubeclaw-browser-cgroup)"
 if [ "$canonical_browser_playwright_cgroup_root" != "$expected_browser_playwright_cgroup_root" ]; then
   echo "browser Playwright cgroup root is unsafe" >&2
   exit 1
 fi
+# A previous worker may have left this mode-0700 directory owned by builder.
+# The supervisor has CHOWN but no DAC override, so reclaim traversal while
+# validating/configuring it, then hand off the directory last.
+chown root:builder "$browser_playwright_cgroup_root"
+test -f "$browser_playwright_cgroup_root/cgroup.controllers"
 for controller in pids memory cpu; do
   grep -qw "$controller" "$browser_playwright_cgroup_root/cgroup.controllers" \
     || { echo "required browser cgroup controller is unavailable: $controller" >&2; exit 1; }
@@ -84,7 +88,7 @@ for controller in pids memory cpu; do
   grep -qw "$controller" "$browser_playwright_cgroup_root/cgroup.subtree_control" \
     || { echo "required browser cgroup controller is not delegated: $controller" >&2; exit 1; }
 done
-chown builder:builder "$browser_playwright_cgroup_root" "$browser_playwright_cgroup_root/cgroup.procs" "$browser_playwright_cgroup_root/cgroup.subtree_control"
+chown builder:builder "$browser_playwright_cgroup_root/cgroup.procs" "$browser_playwright_cgroup_root/cgroup.subtree_control" "$browser_playwright_cgroup_root"
 
 # BuildKit creates the socket as the non-root builder. Apply its shared-group
 # permissions as that owner; the restricted supervisor intentionally does not

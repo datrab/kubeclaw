@@ -15,6 +15,12 @@ case "$role" in
       "$image" /check-role-image.sh "$role" "$version" runtime
     ;;
   buster-runtime)
+    # Exercise ownership handoff with exactly the restricted supervisor caps.
+    docker run --rm --network none --cap-drop ALL \
+      --cap-add CHOWN --cap-add SETUID --cap-add SETGID --cap-add SETPCAP \
+      --entrypoint node \
+      -v "$PWD/tests/verification/deployment/buster-cgroup-ownership.mjs:/cgroup-proof.mjs:ro" \
+      "$image" /cgroup-proof.mjs
     # Nested rootless BuildKit runs only in a disposable CI proof container.
     sudo tee /etc/apparmor.d/kubeclaw-ci-build-proof >/dev/null <<'PROFILE'
 abi <abi/4.0>,
