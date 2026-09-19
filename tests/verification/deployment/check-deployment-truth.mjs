@@ -628,11 +628,6 @@ assert.match(
   /"exec":\s*\{\s*"timeoutSeconds":\s*604800,\s*"mode":\s*"full"\s*\}/,
   'fresh configs must use the canonical OpenClaw 2026.8 exec policy keys',
 );
-assert.match(
-  gatewayConfig,
-  /"modelPolicy":\s*\{\s*"allow":\s*\[\s*"openai\/gpt-5\.6-sol",\s*"openai\/gpt-5\.5"\s*\]/,
-  'fresh configs must explicitly allow exactly the managed primary and fallback models',
-);
 assert.doesNotMatch(
   gatewayConfig,
   /"lastTouchedAt":|"timeoutSec":|"security":\s*"full"|"ask":\s*"off"|"ownerDisplay":|"eventQueue":|"retry":|"channelStaleEventThresholdMinutes":|"channelMaxRestartsPerHour":|"resetOnExit":/,
@@ -931,6 +926,22 @@ const helm = spawnSync(
 );
 if (helm.error?.code !== 'ENOENT') {
   assert.equal(helm.status, 0, `helm template failed:\n${helm.stderr}`);
+  const assertManagedModels = rendered => {
+    const configMap = loadAll(rendered).find(object => object?.kind === 'ConfigMap' && object.data?.['openclaw.json']);
+    assert.ok(configMap, 'the rendered gateway configuration must be present');
+    const defaults = JSON.parse(configMap.data['openclaw.json']).agents.defaults;
+    const models = defaults.model.primary === 'openai/gpt-6-astra'
+      ? ['openai/gpt-6-astra', 'openai/gpt-5.6-sol', 'openai/gpt-5.5']
+      : ['openai/gpt-5.6-sol', 'openai/gpt-5.5'];
+    assert.deepEqual(defaults.modelPolicy.allow, models,
+      'fresh configs must retain approved models and allow Astra for its managed primary');
+    for (const model of [defaults.model.primary, ...defaults.model.fallbacks]) {
+      assert.ok(models.includes(model), 'every primary and fallback must be permitted');
+    }
+    assert.deepEqual(Object.keys(defaults.models).sort(), [...models].sort(),
+      'every managed model must retain its runtime configuration');
+  };
+  assertManagedModels(helm.stdout);
   assert.match(helm.stdout, /kind: Deployment/, 'chart must render a Deployment');
   assert.doesNotMatch(
     helm.stdout,
@@ -972,6 +983,7 @@ if (helm.error?.code !== 'ENOENT') {
     /name:\s*buster-v2-runtime/,
     'Buster must render its isolated v2 suite worker',
   );
+  assertManagedModels(busterHelm.stdout);
   assert.match(
     busterHelm.stdout,
     /containerPort:\s*18891/,
@@ -1015,6 +1027,7 @@ if (helm.error?.code !== 'ENOENT') {
     `Nova provider-role helm template failed:\n${novaHelm.stderr}`,
   );
   const novaObjects = loadAll(novaHelm.stdout);
+  assertManagedModels(novaHelm.stdout);
   const viewer = kind => novaObjects.find(object => object?.kind === kind && object.metadata.name === 'agent-nova-archviewer');
   assert.equal(viewer('Service')?.spec.type, 'ClusterIP');
   assert.deepEqual(viewer('Service').spec.ports, [{ name: 'http', port: 3456, targetPort: 'archviewer', protocol: 'TCP' }]);
