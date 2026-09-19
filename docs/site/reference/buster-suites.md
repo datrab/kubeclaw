@@ -334,6 +334,12 @@ check WebSocket messages. `extract` maps up to 32 variable names to selectors.
 A capability error stops more main requests, attempts cleanup, and remains an
 error. The provider is not retry-safe.
 
+For exact nested limits, use the [generated provider configuration
+reference](buster-provider-configuration.md#kubeclawapi-flow-document1). It
+includes the 32-header limit, the 1–4096 character header values, the 64-message
+limit, the 1–300000 millisecond step timeout, the 32-entry JSON expectation and
+extraction limits, and the exact extraction-name pattern.
+
 OpenAPI has these provider fields:
 
 | Field | Required/default | Meaning |
@@ -359,6 +365,12 @@ selected operations can mutate state.
 Both complex providers need `network.http` and emit log plus test-report
 evidence. Assertion mismatches fail; invalid project documents, unsupported
 schema semantics, transport denial, timeout, or malformed response errors.
+
+The [OpenAPI provider configuration
+table](buster-provider-configuration.md#kubeclawopenapi1) records every nested
+operation field. It also records the allowed string, number, and Boolean path or
+query values and the 4096-character header-value limit. Use that table when you author configuration. Use this suite
+section to understand why the provider has those boundaries.
 
 > [Exact API suite composition](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/api.v1.json) ·
 > [flow config](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/api-flow/schemas/config.schema.json) ·
@@ -669,6 +681,32 @@ example.
 | One concrete provider | Its `verify:test-gate:*implementation` script | Read the script; some checks need real tools or network. |
 | Namespace fixture | `go test ./cmd/buster-namespace-controller/...` plus Helm rendering | Controller logic and rendered policy, not live cluster proof. |
 | Browser, scanner, BuildKit, registry, Kubernetes, or Tailscale | Provider check in a disposable configured environment | Live integration proof. |
+
+### Exact suite checks
+
+Use the implementation command after a schema, provider, runtime, or report
+change. Use the live command only in its configured environment. A preflight
+command proves that dependencies and policy are ready; it does not replace the
+implementation command.
+
+| Suite | Local implementation check | Live or production check |
+| --- | --- | --- |
+| Unit | `npm run verify:test-gate:phase8` | `npm run verify:test-gate:unit-live` |
+| Container build | `npm run verify:test-gate:container-build-implementation` | `npm run verify:test-gate:container-build-live` |
+| Kubernetes fixture | `npm run verify:test-gate:kubernetes-fixture-implementation` | `npm run verify:test-gate:kubernetes-fixture-live` |
+| HTTP | `npm run verify:test-gate:http-implementation` | `npm run verify:test-gate:http-live` |
+| Tailscale exposure | `npm run verify:test-gate:tailscale-exposure-implementation` | `npm run verify:test-gate:tailscale-exposure-live` |
+| API | `npm run verify:test-gate:api-implementation` | `npm run verify:test-gate:api-cutover` |
+| Accessibility | `npm run verify:test-gate:a11y-implementation` | `npm run verify:test-gate:a11y-live` |
+| Performance | `npm run verify:test-gate:lighthouse-implementation` | `npm run verify:test-gate:lighthouse-live` |
+| Visual | `npm run verify:test-gate:visual-implementation` | `npm run verify:test-gate:visual-live` |
+| End-to-end | `npm run verify:test-gate:e2e-implementation` | `npm run verify:test-gate:e2e-live` |
+| Security | `npm run verify:test-gate:security-implementation` | `npm run verify:test-gate:security-live` |
+| Size budget | `npm run verify:test-gate:size-budget-implementation` | `npm run verify:test-gate:size-budget-production` |
+
+API and size budget have no live alias. Their right-hand commands are the
+strongest registered production-boundary checks. A successful check does not
+claim that an unrelated external target is healthy.
 
 For a worked composition and diagnosis path, continue with
 [Run and diagnose a Buster suite](../use/workflows/buster-suite.md). For a new

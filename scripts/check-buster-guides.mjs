@@ -68,6 +68,12 @@ const specifications = [
     required: ['## How To Use This Reference', '## Unit Command And JUnit Report',
       '## API', '## Security', '## Errors Outside A Provider'],
   },
+  {
+    file: 'docs/site/reference/buster-provider-configuration.md', minimumLinks: 20, revision,
+    required: ['## How To Read The Tables', '## `kubeclaw.api-flow@1`',
+      '## `kubeclaw.openapi@1`', '## `kubeclaw.api-flow-document@1`',
+      '## Maintenance Rule'],
+  },
 ];
 
 let sourceLinks = 0;
@@ -117,9 +123,6 @@ for (const specification of specifications) {
 
 const reference = fs.readFileSync(path.join(root, 'docs/site/reference/buster-suites.md'), 'utf8');
 const extension = fs.readFileSync(path.join(root, 'docs/site/extend/buster.md'), 'utf8');
-const referenceTerms = [...reference.matchAll(/`([^`\n]+)`/gu)]
-  .flatMap((match) => match[1].split(/[.\[\]]+/u).filter(Boolean));
-const documentsProperty = (property) => referenceTerms.includes(property);
 const suiteDirectory = path.join(root, 'contracts/pipeline-test-gate/v1/suites');
 const suites = fs.readdirSync(suiteDirectory).filter(name => name.endsWith('.v1.json')).sort();
 assert.equal(suites.length, 12, 'shipped Buster suite count changed; update the twelve-suite guide');
@@ -131,29 +134,6 @@ for (const name of suites) {
 const pluginDirectory = path.join(root, 'skills/buster/plugins');
 const pluginNames = fs.readdirSync(pluginDirectory).sort();
 let providerCount = 0;
-const schemaGaps = [];
-
-function schemaPropertyNames(schema, rootSchema = schema, seen = new Set()) {
-  if (!schema || typeof schema !== 'object' || seen.has(schema)) return new Set();
-  seen.add(schema);
-  const names = new Set();
-  if (typeof schema.$ref === 'string' && schema.$ref.startsWith('#/')) {
-    const target = schema.$ref.slice(2).split('/').reduce((value, part) => value?.[part], rootSchema);
-    for (const name of schemaPropertyNames(target, rootSchema, seen)) names.add(name);
-  }
-  for (const [name, child] of Object.entries(schema.properties ?? {})) {
-    names.add(name);
-    for (const nested of schemaPropertyNames(child, rootSchema, seen)) names.add(nested);
-  }
-  for (const keyword of ['items', 'additionalProperties', 'anyOf', 'oneOf', 'allOf']) {
-    const values = Array.isArray(schema[keyword]) ? schema[keyword] : [schema[keyword]];
-    for (const child of values) for (const name of schemaPropertyNames(child, rootSchema, seen)) names.add(name);
-  }
-  for (const child of Object.values(schema.$defs ?? {})) {
-    for (const name of schemaPropertyNames(child, rootSchema, seen)) names.add(name);
-  }
-  return names;
-}
 
 for (const pluginName of pluginNames) {
   const manifestPath = path.join(pluginDirectory, pluginName, 'plugin.json');
@@ -163,23 +143,35 @@ for (const pluginName of pluginNames) {
     providerCount += 1;
     assert(`${reference}\n${extension}`.includes(`\`${provider.contractId}\``),
       `Buster guides omit provider ${provider.contractId}`);
-    const schemaPath = path.join(pluginDirectory, pluginName, provider.configSchema);
-    const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
-    for (const property of schemaPropertyNames(schema)) {
-      if (!documentsProperty(property)) schemaGaps.push(`${provider.contractId}:${property}`);
-    }
   }
 }
 assert.equal(providerCount, 19, 'Buster provider count changed; update provider and suite guidance');
 
-const flowSchema = JSON.parse(fs.readFileSync(
-  path.join(pluginDirectory, 'api-flow/schemas/flow.schema.json'), 'utf8'));
-for (const property of schemaPropertyNames(flowSchema)) {
-  if (!documentsProperty(property)) schemaGaps.push(`kubeclaw.api-flow-document@1:${property}`);
+const packageScripts = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')).scripts;
+const documentedSuiteChecks = [
+  ['verify:test-gate:phase8', 'verify:test-gate:unit-live'],
+  ['verify:test-gate:container-build-implementation', 'verify:test-gate:container-build-live'],
+  ['verify:test-gate:kubernetes-fixture-implementation', 'verify:test-gate:kubernetes-fixture-live'],
+  ['verify:test-gate:http-implementation', 'verify:test-gate:http-live'],
+  ['verify:test-gate:tailscale-exposure-implementation', 'verify:test-gate:tailscale-exposure-live'],
+  ['verify:test-gate:api-implementation', 'verify:test-gate:api-cutover'],
+  ['verify:test-gate:a11y-implementation', 'verify:test-gate:a11y-live'],
+  ['verify:test-gate:lighthouse-implementation', 'verify:test-gate:lighthouse-live'],
+  ['verify:test-gate:visual-implementation', 'verify:test-gate:visual-live'],
+  ['verify:test-gate:e2e-implementation', 'verify:test-gate:e2e-live'],
+  ['verify:test-gate:security-implementation', 'verify:test-gate:security-live'],
+  ['verify:test-gate:size-budget-implementation', 'verify:test-gate:size-budget-production'],
+];
+assert.equal(documentedSuiteChecks.length, suites.length,
+  'the exact verification matrix must have one row for each suite');
+for (const commands of documentedSuiteChecks) for (const command of commands) {
+  assert(packageScripts[command], `documented suite command is not registered: ${command}`);
+  assert(reference.includes(`npm run ${command}`), `suite reference omits registered command: ${command}`);
 }
-assert.deepEqual(schemaGaps, [], `suite reference omits nested configuration fields: ${schemaGaps.join(', ')}`);
 
 execFileSync(process.execPath, [path.join(root, 'scripts/generate-buster-error-reference.mjs')],
+  { cwd: root, stdio: 'pipe' });
+execFileSync(process.execPath, [path.join(root, 'scripts/generate-buster-provider-reference.mjs')],
   { cwd: root, stdio: 'pipe' });
 
 const examplePath = path.join(root,
@@ -255,6 +247,7 @@ const navigation = [
   ['docs/site/understand/README.md', 'buster-namespace-controller.md'],
   ['docs/site/reference/README.md', 'buster-suites.md'],
   ['docs/site/reference/README.md', 'buster-error-codes.md'],
+  ['docs/site/reference/README.md', 'buster-provider-configuration.md'],
   ['docs/site/use/README.md', 'workflows/buster-suite.md'],
   ['docs/site/extend/README.md', 'platform/buster.md'],
 ];

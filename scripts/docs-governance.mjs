@@ -36,6 +36,9 @@ function publicRoute(item) {
 function checksFor(page) {
   const checks = ['npm run docs:governance:check', 'npm run docs:publication:check', 'npm run docs:check:refs'];
   if (page === 'docs/site/status/open-issues.md') checks.unshift('npm run docs:status:check');
+  if (page.includes('/buster') || page === 'docs/site/extend/platform/buster.md') {
+    checks.unshift('npm run docs:buster-guides:check');
+  }
   if (page === 'docs/site/reference/capabilities.md' || page.startsWith('docs/site/extend/plugin-catalogue/')) {
     checks.unshift('npm run docs:publication:check');
   }
@@ -52,6 +55,8 @@ function contentKind(page) {
       'docs/site/reference/secrets.md',
       'docs/site/reference/verification-commands.md',
       'docs/site/reference/workflows.md',
+      'docs/site/reference/buster-error-codes.md',
+      'docs/site/reference/buster-provider-configuration.md',
     ].includes(page)
     || page.startsWith('docs/site/extend/plugin-catalogue/')) return 'generated';
   return 'authored';

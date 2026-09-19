@@ -1,78 +1,76 @@
 # Buster Error Code Reference
 
-Status: generated from implemented provider and capability sources
+Status: generated reference
 Audience: pipeline author, operator, test maintainer
 Owner: buster
-Evidence: scripts/generate-buster-error-reference.mjs; skills/buster/plugins
+Evidence: scripts/generate-buster-error-reference.mjs; skills/buster/engine/test-gates/browser-axe-runtime.ts; skills/buster/engine/test-gates/browser-lighthouse-runtime.ts; skills/buster/engine/test-gates/browser-playwright-runtime.ts; skills/buster/engine/test-gates/browser-visual-runtime.ts; skills/buster/engine/test-gates/container-build-runtime.ts; skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts; skills/buster/engine/test-gates/kubernetes-runtime-security.ts; skills/buster/engine/test-gates/network-http-runtime.ts; skills/buster/engine/test-gates/process-input.ts; skills/buster/engine/test-gates/production.ts; skills/buster/engine/test-gates/report-adapter-runtime.ts; skills/buster/engine/test-gates/runner.ts; skills/buster/engine/test-gates/security-scan-runtime.ts; skills/buster/engine/test-gates/tailscale-exposure-runtime.ts; skills/buster/plugins/api-flow/src/provider.js; skills/buster/plugins/axe/src/provider.js; skills/buster/plugins/container-build/src/provider.js; skills/buster/plugins/coverage-budget/src/provider.js; skills/buster/plugins/demo-auth-smoke/src/protocol.js; skills/buster/plugins/demo-auth-smoke/src/provider.js; skills/buster/plugins/direct-command/src/provider.js; skills/buster/plugins/http/src/provider.js; skills/buster/plugins/junit-report-adapter/src/adapter.js; skills/buster/plugins/kubernetes-fixture/src/provider.js; skills/buster/plugins/lighthouse/src/provider.js; skills/buster/plugins/openapi/src/provider.js; skills/buster/plugins/playwright/src/provider.js; skills/buster/plugins/security-providers/src/common.js; skills/buster/plugins/size-budget/src/provider.js; skills/buster/plugins/tailscale-exposure/src/provider.js; skills/buster/plugins/visual/src/provider.js
 Evidence revision: `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`
-Applies to: exact errors emitted by shipped Buster suite providers
-Last verified: generated source inventory on 2026-09-19
+Applies to: exact errors emitted by shipped Buster providers and their execution adapters
+Last verified: generated from current error sources on 2026-09-19
 
 ## How To Use This Reference
 
-Find the complete code before you retry. A code identifies the boundary that
-could not produce trusted facts. It does not by itself make a retry safe.
-Use the attempt state and the provider retry contract with the code.
+Find the complete code before you retry. The table separates the likely cause,
+effect, corrective action, and retry rule. Always keep the preserved cause and
+attempt state with the code. They contain details that the stable code cannot.
 
-A failed assertion is not an execution error. It produces a normal provider
-result with findings. The codes below describe invalid input, unavailable
-authority, interrupted execution, invalid output, or failed evidence checks.
+A failed test assertion is a normal provider result with findings. These codes
+identify invalid input, unavailable authority, interrupted execution, invalid
+output, or failed evidence handling. Do not translate such an error into a test
+failure.
 
-The generator keeps this list equal to the source inventory. A source change
-fails the documentation check until this page is regenerated and reviewed.
+Literal codes come from the listed implementation files. Explicit expansions
+cover code families that the implementation builds from a checked prefix or
+limit name. The generator rejects retired codes and configuration variable names.
 
 ## Unit Command And JUnit Report
 
-**Meaning:** Command, report, or JUnit normalization failed.
-
-**Safe action:** Check the executable catalogue, paths, process result, and JUnit bytes.
-
-**Exact codes (44):**
-
-- `DIRECT_COMMAND_ARGUMENTS_INVALID`
-- `DIRECT_COMMAND_ARTIFACT_FILE_LIMIT_EXCEEDED`
-- `DIRECT_COMMAND_ARTIFACT_INVALID`
-- `DIRECT_COMMAND_ARTIFACT_LIMIT_EXCEEDED`
-- `DIRECT_COMMAND_CONFIG_INVALID`
-- `DIRECT_COMMAND_COVERAGE_INVALID`
-- `DIRECT_COMMAND_DECLARATION_DUPLICATE`
-- `DIRECT_COMMAND_ENVIRONMENT_DENIED`
-- `DIRECT_COMMAND_EXECUTABLE_INVALID`
-- `DIRECT_COMMAND_OUTPUT_CHANGED`
-- `DIRECT_COMMAND_OUTPUT_NOT_FILE`
-- `DIRECT_COMMAND_PATH_ESCAPE`
-- `DIRECT_COMMAND_PATH_INVALID`
-- `DIRECT_COMMAND_REPORTS_FORBIDDEN`
-- `DIRECT_COMMAND_REPORT_INVALID`
-- `DIRECT_COMMAND_REPORT_REQUIRED`
-- `DIRECT_COMMAND_RESULT_MODE_INVALID`
-- `DIRECT_COMMAND_SYMLINK_DENIED`
-- `JUNIT_BOM_INVALID`
-- `JUNIT_DURATION_INVALID`
-- `JUNIT_MEDIA_TYPE_UNSUPPORTED`
-- `JUNIT_SUITE_DEPTH_LIMIT`
-- `JUNIT_UTF8_INVALID`
-- `JUNIT_XML_ATTRIBUTE_DUPLICATE`
-- `JUNIT_XML_ATTRIBUTE_INVALID`
-- `JUNIT_XML_CDATA_INVALID`
-- `JUNIT_XML_CHARACTER_INVALID`
-- `JUNIT_XML_COMMENT_INVALID`
-- `JUNIT_XML_DECLARATION_FORBIDDEN`
-- `JUNIT_XML_DEPTH_LIMIT`
-- `JUNIT_XML_ENTITY_INVALID`
-- `JUNIT_XML_ENTITY_UNKNOWN`
-- `JUNIT_XML_INCOMPLETE`
-- `JUNIT_XML_ISSUE_NESTED`
-- `JUNIT_XML_PROCESSING_INSTRUCTION_INVALID`
-- `JUNIT_XML_ROOT_INVALID`
-- `JUNIT_XML_STATE_INVALID`
-- `JUNIT_XML_SUITE_IN_CASE`
-- `JUNIT_XML_TAG_INVALID`
-- `JUNIT_XML_TAG_LIMIT`
-- `JUNIT_XML_TAG_MISMATCH`
-- `JUNIT_XML_TESTCASE_INVALID`
-- `JUNIT_XML_TEXT_INVALID`
-- `JUNIT_XML_TEXT_OUTSIDE_ROOT`
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `DIRECT_COMMAND_ARGUMENTS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DIRECT_COMMAND_ARTIFACT_FILE_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `DIRECT_COMMAND_ARTIFACT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DIRECT_COMMAND_ARTIFACT_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `DIRECT_COMMAND_CONFIG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DIRECT_COMMAND_COVERAGE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DIRECT_COMMAND_DECLARATION_DUPLICATE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DIRECT_COMMAND_ENVIRONMENT_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DIRECT_COMMAND_EXECUTABLE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DIRECT_COMMAND_OUTPUT_CHANGED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `DIRECT_COMMAND_OUTPUT_NOT_FILE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `DIRECT_COMMAND_PATH_ESCAPE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `DIRECT_COMMAND_PATH_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DIRECT_COMMAND_REPORTS_FORBIDDEN` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DIRECT_COMMAND_REPORT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DIRECT_COMMAND_REPORT_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DIRECT_COMMAND_RESULT_MODE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DIRECT_COMMAND_SYMLINK_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_BOM_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_DURATION_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_MEDIA_TYPE_UNSUPPORTED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_SUITE_DEPTH_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `JUNIT_UTF8_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_ATTRIBUTE_DUPLICATE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_ATTRIBUTE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_CDATA_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_CHARACTER_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_COMMENT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_DECLARATION_FORBIDDEN` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_DEPTH_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `JUNIT_XML_ENTITY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_ENTITY_UNKNOWN` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `JUNIT_XML_INCOMPLETE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `JUNIT_XML_ISSUE_NESTED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `JUNIT_XML_PROCESSING_INSTRUCTION_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_ROOT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_STATE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_SUITE_IN_CASE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `JUNIT_XML_TAG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_TAG_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `JUNIT_XML_TAG_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_TESTCASE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_TEXT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `JUNIT_XML_TEXT_OUTSIDE_ROOT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
 
 **Source evidence:**
 
@@ -81,22 +79,18 @@ fails the documentation check until this page is regenerated and reviewed.
 
 ## Coverage Budget
 
-**Meaning:** LCOV input or the declared budget is invalid.
-
-**Safe action:** Check input identity, LCOV syntax, size limits, and the minimum percentage.
-
-**Exact codes (10):**
-
-- `COVERAGE_BUDGET_MINIMUM_INVALID`
-- `COVERAGE_INPUT_DIGEST_MISMATCH`
-- `COVERAGE_INPUT_DUPLICATE`
-- `COVERAGE_INPUT_INVALID`
-- `COVERAGE_INPUT_REQUIRED`
-- `COVERAGE_INPUT_SIZE_MISMATCH`
-- `COVERAGE_LCOV_EMPTY`
-- `COVERAGE_LCOV_INVALID`
-- `COVERAGE_LCOV_LINE_LIMIT`
-- `COVERAGE_LCOV_TOO_LARGE`
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `COVERAGE_BUDGET_MINIMUM_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `COVERAGE_INPUT_DIGEST_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `COVERAGE_INPUT_DUPLICATE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `COVERAGE_INPUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `COVERAGE_INPUT_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `COVERAGE_INPUT_SIZE_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `COVERAGE_LCOV_EMPTY` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `COVERAGE_LCOV_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `COVERAGE_LCOV_LINE_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `COVERAGE_LCOV_TOO_LARGE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
 
 **Source evidence:**
 
@@ -104,58 +98,54 @@ fails the documentation check until this page is regenerated and reviewed.
 
 ## Container Build
 
-**Meaning:** Build input, BuildKit, registry, or image proof failed.
-
-**Safe action:** Check safe paths, native readiness, push policy, and manifest digest equality.
-
-**Exact codes (46):**
-
-- `BUSTER_CONTAINER_BUILD_CONFIG_REQUIRED`
-- `BUSTER_CONTAINER_BUILD_REGISTRY_CREDENTIALS_INCOMPLETE`
-- `CONTAINER_BUILD_ARGUMENTS_INVALID`
-- `CONTAINER_BUILD_ARGUMENT_ALLOWLIST_INVALID`
-- `CONTAINER_BUILD_ARGUMENT_DENIED`
-- `CONTAINER_BUILD_ARGUMENT_INVALID`
-- `CONTAINER_BUILD_BUILDKIT_HOST_INVALID`
-- `CONTAINER_BUILD_CANCELLED`
-- `CONTAINER_BUILD_CAPABILITY_REQUEST_INVALID`
-- `CONTAINER_BUILD_CONFIG_INVALID`
-- `CONTAINER_BUILD_CONTEXT_NOT_DIRECTORY`
-- `CONTAINER_BUILD_CONTEXT_OUTSIDE_REPOSITORY`
-- `CONTAINER_BUILD_DEFINITION_IDENTITY_INVALID`
-- `CONTAINER_BUILD_DEFINITION_INVALID`
-- `CONTAINER_BUILD_DIGEST_MISSING`
-- `CONTAINER_BUILD_DOCKERFILE_NOT_FILE`
-- `CONTAINER_BUILD_DOCKERFILE_OUTSIDE_PROVIDER_ROOTS`
-- `CONTAINER_BUILD_EXECUTION_ERROR`
-- `CONTAINER_BUILD_FAILED`
-- `CONTAINER_BUILD_LIMIT_INVALID`
-- `CONTAINER_BUILD_LOG_LIMIT_INVALID`
-- `CONTAINER_BUILD_MANIFEST_LIMIT_INVALID`
-- `CONTAINER_BUILD_OUTPUT_NAME_INVALID`
-- `CONTAINER_BUILD_PATH_DENIED`
-- `CONTAINER_BUILD_PATH_ESCAPE`
-- `CONTAINER_BUILD_PATH_INVALID`
-- `CONTAINER_BUILD_PATH_TYPE_INVALID`
-- `CONTAINER_BUILD_PLATFORMS_INVALID`
-- `CONTAINER_BUILD_PLATFORM_DENIED`
-- `CONTAINER_BUILD_PLATFORM_INVALID`
-- `CONTAINER_BUILD_REGISTRY_CREDENTIALS_INCOMPLETE`
-- `CONTAINER_BUILD_REGISTRY_CREDENTIALS_REQUIRE_TLS`
-- `CONTAINER_BUILD_REGISTRY_DIGEST_MISMATCH`
-- `CONTAINER_BUILD_REGISTRY_ENDPOINT_MISMATCH`
-- `CONTAINER_BUILD_REGISTRY_ERROR`
-- `CONTAINER_BUILD_REGISTRY_MANIFEST_SIZE_INVALID`
-- `CONTAINER_BUILD_REGISTRY_MANIFEST_TOO_LARGE`
-- `CONTAINER_BUILD_REGISTRY_READ_FAILED`
-- `CONTAINER_BUILD_REGISTRY_REFERENCE_INVALID`
-- `CONTAINER_BUILD_REGISTRY_URL_INVALID`
-- `CONTAINER_BUILD_REPOSITORY_PREFIX_INVALID`
-- `CONTAINER_BUILD_SYMLINK_DENIED`
-- `CONTAINER_BUILD_TARGET_INVALID`
-- `CONTAINER_BUILD_TEMPLATE_UNKNOWN`
-- `CONTAINER_BUILD_TIMEOUT`
-- `CONTAINER_BUILD_TIME_LIMIT_INVALID`
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `BUSTER_CONTAINER_BUILD_CONFIG_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BUSTER_CONTAINER_BUILD_REGISTRY_CREDENTIALS_INCOMPLETE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `CONTAINER_BUILD_ARGUMENTS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_ARGUMENT_ALLOWLIST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_ARGUMENT_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_ARGUMENT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_BUILDKIT_HOST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `CONTAINER_BUILD_CAPABILITY_REQUEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_CONFIG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_CONTEXT_NOT_DIRECTORY` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `CONTAINER_BUILD_CONTEXT_OUTSIDE_REPOSITORY` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `CONTAINER_BUILD_DEFINITION_IDENTITY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_DEFINITION_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_DIGEST_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_DOCKERFILE_NOT_FILE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `CONTAINER_BUILD_DOCKERFILE_OUTSIDE_PROVIDER_ROOTS` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `CONTAINER_BUILD_EXECUTION_ERROR` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `CONTAINER_BUILD_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `CONTAINER_BUILD_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_LOG_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_MANIFEST_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_OUTPUT_NAME_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_PATH_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_PATH_ESCAPE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `CONTAINER_BUILD_PATH_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_PATH_TYPE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_PLATFORMS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_PLATFORM_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_PLATFORM_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_REGISTRY_CREDENTIALS_INCOMPLETE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `CONTAINER_BUILD_REGISTRY_CREDENTIALS_REQUIRE_TLS` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `CONTAINER_BUILD_REGISTRY_DIGEST_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_REGISTRY_ENDPOINT_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_REGISTRY_ERROR` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `CONTAINER_BUILD_REGISTRY_MANIFEST_SIZE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_REGISTRY_MANIFEST_TOO_LARGE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_REGISTRY_READ_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `CONTAINER_BUILD_REGISTRY_REFERENCE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_REGISTRY_URL_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_REPOSITORY_PREFIX_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_SYMLINK_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_TARGET_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `CONTAINER_BUILD_TEMPLATE_UNKNOWN` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `CONTAINER_BUILD_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
+| `CONTAINER_BUILD_TIME_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
 
 **Source evidence:**
 
@@ -165,107 +155,114 @@ fails the documentation check until this page is regenerated and reviewed.
 
 ## Kubernetes Fixture
 
-**Meaning:** The deployment fixture or namespace lease failed.
-
-**Safe action:** Check typed inputs, lease status, broker policy, readiness, and cleanup.
-
-**Exact codes (95):**
-
-- `KUBERNETES_FIXTURE_API_GROUP_INVALID`
-- `KUBERNETES_FIXTURE_API_VERSION_INVALID`
-- `KUBERNETES_FIXTURE_CANCELLED`
-- `KUBERNETES_FIXTURE_CAPABILITY_DROP_REQUIRED`
-- `KUBERNETES_FIXTURE_CAPABILITY_REQUEST_INVALID`
-- `KUBERNETES_FIXTURE_CLUSTER_SCOPE_DENIED`
-- `KUBERNETES_FIXTURE_CONFIG_INVALID`
-- `KUBERNETES_FIXTURE_CONTAINERS_INVALID`
-- `KUBERNETES_FIXTURE_CONTAINER_SECURITY_INVALID`
-- `KUBERNETES_FIXTURE_CONTROLLER_NAMESPACE_INVALID`
-- `KUBERNETES_FIXTURE_CREATED_AT_INVALID`
-- `KUBERNETES_FIXTURE_CREDENTIAL_PROVENANCE_MISSING`
-- `KUBERNETES_FIXTURE_DEFAULT_STORAGE_CLASS_DENIED`
-- `KUBERNETES_FIXTURE_DEFAULT_STORAGE_CLASS_POLICY_INVALID`
-- `KUBERNETES_FIXTURE_EXTERNAL_SERVICE_DENIED`
-- `KUBERNETES_FIXTURE_GENERIC_EPHEMERAL_VOLUME_DENIED`
-- `KUBERNETES_FIXTURE_HOST_NAMESPACE_DENIED`
-- `KUBERNETES_FIXTURE_HOST_PATH_DENIED`
-- `KUBERNETES_FIXTURE_HOST_PORT_DENIED`
-- `KUBERNETES_FIXTURE_IMAGE_AMBIGUOUS`
-- `KUBERNETES_FIXTURE_IMAGE_DENIED`
-- `KUBERNETES_FIXTURE_IMAGE_DIGEST_INVALID`
-- `KUBERNETES_FIXTURE_IMAGE_INPUT_INVALID`
-- `KUBERNETES_FIXTURE_IMAGE_INVALID`
-- `KUBERNETES_FIXTURE_IMAGE_NOT_USED`
-- `KUBERNETES_FIXTURE_IMAGE_REGISTRY_DENIED`
-- `KUBERNETES_FIXTURE_IMAGE_REQUIRED`
-- `KUBERNETES_FIXTURE_INPUT_MEDIA_TYPE_INVALID`
-- `KUBERNETES_FIXTURE_INPUT_METADATA_INVALID`
-- `KUBERNETES_FIXTURE_INPUT_NOT_FILE`
-- `KUBERNETES_FIXTURE_INPUT_REQUIRED`
-- `KUBERNETES_FIXTURE_INPUT_UNKNOWN`
-- `KUBERNETES_FIXTURE_INPUT_URL_INVALID`
-- `KUBERNETES_FIXTURE_KUBECTL`
-- `KUBERNETES_FIXTURE_KUBECTL_FAILED`
-- `KUBERNETES_FIXTURE_LEASE_FAILED`
-- `KUBERNETES_FIXTURE_LEASE_NAME_INVALID`
-- `KUBERNETES_FIXTURE_LEASE_REJECTED`
-- `KUBERNETES_FIXTURE_LEASE_TIMEOUT`
-- `KUBERNETES_FIXTURE_MANIFEST_CHANGED`
-- `KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT`
-- `KUBERNETES_FIXTURE_MANIFEST_DIGEST_INVALID`
-- `KUBERNETES_FIXTURE_MANIFEST_DIGEST_MISMATCH`
-- `KUBERNETES_FIXTURE_MANIFEST_LIST_INVALID`
-- `KUBERNETES_FIXTURE_MANIFEST_NOT_FILE`
-- `KUBERNETES_FIXTURE_MANIFEST_PATH_DENIED`
-- `KUBERNETES_FIXTURE_MANIFEST_PATH_INVALID`
-- `KUBERNETES_FIXTURE_MANIFEST_READ_INCOMPLETE`
-- `KUBERNETES_FIXTURE_MANIFEST_SIZE_INVALID`
-- `KUBERNETES_FIXTURE_MUTABLE_IMAGE_DENIED`
-- `KUBERNETES_FIXTURE_NAMESPACE_FIELD_DENIED`
-- `KUBERNETES_FIXTURE_NAMESPACE_MISMATCH`
-- `KUBERNETES_FIXTURE_NAMESPACE_NAME_INVALID`
-- `KUBERNETES_FIXTURE_NAMESPACE_PREFIXES_INVALID`
-- `KUBERNETES_FIXTURE_NAMESPACE_PREFIX_DENIED`
-- `KUBERNETES_FIXTURE_NAMESPACE_PREFIX_INVALID`
-- `KUBERNETES_FIXTURE_OPERATION_INVALID`
-- `KUBERNETES_FIXTURE_POLL_INTERVAL_INVALID`
-- `KUBERNETES_FIXTURE_PREPARATION_FAILED`
-- `KUBERNETES_FIXTURE_PVC_SIZE_DENIED`
-- `KUBERNETES_FIXTURE_PVC_SOURCE_DENIED`
-- `KUBERNETES_FIXTURE_PVC_TEMPLATES_INVALID`
-- `KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED`
-- `KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_LIMIT_INVALID`
-- `KUBERNETES_FIXTURE_PVC_VOLUME_MODE_DENIED`
-- `KUBERNETES_FIXTURE_RBAC_DENIED`
-- `KUBERNETES_FIXTURE_READINESS_TIMEOUT`
-- `KUBERNETES_FIXTURE_READINESS_TIMEOUT_INVALID`
-- `KUBERNETES_FIXTURE_REGISTRY_PREFIXES_INVALID`
-- `KUBERNETES_FIXTURE_RELEASE_FAILED`
-- `KUBERNETES_FIXTURE_REQUEST_INVALID`
-- `KUBERNETES_FIXTURE_RESOURCE_COUNT_INVALID`
-- `KUBERNETES_FIXTURE_RESOURCE_KIND_DENIED`
-- `KUBERNETES_FIXTURE_RETENTION_INVALID`
-- `KUBERNETES_FIXTURE_RETENTION_MODE_INVALID`
-- `KUBERNETES_FIXTURE_RUN_AS_NON_ROOT_REQUIRED`
-- `KUBERNETES_FIXTURE_SECCOMP_REQUIRED`
-- `KUBERNETES_FIXTURE_SECRET_REFERENCES_INVALID`
-- `KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED`
-- `KUBERNETES_FIXTURE_SERVICE_DUPLICATE`
-- `KUBERNETES_FIXTURE_SERVICE_NAME_INVALID`
-- `KUBERNETES_FIXTURE_SERVICE_PORT_INVALID`
-- `KUBERNETES_FIXTURE_SERVICE_PORT_MISMATCH`
-- `KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT`
-- `KUBERNETES_FIXTURE_SERVICE_REQUIRED`
-- `KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_INVALID`
-- `KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_MISMATCH`
-- `KUBERNETES_FIXTURE_STATEFULSET_REPLICAS_INVALID`
-- `KUBERNETES_FIXTURE_STORAGE_CLASSES_INVALID`
-- `KUBERNETES_FIXTURE_STORAGE_CLASS_DENIED`
-- `KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID`
-- `KUBERNETES_FIXTURE_SUBJECT_INVALID`
-- `KUBERNETES_FIXTURE_TEST_CREDENTIALS_INVALID`
-- `KUBERNETES_FIXTURE_WORKLOAD_REQUIRED`
-- `TEST_PROVIDER_FIXTURE_CLEANUP_REQUIRED`
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `KUBERNETES_FIXTURE_API_GROUP_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_API_VERSION_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `KUBERNETES_FIXTURE_CAPABILITY_DROP_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_CAPABILITY_REQUEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_CLUSTER_SCOPE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_CONFIG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_CONTAINERS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_CONTAINER_SECURITY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_CONTROLLER_NAMESPACE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_CREATED_AT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_CREDENTIAL_PROVENANCE_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_DEFAULT_STORAGE_CLASS_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_DEFAULT_STORAGE_CLASS_POLICY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_EXECUTION_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_EXTERNAL_SERVICE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_GENERIC_EPHEMERAL_VOLUME_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_HOST_NAMESPACE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_HOST_PATH_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_HOST_PORT_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_IMAGE_AMBIGUOUS` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `KUBERNETES_FIXTURE_IMAGE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_IMAGE_DIGEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_IMAGE_INPUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_IMAGE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_IMAGE_NOT_USED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `KUBERNETES_FIXTURE_IMAGE_REGISTRY_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_IMAGE_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_INPUT_MEDIA_TYPE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_INPUT_METADATA_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_INPUT_NOT_FILE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `KUBERNETES_FIXTURE_INPUT_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_INPUT_UNKNOWN` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `KUBERNETES_FIXTURE_INPUT_URL_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_KUBECTL` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `KUBERNETES_FIXTURE_KUBECTL_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `KUBERNETES_FIXTURE_KUBECTL_CLEANUP_FAILED` | Cleanup or ownership release did not complete. | Resources or leases can still exist after the attempt. | Inspect the recorded resource identity and finish cleanup before reuse. | Do not retry the workload until ownership and retained state are known. |
+| `KUBERNETES_FIXTURE_KUBECTL_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `KUBERNETES_FIXTURE_KUBECTL_OUTPUT_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `KUBERNETES_FIXTURE_KUBECTL_STDERR_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `KUBERNETES_FIXTURE_KUBECTL_STDIN_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `KUBERNETES_FIXTURE_KUBECTL_STDOUT_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `KUBERNETES_FIXTURE_KUBECTL_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
+| `KUBERNETES_FIXTURE_LEASE_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `KUBERNETES_FIXTURE_LEASE_NAME_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_LEASE_REJECTED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `KUBERNETES_FIXTURE_LEASE_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
+| `KUBERNETES_FIXTURE_MANIFEST_CHANGED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `KUBERNETES_FIXTURE_MANIFEST_DIGEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_MANIFEST_DIGEST_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_MANIFEST_LIST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_MANIFEST_NOT_FILE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `KUBERNETES_FIXTURE_MANIFEST_PATH_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_MANIFEST_PATH_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_MANIFEST_READ_INCOMPLETE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `KUBERNETES_FIXTURE_MANIFEST_SIZE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_MANIFEST_SIZE_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_MUTABLE_IMAGE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_NAMESPACE_FIELD_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_NAMESPACE_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_NAMESPACE_NAME_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_NAMESPACE_PREFIXES_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_NAMESPACE_PREFIX_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_NAMESPACE_PREFIX_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_OPERATION_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_POLL_INTERVAL_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_PREPARATION_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `KUBERNETES_FIXTURE_PVC_SIZE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_PVC_SIZE_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_PVC_SOURCE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_PVC_TEMPLATES_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_PVC_VOLUME_MODE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_RBAC_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_READINESS_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
+| `KUBERNETES_FIXTURE_READINESS_TIMEOUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_REGISTRY_PREFIXES_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_RELEASE_FAILED` | Cleanup or ownership release did not complete. | Resources or leases can still exist after the attempt. | Inspect the recorded resource identity and finish cleanup before reuse. | Do not retry the workload until ownership and retained state are known. |
+| `KUBERNETES_FIXTURE_REQUEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_RESOURCE_COUNT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_RESOURCE_COUNT_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_RESOURCE_KIND_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_RETENTION_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_RETENTION_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_RETENTION_MODE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_RUN_AS_NON_ROOT_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_SECCOMP_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_SECRET_REFERENCES_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_SERVICE_DUPLICATE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_SERVICE_NAME_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_SERVICE_PORT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_SERVICE_PORT_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
+| `KUBERNETES_FIXTURE_SERVICE_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_STATEFULSET_REPLICAS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_STORAGE_CLASSES_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_STORAGE_CLASS_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_SUBJECT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_TEST_CREDENTIALS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_FIXTURE_WORKLOAD_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
 
 **Source evidence:**
 
@@ -274,65 +271,61 @@ fails the documentation check until this page is regenerated and reviewed.
 
 ## HTTP
 
-**Meaning:** The bounded HTTP request could not produce trusted facts.
-
-**Safe action:** Check target selection, origin policy, timeout, response size, and assertions.
-
-**Exact codes (53):**
-
-- `HTTP_CAPABILITY_REQUEST_INVALID`
-- `HTTP_CONFIG_ACCEPT_INVALID`
-- `HTTP_CONFIG_CONTENT_TYPE_INVALID`
-- `HTTP_CONFIG_ENDPOINT_NAME_INVALID`
-- `HTTP_CONFIG_EXPECTED_TEXT_INVALID`
-- `HTTP_CONFIG_INVALID`
-- `HTTP_CONFIG_METHOD_INVALID`
-- `HTTP_CONFIG_PATH_INVALID`
-- `HTTP_CONFIG_RESPONSE_LIMIT_INVALID`
-- `HTTP_CONFIG_STATUSES_INVALID`
-- `HTTP_CONFIG_TIMEOUT_INVALID`
-- `HTTP_CONFIG_URL_INVALID`
-- `HTTP_INPUT_ENDPOINTS_INVALID`
-- `HTTP_INPUT_ENDPOINT_INVALID`
-- `HTTP_INPUT_INVALID`
-- `HTTP_INPUT_UNKNOWN`
-- `HTTP_REQUEST_BODY_INVALID`
-- `HTTP_REQUEST_CANCELLED`
-- `HTTP_REQUEST_EXACT_ORIGIN_REQUIRED`
-- `HTTP_REQUEST_FAILED`
-- `HTTP_REQUEST_HEADERS_INVALID`
-- `HTTP_REQUEST_HEADER_DENIED`
-- `HTTP_REQUEST_METHOD_DENIED`
-- `HTTP_REQUEST_ORIGIN_DENIED`
-- `HTTP_REQUEST_PAYLOAD_INVALID`
-- `HTTP_REQUEST_PAYLOAD_UNKNOWN_FIELD`
-- `HTTP_REQUEST_PORT_DENIED`
-- `HTTP_REQUEST_RESPONSE_LIMIT_INVALID`
-- `HTTP_REQUEST_TIMEOUT`
-- `HTTP_REQUEST_TIMEOUT_INVALID`
-- `HTTP_REQUEST_URL_INVALID`
-- `HTTP_RESPONSE_HEADERS_INVALID`
-- `HTTP_RESPONSE_INVALID`
-- `HTTP_RESPONSE_REDIRECT_DENIED`
-- `HTTP_RESPONSE_SIZE_EXCEEDED`
-- `HTTP_RUNTIME_EXECUTION_LIMIT_INVALID`
-- `HTTP_RUNTIME_HEADER_POLICY_INVALID`
-- `HTTP_RUNTIME_HOST_SUFFIX_INVALID`
-- `HTTP_RUNTIME_METHOD_POLICY_INVALID`
-- `HTTP_RUNTIME_ORIGIN_INVALID`
-- `HTTP_RUNTIME_PORT_INVALID`
-- `HTTP_RUNTIME_PORT_POLICY_REQUIRED`
-- `HTTP_RUNTIME_REQUEST_LIMIT_INVALID`
-- `HTTP_RUNTIME_RESPONSE_LIMIT_INVALID`
-- `HTTP_RUNTIME_TARGET_POLICY_REQUIRED`
-- `HTTP_TARGET_AMBIGUOUS`
-- `HTTP_TARGET_ENDPOINT_NOT_FOUND`
-- `HTTP_TARGET_REQUIRED`
-- `HTTP_WEBSOCKET_DENIED`
-- `HTTP_WEBSOCKET_EXACT_ORIGIN_REQUIRED`
-- `HTTP_WEBSOCKET_MESSAGES_INVALID`
-- `HTTP_WEBSOCKET_MESSAGES_MISSING`
-- `HTTP_WEBSOCKET_MINIMUM_INVALID`
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `HTTP_CAPABILITY_REQUEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_CONFIG_ACCEPT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_CONFIG_CONTENT_TYPE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_CONFIG_ENDPOINT_NAME_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_CONFIG_EXPECTED_TEXT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_CONFIG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_CONFIG_METHOD_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_CONFIG_PATH_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_CONFIG_RESPONSE_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_CONFIG_STATUSES_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_CONFIG_TIMEOUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_CONFIG_URL_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_INPUT_ENDPOINTS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_INPUT_ENDPOINT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_INPUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_INPUT_UNKNOWN` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `HTTP_REQUEST_BODY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_REQUEST_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `HTTP_REQUEST_EXACT_ORIGIN_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_REQUEST_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `HTTP_REQUEST_HEADERS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_REQUEST_HEADER_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_REQUEST_METHOD_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_REQUEST_ORIGIN_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_REQUEST_PAYLOAD_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_REQUEST_PAYLOAD_UNKNOWN_FIELD` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `HTTP_REQUEST_PORT_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_REQUEST_RESPONSE_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_REQUEST_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
+| `HTTP_REQUEST_TIMEOUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_REQUEST_URL_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_RESPONSE_HEADERS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_RESPONSE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_RESPONSE_REDIRECT_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_RESPONSE_SIZE_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `HTTP_RUNTIME_EXECUTION_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_RUNTIME_HEADER_POLICY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_RUNTIME_HOST_SUFFIX_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_RUNTIME_METHOD_POLICY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_RUNTIME_ORIGIN_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_RUNTIME_PORT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_RUNTIME_PORT_POLICY_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_RUNTIME_REQUEST_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_RUNTIME_RESPONSE_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_RUNTIME_TARGET_POLICY_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_TARGET_AMBIGUOUS` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `HTTP_TARGET_ENDPOINT_NOT_FOUND` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `HTTP_TARGET_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_WEBSOCKET_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_WEBSOCKET_EXACT_ORIGIN_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_WEBSOCKET_MESSAGES_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_WEBSOCKET_MESSAGES_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `HTTP_WEBSOCKET_MINIMUM_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
 
 **Source evidence:**
 
@@ -341,50 +334,53 @@ fails the documentation check until this page is regenerated and reviewed.
 
 ## Tailscale Exposure
 
-**Meaning:** Exposure ownership, readiness, or release failed.
-
-**Safe action:** Check lease generation, ingress ownership, DNS, handoff, and cleanup.
-
-**Exact codes (38):**
-
-- `TAILSCALE_EXPOSURE_API_INVALID`
-- `TAILSCALE_EXPOSURE_CANCELLED`
-- `TAILSCALE_EXPOSURE_CAPABILITY_REQUEST_INVALID`
-- `TAILSCALE_EXPOSURE_CONFIG_INVALID`
-- `TAILSCALE_EXPOSURE_CONTROLLER_FAILED`
-- `TAILSCALE_EXPOSURE_CONTROLLER_NAMESPACE_INVALID`
-- `TAILSCALE_EXPOSURE_DEPLOYMENT_INPUT_INVALID`
-- `TAILSCALE_EXPOSURE_DEPLOYMENT_INVALID`
-- `TAILSCALE_EXPOSURE_ENDPOINT_AMBIGUOUS`
-- `TAILSCALE_EXPOSURE_ENDPOINT_NAME_INVALID`
-- `TAILSCALE_EXPOSURE_ENDPOINT_NOT_FOUND`
-- `TAILSCALE_EXPOSURE_HANDOFF_MISSING`
-- `TAILSCALE_EXPOSURE_HOSTNAME_INVALID`
-- `TAILSCALE_EXPOSURE_HOST_DENIED`
-- `TAILSCALE_EXPOSURE_HOST_MISMATCH`
-- `TAILSCALE_EXPOSURE_HOST_POLICY_INVALID`
-- `TAILSCALE_EXPOSURE_HOST_SUFFIX_INVALID`
-- `TAILSCALE_EXPOSURE_INPUT_UNKNOWN`
-- `TAILSCALE_EXPOSURE_INTERNAL_ENDPOINT_INVALID`
-- `TAILSCALE_EXPOSURE_KUBECTL`
-- `TAILSCALE_EXPOSURE_KUBECTL_FAILED`
-- `TAILSCALE_EXPOSURE_KUBECTL_INVALID`
-- `TAILSCALE_EXPOSURE_LEASE_CHANGED`
-- `TAILSCALE_EXPOSURE_LEASE_EXPIRED`
-- `TAILSCALE_EXPOSURE_LEASE_MISMATCH`
-- `TAILSCALE_EXPOSURE_LEASE_NAME_INVALID`
-- `TAILSCALE_EXPOSURE_NAMESPACE_DENIED`
-- `TAILSCALE_EXPOSURE_NAMESPACE_POLICY_INVALID`
-- `TAILSCALE_EXPOSURE_OPERATION_INVALID`
-- `TAILSCALE_EXPOSURE_PATH_INVALID`
-- `TAILSCALE_EXPOSURE_PREPARATION_FAILED`
-- `TAILSCALE_EXPOSURE_RBAC_DENIED`
-- `TAILSCALE_EXPOSURE_READINESS_TIMEOUT`
-- `TAILSCALE_EXPOSURE_READINESS_TIMEOUT_INVALID`
-- `TAILSCALE_EXPOSURE_REQUEST_INVALID`
-- `TAILSCALE_EXPOSURE_RETENTION_INVALID`
-- `TAILSCALE_EXPOSURE_ROLLBACK_FAILED`
-- `TAILSCALE_EXPOSURE_URL_INVALID`
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `TAILSCALE_EXPOSURE_API_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `TAILSCALE_EXPOSURE_CAPABILITY_REQUEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_CONFIG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_CONTROLLER_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `TAILSCALE_EXPOSURE_CONTROLLER_NAMESPACE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_DEPLOYMENT_INPUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_DEPLOYMENT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_ENDPOINT_AMBIGUOUS` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TAILSCALE_EXPOSURE_ENDPOINT_NAME_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_ENDPOINT_NOT_FOUND` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `TAILSCALE_EXPOSURE_HANDOFF_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_HOSTNAME_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_HOST_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_HOST_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_HOST_POLICY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_HOST_SUFFIX_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_INPUT_UNKNOWN` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TAILSCALE_EXPOSURE_INTERNAL_ENDPOINT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_KUBECTL` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TAILSCALE_EXPOSURE_KUBECTL_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `TAILSCALE_EXPOSURE_KUBECTL_CLEANUP_FAILED` | Cleanup or ownership release did not complete. | Resources or leases can still exist after the attempt. | Inspect the recorded resource identity and finish cleanup before reuse. | Do not retry the workload until ownership and retained state are known. |
+| `TAILSCALE_EXPOSURE_KUBECTL_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `TAILSCALE_EXPOSURE_KUBECTL_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_KUBECTL_OUTPUT_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TAILSCALE_EXPOSURE_KUBECTL_STDERR_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `TAILSCALE_EXPOSURE_KUBECTL_STDIN_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `TAILSCALE_EXPOSURE_KUBECTL_STDOUT_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `TAILSCALE_EXPOSURE_KUBECTL_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
+| `TAILSCALE_EXPOSURE_LEASE_CHANGED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TAILSCALE_EXPOSURE_LEASE_EXPIRED` | Time-bound authority or evidence is no longer valid. | The old value cannot authorize the current attempt. | Issue fresh authority or evidence through its owner. | Retry only with the fresh value. |
+| `TAILSCALE_EXPOSURE_LEASE_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_LEASE_NAME_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_NAMESPACE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_NAMESPACE_POLICY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_OPERATION_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_PATH_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_PREPARATION_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `TAILSCALE_EXPOSURE_RBAC_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_READINESS_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
+| `TAILSCALE_EXPOSURE_READINESS_TIMEOUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_REQUEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_RETENTION_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TAILSCALE_EXPOSURE_ROLLBACK_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `TAILSCALE_EXPOSURE_URL_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
 
 **Source evidence:**
 
@@ -393,65 +389,61 @@ fails the documentation check until this page is regenerated and reviewed.
 
 ## API
 
-**Meaning:** API flow or OpenAPI execution failed.
-
-**Safe action:** Check the project document, selected operation, variables, origin policy, and cleanup.
-
-**Exact codes (53):**
-
-- `API_FLOW_CONFIG_INVALID`
-- `API_FLOW_ENDPOINT_NOT_FOUND`
-- `API_FLOW_EXPECT_INVALID`
-- `API_FLOW_EXTRACT_INVALID`
-- `API_FLOW_FILE_DENIED`
-- `API_FLOW_FILE_INVALID`
-- `API_FLOW_FILE_TOO_LARGE`
-- `API_FLOW_HEADERS_INVALID`
-- `API_FLOW_INPUT_INVALID`
-- `API_FLOW_INPUT_UNKNOWN`
-- `API_FLOW_MESSAGES_INVALID`
-- `API_FLOW_METHOD_INVALID`
-- `API_FLOW_PATH_INVALID`
-- `API_FLOW_PROTOCOL_INVALID`
-- `API_FLOW_RESPONSE_LIMIT_INVALID`
-- `API_FLOW_SELECTOR_INVALID`
-- `API_FLOW_STEPS_INVALID`
-- `API_FLOW_STEP_ID_DUPLICATE`
-- `API_FLOW_STEP_ID_INVALID`
-- `API_FLOW_STEP_INVALID`
-- `API_FLOW_STEP_LIMIT_EXCEEDED`
-- `API_FLOW_STEP_LIMIT_INVALID`
-- `API_FLOW_TARGET_AMBIGUOUS`
-- `API_FLOW_TARGET_REQUIRED`
-- `API_FLOW_TIMEOUT_INVALID`
-- `API_FLOW_VARIABLES_INVALID`
-- `API_FLOW_VARIABLE_MISSING`
-- `API_FLOW_VERSION_UNSUPPORTED`
-- `API_FLOW_WORKSPACE_INVALID`
-- `OPENAPI_CONFIG_INVALID`
-- `OPENAPI_ENDPOINT_NOT_FOUND`
-- `OPENAPI_EXTERNAL_REF_DENIED`
-- `OPENAPI_FILE_DENIED`
-- `OPENAPI_FILE_INVALID`
-- `OPENAPI_FILE_TOO_LARGE`
-- `OPENAPI_INPUT_INVALID`
-- `OPENAPI_INPUT_UNKNOWN`
-- `OPENAPI_OPERATION_ID_INVALID`
-- `OPENAPI_OPERATION_NOT_FOUND`
-- `OPENAPI_PATHS_INVALID`
-- `OPENAPI_PATH_INVALID`
-- `OPENAPI_PATH_PARAMETER_MISSING`
-- `OPENAPI_SCHEMA_DEPTH_EXCEEDED`
-- `OPENAPI_SCHEMA_PATTERN_INVALID`
-- `OPENAPI_SCHEMA_PATTERN_UNSAFE`
-- `OPENAPI_SCHEMA_REF_CYCLE`
-- `OPENAPI_SCHEMA_REF_MISSING`
-- `OPENAPI_SELECTION_EMPTY`
-- `OPENAPI_SELECTION_LIMIT_EXCEEDED`
-- `OPENAPI_TARGET_AMBIGUOUS`
-- `OPENAPI_TARGET_REQUIRED`
-- `OPENAPI_VERSION_UNSUPPORTED`
-- `OPENAPI_WORKSPACE_INVALID`
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `API_FLOW_CONFIG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_ENDPOINT_NOT_FOUND` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `API_FLOW_EXPECT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_EXTRACT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_FILE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_FILE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_FILE_TOO_LARGE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_HEADERS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_INPUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_INPUT_UNKNOWN` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `API_FLOW_MESSAGES_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_METHOD_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_PATH_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_PROTOCOL_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_RESPONSE_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_SELECTOR_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_STEPS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_STEP_ID_DUPLICATE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_STEP_ID_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_STEP_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_STEP_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `API_FLOW_STEP_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_TARGET_AMBIGUOUS` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `API_FLOW_TARGET_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_TIMEOUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_VARIABLES_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_VARIABLE_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_VERSION_UNSUPPORTED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `API_FLOW_WORKSPACE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_CONFIG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_ENDPOINT_NOT_FOUND` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `OPENAPI_EXTERNAL_REF_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_FILE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_FILE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_FILE_TOO_LARGE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_INPUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_INPUT_UNKNOWN` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `OPENAPI_OPERATION_ID_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_OPERATION_NOT_FOUND` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `OPENAPI_PATHS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_PATH_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_PATH_PARAMETER_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_SCHEMA_DEPTH_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `OPENAPI_SCHEMA_PATTERN_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_SCHEMA_PATTERN_UNSAFE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `OPENAPI_SCHEMA_REF_CYCLE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `OPENAPI_SCHEMA_REF_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_SELECTION_EMPTY` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `OPENAPI_SELECTION_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `OPENAPI_TARGET_AMBIGUOUS` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `OPENAPI_TARGET_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_VERSION_UNSUPPORTED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `OPENAPI_WORKSPACE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
 
 **Source evidence:**
 
@@ -460,55 +452,49 @@ fails the documentation check until this page is regenerated and reviewed.
 
 ## Accessibility
 
-**Meaning:** Axe configuration, browser authority, or result validation failed.
-
-**Safe action:** Check target, profiles, routes, acceptance expiry, and browser readiness.
-
-**Exact codes (43):**
-
-- `AXE_CAPABILITY_RESULT_INVALID`
-- `AXE_CONFIG_INVALID`
-- `AXE_ENDPOINT_NOT_FOUND`
-- `AXE_INPUT_INVALID`
-- `AXE_INPUT_UNKNOWN`
-- `AXE_PROFILE_FILE_DENIED`
-- `AXE_PROFILE_FILE_INVALID`
-- `AXE_PROFILE_FILE_TOO_LARGE`
-- `AXE_PROFILE_INVALID`
-- `AXE_PROFILE_LIMIT_EXCEEDED`
-- `AXE_PROFILE_NOT_FOUND`
-- `AXE_PROFILE_UNKNOWN_FIELD`
-- `AXE_TARGET_AMBIGUOUS`
-- `AXE_TARGET_REQUIRED`
-- `AXE_WORKSPACE_INVALID`
-- `BROWSER_AXE_BROWSER_DENIED`
-- `BROWSER_AXE_BROWSER_INVALID`
-- `BROWSER_AXE_BROWSER_POLICY_INVALID`
-- `BROWSER_AXE_CANCELLED`
-- `BROWSER_AXE_COMBINATION_INVALID`
-- `BROWSER_AXE_COMBINATION_LIMIT_EXCEEDED`
-- `BROWSER_AXE_COMBINATION_LIMIT_INVALID`
-- `BROWSER_AXE_CONCURRENCY_INVALID`
-- `BROWSER_AXE_EXCLUDE_INVALID`
-- `BROWSER_AXE_OPERATION_DENIED`
-- `BROWSER_AXE_ORIGIN_DENIED`
-- `BROWSER_AXE_ORIGIN_INVALID`
-- `BROWSER_AXE_PROFILE_INVALID`
-- `BROWSER_AXE_REQUEST_INVALID`
-- `BROWSER_AXE_RESOURCE_INVALID`
-- `BROWSER_AXE_RESULT_BYTES_EXCEEDED`
-- `BROWSER_AXE_RESULT_LIMIT_INVALID`
-- `BROWSER_AXE_ROUTE_INVALID`
-- `BROWSER_AXE_SCREENSHOT_BYTES_EXCEEDED`
-- `BROWSER_AXE_SCREENSHOT_BYTES_INVALID`
-- `BROWSER_AXE_SCREENSHOT_LIMIT_INVALID`
-- `BROWSER_AXE_SUBRESOURCE_ORIGIN_DENIED`
-- `BROWSER_AXE_TAGS_INVALID`
-- `BROWSER_AXE_TIMEOUT_EXCEEDED`
-- `BROWSER_AXE_TIMEOUT_INVALID`
-- `BROWSER_AXE_VIEWPORT_INVALID`
-- `LEGACY_A11Y_THRESHOLDS_RETIRED`
-- `LEGACY_A11Y_TIMEOUT_INVALID`
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `AXE_CAPABILITY_RESULT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `AXE_CONFIG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `AXE_ENDPOINT_NOT_FOUND` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `AXE_INPUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `AXE_INPUT_UNKNOWN` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `AXE_PROFILE_FILE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `AXE_PROFILE_FILE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `AXE_PROFILE_FILE_TOO_LARGE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `AXE_PROFILE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `AXE_PROFILE_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `AXE_PROFILE_NOT_FOUND` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `AXE_PROFILE_UNKNOWN_FIELD` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `AXE_TARGET_AMBIGUOUS` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `AXE_TARGET_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `AXE_WORKSPACE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_BROWSER_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_BROWSER_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_BROWSER_POLICY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `BROWSER_AXE_COMBINATION_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_COMBINATION_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_AXE_COMBINATION_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_CONCURRENCY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_EXCLUDE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_OPERATION_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_ORIGIN_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_ORIGIN_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_PROFILE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_REQUEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_RESOURCE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_RESULT_BYTES_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_AXE_RESULT_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_ROUTE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_SCREENSHOT_BYTES_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_AXE_SCREENSHOT_BYTES_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_SCREENSHOT_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_SUBRESOURCE_ORIGIN_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_TAGS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_TIMEOUT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_AXE_TIMEOUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_AXE_VIEWPORT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
 
 **Source evidence:**
 
@@ -518,55 +504,50 @@ fails the documentation check until this page is regenerated and reviewed.
 
 ## Lighthouse Performance
 
-**Meaning:** Lighthouse setup, browser execution, or report admission failed.
-
-**Safe action:** Check settings, profile, budget, Chrome readiness, timeout, and report bytes.
-
-**Exact codes (43):**
-
-- `BROWSER_LIGHTHOUSE_CANCELLED`
-- `BROWSER_LIGHTHOUSE_DEBUG_PORT_INVALID`
-- `BROWSER_LIGHTHOUSE_EXECUTABLE_INVALID`
-- `BROWSER_LIGHTHOUSE_LAUNCH_FAILED`
-- `BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_INVALID`
-- `BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_MISSING`
-- `BROWSER_LIGHTHOUSE_OPERATION_DENIED`
-- `BROWSER_LIGHTHOUSE_ORIGIN_DENIED`
-- `BROWSER_LIGHTHOUSE_ORIGIN_INVALID`
-- `BROWSER_LIGHTHOUSE_PROFILE_INVALID`
-- `BROWSER_LIGHTHOUSE_PROXY_FAILED`
-- `BROWSER_LIGHTHOUSE_PURPOSE_INVALID`
-- `BROWSER_LIGHTHOUSE_REQUEST_INVALID`
-- `BROWSER_LIGHTHOUSE_RESOURCE_INVALID`
-- `BROWSER_LIGHTHOUSE_RESULT_BYTES_EXCEEDED`
-- `BROWSER_LIGHTHOUSE_RESULT_INVALID`
-- `BROWSER_LIGHTHOUSE_RESULT_LIMIT_INVALID`
-- `BROWSER_LIGHTHOUSE_ROUTE_INVALID`
-- `BROWSER_LIGHTHOUSE_RUN_INVALID`
-- `BROWSER_LIGHTHOUSE_RUN_LIMIT_EXCEEDED`
-- `BROWSER_LIGHTHOUSE_RUN_LIMIT_INVALID`
-- `BROWSER_LIGHTHOUSE_SUBRESOURCE_ORIGIN_DENIED`
-- `BROWSER_LIGHTHOUSE_TIMEOUT_EXCEEDED`
-- `BROWSER_LIGHTHOUSE_TIMEOUT_INVALID`
-- `LEGACY_PERF_CONFIGURATION_RETIRED`
-- `LIGHTHOUSE_AUDIT_EXECUTION_ERROR`
-- `LIGHTHOUSE_BUDGET_INVALID`
-- `LIGHTHOUSE_BUDGET_NOT_FOUND`
-- `LIGHTHOUSE_CAPABILITY_RESULT_INVALID`
-- `LIGHTHOUSE_CATEGORY_MISSING`
-- `LIGHTHOUSE_CONFIG_INVALID`
-- `LIGHTHOUSE_ENDPOINT_NOT_FOUND`
-- `LIGHTHOUSE_INPUT_INVALID`
-- `LIGHTHOUSE_INPUT_UNKNOWN`
-- `LIGHTHOUSE_METRIC_MISSING`
-- `LIGHTHOUSE_PROFILE_INVALID`
-- `LIGHTHOUSE_PROFILE_NOT_FOUND`
-- `LIGHTHOUSE_SETTINGS_FILE_DENIED`
-- `LIGHTHOUSE_SETTINGS_FILE_INVALID`
-- `LIGHTHOUSE_SETTINGS_FILE_TOO_LARGE`
-- `LIGHTHOUSE_TARGET_AMBIGUOUS`
-- `LIGHTHOUSE_TARGET_REQUIRED`
-- `LIGHTHOUSE_WORKSPACE_INVALID`
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `BROWSER_LIGHTHOUSE_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `BROWSER_LIGHTHOUSE_DEBUG_PORT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_EXECUTABLE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_LAUNCH_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_OPERATION_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_ORIGIN_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_ORIGIN_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_PROFILE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_PROXY_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `BROWSER_LIGHTHOUSE_PURPOSE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_REQUEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_RESOURCE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_RESULT_BYTES_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_LIGHTHOUSE_RESULT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_RESULT_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_ROUTE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_RUN_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_RUN_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_LIGHTHOUSE_RUN_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_SUBRESOURCE_ORIGIN_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_LIGHTHOUSE_TIMEOUT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_LIGHTHOUSE_TIMEOUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `LIGHTHOUSE_AUDIT_EXECUTION_ERROR` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `LIGHTHOUSE_BUDGET_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `LIGHTHOUSE_BUDGET_NOT_FOUND` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `LIGHTHOUSE_CAPABILITY_RESULT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `LIGHTHOUSE_CATEGORY_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `LIGHTHOUSE_CONFIG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `LIGHTHOUSE_ENDPOINT_NOT_FOUND` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `LIGHTHOUSE_INPUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `LIGHTHOUSE_INPUT_UNKNOWN` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `LIGHTHOUSE_METRIC_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `LIGHTHOUSE_PROFILE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `LIGHTHOUSE_PROFILE_NOT_FOUND` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `LIGHTHOUSE_SETTINGS_FILE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `LIGHTHOUSE_SETTINGS_FILE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `LIGHTHOUSE_SETTINGS_FILE_TOO_LARGE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `LIGHTHOUSE_TARGET_AMBIGUOUS` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `LIGHTHOUSE_TARGET_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `LIGHTHOUSE_WORKSPACE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
 
 **Source evidence:**
 
@@ -576,64 +557,61 @@ fails the documentation check until this page is regenerated and reviewed.
 
 ## Visual
 
-**Meaning:** Baseline, browser identity, image comparison, or evidence failed.
-
-**Safe action:** Check target selection, baseline digest, browser version, masks, and PNG limits.
-
-**Exact codes (52):**
-
-- `BROWSER_VISUAL_BROWSER_DENIED`
-- `BROWSER_VISUAL_BROWSER_POLICY_INVALID`
-- `BROWSER_VISUAL_CANCELLED`
-- `BROWSER_VISUAL_CAPTURE_INVALID`
-- `BROWSER_VISUAL_COMBINATION_INVALID`
-- `BROWSER_VISUAL_COMBINATION_LIMIT_EXCEEDED`
-- `BROWSER_VISUAL_COMBINATION_LIMIT_INVALID`
-- `BROWSER_VISUAL_COMPARE_INVALID`
-- `BROWSER_VISUAL_CONCURRENCY_INVALID`
-- `BROWSER_VISUAL_DECODED_IMAGE_LIMIT_EXCEEDED`
-- `BROWSER_VISUAL_MASK_INVALID`
-- `BROWSER_VISUAL_MASK_LIMIT_INVALID`
-- `BROWSER_VISUAL_OPERATION_DENIED`
-- `BROWSER_VISUAL_ORIGIN_DENIED`
-- `BROWSER_VISUAL_ORIGIN_INVALID`
-- `BROWSER_VISUAL_PROFILE_INVALID`
-- `BROWSER_VISUAL_REQUEST_INVALID`
-- `BROWSER_VISUAL_RESOURCE_INVALID`
-- `BROWSER_VISUAL_RESULT_BYTES_EXCEEDED`
-- `BROWSER_VISUAL_RESULT_LIMIT_INVALID`
-- `BROWSER_VISUAL_SCREENSHOT_BYTES_EXCEEDED`
-- `BROWSER_VISUAL_SCREENSHOT_LIMIT_INVALID`
-- `BROWSER_VISUAL_SUBRESOURCE_ORIGIN_DENIED`
-- `BROWSER_VISUAL_TIMEOUT_EXCEEDED`
-- `BROWSER_VISUAL_TIMEOUT_INVALID`
-- `LEGACY_VISUAL_CONFIGURATION_RETIRED`
-- `VISUAL_BASELINE_BUNDLE_DIGEST_MISMATCH`
-- `VISUAL_BASELINE_BYTES_EXCEEDED`
-- `VISUAL_BASELINE_DECODED_IMAGE_LIMIT_EXCEEDED`
-- `VISUAL_BASELINE_DIGEST_MISMATCH`
-- `VISUAL_BASELINE_FILE_DENIED`
-- `VISUAL_BASELINE_IDENTITY_MISMATCH`
-- `VISUAL_BASELINE_PNG_INVALID`
-- `VISUAL_CAPABILITY_RESULT_INVALID`
-- `VISUAL_COMPARISON_OVERRIDE_INVALID`
-- `VISUAL_COMPARISON_PROFILE_INVALID`
-- `VISUAL_CONFIG_INVALID`
-- `VISUAL_ENDPOINT_NOT_FOUND`
-- `VISUAL_EVIDENCE_BYTES_EXCEEDED`
-- `VISUAL_EVIDENCE_FILE_LIMIT_EXCEEDED`
-- `VISUAL_INPUT_INVALID`
-- `VISUAL_INPUT_UNKNOWN`
-- `VISUAL_MANIFEST_INVALID`
-- `VISUAL_MASK_INVALID`
-- `VISUAL_PROFILE_FILE_INVALID`
-- `VISUAL_PROFILE_INVALID`
-- `VISUAL_TARGETS_INVALID`
-- `VISUAL_TARGET_AMBIGUOUS`
-- `VISUAL_TARGET_INVALID`
-- `VISUAL_TARGET_NOT_FOUND`
-- `VISUAL_TARGET_REQUIRED`
-- `VISUAL_WORKSPACE_INVALID`
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `BROWSER_VISUAL_BROWSER_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_BROWSER_POLICY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `BROWSER_VISUAL_CAPTURE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_COMBINATION_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_COMBINATION_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_VISUAL_COMBINATION_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_COMPARE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_CONCURRENCY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_DECODED_IMAGE_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_VISUAL_MASK_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_MASK_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_OPERATION_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_ORIGIN_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_ORIGIN_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_PROFILE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_REQUEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_RESOURCE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_RESULT_BYTES_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_VISUAL_RESULT_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_SCREENSHOT_BYTES_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_VISUAL_SCREENSHOT_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_SUBRESOURCE_ORIGIN_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_VISUAL_TIMEOUT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_VISUAL_TIMEOUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_BASELINE_BUNDLE_DIGEST_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_BASELINE_BYTES_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `VISUAL_BASELINE_DECODED_IMAGE_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `VISUAL_BASELINE_DIGEST_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_BASELINE_FILE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_BASELINE_IDENTITY_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_BASELINE_PNG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_CAPABILITY_RESULT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_COMPARISON_OVERRIDE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_COMPARISON_PROFILE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_CONFIG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_ENDPOINT_NOT_FOUND` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `VISUAL_EVIDENCE_BYTES_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `VISUAL_EVIDENCE_FILE_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `VISUAL_INPUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_INPUT_UNKNOWN` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `VISUAL_MANIFEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_MANIFEST_INVALID_TOO_LARGE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_MASK_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_PROFILE_FILE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_PROFILE_FILE_INVALID_TOO_LARGE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_PROFILE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_TARGETS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_TARGET_AMBIGUOUS` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `VISUAL_TARGET_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_TARGET_NOT_FOUND` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `VISUAL_TARGET_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `VISUAL_WORKSPACE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
 
 **Source evidence:**
 
@@ -643,70 +621,61 @@ fails the documentation check until this page is regenerated and reviewed.
 
 ## End-To-End
 
-**Meaning:** Playwright setup, process execution, report, or attachment failed.
-
-**Safe action:** Check project paths, browser sandbox, test selection, JSON report, and limits.
-
-**Exact codes (58):**
-
-- `BROWSER_PLAYWRIGHT_ARTIFACT_BYTES_EXCEEDED`
-- `BROWSER_PLAYWRIGHT_ARTIFACT_DENIED`
-- `BROWSER_PLAYWRIGHT_ARTIFACT_FILE_LIMIT_EXCEEDED`
-- `BROWSER_PLAYWRIGHT_CANCELLED`
-- `BROWSER_PLAYWRIGHT_CGROUP_CLEANUP_FAILED`
-- `BROWSER_PLAYWRIGHT_CGROUP_NOT_DELEGATED`
-- `BROWSER_PLAYWRIGHT_CGROUP_UNAVAILABLE`
-- `BROWSER_PLAYWRIGHT_CGROUP_UNSAFE`
-- `BROWSER_PLAYWRIGHT_CONFIG_DENIED`
-- `BROWSER_PLAYWRIGHT_CPU_LIMIT_EXCEEDED`
-- `BROWSER_PLAYWRIGHT_IDENTITY_NOT_ISOLATED`
-- `BROWSER_PLAYWRIGHT_LIMITS_INVALID`
-- `BROWSER_PLAYWRIGHT_MEMORY_LIMIT_EXCEEDED`
-- `BROWSER_PLAYWRIGHT_OPERATION_DENIED`
-- `BROWSER_PLAYWRIGHT_ORIGIN_DENIED`
-- `BROWSER_PLAYWRIGHT_ORIGIN_INVALID`
-- `BROWSER_PLAYWRIGHT_OUTPUT_LIMIT_EXCEEDED`
-- `BROWSER_PLAYWRIGHT_POLICY_INVALID`
-- `BROWSER_PLAYWRIGHT_PROCESS_LIMIT_EXCEEDED`
-- `BROWSER_PLAYWRIGHT_PROJECT_DENIED`
-- `BROWSER_PLAYWRIGHT_PROXY_FAILED`
-- `BROWSER_PLAYWRIGHT_REPORT_INVALID`
-- `BROWSER_PLAYWRIGHT_REPORT_LIMIT_EXCEEDED`
-- `BROWSER_PLAYWRIGHT_REPORT_MISSING`
-- `BROWSER_PLAYWRIGHT_REPOSITORY_DENIED`
-- `BROWSER_PLAYWRIGHT_REQUEST_INVALID`
-- `BROWSER_PLAYWRIGHT_RESOURCE_INVALID`
-- `BROWSER_PLAYWRIGHT_RESULT_LIMIT_EXCEEDED`
-- `BROWSER_PLAYWRIGHT_RUNTIME_OVERLAY_TAMPERED`
-- `BROWSER_PLAYWRIGHT_TIMEOUT`
-- `BROWSER_PLAYWRIGHT_TIMEOUT_INVALID`
-- `BROWSER_PLAYWRIGHT_WORKERS_INVALID`
-- `LEGACY_E2E_CONFIGURATION_RETIRED`
-- `PLAYWRIGHT_ARTIFACT_BYTES_EXCEEDED`
-- `PLAYWRIGHT_ARTIFACT_FILE_LIMIT_EXCEEDED`
-- `PLAYWRIGHT_ARTIFACT_INVALID`
-- `PLAYWRIGHT_BROWSERS_PATH`
-- `PLAYWRIGHT_CAPABILITY_RESULT_INVALID`
-- `PLAYWRIGHT_CASE_RESULT_INVALID`
-- `PLAYWRIGHT_CASE_STATUS_INVALID`
-- `PLAYWRIGHT_CONFIG_FILE_INVALID`
-- `PLAYWRIGHT_CONFIG_INVALID`
-- `PLAYWRIGHT_ENDPOINT_NOT_FOUND`
-- `PLAYWRIGHT_EVIDENCE_PATH_INVALID`
-- `PLAYWRIGHT_EXECUTION_FAILED`
-- `PLAYWRIGHT_INPUT_INVALID`
-- `PLAYWRIGHT_INPUT_UNKNOWN`
-- `PLAYWRIGHT_JSON_OUTPUT_NAME`
-- `PLAYWRIGHT_PROJECT_DIRECTORY_INVALID`
-- `PLAYWRIGHT_REPORT_BYTES_EXCEEDED`
-- `PLAYWRIGHT_REPORT_INVALID`
-- `PLAYWRIGHT_TARGET_AMBIGUOUS`
-- `PLAYWRIGHT_TARGET_INVALID`
-- `PLAYWRIGHT_TARGET_REQUIRED`
-- `PLAYWRIGHT_TEST_BASE_URL`
-- `PLAYWRIGHT_WORKSPACE_INVALID`
-- `PLAYWRIGHT_ZERO_TESTS`
-- `TEST_PROVIDER_E2E_DETAILS_INVALID`
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `BROWSER_PLAYWRIGHT_ARTIFACT_BYTES_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_PLAYWRIGHT_ARTIFACT_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_PLAYWRIGHT_ARTIFACT_FILE_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_PLAYWRIGHT_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `BROWSER_PLAYWRIGHT_CGROUP_CLEANUP_FAILED` | Cleanup or ownership release did not complete. | Resources or leases can still exist after the attempt. | Inspect the recorded resource identity and finish cleanup before reuse. | Do not retry the workload until ownership and retained state are known. |
+| `BROWSER_PLAYWRIGHT_CGROUP_NOT_DELEGATED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_PLAYWRIGHT_CGROUP_UNAVAILABLE` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `BROWSER_PLAYWRIGHT_CGROUP_UNSAFE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_PLAYWRIGHT_CONFIG_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_PLAYWRIGHT_CPU_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_PLAYWRIGHT_IDENTITY_NOT_ISOLATED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_PLAYWRIGHT_LIMITS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_PLAYWRIGHT_MEMORY_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_PLAYWRIGHT_OPERATION_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_PLAYWRIGHT_ORIGIN_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_PLAYWRIGHT_ORIGIN_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_PLAYWRIGHT_OUTPUT_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_PLAYWRIGHT_POLICY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_PLAYWRIGHT_PROCESS_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_PLAYWRIGHT_PROJECT_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_PLAYWRIGHT_PROXY_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `BROWSER_PLAYWRIGHT_REPORT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_PLAYWRIGHT_REPORT_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_PLAYWRIGHT_REPORT_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_PLAYWRIGHT_REPOSITORY_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_PLAYWRIGHT_REQUEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_PLAYWRIGHT_RESOURCE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_PLAYWRIGHT_RESULT_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_PLAYWRIGHT_RUNTIME_OVERLAY_TAMPERED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `BROWSER_PLAYWRIGHT_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
+| `BROWSER_PLAYWRIGHT_TIMEOUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `BROWSER_PLAYWRIGHT_WORKERS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `PLAYWRIGHT_ARTIFACT_BYTES_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `PLAYWRIGHT_ARTIFACT_FILE_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `PLAYWRIGHT_ARTIFACT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `PLAYWRIGHT_CAPABILITY_RESULT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `PLAYWRIGHT_CASE_RESULT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `PLAYWRIGHT_CASE_STATUS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `PLAYWRIGHT_CONFIG_FILE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `PLAYWRIGHT_CONFIG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `PLAYWRIGHT_ENDPOINT_NOT_FOUND` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `PLAYWRIGHT_EVIDENCE_PATH_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `PLAYWRIGHT_EXECUTION_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `PLAYWRIGHT_INPUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `PLAYWRIGHT_INPUT_UNKNOWN` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `PLAYWRIGHT_PROJECT_DIRECTORY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `PLAYWRIGHT_REPORT_BYTES_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `PLAYWRIGHT_REPORT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `PLAYWRIGHT_TARGET_AMBIGUOUS` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `PLAYWRIGHT_TARGET_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `PLAYWRIGHT_TARGET_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `PLAYWRIGHT_WORKSPACE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `PLAYWRIGHT_ZERO_TESTS` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
 
 **Source evidence:**
 
@@ -716,45 +685,40 @@ fails the documentation check until this page is regenerated and reviewed.
 
 ## Security
 
-**Meaning:** A security policy, scanner, database, input, or cluster read failed.
-
-**Safe action:** Check strict policy, acceptance expiry, scanner readiness, and immutable inputs.
-
-**Exact codes (33):**
-
-- `KUBERNETES_RUNTIME_SECURITY_CANCELLED`
-- `KUBERNETES_RUNTIME_SECURITY_CAPABILITY_DENIED`
-- `KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID`
-- `KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED`
-- `KUBERNETES_RUNTIME_SECURITY_LEASE_MISMATCH`
-- `KUBERNETES_RUNTIME_SECURITY_MANIFEST_DIGEST_MISMATCH`
-- `KUBERNETES_RUNTIME_SECURITY_NAMESPACE_DENIED`
-- `KUBERNETES_RUNTIME_SECURITY_OPERATION_DENIED`
-- `KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED`
-- `KUBERNETES_RUNTIME_SECURITY_PATH_DENIED`
-- `KUBERNETES_RUNTIME_SECURITY_REQUEST_INVALID`
-- `KUBERNETES_RUNTIME_SECURITY_RESPONSE_INVALID`
-- `KUBERNETES_RUNTIME_SECURITY_RESULT_DIGEST_MISMATCH`
-- `KUBERNETES_RUNTIME_SECURITY_TIMEOUT`
-- `LEGACY_SECURITY_CONFIGURATION_RETIRED`
-- `SECURITY_POLICY_ACCEPTANCES_INVALID`
-- `SECURITY_POLICY_INVALID`
-- `SECURITY_SCANNER_EXECUTION_FAILED`
-- `SECURITY_SCANNER_RESPONSE_INVALID`
-- `SECURITY_SCANNER_RESULT_INVALID`
-- `SECURITY_SCAN_CANCELLED`
-- `SECURITY_SCAN_CAPABILITY_DENIED`
-- `SECURITY_SCAN_HTTP_LAB_UNSUPPORTED`
-- `SECURITY_SCAN_IMAGE_DENIED`
-- `SECURITY_SCAN_LIMIT_INVALID`
-- `SECURITY_SCAN_MANIFEST_DIGEST_MISMATCH`
-- `SECURITY_SCAN_OPERATION_DENIED`
-- `SECURITY_SCAN_OUTPUT_LIMIT_EXCEEDED`
-- `SECURITY_SCAN_PATH_DENIED`
-- `SECURITY_SCAN_REGISTRY_AUTH_INVALID`
-- `SECURITY_SCAN_REGISTRY_POLICY_INVALID`
-- `SECURITY_SCAN_REQUEST_INVALID`
-- `SECURITY_SCAN_TIMEOUT`
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `KUBERNETES_RUNTIME_SECURITY_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `KUBERNETES_RUNTIME_SECURITY_CAPABILITY_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `KUBERNETES_RUNTIME_SECURITY_LEASE_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_RUNTIME_SECURITY_MANIFEST_DIGEST_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_RUNTIME_SECURITY_NAMESPACE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_RUNTIME_SECURITY_OPERATION_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `KUBERNETES_RUNTIME_SECURITY_PATH_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_RUNTIME_SECURITY_REQUEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_RUNTIME_SECURITY_RESPONSE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_RUNTIME_SECURITY_RESULT_DIGEST_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `KUBERNETES_RUNTIME_SECURITY_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
+| `SECURITY_POLICY_ACCEPTANCES_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SECURITY_POLICY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SECURITY_SCANNER_EXECUTION_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `SECURITY_SCANNER_RESPONSE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SECURITY_SCANNER_RESULT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SECURITY_SCAN_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `SECURITY_SCAN_CAPABILITY_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SECURITY_SCAN_HTTP_LAB_UNSUPPORTED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SECURITY_SCAN_IMAGE_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SECURITY_SCAN_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SECURITY_SCAN_MANIFEST_DIGEST_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SECURITY_SCAN_OPERATION_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SECURITY_SCAN_OUTPUT_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `SECURITY_SCAN_PATH_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SECURITY_SCAN_REGISTRY_AUTH_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SECURITY_SCAN_REGISTRY_POLICY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SECURITY_SCAN_REQUEST_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SECURITY_SCAN_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
 
 **Source evidence:**
 
@@ -764,44 +728,40 @@ fails the documentation check until this page is regenerated and reviewed.
 
 ## Size Budget
 
-**Meaning:** Artifact measurement, archive inspection, or budget evaluation failed.
-
-**Safe action:** Check input digest, archive safety, matching rules, baseline, and limits.
-
-**Exact codes (32):**
-
-- `SIZE_BUDGET_ARCHIVE_CHECKSUM_INVALID`
-- `SIZE_BUDGET_ARCHIVE_DUPLICATE`
-- `SIZE_BUDGET_ARCHIVE_ENTRY_DENIED`
-- `SIZE_BUDGET_ARCHIVE_EXPANDED_LIMIT`
-- `SIZE_BUDGET_ARCHIVE_FILE_LIMIT`
-- `SIZE_BUDGET_ARCHIVE_INVALID`
-- `SIZE_BUDGET_ARCHIVE_PATH_INVALID`
-- `SIZE_BUDGET_ARCHIVE_TRAILING_DATA`
-- `SIZE_BUDGET_ARCHIVE_TRUNCATED`
-- `SIZE_BUDGET_BASELINE_INVALID`
-- `SIZE_BUDGET_BASELINE_MEDIA_TYPE_INVALID`
-- `SIZE_BUDGET_BASELINE_OUTPUT_LIMIT`
-- `SIZE_BUDGET_BASELINE_REQUIRED`
-- `SIZE_BUDGET_BLOCKING_LIMIT_REQUIRED`
-- `SIZE_BUDGET_CANCELLED`
-- `SIZE_BUDGET_CONFIG_INVALID`
-- `SIZE_BUDGET_EVIDENCE_PATH_DENIED`
-- `SIZE_BUDGET_FORMAT_MISMATCH`
-- `SIZE_BUDGET_INPUT_DIGEST_MISMATCH`
-- `SIZE_BUDGET_INPUT_DUPLICATE`
-- `SIZE_BUDGET_INPUT_INVALID`
-- `SIZE_BUDGET_INPUT_MEDIA_TYPE_INVALID`
-- `SIZE_BUDGET_INPUT_REQUIRED`
-- `SIZE_BUDGET_INPUT_SIZE_INVALID`
-- `SIZE_BUDGET_INPUT_SIZE_MISMATCH`
-- `SIZE_BUDGET_INPUT_UNKNOWN`
-- `SIZE_BUDGET_INPUT_URL_INVALID`
-- `SIZE_BUDGET_LIMIT_INVALID`
-- `SIZE_BUDGET_MATCHING_FILES_INVALID`
-- `SIZE_BUDGET_PATTERN_INVALID`
-- `SIZE_BUDGET_RULE_ID_INVALID`
-- `SIZE_BUDGET_TOTAL_LIMIT`
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `SIZE_BUDGET_ARCHIVE_CHECKSUM_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_ARCHIVE_DUPLICATE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_ARCHIVE_ENTRY_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_ARCHIVE_EXPANDED_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `SIZE_BUDGET_ARCHIVE_FILE_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `SIZE_BUDGET_ARCHIVE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_ARCHIVE_PATH_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_ARCHIVE_TRAILING_DATA` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `SIZE_BUDGET_ARCHIVE_TRUNCATED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `SIZE_BUDGET_BASELINE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_BASELINE_MEDIA_TYPE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_BASELINE_OUTPUT_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `SIZE_BUDGET_BASELINE_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_BLOCKING_LIMIT_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `SIZE_BUDGET_CONFIG_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_EVIDENCE_PATH_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_FORMAT_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_INPUT_DIGEST_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_INPUT_DUPLICATE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_INPUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_INPUT_MEDIA_TYPE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_INPUT_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_INPUT_SIZE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_INPUT_SIZE_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_INPUT_UNKNOWN` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `SIZE_BUDGET_INPUT_URL_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_MATCHING_FILES_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_PATTERN_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_RULE_ID_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `SIZE_BUDGET_TOTAL_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
 
 **Source evidence:**
 
@@ -809,45 +769,152 @@ fails the documentation check until this page is regenerated and reviewed.
 
 ## Authenticated Demo Smoke Test
 
-**Meaning:** The authenticated preview flow could not prove its contract.
-
-**Safe action:** Check all typed inputs, credential provenance, paths, cookie scope, and assertions.
-
-**Exact codes (28):**
-
-- `DEMO_AUTH_ASSERTION_INVALID`
-- `DEMO_AUTH_ASSERTION_MISSING`
-- `DEMO_AUTH_BUSINESS_ASSERTION_FAILED`
-- `DEMO_AUTH_BUSINESS_ASSERTION_REQUIRED`
-- `DEMO_AUTH_CANCELLED`
-- `DEMO_AUTH_CONTRACT_INVALID`
-- `DEMO_AUTH_CREDENTIAL_DIGEST_MISMATCH`
-- `DEMO_AUTH_DEADLINE_EXPIRED`
-- `DEMO_AUTH_EXPOSURE_EXPIRED`
-- `DEMO_AUTH_EXPOSURE_GENERATION_REQUIRED`
-- `DEMO_AUTH_HTTP_EVIDENCE_INVALID`
-- `DEMO_AUTH_IDENTITY_MISMATCH`
-- `DEMO_AUTH_INPUT_INVALID`
-- `DEMO_AUTH_INPUT_REQUIRED`
-- `DEMO_AUTH_KEY_INVALID`
-- `DEMO_AUTH_LOGIN_FAILED`
-- `DEMO_AUTH_NEGATIVE_CONTROL_FAILED`
-- `DEMO_AUTH_ORIGIN_MISMATCH`
-- `DEMO_AUTH_PATH_INVALID`
-- `DEMO_AUTH_POINTER_INVALID`
-- `DEMO_AUTH_PROTECTED_JSON_INVALID`
-- `DEMO_AUTH_PROTECTED_RESPONSE_INVALID`
-- `DEMO_AUTH_PROTOCOL_UNSUPPORTED`
-- `DEMO_AUTH_PROVENANCE_REQUIRED`
-- `DEMO_AUTH_SESSION_COOKIE_INVALID`
-- `DEMO_AUTH_SESSION_COOKIE_SCOPE_INVALID`
-- `DEMO_AUTH_SOURCE_MISMATCH`
-- `DEMO_AUTH_URL_INVALID`
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `DEMO_AUTH_ASSERTION_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_ASSERTION_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_BUSINESS_ASSERTION_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `DEMO_AUTH_BUSINESS_ASSERTION_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `DEMO_AUTH_CONTRACT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_CREDENTIAL_DIGEST_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_DEADLINE_EXPIRED` | Time-bound authority or evidence is no longer valid. | The old value cannot authorize the current attempt. | Issue fresh authority or evidence through its owner. | Retry only with the fresh value. |
+| `DEMO_AUTH_EXPOSURE_EXPIRED` | Time-bound authority or evidence is no longer valid. | The old value cannot authorize the current attempt. | Issue fresh authority or evidence through its owner. | Retry only with the fresh value. |
+| `DEMO_AUTH_EXPOSURE_GENERATION_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_HTTP_EVIDENCE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_IDENTITY_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_INPUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_INPUT_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_KEY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_LOGIN_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `DEMO_AUTH_NEGATIVE_CONTROL_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `DEMO_AUTH_ORIGIN_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_PATH_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_POINTER_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_PROTECTED_JSON_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_PROTECTED_RESPONSE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_PROTOCOL_UNSUPPORTED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_PROVENANCE_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_SESSION_COOKIE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_SESSION_COOKIE_SCOPE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_SOURCE_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `DEMO_AUTH_URL_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
 
 **Source evidence:**
 
 - [skills/buster/plugins/demo-auth-smoke/src/protocol.js](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/demo-auth-smoke/src/protocol.js)
 - [skills/buster/plugins/demo-auth-smoke/src/provider.js](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/demo-auth-smoke/src/provider.js)
+
+## Provider And Report Runtime
+
+| Exact code | Likely cause | Effect | Safe action | Retry rule |
+| --- | --- | --- | --- | --- |
+| `REPORT_ADAPTER_ARTIFACT_TYPE_FORBIDDEN` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `REPORT_ADAPTER_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `REPORT_ADAPTER_CASE_FINDING_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_CASE_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_CLEANUP_FAILED` | Cleanup or ownership release did not complete. | Resources or leases can still exist after the attempt. | Inspect the recorded resource identity and finish cleanup before reuse. | Do not retry the workload until ownership and retained state are known. |
+| `REPORT_ADAPTER_CPU_LIMIT_GRANULARITY` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_DETAIL_LIMIT_EXCEEDS_CONTRACT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `REPORT_ADAPTER_FINDING_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_HARD_LIMIT_EXCEEDED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_LIMITS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `REPORT_ADAPTER_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `REPORT_ADAPTER_MEDIA_TYPE_UNSUPPORTED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `REPORT_ADAPTER_MEMORY_LIMIT_INCOMPATIBLE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_MODULE_FORBIDDEN` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `REPORT_ADAPTER_OPEN_FILE_LIMIT_TOO_LOW` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_OUTPUT_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_PACKAGE_BYTE_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_PACKAGE_CHANGED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_PACKAGE_DIGEST_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `REPORT_ADAPTER_PACKAGE_ENTRY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `REPORT_ADAPTER_PACKAGE_FILE_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_PACKAGE_SNAPSHOT_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `REPORT_ADAPTER_PACKAGE_SNAPSHOT_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
+| `REPORT_ADAPTER_PACKAGE_SYMLINK` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_PROTOCOL_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `REPORT_ADAPTER_RESULT_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_RUNTIME_PARENT_FORBIDDEN` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `REPORT_ADAPTER_RUNTIME_ROOT_CHANGED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_RUNTIME_ROOT_FORBIDDEN` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `REPORT_ADAPTER_RUNTIME_ROOT_NOT_ABSOLUTE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_RUNTIME_ROOT_OWNER_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `REPORT_ADAPTER_RUNTIME_ROOT_TOO_BROAD` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_SANDBOX_NOT_BUILT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_SOURCE_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `REPORT_ADAPTER_SOURCE_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `REPORT_ADAPTER_STDERR_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `REPORT_ADAPTER_STDIN_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `REPORT_ADAPTER_STDOUT_FAILED` | An operation or evidence transfer failed. | The provider cannot return a trusted complete result. | Read the preserved cause and logs, then check the named boundary. | Use the provider retry contract and inspect possible side effects first. |
+| `REPORT_ADAPTER_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
+| `TEST_PROVIDER_ARTIFACT_BYTE_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_PROVIDER_ARTIFACT_FILE_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_PROVIDER_ATTEMPT_PATH_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_CANCELLED` | The attempt received cancellation. | Execution stopped before complete evidence existed. | Confirm the cancellation owner and inspect cleanup state. | Start a new attempt only when the requested cancellation is no longer active. |
+| `TEST_PROVIDER_CAPABILITY_DENIED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_CAPABILITY_UNAVAILABLE` | A required authority, dependency, or input is not available. | The provider cannot establish the required evidence. | Restore or select the required dependency and verify its identity. | Retry after readiness is independently confirmed. |
+| `TEST_PROVIDER_CLEANUP_COMPLETE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_PROVIDER_CLEANUP_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
+| `TEST_PROVIDER_COUNTS_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_CPU_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_PROVIDER_EVIDENCE_DUPLICATE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_EVIDENCE_ID_RESERVED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_PROVIDER_EVIDENCE_TYPE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_FIXTURE_CLEANUP_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_LOG_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_PROVIDER_MEMORY_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_PROVIDER_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_OUTCOME_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_OUTPUT_ARTIFACT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_OUTPUT_DUPLICATE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_OUTPUT_EVIDENCE_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_OUTPUT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_OUTPUT_REQUIRED` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_OUTPUT_SCHEMA_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_PROCESS_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_PROVIDER_REPORT_DUPLICATE` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_REPORT_EVIDENCE_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_REPORT_EVIDENCE_TYPE_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_REPORT_FORMAT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_PROVIDER_REPORT_NOT_RETAINED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_PROVIDER_RESULT_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_PROVIDER_TIMEOUT` | A bounded operation exceeded its time limit. | The boundary did not produce complete trusted facts. | Check dependency health and whether the configured limit is realistic. | Retry only when the provider is retry-safe or the prior side effects are known. |
+| `TEST_REPORT_ADAPTER_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_REPORT_ADAPTER_NOT_RESOLVED` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_REPORT_RESULT_LIMIT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_ADMISSION_STORE_ROOT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_ADMISSION_STORE_ROOT_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_RUNNER_ADMISSION_STORE_ROOT_NOT_DIRECTORY` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_ADMISSION_STORE_ROOT_SYMLINK` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_ARTIFACT_ROOT_OVERLAPS_WORKSPACE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_ATTEMPT_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_RUNNER_ATTEMPT_REPOSITORY` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_ATTEMPT_REPOSITORY_OUTSIDE_WORKSPACE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_ATTEMPT_STORE_ROOT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_ATTEMPT_STORE_ROOT_MISMATCH` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_RUNNER_ATTEMPT_STORE_ROOT_NOT_DIRECTORY` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_ATTEMPT_STORE_ROOT_SYMLINK` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_CLEANUP_TIMEOUT_INVALID` | Cleanup or ownership release did not complete. | Resources or leases can still exist after the attempt. | Inspect the recorded resource identity and finish cleanup before reuse. | Do not retry the workload until ownership and retained state are known. |
+| `TEST_RUNNER_CONCURRENCY_GROUP_MISSING` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_RUNNER_CONCURRENCY_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+| `TEST_RUNNER_DEADLOCK` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_OBSERVABILITY_ROOT` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_OBSERVABILITY_ROOT_NOT_DIRECTORY` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_OBSERVABILITY_ROOT_OVERLAPS_WORKSPACE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_OBSERVABILITY_ROOT_SYMLINK` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_PATH_NOT_ABSOLUTE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_RECOVERY_OWNED_BY_NOVA` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_REPOSITORY` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_REPOSITORY_OUTSIDE_WORKSPACE` | A provider-specific invariant was not satisfied. | The boundary refused to claim a trusted result. | Use the code name, preserved cause, and linked source to inspect that invariant. | Confirm retry safety and attempt state before a new attempt. |
+| `TEST_RUNNER_RESULT_LIMIT_INVALID` | Input, policy, or returned evidence violates a contract. | Execution cannot safely continue with the supplied value. | Correct the named contract value or policy; do not weaken validation. | Retry after correction. An unchanged retry has no value. |
+
+**Source evidence:**
+
+- [skills/buster/engine/test-gates/process-input.ts](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/process-input.ts)
+- [skills/buster/engine/test-gates/report-adapter-runtime.ts](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/report-adapter-runtime.ts)
+- [skills/buster/engine/test-gates/runner.ts](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/runner.ts)
 
 ## Errors Outside A Provider
 
@@ -856,4 +923,11 @@ reconciliation have separate authorities. Use the family table in the
 [suite reference](buster-suites.md#error-codes-and-safe-actions), then continue
 with the linked subsystem guide. Do not translate an integrity or admission
 error into a failed test assertion.
+
+## Maintenance Rule
+
+Change the implementation first. Then run
+`node scripts/generate-buster-error-reference.mjs --write`. Review added or
+removed codes and their diagnosis class. If code is built dynamically, add an
+explicit expansion and a source sentinel in this generator.
 

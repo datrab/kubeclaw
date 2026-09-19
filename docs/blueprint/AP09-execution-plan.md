@@ -315,8 +315,13 @@ Zweck, Grenze, konkrete Composition, vollständige verschachtelte
 Providerkonfiguration, Defaults, Ports, Capabilities, Retry-Verhalten,
 Evidence, Reports, Resultregeln, externe Voraussetzungen und Verifikation. Die
 Referenz erfasst außerdem alle 19 installierten Provider-Verträge und den
-JUnit-Adapter. Die erzeugte Referenz `buster-error-codes.md` inventarisiert alle
-exakten Suite- und Providerfehler direkt aus den maßgeblichen Quelldateien. Der
+JUnit-Adapter. Die erzeugte Referenz `buster-provider-configuration.md` leitet
+alle vollständigen Feldpfade, Typen, Pflichtzustände, Defaults, Wertebereiche,
+Grenzen und Auswahlregeln direkt aus den 19 Provider-Schemas und dem
+API-Flow-Dokument ab. Die erzeugte Referenz `buster-error-codes.md`
+inventarisiert alle exakten Suite-, Provider- und Adapterfehler direkt aus den
+maßgeblichen Quelldateien. Sie erweitert dynamisch gebildete Fehlerfamilien
+explizit und trennt Ursache, Wirkung, sichere Aktion und Wiederholungsregel. Der
 Workflow enthält
 eine vollständige gepflegte `.swarm/pipeline.json` mit JUnit Report,
 checked-manifest Artifact, Kubernetes Fixture, typisierten Links und einer
@@ -332,12 +337,13 @@ Result-, Capability- und Namespace-Core-Änderungen mit Compatibility-,
 Recovery-, Error- und Change-to-check-Regeln.
 
 **Interne Prüfung:** `docs:buster-guides:check` bindet alle sechs Anforderungen
-an gepflegte Marker. Er prüft sieben Seiten, 117 revisionsfeste Quelllinks,
-gültige Zeilenbereiche und 98 revisionsgebundene Implementierungsdateien. Er
-prüft zwölf Suite-Templates, 19 Provider-Verträge und alle rekursiv gefundenen
-Schemafelder einschließlich des API-Flow-Dokuments. Er prüft außerdem den
-vollständigen Workflow-Resolve, den erzeugten exakten Fehlercodebestand,
-Navigation und detaillierte Surface-Coverage. Zusätzlich müssen Suite Resolver,
+an gepflegte Marker. Er prüft acht Seiten, 140 revisionsfeste Quelllinks,
+gültige Zeilenbereiche und 106 revisionsgebundene Implementierungsdateien. Er
+prüft zwölf Suite-Templates, 19 Provider-Verträge und die bytegenau aus allen
+Schemas erzeugte Konfigurationsreferenz einschließlich des API-Flow-Dokuments.
+Er bindet für jede Suite einen vorhandenen lokalen und produktionsnahen
+Prüfbefehl. Er prüft außerdem den vollständigen Workflow-Resolve, den erzeugten
+Fehlercodebestand, Navigation und detaillierte Surface-Coverage. Zusätzlich müssen Suite Resolver,
 Provider Registry,
 Plan Runner, Remote Plan, Namespace-Controller-Tests und die vollständige
 Dokumentationsprüfung erfolgreich sein. BuildKit-, Registry-, Kubernetes-,

@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 114,
+  "pageCount": 115,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -218,6 +218,7 @@
         "skills/buster/engine/test-gates/report-adapter-runtime.ts"
       ],
       "checks": [
+        "npm run docs:buster-guides:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -355,6 +356,7 @@
         "cmd/buster-namespace-controller"
       ],
       "checks": [
+        "npm run docs:buster-guides:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1437,17 +1439,87 @@
     {
       "page": "docs/site/reference/buster-error-codes.md",
       "route": "/reference/buster-error-codes/",
-      "contentKind": "authored",
-      "status": "generated from implemented provider and capability sources",
+      "contentKind": "generated",
+      "status": "generated reference",
       "audience": "pipeline author, operator, test maintainer",
       "owner": "buster",
-      "appliesTo": "exact errors emitted by shipped Buster suite providers",
-      "lastVerified": "generated source inventory on 2026-09-19",
+      "appliesTo": "exact errors emitted by shipped Buster providers and their execution adapters",
+      "lastVerified": "generated from current error sources on 2026-09-19",
       "sourceDependencies": [
         "scripts/generate-buster-error-reference.mjs",
-        "skills/buster/plugins"
+        "skills/buster/engine/test-gates/browser-axe-runtime.ts",
+        "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
+        "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+        "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+        "skills/buster/engine/test-gates/container-build-runtime.ts",
+        "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+        "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+        "skills/buster/engine/test-gates/network-http-runtime.ts",
+        "skills/buster/engine/test-gates/process-input.ts",
+        "skills/buster/engine/test-gates/production.ts",
+        "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+        "skills/buster/engine/test-gates/runner.ts",
+        "skills/buster/engine/test-gates/security-scan-runtime.ts",
+        "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "skills/buster/plugins/api-flow/src/provider.js",
+        "skills/buster/plugins/axe/src/provider.js",
+        "skills/buster/plugins/container-build/src/provider.js",
+        "skills/buster/plugins/coverage-budget/src/provider.js",
+        "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+        "skills/buster/plugins/direct-command/src/provider.js",
+        "skills/buster/plugins/http/src/provider.js",
+        "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+        "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "skills/buster/plugins/lighthouse/src/provider.js",
+        "skills/buster/plugins/openapi/src/provider.js",
+        "skills/buster/plugins/playwright/src/provider.js",
+        "skills/buster/plugins/security-providers/src/common.js",
+        "skills/buster/plugins/size-budget/src/provider.js",
+        "skills/buster/plugins/tailscale-exposure/src/provider.js",
+        "skills/buster/plugins/visual/src/provider.js"
       ],
       "checks": [
+        "npm run docs:buster-guides:check",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/buster-provider-configuration.md",
+      "route": "/reference/buster-provider-configuration/",
+      "contentKind": "generated",
+      "status": "generated reference",
+      "audience": "pipeline author, operator, test maintainer",
+      "owner": "buster",
+      "appliesTo": "complete JSON configuration contracts for all shipped Buster test providers",
+      "lastVerified": "generated from current provider schemas on 2026-09-19",
+      "sourceDependencies": [
+        "scripts/generate-buster-provider-reference.mjs",
+        "skills/buster/plugins/api-flow/schemas/config.schema.json",
+        "skills/buster/plugins/api-flow/schemas/flow.schema.json",
+        "skills/buster/plugins/axe/schemas/config.schema.json",
+        "skills/buster/plugins/container-build/schemas/config.schema.json",
+        "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+        "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+        "skills/buster/plugins/direct-command/schemas/config.schema.json",
+        "skills/buster/plugins/http/schemas/config.schema.json",
+        "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+        "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+        "skills/buster/plugins/openapi/schemas/config.schema.json",
+        "skills/buster/plugins/playwright/schemas/config.schema.json",
+        "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+        "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+        "skills/buster/plugins/security-providers/schemas/image.schema.json",
+        "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+        "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+        "skills/buster/plugins/size-budget/schemas/config.schema.json",
+        "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+        "skills/buster/plugins/visual/schemas/config.schema.json"
+      ],
+      "checks": [
+        "npm run docs:buster-guides:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1467,6 +1539,7 @@
         "skills/buster/plugins"
       ],
       "checks": [
+        "npm run docs:buster-guides:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1760,6 +1833,7 @@
         "cmd/buster-namespace-controller"
       ],
       "checks": [
+        "npm run docs:buster-guides:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -1780,6 +1854,7 @@
         "contracts/pipeline-test-gate/v1"
       ],
       "checks": [
+        "npm run docs:buster-guides:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -2251,6 +2326,7 @@
         "skills/buster/plugins"
       ],
       "checks": [
+        "npm run docs:buster-guides:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
