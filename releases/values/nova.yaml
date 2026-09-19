@@ -1,4 +1,4 @@
-# Generated from release 42166567be4938e21c2e194fd81e0a974154071e and byte-matched source configuration; do not edit.
+# Generated from release 74e1ee617c41bcee0a358b184f2d602788e66d6a and byte-matched source configuration; do not edit.
 agentRole: nova
 gateway:
   startupDoctor:
@@ -21,7 +21,7 @@ initSetup:
       memory: 8Gi
 image:
   repository: ghcr.io/datrab/kubeclaw-nova
-  digest: sha256:9194a1b609fdde2ac1629af7037039e324eec4c51726eb8afaa5e30078939f5c
+  digest: sha256:772b92d57278fe8091c0a13780f00c555804e0923c8037060c15fff4c9b56447
   tag: ''
   pullPolicy: IfNotPresent
 imagePullSecrets:
@@ -29,13 +29,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-35231644743-1/nova-045db17d9f6df8c54e61dba3689a9ed497e15918.tgz
-  expectedCommit: 045db17d9f6df8c54e61dba3689a9ed497e15918
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-35471064102-1/nova-74e1ee617c41bcee0a358b184f2d602788e66d6a.tgz
+  expectedCommit: 74e1ee617c41bcee0a358b184f2d602788e66d6a
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: 0b5231e0eb94bc6430356b5a570c42275204f78e12ada8871cf1d8fd6166ded8
+  sha256: 34460f73c876a69cacf713725556a5672a3ea25a980ad932ec9225eb4d3e3e77
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-nova
@@ -61,6 +61,10 @@ commands:
     - user:849379821536804864
 agent:
   project: clawdeck
+  model:
+    primary: openai/gpt-6-astra
+    fallbacks:
+      - openai/gpt-5.5
   git:
     enabled: true
     secretName: git-deploy-key-nova
@@ -134,7 +138,7 @@ probes:
     failureThreshold: 5
 extraContainers:
   - name: archviewer
-    image: ghcr.io/datrab/kubeclaw-archviewer@sha256:1a25de4e067b32e3ef23910aaf146ddd6f8668dd951f30be845f9108d2a372fd
+    image: ghcr.io/datrab/kubeclaw-archviewer@sha256:60d96e78e2a77b982a37ce4040fa2486bc102700160619606593485f14e5caf6
     imagePullPolicy: Always
     ports:
       - name: archviewer
