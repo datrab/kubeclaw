@@ -105,6 +105,13 @@ receive lease-local RBAC; the provider does not receive the controller token.
 **Reason:** Generic RBAC can allow a controller to bind a role, but it cannot
 express which request subjects the product considers valid for each lease.
 
+**Rejected alternative:** Accept any subject that Kubernetes RBAC lets the
+controller bind.
+
+**Cost:** Operators must maintain the allowlist when an approved test identity
+or access mode changes. An omitted identity fails closed until the chart values
+are updated.
+
 ## Status and Fencing
 
 Important status fields are `phase`, `namespaceName`, `createdAt`, `internalUrl`,

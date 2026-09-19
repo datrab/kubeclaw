@@ -311,15 +311,20 @@ Fehler und alle ausgelieferten Helm-Werte.
 
 `reference/buster-suites.md` trennt die zwölf tatsächlich ausgelieferten
 Suite-Templates ausdrücklich vom Weg für eine eigene Suite. Jede Suite besitzt
-Zweck, Grenze, konkrete Composition, vollständige Top-Level-Providerfelder,
-Defaults, Ports, Capabilities, Retry-Verhalten, Evidence, Reports, Resultregeln,
-externe Voraussetzungen und Verifikation. Die Referenz erfasst außerdem alle
-19 installierten Provider-Verträge und den JUnit-Adapter. Der Workflow enthält
+Zweck, Grenze, konkrete Composition, vollständige verschachtelte
+Providerkonfiguration, Defaults, Ports, Capabilities, Retry-Verhalten,
+Evidence, Reports, Resultregeln, externe Voraussetzungen und Verifikation. Die
+Referenz erfasst außerdem alle 19 installierten Provider-Verträge und den
+JUnit-Adapter. Die erzeugte Referenz `buster-error-codes.md` inventarisiert alle
+exakten Suite- und Providerfehler direkt aus den maßgeblichen Quelldateien. Der
+Workflow enthält
 eine vollständige gepflegte `.swarm/pipeline.json` mit JUnit Report,
 checked-manifest Artifact, Kubernetes Fixture, typisierten Links und einer
 zweifachen HTTP-Matrix. Der Docs-Check löst dieses Beispiel wirklich gegen die
 ausgelieferten Templates und die aktuelle Registry auf; er prüft dadurch auch
-Fixture-, Matrix- und Adapterbindung statt nur JSON-Syntax.
+Fixture-, Matrix- und Adapterbindung statt nur JSON-Syntax. Ein getrennter
+vertikaler Beweis führt den lokalen Nova-zu-Buster-Pfad mit signiertem
+Source-Snapshot, Worker Core, JUnit, Evidence-Import und Entscheidung aus.
 
 `extend/buster.md` bleibt der öffentliche Provider-, Fixture-, Suite- und
 Report-Adapter-Weg. `extend/platform/buster.md` ergänzt Plan-, Wire-, Engine-,
@@ -327,11 +332,13 @@ Result-, Capability- und Namespace-Core-Änderungen mit Compatibility-,
 Recovery-, Error- und Change-to-check-Regeln.
 
 **Interne Prüfung:** `docs:buster-guides:check` bindet alle sechs Anforderungen
-an gepflegte Marker. Er prüft 67 revisionsfeste Quelllinks, gültige
-Zeilenbereiche, Bytegleichheit von 54 zitierten Implementierungsdateien,
-zwölf Suite-Templates, 19 Provider-Verträge, deren Top-Level-Konfigurationsfelder,
-den vollständigen Workflow-Resolve, Navigation und detaillierte
-Surface-Coverage. Zusätzlich müssen Suite Resolver, Provider Registry,
+an gepflegte Marker. Er prüft sieben Seiten, 117 revisionsfeste Quelllinks,
+gültige Zeilenbereiche und 98 revisionsgebundene Implementierungsdateien. Er
+prüft zwölf Suite-Templates, 19 Provider-Verträge und alle rekursiv gefundenen
+Schemafelder einschließlich des API-Flow-Dokuments. Er prüft außerdem den
+vollständigen Workflow-Resolve, den erzeugten exakten Fehlercodebestand,
+Navigation und detaillierte Surface-Coverage. Zusätzlich müssen Suite Resolver,
+Provider Registry,
 Plan Runner, Remote Plan, Namespace-Controller-Tests und die vollständige
 Dokumentationsprüfung erfolgreich sein. BuildKit-, Registry-, Kubernetes-,
 Tailscale-, Browser-, Scanner-, SPIFFE- und cgroup-Prüfungen bleiben ehrlich als

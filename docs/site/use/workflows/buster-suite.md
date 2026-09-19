@@ -94,8 +94,8 @@ directory.
 
 Use the same rule for images, checked manifests, deployments, credentials,
 public endpoints, build archives, and baselines. If data crosses a node
-boundary, declare a compatible output and input. `dependsOn` controls order but
-does not move data.
+boundary, declare a compatible output and input. `needs` controls order but does
+not move data.
 
 ## 4. Resolve Before You Run
 
@@ -131,6 +131,28 @@ Observe the states in order: `accepted`, `running`, and one terminal state.
 mean that every blocking test passed. Nova must fetch the exact result digest,
 verify its identities and receipts, import every referenced evidence digest,
 and then calculate the gate decision.
+
+The repository includes an executable vertical proof for this complete path.
+It creates a temporary Git repository and resolves a unit-suite plan. It then
+starts a real local Buster service and submits the signed source snapshot. The
+proof runs the provider through Worker Core, parses JUnit, imports evidence, and
+checks the Nova decision.
+
+```text
+npm run verify:test-gate:phase8
+```
+
+This command needs a C compiler, GNU `flock`, `/usr/bin/tar`, and a sandbox that
+can start child processes. Stop if `plugin-system:sandbox:build` fails. Do not
+treat a smaller registry or resolver check as execution evidence. The
+[vertical proof source](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/tests/verification/contracts/check-pipeline-phase8-vertical.mts)
+shows the temporary project, runtime, submission, expected result, and negative
+controls.
+
+The fixture-and-matrix example is a configuration template. It proves loading,
+resolution, port links, matrix expansion, and JUnit-adapter binding. It cannot
+prove a live Kubernetes run until you replace its image and command placeholders
+and supply the broker described in [Before You Start](#before-you-start).
 
 > [Buster status and result are separate remote objects](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/remote-plan-http.ts#L80-L178).
 >
@@ -179,6 +201,12 @@ A successful run has one immutable plan, a committed source identity, a
 terminal Buster result, passed required nodes, satisfied coverage, complete
 evidence import, and proved cleanup or bounded retention. The audit path can
 connect each fact to the exact provider package and attempt.
+
+For the executable vertical proof, the command prints a JSON object with
+`"ok": true`, `"remote": true`, provider `direct-command`, report `junit`, and
+coverage `lcov`. A missing compiler, incompatible lock program, absent archive
+tool, or denied process launch is an environment failure. It is not a passed or
+failed test result.
 
 ## Extend The Workflow
 

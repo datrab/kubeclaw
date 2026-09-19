@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 113,
+  "pageCount": 114,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -1427,6 +1427,25 @@
       "sourceDependencies": [
         "scripts/docs-generate.mjs",
         "scripts/docs-publication.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/buster-error-codes.md",
+      "route": "/reference/buster-error-codes/",
+      "contentKind": "authored",
+      "status": "generated from implemented provider and capability sources",
+      "audience": "pipeline author, operator, test maintainer",
+      "owner": "buster",
+      "appliesTo": "exact errors emitted by shipped Buster suite providers",
+      "lastVerified": "generated source inventory on 2026-09-19",
+      "sourceDependencies": [
+        "scripts/generate-buster-error-reference.mjs",
+        "skills/buster/plugins"
       ],
       "checks": [
         "npm run docs:governance:check",

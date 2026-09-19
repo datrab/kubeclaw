@@ -12,8 +12,9 @@ Last verified: source and contract inspection on 2026-09-19
 
 Buster executes a test plan. It does not decide which product work Nova must do.
 Nova selects the test scope, resolves suites, and freezes the plan. Buster admits
-that plan, executes its nodes, retains evidence, and returns a signed result
-identity. Nova verifies and imports the result. Nova then applies the gate policy.
+that plan, executes its nodes, retains evidence, and returns a digest-bound
+result identity. Nova verifies and imports the result. Nova then applies the
+gate policy.
 
 This separation prevents a test provider from changing the pipeline. A provider
 can report facts about one attempt. It cannot add a test, change a blocking node
@@ -37,6 +38,19 @@ must resolve a new plan with a new digest.
 > [Buster checks plan and provider identity before it executes a node](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/runner.ts#L234-L265).
 >
 > [Nova derives the gate decision from the verified remote result](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/remote-result-authority.ts#L109-L190).
+
+## Why Each Boundary Exists
+
+| Decision | Reason | Rejected alternative | Cost and consequence |
+| --- | --- | --- | --- |
+| Send one committed Git archive. | Buster must execute the same bytes that Nova identified. | Send the mutable working tree or let Buster clone a moving branch. | The author must commit every required file before execution. |
+| Sign the source statement with Nova's Ed25519 key. | Buster must know which trusted source authority created the archive identity. | Trust a repository name, transport token, or archive digest alone. | Operators must provision, protect, and rotate an asymmetric key pair. |
+| Keep Buster result receipts hash-bound instead of signing them. | The authenticated service boundary and exact digests provide the implemented result authority. | Describe deterministic receipt hashes as cryptographic signatures. | A receipt proves internal identity binding, not independent non-repudiation. |
+| Store status, result, and evidence as separate objects. | Polling must stay small while result and evidence bytes retain exact identities. | Put all bytes into every status response. | Operators must preserve and recover several related durable objects. |
+| Reserve result capacity during admission. | An accepted job must not create storage debt that can fail only after execution. | Admit work until the result store becomes full. | Conservative reservations can reject work before the store is physically full. |
+| Run providers through Worker Core capabilities. | A package receives only declared, bounded authority for one attempt. | Let provider code open host processes, sockets, cluster clients, or scanners directly. | Each new authority needs a policy, adapter, limits, tests, and operator configuration. |
+| Keep original evidence and normalized report facts. | Normalization supports common decisions, while original bytes preserve diagnostic detail. | Keep only parsed counts or only raw files. | Evidence storage must account for both forms and their separate limits. |
+| Import a verified result once in Nova. | A retry must continue the same durable import instead of duplicating evidence or changing identity. | Mark the gate complete before every evidence object is present. | Nova needs pending and complete import records plus conflict handling. |
 
 ## Complete Request Path
 

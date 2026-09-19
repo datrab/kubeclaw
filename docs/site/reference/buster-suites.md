@@ -26,6 +26,18 @@ There is no thirteenth shipped template. The additional supported task is to
 path is documented with the same care, but it must not be counted as shipped
 behavior.
 
+## Why The Suite Model Uses These Rules
+
+| Decision | Reason | Rejected alternative | Cost and consequence |
+| --- | --- | --- | --- |
+| Keep project-specific suites empty. | Only the project knows its command, image, endpoint, or budget. | Guess project behavior in a shared template. | A selected empty suite does not run until the project adds a node. |
+| Use strict provider schemas. | A misspelled or unknown field must fail before execution. | Ignore unknown configuration and rely on provider defaults. | Schema evolution needs explicit compatibility work. |
+| Connect nodes with typed ports. | Dependencies must show which exact value or artifact crosses the boundary. | Share untracked paths or infer data from node order. | Authors must declare both the dependency and the port link. |
+| Let the provider own retry safety. | Only the provider contract knows whether repetition can duplicate an external effect. | Let each project mark any node as safe. | Some transient failures cannot use an automatic Buster retry. |
+| Expand matrices during resolution. | Every variation needs a stable identity, limits, coverage, and evidence policy before execution. | Let a provider create hidden variations while it runs. | Large products are rejected by the operator matrix limit. |
+| Separate fixtures from tests. | Resource lifecycle and quality decisions have different outcomes and cleanup duties. | Treat successful resource creation as a passed quality check. | Plans must retain fixture ownership until all consumers finish. |
+| Generate the exact error-code index from source. | Operators need a complete lookup that cannot silently drift from emitted codes. | Maintain selected examples or wildcard families only. | A new emitted code makes the documentation gate fail until the index is reviewed. |
+
 > **Authoritative inventory**
 >
 > [The suite directory contains the twelve versioned JSON templates](https://github.com/datrab/kubeclaw/tree/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites).
@@ -192,12 +204,12 @@ coverage has a threshold; this keeps test correctness separate from coverage.
 deploy or test the image. The empty template requires a project node using
 `kubeclaw.container-build@1`.
 
-`buildContext` and `definition` are required. `definition.type: dockerfile`
-also requires `dockerfile`; optional `target` and up to 32 non-secret
-`buildArgs` are allowed. `definition.type: template` accepts only
-`template: node-static@1`. `outputName` defaults to a safe form of the module
-or node ID. `platform` defaults to `linux/amd64`, must be a Linux platform
-string, and is the only permitted matrix field.
+`buildContext` and `definition` are required. `definition.type` selects
+`dockerfile` or `template`. Dockerfile mode also requires `dockerfile` and
+accepts optional `target` plus 32 non-secret `buildArgs`. Template mode requires
+`definition.template: node-static@1`. `outputName` defaults to a safe form of
+the module or node ID. `platform` defaults to `linux/amd64`. It must be a Linux
+platform string and is the only permitted matrix field.
 
 The provider is retry-safe, needs `container.build`, and returns required
 `image` data. It passes only after Buster reads the pushed registry manifest
@@ -295,19 +307,54 @@ The shipped template contains:
 - blocking `openapi`, with `.swarm/openapi.json` and operation `health`, no
   retry, and group `api-flow`.
 
-HTTP fields are in section 4. API flow requires `flowFile`; optional `url` or
-`endpointName` selects the target. `requestTimeoutMs` defaults to 10000,
-`maximumResponseBytes` to 1048576, and `maximumSteps` to 64. The flow file has
-bounded setup, main, and cleanup actions; requests, assertions, extraction,
-variables, and dependencies. The provider validates them before execution. At least one main
-step must execute. A capability error stops more main requests, attempts
-cleanup, and remains an error. The provider is not retry-safe.
+HTTP fields are in section 4. API flow has these provider fields:
 
-OpenAPI requires `specFile`. It accepts optional `url`, `endpointName`, selected
-`operations`, selected `tags`, and the same request and response limits as HTTP.
-The provider supports a documented, bounded OpenAPI 3.0/3.1 schema subset and
-local references. Unsupported assertions fail closed. It is not retry-safe
-because selected operations can mutate state.
+| Field | Required/default | Meaning |
+| --- | --- | --- |
+| `flowFile` | Required | Project-relative JSON flow file. |
+| `url` | No direct URL | Absolute target URL. Do not set it with `endpointName` or a typed endpoint input. |
+| `endpointName` | No named endpoint | Operator-approved endpoint name. |
+| `requestTimeoutMs` | 10000; range 1–300000 | Default timeout for one request or WebSocket step. |
+| `maximumResponseBytes` | 1048576; range 1–16777216 | Maximum accepted response bytes. |
+| `maximumSteps` | 64; range 1–256 | Maximum combined setup, main, and cleanup steps. |
+
+The flow document requires `schemaVersion` with value
+`kubeclaw.api-flow.v1`. It accepts up to
+64 scalar `variables`. `setup`, `steps`, and `cleanup` each contain bounded step
+arrays. `steps` is required and must contain at least one executed main step.
+
+Each step requires `id` and `path`. Optional `method` accepts `DELETE`, `GET`,
+`HEAD`, `OPTIONS`, `PATCH`, `POST`, or `PUT`. Set `protocol: websocket` for a
+WebSocket step. A step can also set `headers`, `body`, `messages`, `timeoutMs`,
+`expect`, and `extract`.
+
+`expect.status`, `expect.contentType`, `expect.bodyContains`, and `expect.json`
+check HTTP responses. `expect.minimumMessages` and `expect.messageContains`
+check WebSocket messages. `extract` maps up to 32 variable names to selectors.
+A capability error stops more main requests, attempts cleanup, and remains an
+error. The provider is not retry-safe.
+
+OpenAPI has these provider fields:
+
+| Field | Required/default | Meaning |
+| --- | --- | --- |
+| `specFile` | Required | Project-relative OpenAPI JSON file. |
+| `url` | No direct URL | Absolute target URL. It is exclusive with the other target selectors. |
+| `endpointName` | No named endpoint | Operator-approved endpoint name. |
+| `operations[]` | Required unless `tags` exists; max 128 | Exact operation selections and request values. |
+| `tags[]` | Required unless `operations` exists; max 32 | Select all supported operations with one of these tags. |
+| `requestTimeoutMs` | 10000; range 1–300000 | Timeout for one selected operation. |
+| `maximumResponseBytes` | 1048576; range 1–16777216 | Maximum accepted response bytes. |
+
+Each `operations[]` item requires `operationId`. Optional `pathParameters`,
+`query`, and `headers` accept at most 32 entries. Optional `body` supplies the
+request body. `expectedStatuses[]` accepts 1–16 unique HTTP status codes.
+`cleanup` defaults to `false`; set it only for an operation that reverses prior
+test state.
+
+The provider supports a bounded OpenAPI 3.0/3.1 subset and local references.
+Unsupported assertions fail closed. The provider is not retry-safe because
+selected operations can mutate state.
 
 Both complex providers need `network.http` and emit log plus test-report
 evidence. Assertion mismatches fail; invalid project documents, unsupported
@@ -332,6 +379,10 @@ data; `tags` defaults to the two shipped WCAG levels. `exclude[]` identifies
 deliberately omitted selectors. `acceptances[]` must bind an exact rule, route,
 selector, reason, and expiry. `timeoutMs` defaults to 30000 and ranges from
 1000 to 120000.
+
+Each acceptance requires `rule`, `route`, `selector`, `reason`, and `expiresAt`.
+The reason has 8–1024 characters. The expiry uses an exact calendar date. An
+expired acceptance is an execution error; it never silently restores a pass.
 
 The retry-safe provider needs `browser.axe`. It records logs and test reports,
 and adds screenshots on failure. Unaccepted violations fail. Invalid or expired
@@ -360,6 +411,10 @@ combined budget and is required by runtime policy for blocking performance.
 `runs` is 1, 3, or 5. `acceptances[]` defaults empty. `timeoutMs` defaults to
 120000 and ranges from 10000 to 180000.
 
+Each acceptance requires `audit`, `route`, `reason`, and `expiresAt`. The audit
+names one Lighthouse finding on one route. The reason has 8–1024 characters,
+and the expiry uses an exact calendar date.
+
 The retry-safe provider needs `browser.lighthouse`. It stores every performance
 report and one complete median-score representative report. A budget breach or
 unaccepted finding fails. Missing profile, forbidden origin, unavailable Chrome
@@ -383,6 +438,15 @@ The shipped blocking node uses `.swarm/visual/baselines.json`,
 `strict-v1` and also permits `balanced-v1`. `overrides` changes declared target
 thresholds within policy. `masks[]` handles named dynamic regions. `timeoutMs`
 defaults to 30000 and ranges from 1000 to 120000.
+
+`overrides.maximumDifferencePercent` accepts 0–100. It changes the permitted
+share of different pixels. `overrides.pixelThreshold` accepts 0–1 and changes
+the per-pixel comparison threshold. `overrides.uncertaintyMarginPercent`
+accepts 0–100 and reserves a boundary for uncertain comparisons. An override
+can make a declared target stricter or looser within operator policy.
+
+Each `masks[]` item requires one `target` and 1–32 unique `selectors`. A mask
+applies only to that named target. It does not hide a region in other targets.
 
 The retry-safe provider needs `browser.visual`. Evidence includes log,
 baseline, current image, difference image, and test report. A valid comparison
@@ -441,6 +505,9 @@ most 128 entries. Each entry requires exact `findingId`, a reason of 8–1024
 characters, and an `expiresAt` date-time. The fixed policy blocks critical and
 high findings, active threats, and vulnerabilities without fixes. An
 acceptance suppresses blocking only while its exact ID and expiry are valid.
+
+The exact acceptance fields are `acceptances[].findingId`,
+`acceptances[].reason`, and `acceptances[].expiresAt`.
 
 Header `requestTimeoutMs` defaults to 10000. Header `rules.add[]` and
 `rules.replace[]` contain at most 32 entries with `id`, `header`, `severity`,
@@ -551,6 +618,10 @@ facts. A failed assertion is a provider result with findings, not an
 exception code. Preserve the complete code suffix because it can contain the
 node, field, port, or artifact that failed.
 
+Use the [exact Buster error-code reference](buster-error-codes.md) to find every
+code emitted by the shipped suite providers. The table below is the shorter
+routing view. It groups codes by the operator action that they require.
+
 | Suite or boundary | Code families and important exact codes | Safe action |
 | --- | --- | --- |
 | Plan and suite | `TEST_PLAN_SUITE_*`, `TEST_PLAN_NODE_*`, `TEST_PLAN_CONFIGURATION_INVALID`, `TEST_PLAN_MATRIX_*`, `TEST_PLAN_DEPENDENCY_*`, `TEST_PLAN_PORT_*`, `TEST_PLAN_COVERAGE_*` | Correct the declaration or installed registry. Do not send an unresolved plan. |
@@ -569,10 +640,9 @@ node, field, port, or artifact that failed.
 | Size budget | `SIZE_BUDGET_*` | Check input and baseline digests, archive safety, glob rules, decompression limits, and blocking budget presence. |
 | Remote engine | `BUSTER_REMOTE_*`, `BUSTER_SOURCE_*`, `TEST_PROVIDER_*`, `TEST_REPORT_ADAPTER_*` | Diagnose admission, store, package, attempt, evidence, result, and import in that order. Never translate an integrity error into a test failure. |
 
-The code family is stable for operator routing. The provider and capability
-source remain authoritative for the complete suffix. Use the exact source links
-on the suite and the package catalogue page. Do not infer retry safety from the
-word `TIMEOUT` or `FAILED`; use the provider contract and the attempt state.
+The code family is stable for operator routing. The generated exact reference
+must stay equal to the provider and capability sources. Do not infer retry
+safety from `TIMEOUT` or `FAILED`. Use the provider contract and attempt state.
 
 ## Configuration Precedence
 

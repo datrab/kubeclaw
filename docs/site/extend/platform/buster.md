@@ -21,6 +21,13 @@ execution authority, evidence rules, result authority, or namespace lifecycle.
 the authority shared by every suite. Core changes have a larger compatibility,
 recovery, and security surface.
 
+**Rejected alternative:** Add common test behavior directly to the engine when
+an installed provider, adapter, or suite can express it.
+
+**Cost:** Extension authors must learn the package contracts and registration
+path. A feature can require coordinated package and role updates even when the
+engine does not change.
+
 ## Component Map
 
 | Change area | Primary owner | Other boundaries that must agree |
