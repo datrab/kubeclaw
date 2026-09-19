@@ -68,6 +68,9 @@ commands:
 
 agent:
   project: "clawdeck"
+  model:
+    primary: "openai/gpt-6-astra"
+    fallbacks: ["openai/gpt-5.5"]
   git:
     enabled: true
     secretName: "git-deploy-key-nova"

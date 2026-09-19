@@ -91,11 +91,21 @@ data:
           },
           "modelPolicy": {
             "allow": [
+              {{- if eq .Values.agent.model.primary "openai/gpt-6-astra" }}
+              "openai/gpt-6-astra",
+              {{- end }}
               "openai/gpt-5.6-sol",
               "openai/gpt-5.5"
             ]
           },
           "models": {
+            {{- if eq .Values.agent.model.primary "openai/gpt-6-astra" }}
+            "openai/gpt-6-astra": {
+              "agentRuntime": {
+                "id": "codex"
+              }
+            },
+            {{- end }}
             "openai/gpt-5.6-sol": {
               "agentRuntime": {
                 "id": "codex"
