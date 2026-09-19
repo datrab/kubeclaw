@@ -145,11 +145,17 @@ maschinen-generierte Einzelinventar jedes Error Codes bleibt als gemeinsame
 Driftkontrolle in AP09.11. Diese Trennung verhindert, dass eine lange
 generierte Liste die Entscheidungshilfe ersetzt.
 
-**Interne Prüfung:** `docs:core-guides:check` prüft Pflichtinhalte, 166
-revisionsfeste Quelllinks, gültige Zeilenbereiche, Navigation und Surface-
-Coverage für Nova, Plugin Runtime und Worker Core. Zusätzlich müssen
+**Interne Prüfung:** `docs:core-guides:check` bindet alle 52 Anforderungen an
+gepflegte Inhaltsmarker. Er prüft zusätzlich 178 revisionsfeste Quelllinks,
+gültige Zeilenbereiche, Navigation und Surface-Coverage für Nova, Plugin
+Runtime und Worker Core. Der Check bindet außerdem
+28 Capabilities, 89 Registry-, Config-, Package-, State-, Recovery- und
+Isolation-Diagnosen, 446 Nova-Kennungen an
+Entscheidungsfamilien und 207 konkrete Worker-Fehlerkennungen an den aktuellen
+Quellbestand. Zusätzlich müssen
 `docs:publication:check`, `docs:check:refs`, `docs:site-boundary:check` und die
-fokussierten Plugin-Vertragsprüfungen erfolgreich sein.
+Vertragsprüfungen für das Plugin-v2-Basisschema, die Plattformkonfiguration,
+die Registry, den Lifecycle und die Capability Runtime erfolgreich sein.
 
 ### AP09.3 — Worker Core und native Ausführung
 
@@ -184,7 +190,7 @@ nicht aus Unit- oder Contract-Tests abgeleitet.
 
 **Interne Prüfung:** `verify:worker-core:contracts`,
 `verify:worker-core:attempt-executor`, `verify:worker-core:local-runtime` und
-`docs:core-guides:check` müssen erfolgreich sein. Der Docs-Check prüft 47
+`docs:core-guides:check` müssen erfolgreich sein. Der Docs-Check prüft 60
 direkte Worker-Codebelege und verwirft ungültige Zeilenbereiche.
 
 ### AP09.4 — Prism in Depth

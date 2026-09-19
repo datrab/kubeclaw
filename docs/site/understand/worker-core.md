@@ -607,7 +607,22 @@ The store has fixed record and byte limits. It has no automatic compaction.
 Capacity exhaustion is an operational stop. An operator must preserve audit
 requirements when it defines external retention.
 
+Worker Core does not implement an ownership heartbeat or a renewable ownership
+lease. The local runtime publishes health records with a monotonic sequence,
+but it has no method that renews an accepted, in-flight claim. The contract
+permits a controller to present a candidate envelope with a later claim expiry;
+this consistency rule does not implement delivery or acceptance of that
+renewal. The local runtime rejects a repeat attempt while its replay entry is
+active. Durable native ownership changes through compare-and-swap phase
+transitions and kernel scope observation. An operator must not treat an old
+health timestamp as proof that an owner is dead. Recovery proves the boot
+identity, binding, and scope state or stops admission.
+
 > **Ownership evidence**
+>
+> [Claim consistency permits only an expiry extension and rejects an identity or work change](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/validation.ts#L247-L269).
+>
+> [Local health reports a monotonic sequence but creates no durable ownership heartbeat](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/local-runtime.ts#L116-L151).
 >
 > [The ownership record and file store define identity, phases, binding, diagnosis, counters, locking, and compare-and-swap updates](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/ownership-store.ts#L10-L170).
 >

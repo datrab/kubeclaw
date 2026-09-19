@@ -551,6 +551,24 @@ The policy can then request one or more orchestrator-authorized extra orders.
 An authorization signal binds the pending request digest, actor, reason, wait, and current repair history.
 A stale authorization cannot approve a changed repair request.
 
+The generic pipeline contract supplies no implicit execution budget.
+Every stage must declare `maxAttempts`, `maxRemediationCycles`, and
+`timeoutMs`. `maxTechnicalRetries`, `repairCategory`, `repairBudget`, and
+`orchestratorAfterAttempt` are optional and change only their named behavior.
+If `maxTechnicalRetries` is absent, technical retries use the shared
+`maxAttempts` ceiling. If `repairCategory` is absent, repair uses
+`maxRemediationCycles`. A category-based repair requires the repair target to
+own a matching `repairBudget`; an absent category is an error, not a zero
+budget.
+
+The project compiler supplies an opinionated policy. It sets a 30-minute stage
+timeout, one technical retry, two automatic repair orders for each enabled
+lint, review, or test category, and at most one orchestrator-authorized extra
+order. It calculates `maxAttempts` so that the initial attempt, all possible
+repair orders, their rechecks, and the technical retry fit under the same hard
+ceiling. An explicit `pipeline-definition.v2` does not inherit these compiler
+values.
+
 | Condition | Core response | Safe next action |
 | --- | --- | --- |
 | Technical retry remains | Repeat the same stage. | No operator action. |
@@ -564,6 +582,10 @@ A stale authorization cannot approve a changed repair request.
 Combining them could let infrastructure noise consume all repair work, or let repeated product edits bypass a technical retry limit.
 
 > **Source evidence — repair budgets and identity**
+>
+> [The stage contract requires the hard execution bounds and declares each optional specialized budget](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L481-L510).
+>
+> [The project compiler calculates its explicit timeout, technical retry, repair categories, and aggregate attempt ceiling](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/project/compiler.ts#L55-L66).
 >
 > [The repair budget decides automatic, authorized, and blocked orders and records their stable identity](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/repair-budget.ts#L27-L100).
 >
@@ -579,6 +601,20 @@ Core can stop, restart, and still require the same external decision.
 
 A wait request states its wait ID, signal type, authorized issuer, optional expiry, and stage context.
 A resume signal uses `resume-signal.v2` and adds signal ID, idempotency key, issue time, issuer, and payload.
+
+The two contracts have closed field sets.
+
+| Contract | Required fields | Optional field and meaning |
+| --- | --- | --- |
+| `wait-request.v2` | `schemaVersion`, `waitId`, `kind`, `signalType`, `authorizedIssuer`, `expiresAt` | `request` carries bounded JSON context for the named signal. |
+| `resume-signal.v2` | `schemaVersion`, `signalId`, `idempotencyKey`, `waitId`, `signalType`, `issuer`, `issuedAt`, `payload` | None. `payload` is always a JSON object, including when it is empty. |
+
+`kind` is `signal` or `orchestrator`. Issuer type is `orchestrator`,
+`operator`, or `adapter`. The shared contract validates the outer payload, but
+it does not give every namespaced signal type a global inner schema. The stage
+or the repair-authorization path must interpret its own `request` and `payload`
+fields. Core validates the complete repair payload because that signal spends
+additional repair authority.
 
 A plugin-provided `wait` keeps the plugin's declared kind, signal type, issuer, expiry, and request.
 Core-generated orchestrator waits use kind `orchestrator` and signal type `core.orchestrator.resume`.
@@ -610,6 +646,8 @@ It returns `RECOVERY_SIGNAL_REQUIRED` with the wait ID.
 A cooldown is different: recovery can continue after `retryAt`, but not before it.
 
 > **Source evidence — signal validation and single use**
+>
+> [The shared schema gives wait requests and resume signals closed field sets, issuer types, timestamps, and JSON payloads](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L747-L806).
 >
 > [Signal validation checks contract, wait, signal type, issuer, expiry, and freshness](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L137-L143).
 >
@@ -737,13 +775,27 @@ Shutdown order is deliberate:
 5. Shut down adapters and their dependencies.
 6. Release the run mutation lease.
 
+`shutdownTimeoutMs` is a required positive platform value. Core uses it for
+adapter invocation cleanup and adapter shutdown. Observer registrations own
+their delivery timeout, maximum attempts, and backoff. A required observer
+failure can make the flush fail. A later adapter-shutdown failure can become
+the thrown shutdown error because shutdown runs in the outer `finally`
+boundary. Neither error can change an already stored lifecycle event. Operators
+must therefore inspect observer delivery records, adapter errors, and the
+canonical journal instead of treating the last thrown error as the full run
+history.
+
 > **Source evidence — cancellation and cleanup**
+>
+> [The platform contract requires one positive shutdown timeout and passes it to adapter runtime control](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/config/platform.ts#L6-L28).
 >
 > [The loop records cancellation for all open stages and for the run](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/pipeline-loop.ts#L75-L84).
 >
 > [The attempt executor propagates cancellation, records its outcome, and revokes the lease](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/stage-executor.ts#L65-L79).
 >
 > [The adapter invocation phase rejects calls after close and bounds cleanup](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapter-invocation-phase.ts#L14-L60).
+>
+> [The engine drains observers before adapter shutdown and preserves both actions in nested cleanup boundaries](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-run.ts#L21-L34).
 
 ## 13. Restart and Recovery
 
@@ -855,7 +907,15 @@ If a request fails, Nova queries the remote job by identity.
 It persists the reconciled state before it returns the failure.
 A failure that also cannot persist reconciliation carries both causes.
 
+One gate deadline covers dispatch, polling, result download, evidence download,
+and retry delays. Each operation receives only the remaining time. Expiry
+raises `NOVA_REMOTE_PLAN_TIMEOUT`; caller cancellation remains
+`NOVA_REMOTE_PLAN_CANCELLED`. A transport retry cannot reset the overall
+deadline.
+
 > **Source evidence — remote dispatch**
+>
+> [The gate deadline shares one expiry across child operations, delays, cancellation, and timeout errors](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/deadline.ts#L1-L43).
 >
 > [Remote job creation binds the plan, source, grants, idempotency key, and request digest](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/remote-dispatch.ts#L23-L55).
 >
@@ -894,6 +954,27 @@ The lifecycle journal is the authority.
 The audit output is a derived read model.
 `readPipelineAudit()` selects one run, preserves event order, includes each source record hash, and calculates an audit digest.
 
+The output contract is `pipeline-audit.v1`. It contains `runId`, the complete
+journal head, ordered event projections, and a digest of that projection. Each
+event exposes event ID, sequence, type, redacted identity, occurrence time,
+causation ID, redacted payload, and source-record hash. The version is the
+stability boundary. A consumer must reject an unknown version instead of
+inferring fields.
+
+The audit command does not require a terminal run. For an incomplete run, it
+returns the verified prefix that exists at read time. It does not add a
+synthetic completion marker. A missing journal or missing run fails. A corrupt,
+internally inconsistent hash chain fails inside the journal reader before the
+audit projection exists.
+
+The audit reader does not compare the current journal head with an external,
+previously trusted head. A cleanly truncated file can therefore look like a
+valid, shorter journal to a new process. Consumers that must detect rollback
+must retain the last trusted `journalHead` or audit digest outside the run root
+and compare it with later reads. The current projection proves internal chain
+integrity. By itself, it does not prove that the storage owner kept every
+previously observed record.
+
 The audit projection recursively redacts fields whose names indicate credentials, secrets, tokens, cookies, passwords, or authorization data.
 Redaction protects common structured fields.
 It cannot make an arbitrary value safe when a producer puts a secret under an innocent field name.
@@ -916,6 +997,8 @@ This rule prevents an observation loop.
 > **Source evidence — audit projection**
 >
 > [Audit rebuilds from the hash-verified journal, redacts sensitive keys, preserves source hashes, and adds a digest](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/telemetry/audit.ts#L6-L27).
+>
+> [A new journal reader validates the file that it sees but has no previously trusted head for a rollback comparison](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/state/journal.ts#L42-L77).
 >
 > [Observer delivery uses durable attempts, provenance-bound checkpoints, subscriptions, and bounded failure policy](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/telemetry/observers.ts#L14-L106).
 

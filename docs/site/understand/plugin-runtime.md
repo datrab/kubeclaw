@@ -319,6 +319,14 @@ At invocation time, the host checks the exact operation, resource type, canonica
 For example, HTTP uses canonical origins, command execution uses an exact executable plus an allowed working root, and secret access uses an allowed secret name.
 `secrets.read` also uses the confidential effect path, which keeps its result out of the normal durable effect record.
 
+There is no wildcard syntax. A value such as `*` is only the literal string
+`*`; it does not expand authority. Some resource families use an explicit
+hierarchy rule. A state namespace can be equal to or below an allowed
+namespace. A repository path or working directory must remain below a
+canonical allowed root. A `kubernetes.exposure` namespace requires the exact
+allowed prefix or that prefix followed by `-`. All other rows below use exact
+equality unless the row states a prefix rule.
+
 The following table gives the complete resource-matching model.
 
 | Capability family | Resource match |
@@ -363,6 +371,8 @@ The pipeline definition owns the selected stage types and each stage's configura
 
 Relative installation, trusted, storage, and isolation paths resolve against the platform configuration file directory.
 The platform schema is closed. Unknown top-level fields fail validation.
+The loader reports every schema or format rejection as
+`PLATFORM_CONFIG_INVALID` and includes the canonical file and validator detail.
 
 Each registration owns its configuration schema:
 
@@ -376,6 +386,15 @@ There is no hidden merge of arbitrary project and platform objects.
 The pipeline cannot select trust roots, providers, or grants.
 The platform cannot silently replace a stage type's registration-owned schema.
 
+Nova stores the effective runtime configuration in `run-snapshot.json` so that
+recovery can compare the same provider, grant, adapter, observer, and isolation
+choices. The snapshot keeps the configured values; this path does not redact
+configuration and it does not produce a separate sanitized “effective config”
+view. A configuration must therefore contain secret references, such as names
+used through `secrets.read`, and not secret values. Registration schemas can
+reject unwanted fields, but the host does not infer which arbitrary field is
+sensitive.
+
 > **Source evidence — configuration boundary**
 >
 > [The platform type lists every host-owned configuration family](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/config/platform.ts#L6-L28).
@@ -383,6 +402,8 @@ The platform cannot silently replace a stage type's registration-owned schema.
 > [The loader validates the closed platform schema and resolves its host paths relative to the configuration file](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/config/platform.ts#L30-L70).
 >
 > [Registration-owned validators reject missing owners and invalid stage, observer, adapter, and test-provider values](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/configuration.ts#L28-L121).
+>
+> [The immutable registry record retains effective provider, grant, adapter, observer, isolation, package, and stage-owner choices](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L123-L134).
 
 ## Import Audit Is An Admission Check, Not The Runtime Sandbox
 
@@ -601,6 +622,41 @@ The current error vocabulary is:
 | Capability policy | `REGISTRY_CAPABILITY_FORBIDDEN`, `REGISTRY_CAPABILITY_UNKNOWN`, `REGISTRY_CAPABILITY_CONSTRAINT_INVALID`, `REGISTRY_CAPABILITY_DENIED`, `REGISTRY_CAPABILITY_UNREQUESTED` |
 | Import, activation, and values | `REGISTRY_EXECUTOR_INVALID`, `REGISTRY_IMPORT_SIDE_EFFECT`, `REGISTRY_ACTIVATION_FAILED`, `REGISTRY_RESULT_INVALID` |
 
+The import-audit child also uses three internal protocol markers.
+`REGISTRY_IMPORT_AUDIT_MODULE_REQUIRED` means that the parent omitted the
+module path. `REGISTRY_IMPORT_AUDIT_EXPORT_REQUIRED` means that it omitted the
+export name. `REGISTRY_IMPORT_AUDIT_OK` is the bounded success marker; it is not
+an error. The parent converts a missing marker, invalid output, timeout, or
+child failure into the public import or activation failure.
+
+The package installer uses these exact admission codes:
+
+| Boundary | Codes | Safe response |
+| --- | --- | --- |
+| Operator and source | `PLUGIN_INSTALL_OPERATOR_UNAUTHORIZED`, `PLUGIN_INSTALL_CANONICAL_SOURCE_INVALID`, `PLUGIN_INSTALL_SOURCE_DIGEST_UNTRUSTED`, `PLUGIN_INSTALL_ATTESTATION_UNVERIFIED` | Use an authorized operator and one immutable, policy-approved source identity. |
+| Package tree | `PLUGIN_INSTALL_FILE_COUNT_LIMIT`, `PLUGIN_INSTALL_SIZE_LIMIT`, `PLUGIN_INSTALL_FILE_TYPE_FORBIDDEN`, `PLUGIN_INSTALL_SYMLINK_FORBIDDEN`, `PLUGIN_INSTALL_DEPENDENCIES_MUST_BE_BUNDLED` | Rebuild the bundle within declared limits. Do not relax traversal or file-type checks for one package. |
+| Executable content | `PLUGIN_INSTALL_SCRIPTS_FORBIDDEN`, `PLUGIN_INSTALL_MODULE_FORMAT_INVALID`, `PLUGIN_INSTALL_MODULE_INVALID`, `PLUGIN_INSTALL_EXTERNAL_ADAPTER_UNSUPPORTED` | Remove lifecycle scripts, use supported bundled modules, correct syntax, or use a supported external stage or observer surface. |
+| Publication | `PLUGIN_INSTALL_DIGEST_MISMATCH`, `PLUGIN_INSTALL_TARGET_CONFLICT` | Recalculate the immutable package identity or select the already installed identical target. Never overwrite conflicting bytes. |
+
+Removal adds `PLUGIN_REMOVE_OUTSIDE_INSTALLATION_ROOT`. It protects the final
+filesystem action from an incorrect or nested target.
+
+External-stage and external-observer isolation uses the following exact groups:
+
+| Boundary | Codes | Safe response |
+| --- | --- | --- |
+| Host prerequisites | `ISOLATION_SANDBOX_NOT_BUILT`, `ISOLATION_CGROUP_REQUIRED`, `ISOLATION_CGROUP_ROOT_INVALID`, `ISOLATION_CGROUP_NOT_DELEGATED`, `ISOLATION_PAGE_SIZE_UNAVAILABLE`, `ISOLATION_PAGE_SIZE_INVALID`, `ISOLATION_MEMORY_LIMIT_INVALID` | Provision and verify the host. Do not run the external package directly in the trusted host as a fallback. |
+| Scope setup and cleanup | `ISOLATION_CGROUP_SETUP_FAILED`, `ISOLATION_CGROUP_SETUP_CLEANUP_FAILED`, `ISOLATION_CGROUP_LIMIT_MISMATCH`, `ISOLATION_CGROUP_CLEANUP_FAILED`, `ISOLATION_CLEANUP_FAILED`, `ISOLATION_TREE_TERMINATION_FAILED`, `ISOLATION_PROCESS_CLEANUP_TIMEOUT` | Stop admission, retain diagnostics, and prove tree termination before another invocation. |
+| Package and surface | `ISOLATION_MODULE_OUTSIDE_PACKAGE`, `ISOLATION_EXPORT_INVALID`, `ISOLATION_SURFACE_UNSUPPORTED`, `ISOLATION_PIPE_FAILED` | Correct the admitted package path, export, supported surface, or host pipe. Do not widen the package root. |
+| JSON boundaries | `ISOLATION_INVOCATION_NOT_SERIALIZABLE`, `ISOLATION_INVOCATION_TOO_LARGE`, `ISOLATION_RESPONSE_NOT_SERIALIZABLE`, `ISOLATION_RESPONSE_TOO_LARGE`, `ISOLATION_RESULT_NOT_SERIALIZABLE`, `ISOLATION_RESULT_TOO_LARGE` | Keep the invocation, each host response, and the final result inside the JSON and one-mebibyte boundary. A circular value, a top-level undefined result, or an oversized encoded message cannot cross the process boundary. |
+| Framed protocol | `ISOLATION_PROTOCOL_INIT_REQUIRED`, `ISOLATION_PROTOCOL_INVALID_MESSAGE`, `ISOLATION_PROTOCOL_INVALID_JSON`, `ISOLATION_PROTOCOL_INVALID_UTF8`, `ISOLATION_PROTOCOL_INPUT_LIMIT`, `ISOLATION_PROTOCOL_LINE_LIMIT`, `ISOLATION_PROTOCOL_OUTPUT_LIMIT`, `ISOLATION_PROTOCOL_TRUNCATED` | Terminate the child and correct its protocol implementation. Do not accept a partial message or result. |
+| Relayed requests | `ISOLATION_PROTOCOL_CAPABILITY_INVALID`, `ISOLATION_PROTOCOL_EVENT_INVALID`, `ISOLATION_RPC_LIMIT`, `ISOLATION_RPC_NOT_DRAINED`, `ISOLATION_SESSION_CLOSED` | Reject the request or result. The child must finish all bounded capability and event calls before it returns. |
+| Child outcome | `ISOLATED_PLUGIN_CANCELLED`, `ISOLATED_PLUGIN_TIMEOUT`, `ISOLATED_PLUGIN_STDERR_LIMIT`, `ISOLATED_PLUGIN_MEMORY_LIMIT`, `ISOLATED_PLUGIN_FAILED`, `ISOLATED_PLUGIN_EXITED` | Preserve the controlled attempt outcome. Retry only through Nova policy and only after effect reconciliation when external work can exist. |
+
+`REGISTRY_SCHEMA_NOT_COMPILED` identifies an internal lookup for a schema that
+the admitted snapshot did not compile. Registry construction or configuration
+validation stops; the runtime must not continue with an unvalidated value.
+
 `REGISTRY_ADAPTER_PROVIDER_CONFLICT` belongs to the declared public type.
 The current resolver does not emit it.
 It uses missing, invalid, ambiguous, and cycle codes for active provider failures.
@@ -618,6 +674,10 @@ Their suffix identifies the failed ownership, sequence, idempotency, package, gr
 > **Source evidence — registry error vocabulary**
 >
 > [The typed registry error list is the source for public registry admission and activation codes](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/errors.ts#L1-L37).
+>
+> [The installer throws bounded operator, trust, tree, syntax, adapter, digest, and publication diagnostics](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/packages/install.ts#L43-L234).
+>
+> [The isolation session defines protocol, RPC, child-outcome, and cleanup diagnostics](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/isolation/session.ts#L43-L165).
 
 | Phase | Representative failure | Safe result | Recovery owner |
 | --- | --- | --- | --- |
