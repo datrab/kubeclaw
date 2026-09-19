@@ -167,14 +167,109 @@ operator-supplied file adds private values but cannot replace selected release t
 | `workerTrust.spiffe.enabled` | `false` in chart defaults | Production selection can enable SPIFFE. All trust identities must then be complete. |
 | `workerTrust.spiffe.*` | platform defaults | Trust domain, service accounts, CSI socket, Envoy image, and sidecar resources. Change as one reviewed trust policy. |
 
-The exact accepted Helm shape is closed by the chart JSON Schema.
-Use that schema when an override is rejected.
+### Complete shipped Helm field map
+
+The following table names every leaf value in the shipped Prism values file.
+An empty value means that selection or activation must supply it when required.
+
+| Field | Shipped default | Operator rule |
+| --- | --- | --- |
+| `images.control.repository` | `ghcr.io/datrab/kubeclaw-prism-control` | Keep the repository paired with the selected Control digest. |
+| `images.control.digest` | empty | A release or deploy override must supply a SHA-256 digest. |
+| `images.control.pullPolicy` | `IfNotPresent` | The schema also permits `Never`. |
+| `images.studio.repository` | `ghcr.io/datrab/kubeclaw-prism-studio` | Keep the repository paired with the selected Studio digest. |
+| `images.studio.digest` | empty | A release or deploy override must supply a SHA-256 digest. |
+| `images.studio.pullPolicy` | `IfNotPresent` | The schema also permits `Never`. |
+| `images.worker.repository` | `ghcr.io/datrab/kubeclaw-prism-worker` | Keep the repository paired with the selected Worker digest. |
+| `images.worker.digest` | empty | A release or deploy override must supply a SHA-256 digest. |
+| `images.worker.pullPolicy` | `IfNotPresent` | The schema also permits `Never`. |
+| `images.ingestion.repository` | `ghcr.io/datrab/kubeclaw-prism-ingestion` | Keep the repository paired with the selected Ingestion digest. |
+| `images.ingestion.digest` | empty | A release or deploy override must supply a SHA-256 digest. |
+| `images.ingestion.pullPolicy` | `IfNotPresent` | The schema also permits `Never`. |
+| `imagePullSecrets[0].name` | `ghcr-secret` | Name a Secret that can pull every selected Prism image. |
+| `control.pipelinePreferenceSubject` | empty | Set one valid Prism user subject or keep personal learning disabled. |
+| `control.replicas` | `1` | Size Control independently from the single native Worker. |
+| `control.resources.requests.cpu`, `control.resources.requests.memory` | `500m`, `1Gi` | Admission request for each Control Pod. |
+| `control.resources.limits.cpu`, `control.resources.limits.memory` | `4`, `4Gi` | Maximum Control Pod resources. |
+| `control.productDecisions.enabled` | `false` | Keep the separate product authority disabled unless every field below is reviewed. |
+| `control.productDecisions.operators` | empty list | Supply one to 100 exact operator identities when enabled. |
+| `control.productDecisions.tokenExpirationSeconds` | `600` | The schema permits 600 through 3,600 seconds. |
+| `control.productDecisions.issuer` | empty | Supply the fixed signing issuer when enabled. |
+| `control.productDecisions.origin` | empty | Supply the exact HTTPS operator-page origin. |
+| `control.productDecisions.authorityRevision` | empty | Bind decisions to one authority-policy revision. |
+| `control.productDecisions.signingSecretName` | empty | Name the Kubernetes Secret that contains the Ed25519 private key. |
+| `control.productDecisions.signingSecretKey` | `private-key.pem` | Select the key inside the signing Secret. |
+| `control.productDecisions.controllerUrl` | empty | Supply an HTTPS controller URL on port 8443. |
+| `control.productDecisions.controllerNamespace` | empty | Name the controller namespace used for authority binding. |
+| `control.productDecisions.controllerRelease` | empty | Name the controller release used for authority binding. |
+| `control.productDecisions.controllerCaSecretName` | empty | Name the Secret that contains the pinned controller CA. |
+| `control.productDecisions.controllerCaSecretKey` | `ca.crt` | Select the CA file inside that Secret. |
+| `control.productDecisions.tokenAudience` | empty | Supply the exact controller token audience. |
+| `studio.replicas` | `1` | Studio is stateless. More replicas do not add product authority. |
+| `studio.resources.requests.cpu`, `studio.resources.requests.memory` | `250m`, `256Mi` | Admission request for each Studio Pod. |
+| `studio.resources.limits.cpu`, `studio.resources.limits.memory` | `2`, `1Gi` | Maximum Studio Pod resources. |
+| `worker.replicas` | `1` | The chart requires exactly one native Worker. |
+| `worker.native.nodeName` | empty | Host preflight must select the node. |
+| `worker.native.namespace` | empty | Host preflight must select the native pool namespace. |
+| `worker.native.policyDigest` | empty | Use the generated 64-character policy digest. |
+| `worker.native.closeTimeoutMs` | `105000` | Keep this within the service and Pod shutdown budgets. |
+| `worker.shutdownTimeoutMs` | `120000` | Budget for admission stop, cancellation, cleanup, and journal close. |
+| `worker.terminationGracePeriodSeconds` | `150` | Keep this longer than the complete service shutdown path. |
+| `worker.resources.requests.cpu`, `worker.resources.requests.memory` | `1`, `2Gi` | Admission request for the Worker Pod. |
+| `worker.resources.limits.cpu`, `worker.resources.limits.memory` | `8`, `8Gi` | Pod limits do not replace per-attempt native limits. |
+| `ingestion.enabled` | `false` | Enable only after source policy and resource sizing are approved. |
+| `ingestion.replicas` | `1` | Set zero only when the service stays disabled. |
+| `ingestion.resources.requests.cpu`, `ingestion.resources.requests.memory` | empty | Both values become mandatory when ingestion is enabled. |
+| `ingestion.resources.limits.cpu`, `ingestion.resources.limits.memory` | empty | Both values become mandatory when ingestion is enabled. |
+| `ingestion.quarantineTtlMs` | `3600000` | The schema permits one minute through 24 hours. |
+| `postgresql.enabled` | `true` | Disable only when another reviewed PostgreSQL service supplies pgvector. |
+| `postgresql.image` | pinned `pgvector/pgvector:pg17` image | Preserve a digest-bound pgvector image. |
+| `postgresql.storage` | `100Gi` | Size from measured database growth and restore time. |
+| `postgresql.storageClass` | empty | Empty selects the cluster default StorageClass. |
+| `postgresql.existingSecret` | empty | Deploy binds the selected database Secret. |
+| `postgresql.resources.requests.cpu`, `postgresql.resources.requests.memory` | `500m`, `1Gi` | Admission request for PostgreSQL. |
+| `postgresql.resources.limits.cpu`, `postgresql.resources.limits.memory` | `4`, `8Gi` | Validate these limits with native database checks. |
+| `secrets.runtime` | `prism-runtime` | Secret for session and internal fallback authentication. |
+| `secrets.database` | `prism-postgresql-auth` | Secret for administrative, migrator, runtime, and read-only database identities. |
+| `artifactStorage.storage` | `100Gi` | Size from immutable preview and baseline growth. |
+| `artifactStorage.storageClass` | empty | Empty selects the cluster default StorageClass. |
+| `backup.schedule` | `0 2 * * *` | Schedule the local matched backup group. |
+| `backup.verificationSchedule` | `0 3 * * 0` | Schedule checksum and bundle verification. |
+| `backup.databaseProofSchedule` | `0 4 * * 0` | Schedule the native database restore proof. |
+| `backup.maximumBytes` | `85899345920` | Stop one backup before it exceeds 80 GiB. |
+| `backup.maximumRetainedBytes` | `96636764160` | Local byte ceiling; it does not delete expired backups. |
+| `backup.maximumDurationSeconds` | `3600` | Stop one backup after one hour. |
+| `backup.resources.requests.cpu`, `backup.resources.requests.memory` | `250m`, `256Mi` | Admission request for backup and verification Jobs. |
+| `backup.resources.limits.cpu`, `backup.resources.limits.memory` | `2`, `2Gi` | Maximum resources for backup and verification Jobs. |
+| `tailscale.enabled` | `true` | Disable only when another reviewed private exposure path exists. |
+| `tailscale.hostname` | `prism-studio` | Private MagicDNS label for Studio. |
+| `tailscale.operatorNamespace` | `tailscale` | Namespace of the Tailscale operator. |
+| `workerTrust.spiffe.enabled` | `false` | Production selection can enable workload identity. |
+| `workerTrust.spiffe.trustDomain` | `kubeclaw.internal` | Must match the installed SPIRE trust domain. |
+| `workerTrust.spiffe.novaNamespace`, `workerTrust.spiffe.novaServiceAccount` | `kubeclaw`, `agent-nova` | Bind the trusted Nova identity. |
+| `workerTrust.spiffe.agentNamespace`, `workerTrust.spiffe.agentServiceAccount` | `kubeclaw`, `agent-prism` | Bind the trusted Prism Agent identity. |
+| `workerTrust.spiffe.socketPath` | `/run/spire/sockets/spire-agent.sock` | Must match the mounted CSI socket. |
+| `workerTrust.spiffe.csiDriver` | `csi.spiffe.io` | Must match the installed CSI driver. |
+| `workerTrust.spiffe.envoy.repository` | `envoyproxy/envoy` | Keep it paired with the selected digest. |
+| `workerTrust.spiffe.envoy.tag` | `v1.39.0` | Human-readable image version; the digest remains authoritative. |
+| `workerTrust.spiffe.envoy.digest` | pinned SHA-256 digest | Change only through reviewed image selection. |
+| `workerTrust.spiffe.envoy.pullPolicy` | `IfNotPresent` | The schema also permits `Always` and `Never`. |
+| `workerTrust.spiffe.envoy.resources.requests.cpu`, `workerTrust.spiffe.envoy.resources.requests.memory` | `50m`, `64Mi` | Admission request for each Envoy sidecar. |
+| `workerTrust.spiffe.envoy.resources.limits.cpu`, `workerTrust.spiffe.envoy.resources.limits.memory` | `500m`, `256Mi` | Maximum resources for each Envoy sidecar. |
+
+The chart schema closes the top-level names and several security-sensitive
+objects. It does not close every nested object. For example, `studio`,
+`postgresql`, `secrets`, `artifactStorage`, `tailscale`, and several
+`resources` objects accept fields that the schema does not describe.
+Helm can therefore accept an unknown nested value that no template consumes.
+Compare effective values with this field map and the rendered manifests.
+Do not treat schema acceptance alone as proof that a value has an effect.
 
 > **Source evidence — Helm values**
 >
 > [The maintained chart defaults define service, storage, backup, exposure, and trust values](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/values.yaml#L1-L92).
 >
-> [The chart schema is the exact input contract](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/values.schema.json#L1-L531).
+> [The chart schema closes the top level but leaves some nested objects open](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/values.schema.json#L59-L531).
 
 ### Runtime settings and defaults
 
@@ -264,10 +359,14 @@ separate from the Baseline Bundle approval flow.
 
 | Setting | Default | Effect |
 | --- | --- | --- |
+| `PRISM_NAMESPACE` | Main KubeClaw namespace | Namespace for both Prism Helm releases and their Secrets. |
+| `PRISM_RELEASE` | `prism` | Helm release name for the Prism service chart. |
+| `PRISM_HELM_TIMEOUT` | `45m` | Atomic Helm install or upgrade deadline. |
+| `PRISM_ROLLOUT_TIMEOUT` | `45m` | Kubernetes rollout and readiness deadline. |
 | `PRISM_VALUES_FILE` | none | Optional private service-values overlay. It does not replace the materialized release file. |
 | `PRISM_AGENT_VALUES_FILE` | none | Optional private agent-values overlay. |
-| `PRISM_{CONTROL,STUDIO,WORKER,INGESTION}_IMAGE_REPOSITORY` | selected values | Explicit repository override. The corresponding selected digest remains mandatory. |
-| `PRISM_{CONTROL,STUDIO,WORKER,INGESTION}_IMAGE_DIGEST` | selected values | Explicit digest override. It must be a complete SHA-256 digest. |
+| `PRISM_CONTROL_IMAGE_REPOSITORY`, `PRISM_STUDIO_IMAGE_REPOSITORY`, `PRISM_WORKER_IMAGE_REPOSITORY`, `PRISM_INGESTION_IMAGE_REPOSITORY` | selected values | Explicit repository overrides. Each selected digest remains mandatory. |
+| `PRISM_CONTROL_IMAGE_DIGEST`, `PRISM_STUDIO_IMAGE_DIGEST`, `PRISM_WORKER_IMAGE_DIGEST`, `PRISM_INGESTION_IMAGE_DIGEST` | selected values | Explicit digest overrides. Each value must be a complete SHA-256 digest. |
 | `PRISM_CODE_BUNDLE_ARCHIVE_URL` | value file or derived GitHub URL | Exact Prism runtime code archive. |
 | `PRISM_CODE_BUNDLE_EXPECTED_COMMIT` | selected runtime commit | Must match the selected runtime receipt. |
 | `PRISM_CODE_BUNDLE_CONTRACT_VERSION` | `v2` | Code-bundle contract version. |
@@ -277,6 +376,16 @@ separate from the Baseline Bundle approval flow.
 | `PRISM_RUNTIME_SECRET_NAME` | `prism-runtime` | Runtime Secret selected by the deployment. |
 | `PRISM_DATABASE_SECRET_NAME` | `prism-postgresql-auth` | Database Secret selected by the deployment. |
 | `NATIVE_WORKER_NODE_POLICY_FILE` | platform native-pool file | Input for Prism native deployment preflight. |
+| `PRISM_E2E_USER` | none | Required Tailscale login for `prism-e2e`. |
+| `PRISM_E2E_USE_LEASE` | `true` | Uses a temporary namespace lease for the live test when true. |
+| `PRISM_E2E_RUN_FAILURES` | `false` | Runs the additional production failure exercise when true. |
+
+The deploy script also creates internal variables. Do not supply them as
+operator configuration. `PRISM_VALUES_OVERLAY` and
+`PRISM_AGENT_VALUES_OVERLAY` preserve the two optional file names after the
+script selects its release files. The live-test Job receives
+`PRISM_AGENT_URL`, `PRISM_E2E_IMAGE_REFERENCES`, and
+`PRISM_E2E_INGRESS_SECRET` from the deploy script.
 
 Environment overrides are operational inputs.
 Record them with the deployment evidence because they can make a render different

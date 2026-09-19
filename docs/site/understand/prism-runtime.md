@@ -252,6 +252,19 @@ It does not yet give each error a stable machine-readable code or a precise HTTP
 
 Product decisions are optional and disabled by default.
 When enabled, Control adds an operator page and routes to list subjects, list decisions, submit a decision, and recover an uncertain decision.
+
+| Route | Purpose |
+| --- | --- |
+| `GET /v1/product-decisions/operator` | Serve the static operator page without granting authority. |
+| `GET /v1/product-decisions/subjects` | Read eligible subjects from the product controller. |
+| `GET /v1/product-decisions` | List at most 100 decisions owned by the authenticated operator. |
+| `POST /v1/product-decisions` | Validate, sign, store, and submit one accept or extend decision. |
+| `POST /v1/product-decisions/:id/recover` | Reconcile one uncertain decision that the same operator owns. |
+
+Control calls three controller routes over pinned HTTPS.
+It uses `POST /v1/demo-product/subjects`, `POST /v1/demo-product/decisions`,
+and `POST /v1/demo-product/status`.
+
 The path uses a dedicated operator allowlist plus exact Origin and CSRF checks.
 It also uses an Ed25519 key, HTTPS-only origins, a service-account token, and a controller CA.
 

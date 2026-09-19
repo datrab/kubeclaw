@@ -235,8 +235,10 @@ Request-, Job-, Session-, Cancellation- und Recovery-Flüsse. `prism-data.md`
 erklärt das vollständige Domain- und Speichermodell, alle 17 Migrationen,
 Retrieval, Rights, Ranking, Rendering, Artefakte, Transaktionen, Locks, Backup
 und Retention. `use/prism-studio.md` enthält alle 62 direkt aus der Runtime
-gelesenen Einstellungen sowie Deployment, Secrets, Präzedenz, Diagnose,
-Recovery und den vollständigen Studio-zu-Nova-Weg.
+gelesenen Einstellungen, alle 97 ausgelieferten Prism-Helm-Felder und alle 31
+Prism-Kennungen des Deploy-Skripts. Die Seite trennt dabei bedienbare Werte von
+intern abgeleiteten Variablen. Sie erklärt außerdem Deployment, Secrets,
+Präzedenz, Diagnose, Recovery und den vollständigen Studio-zu-Nova-Weg.
 `extend/platform/prism.md` ordnet jede unterstützte Änderung ihrem kleinsten
 Owner und den nötigen Prüfungen zu.
 
@@ -251,8 +253,9 @@ Disaster-Recovery-Evidenz.
 **Interne Prüfung:** `docs:prism-guides:check` bindet alle vier
 Anforderungen an gepflegte Inhaltsmarker. Er prüft 228 revisionsfeste
 Quelllinks, gültige Zeilenbereiche, die Bytegleichheit von 101 zitierten
-Implementierungsdateien, alle 62 Runtime-Einstellungen, alle 17 Migrationen,
-die fünf Engine-Operationen, Navigation und detaillierte Surface-Coverage.
+Implementierungsdateien, alle 62 Runtime-Einstellungen, alle 97 ausgelieferten
+Helm-Felder, alle 31 Deploy-Kennungen, alle 17 Migrationen, die fünf
+Engine-Operationen, Navigation und detaillierte Surface-Coverage.
 Zusätzlich müssen der vollständige Dokumentationscheck, die Prism-Contract-
 und TypeScript-Prüfungen sowie die verfügbaren fokussierten Prism-Tests
 erfolgreich sein. Native PostgreSQL-, Browser-, cgroup-, Tailscale-, SPIFFE-

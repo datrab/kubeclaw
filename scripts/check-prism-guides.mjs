@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { parse as parseYaml } from 'yaml';
 
 const root = path.resolve(import.meta.dirname, '..');
 const revision = '4e52c72788ac002788bc036a497d76c13e6a35fd';
@@ -150,6 +151,35 @@ for (const setting of settings) {
     `Prism operator guide does not name runtime setting ${setting}`);
 }
 
+function leafPaths(value, prefix = '') {
+  if (Array.isArray(value)) {
+    return value.flatMap((item, index) => leafPaths(item, `${prefix}[${index}]`));
+  }
+  if (value !== null && typeof value === 'object') {
+    return Object.entries(value).flatMap(([key, child]) =>
+      leafPaths(child, prefix ? `${prefix}.${key}` : key));
+  }
+  return [prefix];
+}
+const shippedValues = parseYaml(fs.readFileSync(path.join(root, 'charts/prism/values.yaml'), 'utf8'));
+const helmFields = leafPaths(shippedValues);
+assert.equal(helmFields.length, 97,
+  'shipped Prism Helm field count changed; update the complete operator field map');
+for (const field of helmFields) {
+  assert(operator.includes(`\`${field}\``),
+    `Prism operator guide does not name shipped Helm field ${field}`);
+}
+
+const deploySource = fs.readFileSync(path.join(root, 'scripts/deploy.sh'), 'utf8');
+const deploySettings = [...new Set([...deploySource.matchAll(/\b(PRISM_[A-Z0-9_]+)\b/gu)]
+  .map((match) => match[1]))].sort();
+assert.equal(deploySettings.length, 31,
+  'Prism deploy setting count changed; update the operator deployment table');
+for (const setting of deploySettings) {
+  assert(operator.includes(`\`${setting}\``),
+    `Prism operator guide does not classify deploy identifier ${setting}`);
+}
+
 const dataGuide = fs.readFileSync(path.join(root, 'docs/site/understand/prism-data.md'), 'utf8');
 const migrationDirectory = path.join(root, 'skills/prism/storage/migrations');
 const migrations = fs.readdirSync(migrationDirectory)
@@ -195,4 +225,4 @@ for (const [id, [file, marker]] of Object.entries(requirementMarkers)) {
     `${id} lost its maintained marker in ${file}`);
 }
 
-console.log(`Prism guides verified: ${specifications.length} pages, ${sourceLinks} pinned links, ${checkedSources.size} source files, ${settings.length} runtime settings, ${migrations.length} migrations, ${Object.keys(requirementMarkers).length} requirements.`);
+console.log(`Prism guides verified: ${specifications.length} pages, ${sourceLinks} pinned links, ${checkedSources.size} source files, ${settings.length} runtime settings, ${helmFields.length} shipped Helm fields, ${deploySettings.length} deploy identifiers, ${migrations.length} migrations, ${Object.keys(requirementMarkers).length} requirements.`);
