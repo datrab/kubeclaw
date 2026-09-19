@@ -313,8 +313,8 @@ The main run records are:
 
 | Record | Purpose | Important failure meaning |
 | --- | --- | --- |
-| `run-snapshot.json` | Immutable graph, registry, configuration, and runtime profiles. | A missing or invalid snapshot makes safe recovery impossible. |
-| `events.jsonl` | Lifecycle and plugin-domain history. | Divergence, rewind, or invalid hash stops replay. |
+| `run-snapshot.json` | Immutable graph, registry, selected runtime-configuration subset, and runtime profiles. | A missing or invalid snapshot makes safe recovery impossible. Platform fields outside the stored subset need separate change control. |
+| `events.jsonl` | Lifecycle and plugin-domain history. | An invalid hash, or a rewind or divergence detected after a reader loaded its prefix, stops replay. A new reader needs an external trusted head to detect a valid-prefix rollback. |
 | Effect journal and result blobs | Requests, acceptance, receipts, and large result bodies. | An accepted request without a recoverable receipt can block recovery. |
 | `signals.jsonl` | Consumed resume signals. | A second signal for one wait is rejected. |
 | `administrative-decisions.jsonl` | Authorized reopen and package decisions. | A changed decision identity or unauthorized issuer is rejected. |
@@ -324,7 +324,12 @@ The generic file journal serializes one JSON record per line.
 Each record has a sequence, previous hash, and current hash.
 Append uses a cross-process file mutex and `fsync`.
 Startup truncates only an incomplete final line.
-It rejects a changed file identity, a shorter history, or a different prior hash chain.
+After a reader loads records, it detects file-identity, size, and timestamp
+changes and reloads the file. It accepts the reload when the previous records
+remain the exact prefix of the new history. It rejects a shorter history or a
+different prior hash chain. A new reader has no earlier prefix for comparison;
+it cannot identify a clean rollback without an externally retained trusted
+head.
 
 The journal takes a detached JSON snapshot before it writes.
 It rejects cycles, proxies, accessors, sparse arrays, non-finite numbers, functions, and other non-JSON values.
@@ -347,7 +352,7 @@ File and directory synchronization reduce risk, but they do not prove storage du
 >
 > [The run-root resolver validates the run ID, uses a hashed directory, and verifies an older directory before use](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/run-root.ts#L62-L75).
 >
-> [The journal repairs an incomplete tail and rejects rewind or divergence](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/state/journal.ts#L59-L103).
+> [The journal repairs an incomplete tail and, after it loads a prefix, rejects a later rewind or divergence](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/state/journal.ts#L59-L103).
 >
 > [Journal append computes the hash chain, writes all bytes, synchronizes them, and verifies the final size](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/state/journal.ts#L125-L155).
 >
@@ -555,10 +560,13 @@ The generic pipeline contract supplies no implicit execution budget.
 Every stage must declare `maxAttempts`, `maxRemediationCycles`, and
 `timeoutMs`. `maxTechnicalRetries`, `repairCategory`, `repairBudget`, and
 `orchestratorAfterAttempt` are optional and change only their named behavior.
-If `maxTechnicalRetries` is absent, technical retries use the shared
-`maxAttempts` ceiling. If `repairCategory` is absent, repair uses
-`maxRemediationCycles`. A category-based repair requires the repair target to
-own a matching `repairBudget`; an absent category is an error, not a zero
+If `maxTechnicalRetries` is absent and the stage has no `repairBudget`,
+technical retries use the shared `maxAttempts` ceiling. A stage that owns a
+`repairBudget` must also declare `maxTechnicalRetries`. Graph validation needs
+that value to prove that the initial attempt, every repair order, and every
+technical retry fit below `maxAttempts`. If `repairCategory` is absent, repair
+uses `maxRemediationCycles`. A category-based repair requires the repair target
+to own a matching `repairBudget`; an absent category is an error, not a zero
 budget.
 
 The project compiler supplies an opinionated policy. It sets a 30-minute stage
@@ -584,6 +592,8 @@ Combining them could let infrastructure noise consume all repair work, or let re
 > **Source evidence — repair budgets and identity**
 >
 > [The stage contract requires the hard execution bounds and declares each optional specialized budget](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L481-L510).
+>
+> [Graph validation requires a technical retry limit for a repair-budget owner and proves the aggregate attempt ceiling](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/graph-repair-budget.ts#L3-L30).
 >
 > [The project compiler calculates its explicit timeout, technical retry, repair categories, and aggregate attempt ceiling](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/project/compiler.ts#L55-L66).
 >

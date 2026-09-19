@@ -395,6 +395,20 @@ used through `secrets.read`, and not secret values. Registration schemas can
 reject unwanted fields, but the host does not infer which arbitrary field is
 sensitive.
 
+This stored configuration is a deliberate subset, not a copy of the complete
+platform file. It contains `providers`, `grants`, `adapters`,
+`activeAdapters`, `observers`, and optional `isolation`. Package provenance
+separately records the selected package identity and its trust evidence. The
+graph snapshot separately retains each stage configuration and input. The
+snapshot configuration does not include installation roots, trusted roots,
+external trust policy, the platform `schemaVersion`, `storageRoot`,
+`shutdownTimeoutMs`, `effectLockTtlMs`, `orchestratorIssuerId`, or
+`administrativeDecisionIssuers`. Recovery uses the current platform values at
+those boundaries unless a separate durable record binds the relevant identity.
+The snapshot comparison cannot by itself detect a change to an omitted field.
+An operator must therefore review these changes as recovery and security
+changes, not as harmless host tuning.
+
 > **Source evidence — configuration boundary**
 >
 > [The platform type lists every host-owned configuration family](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/config/platform.ts#L6-L28).
@@ -402,6 +416,12 @@ sensitive.
 > [The loader validates the closed platform schema and resolves its host paths relative to the configuration file](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/config/platform.ts#L30-L70).
 >
 > [Registration-owned validators reject missing owners and invalid stage, observer, adapter, and test-provider values](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/foundation/registry/configuration.ts#L28-L121).
+>
+> [Runtime preparation defines the exact platform-configuration subset that enters the immutable run record](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-runtime.ts#L23-L42).
+>
+> [The graph snapshot retains its nodes as complete stage definitions](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/graph.ts#L13-L19).
+>
+> [The stage-definition contract includes registration-owned `config` and `input`](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L446-L468).
 >
 > [The immutable registry record retains effective provider, grant, adapter, observer, isolation, package, and stage-owner choices](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/engine-snapshots.ts#L123-L134).
 

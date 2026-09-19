@@ -42,6 +42,7 @@ const specifications = [
       '## 17. Failure Families and Operator Response',
       '## 18. Design Decisions and Their Costs',
       'The generic pipeline contract supplies no implicit execution budget.',
+      '`repairBudget` must also declare `maxTechnicalRetries`.',
       'One gate deadline covers dispatch, polling, result download, evidence download,',
       'The output contract is `pipeline-audit.v1`.',
       '**Decision:**', '**Reason:**', '**Alternative:**',
@@ -70,6 +71,7 @@ const specifications = [
       '## Failure And Recovery Map', '**Rejected alternative:**',
       'defines 28 plugin-facing capabilities', 'external adapter',
       'There is no wildcard syntax.', 'The snapshot keeps the configured values',
+      'This stored configuration is a deliberate subset',
     ],
   },
   {
@@ -95,6 +97,7 @@ const specifications = [
 ];
 
 let sourceLinks = 0;
+const currentEvidenceFiles = new Set();
 for (const specification of specifications) {
   const source = fs.readFileSync(path.join(root, specification.file), 'utf8');
   assert(source.includes(`Evidence revision: \`${revision}\``),
@@ -120,6 +123,14 @@ for (const specification of specifications) {
       `${specification.file} uses another revision for ${repositoryPath}`);
     const pinned = execFileSync('git', ['-C', root, 'show', `${linkRevision}:${repositoryPath}`],
       { encoding: 'utf8' });
+    if (!currentEvidenceFiles.has(repositoryPath)) {
+      const currentPath = path.join(root, repositoryPath);
+      assert(fs.existsSync(currentPath),
+        `${specification.file} links a source file that is absent from the current checkout: ${repositoryPath}`);
+      assert.equal(fs.readFileSync(currentPath, 'utf8'), pinned,
+        `${repositoryPath} changed after evidence revision ${revision}; inspect the change and repin the core guides`);
+      currentEvidenceFiles.add(repositoryPath);
+    }
     if (!firstValue) continue;
     const lineCount = pinned.split('\n').length;
     const first = Number(firstValue);
@@ -252,8 +263,20 @@ const constructedWorkerCodeStems = new Set([
   'WORKER_CLEANUP', 'WORKER_EVIDENCE_COLLECTION', 'WORKER_LOG_STORE',
   'WORKER_RESULT_FINALIZATION', 'WORKER_FINAL_RESOURCE_MEASUREMENT',
 ]);
-const undocumentedWorkerCodes = [...workerCodes].filter((code) =>
-  !workerGuide.includes(`\`${code}\``) && !constructedWorkerCodeStems.has(code));
+const concreteWorkerCodes = new Set([...workerCodes].filter((code) =>
+  !constructedWorkerCodeStems.has(code)));
+for (const prefix of ['WORKER_ATTEMPT_INPUT', 'WORKER_RESULT']) {
+  for (const suffix of ['BYTE_LIMIT', 'NODE_LIMIT', 'DEPTH_LIMIT', 'TYPE_INVALID', 'CYCLE']) {
+    concreteWorkerCodes.add(`${prefix}_${suffix}`);
+  }
+}
+for (const phase of ['WORKER_RESOURCE_MEASUREMENT', 'WORKER_CLEANUP',
+  'WORKER_EVIDENCE_COLLECTION', 'WORKER_LOG_STORE', 'WORKER_RESULT_FINALIZATION',
+  'WORKER_FINAL_RESOURCE_MEASUREMENT']) {
+  concreteWorkerCodes.add(`${phase}_TIMEOUT`);
+}
+const undocumentedWorkerCodes = [...concreteWorkerCodes].filter((code) =>
+  !workerGuide.includes(`\`${code}\``));
 assert.deepEqual(undocumentedWorkerCodes.sort(), [],
   `Worker guide does not name source error codes: ${undocumentedWorkerCodes.join(', ')}`);
 
@@ -276,8 +299,8 @@ assert.deepEqual(undocumentedPluginCodes.sort(), [],
 
 console.log(JSON.stringify({ ok: true, pages: specifications.length,
   requirements: Object.keys(requirementMarkers).length,
-  pinnedSourceLinks: sourceLinks, capabilities: capabilityVocabulary.CAPABILITY_IDS.length,
+  pinnedSourceLinks: sourceLinks, currentEvidenceFiles: currentEvidenceFiles.size,
+  capabilities: capabilityVocabulary.CAPABILITY_IDS.length,
   novaErrorCodesCoveredByFamily: novaCodes.size,
-  workerErrorCodesNamed: [...workerCodes].filter((code) =>
-    !constructedWorkerCodeStems.has(code)).length,
+  workerErrorCodesNamed: concreteWorkerCodes.size,
   pluginRuntimeDiagnosticsNamed: pluginCodes.size }));

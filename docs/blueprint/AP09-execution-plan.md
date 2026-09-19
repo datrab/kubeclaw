@@ -146,12 +146,13 @@ Driftkontrolle in AP09.11. Diese Trennung verhindert, dass eine lange
 generierte Liste die Entscheidungshilfe ersetzt.
 
 **Interne Prüfung:** `docs:core-guides:check` bindet alle 52 Anforderungen an
-gepflegte Inhaltsmarker. Er prüft zusätzlich 178 revisionsfeste Quelllinks,
-gültige Zeilenbereiche, Navigation und Surface-Coverage für Nova, Plugin
+gepflegte Inhaltsmarker. Er prüft zusätzlich 182 revisionsfeste Quelllinks,
+gültige Zeilenbereiche und die Bytegleichheit aller 108 zitierten Dateien mit
+der Evidence-Revision sowie Navigation und Surface-Coverage für Nova, Plugin
 Runtime und Worker Core. Der Check bindet außerdem
 28 Capabilities, 89 Registry-, Config-, Package-, State-, Recovery- und
 Isolation-Diagnosen, 446 Nova-Kennungen an
-Entscheidungsfamilien und 207 konkrete Worker-Fehlerkennungen an den aktuellen
+Entscheidungsfamilien und 223 konkrete Worker-Fehlerkennungen an den aktuellen
 Quellbestand. Zusätzlich müssen
 `docs:publication:check`, `docs:check:refs`, `docs:site-boundary:check` und die
 Vertragsprüfungen für das Plugin-v2-Basisschema, die Plattformkonfiguration,
