@@ -11,6 +11,9 @@ Purpose: define supported Suite 7 fields
 - `hostname` requests one DNS label from the Tailscale operator.
 - `path` sets the Ingress path. The default is `/`.
 - `readinessTimeoutSeconds` sets a limit from 1 to 3600 seconds.
+- `retentionMode` selects `inherit`, `delete`, or `retain`. The default is
+  `inherit`. Use `retain` only when the deployment lease permits retained
+  preview access.
 
 The provider requires one `deployment` input with schema
 `kubeclaw.kubernetes-deployment-fixture@1`.

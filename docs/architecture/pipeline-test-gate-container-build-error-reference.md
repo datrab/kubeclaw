@@ -51,6 +51,9 @@ appear in Buster service logs.
 | `CONTAINER_BUILD_MANIFEST_LIMIT_INVALID` | The operator manifest limit is invalid. | Capability startup fails. | Set a positive safe integer. | Restart after correction. | Service log. |
 | `CONTAINER_BUILD_CANCELLED` | Nova or the runner cancelled the attempt. | The attempt records cancellation. | Inspect the cancellation source. | Retry only when policy requests it. | Attempt result and event record. |
 | `CONTAINER_BUILD_FAILED` | BuildKit or an unclassified runtime operation failed. | The attempt fails. | Inspect stored standard output and standard error. | Retry after the cause is corrected. | Attempt result and logs. |
+| `CONTAINER_BUILD_EXECUTION_ERROR` | BuildKit did not return a usable execution result. | The attempt errors. | Inspect the preserved process cause and BuildKit logs. | Retry only after the execution boundary is healthy. | Attempt result and logs. |
+| `CONTAINER_BUILD_REGISTRY_ERROR` | Registry publication or verification failed without a more specific code. | The attempt errors. | Inspect registry reachability, authentication, and the preserved cause. | Retry after the registry fault is corrected. | Attempt result and logs. |
+| `CONTAINER_BUILD_TIMEOUT` | The bounded build or registry operation exceeded its deadline. | The attempt errors and cleanup starts. | Inspect BuildKit and registry health before changing the limit. | Retry only when the prior attempt has no uncertain publication. | Attempt result and logs. |
 
 ## Escalation
 

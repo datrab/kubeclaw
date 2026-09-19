@@ -31,6 +31,10 @@ All errors stop the current provider attempt. The runner stores the error summar
 | `BROWSER_LIGHTHOUSE_RUN_LIMIT_EXCEEDED` | The request has too many runs. | Reduce routes or samples. |
 | `BROWSER_LIGHTHOUSE_RUN_LIMIT_INVALID` | The operator run limit is invalid. | Configure a value from 1 to 256. |
 | `BROWSER_LIGHTHOUSE_TIMEOUT_INVALID` | A requested or operator timeout is invalid. | Use a bounded supported timeout. |
+| `BROWSER_LIGHTHOUSE_DEBUG_PORT_INVALID` | Chrome did not publish a valid bounded debugging port. | Inspect Chrome startup and the sandbox process output. |
+| `BROWSER_LIGHTHOUSE_LAUNCH_FAILED` | Chrome could not start or become ready. | Inspect the preserved startup diagnostic and worker resources. |
+| `BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_INVALID` | Captured network evidence is malformed or inconsistent. | Inspect the proxy and browser versions before retrying. |
+| `BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_MISSING` | The run returned no required network evidence. | Restore the instrumented browser path; do not accept the incomplete report. |
 | `LEGACY_PERF_CONFIGURATION_RETIRED` | Old flat performance configuration has no safe automatic conversion. | Add explicit Lighthouse nodes, profiles, and budgets. |
 | `LIGHTHOUSE_BUDGET_INVALID` | The selected budget has unsupported fields. | Validate the settings document. |
 | `LIGHTHOUSE_CAPABILITY_RESULT_INVALID` | The trusted capability result does not match the request. | Inspect the deployed Buster version. |

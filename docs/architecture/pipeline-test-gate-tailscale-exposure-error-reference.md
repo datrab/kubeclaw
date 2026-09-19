@@ -41,6 +41,12 @@ Purpose: explain Suite 7 failures
 - `TAILSCALE_EXPOSURE_PREPARATION_FAILED` means the capability did not return the required endpoint facts.
 - `TAILSCALE_EXPOSURE_ROLLBACK_FAILED` means preparation failed and the compensating exposure-disable patch also failed; inspect both causes before retrying.
 - `TAILSCALE_EXPOSURE_CANCELLED` means Nova or Buster cancelled the attempt.
+- `TAILSCALE_EXPOSURE_HANDOFF_MISSING` means retained exposure has no confirmed
+  ownership handoff.
+- `TAILSCALE_EXPOSURE_RETENTION_INVALID` means the requested retention mode is
+  not compatible with the deployment lease.
+- `TAILSCALE_EXPOSURE_KUBECTL` identifies the bounded kubectl process boundary;
+  use the complete attached code and cause for the specific failure.
 
 Do not add a fixed URL as a fallback. Correct the lease, controller, Tailscale
 operator, or policy problem.

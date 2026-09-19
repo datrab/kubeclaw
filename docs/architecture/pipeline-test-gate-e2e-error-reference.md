@@ -17,6 +17,8 @@ Each error stops the current provider attempt. A blocking node stops the gate. A
 | `PLAYWRIGHT_ZERO_TESTS` | Playwright selected no test. | The node errors. | Correct `testDir`, projects, and filters. | After correction | JSON report |
 | `PLAYWRIGHT_CAPABILITY_RESULT_INVALID` | The trusted browser capability returned malformed data. | The node errors. | Repair or redeploy Buster. | After redeploy | Runner log |
 | `PLAYWRIGHT_REPORT_INVALID` | The JSON report is malformed. | The node errors. | Check Playwright version and reporter output. | After correction | Runner log |
+| `PLAYWRIGHT_CASE_RESULT_INVALID` | One reported test case has malformed result data. | The node errors instead of trusting partial counts. | Inspect the JSON reporter version and the preserved case data. | After correction | JSON report |
+| `PLAYWRIGHT_CASE_STATUS_INVALID` | One reported test case has an unsupported status. | The node errors instead of mapping an unknown state. | Use a supported Playwright version or correct the report producer. | After correction | JSON report |
 | `PLAYWRIGHT_REPORT_BYTES_EXCEEDED` | The canonical report exceeds plan evidence bytes. | Evidence import stops. | Reduce cases or increase the approved limit. | After policy change | Runner log |
 | `PLAYWRIGHT_EXECUTION_FAILED` | Playwright exited without a structured failed case. | The node errors. | Inspect configuration, browser startup, and stderr. | After correction | Runner log |
 | `PLAYWRIGHT_ARTIFACT_INVALID` | Attachment Base64 is malformed. | Evidence import stops. | Repair or redeploy the browser capability. | After redeploy | Runner log |

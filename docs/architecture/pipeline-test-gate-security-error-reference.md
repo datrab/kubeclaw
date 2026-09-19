@@ -25,6 +25,8 @@ All configuration and scanner failures are errors. A failed security assertion i
 | `SECURITY_SCAN_IMAGE_DENIED` | The image is mutable or outside an approved registry. |
 | `SECURITY_SCAN_MANIFEST_DIGEST_MISMATCH` | The manifest bytes do not match the declared digest. |
 | `SECURITY_SCAN_REGISTRY_POLICY_INVALID` | The operator registry allowlist is invalid. |
+| `SECURITY_SCAN_HTTP_LAB_UNSUPPORTED` | The selected anonymous HTTP registry is a lab service and cannot satisfy this scan path. |
+| `SECURITY_SCAN_REGISTRY_AUTH_INVALID` | Registry authentication is incomplete or malformed. |
 | `SECURITY_SCAN_LIMIT_INVALID` | An operator scan limit is invalid. |
 | `SECURITY_SCAN_TIMEOUT` | Trivy exceeded the approved deadline. |
 | `SECURITY_SCAN_CANCELLED` | The caller cancelled Trivy. |

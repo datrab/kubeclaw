@@ -57,6 +57,8 @@ Purpose: identify stable fixture failures and corrective actions
 - `KUBERNETES_FIXTURE_RETENTION_MODE_INVALID`: use delete or retain.
 - `KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED`: request an approved test Secret.
 - `KUBERNETES_FIXTURE_TEST_CREDENTIALS_INVALID`: request one generated credential Secret with a valid name.
+- `KUBERNETES_FIXTURE_CREDENTIAL_PROVENANCE_MISSING`: provide the controller-issued
+  credential provenance before the fixture can expose credentials.
 - `KUBERNETES_FIXTURE_CREATED_AT_INVALID`: inspect the lease creation timestamp.
 
 ## Manifest Errors
@@ -70,6 +72,8 @@ Purpose: identify stable fixture failures and corrective actions
 - `KUBERNETES_FIXTURE_MANIFEST_DIGEST_INVALID`: provide a SHA-256 digest.
 - `KUBERNETES_FIXTURE_MANIFEST_DIGEST_MISMATCH`: use the checked artifact bytes.
 - `KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED`: correct the YAML syntax.
+- `KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT`: reduce YAML nesting, aliases,
+  or other bounded parser complexity.
 - `KUBERNETES_FIXTURE_MANIFEST_LIST_INVALID`: provide valid List items.
 - `KUBERNETES_FIXTURE_RESOURCE_COUNT_INVALID`: reduce or add resources.
 - `KUBERNETES_FIXTURE_CLUSTER_SCOPE_DENIED`: remove cluster-scoped resources.
@@ -103,6 +107,8 @@ Purpose: identify stable fixture failures and corrective actions
 
 - `KUBERNETES_FIXTURE_RBAC_DENIED`: correct lease-client or controller RBAC.
 - `KUBERNETES_FIXTURE_KUBECTL_FAILED`: inspect the attached Kubernetes error.
+- `KUBERNETES_FIXTURE_KUBECTL`: identifies the bounded kubectl process boundary;
+  use the complete attached code and cause for the specific failure.
 - `KUBERNETES_FIXTURE_KUBECTL_OUTPUT_LIMIT`: reduce command output.
 - `KUBERNETES_FIXTURE_LEASE_TIMEOUT`: inspect the namespace controller.
 - `KUBERNETES_FIXTURE_LEASE_FAILED`: inspect the lease status message.

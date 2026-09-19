@@ -12,10 +12,16 @@ This reference describes `kubeclaw.playwright@1`. Project configuration selects 
 | `configFile` | Project-relative path | Yes | None | 1–1024 characters; must be a real file inside the project | `PLAYWRIGHT_CONFIG_FILE_INVALID` | `playwright.config.ts` |
 | `workers` | Integer | No | 4 | 1–64; Buster can reduce it | `PLAYWRIGHT_CONFIG_INVALID` | `2` |
 | `timeoutMs` | Integer milliseconds | No | Node timeout | 1,000–3,600,000; Buster can reduce it | `PLAYWRIGHT_CONFIG_INVALID` | `120000` |
+| `minimumExecutedTests` | Integer | No | 1 | 1–100,000 | `PLAYWRIGHT_CONFIG_INVALID` | `1` |
+| `requiredTests` | String array | No | Empty | At most 1,024 unique test-title paths; each value is 1–1,024 characters | `PLAYWRIGHT_CONFIG_INVALID` | `["chromium › smoke › opens the page"]` |
 
 Use either `url` or one typed `deployment` or `endpoint` input. Do not use both. Unknown fields are invalid. Symlinks cannot move a path outside the immutable attempt repository.
 
 The project Playwright configuration owns test selection, browser projects, retries, authentication setup, assertion timeouts, screenshots, video, and traces. KubeClaw always adds the JSON reporter, a canonical artifact directory, `--max-failures=0`, the authorized base URL, and the effective worker ceiling.
+
+`minimumExecutedTests` rejects a run that executes too few tests. Each
+`requiredTests` value must match one canonical reported title path. These
+checks prevent a green result after accidental test filtering.
 
 ## Operator fields
 

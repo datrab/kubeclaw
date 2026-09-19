@@ -16,7 +16,7 @@
     "API-HTTP-002":{"disposition":"preserved","status":"proved","rationale":"The live test uses a real WebSocket server.","proof":["skills/buster/plugins/api-flow/tests/live-function.test.ts"]},
     "API-HTTP-003":{"disposition":"preserved","status":"proved","rationale":"The capability enforces the smaller provider or node timeout.","proof":["skills/buster/plugins/api-flow/src/provider.js"]},
     "API-HTTP-004":{"disposition":"improved","status":"proved","rationale":"The capability has explicit operator allowlists and byte limits.","proof":["skills/buster/engine/test-gates/network-http-runtime.ts"]},
-    "API-HTTP-005":{"disposition":"improved","status":"proved","rationale":"The capability rejects redirects.","proof":["skills/buster/plugins/http/tests/live-function.test.ts"]},
+    "API-HTTP-005":{"disposition":"improved","status":"proved","rationale":"The capability rejects redirects.","proof":["tests/verification/integration/http-provider-live.test.ts"]},
     "API-ASSERT-001":{"disposition":"preserved","status":"proved","rationale":"Status mismatches create failures.","proof":["skills/buster/plugins/api-flow/src/provider.js"]},
     "API-ASSERT-002":{"disposition":"preserved","status":"proved","rationale":"Content-type mismatches create failures.","proof":["skills/buster/plugins/api-flow/tests/live-function.test.ts"]},
     "API-ASSERT-003":{"disposition":"preserved","status":"proved","rationale":"Missing response text creates a failure.","proof":["skills/buster/plugins/api-flow/src/provider.js"]},
