@@ -16,6 +16,7 @@ Start with the task that you must complete. Each route has one primary reader an
 | Task | Shortest route | Result |
 | --- | --- | --- |
 | Understand what KubeClaw controls | [Architecture entry](understand/README.md) | System boundary, roles, authority, and request flow |
+| Understand or change Prism | [Prism architecture](understand/prism.md) | Complete runtime, data, operator, and developer route |
 | Check a local checkout | [Operator quickstart](use/quickstart.md) | Verified source and documentation inputs without external effects |
 | Plan or install the platform | [Plan and Install](use/install.md) | Verified deployment or an exact blocked prerequisite |
 | Configure, start, or inspect a run | [Configure and Operate](use/operate.md) | Recorded command, run identity, and result boundary |

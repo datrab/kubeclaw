@@ -196,6 +196,9 @@ direkte Worker-Codebelege und verwirft ungültige Zeilenbereiche.
 
 ### AP09.4 — Prism in Depth
 
+**Status:** Intern abgeschlossen am 19. September 2026. Die unabhängige
+Read-only-Abnahme des Gesamtplans bleibt offen.
+
 Prism erhält einen eigenen Teilplan und darf nicht in einer allgemeinen
 Komponentenübersicht verschwinden. Die Dokumentation umfasst mindestens:
 
@@ -221,6 +224,39 @@ tatsächliche Umgebung nennen.
 **Gate:** Ein neuer Prism-Entwickler kann einen Request und seine Daten durch
 alle Komponenten verfolgen, eine unterstützte Änderung planen, die richtigen
 Checks auswählen und Fehler ohne historische Dokumente diagnostizieren.
+
+**Geliefertes Ergebnis:** Die vier AP09.4-Anforderungen `SPC-002`, `SPC-003`,
+`OPR-010` und `CDV-009` besitzen einen zusammenhängenden kanonischen
+Leserweg. `prism.md` erklärt die
+Produktgrenze und verbindet Runtime, Daten, Betrieb und Erweiterung.
+`prism-runtime.md` verfolgt Control, Agent Bridge, Worker, Worker Core, Engine,
+Studio, Ingestion und Pipeline Adapter durch Authentisierung, Readiness,
+Request-, Job-, Session-, Cancellation- und Recovery-Flüsse. `prism-data.md`
+erklärt das vollständige Domain- und Speichermodell, alle 17 Migrationen,
+Retrieval, Rights, Ranking, Rendering, Artefakte, Transaktionen, Locks, Backup
+und Retention. `use/prism-studio.md` enthält alle 62 direkt aus der Runtime
+gelesenen Einstellungen sowie Deployment, Secrets, Präzedenz, Diagnose,
+Recovery und den vollständigen Studio-zu-Nova-Weg.
+`extend/platform/prism.md` ordnet jede unterstützte Änderung ihrem kleinsten
+Owner und den nötigen Prüfungen zu.
+
+Die Seiten unterscheiden implementierte Runtime-Wege, nur als Bibliothek
+vorhandene Adapter, umgebungsabhängige Beweise und offene Produktgrenzen. Sie
+dokumentieren insbesondere die fehlende Publikationssperre gegen parallele
+Revisionen, den derzeit deterministischen Produktions-Provider, die fehlenden
+produktiven Aufrufer der Buster-/Forge-Adapter, die standardmäßig deaktivierte
+Public-Web-Ingestion sowie fehlende automatische Retention und vollständige
+Disaster-Recovery-Evidenz.
+
+**Interne Prüfung:** `docs:prism-guides:check` bindet alle vier
+Anforderungen an gepflegte Inhaltsmarker. Er prüft 228 revisionsfeste
+Quelllinks, gültige Zeilenbereiche, die Bytegleichheit von 101 zitierten
+Implementierungsdateien, alle 62 Runtime-Einstellungen, alle 17 Migrationen,
+die fünf Engine-Operationen, Navigation und detaillierte Surface-Coverage.
+Zusätzlich müssen der vollständige Dokumentationscheck, die Prism-Contract-
+und TypeScript-Prüfungen sowie die verfügbaren fokussierten Prism-Tests
+erfolgreich sein. Native PostgreSQL-, Browser-, cgroup-, Tailscale-, SPIFFE-
+und Provider-Prüfungen bleiben ehrlich als umgebungsabhängige Abnahme getrennt.
 
 ### AP09.5 — Buster und zwölf Test-Suites
 

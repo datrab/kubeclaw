@@ -788,7 +788,7 @@
       "workPackage": "AP09.4",
       "owner": "Prism maintainers",
       "canonicalTarget": "docs/site/understand/prism.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L171"
     },
     {
@@ -801,7 +801,7 @@
       "workPackage": "AP09.4",
       "owner": "Prism maintainers",
       "canonicalTarget": "docs/site/understand/prism-data.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L172"
     },
     {
@@ -1815,7 +1815,7 @@
       "workPackage": "AP09.4",
       "owner": "Prism maintainers",
       "canonicalTarget": "docs/site/use/prism-studio.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L270"
     },
     {
@@ -2686,7 +2686,7 @@
       "workPackage": "AP09.4",
       "owner": "Prism maintainers",
       "canonicalTarget": "docs/site/extend/platform/prism.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L347"
     },
     {

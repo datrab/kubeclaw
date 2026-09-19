@@ -44,6 +44,7 @@ The [glossary](../reference/glossary.md) defines all KubeClaw terms used in this
 | How does Nova compile, schedule, recover, and finish a run? | [Nova Core](nova-core.md) |
 | How does a plugin move from package bytes to bounded execution? | [Plugin Runtime](plugin-runtime.md) |
 | How does Worker Core run and recover one bounded attempt? | [Worker Core](worker-core.md) |
+| How does Prism turn design intent into an approved baseline? | [Prism](prism.md) |
 | Why does a retry differ from recovery? | [Request, state, and recovery](request-state-recovery.md#failure-paths) |
 | Which required services support the pipeline? | [Pipeline dependencies](pipeline-dependencies.md) |
 | Where do identities, processes, and trust boundaries sit? | [Deployment and trust](deployment-and-trust.md) |
@@ -195,6 +196,7 @@ Formal language validation and human-reader acceptance remain required publicati
 - [Nova Core](nova-core.md) follows compilation, scheduling, effects, recovery, audit, and terminal decisions in detail.
 - [Plugin Runtime](plugin-runtime.md) follows discovery, admission, grants, activation, isolation, state, replacement, and removal.
 - [Worker Core](worker-core.md) follows a claim through admission, native execution, durable recovery, and a sealed result.
+- [Prism](prism.md) maps the complete design, data, approval, Studio, and pipeline-handoff system.
 - [Pipeline dependencies](pipeline-dependencies.md) explains Git, Redis, PostgreSQL, BuildKit, registries, mirrors, and Tailscale.
 - [Deployment and trust](deployment-and-trust.md) maps processes, identities, storage, grants, networks, and failure domains.
 - [Platform and operations architecture](platform-and-operations.md) explains K3s, Cilium, Argo CD, and the optional Ops Pod.

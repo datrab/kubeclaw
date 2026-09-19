@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 103,
+  "pageCount": 108,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -332,6 +332,26 @@
         "skills/nova/plugins/lint/src/stage.ts",
         "skills/nova/plugins/lint/src/adapter.ts",
         "skills/nova/plugins/lint/src/engine/policy-version.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/platform/prism.md",
+      "route": "/extend/platform/prism/",
+      "contentKind": "authored",
+      "status": "implemented extension guidance with stated runtime limits",
+      "audience": "Prism maintainer, service developer, contract author, Studio developer",
+      "owner": "Prism maintainers",
+      "appliesTo": "current Prism source, contracts, services, and deployment integration",
+      "lastVerified": "source and test inspection on 2026-09-19",
+      "sourceDependencies": [
+        "skills/prism",
+        "contracts/prism/v1",
+        "tests/verification/contracts"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -1795,6 +1815,67 @@
       ]
     },
     {
+      "page": "docs/site/understand/prism-data.md",
+      "route": "/understand/prism-data/",
+      "contentKind": "authored",
+      "status": "implemented with stated limits",
+      "audience": "Prism developer, platform engineer, operator, and incident responder",
+      "owner": "Prism maintainers",
+      "appliesTo": "prism.design-document.v1, the current Prism services, and the Prism PostgreSQL schema",
+      "lastVerified": "source, schema, migration, chart, and test inspection on 2026-09-19",
+      "sourceDependencies": [
+        "contracts/prism/v1",
+        "skills/prism",
+        "charts/prism"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism-runtime.md",
+      "route": "/understand/prism-runtime/",
+      "contentKind": "authored",
+      "status": "implemented with stated deployment and recovery limits",
+      "audience": "architecture reader, Prism developer, operator, incident responder",
+      "owner": "Prism maintainers",
+      "appliesTo": "the current Prism Control, Studio, native Worker, Ingestion service, Agent Bridge, and pipeline adapter",
+      "lastVerified": "source, deployment, and test inspection on 2026-09-19",
+      "sourceDependencies": [
+        "skills/prism",
+        "contracts/prism/v1",
+        "charts/prism",
+        "my-values/prism-agent-values.yaml"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/prism.md",
+      "route": "/understand/prism/",
+      "contentKind": "authored",
+      "status": "implemented architecture with stated environment limits",
+      "audience": "platform engineer, Prism developer, operator, technical reviewer",
+      "owner": "Prism maintainers",
+      "appliesTo": "current Prism contracts, services, storage, Studio, and pipeline handoff",
+      "lastVerified": "source and test inspection on 2026-09-19",
+      "sourceDependencies": [
+        "skills/prism",
+        "contracts/prism/v1",
+        "skills/nova/plugins/prism-design"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/understand/request-state-recovery.md",
       "route": "/understand/request-state-recovery/",
       "contentKind": "authored",
@@ -1968,6 +2049,27 @@
         "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
         "skills/nova/core/execution/engine-snapshots.ts",
         "skills/nova/core/execution/engine-run.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/prism-studio.md",
+      "route": "/use/prism-studio/",
+      "contentKind": "authored",
+      "status": "implemented with stated deployment and live-proof limits",
+      "audience": "Prism operator, designer, incident responder, platform maintainer",
+      "owner": "Prism maintainers",
+      "appliesTo": "the current Prism Control, Studio, agent, native worker, ingestion service, and Nova Prism stage",
+      "lastVerified": "source, contract, chart, and focused-test inspection on 2026-09-19",
+      "sourceDependencies": [
+        "skills/prism",
+        "skills/nova/plugins/prism-design",
+        "charts/prism",
+        "scripts/deploy.sh"
       ],
       "checks": [
         "npm run docs:governance:check",

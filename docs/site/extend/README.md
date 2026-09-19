@@ -18,6 +18,10 @@ the original authors' motives.
 Use this guide before you create a package or change Core.
 It identifies the smallest supported change that solves your problem.
 
+Use [Extend Prism safely](platform/prism.md) when the change belongs to a Prism
+contract, service, document operation, renderer, retrieval path, Studio,
+storage boundary, or pipeline handoff.
+
 A smaller change has fewer trust, recovery, packaging, and maintenance consequences.
 However, configuration cannot create behavior that no installed component supplies.
 
