@@ -71,7 +71,7 @@ spec:
   source:
     repoURL: https://github.com/datrab/kubeclaw.git
     targetRevision: main
-    path: releases/gitops/runtime-35231644743-1/buster
+    path: releases/gitops/runtime-35471064102-1/buster
     directory:
       include: resources.yaml
   destination:
@@ -106,7 +106,7 @@ spec:
   source:
     repoURL: https://github.com/datrab/kubeclaw.git
     targetRevision: main
-    path: releases/gitops/runtime-35231644743-1/prism
+    path: releases/gitops/runtime-35471064102-1/prism
     directory:
       include: resources.yaml
   destination:
@@ -141,7 +141,7 @@ spec:
   source:
     repoURL: https://github.com/datrab/kubeclaw.git
     targetRevision: main
-    path: releases/gitops/runtime-35231644743-1/nova
+    path: releases/gitops/runtime-35471064102-1/nova
     directory:
       include: resources.yaml
   destination:
