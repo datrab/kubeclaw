@@ -5,7 +5,7 @@ Audience: reader, operator, plugin author, maintainer, documentation owner
 Owner: documentation architecture
 Evidence: package.json; packaging/runtime/package-ownership.json; packaging/runtime/roles; skills/common/plugin-runtime; skills/nova; skills/worker; skills/buster; skills/prism; contracts; charts; scripts
 Applies to: current repository product and platform surfaces
-Last verified: source inspection on 2026-09-17
+Last verified: source and contract inspection on 2026-09-19
 
 ## Purpose
 
@@ -29,10 +29,10 @@ An indexed page identifies the authority while its complete reference remains un
 | ID | Surface | Primary reading | Source authority | Coverage |
 | --- | --- | --- | --- | --- |
 | SUR-CTL-01 | Product purpose and system boundary | [Architecture entry](understand/README.md) | [Runtime roles](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles) | Detailed |
-| SUR-CTL-02 | Project compiler and project input | [Configure and Operate](use/operate.md#understand-the-two-command-forms) | [Project compiler](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/project/compiler.ts) | Partial |
-| SUR-CTL-03 | Nova Core lifecycle and scheduling | [Components and authority](understand/components-and-authority.md) | [Nova Core](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core) | Partial |
-| SUR-CTL-04 | Plugin discovery, grants, activation, and isolation | [Extension decision guide](extend/README.md) | [Plugin runtime](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime) | Partial |
-| SUR-CTL-05 | Worker Core admission and attempt execution | [Components and authority](understand/components-and-authority.md#worker-core-the-neutral-attempt-controller) | [Worker Core](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/worker/core) | Partial |
+| SUR-CTL-02 | Project compiler and project input | [Nova Core](understand/nova-core.md#1-project-admission-and-compilation) | [Project compiler](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/project/compiler.ts) | Detailed |
+| SUR-CTL-03 | Nova Core lifecycle and scheduling | [Nova Core](understand/nova-core.md) | [Nova Core](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core) | Detailed |
+| SUR-CTL-04 | Plugin discovery, grants, activation, and isolation | [Plugin Runtime](understand/plugin-runtime.md) | [Plugin runtime](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime) | Detailed |
+| SUR-CTL-05 | Worker Core admission and attempt execution | [Worker Core](understand/worker-core.md) | [Worker Core](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/worker/core) | Detailed |
 | SUR-CTL-06 | Runtime roles and package ownership | [Deployment and trust](understand/deployment-and-trust.md) | [Package ownership](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/package-ownership.json) | Partial |
 | SUR-CTL-07 | Request, state, retry, wait, and recovery | [Request, state, and recovery](understand/request-state-recovery.md) | [Nova execution](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/execution) | Detailed |
 
@@ -81,11 +81,11 @@ An indexed page identifies the authority while its complete reference remains un
 | ID | Surface | Primary reading | Source authority | Coverage |
 | --- | --- | --- | --- | --- |
 | SUR-COM-01 | Nova dispatch to Buster, Prism, Forge, and Echo | [Request, state, and recovery](understand/request-state-recovery.md) | [Nova plugins](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/plugins) | Partial |
-| SUR-COM-02 | Core calls to stages, adapters, and observers | [Extension contracts](extend/contracts.md) | [Plugin runtime](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime) | Partial |
-| SUR-COM-03 | Worker control channel and native process communication | [Worker Trust](understand/worker-trust.md) | [Worker Core](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/worker/core) | Partial |
+| SUR-COM-02 | Core calls to stages, adapters, and observers | [Plugin Runtime](understand/plugin-runtime.md) | [Plugin runtime](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime) | Detailed |
+| SUR-COM-03 | Worker control channel and native process communication | [Worker Core](understand/worker-core.md#native-control-channel) | [Worker Core](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/worker/core) | Detailed |
 | SUR-COM-04 | Redis streams, service HTTP, private routes, Git, OCI, and BuildKit paths | [Pipeline dependencies](understand/pipeline-dependencies.md) | [Deployment charts](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/charts) | Partial |
-| SUR-DAT-01 | Nova journals, snapshots, effects, and run roots | [Request, state, and recovery](understand/request-state-recovery.md) | [Nova state](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/state) and [effects](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/effects) | Partial |
-| SUR-DAT-02 | Worker journals, ownership, output spools, and result seals | [Back Up and Recover](use/recovery.md) | [Worker Core](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/worker/core) | Partial |
+| SUR-DAT-01 | Nova journals, snapshots, effects, and run roots | [Nova Core](understand/nova-core.md#4-durable-state-and-the-run-root) | [Nova state](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/state) and [effects](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/effects) | Detailed |
+| SUR-DAT-02 | Worker journals, ownership, output spools, and result seals | [Worker Core](understand/worker-core.md#attempt-journal-and-commit-boundaries) | [Worker Core](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/worker/core) | Detailed |
 | SUR-DAT-03 | Buster plans, attempts, evidence, and reports | [Buster extension guide](extend/buster.md) | [Buster Engine](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/buster/engine) | Partial |
 | SUR-DAT-04 | Prism revisions, approvals, artifacts, and PostgreSQL data | [Prism decisions](decisions/prism.md) | [Prism storage](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/prism/storage) | Partial |
 | SUR-DAT-05 | LiteLLM PostgreSQL data | [Pipeline dependencies](understand/pipeline-dependencies.md) | [LiteLLM deployment](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/my-values/infra/litellm-deployment.yaml) | Indexed |

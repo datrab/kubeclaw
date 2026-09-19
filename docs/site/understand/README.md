@@ -6,7 +6,7 @@ Owner: platform architecture
 Evidence: packaging/runtime/roles; skills/nova/core; skills/worker/core
 Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
 Applies to: current source and declared runtime roles
-Last verified: source inspection on 2026-09-15
+Last verified: source and contract inspection on 2026-09-19
 
 ## What KubeClaw Does
 
@@ -41,6 +41,9 @@ The [glossary](../reference/glossary.md) defines all KubeClaw terms used in this
 | --- | --- |
 | What does KubeClaw control, and what stays outside it? | This page, then [Components and authority](components-and-authority.md) |
 | How does one request become a result? | [Request, state, and recovery](request-state-recovery.md) |
+| How does Nova compile, schedule, recover, and finish a run? | [Nova Core](nova-core.md) |
+| How does a plugin move from package bytes to bounded execution? | [Plugin Runtime](plugin-runtime.md) |
+| How does Worker Core run and recover one bounded attempt? | [Worker Core](worker-core.md) |
 | Why does a retry differ from recovery? | [Request, state, and recovery](request-state-recovery.md#failure-paths) |
 | Which required services support the pipeline? | [Pipeline dependencies](pipeline-dependencies.md) |
 | Where do identities, processes, and trust boundaries sit? | [Deployment and trust](deployment-and-trust.md) |
@@ -189,6 +192,9 @@ Formal language validation and human-reader acceptance remain required publicati
 
 - [Components and authority](components-and-authority.md) explains each part and each decision boundary.
 - [Request, state, and recovery](request-state-recovery.md) follows success, retry, repair, wait, cancellation, and uncertain effects.
+- [Nova Core](nova-core.md) follows compilation, scheduling, effects, recovery, audit, and terminal decisions in detail.
+- [Plugin Runtime](plugin-runtime.md) follows discovery, admission, grants, activation, isolation, state, replacement, and removal.
+- [Worker Core](worker-core.md) follows a claim through admission, native execution, durable recovery, and a sealed result.
 - [Pipeline dependencies](pipeline-dependencies.md) explains Git, Redis, PostgreSQL, BuildKit, registries, mirrors, and Tailscale.
 - [Deployment and trust](deployment-and-trust.md) maps processes, identities, storage, grants, networks, and failure domains.
 - [Platform and operations architecture](platform-and-operations.md) explains K3s, Cilium, Argo CD, and the optional Ops Pod.

@@ -20,7 +20,7 @@
       "id": "AP09.2",
       "name": "Nova Core and plugin runtime",
       "owner": "Nova and plugin-runtime maintainers",
-      "target": "docs/site/understand/nova-core-and-plugin-runtime.md",
+      "target": "docs/site/understand/nova-core.md",
       "requirementCount": 38
     },
     {
@@ -372,7 +372,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L129"
     },
     {
@@ -385,7 +385,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L130"
     },
     {
@@ -398,7 +398,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L131"
     },
     {
@@ -411,7 +411,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L132"
     },
     {
@@ -424,7 +424,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L133"
     },
     {
@@ -437,7 +437,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L134"
     },
     {
@@ -450,7 +450,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L135"
     },
     {
@@ -463,7 +463,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L136"
     },
     {
@@ -476,7 +476,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L137"
     },
     {
@@ -489,7 +489,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L138"
     },
     {
@@ -502,7 +502,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L139"
     },
     {
@@ -515,7 +515,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L140"
     },
     {
@@ -528,7 +528,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L141"
     },
     {
@@ -541,7 +541,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L142"
     },
     {
@@ -554,7 +554,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L143"
     },
     {
@@ -567,7 +567,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L144"
     },
     {
@@ -580,7 +580,7 @@
       "workPackage": "AP09.2",
       "owner": "Nova maintainers",
       "canonicalTarget": "docs/site/understand/nova-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L145"
     },
     {
@@ -606,7 +606,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L152"
     },
     {
@@ -619,7 +619,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L153"
     },
     {
@@ -632,7 +632,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L154"
     },
     {
@@ -645,7 +645,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L155"
     },
     {
@@ -658,7 +658,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L156"
     },
     {
@@ -671,7 +671,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L157"
     },
     {
@@ -684,7 +684,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L158"
     },
     {
@@ -697,7 +697,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L159"
     },
     {
@@ -710,7 +710,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L160"
     },
     {
@@ -723,7 +723,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L161"
     },
     {
@@ -736,7 +736,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L162"
     },
     {
@@ -749,7 +749,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L163"
     },
     {
@@ -762,7 +762,7 @@
       "workPackage": "AP09.3",
       "owner": "Worker Core maintainers",
       "canonicalTarget": "docs/site/understand/worker-core.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L164"
     },
     {
@@ -917,8 +917,8 @@
       "finding": "Choice Guide und Contracts erklären inert discovery, Digests, Provenance und getrennte Activation mit direkten Links. Installation Roots, Canonicalization, Symlink-/Alias-Regeln, Dateiauswahl, Discovery-Reihenfolge und alle Reject-Klassen fehlen als vollständiger Algorithmus.",
       "workPackage": "AP09.2",
       "owner": "plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/plugin-system.md",
-      "targetState": "planned",
+      "canonicalTarget": "docs/site/understand/plugin-runtime.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L186"
     },
     {
@@ -930,8 +930,8 @@
       "finding": "Shared Envelope erklärt relative Pfade, Escape-Verbot, Referenzen und Schema-Validierung; das vollständige JSON Schema ist verlinkt. Validierungsreihenfolge, Schema-Lifetime, `$id`-/`$ref`-Grenzen und alle Diagnosen sind nicht als Referenz veröffentlicht.",
       "workPackage": "AP09.2",
       "owner": "plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/plugin-system.md",
-      "targetState": "planned",
+      "canonicalTarget": "docs/site/understand/plugin-runtime.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L187"
     },
     {
@@ -956,8 +956,8 @@
       "finding": "Deployment-Seite trennt Package Integrity, Registration Authority, Workload Identity und Source Identity. Choice Guide nennt trusted first-party und external paths. Trust Roots, Digest-/Attestation-Policy, Installer, Attestation-Verifikation, Built-in-Ausnahme und Reject-Fälle fehlen als durchgehender Pfad.",
       "workPackage": "AP09.2",
       "owner": "plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/plugin-system.md",
-      "targetState": "planned",
+      "canonicalTarget": "docs/site/understand/plugin-runtime.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L189"
     },
     {
@@ -969,8 +969,8 @@
       "finding": "Aktive Seiten erwähnen Import Auditing, erklären aber weder Permission Boundary, verbotene APIs, Guards, Digest-Recheck, Child-Prozess, Timeout, Exportprüfung noch Ablehnungsdiagnosen von `import-audit.ts`.",
       "workPackage": "AP09.2",
       "owner": "plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/plugin-system.md",
-      "targetState": "planned",
+      "canonicalTarget": "docs/site/understand/plugin-runtime.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L190"
     },
     {
@@ -982,8 +982,8 @@
       "finding": "Contracts belegt die fünf immutable Maps und globale Ownership. Vollständige Build-Reihenfolge, Frozen Maps/Sets, Konfliktklassen für IDs, Stage Types, Providers, Reports und Subscriptions sowie Error Codes fehlen.",
       "workPackage": "AP09.2",
       "owner": "plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/plugin-system.md",
-      "targetState": "planned",
+      "canonicalTarget": "docs/site/understand/plugin-runtime.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L191"
     },
     {
@@ -995,8 +995,8 @@
       "finding": "Die generierte Capability-Referenz ist aktuell; Contracts erklärt Declaration, Provider Selection und Caller Grant als getrennte Kontrollen. Dependency-Auflösung, Ambiguität, Zyklen, genau-ein-Provider-Regel, confidential capabilities und Fehlerpfade fehlen.",
       "workPackage": "AP09.2",
       "owner": "plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/plugin-system.md",
-      "targetState": "planned",
+      "canonicalTarget": "docs/site/understand/plugin-runtime.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L192"
     },
     {
@@ -1008,8 +1008,8 @@
       "finding": "Deployment and Trust erklärt Least Authority und nennt Pfade, Namespaces, Targets, Origins, Commands und Signals. Die vollständige Match-Semantik je Resource Type, Normalisierung, Wildcards, Denials, confidential payloads und Diagnosen fehlen.",
       "workPackage": "AP09.2",
       "owner": "plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/plugin-system.md",
-      "targetState": "planned",
+      "canonicalTarget": "docs/site/understand/plugin-runtime.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L193"
     },
     {
@@ -1021,8 +1021,8 @@
       "finding": "Choice Guide trennt Projekt-, Plattform- und Hostkonfiguration; Contracts erklärt registration-owned validation. Sources, Precedence, Defaults, unbekannte Felder, sensitive values, Observer-/Adapterauflösung und effektive Konfigurationsausgabe fehlen als vollständiger Flow.",
       "workPackage": "AP09.2",
       "owner": "plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/plugin-system.md",
-      "targetState": "planned",
+      "canonicalTarget": "docs/site/understand/plugin-runtime.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L194"
     },
     {
@@ -1034,8 +1034,8 @@
       "finding": "Discovery-/Activation-Tabelle erklärt Surface-Unterschiede, Integrity-Recheck und selektives Laden. Exportform, Import Audit, transactional adapter startup, readiness, rollback, shutdown, partial failures und Activation Error Codes sind nicht vollständig dokumentiert.",
       "workPackage": "AP09.2",
       "owner": "plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/plugin-system.md",
-      "targetState": "planned",
+      "canonicalTarget": "docs/site/understand/plugin-runtime.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L195"
     },
     {
@@ -1060,8 +1060,8 @@
       "finding": "Deployment and Trust erklärt Direct-versus-isolated Activation und die bounded context boundary. IPC-Protokoll, Sessionzustände, Permission Model, cgroup, Memory Limit, Sandbox-C-Boundary, Cancellation, Cleanup und Fehlercodes fehlen.",
       "workPackage": "AP09.2",
       "owner": "plugin-runtime maintainers",
-      "canonicalTarget": "docs/site/understand/plugin-system.md",
-      "targetState": "planned",
+      "canonicalTarget": "docs/site/understand/plugin-runtime.md",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L197"
     },
     {

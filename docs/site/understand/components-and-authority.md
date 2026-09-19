@@ -6,7 +6,7 @@ Owner: platform architecture
 Evidence: skills/nova/core; skills/worker/core; packaging/runtime/roles
 Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
 Applies to: current source and declared runtime roles
-Last verified: source inspection on 2026-09-15
+Last verified: source and contract inspection on 2026-09-19
 
 ## Purpose
 
@@ -354,9 +354,109 @@ The plugin never receives a direct method that changes the canonical stage state
 >
 > [`DurableInvocation` records requests and receipts around the selected adapter](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/effects/durable-invocation.ts#L39-L117).
 
+## Failure Domains And Stop Boundaries
+
+A component boundary must also be a failure boundary.
+One failed dependency must not silently move authority to another component.
+
+| Failure domain | Direct dependency | Authoritative retained data | Safe response | Forbidden response |
+| --- | --- | --- | --- | --- |
+| Project compilation | Project document, repository layout, and fixed source revision | Validated project input and compiled graph | Reject the input before a run starts | Guess a revision, path, module, or graph edge |
+| Nova process | Durable run root and immutable package bytes | Graph snapshot, registry snapshot, lifecycle journal, signals, and effect records | Recover from the recorded history with the same identities | Continue from process memory or current package bytes |
+| Plugin registry | Installed manifests, schemas, package roots, and trust configuration | Canonical package and registration identities with digests | Reject discovery, admission, conflict, or activation as a startup error | Import unvalidated code or select a registration by load order |
+| Capability adapter | Selected provider, grant, resource constraint, and external service | Effect request, idempotency key, acceptance state, and receipt | Recover the receipt or stop for reconciliation | Repeat an accepted effect because its response was lost |
+| Redis transport | Redis availability, stream policy, and authenticated callers | Transport records and the component's own durable control state | Retry transport delivery within its contract; recover authority from the owning store | Treat Redis delivery as the canonical lifecycle decision |
+| Buster service | Immutable plan, source snapshot, providers, Worker Core, and result store | Remote job status, complete plan result, evidence identities, and import record | Resume or import only after identity and terminal-result checks | Convert transport completion directly into a quality verdict |
+| Worker host | Profile, capacity pool, trusted supervisor, engine, and persistent attempt stores | Admission, claim, ownership, journal, output spool, observations, cleanup, and sealed result | Reconcile ownership and process state; stop when either remains uncertain | Launch a replacement attempt while an earlier process can still run |
+| Prism service | PostgreSQL, artifact storage, Worker Core, and approved design identities | Projects, revisions, operations, approvals, bundles, and immutable artifacts | Recover canonical records and rebuild only declared projections | Treat a preview, editor state, or local receipt as canonical approval |
+| Git or artifact storage | Repository or object-store availability and exact identity | Commit identity or artifact digest, namespace, size, and producer | Stop or recover the exact object before dependent work continues | Substitute a newer commit or an object with the same display name |
+| Observer or telemetry sink | Event subscription, delivery policy, and sink | Core journal plus observer-owned checkpoint and delivery evidence | Preserve lifecycle truth and expose degraded or exhausted delivery | Reconstruct lifecycle state from a dashboard or notification |
+| Kubernetes and required services | Scheduling, storage, DNS, identities, registries, BuildKit, databases, and configured network paths | Component-owned persistent volumes and external service stores | Stop the affected operation and preserve diagnostic evidence | Claim platform readiness from manifests or local source checks alone |
+
+The table separates three questions.
+A dependency can transport data, store authority, or present a projection.
+Those roles are not interchangeable.
+
+## Data Authority And Derived Copies
+
+| Data | Canonical owner | Permitted copies or projections | Required identity check |
+| --- | --- | --- | --- |
+| Compiled pipeline graph | Nova run snapshot | Operator display and audit read model | Run ID and graph digest |
+| Lifecycle state | Nova lifecycle journal and reducer | Status page, notification, telemetry, and audit projection | Run, stage, attempt, event sequence, and schema version |
+| Plugin selection | Frozen registry and package snapshot | Catalogue and activation diagnostics | Package ID, version, content digest, registration ID, and API version |
+| External effect outcome | Adapter receipt in the effect journal | Stage evidence and recovery diagnostics | Effect ID, idempotency key, owner attempt, capability, and resource |
+| Human or orchestrator response | Accepted resume-signal record | Resolved-wait lifecycle event | Wait, signal, issuer, issue time, and idempotency identity |
+| Worker attempt fact | Worker journal, ownership state, and sealed terminal result | Buster or Prism specialist result | Attempt, claim generation, engine, profile, protocol, result digest, and transport identity |
+| Test-plan result | Buster result store | Nova import record, report, and operator view | Job, plan, run, source, request, result, and evidence digests |
+| Design state | Prism PostgreSQL records and immutable artifact objects | Studio projection, preview, export, Forge assignment, and Buster plan | Project, design, revision, operation, approval, bundle, and artifact identities |
+| Source state | Git object database and authorized workspace | Source archive, diff, review bundle, and build context | Repository identity and immutable commit digest |
+| Large evidence | Artifact store | Report attachment and bounded display summary | Artifact ID, namespace, digest, size, and producer attempt |
+
+## Communication, Persistence, And Retention Map
+
+This table lists each communication path that crosses a component boundary in
+the documented platform baseline. It does not list private calls inside one
+component. A later implementation can replace a transport only if it preserves
+the contract, authority, persistence, and failure behavior in the same row.
+
+| Producer | Consumer | Contract or message | Transport | Authoritative persistence | Retention or cleanup owner | Effect of a failed handoff |
+| --- | --- | --- | --- | --- | --- | --- |
+| Project author or automation | Nova project compiler | `nova-project.v2`, referenced control files, and the selected source revision | CLI arguments and local files | Admitted project input, compiled graph, and source identity in the run root | Nova run-root policy | Compilation stops before execution. Nova does not guess a missing file, revision, or graph value. |
+| Nova Core | Stage plugin | Resolved stage input, attempt lease, limits, grants, and typed stage result | In-process call for trusted code; bounded child protocol for an external stage | Nova lifecycle journal, plugin-state journal, effect journal, and artifacts | Nova run owner and artifact-store policy | The attempt fails, times out, or stops for reconciliation. A returned result cannot directly change lifecycle state. |
+| Stage or observer plugin | Capability adapter | Capability, operation, canonical resource, payload, effect identity, and fence | Bounded host context; external plugins relay requests through the isolated protocol | Effect request, acceptance, receipt, and resource-lock record | Nova effect and lock-store policy | Authority is denied before the adapter, or recovery stops if an accepted effect has no known result. |
+| Nova Core | Observer plugin | Ordered lifecycle or plugin-domain event with run and sequence identity | Observer invocation through the admitted registry | Core journal plus observer delivery attempts and checkpoints | Core retains the event; observer policy retains or expires delivery evidence | Required-observer exhaustion fails the flush. Optional-observer failure records a visible gap without rewriting lifecycle truth. |
+| Nova test gate | Buster remote-plan service | Immutable plan job, source snapshot identity, status, result, and evidence digests | Authenticated HTTP or loopback HTTP behind the SPIFFE proxy | Nova dispatch/import stores and Buster job/result stores | Nova owns import records; Buster owns jobs, results, and evidence | Nova retries only declared transport failures. It reconciles the same job identity before a new dispatch. |
+| Buster or Prism runtime | Worker Core | Worker envelope, profile, claim, cancellation, progress, logs, evidence, and terminal result | Local runtime call or a role-owned remote transport | Worker attempt journal, ownership store, output spool, and result seal | Worker host policy and the calling role's result policy | Admission rejects before launch, or recovery fences new work until ownership and process state are safe. |
+| Trusted native supervisor | Unprivileged specialist host | Length-bounded envelope, framed control messages, cancellation, and provisional result | Standard input/output plus a private framed control endpoint | Supervisor-owned journal, spool, ownership record, observations, and final seal | Native worker host policy | The supervisor terminates and drains the process tree. It does not accept a result while control requests remain unsettled. |
+| Redis transport adapter | Redis and an external consumer | `transport.publish` or `telemetry.emit` payload plus idempotency identity | RESP over `redis:` or TLS-protected `rediss:` | Redis stream and deduplication key; lifecycle authority stays in Nova | Redis stream length and deduplication TTL from platform configuration | Delivery can retry within adapter policy. Redis loss cannot create or change a lifecycle decision. |
+| Source-capable stage or service | Git repository and isolated workspace | Repository identity, immutable revision, allowed path, commit, merge, or sync request | Git process through the selected capability adapter | Git object database; Nova stores the accepted commit identity | Repository owner and workspace-cleanup policy | The operation stops on identity or path mismatch. Recovery does not substitute the current branch head. |
+| Buster container-build provider | BuildKit and OCI registry | Bounded build context, Dockerfile, platform, image reference, and digest-bearing result | BuildKit API and OCI registry protocol | BuildKit cache is derived; registry content digest is the image authority | BuildKit cache policy and registry retention policy | The suite reports an execution error or failed check. It does not treat a local cache hit as a published image. |
+| Prism services | PostgreSQL and artifact storage | Projects, revisions, operations, approvals, retrieval records, bundles, and artifact identities | PostgreSQL protocol and artifact capability calls | PostgreSQL owns relational design state; artifact storage owns immutable bytes | Prism database and artifact retention policy | Prism stops the affected operation. It can rebuild a declared projection, but it cannot recreate an approval from a preview. |
+| Private service | Authorized remote user or test client | Service-specific HTTP route | Kubernetes Service plus Tailscale exposure when the declared path needs private external access | The service store remains authoritative; Tailscale stores connectivity state only | Service owner and Tailscale operator | The service can remain healthy while the route is unavailable. Route recovery must not replay product work. |
+| Helm or Argo CD owner | Kubernetes API | Rendered Kubernetes objects and declared ownership labels | Kubernetes API | Kubernetes stores desired and observed object state; component stores retain product truth | The selected deployment owner | Reconciliation stops or reports drift. Direct Helm and Argo CD must not control the same object set. |
+| Runtime and platform exporters | Monitoring stack | Metrics, logs, and traces with correlation identity | Scrape, log, or trace protocol selected by the deployment | Monitoring storage is a diagnostic projection | Monitoring retention policy | Loss reduces visibility. It does not change the run, attempt, effect, or approval state. |
+
+> **Source evidence — component-boundary communication**
+>
+> [Nova dispatches a resolved attempt through one bounded stage context](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/stage-executor.ts#L31-L119).
+>
+> [The remote-plan transport binds HTTP jobs, results, and evidence to stable identities](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/remote-dispatch.ts#L23-L197).
+>
+> [Observer delivery records attempts and advances provenance-bound checkpoints](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/telemetry/observers.ts#L14-L106).
+>
+> [The Redis adapter publishes with a stream bound and a deduplication key](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/common/plugins/redis-transport/src/adapter.ts#L14-L91).
+>
+> [Worker Core binds specialist work to the generic execution hooks](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/worker/core/worker/attempt-executor.ts#L30-L106).
+>
+> **Limit:** The table proves source-level contracts and ownership. Deployment-specific retention periods and live reachability still require the target environment's configuration and acceptance evidence.
+
+**Why this design exists:** Recovery needs one answer for each fact.
+A cache or transport copy can disappear without changing the fact's owner.
+
+**Cost:** Each handoff needs explicit identities and duplicate checks.
+The system stops when it cannot prove that two copies describe the same fact.
+
+**Rejected alternative:** A shared database or message bus does not become one
+universal authority merely because several components can read it.
+
+> **Source evidence — retained authority across boundaries**
+>
+> [Nova writes graph and registry snapshots before execution](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/execution/engine-run.ts#L36-L43).
+>
+> [The effect path records a request before invocation and records the returned receipt](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/effects/durable-invocation.ts#L88-L117).
+>
+> [Nova verifies a terminal Buster result and its evidence before import](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/core/test-gates/remote-result-import.ts#L213-L247).
+>
+> [Worker Core writes admission before launch and seals the result before delivery](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/worker/core/worker/native-attempt-executor.ts#L20-L60).
+>
+> **Limit:** These source paths prove ordering and validation in the inspected implementation. They do not prove storage durability or service availability in a live environment.
+
 ## Read Next
 
 - [Request, State, and Recovery](request-state-recovery.md) follows these boundaries through a complete run.
+- [Nova Core](nova-core.md) gives the detailed lifecycle, scheduling, effect, recovery, and audit model.
+- [Plugin Runtime](plugin-runtime.md) gives the detailed package, registry, grant, activation, and isolation model.
+- [Worker Core](worker-core.md) gives the detailed claim, process, resource, journal, ownership, and result model.
 - [Deployment and Trust](deployment-and-trust.md) maps them to pods, identities, networks, and stores.
 - [Plugin catalogue](../extend/plugin-catalogue/README.md) lists discovered extension packages.
 - [Decisions](../decisions/README.md) preserves the detailed reasons and rejected alternatives.

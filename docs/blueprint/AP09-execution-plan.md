@@ -1,7 +1,7 @@
 # AP09 — Ausführungsplan zur vollständigen zentralen Dokumentation
 
-Stand: 17.09.2026  
-Status: AP09.0 intern abgeschlossen und für unabhängige Abnahme bereit
+Stand: 19.09.2026
+Status: AP09.0 bis AP09.3 intern abgeschlossen und für unabhängige Abnahme bereit
 Ziel: vollständige, eigenständige und dauerhaft pflegbare Produktdokumentation unter `docs/site`
 
 ## 1. Ausgangslage
@@ -112,6 +112,9 @@ oder einen Leserpfad mit einem ausführbaren ersten Pipeline-Beispiel.
 
 ### AP09.2 — Nova Core und Plugin Runtime
 
+**Status:** Intern abgeschlossen am 19. September 2026. Die unabhängige
+Read-only-Abnahme des Gesamtplans bleibt offen.
+
 - Nova Core vollständig erklären: Compile, Graph, Registry Snapshot, State,
   Scheduling, Dispatch, Effects, Wait/Resume, Repair, Cancellation, Recovery,
   Audit und Fehler.
@@ -123,7 +126,35 @@ oder einen Leserpfad mit einem ausführbaren ersten Pipeline-Beispiel.
 **Gate:** Ein technischer Leser kann einen Request und ein Plugin durch Nova
 verfolgen, jede Autoritätsgrenze begründen und die sicheren Fehlerwege nennen.
 
+**Geliefertes Ergebnis:** Die 38 zugeordneten Anforderungen `ARC-001` bis
+`ARC-006`, `NVC-001` bis `NVC-018` und `PLG-001` bis `PLG-014` besitzen nun
+einen zusammenhängenden Leserweg. `nova-core.md` verfolgt Projektaufnahme,
+Graph, Registry Snapshot, Run Root, Scheduling, Attempt Authority, Lifecycle,
+Retry, Repair, Wait, Effects, Artefakte, Shutdown, Recovery, Buster-Handoff,
+Audit und sichere Fehlerreaktionen. `plugin-runtime.md` verfolgt ein Package
+von Installation und inerter Discovery über Trust, Registry, Auswahl, Grants,
+Konfiguration, Import Audit und Activation bis zu Isolation, State, Effects,
+Replacement und Removal. `components-and-authority.md` verbindet diese
+Mechanismen mit einer vollständigen Boundary-Matrix für Producer, Consumer,
+Vertrag, Transport, autoritative Persistenz, Retention und Ausfallwirkung.
+
+Die Nova-Fehlerreferenz gruppiert alle operativ unterschiedlichen
+Fehlerfamilien nach Auslöser, Lifecycle-Wirkung, Retry-Regel und sicherer
+Operatoraktion und verlinkt die exakten Throw-Sites. Das rekursive,
+maschinen-generierte Einzelinventar jedes Error Codes bleibt als gemeinsame
+Driftkontrolle in AP09.11. Diese Trennung verhindert, dass eine lange
+generierte Liste die Entscheidungshilfe ersetzt.
+
+**Interne Prüfung:** `docs:core-guides:check` prüft Pflichtinhalte, 166
+revisionsfeste Quelllinks, gültige Zeilenbereiche, Navigation und Surface-
+Coverage für Nova, Plugin Runtime und Worker Core. Zusätzlich müssen
+`docs:publication:check`, `docs:check:refs`, `docs:site-boundary:check` und die
+fokussierten Plugin-Vertragsprüfungen erfolgreich sein.
+
 ### AP09.3 — Worker Core und native Ausführung
+
+**Status:** Intern abgeschlossen am 19. September 2026. Die unabhängige
+Read-only-Abnahme des Gesamtplans bleibt offen.
 
 - Profile, Claims, Admission und die neutrale Worker-Authority erklären.
 - Control Channel, Process Launch, Process Groups, Sandbox, Spool und
@@ -136,6 +167,25 @@ verfolgen, jede Autoritätsgrenze begründen und die sicheren Fehlerwege nennen.
 
 **Gate:** Ein neuer Worker-Core-Entwickler kann einen nativen Attempt vom Claim
 bis zum versiegelten Ergebnis oder sicheren Recovery Stop verfolgen.
+
+**Geliefertes Ergebnis:** Alle 14 Anforderungen `WKC-001` bis `WKC-014`
+besitzen mit `worker-core.md` einen kanonischen Deep Dive. Die Seite verfolgt
+Profile, Protokollversionen, Wire-Felder, Claims, Admission, generische
+Engine-Hooks, Logs, Evidence, Ressourcen, Trusted Launch, Control Channel,
+Deadlines, Cancellation, Supervisor Authority, Ownership, Journal-Commit-
+Grenzen, Restart, Result Seal und Retryentscheidungen. Sie enthält die
+integrierte aktuelle Fehlerreferenz, eine sichere Retry-Matrix, den vollständigen
+Weg für eine neue Engine und klar ausgewiesene Host- und Sandbox-Grenzen.
+
+Die dokumentierten Source-Level-Verträge wurden mit den Worker-Contract-,
+Attempt-Executor- und Local-Runtime-Prüfungen abgeglichen. Live-cgroup-,
+Launcher- und Kernel-Isolation bleiben bewusst Umgebungsevidenz und werden
+nicht aus Unit- oder Contract-Tests abgeleitet.
+
+**Interne Prüfung:** `verify:worker-core:contracts`,
+`verify:worker-core:attempt-executor`, `verify:worker-core:local-runtime` und
+`docs:core-guides:check` müssen erfolgreich sein. Der Docs-Check prüft 47
+direkte Worker-Codebelege und verwirft ungültige Zeilenbereiche.
 
 ### AP09.4 — Prism in Depth
 

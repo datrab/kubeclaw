@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 100,
+  "pageCount": 103,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -1354,7 +1354,7 @@
       "audience": "reader, operator, plugin author, maintainer, documentation owner",
       "owner": "documentation architecture",
       "appliesTo": "current repository product and platform surfaces",
-      "lastVerified": "source inspection on 2026-09-17",
+      "lastVerified": "source and contract inspection on 2026-09-19",
       "sourceDependencies": [
         "package.json",
         "packaging/runtime/package-ownership.json",
@@ -1653,7 +1653,7 @@
       "audience": "new reader, operator, maintainer, security reviewer, plugin author",
       "owner": "platform architecture",
       "appliesTo": "current source and declared runtime roles",
-      "lastVerified": "source inspection on 2026-09-15",
+      "lastVerified": "source and contract inspection on 2026-09-19",
       "sourceDependencies": [
         "packaging/runtime/roles",
         "skills/nova/core",
@@ -1673,7 +1673,7 @@
       "audience": "new reader, architecture reader, maintainer, security reviewer",
       "owner": "platform architecture",
       "appliesTo": "current source and declared runtime roles",
-      "lastVerified": "source inspection on 2026-09-15",
+      "lastVerified": "source and contract inspection on 2026-09-19",
       "sourceDependencies": [
         "skills/nova/core",
         "skills/worker/core",
@@ -1698,6 +1698,26 @@
         "packaging/runtime/roles",
         "charts/kubeclaw",
         "charts/prism"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/nova-core.md",
+      "route": "/understand/nova-core/",
+      "contentKind": "authored",
+      "status": "implemented with stated limits",
+      "audience": "architecture reader, Nova developer, operator, incident responder",
+      "owner": "Nova maintainers",
+      "appliesTo": "`nova-project.v2`, `pipeline-definition.v2`, and the current Nova Core runtime",
+      "lastVerified": "source and contract inspection on 2026-09-19",
+      "sourceDependencies": [
+        "skills/nova/project",
+        "skills/nova/core",
+        "skills/common/plugin-runtime"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -1751,6 +1771,30 @@
       ]
     },
     {
+      "page": "docs/site/understand/plugin-runtime.md",
+      "route": "/understand/plugin-runtime/",
+      "contentKind": "authored",
+      "status": "implemented design; host-kernel acceptance remains environment-specific",
+      "audience": "platform developer, plugin author, security engineer, operator",
+      "owner": "plugin-runtime maintainers",
+      "appliesTo": "`pipeline-plugin-v2`, `pipeline-platform.v2`, and the current Nova plugin host",
+      "lastVerified": "source and contract inspection on 2026-09-19",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/common/plugin-runtime/foundation",
+        "skills/nova/core/execution",
+        "skills/nova/core/state/plugins.ts",
+        "tests/verification/contracts/check-plugin-system-v2-registry.mjs",
+        "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
+        "tests/verification/contracts/check-plugin-system-v2-phase11.mts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/understand/request-state-recovery.md",
       "route": "/understand/request-state-recovery/",
       "contentKind": "authored",
@@ -1781,6 +1825,28 @@
       "lastVerified": "source inspection on 2026-09-15",
       "sourceDependencies": [
         "docs/site/understand/request-state-recovery.md"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/worker-core.md",
+      "route": "/understand/worker-core/",
+      "contentKind": "authored",
+      "status": "implemented with stated native-host limits",
+      "audience": "Worker Core developer, specialist-engine developer, operator, security reviewer",
+      "owner": "Worker Core maintainers",
+      "appliesTo": "Worker protocol v1, attempt envelopes v1-v3, generic execution, and Linux native execution",
+      "lastVerified": "source, contract, and focused test inspection on 2026-09-19",
+      "sourceDependencies": [
+        "contracts/pipeline-worker-core/v1",
+        "skills/worker/core",
+        "skills/prism/server/native-worker-execution.ts",
+        "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts",
+        "tests/verification/reliability"
       ],
       "checks": [
         "npm run docs:governance:check",

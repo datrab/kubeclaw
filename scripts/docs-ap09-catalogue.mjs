@@ -35,7 +35,7 @@ const packageDefinitions = {
   'AP09.2': {
     name: 'Nova Core and plugin runtime',
     owner: 'Nova and plugin-runtime maintainers',
-    target: 'docs/site/understand/nova-core-and-plugin-runtime.md',
+    target: 'docs/site/understand/nova-core.md',
   },
   'AP09.3': {
     name: 'Worker Core and native execution',
@@ -114,7 +114,7 @@ const namespaceDefinitions = {
   NVC: { owner: 'Nova maintainers', target: 'docs/site/understand/nova-core.md' },
   WKC: { owner: 'Worker Core maintainers', target: 'docs/site/understand/worker-core.md' },
   SPC: { owner: 'component maintainers', target: 'docs/site/understand/specialists.md' },
-  PLG: { owner: 'plugin-runtime maintainers', target: 'docs/site/understand/plugin-system.md' },
+  PLG: { owner: 'plugin-runtime maintainers', target: 'docs/site/understand/plugin-runtime.md' },
   COM: { owner: 'runtime and platform maintainers', target: 'docs/site/understand/communication.md' },
   DAT: { owner: 'state-owning component maintainers', target: 'docs/site/understand/data-and-state.md' },
   TEL: { owner: 'observability maintainers', target: 'docs/site/understand/telemetry.md' },
