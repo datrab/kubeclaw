@@ -132,12 +132,12 @@
         {
           "key": "secretName",
           "value": "git-deploy-key-nova",
-          "line": 73
+          "line": 76
         },
         {
           "key": "existingSecret",
           "value": "nova-archviewer-auth",
-          "line": 89
+          "line": 92
         }
       ]
     },
