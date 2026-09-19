@@ -15,6 +15,7 @@ procedures. This section gives exact names and source-backed facts.
 
 ## Configuration and Operation
 
+- [Buster suites and providers](buster-suites.md) gives the complete twelve-suite surface, provider fields, defaults, ports, evidence, prerequisites, and checks.
 - [CLI commands](cli.md) lists the deployment command surface.
 - [Environment variables](environment-variables.md) lists deployment and secret-setup variables.
 - [Helm values](helm-values.md) lists current value families and Secret references.

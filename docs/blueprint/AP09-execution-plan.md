@@ -1,7 +1,7 @@
 # AP09 — Ausführungsplan zur vollständigen zentralen Dokumentation
 
 Stand: 19.09.2026
-Status: AP09.0 bis AP09.3 intern abgeschlossen und für unabhängige Abnahme bereit
+Status: AP09.0 bis AP09.5 intern abgeschlossen und für unabhängige Abnahme bereit
 Ziel: vollständige, eigenständige und dauerhaft pflegbare Produktdokumentation unter `docs/site`
 
 ## 1. Ausgangslage
@@ -263,6 +263,9 @@ und Provider-Prüfungen bleiben ehrlich als umgebungsabhängige Abnahme getrennt
 
 ### AP09.5 — Buster und zwölf Test-Suites
 
+**Status:** Intern abgeschlossen am 19. September 2026. Die unabhängige
+Read-only-Abnahme des Gesamtplans bleibt offen.
+
 - Buster Engine, Plan Resolution, Admission, Remote Store, Source Snapshot,
   Provider, Evidence, Reports, Result Authority, Signing, Import und Recovery
   als zusammenhängendes Produkt erklären.
@@ -296,6 +299,43 @@ und Dokumentation hinzufügt.
 
 **Gate:** Ein Leser kann jede Suite konfigurieren, ausführen, diagnostizieren
 und erweitern sowie eine neue Suite ohne verborgenes Wissen integrieren.
+
+**Geliefertes Ergebnis:** Die sechs Anforderungen `SPC-001`, `SPC-008`,
+`CFG-006`, `FLW-011`, `EXT-005` und `CDV-008` besitzen einen zusammenhängenden
+kanonischen Leserweg. `buster.md` verfolgt Plan Resolution, signierten
+Source Snapshot, Transport, Admission, Durable Store, Execution, Worker Core,
+Provider, Evidence, Reports, Result Authority, Nova Import, Cancellation und
+Recovery. `buster-namespace-controller.md` erklärt Lease Spec und Status,
+Phasen, Immutability, RBAC, Credentials, Exposure Fencing, Retention, Release,
+Fehler und alle ausgelieferten Helm-Werte.
+
+`reference/buster-suites.md` trennt die zwölf tatsächlich ausgelieferten
+Suite-Templates ausdrücklich vom Weg für eine eigene Suite. Jede Suite besitzt
+Zweck, Grenze, konkrete Composition, vollständige Top-Level-Providerfelder,
+Defaults, Ports, Capabilities, Retry-Verhalten, Evidence, Reports, Resultregeln,
+externe Voraussetzungen und Verifikation. Die Referenz erfasst außerdem alle
+19 installierten Provider-Verträge und den JUnit-Adapter. Der Workflow enthält
+eine vollständige gepflegte `.swarm/pipeline.json` mit JUnit Report,
+checked-manifest Artifact, Kubernetes Fixture, typisierten Links und einer
+zweifachen HTTP-Matrix. Der Docs-Check löst dieses Beispiel wirklich gegen die
+ausgelieferten Templates und die aktuelle Registry auf; er prüft dadurch auch
+Fixture-, Matrix- und Adapterbindung statt nur JSON-Syntax.
+
+`extend/buster.md` bleibt der öffentliche Provider-, Fixture-, Suite- und
+Report-Adapter-Weg. `extend/platform/buster.md` ergänzt Plan-, Wire-, Engine-,
+Result-, Capability- und Namespace-Core-Änderungen mit Compatibility-,
+Recovery-, Error- und Change-to-check-Regeln.
+
+**Interne Prüfung:** `docs:buster-guides:check` bindet alle sechs Anforderungen
+an gepflegte Marker. Er prüft 67 revisionsfeste Quelllinks, gültige
+Zeilenbereiche, Bytegleichheit von 54 zitierten Implementierungsdateien,
+zwölf Suite-Templates, 19 Provider-Verträge, deren Top-Level-Konfigurationsfelder,
+den vollständigen Workflow-Resolve, Navigation und detaillierte
+Surface-Coverage. Zusätzlich müssen Suite Resolver, Provider Registry,
+Plan Runner, Remote Plan, Namespace-Controller-Tests und die vollständige
+Dokumentationsprüfung erfolgreich sein. BuildKit-, Registry-, Kubernetes-,
+Tailscale-, Browser-, Scanner-, SPIFFE- und cgroup-Prüfungen bleiben ehrlich als
+umgebungsabhängige Live-Abnahme getrennt.
 
 ### AP09.6 — Lint
 

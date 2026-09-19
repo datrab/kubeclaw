@@ -775,7 +775,7 @@
       "workPackage": "AP09.5",
       "owner": "Buster maintainers",
       "canonicalTarget": "docs/site/understand/buster.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L170"
     },
     {
@@ -866,7 +866,7 @@
       "workPackage": "AP09.5",
       "owner": "Buster maintainers",
       "canonicalTarget": "docs/site/understand/buster-namespace-controller.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L177"
     },
     {
@@ -1958,7 +1958,7 @@
       "workPackage": "AP09.5",
       "owner": "Buster maintainers",
       "canonicalTarget": "docs/site/reference/buster-suites.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L281"
     },
     {
@@ -2257,7 +2257,7 @@
       "workPackage": "AP09.5",
       "owner": "Buster maintainers",
       "canonicalTarget": "docs/site/use/workflows/buster-suite.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L309"
     },
     {
@@ -2673,7 +2673,7 @@
       "workPackage": "AP09.5",
       "owner": "Buster maintainers",
       "canonicalTarget": "docs/site/extend/platform/buster.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L346"
     },
     {

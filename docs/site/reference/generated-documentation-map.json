@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 108,
+  "pageCount": 113,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -332,6 +332,27 @@
         "skills/nova/plugins/lint/src/stage.ts",
         "skills/nova/plugins/lint/src/adapter.ts",
         "skills/nova/plugins/lint/src/engine/policy-version.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/platform/buster.md",
+      "route": "/extend/platform/buster/",
+      "contentKind": "authored",
+      "status": "implemented with environment-dependent integration checks",
+      "audience": "Buster engine, Nova adapter, and namespace-controller developer",
+      "owner": "buster",
+      "appliesTo": "changes below the public provider and suite extension contracts",
+      "lastVerified": "source and contract inspection on 2026-09-19",
+      "sourceDependencies": [
+        "contracts/pipeline-test-gate/v1",
+        "skills/nova/core/test-gates/resolver.ts",
+        "skills/buster/engine/test-gates",
+        "cmd/buster-namespace-controller"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -1414,6 +1435,25 @@
       ]
     },
     {
+      "page": "docs/site/reference/buster-suites.md",
+      "route": "/reference/buster-suites/",
+      "contentKind": "authored",
+      "status": "implemented with stated external prerequisites",
+      "audience": "pipeline author, operator, test maintainer",
+      "owner": "buster",
+      "appliesTo": "pipeline test-gate contract version 1",
+      "lastVerified": "all suite templates, providers, and schemas on 2026-09-19",
+      "sourceDependencies": [
+        "contracts/pipeline-test-gate/v1/suites",
+        "skills/buster/plugins"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/reference/capabilities.md",
       "route": "/reference/capabilities/",
       "contentKind": "generated",
@@ -1678,6 +1718,47 @@
         "packaging/runtime/roles",
         "skills/nova/core",
         "skills/worker/core"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/buster-namespace-controller.md",
+      "route": "/understand/buster-namespace-controller/",
+      "contentKind": "authored",
+      "status": "implemented; disabled by default",
+      "audience": "platform operator, Buster maintainer, fixture author",
+      "owner": "buster",
+      "appliesTo": "Kubernetes-backed Buster fixtures and preview exposure",
+      "lastVerified": "source, chart, and controller inspection on 2026-09-19",
+      "sourceDependencies": [
+        "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+        "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+        "charts/kubeclaw/templates/buster-namespace-fence.yaml",
+        "cmd/buster-namespace-controller"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/buster.md",
+      "route": "/understand/buster/",
+      "contentKind": "authored",
+      "status": "implemented with stated environment limits",
+      "audience": "technical reader, operator, test author, Buster maintainer",
+      "owner": "buster",
+      "appliesTo": "the current Nova-to-Buster remote test-gate path",
+      "lastVerified": "source and contract inspection on 2026-09-19",
+      "sourceDependencies": [
+        "skills/nova/core/test-gates",
+        "skills/buster/engine/test-gates",
+        "contracts/pipeline-test-gate/v1"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -2128,6 +2209,27 @@
       "sourceDependencies": [
         "scripts/deploy.sh",
         "tests/verification/live/worker-trust-cluster-e2e.sh"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/workflows/buster-suite.md",
+      "route": "/use/workflows/buster-suite/",
+      "contentKind": "authored",
+      "status": "implemented; live dependencies vary by suite",
+      "audience": "pipeline author and operator",
+      "owner": "buster",
+      "appliesTo": "one pipeline test-gate scope",
+      "lastVerified": "source and contract inspection on 2026-09-19",
+      "sourceDependencies": [
+        "contracts/pipeline-test-gate/v1/examples",
+        "skills/nova/core/test-gates/resolver.ts",
+        "skills/buster/engine/test-gates",
+        "skills/buster/plugins"
       ],
       "checks": [
         "npm run docs:governance:check",

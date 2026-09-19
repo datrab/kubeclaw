@@ -1,0 +1,95 @@
+{
+  "project": "example-web",
+  "modules": {
+    "web": {
+      "suites": {
+        "unit": {
+          "uses": "kubeclaw.unit-suite@1",
+          "add": {
+            "unit": {
+              "uses": "kubeclaw.direct-command@1",
+              "mode": "blocking",
+              "concurrencyGroup": "unit",
+              "config": {
+                "executable": "npm",
+                "args": ["test", "--", "--reporter=junit"],
+                "workingDirectory": ".",
+                "resultMode": "junit-required",
+                "reports": [
+                  {
+                    "id": "unit",
+                    "format": "junit",
+                    "path": "reports/unit.xml",
+                    "mediaType": "application/junit+xml"
+                  }
+                ]
+              }
+            },
+            "checked-manifest": {
+              "uses": "kubeclaw.direct-command@1",
+              "mode": "blocking",
+              "concurrencyGroup": "unit",
+              "config": {
+                "executable": "manifest-check",
+                "args": ["k8s/deployment.yaml", "build/checked.yaml"],
+                "workingDirectory": ".",
+                "resultMode": "exit-code",
+                "artifacts": [
+                  {
+                    "id": "checked-manifest",
+                    "path": "build/checked.yaml",
+                    "mediaType": "application/vnd.kubeclaw.checked-kubernetes-yaml"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "fixtures": {
+        "deployment": {
+          "uses": "kubeclaw.kubernetes-fixture@1",
+          "config": {
+            "image": {
+              "reference": "registry-local.kubeclaw.svc.cluster.local:5001/apps/web@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "serviceName": "web",
+            "servicePort": 8080,
+            "namespacePrefix": "test",
+            "retention": { "mode": "delete", "seconds": 1800 },
+            "readinessTimeoutSeconds": 120,
+            "secretReferences": []
+          },
+          "inputs": {
+            "checked-manifest": {
+              "from": "unit/checked-manifest",
+              "output": "artifact-1",
+              "mediaType": "application/vnd.kubeclaw.checked-kubernetes-yaml"
+            }
+          }
+        }
+      },
+      "tests": {
+        "http": {
+          "uses": "kubeclaw.http@1",
+          "mode": "blocking",
+          "inputs": {
+            "deployment": { "from": "deployment", "output": "deployment" }
+          },
+          "config": {
+            "method": "GET",
+            "expectedStatuses": [200],
+            "maximumResponseBytes": 1048576,
+            "requestTimeoutMs": 10000
+          },
+          "matrix": { "path": ["/health", "/ready"] },
+          "concurrencyGroup": "http",
+          "retries": 1
+        }
+      },
+      "concurrencyLimits": { "unit": 2, "http": 2 }
+    }
+  },
+  "gates": {}
+}

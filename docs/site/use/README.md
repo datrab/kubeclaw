@@ -32,6 +32,7 @@ Use [Worker Trust](worker-trust.md) when identity or mTLS needs a focused proced
 | Protect or restore state, a node, a cluster, or access | [Back Up and Recover](recovery.md) | A verified recovery or a declared missing prerequisite |
 | Upgrade, rotate credentials, control retention, or remove KubeClaw | [Maintain and Retire](maintenance.md) | A compatible change, rollback decision, or removal record |
 | Run the Prism design lifecycle | [Operate Prism](prism-studio.md) | A traced project, revision, approval, baseline, or exact recovery action |
+| Configure, run, and diagnose a Buster suite | [Buster suite workflow](workflows/buster-suite.md) | A resolved plan, verified result, imported evidence, and cleanup decision |
 
 ## Operating Rule
 

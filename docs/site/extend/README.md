@@ -22,6 +22,10 @@ Use [Extend Prism safely](platform/prism.md) when the change belongs to a Prism
 contract, service, document operation, renderer, retrieval path, Studio,
 storage boundary, or pipeline handoff.
 
+Use [Extend Buster](buster.md) for a test provider, fixture, suite, or report
+adapter. Use [Develop Buster Core](platform/buster.md) for plan, wire, engine,
+result-authority, capability, or namespace-controller changes.
+
 A smaller change has fewer trust, recovery, packaging, and maintenance consequences.
 However, configuration cannot create behavior that no installed component supplies.
 
