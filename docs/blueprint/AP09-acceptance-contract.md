@@ -129,9 +129,12 @@ und Änderungen an Produkt oder `docs/site` zwischen beiden Commits.
 
 Ein Source-Link ist nur gültig, wenn Host und Repository exakt
 `github.com/datrab/kubeclaw` sind, der Commit `reviewed_revision` ist, das Ziel
-in diesem Commit ein Git-Blob ist und der aufsteigende Zeilenbereich innerhalb
-der Datei liegt. Ein kanonischer Leserort muss ein Markdown-Blob unter
-`docs/site` sein. Sein Fragment muss einer vorhandenen Überschrift oder einer
+in diesem Commit eine reguläre Git-Datei mit Modus `100644` oder `100755` und
+kein Symlink oder sonstiger spezieller Eintrag ist und der aufsteigende
+Zeilenbereich innerhalb der Datei liegt. Ein kanonischer Leserort muss eine
+reguläre Markdown-Datei unter `docs/site` sein. Auch das vollständige
+Publication-Inventar muss jeden Markdown-Symlink ablehnen. Das Fragment muss
+einer vorhandenen Überschrift oder einer
 expliziten HTML-ID entsprechen. Weil die Publication alle Markdown-Dateien
 unter diesem Root übernimmt, beweist dieser Test zugleich die Aufnahme in den
 Publication-Input; der gespeicherte Publication-Report beweist den Output.

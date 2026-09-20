@@ -66,12 +66,28 @@ function exactIds(actual, authority, label) {
   unique(actual, label);
   assert.deepEqual([...actual].sort(), [...authority].sort(), `${label} does not match its authority`);
 }
+function gitTreeEntries(revision, relative, label) {
+  assert(!path.isAbsolute(relative), `${label} must be repository-relative`);
+  const normalized = path.posix.normalize(relative.replaceAll('\\', '/'));
+  assert(!normalized.startsWith('../') && normalized !== '..', `${label} escapes the repository`);
+  const output = execFileSync('git', ['ls-tree', '-r', '-z', revision, '--', normalized], {
+    cwd: root, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024,
+  });
+  return output.split('\0').filter(Boolean).map((entry) => {
+    const match = entry.match(/^(\d{6}) (\w+) ([a-f0-9]{40})\t([\s\S]+)$/u);
+    assert(match, `${label} contains an invalid Git tree entry`);
+    return { mode: match[1], type: match[2], object: match[3], path: match[4] };
+  });
+}
 function gitBlob(revision, relative, label) {
   assert(!path.isAbsolute(relative), `${label} must be repository-relative`);
   const normalized = path.posix.normalize(relative.replaceAll('\\', '/'));
   assert(!normalized.startsWith('../') && normalized !== '..', `${label} escapes the repository`);
-  assert.equal(git(['cat-file', '-t', `${revision}:${normalized}`]), 'blob',
-    `${label} is not a tracked file at ${revision}`);
+  const entries = gitTreeEntries(revision, normalized, label);
+  assert.equal(entries.length, 1, `${label} is not exactly one tracked file at ${revision}`);
+  assert.equal(entries[0].path, normalized, `${label} resolved to a different Git path`);
+  assert(['100644', '100755'].includes(entries[0].mode) && entries[0].type === 'blob',
+    `${label} must be a regular tracked file, not a symlink or special entry`);
   return execFileSync('git', ['show', `${revision}:${normalized}`], {
     cwd: root, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024,
   });
@@ -279,8 +295,11 @@ function evidence(file, rows, catalog, fixtures) {
   const buildReport = json(p(artifactIndex.get(value.publication.build_report_artifact_id).path));
   const anchorInventoryArtifact = artifactIndex.get(value.publication.anchor_inventory_artifact_id);
   const anchorInventory = json(p(anchorInventoryArtifact.path));
-  const publishedPages = git(['ls-tree', '-r', '--name-only', value.reviewed_revision, '--', 'docs/site'])
-    .split('\n').filter((item) => item.endsWith('.md')).sort();
+  const publicationTree = gitTreeEntries(value.reviewed_revision, 'docs/site', 'publication tree');
+  const markdownEntries = publicationTree.filter((item) => item.path.endsWith('.md'));
+  assert(markdownEntries.every((item) => ['100644', '100755'].includes(item.mode) && item.type === 'blob'),
+    'publication tree contains a Markdown symlink or special entry');
+  const publishedPages = markdownEntries.map((item) => item.path).sort();
   const pageDigest = crypto.createHash('sha256');
   for (const page of publishedPages) pageDigest.update(gitBlob(value.reviewed_revision, page, 'publication page'));
   assert.equal(buildReport.schemaVersion, 'kubeclaw-docs-publication.v1');
