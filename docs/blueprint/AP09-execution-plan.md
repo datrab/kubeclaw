@@ -1,7 +1,7 @@
 # AP09 — Ausführungsplan zur vollständigen zentralen Dokumentation
 
 Stand: 19.09.2026
-Status: AP09.0 bis AP09.5 intern abgeschlossen und für unabhängige Abnahme bereit
+Status: AP09.0 bis AP09.7 intern abgeschlossen und für unabhängige Abnahme bereit
 Ziel: vollständige, eigenständige und dauerhaft pflegbare Produktdokumentation unter `docs/site`
 
 ## 1. Ausgangslage
@@ -352,6 +352,9 @@ umgebungsabhängige Live-Abnahme getrennt.
 
 ### AP09.6 — Lint
 
+**Status:** Intern abgeschlossen am 20. September 2026. Die unabhängige
+Read-only-Abnahme des Gesamtplans bleibt offen.
+
 - Pre-check, Full Lint, Executor und Report Adapter mit ihrer Autorität erklären.
 - Alle Regeln und Tools als erzeugte Referenz inventarisieren.
 - Discovery, Targets, Scopes, Severity, Policy-Version, Defaults, Präzedenz,
@@ -365,10 +368,31 @@ umgebungsabhängige Live-Abnahme getrennt.
 **Gate:** Ein Leser kann jede Lint-Funktion konfigurieren und verifizieren und
 alle unterstützten Erweiterungsarten ohne verborgenes Wissen integrieren.
 
+**Geliefertes Ergebnis:** `reference/lint-policy.md` beschreibt den
+vollständigen aktuellen Vertrag: 31 Tools, 22 blockierende ESLint-Regeln, acht
+experimentelle Type-Evidence-Regeln, 25 Semgrep-Regeln sowie alle sechs
+Kubernetes-Regeltypen und ausgelieferten Rule-IDs. Die Seite erklärt
+Policy-Versionen, Laden und Präzedenz, Projekte, Discovery, Targets, Scopes,
+Severity, Baselines, Waivers, Debt, Fingerprints, Rule Admission, immutable
+Pack Identity, Fehler und Report-Evidence. `extend/lint.md` erklärt die
+Autoritätsgrenzen zwischen Stage, Adapter und Engine sowie geprüfte Änderungen
+für Regeln, Tools, Sprachen, Targets, Packs, Baselines und Reportverträge.
+
+**Interne Prüfung:** `docs:platform-specialist-guides:check` bindet `CFG-016`
+und `EXT-006` an Inhaltsmarker, prüft alle revisionsfesten Codebelege und
+gleicht Tool- und Kubernetes-Regelinventar dynamisch mit den ausgelieferten
+Konfigurationen ab. TypeScript-Build und fokussierte Lint-Tests waren
+erfolgreich. Der abschließende Live-Test benötigt GNU `flock`; BusyBox `flock`
+in der Prüfungsumgebung besitzt die notwendige Timeout-Option nicht.
+
 ### AP09.7 — Plattform, Spezialisten, Kommunikation, Daten und Sicherheit
 
-- Pflichtabhängigkeiten wie Redis, PostgreSQL, Git Mirrors, OCI Registry,
-  BuildKit und Tailscale vollständig integrieren.
+**Status:** Intern abgeschlossen am 20. September 2026. Die unabhängige
+Read-only-Abnahme des Gesamtplans bleibt offen.
+
+- Pflichtabhängigkeiten wie Redis, PostgreSQL, Git, OCI Registry, BuildKit und
+  Tailscale vollständig integrieren und den noch fehlenden Git Mirror ehrlich
+  als geplante Funktion behandeln.
 - LiteLLM als eigenes Gateway mit Modellen, Embeddings, Credentials,
   Consumers, Readiness, Limits und Recovery erklären.
 - Argo, Cilium und Monitoring als optionale Plattforminfrastruktur behandeln.
@@ -381,6 +405,31 @@ alle unterstützten Erweiterungsarten ohne verborgenes Wissen integrieren.
 
 **Gate:** Jede Laufzeitabhängigkeit hat Owner, Zweck, Consumer, Protokoll,
 Konfiguration, Ausfallwirkung, Diagnose und Recovery.
+
+**Geliefertes Ergebnis:** Die 53 Anforderungen `SPC-004` bis `SPC-007`,
+`SPC-009`, `SPC-010`, `COM-001` bis `COM-012`, `DAT-001` bis `DAT-009`,
+`TEL-001` bis `TEL-007`, `INF-001` bis `INF-012` und `SEC-001` bis `SEC-007`
+besitzen jetzt kanonische Leserziele. Eigene Seiten erklären Forge, Echo,
+OpenClaw, Codex, Ops MCP und Archviewer. Zentrale Matrizen erfassen alle
+Kommunikationswege, Endpunkte, Stores, aktiven Events, Identitäten, Secrets,
+Netzpfade und Supply-Chain-Grenzen. Daten- und Telemetrie-Guides verbinden
+Authority, Persistenz, Retention, Druck, Backup und Restore. Plattform- und
+Security-Guides erklären Host/K3s, DNS, Storage, Scheduling, Flannel/Cilium,
+Argo CD, BuildKit, Registry, Mirror, Redis, PostgreSQL, Tailscale, LiteLLM,
+Monitoring, Ops Pod, SPIRE, mTLS, Least Privilege und Incident Recovery.
+
+Der aktuelle Stand behauptet weder einen vorhandenen Git Mirror noch eine
+produktionsreife lokale Registry. Er trennt optionale Infrastruktur von
+Pipelinepflichten und Repository-/Render-Evidence von Live-Enforcement.
+
+**Interne Prüfung:** `docs:platform-specialist-guides:check` prüft 13 Seiten,
+211 revisionsfeste Links, gültige Zeilenbereiche und die Bytegleichheit von 143
+zitierten Quelldateien. Er gleicht außerdem alle acht Ops-MCP-Tools mit dem
+Server ab und prüft Navigation sowie gepflegte Inhaltsmarker. Fokussierte
+Runtime-, Observer-, Redis-, Echo-, OpenClaw-, Ops- und Telemetrie-Tests waren
+erfolgreich, soweit die lokale Toolchain sie ausführen konnte. Live-Tests mit
+GNU-`flock`, Go-Generatoren sowie echte Cluster-, SPIFFE-, Tailscale-, CNI-,
+Registry- und Providerpfade bleiben ausdrücklich umgebungsabhängige Evidenz.
 
 ### AP09.8 — Operator-Handbuch und vollständige Konfiguration
 

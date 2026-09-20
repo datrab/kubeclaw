@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 116,
+  "pageCount": 128,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -308,6 +308,27 @@
         "skills/worker/core/worker/attempt-executor.ts",
         "contracts/pipeline-worker-core/v1/src/types.ts",
         "packaging/runtime/roles"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/extend/lint.md",
+      "route": "/extend/lint/",
+      "contentKind": "authored",
+      "status": "implemented",
+      "audience": "lint rule author, policy maintainer, Nova maintainer",
+      "owner": "lint",
+      "appliesTo": "`kubeclaw.lint` and the shipped lint policy",
+      "lastVerified": "source and focused package checks on 2026-09-20",
+      "sourceDependencies": [
+        "skills/nova/plugins/lint/plugin.json",
+        "skills/nova/plugins/lint/src",
+        "skills/nova/plugins/lint/tests",
+        "charts/kubeclaw/files/config"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -1652,6 +1673,27 @@
       ]
     },
     {
+      "page": "docs/site/reference/lint-policy.md",
+      "route": "/reference/lint-policy/",
+      "contentKind": "authored",
+      "status": "implemented",
+      "audience": "lint-policy maintainer, operator, Nova maintainer",
+      "owner": "lint",
+      "appliesTo": "`pipeline_lint_policy.v7`, `pipeline_lint_baseline.v2`, `kubernetes_lint_policy_pack.v1`, `pipeline_lint_report.v7`",
+      "lastVerified": "source, configuration, and package checks on 2026-09-20",
+      "sourceDependencies": [
+        "charts/kubeclaw/files/config/lint-policy.json",
+        "charts/kubeclaw/files/config/lint-baseline.json",
+        "charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
+        "skills/nova/plugins/lint/src/engine"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/reference/secrets.md",
       "route": "/reference/secrets/",
       "contentKind": "generated",
@@ -1806,6 +1848,27 @@
       ]
     },
     {
+      "page": "docs/site/understand/archviewer.md",
+      "route": "/understand/archviewer/",
+      "contentKind": "authored",
+      "status": "implemented as an optional Nova sidecar",
+      "audience": "platform operator, documentation publisher, Nova maintainer, security reviewer",
+      "owner": "Archviewer maintainers",
+      "appliesTo": "Nova Helm release with `archviewer.enabled=true`",
+      "lastVerified": "image, chart, web-server configuration, and native-test inspection on 2026-09-20",
+      "sourceDependencies": [
+        "docker/Dockerfile.archviewer",
+        "docker/archviewer.nginx.conf",
+        "charts/kubeclaw/templates/archviewer.yaml",
+        "tests/verification/reliability/archviewer-native.test.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/understand/buster-namespace-controller.md",
       "route": "/understand/buster-namespace-controller/",
       "contentKind": "authored",
@@ -1849,6 +1912,52 @@
       ]
     },
     {
+      "page": "docs/site/understand/codex-integration.md",
+      "route": "/understand/codex-integration/",
+      "contentKind": "authored",
+      "status": "implemented as a local plugin package and an optional Ops Pod",
+      "audience": "Codex operator, plugin maintainer, platform operator, security reviewer",
+      "owner": "Codex integration maintainers",
+      "appliesTo": "`kubeclaw-ops@0.2.0` and the current local marketplace entry",
+      "lastVerified": "manifest, skill, chart, service, and test inspection on 2026-09-20",
+      "sourceDependencies": [
+        "plugins/kubeclaw-ops",
+        ".agents/plugins/marketplace.json",
+        "charts/ops-pod",
+        "tools/ops-mcp"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/communication.md",
+      "route": "/understand/communication/",
+      "contentKind": "authored",
+      "status": "implemented paths documented; unavailable guarantees stated explicitly",
+      "audience": "platform operator, runtime maintainer, integration developer, security reviewer",
+      "owner": "runtime and platform maintainers",
+      "appliesTo": "current Nova, Buster, Prism, Worker Core, specialist, Redis, registry, Git, BuildKit, Tailscale, and SPIFFE paths",
+      "lastVerified": "code, schema, chart, manifest, and focused test inspection on 2026-09-20",
+      "sourceDependencies": [
+        "contracts/pipeline-test-gate/v1",
+        "contracts/pipeline-worker-core/v1",
+        "skills/nova/core",
+        "skills/worker/core",
+        "skills/common/plugins/redis-transport",
+        "charts/kubeclaw",
+        "charts/prism",
+        "tests/verification/reliability"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/understand/components-and-authority.md",
       "route": "/understand/components-and-authority/",
       "contentKind": "authored",
@@ -1861,6 +1970,31 @@
         "skills/nova/core",
         "skills/worker/core",
         "packaging/runtime/roles"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/data-and-state.md",
+      "route": "/understand/data-and-state/",
+      "contentKind": "authored",
+      "status": "implemented with stated retention and disaster-recovery limits",
+      "audience": "platform operator, runtime developer, data owner, incident responder",
+      "owner": "state-owning component maintainers",
+      "appliesTo": "current file stores, Prism PostgreSQL, LiteLLM PostgreSQL, Redis, and content-addressed artifacts",
+      "lastVerified": "code, schema, chart, values, recovery-script, and focused-test inspection on 2026-09-20",
+      "sourceDependencies": [
+        "skills/nova/core",
+        "skills/worker/core",
+        "skills/buster/engine",
+        "skills/prism",
+        "charts/prism",
+        "gitops/platform",
+        "scripts/postgresql-recovery.sh",
+        "scripts/redis-prepare-migration.sh"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -1889,6 +2023,48 @@
       ]
     },
     {
+      "page": "docs/site/understand/echo.md",
+      "route": "/understand/echo/",
+      "contentKind": "authored",
+      "status": "implemented with explicit model and repository evidence limits",
+      "audience": "pipeline operator, Echo maintainer, policy author, security reviewer",
+      "owner": "Echo maintainers",
+      "appliesTo": "review, repository-audit, and repository-revalidation stages",
+      "lastVerified": "source, schema, manifest, and focused test inspection on 2026-09-20",
+      "sourceDependencies": [
+        "skills/nova/plugins/review/src",
+        "skills/nova/plugins/review/schemas",
+        "skills/nova/plugins/review/tests"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/forge.md",
+      "route": "/understand/forge/",
+      "contentKind": "authored",
+      "status": "implemented for the Nova implementation stage",
+      "audience": "pipeline operator, Forge maintainer, plugin author, security reviewer",
+      "owner": "Forge maintainers",
+      "appliesTo": "`kubeclaw.implementation-agent` and its OpenClaw runtime-dispatch path",
+      "lastVerified": "source, schema, manifest, and focused test inspection on 2026-09-20",
+      "sourceDependencies": [
+        "skills/nova/plugins/implementation-agent",
+        "skills/common/plugins/runtime-dispatch",
+        "skills/common/plugins/git-workspace",
+        "tests/verification/reliability/forge-workspace.test.mts",
+        "tests/verification/reliability/forge-lock-wait.test.mts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/understand/nova-core.md",
       "route": "/understand/nova-core/",
       "contentKind": "authored",
@@ -1901,6 +2077,48 @@
         "skills/nova/project",
         "skills/nova/core",
         "skills/common/plugin-runtime"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/openclaw.md",
+      "route": "/understand/openclaw/",
+      "contentKind": "authored",
+      "status": "implemented with separate host-plugin and pipeline-adapter boundaries",
+      "audience": "OpenClaw operator, integration maintainer, plugin author, security reviewer",
+      "owner": "OpenClaw integration maintainers",
+      "appliesTo": "OpenClaw plugin API 2026.9.1 or later and current runtime-dispatch targets",
+      "lastVerified": "source, manifest, schema, package, and focused test inspection on 2026-09-20",
+      "sourceDependencies": [
+        "skills/prism/openclaw-plugin",
+        "skills/common/plugins/openclaw-agent-observer",
+        "skills/common/plugins/openclaw-agent-events",
+        "skills/common/plugins/runtime-dispatch"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/ops-mcp.md",
+      "route": "/understand/ops-mcp/",
+      "contentKind": "authored",
+      "status": "implemented; optional to pipeline execution",
+      "audience": "operator, Codex integrator, Ops MCP maintainer, security reviewer",
+      "owner": "Ops MCP maintainers",
+      "appliesTo": "`kubeclaw-ops` MCP service version 0.2.0",
+      "lastVerified": "service, chart, policy, and focused test inspection on 2026-09-20",
+      "sourceDependencies": [
+        "tools/ops-mcp/src",
+        "tools/ops-mcp/test",
+        "charts/ops-pod",
+        "scripts/deploy-ops-pod.sh"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -1938,14 +2156,14 @@
       "status": "implemented in parts; host automation and live acceptance remain open",
       "audience": "architecture reader, platform operator, maintainer, security reviewer",
       "owner": "platform architecture and operations",
-      "appliesTo": "current Kubernetes deployment and operations tooling",
-      "lastVerified": "source inspection on 2026-09-17",
+      "appliesTo": "current Kubernetes platform and its supported deployment paths",
+      "lastVerified": "source inspection on 2026-09-20",
       "sourceDependencies": [
         "scripts/deploy.sh",
-        "scripts/deploy-cilium.sh",
-        "scripts/argocd-self-management.mjs",
+        "scripts/platform-services.mjs",
         "charts/ops-pod",
-        "gitops/platform"
+        "gitops/platform",
+        "my-values/infra"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -2069,6 +2287,51 @@
       "lastVerified": "source inspection on 2026-09-15",
       "sourceDependencies": [
         "docs/site/understand/request-state-recovery.md"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/security-and-trust.md",
+      "route": "/understand/security-and-trust/",
+      "contentKind": "authored",
+      "status": "implemented in parts; live enforcement and acceptance remain environment-specific",
+      "audience": "operator, security reviewer, architecture reader, maintainer",
+      "owner": "platform security and runtime maintainers",
+      "appliesTo": "the current supported release and its documented lab deployment",
+      "lastVerified": "source inspection on 2026-09-20",
+      "sourceDependencies": [
+        "my-values/infra/spire-values.yaml",
+        "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "charts/prism/templates/networkpolicy.yaml",
+        "skills/nova/core/execution/authorization.ts",
+        "my-values/setup-secrets.sh",
+        "skills/nova/core/test-gates/source-snapshot.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/understand/telemetry.md",
+      "route": "/understand/telemetry/",
+      "contentKind": "authored",
+      "status": "active v2 path implemented; retained v1 contract has no active runtime producer or consumer",
+      "audience": "runtime developer, observer author, operator, security reviewer",
+      "owner": "observability maintainers",
+      "appliesTo": "Nova lifecycle-event.v2, plugin-domain-event.v2, observer delivery v2, and retained telemetry v1 assets",
+      "lastVerified": "contract, runtime, plugin, configuration, and focused-test inspection on 2026-09-20",
+      "sourceDependencies": [
+        "skills/nova/core/telemetry",
+        "skills/common/plugins/telemetry-observer",
+        "skills/common/plugins/telemetry-store",
+        "skills/common/plugins/redis-transport",
+        "contracts/telemetry/v1"
       ],
       "checks": [
         "npm run docs:governance:check",

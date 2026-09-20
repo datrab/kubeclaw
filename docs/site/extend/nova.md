@@ -249,8 +249,11 @@ authority stays in the adapter.
 
 The current policy schema version is `pipeline_lint_policy.v7`. Policy selects tools,
 paths, severity behavior, debt and experimental handling, Kubernetes inputs, and
-governance controls. The exhaustive reference is not yet available, but authoring follows these
-rules:
+governance controls. The [Lint Policy Reference](../reference/lint-policy.md)
+defines the complete current surface. [Extend Lint](lint.md) gives the supported
+rule, tool, target, policy-pack, baseline, and report change procedures.
+
+Authoring follows these rules:
 
 1. Change policy when an existing tool or rule already expresses the requirement.
 2. Use a Kubernetes policy pack for a supported declarative Kubernetes rule type.

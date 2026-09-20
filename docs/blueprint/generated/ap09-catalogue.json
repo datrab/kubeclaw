@@ -814,7 +814,7 @@
       "workPackage": "AP09.7",
       "owner": "Forge maintainers",
       "canonicalTarget": "docs/site/understand/forge.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L173"
     },
     {
@@ -827,7 +827,7 @@
       "workPackage": "AP09.7",
       "owner": "Echo maintainers",
       "canonicalTarget": "docs/site/understand/echo.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L174"
     },
     {
@@ -840,7 +840,7 @@
       "workPackage": "AP09.7",
       "owner": "OpenClaw integration maintainers",
       "canonicalTarget": "docs/site/understand/openclaw.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L175"
     },
     {
@@ -853,7 +853,7 @@
       "workPackage": "AP09.7",
       "owner": "Codex integration maintainers",
       "canonicalTarget": "docs/site/understand/codex-integration.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L176"
     },
     {
@@ -879,7 +879,7 @@
       "workPackage": "AP09.7",
       "owner": "Ops MCP maintainers",
       "canonicalTarget": "docs/site/understand/ops-mcp.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L178"
     },
     {
@@ -892,7 +892,7 @@
       "workPackage": "AP09.7",
       "owner": "Archviewer maintainers",
       "canonicalTarget": "docs/site/understand/archviewer.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L179"
     },
     {
@@ -1087,7 +1087,7 @@
       "workPackage": "AP09.7",
       "owner": "runtime and platform maintainers",
       "canonicalTarget": "docs/site/understand/communication.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L204"
     },
     {
@@ -1100,7 +1100,7 @@
       "workPackage": "AP09.7",
       "owner": "runtime and platform maintainers",
       "canonicalTarget": "docs/site/understand/communication.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L205"
     },
     {
@@ -1113,7 +1113,7 @@
       "workPackage": "AP09.7",
       "owner": "runtime and platform maintainers",
       "canonicalTarget": "docs/site/understand/communication.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L206"
     },
     {
@@ -1126,7 +1126,7 @@
       "workPackage": "AP09.7",
       "owner": "runtime and platform maintainers",
       "canonicalTarget": "docs/site/understand/communication.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L207"
     },
     {
@@ -1139,7 +1139,7 @@
       "workPackage": "AP09.7",
       "owner": "runtime and platform maintainers",
       "canonicalTarget": "docs/site/understand/communication.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L208"
     },
     {
@@ -1152,7 +1152,7 @@
       "workPackage": "AP09.7",
       "owner": "runtime and platform maintainers",
       "canonicalTarget": "docs/site/understand/communication.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L209"
     },
     {
@@ -1165,7 +1165,7 @@
       "workPackage": "AP09.7",
       "owner": "runtime and platform maintainers",
       "canonicalTarget": "docs/site/understand/communication.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L210"
     },
     {
@@ -1178,7 +1178,7 @@
       "workPackage": "AP09.7",
       "owner": "runtime and platform maintainers",
       "canonicalTarget": "docs/site/understand/communication.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L211"
     },
     {
@@ -1191,7 +1191,7 @@
       "workPackage": "AP09.7",
       "owner": "runtime and platform maintainers",
       "canonicalTarget": "docs/site/understand/communication.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L212"
     },
     {
@@ -1204,7 +1204,7 @@
       "workPackage": "AP09.7",
       "owner": "runtime and platform maintainers",
       "canonicalTarget": "docs/site/understand/communication.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L213"
     },
     {
@@ -1217,7 +1217,7 @@
       "workPackage": "AP09.7",
       "owner": "runtime and platform maintainers",
       "canonicalTarget": "docs/site/understand/communication.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L214"
     },
     {
@@ -1230,7 +1230,7 @@
       "workPackage": "AP09.7",
       "owner": "runtime and platform maintainers",
       "canonicalTarget": "docs/site/understand/communication.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L215"
     },
     {
@@ -1243,7 +1243,7 @@
       "workPackage": "AP09.7",
       "owner": "state-owning component maintainers",
       "canonicalTarget": "docs/site/understand/data-and-state.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L216"
     },
     {
@@ -1256,7 +1256,7 @@
       "workPackage": "AP09.7",
       "owner": "state-owning component maintainers",
       "canonicalTarget": "docs/site/understand/data-and-state.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L217"
     },
     {
@@ -1269,7 +1269,7 @@
       "workPackage": "AP09.7",
       "owner": "state-owning component maintainers",
       "canonicalTarget": "docs/site/understand/data-and-state.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L218"
     },
     {
@@ -1282,7 +1282,7 @@
       "workPackage": "AP09.7",
       "owner": "state-owning component maintainers",
       "canonicalTarget": "docs/site/understand/data-and-state.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L219"
     },
     {
@@ -1295,7 +1295,7 @@
       "workPackage": "AP09.7",
       "owner": "state-owning component maintainers",
       "canonicalTarget": "docs/site/understand/data-and-state.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L220"
     },
     {
@@ -1308,7 +1308,7 @@
       "workPackage": "AP09.7",
       "owner": "state-owning component maintainers",
       "canonicalTarget": "docs/site/understand/data-and-state.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L221"
     },
     {
@@ -1321,7 +1321,7 @@
       "workPackage": "AP09.7",
       "owner": "state-owning component maintainers",
       "canonicalTarget": "docs/site/understand/data-and-state.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L222"
     },
     {
@@ -1334,7 +1334,7 @@
       "workPackage": "AP09.7",
       "owner": "state-owning component maintainers",
       "canonicalTarget": "docs/site/understand/data-and-state.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L223"
     },
     {
@@ -1347,7 +1347,7 @@
       "workPackage": "AP09.7",
       "owner": "state-owning component maintainers",
       "canonicalTarget": "docs/site/understand/data-and-state.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L224"
     },
     {
@@ -1360,7 +1360,7 @@
       "workPackage": "AP09.7",
       "owner": "observability maintainers",
       "canonicalTarget": "docs/site/understand/telemetry.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L225"
     },
     {
@@ -1373,7 +1373,7 @@
       "workPackage": "AP09.7",
       "owner": "observability maintainers",
       "canonicalTarget": "docs/site/understand/telemetry.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L226"
     },
     {
@@ -1386,7 +1386,7 @@
       "workPackage": "AP09.7",
       "owner": "observability maintainers",
       "canonicalTarget": "docs/site/understand/telemetry.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L227"
     },
     {
@@ -1399,7 +1399,7 @@
       "workPackage": "AP09.7",
       "owner": "observability maintainers",
       "canonicalTarget": "docs/site/understand/telemetry.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L228"
     },
     {
@@ -1438,7 +1438,7 @@
       "workPackage": "AP09.7",
       "owner": "observability maintainers",
       "canonicalTarget": "docs/site/understand/telemetry.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L231"
     },
     {
@@ -1607,7 +1607,7 @@
       "workPackage": "AP09.7",
       "owner": "security maintainers",
       "canonicalTarget": "docs/site/understand/security-and-trust.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L249"
     },
     {
@@ -1620,7 +1620,7 @@
       "workPackage": "AP09.7",
       "owner": "security maintainers",
       "canonicalTarget": "docs/site/understand/security-and-trust.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L250"
     },
     {
@@ -1633,7 +1633,7 @@
       "workPackage": "AP09.7",
       "owner": "security maintainers",
       "canonicalTarget": "docs/site/understand/security-and-trust.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L251"
     },
     {
@@ -1646,7 +1646,7 @@
       "workPackage": "AP09.7",
       "owner": "security maintainers",
       "canonicalTarget": "docs/site/understand/security-and-trust.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L252"
     },
     {
@@ -1659,7 +1659,7 @@
       "workPackage": "AP09.7",
       "owner": "security maintainers",
       "canonicalTarget": "docs/site/understand/security-and-trust.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L253"
     },
     {
@@ -1672,7 +1672,7 @@
       "workPackage": "AP09.7",
       "owner": "security maintainers",
       "canonicalTarget": "docs/site/understand/security-and-trust.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L254"
     },
     {
@@ -1685,7 +1685,7 @@
       "workPackage": "AP09.7",
       "owner": "security maintainers",
       "canonicalTarget": "docs/site/understand/security-and-trust.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L255"
     },
     {
@@ -2088,7 +2088,7 @@
       "workPackage": "AP09.6",
       "owner": "Lint maintainers",
       "canonicalTarget": "docs/site/reference/lint-policy.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L291"
     },
     {

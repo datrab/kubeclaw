@@ -47,6 +47,15 @@ The [glossary](../reference/glossary.md) defines all KubeClaw terms used in this
 | How does Prism turn design intent into an approved baseline? | [Prism](prism.md) |
 | How does Buster resolve, execute, store, and return a test plan? | [Buster](buster.md) |
 | How does Buster lease and safely remove Kubernetes namespaces? | [Buster namespace controller](buster-namespace-controller.md) |
+| How does Forge change and merge one bounded workspace? | [Forge](forge.md) |
+| How does Echo turn evidence into a review decision? | [Echo](echo.md) |
+| How do OpenClaw host plugins and agent dispatch differ? | [OpenClaw integration](openclaw.md) |
+| How does the Codex Ops plugin reach bounded cluster evidence? | [Codex integration](codex-integration.md) and [Ops MCP](ops-mcp.md) |
+| How are static architecture presentations published privately? | [Archviewer](archviewer.md) |
+| What are the schema, identity, timeout, retry, and failure rules for each connection? | [Communication](communication.md) |
+| Which store owns each record, and how do backup and restore work? | [Data and state](data-and-state.md) |
+| How do events reach observers and telemetry sinks without becoming pipeline truth? | [Telemetry](telemetry.md) |
+| How do identities, secrets, network policy, and supply-chain checks work together? | [Security and trust](security-and-trust.md) |
 | Why does a retry differ from recovery? | [Request, state, and recovery](request-state-recovery.md#failure-paths) |
 | Which required services support the pipeline? | [Pipeline dependencies](pipeline-dependencies.md) |
 | Where do identities, processes, and trust boundaries sit? | [Deployment and trust](deployment-and-trust.md) |
@@ -202,8 +211,11 @@ Human-reader acceptance remains a publication check.
 - [Prism](prism.md) maps the complete design, data, approval, Studio, and pipeline-handoff system.
 - [Buster](buster.md) follows an immutable test plan from Nova resolution through remote result import.
 - [Buster namespace controller](buster-namespace-controller.md) explains leases, fencing, credentials, exposure, retention, and cleanup.
+- [Data and state](data-and-state.md) maps every authoritative store, projection, artifact, backup group, and restore order.
+- [Telemetry](telemetry.md) explains active v2 events, observer delivery, redaction, checkpoints, sink pressure, and the retained v1 boundary.
 - [Pipeline dependencies](pipeline-dependencies.md) explains Git, Redis, PostgreSQL, BuildKit, registries, mirrors, and Tailscale.
 - [Deployment and trust](deployment-and-trust.md) maps processes, identities, storage, grants, networks, and failure domains.
+- [Security and trust](security-and-trust.md) explains the threat model, human and workload identity, secrets, mTLS, network policy, provenance, and least authority.
 - [Platform and operations architecture](platform-and-operations.md) explains K3s, Cilium, Argo CD, and the optional Ops Pod.
 - [Worker Trust](worker-trust.md) gives the detailed SPIFFE and Envoy trust path.
 - [Operate KubeClaw](../use/README.md) contains the complete operator procedure track and its stated limits.

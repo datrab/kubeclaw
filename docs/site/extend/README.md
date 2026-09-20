@@ -26,6 +26,9 @@ Use [Extend Buster](buster.md) for a test provider, fixture, suite, or report
 adapter. Use [Develop Buster Core](platform/buster.md) for plan, wire, engine,
 result-authority, capability, or namespace-controller changes.
 
+Use [Extend Lint](lint.md) for lint policy, rules, tools, targets, baselines,
+Kubernetes policy packs, report validation, and their proof requirements.
+
 A smaller change has fewer trust, recovery, packaging, and maintenance consequences.
 However, configuration cannot create behavior that no installed component supplies.
 
