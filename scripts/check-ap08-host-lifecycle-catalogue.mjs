@@ -6,7 +6,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
 const root = path.resolve(import.meta.dirname, '..');
-const revision = 'bcf032f241b432bf920baa9ee5f727947921447d';
+const revision = '5b6e1b97415ffefa4bb42bf2ae331f27597170b5';
 
 function read(relative) {
   return fs.readFileSync(path.join(root, relative), 'utf8');

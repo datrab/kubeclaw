@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/buster/plugins/junit-report-adapter/plugin.json; skills/buster/plugins/junit-report-adapter/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision 5b6e1b97415ffefa4bb42bf2ae331f27597170b5
 
 ## Authored Guidance
 
@@ -26,7 +26,7 @@ Malformed, oversized, or unsupported JUnit input must fail normalization.
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/junit-report-adapter/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/junit-report-adapter/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -40,7 +40,7 @@ the contract and lifecycle rules that apply to this package.
 - Host: `pipeline-runtime`.
 - Package identity: `kubeclaw.junit-report@1.0.0`.
 - Runtime-role manifest inclusion: `buster`
-- Manifest: [skills/buster/plugins/junit-report-adapter/plugin.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/junit-report-adapter/plugin.json)
+- Manifest: [skills/buster/plugins/junit-report-adapter/plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/junit-report-adapter/plugin.json)
 
 ## Boundaries
 
@@ -121,11 +121,11 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [skills/buster/plugins/junit-report-adapter/plugin.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/junit-report-adapter/plugin.json)
-- Authored package guide: [skills/buster/plugins/junit-report-adapter/README.md](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/junit-report-adapter/README.md)
-- Module for `junit`: [src/adapter.js](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/junit-report-adapter/src/adapter.js)
-- Test: [skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs)
-- Test: [skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts)
+- Manifest: [skills/buster/plugins/junit-report-adapter/plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/junit-report-adapter/plugin.json)
+- Authored package guide: [skills/buster/plugins/junit-report-adapter/README.md](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/junit-report-adapter/README.md)
+- Module for `junit`: [src/adapter.js](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/junit-report-adapter/src/adapter.js)
+- Test: [skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs)
+- Test: [skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts)
 
 Generated facts come from the manifest, package metadata, runtime-role inventory,
 schemas, and test-file discovery. Maintained guidance data owns the purpose,

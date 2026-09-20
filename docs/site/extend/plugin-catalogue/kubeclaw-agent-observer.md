@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json; skills/common/plugins/openclaw-agent-observer/README.md
 Applies to: openclaw-plugin; package 0.0.0
-Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision 5b6e1b97415ffefa4bb42bf2ae331f27597170b5
 
 ## Authored Guidance
 
@@ -26,7 +26,7 @@ It depends on configured Redis streams and does not own pipeline state.
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -40,7 +40,7 @@ the contract and lifecycle rules that apply to this package.
 - Host: `openclaw`.
 - Package identity: `kubeclaw-agent-observer@0.0.0`.
 - Runtime-role manifest inclusion: `buster`, `nova`, `prism`
-- Manifest: [skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json)
+- Manifest: [skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json)
 
 ## Boundaries
 
@@ -62,7 +62,7 @@ Required capabilities: None.
 
 Provided capabilities: None.
 
-Configuration schema: [Inline host schema in the manifest](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json)
+Configuration schema: [Inline host schema in the manifest](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
@@ -129,14 +129,14 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json)
-- Authored package guide: [skills/common/plugins/openclaw-agent-observer/README.md](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/README.md)
-- Module for `kubeclaw-agent-observer`: [./src/index.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/src/index.ts)
-- Test: [skills/common/plugins/openclaw-agent-observer/tests/clean-build.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/tests/clean-build.test.mjs)
-- Test: [skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs)
-- Test: [skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts)
-- Test: [skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs)
-- Test: [skills/common/plugins/openclaw-agent-observer/tests/remediation.test.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/tests/remediation.test.ts)
+- Manifest: [skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json)
+- Authored package guide: [skills/common/plugins/openclaw-agent-observer/README.md](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/README.md)
+- Module for `kubeclaw-agent-observer`: [./src/index.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/src/index.ts)
+- Test: [skills/common/plugins/openclaw-agent-observer/tests/clean-build.test.mjs](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/tests/clean-build.test.mjs)
+- Test: [skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs)
+- Test: [skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts)
+- Test: [skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs)
+- Test: [skills/common/plugins/openclaw-agent-observer/tests/remediation.test.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/tests/remediation.test.ts)
 
 Generated facts come from the manifest, package metadata, runtime-role inventory,
 schemas, and test-file discovery. Maintained guidance data owns the purpose,

@@ -4,7 +4,7 @@ Status: implemented with separate host-plugin and pipeline-adapter boundaries
 Audience: OpenClaw operator, integration maintainer, plugin author, security reviewer
 Owner: OpenClaw integration maintainers
 Evidence: skills/prism/openclaw-plugin; skills/common/plugins/openclaw-agent-observer; skills/common/plugins/openclaw-agent-events; skills/common/plugins/runtime-dispatch
-Evidence revision: `549dfe003d41fca50b85c3040029a74a817715d6`
+Evidence revision: `5b6e1b97415ffefa4bb42bf2ae331f27597170b5`
 Applies to: OpenClaw plugin API 2026.9.1 or later and current runtime-dispatch targets
 Last verified: source, manifest, schema, package, and focused test inspection on 2026-09-20
 
@@ -49,11 +49,11 @@ explicit pressure boundary, not durable storage.
 
 > **Source evidence — package declarations**
 >
-> [The Prism host manifest declares both tools and its only configuration field](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/prism/openclaw-plugin/openclaw.plugin.json#L1-L17).
+> [The Prism host manifest declares both tools and its only configuration field](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/openclaw-plugin/openclaw.plugin.json#L1-L17).
 >
-> [The observer package declares source/runtime entries, compatibility, and its complete test command](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/common/plugins/openclaw-agent-observer/package.json#L1-L32).
+> [The observer package declares source/runtime entries, compatibility, and its complete test command](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/package.json#L1-L32).
 >
-> [The event adapter schema defines the hook allowlist and queue limits](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/common/plugins/openclaw-agent-events/schemas/config.schema.json#L1-L49).
+> [The event adapter schema defines the hook allowlist and queue limits](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-events/schemas/config.schema.json#L1-L49).
 
 ## Discovery, Installation, And Activation
 
@@ -100,9 +100,9 @@ budgets must fit inside the context budget.
 
 > **Source evidence — target admission**
 >
-> [The target parser defines every accepted field, default, identity rule, timing bound, and prompt budget](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L1-L84).
+> [The target parser defines every accepted field, default, identity rule, timing bound, and prompt budget](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/runtime-dispatch/src/openclaw-config.ts#L1-L84).
 >
-> [The adapter rejects every operation outside the exact runtime-dispatch shape](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts#L1-L24).
+> [The adapter rejects every operation outside the exact runtime-dispatch shape](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts#L1-L24).
 
 ## Session Lifecycle
 

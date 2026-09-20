@@ -4,7 +4,7 @@ Status: implemented as a local plugin package and an optional Ops Pod
 Audience: Codex operator, plugin maintainer, platform operator, security reviewer
 Owner: Codex integration maintainers
 Evidence: plugins/kubeclaw-ops; .agents/plugins/marketplace.json; charts/ops-pod; tools/ops-mcp
-Evidence revision: `549dfe003d41fca50b85c3040029a74a817715d6`
+Evidence revision: `5b6e1b97415ffefa4bb42bf2ae331f27597170b5`
 Applies to: `kubeclaw-ops@0.2.0` and the current local marketplace entry
 Last verified: manifest, skill, chart, service, and test inspection on 2026-09-20
 
@@ -22,11 +22,11 @@ available separately in the Codex environment.
 
 > **Source evidence — package and marketplace boundary**
 >
-> [The plugin manifest declares one skill directory and the `Read` interface capability](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/plugins/kubeclaw-ops/.codex-plugin/plugin.json#L1-L26).
+> [The plugin manifest declares one skill directory and the `Read` interface capability](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/plugins/kubeclaw-ops/.codex-plugin/plugin.json#L1-L26).
 >
-> [The local marketplace makes installation available and requests authentication on install](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/.agents/plugins/marketplace.json#L1-L20).
+> [The local marketplace makes installation available and requests authentication on install](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/.agents/plugins/marketplace.json#L1-L20).
 >
-> [The skill defines the evidence order and forbids mutation claims](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md#L1-L33).
+> [The skill defines the evidence order and forbids mutation claims](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md#L1-L33).
 
 ## Installation And Activation
 
@@ -66,9 +66,9 @@ does not expose an exec tool and remains read-only.
 
 > **Source evidence — process and credential layout**
 >
-> [The workload fixes immutable images, one writer, security contexts, mounts, probes, and loopback MCP](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/ops-pod/templates/workload.yaml#L1-L176).
+> [The workload fixes immutable images, one writer, security contexts, mounts, probes, and loopback MCP](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/charts/ops-pod/templates/workload.yaml#L1-L176).
 >
-> [RBAC grants read verbs broadly and isolates optional pod exec in named namespaces](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/ops-pod/templates/rbac.yaml#L1-L91).
+> [RBAC grants read verbs broadly and isolates optional pod exec in named namespaces](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/charts/ops-pod/templates/rbac.yaml#L1-L91).
 
 ## Workspace And Network Boundaries
 

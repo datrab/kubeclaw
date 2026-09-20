@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/nova/plugins/project-summary/plugin.json; skills/nova/plugins/project-summary/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision 5b6e1b97415ffefa4bb42bf2ae331f27597170b5
 
 ## Authored Guidance
 
@@ -26,7 +26,7 @@ It summarizes the inputs supplied by the graph and cannot recover omitted facts.
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/project-summary/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/project-summary/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -40,7 +40,7 @@ the contract and lifecycle rules that apply to this package.
 - Host: `pipeline-runtime`.
 - Package identity: `kubeclaw.project-summary@1.0.0`.
 - Runtime-role manifest inclusion: `nova`
-- Manifest: [skills/nova/plugins/project-summary/plugin.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/project-summary/plugin.json)
+- Manifest: [skills/nova/plugins/project-summary/plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/project-summary/plugin.json)
 
 ## Boundaries
 
@@ -65,16 +65,16 @@ Required capabilities: `artifacts.read`, `artifacts.write`
 
 Provided capabilities: None.
 
-Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/project-summary/schemas/config.schema.json)
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/project-summary/schemas/config.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
 - `agentRole` (string; optional; minLength `1`)
 - `deliveryManifestEncoding` (constant; optional; value `delivery-manifest.utf16-v1`)
 
-Input schema: [schemas/input.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/project-summary/schemas/input.schema.json)
+Input schema: [schemas/input.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/project-summary/schemas/input.schema.json)
 
-Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/project-summary/schemas/result.schema.json)
+Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/project-summary/schemas/result.schema.json)
 
 Declared manifest facts:
 
@@ -124,11 +124,11 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [skills/nova/plugins/project-summary/plugin.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/project-summary/plugin.json)
-- Authored package guide: [skills/nova/plugins/project-summary/README.md](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/project-summary/README.md)
-- Module for `summary`: [src/stage.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/project-summary/src/stage.ts)
-- Test: [skills/nova/plugins/project-summary/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/project-summary/tests/live-function.test.ts)
-- Test: [skills/nova/plugins/project-summary/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/project-summary/tests/package-boundary.test.mjs)
+- Manifest: [skills/nova/plugins/project-summary/plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/project-summary/plugin.json)
+- Authored package guide: [skills/nova/plugins/project-summary/README.md](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/project-summary/README.md)
+- Module for `summary`: [src/stage.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/project-summary/src/stage.ts)
+- Test: [skills/nova/plugins/project-summary/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/project-summary/tests/live-function.test.ts)
+- Test: [skills/nova/plugins/project-summary/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/project-summary/tests/package-boundary.test.mjs)
 
 Generated facts come from the manifest, package metadata, runtime-role inventory,
 schemas, and test-file discovery. Maintained guidance data owns the purpose,

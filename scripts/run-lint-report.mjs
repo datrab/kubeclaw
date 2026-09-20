@@ -16,6 +16,7 @@ Required:
 Options:
   --working-directory PATH  Repository to inspect (default: current directory)
   --project NAME            Project name recorded in the report
+  --module-path PATH        Restrict tools to one repository-relative module
   --tier pre-check|full     Lint tier (default: full)
   --changed-file PATH       Restrict the request; repeat for more files
   --raw-manifest PATH       Override a Kubernetes raw input; repeat as needed
@@ -46,6 +47,7 @@ function parseArguments(values) {
     ['--output', 'output'],
     ['--working-directory', 'workingDirectory'],
     ['--project', 'project'],
+    ['--module-path', 'modulePath'],
     ['--tier', 'tier'],
   ]);
   const listOptions = new Map([
@@ -114,6 +116,7 @@ async function main() {
       policyProject: options.policyProject,
       tier: options.tier,
       project: options.project,
+      modulePath: options.modulePath,
       changedFiles: options.changedFiles,
       includeDebt: options.includeDebt,
       includeExperimental: options.includeExperimental,

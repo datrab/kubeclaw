@@ -7,7 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { generatedCodeInventory } from './docs-lint-policy-reference.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
-const revision = '549dfe003d41fca50b85c3040029a74a817715d6';
+const revision = '5b6e1b97415ffefa4bb42bf2ae331f27597170b5';
 
 const specifications = [
   ['docs/site/extend/lint.md', 15, [
@@ -149,6 +149,24 @@ for (const [file, minimumLinks, markers] of specifications) {
 
 const lintReference = fs.readFileSync(path.join(root, 'docs/site/reference/lint-policy.md'), 'utf8');
 const lintRules = fs.readFileSync(path.join(root, 'docs/site/reference/lint-rules.md'), 'utf8');
+const lintExtension = fs.readFileSync(path.join(root, 'docs/site/extend/lint.md'), 'utf8');
+const lintPackage = JSON.parse(fs.readFileSync(path.join(root, 'skills/nova/plugins/lint/package.json'), 'utf8'));
+assert.equal(typeof lintPackage.scripts?.['test:focused'], 'string', 'lint package lacks the fail-fast focused suite');
+assert.equal(typeof lintPackage.scripts?.['test:live'], 'string', 'lint package lacks the separate live suite');
+for (const required of [
+  'npm run test:focused --prefix skills/nova/plugins/lint',
+  'npm run test:live --prefix skills/nova/plugins/lint',
+  'npm run lint:report --',
+  '--helm-chart charts/kubeclaw',
+  '"hostileCases":8',
+  'LINT_POLICY_ADAPTER_MISSING',
+  'LINT_POLICY_TOOL_MISSING',
+]) assert(lintExtension.includes(required), `lint extension guide omits maintained proof: ${required}`);
+for (const requiredFile of [
+  'scripts/run-lint-report.mjs',
+  'skills/nova/plugins/lint/tests/registry-lifecycle.test.mjs',
+  'skills/nova/plugins/lint/tests/report-contract.test.mjs',
+]) assert(fs.existsSync(path.join(root, requiredFile)), `lint extension proof is absent: ${requiredFile}`);
 const lintPolicy = JSON.parse(fs.readFileSync(
   path.join(root, 'charts/kubeclaw/files/config/lint-policy.json'), 'utf8'));
 assert.equal(lintPolicy.tools.length, 31,

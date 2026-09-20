@@ -80,20 +80,1856 @@
   ],
   "evidenceObjects": [
     {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "charts/kubeclaw/files/config/lint-policy.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
       "path": "charts/kubeclaw/templates/configmap-gateway.yaml"
     },
     {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
       "path": "charts/ops-pod/templates/workload.yaml"
     },
     {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
       "path": "charts/ops-pod/values.yaml"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "contracts/pipeline-worker-core/v1/src/types.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "docker/Dockerfile.prism-agent"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "packaging/runtime/package-ownership.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "plugins/kubeclaw-ops/.codex-plugin/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "plugins/kubeclaw-ops/skills"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "scripts/build-runtime-role-bundle.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "scripts/check-runtime-role-manifests.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/engine/src/index.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/engine/test-gates/provider-loader.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/engine/test-gates/runner.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/api-flow/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/api-flow/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/api-flow/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/api-flow/src/provider.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/api-flow/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/api-flow/tests/remediation.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/axe/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/axe/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/axe/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/axe/src/provider.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/axe/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/container-build/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/container-build/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/container-build/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/container-build/src/provider.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/container-build/tests/deadline.test.mts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/container-build/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/coverage-budget/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/coverage-budget/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/coverage-budget/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/coverage-budget/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/demo-auth-smoke/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/demo-auth-smoke/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/direct-command/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/direct-command/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/direct-command/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/direct-command/src/provider.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/direct-command/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/http/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/http/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/http/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/http/src/provider.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/junit-report-adapter/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/junit-report-adapter/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/junit-report-adapter/src/adapter.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/kubernetes-fixture/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/kubernetes-fixture/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/lighthouse/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/lighthouse/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/lighthouse/src/provider.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/lighthouse/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/openapi/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/openapi/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/openapi/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/openapi/src/provider.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/openapi/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/openapi/tests/remediation.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/playwright/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/playwright/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/playwright/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/playwright/src/provider.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/playwright/tests/fixture/specs/home.spec.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/playwright/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/security-providers/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/security-providers/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/security-providers/schemas/image.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/security-providers/src/dependency.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/security-providers/src/headers.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/security-providers/src/image.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/security-providers/tests/database-freshness.test.mts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/size-budget/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/size-budget/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/size-budget/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/size-budget/src/provider.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/size-budget/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/tailscale-exposure/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/tailscale-exposure/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/tailscale-exposure/src/provider.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/visual/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/visual/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/visual/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/visual/src/provider.js"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/visual/tests/browser-identity.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/buster/plugins/visual/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugin-runtime/foundation/registry/activation.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugin-runtime/foundation/registry/build.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugin-runtime/sdk/src/runtime.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/agent-observability/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/agent-observability/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/agent-observability/schemas/checkpoint.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/agent-observability/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/agent-observability/src/observers.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/agent-observability/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/agent-observability/tests/observers.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/agent-observability/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/agent-observability/tests/parity.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/artifact-store/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/artifact-store/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/artifact-store/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/artifact-store/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/artifact-store/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/command-runner/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/command-runner/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/command-runner/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/command-runner/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/command-runner/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/command-runner/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/command-runner/tests/process-group-exit.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/command-runner/tests/process-group.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/git-workspace/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/git-workspace/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/git-workspace/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/git-workspace/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/git-workspace/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/git-workspace/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/git-workspace/tests/sync-disposition.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/network-http/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/network-http/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/network-http/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/network-http/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/network-http/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/network-http/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/network-http/tests/streaming.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/notification-observer/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/notification-observer/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/notification-observer/schemas/checkpoint.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/notification-observer/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/notification-observer/src/observer.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/notification-observer/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/notification-observer/tests/observer.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/notification-observer/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/notification-observer/tests/parity.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/openclaw-agent-events/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/openclaw-agent-events/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/openclaw-agent-observer/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/openclaw-agent-observer/tests/clean-build.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/openclaw-agent-observer/tests/remediation.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/operator-messaging/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/operator-messaging/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/operator-messaging/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/operator-messaging/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/operator-messaging/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/redis-transport/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/redis-transport/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/redis-transport/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/redis-transport/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/redis-transport/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/redis-transport/tests/package-boundary.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/runtime-dispatch/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/runtime-dispatch/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/runtime-dispatch/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/secret-resolver/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/secret-resolver/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/secret-resolver/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/secret-resolver/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/secret-resolver/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/secret-resolver/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/state-store/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/state-store/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/state-store/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/state-store/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/state-store/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/state-store/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/telemetry-observer/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/telemetry-observer/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/telemetry-observer/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/telemetry-observer/src/observer.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/telemetry-observer/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/telemetry-observer/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/telemetry-observer/tests/parity.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/telemetry-store/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/telemetry-store/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/telemetry-store/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/telemetry-store/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/telemetry-store/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/telemetry-store/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/transport-publisher/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/transport-publisher/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/transport-publisher/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/transport-publisher/tests/config-validation.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/transport-publisher/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/transport-publisher/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/wait-store/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/wait-store/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/wait-store/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/wait-store/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/wait-store/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/common/plugins/wait-store/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/core/effects/durable-invocation.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/core/execution/stage-executor.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/core/telemetry/observer-delivery.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/architecture-validator/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/architecture-validator/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/architecture-validator/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/architecture-validator/schemas/input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/architecture-validator/schemas/result.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/architecture-validator/src/stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/architecture-validator/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/blueprint-sync/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/blueprint-sync/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/blueprint-sync/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/blueprint-sync/schemas/input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/blueprint-sync/schemas/result.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/blueprint-sync/src/stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/blueprint-sync/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/buster-quality-gate/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/buster-quality-gate/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/buster-quality-gate/schemas/input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/buster-quality-gate/schemas/result.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/buster-quality-gate/src/stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/buster-quality-gate/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/buster-quality-gate/tests/suite-first.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/case-study/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/case-study/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/case-study/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/case-study/schemas/input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/case-study/schemas/result.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/case-study/src/stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/case-study/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/case-study/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/case-study/tests/protocol.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/delivery-lint/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/delivery-lint/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/delivery-lint/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/delivery-lint/schemas/input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/delivery-lint/schemas/result.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/delivery-lint/src/stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/schemas/candidate.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/schemas/delivery.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/schemas/ready.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/schemas/result.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/src/candidate.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/src/delivery.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/src/ready.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/tests/compiler.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/tests/controller-client.test.mts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/demo-handoff/tests/handoff.test.mts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/human-approval/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/human-approval/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/human-approval/schemas/architecture-input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/human-approval/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/human-approval/schemas/input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/human-approval/schemas/result.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/human-approval/src/stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/human-approval/tests/approval.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/human-approval/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/human-approval/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/implementation-agent/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/implementation-agent/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/implementation-agent/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/implementation-agent/schemas/input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/implementation-agent/schemas/result.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/implementation-agent/src/stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/implementation-agent/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/implementation-agent/tests/protocol.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/schemas/adapter-config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/schemas/input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/schemas/result.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/src/stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/tests/adapter-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/tests/discovery.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/tests/eslint-discipline.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/tests/registry-lifecycle.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/tests/remediation.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/tests/report-contract.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/lint/tests/stage.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/pipeline-review/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/pipeline-review/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/pipeline-review/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/pipeline-review/schemas/input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/pipeline-review/schemas/result.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/pipeline-review/src/stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/pipeline-review/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/pipeline-review/tests/protocol.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/preflight-contract/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/preflight-contract/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/preflight-contract/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/preflight-contract/schemas/input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/preflight-contract/schemas/result.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/preflight-contract/schemas/source-input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/preflight-contract/src/source-stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/preflight-contract/src/stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/prism-design/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/prism-design/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/prism-design/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/prism-design/schemas/input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/prism-design/schemas/result.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/prism-design/src/stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/prism-design/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/project-summary/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/project-summary/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/project-summary/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/project-summary/schemas/input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/project-summary/schemas/result.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/project-summary/src/stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/project-summary/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/remote-test-gate/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/remote-test-gate/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/remote-test-gate/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/remote-test-gate/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/repository-adapter/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/repository-adapter/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/repository-adapter/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/repository-adapter/src/adapter.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/repository-adapter/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/repository-adapter/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/repository-adapter/tests/path-safety.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/schemas/config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/schemas/input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/schemas/repository-audit-input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/schemas/result.schema.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/src/repository-audit-stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/src/stage.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/echo-review-output.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/echo-review-verification.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/live-function.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/package-boundary.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/protocol.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/remediation.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/repository-review-io.test.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/repository-review-profile.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-bundle-contract.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-bundle-snapshot.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-cluster-contract.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-cluster-identity.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-content-cache.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-context-production.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-context-selection.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-contract-parity.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-coverage.test.mts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-decision-matrix.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-evaluation-metadata.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-evidence-authority.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-evidence-schema-independent.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-fact-extractors.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-governor.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-graph.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-invariants.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-map-artifacts.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-policy-contract.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-policy-profiles.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-policy-resolver.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-prompt-budget.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-proposal-preflight.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-quality-corpus.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-reducer.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-report-builder.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-report-contract.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-report-encoding.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-scale-slicing.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-slicing.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-snapshot-inventory.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-stage-input.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-stage-verification.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-verdict-policy.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-verification-reconciliation.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/review-verified-findings.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/scalable-review-compiler.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/scalable-review-jobs.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/scalable-review-topology.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/scalable-review-verification.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/simplification-contract.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/simplification-fact-producer.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/simplification-manifest.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/simplification-miner.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/nova/plugins/review/tests/stage.unit.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/prism/control/native-operation-store.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/prism/control/native-operation.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/prism/control/worker-evidence.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/prism/control/worker-operation-transport.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/prism/control/worker-results.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/prism/engine/worker-binding.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/prism/openclaw-plugin/index.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/prism/openclaw-plugin/index.test.mjs"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/prism/openclaw-plugin/openclaw.plugin.json"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/prism/openclaw-plugin/README.md"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/prism/server/worker-operation.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/prism/server/worker-service.ts"
+    },
+    {
+      "revision": "5b6e1b97415ffefa4bb42bf2ae331f27597170b5",
+      "path": "skills/worker/core/worker/attempt-executor.ts"
+    },
+    {
+      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
+      "path": "charts/kubeclaw/files/config/lint-policy.json"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
@@ -106,10 +1942,6 @@
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "contracts/pipeline-worker-core/v1/src/types.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "docker/Dockerfile.prism-agent"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
@@ -129,23 +1961,11 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "plugins/kubeclaw-ops/skills"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "scripts/build-runtime-role-bundle.mjs"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "scripts/check-runtime-role-manifests.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/engine/src/index.ts"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
@@ -165,83 +1985,11 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/api-flow/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/api-flow/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/api-flow/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/api-flow/src/provider.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/api-flow/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/api-flow/tests/remediation.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/axe/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/axe/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/axe/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/axe/src/provider.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/axe/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/container-build/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/container-build/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/container-build/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/container-build/src/provider.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/container-build/tests/deadline.test.mts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/container-build/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/buster/plugins/coverage-budget/package.json"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/buster/plugins/coverage-budget/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/coverage-budget/README.md"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
@@ -257,31 +2005,7 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/demo-auth-smoke/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/demo-auth-smoke/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/buster/plugins/direct-command/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/direct-command/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/direct-command/schemas/config.schema.json"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
@@ -301,10 +2025,6 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/http/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/buster/plugins/http/schemas/config.schema.json"
     },
     {
@@ -317,227 +2037,7 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/junit-report-adapter/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/buster/plugins/junit-report-adapter/src/adapter.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/kubernetes-fixture/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/kubernetes-fixture/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/lighthouse/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/lighthouse/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/lighthouse/src/provider.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/lighthouse/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/openapi/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/openapi/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/openapi/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/openapi/src/provider.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/openapi/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/openapi/tests/remediation.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/playwright/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/playwright/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/playwright/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/playwright/src/provider.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/playwright/tests/fixture/specs/home.spec.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/playwright/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/security-providers/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/security-providers/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/security-providers/schemas/image.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/security-providers/src/dependency.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/security-providers/src/headers.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/security-providers/src/image.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/security-providers/tests/database-freshness.test.mts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/size-budget/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/size-budget/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/size-budget/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/size-budget/src/provider.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/size-budget/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/tailscale-exposure/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/tailscale-exposure/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/tailscale-exposure/src/provider.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/visual/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/visual/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/visual/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/visual/src/provider.js"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/visual/tests/browser-identity.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/buster/plugins/visual/tests/live-function.test.ts"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
@@ -577,167 +2077,7 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/agent-observability/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/agent-observability/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/agent-observability/schemas/checkpoint.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/agent-observability/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/agent-observability/src/observers.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/agent-observability/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/agent-observability/tests/observers.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/agent-observability/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/agent-observability/tests/parity.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/artifact-store/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/artifact-store/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/artifact-store/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/artifact-store/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/artifact-store/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/artifact-store/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/command-runner/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/command-runner/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/command-runner/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/command-runner/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/command-runner/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/command-runner/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/command-runner/tests/process-group-exit.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/command-runner/tests/process-group.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/git-workspace/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/git-workspace/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/git-workspace/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/git-workspace/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/git-workspace/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/git-workspace/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/git-workspace/tests/sync-disposition.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/network-http/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/network-http/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/network-http/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/network-http/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/network-http/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/network-http/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/network-http/tests/streaming.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/common/plugins/notification-observer/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/notification-observer/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/notification-observer/schemas/checkpoint.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/notification-observer/schemas/config.schema.json"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
@@ -745,43 +2085,7 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/notification-observer/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/common/plugins/notification-observer/tests/observer.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/notification-observer/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/notification-observer/tests/parity.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/openclaw-agent-events/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/openclaw-agent-events/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
@@ -789,275 +2093,11 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/openclaw-agent-observer/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/openclaw-agent-observer/tests/clean-build.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/openclaw-agent-observer/tests/remediation.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/operator-messaging/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/operator-messaging/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/operator-messaging/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/operator-messaging/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/operator-messaging/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/redis-transport/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/redis-transport/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/redis-transport/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/redis-transport/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/redis-transport/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/redis-transport/tests/package-boundary.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/runtime-dispatch/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/runtime-dispatch/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/runtime-dispatch/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/secret-resolver/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/secret-resolver/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/secret-resolver/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/secret-resolver/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/secret-resolver/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/secret-resolver/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/state-store/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/state-store/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/state-store/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/common/plugins/state-store/src/adapter.ts"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/state-store/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/state-store/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/telemetry-observer/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/telemetry-observer/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/telemetry-observer/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/telemetry-observer/src/observer.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/telemetry-observer/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/telemetry-observer/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/telemetry-observer/tests/parity.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/telemetry-store/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/telemetry-store/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/telemetry-store/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/telemetry-store/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/telemetry-store/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/telemetry-store/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/transport-publisher/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/transport-publisher/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/transport-publisher/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/transport-publisher/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/transport-publisher/tests/config-validation.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/transport-publisher/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/transport-publisher/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/wait-store/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/wait-store/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/wait-store/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/wait-store/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/wait-store/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/common/plugins/wait-store/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/nova/core/effects/coordinator.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/core/effects/durable-invocation.ts"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
@@ -1121,59 +2161,7 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/architecture-validator/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/architecture-validator/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/architecture-validator/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/architecture-validator/schemas/input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/architecture-validator/schemas/result.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/architecture-validator/src/stage.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/architecture-validator/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/nova/plugins/blueprint-sync/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/blueprint-sync/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/blueprint-sync/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/blueprint-sync/schemas/input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/blueprint-sync/schemas/result.schema.json"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
@@ -1185,279 +2173,7 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/blueprint-sync/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/buster-quality-gate/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/buster-quality-gate/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/buster-quality-gate/schemas/input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/buster-quality-gate/schemas/result.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/buster-quality-gate/src/stage.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/buster-quality-gate/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/buster-quality-gate/tests/suite-first.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/case-study/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/case-study/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/case-study/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/case-study/schemas/input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/case-study/schemas/result.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/case-study/src/stage.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/case-study/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/case-study/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/case-study/tests/protocol.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/delivery-lint/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/delivery-lint/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/delivery-lint/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/delivery-lint/schemas/input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/delivery-lint/schemas/result.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/delivery-lint/src/stage.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/schemas/candidate.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/schemas/delivery.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/schemas/ready.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/schemas/result.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/src/candidate.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/src/delivery.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/src/ready.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/tests/compiler.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/tests/controller-client.test.mts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/demo-handoff/tests/handoff.test.mts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/human-approval/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/human-approval/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/human-approval/schemas/architecture-input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/human-approval/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/human-approval/schemas/input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/human-approval/schemas/result.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/human-approval/src/stage.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/human-approval/tests/approval.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/human-approval/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/human-approval/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/implementation-agent/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/implementation-agent/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/implementation-agent/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/implementation-agent/schemas/input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/implementation-agent/schemas/result.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/implementation-agent/src/stage.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/implementation-agent/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/implementation-agent/tests/protocol.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/nova/plugins/lint/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/lint/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/lint/schemas/adapter-config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/lint/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/lint/schemas/input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/lint/schemas/result.schema.json"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
@@ -1485,567 +2201,11 @@
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/lint/tests/adapter-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/lint/tests/discovery.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/lint/tests/eslint-discipline.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/lint/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/lint/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/lint/tests/remediation.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/lint/tests/stage.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/pipeline-review/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/pipeline-review/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/pipeline-review/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/pipeline-review/schemas/input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/pipeline-review/schemas/result.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/pipeline-review/src/stage.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/pipeline-review/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/pipeline-review/tests/protocol.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/preflight-contract/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/preflight-contract/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/preflight-contract/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/preflight-contract/schemas/input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/preflight-contract/schemas/result.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/preflight-contract/schemas/source-input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/preflight-contract/src/source-stage.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/preflight-contract/src/stage.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/prism-design/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/prism-design/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/prism-design/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/prism-design/schemas/input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/prism-design/schemas/result.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/prism-design/src/stage.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/prism-design/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/project-summary/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/project-summary/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/project-summary/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/project-summary/schemas/input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/project-summary/schemas/result.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/project-summary/src/stage.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/project-summary/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/remote-test-gate/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/remote-test-gate/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/remote-test-gate/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/remote-test-gate/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/repository-adapter/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/repository-adapter/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/repository-adapter/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/repository-adapter/src/adapter.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/repository-adapter/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/repository-adapter/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/repository-adapter/tests/path-safety.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/schemas/config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/schemas/input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/schemas/repository-audit-input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/schemas/result.schema.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/src/repository-audit-stage.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/src/stage.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/echo-review-output.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/echo-review-verification.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/live-function.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/package-boundary.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/protocol.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/remediation.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/repository-review-io.test.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/repository-review-profile.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-bundle-contract.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-bundle-snapshot.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-cluster-contract.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-cluster-identity.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-content-cache.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-context-production.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-context-selection.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-contract-parity.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-coverage.test.mts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-decision-matrix.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-evaluation-metadata.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-evidence-authority.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-evidence-schema-independent.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-fact-extractors.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-governor.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-graph.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-invariants.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-map-artifacts.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-policy-contract.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-policy-profiles.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-policy-resolver.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-prompt-budget.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-proposal-preflight.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-quality-corpus.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-reducer.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-report-builder.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-report-contract.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-report-encoding.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-scale-slicing.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-slicing.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-snapshot-inventory.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-stage-input.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-stage-verification.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-verdict-policy.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-verification-reconciliation.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/review-verified-findings.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/scalable-review-compiler.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/scalable-review-jobs.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/scalable-review-topology.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/scalable-review-verification.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/simplification-contract.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/simplification-fact-producer.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/simplification-manifest.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/simplification-miner.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/nova/plugins/review/tests/stage.unit.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/nova/project/compiler.ts"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/prism/control/native-operation-store.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/prism/control/native-operation.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/prism/control/worker-evidence.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/prism/control/worker-operation-transport.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/prism/control/worker-results.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/prism/engine/worker-binding.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/prism/openclaw-plugin/index.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/prism/openclaw-plugin/index.test.mjs"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
       "path": "skills/prism/openclaw-plugin/openclaw.plugin.json"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/prism/openclaw-plugin/README.md"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/prism/server/worker-operation.ts"
-    },
-    {
-      "revision": "bcf032f241b432bf920baa9ee5f727947921447d",
-      "path": "skills/prism/server/worker-service.ts"
     },
     {
       "revision": "bcf032f241b432bf920baa9ee5f727947921447d",

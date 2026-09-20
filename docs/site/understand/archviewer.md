@@ -4,7 +4,7 @@ Status: implemented as an optional Nova sidecar
 Audience: platform operator, documentation publisher, Nova maintainer, security reviewer
 Owner: Archviewer maintainers
 Evidence: docker/Dockerfile.archviewer; docker/archviewer.nginx.conf; charts/kubeclaw/templates/archviewer.yaml; tests/verification/reliability/archviewer-native.test.mjs
-Evidence revision: `549dfe003d41fca50b85c3040029a74a817715d6`
+Evidence revision: `5b6e1b97415ffefa4bb42bf2ae331f27597170b5`
 Applies to: Nova Helm release with `archviewer.enabled=true`
 Last verified: image, chart, web-server configuration, and native-test inspection on 2026-09-20
 
@@ -20,9 +20,9 @@ clear and avoids several roles publishing different content under one hostname.
 
 > **Source evidence — a static, Nova-only surface**
 >
-> [The image contains only Nginx configuration and an initially empty `/designs` directory](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/docker/Dockerfile.archviewer#L1-L22).
+> [The image contains only Nginx configuration and an initially empty `/designs` directory](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/docker/Dockerfile.archviewer#L1-L22).
 >
-> [The chart refuses non-Nova roles and legacy duplicate port ownership](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/templates/archviewer.yaml#L1-L10).
+> [The chart refuses non-Nova roles and legacy duplicate port ownership](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/charts/kubeclaw/templates/archviewer.yaml#L1-L10).
 
 ## Request Path
 
@@ -52,11 +52,11 @@ unknown document returns 404.
 
 > **Source evidence — three access checks**
 >
-> [Nginx requires Basic auth, disables indexes, and exempts only health](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/docker/archviewer.nginx.conf#L1-L19).
+> [Nginx requires Basic auth, disables indexes, and exempts only health](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/docker/archviewer.nginx.conf#L1-L19).
 >
-> [Service, Tailscale Ingress, and Cilium policy bind the same private endpoint](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/templates/archviewer.yaml#L11-L53).
+> [Service, Tailscale Ingress, and Cilium policy bind the same private endpoint](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/charts/kubeclaw/templates/archviewer.yaml#L11-L53).
 >
-> [The deployment mounts only the named htpasswd key from the existing Secret](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/templates/deployment.yaml#L1644-L1652).
+> [The deployment mounts only the named htpasswd key from the existing Secret](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/charts/kubeclaw/templates/deployment.yaml#L1644-L1652).
 
 ## Publication And Lifecycle
 
@@ -80,7 +80,7 @@ release receipt before deployment.
 
 > **Source evidence — current lab wiring**
 >
-> [The Nova values enable the surface and define the actual sidecar, mounts, and probes](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/my-values/nova-values.yaml#L87-L178).
+> [The Nova values enable the surface and define the actual sidecar, mounts, and probes](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/my-values/nova-values.yaml#L87-L178).
 
 ## Failure And Recovery
 

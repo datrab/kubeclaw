@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/nova/plugins/demo-handoff/plugin.json; skills/nova/plugins/demo-handoff/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision 5b6e1b97415ffefa4bb42bf2ae331f27597170b5
 
 ## Authored Guidance
 
@@ -26,7 +26,7 @@ Its three stages and adapter share one package-specific handoff contract.
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -40,7 +40,7 @@ the contract and lifecycle rules that apply to this package.
 - Host: `pipeline-runtime`.
 - Package identity: `kubeclaw.demo-handoff@1.0.0`.
 - Runtime-role manifest inclusion: `nova`
-- Manifest: [skills/nova/plugins/demo-handoff/plugin.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/plugin.json)
+- Manifest: [skills/nova/plugins/demo-handoff/plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/plugin.json)
 
 ## Boundaries
 
@@ -68,15 +68,15 @@ Required capabilities: `test.plan.evidence`, `artifacts.write`
 
 Provided capabilities: None.
 
-Configuration schema: [schemas/empty.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/schemas/empty.schema.json)
+Configuration schema: [schemas/empty.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/schemas/empty.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
 The schema declares no top-level fields.
 
-Input schema: [schemas/candidate.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/schemas/candidate.schema.json)
+Input schema: [schemas/candidate.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/schemas/candidate.schema.json)
 
-Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/schemas/result.schema.json)
+Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/schemas/result.schema.json)
 
 Declared manifest facts:
 
@@ -100,15 +100,15 @@ Required capabilities: `demo.handoff`, `artifacts.write`
 
 Provided capabilities: None.
 
-Configuration schema: [schemas/empty.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/schemas/empty.schema.json)
+Configuration schema: [schemas/empty.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/schemas/empty.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
 The schema declares no top-level fields.
 
-Input schema: [schemas/delivery.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/schemas/delivery.schema.json)
+Input schema: [schemas/delivery.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/schemas/delivery.schema.json)
 
-Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/schemas/result.schema.json)
+Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/schemas/result.schema.json)
 
 Declared manifest facts:
 
@@ -132,15 +132,15 @@ Required capabilities: `demo.handoff`, `artifacts.write`
 
 Provided capabilities: None.
 
-Configuration schema: [schemas/empty.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/schemas/empty.schema.json)
+Configuration schema: [schemas/empty.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/schemas/empty.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
 The schema declares no top-level fields.
 
-Input schema: [schemas/ready.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/schemas/ready.schema.json)
+Input schema: [schemas/ready.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/schemas/ready.schema.json)
 
-Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/schemas/result.schema.json)
+Result schema: [schemas/result.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/schemas/result.schema.json)
 
 Declared manifest facts:
 
@@ -164,7 +164,7 @@ Required capabilities: `artifacts.read`, `test.plan.evidence`, `operator.request
 
 Provided capabilities: `demo.handoff`
 
-Configuration schema: [schemas/adapter.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/schemas/adapter.schema.json)
+Configuration schema: [schemas/adapter.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/schemas/adapter.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
@@ -229,15 +229,15 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [skills/nova/plugins/demo-handoff/plugin.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/plugin.json)
-- Authored package guide: [skills/nova/plugins/demo-handoff/README.md](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/README.md)
-- Module for `candidate`: [src/candidate.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/src/candidate.ts)
-- Module for `delivery`: [src/delivery.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/src/delivery.ts)
-- Module for `ready`: [src/ready.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/src/ready.ts)
-- Module for `handoff`: [src/adapter.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/src/adapter.ts)
-- Test: [skills/nova/plugins/demo-handoff/tests/compiler.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/tests/compiler.test.mjs)
-- Test: [skills/nova/plugins/demo-handoff/tests/controller-client.test.mts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/tests/controller-client.test.mts)
-- Test: [skills/nova/plugins/demo-handoff/tests/handoff.test.mts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/demo-handoff/tests/handoff.test.mts)
+- Manifest: [skills/nova/plugins/demo-handoff/plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/plugin.json)
+- Authored package guide: [skills/nova/plugins/demo-handoff/README.md](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/README.md)
+- Module for `candidate`: [src/candidate.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/src/candidate.ts)
+- Module for `delivery`: [src/delivery.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/src/delivery.ts)
+- Module for `ready`: [src/ready.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/src/ready.ts)
+- Module for `handoff`: [src/adapter.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/src/adapter.ts)
+- Test: [skills/nova/plugins/demo-handoff/tests/compiler.test.mjs](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/tests/compiler.test.mjs)
+- Test: [skills/nova/plugins/demo-handoff/tests/controller-client.test.mts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/tests/controller-client.test.mts)
+- Test: [skills/nova/plugins/demo-handoff/tests/handoff.test.mts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/demo-handoff/tests/handoff.test.mts)
 
 Generated facts come from the manifest, package metadata, runtime-role inventory,
 schemas, and test-file discovery. Maintained guidance data owns the purpose,

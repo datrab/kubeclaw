@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(import.meta.dirname, '..');
 const policyPath = path.join(root, 'charts/kubeclaw/files/config/lint-policy.json');
 const target = path.join(root, 'docs/site/reference/lint-policy-generated.md');
-const revision = '549dfe003d41fca50b85c3040029a74a817715d6';
+const revision = '5b6e1b97415ffefa4bb42bf2ae331f27597170b5';
 const versionsPath = path.join(root, 'versions.json');
 const novaToolsPackagePath = path.join(root, 'docker/nova-tools/package.json');
 const novaToolsLockPath = path.join(root, 'docker/nova-tools/package-lock.json');
@@ -63,7 +63,8 @@ const lintSourcePaths = fs.readdirSync(path.join(root, 'skills/nova/plugins/lint
   .filter((file) => file.endsWith('.ts'))
   .map((file) => path.join(root, 'skills/nova/plugins/lint/src/engine', file))
   .concat(['request.ts', 'adapter.ts', 'candidate.ts', 'stage.ts'].map((file) =>
-    path.join(root, 'skills/nova/plugins/lint/src', file)));
+    path.join(root, 'skills/nova/plugins/lint/src', file)))
+  .concat(path.join(root, 'scripts/run-lint-report.mjs'));
 
 function literalValues(node) {
   const values = [];
@@ -281,8 +282,8 @@ const packRuleRows = packs.flatMap(({ reference, pack }) => pack.rules.map((rule
 )).join('\n');
 
 const versionArgumentNames = [
-  'GOCYCLO_VERSION', 'GOVULNCHECK_VERSION', 'HADOLINT_VERSION', 'HELM_VERSION',
-  'KUBECONFORM_VERSION', 'MYPY_VERSION', 'RUFF_VERSION', 'SEMGREP_VERSION',
+  'GOCYCLO_VERSION', 'GOVULNCHECK_VERSION', 'GO_VERSION', 'HADOLINT_VERSION', 'HELM_VERSION',
+  'KUBECONFORM_VERSION', 'KUBECTL_VERSION', 'MYPY_VERSION', 'RUFF_VERSION', 'SEMGREP_VERSION',
   'SHFMT_VERSION', 'STATICCHECK_VERSION', 'TERRAFORM_VERSION', 'TFLINT_VERSION',
   'TRIVY_VERSION',
 ];
@@ -294,6 +295,10 @@ const analyserVersionRows = [
     .replaceAll('_', '-'), repositoryVersions.buildArgs[name], '`versions.json` build argument']),
   ...analyserPackageNames.map((name) => [name, novaToolsPackage.dependencies[name],
     '`docker/nova-tools/package.json` direct dependency; lock verified']),
+  ['kubernetes-schema-tree', repositoryVersions.buildArgs.KUBERNETES_JSON_SCHEMA_COMMIT,
+    '`versions.json` source commit; selected tree matches `KUBECTL_VERSION`'],
+  ['nova-runtime-base', `${repositoryVersions.openclaw.version}@${repositoryVersions.openclaw.digest}`,
+    '`versions.json` OpenClaw base image identity'],
 ].map(([name, version, authority]) => `| \`${name}\` | \`${version}\` | ${authority} |`).join('\n');
 
 const identifierRows = [
@@ -310,7 +315,7 @@ Status: generated reference
 Audience: lint-policy maintainer, operator, Nova maintainer
 Owner: lint
 Generator: scripts/docs-lint-policy-reference.mjs
-Evidence: charts/kubeclaw/files/config/lint-policy.json; ${path.relative(root, baselinePath)}; ${packs.map(({ reference }) => path.relative(root, path.resolve(configDirectory, reference.path))).join('; ')}; versions.json; docker/nova-tools/package.json; docker/nova-tools/package-lock.json; charts/kubeclaw/files/config/eslint.config.mjs; charts/kubeclaw/files/config/eslint-type-evidence-config.mjs; charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs; charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs; charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs; charts/kubeclaw/files/config/.semgrep.yml; skills/nova/plugins/lint/src
+Evidence: charts/kubeclaw/files/config/lint-policy.json; ${path.relative(root, baselinePath)}; ${packs.map(({ reference }) => path.relative(root, path.resolve(configDirectory, reference.path))).join('; ')}; versions.json; docker/nova-tools/package.json; docker/nova-tools/package-lock.json; charts/kubeclaw/files/config/eslint.config.mjs; charts/kubeclaw/files/config/eslint-type-evidence-config.mjs; charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs; charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs; charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs; charts/kubeclaw/files/config/.semgrep.yml; skills/nova/plugins/lint/src; scripts/run-lint-report.mjs
 Evidence revision: \`${revision}\`
 Applies to: \`${policy.schema_version}\`, \`${baseline.schema_version}\`, and ${packs.map(({ pack }) => `\`${pack.schema_version}\``).join(', ')}
 Last verified: generated from repository configuration on 2026-09-20

@@ -352,8 +352,8 @@ umgebungsabhängige Live-Abnahme getrennt.
 
 ### AP09.6 — Lint
 
-**Status:** Intern abgeschlossen am 20. September 2026. Die unabhängige
-Read-only-Abnahme des Gesamtplans bleibt offen.
+**Status:** In abschliessender unabhängiger Re-Abnahme am 20. September 2026.
+Die Read-only-Abnahme des Gesamtplans bleibt getrennt offen.
 
 - Pre-check, Full Lint, Executor und Report Adapter mit ihrer Autorität erklären.
 - Alle Regeln und Tools als erzeugte Referenz inventarisieren.
@@ -394,7 +394,11 @@ erfolgreich. Der nachgeschaltete repository-weite Migrationslauf war nicht
 vollständig erfolgreich. Ihm fehlten unter anderem `/usr/bin/tar`, GNU `flock`
 und das lokale Kubernetes-Schema. Ein älterer Cutover-Test erwartet außerdem
 noch keine experimentellen Type-Evidence-Tools. Die fokussierten Lint-Tests
-waren bis einschließlich der acht Remediation-Fälle erfolgreich. Der
+waren bis einschließlich der acht Remediation-Fälle erfolgreich. Der neue
+Fail-fast-Pfad prüft zusätzlich Registry-Lifecycle, acht feindliche
+Report-Contract-Fälle, Stage-Request-Bindung und echte Regel-Ausnahmen. Ein
+gepflegter Engine-Runner erzeugt und behält validierte Reports; er trennt
+Engine-/Policy-Prüfung ausdrücklich von Stage-, Grant- und Artifact-Prüfung. Der
 abschließende Live-Test benötigt `shellcheck`, `shfmt` und GNU `flock`;
 BusyBox `flock` besitzt die erforderliche Timeout-Option nicht.
 
@@ -423,9 +427,18 @@ Die erste unabhängige Runde lehnte die Abnahme ab. Sie fand unvollständige
 Fehlercode-Erzeugung, falsche experimentelle Blocking-Aussagen, fehlende
 Lifecycle-Wege, fehlende Versionsautorität, unvollständige Generator-Governance,
 fehlende Entscheidungskennzeichnung und die Policy-Pack-Delivery-Lücke. Diese
-Punkte wurden anschließend in Generator, Checks und Leitfäden bearbeitet. Eine
-neue unabhängige Runde muss die Korrekturen ohne Chat-Kontext bestätigen; bis
-dahin bleibt die Leserabnahme offen.
+Punkte wurden anschließend in Generator, Checks und Leitfäden bearbeitet. Die
+zweite unabhängige Runde lehnte ebenfalls ab. Sie fand einen False-Green im
+veröffentlichten Shell-Block, fehlendes ESLint-`PATH`, keinen behaltenen Lauf
+gegen die kanonische Policy, zu starke Report-Identity-Aussagen, einen falschen
+Anker und zu konzeptionelle Erweiterungs-/Rollback-Wege. Die Korrektur ersetzte
+den Shell-Block durch ein Fail-fast-npm-Ziel, ergänzte den Report-Runner und
+hostile Contract-/Registry-/Pack-Lifecycle-Tests, band bekannte Request-Werte im
+Stage und machte die vier Erweiterungswege datei-, befehls-, beobachtungs- und
+cleanup-genau. Sie dokumentiert zudem, dass der frische Source-Checkout das
+runtime-erzeugte `Projects/buster-infra-smoke`-Manifest nicht besitzt. Eine neue
+Fresh-Context-Runde muss diese zweite Korrektur noch bestätigen; bis dahin bleibt
+die Leserabnahme offen.
 
 ### AP09.7 — Plattform, Spezialisten, Kommunikation, Daten und Sicherheit
 

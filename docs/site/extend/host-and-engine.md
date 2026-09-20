@@ -4,7 +4,7 @@ Status: implemented with stated local limits
 Audience: host-extension author, Worker engine maintainer, runtime packager
 Owner: plugin-foundation
 Evidence: skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json; skills/prism/openclaw-plugin/openclaw.plugin.json; plugins/kubeclaw-ops/.codex-plugin/plugin.json; charts/ops-pod; skills/worker/core/worker/attempt-executor.ts; contracts/pipeline-worker-core/v1/src/types.ts; packaging/runtime/roles
-Evidence revision: `bcf032f241b432bf920baa9ee5f727947921447d`
+Evidence revision: `5b6e1b97415ffefa4bb42bf2ae331f27597170b5`
 Applies to: OpenClaw extensions, Codex plugins and skills, Worker Core engines, runtime roles
 Last verified: source, package, role, and focused host checks on 2026-09-17
 
@@ -75,7 +75,7 @@ pipeline registration arrays. The configuration schema names Redis connection,
 payload, queue, retry, retention, priority, and hook-timeout fields. It marks the
 password as sensitive for the host UI.
 
-> **Host manifest:** [The observer manifest declares startup activation, strict configuration, and the sensitive password field](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#L1-L35).
+> **Host manifest:** [The observer manifest declares startup activation, strict configuration, and the sensitive password field](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#L1-L35).
 
 Follow this path:
 
@@ -93,16 +93,16 @@ Follow this path:
 The observer starts its writer only after it resolves configuration. It drops invalid
 events with one bounded warning. It records deduplication only after queue admission.
 
-> **Runtime lifecycle:** [The observer resolves configuration, starts the writer, normalizes events, flushes, and stops subscriptions](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/src/index.ts#L41-L149).
+> **Runtime lifecycle:** [The observer resolves configuration, starts the writer, normalizes events, flushes, and stops subscriptions](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/src/index.ts#L41-L149).
 >
-> **Admission and deduplication:** [The observer records a dedupe key only after the writer accepts the event](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/src/index.ts#L176-L192).
+> **Admission and deduplication:** [The observer records a dedupe key only after the writer accepts the event](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/src/index.ts#L176-L192).
 >
-> **Package exercise:** [The live-function test covers disabled, healthy, invalid, and degraded startup paths](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts#L9-L130).
+> **Package exercise:** [The live-function test covers disabled, healthy, invalid, and degraded startup paths](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts#L9-L130).
 
 The runtime-role builder packages this extension separately from pipeline plugins.
 The role manifest must select it. Source presence alone is not activation.
 
-> **Extension bundle path:** [The role builder synchronizes the observer contract and copies selected extension bytes](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/scripts/build-runtime-role-bundle.mjs#L190-L204).
+> **Extension bundle path:** [The role builder synchronizes the observer contract and copies selected extension bytes](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/scripts/build-runtime-role-bundle.mjs#L190-L204).
 
 ## Build An OpenClaw Tool Extension
 
@@ -114,9 +114,9 @@ The manifest declares tool names, coding profiles, startup activation, and the
 control URL. OpenClaw validates tool parameters before the extension sends the HTTP
 request. Prism control validates and persists the request after transport.
 
-> **Tool manifest:** [The Prism manifest declares two tool contracts and one strict control URL field](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/openclaw.plugin.json#L1-L17).
+> **Tool manifest:** [The Prism manifest declares two tool contracts and one strict control URL field](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/openclaw-plugin/openclaw.plugin.json#L1-L17).
 >
-> **Tool registration:** [The extension defines the complete design-set and revision parameter contracts and posts them to Prism control](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/index.mjs#L22-L80).
+> **Tool registration:** [The extension defines the complete design-set and revision parameter contracts and posts them to Prism control](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/openclaw-plugin/index.mjs#L22-L80).
 
 The current Prism tools bound the design count, but not every text or document
 size. Their HTTP request has no explicit timeout or cancellation signal. The
@@ -137,11 +137,11 @@ Build a new tool extension as follows:
 9. Inspect the effective host configuration after migration.
 10. Invoke the real tool before live acceptance.
 
-> **Registration test:** [The Prism test verifies both tool names and the exact three-design bound](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/index.test.mjs#L1-L16).
+> **Registration test:** [The Prism test verifies both tool names and the exact three-design bound](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/openclaw-plugin/index.test.mjs#L1-L16).
 >
-> **Image inclusion:** [The Prism agent image copies the extension to the OpenClaw extension directory](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/docker/Dockerfile.prism-agent#L111-L119).
+> **Image inclusion:** [The Prism agent image copies the extension to the OpenClaw extension directory](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/docker/Dockerfile.prism-agent#L111-L119).
 >
-> **Role-specific host configuration:** [The chart allows and configures the Prism extension only for the Prism role](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/charts/kubeclaw/templates/configmap-gateway.yaml#L262-L320).
+> **Role-specific host configuration:** [The chart allows and configures the Prism extension only for the Prism role](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/charts/kubeclaw/templates/configmap-gateway.yaml#L262-L320).
 
 ## Build A Codex Plugin Or Skill
 
@@ -160,11 +160,11 @@ credential mounts as the effective authority, even though the plugin interface a
 the MCP tool surface are read-only. Set `rbac.execNamespaces` to `[]` to remove the
 Codex token, kubeconfig, and exec binding.
 
-> **Codex manifest:** [The Ops manifest declares the skill directory, read capability, interface text, and example prompts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/plugins/kubeclaw-ops/.codex-plugin/plugin.json#L1-L26).
+> **Codex manifest:** [The Ops manifest declares the skill directory, read capability, interface text, and example prompts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/plugins/kubeclaw-ops/.codex-plugin/plugin.json#L1-L26).
 >
-> **Deployment authority:** [The chart mounts Kubernetes credentials into Codex when an exec namespace is configured](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/charts/ops-pod/templates/workload.yaml#L51-L76).
+> **Deployment authority:** [The chart mounts Kubernetes credentials into Codex when an exec namespace is configured](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/charts/ops-pod/templates/workload.yaml#L51-L76).
 >
-> [The default value selects `kubeclaw`](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/charts/ops-pod/values.yaml#L21-L28).
+> [The default value selects `kubeclaw`](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/charts/ops-pod/values.yaml#L21-L28).
 
 Use this authoring path:
 
@@ -191,9 +191,9 @@ The attempt envelope binds pipeline, node, attempt, claim, profile, package,
 capability, limit, input, operation, cancellation, and deadline identity. A worker
 profile binds one worker type to one exact engine identity and digest.
 
-> **Profile and envelope:** [The Worker contract binds engine identity, packages, capabilities, limits, inputs, operation, and cancellation](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/contracts/pipeline-worker-core/v1/src/types.ts#L28-L49).
+> **Profile and envelope:** [The Worker contract binds engine identity, packages, capabilities, limits, inputs, operation, and cancellation](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/contracts/pipeline-worker-core/v1/src/types.ts#L28-L49).
 >
-> **Attempt data:** [The attempt envelope carries immutable identity, limits, inputs, and the specialist operation](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/contracts/pipeline-worker-core/v1/src/types.ts#L113-L154).
+> **Attempt data:** [The attempt envelope carries immutable identity, limits, inputs, and the specialist operation](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/contracts/pipeline-worker-core/v1/src/types.ts#L113-L154).
 
 Worker Core calls a narrow operation lifecycle:
 
@@ -204,7 +204,7 @@ Worker Core calls a narrow operation lifecycle:
 - optional cleanup and evidence hooks finish the attempt;
 - optional finalization adds evidence-derived facts before durability.
 
-> **Operation boundary:** [The shared executor defines prepare, execute, terminate, measurement, cleanup, evidence, and finalization hooks](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/worker/core/worker/attempt-executor.ts#L62-L93).
+> **Operation boundary:** [The shared executor defines prepare, execute, terminate, measurement, cleanup, evidence, and finalization hooks](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/worker/core/worker/attempt-executor.ts#L62-L93).
 
 Use a new engine only when one stage or provider cannot express the specialist
 operation. Then follow this path:
@@ -223,12 +223,12 @@ operation. Then follow this path:
 Prism shows the contract binding. It accepts only the Prism engine contract and five
 known operations. It verifies request and result schema identities around execution.
 
-> **Prism binding:** [The Prism binding checks contract, operation, schema identity, input, execution, and result before it returns Worker data](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/engine/worker-binding.ts#L8-L49).
+> **Prism binding:** [The Prism binding checks contract, operation, schema identity, input, execution, and result before it returns Worker data](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/engine/worker-binding.ts#L8-L49).
 
 Buster also uses Worker Core, but Buster owns test-plan meaning. Its runtime exports
 the neutral Core and Buster's provider, report, evidence, and remote-plan services.
 
-> **Buster boundary:** [The Buster runtime exports its engine while the engine exports Worker Core and Buster-owned test services](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/buster/engine/src/index.ts#L1-L13).
+> **Buster boundary:** [The Buster runtime exports its engine while the engine exports Worker Core and Buster-owned test services](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/engine/src/index.ts#L1-L13).
 
 There is no installable Worker-engine manifest or generic engine loader at this
 revision. A new engine is a product integration and packaging change. Do not present
@@ -243,30 +243,30 @@ The path starts in Prism control. Control stores the operation input as an artif
 It creates a version-three attempt envelope with that artifact reference. It then
 reserves the idempotency key and complete envelope in PostgreSQL before dispatch.
 
-> **Submission and completion:** [Prism stores input, reserves the attempt, dispatches it, records the result, hydrates evidence, and marks completion](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/control/native-operation.ts#L12-L29).
+> **Submission and completion:** [Prism stores input, reserves the attempt, dispatches it, records the result, hydrates evidence, and marks completion](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/control/native-operation.ts#L12-L29).
 >
-> **Durable identity:** [The operation store rejects conflicting reuse and preserves the original envelope and terminal result](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/control/native-operation-store.ts#L25-L67).
+> **Durable identity:** [The operation store rejects conflicting reuse and preserves the original envelope and terminal result](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/control/native-operation-store.ts#L25-L67).
 
 Control sends the exact envelope to `POST /v1/attempts`. It uses SPIFFE transport
 identity when enabled. Otherwise, it signs the body with a timestamp and nonce. The
 transport limits dispatch time and response bytes.
 
-> **Worker transport:** [The client submits one signed or SPIFFE-authenticated envelope and rejects oversized or unsuccessful responses](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/control/worker-operation-transport.ts#L8-L35).
+> **Worker transport:** [The client submits one signed or SPIFFE-authenticated envelope and rejects oversized or unsuccessful responses](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/control/worker-operation-transport.ts#L8-L35).
 
 The worker accepts only JSON at the attempt route. It bounds request bytes, verifies
 the caller, validates the envelope, and checks native readiness. A busy or unavailable
 worker returns `503`. Invalid input or execution returns `422`.
 
-> **Worker ingress:** [The Prism worker authenticates, validates, dispatches, and returns one bounded attempt result](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/server/worker-service.ts#L28-L69).
+> **Worker ingress:** [The Prism worker authenticates, validates, dispatches, and returns one bounded attempt result](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/server/worker-service.ts#L28-L69).
 >
-> **Readiness and contract check:** [Dispatch rejects an invalid envelope or a native runtime that needs reconciliation](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/server/worker-service.ts#L89-L106).
+> **Readiness and contract check:** [Dispatch rejects an invalid envelope or a native runtime that needs reconciliation](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/server/worker-service.ts#L89-L106).
 
 The Prism operation implements the neutral Worker hooks. Preparation is synchronous.
 Execution reads the declared input artifact and calls only a supported Prism operation.
 Termination aborts owned work and waits for settlement. Evidence uploads remove large
 binary values from the specialist result.
 
-> **Specialist operation:** [The Prism operation implements prepare, execute, terminate, measurement, artifact input, and bounded evidence output](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/server/worker-operation.ts#L9-L98).
+> **Specialist operation:** [The Prism operation implements prepare, execute, terminate, measurement, artifact input, and bounded evidence output](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/server/worker-operation.ts#L9-L98).
 
 Worker Core emits ordered progress for acceptance, start, operation completion, and
 cleanup. Progress delivery is best effort. The terminal result remains the authority
@@ -280,20 +280,20 @@ Cancellation aborts the operation signal. Core calls `terminate`, bounds settlem
 measures resources, and runs cleanup. It reports unresolved execution or failed
 cleanup instead of detaching owned work.
 
-> **Execution and cancellation:** [Worker Core applies deadlines, races cancellation, terminates work, measures resources, and runs cleanup](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/worker/core/worker/attempt-executor.ts#L360-L465).
+> **Execution and cancellation:** [Worker Core applies deadlines, races cancellation, terminates work, measures resources, and runs cleanup](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/worker/core/worker/attempt-executor.ts#L360-L465).
 >
-> **Progress and terminal result:** [Worker Core emits best-effort progress and creates a digest-bound authoritative result](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/worker/core/worker/attempt-executor.ts#L590-L689).
+> **Progress and terminal result:** [Worker Core emits best-effort progress and creates a digest-bound authoritative result](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/worker/core/worker/attempt-executor.ts#L590-L689).
 >
-> **Receipt limit:** [The executor states that its local receipt detects accidental duplication or mutation and relies on authenticated transport for identity](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/worker/core/worker/attempt-executor.ts#L658-L680).
+> **Receipt limit:** [The executor states that its local receipt detects accidental duplication or mutation and relies on authenticated transport for identity](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/worker/core/worker/attempt-executor.ts#L658-L680).
 
 Control validates the result against the original attempt before it reads evidence.
 It checks attempt identity, claim generation, result digest, state, and specialist
 schema. It stores the bound terminal result before evidence hydration. A hydration
 failure therefore cannot cause an automatic second execution.
 
-> **Result import:** [Prism binds the result to the attempt and validates the specialist schema before acceptance](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/control/worker-results.ts#L19-L57).
+> **Result import:** [Prism binds the result to the attempt and validates the specialist schema before acceptance](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/control/worker-results.ts#L19-L57).
 >
-> **Evidence import:** [Prism enforces evidence count, byte, type, media, location, and full-log requirements before hydration](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/control/worker-evidence.ts#L5-L37).
+> **Evidence import:** [Prism enforces evidence count, byte, type, media, location, and full-log requirements before hydration](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/control/worker-evidence.ts#L5-L37).
 
 This example has one deliberate limitation. The HTTP response carries the terminal
 result. Progress events do not replace it and do not provide a separate completion
@@ -341,7 +341,7 @@ Adding a role manifest alone is not supported. The extension catalogue in the
 role checker also lists only `kubeclaw-agent-observer`; a new host extension
 requires an explicit packaging integration.
 
-> **Fixed role and extension sets:** [The checker lists supported identities](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/scripts/check-runtime-role-manifests.mjs#L6-L85), and [the builder rejects other roles](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/scripts/build-runtime-role-bundle.mjs#L7-L14).
+> **Fixed role and extension sets:** [The checker lists supported identities](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/scripts/check-runtime-role-manifests.mjs#L6-L85), and [the builder rejects other roles](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/scripts/build-runtime-role-bundle.mjs#L7-L14).
 
 For an existing role:
 
@@ -356,15 +356,15 @@ For an existing role:
 9. Render deployment configuration and verify the selected role.
 10. Perform startup, readiness, one real task, shutdown, and recovery acceptance.
 
-> **Three role shapes:** [The ownership map assigns shared, Nova, Worker, Buster, and Prism packages to allowed roles](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/packaging/runtime/package-ownership.json#L8-L26).
+> **Three role shapes:** [The ownership map assigns shared, Nova, Worker, Buster, and Prism packages to allowed roles](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/packaging/runtime/package-ownership.json#L8-L26).
 >
 The role checker collects required capabilities from stages, observers, and
 adapters. It does not prove Buster test-provider capability closure; run the
 provider registry, plan resolver, and provider execution checks separately.
 
-> **Role closure:** [The role checker validates ownership, dependency closure, capability providers, and complete owned-plugin selection](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/scripts/check-runtime-role-manifests.mjs#L77-L145).
+> **Role closure:** [The role checker validates ownership, dependency closure, capability providers, and complete owned-plugin selection](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/scripts/check-runtime-role-manifests.mjs#L77-L145).
 >
-> **Bundle selection:** [The builder copies only role-selected plugin packages and preserves their source digests](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/scripts/build-runtime-role-bundle.mjs#L169-L187).
+> **Bundle selection:** [The builder copies only role-selected plugin packages and preserves their source digests](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/scripts/build-runtime-role-bundle.mjs#L169-L187).
 
 ## Compatibility And Replacement
 

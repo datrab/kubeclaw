@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/prism/openclaw-plugin/openclaw.plugin.json; skills/prism/openclaw-plugin/README.md
 Applies to: openclaw-plugin; package 0.1.0
-Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision 5b6e1b97415ffefa4bb42bf2ae331f27597170b5
 
 ## Authored Guidance
 
@@ -26,7 +26,7 @@ It requires Prism control. The tools constrain the design count, but do not boun
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/openclaw-plugin/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -41,7 +41,7 @@ the contract and lifecycle rules that apply to this package.
 - Package identity: `kubeclaw-prism@0.1.0`.
 - Runtime-role manifest inclusion: No runtime role.
 - Additional packaging path: The Prism agent image copies this extension directly; the runtime-role manifest does not list it.
-- Manifest: [skills/prism/openclaw-plugin/openclaw.plugin.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/openclaw.plugin.json)
+- Manifest: [skills/prism/openclaw-plugin/openclaw.plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/openclaw-plugin/openclaw.plugin.json)
 
 ## Boundaries
 
@@ -63,7 +63,7 @@ Required capabilities: None.
 
 Provided capabilities: None.
 
-Configuration schema: [Inline host schema in the manifest](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/openclaw.plugin.json)
+Configuration schema: [Inline host schema in the manifest](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/openclaw-plugin/openclaw.plugin.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
@@ -108,10 +108,10 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [skills/prism/openclaw-plugin/openclaw.plugin.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/openclaw.plugin.json)
-- Authored package guide: [skills/prism/openclaw-plugin/README.md](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/README.md)
-- Module for `kubeclaw-prism`: [./index.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/index.mjs)
-- Test: [skills/prism/openclaw-plugin/index.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/prism/openclaw-plugin/index.test.mjs)
+- Manifest: [skills/prism/openclaw-plugin/openclaw.plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/openclaw-plugin/openclaw.plugin.json)
+- Authored package guide: [skills/prism/openclaw-plugin/README.md](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/openclaw-plugin/README.md)
+- Module for `kubeclaw-prism`: [./index.mjs](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/openclaw-plugin/index.mjs)
+- Test: [skills/prism/openclaw-plugin/index.test.mjs](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/prism/openclaw-plugin/index.test.mjs)
 
 Generated facts come from the manifest, package metadata, runtime-role inventory,
 schemas, and test-file discovery. Maintained guidance data owns the purpose,

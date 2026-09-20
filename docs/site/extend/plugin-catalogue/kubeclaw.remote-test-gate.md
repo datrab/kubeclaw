@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/nova/plugins/remote-test-gate/plugin.json; skills/nova/plugins/remote-test-gate/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: see the separate verification record; source evidence revision bcf032f241b432bf920baa9ee5f727947921447d
+Last verified: see the separate verification record; source evidence revision 5b6e1b97415ffefa4bb42bf2ae331f27597170b5
 
 ## Authored Guidance
 
@@ -26,7 +26,7 @@ Plan and evidence identities must remain bound across remote execution.
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/remote-test-gate/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/remote-test-gate/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -40,7 +40,7 @@ the contract and lifecycle rules that apply to this package.
 - Host: `pipeline-runtime`.
 - Package identity: `kubeclaw.remote-test-gate@1.0.0`.
 - Runtime-role manifest inclusion: `nova`
-- Manifest: [skills/nova/plugins/remote-test-gate/plugin.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/remote-test-gate/plugin.json)
+- Manifest: [skills/nova/plugins/remote-test-gate/plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/remote-test-gate/plugin.json)
 
 ## Boundaries
 
@@ -66,7 +66,7 @@ Required capabilities: `secrets.read`
 
 Provided capabilities: `test.plan.execute`
 
-Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/remote-test-gate/schemas/config.schema.json)
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/remote-test-gate/schemas/config.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
@@ -102,7 +102,7 @@ Required capabilities: `artifacts.read`
 
 Provided capabilities: `test.plan.evidence`
 
-Configuration schema: [schemas/evidence-config.schema.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json)
+Configuration schema: [schemas/evidence-config.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
@@ -160,12 +160,12 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [skills/nova/plugins/remote-test-gate/plugin.json](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/remote-test-gate/plugin.json)
-- Authored package guide: [skills/nova/plugins/remote-test-gate/README.md](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/remote-test-gate/README.md)
-- Module for `plan`: [src/adapter.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/remote-test-gate/src/adapter.ts)
-- Module for `evidence`: [src/evidence-adapter.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts)
-- Test: [skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts)
-- Test: [skills/nova/plugins/remote-test-gate/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/remote-test-gate/tests/live-function.test.ts)
+- Manifest: [skills/nova/plugins/remote-test-gate/plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/remote-test-gate/plugin.json)
+- Authored package guide: [skills/nova/plugins/remote-test-gate/README.md](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/remote-test-gate/README.md)
+- Module for `plan`: [src/adapter.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/remote-test-gate/src/adapter.ts)
+- Module for `evidence`: [src/evidence-adapter.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts)
+- Test: [skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts)
+- Test: [skills/nova/plugins/remote-test-gate/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/remote-test-gate/tests/live-function.test.ts)
 
 Generated facts come from the manifest, package metadata, runtime-role inventory,
 schemas, and test-file discovery. Maintained guidance data owns the purpose,
