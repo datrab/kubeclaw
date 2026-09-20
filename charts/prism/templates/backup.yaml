@@ -37,9 +37,15 @@ spec:
           securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, fsGroup: 1000, seccompProfile: { type: RuntimeDefault } }
           restartPolicy: Never
           containers:
-            - name: {{ $mode }}
+            # Container names are Kubernetes merge keys. Preserve the original
+            # Helm identities so adoption updates the existing process instead
+            # of retaining the old backup/restore program as a second container.
+            - name: {{ if eq $mode "backup" }}proof{{ else if eq $mode "database-proof" }}restore-proof{{ else }}{{ $mode }}{{ end }}
               image: {{ $.Values.postgresql.image | quote }}
               command: ["bash", "/backup-program/prism-backup.sh", {{ $mode | quote }}]
+              # The legacy containers put their shell program in args. Explicit
+              # deletion is needed when it is absent from last-applied state.
+              args: null
               env:
                 - { name: BACKUP_ROOT, value: /backups }
                 - { name: BACKUP_MAXIMUM_BYTES, value: {{ $.Values.backup.maximumBytes | quote }} }

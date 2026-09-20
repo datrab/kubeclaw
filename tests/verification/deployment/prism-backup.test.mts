@@ -108,13 +108,21 @@ test('native lock prevents overlap and whole-operation deadline kills blocked du
 
 test('actual Helm render runs the group script and verification has no database credentials', async () => {
   const helm = process.env.HELM_BIN ?? 'helm';
-  const { stdout } = await execute(helm, ['template', 'prism', 'charts/prism', '-f', 'charts/prism/ci-values.yaml']);
+  const { stdout } = await execute(helm, ['template', 'prism', 'charts/prism', '-n', 'default', '-f', 'charts/prism/ci-values.yaml']);
   const docs = loadAll(stdout) as any[];
   const config = docs.find(item => item?.kind === 'ConfigMap' && item.metadata.name === 'prism-backup-script');
   assert.equal(config.data['prism-backup.sh'], await readFile(script, 'utf8'));
   const backup = docs.find(item => item?.kind === 'CronJob' && item.metadata.name === 'prism-backup').spec.jobTemplate.spec;
   const verification = docs.find(item => item?.kind === 'CronJob' && item.metadata.name === 'prism-backup-verification').spec.jobTemplate.spec;
   const proof = docs.find(item => item?.kind === 'CronJob' && item.metadata.name === 'prism-restore-proof');
+  // Names are the strategic-merge identity, not a label for the script mode.
+  // Renaming the original Helm containers left both programs running after
+  // adoption; omitted args also retained the old destructive shell program.
+  for (const [job, name] of [[backup, 'proof'], [verification, 'verify'], [proof.spec.jobTemplate.spec, 'restore-proof']] as const) {
+    assert.equal(job.template.spec.containers.length, 1);
+    assert.equal(job.template.spec.containers[0].name, name);
+    assert.equal(job.template.spec.containers[0].args, null);
+  }
   assert.deepEqual(proof.spec.jobTemplate.spec.template.spec.containers[0].command, ['bash', '/backup-program/prism-backup.sh', 'database-proof']);
   assert.equal(backup.backoffLimit, 0); assert.equal(backup.activeDeadlineSeconds, 3630);
   assert.equal(backup.template.spec.securityContext.runAsUser, 1000);
