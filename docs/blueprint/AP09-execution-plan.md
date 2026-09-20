@@ -41,6 +41,13 @@ Eine Seite ist nicht vollständig, nur weil sie existiert oder auf ein Schema
 verweist. Ein Leser darf kein Package-README, Review-Dokument oder früheres
 Gespräch benötigen, um eine unterstützte Aufgabe auszuführen.
 
+Für AP09.7 bis AP09.13 gilt zusätzlich der
+[verbindliche Abnahmevertrag](AP09-acceptance-contract.md). Er definiert binäre
+PASS/FAIL-Punkte, Pflichtbelege, automatische Ablehnungsgründe, Fresh-Context-
+Readerübungen, Mutationsnachweise und die gemeinsame Endregel. Die kurzen Gates
+in diesem Ausführungsplan sind Zusammenfassungen; sie ersetzen keinen Punkt des
+Abnahmevertrags.
+
 ## 3. Umsetzungspakete
 
 ### AP09.0 — Review-Reconciliation und verbindlicher Katalog

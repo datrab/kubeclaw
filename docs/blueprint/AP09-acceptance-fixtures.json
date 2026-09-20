@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "kubeclaw-ap09-acceptance-fixtures.v1",
+  "purpose": "Pre-registered reader, search, and responsive-layout tasks for AP09.12 and AP09.13. Change this file before, never after, the measured run.",
+  "readerDelivery": {
+    "participantVisibleFields": ["id", "persona", "startPath", "objective", "taskInput", "allowedAssistance", "failureThreshold"],
+    "facilitatorOnlyFields": ["fixturePaths", "injectedFaultId", "facilitatorSetup", "requiredOutcomes", "participantRequirements"]
+  },
+  "renderCriteria": [
+    { "id": "no-horizontal-page-overflow", "passCondition": "At the registered viewport, document.scrollWidth is less than or equal to document.clientWidth." },
+    { "id": "navigation-keyboard-reachable", "passCondition": "Starting at the address bar and using only Tab, Shift+Tab, Enter, Escape, Space, and arrow keys, every visible navigation link can receive focus and activate its declared target." },
+    { "id": "code-scroll-contained", "passCondition": "Every pre element with scrollWidth greater than clientWidth scrolls inside its own box, and its bounding rectangle does not extend beyond document.clientWidth." },
+    { "id": "diagrams-have-readable-fallback", "passCondition": "Every diagram has a visible adjacent text fallback that names every node and every directed relationship shown in the diagram." },
+    { "id": "tables-scroll-contained", "passCondition": "Every table wider than its container scrolls inside one wrapper, and its bounding rectangle does not extend beyond document.clientWidth." },
+    { "id": "focus-visible", "passCondition": "Every interactive element shows a focus indicator with at least 3:1 contrast against adjacent colors while it has keyboard focus." },
+    { "id": "tap-targets-do-not-overlap", "passCondition": "Every interactive target has a box of at least 24 by 24 CSS pixels, and no two target boxes overlap." }
+  ],
+  "searchQueries": [
+    { "id": "SEARCH-01", "query": "install KubeClaw prerequisites", "expectedPath": "docs/site/use/install.md", "maximumRank": 3 },
+    { "id": "SEARCH-02", "query": "diagnose a failed pipeline run", "expectedPath": "docs/site/use/diagnose.md", "maximumRank": 3 },
+    { "id": "SEARCH-03", "query": "create a first pipeline plugin", "expectedPath": "docs/site/extend/first-plugin.md", "maximumRank": 3 },
+    { "id": "SEARCH-04", "query": "configure Buster test suites", "expectedPath": "docs/site/reference/buster-suites.md", "maximumRank": 3 },
+    { "id": "SEARCH-05", "query": "Nova retry wait resume recovery", "expectedPath": "docs/site/understand/nova-core.md", "maximumRank": 3 }
+  ],
+  "renderScenarios": [
+    {
+      "id": "RENDER-01", "browser": "chromium", "viewport": { "width": 1440, "height": 900 },
+      "paths": ["docs/site/README.md", "docs/site/understand/request-to-result.md", "docs/site/reference/buster-suites.md"],
+      "assertions": ["no-horizontal-page-overflow", "navigation-keyboard-reachable", "code-scroll-contained", "diagrams-have-readable-fallback"]
+    },
+    {
+      "id": "RENDER-02", "browser": "firefox", "viewport": { "width": 768, "height": 1024 },
+      "paths": ["docs/site/use/operate.md", "docs/site/extend/first-plugin.md", "docs/site/reference/lint-rules.md"],
+      "assertions": ["no-horizontal-page-overflow", "navigation-keyboard-reachable", "tables-scroll-contained", "focus-visible"]
+    },
+    {
+      "id": "RENDER-03", "browser": "webkit", "viewport": { "width": 390, "height": 844 },
+      "paths": ["docs/site/README.md", "docs/site/use/diagnose.md", "docs/site/extend/plugin-catalogue/README.md"],
+      "assertions": ["no-horizontal-page-overflow", "navigation-keyboard-reachable", "code-scroll-contained", "tap-targets-do-not-overlap"]
+    }
+  ],
+  "readerTasks": [
+    {
+      "id": "READER-OPERATOR-01", "persona": "operator", "startPath": "docs/site/README.md",
+      "objective": "Find the supported installation path, run its preflight checks, identify the readiness signals, and stop safely at every failed prerequisite.",
+      "taskInput": "A clean checkout at reviewed_revision on an Ubuntu 24.04 host without a prepared cluster. The facilitator injects a failed DNS prerequisite reported by the documented preflight command.",
+      "fixturePaths": [], "injectedFaultId": "INSTALL-DNS-UNRESOLVED",
+      "requiredOutcomes": [
+        { "id": "correct-install-route", "passCondition": "The participant reaches docs/site/use/install.md from the site entry without search or an external link." },
+        { "id": "all-prerequisites-found", "passCondition": "The participant records every prerequisite named by the canonical install procedure before running a mutating command." },
+        { "id": "readiness-levels-distinguished", "passCondition": "The participant separately identifies process, service, dependency, and functional readiness signals." },
+        { "id": "safe-stop-used", "passCondition": "After the DNS fault, the participant stops before mutation and selects the documented DNS recovery check." }
+      ],
+      "allowedAssistance": "Only docs/site, tools named by the task pages, and environment reset by a facilitator. The facilitator cannot explain a step or choose a page.",
+      "failureThreshold": "FAIL after one omitted prerequisite, one mutating command after failed preflight, one wrong readiness level, any forbidden source, or 90 minutes without completion.",
+      "participantRequirements": { "freshContext": true, "priorContribution": false, "requiredRole": "operator" },
+      "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
+    },
+    {
+      "id": "READER-OPERATOR-02", "persona": "operator", "startPath": "docs/site/README.md",
+      "objective": "Decide whether a complete platform restore is currently supported, identify the exact source-backed blocker, and stop before an unsafe cutover.",
+      "taskInput": "A clean checkout at reviewed_revision and an isolated empty target. Determine from docs/site whether a complete platform restore is supported now. If it is supported, follow the procedure. If it is not supported, identify the boundary and take the documented safe action. No author or first operator is present.",
+      "facilitatorSetup": "Keep this field hidden from the participant. Current source authority declares complete host and cross-service restore proof open as IFR-01-001 and IFR-26-001; score the participant against the hidden requiredOutcomes below.",
+      "fixturePaths": [], "injectedFaultId": "RESTORE-CURRENT-PRODUCT-BOUNDARY",
+      "requiredOutcomes": [
+        { "id": "support-state-correct", "passCondition": "The participant concludes that a complete platform restore is not currently demonstrated and does not claim support from component-level checks." },
+        { "id": "blockers-identified", "passCondition": "The participant identifies IFR-01-001 and IFR-26-001, their source-backed limits, owners, and measurable closure conditions." },
+        { "id": "safe-stop-used", "passCondition": "The participant stops before cutover or destructive replacement and selects an isolated-target proof as the required next action." },
+        { "id": "available-scope-separated", "passCondition": "The participant separates currently available component backup checks from the missing host and cross-service restore proof." }
+      ],
+      "allowedAssistance": "Only docs/site, the versioned backup fixture, tools named by the restore page, and environment reset by a facilitator. No procedural hints are allowed.",
+      "failureThreshold": "FAIL after a false support claim, one omitted blocker or owner, unsafe cutover, conflation of component and platform proof, any forbidden source, or 90 minutes without completion.",
+      "participantRequirements": { "freshContext": true, "priorContribution": false, "requiredRole": "operator" },
+      "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
+    },
+    {
+      "id": "READER-PIPELINE-01", "persona": "pipeline-author", "startPath": "docs/site/README.md",
+      "objective": "Create and validate a minimal pipeline, explain the effective defaults, and identify the first safe action for one dependency failure.",
+      "taskInput": "The canonical minimal pipeline fixture at reviewed_revision. The facilitator makes its declared Redis endpoint unreachable before the failure run.",
+      "fixturePaths": ["docs/site/use/workflows/examples/minimal.pipeline.json"], "injectedFaultId": "PIPELINE-REDIS-UNREACHABLE",
+      "requiredOutcomes": [
+        { "id": "pipeline-validates", "passCondition": "The exact documented validation command exits zero for the unchanged fixture." },
+        { "id": "effective-defaults-explained", "passCondition": "The participant records every default inserted by the compiler and links each value to its documented authority." },
+        { "id": "runtime-identities-resolve", "passCondition": "Every selected role, stage, plugin, provider, fixture, and report identity resolves through the documented registry command." },
+        { "id": "failure-action-is-bounded", "passCondition": "For the Redis fault, the participant identifies the persisted state, does not use unbounded retry, and selects the documented stop or recovery action." }
+      ],
+      "allowedAssistance": "Only docs/site, the registered fixture, and commands named by its pages. The facilitator can inject or remove the Redis fault but cannot interpret output.",
+      "failureThreshold": "FAIL after one unresolved identity, unexplained effective default, unsafe retry, use of a forbidden source, or 90 minutes without completion.",
+      "participantRequirements": { "freshContext": true, "priorContribution": false, "requiredRole": "pipeline-author" },
+      "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
+    },
+    {
+      "id": "READER-PLUGIN-01", "persona": "plugin-developer", "startPath": "docs/site/README.md",
+      "objective": "Create, test, activate, replace, disable, and remove the documented minimal plugin without undeclared authority.",
+      "taskInput": "A clean checkout at reviewed_revision and the maintained minimal-stage example under docs/site/extend/examples. Use the exact replacement identity and invalid-capability mutation specified by the guide.",
+      "fixturePaths": ["docs/site/extend/examples/minimal-stage/plugin.json"], "injectedFaultId": "PLUGIN-UNDECLARED-CAPABILITY",
+      "requiredOutcomes": [
+        { "id": "plugin-tests-pass", "passCondition": "The package-local contract and behavior commands named by the guide exit zero before activation." },
+        { "id": "activation-proven", "passCondition": "Discovery and registry output show the example's exact package and registration identities." },
+        { "id": "replacement-proven", "passCondition": "The documented replacement changes the registry snapshot digest and selects only the replacement implementation." },
+        { "id": "removal-state-inspected", "passCondition": "After disable and removal, discovery no longer lists the identity and the participant records every retained state or artifact named by the guide." }
+      ],
+      "allowedAssistance": "Only docs/site, the maintained example, and tools named by the extension guides. The facilitator cannot correct code or commands.",
+      "failureThreshold": "FAIL after any bypassed validation, undeclared capability, unresolved identity, uninspected retained state, forbidden source, or 120 minutes without completion.",
+      "participantRequirements": { "freshContext": true, "priorContribution": false, "requiredRole": "plugin-developer" },
+      "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
+    },
+    {
+      "id": "READER-PLATFORM-01", "persona": "platform-developer", "startPath": "docs/site/README.md",
+      "objective": "Trace one request across Nova, Worker Core, Redis, PostgreSQL, Git, registry, BuildKit, and Tailscale, then identify ownership and recovery at each boundary.",
+      "taskInput": "The registered successful request trace and the registered Redis-unavailable trace for reviewed_revision. No component diagram is supplied outside docs/site.",
+      "fixturePaths": ["docs/site/use/workflows/examples/request-trace-success.json", "docs/site/use/workflows/examples/request-trace-redis-unavailable.json"], "injectedFaultId": "TRACE-REDIS-UNAVAILABLE",
+      "requiredOutcomes": [
+        { "id": "complete-request-trace", "passCondition": "The trace names Nova, Worker Core, Redis, PostgreSQL, Git, registry, BuildKit, and Tailscale in observed order and records each exchanged identity." },
+        { "id": "authority-boundaries-correct", "passCondition": "For every handoff, the participant identifies the component that may decide and the component that may only report." },
+        { "id": "required-versus-optional-correct", "passCondition": "The participant classifies every traced dependency according to the current required, optional, or planned inventory with no mismatch." },
+        { "id": "recovery-owner-found", "passCondition": "For the Redis fault, the participant identifies the first failed health signal, safe stop rule, recovery owner, and bounded retry rule." }
+      ],
+      "allowedAssistance": "Only docs/site and the two registered trace artifacts. The facilitator cannot name a component or boundary.",
+      "failureThreshold": "FAIL after one missing component, wrong authority owner, wrong dependency class, unsafe recovery, forbidden source, or 90 minutes without completion.",
+      "participantRequirements": { "freshContext": true, "priorContribution": false, "requiredRole": "platform-developer" },
+      "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
+    },
+    {
+      "id": "READER-QUALITY-01", "persona": "prism-buster-specialist", "startPath": "docs/site/README.md",
+      "objective": "Configure one Prism flow and one Buster suite, explain their result authority, and add a documented extension without bypassing validation.",
+      "taskInput": "The canonical Prism Studio flow and Buster suite fixture named by their guides, plus a mutation that adds the fixture's registered undeclared provider capability.",
+      "fixturePaths": ["docs/site/use/workflows/examples/prism-studio-flow.json", "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json"], "injectedFaultId": "QUALITY-UNDECLARED-PROVIDER-CAPABILITY",
+      "requiredOutcomes": [
+        { "id": "prism-flow-resolves", "passCondition": "The documented Prism validation resolves the exact flow, template, provider, and output identities from the registered fixture." },
+        { "id": "buster-suite-resolves", "passCondition": "The documented Buster command resolves the exact suite, provider, fixture, report, matrix, and artifact identities from the registered fixture." },
+        { "id": "result-authority-correct", "passCondition": "The participant identifies the signed or otherwise authoritative result record and does not treat provider output alone as acceptance." },
+        { "id": "extension-validation-fails-when-mutated", "passCondition": "The undeclared-capability mutation is rejected by the named validation gate with its registered documentation-drift diagnostic." }
+      ],
+      "allowedAssistance": "Only docs/site, the two canonical fixtures, and commands named by their guides. The facilitator can apply the registered mutation but cannot interpret its result.",
+      "failureThreshold": "FAIL after one unresolved identity, wrong result authority, accepted mutation, forbidden source, or 120 minutes without completion.",
+      "participantRequirements": { "freshContext": true, "priorContribution": false, "requiredRole": "prism-buster-specialist" },
+      "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
+    }
+  ],
+  "mutationTests": [
+    { "kind": "config", "operations": ["add", "change", "remove"], "gate": "docs:drift:config:check", "command": "npm run docs:drift:config:check", "diagnosticCode": "DOC_DRIFT_CONFIG" },
+    { "kind": "schema", "operations": ["add", "change", "remove"], "gate": "docs:drift:schema:check", "command": "npm run docs:drift:schema:check", "diagnosticCode": "DOC_DRIFT_SCHEMA" },
+    { "kind": "cli", "operations": ["add", "change", "remove"], "gate": "docs:drift:cli:check", "command": "npm run docs:drift:cli:check", "diagnosticCode": "DOC_DRIFT_CLI" },
+    { "kind": "contract", "operations": ["add", "change", "remove"], "gate": "docs:drift:contract:check", "command": "npm run docs:drift:contract:check", "diagnosticCode": "DOC_DRIFT_CONTRACT" },
+    { "kind": "event", "operations": ["add", "change", "remove"], "gate": "docs:drift:event:check", "command": "npm run docs:drift:event:check", "diagnosticCode": "DOC_DRIFT_EVENT" },
+    { "kind": "endpoint", "operations": ["add", "change", "remove"], "gate": "docs:drift:endpoint:check", "command": "npm run docs:drift:endpoint:check", "diagnosticCode": "DOC_DRIFT_ENDPOINT" },
+    { "kind": "store", "operations": ["add", "change", "remove"], "gate": "docs:drift:store:check", "command": "npm run docs:drift:store:check", "diagnosticCode": "DOC_DRIFT_STORE" },
+    { "kind": "capability", "operations": ["add", "change", "remove"], "gate": "docs:drift:capability:check", "command": "npm run docs:drift:capability:check", "diagnosticCode": "DOC_DRIFT_CAPABILITY" },
+    { "kind": "plugin-registration", "operations": ["add", "change", "remove"], "gate": "docs:drift:plugin-registration:check", "command": "npm run docs:drift:plugin-registration:check", "diagnosticCode": "DOC_DRIFT_PLUGIN_REGISTRATION" },
+    { "kind": "error-code", "operations": ["add", "change", "remove"], "gate": "docs:drift:error-code:check", "command": "npm run docs:drift:error-code:check", "diagnosticCode": "DOC_DRIFT_ERROR_CODE" },
+    { "kind": "workflow", "operations": ["add", "change", "remove"], "gate": "docs:drift:workflow:check", "command": "npm run docs:drift:workflow:check", "diagnosticCode": "DOC_DRIFT_WORKFLOW" }
+  ]
+}
