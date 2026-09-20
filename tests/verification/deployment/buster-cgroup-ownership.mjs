@@ -20,6 +20,12 @@ try {
     fs.writeFileSync(path.join(directory, 'cgroup.controllers'), 'pids memory cpu\n');
     fs.writeFileSync(path.join(directory, 'cgroup.procs'), '');
     fs.writeFileSync(path.join(directory, 'cgroup.subtree_control'), '');
+    // A completed handoff persists both directory AND control-file ownership.
+    // Keeping these files root-owned hid the real second-start failure.
+    for (const name of ['cgroup.procs', 'cgroup.subtree_control']) {
+      fs.chmodSync(path.join(directory, name), 0o644);
+      fs.chownSync(path.join(directory, name), initialOwner, 1000);
+    }
     fs.chownSync(directory, initialOwner, 1000);
     const script = `set -eu\nbrowser_playwright_cgroup_root='${directory}'\n`
       + source.slice(start, end).replaceAll('/var/run/kubeclaw-browser-cgroup', directory);
@@ -32,6 +38,7 @@ try {
     assert.equal(directoryOwner, 1000);
     for (const name of ['cgroup.procs', 'cgroup.subtree_control']) {
       assert.equal(fs.statSync(path.join(directory, name)).uid, 1000);
+      assert.equal(fs.statSync(path.join(directory, name)).mode & 0o777, 0o644);
     }
     assert.equal(fs.readFileSync(path.join(directory, 'cgroup.subtree_control'), 'utf8'), '+pids +memory +cpu');
   }

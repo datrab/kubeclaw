@@ -83,6 +83,9 @@ if [ -s "$browser_playwright_cgroup_root/cgroup.procs" ]; then
   echo "browser Playwright cgroup subtree contains host processes" >&2
   exit 1
 fi
+# The previous worker also owns the control file. Reclaim write ownership before
+# enabling controllers; CHOWN does not grant DAC override on a builder-owned file.
+chown root:builder "$browser_playwright_cgroup_root/cgroup.subtree_control"
 printf '+pids +memory +cpu' >"$browser_playwright_cgroup_root/cgroup.subtree_control"
 for controller in pids memory cpu; do
   grep -qw "$controller" "$browser_playwright_cgroup_root/cgroup.subtree_control" \

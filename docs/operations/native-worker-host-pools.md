@@ -19,10 +19,14 @@ The Buster browser cgroup startup path retains the supervisor's restricted
 capabilities. It temporarily reclaims ownership of its validated, dedicated
 directory before inspecting it, then delegates the control files before the
 directory itself. This also handles a mode-0700 directory left by a previous
-worker. Delegating the directory first prevents the supervisor from reaching
+worker. It also reclaims the existing `cgroup.subtree_control` file before
+writing controller settings: the previous worker owns that mode-0644 file too,
+and reclaiming the directory alone does not grant write access to it.
+Delegating the directory first prevents the supervisor from reaching
 the files because it has no DAC override. Image acceptance executes the actual
 setup code against filesystem fixtures with the production capability set,
-covering both initial and repeated delegation. No additional capabilities or
+covering both initial and repeated delegation with retained directory and file
+ownership, and asserting unchanged control-file modes. No additional capabilities or
 broader directory permissions are required.
 
 Operator requirement confirmed 2026-09-17: role pools limit aggregate CPU,
