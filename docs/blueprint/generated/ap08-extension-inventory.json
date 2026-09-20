@@ -1122,7 +1122,7 @@
       ],
       "authoredGuide": "skills/nova/plugins/lint/README.md",
       "authoredGuideWords": 693,
-      "testScript": "node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node tests/adapter-boundary.test.mjs && node tests/discovery.test.mjs && node tests/eslint-discipline.test.mjs && node tests/eslint-type-evidence.test.mjs && node --test tests/remediation.test.mjs && node tests/live-function.test.ts",
+      "testScript": "npm run test:focused && npm run test:live",
       "testFiles": [
         "skills/nova/plugins/lint/tests/adapter-boundary.test.mjs",
         "skills/nova/plugins/lint/tests/discovery.test.mjs",
@@ -1130,7 +1130,9 @@
         "skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs",
         "skills/nova/plugins/lint/tests/live-function.test.ts",
         "skills/nova/plugins/lint/tests/package-boundary.test.mjs",
+        "skills/nova/plugins/lint/tests/registry-lifecycle.test.mjs",
         "skills/nova/plugins/lint/tests/remediation.test.mjs",
+        "skills/nova/plugins/lint/tests/report-contract.test.mjs",
         "skills/nova/plugins/lint/tests/stage.unit.test.mjs"
       ],
       "cataloguePage": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",

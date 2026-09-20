@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "build": "tsc --noEmit -p tsconfig.json",
-    "test": "node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node tests/adapter-boundary.test.mjs && node tests/discovery.test.mjs && node tests/eslint-discipline.test.mjs && node tests/eslint-type-evidence.test.mjs && node --test tests/remediation.test.mjs && node tests/live-function.test.ts",
+    "test": "npm run test:focused && npm run test:live",
+    "test:focused": "node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node tests/adapter-boundary.test.mjs && node tests/discovery.test.mjs && node tests/registry-lifecycle.test.mjs && node tests/eslint-discipline.test.mjs && node tests/eslint-type-evidence.test.mjs && node tests/report-contract.test.mjs && node --test tests/remediation.test.mjs",
+    "test:live": "node tests/live-function.test.ts",
     "test:remediation": "node --test tests/remediation.test.mjs"
   },
   "dependencies": {

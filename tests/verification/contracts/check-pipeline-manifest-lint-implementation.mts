@@ -282,6 +282,35 @@ try {
   fs.writeFileSync(policyPath, JSON.stringify(forged));
   await assert.rejects(() => executeLintReport({ workingDirectory: repository, policyPath, policyProject: 'fixture', tier: 'full' }), /digest mismatch/u);
 
+  const writePackVariant = (document: Record<string, unknown>) => {
+    const source = `${JSON.stringify(document, null, 2)}\n`;
+    fs.writeFileSync(path.join(config, 'pack.json'), source);
+    const policy = JSON.parse(JSON.stringify(canonical));
+    policy.kubernetes_policy_packs[0].sha256 = crypto.createHash('sha256').update(source).digest('hex');
+    fs.writeFileSync(policyPath, JSON.stringify(policy));
+  };
+  writePackVariant({ ...pack, id: 'wrong-identity' });
+  await assert.rejects(() => executeLintReport({ workingDirectory: repository, policyPath, policyProject: 'fixture', tier: 'full' }), /does not match policy reference/u);
+  writePackVariant({ ...pack, rules: [{ id: 'unsupported', type: 'command', severity: 'error', parameters: {} }] });
+  await assert.rejects(() => executeLintReport({ workingDirectory: repository, policyPath, policyProject: 'fixture', tier: 'full' }), /unsupported rule type 'command'/u);
+  fs.writeFileSync(path.join(config, 'pack.json'), packSource);
+  fs.writeFileSync(policyPath, JSON.stringify(canonical));
+
+  const deselectedPack = JSON.parse(JSON.stringify(canonical));
+  deselectedPack.projects[0].kubernetes.policy_packs = [];
+  fs.writeFileSync(policyPath, JSON.stringify(deselectedPack));
+  const deselectedReport: any = await executeLintReport({ workingDirectory: repository, policyPath, policyProject: 'fixture', tier: 'full', includeExperimental: true });
+  assert.equal(deselectedReport.tools['kubernetes-policy'].evidence.some((entry: any) => entry.kind === 'policy-pack'), false,
+    'a deselected pack must not enter evaluator evidence');
+  assert.equal(deselectedReport.policy.policy_pack_digests.fixture, canonical.kubernetes_policy_packs[0].sha256,
+    'a retained top-level pack remains loaded and identified during its rollback window');
+  const removedPack = JSON.parse(JSON.stringify(deselectedPack));
+  removedPack.kubernetes_policy_packs = [];
+  fs.writeFileSync(policyPath, JSON.stringify(removedPack));
+  const removedPackReport: any = await executeLintReport({ workingDirectory: repository, policyPath, policyProject: 'fixture', tier: 'full', includeExperimental: true });
+  assert.deepEqual(removedPackReport.policy.policy_pack_digests, {}, 'a removed pack must leave report identity');
+  fs.writeFileSync(policyPath, JSON.stringify(canonical));
+
   const duplicateInputs = JSON.parse(JSON.stringify(canonical));
   duplicateInputs.projects[0].kubernetes.raw_manifests.push('raw.yaml');
   fs.writeFileSync(policyPath, JSON.stringify(duplicateInputs));

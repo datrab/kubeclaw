@@ -19,7 +19,9 @@ procedures. This section gives exact names and source-backed facts.
 - [Buster runtime configuration](buster-runtime-configuration.md) explains the service, store, authentication, limits, and capability policy that make those providers available.
 - [Buster provider configuration](buster-provider-configuration.md) gives every exact nested field path, type, default, limit, and choice in all shipped provider schemas.
 - [Buster error codes](buster-error-codes.md) lists every exact error emitted by the shipped suite providers and gives the safe action for each boundary.
-- [Lint policy](lint-policy.md) lists every shipped lint tool and repository-owned rule. It defines loading, scope, severity, baselines, admission, packs, failures, and report evidence.
+- [Lint policy](lint-policy.md) explains loading, precedence, scope, severity, baselines, admission, packs, failures, and report evidence.
+- [Generated lint policy facts](lint-policy-generated.md) lists every exact shipped tool, target, filter, timeout, threshold, admission, waiver, and pack value.
+- [Lint rules and findings](lint-rules.md) explains repository-owned rules, normalized findings, external-code boundaries, remediation, and operational failures.
 - [CLI commands](cli.md) lists the deployment command surface.
 - [Environment variables](environment-variables.md) lists deployment and secret-setup variables.
 - [Helm values](helm-values.md) lists current value families and Secret references.

@@ -181,12 +181,12 @@ Run the package command:
 npm test --prefix skills/nova/plugins/lint
 ```
 
-Package test files found: 8. This is file discovery, not an executed test count.
+Package test files found: 10. This is file discovery, not an executed test count.
 
 Exact package test script (run from the package directory):
 
 ```text
-node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node tests/adapter-boundary.test.mjs && node tests/discovery.test.mjs && node tests/eslint-discipline.test.mjs && node tests/eslint-type-evidence.test.mjs && node --test tests/remediation.test.mjs && node tests/live-function.test.ts
+npm run test:focused && npm run test:live
 ```
 
 The catalogue status does not claim live host or cluster acceptance.
@@ -205,7 +205,9 @@ The result above states the exact local limit. Run the package command in the ta
 - Test: [skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs)
 - Test: [skills/nova/plugins/lint/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/lint/tests/live-function.test.ts)
 - Test: [skills/nova/plugins/lint/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/lint/tests/package-boundary.test.mjs)
+- Test: [skills/nova/plugins/lint/tests/registry-lifecycle.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/lint/tests/registry-lifecycle.test.mjs)
 - Test: [skills/nova/plugins/lint/tests/remediation.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/lint/tests/remediation.test.mjs)
+- Test: [skills/nova/plugins/lint/tests/report-contract.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/lint/tests/report-contract.test.mjs)
 - Test: [skills/nova/plugins/lint/tests/stage.unit.test.mjs](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/plugins/lint/tests/stage.unit.test.mjs)
 
 Generated facts come from the manifest, package metadata, runtime-role inventory,

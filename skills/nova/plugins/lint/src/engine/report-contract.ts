@@ -1,4 +1,5 @@
 import { sha256Text } from '@kubeclaw/plugin-sdk';
+import path from 'node:path';
 
 import { LINT_POLICY_SCHEMA_VERSION } from './policy-version.ts';
 import { accumulateToolSummary, createToolSummary } from './tool-summary.ts';
@@ -29,6 +30,10 @@ function requireRecord(value: unknown, path: string): AnyRecord {
 
 function requireString(value: unknown, path: string): void {
   if (typeof value !== 'string' || !value.trim()) fail(path, 'required non-empty string');
+}
+
+function requireSha256(value: unknown, path: string): void {
+  if (typeof value !== 'string' || !/^[a-f0-9]{64}$/u.test(value)) fail(path, 'required lowercase SHA-256');
 }
 
 function requireCount(value: unknown, path: string): void {
@@ -137,32 +142,51 @@ function expectedToolPolicy(path: string, policies: AnyRecord): AnyRecord | null
 function validatePolicyEvidence(value: AnyRecord, expected: AnyRecord): AnyRecord {
   const policy = requireRecord(value.policy, 'report.policy');
   if (policy.schema_version !== LINT_POLICY_SCHEMA_VERSION) fail('report.policy.schema_version', `expected ${LINT_POLICY_SCHEMA_VERSION}`);
-  for (const field of ['digest', 'baseline_digest', 'project']) requireString(policy[field], `report.policy.${field}`);
+  requireString(policy.project, 'report.policy.project');
+  requireSha256(policy.digest, 'report.policy.digest');
+  requireSha256(policy.baseline_digest, 'report.policy.baseline_digest');
   const configDigests = requireRecord(policy.config_digests, 'report.policy.config_digests');
   for (const [toolId, digest] of Object.entries(configDigests)) {
     requireString(toolId, 'report.policy.config_digests key');
-    requireString(digest, `report.policy.config_digests.${toolId}`);
+    requireSha256(digest, `report.policy.config_digests.${toolId}`);
   }
   const packDigests = requireRecord(policy.policy_pack_digests, 'report.policy.policy_pack_digests');
   for (const [packId, digest] of Object.entries(packDigests)) {
     requireString(packId, 'report.policy.policy_pack_digests key');
-    requireString(digest, `report.policy.policy_pack_digests.${packId}`);
+    requireSha256(digest, `report.policy.policy_pack_digests.${packId}`);
   }
   const effectiveTargets = requireRecord(policy.effective_targets, 'report.policy.effective_targets');
   for (const [toolId, targets] of Object.entries(effectiveTargets)) {
     requireString(toolId, 'report.policy.effective_targets key');
     if (!Array.isArray(targets) || targets.length === 0) fail(`report.policy.effective_targets.${toolId}`, 'required non-empty array');
-    targets.forEach((target, index) => requireString(target, `report.policy.effective_targets.${toolId}[${index}]`));
+    targets.forEach((target, index) => {
+      requireString(target, `report.policy.effective_targets.${toolId}[${index}]`);
+      const normalized = path.posix.normalize(String(target).replace(/\\/gu, '/'));
+      if (path.posix.isAbsolute(normalized) || normalized === '..' || normalized.startsWith('../')) {
+        fail(`report.policy.effective_targets.${toolId}[${index}]`, 'required repository-relative path');
+      }
+    });
   }
-  validateExpectedPolicy(policy, configDigests, expected);
+  validateExpectedPolicy(policy, configDigests, packDigests, effectiveTargets, expected);
   return policy;
 }
 
-function validateExpectedPolicy(policy: AnyRecord, configDigests: AnyRecord, expected: AnyRecord): void {
+function validateExpectedPolicy(policy: AnyRecord, configDigests: AnyRecord, packDigests: AnyRecord, effectiveTargets: AnyRecord, expected: AnyRecord): void {
   if (expected.policyProject !== undefined && policy.project !== expected.policyProject) fail('report.policy.project', `expected configured project ${expected.policyProject}`);
   if (expected.policyDigest !== undefined && policy.digest !== expected.policyDigest) fail('report.policy.digest', 'does not match configured policy');
   if (expected.baselineDigest !== undefined && policy.baseline_digest !== expected.baselineDigest) fail('report.policy.baseline_digest', 'does not match configured baseline');
   if (expected.configDigests !== undefined) validateConfigDigests(configDigests, expected.configDigests);
+  if (expected.policyPackDigests !== undefined) validateIdentityMap(packDigests, expected.policyPackDigests, 'report.policy.policy_pack_digests');
+  if (expected.effectiveTargets !== undefined && JSON.stringify(effectiveTargets) !== JSON.stringify(expected.effectiveTargets)) {
+    fail('report.policy.effective_targets', 'does not match configured targets');
+  }
+}
+
+function validateIdentityMap(actual: AnyRecord, expected: AnyRecord, field: string): void {
+  const actualKeys = Object.keys(actual).sort();
+  const expectedKeys = Object.keys(expected).sort();
+  if (JSON.stringify(actualKeys) !== JSON.stringify(expectedKeys)) fail(field, 'keys do not match configured identity');
+  for (const key of expectedKeys) if (actual[key] !== expected[key]) fail(`${field}.${key}`, 'does not match configured identity');
 }
 
 function validateConfigDigests(actual: AnyRecord, expected: AnyRecord): void {
@@ -183,6 +207,7 @@ function validateReportScope(value: AnyRecord, expected: AnyRecord): AnyRecord {
 }
 
 function validateExpectedScope(value: AnyRecord, expected: AnyRecord): void {
+  if (expected.project !== undefined && value.project !== expected.project) fail('report.project', `expected requested project ${expected.project}`);
   if (expected.tier !== undefined && value.tier !== expected.tier) fail('report.tier', `expected requested tier ${expected.tier}`);
   if (expected.scope !== undefined && value.scope !== expected.scope) fail('report.scope', `expected requested scope ${expected.scope}`);
 }

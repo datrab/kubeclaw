@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { generatedCodeInventory } from './docs-lint-policy-reference.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const revision = '549dfe003d41fca50b85c3040029a74a817715d6';
@@ -21,6 +22,13 @@ const specifications = [
     '## Curated Semgrep Rules', '## Kubernetes Policy Packs',
     '## Baselines, Waivers, And Debt', '## Rule Admission',
     '## Invalid Policy And Runtime Failures', '## Report Evidence',
+  ]],
+  ['docs/site/reference/lint-rules.md', 12, [
+    '## How To Interpret A Finding', '## Blocking ESLint Rules',
+    '## Experimental Type-Evidence Rules', '## Curated Semgrep Rules',
+    '## Engine-Owned Finding Codes', '## Kubernetes Policy Rules',
+    '## External Rule Families', '## Operational Error Codes',
+    '## Verification Boundary',
   ]],
   ['docs/site/understand/forge.md', 5, [
     '## Purpose And Authority', '## Input And Dispatch Contract',
@@ -140,6 +148,7 @@ for (const [file, minimumLinks, markers] of specifications) {
 }
 
 const lintReference = fs.readFileSync(path.join(root, 'docs/site/reference/lint-policy.md'), 'utf8');
+const lintRules = fs.readFileSync(path.join(root, 'docs/site/reference/lint-rules.md'), 'utf8');
 const lintPolicy = JSON.parse(fs.readFileSync(
   path.join(root, 'charts/kubeclaw/files/config/lint-policy.json'), 'utf8'));
 assert.equal(lintPolicy.tools.length, 31,
@@ -148,13 +157,58 @@ for (const tool of lintPolicy.tools) {
   assert(lintReference.includes(`\`${tool.id}\``),
     `lint policy reference omits shipped tool ${tool.id}`);
 }
-const policyPack = JSON.parse(fs.readFileSync(
-  path.join(root, 'charts/kubeclaw/files/config/kubernetes-policy-pack-default.json'), 'utf8'));
-for (const rule of policyPack.rules) {
-  assert(lintReference.includes(`\`${rule.id}\``),
-    `lint policy reference omits Kubernetes rule ${rule.id}`);
-  assert(lintReference.includes(`\`${rule.type}\``),
-    `lint policy reference omits Kubernetes rule type ${rule.type}`);
+execFileSync(process.execPath, [path.join(root, 'scripts/docs-lint-policy-reference.mjs'), '--check'],
+  { encoding: 'utf8' });
+const lintGeneratedReference = fs.readFileSync(
+  path.join(root, 'docs/site/reference/lint-policy-generated.md'), 'utf8');
+
+const eslintConfigs = await Promise.all([
+  'eslint.config.mjs', 'eslint-type-evidence-config.mjs',
+  'eslint-type-evidence-tests-config.mjs', 'eslint-type-evidence-generated-config.mjs',
+].map((file) => import(path.join(root, 'charts/kubeclaw/files/config', file))));
+const configuredEslintRules = new Set(eslintConfigs.flatMap(({ default: groups }) =>
+  groups.flatMap((group) => Object.keys(group.rules ?? {}))));
+for (const rule of configuredEslintRules) {
+  assert(lintRules.includes(`\`${rule}\``), `lint rule reference omits ESLint rule ${rule}`);
+}
+
+const semgrepSource = fs.readFileSync(path.join(root, 'charts/kubeclaw/files/config/.semgrep.yml'), 'utf8');
+const semgrepIds = [...semgrepSource.matchAll(/^\s*- id:\s*([^\s]+)$/gmu)].map((match) => match[1]);
+assert.equal(semgrepIds.length, 25, 'Semgrep rule count changed; update the lint rule reference');
+for (const rule of semgrepIds) {
+  assert(lintRules.includes(`\`${rule}\``), `lint rule reference omits Semgrep rule ${rule}`);
+}
+
+const fixedCodes = new Set(generatedCodeInventory());
+const criticalFixedCodes = [
+  'go-vet', 'kubeconform', 'kubernetes-schema', 'eslint', 'mypy', 'semgrep',
+  'staticcheck', 'tflint', 'trivy-kubernetes', 'trivy-terraform',
+  'LINT_POLICY_PATH_INVALID', 'LINT_POLICY_PATH_DENIED',
+];
+for (const code of criticalFixedCodes) {
+  assert(fixedCodes.has(code), `shared fixed-code inventory omits critical code ${code}`);
+}
+for (const code of fixedCodes) {
+  const documentedUpstreamFallback = code === 'semgrep'
+    && lintRules.includes('## Curated Semgrep Rules');
+  assert(documentedUpstreamFallback || lintRules.includes(`\`${code}\``),
+    `lint rule reference omits fixed code ${code}`);
+  assert(lintGeneratedReference.includes(`\`${code}\``),
+    `generated lint policy reference omits fixed code ${code}`);
+}
+const documentedFixedCodeCount = Number(
+  /\| Engine-owned fixed codes \| (\d+) \|/u.exec(lintGeneratedReference)?.[1]);
+assert.equal(documentedFixedCodeCount, fixedCodes.size,
+  'generated lint policy reference contains a stale fixed-code count or omissions');
+const configDirectory = path.dirname(path.join(root, 'charts/kubeclaw/files/config/lint-policy.json'));
+for (const reference of lintPolicy.kubernetes_policy_packs) {
+  const policyPack = JSON.parse(fs.readFileSync(path.resolve(configDirectory, reference.path), 'utf8'));
+  for (const rule of policyPack.rules) {
+    assert(lintGeneratedReference.includes(`\`${rule.id}\``),
+      `lint policy reference omits Kubernetes rule ${rule.id}`);
+    assert(lintGeneratedReference.includes(`\`${rule.type}\``),
+      `lint policy reference omits Kubernetes rule type ${rule.type}`);
+  }
 }
 
 const opsGuide = fs.readFileSync(path.join(root, 'docs/site/understand/ops-mcp.md'), 'utf8');
@@ -169,6 +223,8 @@ for (const tool of opsTools) {
 const navigation = [
   ['docs/site/extend/README.md', 'lint.md'],
   ['docs/site/reference/README.md', 'lint-policy.md'],
+  ['docs/site/reference/README.md', 'lint-policy-generated.md'],
+  ['docs/site/reference/README.md', 'lint-rules.md'],
   ['docs/site/understand/README.md', 'forge.md'],
   ['docs/site/understand/README.md', 'echo.md'],
   ['docs/site/understand/README.md', 'openclaw.md'],

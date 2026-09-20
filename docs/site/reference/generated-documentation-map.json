@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 128,
+  "pageCount": 130,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -1673,6 +1673,38 @@
       ]
     },
     {
+      "page": "docs/site/reference/lint-policy-generated.md",
+      "route": "/reference/lint-policy-generated/",
+      "contentKind": "generated",
+      "status": "generated reference",
+      "audience": "lint-policy maintainer, operator, Nova maintainer",
+      "owner": "lint",
+      "appliesTo": "`pipeline_lint_policy.v7`, `pipeline_lint_baseline.v2`, and `kubernetes_lint_policy_pack.v1`",
+      "lastVerified": "generated from repository configuration on 2026-09-20",
+      "sourceDependencies": [
+        "scripts/docs-lint-policy-reference.mjs",
+        "charts/kubeclaw/files/config/lint-policy.json",
+        "charts/kubeclaw/files/config/lint-baseline.json",
+        "charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
+        "versions.json",
+        "docker/nova-tools/package.json",
+        "docker/nova-tools/package-lock.json",
+        "charts/kubeclaw/files/config/eslint.config.mjs",
+        "charts/kubeclaw/files/config/eslint-type-evidence-config.mjs",
+        "charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs",
+        "charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs",
+        "charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs",
+        "charts/kubeclaw/files/config/.semgrep.yml",
+        "skills/nova/plugins/lint/src"
+      ],
+      "checks": [
+        "npm run docs:lint-policy:check",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/reference/lint-policy.md",
       "route": "/reference/lint-policy/",
       "contentKind": "authored",
@@ -1680,10 +1712,32 @@
       "audience": "lint-policy maintainer, operator, Nova maintainer",
       "owner": "lint",
       "appliesTo": "`pipeline_lint_policy.v7`, `pipeline_lint_baseline.v2`, `kubernetes_lint_policy_pack.v1`, `pipeline_lint_report.v7`",
-      "lastVerified": "source, configuration, and package checks on 2026-09-20",
+      "lastVerified": "source, configuration, and focused package checks on 2026-09-20; live fixture blocked before lint by BusyBox flock",
       "sourceDependencies": [
         "charts/kubeclaw/files/config/lint-policy.json",
         "charts/kubeclaw/files/config/lint-baseline.json",
+        "charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
+        "skills/nova/plugins/lint/src/engine"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/lint-rules.md",
+      "route": "/reference/lint-rules/",
+      "contentKind": "authored",
+      "status": "implemented",
+      "audience": "developer, lint-policy maintainer, operator",
+      "owner": "lint",
+      "appliesTo": "the repository-owned rules and normalized findings in `pipeline_lint_policy.v7`",
+      "lastVerified": "source, configuration, and focused lint tests on 2026-09-20; no target-image execution",
+      "sourceDependencies": [
+        "charts/kubeclaw/files/config/eslint.config.mjs",
+        "charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs",
+        "charts/kubeclaw/files/config/.semgrep.yml",
         "charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
         "skills/nova/plugins/lint/src/engine"
       ],

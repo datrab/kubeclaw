@@ -377,13 +377,55 @@ Severity, Baselines, Waivers, Debt, Fingerprints, Rule Admission, immutable
 Pack Identity, Fehler und Report-Evidence. `extend/lint.md` erklärt die
 Autoritätsgrenzen zwischen Stage, Adapter und Engine sowie geprüfte Änderungen
 für Regeln, Tools, Sprachen, Targets, Packs, Baselines und Reportverträge.
+`reference/lint-policy-generated.md` erzeugt alle effektiven Policywerte,
+Anwendbarkeit, Admissions, Waiver, Packs sowie Regel- und Codeidentitäten direkt
+aus Policy, Konfiguration und Implementierungsquellen. `reference/lint-rules.md`
+erklärt Trigger, bewusste Grenzen, Abhilfe, externe Codegrenzen und operative
+Fehler. Der Erweiterungsleitfaden deckt zusätzlich Änderung, experimentelle
+Einführung, Promotion, Entfernung, Migration, Rollback, Aktivierung und
+Beobachtung ab.
 
-**Interne Prüfung:** `docs:platform-specialist-guides:check` bindet `CFG-016`
-und `EXT-006` an Inhaltsmarker, prüft alle revisionsfesten Codebelege und
-gleicht Tool- und Kubernetes-Regelinventar dynamisch mit den ausgelieferten
-Konfigurationen ab. TypeScript-Build und fokussierte Lint-Tests waren
-erfolgreich. Der abschließende Live-Test benötigt GNU `flock`; BusyBox `flock`
-in der Prüfungsumgebung besitzt die notwendige Timeout-Option nicht.
+**Interne Prüfung:** `docs:lint-policy:check` vergleicht die erzeugte Referenz
+bytegenau mit Policy, Baseline, Pack, ESLint-, Semgrep- und implementierten
+Codeidentitäten. `docs:platform-specialist-guides:check` prüft zusätzlich
+Erklärungen, Navigation und revisionsfeste Belege. TypeScript-Build,
+Dokumentations-Gates, Linkprüfung, Coverage und Publikationsprüfung waren
+erfolgreich. Der nachgeschaltete repository-weite Migrationslauf war nicht
+vollständig erfolgreich. Ihm fehlten unter anderem `/usr/bin/tar`, GNU `flock`
+und das lokale Kubernetes-Schema. Ein älterer Cutover-Test erwartet außerdem
+noch keine experimentellen Type-Evidence-Tools. Die fokussierten Lint-Tests
+waren bis einschließlich der acht Remediation-Fälle erfolgreich. Der
+abschließende Live-Test benötigt `shellcheck`, `shfmt` und GNU `flock`;
+BusyBox `flock` besitzt die erforderliche Timeout-Option nicht.
+
+**Bekannte Implementierungsgrenze:** Der aktuelle Helm-Chart liefert
+`kubernetes-policy-pack-default.json` nicht in das Runtime-Konfigurationsverzeichnis.
+Der ausgelieferte Policy-Verweis kann deshalb im Deployment nicht geladen
+werden. Die öffentliche Referenz und der Erweiterungsleitfaden nennen den
+exakten Stop-Zustand, die fehlenden ConfigMap- und Kopierschritte sowie die
+erforderliche Deployment-Prüfung. AP09.6 dokumentiert diese Produktlücke; es
+behauptet keine erfolgreiche Live-Ausführung der Policy Packs.
+
+**Controlled-language review record:** Der Umfang umfasst
+`reference/lint-policy.md`, `reference/lint-policy-generated.md`,
+`reference/lint-rules.md` und `extend/lint.md`. Die Methode kombiniert den
+Publikationscheck für direkte Sätze, verbotene vage Begriffe, Passivformen und
+Satzlänge mit zwei unabhängigen Fresh-Context-Reviews. Die technische
+Terminologie umfasst policy, adapter, analyser, detector, tier, scope, finding,
+operational error, baseline, waiver, debt, admission, pack, fingerprint und
+candidate revision. Exakte Bezeichner bleiben unverändert. Die Reviews prüfen
+die Aufgaben Konfiguration finden, Tool-Auswahl erklären, Fehler diagnostizieren,
+Regeln/Tools/Targets/Packs ändern und entfernen sowie Migration und Rollback.
+Dies ist eine projektinterne Controlled-Language-Prüfung nach den festgelegten
+ASD-STE100-Prinzipien, keine formale ASD-STE100-Zertifizierung.
+
+Die erste unabhängige Runde lehnte die Abnahme ab. Sie fand unvollständige
+Fehlercode-Erzeugung, falsche experimentelle Blocking-Aussagen, fehlende
+Lifecycle-Wege, fehlende Versionsautorität, unvollständige Generator-Governance,
+fehlende Entscheidungskennzeichnung und die Policy-Pack-Delivery-Lücke. Diese
+Punkte wurden anschließend in Generator, Checks und Leitfäden bearbeitet. Eine
+neue unabhängige Runde muss die Korrekturen ohne Chat-Kontext bestätigen; bis
+dahin bleibt die Leserabnahme offen.
 
 ### AP09.7 — Plattform, Spezialisten, Kommunikation, Daten und Sicherheit
 

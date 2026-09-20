@@ -36,6 +36,7 @@ function publicRoute(item) {
 function checksFor(page) {
   const checks = ['npm run docs:governance:check', 'npm run docs:publication:check', 'npm run docs:check:refs'];
   if (page === 'docs/site/status/open-issues.md') checks.unshift('npm run docs:status:check');
+  if (page === 'docs/site/reference/lint-policy-generated.md') checks.unshift('npm run docs:lint-policy:check');
   if (page.includes('/buster') || page === 'docs/site/extend/platform/buster.md') {
     checks.unshift('npm run docs:buster-guides:check');
   }
@@ -57,6 +58,7 @@ function contentKind(page) {
       'docs/site/reference/workflows.md',
       'docs/site/reference/buster-error-codes.md',
       'docs/site/reference/buster-provider-configuration.md',
+      'docs/site/reference/lint-policy-generated.md',
     ].includes(page)
     || page.startsWith('docs/site/extend/plugin-catalogue/')) return 'generated';
   return 'authored';
@@ -72,6 +74,7 @@ const pages = walk(siteRoot)
     const missing = metadataFields.filter((field) => values[field] === null);
     if (missing.length) throw new Error(`${page} lacks metadata: ${missing.join(', ')}`);
     const evidence = values.Evidence.split(';').map((value) => value.trim());
+    const generator = metadata(text, 'Generator');
     return {
       page,
       route: publicRoute(item),
@@ -81,7 +84,7 @@ const pages = walk(siteRoot)
       owner: values.Owner,
       appliesTo: values['Applies to'],
       lastVerified: values['Last verified'],
-      sourceDependencies: evidence,
+      sourceDependencies: generator ? [generator, ...evidence] : evidence,
       checks: checksFor(page),
     };
   });

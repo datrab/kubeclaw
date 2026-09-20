@@ -6,7 +6,7 @@ Owner: lint
 Evidence: charts/kubeclaw/files/config/lint-policy.json; charts/kubeclaw/files/config/lint-baseline.json; charts/kubeclaw/files/config/kubernetes-policy-pack-default.json; skills/nova/plugins/lint/src/engine
 Evidence revision: `549dfe003d41fca50b85c3040029a74a817715d6`
 Applies to: `pipeline_lint_policy.v7`, `pipeline_lint_baseline.v2`, `kubernetes_lint_policy_pack.v1`, `pipeline_lint_report.v7`
-Last verified: source, configuration, and package checks on 2026-09-20
+Last verified: source, configuration, and focused package checks on 2026-09-20; live fixture blocked before lint by BusyBox flock
 
 ## Purpose
 
@@ -15,7 +15,10 @@ project discovery, targets, tool settings, governance records, and immutable
 Kubernetes rule packs. The engine rejects an invalid policy before it runs a
 tool. A partly valid policy cannot produce an authoritative-looking report.
 
-Use [Extend Lint](../extend/lint.md) for change procedures.
+Use the [generated policy facts](lint-policy-generated.md) for every exact
+shipped value. Use the [rule and finding reference](lint-rules.md) for triggers,
+exceptions, remediation, and error codes. Use [Extend Lint](../extend/lint.md)
+for change procedures.
 
 > **Canonical evidence:** [The shipped policy contains the project, 31 tools,
 > exclusions, architecture, admission, baseline, and pack selection](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/files/config/lint-policy.json#L1-L1070).
@@ -59,6 +62,52 @@ policy. This prevents repository input from granting itself new checks or author
 > [the adapter enforces both roots](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/adapter.ts#L10-L50),
 > and [the engine applies only the bounded Kubernetes override](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/index.ts#L34-L57).
 
+### Deployment And Persistent-Config Precedence
+
+The runtime has a delivery chain before policy loading. Helm builds a ConfigMap.
+An init container copies files through a persistent config volume. The runtime
+then reads its copies from the runtime-config directory.
+
+`semgrepConfigYaml` and `eslintConfigMjs` can replace the chart defaults. With
+`swarmConfig.overrideOnRestart=false`, an existing persistent Semgrep or ESLint
+file wins over a later chart value. This default preserves runtime-owned edits.
+It also means that a chart upgrade does not prove those two files changed.
+
+The init container overwrites the other lint configs, baseline, and policy from
+the chart source on each restart. `jscpd-tests.json` follows this overwrite path
+even though it is an implicit JSCPD companion.
+
+The chart does not currently deliver `kubernetes-policy-pack-default.json` to
+the persistent or runtime config directory. The shipped policy references that
+relative file. Therefore, the deployed policy loader stops with
+`LINT_POLICY_INVALID` before it runs a tool unless an operator supplies the pack
+beside `lint-policy.json`. The repository fixture copies the pack explicitly,
+but the live-function fixture removes all pack references. Neither test proves
+the current chart delivery path.
+
+Treat this as an implementation gap, not an operator workaround. Do not claim a
+successful deployed full run until the ConfigMap and both copy stages deliver
+the pack and a chart-level test proves the final runtime path.
+
+Use the report's policy and explicit config digests to identify most effective
+runtime inputs. Inspect persistent `jscpd-tests.json` and the installed
+type-evidence plugin separately. Their digests are not in `config_digests`.
+
+To adopt a new Semgrep or ESLint chart value, set
+`swarmConfig.overrideOnRestart=true` for the controlled restart. Verify the
+effective digest and findings. Return the value to `false` when later runtime
+preservation remains required.
+
+For rollback, restore the earlier reviewed chart value or persistent file. Then
+restart with the matching overwrite choice. A previous report identifies the
+old digest, but it is not proof that rollback completed.
+
+> **Delivery evidence:** [Helm values define both overrides and restart behavior](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/values.yaml#L469-L498).
+> [The ConfigMap selects override or packaged content](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/templates/configmap-swarm-config.yaml#L10-L49).
+> [The init container preserves only existing Semgrep and ESLint files when overwrite is false](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/templates/deployment.yaml#L622-L696).
+> [The live fixture removes pack references](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/tests/live-function.test.ts#L15-L22),
+> while [the manifest fixture copies pack bytes explicitly](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/tests/verification/contracts/support/manifest-lint-parity-fixture.mts#L122-L128).
+
 ## Stage And Adapter Configuration
 
 | Field | Required | Exact meaning |
@@ -86,8 +135,9 @@ visibility flags are false even if the host does not insert defaults.
 | `changedFiles` | Optional unique relative paths. Valid deleted leaves are ignored during scope resolution. |
 | `sourceStageId` | Optional runtime source selector; mutually exclusive with `revision`. |
 | `revision` | Optional full lowercase 40-character SHA; runs in a detached temporary checkout. |
-| `kubernetes.rawManifests` | Optional list of at most 256 paths; replaces the project list for this call. |
-| `kubernetes.helmCharts` | Optional list of at most 256 paths; replaces the project list for this call. |
+| `kubernetes` | Optional override object. When present, it must contain both arrays below. Their combined content must not be empty. |
+| `kubernetes.rawManifests` | Required inside `kubernetes`; at most 256 paths; replaces the project list for this call. |
+| `kubernetes.helmCharts` | Required inside `kubernetes`; at most 256 paths; replaces the project list for this call. |
 
 The candidate runner disables Git hooks, verifies detached `HEAD`, and removes
 the temporary checkout. The stage rejects a response bound to another revision.
@@ -120,6 +170,14 @@ When the whole Kubernetes object is absent, defaults are 128 files, 1 MiB per
 file, 10 MiB rendered content, and 2,048 documents. Configured hard maxima are
 128 files, 16 MiB per file, 64 MiB rendered content, and 100,000 documents.
 
+The shipped workspace project names
+`Projects/buster-infra-smoke/src/deployment.yaml`. The deployed workspace creates
+that input; a clean source checkout does not contain it. A source-only engine run
+must pass an explicit Kubernetes input override, such as the source-owned
+`charts/kubeclaw` chart, and must use the Nova image for its pinned schema tree.
+That override proves the selected source input only. Deployment acceptance must
+run with the generated manifest and the canonical input list.
+
 > **Project evidence:** [Project validation defines vocabulary, defaults,
 > authorities, and bounds](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/policy.ts#L29-L123).
 
@@ -129,10 +187,14 @@ Discovery scans only to `discovery_max_depth`, skips hidden directories and
 `node_modules`, applies global exclusions, and matches language evidence. It can
 detect several languages. Discovery does not grant filesystem access.
 
-Each tool combines `targets`, `include`, its own `exclude`, and
-`global_exclusions`. Target trees are checked for repository escape and symlinks;
-`.git` is excluded from this security walk. This separate tree check is needed
-because native tools can read files that discovery excludes.
+Policy-selected files combine `targets`, `include`, tool `exclude`, and
+`global_exclusions`. Type-evidence classification intentionally uses only Git,
+Swarm, and dependency-tree exclusions. It must still see generated or untracked
+files. Native recursive tools also apply their own configuration exclusions.
+
+Target trees are checked for repository escape and symlinks. `.git` is excluded
+from this security walk. This separate check is necessary because a native tool
+can traverse files that normal discovery excludes.
 
 | Scope | Effective behavior |
 | --- | --- |
@@ -202,16 +264,159 @@ each installed adapter needs a policy entry.
 | `helm-lint` | Full | project | Helm chart lint. |
 | `kubeconform` | Full | project | Kubernetes schema validation. |
 | `kubernetes-policy` | Full | project | Selected immutable policy-pack rules. |
-| `kubernetes-schema` | Full | project | Internal Kubernetes shape checks. |
+| `kubernetes-schema` | Full | project | Explicit-input validation against the configured offline Kubernetes schema. |
 | `trivy-kubernetes` | Full | project | Rendered Kubernetes security. |
 | `yamllint` | Full | changed files | YAML checks outside Helm templates. |
 | `openapi-contract` | Full | project | OpenAPI shape and reference checks. |
 
 External tools can produce version-specific codes. The engine preserves them.
-The next sections list every rule configured or implemented by this repository.
+The next sections summarize the repository-owned rule groups. The
+[rule and finding reference](lint-rules.md) is the canonical detailed catalogue.
+
+The inventory above identifies every tool. It is not the exact configuration
+table. The [generated tool settings](lint-policy-generated.md#tool-execution-settings)
+record every required flag, timeout, threshold, language, native config,
+argument, target, include pattern, and exclusion directly from policy.
 
 > **Inventory evidence:** [The policy holds all 31 exact settings](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/files/config/lint-policy.json#L131-L1070),
 > and [the registry imports all implementation families](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/tool-registry.ts#L1-L18).
+
+### Why The Tool Settings Differ
+
+The repository has no decision record for each tier, scope, timeout, or target.
+The explanations below are current inferences from the implementation. They are
+not claims about the original design discussion.
+
+| Choice | Current inferred reason | Cost and reconsideration condition |
+| --- | --- | --- |
+| All shipped tools are required. | A missing analyser removes promised coverage, so absence must not look clean. | One missing binary blocks the stage. Reconsider only when the tool is explicitly optional and the report exposes that reduced assurance. |
+| Pre-check contains the faster format, type, and basic lint tools. | Early feedback should reject cheap defects before the larger repository checks run. | A slow pre-check delays every cycle. Move a tool only after measured runtime and coverage analysis. |
+| Full includes pre-check and adds expensive checks. | Final acceptance must retain early checks and add repository-wide evidence. | Work repeats across tiers. Reconsider when shared, revision-bound results can be reused without weakening identity. |
+| Changed-file scope is used for file analysers. | The tool can produce a trustworthy result from the selected files. | It can miss cross-file effects. Use project or repository scope when analyser meaning depends on other files. |
+| Affected-project scope is used for TypeScript and Go. | Their compilers and package tools need a complete owned project or module. | More work runs than a file-only check. Narrow it only when dependency-aware selection remains complete. |
+| Project or repository scope is used for graphs, duplication, manifests, and contracts. | These checks compare relationships or discover inputs across a declared boundary. | They cost more and can produce broad findings. Narrow them only with a tested completeness rule. |
+| Timeouts are 30, 60, or 120 seconds. | The bands separate file tools, project tools, and repository or security tools. | A fixed timeout can fail on a larger valid project. Change it only with retained duration evidence and cleanup tests. |
+| Targets and exclusions are explicit. | Native tools can traverse beyond ordinary discovery, so policy must bound their input independently. | Every exclusion can hide debt. Add one only with a named ownership reason and a negative test. |
+
+These choices should change when measured cost, project size, or analyser
+semantics invalidate the current boundary. A settings change must preserve the
+failure, report, and authority contracts described on this page.
+
+## Native Configuration Decisions
+
+The policy selects a native configuration path. The native file owns detailed
+rules that belong to that analyser. The report records explicit config-path
+digests, so a changed explicit config changes report identity.
+
+The repository has no decision record for each native threshold and exclusion.
+The rationale below is an inference from current behavior and maintenance cost.
+The lint owner must review it when a value changes.
+
+| Configuration | Effective choice | Inferred current rationale and consequence |
+| --- | --- | --- |
+| `eslint.config.mjs` | Production limits, typed rules, seven local discipline rules, and named boundary exemptions. | One file keeps a rule beside its legitimate boundaries. An exemption is visible and reviewable instead of hidden in source comments. |
+| `eslint-type-evidence-config.mjs` | Seven syntax rules cover production TypeScript. One typed rule covers project-owned files and 12 declared default-project files. | Syntax rules retain broad coverage. The expensive typed rule runs only where TypeScript project ownership is known. |
+| `eslint-type-evidence-tests-config.mjs` | Seven experimental rules inspect tests and fixtures without the typed assertion rule. | Tests remain visible without pretending that each test file has production project ownership. |
+| `eslint-type-evidence-generated-config.mjs` | Seven syntax rules inspect generated or otherwise untracked files. | This partition exposes weak type evidence without loading untrusted project metadata. |
+| `type-evidence-eslint-plugin.mjs` | Seven local rule implementations are imported by all three type-evidence configs. | One implementation keeps their meaning consistent across partitions. It is an implicit behavior source, not a policy `config_path`. |
+| `.semgrep.yml` | Twenty-five warning rules cover JavaScript, TypeScript, and Python security boundaries. Individual rules own narrow path exclusions. | Curated local patterns make the accepted security boundary reviewable. The blocking threshold makes every emitted warning actionable. |
+| `knip.json` | Declared workspaces, entry points, project files, ignored generated paths, tool binaries, and known runtime-only dependencies. | Knip needs real entry points to distinguish dead code from convention-based loading. Every ignore can hide debt, so changes require consumer evidence. |
+| `jscpd.json` | Production clones need at least 70 tokens and 10 lines. Generated, dependency, coverage, vendor, and test trees are excluded. | The production threshold finds structural duplication while avoiding generated copies and small incidental phrases. |
+| `jscpd-tests.json` | Test clones need at least 100 tokens and 18 lines. Generated, dependency, coverage, and build trees are excluded. | Repeated test setup is often useful. The higher threshold reports only larger copied test structures. |
+| `.tflint.hcl` | The Terraform plugin uses its recommended preset. | The project delegates general Terraform rule selection to the pinned analyser instead of maintaining a partial local copy. |
+| `.yamllint.yml` | The default profile remains active, but document start, braces, colons, comment indentation, and line length are disabled. Truthy values accept only `true` and `false`. | YAML structure remains checked while Helm-style and compact configuration syntax avoid formatting-only noise. Boolean spelling stays unambiguous. |
+
+JSCPD always runs twice. It applies production calibration to normal configured
+targets and test calibration to `tests`. A missing calibration file is an
+execution error, not an empty result.
+
+The shipped project has no Terraform roots. Its Terraform tools are therefore
+not applicable today. Their configuration remains a supported contract for a
+project that declares a root and an offline provider mirror.
+
+> **Native-config evidence:** [JSCPD requires and runs both calibrations](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/architecture-tools.ts#L242-L276).
+> [Policy loading digests each explicit `config_path`](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/policy.ts#L234-L273).
+> Exact settings remain in [Knip](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/files/config/knip.json),
+> [production JSCPD](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/files/config/jscpd.json),
+> [test JSCPD](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/files/config/jscpd-tests.json),
+> [TFLint](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/files/config/.tflint.hcl),
+> and [yamllint](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/files/config/.yamllint.yml).
+
+`jscpd-tests.json` and `type-evidence-eslint-plugin.mjs` are implicit behavior
+sources. The engine requires or imports them, but the report does not include
+their digests in `config_digests`. Treat this as an evidence limit when a
+duplication or type-evidence result changes.
+
+### Runtime Binary And Version Authority
+
+Policy selects behavior, but the Nova image supplies the executable versions.
+`versions.json` is the reviewed root for pinned build arguments. Python wheel
+locks, Go module locks, the Nova npm lock, and checksum-verified downloads bind
+the resolved tools. `npm run versions:check` verifies these authorities.
+
+Node-based tools such as ESLint, Knip, JSCPD, TypeScript, and Dependency
+Cruiser come from `docker/nova-tools/package-lock.json`. Ruff, Mypy, and Semgrep
+come from hashed Python locks. Staticcheck, Govulncheck, and Gocyclo come from
+the Go lock. Hadolint, shfmt, Terraform, TFLint, Trivy, Helm, and Kubeconform use
+versioned and checksum-verified downloads.
+
+ShellCheck and yamllint come from the dated Debian snapshot. Their package
+versions are not separate policy fields. The immutable image digest is the
+effective deployed identity for those packages.
+
+> **Version evidence:** [The canonical build arguments name the current tool versions](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/versions.json#L7-L51).
+> [The Nova image verifies Python, Go, and downloaded analyser versions](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/docker/Dockerfile.nova#L72-L216).
+
+## Tool Execution Contracts
+
+The [generated applicability table](lint-policy-generated.md#shipped-full-run-applicability)
+separates eligible, dormant, opt-in, and replaced paths. The table below explains
+what each adapter does after selection.
+
+| Tool | Execution and result contract |
+| --- | --- |
+| `tsc` | Finds affected TypeScript configurations and runs `tsc --noEmit`. It preserves `TS` diagnostics and rejects an unstructured failing result. |
+| `gofmt` | Runs `gofmt -l` on selected Go files. Each returned filename becomes `go-format`. No matching Go file is not applicable. |
+| `go-vet` | Runs configured packages in each affected Go module. It normalizes parsed file diagnostics to `go-vet`. |
+| `gocyclo` | Checks affected Go modules with maximum complexity 10. It creates a stable seed from package, function, and file identity. |
+| `shellcheck` | Runs selected shell files in JSON mode at warning severity. It preserves `SC` codes and rejects an unexplained nonzero exit. |
+| `shfmt` | Runs one format diff per selected shell file. Exit one with a diff is a finding; another nonzero exit is a parse failure. |
+| `ruff` | Runs JSON lint on changed Python files or selected scope. Fixable findings become warnings; other findings become errors. |
+| `eslint` | Runs the blocking flat config on changed matching files or configured targets. It preserves rule IDs and stable occurrence seeds. |
+| `eslint-type-evidence-production` | Classifies tracked production files and runs the production audit config. It is experimental and repository-scoped. |
+| `eslint-type-evidence-tests` | Classifies tests and fixtures, then runs their syntax-only audit config. It is experimental and repository-scoped. |
+| `eslint-type-evidence-generated` | Classifies generated or untracked files, then runs syntax-only audit rules. It is experimental and repository-scoped. |
+| `knip` | Runs the declared workspace model and requests six active issue categories. It converts each issue to a `knip:<category>` finding. |
+| `dependency-cruiser` | Builds the configured module graph without following dependencies. It reports forbidden layer edges and strongly connected cycles. |
+| `jscpd` | Runs production and test calibrations into temporary reports. It joins both duplicate lists and removes the temporary directories. |
+| `mypy` | Runs JSON output on the selected Python scope. It preserves the error code and treats output without valid findings as a parse failure. |
+| `go-imports` | Uses `go list -json` for each affected module. It rejects external imports outside the module's approved prefixes. |
+| `staticcheck` | Reads a JSON stream for configured Go packages. It preserves Staticcheck codes, locations, severity, and messages. |
+| `govulncheck` | Reads pinned JSON-stream output and reports reachable OSV findings. Any nonzero exit is operational failure in this mode. |
+| `terraform-fmt` | Runs recursive format checks for affected declared roots. It is dormant while the shipped project has no Terraform root. |
+| `terraform-validate` | Requires the offline mirror and committed lock file. It initializes without backend or downloads, then validates JSON output. |
+| `tflint` | Runs the recommended native config in every declared Terraform root. It preserves rule name and severity. |
+| `trivy-terraform` | Requests high and critical Terraform misconfigurations without online updates. It rejects nonzero output without parsed issues. |
+| `semgrep` | Runs the curated config without metrics or version checks. Execution errors are not findings and block as tool failure. |
+| `hadolint` | Runs JSON output once per selected Dockerfile. It preserves Hadolint codes and source-line identity for stable fingerprints. |
+| `helm-lint` | Runs strict Helm lint for every discovered chart. It normalizes only explicit error and warning lines. |
+| `kubeconform` | Validates discovered Helm charts only when no explicit Kubernetes input exists. It uses the generic compatible schema path. |
+| `kubernetes-policy` | Loads bounded raw and rendered resources. It applies selected immutable packs with namespace and service-account lookup. |
+| `kubernetes-schema` | Validates configured raw manifests and charts against the pinned offline Kubernetes version and schema location. |
+| `trivy-kubernetes` | Renders configured charts and scans Kubernetes misconfigurations. It preserves Trivy IDs and stable resource identity. |
+| `yamllint` | Runs strict parsable output on selected YAML outside Helm templates. It normalizes diagnostics to `yamllint`. |
+| `openapi-contract` | Inspects matching OpenAPI filenames internally. It checks syntax, version, paths, local references, operations, IDs, and responses. |
+
+The engine runs selected tools sequentially in registry order. A failed tool
+does not masquerade as a clean result. The engine continues to assemble tool
+results unless cancellation rejects the invocation.
+
+> **Execution evidence:** [Language adapters define TypeScript, Python, shell,
+> and ESLint behavior](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts#L20-L263).
+> [Architecture adapters define graph, dead-code, and duplication behavior](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/architecture-tools.ts#L96-L284).
+> [Go](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/go-tools.ts#L128-L312),
+> [Terraform](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/terraform-tools.ts#L64-L187),
+> and [container and YAML adapters](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/container-yaml-tools.ts#L22-L177) own their command contracts.
 
 ## Blocking ESLint Rules
 
@@ -222,7 +427,7 @@ The next sections list every rule configured or implemented by this repository.
 | `max-lines` | Maximum 300 nonblank/noncomment lines | Maximum 2,000 |
 | `max-lines-per-function` | Maximum 60 nonblank/noncomment lines | Maximum 650 |
 | `max-params` | Maximum 7 | Maximum 12 |
-| `no-async-promise-executor` | Enabled | Enabled |
+| `no-async-promise-executor` | Not enabled | Enabled |
 | `no-global-assign` | Enabled | Enabled |
 | `no-useless-catch` | Enabled | Enabled |
 | `no-var` | Enabled | Enabled |
@@ -296,6 +501,12 @@ blocks warnings. Therefore, they are not advisory.
 
 ## Kubernetes Policy Packs
 
+Source code implements pack admission. Current Helm delivery does not. The
+chart does not place the referenced default pack beside the runtime policy.
+Thus, the shipped deployment cannot complete policy loading without an external
+file injection. The deployment section gives the exact boundary and stop
+condition.
+
 A reference contains `id`, semantic `version`, relative `path`, and lowercase
 SHA-256. Admission keeps the real path inside the policy directory, limits a file
 to 1 MiB, verifies the digest before parsing, matches document ID and version,
@@ -305,7 +516,7 @@ rules per pack. Loaded packs and rule lists are frozen.
 | Rule type | Parameters | Evaluation |
 | --- | --- | --- |
 | `required-env` | Unique non-empty `names` | Normal and init containers need each variable, directly or through resolvable `envFrom`. |
-| `secret-ref` | None | Non-optional secret key and source references must resolve in the namespace. |
+| `secret-ref` | None | Non-optional container `env` secret keys and `envFrom` secret sources must resolve in the namespace. It does not inspect volumes or image-pull references. |
 | `private-registry-pull-secret` | Unique non-empty `registries` | Matching images need pod or service-account pull secrets. |
 | `readiness-probe` | None | Normal containers need readiness probes. |
 | `liveness-probe` | None | Normal containers need liveness probes. |
@@ -320,7 +531,7 @@ The default pack has these six concrete error-severity rules:
 | Rule ID | Type | Exact parameter and effect |
 | --- | --- | --- |
 | `required-runtime-env` | `required-env` | Requires `REDIS_HOST` in each normal and init container. Resolvable `envFrom` entries count. |
-| `valid-secret-refs` | `secret-ref` | Requires each non-optional secret key and secret source to exist in the workload namespace. |
+| `valid-secret-refs` | `secret-ref` | Requires each non-optional container `env` secret key and `envFrom` secret source to exist in the workload namespace. |
 | `private-registry-auth` | `private-registry-pull-secret` | Requires a pod or service-account pull secret for images under `registry.example.invalid`. |
 | `readiness-probe` | `readiness-probe` | Requires a readiness probe on each normal container. |
 | `liveness-probe` | `liveness-probe` | Requires a liveness probe on each normal container. |
@@ -400,7 +611,7 @@ debt.
 | Malformed output | Tool-specific `*-parse-failed`; stage blocks. |
 | Cancellation | Invocation rejects as `LINT_CANCELLED`; not a normal tool result. |
 | Unconfirmed descendant cleanup | `LINT_PROCESS_CLEANUP_FAILED`. |
-| Invalid report identity, evidence, totals, or visibility | `LINT_REPORT_CONTRACT_INVALID`. |
+| Invalid report shape, SHA-256 syntax, target path, evidence, totals, or request-bound project/tier/scope/visibility | `LINT_REPORT_CONTRACT_INVALID`. |
 
 Native commands get an allowlisted environment and private cache directories.
 Termination sends TERM to the Linux process group, then KILL after 250 ms, and
@@ -413,10 +624,24 @@ general sandbox.
 
 ## Report Evidence
 
-Every accepted report contains policy version and digest, project, native-config
-digests, pack digests, effective targets, baseline digest, report scope, tier,
+Every accepted report contains policy version and digest, project, explicit
+native-config digests, pack digests, effective targets, baseline digest, report scope, tier,
 visibility, changed files, detected types, discovery diagnostics, tool results,
 and a summary recomputed from those results.
+
+The explicit config digests cover each policy `config_path`. They do not cover
+the implicit JSCPD test calibration or local type-evidence plugin implementation.
+The pinned implementation links and target image remain necessary evidence for
+those inputs.
+
+The engine creates the policy, baseline, config, pack, and target identity maps
+from files that it loaded. The stage binds the report to the configured policy
+project and to the request's tier, module scope, optional project name, and
+visibility. It does not reload every policy input and compare all identity maps
+independently. The validator can compare expected policy, baseline, config, pack,
+target, and tool inventories when a caller supplies them. The executor is the
+trusted producer for the remaining maps in the current stage path. This boundary
+is important when a new adapter or remote producer is considered.
 
 Evidence has at most 256 entries. Each has kind, source, SHA-256, and byte count.
 Referenced evidence is limited to 64 MiB. Inline content is limited to 256 KiB
@@ -426,3 +651,21 @@ an immutable JSON artifact, and only then returns the stage decision.
 > **Report evidence:** [The builder records policy and scope identity](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/report.ts#L205-L241),
 > [the contract validates evidence and recomputes totals](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/report-contract.ts#L59-L73),
 > and [the stage stores the artifact](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/stage.ts#L83-L91).
+
+## Verification Record
+
+This record separates source evidence from checks that ran in the local
+verification environment. A passed local check does not replace target-image acceptance.
+
+| Claim | Implementation | Contract or setting | Test evidence and status on 2026-09-20 | Revision | Limit |
+| --- | --- | --- | --- | --- | --- |
+| Stage, adapter, and engine keep lifecycle, authority, and analysis responsibilities separate. | [Stage request and decision](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/stage.ts#L24-L100) | [Adapter root admission](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/adapter.ts#L28-L63) | Stage, package-boundary, and adapter-boundary suites passed. | `549dfe003d41fca50b85c3040029a74a817715d6` | Source and focused tests do not prove deployed capability grants. |
+| The policy loader validates the complete policy and binds its direct configuration files. | [Policy loader](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/policy.ts#L234-L273) | [Shipped policy](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/files/config/lint-policy.json#L1-L1070) | `docs:lint-policy:check` passed. It compared the generated page with policy, baseline, pack, native configuration, and implemented identifiers. | `549dfe003d41fca50b85c3040029a74a817715d6` | Report digests do not include the implicit JSCPD test config or the local type-evidence plugin. |
+| Project discovery and target validation cannot grant paths outside repository authority. | [Discovery](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/discovery.ts#L138-L220) | [Native target path validation](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/policy-paths.ts#L43-L74) | Discovery and remediation suites passed, including escape and excluded-source cases. | `549dfe003d41fca50b85c3040029a74a817715d6` | A newly added native analyser needs its own traversal tests. |
+| Policy and registry must contain the same tool IDs. | [Closed registry check](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/tool-registry-core.ts#L105-L129) | [All policy tools](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/files/config/lint-policy.json#L280-L1070) | Package-boundary and generated-parity checks passed for all 31 tools. | `549dfe003d41fca50b85c3040029a74a817715d6` | Matching IDs do not prove that each external binary runs in the deployed image. |
+| Pack admission binds path, bytes, digest, ID, version, and closed rule data. | [Pack loader](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts#L67-L118) | [Default pack reference](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/files/config/lint-policy.json#L9-L15) | Source-level pack and generated digest checks passed. | `549dfe003d41fca50b85c3040029a74a817715d6` | Helm does not deliver the pack today. Deployed loading remains blocked until chart delivery is fixed and tested. |
+| Baselines suppress only approved, unexpired fingerprint debt and expose stale entries in a complete full run. | [Baseline governance](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/lint-governance.ts#L7-L43) | [Stale baseline check](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/index.ts#L119-L132) | Generated baseline parity and remediation checks passed. | `549dfe003d41fca50b85c3040029a74a817715d6` | A scoped or failed run cannot prove that every waiver is stale. |
+| Tool failures cannot become clean tool results. | [Result normalization](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/report.ts#L104-L163) | [Report contract](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/src/engine/report-contract.ts#L38-L231) | The remediation suite passed all eight tests, including start failure, timeout, output overflow, abort, shutdown, and descendant cleanup. | `549dfe003d41fca50b85c3040029a74a817715d6` | The suite uses selected real tools and controlled fixtures. It does not execute every external analyser. |
+| Runtime versions come from reviewed locks and image build inputs, not lint policy. | [Nova analyser installation](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/docker/Dockerfile.nova#L72-L216) | [Version authorities](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/versions.json#L7-L51) | `npm run versions:check` passed for 42 inputs and the runtime lock receipt. | `549dfe003d41fca50b85c3040029a74a817715d6` | A source lock check does not prove the identity of a running Pod image. |
+| The published pages contain the current generated facts and valid pinned links. | [Policy source used by the generated reference](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/charts/kubeclaw/files/config/lint-policy.json#L1-L1070) | [Generated policy facts](lint-policy-generated.md) | Generated-reference, specialist-guide, link, coverage, and publication checks passed. | `549dfe003d41fca50b85c3040029a74a817715d6` | These checks prove parity and publication structure. They do not replace a reader exercise. |
+| The complete plugin function can run both tiers in the target tool environment. | [Live-function test](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/tests/live-function.test.ts#L13-L230) | [Plugin registrations](https://github.com/datrab/kubeclaw/blob/549dfe003d41fca50b85c3040029a74a817715d6/skills/nova/plugins/lint/plugin.json#L1-L48) | Not reached in this environment. The fixture stopped while it acquired its first journal lock because BusyBox `flock` has no timeout option. | `549dfe003d41fca50b85c3040029a74a817715d6` | Run this check in the target image with `shellcheck`, `shfmt`, and GNU `flock`. |
