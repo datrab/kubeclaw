@@ -4,7 +4,7 @@ Status: implemented with stated local limits
 Audience: extension author, operator, maintainer
 Owner: plugin-foundation
 Evidence: scripts/verify-plugin-packages.mjs; skills/common/plugin-runtime/foundation/registry; packaging/runtime/roles
-Evidence revision: `5b6e1b97415ffefa4bb42bf2ae331f27597170b5`
+Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
 Applies to: pipeline-plugin-v2, OpenClaw extensions, Codex plugins, Worker engines, runtime roles
 Last verified: source and focused local checks on 2026-09-16
 
@@ -53,9 +53,9 @@ hosts, and unavailable live dependencies behind an aggregate result.
 **Reconsider when:** A test runner can preserve each level, environment, skip reason,
 and result in one machine-readable record.
 
-> **Discovery boundary:** [The registry builder validates package declarations and creates separate indexes](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugin-runtime/foundation/registry/build.ts#L265-L317).
+> **Discovery boundary:** [The registry builder validates package declarations and creates separate indexes](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/foundation/registry/build.ts#L265-L317).
 >
-> **Activation boundary:** [Foundation checks selected package integrity before it imports executable code](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137).
+> **Activation boundary:** [Foundation checks selected package integrity before it imports executable code](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/foundation/registry/activation.ts#L103-L137).
 
 ## Record A Reproducible Result
 
@@ -94,9 +94,9 @@ this focused procedure:
 Core owns lifecycle changes. A stage test must not accept direct journal mutation as
 proof of a supported plugin result.
 
-> **Invocation boundary:** [The SDK context exposes bounded capability, event, and artifact services](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugin-runtime/sdk/src/runtime.ts#L21-L43).
+> **Invocation boundary:** [The SDK context exposes bounded capability, event, and artifact services](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/sdk/src/runtime.ts#L21-L43).
 >
-> **Result interpretation:** [Nova validates the result, records it, applies lifecycle rules, and always cleans the attempt](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/core/execution/stage-executor.ts#L31-L52).
+> **Result interpretation:** [Nova validates the result, records it, applies lifecycle rules, and always cleans the attempt](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/stage-executor.ts#L31-L52).
 
 ## Test An Observer
 
@@ -114,7 +114,7 @@ An observer consumes committed events. It must not control the pipeline.
 An observer can fail its delivery. That failure does not reverse the committed
 pipeline event.
 
-> **Bounded delivery:** [Nova binds the observer identity, delivery attempt, lease, grants, timeout, and cleanup](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/core/telemetry/observer-delivery.ts#L15-L43).
+> **Bounded delivery:** [Nova binds the observer identity, delivery attempt, lease, grants, timeout, and cleanup](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/telemetry/observer-delivery.ts#L15-L43).
 
 ## Test A Capability Adapter
 
@@ -133,9 +133,9 @@ An adapter test must prove policy and the external effect.
 Do not prove an effect only with a mock. Use a mock for deterministic inner tests,
 then use the real protocol in an integration or live check.
 
-> **Provider resolution:** [Foundation maps each capability to one installed adapter and rejects invalid mappings](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L75-L119).
+> **Provider resolution:** [Foundation maps each capability to one installed adapter and rejects invalid mappings](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/foundation/registry/capabilities.ts#L75-L119).
 >
-> **Effect recovery:** [The durable invocation records request and acceptance, recovers receipts, fences calls, and records completion](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/core/effects/durable-invocation.ts#L88-L157).
+> **Effect recovery:** [The durable invocation records request and acceptance, recovers receipts, fences calls, and records completion](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/effects/durable-invocation.ts#L88-L157).
 
 ## Test A Provider Or Report Adapter
 
@@ -162,9 +162,9 @@ For a report adapter:
 The provider produces facts. The report adapter normalizes facts. Gate policy decides
 whether those facts pass.
 
-> **Provider binding:** [Buster verifies the plan digest, registry snapshot, provider identity, and report-adapter identity](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/engine/test-gates/runner.ts#L234-L267).
+> **Provider binding:** [Buster verifies the plan digest, registry snapshot, provider identity, and report-adapter identity](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/engine/test-gates/runner.ts#L234-L267).
 >
-> **Package snapshot:** [The provider loader verifies the digest and copies exact package bytes into the attempt workspace](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/engine/test-gates/provider-loader.ts#L52-L79).
+> **Package snapshot:** [The provider loader verifies the digest and copies exact package bytes into the attempt workspace](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/engine/test-gates/provider-loader.ts#L52-L79).
 
 ## Test An OpenClaw Or Codex Extension
 
@@ -216,9 +216,9 @@ A role test proves packaging around that engine:
 6. Run one real task and one failure.
 7. Stop and restart while recoverable work exists.
 
-> **Attempt lifecycle:** [Worker Core invokes preparation, execution, termination, measurement, cleanup, and evidence hooks](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/worker/core/worker/attempt-executor.ts#L62-L93).
+> **Attempt lifecycle:** [Worker Core invokes preparation, execution, termination, measurement, cleanup, and evidence hooks](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/worker/core/worker/attempt-executor.ts#L62-L93).
 >
-> **Role closure:** [The role checker verifies ownership, dependencies, capability providers, and plugin selection](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/scripts/check-runtime-role-manifests.mjs#L77-L145).
+> **Role closure:** [The role checker verifies ownership, dependencies, capability providers, and plugin selection](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/check-runtime-role-manifests.mjs#L77-L145).
 
 ## Install And Activate By Surface
 

@@ -4,7 +4,7 @@ Status: implemented with explicit model and repository evidence limits
 Audience: pipeline operator, Echo maintainer, policy author, security reviewer
 Owner: Echo maintainers
 Evidence: skills/nova/plugins/review/src; skills/nova/plugins/review/schemas; skills/nova/plugins/review/tests
-Evidence revision: `5b6e1b97415ffefa4bb42bf2ae331f27597170b5`
+Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
 Applies to: review, repository-audit, and repository-revalidation stages
 Last verified: source, schema, manifest, and focused test inspection on 2026-09-20
 
@@ -21,9 +21,9 @@ untrusted output.
 
 > **Source evidence — three bounded review stages**
 >
-> [The package registers review, repository audit, and revalidation with read and artifact capabilities only](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/review/plugin.json#L1-L54).
+> [The package registers review, repository audit, and revalidation with read and artifact capabilities only](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/review/plugin.json#L1-L54).
 >
-> [The stage resolves policy, prepares evidence, dispatches Echo, verifies output, reduces the decision, and persists the result](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/review/src/stage.ts#L1-L28).
+> [The stage resolves policy, prepares evidence, dispatches Echo, verifies output, reduces the decision, and persists the result](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/review/src/stage.ts#L1-L28).
 
 ## Fixed Review Subject
 
@@ -43,9 +43,9 @@ carry a path, reasons, and dependency depth from 1 through 8.
 
 > **Source evidence — subject admission**
 >
-> [The stage input schema defines task, revision, scope, requirement, evidence, and context bounds](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/review/schemas/input.schema.json#L1-L35).
+> [The stage input schema defines task, revision, scope, requirement, evidence, and context bounds](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/review/schemas/input.schema.json#L1-L35).
 >
-> [The final report validator binds report identity to revisions, manifest, policy, and bundle digests](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/review/src/review-report-contract.ts#L123-L140).
+> [The final report validator binds report identity to revisions, manifest, policy, and bundle digests](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/review/src/review-report-contract.ts#L123-L140).
 
 ## Echo Output
 
@@ -67,9 +67,9 @@ both as direct evidence.
 
 > **Source evidence — review language is a contract**
 >
-> [The Echo contract defines all assessment, category, priority, scope, change, and evidence values](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/review/src/echo-review-contract.ts#L1-L133).
+> [The Echo contract defines all assessment, category, priority, scope, change, and evidence values](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/review/src/echo-review-contract.ts#L1-L133).
 >
-> [The generated schema requires evidence for satisfied and violated requirements](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/plugins/review/src/echo-review-contract.ts#L207-L237).
+> [The generated schema requires evidence for satisfied and violated requirements](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/review/src/echo-review-contract.ts#L207-L237).
 
 ## Policy And Certification
 

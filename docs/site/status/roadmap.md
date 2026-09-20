@@ -3,9 +3,9 @@
 Status: planned direction
 Audience: operator, maintainer, developer
 Owner: platform-maintainers
-Evidence: docs/status/open-issues.json; packaging/runtime/package-ownership.json
+Evidence: docs/status/open-issues.json; packaging/runtime/package-ownership.json; skills/nova/plugins/lint/src/adapter.ts; skills/nova/plugins/lint/src/engine/discovery.ts; skills/nova/plugins/lint/src/engine/execution.ts; charts/kubeclaw/templates/configmap-swarm-config.yaml; charts/kubeclaw/templates/deployment.yaml
 Applies to: planned KubeClaw product and platform work
-Last verified: 2026-09-17
+Last verified: 2026-09-20
 
 ## Purpose
 
@@ -77,6 +77,29 @@ The replacement must:
 
 Acceptance requires a real BuildKit push and a Buster digest check. A Kubernetes
 node must then perform an uncached pull of the same digest.
+
+## Lint Concurrency and Deployed Extension Acceptance
+
+The current lint adapter can accept concurrent invocations, but discovery
+diagnostics use shared process state and native analysers use shared cache
+directories. The planned change must make diagnostic ownership
+invocation-local. It must also isolate a cache or prove that its owning analyser
+supports concurrent writers. Concurrency tests must overlap two distinguishable
+runs and prove that findings, diagnostics, cancellation, cleanup, and artifacts
+remain bound to the correct request.
+
+The repository also lacks a maintained deployment fixture that invokes an
+installed lint stage in a Nova pod. The fixture must select the namespace, pod,
+and container through stable labels; verify access and readiness; compare the
+approved configuration digests with `/runtime-config`; invoke pre-check and full
+through the real stage/capability path; retain the immutable report artifact;
+check its policy, config, pack, tool, scope, and finding identities; and remove
+only fixture-owned data. It must specify expected exit states and stop when the
+pod, source revision, or runtime bytes do not match.
+
+Acceptance requires two results. The overlap test must prove report isolation,
+and a second operator must run the deployment fixture without an undocumented
+`kubectl exec` command or manual report reconstruction.
 
 ## Other Planned Themes
 

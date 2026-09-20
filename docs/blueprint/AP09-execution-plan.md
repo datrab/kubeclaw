@@ -352,8 +352,10 @@ umgebungsabhängige Live-Abnahme getrennt.
 
 ### AP09.6 — Lint
 
-**Status:** In abschliessender unabhängiger Re-Abnahme am 20. September 2026.
-Die Read-only-Abnahme des Gesamtplans bleibt getrennt offen.
+**Status:** Intern abgeschlossen und durch getrennte Fresh-Context-Prüfungen für
+Quelltreue, Clean-Reader-Reproduzierbarkeit sowie Architektur- und Sprachqualität
+am 20. September 2026 abgenommen. Die Read-only-Abnahme des Gesamtplans bleibt
+getrennt offen.
 
 - Pre-check, Full Lint, Executor und Report Adapter mit ihrer Autorität erklären.
 - Alle Regeln und Tools als erzeugte Referenz inventarisieren.
@@ -410,6 +412,16 @@ exakten Stop-Zustand, die fehlenden ConfigMap- und Kopierschritte sowie die
 erforderliche Deployment-Prüfung. AP09.6 dokumentiert diese Produktlücke; es
 behauptet keine erfolgreiche Live-Ausführung der Policy Packs.
 
+Der Adapter serialisiert außerdem nur die Tools innerhalb eines Reports, nicht
+mehrere Reports untereinander. Der aktuelle Discovery-Diagnosepuffer und die
+nativen Tool-Caches besitzen noch keine nachgewiesene Isolation für parallele
+Aufrufe. Die Dokumentation fordert deshalb serialisierte akzeptanzrelevante
+Läufe. Ein eigener Roadmap-Punkt bindet die spätere Freigabe an überlappende
+Isolationstests. Derselbe Punkt fordert eine gepflegte Deployment-Fixture, weil
+das Repository derzeit keinen unterstützten direkten Lint-Stage-Aufruf in einem
+laufenden Nova-Pod bereitstellt. Source-, Render- und Target-Image-Prüfungen
+werden nicht als Ersatz für diesen noch fehlenden Deployment-Nachweis ausgegeben.
+
 **Controlled-language review record:** Der Umfang umfasst
 `reference/lint-policy.md`, `reference/lint-policy-generated.md`,
 `reference/lint-rules.md` und `extend/lint.md`. Die Methode kombiniert den
@@ -436,9 +448,24 @@ den Shell-Block durch ein Fail-fast-npm-Ziel, ergänzte den Report-Runner und
 hostile Contract-/Registry-/Pack-Lifecycle-Tests, band bekannte Request-Werte im
 Stage und machte die vier Erweiterungswege datei-, befehls-, beobachtungs- und
 cleanup-genau. Sie dokumentiert zudem, dass der frische Source-Checkout das
-runtime-erzeugte `Projects/buster-infra-smoke`-Manifest nicht besitzt. Eine neue
-Fresh-Context-Runde muss diese zweite Korrektur noch bestätigen; bis dahin bleibt
-die Leserabnahme offen.
+runtime-erzeugte `Projects/buster-infra-smoke`-Manifest nicht besitzt.
+
+Die abschließenden unabhängigen Prüfungen fanden weitere konkrete Grenzen:
+fehlende `--module-path`-Weitergabe, einen unvollständigen Runner-Exitvertrag,
+ungenaue Baseline-Prune-Ausgänge, fehlende Runtime-Versionen, nicht ausgelieferte
+neue native Konfigurationen, eine unbegründete Ein-Projekt-Grenze sowie geteilte
+Discovery- und Cache-Zustände bei parallelen Aufrufen. Die Korrektur ergänzte
+CLI- und Reportverträge, vollständige Source-/Render-/Target-Image-Gates,
+ConfigMap- und beide Copy-Grenzen, genaue Fresh/Stale/Invalid-Ausgänge, eine
+explizit unbekannte historische Begründung mit Kosten und Änderungsbedingungen
+sowie die Serialisierungs- und Roadmap-Grenze. Danach bestanden drei getrennte
+Fresh-Context-Abnahmen ohne materiellen Restbefund. Die automatischen Endprüfungen
+umfassten 307 revisionsfeste Links auf 168 Quelldateien, die generierte
+Policy-Referenz, Publikation, lokale Referenzen, Site-Grenzen, TypeScript-Build,
+Versionsautoritäten und die fokussierte Lint-Suite mit acht feindlichen
+Reportfällen und acht Remediation-Fällen. Die oben genannten Live- und
+Deployment-Grenzen bleiben ausdrücklich offen und verhindern keine falsche
+Implementierungsbehauptung.
 
 ### AP09.7 — Plattform, Spezialisten, Kommunikation, Daten und Sicherheit
 

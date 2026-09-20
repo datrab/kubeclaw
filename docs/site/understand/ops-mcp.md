@@ -4,7 +4,7 @@ Status: implemented; optional to pipeline execution
 Audience: operator, Codex integrator, Ops MCP maintainer, security reviewer
 Owner: Ops MCP maintainers
 Evidence: tools/ops-mcp/src; tools/ops-mcp/test; charts/ops-pod; scripts/deploy-ops-pod.sh
-Evidence revision: `5b6e1b97415ffefa4bb42bf2ae331f27597170b5`
+Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
 Applies to: `kubeclaw-ops` MCP service version 0.2.0
 Last verified: service, chart, policy, and focused test inspection on 2026-09-20
 
@@ -50,11 +50,11 @@ must keep these values if it wants to continue an investigation.
 
 > **Source evidence — fail-closed HTTP boundary**
 >
-> [Configuration validates port, local binding, namespaces, token sources, and origin allowlist](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/tools/ops-mcp/src/config.mjs#L1-L23).
+> [Configuration validates port, local binding, namespaces, token sources, and origin allowlist](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/config.mjs#L1-L23).
 >
-> [Authentication validates and rereads the bearer credential for every request](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/tools/ops-mcp/src/authentication.mjs#L1-L38).
+> [Authentication validates and rereads the bearer credential for every request](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/authentication.mjs#L1-L38).
 >
-> [The HTTP router exposes only health and MCP and applies bearer and origin checks](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/tools/ops-mcp/src/server.mjs#L490-L553).
+> [The HTTP router exposes only health and MCP and applies bearer and origin checks](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L490-L553).
 
 ## Tool Reference
 
@@ -101,9 +101,9 @@ lossless cursor. An empty or partial result does not prove that no drop occurred
 
 > **Source evidence — bounded downstream calls**
 >
-> [Kubernetes transport fixes HTTPS, CA, token rotation, 10-second timeout, 8 MiB ceiling, and narrow oversized-page retry](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/tools/ops-mcp/src/kubernetes.mjs#L1-L98).
+> [Kubernetes transport fixes HTTPS, CA, token rotation, 10-second timeout, 8 MiB ceiling, and narrow oversized-page retry](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/kubernetes.mjs#L1-L98).
 >
-> [Hubble transport fixes concurrency, time window, byte limits, exact filtering, and partial-result semantics](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/tools/ops-mcp/src/hubble.mjs#L1-L118).
+> [Hubble transport fixes concurrency, time window, byte limits, exact filtering, and partial-result semantics](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/hubble.mjs#L1-L118).
 
 ## Authorization And Data Exposure
 

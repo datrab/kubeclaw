@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/buster/plugins/api-flow/plugin.json; skills/buster/plugins/api-flow/README.md
 Applies to: pipeline-plugin-v2; package 1.0.0
-Last verified: see the separate verification record; source evidence revision 5b6e1b97415ffefa4bb42bf2ae331f27597170b5
+Last verified: see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb
 
 ## Authored Guidance
 
@@ -26,7 +26,7 @@ Flow state exists only inside the bounded provider execution.
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/api-flow/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/plugins/api-flow/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -40,7 +40,7 @@ the contract and lifecycle rules that apply to this package.
 - Host: `pipeline-runtime`.
 - Package identity: `kubeclaw.api-flow@1.0.0`.
 - Runtime-role manifest inclusion: `buster`
-- Manifest: [skills/buster/plugins/api-flow/plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/api-flow/plugin.json)
+- Manifest: [skills/buster/plugins/api-flow/plugin.json](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/plugins/api-flow/plugin.json)
 
 ## Boundaries
 
@@ -65,7 +65,7 @@ Required capabilities: `network.http`
 
 Provided capabilities: None.
 
-Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/api-flow/schemas/config.schema.json)
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/plugins/api-flow/schemas/config.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
@@ -138,11 +138,11 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [skills/buster/plugins/api-flow/plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/api-flow/plugin.json)
-- Authored package guide: [skills/buster/plugins/api-flow/README.md](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/api-flow/README.md)
-- Module for `flow`: [src/provider.js](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/api-flow/src/provider.js)
-- Test: [skills/buster/plugins/api-flow/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/api-flow/tests/live-function.test.ts)
-- Test: [skills/buster/plugins/api-flow/tests/remediation.test.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/buster/plugins/api-flow/tests/remediation.test.ts)
+- Manifest: [skills/buster/plugins/api-flow/plugin.json](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/plugins/api-flow/plugin.json)
+- Authored package guide: [skills/buster/plugins/api-flow/README.md](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/plugins/api-flow/README.md)
+- Module for `flow`: [src/provider.js](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/plugins/api-flow/src/provider.js)
+- Test: [skills/buster/plugins/api-flow/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/plugins/api-flow/tests/live-function.test.ts)
+- Test: [skills/buster/plugins/api-flow/tests/remediation.test.ts](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/buster/plugins/api-flow/tests/remediation.test.ts)
 
 Generated facts come from the manifest, package metadata, runtime-role inventory,
 schemas, and test-file discovery. Maintained guidance data owns the purpose,

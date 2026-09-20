@@ -4,7 +4,7 @@ Status: active v2 path implemented; retained v1 contract has no active runtime p
 Audience: runtime developer, observer author, operator, security reviewer
 Owner: observability maintainers
 Evidence: skills/nova/core/telemetry; skills/common/plugins/telemetry-observer; skills/common/plugins/telemetry-store; skills/common/plugins/redis-transport; contracts/telemetry/v1
-Evidence revision: `5b6e1b97415ffefa4bb42bf2ae331f27597170b5`
+Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
 Applies to: Nova lifecycle-event.v2, plugin-domain-event.v2, observer delivery v2, and retained telemetry v1 assets
 Last verified: contract, runtime, plugin, configuration, and focused-test inspection on 2026-09-20
 
@@ -37,9 +37,9 @@ do not create a running service. No v1-to-v2 adapter exists.
 
 > **Source evidence — the version boundary**
 >
-> [The retained v1 README defines its inactive runtime status and limits](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/contracts/telemetry/v1/README.md#L1-L7).
+> [The retained v1 README defines its inactive runtime status and limits](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/contracts/telemetry/v1/README.md#L1-L7).
 >
-> [The active SDK defines lifecycle events, plugin domain events, observer delivery, and checkpoints as separate v2 contracts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L597-L672).
+> [The active SDK defines lifecycle events, plugin domain events, observer delivery, and checkpoints as separate v2 contracts](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L597-L672).
 
 ### What the retained v1 asset contains
 
@@ -55,9 +55,9 @@ nullable cursor, but no current consumer enforces its proposed
 `project/run/sequence` meaning. `source` and `authority` fields also do not
 authenticate a sender.
 
-> [The retained catalog is the complete 53-type source list](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/contracts/telemetry/v1/catalog.json).
+> [The retained catalog is the complete 53-type source list](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/contracts/telemetry/v1/catalog.json).
 >
-> [The generated manifest binds all 132 delivered files and states compatibility rules](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/contracts/telemetry/v1/contract-manifest.json).
+> [The generated manifest binds all 132 delivered files and states compatibility rules](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/contracts/telemetry/v1/contract-manifest.json).
 
 ## Active Data Path
 
@@ -119,11 +119,11 @@ Each lifecycle event has the same envelope fields:
 
 > **Source evidence — lifecycle production**
 >
-> [The SDK contract contains the full closed list and common envelope fields](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L605-L645).
+> [The SDK contract contains the full closed list and common envelope fields](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L605-L645).
 >
-> [The pipeline runner assigns the journal sequence and writes run, stage, and attempt events through one append function](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/core/execution/runner.ts#L49-L78).
+> [The pipeline runner assigns the journal sequence and writes run, stage, and attempt events through one append function](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/runner.ts#L49-L78).
 >
-> [The effect bridge emits bounded effect facts but excludes effects created by observer delivery to prevent a feedback loop](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/core/execution/engine-runtime.ts#L53-L59).
+> [The effect bridge emits bounded effect facts but excludes effects created by observer delivery to prevent a feedback loop](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/engine-runtime.ts#L53-L59).
 
 ### Plugin domain events
 
@@ -143,9 +143,9 @@ consumer relies on it.
 
 > **Source evidence — domain event authority**
 >
-> [The SDK requires producer provenance on every plugin domain event](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L646-L656).
+> [The SDK requires producer provenance on every plugin domain event](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L646-L656).
 >
-> [Stage emission assigns canonical sequence, producer provenance, attempt causation, and the supplied type and payload](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/core/execution/stage-executor.ts#L82-L97).
+> [Stage emission assigns canonical sequence, producer provenance, attempt causation, and the supplied type and payload](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/stage-executor.ts#L82-L97).
 
 ## Producer and Consumer Matrix
 
@@ -192,13 +192,13 @@ revision.
 
 > **Source evidence — shipped producer and consumers**
 >
-> [The telemetry observer manifest contains its exact 27 subscriptions and bounded best-effort policy](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/telemetry-observer/plugin.json#L6-L50).
+> [The telemetry observer manifest contains its exact 27 subscriptions and bounded best-effort policy](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/telemetry-observer/plugin.json#L6-L50).
 >
-> [The notification manifest separates lifecycle notifications from artifact preview delivery](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/plugin.json#L6-L59).
+> [The notification manifest separates lifecycle notifications from artifact preview delivery](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/plugin.json#L6-L59).
 >
-> [The agent-observability manifest declares both the 12-event telemetry consumer and the five-event evidence consumer](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/agent-observability/plugin.json#L6-L65).
+> [The agent-observability manifest declares both the 12-event telemetry consumer and the five-event evidence consumer](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/agent-observability/plugin.json#L6-L65).
 >
-> [The OpenClaw adapter derives only the fixed prefixed type from an admitted hook name](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-events/src/adapter.ts#L52-L82).
+> [The OpenClaw adapter derives only the fixed prefixed type from an admitted hook name](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-events/src/adapter.ts#L52-L82).
 
 ## Identity and Correlation
 
@@ -250,9 +250,9 @@ not a new event.
 
 > **Source evidence — stable delivery**
 >
-> [Observer delivery derives a stable delivery ID and stable adapter keys from observer and event identity](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/core/telemetry/observer-delivery.ts#L15-L43).
+> [Observer delivery derives a stable delivery ID and stable adapter keys from observer and event identity](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/telemetry/observer-delivery.ts#L15-L43).
 >
-> [Redis performs deduplication and stream append in one Lua operation and returns the original stream entry ID on replay](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/redis-transport/src/adapter.ts#L14-L20).
+> [Redis performs deduplication and stream append in one Lua operation and returns the original stream entry ID on replay](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/redis-transport/src/adapter.ts#L14-L20).
 
 ## Redaction and Sensitive Data
 
@@ -280,11 +280,11 @@ remove or summarize sensitive values at the producer boundary.
 
 > **Source evidence — projection safety**
 >
-> [The telemetry observer creates a v2 envelope and redacts event identity and payload before adapter invocation](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/telemetry-observer/src/observer.ts#L7-L29).
+> [The telemetry observer creates a v2 envelope and redacts event identity and payload before adapter invocation](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/telemetry-observer/src/observer.ts#L7-L29).
 >
-> [The file telemetry projection rejects proxies, accessors, cycles, invalid Unicode, non-finite numbers, excessive depth or nodes, and sensitive field names](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/telemetry-store/src/projection.ts#L3-L94).
+> [The file telemetry projection rejects proxies, accessors, cycles, invalid Unicode, non-finite numbers, excessive depth or nodes, and sensitive field names](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/telemetry-store/src/projection.ts#L3-L94).
 >
-> [The audit reader rebuilds from the verified journal, redacts identity and payload, and binds its digest to record hashes and journal head](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/core/telemetry/audit.ts#L6-L27).
+> [The audit reader rebuilds from the verified journal, redacts identity and payload, and binds its digest to record hashes and journal head](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/telemetry/audit.ts#L6-L27).
 
 ## Observer Delivery, Checkpoints, and Recovery
 
@@ -326,9 +326,9 @@ delivery journal, and its checkpoint does not advance.
 
 > **Source evidence — recovery behavior**
 >
-> [Observer Runtime filters subscriptions, enforces checkpoints, applies required or best-effort policy, retries, and checkpoints only after success](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/core/telemetry/observers.ts#L70-L106).
+> [Observer Runtime filters subscriptions, enforces checkpoints, applies required or best-effort policy, retries, and checkpoints only after success](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/telemetry/observers.ts#L70-L106).
 >
-> [Recovery validates attempt transitions and rebuilds the maximum attempt and completed-delivery sets](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/core/telemetry/observer-recovery.ts#L71-L82).
+> [Recovery validates attempt transitions and rebuilds the maximum attempt and completed-delivery sets](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/telemetry/observer-recovery.ts#L71-L82).
 
 ## Sink Contracts
 
@@ -352,7 +352,7 @@ The store does not silently rotate records. A full required sink applies
 backpressure through Observer Runtime. An operator must add capacity or execute
 owner-authorized retirement.
 
-> [The file adapter declares the defaults, stream, operation checks, idempotent append, and size-error mapping](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/telemetry-store/src/adapter.ts#L5-L42).
+> [The file adapter declares the defaults, stream, operation checks, idempotent append, and size-error mapping](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/telemetry-store/src/adapter.ts#L5-L42).
 
 ### Redis telemetry adapter
 
@@ -370,9 +370,9 @@ A connection failure, timeout, malformed reply, full Redis instance, or missing
 secret fails the adapter call. Observer policy then decides whether the host
 fails closed or records a best-effort failure.
 
-> [The adapter validates URL, prefix, MAXLEN, dedup TTL, timeout, secret, payload size, operation, and returned stream ID](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/redis-transport/src/adapter.ts#L23-L87).
+> [The adapter validates URL, prefix, MAXLEN, dedup TTL, timeout, secret, payload size, operation, and returned stream ID](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/redis-transport/src/adapter.ts#L23-L87).
 >
-> [The network exchange supports plain or TLS Redis, AUTH, cancellation, timeout, and bounded reply decoding](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/redis-transport/src/exchange.ts#L5-L36).
+> [The network exchange supports plain or TLS Redis, AUTH, cancellation, timeout, and bounded reply decoding](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/redis-transport/src/exchange.ts#L5-L36).
 
 ## Evidence, Redis, Logs, and Metrics
 

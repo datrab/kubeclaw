@@ -5,7 +5,7 @@ Audience: lint-policy maintainer, operator, Nova maintainer
 Owner: lint
 Generator: scripts/docs-lint-policy-reference.mjs
 Evidence: charts/kubeclaw/files/config/lint-policy.json; charts/kubeclaw/files/config/lint-baseline.json; charts/kubeclaw/files/config/kubernetes-policy-pack-default.json; versions.json; docker/nova-tools/package.json; docker/nova-tools/package-lock.json; charts/kubeclaw/files/config/eslint.config.mjs; charts/kubeclaw/files/config/eslint-type-evidence-config.mjs; charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs; charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs; charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs; charts/kubeclaw/files/config/.semgrep.yml; skills/nova/plugins/lint/src; scripts/run-lint-report.mjs
-Evidence revision: `5b6e1b97415ffefa4bb42bf2ae331f27597170b5`
+Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
 Applies to: `pipeline_lint_policy.v7`, `pipeline_lint_baseline.v2`, and `kubernetes_lint_policy_pack.v1`
 Last verified: generated from repository configuration on 2026-09-20
 

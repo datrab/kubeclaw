@@ -4,7 +4,7 @@ Status: implemented paths documented; unavailable guarantees stated explicitly
 Audience: platform operator, runtime maintainer, integration developer, security reviewer
 Owner: runtime and platform maintainers
 Evidence: contracts/pipeline-test-gate/v1; contracts/pipeline-worker-core/v1; skills/nova/core; skills/worker/core; skills/common/plugins/redis-transport; charts/kubeclaw; charts/prism; tests/verification/reliability
-Evidence revision: `5b6e1b97415ffefa4bb42bf2ae331f27597170b5`
+Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
 Applies to: current Nova, Buster, Prism, Worker Core, specialist, Redis, registry, Git, BuildKit, Tailscale, and SPIFFE paths
 Last verified: code, schema, chart, manifest, and focused test inspection on 2026-09-20
 
@@ -62,15 +62,15 @@ safe only when the row names an idempotency or identity rule.
 
 > **Source evidence — service and optional monitoring endpoints**
 >
-> [Prism Services expose Studio, Control, Worker, ingestion, and their mTLS variants on separate ports](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/charts/prism/templates/services.yaml#L1-L47).
+> [Prism Services expose Studio, Control, Worker, ingestion, and their mTLS variants on separate ports](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/services.yaml#L1-L47).
 >
-> [The local registry binds Service port 5001 to container port 5000 and probes `/v2/`](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/my-values/infra/registry-local.yaml#L1-L106).
+> [The local registry binds Service port 5001 to container port 5000 and probes `/v2/`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-local.yaml#L1-L106).
 >
-> [The mirror exposes port 5000 and names Docker Hub as its only upstream](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/my-values/infra/registry-mirror.yaml#L1-L94).
+> [The mirror exposes port 5000 and names Docker Hub as its only upstream](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-mirror.yaml#L1-L94).
 >
-> [Alloy sends node log streams to the exact Loki push URL](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/gitops/platform/values/alloy.yaml#L1-L101).
+> [Alloy sends node log streams to the exact Loki push URL](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/alloy.yaml#L1-L101).
 >
-> [Prometheus and Grafana values define credentials, persistence, retention, resources, and the lab NodePort](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/gitops/platform/values/prometheus.yaml#L1-L44).
+> [Prometheus and Grafana values define credentials, persistence, retention, resources, and the lab NodePort](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/prometheus.yaml#L1-L44).
 
 ## Detailed Transport Notes
 
@@ -85,7 +85,7 @@ before import.
 
 > **Source evidence — remote calls and content binding**
 >
-> [The transport defines all five remote operations, authentication modes, response ceilings, and digest checks](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/nova/core/test-gates/remote-dispatch.ts#L23-L197).
+> [The transport defines all five remote operations, authentication modes, response ceilings, and digest checks](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/test-gates/remote-dispatch.ts#L23-L197).
 
 ### Core, Plugins, And Worker Control
 
@@ -102,7 +102,7 @@ state machine.
 
 > **Source evidence — bounded framing**
 >
-> [The channel validates limits, serializes writes, frames lengths, rejects a second reader, and detects truncated input](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/worker/core/worker/native-control-channel.ts#L1-L74).
+> [The channel validates limits, serializes writes, frames lengths, rejects a second reader, and detects truncated input](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/worker/core/worker/native-control-channel.ts#L1-L74).
 
 ### Redis
 
@@ -132,15 +132,15 @@ accept writes under one logical stream prefix.
 
 > **Source evidence — stream, atomic deduplication, and limits**
 >
-> [The adapter validates configuration and atomically deduplicates before `XADD`](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/redis-transport/src/adapter.ts#L1-L91).
+> [The adapter validates configuration and atomically deduplicates before `XADD`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/redis-transport/src/adapter.ts#L1-L91).
 >
-> [Stream names include version, kind, encoded target, and a hashed idempotency key](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/redis-transport/src/stream-identity.ts#L1-L8).
+> [Stream names include version, kind, encoded target, and a hashed idempotency key](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/redis-transport/src/stream-identity.ts#L1-L8).
 >
-> [The RESP decoder permits exactly the AUTH and command replies within bounded memory](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/redis-transport/src/resp.ts#L1-L67).
+> [The RESP decoder permits exactly the AUTH and command replies within bounded memory](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/redis-transport/src/resp.ts#L1-L67).
 >
-> [The OpenClaw writer applies queue priority, bounded retry, `MAXLEN`, and dead-letter handling](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L140-L255).
+> [The OpenClaw writer applies queue priority, bounded retry, `MAXLEN`, and dead-letter handling](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L140-L255).
 >
-> [The native migration test preserves stream, pending-consumer, and dedup-expiry state](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/tests/verification/reliability/redis-migration.test.mts#L12-L83).
+> [The native migration test preserves stream, pending-consumer, and dedup-expiry state](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tests/verification/reliability/redis-migration.test.mts#L12-L83).
 
 ### SPIFFE And mTLS
 
@@ -155,7 +155,7 @@ fence, capability, or application-role authorization.
 
 > **Source evidence — application-side peer proof**
 >
-> [Worker trust accepts one URI identity, validates its form, checks loopback proxy origin, and enforces the exact allowlist](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/worker/core/worker/trust.ts#L1-L52).
+> [Worker trust accepts one URI identity, validates its form, checks loopback proxy origin, and enforces the exact allowlist](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/worker/core/worker/trust.ts#L1-L52).
 
 ### Git, OCI, BuildKit, And Tailscale
 
@@ -175,11 +175,11 @@ the correct endpoint explicitly.
 
 > **Source evidence — content and route wiring**
 >
-> [The Buster runtime starts rootless BuildKit with generated registry configuration](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/docker/buster-runtime-entrypoint.sh#L1-L38).
+> [The Buster runtime starts rootless BuildKit with generated registry configuration](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/docker/buster-runtime-entrypoint.sh#L1-L38).
 >
-> [One generator produces node, BuildKit, and runtime registry client settings from the selected endpoints](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/scripts/registry-client-config.mjs#L57-L104).
+> [One generator produces node, BuildKit, and runtime registry client settings from the selected endpoints](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/registry-client-config.mjs#L57-L104).
 >
-> [Archviewer demonstrates a private Tailscale Ingress whose Cilium rule binds the exact owning proxy](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/charts/kubeclaw/templates/archviewer.yaml#L22-L53).
+> [Archviewer demonstrates a private Tailscale Ingress whose Cilium rule binds the exact owning proxy](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/archviewer.yaml#L22-L53).
 
 ## Global Retry Rules
 

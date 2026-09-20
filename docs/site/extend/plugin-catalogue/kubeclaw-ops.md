@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: plugins/kubeclaw-ops/.codex-plugin/plugin.json; plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md
 Applies to: codex-plugin; package 0.2.0
-Last verified: see the separate verification record; source evidence revision 5b6e1b97415ffefa4bb42bf2ae331f27597170b5
+Last verified: see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb
 
 ## Authored Guidance
 
@@ -26,7 +26,7 @@ The plugin supplies a skill, but it does not supply the external read-only tools
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -41,7 +41,7 @@ the contract and lifecycle rules that apply to this package.
 - Package identity: `kubeclaw-ops@0.2.0`.
 - Runtime-role manifest inclusion: No runtime role.
 - Additional packaging path: Codex installs this package separately; KubeClaw runtime-role manifests do not contain it.
-- Manifest: [plugins/kubeclaw-ops/.codex-plugin/plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/plugins/kubeclaw-ops/.codex-plugin/plugin.json)
+- Manifest: [plugins/kubeclaw-ops/.codex-plugin/plugin.json](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/plugins/kubeclaw-ops/.codex-plugin/plugin.json)
 
 ## Boundaries
 
@@ -106,9 +106,9 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [plugins/kubeclaw-ops/.codex-plugin/plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/plugins/kubeclaw-ops/.codex-plugin/plugin.json)
-- Authored package guide: [plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md)
-- Module for `kubeclaw-ops`: [./skills/](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/plugins/kubeclaw-ops/skills)
+- Manifest: [plugins/kubeclaw-ops/.codex-plugin/plugin.json](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/plugins/kubeclaw-ops/.codex-plugin/plugin.json)
+- Authored package guide: [plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md)
+- Module for `kubeclaw-ops`: [./skills/](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/plugins/kubeclaw-ops/skills)
 
 Generated facts come from the manifest, package metadata, runtime-role inventory,
 schemas, and test-file discovery. Maintained guidance data owns the purpose,

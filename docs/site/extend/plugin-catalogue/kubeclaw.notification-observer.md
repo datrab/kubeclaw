@@ -5,7 +5,7 @@ Audience: plugin author, operator, maintainer
 Owner: plugin-foundation
 Evidence: skills/common/plugins/notification-observer/plugin.json; skills/common/plugins/notification-observer/README.md
 Applies to: pipeline-plugin-v2; package 1.1.0
-Last verified: see the separate verification record; source evidence revision 5b6e1b97415ffefa4bb42bf2ae331f27597170b5
+Last verified: see the separate verification record; source evidence revision 32b02816cc19cc8865a45b221b8b6ca28e99e8fb
 
 ## Authored Guidance
 
@@ -26,7 +26,7 @@ Delivery failure affects the observer attempt, not canonical pipeline history.
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
 
-- [Package guide](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/README.md)
+- [Package guide](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/README.md)
 - [Shared extension contracts](../contracts.md)
 - [Proof and failure exercises](../testing.md#use-a-proof-ladder)
 - [Install and activate](../testing.md#install-and-activate-by-surface)
@@ -40,7 +40,7 @@ the contract and lifecycle rules that apply to this package.
 - Host: `pipeline-runtime`.
 - Package identity: `kubeclaw.notification-observer@1.1.0`.
 - Runtime-role manifest inclusion: `nova`
-- Manifest: [skills/common/plugins/notification-observer/plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/plugin.json)
+- Manifest: [skills/common/plugins/notification-observer/plugin.json](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/plugin.json)
 
 ## Boundaries
 
@@ -66,7 +66,7 @@ Required capabilities: `operator.request`
 
 Provided capabilities: None.
 
-Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/schemas/config.schema.json)
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/schemas/config.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
@@ -81,7 +81,7 @@ Input schema: No package-specific inputSchema field. Use the [shared runtime dat
 
 Result schema: No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
-Checkpoint schema: [schemas/checkpoint.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/schemas/checkpoint.schema.json)
+Checkpoint schema: [schemas/checkpoint.schema.json](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/schemas/checkpoint.schema.json)
 
 Declared manifest facts:
 
@@ -107,7 +107,7 @@ Required capabilities: `operator.request`
 
 Provided capabilities: None.
 
-Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/schemas/config.schema.json)
+Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/schemas/config.schema.json)
 
 Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
 
@@ -122,7 +122,7 @@ Input schema: No package-specific inputSchema field. Use the [shared runtime dat
 
 Result schema: No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).
 
-Checkpoint schema: [schemas/checkpoint.schema.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/schemas/checkpoint.schema.json)
+Checkpoint schema: [schemas/checkpoint.schema.json](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/schemas/checkpoint.schema.json)
 
 Declared manifest facts:
 
@@ -174,14 +174,14 @@ The result above states the exact local limit. Run the package command in the ta
 
 ## Source Evidence
 
-- Manifest: [skills/common/plugins/notification-observer/plugin.json](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/plugin.json)
-- Authored package guide: [skills/common/plugins/notification-observer/README.md](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/README.md)
-- Module for `notifications`: [src/observer.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/src/observer.ts)
-- Module for `preview-delivery`: [src/observer.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/src/observer.ts)
-- Test: [skills/common/plugins/notification-observer/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/tests/live-function.test.ts)
-- Test: [skills/common/plugins/notification-observer/tests/observer.unit.test.mjs](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/tests/observer.unit.test.mjs)
-- Test: [skills/common/plugins/notification-observer/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/tests/package-boundary.test.mjs)
-- Test: [skills/common/plugins/notification-observer/tests/parity.test.ts](https://github.com/datrab/kubeclaw/blob/5b6e1b97415ffefa4bb42bf2ae331f27597170b5/skills/common/plugins/notification-observer/tests/parity.test.ts)
+- Manifest: [skills/common/plugins/notification-observer/plugin.json](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/plugin.json)
+- Authored package guide: [skills/common/plugins/notification-observer/README.md](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/README.md)
+- Module for `notifications`: [src/observer.ts](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/src/observer.ts)
+- Module for `preview-delivery`: [src/observer.ts](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/src/observer.ts)
+- Test: [skills/common/plugins/notification-observer/tests/live-function.test.ts](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/tests/live-function.test.ts)
+- Test: [skills/common/plugins/notification-observer/tests/observer.unit.test.mjs](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/tests/observer.unit.test.mjs)
+- Test: [skills/common/plugins/notification-observer/tests/package-boundary.test.mjs](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/tests/package-boundary.test.mjs)
+- Test: [skills/common/plugins/notification-observer/tests/parity.test.ts](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/notification-observer/tests/parity.test.ts)
 
 Generated facts come from the manifest, package metadata, runtime-role inventory,
 schemas, and test-file discovery. Maintained guidance data owns the purpose,
