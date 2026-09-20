@@ -1444,7 +1444,7 @@
       "audience": "pipeline author, operator, test maintainer",
       "owner": "buster",
       "appliesTo": "stable uppercase error codes constructed by the shipped Buster engine, providers, and execution adapters",
-      "lastVerified": "generated from the complete production source inventory on 2026-09-19",
+      "lastVerified": "generated from the complete production source inventory on 2026-09-20",
       "sourceDependencies": [
         "scripts/generate-buster-error-reference.mjs"
       ],

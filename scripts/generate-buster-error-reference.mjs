@@ -126,11 +126,14 @@ function analyse(file) {
     const declared = nameOf(node);
     const nextOwner = declared ?? owner;
     if (ts.isNewExpression(node) && ts.isIdentifier(node.expression)
-      && node.expression.text === 'Error' && node.arguments?.length) {
+      && ['Error', 'AggregateError'].includes(node.expression.text) && node.arguments?.length) {
       const definition = nextOwner ? functions.get(nextOwner) : null;
       const parameters = new Map(definition?.names.map((name, index) =>
         [name, definition.values[index]]).filter(([name]) => name) ?? []);
-      const values = valuesFor(node.arguments[0], constants, parameters);
+      // Error(message) stores its message in argument 0. AggregateError(errors,
+      // message) stores the stable code in argument 1.
+      const messageIndex = node.expression.text === 'AggregateError' ? 1 : 0;
+      const values = valuesFor(node.arguments[messageIndex], constants, parameters);
       const line = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1;
       for (const value of values) {
         const code = stableCode(value);
@@ -211,7 +214,8 @@ locations.delete('TEST_PROVIDER_CLEANUP_COMPLETE');
 
 for (const required of ['VISUAL_BASELINE_BROWSER_VERSION_MISMATCH', 'KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED',
   'SECURITY_SCAN_DATABASE_STALE', 'DIRECT_COMMAND_EXECUTABLE_DENIED', 'TEST_EVIDENCE_PATH_FORBIDDEN',
-  'BUSTER_REMOTE_CONFIG_INVALID', 'REPORT_ADAPTER_TIMEOUT']) {
+  'BUSTER_REMOTE_CONFIG_INVALID', 'REPORT_ADAPTER_TIMEOUT', 'TAILSCALE_EXPOSURE_ROLLBACK_FAILED',
+  'BUSTER_REMOTE_TERMINAL_STATUS_UNREADABLE']) {
   assert(locations.has(required), `production error is absent from the generated inventory: ${required}`);
 }
 for (const forbidden of ['TEST_RUNNER_ADMISSION_STORE_ROOT', 'TEST_PROVIDER_CLEANUP_COMPLETE',
@@ -261,6 +265,11 @@ const componentPrefixes = [
 const semanticSuffixes = ['CLEANUP_FAILED', 'RELEASE_FAILED', 'BROKEN_PIPE', 'NOT_ABSOLUTE', 'NOT_DIRECTORY',
   'NOT_FILE', 'NOT_FOUND', 'NOT_READY', 'OUTSIDE_PROVIDER_ROOTS', 'OUTSIDE_REPOSITORY', 'OUTSIDE_WORKSPACE',
   'OUTSIDE_ROOT', 'OVERLAPS_WORKSPACE', 'PATH_ESCAPE', 'TOO_LARGE', 'TOO_LOW', 'TOO_BROAD',
+  'CLOSED_BEFORE_TEARDOWN', 'READINESS_BEFORE_ADMISSION', 'UNAWAITED_CAPABILITIES',
+  'ALREADY_STARTED', 'ALREADY_TERMINAL', 'OWNED_BY_NOVA', 'NO_BYTE_SAVING', 'TRAILING_DATA',
+  'TEARDOWN_PENDING', 'NOT_COMPLETED', 'NOT_DURABLE', 'NOT_PRIVATE', 'ZERO_CASES',
+  'SHUTTING_DOWN', 'BEFORE_ADMISSION', 'UNREADABLE', 'INCOMPATIBLE', 'GRANULARITY',
+  'UNCERTAIN', 'IMMUTABLE', 'REPEATED', 'FENCED', 'DEADLOCK', 'IN_CASE', 'SHUTDOWN', 'TERMINAL',
   'LIMIT_EXCEEDS_CONTRACT', 'LIMIT_EXCEEDED', 'BUDGET_EXCEEDED',
   'CAPACITY_EXCEEDED', 'BYTES_EXCEEDED', 'OUTPUT_LIMIT', 'FILE_LIMIT', 'CANCELLED',
   'TIMEOUT_EXCEEDED', 'TIMEOUT', 'UNAVAILABLE', 'UNREACHABLE', 'MISSING', 'REQUIRED', 'DENIED',
@@ -280,6 +289,7 @@ function errorParts(code) {
   const replacements = { config: 'configuration', auth: 'authentication', env: 'environment',
     expect: 'expected-result rule', extract: 'extraction rule', stdin: 'standard input', stdout: 'standard output',
     stderr: 'standard error', url: 'URL', uri: 'URI', api: 'API', json: 'JSON', http: 'HTTP', git: 'Git',
+    xml: 'XML', cpu: 'CPU', nova: 'Nova', junit: 'JUnit',
     pvc: 'persistent volume claim', ref: 'reference', refs: 'references' };
   const words = (stem || defaultObject).toLowerCase().split('_').map((word) => replacements[word] ?? word);
   if (words.at(-1) === 'parse') words[words.length - 1] = 'parsing';
@@ -291,34 +301,36 @@ function naturalCause(code) {
   const lead = `${component[0].toUpperCase()}${component.slice(1)}`;
   if (suffix === 'CANCELLED') return `${lead} stopped ${object} after a cancellation request.`;
   if (suffix === 'TIMEOUT' || suffix === 'TIMEOUT_EXCEEDED') return `${lead} did not complete ${object} before its time limit.`;
-  if (suffix === 'CLEANUP_FAILED' || suffix === 'RELEASE_FAILED') return `${lead} could not complete ${object} cleanup or release.`;
-  if (suffix === 'MISMATCH' || suffix === 'CHANGED') return `The observed ${component} ${object} does not match the admitted value.`;
+  if (suffix === 'CLEANUP_FAILED' || suffix === 'RELEASE_FAILED') return object === 'operation'
+    ? `${lead} could not complete cleanup or release.`
+    : `${lead} could not complete cleanup or release for ${object}.`;
+  if (suffix === 'MISMATCH' || suffix === 'CHANGED') return `${lead} observed ${object} that differs from the admitted value.`;
   if (suffix === 'NOT_FOUND') return `${lead} cannot find the selected ${object}.`;
   if (['UNAVAILABLE', 'UNREACHABLE', 'NOT_READY'].includes(suffix)) return `${lead} cannot use ${object} because it is not ready or available.`;
   if (suffix === 'MISSING') return `${lead} did not receive required ${object}.`;
   if (suffix === 'REQUIRED') return `${lead} requires ${object}.`;
   if (suffix === 'DENIED' || suffix === 'FORBIDDEN') return `${lead} policy does not permit ${object}.`;
-  if (suffix === 'NOT_ABSOLUTE') return `The ${component} ${object} is not an absolute path.`;
-  if (suffix === 'NOT_DIRECTORY') return `The ${component} ${object} is not a directory.`;
-  if (suffix === 'NOT_FILE') return `The ${component} ${object} is not a regular file.`;
+  if (suffix === 'NOT_ABSOLUTE') return `${lead} received ${object} that is not an absolute path.`;
+  if (suffix === 'NOT_DIRECTORY') return `${lead} received ${object} that is not a directory.`;
+  if (suffix === 'NOT_FILE') return `${lead} received ${object} that is not a regular file.`;
   if (['OUTSIDE_PROVIDER_ROOTS', 'OUTSIDE_REPOSITORY', 'OUTSIDE_WORKSPACE', 'OUTSIDE_ROOT',
-    'OVERLAPS_WORKSPACE', 'PATH_ESCAPE', 'SYMLINK'].includes(suffix)) return `The ${component} ${object} crosses its approved filesystem boundary.`;
+    'OVERLAPS_WORKSPACE', 'PATH_ESCAPE', 'SYMLINK'].includes(suffix)) return `${lead} detected ${object} outside its approved filesystem boundary.`;
   if (['TOO_LARGE', 'LIMIT_EXCEEDED', 'BUDGET_EXCEEDED', 'CAPACITY_EXCEEDED',
-    'BYTES_EXCEEDED', 'OUTPUT_LIMIT', 'FILE_LIMIT', 'EXHAUSTED', 'EXCEEDED', 'FULL', 'LIMIT'].includes(suffix)) return `The ${component} ${object} exceeds its configured resource limit.`;
-  if (suffix === 'LIMIT_EXCEEDS_CONTRACT' || suffix === 'TOO_LOW' || suffix === 'TOO_BROAD') return `The configured ${component} ${object} is outside its safe contract range.`;
-  if (suffix === 'EXPIRED' || suffix === 'STALE') return `The ${component} ${object} is no longer current.`;
+    'BYTES_EXCEEDED', 'OUTPUT_LIMIT', 'FILE_LIMIT', 'EXHAUSTED', 'EXCEEDED', 'FULL', 'LIMIT'].includes(suffix)) return `${lead} rejected ${object} because it exceeds its configured resource limit.`;
+  if (suffix === 'LIMIT_EXCEEDS_CONTRACT' || suffix === 'TOO_LOW' || suffix === 'TOO_BROAD') return `${lead} rejected ${object} because its configured value is outside the safe range.`;
+  if (suffix === 'EXPIRED' || suffix === 'STALE') return `${lead} rejected ${object} because it is no longer current.`;
   if (suffix === 'UNSUPPORTED') return `${lead} does not support the selected ${object}.`;
   if (suffix === 'DUPLICATE') return `${lead} received more than one ${object} with the same identity.`;
   if (suffix === 'AMBIGUOUS') return `${lead} cannot select one unambiguous ${object}.`;
-  if (suffix === 'INCOMPLETE') return `The ${component} ${object} is incomplete.`;
+  if (suffix === 'INCOMPLETE') return `${lead} received incomplete ${object}.`;
   if (suffix === 'UNKNOWN') return `${lead} does not recognize ${object}.`;
   if (suffix === 'UNKNOWN_FIELD') return `${lead} does not recognize a field in ${object}.`;
-  if (suffix === 'INVALID') return `The ${component} ${object} does not satisfy its contract.`;
-  if (suffix === 'EMPTY') return `The ${component} ${object} contains no usable value.`;
-  if (suffix === 'TAMPERED') return `The ${component} ${object} changed outside its owner.`;
-  if (suffix === 'UNSAFE') return `The ${component} ${object} does not satisfy its safety policy.`;
-  if (suffix === 'CYCLE') return `The ${component} ${object} contains a reference cycle.`;
-  if (suffix === 'TRUNCATED') return `The ${component} ${object} ended before it was complete.`;
+  if (suffix === 'INVALID') return `${lead} rejected ${object} because its value, type, or structure is invalid.`;
+  if (suffix === 'EMPTY') return `${lead} received no usable value for ${object}.`;
+  if (suffix === 'TAMPERED') return `${lead} detected a change to ${object} outside its owner.`;
+  if (suffix === 'UNSAFE') return `${lead} rejected ${object} because it violates the safety policy.`;
+  if (suffix === 'CYCLE') return `${lead} detected a reference cycle in ${object}.`;
+  if (suffix === 'TRUNCATED') return `${lead} received incomplete ${object}.`;
   if (suffix === 'REJECTED') return `${lead} policy rejected ${object}.`;
   if (suffix === 'RESERVED') return `${lead} received a reserved ${object}.`;
   if (['NOT_AVAILABLE', 'NOT_BUILT', 'NOT_RESOLVED'].includes(suffix)) return `${lead} cannot use ${object} because it is not available.`;
@@ -326,16 +338,41 @@ function naturalCause(code) {
   if (suffix === 'NOT_RETAINED') return `${lead} cannot find retained ${object}.`;
   if (suffix === 'NOT_USED') return `${lead} did not use the supplied ${object}.`;
   if (suffix === 'CLOSED' || suffix === 'TERMINATED') return `${lead} stopped ${object} before completion.`;
-  if (suffix === 'CONFLICT') return `The ${component} ${object} conflicts with recorded state.`;
-  if (suffix === 'NESTED') return `The ${component} ${object} has an invalid nested structure.`;
+  if (suffix === 'CONFLICT') return `${lead} detected ${object} that conflicts with recorded state.`;
+  if (suffix === 'NESTED') return `${lead} rejected ${object} because its nested structure is invalid.`;
+  if (suffix === 'IN_CASE') return `${lead} found ${object} inside a case element.`;
+  if (suffix === 'TRAILING_DATA') return `${lead} found data after the complete ${object}.`;
+  if (suffix === 'GRANULARITY') return `${lead} rejected ${object} because it does not use a supported increment.`;
+  if (suffix === 'INCOMPATIBLE') return `${lead} rejected ${object} because it is incompatible with the selected runtime.`;
+  if (suffix === 'UNAWAITED_CAPABILITIES') return `${lead} finished while capability requests were still pending.`;
+  if (suffix === 'ZERO_CASES') return `${lead} found no test cases in ${object}.`;
+  if (suffix === 'DEADLOCK') return `${lead} found no runnable node while unfinished work remained.`;
+  if (suffix === 'OWNED_BY_NOVA') return `${lead} rejected ${object} because Nova owns this recovery decision.`;
+  if (suffix === 'ALREADY_STARTED') return `${lead} rejected ${object} because it had already started.`;
+  if (suffix === 'ALREADY_TERMINAL' || suffix === 'TERMINAL') return `${lead} found ${object} in a terminal state.`;
+  if (suffix === 'SHUTTING_DOWN') return `${lead} rejected new work because shutdown is in progress.`;
+  if (suffix === 'SHUTDOWN') return `${lead} rejected new work because shutdown has started.`;
+  if (suffix === 'UNREADABLE') return `${lead} could not read ${object}.`;
+  if (suffix === 'UNCERTAIN') return `${lead} cannot prove the final state of ${object}.`;
+  if (suffix === 'NOT_COMPLETED') return `${lead} found ${object} before completion.`;
+  if (suffix === 'NO_BYTE_SAVING') return `${lead} rejected ${object} because compaction would not reduce stored bytes.`;
+  if (suffix === 'CLOSED_BEFORE_TEARDOWN') return `${lead} found ${object} closed before teardown completed.`;
+  if (suffix === 'NOT_PRIVATE') return `${lead} rejected ${object} because other users can access it.`;
+  if (suffix === 'READINESS_BEFORE_ADMISSION' || suffix === 'BEFORE_ADMISSION') return `${lead} received ${object} before admission completed.`;
+  if (suffix === 'FENCED') return `${lead} rejected ${object} because a newer owner fenced it.`;
+  if (suffix === 'IMMUTABLE') return `${lead} rejected a change to immutable ${object}.`;
+  if (suffix === 'REPEATED') return `${lead} rejected a repeated transition for ${object}.`;
+  if (suffix === 'TEARDOWN_PENDING') return `${lead} found unfinished teardown for ${object}.`;
+  if (suffix === 'NOT_DURABLE') return `${lead} could not confirm durable ${object}.`;
   if (suffix === 'ZERO_TESTS') return `${lead} did not execute a test.`;
   if (suffix === 'REQUIRE_TLS') return `${lead} requires TLS for ${object}.`;
-  if (suffix === 'FUTURE') return `The ${component} ${object} has a future timestamp.`;
+  if (suffix === 'FUTURE') return `${lead} rejected ${object} because its timestamp is in the future.`;
   if (['FAILED', 'ERROR', 'EXITED', 'BROKEN_PIPE'].includes(suffix)) return `${lead} could not complete ${object}.`;
-  return `${lead} detected an invalid runtime state for ${object}.`;
+  return `${lead} detected an invalid state while processing ${object}.`;
 }
 function diagnosis(code) {
   const cause = naturalCause(code);
+  const { object, suffix } = errorParts(code);
   if (/_CANCELLED$/u.test(code)) return [cause, 'The operation stopped before complete evidence existed.', 'Confirm who requested cancellation. Check retained resources and partial evidence.', 'Start a new attempt only after cleanup or an intentional retention decision.'];
   if (/(?:_TIMEOUT|_TIMEOUT_EXCEEDED)$/u.test(code)) return [cause, 'The boundary did not produce complete trusted evidence.', 'Check dependency health and compare the limit with normal duration.', 'Retry after readiness is confirmed and the interrupted action is known to be retry-safe.'];
   if (/(?:_CLEANUP_FAILED|_RELEASE_FAILED)$/u.test(code)) return [cause, 'A resource, lease, or process can remain.', 'Use the recorded identity to inspect and finish cleanup. Keep the failure evidence.', 'Do not rerun until ownership and retained state are known.'];
@@ -346,8 +383,23 @@ function diagnosis(code) {
   if (/(?:TOO_LARGE|LIMIT|LIMIT_EXCEEDED|BUDGET_EXCEEDED|CAPACITY_EXCEEDED|BYTES_EXCEEDED|FILE_LIMIT|OUTPUT_LIMIT|EXHAUSTED)$/u.test(code)) return [cause, 'Buster stopped before input or output could exhaust the worker.', 'Reduce the data. Increase the owning limit only after a capacity review.', 'Retry with smaller data or an approved larger limit.'];
   if (/(?:NOT_FOUND|UNAVAILABLE|NOT_READY|UNREACHABLE|MISSING)$/u.test(code)) return [cause, 'The dependent operation cannot produce trusted evidence.', 'Restore the named dependency or input and verify its identity and readiness.', 'Retry after an independent readiness check succeeds.'];
   if (/(?:EXPIRED|STALE)$/u.test(code)) return [cause, 'The old value cannot authorize this attempt.', 'Ask the owning component for fresh authority or evidence.', 'Retry only with the fresh value.'];
-  if (/(?:INVALID|REQUIRED|UNSUPPORTED|DUPLICATE|AMBIGUOUS|INCOMPLETE|UNKNOWN)$/u.test(code)) return [cause, 'Execution did not continue with ambiguous or unsafe data.', 'Correct the named field, input, or policy. Keep validation enabled.', 'Retry after the value passes the same contract check.'];
+  if (/_INVALID$/u.test(code)) {
+    return [cause, 'Execution stopped before it could use invalid or ambiguous data.',
+      `Read the diagnostic detail after the code. Inspect the linked validation and correct ${object}.`,
+      'Retry only after the corrected value passes the same validation.'];
+  }
+  if (/(?:REQUIRED|UNSUPPORTED|DUPLICATE|AMBIGUOUS|INCOMPLETE|UNKNOWN)$/u.test(code)) return [cause, 'Execution did not continue with ambiguous or unsafe data.', 'Correct the named field, input, or policy. Keep validation enabled.', 'Retry after the value passes the same contract check.'];
   if (/(?:FAILED|ERROR|EXITED|BROKEN_PIPE|TAMPERED)$/u.test(code)) return [cause, 'Buster cannot claim a complete trusted result.', 'Read the preserved cause and source. Inspect side effects before recovery.', 'Follow the provider retry rule only after side effects are known.'];
+  if (['UNREADABLE', 'NOT_DURABLE', 'NOT_PRIVATE', 'TRAILING_DATA'].includes(suffix)) return [cause,
+    'Buster cannot trust the stored or parsed state.',
+    'Preserve the affected bytes and diagnostic detail. Restore the record from its authoritative owner.',
+    'Retry only after an integrity check can read the complete authoritative state.'];
+  if (['ALREADY_STARTED', 'ALREADY_TERMINAL', 'TERMINAL', 'SHUTTING_DOWN', 'SHUTDOWN',
+    'OWNED_BY_NOVA', 'NOT_COMPLETED', 'BEFORE_ADMISSION', 'READINESS_BEFORE_ADMISSION',
+    'FENCED', 'IMMUTABLE', 'REPEATED', 'TEARDOWN_PENDING', 'CLOSED_BEFORE_TEARDOWN'].includes(suffix)) return [cause,
+    'The requested operation conflicts with the recorded lifecycle state.',
+    'Keep the existing record. Identify its current owner and complete or reconcile that lifecycle first.',
+    'Do not repeat the transition until the authoritative state permits it.'];
   return [cause, 'The boundary did not produce a trusted result.', 'Use the preserved cause and source link to inspect the named condition.', 'Confirm attempt state and retry safety before a new attempt.'];
 }
 
@@ -364,7 +416,7 @@ const lines = [
   'Source inventory: production files under `skills/buster/engine` and `skills/buster/plugins/*/src`',
   `Evidence revision: \`${revision}\``,
   'Applies to: stable uppercase error codes constructed by the shipped Buster engine, providers, and execution adapters',
-  'Last verified: generated from the complete production source inventory on 2026-09-19', '',
+  'Last verified: generated from the complete production source inventory on 2026-09-20', '',
   '## How To Use This Reference', '',
   'Find the stable code at the start of the error message. Text after the first',
   'colon is diagnostic detail and is not part of the code. The table separates the',
@@ -374,7 +426,8 @@ const lines = [
   'identify rejected contracts, unavailable authority, interrupted execution,',
   'unsafe output, or failed evidence handling. Do not convert them into findings.', '',
   'The generator discovers production source files. It reads codes passed directly',
-  'or through local validation helpers to the JavaScript `Error` constructor. It',
+  'or through local validation helpers to the JavaScript `Error` and',
+  '`AggregateError` constructors. It',
   'also expands the finite process, limit, path, and file-size families in source.',
   'Tests, declarations, CLI usage text, text after a colon, and internal control',
   'signals are outside this inventory.', '',
@@ -402,6 +455,14 @@ lines.push('## Errors Outside This Inventory', '',
   'Review each changed code, diagnosis class, and source before publication.', '');
 
 const output = `${lines.join('\n')}\n`;
+assert(output.includes('`TAILSCALE_EXPOSURE_ROLLBACK_FAILED`'),
+  'the generated reference must include AggregateError rollback failures');
+assert(output.includes('`BUSTER_REMOTE_TERMINAL_STATUS_UNREADABLE`'),
+  'the generated reference must include AggregateError terminal-read failures');
+assert(!output.includes('does not satisfy its contract'),
+  'generated causes must explain the invalid condition without a generic contract restatement');
+assert(!/\b(?:arguments|bytes|counts|credentials|fields|files|headers|limits|paths|prefixes|steps|workers) does\b/u.test(output),
+  'generated causes contain a plural-subject grammar error');
 if (process.argv.includes('--write')) {
   fs.writeFileSync(target, output);
   console.log(`wrote ${path.relative(root, target)} (${locations.size} stable codes from ${productionFiles.length} production files)`);
