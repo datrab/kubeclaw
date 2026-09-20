@@ -122,6 +122,13 @@ function analyse(file) {
 
   const found = [];
   const literals = [];
+  const isTypeLiteral = (node) => {
+    for (let current = node.parent; current; current = current.parent) {
+      if (ts.isLiteralTypeNode(current)) return true;
+      if (ts.isStatement(current) || ts.isSourceFile(current)) return false;
+    }
+    return false;
+  };
   const inspect = (node, owner = null) => {
     const declared = nameOf(node);
     const nextOwner = declared ?? owner;
@@ -140,7 +147,7 @@ function analyse(file) {
         if (code) found.push({ code, file, line });
       }
     }
-    if (ts.isStringLiteralLike(node)) {
+    if (ts.isStringLiteralLike(node) && !isTypeLiteral(node)) {
       const code = stableCode(node.text);
       if (code) literals.push({ code, file,
         line: sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1 });
@@ -156,6 +163,26 @@ function analyse(file) {
 }
 
 const analysed = new Map(productionFiles.map((file) => [file, analyse(file)]));
+const excludedLiteralCodes = new Map([
+  ['BUSTER_READY', 'positive readiness result'],
+  ['DEPENDENCY_OK', 'positive dependency-process result'],
+  ['DURABLE_RECORD_IDEMPOTENCY_CONFLICT', 'internal store signal translated to BUSTER_REMOTE_JOB_CONFLICT'],
+  ['KUBERNETES_FIXTURE_KUBECTL', 'prefix used to construct the documented kubectl error family'],
+  ['MANIFEST_SIZE', 'label used to construct a documented Kubernetes fixture limit error'],
+  ['NOT_FOUND', 'substring used only to map an existing error to HTTP 404'],
+  ['PVC_SIZE', 'label used to construct a documented Kubernetes fixture limit error'],
+  ['PVC_TOTAL_SIZE', 'label used to construct a documented Kubernetes fixture limit error'],
+  ['REPORT_ADAPTER', 'prefix used to construct the documented report-adapter process family'],
+  ['RESOURCE_COUNT', 'label used to construct a documented Kubernetes fixture limit error'],
+  ['SIZE_EXCEEDED', 'substring used only to map an existing error to HTTP 413'],
+  ['TAILSCALE_EXPOSURE_KUBECTL', 'prefix used to construct the documented kubectl error family'],
+  ['TEST_PROVIDER_CLEANUP_COMPLETE', 'internal AbortController completion signal'],
+  ['TEST_RUNNER_ADMISSION_STORE_ROOT', 'label used to construct documented store-root path errors'],
+  ['TEST_RUNNER_ATTEMPT_REPOSITORY', 'label used to construct a documented workspace error'],
+  ['TEST_RUNNER_ATTEMPT_STORE_ROOT', 'label used to construct documented store-root path errors'],
+  ['TEST_RUNNER_OBSERVABILITY_ROOT', 'label used to construct documented store-root path errors'],
+  ['TEST_RUNNER_REPOSITORY', 'label used to construct a documented workspace error'],
+]);
 const dynamicFamilies = [
   { file: 'skills/buster/engine/test-gates/process-input.ts', sentinel: '${options.prefix}_CANCELLED',
     prefixes: ['REPORT_ADAPTER', 'KUBERNETES_FIXTURE_KUBECTL', 'TAILSCALE_EXPOSURE_KUBECTL'],
@@ -190,13 +217,19 @@ function addLocation(code, file, line) {
   entries.set(`${file}:${line}`, { file, line });
   locations.set(code, entries);
 }
-const discoveredCodes = new Set([...analysed.values()].flatMap((entry) => entry.found.map((item) => item.code)));
-// Prefer the literal or template call site. For helper-based validation, this is
-// the line that supplies the exact code, not only the generic `new Error(code)`.
+const literalLocations = new Map();
 for (const entry of analysed.values()) for (const item of entry.literals) {
-  if (discoveredCodes.has(item.code)) addLocation(item.code, item.file, item.line);
+  const entries = literalLocations.get(item.code) ?? [];
+  entries.push(item);
+  literalLocations.set(item.code, entries);
+  // A runtime diagnostic can cross the Buster boundary as an exception, HTTP
+  // error, readiness code, result field, summary, or helper argument. Include
+  // every production literal unless the audited list above excludes it.
+  if (!excludedLiteralCodes.has(item.code)) addLocation(item.code, item.file, item.line);
 }
-for (const entry of analysed.values()) for (const item of entry.found) addLocation(item.code, item.file, item.line);
+for (const entry of analysed.values()) for (const item of entry.found) {
+  if (!excludedLiteralCodes.has(item.code)) addLocation(item.code, item.file, item.line);
+}
 for (const family of dynamicFamilies) {
   const source = analysed.get(family.file)?.source;
   assert(source?.includes(family.sentinel), `dynamic error construction changed in ${family.file}: ${family.sentinel}`);
@@ -208,9 +241,14 @@ for (const family of dynamicFamilies) {
   }
 }
 
-// This value is an internal AbortController reason. It does not cross the
-// documented execution boundary as an error code.
-locations.delete('TEST_PROVIDER_CLEANUP_COMPLETE');
+for (const [code, reason] of excludedLiteralCodes) {
+  assert(literalLocations.has(code), `excluded diagnostic literal disappeared; review the exclusion: ${code} (${reason})`);
+  assert(!locations.has(code), `excluded non-error entered the generated inventory: ${code}`);
+}
+for (const code of literalLocations.keys()) {
+  assert(locations.has(code) || excludedLiteralCodes.has(code),
+    `production diagnostic literal is neither documented nor explicitly excluded: ${code}`);
+}
 
 for (const required of ['VISUAL_BASELINE_BROWSER_VERSION_MISMATCH', 'KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED',
   'SECURITY_SCAN_DATABASE_STALE', 'DIRECT_COMMAND_EXECUTABLE_DENIED', 'TEST_EVIDENCE_PATH_FORBIDDEN',
@@ -242,7 +280,11 @@ const groupFor = (code) => groupDefinitions.find(([, prefixes]) =>
 
 const componentPrefixes = [
   ['BROWSER_PLAYWRIGHT_RUNTIME_', 'Playwright runtime'], ['SECURITY_SCAN_REGISTRY_', 'security scan registry'],
+  ['SECURITY_DATABASE_', 'security scanner'], ['SECURITY_HEADERS_', 'security headers provider'],
+  ['SECURITY_SCANNER_', 'security scanner'], ['SECURITY_POLICY_', 'security policy'],
   ['HTTP_REGISTRY_HEALTH_', 'HTTP registry health check'], ['BUSTER_SOURCE_ATTESTATION_', 'Buster source attestation'],
+  ['BUSTER_COMPACTION_', 'Buster compaction service'], ['BUSTER_FIXTURE_', 'Buster fixture authority'],
+  ['BUSTER_REGISTRY_HEALTH_', 'HTTP registry health check'],
   ['BUSTER_REMOTE_CONFIG_', 'Buster remote service', 'configuration'], ['EXPOSURE_HANDOFF_', 'exposure handoff'],
   ['TEST_EVIDENCE_STORE_', 'test evidence store'], ['DEPENDENCY_PROCESS_', 'dependency process'],
   ['FIXTURE_AUTHORITY_', 'fixture authority', 'value'], ['DEMO_AUTH_', 'authenticated demo'],
@@ -251,7 +293,8 @@ const componentPrefixes = [
   ['BROWSER_PLAYWRIGHT_', 'Playwright browser runtime'], ['BROWSER_VISUAL_', 'visual browser runtime'],
   ['BROWSER_AXE_', 'accessibility browser runtime'], ['KUBERNETES_FIXTURE_', 'Kubernetes fixture'],
   ['TAILSCALE_EXPOSURE_', 'Tailscale exposure'], ['DIRECT_COMMAND_', 'direct command provider'],
-  ['REPORT_ADAPTER_', 'report adapter'], ['TEST_PROVIDER_', 'test provider'], ['TEST_RUNNER_', 'test runner'],
+  ['REPORT_ADAPTER_', 'report adapter'], ['REPORT_ARTIFACT_', 'report adapter'], ['TEST_PROVIDER_', 'test provider'],
+  ['TEST_REPORT_', 'test report'], ['TEST_PLAN_', 'test runner'], ['TEST_RUNNER_', 'test runner'],
   ['TEST_EVIDENCE_', 'test evidence store'], ['BUSTER_REMOTE_', 'Buster remote service'],
   ['REMOTE_PLAN_', 'remote plan service'], ['API_FLOW_', 'API Flow'], ['OPENAPI_', 'OpenAPI provider'],
   ['CONTAINER_BUILD_', 'container build provider'], ['KUBERNETES_POLICY_', 'Kubernetes policy scanner'],
@@ -259,15 +302,20 @@ const componentPrefixes = [
   ['SIZE_BUDGET_', 'size-budget provider'], ['BROWSER_', 'browser runtime'], ['VISUAL_', 'visual provider'],
   ['PLAYWRIGHT_', 'Playwright provider'], ['LIGHTHOUSE_', 'Lighthouse provider'], ['AXE_', 'accessibility provider'],
   ['HTTP_', 'HTTP provider'], ['JUNIT_', 'JUnit adapter'], ['COVERAGE_', 'coverage provider'],
+  ['OBSERVABILITY_', 'observability recorder'], ['PROCESS_INPUT_', 'process-input lifecycle'],
+  ['WORKER_RUNTIME_', 'worker runtime'], ['WORKER_TERMINATION_', 'worker runtime'],
   ['FIXTURE_', 'fixture authority'], ['DEPENDENCY_', 'dependency process'], ['EXPOSURE_', 'exposure handoff'],
   ['DEMO_', 'demo smoke test'], ['BUSTER_', 'Buster runtime'],
 ];
-const semanticSuffixes = ['CLEANUP_FAILED', 'RELEASE_FAILED', 'BROKEN_PIPE', 'NOT_ABSOLUTE', 'NOT_DIRECTORY',
+const semanticSuffixes = ['CLEANUP_FAILED', 'RELEASE_FAILED', 'STDERR_FAILED', 'STDIN_FAILED', 'STDOUT_FAILED',
+  'SOURCE_GIT_FAILED', 'REGISTRY_READ_FAILED', 'REGISTRY_ERROR', 'CONTROLLER_FAILED', 'LEASE_FAILED', 'PROXY_FAILED', 'SPAWN_FAILED',
+  'EXIT_FAILED', 'TAR_FAILED', 'INITIALIZE_EXITED', 'PROCESS_EXITED', 'BROKEN_PIPE', 'NOT_ABSOLUTE', 'NOT_DIRECTORY',
   'NOT_FILE', 'NOT_FOUND', 'NOT_READY', 'OUTSIDE_PROVIDER_ROOTS', 'OUTSIDE_REPOSITORY', 'OUTSIDE_WORKSPACE',
   'OUTSIDE_ROOT', 'OVERLAPS_WORKSPACE', 'PATH_ESCAPE', 'TOO_LARGE', 'TOO_LOW', 'TOO_BROAD',
   'CLOSED_BEFORE_TEARDOWN', 'READINESS_BEFORE_ADMISSION', 'UNAWAITED_CAPABILITIES',
   'ALREADY_STARTED', 'ALREADY_TERMINAL', 'OWNED_BY_NOVA', 'NO_BYTE_SAVING', 'TRAILING_DATA',
   'TEARDOWN_PENDING', 'NOT_COMPLETED', 'NOT_DURABLE', 'NOT_PRIVATE', 'ZERO_CASES',
+  'NO_EXECUTED_CASES', 'EXECUTION_INTERRUPTED', 'NOT_BOOTSTRAPPED',
   'SHUTTING_DOWN', 'BEFORE_ADMISSION', 'UNREADABLE', 'INCOMPATIBLE', 'GRANULARITY',
   'UNCERTAIN', 'IMMUTABLE', 'REPEATED', 'FENCED', 'DEADLOCK', 'IN_CASE', 'SHUTDOWN', 'TERMINAL',
   'LIMIT_EXCEEDS_CONTRACT', 'LIMIT_EXCEEDED', 'BUDGET_EXCEEDED',
@@ -293,14 +341,92 @@ function errorParts(code) {
     pvc: 'persistent volume claim', ref: 'reference', refs: 'references' };
   const words = (stem || defaultObject).toLowerCase().split('_').map((word) => replacements[word] ?? word);
   if (words.at(-1) === 'parse') words[words.length - 1] = 'parsing';
-  return { component, object: words.join(' '), suffix };
+  return { component, object: words.join(' '), stem, suffix };
 }
+
+function invalidRule(code) {
+  const { stem } = errorParts(code);
+  const tokens = new Set((stem || code).split('_'));
+  const has = (...values) => values.some((value) => tokens.has(value));
+  if (has('PATH', 'PATHS', 'FILE', 'FILES', 'DIRECTORY', 'DIRECTORIES', 'ROOT', 'ROOTS', 'WORKSPACE', 'SYMLINK')) {
+    return 'A path breaks a syntax, file-type, or containment rule.';
+  }
+  if (has('LIMIT', 'LIMITS', 'MAXIMUM', 'MINIMUM', 'TIMEOUT', 'DURATION', 'INTERVAL', 'BYTE', 'BYTES', 'SIZE',
+    'COUNT', 'COUNTS', 'QUANTITY', 'REPLICAS', 'CONCURRENCY', 'WORKER', 'WORKERS', 'PROCESS', 'PROCESSES',
+    'MEMORY', 'CPU', 'PORT', 'PORTS', 'BUDGET')) {
+    return 'A numeric value is not a safe integer or is outside its supported range.';
+  }
+  if (has('CREATED', 'TIMESTAMP', 'DATE')) {
+    return 'A timestamp has the wrong syntax, precision, or allowed time range.';
+  }
+  if (has('DIGEST', 'CHECKSUM', 'IDENTITY', 'IDEMPOTENCY', 'PROVENANCE', 'REVISION', 'AUTHORITY', 'SIGNATURE',
+    'RECEIPT', 'KEY', 'KEYS', 'TOKEN', 'POINTER', 'AUTH', 'AUTHENTICATION', 'CREDENTIAL', 'CREDENTIALS',
+    'ATTESTATION', 'BINDING', 'CLAIM', 'ID')) {
+    return 'An identity, digest, signature, or authority value has the wrong format or binding.';
+  }
+  if (has('CONFIG', 'CONFIGURATION', 'POLICY', 'SCHEMA', 'DECLARATION', 'OPTION', 'OPTIONS', 'PROFILE', 'SETTING',
+    'SETTINGS', 'DEFINITION', 'PLATFORM', 'PLATFORMS', 'PREFIX', 'NAMESPACE', 'RETENTION', 'MODE', 'INTENT',
+    'ENV', 'ENVIRONMENT', 'TARGET', 'TARGETS', 'CONTAINER', 'CONTAINERS', 'SECURITY', 'TEMPLATE', 'TEMPLATES',
+    'CLASS', 'CLASSES', 'REFERENCE', 'REFERENCES', 'RULE', 'RULES', 'PURPOSE', 'RESOURCE', 'ROUTE', 'TAGS',
+    'VIEWPORT', 'CAPTURE', 'COMBINATION', 'COMPARE', 'RUN', 'PATTERN', 'VERSION', 'EXCLUDE', 'ACCEPTANCE',
+    'ACCEPTANCES', 'SCOPE')) {
+    return 'A required field, field type, or allowed configuration value is not valid.';
+  }
+  if (has('URL', 'URI', 'ORIGIN', 'ORIGINS', 'HOST', 'HOSTS', 'METHOD', 'METHODS', 'HEADER', 'HEADERS', 'NETWORK',
+    'ENDPOINT', 'REGISTRY', 'ADDRESS', 'API')) {
+    return 'A network value breaks an accepted syntax, scheme, host, port, header, or policy rule.';
+  }
+  if (has('REPORT', 'REPORTS', 'EVIDENCE', 'RESULT', 'RESULTS', 'FINDING', 'FINDINGS', 'METRIC', 'METRICS',
+    'OUTPUT', 'OUTPUTS', 'ARTIFACT', 'ARTIFACTS', 'RECORD', 'RECORDS', 'OUTCOME', 'COVERAGE')) {
+    return 'Produced evidence has an invalid shape, identity, count, media type, or declared relationship.';
+  }
+  if (has('MANIFEST', 'ARCHIVE', 'TAR', 'IMAGE', 'BASELINE', 'SCREENSHOT', 'XML', 'JSON', 'JUNIT', 'LCOV',
+    'COMPARISON', 'MASK', 'COOKIE', 'ENCODING', 'BOM', 'UTF8', 'DATABASE', 'METADATA', 'ENTRY', 'BLOB')) {
+    return 'Document or artifact content breaks its required format, structure, or safety rule.';
+  }
+  if (has('STATE', 'STATUS', 'PHASE', 'TRANSITION', 'LIFECYCLE', 'ATTEMPT', 'JOB', 'PLAN', 'NODE', 'FIXTURE',
+    'LEASE', 'PREDECESSOR', 'PREDECESSORS', 'ADMISSION', 'CONTROL', 'READINESS', 'ACK', 'TEARDOWN', 'TERMINAL')) {
+    return 'Recorded execution state breaks an allowed identity, phase, or transition rule.';
+  }
+  if (has('COMMAND', 'EXECUTABLE', 'PROCESS', 'PROCESSES', 'SANDBOX', 'CGROUP', 'RUNTIME', 'BROWSER', 'PLAYWRIGHT',
+    'CHROME', 'KUBECTL', 'DEPLOYMENT')) {
+    return 'An execution value breaks an executable, isolation, runtime, or resource rule.';
+  }
+  if (has('REQUEST', 'RESPONSE', 'PAYLOAD', 'MESSAGE', 'MESSAGES', 'INPUT', 'INPUTS', 'ARGUMENT', 'ARGUMENTS', 'VARIABLE',
+    'VARIABLES', 'PROTOCOL', 'OPERATION', 'SELECTOR', 'STEP', 'STEPS', 'EXPECT', 'EXTRACT', 'ASSERTION', 'CONTRACT',
+    'SHAPE')) {
+    return 'At least one supplied value has the wrong type, format, size, or allowed name.';
+  }
+  if (has('NAME', 'HOSTNAME', 'SUBJECT')) {
+    return 'A name has the wrong syntax, length, or allowed value.';
+  }
+  return 'At least one value has the wrong type, format, range, or structure.';
+}
+
+const exactCauses = new Map([
+  ['DIRECT_COMMAND_PATH_ESCAPE', 'Direct command provider received a path outside its approved root.'],
+  ['CONTAINER_BUILD_PATH_ESCAPE', 'Container build provider received a path outside its approved root.'],
+  ['TEST_PROVIDER_MISSING', 'Test runner cannot find the selected test provider contract in its registry snapshot.'],
+  ['TEST_PROVIDER_TERMINATED', 'Test provider process stopped before it completed the request.'],
+  ['BUSTER_SOURCE_ATTESTATION_INVALID', 'Buster remote service could not verify the source snapshot attestation.'],
+  ['TAILSCALE_EXPOSURE_KUBECTL_INVALID', 'Tailscale exposure received a kubectl path that is not a regular file.'],
+  ['TAILSCALE_EXPOSURE_PREDECESSORS_EXHAUSTED', 'Tailscale exposure found no predecessor lease that it can safely resume.'],
+  ['VISUAL_MANIFEST_INVALID_TOO_LARGE', 'Visual provider rejected the manifest file because its byte size exceeds the limit.'],
+  ['VISUAL_PROFILE_FILE_INVALID_TOO_LARGE', 'Visual provider rejected the profile file because its byte size exceeds the limit.'],
+  ['BUSTER_REMOTE_CONCURRENCY_EXCEEDS_SERVICE_LIMIT', 'Buster remote service rejected the requested concurrency because it exceeds the service limit.'],
+  ['TERMINATION_FAILED', 'Dependency process could not stop its child process cleanly.'],
+]);
 
 function naturalCause(code) {
   const { component, object, suffix } = errorParts(code);
   const lead = `${component[0].toUpperCase()}${component.slice(1)}`;
-  if (suffix === 'CANCELLED') return `${lead} stopped ${object} after a cancellation request.`;
-  if (suffix === 'TIMEOUT' || suffix === 'TIMEOUT_EXCEEDED') return `${lead} did not complete ${object} before its time limit.`;
+  if (exactCauses.has(code)) return exactCauses.get(code);
+  if (suffix === 'CANCELLED') return object === 'operation'
+    ? `${lead} stopped its current work after a cancellation request.`
+    : `${lead} stopped ${object} after a cancellation request.`;
+  if (suffix === 'TIMEOUT' || suffix === 'TIMEOUT_EXCEEDED') return object === 'operation'
+    ? `${lead} did not finish its current work before the time limit.`
+    : `${lead} did not complete ${object} before its time limit.`;
   if (suffix === 'CLEANUP_FAILED' || suffix === 'RELEASE_FAILED') return object === 'operation'
     ? `${lead} could not complete cleanup or release.`
     : `${lead} could not complete cleanup or release for ${object}.`;
@@ -315,17 +441,18 @@ function naturalCause(code) {
   if (suffix === 'NOT_FILE') return `${lead} received ${object} that is not a regular file.`;
   if (['OUTSIDE_PROVIDER_ROOTS', 'OUTSIDE_REPOSITORY', 'OUTSIDE_WORKSPACE', 'OUTSIDE_ROOT',
     'OVERLAPS_WORKSPACE', 'PATH_ESCAPE', 'SYMLINK'].includes(suffix)) return `${lead} detected ${object} outside its approved filesystem boundary.`;
+  if (suffix === 'OUTPUT_LIMIT') return `${lead} stopped process output because it exceeds the configured byte limit.`;
   if (['TOO_LARGE', 'LIMIT_EXCEEDED', 'BUDGET_EXCEEDED', 'CAPACITY_EXCEEDED',
-    'BYTES_EXCEEDED', 'OUTPUT_LIMIT', 'FILE_LIMIT', 'EXHAUSTED', 'EXCEEDED', 'FULL', 'LIMIT'].includes(suffix)) return `${lead} rejected ${object} because it exceeds its configured resource limit.`;
-  if (suffix === 'LIMIT_EXCEEDS_CONTRACT' || suffix === 'TOO_LOW' || suffix === 'TOO_BROAD') return `${lead} rejected ${object} because its configured value is outside the safe range.`;
-  if (suffix === 'EXPIRED' || suffix === 'STALE') return `${lead} rejected ${object} because it is no longer current.`;
+    'BYTES_EXCEEDED', 'FILE_LIMIT', 'EXHAUSTED', 'EXCEEDED', 'FULL', 'LIMIT'].includes(suffix)) return `${lead} rejected ${object}. The measured resource use exceeds the configured limit.`;
+  if (suffix === 'LIMIT_EXCEEDS_CONTRACT' || suffix === 'TOO_LOW' || suffix === 'TOO_BROAD') return `${lead} rejected ${object}. The configured value is outside the safe range.`;
+  if (suffix === 'EXPIRED' || suffix === 'STALE') return `${lead} rejected ${object}. The value is no longer current.`;
   if (suffix === 'UNSUPPORTED') return `${lead} does not support the selected ${object}.`;
   if (suffix === 'DUPLICATE') return `${lead} received more than one ${object} with the same identity.`;
   if (suffix === 'AMBIGUOUS') return `${lead} cannot select one unambiguous ${object}.`;
   if (suffix === 'INCOMPLETE') return `${lead} received incomplete ${object}.`;
   if (suffix === 'UNKNOWN') return `${lead} does not recognize ${object}.`;
   if (suffix === 'UNKNOWN_FIELD') return `${lead} does not recognize a field in ${object}.`;
-  if (suffix === 'INVALID') return `${lead} rejected ${object} because its value, type, or structure is invalid.`;
+  if (suffix === 'INVALID') return `${lead} rejected ${object}. ${invalidRule(code)}`;
   if (suffix === 'EMPTY') return `${lead} received no usable value for ${object}.`;
   if (suffix === 'TAMPERED') return `${lead} detected a change to ${object} outside its owner.`;
   if (suffix === 'UNSAFE') return `${lead} rejected ${object} because it violates the safety policy.`;
@@ -364,10 +491,30 @@ function naturalCause(code) {
   if (suffix === 'REPEATED') return `${lead} rejected a repeated transition for ${object}.`;
   if (suffix === 'TEARDOWN_PENDING') return `${lead} found unfinished teardown for ${object}.`;
   if (suffix === 'NOT_DURABLE') return `${lead} could not confirm durable ${object}.`;
+  if (suffix === 'NO_EXECUTED_CASES') return `${lead} found no executed test case in ${object}.`;
+  if (suffix === 'EXECUTION_INTERRUPTED') return `${lead} found ${object} interrupted by the previous process stop.`;
+  if (suffix === 'NOT_BOOTSTRAPPED') return `${lead} received a readiness request before durable recovery completed.`;
   if (suffix === 'ZERO_TESTS') return `${lead} did not execute a test.`;
   if (suffix === 'REQUIRE_TLS') return `${lead} requires TLS for ${object}.`;
   if (suffix === 'FUTURE') return `${lead} rejected ${object} because its timestamp is in the future.`;
-  if (['FAILED', 'ERROR', 'EXITED', 'BROKEN_PIPE'].includes(suffix)) return `${lead} could not complete ${object}.`;
+  if (suffix === 'STDIN_FAILED') return `${lead} could not write data to the child process standard input.`;
+  if (suffix === 'STDOUT_FAILED') return `${lead} could not read complete data from the child process standard output.`;
+  if (suffix === 'STDERR_FAILED') return `${lead} could not read complete data from the child process standard error.`;
+  if (suffix === 'SPAWN_FAILED') return `${lead} could not start the child process.`;
+  if (suffix === 'EXIT_FAILED') return `${lead} received an unsuccessful exit from the child process.`;
+  if (suffix === 'REGISTRY_ERROR') return `${lead} received an error while it accessed the container registry.`;
+  if (suffix === 'REGISTRY_READ_FAILED') return `${lead} could not read the required response from the container registry.`;
+  if (suffix === 'PROXY_FAILED') return `${lead} could not start or use the local proxy.`;
+  if (suffix === 'CONTROLLER_FAILED') return `${lead} controller failed before it completed the requested change.`;
+  if (suffix === 'LEASE_FAILED') return `${lead} could not acquire or maintain the required lease.`;
+  if (suffix === 'TAR_FAILED') return `${lead} could not create or read the source archive.`;
+  if (suffix === 'SOURCE_GIT_FAILED') return `${lead} could not read or verify the Git source.`;
+  if (suffix === 'INITIALIZE_EXITED') return `${lead} exited before initialization completed.`;
+  if (suffix === 'PROCESS_EXITED') return `${lead} process exited before it returned a complete result.`;
+  if (suffix === 'BROKEN_PIPE') return `${lead} lost the data channel to its child process.`;
+  if (suffix === 'FAILED' || suffix === 'ERROR' || suffix === 'EXITED') return object === 'operation'
+    ? `${lead} failed before it produced a complete result.`
+    : `${lead} could not complete ${object}.`;
   return `${lead} detected an invalid state while processing ${object}.`;
 }
 function diagnosis(code) {
@@ -380,13 +527,17 @@ function diagnosis(code) {
   if (/_MISMATCH$/u.test(code)) return [cause, 'Buster cannot trust the object or result.', 'Compare the recorded expected and actual values. Restore one authoritative value.', 'Retry only after both sides use the same value.'];
   if (/(?:PATH|FILE|DIRECTORY|ROOT|WORKSPACE).*(?:DENIED|FORBIDDEN|ESCAPE|OUTSIDE|SYMLINK|NOT_ABSOLUTE|NOT_FILE|NOT_DIRECTORY)$/u.test(code)) return [cause, 'Buster did not cross its approved filesystem boundary.', 'Use a regular file or directory inside the documented workspace or evidence root.', 'Retry after the path and every parent link pass containment checks.'];
   if (/(?:_DENIED|_FORBIDDEN)$/u.test(code)) return [cause, 'The requested capability, value, or target was not used.', 'Select an allowed value or change the owning policy through review.', 'An unchanged retry will fail again.'];
-  if (/(?:TOO_LARGE|LIMIT|LIMIT_EXCEEDED|BUDGET_EXCEEDED|CAPACITY_EXCEEDED|BYTES_EXCEEDED|FILE_LIMIT|OUTPUT_LIMIT|EXHAUSTED)$/u.test(code)) return [cause, 'Buster stopped before input or output could exhaust the worker.', 'Reduce the data. Increase the owning limit only after a capacity review.', 'Retry with smaller data or an approved larger limit.'];
+  if (code === 'TAILSCALE_EXPOSURE_PREDECESSORS_EXHAUSTED') return [cause,
+    'The service cannot select an earlier lease without risking conflicting ownership.',
+    'Keep all lease records. Inspect their owners, generations, states, and expiry times before recovery.',
+    'Retry only after one authoritative lease can be selected or a new handoff is admitted.'];
+  if (/(?:TOO_LARGE|LIMIT|LIMIT_EXCEEDED|BUDGET_EXCEEDED|CAPACITY_EXCEEDED|BYTES_EXCEEDED|FILE_LIMIT|OUTPUT_LIMIT|EXHAUSTED|EXCEEDED)$/u.test(code)) return [cause, 'Buster stopped before input or output could exhaust the worker.', 'Reduce the data. Increase the owning limit only after a capacity review.', 'Retry with smaller data or an approved larger limit.'];
   if (/(?:NOT_FOUND|UNAVAILABLE|NOT_READY|UNREACHABLE|MISSING)$/u.test(code)) return [cause, 'The dependent operation cannot produce trusted evidence.', 'Restore the named dependency or input and verify its identity and readiness.', 'Retry after an independent readiness check succeeds.'];
   if (/(?:EXPIRED|STALE)$/u.test(code)) return [cause, 'The old value cannot authorize this attempt.', 'Ask the owning component for fresh authority or evidence.', 'Retry only with the fresh value.'];
   if (/_INVALID$/u.test(code)) {
     return [cause, 'Execution stopped before it could use invalid or ambiguous data.',
-      `Read the diagnostic detail after the code. Inspect the linked validation and correct ${object}.`,
-      'Retry only after the corrected value passes the same validation.'];
+      `Read the diagnostic detail after the code. Compare ${object} with the exact constraint at the linked source line.`,
+      'Retry only after the rejected value passes the same validation.'];
   }
   if (/(?:REQUIRED|UNSUPPORTED|DUPLICATE|AMBIGUOUS|INCOMPLETE|UNKNOWN)$/u.test(code)) return [cause, 'Execution did not continue with ambiguous or unsafe data.', 'Correct the named field, input, or policy. Keep validation enabled.', 'Retry after the value passes the same contract check.'];
   if (/(?:FAILED|ERROR|EXITED|BROKEN_PIPE|TAMPERED)$/u.test(code)) return [cause, 'Buster cannot claim a complete trusted result.', 'Read the preserved cause and source. Inspect side effects before recovery.', 'Follow the provider retry rule only after side effects are known.'];
@@ -396,10 +547,19 @@ function diagnosis(code) {
     'Retry only after an integrity check can read the complete authoritative state.'];
   if (['ALREADY_STARTED', 'ALREADY_TERMINAL', 'TERMINAL', 'SHUTTING_DOWN', 'SHUTDOWN',
     'OWNED_BY_NOVA', 'NOT_COMPLETED', 'BEFORE_ADMISSION', 'READINESS_BEFORE_ADMISSION',
-    'FENCED', 'IMMUTABLE', 'REPEATED', 'TEARDOWN_PENDING', 'CLOSED_BEFORE_TEARDOWN'].includes(suffix)) return [cause,
+    'FENCED', 'IMMUTABLE', 'REPEATED', 'TEARDOWN_PENDING', 'CLOSED_BEFORE_TEARDOWN',
+    'EXECUTION_INTERRUPTED'].includes(suffix)) return [cause,
     'The requested operation conflicts with the recorded lifecycle state.',
     'Keep the existing record. Identify its current owner and complete or reconcile that lifecycle first.',
     'Do not repeat the transition until the authoritative state permits it.'];
+  if (suffix === 'NO_EXECUTED_CASES') return [cause,
+    'The report cannot prove that the test command executed a case.',
+    'Check test discovery, filters, prerequisites, and the original report before changing the requirement.',
+    'Retry after the same command produces at least one executed case.'];
+  if (suffix === 'NOT_BOOTSTRAPPED') return [cause,
+    'Buster is not ready to accept work.',
+    'Keep the service out of traffic. Inspect durable recovery and configured dependency readiness.',
+    'Retry readiness after recovery completes; do not submit a job before BUSTER_READY.'];
   return [cause, 'The boundary did not produce a trusted result.', 'Use the preserved cause and source link to inspect the named condition.', 'Confirm attempt state and retry safety before a new attempt.'];
 }
 
@@ -425,13 +585,28 @@ const lines = [
   'A failed test assertion is a normal provider result with findings. These codes',
   'identify rejected contracts, unavailable authority, interrupted execution,',
   'unsafe output, or failed evidence handling. Do not convert them into findings.', '',
-  'The generator discovers production source files. It reads codes passed directly',
-  'or through local validation helpers to the JavaScript `Error` and',
-  '`AggregateError` constructors. It',
-  'also expands the finite process, limit, path, and file-size families in source.',
-  'Tests, declarations, CLI usage text, text after a colon, and internal control',
-  'signals are outside this inventory.', '',
+  'The generator discovers production source files. It inventories every stable',
+  'uppercase diagnostic literal in runtime code. This includes exceptions, HTTP',
+  'errors, negative readiness codes, result fields, summaries, and helper arguments.',
+  'It also follows local `Error` and `AggregateError` helpers and expands finite',
+  'dynamic process, limit, path, and file-size families.', '',
+  'A literal is absent only when the audited exclusion table identifies it as a',
+  'success value, an internal control signal, a construction label, or an HTTP',
+  'classifier. A generator assertion requires every runtime literal to be in the',
+  'reference or in that table. Tests, declarations, CLI usage text, and diagnostic',
+  'text after the first colon remain outside the inventory.', '',
+  '## Audited Non-Error Literals', '',
+  'These production literals match the code syntax but are not emitted error',
+  'identities. The generator verifies that each literal still exists and remains',
+  'excluded from the error tables.', '',
+  '| Literal | Exclusion reason | Source |',
+  '| --- | --- | --- |',
 ];
+for (const [code, reason] of [...excludedLiteralCodes].sort(([a], [b]) => a.localeCompare(b))) {
+  const evidence = (literalLocations.get(code) ?? []).slice(0, 3).map(sourceLink).join('<br>');
+  lines.push(`| \`${code}\` | ${reason} | ${evidence} |`);
+}
+lines.push('');
 for (const title of groupOrder) {
   const codes = grouped.get(title); if (!codes?.length) continue;
   lines.push(`## ${title}`, '', '| Stable code | Likely cause | Effect | Safe action | Retry rule | Source |',
@@ -461,8 +636,23 @@ assert(output.includes('`BUSTER_REMOTE_TERMINAL_STATUS_UNREADABLE`'),
   'the generated reference must include AggregateError terminal-read failures');
 assert(!output.includes('does not satisfy its contract'),
   'generated causes must explain the invalid condition without a generic contract restatement');
-assert(!/\b(?:arguments|bytes|counts|credentials|fields|files|headers|limits|paths|prefixes|steps|workers) does\b/u.test(output),
+assert(!/\b(?:arguments|bytes|counts|credentials|fields|files|headers|limits|paths|predecessors|prefixes|steps|workers) does\b/u.test(output),
   'generated causes contain a plural-subject grammar error');
+assert(!/\b(?:arguments|bytes|counts|credentials|details|entries|fields|files|findings|headers|limits|links|methods|operations|origins|outputs|paths|ports|predecessors|prefixes|profiles|reports|resources|results|routes|roots|steps|tests|values|workers) because (?:it|its)\b/u.test(output),
+  'generated causes contain a plural-object pronoun error');
+assert(!output.includes('because its value, type, or structure is invalid'),
+  'generated invalid-value causes must name the applicable validation class');
+const unclassifiedInvalidCodes = [...output.matchAll(/\| `([^`]+)` \| [^|]*At least one value has the wrong type, format, range, or structure\./gu)]
+  .map((match) => match[1]);
+assert.equal(unclassifiedInvalidCodes.length, 0,
+  `every current INVALID code must map to a specific validation class: ${unclassifiedInvalidCodes.join(', ')}`);
+assert(!output.includes('detected an invalid state while processing'),
+  'every current nonstandard diagnostic suffix must have an explicit explanation');
+const awkwardFailurePhrases = output.match(/could not complete (?:registry|standard error|standard input|standard output|controller|proxy|exit|spawn|tar|initialize|process)[^.|]*/gu) ?? [];
+assert.equal(awkwardFailurePhrases.length, 0,
+  `generated causes must describe the failed operation in natural language: ${[...new Set(awkwardFailurePhrases)].join(', ')}`);
+assert(!output.includes('rejected operation because it exceeds'),
+  'generated limit causes must identify the limited resource');
 if (process.argv.includes('--write')) {
   fs.writeFileSync(target, output);
   console.log(`wrote ${path.relative(root, target)} (${locations.size} stable codes from ${productionFiles.length} production files)`);
