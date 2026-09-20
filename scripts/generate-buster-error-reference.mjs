@@ -122,6 +122,8 @@ function analyse(file) {
 
   const found = [];
   const literals = [];
+  const dynamicTemplates = [];
+  const processInputInvocations = [];
   const isTypeLiteral = (node) => {
     for (let current = node.parent; current; current = current.parent) {
       if (ts.isLiteralTypeNode(current)) return true;
@@ -129,23 +131,71 @@ function analyse(file) {
     }
     return false;
   };
-  const inspect = (node, owner = null) => {
+  const inspect = (node, owner = null, locals = new Map()) => {
     const declared = nameOf(node);
     const nextOwner = declared ?? owner;
+    const definition = nextOwner ? functions.get(nextOwner) : null;
+    const parameters = new Map(definition?.names.map((name, index) =>
+      [name, definition.values[index]]).filter(([name]) => name) ?? []);
+    let nextLocals = locals;
+    if (ts.isForOfStatement(node) && ts.isVariableDeclarationList(node.initializer)
+      && node.initializer.declarations.length === 1) {
+      const declaration = node.initializer.declarations[0];
+      let expression = node.expression;
+      while (ts.isAsExpression(expression) || ts.isSatisfiesExpression(expression)
+        || ts.isParenthesizedExpression(expression)) expression = expression.expression;
+      if (ts.isArrayBindingPattern(declaration.name) && ts.isArrayLiteralExpression(expression)) {
+        nextLocals = new Map(locals);
+        for (const [index, binding] of declaration.name.elements.entries()) {
+          if (!ts.isBindingElement(binding) || !ts.isIdentifier(binding.name)) continue;
+          const values = new Set();
+          for (const tuple of expression.elements) {
+            let item = tuple;
+            while (ts.isAsExpression(item) || ts.isSatisfiesExpression(item)
+              || ts.isParenthesizedExpression(item)) item = item.expression;
+            if (!ts.isArrayLiteralExpression(item) || index >= item.elements.length) continue;
+            for (const value of valuesFor(item.elements[index], constants,
+              new Map([...parameters, ...locals]))) values.add(value);
+          }
+          if (values.size) nextLocals.set(binding.name.text, values);
+        }
+      }
+    }
     if (ts.isNewExpression(node) && ts.isIdentifier(node.expression)
       && ['Error', 'AggregateError'].includes(node.expression.text) && node.arguments?.length) {
-      const definition = nextOwner ? functions.get(nextOwner) : null;
-      const parameters = new Map(definition?.names.map((name, index) =>
-        [name, definition.values[index]]).filter(([name]) => name) ?? []);
       // Error(message) stores its message in argument 0. AggregateError(errors,
       // message) stores the stable code in argument 1.
       const messageIndex = node.expression.text === 'AggregateError' ? 1 : 0;
-      const values = valuesFor(node.arguments[messageIndex], constants, parameters);
+      const values = valuesFor(node.arguments[messageIndex], constants,
+        new Map([...parameters, ...nextLocals]));
       const line = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1;
       for (const value of values) {
         const code = stableCode(value);
         if (code) found.push({ code, file, line });
       }
+    }
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)
+      && node.expression.text === 'runProcessInput') {
+      let options = node.arguments[2];
+      while (options && (ts.isAsExpression(options) || ts.isSatisfiesExpression(options)
+        || ts.isParenthesizedExpression(options))) options = options.expression;
+      const scope = new Map([...parameters, ...nextLocals]);
+      const propertyValues = (name) => {
+        if (!options || !ts.isObjectLiteralExpression(options)) return new Set();
+        const property = options.properties.find((candidate) => ts.isPropertyAssignment(candidate)
+          && ((ts.isIdentifier(candidate.name) && candidate.name.text === name)
+            || (ts.isStringLiteralLike(candidate.name) && candidate.name.text === name)));
+        return property && ts.isPropertyAssignment(property)
+          ? valuesFor(property.initializer, constants, scope) : new Set();
+      };
+      const hasProperty = (name) => options && ts.isObjectLiteralExpression(options)
+        && options.properties.some((candidate) => ts.isPropertyAssignment(candidate)
+          && ((ts.isIdentifier(candidate.name) && candidate.name.text === name)
+            || (ts.isStringLiteralLike(candidate.name) && candidate.name.text === name)));
+      processInputInvocations.push({ file,
+        line: sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1,
+        prefixes: propertyValues('prefix'), outputLimitErrors: propertyValues('outputLimitError'),
+        hasOutputLimitError: hasProperty('outputLimitError') });
     }
     if (ts.isStringLiteralLike(node) && !isTypeLiteral(node)) {
       const code = stableCode(node.text);
@@ -155,14 +205,34 @@ function analyse(file) {
       const code = stableCode(node.head.text);
       if (code) literals.push({ code, file,
         line: sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1 });
+      const template = node.getText(sourceFile).slice(1, -1);
+      const skeleton = `${node.head.text}${node.templateSpans
+        .map((span) => `\${}${span.literal.text}`).join('')}`;
+      const codeSkeleton = skeleton.split(':', 1)[0];
+      if (codeSkeleton.includes('${}') && stableCode(codeSkeleton.replaceAll('${}', 'DYNAMIC'))) {
+        dynamicTemplates.push({ template, file,
+          line: sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1 });
+      }
     }
-    for (const child of visitChildren(node)) inspect(child, nextOwner);
+    for (const child of visitChildren(node)) inspect(child, nextOwner, nextLocals);
   };
   inspect(sourceFile);
-  return { found, literals, source };
+  return { found, literals, dynamicTemplates, processInputInvocations, source };
 }
 
 const analysed = new Map(productionFiles.map((file) => [file, analyse(file)]));
+const processInputInvocations = [...analysed.values()].flatMap((entry) => entry.processInputInvocations);
+assert(processInputInvocations.length > 0, 'runProcessInput has no audited production call site');
+for (const invocation of processInputInvocations) {
+  assert(invocation.prefixes.size > 0,
+    `runProcessInput prefix is not statically auditable: ${invocation.file}:${invocation.line}`);
+  assert(!invocation.hasOutputLimitError || invocation.outputLimitErrors.size > 0,
+    `runProcessInput output-limit code is not statically auditable: ${invocation.file}:${invocation.line}`);
+}
+const processInputPrefixes = [...new Set(processInputInvocations.flatMap((invocation) => [...invocation.prefixes]))].sort();
+const defaultProcessOutputPrefixes = [...new Set(processInputInvocations
+  .filter((invocation) => !invocation.hasOutputLimitError)
+  .flatMap((invocation) => [...invocation.prefixes]))].sort();
 const excludedLiteralCodes = new Map([
   ['BUSTER_READY', 'positive readiness result'],
   ['DEPENDENCY_OK', 'positive dependency-process result'],
@@ -185,30 +255,34 @@ const excludedLiteralCodes = new Map([
 ]);
 const dynamicFamilies = [
   { file: 'skills/buster/engine/test-gates/process-input.ts', sentinel: '${options.prefix}_CANCELLED',
-    prefixes: ['REPORT_ADAPTER', 'KUBERNETES_FIXTURE_KUBECTL', 'TAILSCALE_EXPOSURE_KUBECTL'],
+    prefixes: processInputPrefixes,
     suffixes: ['CANCELLED', 'TIMEOUT', 'STDIN_FAILED', 'STDOUT_FAILED', 'STDERR_FAILED'],
     sentinels: { CANCELLED: '${options.prefix}_CANCELLED', TIMEOUT: '${options.prefix}_TIMEOUT',
       STDIN_FAILED: '${options.prefix}_STDIN_FAILED', STDOUT_FAILED: '${options.prefix}_STDOUT_FAILED',
       STDERR_FAILED: '${options.prefix}_STDERR_FAILED' } },
   { file: 'skills/buster/engine/test-gates/process-input.ts', sentinel: '${prefix}_CLEANUP_FAILED',
-    prefixes: ['REPORT_ADAPTER', 'KUBERNETES_FIXTURE_KUBECTL', 'TAILSCALE_EXPOSURE_KUBECTL'],
+    prefixes: processInputPrefixes,
     suffixes: ['CLEANUP_FAILED'] },
   { file: 'skills/buster/engine/test-gates/process-input.ts', sentinel: '${options.prefix}_OUTPUT_LIMIT',
-    prefixes: ['KUBERNETES_FIXTURE_KUBECTL', 'TAILSCALE_EXPOSURE_KUBECTL'], suffixes: ['OUTPUT_LIMIT'] },
+    prefixes: defaultProcessOutputPrefixes, suffixes: ['OUTPUT_LIMIT'] },
   { file: 'skills/buster/engine/test-gates/report-adapter-runtime.ts', sentinel: 'REPORT_ADAPTER_RESULT_LIMIT',
     prefixes: ['REPORT_ADAPTER'], suffixes: ['RESULT_LIMIT'] },
   { file: 'skills/buster/engine/test-gates/container-build-runtime.ts', sentinel: 'CONTAINER_BUILD_${label}_LIMIT_INVALID',
-    prefixes: ['CONTAINER_BUILD'], suffixes: ['LOG_LIMIT_INVALID', 'TIME_LIMIT_INVALID', 'MANIFEST_LIMIT_INVALID'] },
+    prefixes: ['CONTAINER_BUILD'], suffixes: ['LOG_LIMIT_INVALID', 'TIME_LIMIT_INVALID', 'MANIFEST_LIMIT_INVALID'],
+    sourceResolved: true },
   { file: 'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts', sentinel: 'KUBERNETES_FIXTURE_${label}_LIMIT_INVALID',
     prefixes: ['KUBERNETES_FIXTURE'], suffixes: ['MANIFEST_SIZE_LIMIT_INVALID', 'RESOURCE_COUNT_LIMIT_INVALID',
-      'PVC_SIZE_LIMIT_INVALID', 'PVC_TOTAL_SIZE_LIMIT_INVALID', 'RETENTION_LIMIT_INVALID', 'EXECUTION_LIMIT_INVALID'] },
+      'PVC_SIZE_LIMIT_INVALID', 'PVC_TOTAL_SIZE_LIMIT_INVALID', 'RETENTION_LIMIT_INVALID', 'EXECUTION_LIMIT_INVALID'],
+    sourceResolved: true },
   { file: 'skills/buster/engine/test-gates/runner.ts', sentinel: '${label}_SYMLINK',
     prefixes: ['TEST_RUNNER_OBSERVABILITY_ROOT', 'TEST_RUNNER_ATTEMPT_STORE_ROOT', 'TEST_RUNNER_ADMISSION_STORE_ROOT'],
-    suffixes: ['SYMLINK', 'NOT_DIRECTORY'] },
+    suffixes: ['SYMLINK', 'NOT_DIRECTORY'],
+    sentinels: { SYMLINK: '${label}_SYMLINK', NOT_DIRECTORY: '${label}_NOT_DIRECTORY' }, sourceResolved: true },
   { file: 'skills/buster/engine/test-gates/runner.ts', sentinel: '${label}_OUTSIDE_WORKSPACE',
-    prefixes: ['TEST_RUNNER_REPOSITORY', 'TEST_RUNNER_ATTEMPT_REPOSITORY'], suffixes: ['OUTSIDE_WORKSPACE'] },
+    prefixes: ['TEST_RUNNER_REPOSITORY', 'TEST_RUNNER_ATTEMPT_REPOSITORY'], suffixes: ['OUTSIDE_WORKSPACE'],
+    sourceResolved: true },
   { file: 'skills/buster/plugins/visual/src/provider.js', sentinel: '${code}_TOO_LARGE',
-    prefixes: ['VISUAL_PROFILE_FILE_INVALID', 'VISUAL_MANIFEST_INVALID'], suffixes: ['TOO_LARGE'] },
+    prefixes: ['VISUAL_PROFILE_FILE_INVALID', 'VISUAL_MANIFEST_INVALID'], suffixes: ['TOO_LARGE'], sourceResolved: true },
 ];
 
 const locations = new Map();
@@ -233,12 +307,20 @@ for (const entry of analysed.values()) for (const item of entry.found) {
 for (const family of dynamicFamilies) {
   const source = analysed.get(family.file)?.source;
   assert(source?.includes(family.sentinel), `dynamic error construction changed in ${family.file}: ${family.sentinel}`);
+  if (family.sourceResolved) continue;
   for (const prefix of family.prefixes) for (const suffix of family.suffixes) {
     const sentinel = family.sentinels?.[suffix] ?? family.sentinel;
     assert(source.includes(sentinel), `dynamic error suffix changed in ${family.file}: ${sentinel}`);
     const line = source.slice(0, source.indexOf(sentinel)).split('\n').length;
     addLocation(`${prefix}_${suffix}`, family.file, line);
   }
+}
+const allowedDynamicTemplates = new Set(dynamicFamilies.flatMap((family) => [
+  family.sentinel, ...Object.values(family.sentinels ?? {}),
+]).filter((template) => template.includes('${')));
+for (const entry of analysed.values()) for (const item of entry.dynamicTemplates) {
+  assert(allowedDynamicTemplates.has(item.template),
+    `dynamic production diagnostic is not an audited finite family: ${item.file}:${item.line} ${item.template}`);
 }
 
 for (const [code, reason] of excludedLiteralCodes) {
@@ -327,6 +409,11 @@ const semanticSuffixes = ['CLEANUP_FAILED', 'RELEASE_FAILED', 'STDERR_FAILED', '
   'NOT_USED', 'REJECTED', 'RESERVED', 'SYMLINK', 'UNSAFE', 'CYCLE', 'TRUNCATED', 'TERMINATED',
   'CLOSED', 'CONFLICT', 'NESTED', 'ZERO_TESTS', 'REQUIRE_TLS', 'FUTURE', 'FULL', 'EXCEEDED',
   'FAILED', 'ERROR', 'EXITED', 'EMPTY', 'LIMIT'];
+const exactObjects = new Map([
+  ['BUSTER_SOURCE_ATTESTATION_INVALID', 'source snapshot attestation'],
+  ['SECURITY_POLICY_INVALID', 'security policy'],
+  ['TAILSCALE_EXPOSURE_KUBECTL_INVALID', 'kubectl executable'],
+]);
 
 function errorParts(code) {
   const [prefix, component, defaultObject = 'operation'] = componentPrefixes.find(([candidate]) => code.startsWith(candidate))
@@ -337,11 +424,12 @@ function errorParts(code) {
   const replacements = { config: 'configuration', auth: 'authentication', env: 'environment',
     expect: 'expected-result rule', extract: 'extraction rule', stdin: 'standard input', stdout: 'standard output',
     stderr: 'standard error', url: 'URL', uri: 'URI', api: 'API', json: 'JSON', http: 'HTTP', git: 'Git',
-    xml: 'XML', cpu: 'CPU', nova: 'Nova', junit: 'JUnit',
-    pvc: 'persistent volume claim', ref: 'reference', refs: 'references' };
+    xml: 'XML', cpu: 'CPU', nova: 'Nova', junit: 'JUnit', id: 'ID', ids: 'IDs', bom: 'BOM', utf8: 'UTF-8',
+    rbac: 'RBAC', tls: 'TLS', dns: 'DNS', oci: 'OCI', tar: 'TAR', buildkit: 'BuildKit', websocket: 'WebSocket',
+    statefulset: 'StatefulSet', pvc: 'persistent volume claim', ref: 'reference', refs: 'references' };
   const words = (stem || defaultObject).toLowerCase().split('_').map((word) => replacements[word] ?? word);
   if (words.at(-1) === 'parse') words[words.length - 1] = 'parsing';
-  return { component, object: words.join(' '), stem, suffix };
+  return { component, object: exactObjects.get(code) ?? words.join(' '), stem, suffix };
 }
 
 function invalidRule(code) {
@@ -408,13 +496,23 @@ const exactCauses = new Map([
   ['CONTAINER_BUILD_PATH_ESCAPE', 'Container build provider received a path outside its approved root.'],
   ['TEST_PROVIDER_MISSING', 'Test runner cannot find the selected test provider contract in its registry snapshot.'],
   ['TEST_PROVIDER_TERMINATED', 'Test provider process stopped before it completed the request.'],
+  ['TEST_REPORT_NO_EXECUTED_CASES', 'Test report contains skipped cases but no executed test case.'],
+  ['TEST_REPORT_ZERO_CASES', 'Test report contains no test case.'],
+  ['JUNIT_XML_TEXT_OUTSIDE_ROOT', 'JUnit adapter found text outside the XML root element.'],
   ['BUSTER_SOURCE_ATTESTATION_INVALID', 'Buster remote service could not verify the source snapshot attestation.'],
+  ['BUSTER_REMOTE_EXECUTION_INTERRUPTED', 'Buster remote service found recorded execution that the previous process stop interrupted.'],
+  ['BUSTER_COMPACTION_NO_BYTE_SAVING', 'Buster compaction service found that the compacted record would not use fewer bytes.'],
+  ['BUSTER_FIXTURE_NOT_READY', 'Buster fixture authority received a provider result that does not prove fixture readiness.'],
+  ['BUSTER_FIXTURE_READINESS_BEFORE_ADMISSION', 'Buster fixture authority received a readiness timestamp earlier than the recorded admission time.'],
+  ['SECURITY_POLICY_INVALID', 'Security scanner received a policy with an unsupported profile or field.'],
   ['TAILSCALE_EXPOSURE_KUBECTL_INVALID', 'Tailscale exposure received a kubectl path that is not a regular file.'],
   ['TAILSCALE_EXPOSURE_PREDECESSORS_EXHAUSTED', 'Tailscale exposure found no predecessor lease that it can safely resume.'],
   ['VISUAL_MANIFEST_INVALID_TOO_LARGE', 'Visual provider rejected the manifest file because its byte size exceeds the limit.'],
   ['VISUAL_PROFILE_FILE_INVALID_TOO_LARGE', 'Visual provider rejected the profile file because its byte size exceeds the limit.'],
   ['BUSTER_REMOTE_CONCURRENCY_EXCEEDS_SERVICE_LIMIT', 'Buster remote service rejected the requested concurrency because it exceeds the service limit.'],
+  ['BUSTER_REMOTE_ADMISSION_FULL', 'Buster remote service rejected a new job because its admission queue is full.'],
   ['TERMINATION_FAILED', 'Dependency process could not stop its child process cleanly.'],
+  ['WORKER_TERMINATION_FAILED', 'Worker runtime could not stop the worker process cleanly.'],
 ]);
 
 function naturalCause(code) {
@@ -439,8 +537,10 @@ function naturalCause(code) {
   if (suffix === 'NOT_ABSOLUTE') return `${lead} received ${object} that is not an absolute path.`;
   if (suffix === 'NOT_DIRECTORY') return `${lead} received ${object} that is not a directory.`;
   if (suffix === 'NOT_FILE') return `${lead} received ${object} that is not a regular file.`;
+  if (suffix === 'OVERLAPS_WORKSPACE') return `${lead} detected ${object} that overlaps the protected workspace.`;
+  if (suffix === 'SYMLINK') return `${lead} received ${object} that is a symbolic link.`;
   if (['OUTSIDE_PROVIDER_ROOTS', 'OUTSIDE_REPOSITORY', 'OUTSIDE_WORKSPACE', 'OUTSIDE_ROOT',
-    'OVERLAPS_WORKSPACE', 'PATH_ESCAPE', 'SYMLINK'].includes(suffix)) return `${lead} detected ${object} outside its approved filesystem boundary.`;
+    'PATH_ESCAPE'].includes(suffix)) return `${lead} detected ${object} outside its approved filesystem boundary.`;
   if (suffix === 'OUTPUT_LIMIT') return `${lead} stopped process output because it exceeds the configured byte limit.`;
   if (['TOO_LARGE', 'LIMIT_EXCEEDED', 'BUDGET_EXCEEDED', 'CAPACITY_EXCEEDED',
     'BYTES_EXCEEDED', 'FILE_LIMIT', 'EXHAUSTED', 'EXCEEDED', 'FULL', 'LIMIT'].includes(suffix)) return `${lead} rejected ${object}. The measured resource use exceeds the configured limit.`;
@@ -525,27 +625,48 @@ function diagnosis(code) {
   if (/(?:_CLEANUP_FAILED|_RELEASE_FAILED)$/u.test(code)) return [cause, 'A resource, lease, or process can remain.', 'Use the recorded identity to inspect and finish cleanup. Keep the failure evidence.', 'Do not rerun until ownership and retained state are known.'];
   if (/(?:DIGEST|CHECKSUM|IDENTITY|PROVENANCE).*_MISMATCH|_CHANGED$/u.test(code)) return [cause, 'Buster rejects evidence that can belong to different input or state.', 'Restore the admitted object or submit a new attempt with the new identity.', 'Do not retry the same attempt with changed input.'];
   if (/_MISMATCH$/u.test(code)) return [cause, 'Buster cannot trust the object or result.', 'Compare the recorded expected and actual values. Restore one authoritative value.', 'Retry only after both sides use the same value.'];
-  if (/(?:PATH|FILE|DIRECTORY|ROOT|WORKSPACE).*(?:DENIED|FORBIDDEN|ESCAPE|OUTSIDE|SYMLINK|NOT_ABSOLUTE|NOT_FILE|NOT_DIRECTORY)$/u.test(code)) return [cause, 'Buster did not cross its approved filesystem boundary.', 'Use a regular file or directory inside the documented workspace or evidence root.', 'Retry after the path and every parent link pass containment checks.'];
+  if (['NOT_ABSOLUTE', 'NOT_FILE', 'NOT_DIRECTORY', 'OUTSIDE_PROVIDER_ROOTS', 'OUTSIDE_REPOSITORY',
+    'OUTSIDE_WORKSPACE', 'OVERLAPS_WORKSPACE', 'PATH_ESCAPE', 'SYMLINK'].includes(suffix)
+    || (['DENIED', 'FORBIDDEN'].includes(suffix) && /(?:PATH|FILE|DIRECTORY|ROOT|WORKSPACE|SYMLINK)/u.test(code))) {
+    return [cause, 'Buster did not cross its approved filesystem boundary.',
+      'Use a regular file or directory inside the documented workspace or evidence root.',
+      'Retry after the path and every parent link pass containment checks.'];
+  }
   if (/(?:_DENIED|_FORBIDDEN)$/u.test(code)) return [cause, 'The requested capability, value, or target was not used.', 'Select an allowed value or change the owning policy through review.', 'An unchanged retry will fail again.'];
   if (code === 'TAILSCALE_EXPOSURE_PREDECESSORS_EXHAUSTED') return [cause,
     'The service cannot select an earlier lease without risking conflicting ownership.',
     'Keep all lease records. Inspect their owners, generations, states, and expiry times before recovery.',
     'Retry only after one authoritative lease can be selected or a new handoff is admitted.'];
-  if (/(?:TOO_LARGE|LIMIT|LIMIT_EXCEEDED|BUDGET_EXCEEDED|CAPACITY_EXCEEDED|BYTES_EXCEEDED|FILE_LIMIT|OUTPUT_LIMIT|EXHAUSTED|EXCEEDED)$/u.test(code)) return [cause, 'Buster stopped before input or output could exhaust the worker.', 'Reduce the data. Increase the owning limit only after a capacity review.', 'Retry with smaller data or an approved larger limit.'];
-  if (/(?:NOT_FOUND|UNAVAILABLE|NOT_READY|UNREACHABLE|MISSING)$/u.test(code)) return [cause, 'The dependent operation cannot produce trusted evidence.', 'Restore the named dependency or input and verify its identity and readiness.', 'Retry after an independent readiness check succeeds.'];
+  if (code === 'BUSTER_REMOTE_ADMISSION_FULL') return [cause,
+    'Buster did not admit or start the new job.',
+    'Wait for a queued job to start or cancel a job that is no longer required. Increase queue capacity only after a service-capacity review.',
+    'Retry when the service has a free queue slot.'];
+  if (code === 'BUSTER_REMOTE_CONCURRENCY_EXCEEDS_SERVICE_LIMIT') return [cause,
+    'Buster did not admit the job with an unenforceable concurrency request.',
+    'Reduce the job maximum concurrency to the published service limit.',
+    'Retry with the corrected concurrency value.'];
+  if (/(?:TOO_LARGE|LIMIT|LIMIT_EXCEEDED|BUDGET_EXCEEDED|CAPACITY_EXCEEDED|BYTES_EXCEEDED|FILE_LIMIT|OUTPUT_LIMIT|EXHAUSTED|EXCEEDED|FULL)$/u.test(code)) return [cause, 'Buster stopped before the named resource could exceed worker or service capacity.', 'Reduce the named input, output, concurrency, or resource use. Increase the limit only after a capacity review.', 'Retry with smaller work or an approved larger limit.'];
+  if (code === 'BUSTER_FIXTURE_NOT_READY') return [cause,
+    'Buster does not publish fixture readiness or start dependent tests.',
+    'Inspect the provider outcome and case counts. Correct the fixture preparation failure first.',
+    'Retry readiness only after the fixture provider returns a complete passing result.'];
+  if (/(?:NOT_FOUND|UNAVAILABLE|NOT_READY|UNREACHABLE|MISSING|NOT_AVAILABLE|NOT_BUILT|NOT_RESOLVED|NOT_RETAINED)$/u.test(code)) return [cause, 'The dependent operation cannot produce trusted evidence.', 'Restore the named dependency or input and verify its identity and readiness.', 'Retry after an independent readiness check succeeds.'];
   if (/(?:EXPIRED|STALE)$/u.test(code)) return [cause, 'The old value cannot authorize this attempt.', 'Ask the owning component for fresh authority or evidence.', 'Retry only with the fresh value.'];
+  if (suffix === 'FUTURE') return [cause, 'Buster cannot use evidence whose recorded time is not yet valid.',
+    'Check the producing host clock and the source timestamp. Do not change the allowed age to hide clock drift.',
+    'Retry with a correct clock and newly produced evidence.'];
   if (/_INVALID$/u.test(code)) {
     return [cause, 'Execution stopped before it could use invalid or ambiguous data.',
       `Read the diagnostic detail after the code. Compare ${object} with the exact constraint at the linked source line.`,
       'Retry only after the rejected value passes the same validation.'];
   }
-  if (/(?:REQUIRED|UNSUPPORTED|DUPLICATE|AMBIGUOUS|INCOMPLETE|UNKNOWN)$/u.test(code)) return [cause, 'Execution did not continue with ambiguous or unsafe data.', 'Correct the named field, input, or policy. Keep validation enabled.', 'Retry after the value passes the same contract check.'];
+  if (/(?:REQUIRED|UNSUPPORTED|DUPLICATE|AMBIGUOUS|INCOMPLETE|UNKNOWN|UNKNOWN_FIELD)$/u.test(code)) return [cause, 'Execution did not continue with ambiguous or unsafe data.', 'Correct the named field, input, or policy. Keep validation enabled.', 'Retry after the value passes the same contract check.'];
   if (/(?:FAILED|ERROR|EXITED|BROKEN_PIPE|TAMPERED)$/u.test(code)) return [cause, 'Buster cannot claim a complete trusted result.', 'Read the preserved cause and source. Inspect side effects before recovery.', 'Follow the provider retry rule only after side effects are known.'];
   if (['UNREADABLE', 'NOT_DURABLE', 'NOT_PRIVATE', 'TRAILING_DATA'].includes(suffix)) return [cause,
     'Buster cannot trust the stored or parsed state.',
     'Preserve the affected bytes and diagnostic detail. Restore the record from its authoritative owner.',
     'Retry only after an integrity check can read the complete authoritative state.'];
-  if (['ALREADY_STARTED', 'ALREADY_TERMINAL', 'TERMINAL', 'SHUTTING_DOWN', 'SHUTDOWN',
+  if (['ALREADY_STARTED', 'ALREADY_TERMINAL', 'TERMINAL', 'SHUTTING_DOWN', 'SHUTDOWN', 'CONFLICT',
     'OWNED_BY_NOVA', 'NOT_COMPLETED', 'BEFORE_ADMISSION', 'READINESS_BEFORE_ADMISSION',
     'FENCED', 'IMMUTABLE', 'REPEATED', 'TEARDOWN_PENDING', 'CLOSED_BEFORE_TEARDOWN',
     'EXECUTION_INTERRUPTED'].includes(suffix)) return [cause,
@@ -556,10 +677,78 @@ function diagnosis(code) {
     'The report cannot prove that the test command executed a case.',
     'Check test discovery, filters, prerequisites, and the original report before changing the requirement.',
     'Retry after the same command produces at least one executed case.'];
+  if (suffix === 'ZERO_CASES') return [cause,
+    'The report cannot prove that the test command discovered a case.',
+    'Check test discovery, filters, report paths, and report-adapter input.',
+    'Retry after the same command produces a report with at least one case.'];
   if (suffix === 'NOT_BOOTSTRAPPED') return [cause,
     'Buster is not ready to accept work.',
     'Keep the service out of traffic. Inspect durable recovery and configured dependency readiness.',
     'Retry readiness after recovery completes; do not submit a job before BUSTER_READY.'];
+  if (code === 'BUSTER_COMPACTION_NO_BYTE_SAVING') return [cause,
+    'Buster keeps the complete job record because compaction gives no storage benefit.',
+    'Keep the original record. Inspect archive and metadata sizes only if unexpected growth requires investigation.',
+    'Do not retry unchanged input. Retry only after record content or compaction rules change.'];
+  if (suffix === 'EMPTY') return [cause,
+    'The provider has no usable input for the requested check.',
+    'Supply the required catalogue, selection, search path, or evidence content named by the code.',
+    'Retry only after the input contains a usable value.'];
+  if (['NESTED', 'IN_CASE'].includes(suffix) || code === 'JUNIT_XML_TEXT_OUTSIDE_ROOT') return [cause,
+    'The document structure is ambiguous or violates the accepted format.',
+    'Correct the source document structure at the linked validation boundary.',
+    'Retry after the same parser accepts the corrected document.'];
+  if (suffix === 'REQUIRE_TLS') return [cause,
+    'Buster did not send registry credentials over an unencrypted connection.',
+    'Use an HTTPS registry endpoint with a trusted certificate, or remove credentials from this request.',
+    'Retry only after the endpoint uses TLS or the request no longer carries credentials.'];
+  if (suffix === 'NOT_USED') return [cause,
+    'The declared input did not affect the prepared fixture.',
+    'Correct the manifest or remove the unused declaration so that evidence matches actual use.',
+    'Retry after the prepared resource uses the declared input.'];
+  if (suffix === 'REJECTED') return [cause,
+    'The owning controller did not accept the requested lease or state transition.',
+    'Read the retained controller status and correct the stated policy, ownership, or readiness condition.',
+    'Retry only after the rejection condition changes.'];
+  if (suffix === 'CYCLE') return [cause,
+    'Buster stopped before recursive references could produce ambiguous or unbounded input.',
+    'Remove the reference or alias cycle. Keep each dependency chain finite.',
+    'Retry after validation confirms that the graph has no cycle.'];
+  if (suffix === 'UNSAFE') return [cause,
+    'The selected value would weaken an enforced safety or isolation boundary.',
+    'Select a value that meets the policy. Change the policy only through an explicit review.',
+    'An unchanged retry will fail again.'];
+  if (suffix === 'ZERO_TESTS') return [cause,
+    'The test run produced no test execution evidence.',
+    'Check test discovery, filters, projects, and prerequisites.',
+    'Retry after the same test command discovers and runs at least one test.'];
+  if (suffix === 'TRUNCATED') return [cause,
+    'Buster cannot trust an incomplete archive or evidence object.',
+    'Produce the object again and verify its size and digest before submission.',
+    'Retry only with a complete object.'];
+  if (['GRANULARITY', 'LIMIT_EXCEEDS_CONTRACT', 'INCOMPATIBLE', 'TOO_LOW', 'TOO_BROAD'].includes(suffix)) return [cause,
+    'The runtime cannot enforce the requested setting safely.',
+    'Choose a documented value within the supported range and runtime constraints.',
+    'Retry after configuration validation accepts the new value.'];
+  if (['NOT_DELEGATED', 'NOT_ISOLATED'].includes(suffix)) return [cause,
+    'The runtime did not start the test without the required operating-system isolation.',
+    'Restore cgroup delegation or select an execution environment that provides the required isolation.',
+    'Retry only after the isolation preflight succeeds.'];
+  if (suffix === 'RESERVED') return [cause,
+    'The supplied identity can conflict with an identity that Buster owns.',
+    'Choose a non-reserved identity that follows the documented naming contract.',
+    'Retry with the new identity.'];
+  if (['CLOSED', 'TERMINATED', 'UNAWAITED_CAPABILITIES'].includes(suffix)) return [cause,
+    'The provider process ended before all requested work and evidence were complete.',
+    'Inspect retained process output, capability requests, and possible side effects before recovery.',
+    'Retry only after cleanup completes and the interrupted operation is known to be retry-safe.'];
+  if (suffix === 'DEADLOCK') return [cause,
+    'The plan still has unfinished nodes, but no node can become runnable.',
+    'Inspect predecessor outcomes, link conditions, and concurrency groups. Correct the blocked plan graph.',
+    'Retry with a plan that gives every unfinished node a reachable state.'];
+  if (suffix === 'UNCERTAIN') return [cause,
+    'Buster cannot prove whether the external or durable operation completed.',
+    'Preserve all records and reconcile the authoritative external state before any new action.',
+    'Do not retry until reconciliation proves that repetition is safe.'];
   return [cause, 'The boundary did not produce a trusted result.', 'Use the preserved cause and source link to inspect the named condition.', 'Confirm attempt state and retry safety before a new attempt.'];
 }
 
@@ -648,6 +837,8 @@ assert.equal(unclassifiedInvalidCodes.length, 0,
   `every current INVALID code must map to a specific validation class: ${unclassifiedInvalidCodes.join(', ')}`);
 assert(!output.includes('detected an invalid state while processing'),
   'every current nonstandard diagnostic suffix must have an explicit explanation');
+assert(!output.includes('The boundary did not produce a trusted result.'),
+  'every current diagnostic must have a specific effect, action, and retry class');
 const awkwardFailurePhrases = output.match(/could not complete (?:registry|standard error|standard input|standard output|controller|proxy|exit|spawn|tar|initialize|process)[^.|]*/gu) ?? [];
 assert.equal(awkwardFailurePhrases.length, 0,
   `generated causes must describe the failed operation in natural language: ${[...new Set(awkwardFailurePhrases)].join(', ')}`);
