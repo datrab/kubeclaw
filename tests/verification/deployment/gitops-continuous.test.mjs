@@ -34,7 +34,14 @@ test('child applications survive squash merges and retain immutable bundle direc
     spec: { source: { targetRevision: 'b'.repeat(40), path: 'releases/gitops/runtime-123-1/nova', directory: { include: 'resources.yaml' } },
       syncPolicy: { automated: { prune: false, selfHeal: true } } } };
   const docs = continuousApplications([project, app].map(value => yaml.dump(value)).join('---\n'));
-  assert.deepEqual(docs, [project, { ...app, spec: { ...app.spec, source: { ...app.spec.source, targetRevision: 'main' } } }]);
+  assert.deepEqual(docs, [project, { ...app,
+    metadata: { ...app.metadata, annotations: { ...app.metadata.annotations, 'kubeclaw.dev/immutable-bundle-path': app.spec.source.path } },
+    spec: { ...app.spec, source: { ...app.spec.source, targetRevision: 'main' } } }]);
+  for (const source of [{ path: 'charts/kubeclaw', directory: { include: 'resources.yaml' } },
+    { path: app.spec.source.path, directory: { include: 'other.yaml' } }]) {
+    const mutable = structuredClone(docs[1]); mutable.spec.source = source;
+    assert.equal(continuousApplications(yaml.dump(mutable))[0].metadata.annotations['kubeclaw.dev/immutable-bundle-path'], undefined);
+  }
 });
 
 test('automatic deployment requires successful main provenance and explicit bootstrap', () => {

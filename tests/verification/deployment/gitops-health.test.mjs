@@ -31,6 +31,29 @@ test('original Application health Lua rejects stale sync, failed hooks, drift an
   change('continuous main uses resolved commit', 'Healthy', branch);
   change('continuous main rejects previous bundle path', 'Progressing', object => { branch(object); object.spec.source.path += '-new'; });
   change('continuous main requires operation for resolved commit', 'Progressing', object => { branch(object); object.status.operationState.syncResult.revision = 'b'.repeat(40); });
+  const unchangedBundle = object => {
+    branch(object);
+    object.metadata = { annotations: { 'kubeclaw.dev/immutable-bundle-path': object.spec.source.path } };
+    object.status.operationState.syncResult.source = structuredClone(object.spec.source);
+    object.status.operationState.syncResult.revision = 'b'.repeat(40);
+  };
+  change('unrelated main commit retains successfully applied immutable bundle health', 'Healthy', unchangedBundle);
+  change('previous bundle operation cannot validate newly compared bundle', 'Progressing', object => {
+    unchangedBundle(object); object.status.operationState.syncResult.source.path += '-old';
+  });
+  change('operation from another repository cannot validate bundle', 'Progressing', object => {
+    unchangedBundle(object); object.status.operationState.syncResult.source.repoURL += '-other';
+  });
+  change('operation with different directory selection cannot validate bundle', 'Progressing', object => {
+    unchangedBundle(object); object.status.operationState.syncResult.source.directory.include = 'other.yaml';
+  });
+  change('mutable main path still requires matching operation revision', 'Progressing', object => {
+    unchangedBundle(object);
+    object.spec.source.path = object.status.sync.comparedTo.source.path = object.status.operationState.syncResult.source.path = 'charts/kubeclaw';
+  });
+  change('same bundle with drift still blocks', 'Progressing', object => { unchangedBundle(object); object.status.sync.status = 'OutOfSync'; });
+  change('same bundle with failed operation still blocks', 'Degraded', object => { unchangedBundle(object); object.status.operationState.phase = 'Failed'; });
+  change('same bundle with unhealthy workloads still blocks', 'Degraded', object => { unchangedBundle(object); object.status.health.status = 'Degraded'; });
   const platform = (object) => { object.metadata = { annotations: { 'kubeclaw.io/health-mode': 'observed' } }; object.spec.sources = [object.spec.source]; delete object.spec.source; };
   change('manual multi-source child reports actual health', 'Healthy', platform);
   change('manual Helm child reports actual health', 'Healthy', object => { platform(object); object.spec.source = { chart: 'ops', targetRevision: 'main' }; delete object.spec.sources; });

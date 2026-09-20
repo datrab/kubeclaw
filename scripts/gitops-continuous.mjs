@@ -32,6 +32,14 @@ export function continuousApplications(manifest, config = {}) {
       // Unique bundle directories survive later promotions. Tracking main also
       // survives squash merges; no transient PR commit needs to stay reachable.
       document.spec.source.targetRevision = 'main';
+      // Health can reuse a successful sync after unrelated main commits only
+      // for the unique release paths produced by the immutable bundle exporter.
+      const annotations = document.metadata.annotations ??= {};
+      delete annotations['kubeclaw.dev/immutable-bundle-path'];
+      if (/^releases\/gitops\/[a-z0-9][a-z0-9-]{0,50}\/(buster|nova|prism)$/u.test(document.spec.source.path ?? '')
+        && document.spec.source.directory?.include === 'resources.yaml') {
+        annotations['kubeclaw.dev/immutable-bundle-path'] = document.spec.source.path;
+      }
       if (config.runtimeAutoSync === false) {
         delete document.spec.syncPolicy.automated;
         // Register all children together, even before any workload is healthy.

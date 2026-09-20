@@ -39,5 +39,19 @@ if status.health == nil or status.health.status ~= "Healthy" then
 end
 if status.operationState == nil or status.operationState.phase ~= "Succeeded"
   or status.operationState.syncResult == nil
-  or status.operationState.syncResult.revision ~= sync.revision then return pending end
+  or status.operationState.syncResult.revision == nil then return pending end
+if status.operationState.syncResult.revision ~= sync.revision then
+  -- A new main commit need not change this immutable release directory. Argo
+  -- updates compared revision without running a redundant sync in that case.
+  -- Require a successful operation for this exact bundle, not unrelated Git
+  -- history; still reject old bundles, missing provenance and mutable sources.
+  local source = obj.spec.source
+  local applied = status.operationState.syncResult.source
+  if source.targetRevision ~= "main" or applied == nil
+    or source.path == nil or annotations["kubeclaw.dev/immutable-bundle-path"] ~= source.path then return pending end
+  for _, key in ipairs({"repoURL", "path", "targetRevision"}) do
+    if applied[key] ~= source[key] then return pending end
+  end
+  if applied.directory == nil or applied.directory.include ~= source.directory.include then return pending end
+end
 return {status = "Healthy", message = "Selected child revision synced and healthy"}
