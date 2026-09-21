@@ -14,6 +14,19 @@ Design Document revision, and its Baseline Bundle.
 
 ## Backup workload reconciliation
 
+Finished backup, checksum-verification and SQL restore-proof Jobs expire after
+one hour (`ttlSecondsAfterFinished: 3600`), including manual Jobs copied from
+the CronJob template. Each CronJob also retains at most one successful and one
+failed Job; this count limit can remove older Jobs sooner. Migration and backup
+storage-check hooks keep their success-deletion policy with the same one-hour
+TTL as a fallback. Export needed failure logs before cleanup. TTL starts only
+after a Job completes or fails; it does not interrupt running work.
+
+This policy deletes Job/Pod objects, not PVCs, snapshots or backup files.
+Already-created Jobs do not inherit template updates: after preserving needed
+diagnostics, an administrator must delete those terminal Jobs once or set their
+`spec.ttlSecondsAfterFinished`. One-off diagnostic Jobs must also specify a TTL.
+
 Backup and SQL restore proof first check PostgreSQL readiness for at most 30
 seconds, within the existing whole-operation deadline and exclusive lock.
 This handles the measured startup connectivity gap in new pods; it does not

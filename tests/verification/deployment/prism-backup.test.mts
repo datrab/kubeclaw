@@ -145,6 +145,26 @@ test('native lock prevents overlap and whole-operation deadline kills blocked du
   assert.equal((await readdir(fixture.backups)).filter(name => name.startsWith('backup-')).length, 0);
 });
 
+test('finished Prism jobs have bounded cleanup without changing storage or execution', async () => {
+  const { stdout } = await execute(process.env.HELM_BIN ?? 'helm', ['template', 'prism', 'charts/prism', '-n', 'default', '-f', 'charts/prism/ci-values.yaml']);
+  const docs = loadAll(stdout) as any[];
+  const crons = docs.filter(doc => doc?.kind === 'CronJob');
+  assert.equal(crons.length, 3);
+  for (const cron of crons) {
+    assert.equal(cron.spec.successfulJobsHistoryLimit, 1);
+    assert.equal(cron.spec.failedJobsHistoryLimit, 1);
+    assert.equal(cron.spec.jobTemplate.spec.ttlSecondsAfterFinished, 3600);
+    assert.equal(cron.spec.jobTemplate.spec.backoffLimit, 0);
+    assert.equal(cron.spec.concurrencyPolicy, 'Forbid');
+    assert(cron.spec.jobTemplate.spec.template.spec.volumes.some((volume: any) => volume.persistentVolumeClaim?.claimName === 'prism-backups'));
+  }
+  for (const name of ['prism-migrate', 'prism-backup-storage-check']) {
+    const job = docs.find(doc => doc?.kind === 'Job' && doc.metadata.name === name);
+    assert.equal(job.spec.ttlSecondsAfterFinished, 3600);
+    assert.equal(job.metadata.annotations['argocd.argoproj.io/hook-delete-policy'], 'BeforeHookCreation,HookSucceeded');
+  }
+});
+
 test('actual Helm render runs the group script and verification has no database credentials', async () => {
   const helm = process.env.HELM_BIN ?? 'helm';
   const { stdout } = await execute(helm, ['template', 'prism', 'charts/prism', '-n', 'default', '-f', 'charts/prism/ci-values.yaml']);

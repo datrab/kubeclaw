@@ -17,10 +17,13 @@ metadata:
 spec:
   schedule: {{ if eq $mode "backup" }}{{ $.Values.backup.schedule | quote }}{{ else if eq $mode "verify" }}{{ $.Values.backup.verificationSchedule | quote }}{{ else }}{{ $.Values.backup.databaseProofSchedule | quote }}{{ end }}
   concurrencyPolicy: Forbid
-  successfulJobsHistoryLimit: 0
-  failedJobsHistoryLimit: 3
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
+      # Applies to scheduled jobs and manual jobs copied from this template.
+      # Keep a bounded diagnostic window without retaining failed pods forever.
+      ttlSecondsAfterFinished: 3600
       backoffLimit: 0
       activeDeadlineSeconds: {{ add $.Values.backup.maximumDurationSeconds 30 }}
       template:
