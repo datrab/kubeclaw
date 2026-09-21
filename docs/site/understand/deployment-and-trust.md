@@ -6,7 +6,7 @@ Owner: platform architecture and operations
 Evidence: packaging/runtime/roles; charts/kubeclaw; charts/prism
 Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
 Applies to: current Helm charts and runtime-role declarations
-Last verified: source inspection on 2026-09-20
+Last verified: source inspection on 2026-09-21
 
 ## Purpose
 
@@ -33,7 +33,9 @@ flowchart LR
     Bridge -->|loopback Envoy 28080 and SPIFFE mTLS| Control
     Bridge -->|durable job launch| OpenClaw[Prism OpenClaw gateway]
     OpenClaw -->|fenced tool result| Control
-    OpenClaw -->|memory embedding| LiteLLM[LiteLLM and Vertex]
+    OpenClaw -->|memory embedding| LiteLLM[LiteLLM]
+    LiteLLM -->|provider request| Vertex[Vertex AI]
+    OpenClaw -->|managed reasoning| OpenAI[OpenAI provider]
     Control -->|Envoy and SPIFFE mTLS| PWorker[Prism Worker]
     Control -->|bearer HTTP| Ingestion[Optional Prism Ingestion]
     Control --> DB[(Prism PostgreSQL)]
@@ -41,6 +43,8 @@ flowchart LR
     Control --> Artifacts[(Prism artifact PVC)]
     Nova --> RunStore[(Nova run storage)]
     Buster --> BStore[(Buster job and evidence storage)]
+    Discord[Discord users and service] -->|enabled bot channels| Nova
+    Discord -->|enabled bot channels| Buster
     Nova -. event delivery .-> Telemetry[Telemetry and observers]
 ```
 
@@ -52,7 +56,9 @@ Studio calls Control through the application route. Control can call the native
 Worker, optional Ingestion workload, and Prism PostgreSQL. The Prism OpenClaw
 gateway can call LiteLLM for memory embeddings. Nova, Buster, Prism, OpenClaw,
 and LiteLLM keep different owner state. Observers receive committed events only
-after Nova writes them.
+after Nova writes them. Managed OpenAI reasoning, Vertex embeddings through
+LiteLLM, and the enabled Nova and Buster Discord channels are external paths;
+none of them owns pipeline or Prism state.
 
 > **Source evidence — deployed Prism path**
 >
@@ -80,6 +86,8 @@ It declares the packages and plugins available to one purpose.
 | Prism agent bridge | Translate authenticated dispatch into a durable Control request and run one claimed OpenClaw job. | The claimed job ID, fence, and local process lifecycle. | Prism documents, approval, and Nova lifecycle authority. |
 | Prism OpenClaw gateway | Perform the external design-agent session and expose fenced Prism tools. | Its gateway session, configured model route, and tool invocation. | Durable Control job/result authority. |
 | LiteLLM | Supply the configured OpenClaw memory embedding route. | Gateway routing and its separate database state. | Agent reasoning route, Prism state, and pipeline lifecycle. |
+| Managed OpenAI provider | Supply the model selected by an OpenClaw agent session. | Provider response and external account controls. | OpenClaw session, Control job, and pipeline lifecycle authority. |
+| Discord | Carry enabled Nova and Buster bot traffic and configured webhook notifications. | External message transport and Discord account controls. | User authorization beyond configured allowlists, pipeline state, and domain results. |
 
 Forge and Echo do not appear as current role manifests.
 Nova reaches them through configured runtime dispatch.
@@ -157,9 +165,13 @@ spiffe://kubeclaw.internal/ns/<namespace>/sa/<service-account>
 The application cannot select another identity through a normal environment variable.
 Envoy receives the short-lived certificate from the SPIRE Workload API.
 
-Human identity remains separate.
-Keycloak can authenticate a human and supply application roles.
-It does not provide a workload identity or artifact signature.
+Human identity remains separate. Keycloak is an unimplemented architectural
+option: this repository does not deploy it, configure a client, connect Prism
+session exchange to it, or provide a live acceptance procedure. If a future
+deployment selects Keycloak, it could authenticate a human and supply
+application roles; it still would not provide workload identity or artifact
+signatures. Current operators must use only the implemented human-authentication
+path described by the selected application procedure.
 
 > **Source evidence — separate service accounts**
 >
@@ -182,6 +194,10 @@ Important paths include:
 | Prism Control | Prism Ingestion | HTTP 8080 | Optional controlled ingestion. |
 | Prism Ingestion | Approved external source | HTTPS 443 only | Bounded acquisition into temporary quarantine. |
 | Prism OpenClaw agent | LiteLLM | HTTP 4000 | Remote memory-search embeddings only. |
+| LiteLLM | Vertex AI | HTTPS 443 | The configured `gemini-embedding-001` route and no reasoning traffic. |
+| Nova, Buster, and Prism OpenClaw | Managed OpenAI provider | External HTTPS owned by the pinned OpenClaw runtime | Agent reasoning under the configured model allowlist. |
+| Discord service | Nova and Buster OpenClaw gateways | External bot gateway and HTTPS APIs | Enabled allowlisted human messages and bot replies. |
+| Nova or Buster notification path | Discord webhook | Secret-selected HTTPS destination | Optional notification delivery; never lifecycle authority. |
 | Nova | Buster | mTLS worker route | Plan submission, status, result, evidence, cancellation. |
 
 The Service sends protected traffic to the Envoy sidecar.
@@ -197,6 +213,14 @@ current supported secured deployment. The architecture does not bind Nova Core
 to Cilium, but the repository has no implemented and proved Flannel equivalent
 for these policies. Do not label Flannel as a supported secured fallback until
 positive and negative route tests pass with equivalent policy and evidence.
+
+This statement has two evidence levels. The repository proves that selected
+manifests contain Cilium resources, that installation checks target Cilium, and
+that Ops can query Hubble. It does not prove that a particular live cluster
+enforces a deny rule. That proof needs an allowed request, a denied request, and
+the matching live flow evidence. The repository has no equivalent Flannel
+manifest set or recorded fallback proof, so “CNI-neutral Core” must not be read
+as “secured Flannel profile available.”
 
 > **Source evidence — default deny and allowed paths**
 >
@@ -349,6 +373,8 @@ The table shows the expected boundary.
 | Prism Worker stops | Native Prism attempt can be interrupted. | Control state, Studio, and stored artifacts. | Use Worker Core ownership and journal recovery. |
 | Prism PostgreSQL stops | Prism state operations and new agent admission stop. | Nova, Buster, and any durable off-database evidence. | Restore the matched Prism database and artifact recovery group before Prism work. |
 | LiteLLM PostgreSQL or LiteLLM stops | OpenClaw memory embedding fails. | Agent session, Control state, and reasoning route can remain separate. | Restore gateway state and credentials, then prove one authenticated embedding. |
+| Managed OpenAI route stops | The affected OpenClaw reasoning step can remain incomplete or have an uncertain external result. | Control's durable job, Nova's journal, and already committed domain state. | Reconcile the same agent session or job; repair provider access; prove one bounded model request before new work. |
+| Discord stops | Enabled bot entry, replies, approvals, or webhook notices can stop. | Core execution and every durable owner store. | Restore the exact bot or webhook identity and target. Prove the affected path without inferring pipeline state from message delivery. |
 | Prism Ingestion stops | New corpus acquisition and cleanup stop. | Existing active corpus and other Prism operations. | Reconcile quarantine and inactive revision state before resubmission. |
 | Artifact PVC fails | Prism content becomes unavailable. | Relational records can remain. | Restore the matched database-and-artifact backup group. |
 | SPIRE or Envoy fails | Protected worker routes fail closed. | Local durable state and unrelated public paths. | Restore identity service and verify exact peer routes. |

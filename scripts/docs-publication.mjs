@@ -556,7 +556,10 @@ function checkSite() {
   const pages = walk(siteRoot).filter((file) => file.endsWith('.md')).sort();
   for (const file of pages) {
     const text = fs.readFileSync(file, 'utf8');
-    for (const field of metadataFields) if (!new RegExp(`^${field}: .+`, 'mu').test(text)) errors.push(`${rel(file)} has no ${field} metadata`);
+    const readerMetadata = file.endsWith('reference/platform-surfaces-generated.md')
+      ? metadataFields.filter((field) => !['Owner', 'Evidence'].includes(field))
+      : metadataFields;
+    for (const field of readerMetadata) if (!new RegExp(`^${field}: .+`, 'mu').test(text)) errors.push(`${rel(file)} has no ${field} metadata`);
     const evidence = text.match(/^Evidence: (.+)$/mu)?.[1];
     for (const item of evidence?.split(';').map((value) => value.trim()) ?? []) {
       if (!fs.existsSync(path.join(root, item))) errors.push(`${rel(file)} cites missing evidence: ${item}`);

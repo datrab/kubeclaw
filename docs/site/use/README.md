@@ -33,6 +33,7 @@ Use [Worker Trust](worker-trust.md) when identity or mTLS needs a focused proced
 | Upgrade, rotate credentials, control retention, or remove KubeClaw | [Maintain and Retire](maintenance.md) | A compatible change, rollback decision, or removal record |
 | Run the Prism design lifecycle | [Operate Prism](prism-studio.md) | A traced project, revision, approval, baseline, or exact recovery action |
 | Configure, run, and diagnose a Buster suite | [Buster suite workflow](workflows/buster-suite.md) | A resolved plan, verified result, imported evidence, and cleanup decision |
+| Execute or inspect the 20-step showcase target, or diagnose Redis loss | [Buster deployment acceptance procedure](workflows/buster-suite.md#deployment-acceptance-exercise-exec-platform-success), [successful request trace](workflows/examples/request-trace-success.json), and [Redis-unavailable trace](workflows/examples/request-trace-redis-unavailable.json) | One registered Nova run through Prism approval, authenticated same-run resume, Buster, BuildKit, Tailscale cleanup, and terminal audit; the JSON traces remain examples rather than live proof |
 
 ## Operating Rule
 

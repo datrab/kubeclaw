@@ -212,6 +212,7 @@ function migration(filePath) {
   if (filePath.startsWith('docs/diagrams/') && filePath.endsWith('.svg')) return ['replace-then-delete', '/architecture/interactive', 'Extract topology, labels, flows, and accessibility text; implement as responsive HTML.'];
   if (filePath.startsWith('docs/generated/inventory/')) return ['regenerate-internal', '/reference/generated', 'Keep source data in build output; publish rendered reference pages, not raw internal inventory navigation.'];
   if (filePath.startsWith('docs/generated/reference/')) return ['internal-only', 'documentation build pipeline', 'Retain generator documentation outside the published site.'];
+  if (filePath.startsWith('docs/config/')) return ['internal-machine-authority', 'documentation build pipeline', 'Keep documentation mapping and generator configuration outside the published reader site.'];
   if (filePath.startsWith('docs/status/')) return ['internal-machine-authority', '/status', 'Keep machine-readable status authority outside the reader site; publish only its generated reader view.'];
   if (filePath.startsWith('docs/review/')) return ['delete-after-reader-coverage', 'Git history', 'Remove this internal review artifact after the canonical site contains every current fact and durable decision.'];
   if (filePath.includes('/templates/')) return ['internal-only', 'documentation contributor tooling', 'Retain only if used by the new documentation pipeline; do not publish as product documentation.'];

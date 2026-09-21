@@ -322,6 +322,291 @@ expiry. Retain the operation and job identities, plan and result digests,
 attempt errors, evidence receipts, cleanup result, and lease expiry. Do not call
 a test run complete while cleanup or retention is unknown.
 
+## Deployment Acceptance Exercise: EXEC-PLATFORM-SUCCESS
+
+This is the maintained healthy deployment exercise. It executes one
+operator-supplied `nova-project.v2` descriptor through the project CLI. The
+same descriptor is compiled, inspected, run, and audited. It must have no
+architecture review or approval stage, and its final provider plan must contain
+one executable chain from container build through a Kubernetes fixture and
+Tailscale exposure to the blocking demo authentication check.
+
+This exercise does not prove the conceptual
+[20-step showcase trace](examples/request-trace-success.json). Prism is proved
+separately by `prism-smoke` and the
+[Studio journey](../prism-studio.md#the-complete-studio-journey). Discord and
+Redis are reporter checks. Cilium and Hubble are network-enforcement and
+observability checks. None of those separate checks is same-run Prism, human
+channel, network-flow, or lifecycle evidence for this Nova project run.
+
+Run only in a registered non-production acceptance environment during an
+approved window. The descriptor must already contain independently resolved
+plans and grants for this installation. The source repository must be clean at
+the selected commit. External credentials and signing keys remain in their
+owning stores.
+
+Create a new evidence directory outside the project repository. Refuse an
+existing directory so an earlier run cannot be overwritten or mixed with this
+one.
+
+```bash
+set -euo pipefail
+export NAMESPACE="<namespace>"
+export PRISM_NAMESPACE="<prism-namespace>"
+export PLATFORM_FILE="<absolute-path>/platform.json"
+export PROJECT_FILE="<absolute-path>/nova-project.v2.json"
+export SOURCE_REF="<immutable-release-ref>"
+export RELEASE_COMMIT="<full-git-commit>"
+export TAILSCALE_PROBE_IMAGE="<registry>/<repository>@sha256:<64-hex-digest>"
+export EVIDENCE_DIR="<new-absolute-path-outside-project>/platform-success-evidence"
+export COMPILED_PIPELINE="$EVIDENCE_DIR/compiled-pipeline.json"
+test -f "$PLATFORM_FILE"
+test -f "$PROJECT_FILE"
+export PROJECT_REPOSITORY="$(node -e '
+const value = JSON.parse(require("node:fs").readFileSync(process.argv[1], "utf8"));
+if (value.schemaVersion !== "nova-project.v2" || typeof value.repositoryRoot !== "string") process.exit(1);
+process.stdout.write(value.repositoryRoot);
+' "$PROJECT_FILE")"
+test "$PROJECT_REPOSITORY" = "$(cd "$PROJECT_REPOSITORY" && pwd -P)"
+evidence_parent="$(cd "$(dirname "$EVIDENCE_DIR")" && pwd -P)"
+test "$EVIDENCE_DIR" = "$evidence_parent/$(basename "$EVIDENCE_DIR")"
+case "$EVIDENCE_DIR" in
+  "$PROJECT_REPOSITORY"|"$PROJECT_REPOSITORY"/*) exit 1 ;;
+esac
+test ! -e "$EVIDENCE_DIR"
+mkdir -m 0700 "$EVIDENCE_DIR"
+test "$(git -C "$PROJECT_REPOSITORY" rev-parse --verify HEAD)" = "$RELEASE_COMMIT"
+test -z "$(git -C "$PROJECT_REPOSITORY" status --porcelain)"
+git -C "$PROJECT_REPOSITORY" fetch --no-tags origin "$SOURCE_REF"
+test "$(git -C "$PROJECT_REPOSITORY" rev-parse --verify FETCH_HEAD^{commit})" = "$RELEASE_COMMIT"
+git -C "$PROJECT_REPOSITORY" merge-base --is-ancestor "$RELEASE_COMMIT" HEAD
+```
+
+Compile to the new outside-repository file. Compilation validates installed
+registrations, schemas, and grants without starting a run.
+
+```bash
+test ! -e "$COMPILED_PIPELINE"
+npm --silent run pipeline -- \
+  --platform "$PLATFORM_FILE" \
+  --project "$PROJECT_FILE" \
+  --compile "$COMPILED_PIPELINE" \
+  > "$EVIDENCE_DIR/compile.json"
+sha256sum "$PROJECT_FILE" > "$EVIDENCE_DIR/project-descriptor.sha256"
+```
+
+Inspect the actual compiled final plan. This check records the exact plan,
+stage, and provider node identities that the terminal audit must later return.
+It also rejects skipped providers, a source mismatch, an architecture approval
+path, missing demo stages, or a plan that merely contains the provider names
+without the required links.
+
+```bash
+node --input-type=module - "$PROJECT_FILE" "$COMPILED_PIPELINE" \
+  "$EVIDENCE_DIR/compile.json" "$EVIDENCE_DIR/expected-provider-chain.json" <<'NODE'
+import fs from 'node:fs';
+const [projectFile, graphFile, compileFile, outputFile] = process.argv.slice(2);
+const project = JSON.parse(fs.readFileSync(projectFile, 'utf8'));
+const graph = JSON.parse(fs.readFileSync(graphFile, 'utf8'));
+const compile = JSON.parse(fs.readFileSync(compileFile, 'utf8'));
+if (project.schemaVersion !== 'nova-project.v2' || project.baseRevision !== process.env.RELEASE_COMMIT
+  || project.architecture?.review !== undefined || project.demo === undefined) {
+  throw new Error('descriptor must select the release, omit architecture review, and declare demo');
+}
+if (compile.status !== 'compiled' || compile.runId !== project.runId
+  || compile.stageCount !== graph.stages?.length) throw new Error('compile identity mismatch');
+if (graph.stages.some(stage => stage.type === 'kubeclaw.decision.architecture-approval'
+  || stage.type.includes('human-approval'))) throw new Error('compiled graph contains a human wait');
+for (const id of ['demo-candidate', 'demo-delivery', 'demo-ready']) {
+  if (!graph.stages.some(stage => stage.id === id)) throw new Error(`missing ${id}`);
+}
+const finalStages = graph.stages.filter(stage => stage.id === 'final-test'
+  && stage.type === 'kubeclaw.test.quality-evaluation');
+if (finalStages.length !== 1) throw new Error('one final-test stage is required');
+const stage = finalStages[0];
+const plan = stage.input?.providerPlan?.plan;
+if (plan?.runId !== project.runId || plan?.planDigest === undefined
+  || plan?.coverage?.policy?.baseRevision !== process.env.RELEASE_COMMIT) {
+  throw new Error('final plan identity or coverage source mismatch');
+}
+const one = packageId => {
+  const nodes = plan.nodes.filter(node => node.provider?.packageId === packageId && node.skipReason === null);
+  if (nodes.length !== 1) throw new Error(`one executable ${packageId} node is required`);
+  return nodes[0];
+};
+const build = one('kubeclaw.container-build');
+const deployment = one('kubeclaw.kubernetes-fixture');
+const exposure = one('kubeclaw.tailscale-exposure');
+const auth = plan.nodes.find(node => node.id === project.demo.authNodeId
+  && node.provider?.packageId === 'kubeclaw.demo-auth-smoke' && node.kind === 'test'
+  && node.mode === 'blocking' && node.skipReason === null);
+if (!auth) throw new Error('blocking demo authentication node is missing');
+if (exposure.configuration?.values?.retentionMode !== 'await-readiness') {
+  throw new Error('Tailscale exposure must retain the fixture through demo readiness');
+}
+const linked = (from, output, to, input, kind, type) => plan.links.some(link =>
+  link.from.nodeId === from.id && link.from.output === output
+  && link.to.nodeId === to.id && link.to.input === input && link.kind === kind
+  && (kind === 'value' ? link.schemaId === type : link.mediaType === type));
+if (!linked(build, 'image', deployment, 'image', 'value', 'kubeclaw.container-image@1')
+  || !plan.links.some(link => link.to.nodeId === deployment.id && link.to.input === 'checked-manifest'
+    && link.kind === 'artifact' && link.mediaType === 'application/vnd.kubeclaw.checked-kubernetes-yaml')
+  || !linked(deployment, 'deployment', exposure, 'deployment', 'value', 'kubeclaw.kubernetes-deployment-fixture@1')
+  || !linked(deployment, 'deployment', auth, 'deployment', 'value', 'kubeclaw.kubernetes-deployment-fixture@1')
+  || !linked(deployment, 'credentials', auth, 'credentials', 'value', 'kubeclaw.generated-demo-credentials@1')
+  || !linked(exposure, 'exposure', auth, 'exposure', 'value', 'kubeclaw.public-endpoint-fixture@1')) {
+  throw new Error('BuildKit, Kubernetes, Tailscale, and demo links are incomplete');
+}
+if (!plan.coverage.policy.requiredChecks.some(check => check.nodeIds.includes(auth.id))) {
+  throw new Error('demo authentication is outside mandatory coverage');
+}
+const expected = { runId: project.runId, stageId: stage.id, planId: plan.planId,
+  planDigest: plan.planDigest, sourceRevision: project.baseRevision,
+  repositoryRoot: project.repositoryRoot,
+  nodes: { build: build.id, deployment: deployment.id, exposure: exposure.id, auth: auth.id } };
+fs.writeFileSync(outputFile, `${JSON.stringify(expected)}\n`, { flag: 'wx', mode: 0o600 });
+console.log(JSON.stringify(expected));
+NODE
+```
+
+Run deployment and dependency preflights before the project. They prove only
+their named boundaries. In particular, `prism-smoke` is not a stage in this
+project run.
+
+```bash
+kubectl config current-context | tee "$EVIDENCE_DIR/context.txt"
+kubectl -n "$NAMESPACE" get deploy,statefulset,pods,svc,pvc -o wide \
+  | tee "$EVIDENCE_DIR/platform-objects.txt"
+kubectl -n "$PRISM_NAMESPACE" get deploy,statefulset,pods,svc,pvc,ingress -o wide \
+  | tee "$EVIDENCE_DIR/prism-objects.txt"
+./scripts/deploy.sh status | tee "$EVIDENCE_DIR/deploy-status.txt"
+./scripts/deploy.sh smoke-agent nova | tee "$EVIDENCE_DIR/nova-smoke.txt"
+./scripts/deploy.sh smoke-agent buster | tee "$EVIDENCE_DIR/buster-smoke.txt"
+./scripts/deploy.sh prism-smoke | tee "$EVIDENCE_DIR/prism-smoke.txt"
+kubectl -n "$NAMESPACE" rollout status statefulset/postgresql --timeout=120s
+kubectl -n "$NAMESPACE" rollout status deployment/litellm --timeout=120s
+kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node -e '
+const response = await fetch(`${process.env.LITELLM_URL}/v1/embeddings`, {
+  method: "POST",
+  headers: { authorization: `Bearer ${process.env.LITELLM_API_KEY}`, "content-type": "application/json" },
+  body: JSON.stringify({ model: "gemini-embedding-001", input: "kubeclaw acceptance prerequisite" }),
+  signal: AbortSignal.timeout(60000)
+});
+const body = await response.json();
+const vector = body?.data?.[0]?.embedding;
+if (!response.ok || !Array.isArray(vector) || !vector.length || !vector.every(Number.isFinite)) process.exit(1);
+console.log(JSON.stringify({ model: body.model ?? "gemini-embedding-001", dimensions: vector.length }));
+' | tee "$EVIDENCE_DIR/litellm-route.json"
+./scripts/deploy.sh nova-buildkit-preflight \
+  | tee "$EVIDENCE_DIR/container-build-prerequisite.txt"
+./scripts/deploy.sh nova-tailscale-preflight "$TAILSCALE_PROBE_IMAGE" \
+  | tee "$EVIDENCE_DIR/tailscale-prerequisite.txt"
+test -z "$(git -C "$PROJECT_REPOSITORY" status --porcelain)"
+```
+
+Execute the same project descriptor exactly once. This no-human-wait exercise
+must return terminal success directly; a `waiting` result is a failure of the
+declared scope, not an invitation to synthesize a signal.
+
+```bash
+sha256sum --check "$EVIDENCE_DIR/project-descriptor.sha256"
+npm --silent run pipeline -- \
+  --platform "$PLATFORM_FILE" \
+  --project "$PROJECT_FILE" \
+  > "$EVIDENCE_DIR/run-terminal.json" \
+  2> "$EVIDENCE_DIR/run-terminal.stderr"
+export RUN_ID="$(node -e '
+const fs = require("node:fs");
+const value = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+if (value.status !== "succeeded" || value.completionScope !== "demo-handoff"
+  || value.acceptanceReadiness !== "ready-for-acceptance") process.exit(1);
+process.stdout.write(value.runId);
+' "$EVIDENCE_DIR/run-terminal.json")"
+npm --silent run pipeline -- \
+  --platform "$PLATFORM_FILE" \
+  --audit "$RUN_ID" \
+  > "$EVIDENCE_DIR/audit-terminal.json"
+```
+
+Require the audit to contain the exact final-plan effect and decision. A passed
+container-build decision means the provider completed BuildKit push and an OCI
+manifest digest read. A passed fixture or exposure node also means Buster did
+not reduce a cleanup error for that node; any cleanup error becomes
+`execution_error`. This is the cleanup meaning supported by the decision. It
+does not expose a separate registry transaction log or Tailscale controller
+release object, so retain those external receipts when the installation makes
+them available and do not invent them from Pod readiness.
+
+```bash
+node - "$EVIDENCE_DIR/audit-terminal.json" "$COMPILED_PIPELINE" \
+  "$EVIDENCE_DIR/expected-provider-chain.json" <<'NODE'
+const fs = require('node:fs');
+const { execFileSync } = require('node:child_process');
+const [auditFile, graphFile, expectedFile] = process.argv.slice(2);
+const audit = JSON.parse(fs.readFileSync(auditFile, 'utf8'));
+const graph = JSON.parse(fs.readFileSync(graphFile, 'utf8'));
+const expected = JSON.parse(fs.readFileSync(expectedFile, 'utf8'));
+if (audit.runId !== expected.runId || process.env.RUN_ID !== expected.runId) throw new Error('audit run mismatch');
+const events = audit.events;
+const requested = events.filter(event => event.type === 'effect.requested'
+  && event.identity?.stageId === expected.stageId
+  && event.payload?.capability === 'test.plan.execute');
+if (requested.length !== 1) throw new Error('one final-plan dispatch is required');
+const completed = events.filter(event => event.type === 'effect.completed'
+  && event.identity?.effectId === requested[0].identity?.effectId);
+if (completed.length !== 1) throw new Error('one final-plan receipt is required');
+const decision = completed[0].payload?.result;
+if (decision?.schemaVersion !== 'test-gate-decision.v2' || decision.runId !== expected.runId
+  || decision.planId !== expected.planId || decision.state !== 'passed'
+  || !/^sha256:[a-f0-9]{64}$/.test(decision.resultDigest ?? '')
+  || !/^sha256:[a-f0-9]{64}$/.test(decision.decisionDigest ?? '')
+  || typeof decision.jobId !== 'string' || !decision.jobId) {
+  throw new Error('exact passed Buster decision is missing or externalized');
+}
+const stage = graph.stages.find(item => item.id === expected.stageId);
+const plan = stage?.input?.providerPlan?.plan;
+if (plan?.planDigest !== expected.planDigest || plan?.coverage?.policy?.baseRevision !== expected.sourceRevision) {
+  throw new Error('compiled plan or selected release changed');
+}
+if (decision.nodes.length !== plan.nodes.length
+  || plan.nodes.some(node => !decision.nodes.some(item => item.nodeId === node.id))) {
+  throw new Error('Buster decision does not cover the exact compiled node set');
+}
+const effects = new Map(decision.nodes.map(node => [node.nodeId, node.effect]));
+for (const [role, nodeId] of Object.entries(expected.nodes)) {
+  if (effects.get(nodeId) !== 'passed') throw new Error(`${role} node did not pass: ${nodeId}`);
+}
+const coverage = decision.coverage;
+if (!/^git:[a-f0-9]{40}$/.test(coverage?.sourceRevision ?? '')
+  || !/^git:[a-f0-9]{40}$/.test(coverage.sourceTree ?? '')
+  || !/^sha256:[a-f0-9]{64}$/.test(coverage.archiveContentDigest ?? '')
+  || coverage.planDigest !== expected.planDigest || coverage.pipelineStageId !== expected.stageId
+  || coverage.policy?.baseRevision !== expected.sourceRevision
+  || !/^sha256:[a-f0-9]{64}$/.test(coverage.coverageDigest ?? '')
+  || !Array.isArray(coverage.checks) || coverage.checks.length === 0
+  || coverage.checks.some(check => check.state !== 'passed')) {
+  throw new Error('source coverage is incomplete or bound to another release');
+}
+execFileSync('git', ['-C', expected.repositoryRoot, 'merge-base', '--is-ancestor',
+  expected.sourceRevision, coverage.sourceRevision.slice(4)]);
+const terminal = [...events].reverse().find(event =>
+  ['run.succeeded', 'run.failed', 'run.blocked', 'run.cancelled'].includes(event.type));
+if (terminal?.type !== 'run.succeeded' || !(requested[0].sequence < completed[0].sequence
+  && completed[0].sequence < terminal.sequence)) throw new Error('terminal ordering is invalid');
+console.log(JSON.stringify({ runId: expected.runId, stageId: expected.stageId,
+  planId: expected.planId, planDigest: expected.planDigest, jobId: decision.jobId,
+  resultDigest: decision.resultDigest, nodes: expected.nodes, terminal: terminal.type }));
+NODE
+```
+
+Pass only when the exact plan and node identities, source coverage, passed
+effects, Buster result digest, and terminal event correlate to `RUN_ID`. The
+Nova terminal journal is pipeline authority. On an uncertain external outcome,
+do not start a replacement run. Reconcile the original effect, Buster job,
+registry digest, and lease identities. Keep the descriptor, compiled graph,
+audit, decision, and external receipts under their retention policies. Remove
+no unidentified namespace, lease, image, or registry blob.
+
 ## Expected Result
 
 A successful run has one immutable plan, a committed source identity, a

@@ -101,6 +101,23 @@ Acceptance requires two results. The overlap test must prove report isolation,
 and a second operator must run the deployment fixture without an undocumented
 `kubectl exec` command or manual report reconstruction.
 
+## Joined Showcase Acceptance Harness
+
+The repository does not currently have one maintained harness that binds a
+Prism Studio design and human approval, a Nova project run, Discord and Redis
+reporting, Cilium and Hubble network evidence, and Buster BuildKit, Kubernetes,
+and Tailscale work to one run identity. The documented 20-step request trace is
+therefore a conceptual reference, not live acceptance evidence.
+
+A future harness must use supported product entry points, preserve one source
+and run identity, record every external effect before dispatch, and correlate
+the Prism request, approval, Buster job, provider nodes, registry digest,
+fixture lease, channel messages, Redis entries, allowed and denied flows, and
+cleanup receipts. It must have bounded recovery for uncertain effects and must
+not promote reporter delivery or a standalone preflight into lifecycle
+authority. Acceptance requires an independently repeatable healthy run plus a
+failure run that proves exact rollback and leaves no unidentified resource.
+
 ## Other Planned Themes
 
 - Use a real pipeline-built project to expose practical operating pressure.

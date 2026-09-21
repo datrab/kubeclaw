@@ -6,7 +6,7 @@ Owner: platform architecture and operations
 Evidence: scripts/deploy.sh; scripts/platform-services.mjs; charts/ops-pod; gitops/platform; my-values/infra
 Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
 Applies to: current Kubernetes platform and its supported deployment paths
-Last verified: source inspection on 2026-09-20
+Last verified: source inspection on 2026-09-21
 
 ## Purpose
 
@@ -22,28 +22,41 @@ health, pipeline truth, and operational observations separate.
 
 ## Required, Conditional, and Optional Systems
 
-| System | Current role | Requirement class | Pipeline authority |
-| --- | --- | --- | --- |
-| Linux host and K3s | Supply the Kubernetes control plane and nodes. | Required for this deployment. | None. |
-| Cluster DNS, storage, scheduler, and one CNI | Supply basic Kubernetes behavior. | Required. | None. |
-| Redis | Carries configured messages and projections. | Required by the showcase deployment. | Transport only. |
-| Tailscale operator | Supplies private platform entry and bounded test exposure. | Required by the showcase deployment. | Route owner only. |
-| Writable OCI registry | Receives tested images by immutable digest. | Required for the container-build path. | Artifact transport and storage only. |
-| Rootless BuildKit | Builds and pushes an image for Buster's container-build provider. | Required for that suite. | Build worker only. |
-| PostgreSQL | Stores LiteLLM state in the platform release. | Required when LiteLLM is enabled. | Database only. |
-| LiteLLM | Routes the configured model and embedding requests. | Conditional platform service. | Model gateway only. |
-| OCI pull-through mirror | Caches Docker Hub pulls. | Optional optimization. | Cache only. |
-| Cilium | Enforces the checked-in security policies and supplies Hubble flow evidence. | Required by the current supported secured deployment. The architecture does not require its API, but the repository has no proved Flannel policy fallback. | Network enforcement only. |
-| Argo CD | Reconciles reviewed Git state. | Optional deployment owner. | Kubernetes desired state only. |
-| Prometheus, Grafana, Loki, and Alloy | Collect and present observations. | Optional. | No pipeline authority. |
-| Ops Pod | Gives a separate analysis and administration workspace. | Optional. | Kubernetes rights assigned to its ServiceAccount. |
+“Required” has two different meanings here. The portable pipeline engine needs
+only the services used by its selected graph. The checked-in showcase profile
+enables more paths and makes their readiness part of that deployment. Mixing
+these meanings would make an optional engine capability look optional in a Pod
+that refuses readiness without it.
+
+| System | Current role | Checked-in showcase profile | Portable pipeline boundary | Pipeline authority |
+| --- | --- | --- | --- | --- |
+| Linux host and K3s | Supply the Kubernetes control plane and nodes. | Required. | A different conforming runtime can host the engine. | None. |
+| Cluster DNS, storage, scheduler, and one CNI | Supply basic Kubernetes behavior. | Required. | Required by this Kubernetes deployment, not by pipeline semantics. | None. |
+| Redis | Carries configured messages and projections. | Required. The Nova and Buster role defaults probe it. | Required only when a selected adapter or observer uses Redis. | Transport only. |
+| Tailscale operator | Supplies private platform entry and bounded test exposure. | Required for the complete showcase and enabled by the deployment default. | Required only for a private route or a Tailscale test fixture. | Route owner only. |
+| Writable OCI registry | Receives tested images by immutable digest. | Required for the intended container-build showcase, but not fully selected by the checked-in Buster values alone. A deployment must supply the endpoint and transport. A lab-only Helm override can make the chart render, but that override is not a selected deployment. | Required only for a graph that builds, pushes, or pulls an image. | Artifact transport and storage only. |
+| Rootless BuildKit | Builds and pushes an image for Buster's container-build provider. | Required by the Buster runtime profile. | Required only when the container-build provider is selected. | Build worker only. |
+| Docker Hub pull-through mirror | Caches Docker Hub pulls. | Its default endpoint is a Nova and Buster readiness input, but the Buster registry-client selection is empty. A green `/v2/` probe therefore does not prove that BuildKit or node clients use the mirror. | A cache is not required for pipeline correctness. Clients can use an approved immutable upstream path. | Cache only. |
+| LiteLLM PostgreSQL | Stores LiteLLM model, key, and accounting state. | Required because the default infrastructure profile enables LiteLLM. | Required only when that gateway profile uses database-backed state. | Database only. |
+| LiteLLM | Routes the configured Vertex embedding request. | Required by the checked-in Nova and Buster probes and Prism memory-search configuration. | Required only when a selected role uses this gateway. | Model gateway only. |
+| Managed OpenAI route | Supplies OpenClaw reasoning for Nova, Buster, and Prism. | Required for their enabled agent sessions; Prism selects `openai/gpt-5.6-sol` with `openai/gpt-5.5` fallback. | Core can run deterministic work without an agent-model call. | Model output only. |
+| Vertex AI | Supplies the configured `gemini-embedding-001` route through LiteLLM. | Required when remote memory search runs. | Not required by Core or by an operation that does not request this embedding. | Embedding output only. |
+| Discord | Supplies the enabled Nova and Buster bot channels and makes a webhook credential available to selected notification paths. | Required for the two enabled bot entry paths. The webhook is required only when a selected stage or observer uses it. | Not required for Core execution or a non-Discord operator path. | Human transport only. |
+| Cilium | Enforces the checked-in security policies and supplies Hubble flow evidence. | Required by the current supported secured profile. The optional Archviewer resource enabled in Nova values also renders a Cilium-specific policy. Repository evidence proves manifests and checks, not live enforcement. | Core does not call a Cilium API. Another CNI can carry the pipeline if it supplies the required network behavior and Archviewer is disabled or gets an equivalent policy. | Network enforcement only. |
+| Argo CD | Reconciles declared Git state. | Optional deployment owner. | Not required. | Kubernetes desired state only. |
+| Prometheus, Grafana, Loki, and Alloy | Collect and present observations. | Optional. | Not required. | No pipeline authority. |
+| Ops Pod | Gives a separate analysis and administration workspace. | Optional. | Not required. | Kubernetes rights assigned to its ServiceAccount. |
 
 **Decision:** Classify a service by the behavior that consumes it, not by where
 it is installed.
 
 **Reason:** Redis and Tailscale are platform services, but selected supported
-pipeline paths depend on them. Monitoring is installed near them, but pipeline
-correctness does not depend on a dashboard.
+paths depend on them. The current role profiles also make LiteLLM and two
+registry endpoints readiness dependencies. This fact does not make those
+services unconditional requirements of every possible pipeline graph.
+Monitoring is installed near them, but pipeline correctness does not depend on
+a dashboard. Readiness configuration and client routing are separate facts. A
+probe can reach a registry or mirror that BuildKit does not use.
 
 ## Layer Map
 
@@ -55,16 +68,18 @@ flowchart TB
     K3s --> Scheduler[Scheduling and capacity]
     Cilium[Cilium: current supported secured path] --> Network[Pod network and policy boundary]
     Flannel[Flannel: unproved fallback] -. future alternative .-> Network
-    Argo[Argo CD] -->|reviewed desired state| K3s
+    Argo[Argo CD] -->|declared desired state| K3s
     DNS --> Runtime[Nova, Buster, and Prism]
     Storage --> Runtime
     Scheduler --> Runtime
     Network --> Runtime
     Redis[(Redis)] --> Runtime
     Registry[(Writable OCI registry)] --> Buster[Buster and BuildKit]
-    Mirror[(Docker Hub mirror)] -. cache .-> Buster
+    Mirror[(Docker Hub mirror)] -->|current readiness and pull cache| Buster
     Tail[Tailscale operator] --> Entry[Private human and test routes]
-    Lite[LiteLLM] --> Models[Model and embedding providers]
+    Lite[LiteLLM] --> Vertex[Vertex embedding provider]
+    Runtime --> OpenAI[Managed OpenAI reasoning route]
+    Discord[Discord bot and webhook APIs] --> Runtime
     Ops[Ops Pod] -->|read and optional bounded exec| K3s
     Monitor[Monitoring stack] -. observes .-> Runtime
 ```
@@ -159,6 +174,16 @@ not supply an equivalent Flannel policy set or a completed positive-and-negative
 fallback test. A default K3s Flannel network can carry packets, but it cannot
 satisfy the current documented enforcement and evidence contract by itself.
 
+The automated portability check renders the Nova core profile with optional
+Archviewer disabled, plus Buster, Prism Agent, and Prism. These core renders
+contain no Cilium API object; Prism still renders 11 standard Kubernetes
+`NetworkPolicy` objects. The same check scans current core runtime sources for
+Cilium API bindings. It also renders the maintained Nova profile separately and
+expects exactly one Cilium object: the optional Archviewer policy. This proves
+source and render portability. It does not prove a live Flannel deployment,
+equivalent traffic enforcement, or Hubble-like incident evidence. Run
+`npm run docs:cni-portability:check` after a network or chart change.
+
 Only one CNI can own the Pod network. The Cilium installation path treats the
 first installation as a guarded cutover. It checks old network sandboxes,
 cordons the affected node, applies the new layer, and keeps acceptance separate
@@ -242,9 +267,14 @@ supplies a credential value after the non-secret endpoint has been selected.
 | LiteLLM PostgreSQL | Platform database owner; stores LiteLLM model, key, and accounting state; LiteLLM consumes it. | PostgreSQL at `postgresql.<namespace>.svc.cluster.local:5432/litellm`; user `litellm`; password from `postgresql-secrets/litellm-password`. | Direct installation selects `POSTGRESQL_RELEASE` and `POSTGRESQL_VALUES_FILE`; GitOps selects `gitops/platform/values/postgresql.yaml`. These are different capacity and image profiles. `litellm-secrets/DATABASE_URL` is the runtime authority and must agree with the selected namespace. | PostgreSQL chart readiness plus a real LiteLLM route check. A LiteLLM `/health` response alone does not prove database contents or provider use. |
 | Prism PostgreSQL | Prism owns project, revision, operation, agent-job, approval, preference, and corpus state; Control, Worker, migration, and backup clients consume it. | PostgreSQL Service `prism-postgresql:5432`; separate runtime, migration, backup, and test URLs come from `prism-postgresql-auth`. | Prism chart values set its image, 100 GiB default storage, and external Secret. Rendered values win; it does not inherit the LiteLLM database settings. | Control `/ready` executes `SELECT 1`; Worker has a bounded database dependency check; backup verification remains a separate operation. |
 | Git origin | Repository owner; supplies exact source objects to role workspaces and Nova Git adapters. | Operator-selected SSH or HTTPS remote; current role values use GitHub SSH through port 443 and a mounted deploy key with pinned host keys. | `agent.git.enabled` defaults to `true`, but `repoUrl` and `secretName` have no usable default. Selected role values override them. There is no supported Git mirror or failover endpoint. | Clone/fetch and exact revision resolution. An existing checkout is evidence only for its local commit, not origin availability. |
-| Writable OCI registry | Registry operator; stores produced manifests and layers; BuildKit pushes and Buster or Kubernetes clients read them. | OCI Distribution API. The lab endpoint is `http://registry-local...:5001` with explicit `http-lab`, anonymous identity; the supported production contract requires HTTPS and explicit credential environment names. | `runtimeInfrastructure.registry` has empty endpoint and transport defaults and must be set. Rendered values produce one `registry-clients.v1` contract. The contract, not legacy sidecar variables, wins for BuildKit, runtime, and node projections. | `/v2/` proves process reachability. A push, digest read, and pull of the immutable manifest prove the active path. |
+| Writable OCI registry | Registry operator; stores produced manifests and layers; BuildKit pushes and Buster or Kubernetes clients read them. | OCI Distribution API. The lab endpoint is `http://registry-local...:5001` with explicit `http-lab`, anonymous identity; the supported production contract requires HTTPS and explicit credential environment names. | `runtimeInfrastructure.registry` has empty endpoint and transport defaults and must be set. `my-values/buster-values.yaml` does not fill them. A Helm render that injects lab values proves only template structure; operators must not treat those values as a selected deployment. A real rendered deployment produces one `registry-clients.v1` contract. That contract, not legacy sidecar variables, wins for BuildKit, runtime, and node projections. | `/v2/` proves process reachability. A push, digest read, and pull of the immutable manifest prove the active path. |
+| Docker Hub mirror | Registry operator; caches Docker Hub manifests and layers; current Nova and Buster readiness checks target its default endpoint. | OCI Distribution API at the checked-in lab endpoint `http://registry-mirror.kubeclaw.svc.cluster.local:5000`; no client credential; Docker Hub remains upstream authority. | Chart defaults list the readiness endpoint, but Buster's `runtimeInfrastructure.dockerHubMirror` selection is empty and `deploy.sh infra` does not create the lab mirror unless `KUBECLAW_DEPLOY_LAB_DOCKERHUB_MIRROR=true`. Select the mirror in the generated registry-client contract or remove its readiness dependency. Do not infer routing from the probe. | `/v2/` proves cache-process reachability only. A cold digest-pinned pull through inspected client configuration proves mirror, upstream, and client routing. |
 | Rootless BuildKit | Buster runtime owner; builds and pushes an image for container-build nodes. | Local BuildKit socket `unix:///run/user/1000/buildkit/buildkitd.sock`; Unix ownership and Pod isolation are the identity boundary. Registry identity comes from the shared registry contract. | Buster values set `CONTAINER_BUILD_BUILDKIT_HOST`; the entrypoint requires `BUILDKIT_HOST`, state root, and registry contract. No cluster TCP default exists. | Entrypoint permits 60 one-second worker checks; provider readiness and an actual digest-bound build are stronger checks. |
 | Tailscale | Tailscale operator owns private Ingress routes; Buster owns each temporary exposure lease. Human clients and exposure tests consume different routes. | Tailnet HTTPS/DNS; OAuth identity comes from `tailscale/operator-oauth`; each published service can add application authentication. | Operator values leave OAuth fields empty so the chart reads the existing Secret. The `tailscale` IngressClass and tags are defaults; selected Helm values win. A fixture’s lease and generation are separate runtime authority. | Operator rollout, proxy readiness, Tailnet DNS/TLS/ACL, and the application check. A created Ingress alone is insufficient. |
+| LiteLLM gateway | Platform gateway owner; routes current remote memory-search embeddings; Nova and Buster also make gateway health part of readiness. | OpenAI-compatible HTTP at `litellm.kubeclaw.svc.cluster.local:4000/v1`; consumer key from `openclaw-shared-secrets/litellmApiKey`; gateway master key and database URL from `litellm-secrets`. | `deploy.sh` enables the direct profile by default and disables role probes only when `KUBECLAW_DEPLOY_LITELLM=false`. The separate GitOps profile has a different image, fixed NodePort, and no Pod probes. The selected owner and its rendered resources win. | Direct Pod probes check liveness/readiness. Role readiness calls authenticated `/health`. Only a real embedding proves the configured route. |
+| Managed OpenAI reasoning | OpenClaw provider owner; supplies Nova, Buster, and Prism agent reasoning. It does not own Core state or Prism results. | Provider traffic is owned by the pinned OpenClaw runtime. The generated configuration selects OpenAI OAuth profiles and the allowed `openai/gpt-5.6-sol` and `openai/gpt-5.5` model IDs. OAuth material lives in OpenClaw's protected persistent state, not in the public ConfigMap. | Role values select primary and fallback models. The generated allowlist limits those choices. Persistent OpenClaw configuration is retained across restart and synchronizes the managed auth section from the selected chart input. | Gateway readiness does not prove a provider request. Prove one bounded agent request and retain its session/error evidence without logging credentials. |
+| Vertex embedding provider | Google Cloud owner; returns vectors for the one LiteLLM model route. LiteLLM is the direct caller; OpenClaw memory search is the consumer. | HTTPS through LiteLLM; model `vertex_ai/gemini-embedding-001`, project and location from `litellm-config`; Google identity from mounted `google-sa-key`. | The externally managed ConfigMap and Secret supply route and identity. The direct renderer binds ConfigMap bytes to the Pod checksum; the GitOps Deployment does not. | One authenticated embedding with a valid vector proves the route. LiteLLM process health does not prove credential, quota, model, or provider health. |
+| Discord | Discord owns bot gateway and HTTPS APIs; enabled Nova and Buster OpenClaw gateways consume bot channels. Selected notification adapters can consume the separately injected webhook. | External Discord endpoints are selected by the pinned OpenClaw plugin or by the secret URL. Bot identities come from `discordToken-nova` and `discordToken-buster`; the webhook identity is the secret URL. User and channel allowlists restrict application handling. | Nova and Buster values set `discord.enabled=true`, distinct channel IDs, token keys, allowed users, and the shared webhook key. Prism leaves Discord disabled. Selected role values win; the repository does not fix Discord API retry policy. | A gateway process can be ready while Discord is unavailable. Prove an allowed inbound message and its bounded reply; prove notification delivery separately when that path is selected. |
 | SPIRE and Envoy | Identity platform owner and each workload owner; issue SVIDs, authenticate mTLS peers, and forward verified identity to Buster and Prism applications. | SPIFFE Workload API on the CSI Unix socket; Envoy listeners use 8443 or role-specific ports and local plaintext loopback. ServiceAccount-derived SPIFFE IDs are the identities. | `workerTrust.spiffe.enabled` defaults to `false` in generic charts. The supported secured values enable it and select trust domain `kubeclaw.internal`; rendered chart values define exact peers and Envoy image. There is no anonymous fallback. | SPIRE/CSI readiness, Envoy `/bootstrap`, `/ready`, and `/health`, then allowed and denied peer requests. |
 
 | Dependency | Failure effect and safe stop | Recovery and proof before resume |
@@ -254,8 +284,13 @@ supplies a credential value after the non-secret endpoint has been selected.
 | Prism PostgreSQL | Stop Prism mutations and agent admission. Do not construct current revision or job state from artifacts alone. | Restore the matched database-and-artifact recovery group, run migrations, verify Control readiness, and reconcile durable operations. |
 | Git origin | Stop a new clone or missing-object fetch. Do not replace the required commit with a newer branch head. | Restore access to the same commit, verify its object bytes, and continue with the recorded revision. |
 | Writable OCI registry | Stop push, manifest verification, and any pull that is not already proved locally. Do not change the expected digest. | Restore the retained registry, check whether the expected digest exists, then prove authenticated push/read/pull as applicable. |
+| Docker Hub mirror | A cold upstream pull and the current role readiness check can stop. A cached digest can remain usable, but the cache is not source authority. | Restore the same route or atomically select an approved upstream route in both generated client configuration and role readiness. Prove a cold digest-pinned pull. |
 | Rootless BuildKit | Stop the build node. Do not treat a BuildKit process exit as proof that no manifest was pushed. | Check the registry by expected digest, repair host/rootless/socket prerequisites, start one worker, then resume with the same attempt identity. |
 | Tailscale | Stop private entry or the exposure consumer. Do not allocate a second route when the prior lease outcome is unknown. | Reconcile the exact Ingress or lease generation, restore OAuth/ACL/DNS/TLS, and prove the intended client path before reuse. |
+| LiteLLM gateway | Stop gateway-backed calls. Do not infer route health from the Pod or silently change model identity. | Restore the selected deployment owner, database, keys, and configuration; then prove one authenticated configured embedding. |
+| Managed OpenAI reasoning | Stop the affected agent session. Do not create a replacement session while an external outcome is unknown. | Reconcile the OpenClaw session, repair provider authentication or availability, and prove one bounded request with the same owning operation or an explicitly new operator action. |
+| Vertex embedding provider | Keep the memory-backed operation incomplete on credential, quota, model, timeout, or invalid-vector failure. Do not use a different embedding model silently. | Repair the classified boundary and prove one vector from the same configured model before resuming. |
+| Discord | Stop the Discord consumer or notification path; Core and durable owner state can remain healthy. Do not treat message delivery as pipeline authority. | Restore the exact bot or webhook credential and allowlist, then prove the same channel/user or notification target without replaying an uncertain mutation. |
 | SPIRE and Envoy | Protected calls fail closed. Do not bypass the proxy with remote plaintext or trust a forwarded header from a non-loopback peer. | Restore SPIRE, CSI, SVID issuance, and Envoy; verify one permitted peer and one denied peer before resuming protected work. |
 
 > **Source evidence — dependency configuration and precedence inputs**
@@ -265,6 +300,13 @@ supplies a credential value after the non-secret endpoint has been selected.
 > [The registry contract rejects implicit transport and unsafe credential combinations](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/registry-client-config.mjs#L23-L54) and [generates distinct BuildKit, runtime, and node projections](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/registry-client-config.mjs#L57-L104).
 >
 > [Prism assigns database URLs, ingestion, worker, and exact trusted identities to Control and Worker](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/workloads.yaml#L90-L138).
+>
+> [Role defaults make Redis, LiteLLM, and both registry endpoints readiness inputs](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/values.yaml#L320-L352).
+> [The infrastructure command leaves both anonymous lab registries unselected by default](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy.sh#L1186-L1221).
+>
+> [The gateway configuration separates managed OpenAI reasoning from the LiteLLM memory route](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-gateway.yaml#L24-L75) and [limits the allowed reasoning models](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-gateway.yaml#L77-L108).
+>
+> [Nova enables its Discord channel and token source](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/nova-values.yaml#L38-L58), and [Buster enables its distinct channel and execution approver](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/buster-values.yaml#L41-L65).
 
 ## Rootless BuildKit
 
@@ -346,6 +388,13 @@ writable registry's role, and it does not mirror GHCR or private registries.
 The mirror has a 5 GiB volume, one replica, and an upstream URL of
 `https://registry-1.docker.io`.
 
+The cache is optional to pipeline semantics, but the checked-in Nova and Buster
+profiles list its endpoint in mandatory registry readiness. The direct
+infrastructure command leaves the anonymous lab mirror off by default. An
+operator must therefore make one coherent choice: deploy the selected mirror,
+or replace the endpoint in both role readiness and generated client settings.
+Leaving a dead default endpoint is not a supported “no mirror” profile.
+
 A running mirror does not configure any client. The operator must project the
 same contract into BuildKit and the node runtime. The registry-client generator
 rejects a mirror that collides with `docker.io`, shares the writable registry
@@ -419,6 +468,13 @@ It reads the master key from the environment and a Google service-account file
 from a Secret mount. The Deployment also enables database-backed model state
 through `DATABASE_URL` in `litellm-secrets`.
 
+LiteLLM is conditional in the portable architecture. It is required in the
+checked-in showcase profile because the infrastructure command enables it by
+default, Nova and Buster probe it, and the OpenClaw memory configuration points
+to it. `KUBECLAW_DEPLOY_LITELLM=false` also disables the role probe during the
+supported direct render; changing only the Deployment would leave an
+inconsistent profile.
+
 Two deployment profiles exist, and they are not byte-for-byte equivalents.
 
 | Profile | Owner and behavior | Readiness and update boundary |
@@ -483,6 +539,69 @@ base URL, authentication, model identity, vector validation, and recovery proof.
 > [The role renders the embedding URL, Secret reference, and model](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-gateway.yaml#L55-L75).
 >
 > [Its dependency check calls only authenticated `/health`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/deployment.yaml#L842-L847).
+
+## Managed Reasoning, Vertex Embeddings, and Discord
+
+The OpenClaw gateway has two model paths. Do not combine them in diagnosis.
+
+- The managed OpenAI path supplies agent reasoning. The rendered configuration
+  selects OAuth profiles, an allowed model set, and a primary/fallback order.
+  The OAuth material belongs to OpenClaw's protected state. It is not a LiteLLM
+  key and is not present in the public ConfigMap.
+- The LiteLLM path supplies remote memory-search embeddings. LiteLLM uses the
+  mounted Google service-account credential to call Vertex AI for
+  `gemini-embedding-001`. It does not route the configured reasoning models.
+
+This separation affects recovery. A valid Vertex vector does not prove that an
+agent can reason. A successful reasoning response does not prove that memory
+search can embed text. Test the failed path with its own model, identity, and
+consumer.
+
+The repository fixes model names and application credential sources, but it
+does not define the managed OpenAI transport endpoint, provider retry policy,
+or provider-side quota. Those details belong to the pinned OpenClaw runtime and
+the external service. On an uncertain response, keep the owning agent job or
+session and reconcile it. Do not start a replacement session merely because a
+provider call timed out.
+
+Nova and Buster also enable distinct Discord bot channels. Each role receives a
+different bot-token key and channel ID. The rendered gateway applies the user
+allowlist, requires a mention in guilds, binds the default Discord account to
+the main agent, and sends execution approvals only to configured approvers.
+Prism declares a Discord credential source but leaves its channel disabled.
+
+The shared webhook is a second Discord identity. Its secret value contains the
+destination. A bot-channel check cannot prove webhook delivery, and a webhook
+response cannot authenticate an inbound user. Discord transport does not own a
+pipeline transition. The durable Nova journal, Buster receipt, or Prism row
+remains authoritative when a message is delayed or lost.
+
+Secret injection alone does not prove that a stage or observer sends a webhook.
+That path becomes required only when the selected plugin configuration names it
+and grants its secret and network capabilities.
+
+| Path | Safe health proof | Failure boundary | Recovery proof |
+| --- | --- | --- | --- |
+| Managed OpenAI reasoning | One bounded request through the intended OpenClaw session and selected model. | OAuth, provider availability, model permission, quota, or an unknown external outcome. | Reconcile the same session or durable agent job; then prove the selected model without exposing OAuth data. |
+| LiteLLM to Vertex embedding | One authenticated request that returns a valid vector for `gemini-embedding-001`. | Consumer key, LiteLLM master key, gateway database, Google identity, model, quota, or vector validation. | Repair the classified layer and repeat one embedding under the owning operation deadline. |
+| Nova or Buster Discord bot | One allowed user message in the configured channel and the bounded reply. | Bot token, allowlist, Discord service, channel, gateway session, or external rate control. | Restore the same bot identity and channel; prove allowed and denied users separately. |
+| Discord webhook | One message to the intended secret destination with a retained delivery result. | Secret URL, Discord response, sender timeout, or an uncertain delivery. | Reconcile the original notification identity before any replay. |
+
+> **Source evidence — distinct external paths**
+>
+> [The generated gateway keeps OpenAI auth and the LiteLLM memory endpoint in separate configuration blocks](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-gateway.yaml#L24-L75).
+>
+> [Prism selects the managed reasoning models while retaining the separate LiteLLM key and endpoint](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/prism-agent-values.yaml#L24-L52).
+>
+> [LiteLLM fixes the one Vertex model, project, location, and master-key source](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/litellm-config.yaml#L1-L14).
+> [Its direct Deployment mounts the Google identity and external gateway Secret](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/litellm-deployment.yaml#L23-L75).
+>
+> [The gateway applies Discord enablement, token indirection, allowlists, mention rules, session binding, and execution approvers](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-gateway.yaml#L180-L232).
+>
+> [The workload injects bot and webhook secrets only into the runtime container](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/deployment.yaml#L1342-L1356).
+>
+> [The notification adapter requires an explicit target, endpoint mode, secret name, payload limit, and format](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/operator-messaging/src/config.ts#L59-L80).
+> [It uses granted secret and network capabilities only after durable reservation](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/operator-messaging/src/adapter.ts#L35-L63).
 
 ## Monitoring Is Optional and Non-Authoritative
 

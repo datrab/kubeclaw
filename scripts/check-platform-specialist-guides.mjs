@@ -11,9 +11,11 @@ const revision = '32b02816cc19cc8865a45b221b8b6ca28e99e8fb';
 
 const specifications = [
   ['docs/site/reference/platform-surfaces-generated.md', 100, [
-    '## Runtime Dependencies', '## Runtime Resources', '## Secret References',
-    '## HTTP Endpoints', '## State And Cache Names', '## Runtime Events',
-    '## Ops MCP Tools', '## Maintenance Contract',
+    '## Runtime Dependencies', '## Runtime Signals',
+    '## Runtime Resources', '## Secret References',
+    '## HTTP Endpoints', '## Outbound HTTP Connections',
+    '## State And Cache Names', '## Runtime Events',
+    '## Ops MCP Tools',
   ]],
   ['docs/site/extend/lint.md', 15, [
     '## Architecture', '## Pre-Check And Full', '## Add A Rule To An Existing Tool',
@@ -113,8 +115,10 @@ for (const [file, minimumLinks, markers] of specifications) {
   const absolute = path.join(root, file);
   assert(fs.existsSync(absolute), `${file} is missing`);
   const source = fs.readFileSync(absolute, 'utf8');
-  assert(source.includes(`Evidence revision: \`${revision}\``),
-    `${file} does not declare the inspected evidence revision`);
+  if (!file.endsWith('platform-surfaces-generated.md')) {
+    assert(source.includes(`Evidence revision: \`${revision}\``),
+      `${file} does not declare the inspected evidence revision`);
+  }
   for (const marker of markers) assert(source.includes(marker), `${file} lacks ${marker}`);
 
   if (file.startsWith('docs/site/understand/')) {
@@ -249,9 +253,106 @@ assert(opsTools.length > 0, 'Ops MCP tool discovery returned no tools');
 for (const tool of opsTools) {
   assert(opsGuide.includes(`\`${tool}\``), `Ops MCP guide omits tool ${tool}`);
 }
+for (const required of [
+  'There is no page, duration, item-count, or encoded-output ceiling',
+  'total pages, total duration, and encoded result bytes are not',
+  'effective credential boundary',
+  '`pods/exec` `create`',
+]) assert(opsGuide.includes(required), `Ops MCP guide omits required limit or authority text: ${required}`);
+
+const surfaceMap = JSON.parse(fs.readFileSync(
+  path.join(root, 'docs/config/platform-surface-map.json'), 'utf8'));
+const dataGuide = fs.readFileSync(path.join(root, 'docs/site/understand/data-and-state.md'), 'utf8');
+const mappedAliases = new Set();
+for (const identity of surfaceMap.stores.identities) {
+  const escaped = identity.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+  const matches = [...dataGuide.matchAll(new RegExp(
+    '^\\| `' + escaped + '` \\| (?:Persistent authority|Ephemeral state|Cache|Inactive/library-only) \\| `(S[0-9]{2})` \\|', 'gmu'))];
+  assert.equal(matches.length, 1,
+    `data guide must classify discovered store ${identity} exactly once`);
+  mappedAliases.add(matches[0][1]);
+}
+for (const alias of mappedAliases) {
+  assert.match(dataGuide, new RegExp(
+    '^\\| `' + alias + '` (?:Persistent authority|Ephemeral state|Cache|Inactive/library-only|Persistent authority or cache as mapped) \\|[^\\n]+\\|[^\\n]+\\|[^\\n]+\\|[^\\n]+\\|[^\\n]+\\|$', 'mu'),
+  `${alias} lacks a complete authority, consistency, retention, recovery, and loss contract`);
+}
+
+const telemetryGuide = fs.readFileSync(path.join(root, 'docs/site/understand/telemetry.md'), 'utf8');
+for (const required of [
+  '## OpenClaw agent-observability v1 path',
+  'pipeline:agent-observability:payload:v1',
+  'pipeline:agent-observability:control:v1',
+  'pipeline:agent-observability:deadletter:v1',
+  'no `XREAD`, consumer group, acknowledgement, checkpoint, or',
+  'does not apply semantic or field-name redaction',
+]) assert(telemetryGuide.includes(required),
+  `telemetry guide omits active OpenClaw observer fact: ${required}`);
+
+const busterWorkflowGuide = fs.readFileSync(
+  path.join(root, 'docs/site/use/workflows/buster-suite.md'), 'utf8');
+for (const required of [
+  'operator-supplied `nova-project.v2` descriptor',
+  'conceptual\n[20-step showcase trace]',
+  'project.architecture?.review !== undefined',
+  "one executable ${packageId} node is required",
+  'plan?.coverage?.policy?.baseRevision !== process.env.RELEASE_COMMIT',
+  'effects.get(nodeId) !== \'passed\'',
+  'This is the cleanup meaning supported by the decision',
+]) assert(busterWorkflowGuide.includes(required),
+  `Buster workflow omits maintained acceptance boundary: ${required}`);
+assert(!busterWorkflowGuide.includes('uses an operator-reviewed explicit pipeline graph'),
+  'Buster workflow still depends on an unmaintained explicit pipeline graph');
+
+const dependencyFailureGuide = fs.readFileSync(path.join(root, 'docs/site/use/diagnose.md'), 'utf8');
+for (const required of [
+  'EXEC-FAIL-REGISTRY-ENDPOINT',
+  "trap 'restore_redis' EXIT",
+  "trap 'restore_prism_postgresql' EXIT",
+  "trap 'restore_litellm_postgresql' EXIT",
+  "trap 'restore_registry_selector' EXIT",
+  "trap 'restore_tailscale_oauth' EXIT",
+  "trap 'restore_litellm_policy' EXIT",
+  'tailscale-authority-fingerprints.json',
+  'tailscale-new-lease.json',
+  'tailscale-fault-cleanup.json',
+  'preconditions: { uid, resourceVersion }',
+  'same-name lease replacement exists; refusing to delete it',
+  'same-name namespace replacement exists; refusing to delete it',
+  'leaseAbsent: true',
+  'namespaceAbsent: true',
+  'operator logs lack an explicit OAuth rejection',
+  'redis-stream-after.json',
+  'redis-nova-audit-after.json',
+  'kubectl create -f - <<EOF',
+  'litellm-readiness-during-fault-before.json',
+  'litellm-pods-during-fault-after.json',
+  'observation: "bounded-upstream-failure"',
+  'test "$litellm_fault_status" -eq 0',
+]) assert(dependencyFailureGuide.includes(required),
+  `dependency failure guide omits rollback or identity proof: ${required}`);
+assert(!dependencyFailureGuide.includes('EXEC-FAIL-REGISTRY-BUILDKIT'),
+  'dependency failure guide retains the misleading registry rejection identity');
+
+const referenceTrace = JSON.parse(fs.readFileSync(
+  path.join(root, 'docs/site/use/workflows/examples/request-trace-success.json'), 'utf8'));
+assert.equal(referenceTrace.status, 'conceptual-reference-only-not-live-proof');
+assert.match(referenceTrace.scopeBoundary, /No maintained harness currently binds/u);
+assert.equal(referenceTrace.steps.length, 20);
+for (const step of referenceTrace.steps) {
+  assert.equal(step.evidenceStatus, 'reference-only; no live evidence is attached',
+    `reference trace step ${step.order} lacks its evidence boundary`);
+}
+const roadmap = fs.readFileSync(path.join(root, 'docs/site/status/roadmap.md'), 'utf8');
+assert(roadmap.includes('## Joined Showcase Acceptance Harness'),
+  'roadmap omits the joined showcase harness limit');
 execFileSync(process.execPath, [path.join(root, 'scripts/docs-platform-surface-inventory.mjs'), '--check'],
   { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+execFileSync(process.execPath, [path.join(root, 'scripts/platform-surface-source-discovery.mjs'), '--self-test'],
+  { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
 execFileSync(process.execPath, [path.join(root, 'scripts/check-platform-surface-drift-mutations.mjs')],
+  { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+execFileSync(process.execPath, [path.join(root, 'scripts/check-cni-portability.mjs')],
   { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
 
 const navigation = [

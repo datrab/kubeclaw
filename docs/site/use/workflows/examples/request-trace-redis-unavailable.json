@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "kubeclaw.documented-request-trace.v1",
+  "scenarioId": "container-build-redis-unavailable",
+  "status": "contract-example-not-live-proof",
+  "baseScenario": "complete-showcase-success in request-trace-success.json",
+  "injectedCondition": "Redis becomes unavailable after Nova has committed the run and before the observer appends the attempt event.",
+  "firstFailedSignal": {
+    "component": "Redis dependency or observer write",
+    "observation": "Authenticated PING, bounded XADD, or the owning adapter command returns a classified connection, authentication, timeout, protocol, or no-eviction capacity error.",
+    "notProof": [
+      "Absence of a stream entry does not prove that Nova did not commit the lifecycle event.",
+      "A later Redis readiness success does not prove that the missing projection was replayed."
+    ]
+  },
+  "authorityAfterFailure": [
+    {
+      "data": "pipeline lifecycle",
+      "owner": "Nova event journal and run state",
+      "redisRole": "non-authoritative projection"
+    },
+    {
+      "data": "Buster job, node result, and evidence",
+      "owner": "Buster durable stores",
+      "redisRole": "non-authoritative transport or observation"
+    },
+    {
+      "data": "Prism project, design request, agent job, revision, and approval",
+      "owner": "Prism Control and Prism PostgreSQL",
+      "redisRole": "none"
+    },
+    {
+      "data": "built image",
+      "owner": "OCI manifest digest and Buster receipt",
+      "redisRole": "none"
+    },
+    {
+      "data": "private fixture route",
+      "owner": "Tailscale lease generation and fixture receipt",
+      "redisRole": "none"
+    }
+  ],
+  "safeStopRule": "Stop only the adapter, observer, or consumer whose contract requires Redis. Do not change a committed Nova or Buster result and do not create a replacement lifecycle event.",
+  "recoveryOwner": "The Redis platform operator restores the selected Redis authority. The owning adapter or observer then reconciles from its documented source and original identity.",
+  "orderedRecovery": [
+    "Retain the Nova and Buster owner records, the exact Redis error, and the original event or delivery identity.",
+    "Classify DNS, network, authentication, timeout, protocol, memory, and storage separately.",
+    "Restore the same Redis endpoint and credential source. Do not point one run at a new unverified authority.",
+    "Prove authenticated PING and the adapter's bounded write behavior.",
+    "Replay only when the adapter contract has a durable source and permits replay. Reuse the original idempotency or delivery key.",
+    "Verify the returned stream entry and deduplication result. Record an unrecoverable projection gap when no durable replay source exists.",
+    "Resume only the stopped consumer. Confirm that Nova and Buster owner records did not change during transport recovery."
+  ],
+  "boundedRetryRule": "Retry only under the owning adapter deadline and deduplication window. Stop on authentication, protocol, no-eviction capacity, or repeated timeout failure. The OpenClaw agent-observability payload path has one write attempt and no replay source; its control path has three bounded attempts and one best-effort dead-letter write.",
+  "completionCondition": "Redis accepts the bounded check and any permitted replay under the original identity, or the operator records the projection as unrecoverable. Nova and Buster authority records remain unchanged.",
+  "documentation": [
+    "../../diagnose.md#redis-unavailable-exec-fail-redis",
+    "../../../understand/communication.md#dependency-failure-traces-to-an-operator-decision",
+    "../../../understand/telemetry.md#openclaw-agent-observability-v1-path",
+    "../../../understand/data-and-state.md#redis-durable-delivery-not-product-authority"
+  ]
+}

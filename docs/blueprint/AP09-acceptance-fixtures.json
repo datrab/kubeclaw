@@ -253,15 +253,15 @@
       "id": "DYNAMIC-EXTENSION-AND-COMPLEX-PLUGIN-TASKS",
       "acceptanceIds": ["A910-13", "A913-04", "A913-05"],
       "path": "docs/generated/inventory/ap09-extension-reader-tasks.json",
-      "schemaVersion": "kubeclaw-ap09-extension-reader-tasks.v1",
+      "schemaVersion": "kubeclaw-ap09-extension-reader-tasks.v2",
       "generatorCommand": "npm run docs:ap09:extension-reader-tasks:check",
       "coverageKinds": ["extension-class", "complex-plugin"],
       "coverageAuthorities": [
-        { "kind": "extension-class", "mode": "generated-discovery", "path": "docs/generated/inventory/extension-classes.json", "schemaVersion": "kubeclaw-extension-classes.v1", "arrayField": "classes", "identityField": "id", "requiredFamilies": ["pipeline", "host", "worker-engine"] },
-        { "kind": "complex-plugin", "mode": "generated-classification", "path": "docs/generated/inventory/plugin-complexity.json", "schemaVersion": "kubeclaw-plugin-complexity.v1", "arrayField": "plugins", "identityField": "id", "classificationField": "classification", "acceptedValue": "complex" }
+        { "kind": "extension-class", "taskKind": "create-new", "mode": "generated-discovery", "path": "docs/generated/inventory/extension-classes.json", "schemaVersion": "kubeclaw-extension-classes.v1", "arrayField": "classes", "identityField": "id", "requiredFamilies": ["pipeline", "host", "worker-engine"] },
+        { "kind": "complex-plugin", "taskKind": "change-existing", "mode": "generated-classification", "path": "docs/generated/inventory/plugin-complexity.json", "schemaVersion": "kubeclaw-plugin-complexity.v1", "arrayField": "plugins", "identityField": "id", "classificationField": "classification", "acceptedValue": "complex" }
       ],
-      "requiredTaskFields": ["id", "acceptanceIds", "coverageKind", "coveredIdentity", "sourceAuthority", "persona", "startPath", "objective", "taskInput", "fixturePaths", "requiredOutcomes", "allowedAssistance", "failureThreshold", "participantRequirements", "forbiddenSources"],
-      "passCondition": "The generated authority contains exactly one executable fresh-context task for every currently discovered extension class and every plugin classified as complex. Each task proves activation or behavior plus a negative path, cleanup, compatibility, and retained-state handling. A documented product blocker produces NOT READY, not PASS, for practical execution."
+      "requiredTaskFields": ["id", "acceptanceIds", "coverageKind", "taskKind", "coveredIdentity", "sourceAuthority", "persona", "startPath", "objective", "taskInput", "fixturePaths", "requiredOutcomes", "allowedAssistance", "failureThreshold", "participantRequirements", "forbiddenSources"],
+      "passCondition": "The generated authority contains exactly one executable create-new task for every currently discovered extension class and one executable change-existing task for every plugin classified as complex. Each create-new task starts without a prepared registration and requires a new identity, package structure, dependencies, manifest, registration, permissions, configuration, build, tests, activation, observation, negative path, compatibility, removal, and retained-state handling. Each complex-plugin change task proves behavior, a negative path, cleanup, compatibility, and retained-state handling. A documented product blocker produces NOT READY, not PASS, for practical execution."
     }
   ],
   "executionScenarios": [

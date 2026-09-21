@@ -1,19 +1,19 @@
 # Telemetry: Events, Delivery, and Evidence
 
-Status: active v2 path implemented; retained v1 contract has no active runtime producer or consumer
+Status: Nova v2 and OpenClaw agent-observability v1 producers are active; retained telemetry v1 has no active runtime producer or consumer
 Audience: runtime developer, observer author, operator, security reviewer
 Owner: observability maintainers
-Evidence: skills/nova/core/telemetry; skills/common/plugins/telemetry-observer; skills/common/plugins/telemetry-store; skills/common/plugins/redis-transport; contracts/telemetry/v1
+Evidence: skills/nova/core/telemetry; skills/common/plugins/openclaw-agent-observer; contracts/agent-observability/v1; skills/common/plugins/telemetry-observer; skills/common/plugins/telemetry-store; skills/common/plugins/redis-transport; contracts/telemetry/v1
 Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
-Applies to: Nova lifecycle-event.v2, plugin-domain-event.v2, observer delivery v2, and retained telemetry v1 assets
-Last verified: contract, runtime, plugin, configuration, and focused-test inspection on 2026-09-20
+Applies to: Nova lifecycle-event.v2, plugin-domain-event.v2, observer delivery v2, OpenClaw agent-observability ingress v1, and retained telemetry v1 assets
+Last verified: contract, runtime, plugin, chart configuration, and focused-test inspection on 2026-09-21
 
 ## Purpose
 
 Telemetry answers what the system observed. It does not get permission to
 change what the pipeline decided.
 
-Nova first commits a canonical event to its run journal. An observer can then
+In the Nova path, Nova first commits a canonical event to its run journal. An observer can then
 receive that event, redact it, and send a projection to a file store, Redis, an
 operator channel, or another granted adapter. If a sink fails, the canonical
 event still exists. Recovery restarts delivery from a verified checkpoint.
@@ -21,23 +21,30 @@ event still exists. Recovery restarts delivery from a verified checkpoint.
 This order is deliberate. It prevents a dashboard, transport, or notification
 service from becoming a second pipeline state machine.
 
-## Two Contract Families
+## Two Contract Families And One Host Ingress Contract
 
-The repository contains two telemetry contract families. Only one is active in
-the current runtime.
+The repository contains two telemetry contract families and one separate
+OpenClaw host-ingress contract. Nova v2 and host ingress have active producers,
+but they do not join into one end-to-end path.
 
 | Family | Status | Runtime producer and consumer | Use |
 | --- | --- | --- | --- |
 | Nova v2 events and observer delivery | Active | Nova Core, plugin contexts, Observer Runtime, activated observer plugins, and selected adapters | Canonical runtime events and their controlled delivery |
+| `agent-observability` ingress v1 | Active producer on the Buster OpenClaw host | `kubeclaw-agent-observer` writes Redis; no repository consumer reads these streams | Bounded copies of OpenClaw hooks, runtime events, and model-usage diagnostics |
 | `contracts/telemetry/v1` flat envelope | Retained asset | None found in repository runtime code | Compatibility material for possible external readers; schema and generated-type checks only |
 
-Do not describe v1 schemas as the live ingestion contract. Their `cursor`,
+Do not confuse the two v1 names. Agent-observability v1 is a live Redis writer.
+Telemetry v1 is the inactive retained asset described below. Do not describe
+telemetry v1 schemas as the live ingestion contract. Their `cursor`,
 timestamps, source, authority strings, quarantine bundles, and generated types
 do not create a running service. No v1-to-v2 adapter exists.
 
 > **Source evidence — the version boundary**
 >
 > [The retained v1 README defines its inactive runtime status and limits](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/contracts/telemetry/v1/README.md#L1-L7).
+>
+> [The active agent-observability contract fixes its schema, source, stream
+> names, event types, and absolute event-size ceiling](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/contracts/agent-observability/v1/src/constants.ts#L1-L47).
 >
 > [The active SDK defines lifecycle and plugin-domain event envelopes](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L597-L656).
 > [It defines observer delivery and checkpoint contracts separately](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L657-L672).
@@ -91,6 +98,158 @@ The active path has six authority boundaries:
 4. Observer Runtime owns attempt and checkpoint state.
 5. The adapter owns transport-specific durability and limits.
 6. The sink owns query and retention, but not pipeline lifecycle.
+
+### OpenClaw agent-observability v1 path
+
+This second active path does not enter Nova's journal or Observer Runtime. The
+current chart enables it only for the Buster OpenClaw role.
+
+```mermaid
+flowchart LR
+    Hooks[12 OpenClaw hooks] --> Normalize[JSON-safe v1 normalization]
+    Events[OpenClaw runtime events] --> Normalize
+    Usage[model.usage diagnostic] --> Normalize
+    Normalize --> Dedupe[Bounded in-memory dedupe]
+    Dedupe --> Queues[Control or payload queue]
+    Queues --> Redis[Two Redis streams]
+    Queues -->|control write exhausted| DLQ[Redis dead-letter stream]
+    Redis --> Missing[No repository stream consumer]
+    DLQ --> Missing
+```
+
+The extension registers 12 hooks. It also subscribes to six OpenClaw runtime
+streams and to the `model.usage` diagnostic. It converts accepted input to
+`AgentObservabilityIngressEventV1`. The envelope contains `v: 1`, the fixed
+source `openclaw.plugin.agent-observer`, a producer timestamp, optional
+correlation identity, and a type-specific payload. Tool events are the only
+events that require both `tool_call_id` and `model_call_id`. Other identity
+fields can be absent, so a Redis reader must not assume that `run_id` exists.
+
+The normalizer accepts plain JSON values, dates, and errors. It rejects
+accessors and proxies, converts circular references to `[Circular]`, and limits
+traversal to depth 256, 2,621,440 nodes, and a 5 MiB normalization ceiling. The
+configured 3 MiB serialized-event check is stricter and runs before queue
+admission. These checks protect the process from unsafe object traversal. They
+do not remove confidential content.
+
+Two in-memory controls reduce duplicate writes:
+
+- a runtime event with `runId`, `stream`, and `seq` uses their SHA-256 value for
+  60-second deduplication; this map holds at most 10,000 entries;
+- an LLM-output event with `model_call_id` uses a canonical content digest for
+  a 10-second hook/runtime pairing window; this map also holds at most 10,000
+  entries.
+
+Other events have no deduplication key. Both maps disappear when the process
+restarts. Redis uses `XADD *`, not an idempotency key, so a restart or a replay
+can create another entry.
+
+| Redis stream | Event types |
+| --- | --- |
+| `pipeline:agent-observability:payload:v1` | `openclaw.llm.input`, `openclaw.llm.output`, `openclaw.tool.started`, `openclaw.tool.finished` |
+| `pipeline:agent-observability:control:v1` | `openclaw.agent.ended`, the three `openclaw.subagent.*` types, `openclaw.model.started`, `openclaw.model.ended`, `openclaw.model.usage`, `openclaw.session.started`, `openclaw.session.ended` |
+| `pipeline:agent-observability:deadletter:v1` | A failed control entry plus failure time, source stream, error text, and original serialized data |
+
+The writer has one control queue and one payload queue. The configured limit is
+100 events in each queue. Control has priority. A full queue or an event larger
+than 3 MiB is dropped before Redis. Control writes get three attempts with
+100 ms and 200 ms waits under the configured 1,000 ms delay ceiling. Payload
+writes get one attempt. Each command has a 5,000 ms timeout. After the final
+control failure, the writer tries one write to the dead-letter stream. A failed
+dead-letter write drops the record. All three streams use approximate `MAXLEN`:
+10,000 for control and payload, and 1,000 for dead letters.
+
+The repository has no `XREAD`, consumer group, acknowledgement, checkpoint, or
+replay implementation for these three stream names. The mapping from ingress
+types to possible telemetry types is descriptive data; no current service
+performs that promotion. Therefore, a successful `XADD` proves only that Redis
+accepted one bounded projection. It does not prove that a consumer processed
+the event. An external consumer must define its own start position,
+acknowledgement, idempotency, retention, and recovery contract before this path
+can support end-to-end evidence.
+
+> **Source evidence — OpenClaw producer path**
+>
+> [The extension registers hooks and its runtime-event subscription](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/index.ts#L240-L268).
+> [It also registers status, self-test, and service lifecycle](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/index.ts#L269-L308).
+> [Normalization extracts optional correlation identities](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts#L67-L90)
+> and [constructs and validates the v1 event before queue admission](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts#L126-L166).
+>
+> [The in-memory dedupe rules and their 10,000-entry bounds are explicit](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/observer-support.ts#L32-L79).
+> [The contract fixes depth and node limits from the 5 MiB absolute
+> ceiling](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/contracts/agent-observability/v1/src/complexity.ts#L1-L28).
+> [Routing assigns four raw-content types to the payload stream and all other
+> ingress types to control](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/contracts/agent-observability/v1/src/routing.ts#L14-L29).
+> [Validation permits optional identity fields but requires tool and model-call
+> identity for tool events](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/contracts/agent-observability/v1/src/validation.ts#L225-L244).
+> [Queue admission, event-size rejection, and control-first selection are in the
+> Redis writer](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L122-L155).
+> [The writer applies bounded retries and command timeouts](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L201-L231),
+> then [records a drop and makes the one dead-letter attempt for control
+> data](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L234-L264).
+
+#### Exact deployed configuration
+
+Configuration from a hook overrides service configuration. Service
+configuration overrides registration configuration. The merged plugin value
+then overrides the matching environment variable. The Buster chart supplies
+all required non-secret values in the OpenClaw entry and supplies the Redis
+host, port, and password as environment variables.
+
+| Plugin key | Environment fallback | Deployed value | Effect |
+| --- | --- | --- | --- |
+| `enabled` | `OPENCLAW_AGENT_OBSERVER_ENABLED` | `true` | Starts Redis output and diagnostic subscription. |
+| `redisHost` | `REDIS_HOST` | chart Redis host | Selects the Redis service. |
+| `redisPort` | `REDIS_PORT` | chart value, default `6379` | Selects the Redis port. |
+| `redisUsername` | `REDIS_USERNAME` | unset | Uses password-only Redis authentication. |
+| `redisPassword` | `REDIS_PASSWORD` | Secret value | Authenticates the Redis connection. |
+| `redisTls` | `REDIS_TLS` | unset, therefore `false` | Does not add TLS in this profile. |
+| `redisNetworkIsolation` | `REDIS_NETWORK_ISOLATION` | `isolated` | Satisfies the extension's secure-transport policy with the password. |
+| `maxEventBytes` | `OPENCLAW_AGENT_OBSERVER_MAX_EVENT_BYTES` | `3145728` | Drops a normalized event above 3 MiB; the contract hard ceiling is 5 MiB. |
+| `maxQueuePerStream` | `OPENCLAW_AGENT_OBSERVER_MAX_QUEUE_PER_STREAM` | `100` | Bounds each in-memory queue separately. |
+| `redisCommandTimeoutMs` | `OPENCLAW_AGENT_OBSERVER_REDIS_COMMAND_TIMEOUT_MS` | `5000` | Bounds each `XADD`. |
+| `streamMaxLen` | `OPENCLAW_AGENT_OBSERVER_STREAM_MAXLEN` | `10000` | Sets approximate control and payload stream length. |
+| `deadLetterMaxLen` | `OPENCLAW_AGENT_OBSERVER_DEADLETTER_MAXLEN` | `1000` | Sets approximate dead-letter stream length. |
+| `controlWriteMaxAttempts` | `OPENCLAW_AGENT_OBSERVER_CONTROL_WRITE_MAX_ATTEMPTS` | `3` | Retries control writes only. |
+| `controlWriteRetryBaseMs` | `OPENCLAW_AGENT_OBSERVER_CONTROL_WRITE_RETRY_BASE_MS` | `100` | Starts exponential retry delay. |
+| `controlWriteRetryMaxMs` | `OPENCLAW_AGENT_OBSERVER_CONTROL_WRITE_RETRY_MAX_MS` | `1000` | Caps each retry delay. |
+| `hookPriority` | `OPENCLAW_AGENT_OBSERVER_HOOK_PRIORITY` | `-100` | Registers the observer early in hook order. |
+| `hookTimeoutMs` | `OPENCLAW_AGENT_OBSERVER_HOOK_TIMEOUT_MS` | `1000` | Bounds each OpenClaw hook callback. |
+
+> [The resolver defines configuration precedence and validation](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/config.ts#L83-L112).
+> [The Buster gateway entry supplies the active values](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-gateway.yaml#L262-L311).
+> [The Pod obtains Redis host, port, and password from values and the configured
+> Secret](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/deployment.yaml#L1282-L1299).
+
+#### Sensitive data and evidence limit
+
+LLM input can contain the prompt, system prompt, history, and provider request.
+LLM output can contain the complete response and history. Tool events can carry
+parameters, results, and errors. Error normalization can include a stack. The
+producer does not apply semantic or field-name redaction to these values. Redis
+and any external consumer must therefore be treated as authorized for raw agent
+content. Queue bounds and JSON normalization are not privacy controls.
+
+The status method exposes queue and drop counters, written counts, retry and
+dead-letter counts, the last error, and whether a Redis client object exists.
+`connected: true` does not prove a successful command or a consumer. A host
+restart loses the counters and both queues. No metric exporter persists them.
+If later configuration disables the extension, the flush loop stops. Existing
+queued entries remain only in memory. A later enabled event can schedule them,
+but stopping the service while disabled loses them. Configuration-resolution
+and normalization failures produce one warning per failure class outside the
+writer counters, so the counters are not a complete received-event total.
+Repository tests exercise normalization and writer behavior with controlled
+clients. They do not prove delivery through a deployed OpenClaw host, Redis
+persistence, or downstream consumption.
+
+> [LLM payload construction retains raw prompts, responses, histories, and
+> metadata](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts#L54-L91).
+> [Tool and agent-end construction retains parameters, results, histories, and
+> errors](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts#L94-L124).
+> [The status and counter surface reports process-local writer state](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/index.ts#L129-L147).
+> [The flush loop runs only while configuration remains enabled and reschedules
+> only under that condition](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts#L170-L199).
 
 ## Active Event Catalog
 
@@ -161,6 +320,8 @@ consumer relies on it.
 | Observer checkpoint v2 | Observer Runtime after successful delivery | Recovery frontier for one observer and run | Observer recovery | Registration provenance, run ID, sequence, event ID | Local hash-chained `observer-checkpoints.jsonl` |
 | Telemetry envelope v2 | Telemetry observer | Projection only | `telemetry.emit` adapter | Observer subscriptions in the active platform configuration | File telemetry store or Redis telemetry adapter |
 | Audit v1 projection | Audit reader | Projection only; includes source record hash and journal head | CLI caller or operator | One run ID | Returned JSON; not written as a second authority by this reader |
+| Agent-observability ingress v1 | Buster OpenClaw extension | OpenClaw host input is the source; the Redis copy is a projection | No repository stream consumer | Hook registration, runtime-stream mapping, or `model.usage` diagnostic | In-memory queue, then control or payload Redis stream |
+| Agent-observability dead letter | Same extension after a control write exhausts retries | Failure copy only | No repository stream consumer | Control events only | One best-effort `XADD` to the bounded dead-letter stream |
 | Retained telemetry v1 event | No active repository runtime producer | None in current runtime | No active repository runtime consumer | Not applicable | Schema generation and tests only |
 
 The plugin manifest declares what an observer can subscribe to. The platform
@@ -186,7 +347,8 @@ its manifest changes. The event still remains canonical in Nova. This difference
 is important when a sink is used for dashboards: absence from that sink does not
 mean the run or scheduler did not emit the event.
 
-OpenClaw Agent Events is the only shipped production adapter that constructs the
+This Nova v2 path is different from the direct OpenClaw-to-Redis path above.
+OpenClaw Agent Events is the only shipped production *pipeline adapter* that constructs the
 12 named plugin-domain types. It normalizes an accepted host hook, changes
 underscores to hyphens, and emits under its fixed plugin prefix. The two agent
 observers are its declared consumers. Other plugins can use the open domain
@@ -280,6 +442,7 @@ remove or summarize sensitive values at the producer boundary.
 | File telemetry projection | Protected and selected personal field names after safe JSON snapshot | Semantic recognition of secrets in free text |
 | Audit projection | Credential-like field names in identity and payload | That original `events.jsonl` contains no secrets |
 | Redis adapter | No additional semantic redaction | Confidentiality without `rediss:` and correct network policy |
+| OpenClaw agent-observability v1 | No semantic or field-name redaction; only bounded JSON normalization | Removal of prompts, histories, model output, tool data, metadata, error text, or stack content |
 
 > **Source evidence — projection safety**
 >
@@ -540,6 +703,9 @@ different bound and response.
 | Redis stream | Approximate `MAXLEN` per stream | Old entries trim during append | Projection history can disappear by policy; Nova state does not |
 | Redis dedup | `dedupTtlMs` per key | Key expires | A replay outside the window can create another stream entry |
 | Redis server | `maxmemory 1gb`, `noeviction`, 20 GiB PVC in selected production values | New write fails instead of evicting state | Backpressure reaches observer policy; existing stream and dedup state remains |
+| OpenClaw host queues | 100 control and 100 payload entries in process memory | New event is dropped; control remains first in flush order | Restart loses all queued events and counters; no replay source exists here |
+| OpenClaw control/payload streams | Approximate `MAXLEN` 10,000 per stream | Redis trims old entries during later writes | No repository consumer, acknowledgement, or checkpoint proves consumption |
+| OpenClaw dead-letter stream | Approximate `MAXLEN` 1,000 | Old failure copies trim; a failed DLQ write drops the new copy | The original OpenClaw hook is not recoverable from Nova's journal |
 | Audit result | Caller memory/output and complete journal read | Read fails or caller cannot retain output | No canonical data change |
 | Retained v1 files | Repository source retention only | Removal can break unknown external readers | No current repository runtime effect; external use must be assessed |
 
@@ -599,6 +765,10 @@ run root. Do not merge partial audit output with another run or journal head.
 | Checkpoint conflicts with event ID | Event journal and conflicting checkpoint evidence | Stop delivery. Restore or investigate the checkpoint journal; do not select one by timestamp. |
 | Redis dedup key expired | Canonical event and any retained stream entry | Consumer deduplicates by event/delivery identity, or operator accepts policy-defined duplicate projection. |
 | Redis stream trimmed old entry | Nova event journal | Replay only through the observer path when policy and sink allow it. A checkpoint may need an owner-approved rewind procedure; do not edit it casually. |
+| OpenClaw host queue is full or the event is too large | No durable copy exists in this path; process counters and a warning remain until restart | Reduce event content or writer pressure. Do not claim recovery; the producer has no queue replay source. |
+| OpenClaw payload-stream write fails | No durable copy exists; the writer makes one attempt | Repair Redis for later events. The failed payload event cannot be replayed by this extension. |
+| OpenClaw control-stream writes exhaust retries | A dead-letter copy can exist if its single write succeeds | Inspect `droppedWriteFailureControl`, `deadLetterWritten`, `deadLetterFailed`, and Redis directly. No repository consumer processes the DLQ. |
+| OpenClaw host restarts with queued events | Redis retains only entries that completed `XADD`; memory queues, dedupe maps, and counters are lost | Treat the gap as unrecoverable unless another independent source retained the original host events. |
 | File sink is full | Nova event journal and prior sink records | Add capacity or execute verified retirement. Required observers remain failed closed. |
 | Canonical event journal is corrupt | No trustworthy projection can repair it | Stop mutation and restore the complete Nova run group from verified backup. |
 | Retained v1 schema changes | No current runtime effect | Regenerate manifest/types, run contract tests, and assess external readers. It does not update v2 runtime automatically. |
@@ -650,6 +820,23 @@ schemas, regenerate all event and bundle schemas plus Go and TypeScript types,
 and run the manifest and cross-language tests. Assess external users first.
 Do not claim that this activates v1 in the runtime.
 
+### Change OpenClaw agent-observability v1
+
+1. Change the source contract under `contracts/agent-observability/v1` first.
+2. Keep hook, event type, payload validator, and control/payload routing in one
+   consistent change.
+3. Run the extension contract-sync step and reject a generated-source diff.
+4. Define which identity is required and how a duplicate is recognized.
+5. Classify raw sensitive fields before you add or promote them.
+6. Set event, queue, command, retry, stream, and dead-letter limits in the
+   Buster gateway configuration.
+7. Add a consumer only with explicit authentication, start position,
+   acknowledgement, checkpoint, replay, idempotency, and retirement behavior.
+8. Test queue overflow, oversized content, restart, disabled configuration,
+   payload-write failure, exhausted control retry, and dead-letter failure.
+9. Verify the installed Buster host and Redis path. Local package tests do not
+   prove this live route.
+
 ## Verification Map and Evidence Limits
 
 | Area | Repository evidence | Limit |
@@ -660,6 +847,7 @@ Do not claim that this activates v1 in the runtime.
 | Telemetry observer redaction | Telemetry-observer parity and live-function tests | Field-name rules cannot detect every semantic secret |
 | File sink bounds and durability | Telemetry-store package and live-function tests | Does not provide off-node backup or automatic retention |
 | Redis lost-ACK and dedup behavior | Redis transport package, durability, and migration tests | Dedup remains bounded by configured TTL; cluster storage acceptance is separate |
+| OpenClaw agent-observability v1 | Contract tests plus extension config, normalization, queue, retry, and package tests | No deployed-host, Redis-persistence, stream-consumer, acknowledgement, checkpoint, replay, or end-to-end completeness proof |
 | Retained v1 schemas and generated languages | `generate-telemetry-contracts.mjs --check` and v1 contract tests | No runtime service, producer, consumer, authorization, or ordering implementation |
 | Prometheus/Grafana values | Upstream chart render and deployment checks verify declared PVCs, Secret, port, and retention | No live scrape, alert, dashboard, or application-metric completeness proof |
 | CRI → Alloy → Loki | Alloy config validation and chart render verify discovery, parsing, labels, positions, and push URL | No live proof that every container line reached Loki or remained queryable for 720 hours |

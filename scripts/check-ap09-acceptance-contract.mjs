@@ -292,6 +292,7 @@ function fixture() {
     exactIds(item.coverageAuthorities.map((authority) => authority.kind), item.coverageKinds,
       `${item.id}.coverageAuthorities`);
     const extensionAuthority = item.coverageAuthorities.find((authority) => authority.kind === 'extension-class');
+    assert.equal(extensionAuthority.taskKind, 'create-new');
     assert.equal(extensionAuthority.mode, 'generated-discovery');
     assert(extensionAuthority.path.startsWith('docs/generated/inventory/') && extensionAuthority.path.endsWith('.json'));
     for (const field of ['schemaVersion', 'arrayField', 'identityField'])
@@ -299,6 +300,7 @@ function fixture() {
     exactIds(extensionAuthority.requiredFamilies, ['pipeline', 'host', 'worker-engine'],
       `${item.id}.extension families`);
     const complexAuthority = item.coverageAuthorities.find((authority) => authority.kind === 'complex-plugin');
+    assert.equal(complexAuthority.taskKind, 'change-existing');
     assert.equal(complexAuthority.mode, 'generated-classification');
     assert(complexAuthority.path.startsWith('docs/generated/inventory/') && complexAuthority.path.endsWith('.json'));
     for (const field of ['schemaVersion', 'arrayField', 'identityField', 'classificationField', 'acceptedValue'])
@@ -560,6 +562,8 @@ function evidence(file, rows, catalog, fixtures) {
       for (const field of authority.requiredTaskFields) assert(Object.hasOwn(task, field),
         `${authority.id}.${task.id} lacks ${field}`);
       assert(authority.coverageKinds.includes(task.coverageKind), `${task.id} has unknown coverage kind`);
+      const coverageAuthority = authority.coverageAuthorities.find((item) => item.kind === task.coverageKind);
+      assert.equal(task.taskKind, coverageAuthority.taskKind, `${task.id} has the wrong task kind`);
       text(task.coveredIdentity, `${task.id}.coveredIdentity`, 2);
       text(task.sourceAuthority, `${task.id}.sourceAuthority`, 5);
       gitBlob(value.reviewed_revision, task.sourceAuthority, `${task.id}.sourceAuthority`);

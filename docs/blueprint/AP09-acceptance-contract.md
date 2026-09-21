@@ -1,7 +1,7 @@
 # AP09 — Verbindlicher Abnahmevertrag für AP09.7 bis AP09.13
 
 Status: verbindliche Abnahmegrundlage
-Stand: 20.09.2026
+Stand: 21.09.2026
 Geltungsbereich: AP09.7 bis AP09.13 und der gemeinsame AP09-Abschluss
 Qualitätsgrundlage: `docs/blueprint/07-documentation-quality-standard.md`
 
@@ -39,7 +39,11 @@ Die folgenden Regeln gelten für jeden Punkt `A97-*` bis `A913-*`.
 6. **Ausführbare Aufgaben:** Ein Verfahren braucht Voraussetzungen, Ort,
    Berechtigungen, exakte Schritte, erwartete Beobachtungen, Exit- oder
    Stop-Regeln, Fehlerunterscheidung, Recovery, Cleanup und aufzubewahrende
-   Evidenz. Ein nicht ausgeführtes Live-Verfahren bleibt als `not run` markiert.
+   Evidenz. Diese Pflicht gilt paketübergreifend für jedes als ausführbar
+   veröffentlichte Beispiel, einschließlich eingebetteter Codeblöcke und
+   verlinkter Beispielartefakte. Ein `not run`-Label ist eine ehrliche
+   Statusangabe, aber kein Abnahmenachweis für ein als ausführbar dargestelltes
+   Beispiel.
 7. **Keine erfundenen Gründe:** Quellcode beweist Verhalten, nicht die
    historische Absicht. Fehlt die Entscheidungsquelle, nennt die Seite den
    historischen Grund `unknown`, kennzeichnet heutige Erklärungen als Inferenz
@@ -137,12 +141,13 @@ Ein Source-Link ist nur gültig, wenn Host und Repository exakt
 in diesem Commit eine reguläre Git-Datei mit Modus `100644` oder `100755` und
 kein Symlink oder sonstiger spezieller Eintrag ist und der aufsteigende
 Zeilenbereich innerhalb der Datei liegt. Ein kanonischer Leserort muss eine
-reguläre Markdown-Datei unter `docs/site` sein. Auch das vollständige
+reguläre Markdown-Datei unter `docs/site` sein. Er ist nur gültig, wenn er im
+revisionsgebundenen positiven Publication-Manifest enthalten ist und sein
+gerenderter Output nachgewiesen ist. Auch das vollständige
 Publication-Inventar muss jeden Markdown-Symlink ablehnen. Das Fragment muss
-einer vorhandenen Überschrift oder einer
-expliziten HTML-ID entsprechen. Weil die Publication alle Markdown-Dateien
-unter diesem Root übernimmt, beweist dieser Test zugleich die Aufnahme in den
-Publication-Input; der gespeicherte Publication-Report beweist den Output.
+einer vorhandenen Überschrift oder einer expliziten HTML-ID entsprechen. Das
+positive Manifest beweist die erlaubte Aufnahme in den Publication-Input; der
+gespeicherte Publication-Report beweist den tatsächlichen Output.
 Der Report muss seine Revision, das geprüfte positive Publication-Manifest,
 die Quellseiten-Gesamtsumme, ein Digest aller publizierten Seiten und den
 SHA-256 des vom echten Renderer erzeugten Anchor-Inventars enthalten. Nicht
@@ -190,8 +195,10 @@ ihrem echten Status im Ledger. Ein Produktlimit ersetzt keinen Pflichtlauf.
 Reviewer und Ausführungsteilnehmer sind verschiedene Identitäten. Jede
 vorregistrierte statische oder dynamisch erzeugte Reader-Aufgabe erhält einen
 eigenen Fresh-Context-Teilnehmer,
-der zuvor nicht an der Dokumentation mitgearbeitet hat. Die beiden
-Operator-Aufgaben verwenden zwei verschiedene Operatoren. Das Ledger bewahrt
+der zuvor nicht an der Dokumentation mitgearbeitet hat. Die vier statischen
+Operator-Reader-Aufgaben erhalten je einen solchen Teilnehmer. Die beiden
+Pflichtläufe `A98-13-OPERATOR-1` und `A98-13-OPERATOR-2` verwenden zwei
+verschiedene Operatoren. Das Ledger bewahrt
 jeden deklarierten Versuch, auch einen fehlgeschlagenen, und bindet den
 akzeptierten Versuch an Teilnehmer, Startzeit, tatsächlich verwendete Hilfen
 und einen gehashten Bericht. Die Reviewer bestätigen zusätzlich, dass kein
@@ -263,7 +270,7 @@ ausführbaren Journeys werden getrennt abgenommen.
 | A99-08 | Fehlerjourneys decken mindestens Redis-Ausfall, Registry/Image-Fehler, Tailscale-Fehler, Worker-Abbruch, unklaren externen Effect und Demo-Delivery-Ablehnung ab. | Ein Fehlerweg endet ohne Zustandsbewertung, Retryentscheidung oder Cleanup. |
 | A99-09 | Security und Secrets im Workflow erklären Grant, Resource, Credentialauflösung, Redaction, Artifact-/Result-Authentizität und negative Zugriffe. | Secrets erscheinen im Beispiel oder erfolgreiche Providerantwort gilt ohne Result-Authority. |
 | A99-10 | Versions-, Schema- und Plugin-Kompatibilität erklären akzeptierte und abgelehnte Kombinationen sowie Migration und Rollback anhand aktueller Checks. | „Backward compatible“ wird ohne negative alte/neue Kombination behauptet. |
-| A99-11 | Alle veröffentlichten Beispiele werden maschinell geparst, kompiliert und gegen aktuelle Rollen, Registries, Templates und Schemas aufgelöst. | JSON-Syntax allein gilt als Beispielprüfung. |
+| A99-11 | Ein am geprüften Commit erzeugtes Beispielinventar erfasst jedes veröffentlichte ausführbare Beispiel einschließlich eingebetteter Codeblöcke und verlinkter Beispielartefakte. Jedes Beispiel wird mit der passenden Toolchain geprüft und unverändert in einem vorregistrierten Szenario bis zum dokumentierten Ergebnis einschließlich relevanter Fehler-, Cleanup- und Zustandsprüfung ausgeführt. Das Ledger bindet Beispiel-ID und Content-Hash an Szenario, Umgebung, Beobachtungen und Artefakte. Gemeinsame Läufe sind nur zulässig, wenn sie jedes enthaltene Beispiel tatsächlich ausführen. Rein erklärende Fragmente sind ausdrücklich als nicht ausführbar gekennzeichnet und werden auf Vertragstreue geprüft. | Ein als ausführbar dargestelltes Beispiel ist nur geparst, kompiliert oder aufgelöst, fehlt im Inventar, wurde vor der Ausführung undokumentiert verändert oder besitzt keinen bestandenen Ausführungsnachweis. Ein `not run`-Label ersetzt diesen Nachweis nicht. |
 | A99-12 | Fresh-Context-Reader führen Minimal-, Voll- und mindestens zwei Fehler-/Recoveryjourneys ohne interne Quellen aus und erhalten die dokumentierten Zustände. | Ein Reviewer prüft nur Prosa oder verwendet Wissen aus dem Erstellungsdialog. |
 | A99-13 | Mutationen an Schemafeld, Stage-Typ, Rolle, Provider, Fixture, Reportformat und Progress-Vertrag machen die zugehörige Referenz oder Journey rot. | Ein öffentliches Pipelineelement kann ohne dokumentarische Auswirkung hinzukommen. |
 
@@ -286,7 +293,7 @@ er ersetzt keine Tiefendokumentation komplexer Pakete.
 | A910-10 | Jede unterstützte interne Erweiterung besitzt einen Clean-Checkout-Weg für Änderung, Registrierung, Berechtigung, Konfiguration, Test, Aktivierung, Beobachtung, Compatibility, Entfernung und Rollback. | Kompilieren oder Unit-Test wird als Aktivierung ausgegeben. |
 | A910-11 | Component-Change-Guides decken Nova, Worker, Buster, Prism, Registry, SDK, Telemetrie, Charts/GitOps, Ops MCP und UI ab und wählen nach Änderung die kleinste vollständige Prüfkette. | Ein universeller „run all tests“-Hinweis ersetzt Change-to-check. |
 | A910-12 | Package-README-Parität wird vollständig geprüft: Jede noch gültige notwendige Aussage ist im Site-Katalog oder Deep Guide enthalten; widersprüchliche README-Aussagen werden nicht übernommen. | Stichprobe oder Dateidiff ersetzt semantischen Inhaltsvergleich. |
-| A910-13 | Ein am geprüften Commit aus Pipeline-, Host- und Worker-Engine-Verträgen erzeugtes Discovery-Inventar bestimmt alle Erweiterungsklassen. Das Aufgabeninventar enthält genau eine vorregistrierte Fresh-Context-Änderung je entdeckter Klasse und je als komplex klassifiziertem Plugin. Unabhängige Reader führen jede Aufgabe praktisch mit Aktivierung, negativem Weg, Compatibility, Cleanup und Remaining Data aus. Ein echter Produktblocker bleibt `NOT READY` und kann keinen Pflichtlauf bestehen. | Eine statische Klassenliste, eine feste Sollzahl, ein einziges Beispiel, eine nach dem Ergebnis gewählte Aufgabe oder ein gelesener Blocker wird auf weitere Erweiterungen hochgerechnet. |
+| A910-13 | Ein am geprüften Commit aus Pipeline-, Host- und Worker-Engine-Verträgen erzeugtes Discovery-Inventar bestimmt alle Erweiterungsklassen. Das Aufgabeninventar enthält je entdeckter Erweiterungsklasse eine vorregistrierte Erstellungsaufgabe und je komplexem Plugin eine vorregistrierte Änderungsaufgabe. Bei jeder Erstellungsaufgabe erstellt ein unabhängiger Fresh-Context-Reader oder Agent eine neue minimale Erweiterung mit neuer Identität aus dem dokumentierten Ausgangszustand. Er erstellt Paketstruktur, Abhängigkeiten, Manifest, Registrierung, Berechtigungen und Konfiguration anhand der veröffentlichten Anleitung und weist Build, Tests, Aktivierung, Beobachtung, negativen Weg, Compatibility, Entfernung und Remaining Data nach. Dokumentierte Generatoren und Templates sind zulässig; eine bereits fertig registrierte Erweiterung darf den Aufbau nicht ersetzen. Jeder notwendige undokumentierte Schritt ergibt `FAIL`; nach einer Dokumentationskorrektur wiederholt ein neuer Teilnehmer die betroffene Erstellungsaufgabe. Unabhängige Reader führen auch jede komplexe Änderungsaufgabe praktisch aus. Ein echter Produktblocker bleibt `NOT READY` und kann keinen Pflichtlauf bestehen. | Eine Änderung an einer vorhandenen Erweiterung wird als Nachweis der Neuerstellung gewertet, vorbereitete Registrierung oder Maintainerhilfe verdeckt einen fehlenden Erstellungsschritt, oder eine statische Klassenliste, feste Sollzahl, ein einziges Beispiel, eine nach dem Ergebnis gewählte Aufgabe oder ein gelesener Blocker wird auf weitere Erweiterungen hochgerechnet. |
 | A910-14 | Mutationen an SDK-Export, Pluginmanifest, Erweiterungsklasse, Registration, verschachteltem Configfeld, Capability, Secret und Error Code machen Generator oder Guide-Check rot. | Eine neue öffentliche Oberfläche oder Erweiterungsklasse bleibt unbemerkt oder nur die Sollzahl ändert sich. |
 
 ## 9. AP09.11 — Exhaustive Reference und automatische Driftkontrolle

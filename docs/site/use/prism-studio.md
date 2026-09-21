@@ -1215,10 +1215,11 @@ Do not use it as the only design document for a code change.
 | Storage or migration | `skills/prism/storage/` | Forward-compatible migration, transaction owner, grants, matched database/artifact recovery, and old workload compatibility |
 | Pipeline handoff | `skills/nova/plugins/prism-design/` and `skills/prism/pipeline-adapter/` | Active architecture, operator approval, content digest, safe archive import, and read-only downstream assignment |
 
-The full change procedure, extension contracts, and compatibility matrices belong
-in the AP9.4 developer guide. Until that guide is complete, read the relevant
-source, contract, migration, chart, and focused tests together. Do not derive a
-new extension contract from an old architecture proposal alone.
+This operator page ends at supported use and recovery. For implementation
+changes, the canonical route is [Extend Prism safely](../extend/platform/prism.md).
+Use that guide with the relevant source, contract, migration, chart, and
+focused tests. Do not derive a new extension contract from an old architecture
+proposal or from this operator procedure alone.
 
 ## Completion Checklist
 
