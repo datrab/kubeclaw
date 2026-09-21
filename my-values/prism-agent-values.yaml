@@ -80,8 +80,15 @@ extraContainers:
       - { name: config, mountPath: /home/node/.openclaw }
       - { name: tmp, mountPath: /tmp }
     securityContext: { runAsUser: 1000, runAsGroup: 1000, allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: [ALL] } }
-    readinessProbe: { httpGet: { path: /ready, port: 18080 }, initialDelaySeconds: 3 }
-    livenessProbe: { httpGet: { path: /health, port: 18080 }, initialDelaySeconds: 10 }
+    # The bridge is private to the pod; only Envoy exposes authenticated traffic.
+    readinessProbe:
+      exec:
+        command: [node, -e, "fetch('http://127.0.0.1:18080/ready',{signal:AbortSignal.timeout(800)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      initialDelaySeconds: 3
+    livenessProbe:
+      exec:
+        command: [node, -e, "fetch('http://127.0.0.1:18080/health',{signal:AbortSignal.timeout(800)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      initialDelaySeconds: 10
     resources: { requests: { cpu: 50m, memory: 128Mi }, limits: { cpu: 500m, memory: 512Mi } }
 
 workspace:

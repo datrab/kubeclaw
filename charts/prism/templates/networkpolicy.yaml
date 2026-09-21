@@ -106,6 +106,9 @@ spec:
         - podSelector: { matchLabels: { app: prism-test-runner } }
       ports: [{ protocol: TCP, port: 18082 }]
   egress:
+    - to:
+        - podSelector: { matchLabels: { app.kubernetes.io/name: redis, app.kubernetes.io/instance: redis } }
+      ports: [{ protocol: TCP, port: 6379 }]
     - to: [{ podSelector: { matchLabels: { app: prism-control } } }]
       ports: [{ protocol: TCP, port: {{ ternary 8443 8080 .Values.workerTrust.spiffe.enabled }} }]
     - to:

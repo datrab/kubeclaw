@@ -36,6 +36,7 @@ jobs:
           node --test tests/verification/deployment/browser-pool-maintenance.test.mjs
           node --test tests/verification/deployment/gitops-adoption-shape.test.mjs
           node --test tests/verification/deployment/prism-backup.test.mts
+          node --test tests/verification/deployment/prism-agent-health.test.mjs
           node --test tests/verification/deployment/runtime-image-workflows.test.mjs tests/verification/deployment/versions.test.mjs tests/verification/deployment/release-images.test.mjs tests/verification/deployment/oci-image-identity.test.mjs tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/prism-release-evidence.test.mjs
           node --test tests/verification/deployment/gitops-continuous.test.mjs tests/verification/deployment/code-release.test.mjs
           node --test tests/verification/deployment/gitops-release.test.mjs
