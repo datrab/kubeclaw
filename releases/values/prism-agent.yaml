@@ -11,13 +11,13 @@ runAsRoot: false
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-35498048075-1/prism-03f726cd2beb0d33750466752ce78bf211de2693.tgz
-  expectedCommit: 03f726cd2beb0d33750466752ce78bf211de2693
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-35573997952-1/prism-eb6545b264b12291ebd693f3e59ba801e059c16f.tgz
+  expectedCommit: eb6545b264b12291ebd693f3e59ba801e059c16f
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: 06cb2f291d6263a2113ee4c3a207e55fcd7799274fb3ac201954335efe1a9aed
+  sha256: 141bb94044907322cc1da39f59c0e637f2675e2e73232077a330d592b885d44c
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-prism
@@ -95,14 +95,20 @@ extraContainers:
         drop:
           - ALL
     readinessProbe:
-      httpGet:
-        path: /ready
-        port: 18080
+      exec:
+        command:
+          - node
+          - '-e'
+          - >-
+            fetch('http://127.0.0.1:18080/ready',{signal:AbortSignal.timeout(800)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))
       initialDelaySeconds: 3
     livenessProbe:
-      httpGet:
-        path: /health
-        port: 18080
+      exec:
+        command:
+          - node
+          - '-e'
+          - >-
+            fetch('http://127.0.0.1:18080/health',{signal:AbortSignal.timeout(800)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))
       initialDelaySeconds: 10
     resources:
       requests:
