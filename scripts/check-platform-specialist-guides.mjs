@@ -10,6 +10,11 @@ const root = path.resolve(import.meta.dirname, '..');
 const revision = '32b02816cc19cc8865a45b221b8b6ca28e99e8fb';
 
 const specifications = [
+  ['docs/site/reference/platform-surfaces-generated.md', 100, [
+    '## Runtime Dependencies', '## Runtime Resources', '## Secret References',
+    '## HTTP Endpoints', '## State And Cache Names', '## Runtime Events',
+    '## Ops MCP Tools', '## Maintenance Contract',
+  ]],
   ['docs/site/extend/lint.md', 15, [
     '## Architecture', '## Pre-Check And Full', '## Add A Rule To An Existing Tool',
     '## Add A Local ESLint Rule', '## Add A Tool', '## Add A Target Or Language',
@@ -144,6 +149,13 @@ for (const [file, minimumLinks, markers] of specifications) {
     const lineCount = pinned.split('\n').length;
     assert(first >= 1 && last >= first && last <= lineCount,
       `${file} has an invalid line range for ${repositoryPath}`);
+    if (file.startsWith('docs/site/understand/') || file.endsWith('platform-surfaces-generated.md')) {
+      assert(last - first <= 60, `${file} has an evidence range wider than 60 lines for ${repositoryPath}`);
+    }
+  }
+
+  if (file.startsWith('docs/site/understand/') || file.endsWith('platform-surfaces-generated.md')) {
+    assert(links.every((match) => match[3]), `${file} has a source link without an explicit line range`);
   }
 }
 
@@ -237,12 +249,17 @@ assert(opsTools.length > 0, 'Ops MCP tool discovery returned no tools');
 for (const tool of opsTools) {
   assert(opsGuide.includes(`\`${tool}\``), `Ops MCP guide omits tool ${tool}`);
 }
+execFileSync(process.execPath, [path.join(root, 'scripts/docs-platform-surface-inventory.mjs'), '--check'],
+  { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+execFileSync(process.execPath, [path.join(root, 'scripts/check-platform-surface-drift-mutations.mjs')],
+  { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
 
 const navigation = [
   ['docs/site/extend/README.md', 'lint.md'],
   ['docs/site/reference/README.md', 'lint-policy.md'],
   ['docs/site/reference/README.md', 'lint-policy-generated.md'],
   ['docs/site/reference/README.md', 'lint-rules.md'],
+  ['docs/site/reference/README.md', 'platform-surfaces-generated.md'],
   ['docs/site/understand/README.md', 'forge.md'],
   ['docs/site/understand/README.md', 'echo.md'],
   ['docs/site/understand/README.md', 'openclaw.md'],

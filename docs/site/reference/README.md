@@ -28,6 +28,7 @@ procedures. This section gives exact names and source-backed facts.
 - [Secrets](secrets.md) lists names, keys, owners, consumers, and recovery rules.
 - [Verification commands](verification-commands.md) maps claims to checks.
 - [Workflow inventory](workflows.md) lists repository automation and triggers.
+- [Generated platform surface inventory](platform-surfaces-generated.md) maps current runtime resources, Secret references, endpoints, stores, events, and Ops MCP tools to their detailed explanations.
 
 ## Extension Runtime
 

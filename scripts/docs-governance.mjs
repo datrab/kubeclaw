@@ -46,7 +46,8 @@ function checksFor(page) {
   return [...new Set(checks)];
 }
 
-function contentKind(page) {
+function contentKind(page, text) {
+  if (metadata(text, 'Generator')) return 'generated';
   if (page === 'docs/site/status/open-issues.md'
     || page === 'docs/site/reference/capabilities.md'
     || [
@@ -78,13 +79,13 @@ const pages = walk(siteRoot)
     return {
       page,
       route: publicRoute(item),
-      contentKind: contentKind(page),
+      contentKind: contentKind(page, text),
       status: values.Status,
       audience: values.Audience,
       owner: values.Owner,
       appliesTo: values['Applies to'],
       lastVerified: values['Last verified'],
-      sourceDependencies: generator ? [generator, ...evidence] : evidence,
+      sourceDependencies: [...new Set(generator ? [generator, ...evidence] : evidence)],
       checks: checksFor(page),
     };
   });

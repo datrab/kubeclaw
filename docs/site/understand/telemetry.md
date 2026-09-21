@@ -39,7 +39,8 @@ do not create a running service. No v1-to-v2 adapter exists.
 >
 > [The retained v1 README defines its inactive runtime status and limits](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/contracts/telemetry/v1/README.md#L1-L7).
 >
-> [The active SDK defines lifecycle events, plugin domain events, observer delivery, and checkpoints as separate v2 contracts](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L597-L672).
+> [The active SDK defines lifecycle and plugin-domain event envelopes](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L597-L656).
+> [It defines observer delivery and checkpoint contracts separately](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L657-L672).
 
 ### What the retained v1 asset contains
 
@@ -55,9 +56,11 @@ nullable cursor, but no current consumer enforces its proposed
 `project/run/sequence` meaning. `source` and `authority` fields also do not
 authenticate a sender.
 
-> [The retained catalog is the complete 53-type source list](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/contracts/telemetry/v1/catalog.json).
+> [The retained catalog is the complete 53-type source list](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/contracts/telemetry/v1/catalog.json#L1-L28).
 >
-> [The generated manifest binds all 132 delivered files and states compatibility rules](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/contracts/telemetry/v1/contract-manifest.json).
+> [The retained contract describes its generated 132-file content manifest](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/contracts/telemetry/v1/README.md#L26-L36).
+> [The manifest states the compatibility rules and binds each listed file by
+> byte count and SHA-256](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/contracts/telemetry/v1/contract-manifest.json#L1-L23).
 
 ## Active Data Path
 
@@ -282,7 +285,9 @@ remove or summarize sensitive values at the producer boundary.
 >
 > [The telemetry observer creates a v2 envelope and redacts event identity and payload before adapter invocation](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/telemetry-observer/src/observer.ts#L7-L29).
 >
-> [The file telemetry projection rejects proxies, accessors, cycles, invalid Unicode, non-finite numbers, excessive depth or nodes, and sensitive field names](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/telemetry-store/src/projection.ts#L3-L94).
+> [The file telemetry projection rejects unsafe object shapes and applies bounded
+> structured traversal](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/telemetry-store/src/projection.ts#L3-L62).
+> [It rejects invalid scalar values and redacts protected field names](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/telemetry-store/src/projection.ts#L63-L94).
 >
 > [The audit reader rebuilds from the verified journal, redacts identity and payload, and binds its digest to record hashes and journal head](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/telemetry/audit.ts#L6-L27).
 
@@ -370,7 +375,7 @@ A connection failure, timeout, malformed reply, full Redis instance, or missing
 secret fails the adapter call. Observer policy then decides whether the host
 fails closed or records a best-effort failure.
 
-> [The adapter validates URL, prefix, MAXLEN, dedup TTL, timeout, secret, payload size, operation, and returned stream ID](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/redis-transport/src/adapter.ts#L23-L87).
+> [The adapter validates URL, prefix, MAXLEN, dedup TTL, timeout, secret, payload size, operation, and returned stream ID](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/redis-transport/src/adapter.ts#L28-L87).
 >
 > [The network exchange supports plain or TLS Redis, AUTH, cancellation, timeout, and bounded reply decoding](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/redis-transport/src/exchange.ts#L5-L36).
 
@@ -399,6 +404,127 @@ dashboard must not change a failed run to succeeded.
 For the same reason, restore Redis and monitoring after the owning journals and
 databases. Rebuild their projections from verified sources when the sink
 contract permits replay.
+
+## Deployed Metrics and Log Path
+
+The optional monitoring stack is a second observability path. It does not
+consume `lifecycle-event.v2`, `plugin-domain-event.v2`, the file telemetry
+store, or Redis streams in the repository configuration.
+
+```mermaid
+flowchart LR
+    Metrics[Chart-provided metric endpoints] -->|Prometheus scrape| Prom[(Prometheus TSDB)]
+    CRI[Container stdout and stderr in CRI files] -->|node-local file read| Alloy[Alloy]
+    Alloy -->|CRI parse and HTTP push| Loki[(Loki)]
+    Prom --> Grafana[Grafana]
+    Loki --> Grafana
+    Events[Nova canonical events] --> Observers[Observer delivery]
+    Observers --> FileRedis[File store or Redis]
+```
+
+Text version: the Prometheus Operator stack discovers and scrapes the metric
+targets created by its chart, including Kubernetes and node exporters. The
+checked repository does not define a KubeClaw `ServiceMonitor`, `PodMonitor`,
+application `/metrics` endpoint, recording rule, alert rule, remote-write
+target, or event-to-metric bridge. Therefore, a Prometheus sample cannot prove
+that Nova emitted or delivered one lifecycle event.
+
+Kubernetes writes container standard output and standard error to node CRI log
+files. One Alloy DaemonSet per node discovers Pods on that node, calculates the
+CRI file path, parses the CRI framing, and pushes entries to Loki. Grafana has
+Prometheus as the chart data source and adds Loki at
+`http://loki.monitoring.svc.cluster.local:3100`. A Grafana query is a read path;
+it does not acknowledge Nova observer delivery.
+
+### Labels and correlation
+
+The Alloy relabel path sets these Loki labels from Kubernetes discovery:
+
+| Label | Source |
+| --- | --- |
+| `app` | First non-empty application name label, `app` label, controller name, or Pod name |
+| `instance` | First non-empty instance label |
+| `component` | First non-empty component label |
+| `node_name` | Pod node name |
+| `namespace` | Pod namespace |
+| `job` | `namespace/app` |
+| `pod` | Pod name |
+| `container` | Container name |
+
+The repository config adds no external Loki labels. It does not parse Nova JSON
+to promote `runId`, `stageId`, `attemptId`, `eventId`, or `deliveryId` to Loki
+labels. Those values are searchable only when the process wrote them in its log
+body. The active Nova event/observer path keeps them as structured envelope
+fields. Prometheus labels come from the selected chart's rendered scrape
+objects; this repository values file adds no KubeClaw correlation labels.
+
+### Selection, sampling, dropping, and redaction
+
+There is no probabilistic sampling in the checked Nova observers, Prometheus
+values, Alloy pipeline, or Loki values. Selection still occurs:
+
+- an observer receives only exact event types in its registration;
+- Prometheus retains only discovered scrape targets and successful samples;
+- Alloy selects Pods on its own node and files that match the calculated CRI
+  paths;
+- kubelet can rotate a source log before Alloy reads it;
+- Loki expires stored entries after 720 hours;
+- Prometheus expires samples after 15 days or earlier when storage pressure
+  prevents ingestion.
+
+Alloy has no `stage.drop`, rate limit, tenant split, or content-redaction stage
+in the repository configuration. It forwards the log body after CRI parsing.
+Therefore, application logs must already exclude secrets. The structured
+telemetry observer and file sink redaction rules do not protect CRI logs. Loki
+authentication is disabled in the checked values; network and deployment
+boundaries must restrict its HTTP endpoint.
+
+### Retention, backpressure, and failure
+
+| Boundary | Retention or buffer | Pressure or failure behavior | Evidence limit |
+| --- | --- | --- | --- |
+| Prometheus scrape | Scrape interval and target buffering belong to the rendered upstream chart; local retention is 15 days on 20 GiB | A failed scrape creates a gap. This repository does not route scrape failure back to Nova. | Source values do not prove which targets are live or that a sample reached TSDB. |
+| CRI source | Kubelet-managed node files | Rotation can remove unread bytes. The repository does not set kubelet log limits. | Alloy cannot recover bytes that no longer exist. |
+| Alloy position and send path | Node-local position files under `/var/lib/kubeclaw-alloy`; library queues/retries use rendered chart defaults | Loki or network failure delays forwarding until collector buffering/retry limits are reached. No product operation waits for it. | The source values do not state an accepted maximum outage or prove zero loss. |
+| Loki | 720 hours on a 20 GiB, single-replica filesystem store | Ingestion/query/storage failure makes logs incomplete or unavailable. No replication, canary, gateway, chunk cache, or result cache is enabled. | Retention configuration does not prove capacity for 720 hours. |
+| Grafana | 5 GiB UI state | Data-source failure returns query errors. Dashboards do not become product authority. | Grafana health does not prove fresh Prometheus samples or Loki entries. |
+
+During a collector outage, keep one collector per node. Do not start Promtail
+and Alloy together because duplicate ingestion can result. Alloy imports the
+legacy Promtail position file only when its own positions do not exist. If
+Alloy fails after cutover, stop it before re-enabling Promtail and inspect both
+position sets. Readiness of either collector is not end-to-end log evidence.
+
+> **Source evidence — optional monitoring**
+>
+> [Prometheus retains 15 days on 20 GiB and Grafana uses a 5 GiB volume plus the
+> Loki data source](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/prometheus.yaml#L3-L50).
+> [Loki is one unauthenticated filesystem-backed replica with 720-hour retention
+> and no caches, gateway, or canary](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/loki.yaml#L1-L33).
+>
+> [Alloy uses a node-local position directory, imports legacy Promtail positions,
+> and disables usage reporting](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/alloy.yaml#L1-L29).
+> [Its discovery is restricted to the current node and CRI parsing forwards to
+> Loki](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/alloy.yaml#L30-L45).
+> [The relabel rules create the `app`, `instance`, `component`, `node_name`,
+> `namespace`, `job`, `pod`, and `container` labels](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/alloy.yaml#L47-L98).
+> [File discovery constructs CRI paths and Loki write sends to the in-cluster
+> push endpoint without external labels](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/alloy.yaml#L100-L130).
+
+### Why event telemetry and platform monitoring are separate
+
+**Accepted approach:** Nova keeps exact lifecycle and domain events in its own
+recoverable journal and treats external sinks as projections. The optional
+monitoring stack keeps infrastructure samples and process logs. This preserves
+pipeline decisions when monitoring is absent. Its cost is that operators must
+correlate two paths, and the repository has no automatic event-to-metric or
+event-to-log completeness proof. The historical reason beyond the implemented
+authority boundary is not recorded; the explanation is an inference.
+
+Reconsider the separation if the project adds an authenticated, bounded bridge
+with explicit correlation, redaction, cardinality, retention, and failure
+semantics. Do not make pipeline completion depend on Grafana, Loki, or
+Prometheus availability unless that new dependency has a recovery contract.
 
 ## Retention, Capacity, and Backpressure
 
@@ -476,6 +602,10 @@ run root. Do not merge partial audit output with another run or journal head.
 | File sink is full | Nova event journal and prior sink records | Add capacity or execute verified retirement. Required observers remain failed closed. |
 | Canonical event journal is corrupt | No trustworthy projection can repair it | Stop mutation and restore the complete Nova run group from verified backup. |
 | Retained v1 schema changes | No current runtime effect | Regenerate manifest/types, run contract tests, and assess external readers. It does not update v2 runtime automatically. |
+| Prometheus scrape fails | Product journals and the last retained samples | Repair discovery, endpoint, or network access. Do not infer product failure or replay a lifecycle action. |
+| Alloy cannot push to Loki | Product journals, CRI files not yet rotated, and collector positions | Preserve positions and source files. Restore Loki/network service. Do not run a second collector concurrently. |
+| Loki volume is full or corrupt | Product journals and any surviving CRI files | Stop relying on log queries, preserve the volume, and restore Loki separately. There is no repository-tested log replay or restore. |
+| Grafana cannot query a data source | The underlying Prometheus or Loki store can still be healthy | Check the data source directly, then Grafana configuration and credentials. Dashboard health is not a sink acknowledgement. |
 
 ## Change Guide
 
@@ -531,6 +661,8 @@ Do not claim that this activates v1 in the runtime.
 | File sink bounds and durability | Telemetry-store package and live-function tests | Does not provide off-node backup or automatic retention |
 | Redis lost-ACK and dedup behavior | Redis transport package, durability, and migration tests | Dedup remains bounded by configured TTL; cluster storage acceptance is separate |
 | Retained v1 schemas and generated languages | `generate-telemetry-contracts.mjs --check` and v1 contract tests | No runtime service, producer, consumer, authorization, or ordering implementation |
+| Prometheus/Grafana values | Upstream chart render and deployment checks verify declared PVCs, Secret, port, and retention | No live scrape, alert, dashboard, or application-metric completeness proof |
+| CRI → Alloy → Loki | Alloy config validation and chart render verify discovery, parsing, labels, positions, and push URL | No live proof that every container line reached Loki or remained queryable for 720 hours |
 
 ## Related Guides
 

@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 130,
+  "pageCount": 131,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -1749,6 +1749,25 @@
       ]
     },
     {
+      "page": "docs/site/reference/platform-surfaces-generated.md",
+      "route": "/reference/platform-surfaces-generated/",
+      "contentKind": "generated",
+      "status": "generated current-source inventory",
+      "audience": "platform operator, runtime maintainer, security maintainer",
+      "owner": "documentation automation",
+      "appliesTo": "runtime resources, secret references, endpoints, stores, events, and Ops MCP tools",
+      "lastVerified": "generated from current source on 2026-09-20",
+      "sourceDependencies": [
+        "scripts/docs-platform-surface-inventory.mjs",
+        "docs/config/platform-surface-map.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/reference/secrets.md",
       "route": "/reference/secrets/",
       "contentKind": "generated",
@@ -2070,7 +2089,7 @@
       "audience": "operator, architecture reader, security reviewer, maintainer",
       "owner": "platform architecture and operations",
       "appliesTo": "current Helm charts and runtime-role declarations",
-      "lastVerified": "source inspection on 2026-09-15",
+      "lastVerified": "source inspection on 2026-09-20",
       "sourceDependencies": [
         "packaging/runtime/roles",
         "charts/kubeclaw",

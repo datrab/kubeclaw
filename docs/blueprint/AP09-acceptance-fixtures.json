@@ -41,6 +41,7 @@
   "readerTasks": [
     {
       "id": "READER-OPERATOR-01", "persona": "operator", "startPath": "docs/site/README.md",
+      "acceptanceIds": ["A98-03", "A98-04", "A98-13", "A913-04", "A913-05"],
       "objective": "Find the supported installation path, run its preflight checks, identify the readiness signals, and stop safely at every failed prerequisite.",
       "taskInput": "A clean checkout at reviewed_revision on an Ubuntu 24.04 host without a prepared cluster. The facilitator injects a failed DNS prerequisite reported by the documented preflight command.",
       "fixturePaths": [], "injectedFaultId": "INSTALL-DNS-UNRESOLVED",
@@ -57,8 +58,10 @@
     },
     {
       "id": "READER-OPERATOR-02", "persona": "operator", "startPath": "docs/site/README.md",
+      "acceptanceIds": ["A98-07", "A98-13", "A913-04", "A913-10", "A913-12"],
       "objective": "Decide whether a complete platform restore is currently supported, identify the exact source-backed blocker, and stop before an unsafe cutover.",
       "taskInput": "A clean checkout at reviewed_revision and an isolated empty target. Determine from docs/site whether a complete platform restore is supported now. If it is supported, follow the procedure. If it is not supported, identify the boundary and take the documented safe action. No author or first operator is present.",
+      "supportState": { "status": "unsupported-boundary", "declaredAtFixtureRevision": true, "authorities": ["docs/site/status/open-issues.md#ifr-01-001", "docs/site/status/open-issues.md#ifr-26-001"] },
       "facilitatorSetup": "Keep this field hidden from the participant. Current source authority declares complete host and cross-service restore proof open as IFR-01-001 and IFR-26-001; score the participant against the hidden requiredOutcomes below.",
       "fixturePaths": [], "injectedFaultId": "RESTORE-CURRENT-PRODUCT-BOUNDARY",
       "requiredOutcomes": [
@@ -73,12 +76,49 @@
       "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
     },
     {
+      "id": "READER-OPERATOR-03", "persona": "operator", "startPath": "docs/site/README.md",
+      "acceptanceIds": ["A98-07", "A98-13", "A913-04", "A913-05"],
+      "objective": "Create a Prism backup, restore its database proof into the documented isolated target, verify it through the documented reader, retain the evidence, and clean up only the temporary target.",
+      "taskInput": "A clean checkout at reviewed_revision and a deployed Prism test namespace with the registered backup fixture. The source service stays online, and the participant must use the supported component-level proof without claiming a complete platform restore.",
+      "supportState": { "status": "supported-component-scope", "declaredAtFixtureRevision": true, "authorities": ["docs/site/use/recovery.md#prism-restore"] },
+      "fixturePaths": [], "injectedFaultId": "RESTORE-PRISM-COMPONENT-PROOF",
+      "requiredOutcomes": [
+        { "id": "backup-group-verified", "passCondition": "The participant creates one matched immutable database-and-artifact backup group and verifies its recorded digests before restore." },
+        { "id": "isolated-restore-executed", "passCondition": "The documented restore-proof command exits zero against a temporary isolated database and never overwrites the source database." },
+        { "id": "application-reader-verifies", "passCondition": "The participant runs the documented Prism reader check against the restored target and records the observed project and revision identities." },
+        { "id": "scope-and-cleanup-correct", "passCondition": "The participant states the exact unproved platform scope, retains the required evidence, and removes only the temporary restore target after verification." }
+      ],
+      "allowedAssistance": "Only docs/site, the registered backup fixture, and tools named by the recovery page. The facilitator can reset the namespace but cannot select or explain a command.",
+      "failureThreshold": "FAIL after a missing digest check, mutation of the source database, absent reader verification, false platform-restore claim, unsafe cleanup, forbidden source, or 120 minutes without completion.",
+      "participantRequirements": { "freshContext": true, "priorContribution": false, "requiredRole": "operator" },
+      "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
+    },
+    {
+      "id": "READER-OPERATOR-04", "persona": "operator", "startPath": "docs/site/README.md",
+      "acceptanceIds": ["A98-03", "A98-04", "A98-06", "A98-13", "A913-04", "A913-05"],
+      "objective": "Install the supported platform profile on the registered clean host, prove all four readiness levels, diagnose one injected dependency failure, recover it, and verify functional service before cleanup.",
+      "taskInput": "A clean registered Ubuntu 24.04 host at reviewed_revision with supported hardware, network access, and credentials. All preflight conditions pass. After functional readiness, the facilitator injects the registered Redis connectivity fault.",
+      "fixturePaths": [], "injectedFaultId": "OPERATOR-INSTALL-REDIS-CONNECTIVITY",
+      "requiredOutcomes": [
+        { "id": "preflight-and-install-pass", "passCondition": "Every documented preflight passes before mutation, and the exact supported install procedure exits zero without an undocumented host step." },
+        { "id": "readiness-proven", "passCondition": "The participant records distinct process, service, dependency, and functional readiness observations from the documented commands." },
+        { "id": "fault-diagnosed-and-recovered", "passCondition": "The symptom path distinguishes Redis connectivity from credentials and data failure, applies the bounded recovery, and restores dependency readiness." },
+        { "id": "functional-and-cleanup-proven", "passCondition": "A post-recovery functional probe succeeds, retained evidence is recorded, and cleanup follows the documented scope without deleting persistent authority." }
+      ],
+      "allowedAssistance": "Only docs/site and tools named by the operator pages. The facilitator provisions the registered host, injects or removes the named fault, and cannot explain a step or output.",
+      "failureThreshold": "FAIL after an undocumented prerequisite or host step, conflated readiness level, guessed cause, unbounded restart, missing functional proof, unsafe cleanup, forbidden source, or 180 minutes without completion.",
+      "participantRequirements": { "freshContext": true, "priorContribution": false, "requiredRole": "operator" },
+      "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
+    },
+    {
       "id": "READER-PIPELINE-01", "persona": "pipeline-author", "startPath": "docs/site/README.md",
-      "objective": "Create and validate a minimal pipeline, explain the effective defaults, and identify the first safe action for one dependency failure.",
+      "acceptanceIds": ["A99-06", "A99-08", "A99-12", "A913-04", "A913-05"],
+      "objective": "Create, validate, and execute a minimal pipeline to its authoritative terminal result, explain the effective defaults, then identify the first safe action for one dependency failure.",
       "taskInput": "The canonical minimal pipeline fixture at reviewed_revision. The facilitator makes its declared Redis endpoint unreachable before the failure run.",
       "fixturePaths": ["docs/site/use/workflows/examples/minimal.pipeline.json"], "injectedFaultId": "PIPELINE-REDIS-UNREACHABLE",
       "requiredOutcomes": [
         { "id": "pipeline-validates", "passCondition": "The exact documented validation command exits zero for the unchanged fixture." },
+        { "id": "minimal-run-succeeds", "passCondition": "With healthy dependencies, the exact documented run command reaches the expected authoritative terminal state and the audit command verifies it." },
         { "id": "effective-defaults-explained", "passCondition": "The participant records every default inserted by the compiler and links each value to its documented authority." },
         { "id": "runtime-identities-resolve", "passCondition": "Every selected role, stage, plugin, provider, fixture, and report identity resolves through the documented registry command." },
         { "id": "failure-action-is-bounded", "passCondition": "For the Redis fault, the participant identifies the persisted state, does not use unbounded retry, and selects the documented stop or recovery action." }
@@ -89,7 +129,59 @@
       "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
     },
     {
+      "id": "READER-PIPELINE-02", "persona": "pipeline-author", "startPath": "docs/site/README.md",
+      "acceptanceIds": ["A99-07", "A99-12", "A913-04", "A913-05"],
+      "objective": "Execute the registered full pipeline from checkout through compile, matrix and fixture execution, report and evidence production, authoritative result import, audit, and cleanup.",
+      "taskInput": "A clean checkout at reviewed_revision, the canonical full-workflow fixture, and healthy registered dependencies. No precomputed registry output or result record is supplied.",
+      "fixturePaths": ["docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json"], "injectedFaultId": "PIPELINE-FULL-SUCCESS",
+      "requiredOutcomes": [
+        { "id": "compile-and-resolution-pass", "passCondition": "The exact fixture compiles and every role, plugin, provider, fixture, report, matrix, and artifact identity resolves from current registries." },
+        { "id": "full-run-succeeds", "passCondition": "The documented run reaches its terminal successful lifecycle state and records every expected matrix and fixture result." },
+        { "id": "authority-chain-proven", "passCondition": "The participant distinguishes provider output, evidence, report, imported result, and final decision authority and records their bound identities." },
+        { "id": "audit-and-cleanup-pass", "passCondition": "The audit command verifies the retained record, cleanup removes only disposable state, and the participant lists all remaining authoritative data." }
+      ],
+      "allowedAssistance": "Only docs/site, the registered fixture, and commands named by its pages. The facilitator can reset dependencies but cannot interpret output or choose recovery.",
+      "failureThreshold": "FAIL after an unresolved identity, skipped execution layer, wrong result authority, destructive cleanup, forbidden source, or 150 minutes without completion.",
+      "participantRequirements": { "freshContext": true, "priorContribution": false, "requiredRole": "pipeline-author" },
+      "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
+    },
+    {
+      "id": "READER-PIPELINE-03", "persona": "pipeline-author", "startPath": "docs/site/README.md",
+      "acceptanceIds": ["A99-08", "A99-12", "A913-05"],
+      "objective": "Run the registered worker-abort scenario, identify the committed state and ownership boundary, perform the documented bounded recovery, and prove the final terminal state and cleanup.",
+      "taskInput": "The canonical full-workflow fixture at reviewed_revision. The facilitator terminates the registered worker after claim commit and before terminal result publication at the fixture-defined synchronization point.",
+      "fixturePaths": ["docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json"], "injectedFaultId": "PIPELINE-WORKER-ABORT-AFTER-CLAIM",
+      "requiredOutcomes": [
+        { "id": "abort-state-identified", "passCondition": "The participant identifies the last committed claim, attempt, journal, and result-import states without inferring success from process exit." },
+        { "id": "ownership-and-retry-bounded", "passCondition": "The participant identifies the recovery owner, fencing identity, retry budget, and condition that forbids duplicate execution." },
+        { "id": "recovery-executed", "passCondition": "The documented recovery command resumes or terminates the attempt as specified and produces the expected authoritative terminal record." },
+        { "id": "cleanup-preserves-evidence", "passCondition": "Cleanup retains the journal, result, and diagnostic evidence required by the guide and removes only the registered disposable resources." }
+      ],
+      "allowedAssistance": "Only docs/site, the registered fixture, and facilitator fault injection at the named synchronization point. No output interpretation or recovery hint is allowed.",
+      "failureThreshold": "FAIL after a wrong committed state, duplicate or unbounded retry, missing fence, unexecuted recovery, lost evidence, forbidden source, or 120 minutes without completion.",
+      "participantRequirements": { "freshContext": true, "priorContribution": false, "requiredRole": "pipeline-author" },
+      "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
+    },
+    {
+      "id": "READER-PIPELINE-04", "persona": "pipeline-author", "startPath": "docs/site/README.md",
+      "acceptanceIds": ["A99-08", "A99-12", "A913-05"],
+      "objective": "Run the registered uncertain-external-effect scenario, distinguish unknown outcome from failure, use receipt lookup or the documented safe stop, and preserve evidence without replaying the effect.",
+      "taskInput": "The canonical effectful-workflow fixture at reviewed_revision. The facilitator drops the response after the external receiver commits the effect and before the local receipt is recorded.",
+      "fixturePaths": ["docs/site/use/workflows/examples/uncertain-effect.pipeline.json"], "injectedFaultId": "PIPELINE-EFFECT-COMMITTED-RESPONSE-LOST",
+      "requiredOutcomes": [
+        { "id": "uncertain-state-identified", "passCondition": "The participant records an unknown outcome and does not rewrite it as failed, cancelled, or completed." },
+        { "id": "identity-and-receipt-used", "passCondition": "The participant uses the documented idempotency identity and receiver receipt lookup when that lookup is available." },
+        { "id": "unsafe-replay-refused", "passCondition": "The participant does not replay an unbound effect and stops when receiver receipt lookup cannot establish the outcome." },
+        { "id": "evidence-retained", "passCondition": "The effect request, local journal head, receiver observation, lookup result, and final operator decision are retained as one evidence set." }
+      ],
+      "allowedAssistance": "Only docs/site, the registered fixture, and the facilitator's registered response-loss injection. The facilitator cannot state whether the effect committed.",
+      "failureThreshold": "FAIL after an invented terminal state, changed identity, unsafe replay, missing safe stop, incomplete evidence, forbidden source, or 120 minutes without completion.",
+      "participantRequirements": { "freshContext": true, "priorContribution": false, "requiredRole": "pipeline-author" },
+      "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
+    },
+    {
       "id": "READER-PLUGIN-01", "persona": "plugin-developer", "startPath": "docs/site/README.md",
+      "acceptanceIds": ["A910-10", "A910-13", "A913-04", "A913-05"],
       "objective": "Create, test, activate, replace, disable, and remove the documented minimal plugin without undeclared authority.",
       "taskInput": "A clean checkout at reviewed_revision and the maintained minimal-stage example under docs/site/extend/examples. Use the exact replacement identity and invalid-capability mutation specified by the guide.",
       "fixturePaths": ["docs/site/extend/examples/minimal-stage/plugin.json"], "injectedFaultId": "PLUGIN-UNDECLARED-CAPABILITY",
@@ -106,6 +198,7 @@
     },
     {
       "id": "READER-PLATFORM-01", "persona": "platform-developer", "startPath": "docs/site/README.md",
+      "acceptanceIds": ["A97-11", "A913-04", "A913-05"],
       "objective": "Trace one request across Nova, Worker Core, Redis, PostgreSQL, Git, registry, BuildKit, and Tailscale, then identify ownership and recovery at each boundary.",
       "taskInput": "The registered successful request trace and the registered Redis-unavailable trace for reviewed_revision. No component diagram is supplied outside docs/site.",
       "fixturePaths": ["docs/site/use/workflows/examples/request-trace-success.json", "docs/site/use/workflows/examples/request-trace-redis-unavailable.json"], "injectedFaultId": "TRACE-REDIS-UNAVAILABLE",
@@ -121,7 +214,25 @@
       "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
     },
     {
+      "id": "READER-PLATFORM-02", "persona": "platform-developer", "startPath": "docs/site/README.md",
+      "acceptanceIds": ["A910-11", "A913-04"],
+      "objective": "Implement the registered Nova lifecycle change from a clean checkout, select the smallest complete check chain, prove compatibility and recovery behavior, and remove the change cleanly.",
+      "taskInput": "The preregistered platform-change fixture at reviewed_revision adds one bounded lifecycle reason without changing an external contract. The participant receives the desired behavior and fixture, but no source path or test command.",
+      "fixturePaths": ["docs/site/extend/examples/platform-change-nova-lifecycle.json"], "injectedFaultId": "PLATFORM-NOVA-LIFECYCLE-CHANGE",
+      "requiredOutcomes": [
+        { "id": "ownership-and-invariants-found", "passCondition": "The participant finds the canonical owner, affected state invariants, compatibility boundary, generated surfaces, and documentation owner before editing." },
+        { "id": "smallest-complete-chain-runs", "passCondition": "The participant runs the documented unit, contract, replay, recovery, compatibility, and documentation checks required for this change, with no unexplained omission." },
+        { "id": "negative-and-recovery-proof-pass", "passCondition": "The registered invalid transition is rejected and the crash or restart fixture preserves the documented lifecycle result." },
+        { "id": "removal-restores-baseline", "passCondition": "After the exercise, removal restores the original generated output and all selected checks pass without retained test state." }
+      ],
+      "allowedAssistance": "Only docs/site, the registered fixture, and tools selected through the documented change guide. The facilitator cannot name source files or checks.",
+      "failureThreshold": "FAIL after a wrong owner, missing invariant or required check, absent negative/recovery proof, stale generated output, forbidden source, or 180 minutes without completion.",
+      "participantRequirements": { "freshContext": true, "priorContribution": false, "requiredRole": "platform-developer" },
+      "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
+    },
+    {
       "id": "READER-QUALITY-01", "persona": "prism-buster-specialist", "startPath": "docs/site/README.md",
+      "acceptanceIds": ["A99-07", "A910-13", "A913-04", "A913-05"],
       "objective": "Configure one Prism flow and one Buster suite, explain their result authority, and add a documented extension without bypassing validation.",
       "taskInput": "The canonical Prism Studio flow and Buster suite fixture named by their guides, plus a mutation that adds the fixture's registered undeclared provider capability.",
       "fixturePaths": ["docs/site/use/workflows/examples/prism-studio-flow.json", "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json"], "injectedFaultId": "QUALITY-UNDECLARED-PROVIDER-CAPABILITY",
@@ -137,17 +248,258 @@
       "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
     }
   ],
+  "dynamicReaderTaskAuthorities": [
+    {
+      "id": "DYNAMIC-EXTENSION-AND-COMPLEX-PLUGIN-TASKS",
+      "acceptanceIds": ["A910-13", "A913-04", "A913-05"],
+      "path": "docs/generated/inventory/ap09-extension-reader-tasks.json",
+      "schemaVersion": "kubeclaw-ap09-extension-reader-tasks.v1",
+      "generatorCommand": "npm run docs:ap09:extension-reader-tasks:check",
+      "coverageKinds": ["extension-class", "complex-plugin"],
+      "coverageAuthorities": [
+        { "kind": "extension-class", "mode": "generated-discovery", "path": "docs/generated/inventory/extension-classes.json", "schemaVersion": "kubeclaw-extension-classes.v1", "arrayField": "classes", "identityField": "id", "requiredFamilies": ["pipeline", "host", "worker-engine"] },
+        { "kind": "complex-plugin", "mode": "generated-classification", "path": "docs/generated/inventory/plugin-complexity.json", "schemaVersion": "kubeclaw-plugin-complexity.v1", "arrayField": "plugins", "identityField": "id", "classificationField": "classification", "acceptedValue": "complex" }
+      ],
+      "requiredTaskFields": ["id", "acceptanceIds", "coverageKind", "coveredIdentity", "sourceAuthority", "persona", "startPath", "objective", "taskInput", "fixturePaths", "requiredOutcomes", "allowedAssistance", "failureThreshold", "participantRequirements", "forbiddenSources"],
+      "passCondition": "The generated authority contains exactly one executable fresh-context task for every currently discovered extension class and every plugin classified as complex. Each task proves activation or behavior plus a negative path, cleanup, compatibility, and retained-state handling. A documented product blocker produces NOT READY, not PASS, for practical execution."
+    }
+  ],
+  "executionScenarios": [
+    {
+      "id": "EXEC-PLATFORM-SUCCESS", "acceptanceIds": ["A97-10", "A99-07", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/workflows/buster-suite.md", "injectedFaultId": "NONE",
+      "objective": "Execute the complete healthy request-to-result path through every pipeline-required dependency and authoritative result import.",
+      "setup": "Use the registered full workflow, healthy dependencies, clean runtime identities, and the exact reviewed revision.",
+      "expectedObservations": [
+        { "id": "all-required-boundaries-observed", "passCondition": "The record contains Nova, Worker, Redis, PostgreSQL, Git, registry, BuildKit, Tailscale, LiteLLM, and authoritative result identities in observed order." },
+        { "id": "terminal-result-authoritative", "passCondition": "The imported result and final lifecycle state pass the documented audit and are not inferred from provider output." },
+        { "id": "telemetry-correlates", "passCondition": "The documented run, stage, attempt, effect, artifact, and trace identities correlate across the retained evidence." },
+        { "id": "cleanup-bounded", "passCondition": "Cleanup removes only disposable resources and lists every retained authoritative record." }
+      ], "failureThreshold": "FAIL after a missing required boundary, unresolved identity, non-authoritative success claim, broken correlation, or destructive cleanup."
+    },
+    {
+      "id": "EXEC-WAIT-RESUME", "acceptanceIds": ["A98-05", "A99-04", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/operate.md", "injectedFaultId": "WAIT-VALID-AND-REPLAYED-SIGNAL",
+      "objective": "Drive a run into waiting, issue one valid resume signal, replay it, and prove one authorized transition.", "setup": "Use the registered wait fixture, issuer identity, signature material, and clean journal.",
+      "expectedObservations": [
+        { "id": "wait-persisted", "passCondition": "The wait request, issuer, identity, deadline, and journal head are persisted before the signal." },
+        { "id": "valid-signal-resumes-once", "passCondition": "The valid signal advances the intended wait exactly once with the documented causal event." },
+        { "id": "replay-is-idempotent", "passCondition": "The replayed signal does not create a second transition or consume another budget." },
+        { "id": "wrong-signal-rejected", "passCondition": "The registered wrong issuer or wait identity is rejected without changing run state." }
+      ], "failureThreshold": "FAIL after missing persisted authority, duplicate transition, accepted wrong signal, or unbound manual state change."
+    },
+    {
+      "id": "EXEC-CANCELLATION", "acceptanceIds": ["A98-05", "A99-04", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/operate.md", "injectedFaultId": "CANCEL-RUNNING-EFFECT",
+      "objective": "Cancel a run during the registered running effect and prove propagation, bounded termination, terminal state, and retained evidence.", "setup": "Use the cancellation fixture at its named synchronization point and do not kill storage services.",
+      "expectedObservations": [
+        { "id": "cancel-authority-verified", "passCondition": "The cancellation request uses the documented authority and exact run identity." },
+        { "id": "propagation-observed", "passCondition": "Worker and external-effect handling receive the documented cancellation or safe-stop action." },
+        { "id": "terminal-state-correct", "passCondition": "The lifecycle reaches the documented cancelled or uncertainty state and never reports false success." },
+        { "id": "evidence-retained", "passCondition": "Request, propagation, timeout, cleanup, and terminal records remain auditable." }
+      ], "failureThreshold": "FAIL after unauthorized cancellation, false success, unbounded process kill, missing uncertainty, or lost evidence."
+    },
+    {
+      "id": "EXEC-RESTART-RECOVERY", "acceptanceIds": ["A98-05", "A99-04", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/recovery.md", "injectedFaultId": "RESTART-AFTER-COMMITTED-EFFECT",
+      "objective": "Restart the control path after a committed effect boundary and recover without duplicate work or invented completion.", "setup": "Stop the registered process after journal commit and before local terminal projection, then restart from the same persisted state.",
+      "expectedObservations": [
+        { "id": "journal-head-restored", "passCondition": "Recovery loads the exact committed journal head, snapshot, and effect identity." },
+        { "id": "receipt-reconciled", "passCondition": "The receiver receipt or documented uncertainty rule decides whether execution may continue." },
+        { "id": "no-duplicate-effect", "passCondition": "Recovery does not issue a second unbound external effect." },
+        { "id": "final-audit-passes", "passCondition": "The final state and retained evidence pass the documented audit after restart." }
+      ], "failureThreshold": "FAIL after stale state, duplicate effect, fabricated receipt, unbounded retry, or failed final audit."
+    },
+    {
+      "id": "EXEC-UPGRADE", "acceptanceIds": ["A98-08", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/maintenance.md", "injectedFaultId": "UPGRADE-SUPPORTED-VERSION-PAIR",
+      "objective": "Upgrade the registered supported version pair through every preflight, data, rollout, health, and functional gate.", "setup": "Use the version-matrix pair and isolated retained backup registered for the reviewed revision.",
+      "expectedObservations": [
+        { "id": "upgrade-preflight-passes", "passCondition": "Compatibility, capacity, credentials, backup, and irreversible boundaries are checked before mutation." },
+        { "id": "ordered-rollout-passes", "passCondition": "Data and component changes follow the documented order and stop at every failed gate." },
+        { "id": "health-and-function-pass", "passCondition": "Process, service, dependency, and functional post-upgrade checks pass." },
+        { "id": "evidence-and-old-version-retained", "passCondition": "The required upgrade evidence and rollback assets remain available until acceptance." }
+      ], "failureThreshold": "FAIL after skipped preflight, wrong order, crossed stop gate, incomplete functional proof, or early retirement of rollback assets."
+    },
+    {
+      "id": "EXEC-ROLLBACK", "acceptanceIds": ["A98-08", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/maintenance.md", "injectedFaultId": "ROLLBACK-BEFORE-IRREVERSIBLE-BOUNDARY",
+      "objective": "Trigger the registered failed upgrade before its irreversible boundary and execute the documented rollback to verified service.", "setup": "Use the rollback-capable version pair, retained backup, and injected post-rollout health failure.",
+      "expectedObservations": [
+        { "id": "rollback-boundary-respected", "passCondition": "The participant proves the irreversible boundary was not crossed before selecting rollback." },
+        { "id": "version-and-data-restored", "passCondition": "The documented component and data versions are restored in the required order." },
+        { "id": "post-rollback-function-passes", "passCondition": "Functional and data-integrity checks pass through original consumers." },
+        { "id": "failed-upgrade-evidence-retained", "passCondition": "The failed rollout and rollback evidence remain intact for diagnosis." }
+      ], "failureThreshold": "FAIL after rollback beyond the declared boundary, mixed versions, absent data proof, or deleted failure evidence."
+    },
+    {
+      "id": "EXEC-DECOMMISSION", "acceptanceIds": ["A98-09", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/maintenance.md", "injectedFaultId": "DECOMMISSION-REGISTERED-TEST-INSTANCE",
+      "objective": "Decommission the registered test instance in the documented order while retaining required audit and recovery evidence.", "setup": "Use a uniquely labelled disposable instance with external resources, credentials, persistent data, and a verified final export.",
+      "expectedObservations": [
+        { "id": "final-export-verified", "passCondition": "The final export and restore-readiness check pass before access or data removal." },
+        { "id": "access-revoked-in-order", "passCondition": "Ingress, identities, credentials, and workload access are revoked in the documented safe order." },
+        { "id": "resources-removed-exactly", "passCondition": "Only explicitly registered workloads, external resources, artifacts, and data targets are removed." },
+        { "id": "retention-proven", "passCondition": "Required audit, deletion, and recovery evidence remains available after decommission." }
+      ], "failureThreshold": "FAIL after unverified export, broad selector or glob, early data deletion, leaked external resource, or missing retained evidence."
+    },
+    {
+      "id": "EXEC-PRISM-JOURNEY", "acceptanceIds": ["A98-12", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/prism-studio.md", "injectedFaultId": "PRISM-ABORT-RESUME-AND-CLEANUP",
+      "objective": "Execute the Prism and Studio journey from setup through revision, evaluation, preview, approval boundary, abort, resume, and cleanup.", "setup": "Use the canonical Prism flow, registered browser environment, model route, and separate human acceptance identity.",
+      "expectedObservations": [
+        { "id": "prism-flow-executes", "passCondition": "Setup, edit, evaluation, preview, and revision history execute with their documented identities." },
+        { "id": "acceptance-remains-human", "passCondition": "Technical success does not replace the separately recorded human acceptance decision." },
+        { "id": "abort-and-resume-correct", "passCondition": "The registered abort preserves recoverable state and resume continues from the documented revision boundary." },
+        { "id": "cleanup-preserves-authority", "passCondition": "Cleanup removes previews and temporary resources while retaining authoritative revisions and decisions." }
+      ], "failureThreshold": "FAIL after mock-only proof, automatic acceptance, lost revision, wrong resume point, or destructive cleanup."
+    },
+    {
+      "id": "EXEC-DEMO-JOURNEY", "acceptanceIds": ["A98-12", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/demo-delivery.md", "injectedFaultId": "DEMO-SUCCESS-AND-SEPARATE-ACCEPTANCE",
+      "objective": "Execute Demo Delivery through build, exposure, evidence, handoff, and separate acceptance without treating technical completion as product acceptance.", "setup": "Use the canonical demo fixture, supported exposure profile, and distinct delivery and acceptance identities.",
+      "expectedObservations": [
+        { "id": "demo-build-and-exposure-pass", "passCondition": "The immutable build identity and supported exposure endpoint pass their documented checks." },
+        { "id": "delivery-evidence-complete", "passCondition": "Required artifacts, receipts, access data, and limitations are present in the handoff." },
+        { "id": "acceptance-separate", "passCondition": "A distinct human identity records acceptance after inspecting the delivered result." },
+        { "id": "cleanup-and-retention-correct", "passCondition": "Exposure cleanup and evidence retention follow the documented post-acceptance path." }
+      ], "failureThreshold": "FAIL after mutable identity, synthetic-only exposure, merged delivery/acceptance authority, missing limitation, or unsafe cleanup."
+    },
+    {
+      "id": "EXEC-FAIL-REDIS", "acceptanceIds": ["A97-10", "A99-08", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/diagnose.md", "injectedFaultId": "DEPENDENCY-REDIS-UNREACHABLE",
+      "objective": "Trace Redis unavailability to safe stop and bounded recovery.", "setup": "Block only the registered Redis endpoint after preflight.",
+      "expectedObservations": [{ "id": "signal", "passCondition": "The Redis health and first consumer failure are observed." }, { "id": "state", "passCondition": "Persisted and in-memory state at failure are distinguished." }, { "id": "decision", "passCondition": "No unbounded retry or data reset occurs." }, { "id": "recovery", "passCondition": "Connectivity recovery and functional verification pass." }], "failureThreshold": "FAIL after guessed cause, state loss, unbounded retry, or absent functional verification."
+    },
+    {
+      "id": "EXEC-FAIL-POSTGRESQL", "acceptanceIds": ["A97-10", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/diagnose.md", "injectedFaultId": "DEPENDENCY-POSTGRESQL-UNREACHABLE",
+      "objective": "Trace PostgreSQL unavailability without confusing Prism and LiteLLM database ownership.", "setup": "Block the registered Prism PostgreSQL route while retaining LiteLLM PostgreSQL.",
+      "expectedObservations": [{ "id": "owner", "passCondition": "The failed database and owner are identified exactly." }, { "id": "consumers", "passCondition": "Affected and unaffected consumers are distinguished." }, { "id": "stop", "passCondition": "Writes stop before unsafe failover or restore." }, { "id": "recovery", "passCondition": "Database and application-reader checks pass after recovery." }], "failureThreshold": "FAIL after wrong database, unsafe write continuation, destructive restore, or readiness-only verification."
+    },
+    {
+      "id": "EXEC-FAIL-REGISTRY-BUILDKIT", "acceptanceIds": ["A97-10", "A99-08", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/diagnose.md", "injectedFaultId": "DEPENDENCY-REGISTRY-REJECTS-BUILDKIT-PUSH",
+      "objective": "Distinguish registry reachability, authentication, mirror, BuildKit, and image-identity failure and recover without mutable substitution.", "setup": "Reject the registered BuildKit push while pull-through mirror health remains available.",
+      "expectedObservations": [{ "id": "layer", "passCondition": "The failing registry/BuildKit layer is distinguished from mirror and runtime pull." }, { "id": "identity", "passCondition": "The intended immutable image identity remains unchanged." }, { "id": "stop", "passCondition": "No insecure fallback or mutable tag substitution occurs." }, { "id": "recovery", "passCondition": "Push, digest verification, pull, and consumer probe pass after recovery." }], "failureThreshold": "FAIL after layer conflation, insecure fallback, mutable tag, or missing digest verification."
+    },
+    {
+      "id": "EXEC-FAIL-TAILSCALE", "acceptanceIds": ["A97-10", "A99-08", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/diagnose.md", "injectedFaultId": "DEPENDENCY-TAILSCALE-AUTH-REJECTED",
+      "objective": "Trace Tailscale identity or route failure while separating pipeline processing from required remote connectivity.", "setup": "Reject the registered auth key or route without changing internal cluster networking.",
+      "expectedObservations": [{ "id": "identity", "passCondition": "Operator, device, auth key, and route ownership are identified." }, { "id": "boundary", "passCondition": "Internal processing and remote connectivity effects are separated." }, { "id": "stop", "passCondition": "No public exposure or credential reuse bypass is used." }, { "id": "recovery", "passCondition": "Rotation, route health, and authorized client access pass." }], "failureThreshold": "FAIL after boundary confusion, public bypass, reused credential, or missing authorized-client proof."
+    },
+    {
+      "id": "EXEC-FAIL-LITELLM", "acceptanceIds": ["A97-10", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/diagnose.md", "injectedFaultId": "DEPENDENCY-LITELLM-UPSTREAM-TIMEOUT",
+      "objective": "Trace LiteLLM timeout through model routing, retry limits, consumer state, and safe recovery.", "setup": "Delay the registered upstream model beyond the configured timeout while LiteLLM itself stays ready.",
+      "expectedObservations": [{ "id": "route", "passCondition": "Model, route, credential source, and timeout owner are identified." }, { "id": "mapping", "passCondition": "The consumer receives the documented bounded error mapping." }, { "id": "retry", "passCondition": "Retry stops at the configured bound and preserves effect uncertainty." }, { "id": "recovery", "passCondition": "Upstream and end-consumer functional probes pass after recovery." }], "failureThreshold": "FAIL after readiness conflation, credential exposure, unbounded retry, or missing consumer proof."
+    },
+    {
+      "id": "EXEC-FAIL-GIT", "acceptanceIds": ["A97-10", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/diagnose.md", "injectedFaultId": "DEPENDENCY-GIT-REVISION-UNAVAILABLE",
+      "objective": "Trace an unavailable Git revision without silently changing source identity.", "setup": "Make the registered immutable revision unavailable while another branch head remains reachable.",
+      "expectedObservations": [{ "id": "revision", "passCondition": "The exact origin, ref, and required immutable revision are recorded." }, { "id": "no-substitution", "passCondition": "No branch head or local stale checkout replaces the required revision." }, { "id": "state", "passCondition": "Dispatch and import records remain bound to the intended source identity." }, { "id": "recovery", "passCondition": "The exact revision is restored and source verification passes before resume." }], "failureThreshold": "FAIL after revision substitution, stale-source execution, identity rewrite, or unverified resume."
+    },
+    {
+      "id": "EXEC-FAIL-WORKER-ABORT", "acceptanceIds": ["A99-08", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/workflows/buster-suite.md", "injectedFaultId": "PIPELINE-WORKER-ABORT-AFTER-CLAIM",
+      "objective": "Execute the registered worker-abort recovery path.", "setup": "Abort after committed claim and before terminal result publication.",
+      "expectedObservations": [{ "id": "committed-state", "passCondition": "Claim, attempt, journal, and import state are recorded." }, { "id": "fence", "passCondition": "Ownership and fencing prevent duplicate execution." }, { "id": "recovery", "passCondition": "Bounded recovery reaches the documented terminal state." }, { "id": "cleanup", "passCondition": "Required evidence remains after cleanup." }], "failureThreshold": "FAIL after duplicate execution, missing fence, unbounded retry, or evidence loss."
+    },
+    {
+      "id": "EXEC-FAIL-UNCERTAIN-EFFECT", "acceptanceIds": ["A99-08", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/recovery.md", "injectedFaultId": "PIPELINE-EFFECT-COMMITTED-RESPONSE-LOST",
+      "objective": "Execute the response-lost uncertain-effect path without unsafe replay.", "setup": "Drop the response after receiver commit and before local receipt.",
+      "expectedObservations": [{ "id": "unknown", "passCondition": "The outcome remains unknown until receipt evidence resolves it." }, { "id": "identity", "passCondition": "Lookup uses the original effect and idempotency identities." }, { "id": "no-replay", "passCondition": "No unbound replay of the external effect occurs." }, { "id": "decision", "passCondition": "The final operator decision and evidence are retained." }], "failureThreshold": "FAIL after invented state, changed identity, unsafe replay, or missing evidence."
+    },
+    {
+      "id": "EXEC-FAIL-DEMO-REJECTION", "acceptanceIds": ["A99-08", "A913-05"], "evidenceClass": "deployment", "commandAuthority": "docs/site/use/demo-delivery.md", "injectedFaultId": "DEMO-HUMAN-REJECTION",
+      "objective": "Execute a technically successful delivery followed by independent human rejection and safe cleanup.", "setup": "Use the registered rejection reason after a complete technical handoff.",
+      "expectedObservations": [{ "id": "technical-state", "passCondition": "Technical completion remains recorded without becoming product acceptance." }, { "id": "rejection-authority", "passCondition": "The separate authorized human decision and reason are retained." }, { "id": "lifecycle", "passCondition": "The run reaches the documented rejection or blocked state." }, { "id": "cleanup", "passCondition": "Exposure cleanup preserves handoff and rejection evidence." }], "failureThreshold": "FAIL after conflated acceptance, overwritten technical result, wrong lifecycle state, or lost rejection evidence."
+    }
+  ],
   "mutationTests": [
-    { "kind": "config", "operations": ["add", "change", "remove"], "gate": "docs:drift:config:check", "command": "npm run docs:drift:config:check", "diagnosticCode": "DOC_DRIFT_CONFIG" },
-    { "kind": "schema", "operations": ["add", "change", "remove"], "gate": "docs:drift:schema:check", "command": "npm run docs:drift:schema:check", "diagnosticCode": "DOC_DRIFT_SCHEMA" },
-    { "kind": "cli", "operations": ["add", "change", "remove"], "gate": "docs:drift:cli:check", "command": "npm run docs:drift:cli:check", "diagnosticCode": "DOC_DRIFT_CLI" },
-    { "kind": "contract", "operations": ["add", "change", "remove"], "gate": "docs:drift:contract:check", "command": "npm run docs:drift:contract:check", "diagnosticCode": "DOC_DRIFT_CONTRACT" },
-    { "kind": "event", "operations": ["add", "change", "remove"], "gate": "docs:drift:event:check", "command": "npm run docs:drift:event:check", "diagnosticCode": "DOC_DRIFT_EVENT" },
-    { "kind": "endpoint", "operations": ["add", "change", "remove"], "gate": "docs:drift:endpoint:check", "command": "npm run docs:drift:endpoint:check", "diagnosticCode": "DOC_DRIFT_ENDPOINT" },
-    { "kind": "store", "operations": ["add", "change", "remove"], "gate": "docs:drift:store:check", "command": "npm run docs:drift:store:check", "diagnosticCode": "DOC_DRIFT_STORE" },
-    { "kind": "capability", "operations": ["add", "change", "remove"], "gate": "docs:drift:capability:check", "command": "npm run docs:drift:capability:check", "diagnosticCode": "DOC_DRIFT_CAPABILITY" },
-    { "kind": "plugin-registration", "operations": ["add", "change", "remove"], "gate": "docs:drift:plugin-registration:check", "command": "npm run docs:drift:plugin-registration:check", "diagnosticCode": "DOC_DRIFT_PLUGIN_REGISTRATION" },
-    { "kind": "error-code", "operations": ["add", "change", "remove"], "gate": "docs:drift:error-code:check", "command": "npm run docs:drift:error-code:check", "diagnosticCode": "DOC_DRIFT_ERROR_CODE" },
-    { "kind": "workflow", "operations": ["add", "change", "remove"], "gate": "docs:drift:workflow:check", "command": "npm run docs:drift:workflow:check", "diagnosticCode": "DOC_DRIFT_WORKFLOW" }
+    {
+      "kind": "config", "operations": ["add", "change", "remove"], "gate": "docs:drift:config:check", "command": "npm run docs:drift:config:check", "diagnosticCode": "DOC_DRIFT_CONFIG",
+      "variants": [
+        { "id": "helm-field", "sourceAuthority": "charts/kubeclaw/values.yaml", "constructor": "yaml-field-v1", "expectedPages": ["docs/site/use/install.md"], "semanticChange": "field identity, type, default, and nested position" },
+        { "id": "environment-setting", "sourceAuthority": "charts/kubeclaw/templates/deployment.yaml", "constructor": "yaml-env-entry-v1", "expectedPages": ["docs/site/understand/deployment-and-trust.md"], "semanticChange": "environment identity, source, default, and consumer" },
+        { "id": "secret-setting", "sourceAuthority": "my-values/setup-secrets.sh", "constructor": "shell-secret-key-v1", "expectedPages": ["docs/site/understand/security-and-trust.md"], "semanticChange": "Secret identity, key, consumer, and rotation boundary" },
+        { "id": "script-flag", "sourceAuthority": "scripts/deploy.sh", "constructor": "shell-flag-v1", "expectedPages": ["docs/site/use/install.md"], "semanticChange": "flag identity, default, validation, and precedence" },
+        { "id": "swarm-config-field", "sourceAuthority": "charts/kubeclaw/files/config/swarm.config.json", "constructor": "json-field-v1", "expectedPages": ["docs/site/use/operate.md"], "semanticChange": "recursive field, default, constraint, and runtime consumer" },
+        { "id": "nested-plugin-config", "sourceAuthority": "skills/nova/plugins/lint/schemas/config.schema.json", "constructor": "json-schema-nested-field-v1", "expectedPages": ["docs/site/extend/plugin-catalogue/kubeclaw.lint.md"], "semanticChange": "nested config field, default, condition, and consumer" },
+        { "id": "default-precedence", "sourceAuthority": "skills/nova/plugins/lint/src/engine/policy-paths.ts", "constructor": "typescript-default-precedence-v1", "expectedPages": ["docs/site/extend/plugin-catalogue/kubeclaw.lint.md"], "semanticChange": "effective default and precedence winner" }
+      ]
+    },
+    {
+      "kind": "schema", "operations": ["add", "change", "remove"], "gate": "docs:drift:schema:check", "command": "npm run docs:drift:schema:check", "diagnosticCode": "DOC_DRIFT_SCHEMA",
+      "variants": [
+        { "id": "recursive-pipeline-field", "sourceAuthority": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts", "constructor": "typescript-contract-field-v1", "expectedPages": ["docs/site/reference/workflows.md"], "semanticChange": "nested field, variant, condition, default, limit, and consumer" },
+        { "id": "pipeline-stage-type", "sourceAuthority": "skills/nova/project/compiler.ts", "constructor": "typescript-stage-kind-v1", "expectedPages": ["docs/site/reference/workflows.md"], "semanticChange": "stage kind, selection rule, registry resolution, and runtime behavior" }
+      ]
+    },
+    {
+      "kind": "cli", "operations": ["add", "change", "remove"], "gate": "docs:drift:cli:check", "command": "npm run docs:drift:cli:check", "diagnosticCode": "DOC_DRIFT_CLI",
+      "variants": [
+        { "id": "nova-cli-flag", "sourceAuthority": "skills/nova/core/cli.ts", "constructor": "typescript-cli-flag-v1", "expectedPages": ["docs/site/use/operate.md"], "semanticChange": "flag, argument, default, conflict, exit behavior, and example" }
+      ]
+    },
+    {
+      "kind": "contract", "operations": ["add", "change", "remove"], "gate": "docs:drift:contract:check", "command": "npm run docs:drift:contract:check", "diagnosticCode": "DOC_DRIFT_CONTRACT",
+      "variants": [
+        { "id": "sdk-export", "sourceAuthority": "skills/common/plugin-runtime/sdk/src/index.ts", "constructor": "typescript-export-v1", "expectedPages": ["docs/site/extend/developer-handbook.md"], "semanticChange": "public export identity, signature, semantics, and compatibility" },
+        { "id": "public-contract-member", "sourceAuthority": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts", "constructor": "typescript-contract-member-v1", "expectedPages": ["docs/site/extend/developer-handbook.md"], "semanticChange": "member meaning, optionality, version, and compatibility" },
+        { "id": "progress-contract", "sourceAuthority": "skills/nova/project_setup/tools/progress-scaffold-validation.ts", "constructor": "typescript-progress-contract-v1", "expectedPages": ["docs/site/reference/workflows.md"], "semanticChange": "progress state, writer, reader, atomicity, and recovery" }
+      ]
+    },
+    {
+      "kind": "event", "operations": ["add", "change", "remove"], "gate": "docs:drift:event:check", "command": "npm run docs:drift:event:check", "diagnosticCode": "DOC_DRIFT_EVENT",
+      "variants": [
+        { "id": "runtime-event", "sourceAuthority": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts", "constructor": "typescript-event-member-v1", "expectedPages": ["docs/site/understand/telemetry.md"], "semanticChange": "event identity, producer, consumer, payload, ordering, and retention" }
+      ]
+    },
+    {
+      "kind": "endpoint", "operations": ["add", "change", "remove"], "gate": "docs:drift:endpoint:check", "command": "npm run docs:drift:endpoint:check", "diagnosticCode": "DOC_DRIFT_ENDPOINT",
+      "variants": [
+        { "id": "runtime-http-route", "sourceAuthority": "skills/prism/server/control-server.ts", "constructor": "typescript-http-route-v1", "expectedPages": ["docs/site/understand/communication.md"], "semanticChange": "method, route, caller, authentication, timeout, limit, and failure" }
+      ]
+    },
+    {
+      "kind": "store", "operations": ["add", "change", "remove"], "gate": "docs:drift:store:check", "command": "npm run docs:drift:store:check", "diagnosticCode": "DOC_DRIFT_STORE",
+      "variants": [
+        { "id": "runtime-store", "sourceAuthority": "skills/nova/core/test-gates/production.ts", "constructor": "typescript-store-path-v1", "expectedPages": ["docs/site/understand/data-and-state.md"], "semanticChange": "store identity, authority, writer, reader, retention, backup, and recovery" }
+      ]
+    },
+    {
+      "kind": "secret", "operations": ["add", "change", "remove"], "gate": "docs:drift:secret:check", "command": "npm run docs:drift:secret:check", "diagnosticCode": "DOC_DRIFT_SECRET",
+      "variants": [
+        { "id": "runtime-secret-reference", "sourceAuthority": "charts/kubeclaw/templates/deployment.yaml", "constructor": "yaml-secret-reference-v1", "expectedPages": ["docs/site/understand/security-and-trust.md"], "semanticChange": "Secret name, key, consumer, optionality, and rotation" }
+      ]
+    },
+    {
+      "kind": "runtime-service", "operations": ["add", "change", "remove"], "gate": "docs:drift:runtime-service:check", "command": "npm run docs:drift:runtime-service:check", "diagnosticCode": "DOC_DRIFT_RUNTIME_SERVICE",
+      "variants": [
+        { "id": "kubernetes-service", "sourceAuthority": "charts/prism/templates/services.yaml", "constructor": "yaml-service-v1", "expectedPages": ["docs/site/understand/platform-and-operations.md"], "semanticChange": "service identity, port, selector, dependency class, and health boundary" }
+      ]
+    },
+    {
+      "kind": "ops-tool", "operations": ["add", "change", "remove"], "gate": "docs:drift:ops-tool:check", "command": "npm run docs:drift:ops-tool:check", "diagnosticCode": "DOC_DRIFT_OPS_TOOL",
+      "variants": [
+        { "id": "ops-mcp-tool", "sourceAuthority": "tools/ops-mcp/src/server.mjs", "constructor": "javascript-mcp-tool-v1", "expectedPages": ["docs/site/understand/ops-mcp.md"], "semanticChange": "tool name, input, authority, output, limit, and failure" }
+      ]
+    },
+    {
+      "kind": "capability", "operations": ["add", "change", "remove"], "gate": "docs:drift:capability:check", "command": "npm run docs:drift:capability:check", "diagnosticCode": "DOC_DRIFT_CAPABILITY",
+      "variants": [
+        { "id": "plugin-capability", "sourceAuthority": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts", "constructor": "typescript-capability-v1", "expectedPages": ["docs/site/reference/capabilities.md"], "semanticChange": "capability identity, provider, consumer, resource, and denial" },
+        { "id": "role-grant", "sourceAuthority": "charts/kubeclaw/files/config/swarm.config.json", "constructor": "json-role-grant-v1", "expectedPages": ["docs/site/reference/capabilities.md"], "semanticChange": "role, grant, resource scope, translation boundary, and denial" }
+      ]
+    },
+    {
+      "kind": "plugin-registration", "operations": ["add", "change", "remove"], "gate": "docs:drift:plugin-registration:check", "command": "npm run docs:drift:plugin-registration:check", "diagnosticCode": "DOC_DRIFT_PLUGIN_REGISTRATION",
+      "variants": [
+        { "id": "plugin-manifest", "sourceAuthority": "skills/nova/plugins/lint/plugin.json", "constructor": "plugin-manifest-registration-v1", "expectedPages": ["docs/site/extend/plugin-catalogue/kubeclaw.lint.md"], "semanticChange": "package, registration, schema, capability, and owner" },
+        { "id": "extension-class", "sourceAuthority": "skills/common/plugin-runtime/foundation/registry/types.ts", "constructor": "typescript-extension-class-v1", "expectedPages": ["docs/site/extend/README.md"], "semanticChange": "extension family, contract, registration, activation, and removal path" },
+        { "id": "provider-registration", "sourceAuthority": "tests/verification/e2e/provider-catalog.mjs", "constructor": "javascript-provider-registration-v1", "expectedPages": ["docs/site/reference/buster-provider-configuration.md"], "semanticChange": "provider identity, namespace, configuration, and selection" },
+        { "id": "fixture-registration", "sourceAuthority": "tests/verification/e2e/fixture-coverage.mjs", "constructor": "javascript-fixture-registration-v1", "expectedPages": ["docs/site/reference/buster-suites.md"], "semanticChange": "fixture identity, suite consumer, input, and output" },
+        { "id": "report-format-registration", "sourceAuthority": "skills/buster/engine/test-gates/production.ts", "constructor": "typescript-report-registration-v1", "expectedPages": ["docs/site/reference/buster-suites.md"], "semanticChange": "report identity, producer, schema, artifact, and consumer" }
+      ]
+    },
+    {
+      "kind": "error-code", "operations": ["add", "change", "remove"], "gate": "docs:drift:error-code:check", "command": "npm run docs:drift:error-code:check", "diagnosticCode": "DOC_DRIFT_ERROR_CODE",
+      "variants": [
+        { "id": "runtime-error-family", "sourceAuthority": "skills/buster/engine/test-gates/production.ts", "constructor": "typescript-error-code-v1", "expectedPages": ["docs/site/reference/buster-error-codes.md"], "semanticChange": "code, trigger, effect, lifecycle state, retry, and safe action" }
+      ]
+    },
+    {
+      "kind": "workflow", "operations": ["add", "change", "remove"], "gate": "docs:drift:workflow:check", "command": "npm run docs:drift:workflow:check", "diagnosticCode": "DOC_DRIFT_WORKFLOW",
+      "variants": [
+        { "id": "pipeline-workflow", "sourceAuthority": "skills/nova/project/compiler.ts", "constructor": "typescript-workflow-selection-v1", "expectedPages": ["docs/site/reference/workflows.md"], "semanticChange": "workflow identity, compile path, runtime selection, state, and recovery" }
+      ]
+    }
   ]
 }

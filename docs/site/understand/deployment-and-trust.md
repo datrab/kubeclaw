@@ -4,9 +4,9 @@ Status: implemented design; live acceptance remains separate
 Audience: operator, architecture reader, security reviewer, maintainer
 Owner: platform architecture and operations
 Evidence: packaging/runtime/roles; charts/kubeclaw; charts/prism
-Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
+Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
 Applies to: current Helm charts and runtime-role declarations
-Last verified: source inspection on 2026-09-15
+Last verified: source inspection on 2026-09-20
 
 ## Purpose
 
@@ -28,8 +28,14 @@ flowchart LR
     User[Human user] -->|private application route| Studio[Prism Studio]
     Studio -->|HTTP 8080| Control[Prism Control]
     Nova[Nova role] -->|Envoy and SPIFFE mTLS| Buster[Buster role]
-    Nova -->|Envoy and SPIFFE mTLS| Control
+    Nova -->|loopback Envoy 28080 and SPIFFE mTLS| AgentProxy[Prism agent Envoy 18082]
+    AgentProxy -->|loopback 18080| Bridge[Prism agent bridge]
+    Bridge -->|loopback Envoy 28080 and SPIFFE mTLS| Control
+    Bridge -->|durable job launch| OpenClaw[Prism OpenClaw gateway]
+    OpenClaw -->|fenced tool result| Control
+    OpenClaw -->|memory embedding| LiteLLM[LiteLLM and Vertex]
     Control -->|Envoy and SPIFFE mTLS| PWorker[Prism Worker]
+    Control -->|bearer HTTP| Ingestion[Optional Prism Ingestion]
     Control --> DB[(Prism PostgreSQL)]
     PWorker --> DB
     Control --> Artifacts[(Prism artifact PVC)]
@@ -38,11 +44,23 @@ flowchart LR
     Nova -. event delivery .-> Telemetry[Telemetry and observers]
 ```
 
-Text version: Nova calls Buster and Prism Control through authenticated worker routes.
-Prism Studio calls Prism Control through the application route.
-Prism Control calls Prism Worker through another authenticated worker route.
-Nova, Buster, and Prism keep different durable stores.
-Observers receive committed events after Nova writes them.
+Text version: Nova calls Buster through its protected route. For Prism, Nova
+first reaches the `agent-prism` Envoy and loopback bridge. The bridge reaches
+Control through a second protected route. Control persists an agent job before
+the bridge launches OpenClaw. OpenClaw commits a fenced result back to Control.
+Studio calls Control through the application route. Control can call the native
+Worker, optional Ingestion workload, and Prism PostgreSQL. The Prism OpenClaw
+gateway can call LiteLLM for memory embeddings. Nova, Buster, Prism, OpenClaw,
+and LiteLLM keep different owner state. Observers receive committed events only
+after Nova writes them.
+
+> **Source evidence — deployed Prism path**
+>
+> [The selected Prism agent values colocate OpenClaw, the loopback bridge, and the Control egress listener](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/prism-agent-values.yaml#L45-L85).
+>
+> [The role proxy accepts Nova, Control, and test-runner identities at 18082 and forwards only to the loopback bridge](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-worker-trust.yaml#L84-L117).
+>
+> [Control receives its database, Ingestion, Worker, agent, and exact SPIFFE settings from the rendered chart](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/workloads.yaml#L90-L138).
 
 ## Runtime Roles and Workloads
 
@@ -59,6 +77,9 @@ It declares the packages and plugins available to one purpose.
 | Prism Studio | Give humans the application interface. | User-facing requests through Control. | Direct database or worker authority. |
 | Prism Ingestion | Fetch and quarantine optional external input. | Narrow outbound fetch path. | Control state ownership. |
 | PostgreSQL | Store Prism relational state. | Database persistence only. | Pipeline and product decisions. |
+| Prism agent bridge | Translate authenticated dispatch into a durable Control request and run one claimed OpenClaw job. | The claimed job ID, fence, and local process lifecycle. | Prism documents, approval, and Nova lifecycle authority. |
+| Prism OpenClaw gateway | Perform the external design-agent session and expose fenced Prism tools. | Its gateway session, configured model route, and tool invocation. | Durable Control job/result authority. |
+| LiteLLM | Supply the configured OpenClaw memory embedding route. | Gateway routing and its separate database state. | Agent reasoning route, Prism state, and pipeline lifecycle. |
 
 Forge and Echo do not appear as current role manifests.
 Nova reaches them through configured runtime dispatch.
@@ -66,7 +87,7 @@ Their actual process location depends on that runtime configuration.
 
 > **Source evidence — package boundaries**
 >
-> [Nova role declaration](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/nova.json#L1-L61), [Buster role declaration](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/buster.json#L1-L60), and [Prism role declaration](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/packaging/runtime/roles/prism.json#L1-L28).
+> [Nova role declaration](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/packaging/runtime/roles/nova.json#L1-L60), [Buster role declaration](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/packaging/runtime/roles/buster.json#L1-L60), and [Prism role declaration](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/packaging/runtime/roles/prism.json#L1-L28).
 >
 > **Decision record:** [ADR-012 explains role-specific immutable bundles](../decisions/core-and-plugins.md#adr-012-assemble-exact-role-specific-runtime-bundles).
 
@@ -99,17 +120,25 @@ Before one component trusts another, it asks four questions.
 Nova-to-Buster source transfer adds another question:
 does this archive match the source identity that Nova signed?
 
-**Why this design exists:** Network location is not an identity.
-A pod IP can change, and another pod can exist in the same namespace.
+**Historical reason:** Unknown. **Current rationale (inference):** Network
+location is not an identity. A Pod IP can change, and another Pod can exist in
+the same namespace. Exact workload identity plus application authorization
+keeps those cases distinct.
 
 **Cost:** SPIRE, its CSI driver, Envoy configuration, and network-policy enforcement become service dependencies.
 Protected routes fail closed when those dependencies fail.
 
+**Status and reconsideration:** The secured chart profile contains the SPIFFE
+and Envoy path. Live issuance and denial remain separate acceptance.
+Reconsider the layers only if a replacement proves exact workload identity,
+encrypted peer authentication, application allowlists, rotation, and both
+positive and negative route behavior without trusting a caller-supplied header.
+
 > **Source evidence — application identity check**
 >
-> [Worker Core parses and authorizes proxied SPIFFE identities](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/worker/core/worker/trust.ts#L1-L52).
+> [Worker Core parses and authorizes proxied SPIFFE identities](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/worker/core/worker/trust.ts#L1-L52).
 >
-> [Prism workloads receive separate trusted caller identities](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/workloads.yaml#L127-L138).
+> [Prism workloads receive separate trusted caller identities](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/workloads.yaml#L127-L138).
 >
 > [Worker Trust gives the complete certificate and proxy path](worker-trust.md).
 
@@ -134,7 +163,7 @@ It does not provide a workload identity or artifact signature.
 
 > **Source evidence — separate service accounts**
 >
-> [The Prism chart creates Control, Studio, Worker, Ingestion, Backup, and test-runner accounts](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/serviceaccounts.yaml#L1-L7).
+> [The Prism chart creates Control, Studio, Worker, Ingestion, Backup, and test-runner accounts](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/serviceaccounts.yaml#L1-L7).
 
 ## Network Boundaries
 
@@ -146,10 +175,13 @@ Important paths include:
 | Caller | Destination | Port or route | Purpose |
 | --- | --- | --- | --- |
 | Prism Studio | Prism Control | HTTP 8080 | Human application actions. |
-| Nova | Prism Control | mTLS service 8443 when enabled | Design and pipeline operations. |
+| Nova | Prism agent Envoy | Nova loopback 28080 to agent Service 8080 and Envoy 18082 | Authenticate and deliver design dispatch to the loopback bridge. |
+| Prism agent bridge and OpenClaw tool | Prism Control | Agent loopback 28080 to Control mTLS Service 8443 | Persist dispatch, claim jobs, and commit fenced designs or revisions. |
 | Prism Control | Prism Worker | mTLS service 8443 when enabled | Bounded native operation. |
 | Prism Control and Worker | PostgreSQL | TCP 5432 | Prism state. |
 | Prism Control | Prism Ingestion | HTTP 8080 | Optional controlled ingestion. |
+| Prism Ingestion | Approved external source | HTTPS 443 only | Bounded acquisition into temporary quarantine. |
+| Prism OpenClaw agent | LiteLLM | HTTP 4000 | Remote memory-search embeddings only. |
 | Nova | Buster | mTLS worker route | Plan submission, status, result, evidence, cancellation. |
 
 The Service sends protected traffic to the Envoy sidecar.
@@ -160,13 +192,31 @@ Prism Studio is different.
 It is an application entry point and can use a private Tailscale ingress.
 It does not use the internal worker route for browser traffic.
 
+The checked-in policy set and Hubble observation path require Cilium in the
+current supported secured deployment. The architecture does not bind Nova Core
+to Cilium, but the repository has no implemented and proved Flannel equivalent
+for these policies. Do not label Flannel as a supported secured fallback until
+positive and negative route tests pass with equivalent policy and evidence.
+
 > **Source evidence — default deny and allowed paths**
 >
-> [The Prism default-deny and DNS policies](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/networkpolicy.yaml#L1-L22).
+> [The Prism default-deny and DNS policies](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/networkpolicy.yaml#L1-L22).
 >
-> [The Prism application paths name allowed callers, destinations, and ports](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/networkpolicy.yaml#L24-L59).
+> [The Prism application paths name allowed callers, destinations, and ports](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/networkpolicy.yaml#L24-L59).
 >
-> [Internal Prism services target the mTLS sidecar port](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/services.yaml#L8-L29).
+> [Internal Prism services target the mTLS sidecar port](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/services.yaml#L8-L29).
+>
+> [The Prism agent policy permits dispatch, Control, LiteLLM, and managed-provider paths](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/networkpolicy.yaml#L95-L121).
+>
+> [Optional Ingestion permits only Control ingress and public HTTPS egress](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/networkpolicy.yaml#L150-L165).
+
+**Decision status:** A CNI-neutral application boundary is an architecture
+direction; Cilium is the implemented and currently supported secured deployment.
+**Historical reason:** Unknown. **Current rationale (inference):** Cilium supplies
+the checked-in identity-aware policies and Hubble evidence. The cost is a larger
+platform dependency and a guarded CNI lifecycle. Reconsider Cilium only after a
+replacement enforces the complete route matrix and supplies equivalent incident
+evidence in live positive-and-negative tests.
 
 ## Capability Grants
 
@@ -187,9 +237,9 @@ This work is intentional security review, not incidental wiring.
 
 > **Source evidence — least authority**
 >
-> [`createPluginInvocationContext()` creates the grant map and denies missing grants](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/context.ts#L34-L58).
+> [`createPluginInvocationContext()` creates the grant map and denies missing grants](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/context.ts#L34-L58).
 >
-> [Capability authorization checks paths, namespaces, names, targets, sources, origins, commands, and signals](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/authorization.ts#L39-L130).
+> [Capability authorization checks paths, namespaces, names, targets, and sources](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/authorization.ts#L39-L93) and [checks origins, commands, and signals](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/authorization.ts#L94-L130).
 
 ## Process Isolation
 
@@ -211,9 +261,9 @@ The runtime must also constrain how untrusted code reaches the host.
 
 > **Source evidence — trust-dependent activation**
 >
-> [`load()` selects direct import or isolated invocation from the package trust scope](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugin-runtime/foundation/registry/activation.ts#L47-L100).
+> [`load()` selects direct import or isolated invocation from the package trust scope](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/foundation/registry/activation.ts#L47-L100).
 >
-> [The isolation runner grants only selected file reads and disables add-ons](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/common/plugin-runtime/foundation/isolation/runner.ts#L33-L52).
+> [The isolation runner grants only selected file reads and disables add-ons](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugin-runtime/foundation/isolation/runner.ts#L33-L52).
 
 ## Storage Boundaries
 
@@ -259,11 +309,11 @@ Database-only restore can create references to missing artifacts.
 
 > **Source evidence — Prism persistence**
 >
-> [The chart enforces one Control replica and mounts the artifact PVC only there](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/workloads.yaml#L1-L6).
+> [The chart enforces one Control replica and mounts the artifact PVC only there](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/workloads.yaml#L1-L6).
 >
-> [The retained artifact PVC uses `ReadWriteOnce`](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/workloads.yaml#L217-L230).
+> [The retained artifact PVC uses `ReadWriteOnce`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/workloads.yaml#L217-L230).
 >
-> [The backup script defines one database-and-artifact group](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/files/prism-backup.sh#L54-L105).
+> [The backup script defines one database-and-artifact group](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/files/prism-backup.sh#L54-L105).
 
 ## Observability Boundary
 
@@ -280,7 +330,7 @@ Use the ordered event, effect receipt, artifact digest, or remote result record 
 
 > **Source evidence — committed events before delivery**
 >
-> [`executePrepared()` creates a serialized observer drainer around the pipeline runner](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/skills/nova/core/execution/engine-run.ts#L21-L34).
+> [`executePrepared()` creates a serialized observer drainer around the pipeline runner](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/core/execution/engine-run.ts#L21-L34).
 >
 > [ADR-011 explains immutable observer input and independent delivery](../decisions/core-and-plugins.md#adr-011-observers-consume-immutable-events-without-lifecycle-mutation).
 
@@ -294,8 +344,12 @@ The table shows the expected boundary.
 | Nova process stops | No new canonical pipeline decisions. | Durable run records and independent services. | Recover the same run from pinned state. |
 | Buster stops during a job | Test outcome can remain unknown. | Nova journal and other independent stages. | Reconnect by job identity; do not submit a changed duplicate. |
 | Prism Control stops | Studio operations and worker coordination stop. | Stored database and artifacts, if storage is healthy. | Restore Control and reconcile operation records. |
+| Prism agent bridge or OpenClaw stops before claim | Accepted job remains in PostgreSQL. | Control, Studio, native Worker, and the unclaimed job. | Restore the agent Pod and let one runner claim the same job. |
+| Prism agent bridge or OpenClaw stops after claim | External outcome can be unknown; job becomes `needs_nova` at expiry or errored completion. | Control's job, fence, request digest, and any already committed result. | Reconcile the job and fenced result. Do not launch a replacement agent automatically. |
 | Prism Worker stops | Native Prism attempt can be interrupted. | Control state, Studio, and stored artifacts. | Use Worker Core ownership and journal recovery. |
-| PostgreSQL stops | Prism state operations stop. | Nova and Buster can remain independent. | Restore database service before Prism application work. |
+| Prism PostgreSQL stops | Prism state operations and new agent admission stop. | Nova, Buster, and any durable off-database evidence. | Restore the matched Prism database and artifact recovery group before Prism work. |
+| LiteLLM PostgreSQL or LiteLLM stops | OpenClaw memory embedding fails. | Agent session, Control state, and reasoning route can remain separate. | Restore gateway state and credentials, then prove one authenticated embedding. |
+| Prism Ingestion stops | New corpus acquisition and cleanup stop. | Existing active corpus and other Prism operations. | Reconcile quarantine and inactive revision state before resubmission. |
 | Artifact PVC fails | Prism content becomes unavailable. | Relational records can remain. | Restore the matched database-and-artifact backup group. |
 | SPIRE or Envoy fails | Protected worker routes fail closed. | Local durable state and unrelated public paths. | Restore identity service and verify exact peer routes. |
 | Observer destination fails | Derived telemetry becomes delayed. | Canonical lifecycle journal. | Replay durable observer delivery. |
@@ -305,16 +359,18 @@ The table shows the expected boundary.
 
 The safe order follows data and identity dependencies.
 
-1. Provide Kubernetes, storage classes, DNS, and network-policy enforcement.
+1. Provide Kubernetes, storage classes, DNS, and Cilium policy enforcement for
+   the current supported secured deployment.
 2. Provide required secrets without placing secret values in documentation or logs.
 3. Provide SPIRE, its CSI driver, and workload registration when worker trust is enabled.
 4. Provide shared data services, such as Redis and PostgreSQL.
 5. Run database migration and storage preparation jobs.
-6. Deploy Nova, Buster, and Prism role workloads with their fixed bundles.
-7. Wait for application and Envoy readiness.
-8. Verify permitted and denied identity paths.
-9. Verify durable writes and restore inputs.
-10. Enable independent user entry only after internal checks succeed.
+6. Deploy Prism Control, Worker, optional Ingestion, and its database migration.
+7. Deploy the Prism OpenClaw agent and its bridge, then Nova and Buster roles.
+8. Wait for application and Envoy readiness.
+9. Verify permitted and denied identity paths, including both Prism mTLS hops.
+10. Verify durable writes, one fenced Prism result, and restore inputs.
+11. Enable independent user entry only after internal checks succeed.
 
 **Why this order exists:** An application can look ready before its identity sidecar or durable store is ready.
 The ordered checks prevent that partial state from becoming an acceptance claim.

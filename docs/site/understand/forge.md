@@ -15,16 +15,25 @@ specialist, not a pipeline controller. Nova owns the attempt, the capability
 grant, the final stage transition, and every later test or review decision.
 Forge can propose file changes and report checks only through a bounded output.
 
-This boundary prevents a capable coding agent from silently widening its task.
 The stage requires separate capabilities for dispatch, workspace creation and
 removal, commit, merge, and artifact access. A grant for one action does not
-imply another action.
+imply another action. This is the implemented safety property. The source does
+not record the historical reason for selecting this design. The current design
+assessment is an inference: separate grants limit the effect of a compromised
+specialist and keep lifecycle authority in Nova. The cost is more adapters,
+fences, and reconciliation work. Reconsider this split only if a replacement
+keeps per-effect authorization, fixed attempt identity, and uncertain-effect
+reconciliation.
 
 > **Source evidence — authority is split by capability**
 >
 > [The implementation manifest declares the stage and its seven required capabilities](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/plugin.json#L1-L23).
 >
-> [The stage invokes each effect separately and returns a typed stage result](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/stage.ts#L13-L111).
+> [The stage creates and integrates the workspace through separate capability calls](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/stage.ts#L13-L71).
+>
+> [The stage binds the active attempt, dispatches, and cleans up after integration](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/stage.ts#L81-L115).
+>
+> [It stores completion and cleanup evidence and returns only Nova stage outcomes](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/stage.ts#L118-L150).
 
 ## Input And Dispatch Contract
 
@@ -46,9 +55,11 @@ not invent that evidence.
 
 > **Source evidence — exact wire shapes**
 >
-> [The input schema defines all accepted fields and bounds](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/schemas/input.schema.json#L1-L106).
+> [The first half of the input schema defines identity, task, source, and workspace fields](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/schemas/input.schema.json#L1-L55).
 >
-> [The request builder defines the protocol and agent-owned output](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/protocol.ts#L1-L62).
+> [The second half defines workspace bounds and rejects unknown input fields](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/schemas/input.schema.json#L56-L106).
+>
+> [The request builder fixes the wire protocol and agent-owned output](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/protocol.ts#L40-L76).
 
 ## Workspace And Git Flow
 
@@ -99,6 +110,13 @@ revision, session digest, summary, paths, and checks. If cleanup fails after a
 successful merge, the stage writes a separate cleanup artifact. Cleanup failure
 does not erase the integrated revision.
 
+The Git repository is the authority for integrated source. The artifact store
+is the authority for the stage report and cleanup evidence. A retained worktree
+is temporary recovery evidence, not a second source authority. Attempt-specific
+paths and the expected-parent check prevent two attempts from silently
+committing through the same workspace or parent. The Git merge adapter remains
+the final concurrency boundary.
+
 ## Failure And Recovery
 
 | Failure | Safe effect | Recovery |
@@ -130,15 +148,44 @@ diagnostic evidence; it is not implicit input to the new attempt.
 >
 > [Only a Core-issued repair request can select repair evidence](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/repair-evidence.ts#L1-L30).
 >
-> [OpenClaw cancellation addresses the known task or session and requires terminal reconciliation](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts#L1-L72).
+> [OpenClaw cancellation first resolves the accepted session identity](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts#L25-L47).
+>
+> [Cleanup cancels and polls to terminal state or returns an unresolved result](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts#L49-L72).
 
 ## Configuration And Extension
 
-The stage requires `config.agent`; `agentRole` is optional. Runtime dispatch has
-the detailed OpenClaw target settings described in [OpenClaw integration](openclaw.md).
-To add a Forge implementation backend, keep the implementation request and
-completion contract stable and add a `runtime.dispatch` target. Do not add Git
-authority to the backend. The stage and Git adapters must retain that authority.
+The compiled stage configuration is the direct source for these values. There
+is no Forge environment-variable fallback and no Forge default for `agent`.
+
+| Setting | Rule and effective precedence |
+| --- | --- |
+| `agent` | Required non-empty runtime target ID. The stage passes this ID to `runtime.dispatch`. The capability grant and runtime target allowlist must also admit it. |
+| `agentRole` | Optional orchestration metadata. The Forge stage does not read it to select the target. |
+| Runtime target | The runtime-dispatch package configuration defines endpoint, secret name, identity, workspace roots, budgets, polling, and result collection. Those values are not overridden by Forge input. |
+| Attempt identity | The active Nova lease replaces caller-supplied `runId` and `attempt`. A repair request also makes `HEAD` win over the declared `baseRef`. |
+
+> **Source evidence — configuration and precedence**
+>
+> [The configuration schema requires `agent` and allows only `agentRole` beside it](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/schemas/config.schema.json#L1).
+>
+> [The active lease replaces input identity before workspace creation and dispatch](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/skills/nova/plugins/implementation-agent/src/stage.ts#L81-L101).
+
+To add a Forge backend, implement a `runtime.dispatch` target that preserves the
+implementation request and completion contract. Do not add Git commit, merge,
+or workspace authority to the backend. A new completion field is a coordinated
+contract change: update the output contract, parser, stored artifact consumers,
+schema, tests, and this page. A prompt-only field is not a supported extension.
+
+## Operation And Diagnosis
+
+Observe the stage result, the implementation artifact, the integrated revision
+fact, and any cleanup artifact together. A `passed` result without
+`implementation.source_revision` means that the successful completion had no
+declared workspace to integrate. A `blocked` result with `retainedWorkspace`
+means that an attempt-owned worktree remains for inspection. Verify its complete
+owner record before any removal. If an effect-reconciliation code is present,
+inspect the effect journal and Git refs before a retry. If the merge is already
+present, do not issue a second commit or merge.
 
 Run these checks after a Forge change:
 

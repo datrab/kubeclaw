@@ -19,6 +19,34 @@ annotations.
 Ops MCP is an optional analysis surface. Nova, Buster, and Prism do not depend
 on it for pipeline lifecycle authority.
 
+The source proves this read-only boundary but does not record the historical
+reason for choosing a separate service. The current design assessment is an
+inference: a narrow service gives an assistant useful live evidence without
+giving its instruction package Kubernetes write authority. The cost is another
+credential, deployment, and availability boundary. Reconsider the service split
+only if a replacement preserves bounded inputs and outputs, per-request
+authentication, namespace checks, and read-only RBAC.
+
+## Complete Request And State Path
+
+1. An MCP client sends a JSON request to `/mcp` with a bearer header and,
+   for a browser, an `Origin` header.
+2. The HTTP router checks the bearer source and exact origin allowlist before
+   the MCP handler parses a tool call.
+3. Zod validates the selected tool input. Namespace values come from the
+   configured enum; a caller cannot supply an arbitrary namespace.
+4. The tool performs HTTPS GET requests with the projected Kubernetes identity,
+   or starts the fixed Hubble binary with exact filters and a bounded process.
+5. The tool reduces the response to JSON text. It returns continuation,
+   truncation, scan, window, and partial-result metadata where applicable.
+6. The HTTP response is the only service result. Ops MCP has no durable session,
+   request, cursor, cache, or result store. Kubernetes, Argo CD, and Hubble are
+   the source authorities. The client owns any continuation token it retains.
+
+Concurrent reads do not update shared product state. Hubble alone has a
+process-local limit of two concurrent queries. A pod restart clears this
+counter and any in-flight HTTP requests; it does not change cluster state.
+
 ## HTTP Contract And Authentication
 
 The service listens on `HOST:PORT`; defaults are `0.0.0.0:8080`. The deployed
@@ -54,7 +82,28 @@ must keep these values if it wants to continue an investigation.
 >
 > [Authentication validates and rereads the bearer credential for every request](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/authentication.mjs#L1-L38).
 >
-> [The HTTP router exposes only health and MCP and applies bearer and origin checks](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L490-L553).
+> [The router constructs the MCP handler and applies bearer and origin checks](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L491-L543).
+>
+> [It maps handler failures, starts the listener, and closes on termination](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L545-L564).
+
+## Configuration And Precedence
+
+Process environment is the service authority. In the Ops Pod, Helm values
+render those environment variables, so rendered chart values win before the
+process starts. There is no request-level configuration override.
+
+| Environment | Default and rule |
+| --- | --- |
+| `PORT`, `HOST` | `8080`, `0.0.0.0`; port must be 0–65535. The Ops Pod sets `127.0.0.1`. |
+| `OPS_LOCAL_ONLY` | Disabled unless exactly `1`. When enabled, `HOST` must be `127.0.0.1`; it also registers the two platform tools. |
+| `OPS_DEFAULT_NAMESPACE` | `kubeclaw`. |
+| `OPS_ALLOWED_NAMESPACES` | Defaults to the default namespace. It is a comma-separated set of valid names and must include `OPS_DEFAULT_NAMESPACE`. |
+| `ARGOCD_NAMESPACE` | `argocd`; independent of the namespaced tool enum. |
+| `OPS_MCP_BEARER_TOKEN_FILE`, `OPS_MCP_BEARER_TOKEN` | Exactly one must provide a valid token. File and inline sources together fail startup; neither source also fails startup. File mode wins only by being the sole configured source. |
+| `MCP_ALLOWED_ORIGINS` | Empty exact allowlist by default, which permits all origins. An absent `Origin` also passes. |
+| `KUBERNETES_API_URL` | `https://kubernetes.default.svc`; must be an HTTPS origin with no credentials, path, query, or fragment. |
+| `KUBERNETES_TOKEN_FILE`, `KUBERNETES_CA_FILE` | Projected ServiceAccount `token` and `ca.crt` paths. |
+| `HUBBLE_BIN`, `HUBBLE_SERVER` | `/usr/local/bin/hubble` and `hubble-relay.cilium.svc.cluster.local:4245`. |
 
 ## Tool Reference
 
@@ -101,9 +150,15 @@ lossless cursor. An empty or partial result does not prove that no drop occurred
 
 > **Source evidence — bounded downstream calls**
 >
-> [Kubernetes transport fixes HTTPS, CA, token rotation, 10-second timeout, 8 MiB ceiling, and narrow oversized-page retry](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/kubernetes.mjs#L1-L98).
+> [Kubernetes transport fixes HTTPS, CA, token rotation, 10-second timeout, and an 8 MiB ceiling](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/kubernetes.mjs#L1-L60).
 >
-> [Hubble transport fixes concurrency, time window, byte limits, exact filtering, and partial-result semantics](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/hubble.mjs#L1-L118).
+> [List transport retries only oversized pages and retains a continuation token](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/kubernetes.mjs#L64-L98).
+>
+> [Hubble fixes concurrency, query window, binary, relay, and timeout defaults](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/hubble.mjs#L1-L50).
+>
+> [It bounds bytes and applies exact post-query filtering](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/hubble.mjs#L51-L100).
+>
+> [The result records process failures, partial reasons, continuation advice, and retention limits](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/hubble.mjs#L101-L118).
 
 ## Authorization And Data Exposure
 
@@ -128,6 +183,36 @@ answers the question.
 | Response too large | Even reduced page size could not stay below 8 MiB. | Narrow the resource query. Do not increase the global ceiling first. |
 | Hubble `partial` | One or more explicit completeness limits applied. | Split the time window or narrow namespace, pod, node, or verdict. |
 | Hubble CLI fails | Relay, binary, policy, DNS, or process problem. | Check returned reasons and stderr; do not report the network as healthy. |
+
+Because all supported tools are reads, a transport failure has no Ops MCP write
+effect to reconcile. A retry is still not an identical observation: Kubernetes
+and Hubble state can change between calls, and an omitted Hubble event can age
+out. Keep the original timestamp and response. Retry only with the same or a
+narrower bound, and report that the samples came from different times.
+
+## Supported Change Boundary
+
+Ops MCP has no runtime tool plug-in interface. A supported new tool is a service
+release. Add its `registerTool` entry with a strict Zod input, read-only and
+idempotent annotations, bounded downstream transport, reduced output, explicit
+partial semantics, and focused tests. If it reads a new Kubernetes resource,
+add only the required `get` or `list` RBAC and namespace/network scope. Then
+update the Codex skill tool list, this reference, the tool-drift check, and the
+deployment image. If a tool would write, exec, follow an unbounded stream, read
+Secrets, or accept an arbitrary URL or command, it is outside this service's
+supported boundary; use a separately authorized component.
+
+Changing an existing input or output is also a contract change because Codex
+instructions and clients depend on the names, defaults, limits, continuation,
+and partial markers. Add a new optional field only with validation, a defined
+default, backward-compatible output, tests, and documentation. Rename or remove
+a field only in a versioned tool or service protocol.
+
+> **Source evidence — tools are compiled service registrations**
+>
+> [Each tool declares its schema and read-only behavior directly in `buildServer`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/tools/ops-mcp/src/server.mjs#L189-L235).
+>
+> [The deployment grants namespaced reads through explicit RoleBindings rather than tool annotations](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/rbac.yaml#L34-L72).
 
 Run the Ops MCP local, HTTP, authentication, Kubernetes, Hubble, diagnostics,
 bootstrap, and policy-contract tests after a change. These checks simulate and

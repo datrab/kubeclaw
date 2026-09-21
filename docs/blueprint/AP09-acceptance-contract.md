@@ -84,13 +84,16 @@ vermischen. Das Evidence-Ledger enthält deshalb drei getrennte Mengen:
 2. **89 Gate-Befunde:** Für jede ID dieses Vertrags gibt es genau einen eigenen
    Befund. Ein Gate verweist auf die zugehörigen Anforderungsbefunde. Mehrere
    Gates dürfen dieselbe Anforderung aus verschiedenen Blickwinkeln prüfen.
-3. **Vorregistrierte Fixtures:** Suche, Darstellung, Persona-Aufgaben und jede
-   Driftmutation kommen
+3. **Vorregistrierte Fixtures:** Suche, Darstellung, statische Persona-Aufgaben,
+   dynamisch entdeckte Erweiterungsaufgaben und jede Driftmutation kommen
    unverändert aus
    [`AP09-acceptance-fixtures.json`](AP09-acceptance-fixtures.json). Query,
-   Sollseite, Maximalrang, Browser, Viewport, Aufgabe, Ergebnis, Mutationsart,
-   zuständiges Gate und Fehlerschwelle werden vor dem Lauf festgelegt. Nachträglich ausgewählte
-   Erfolgsbeispiele ergeben `FAIL`.
+   Sollseite, Maximalrang, Browser, Viewport, Aufgabe, Ergebnis, konkrete
+   Sourcefläche, deterministischer Mutationskonstruktor, zuständiges Gate,
+   betroffene Seite und Fehlerschwelle werden vor dem Lauf festgelegt.
+   Dynamische Aufgaben kommen aus einem am geprüften Commit erzeugten Inventar,
+   das jede entdeckte Erweiterungsklasse und jedes komplexe Plugin genau einmal
+   erfasst. Nachträglich ausgewählte Erfolgsbeispiele ergeben `FAIL`.
 
 Der Paketkatalog ist dynamisch. Die heute erkannten 51 Pakete sind ein
 Baseline-Befund und keine erlaubte Sollzahl. Discovery ist die Authority. Ein
@@ -106,6 +109,8 @@ Für jeden Abnahmepunkt muss der Befund diese Felder enthalten:
 | `catalogue_ids` | Maschinell aus den 261 Einzelbefunden abgeleitete betroffene Katalog-IDs. Die Liste ist nicht selbst der Inhaltsbefund. |
 | `revision` | Vollständiger 40-stelliger geprüfter Produkt-/Dokumentations-Commit. |
 | `reader_task` | Aufgabe in einem Satz, ohne Lösungsandeutung aus dem Reviewkontext. |
+| `reader_fixture_ids` | Exakte vorregistrierte statische und dynamische Reader-Aufgaben, die dieses Gate ausführen. Eine leere Liste ist nur zulässig, wenn keine Aufgabe dem Gate zugeordnet ist. |
+| `execution_scenario_ids` | Exakte vorregistrierte Betriebs-, Lifecycle-, Erfolgs- und Fehlerläufe, die dieses Gate beweisen. Eine allgemeine `PRIMARY`-Ausführung kann keinen fehlenden Szenariolauf ersetzen. |
 | `canonical_pages` | Verwendete veröffentlichte Seiten unter `docs/site`. |
 | `source_evidence` | Revisionsfeste schmale Links für alle materiellen Aussagen. |
 | `execution` | Befehle oder manuelle Schritte, Umgebung, Exit und Beobachtung. |
@@ -138,13 +143,30 @@ einer vorhandenen Überschrift oder einer
 expliziten HTML-ID entsprechen. Weil die Publication alle Markdown-Dateien
 unter diesem Root übernimmt, beweist dieser Test zugleich die Aufnahme in den
 Publication-Input; der gespeicherte Publication-Report beweist den Output.
-Der Report muss seine Revision, die Quellseiten-Gesamtsumme, ein Digest aller
-publizierten Seiten und den SHA-256 des vom echten Renderer erzeugten
-Anchor-Inventars enthalten. Das Inventar bindet jeden Seitenpfad an seine
-tatsächlichen Fragmente und den SHA-256 des gerenderten Outputs. Screenshots und
-Browsermessungen verweisen auf genau diesen Seitenhash. Rohes Markdown,
-Überschriften in Codeblöcken und frei behauptete `id`-Texte sind keine
-gültigen Anchor-Beweise.
+Der Report muss seine Revision, das geprüfte positive Publication-Manifest,
+die Quellseiten-Gesamtsumme, ein Digest aller publizierten Seiten und den
+SHA-256 des vom echten Renderer erzeugten Anchor-Inventars enthalten. Nicht
+freigegebene Markdown-Dateien unter `docs/site` bleiben außerhalb des Manifests;
+eine injizierte nicht freigegebene Seite muss nachweislich aus dem Output
+ausgeschlossen bleiben. Der vollständige erzeugte HTML-Dateibaum und das
+vollständige Route-Inventar werden gespeichert und dürfen weder Pfad noch Route
+dieser Seite enthalten. Für jede freigegebene Seite wird der echte gerenderte
+Output als unveränderliches Artefakt gespeichert. Der Checker berechnet dessen
+SHA-256 selbst und extrahiert daraus die wirklichen HTML-IDs. Das Inventar darf
+nur diese IDs und diesen Hash enthalten. Screenshots und Browsermessungen
+verweisen auf genau diesen nachgerechneten Seitenhash. Rohes Markdown,
+gegenseitig bestätigende JSON-Reports, Überschriften in Codeblöcken und frei
+behauptete `id`-Texte sind keine gültigen Anchor-Beweise.
+
+Die Execution-Matrix ist ebenfalls unveränderlich an den geprüften Commit
+gebunden. Sie trennt erfolgreichen Plattformlauf, Wait/Resume, Cancellation,
+Restart/Recovery, Upgrade, Rollback, Stilllegung, Prism, Demo Delivery sowie
+Ausfälle von Redis, PostgreSQL, Registry/BuildKit, Tailscale, LiteLLM, Git,
+Worker, externem Effect und Demo-Acceptance. Jeder Eintrag besitzt eigene
+Inputs oder Fault-Injection, Sollbeobachtungen, Evidenzklasse, Gate-Bindung und
+Fehlerschwelle. Der Evidence-Checker verlangt jeden Eintrag einzeln; ein frei
+formulierter Sammellauf oder das generische Pflichtfeld `<Gate-ID>-PRIMARY`
+ersetzt keinen dieser Läufe.
 
 Ausführungen enthalten Umgebung, Status, exakten Befehl oder Schritt,
 Exit-Code, Beobachtung und Artefaktverweise. Negative Beweise, Mutationen,
@@ -166,7 +188,8 @@ Source-Check ersetzt werden. Zusätzliche fehlgeschlagene Versuche bleiben mit
 ihrem echten Status im Ledger. Ein Produktlimit ersetzt keinen Pflichtlauf.
 
 Reviewer und Ausführungsteilnehmer sind verschiedene Identitäten. Jede
-vorregistrierte Reader-Aufgabe erhält einen eigenen Fresh-Context-Teilnehmer,
+vorregistrierte statische oder dynamisch erzeugte Reader-Aufgabe erhält einen
+eigenen Fresh-Context-Teilnehmer,
 der zuvor nicht an der Dokumentation mitgearbeitet hat. Die beiden
 Operator-Aufgaben verwenden zwei verschiedene Operatoren. Das Ledger bewahrt
 jeden deklarierten Versuch, auch einen fehlgeschlagenen, und bindet den
@@ -220,7 +243,7 @@ Lifecycle, Konfiguration und produktbezogene Journeys getrennt geprüft.
 | A98-10 | Ein rekursives Konfigurationsinventar erfasst `swarm.config.json`, Helm Values, GitOps Values, Environment, Secrets, CLI-/Scriptflags und abgeleitete Werte mit Typ, Pflichtstatus, Default, Grenze, Owner und Consumer. | Eine Quelle oder ein verschachteltes Feld fehlt; README-Text gilt nicht als Authority. |
 | A98-11 | Für jeden effektiven Wert ist die vollständige Präzedenz vom authored input bis zum Runtime-Consumer erklärt; Konflikt-, leerer-Wert-, Secret- und ungültiger-Wert-Fälle sind getestet. | Zwei Quellen können denselben Wert setzen, ohne dass der Gewinner beweisbar ist. |
 | A98-12 | Prism/Studio und Demo Delivery besitzen ausführbare Journeys vom Setup bis zur getrennten menschlichen Acceptance, mit Fehler-, Abbruch-, Wiederaufnahme- und Cleanup-Weg. | Ein Mock-, Render- oder synthetischer Providerlauf wird als Produktionsjourney ausgegeben. |
-| A98-13 | Zwei Fresh-Context-Operatoren führen mindestens Installation/Start/Diagnose sowie Backup/Restore oder den exakten dokumentierten Blocker ohne Chatwissen aus. | Der Autor erklärt die Schritte, oder Reviewer lesen nur, ohne sie auszuführen. |
+| A98-13 | Getrennte Fresh-Context-Operatoren führen den vollständigen erfolgreichen Installations-/Start-/Diagnoseweg, einen Preflight-Safe-Stop, den aktuell unterstützten isolierten Komponenten-Restore und die vollständige Plattform-Restore-Grenze ohne Chatwissen aus. Eine Grenze ersetzt keinen unterstützten Pflichtlauf. | Der Autor erklärt die Schritte, ein DNS-Safe-Stop ersetzt die erfolgreiche Installation, eine gelesene Produktgrenze ersetzt den unterstützten Restore, oder Reviewer lesen nur, ohne auszuführen. |
 | A98-14 | Mutationstests erkennen ein neues Helm-Feld, Environment-Setting, Secret, Scriptflag und `swarm.config.json`-Feld ohne Operator-Dokumentation. | Nur bekannte Feldzahlen werden geprüft oder ein neues Feld bleibt grün. |
 
 ## 7. AP09.9 — Pipeline und Workflows
@@ -263,8 +286,8 @@ er ersetzt keine Tiefendokumentation komplexer Pakete.
 | A910-10 | Jede unterstützte interne Erweiterung besitzt einen Clean-Checkout-Weg für Änderung, Registrierung, Berechtigung, Konfiguration, Test, Aktivierung, Beobachtung, Compatibility, Entfernung und Rollback. | Kompilieren oder Unit-Test wird als Aktivierung ausgegeben. |
 | A910-11 | Component-Change-Guides decken Nova, Worker, Buster, Prism, Registry, SDK, Telemetrie, Charts/GitOps, Ops MCP und UI ab und wählen nach Änderung die kleinste vollständige Prüfkette. | Ein universeller „run all tests“-Hinweis ersetzt Change-to-check. |
 | A910-12 | Package-README-Parität wird vollständig geprüft: Jede noch gültige notwendige Aussage ist im Site-Katalog oder Deep Guide enthalten; widersprüchliche README-Aussagen werden nicht übernommen. | Stichprobe oder Dateidiff ersetzt semantischen Inhaltsvergleich. |
-| A910-13 | Unabhängige Reader implementieren mindestens eine Änderung je Erweiterungsklasse und je komplexem Plugin entweder praktisch oder weisen den exakten Produktblocker nach. | Ein einziges Beispiel wird auf alle Plugins hochgerechnet. |
-| A910-14 | Mutationen an SDK-Export, Pluginmanifest, Registration, verschachteltem Configfeld, Capability, Secret und Error Code machen Generator oder Guide-Check rot. | Eine neue öffentliche Oberfläche bleibt unbemerkt oder nur die Sollzahl ändert sich. |
+| A910-13 | Ein am geprüften Commit aus Pipeline-, Host- und Worker-Engine-Verträgen erzeugtes Discovery-Inventar bestimmt alle Erweiterungsklassen. Das Aufgabeninventar enthält genau eine vorregistrierte Fresh-Context-Änderung je entdeckter Klasse und je als komplex klassifiziertem Plugin. Unabhängige Reader führen jede Aufgabe praktisch mit Aktivierung, negativem Weg, Compatibility, Cleanup und Remaining Data aus. Ein echter Produktblocker bleibt `NOT READY` und kann keinen Pflichtlauf bestehen. | Eine statische Klassenliste, eine feste Sollzahl, ein einziges Beispiel, eine nach dem Ergebnis gewählte Aufgabe oder ein gelesener Blocker wird auf weitere Erweiterungen hochgerechnet. |
+| A910-14 | Mutationen an SDK-Export, Pluginmanifest, Erweiterungsklasse, Registration, verschachteltem Configfeld, Capability, Secret und Error Code machen Generator oder Guide-Check rot. | Eine neue öffentliche Oberfläche oder Erweiterungsklasse bleibt unbemerkt oder nur die Sollzahl ändert sich. |
 
 ## 9. AP09.11 — Exhaustive Reference und automatische Driftkontrolle
 
@@ -293,7 +316,7 @@ und verständlich machen, aber niemals fehlenden Inhalt kaschieren.
 
 | ID | PASS nur wenn | Automatisches FAIL |
 | --- | --- | --- |
-| A912-01 | Nur freigegebene `docs/site`-Inhalte erscheinen in der Publication; AP-, Review-, Migrations-, Prompt-, temporäre und lokale Evidence-Artefakte werden durch Positivliste und Negativtest ausgeschlossen. | Ein unerwarteter Pfad wird nur wegen seiner Markdown-Endung publiziert. |
+| A912-01 | Nur Seiten aus einem revisionsgebundenen positiven Publication-Manifest erscheinen in der Publication; AP-, Review-, Migrations-, Prompt-, temporäre und lokale Evidence-Artefakte werden ausgeschlossen. Leserprosa enthält keine interne AP-/Review-/Migrationssprache oder Verweise auf interne Arbeitsdateien. Ein Negativtest injiziert eine unerwartete Markdown-Datei unter `docs/site` und beweist, dass sie weder Route noch Output erhält. | Ein unerwarteter Pfad wird wegen seiner Markdown-Endung publiziert, der Checker setzt alle Markdown-Dateien mit der Positivliste gleich, oder Leser müssen interne Arbeitsgeschichte verstehen. |
 | A912-02 | Jeder kanonische Leserweg ist aus Startseite und passender Rollen-/Aufgabennavigation in höchstens drei sinnvollen Entscheidungen erreichbar. | Erreichbarkeit wird nur über Volltextsuche oder einen globalen Dateibaum erreicht. |
 | A912-03 | Redirects funktionieren im Serverpfad und im statischen Fallback; Ketten, Schleifen, tote Ziele, Anchorverlust und nicht registrierte entfernte Seiten schlagen fehl. | Eine Redirect-JSON-Datei ohne ausgeführten Requesttest gilt als wirksam. |
 | A912-04 | Suche indexiert alle kanonischen Seiten, Überschriften, technische IDs und Synonyme, schließt interne Artefakte aus und liefert für festgelegte Readerfragen das richtige Ziel in den oberen Ergebnissen. | Nur Indexgröße oder Suchfeldexistenz wird geprüft. |
@@ -321,7 +344,7 @@ wegklassifizieren.
 | A913-05 | Erfolgs-, Validierungsfehler-, Dependency-Ausfall-, Cancellation-, Wait/Resume-, Restart/Recovery-, unklarer-Effect- und Change/Removal-Wege liefern die dokumentierten Beobachtungen. | Ein Workflow wird aus einem ähnlichen Fall abgeleitet statt ausgeführt. |
 | A913-06 | Controlled-Language-Review erfasst Scope, Methode, technische Begriffe und gelöste Befunde; kein Punkt behauptet formale ASD-STE100-Zertifizierung. | Readability-Score oder kurzer Linter gilt als vollständige Sprachabnahme. |
 | A913-07 | Jede signifikante Entscheidung besitzt belegten oder ausdrücklich unbekannten Grund, Nutzen, Kosten, Status, Implementierungsstand und Neubewertungsbedingung. | Sourceverhalten wird als historische Begründung ausgegeben. |
-| A913-08 | Das kombinierte Mutationpaket führt neue Config, Schemafeld, CLI-Flag, Event, Endpoint, Store, Capability, Plugin/Registration, Error Code und Workflow ein; jede Mutation scheitert am zuständigen Docs-Gate. | Eine Mutation bleibt grün oder scheitert nur an einem fachfremden Buildfehler. |
+| A913-08 | Das kombinierte Mutationpaket führt jede der 28 vorregistrierten Varianten aus `config`, `schema`, `cli`, `contract`, `event`, `endpoint`, `store`, `secret`, `runtime-service`, `ops-tool`, `capability`, `plugin-registration`, `error-code` und `workflow` mit Add, Change und Remove ein; jede der 84 Mutationen scheitert am zuständigen Docs-Gate und nennt die erwartete betroffene Seite. | Eine Mutation bleibt grün, verwendet einen nachträglich gewählten Patch, trifft eine andere Sourcefläche oder scheitert nur an einem fachfremden Buildfehler. |
 | A913-09 | Alle Checks laufen aus sauberem Checkout; Evidence-Bundle bindet Commit, Toolversionen, Umgebung, Befehle, Exit-Codes, Logs, Skips und Reviewerbefunde. | Arbeitsbaum ist schmutzig, Evidenz veränderbar oder Umgebung unbekannt. |
 | A913-10 | Jede Nichtanwendbarkeit nennt Quellbeweis und Grund und wird unabhängig genehmigt; offene Produktgrenzen bleiben als aktuelle Limits mit Owner und Akzeptanzbedingung sichtbar. | `N/A` dient dazu, fehlende Dokumentation oder nicht gelaufene Prüfung zu verstecken. |
 | A913-11 | Die AP10-Löschliste besitzt für jede alte Datei Inhaltsparität, kanonisches Ziel, Redirectbedarf, Referenzsuche und unabhängige Freigabe; das Löschen selbst bleibt AP10. | Alte Quellen werden pauschal nach Pfad oder Dateialter freigegeben. |
@@ -371,13 +394,18 @@ Die spätere Gesamtprüfung übergibt ihr Evidence-Ledger zusätzlich mit
 Dieser Modus akzeptiert nur einen sauberen Evidence-Commit, 261 einzelne
 Anforderungsbefunde, alle 89 `PASS`-Gates, vollständige Fixture-Ergebnisse,
 gespeicherte und gehashte Artefakte, echte Git- und Zeilenauflösung,
-Fresh-Context-Reviewer sowie die erlaubte Zwei-Commit-Grenze. Die zehn
+Fresh-Context-Reviewer sowie die erlaubte Zwei-Commit-Grenze. Die 14
 Mutationsfamilien sind `config`, `schema`, `cli`, `contract`, `event`,
-`endpoint`, `store`, `capability`, `plugin-registration`, `error-code` und
-`workflow`. Diese Vereinigungsmenge deckt sowohl die zehn Referenzfamilien aus
-`A911-01`/`A911-11` als auch die Plugin-/Registrierungsfläche aus `A913-08` ab. Jede Familie
-muss mit den drei vorregistrierten Operationen `add`, `change` und `remove`
-geprüft werden. Das ergibt 33 Pflichtmutationen. Jede braucht einen grünen
-Baseline-Lauf, einen gespeicherten Patch, einen nicht-null Exit des
-vorregistrierten Dokumentationsgates und dessen exakten Drift-Diagnosecode.
-Ein fachfremder Buildfehler besteht die Mutation nicht.
+`endpoint`, `store`, `secret`, `runtime-service`, `ops-tool`, `capability`,
+`plugin-registration`, `error-code` und `workflow`. Ihre 28 vorregistrierten
+Varianten trennen unter anderem Helm-Feld, Environment, Scriptflag,
+`swarm.config.json`, verschachtelte Plugin-Konfiguration, Default/Präzedenz,
+Stage-Typ, Rolle, Erweiterungsklasse, Provider, Fixture, Reportformat,
+Progress-Vertrag, SDK-Export, Secret, Dienst und Ops-Tool. Jede Variante muss
+mit `add`, `change` und `remove`
+geprüft werden. Das ergibt 84 Pflichtmutationen. Jede braucht einen grünen
+Baseline-Lauf, den bytegenau vom registrierten Konstruktor erzeugten Patch auf
+der registrierten Sourcefläche, die erwartete betroffene Seite, einen
+nicht-null Exit des vorregistrierten Dokumentationsgates und dessen exakten
+Drift-Diagnosecode. Ein anderer Patch, eine andere Fläche oder ein fachfremder
+Buildfehler besteht die Mutation nicht.

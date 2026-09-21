@@ -33,7 +33,7 @@ health, pipeline truth, and operational observations separate.
 | PostgreSQL | Stores LiteLLM state in the platform release. | Required when LiteLLM is enabled. | Database only. |
 | LiteLLM | Routes the configured model and embedding requests. | Conditional platform service. | Model gateway only. |
 | OCI pull-through mirror | Caches Docker Hub pulls. | Optional optimization. | Cache only. |
-| Cilium | Can enforce the required network boundaries and add observability. | Optional CNI implementation; Flannel remains valid. | Network enforcement only. |
+| Cilium | Enforces the checked-in security policies and supplies Hubble flow evidence. | Required by the current supported secured deployment. The architecture does not require its API, but the repository has no proved Flannel policy fallback. | Network enforcement only. |
 | Argo CD | Reconciles reviewed Git state. | Optional deployment owner. | Kubernetes desired state only. |
 | Prometheus, Grafana, Loki, and Alloy | Collect and present observations. | Optional. | No pipeline authority. |
 | Ops Pod | Gives a separate analysis and administration workspace. | Optional. | Kubernetes rights assigned to its ServiceAccount. |
@@ -53,8 +53,8 @@ flowchart TB
     K3s --> DNS[Cluster DNS]
     K3s --> Storage[CSI and StorageClasses]
     K3s --> Scheduler[Scheduling and capacity]
-    Flannel[Flannel] -. one CNI owner .-> Network[Pod network and policy boundary]
-    Cilium[Cilium] -. one CNI owner .-> Network
+    Cilium[Cilium: current supported secured path] --> Network[Pod network and policy boundary]
+    Flannel[Flannel: unproved fallback] -. future alternative .-> Network
     Argo[Argo CD] -->|reviewed desired state| K3s
     DNS --> Runtime[Nova, Buster, and Prism]
     Storage --> Runtime
@@ -70,10 +70,11 @@ flowchart TB
 ```
 
 Text version: the host supports K3s. K3s supplies scheduling, DNS, storage, and
-the network used by workloads. One CNI owns the Pod network. Argo CD can own
-deployment reconciliation. Redis, registries, BuildKit, Tailscale, PostgreSQL,
-and LiteLLM support selected runtime paths. Monitoring and the Ops Pod remain
-separate operational surfaces.
+the network used by workloads. Cilium owns the Pod network in the supported
+secured deployment. Flannel is an architectural alternative only. Argo CD can
+own deployment reconciliation. Redis, registries, BuildKit, Tailscale,
+PostgreSQL, and LiteLLM support selected runtime paths. Monitoring and the Ops
+Pod remain separate operational surfaces.
 
 ## Host and K3s Boundary
 
@@ -100,7 +101,7 @@ network, identity, and data services before application reconciliation.
 
 > **Source evidence — present bootstrap boundary**
 >
-> [The deployment command installs services into a selected cluster and exposes explicit component switches](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy.sh#L1-L67).
+> [The deployment command defines the selected cluster inputs and explicit component switches](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy.sh#L1-L60).
 >
 > [The host-automation roadmap states the required planned result](../status/roadmap.md#automated-host-bootstrap-and-recovery).
 
@@ -147,20 +148,32 @@ configuration fault.
 
 ## One Network Owner: Flannel or Cilium
 
-The pipeline requires working Pod networking and enforced traffic boundaries.
-It does not require Nova Core to call the Cilium API. Flannel is a valid CNI for
-a conforming installation. Cilium is an optional implementation that adds rich
-policy and observation features for the learning lab.
+The architecture requires working Pod networking and enforced traffic
+boundaries. Nova Core does not call a Cilium API. This makes another conforming
+CNI possible in principle. It does not make that CNI supported now.
+
+The current secured deployment requires Cilium. The repository supplies
+`CiliumNetworkPolicy` and `CiliumClusterwideNetworkPolicy` resources, uses the
+`kube-apiserver` entity in policy, and queries Hubble for flow evidence. It does
+not supply an equivalent Flannel policy set or a completed positive-and-negative
+fallback test. A default K3s Flannel network can carry packets, but it cannot
+satisfy the current documented enforcement and evidence contract by itself.
 
 Only one CNI can own the Pod network. The Cilium installation path treats the
 first installation as a guarded cutover. It checks old network sandboxes,
 cordons the affected node, applies the new layer, and keeps acceptance separate
 from installation.
 
-**Decision:** Keep the network contract implementation-neutral.
+**Decision status:** The implementation-neutral network boundary is an accepted
+architecture direction. Cilium is the implemented deployment choice. A Flannel
+fallback is planned, not implemented or proved.
 
-**Reason:** This permits a smaller Flannel deployment while preserving the same
-required caller, destination, port, DNS, and denial behavior.
+**Historical reason:** Unknown. **Current rationale (inference):** Keeping Nova
+independent from a CNI API reduces coupling, while Cilium supplies the policy
+and Hubble functions that the present deployment needs. The cost is that the
+smallest current secured installation must operate Cilium, SPIRE, and Envoy.
+Reconsider the deployment choice only after another CNI enforces every allowed
+and denied path and supplies equivalent incident evidence in fresh-cluster tests.
 
 **Failure effect:** A CNI fault can break DNS, service traffic, identity paths,
 and operator access together. An overbroad allow rule can expose a protected
@@ -174,6 +187,8 @@ allowed and denied connections before returning a node to service.
 > [The installer separates first cutover from later Cilium updates](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy-cilium.sh#L7-L32).
 >
 > [The selected values explicitly disable the normal K3s CNI ownership](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/cilium-values.yaml#L24-L31).
+>
+> [The active platform policy uses Cilium identities and a Cilium API resource](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/network-policies.yaml#L1-L55).
 
 ## Argo CD and Exclusive Resource Ownership
 
@@ -200,13 +215,56 @@ reconciliation, promotion, and drift repair stop.
 **Recovery rule:** Restore one owner, verify its exact Git commit, and reconcile
 drift before enabling the other path for a later handover.
 
+**Historical reason:** Unknown. **Current rationale (inference):** Direct
+deployment gives the bootstrap path an owner, and GitOps gives later desired
+state a reviewable owner. The cost is an explicit handover and two configuration
+profiles that maintainers must compare. Reconsider the split if one path can
+bootstrap, recover, and reconcile every resource without a shared-owner window.
+
 > **Source evidence — Git deployment boundary**
 >
 > [Platform projects restrict source repositories, destinations, and resource kinds](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/argocd-self-management.mjs#L15-L29).
 >
-> [The platform tree separates Tailscale, Ops, Redis, registry, and monitoring applications](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/argocd-self-management.mjs#L55-L139).
+> [The platform tree assigns separate Tailscale, Ops, Redis, and registry applications](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/argocd-self-management.mjs#L55-L105).
 >
 > [Adopted SPIRE and storage applications reject shared resource ownership](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/platform-services.mjs#L24-L57).
+
+## Runtime Dependency Contracts
+
+The following records identify the configuration that a caller actually uses.
+“Rendered values” means chart defaults followed by the selected values files
+and explicit Helm overrides; the last supplied value wins. A Kubernetes Secret
+supplies a credential value after the non-secret endpoint has been selected.
+
+| Dependency | Owner, purpose, and consumers | Protocol, endpoint, and identity | Configuration, default, and precedence | Health signal |
+| --- | --- | --- | --- | --- |
+| Redis | Platform data owner; bounded transport, health, and observability state; Nova roles and configured publishers consume it. Redis is not Nova lifecycle authority. | RESP at `redis-master.kubeclaw.svc.cluster.local:6379`; password from `redis-secrets/redis-password`; the adapter also permits `rediss://` with hostname verification. | Direct installation selects `REDIS_RELEASE` and `REDIS_VALUES_FILE`; the selected values override the chart. Role values then set `redis.host`, `port`, Secret name, and key; their chart defaults are the endpoint and Secret above. | Role readiness performs authenticated `PING` and, when enabled, a bounded `XADD`; the Redis workload also has chart health. |
+| LiteLLM PostgreSQL | Platform database owner; stores LiteLLM model, key, and accounting state; LiteLLM consumes it. | PostgreSQL at `postgresql.<namespace>.svc.cluster.local:5432/litellm`; user `litellm`; password from `postgresql-secrets/litellm-password`. | Direct installation selects `POSTGRESQL_RELEASE` and `POSTGRESQL_VALUES_FILE`; GitOps selects `gitops/platform/values/postgresql.yaml`. These are different capacity and image profiles. `litellm-secrets/DATABASE_URL` is the runtime authority and must agree with the selected namespace. | PostgreSQL chart readiness plus a real LiteLLM route check. A LiteLLM `/health` response alone does not prove database contents or provider use. |
+| Prism PostgreSQL | Prism owns project, revision, operation, agent-job, approval, preference, and corpus state; Control, Worker, migration, and backup clients consume it. | PostgreSQL Service `prism-postgresql:5432`; separate runtime, migration, backup, and test URLs come from `prism-postgresql-auth`. | Prism chart values set its image, 100 GiB default storage, and external Secret. Rendered values win; it does not inherit the LiteLLM database settings. | Control `/ready` executes `SELECT 1`; Worker has a bounded database dependency check; backup verification remains a separate operation. |
+| Git origin | Repository owner; supplies exact source objects to role workspaces and Nova Git adapters. | Operator-selected SSH or HTTPS remote; current role values use GitHub SSH through port 443 and a mounted deploy key with pinned host keys. | `agent.git.enabled` defaults to `true`, but `repoUrl` and `secretName` have no usable default. Selected role values override them. There is no supported Git mirror or failover endpoint. | Clone/fetch and exact revision resolution. An existing checkout is evidence only for its local commit, not origin availability. |
+| Writable OCI registry | Registry operator; stores produced manifests and layers; BuildKit pushes and Buster or Kubernetes clients read them. | OCI Distribution API. The lab endpoint is `http://registry-local...:5001` with explicit `http-lab`, anonymous identity; the supported production contract requires HTTPS and explicit credential environment names. | `runtimeInfrastructure.registry` has empty endpoint and transport defaults and must be set. Rendered values produce one `registry-clients.v1` contract. The contract, not legacy sidecar variables, wins for BuildKit, runtime, and node projections. | `/v2/` proves process reachability. A push, digest read, and pull of the immutable manifest prove the active path. |
+| Rootless BuildKit | Buster runtime owner; builds and pushes an image for container-build nodes. | Local BuildKit socket `unix:///run/user/1000/buildkit/buildkitd.sock`; Unix ownership and Pod isolation are the identity boundary. Registry identity comes from the shared registry contract. | Buster values set `CONTAINER_BUILD_BUILDKIT_HOST`; the entrypoint requires `BUILDKIT_HOST`, state root, and registry contract. No cluster TCP default exists. | Entrypoint permits 60 one-second worker checks; provider readiness and an actual digest-bound build are stronger checks. |
+| Tailscale | Tailscale operator owns private Ingress routes; Buster owns each temporary exposure lease. Human clients and exposure tests consume different routes. | Tailnet HTTPS/DNS; OAuth identity comes from `tailscale/operator-oauth`; each published service can add application authentication. | Operator values leave OAuth fields empty so the chart reads the existing Secret. The `tailscale` IngressClass and tags are defaults; selected Helm values win. A fixture’s lease and generation are separate runtime authority. | Operator rollout, proxy readiness, Tailnet DNS/TLS/ACL, and the application check. A created Ingress alone is insufficient. |
+| SPIRE and Envoy | Identity platform owner and each workload owner; issue SVIDs, authenticate mTLS peers, and forward verified identity to Buster and Prism applications. | SPIFFE Workload API on the CSI Unix socket; Envoy listeners use 8443 or role-specific ports and local plaintext loopback. ServiceAccount-derived SPIFFE IDs are the identities. | `workerTrust.spiffe.enabled` defaults to `false` in generic charts. The supported secured values enable it and select trust domain `kubeclaw.internal`; rendered chart values define exact peers and Envoy image. There is no anonymous fallback. | SPIRE/CSI readiness, Envoy `/bootstrap`, `/ready`, and `/health`, then allowed and denied peer requests. |
+
+| Dependency | Failure effect and safe stop | Recovery and proof before resume |
+| --- | --- | --- |
+| Redis | Stop a transport effect after connection, authentication, timeout, protocol, or capacity failure. Do not infer lost lifecycle state or publish under a new idempotency key. | Restore the same logical stream owner, reconcile with the original key, and replay only from the durable producer authority. |
+| LiteLLM PostgreSQL | Stop LiteLLM-dependent requests. Do not recreate keys or models from memory. | Restore and verify the database and encryption inputs, then run one authenticated configured model or embedding request. |
+| Prism PostgreSQL | Stop Prism mutations and agent admission. Do not construct current revision or job state from artifacts alone. | Restore the matched database-and-artifact recovery group, run migrations, verify Control readiness, and reconcile durable operations. |
+| Git origin | Stop a new clone or missing-object fetch. Do not replace the required commit with a newer branch head. | Restore access to the same commit, verify its object bytes, and continue with the recorded revision. |
+| Writable OCI registry | Stop push, manifest verification, and any pull that is not already proved locally. Do not change the expected digest. | Restore the retained registry, check whether the expected digest exists, then prove authenticated push/read/pull as applicable. |
+| Rootless BuildKit | Stop the build node. Do not treat a BuildKit process exit as proof that no manifest was pushed. | Check the registry by expected digest, repair host/rootless/socket prerequisites, start one worker, then resume with the same attempt identity. |
+| Tailscale | Stop private entry or the exposure consumer. Do not allocate a second route when the prior lease outcome is unknown. | Reconcile the exact Ingress or lease generation, restore OAuth/ACL/DNS/TLS, and prove the intended client path before reuse. |
+| SPIRE and Envoy | Protected calls fail closed. Do not bypass the proxy with remote plaintext or trust a forwarded header from a non-loopback peer. | Restore SPIRE, CSI, SVID issuance, and Envoy; verify one permitted peer and one denied peer before resuming protected work. |
+
+> **Source evidence — dependency configuration and precedence inputs**
+>
+> [Role defaults define Git, Redis, LiteLLM, and worker-trust inputs](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/values.yaml#L132-L173) and [the adjacent Git and Redis defaults](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/values.yaml#L204-L232).
+>
+> [The registry contract rejects implicit transport and unsafe credential combinations](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/registry-client-config.mjs#L23-L54) and [generates distinct BuildKit, runtime, and node projections](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/registry-client-config.mjs#L57-L104).
+>
+> [Prism assigns database URLs, ingestion, worker, and exact trusted identities to Control and Worker](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/prism/templates/workloads.yaml#L90-L138).
 
 ## Rootless BuildKit
 
@@ -245,9 +303,9 @@ features. It deletes the probe afterward and reports a cleanup failure.
 >
 > [The Buster entrypoint creates registry configuration, starts rootless BuildKit, waits for its worker, and owns shutdown](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/docker/buster-runtime-entrypoint.sh#L4-L61).
 >
-> [The worker image pins BuildKit, rootless tools, user mappings, and runtime paths](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/docker/Dockerfile.buster-runtime#L1-L78).
+> [The worker image pins BuildKit and rootless tools](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/docker/Dockerfile.buster-runtime#L1-L44) and [defines the runtime user mappings and paths](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/docker/Dockerfile.buster-runtime#L45-L78).
 >
-> [The host preflight explains and tests the required unprivileged-user and AppArmor boundary](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy.sh#L745-L875).
+> [The host preflight creates the bounded rootless probe](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy.sh#L745-L804) and [checks its worker, result, and cleanup](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy.sh#L816-L875).
 
 ## Writable Local OCI Registry
 
@@ -273,7 +331,9 @@ directly.
 
 > **Source evidence — explicit laboratory limits**
 >
-> [The manifest declares anonymous HTTP, one retained writer, disabled delete, bounded resources, and `/v2/` probes](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-local.yaml#L1-L106).
+> [The manifest declares anonymous HTTP and one retained writer](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-local.yaml#L1-L55).
+>
+> [It sets resource bounds, `/v2/` probes, and Service port 5001](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-local.yaml#L56-L106).
 >
 > [Deployment requires explicit storage input and never enables the lab registry by default](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy.sh#L1187-L1219).
 >
@@ -305,7 +365,7 @@ operation does not need a backup because upstream content and digests are author
 
 > **Source evidence — cache boundary and client routing**
 >
-> [The mirror manifest names Docker Hub, its volume, resources, probes, and service port](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-mirror.yaml#L1-L94).
+> [The mirror manifest names Docker Hub and its retained cache](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-mirror.yaml#L1-L55), with [resource bounds, probes, and Service port 5000](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/registry-mirror.yaml#L56-L94).
 >
 > [The client generator keeps writable registry and mirror routes separate and creates BuildKit and node configuration](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/registry-client-config.mjs#L57-L104).
 
@@ -359,10 +419,17 @@ It reads the master key from the environment and a Google service-account file
 from a Secret mount. The Deployment also enables database-backed model state
 through `DATABASE_URL` in `litellm-secrets`.
 
-The service listens on port 4000 and is currently exposed as a NodePort. Startup,
-readiness, and liveness use different health paths and budgets. The deployment
-renderer hashes the exact config bytes into the Pod template. A configuration
-change therefore causes a rollout instead of leaving old Pods with stale bytes.
+Two deployment profiles exist, and they are not byte-for-byte equivalents.
+
+| Profile | Owner and behavior | Readiness and update boundary |
+| --- | --- | --- |
+| Direct `deploy.sh infra` | Renders `my-values/infra/litellm-config.yaml` with the pinned direct Deployment. The renderer creates `litellm-config`, hashes its exact bytes into the Pod template, and applies the Service. The script can override the NodePort, then waits 120 seconds for rollout. | Startup uses `/health/liveliness`; readiness uses `/health/readiness`; liveness uses `/health/liveliness`. A config-byte change forces a rollout. |
+| GitOps `litellm` Application | Reconciles `gitops/platform/litellm/resources.yaml` manually with `FailOnSharedResource=true`. It expects `litellm-config`, `litellm-secrets`, and `google-sa-key` to be managed outside that directory. It uses a different pinned image and a fixed NodePort of 30050. | The GitOps resource declares no Pod probes and does not bind the external ConfigMap bytes to a rollout checksum. Argo records observed application health, but that is not a configured-route check. |
+
+Do not switch owners while both profiles can write the same Deployment or
+Service. Before a handover, compare the image digest, ConfigMap bytes, Secret
+names, Service type and port, resource limits, and probe behavior. The GitOps
+profile does not inherit the stronger direct-profile probes or checksum.
 
 | Boundary | Current owner | Failure effect |
 | --- | --- | --- |
@@ -376,13 +443,46 @@ The current file declares embeddings only. Do not infer a general chat-model
 route from the presence of the gateway. Provider quotas, upstream availability,
 and credential rotation remain external operational dependencies.
 
+The checked-in OpenClaw client uses the gateway only for remote memory-search
+embeddings. It sends model `gemini-embedding-001` to the configured `/v1` base
+URL and resolves `LITELLM_API_KEY` from the selected Secret. Agent reasoning in
+the checked-in Prism values uses OpenClaw's managed OpenAI model route, not this
+LiteLLM model list. The role health check sends authenticated `GET /health` with
+the probe execution timeout. It does not exercise an embedding.
+
+The repository does not configure an OpenClaw embedding request byte limit,
+per-request timeout, status-to-error table, or retry count. Those client details
+belong to the pinned OpenClaw runtime and are not proved by these charts. The
+safe rule is therefore strict: on timeout, 401/403, 429, 5xx, invalid JSON, or an
+invalid vector, keep the owning operation incomplete. Do not start an unbounded
+retry. First distinguish gateway readiness, master-key mismatch, PostgreSQL,
+Vertex credentials, quota, and route/model errors. Retry only under the owning
+operation deadline and only when the caller keeps the same operation identity.
+After repair, prove one real authenticated embedding before resuming model-backed
+work. A health-only success is insufficient.
+
+**Decision status:** The implementation provides the embeddings-only route. **Historical
+reason:** Unknown. **Current rationale (inference):** A single named route limits
+credential and model ambiguity. The cost is dependence on LiteLLM, PostgreSQL,
+and Vertex for memory search, plus profile drift that operators must control.
+Reconsider the gateway or model only when the replacement preserves the client
+base URL, authentication, model identity, vector validation, and recovery proof.
+
 > **Source evidence — gateway configuration and rollout**
 >
 > [The current model list, provider location, master-key source, and parameter behavior](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/litellm-config.yaml#L1-L14).
 >
-> [The Deployment declares secrets, database mode, port, probes, mounts, and resources](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/litellm-deployment.yaml#L1-L97).
+> [The direct Deployment declares the image, database mode, provider mount, and startup/readiness checks](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/my-values/infra/litellm-deployment.yaml#L23-L81).
 >
 > [The renderer binds the mounted configuration to a rollout checksum](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/render-litellm-deployment.mjs#L1-L22).
+>
+> [The direct deployment validates the NodePort, applies the rendered resources, and waits 120 seconds for rollout](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/scripts/deploy.sh#L1166-L1184).
+>
+> [The GitOps profile declares its separate image, external configuration, and Service](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/litellm/resources.yaml#L1-L60) and [the fixed NodePort](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/litellm/resources.yaml#L64-L80).
+>
+> [The role renders the embedding URL, Secret reference, and model](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/configmap-gateway.yaml#L55-L75).
+>
+> [Its dependency check calls only authenticated `/health`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/kubeclaw/templates/deployment.yaml#L842-L847).
 
 ## Monitoring Is Optional and Non-Authoritative
 
@@ -412,7 +512,7 @@ dashboard.
 >
 > [Loki values declare retained filesystem storage and log retention](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/loki.yaml#L1-L33).
 >
-> [Alloy values declare CRI discovery, processing, and Loki delivery](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/alloy.yaml#L30-L130).
+> [Alloy values declare CRI discovery and processing](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/alloy.yaml#L30-L79) and [the Loki delivery and collector resource boundary](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/gitops/platform/values/alloy.yaml#L80-L130).
 
 ## Ops Pod: Tool Policy Is Not Kubernetes Authority
 
@@ -444,16 +544,17 @@ Pod cannot repair the cluster that must schedule it.
 >
 > [Chart defaults enable namespace-scoped Codex execution in `kubeclaw`](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/values.yaml#L21-L28).
 >
-> [RBAC separates cluster reads from namespace-scoped Pod execution](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/rbac.yaml#L1-L92).
+> [RBAC declares the read surface](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/rbac.yaml#L1-L50) and [separates namespace-scoped Pod execution](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/rbac.yaml#L51-L92).
 >
-> [The workload mounts different projected credentials into MCP and Codex](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/workload.yaml#L34-L103).
+> [The workload mounts the Codex credential boundary](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/workload.yaml#L34-L77) and [a separate token into the MCP container](https://github.com/datrab/kubeclaw/blob/32b02816cc19cc8865a45b221b8b6ca28e99e8fb/charts/ops-pod/templates/workload.yaml#L85-L103).
 
 ## Dependency and Recovery Order
 
 Use this order because each later layer needs behavior from the earlier layer.
 
 1. Restore independent host and control-plane access.
-2. Restore K3s, time, node capacity, DNS, storage drivers, and exactly one CNI.
+2. Restore K3s, time, node capacity, DNS, storage drivers, and Cilium for the
+   current supported secured deployment.
 3. Restore required Secrets without printing their values.
 4. Restore SPIRE and its Workload API when protected routes are enabled.
 5. Restore Redis and each separately owned PostgreSQL service.
@@ -477,11 +578,14 @@ process does not prove that Vertex credentials or quota permit one embedding.
 | DNS unavailable | Service-name connections fail. | Existing owner stores. | Repair DNS and CNI; keep configured identities unchanged. |
 | Storage backend unavailable | Selected retained stores stop or become unsafe. | Verified backups and unaffected stores. | Fence writers before storage recovery. |
 | Redis unavailable | Transport and projections stop. | Nova, Worker, Buster, and Prism owner records. | Restore Redis, then replay or reconcile from owners. |
+| Either PostgreSQL owner unavailable | LiteLLM or Prism state operations stop according to the failed database. | Nova/Buster state and the unaffected database owner. | Restore the correct database and its credentials; never cross-restore the two owners. |
+| Git origin unavailable | A new clone or missing-object fetch stops. | Exact commits already present in verified workspaces. | Restore the recorded revision; do not substitute a moving branch head. |
 | Writable registry unavailable | New push, verification, or cold pull stops. | Existing immutable digests and node-local images. | Restore registry and verify manifests. |
 | Pull-through mirror unavailable | Cache acceleration stops. | Upstream registry and digest pins. | Bypass only through an approved client configuration. |
 | BuildKit unavailable | Container builds stop. | Source snapshot and prior image artifacts. | Inspect BuildKit startup and host prerequisites. |
 | Tailscale unavailable | Private entry and exposure routes fail. | Cluster-local services and owner state. | Restore operator identity and route readiness. |
 | LiteLLM unavailable | Configured model calls stop. | Pipeline journals and already stored artifacts. | Restore gateway, database, credentials, and one real route. |
+| SPIRE, CSI, or Envoy unavailable | Protected routes deny or cannot establish identity. | Durable owner state and unrelated local paths. | Restore issuance and proxy readiness, then prove one allowed and one denied peer. |
 | Argo CD unavailable | Reconciliation and drift repair stop. | Current cluster resources and Git desired state. | Restore one deployment owner and compare exact revision. |
 | Monitoring unavailable | Observations and dashboards degrade. | Canonical lifecycle and evidence records. | Restore backends, then collectors. |
 | Ops Pod unavailable | In-cluster analysis is unavailable. | Platform and pipeline services. | Use independent administration access. |
