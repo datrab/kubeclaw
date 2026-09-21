@@ -64,7 +64,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: '0'
     kubeclaw.dev/helm-releases: '["agent-buster"]'
-    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-35573997952-1/buster
+    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-35585048821-1/buster
   labels:
     kubeclaw.dev/gitops-project: kubeclaw
 spec:
@@ -72,7 +72,7 @@ spec:
   source:
     repoURL: https://github.com/datrab/kubeclaw.git
     targetRevision: main
-    path: releases/gitops/runtime-35573997952-1/buster
+    path: releases/gitops/runtime-35585048821-1/buster
     directory:
       include: resources.yaml
   destination:
@@ -100,7 +100,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: '0'
     kubeclaw.dev/helm-releases: '["prism","agent-prism"]'
-    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-35573997952-1/prism
+    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-35585048821-1/prism
   labels:
     kubeclaw.dev/gitops-project: kubeclaw
 spec:
@@ -108,7 +108,7 @@ spec:
   source:
     repoURL: https://github.com/datrab/kubeclaw.git
     targetRevision: main
-    path: releases/gitops/runtime-35573997952-1/prism
+    path: releases/gitops/runtime-35585048821-1/prism
     directory:
       include: resources.yaml
   destination:
@@ -136,7 +136,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: '1'
     kubeclaw.dev/helm-releases: '["agent-nova"]'
-    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-35573997952-1/nova
+    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-35585048821-1/nova
   labels:
     kubeclaw.dev/gitops-project: kubeclaw
 spec:
@@ -144,7 +144,7 @@ spec:
   source:
     repoURL: https://github.com/datrab/kubeclaw.git
     targetRevision: main
-    path: releases/gitops/runtime-35573997952-1/nova
+    path: releases/gitops/runtime-35585048821-1/nova
     directory:
       include: resources.yaml
   destination:
