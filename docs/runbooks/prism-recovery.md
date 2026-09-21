@@ -14,6 +14,15 @@ Design Document revision, and its Baseline Bundle.
 
 ## Backup workload reconciliation
 
+Backup and SQL restore proof first check PostgreSQL readiness for at most 30
+seconds, within the existing whole-operation deadline and exclusive lock.
+This handles the measured startup connectivity gap in new pods; it does not
+repair the cluster's network-policy programming or prove database credentials.
+Only readiness is polled. The dump, database creation and restore each execute
+once; their failures remain failures. If readiness never succeeds, the script
+reports `PRISM_BACKUP_DATABASE_NOT_READY` before creating a snapshot or proof
+database. Checksum-only verification requires no database connection.
+
 The scheduled backup and SQL restore-check containers retain their original
 Helm names (`proof` and `restore-proof`). Kubernetes uses container names as
 merge keys: changing them during GitOps adoption can leave the old container

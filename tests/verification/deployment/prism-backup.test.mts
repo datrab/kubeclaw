@@ -20,6 +20,7 @@ async function setup(t: { after(callback: () => Promise<void>): void }) {
   await Promise.all([artifacts, backups, binaries].map(directory => mkdir(directory)));
   // DB commands are explicit fixtures: these tests cover native filesystem,
   // publication, retention and chart wiring, not PostgreSQL capture or restore.
+  await writeFile(path.join(binaries, 'pg_isready'), '#!/usr/bin/env bash\nexit 0\n', { mode: 0o755 });
   await writeFile(path.join(binaries, 'pg_dump'), '#!/usr/bin/env bash\nset -eu\nif [[ ${1:-} == --version ]]; then echo "pg_dump fixture"; exit; fi\n[[ ${FAIL_DUMP:-0} == 0 ]] || exit 19\nfor arg in "$@"; do case "$arg" in --file=*) printf "database snapshot fixture\\n" > "${arg#--file=}";; esac; done\n', { mode: 0o755 });
   await writeFile(path.join(binaries, 'pg_restore'), '#!/usr/bin/env bash\nset -eu\n[[ $1 == --list && -s $2 ]]\n', { mode: 0o755 });
   const env = { ...process.env, PATH: `${binaries}:${process.env.PATH}`, BACKUP_ROOT: backups, ARTIFACT_ROOT: artifacts,
@@ -36,6 +37,44 @@ async function setup(t: { after(callback: () => Promise<void>): void }) {
   };
   return { root, artifacts, backups, binaries, env, run, store, put };
 }
+
+test('database readiness tolerates an initial connectivity gap but never retries a failed dump', async t => {
+  const fixture = await setup(t);
+  const readyLog = path.join(fixture.root, 'ready.log');
+  const dumpLog = path.join(fixture.root, 'dump.log');
+  await writeFile(path.join(fixture.binaries, 'pg_isready'), `#!/usr/bin/env bash
+set -eu
+if [[ ! -e "$READY_LOG" ]]; then echo unavailable > "$READY_LOG"; exit 2; fi
+echo ready >> "$READY_LOG"
+`, { mode: 0o755 });
+  await writeFile(path.join(fixture.binaries, 'pg_dump'), `#!/usr/bin/env bash
+echo attempted >> "$DUMP_LOG"
+exit 19
+`, { mode: 0o755 });
+  await assert.rejects(fixture.run('backup', { READY_LOG: readyLog, DUMP_LOG: dumpLog }), /DUMP_FAILED_INCOMPLETE_RETAINED/);
+  assert.equal(await readFile(readyLog, 'utf8'), 'unavailable\nready\n');
+  assert.equal(await readFile(dumpLog, 'utf8'), 'attempted\n');
+  assert.equal((await readdir(fixture.backups)).filter(name => name.startsWith('backup-')).length, 0);
+});
+
+test('unreachable database times out before any snapshot or database operation', async t => {
+  const fixture = await setup(t);
+  await writeFile(path.join(fixture.binaries, 'pg_isready'), '#!/usr/bin/env bash\nexit 2\n', { mode: 0o755 });
+  const started = Date.now();
+  await assert.rejects(fixture.run('backup', { BACKUP_MAXIMUM_DURATION_SECONDS: '60' }), /DATABASE_NOT_READY/);
+  const elapsed = Date.now() - started;
+  assert(elapsed >= 29_000 && elapsed < 40_000, `readiness bound: ${elapsed}ms`);
+  assert.deepEqual(await readdir(fixture.backups), ['.lock'], 'no incomplete snapshot is created before readiness');
+});
+
+test('invalid readiness invocation fails immediately; checksum verification stays offline and restore stays gated', async t => {
+  const fixture = await setup(t);
+  const group = await fixture.run('backup');
+  await writeFile(path.join(fixture.binaries, 'pg_isready'), '#!/usr/bin/env bash\nexit 3\n', { mode: 0o755 });
+  assert.equal(await fixture.run('verify'), group);
+  await assert.rejects(fixture.run('backup'), /DATABASE_NOT_READY/);
+  await assert.rejects(fixture.run('database-proof'), /DATABASE_NOT_READY/);
+});
 
 test('DB/object group preserves original artifact IDs on a fresh directory and retains old backups', async t => {
   const fixture = await setup(t);
