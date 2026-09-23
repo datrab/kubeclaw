@@ -485,7 +485,11 @@ function typeOf(value) {
 
 function redactValue(fieldPath, value) {
   let lastSegment;
-  try { lastSegment = String(yamlFieldPathTokens(fieldPath).at(-1) ?? fieldPath); }
+  try {
+    lastSegment = String(yamlFieldPathTokens(fieldPath)
+      .filter((token) => typeof token === 'string')
+      .at(-1) ?? fieldPath);
+  }
   catch { lastSegment = fieldPath.split('.').at(-1)?.replace(/\[[0-9]+\]$/u, '') ?? fieldPath; }
   if (SENSITIVE_VALUE_NAME.test(lastSegment)) return '<redacted:sensitive-field>';
   if (typeof value === 'string') {
