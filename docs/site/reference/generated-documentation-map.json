@@ -1712,7 +1712,7 @@
       "audience": "operator, security operator, developer",
       "owner": "the source component listed for each route or connection",
       "appliesTo": "discovered inbound routes and outbound network calls in shipped runtime sources",
-      "lastVerified": "generated from revision `0cac5f752d0ed48c47e81e730542b879bb254479`",
+      "lastVerified": "generated from revision `b2fa48a5b332dddbf0ca0b24b202711efd7c768b`",
       "sourceDependencies": [
         "docs/generated/inventory/platform-surfaces.json",
         "scripts/docs-platform-surface-inventory.mjs"
