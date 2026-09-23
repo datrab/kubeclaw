@@ -41,6 +41,16 @@ function specialContractEvidence(registration) {
     `cannot find end of YAML special authority at ${registration.line}`);
   return semanticEvidenceRange(registration.line, end);
 }
+function semanticRangeBetween(startText, endText = startText) {
+  const starts = semanticAuthorityLines
+    .map((line, index) => line.includes(startText) ? index : -1)
+    .filter((index) => index >= 0);
+  assert.equal(starts.length, 1, `semantic contract start must be unique: ${startText}`);
+  const start = starts[0];
+  const end = semanticAuthorityLines.findIndex((line, index) => index >= start && line.includes(endText));
+  assert(end >= start, `cannot find semantic contract end after ${startText}: ${endText}`);
+  return semanticEvidenceRange(start + 1, end + 1);
+}
 
 const externalChartLockBytes = fs.readFileSync(new URL('./docs-external-helm-authority-lock.json', import.meta.url));
 const externalChartLock = JSON.parse(externalChartLockBytes);
@@ -223,7 +233,7 @@ function add(path, fieldPath, profile, options = {}) {
   });
 }
 
-function special(path, fieldPath, authority) {
+function special(path, fieldPath, authority, indirectContract = null) {
   const key = `${path}#${fieldPath}`;
   assert(!fieldAuthorities.has(key), `duplicate YAML field authority: ${key}`);
   assert(files.has(path), `YAML field authority has no file declaration: ${key}`);
@@ -232,8 +242,24 @@ function special(path, fieldPath, authority) {
     assert(typeof authority[name] === 'string' && authority[name].length >= minimum, `incomplete ${name}: ${key}`);
   }
   const semanticAuthorityEvidence = semanticRegistrationEvidence();
+  const semanticContractEvidence = indirectContract?.evidence ?? specialContractEvidence(semanticAuthorityEvidence);
+  if (indirectContract) {
+    assert(Array.isArray(indirectContract.tokens) && indirectContract.tokens.length >= 2,
+      `${key}: indirect semantic contract needs field-specific proof tokens`);
+    const contractText = semanticAuthorityLines
+      .slice(semanticContractEvidence.line - 1, semanticContractEvidence.endLine)
+      .join('\n');
+    for (const token of indirectContract.tokens) {
+      assert(typeof token === 'string' && token.length > 0 && contractText.includes(token),
+        `${key}: indirect semantic contract range does not contain token ${JSON.stringify(token)}`);
+    }
+  }
   fieldAuthorities.set(key, {
-    ...authority, semanticAuthorityEvidence, semanticContractEvidence: specialContractEvidence(semanticAuthorityEvidence),
+    ...authority,
+    semanticAuthorityEvidence,
+    semanticContractEvidence,
+    semanticContractBinding: indirectContract ? 'indirect-field-contract' : 'direct-field-contract',
+    semanticContractProofTokens: indirectContract?.tokens ?? null,
   });
 }
 
@@ -299,6 +325,10 @@ add(loki, '$.loki.auth_enabled', 'booleanFeature', { subject: 'Loki requires ten
 special(loki, '$.loki.commonConfig.replication_factor', { purpose: 'Sets how many replicas store each Loki data item.', acceptedValues: 'A positive integer that does not exceed the usable replica count for the selected topology. This single-node profile uses `1`.', emptyBehavior: 'An empty scalar is invalid. Removing the key uses the pinned chart default `3`, which is not valid for this one-replica profile.', impact: 'Changes data redundancy and the number of healthy replicas required for writes.', failure: 'A factor above available replicas causes write or ring errors; zero, negative, or wrongly typed values fail configuration validation.' });
 special(loki, '$.loki.limits_config.max_query_length', { purpose: 'Limits the largest time interval one Loki query can cover.', acceptedValues: 'A positive Loki duration such as `721h`.', emptyBehavior: 'Remove the field to use Loki default behavior. Do not use an empty duration.', impact: 'Controls the maximum historical span and cost of one query.', failure: 'An invalid duration prevents Loki configuration loading. A value below required investigations rejects those queries.' });
 special(loki, '$.loki.limits_config.retention_period', { purpose: 'Sets the retention period for stored Loki log data.', acceptedValues: 'A positive Loki duration. This profile uses `720h`.', emptyBehavior: 'Removing the field uses Loki default retention behavior; an empty duration is invalid.', impact: 'Changes storage growth and the time for which logs remain queryable.', failure: 'An invalid duration prevents configuration loading. A short period removes required logs; a long period can exhaust storage.' });
+const lokiSchemaContractEvidence = semanticRangeBetween(
+  'for (const [pathName, purpose' + ', allowed] of [',
+  ']) special(loki, `$.loki.schemaConfig' + '.configs[0].${pathName}`',
+);
 for (const [pathName, purpose, allowed] of [
   ['from', 'sets the UTC date on which this Loki schema period starts', 'An ISO date in `YYYY-MM-DD` form'],
   ['store', 'selects the Loki index store for this schema period', 'A store supported by Loki v13; this profile uses `tsdb`'],
@@ -306,7 +336,7 @@ for (const [pathName, purpose, allowed] of [
   ['schema', 'selects the Loki storage schema version', 'A Loki-supported schema identifier; this profile uses `v13`'],
   ['index.prefix', 'sets the prefix for generated Loki index tables', 'A non-empty table-name prefix; this profile uses `index_`'],
   ['index.period', 'sets the duration covered by each Loki index table', 'A positive Loki duration; this profile uses `24h`'],
-]) special(loki, `$.loki.schemaConfig.configs[0].${pathName}`, { purpose: `The first schema entry ${purpose}.`, acceptedValues: `${allowed}.`, emptyBehavior: 'An empty value makes the schema entry incomplete; do not remove it from an active schema period.', impact: 'Changes the on-disk data contract. Changing it after data exists requires a compatible migration plan.', failure: 'An invalid or incompatible schema entry prevents Loki startup or makes existing data unreadable.' });
+]) special(loki, `$.loki.schemaConfig.configs[0].${pathName}`, { purpose: `The first schema entry ${purpose}.`, acceptedValues: `${allowed}.`, emptyBehavior: 'An empty value makes the schema entry incomplete; do not remove it from an active schema period.', impact: 'Changes the on-disk data contract. Changing it after data exists requires a compatible migration plan.', failure: 'An invalid or incompatible schema entry prevents Loki startup or makes existing data unreadable.' }, { evidence: lokiSchemaContractEvidence, tokens: [pathName, purpose, allowed] });
 special(loki, '$.loki.storage.type', { purpose: 'Selects the Loki storage backend used by the chart configuration.', acceptedValues: 'A storage type supported by chart 18.13.1. This monolithic lab profile uses `filesystem`.', emptyBehavior: 'An empty value cannot select a backend. Removing the key uses the pinned chart default, which is not this local-storage contract.', impact: 'Changes where Loki stores chunks and indexes and therefore changes backup and recovery requirements.', failure: 'An unsupported type prevents rendering or startup; selecting remote storage without credentials leaves Loki unready.' });
 add(loki, '$.singleBinary.replicas', 'replicas', { subject: 'the monolithic Loki single-binary workload' });
 for (const component of ['backend', 'read', 'write']) add(loki, `$.${component}.replicas`, 'replicas', { subject: `the Loki ${component} workload`, zero: 'disables that distributed-mode workload in this monolithic profile' });
@@ -334,13 +364,17 @@ add(prometheus, '$.grafana.persistence.size', 'pvcSize', { subject: 'Grafana sta
 add(prometheus, '$.grafana.admin.existingSecret', 'secretName', { subject: 'Grafana administrator credentials' });
 add(prometheus, '$.grafana.admin.userKey', 'secretKey', { subject: 'the Grafana administrator user name' });
 add(prometheus, '$.grafana.admin.passwordKey', 'secretKey', { subject: 'the Grafana administrator password' });
+const grafanaDataSourceContractEvidence = semanticRangeBetween(
+  'for (const [key, purpose, accepted' + ', impact, failure] of [',
+  ']) special(prometheus, `$.grafana' + '.additionalDataSources[0].${key}`',
+);
 for (const [key, purpose, accepted, impact, failure] of [
   ['name', 'Sets the display and provisioning name of the additional Grafana data source.', 'A non-empty Grafana data-source name; this profile uses `Loki`.', 'Changes the name users and dashboards use to select the data source.', 'An empty or duplicate name makes provisioning ambiguous or fail.'],
   ['type', 'Selects the Grafana data-source plugin used for the additional source.', 'A provisioned Grafana data-source type; this profile uses `loki`.', 'Changes the query protocol and editor used for the source.', 'An unavailable plugin or wrong type makes queries fail.'],
   ['access', 'Selects whether Grafana proxies queries to the data source.', '`proxy` or another access mode supported by the pinned Grafana chart; this profile uses `proxy`.', 'Changes whether browsers or the Grafana server connect to Loki.', 'A wrong mode can expose an internal URL to browsers or make the source unreachable.'],
   ['isDefault', 'Controls whether this is Grafana’s default data source.', '`true` or `false`; this profile uses `false`.', 'Changes which data source new panels and Explore select by default.', 'More than one default data source can make provisioning fail.'],
   ['url', 'Sets the internal Loki endpoint used by Grafana.', 'An absolute HTTP or HTTPS URL reachable from the Grafana Pod.', 'Changes the Loki instance queried by Grafana.', 'A malformed or unreachable URL makes the data source unhealthy and log queries fail.'],
-]) special(prometheus, `$.grafana.additionalDataSources[0].${key}`, { purpose, acceptedValues: accepted, emptyBehavior: 'An empty value does not satisfy this selected data-source contract.', impact, failure });
+]) special(prometheus, `$.grafana.additionalDataSources[0].${key}`, { purpose, acceptedValues: accepted, emptyBehavior: 'An empty value does not satisfy this selected data-source contract.', impact, failure }, { evidence: grafanaDataSourceContractEvidence, tokens: [key, purpose, accepted, impact, failure] });
 special(prometheus, '$.grafana.envValueFrom.GOMEMLIMIT.resourceFieldRef.resource', { purpose: 'Selects the Grafana container resource value used to derive the Go `GOMEMLIMIT` environment variable.', acceptedValues: 'A downward-API resource selector such as `limits.memory`; this profile uses `limits.memory`.', emptyBehavior: 'An empty selector cannot resolve a resource value.', impact: 'Binds the Go runtime memory target to the configured Grafana memory limit.', failure: 'An unsupported selector prevents Pod environment materialization or leaves `GOMEMLIMIT` unset.' });
 special(prometheus, '$.grafana.envValueFrom.GOMEMLIMIT.resourceFieldRef.divisor', { purpose: 'Selects the unit divisor applied to Grafana’s memory limit before it becomes `GOMEMLIMIT`.', acceptedValues: 'A positive Kubernetes quantity. This profile uses `1` to expose bytes.', emptyBehavior: 'An empty divisor is invalid for a resource field reference.', impact: 'Changes the numeric scale passed to the Go runtime.', failure: 'An invalid divisor fails API admission; the wrong scale can cause premature garbage collection or memory pressure.' });
 add(prometheus, '$.grafana.service.type', 'serviceType', { subject: 'Grafana', allowed: '`ClusterIP`, `NodePort`, or `LoadBalancer`; this profile explicitly uses `NodePort`' });
@@ -498,13 +532,17 @@ special(litellmConfig, '$.model_list[0].litellm_params.vertex_project', { purpos
 const postgresqlRecovery = 'my-values/infra/postgresql-recovery.yaml';
 file(postgresqlRecovery, '5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438');
 special(postgresqlRecovery, '$.schemaVersion', { purpose: 'Selects the PostgreSQL recovery-policy contract understood by render-postgresql-recovery.mjs.', acceptedValues: 'Exactly the integer `1`.', emptyBehavior: 'Missing, null, string, or empty values fail validation.', impact: 'Selects how every backup, retention, verification, resource, and storage field is interpreted.', failure: 'Any other value stops rendering with `POSTGRES_RECOVERY_CONFIGURATION_INVALID` before resources are emitted.' });
+const postgresqlRecoveryTimingContractEvidence = semanticRangeBetween(
+  'for (const [fieldName, purpose' + ', limit] of [',
+  ']) special(postgresqlRecovery' + ', `$.${fieldName}`',
+);
 for (const [fieldName, purpose, limit] of [
   ['backupIntervalMinutes', 'Sets the interval between scheduled PostgreSQL backups.', 'A positive safe integer no greater than 60 minutes.'],
   ['verificationIntervalMinutes', 'Sets the interval between backup freshness and database verification runs.', 'A positive safe integer no greater than 30 minutes and no greater than the backup interval.'],
   ['maximumAgeSeconds', 'Sets the maximum accepted age of the newest verified backup.', 'A positive safe integer larger than the complete worst-case verification and backup timing budget.'],
   ['maximumDurationSeconds', 'Sets the maximum runtime allowed for one backup operation.', 'A positive safe integer smaller than maximumAgeSeconds.'],
   ['verificationDeadlineSeconds', 'Sets how long Kubernetes may delay a scheduled verification Job before it is missed.', 'A positive safe integer that keeps the complete RPO timing formula below maximumAgeSeconds.'],
-]) special(postgresqlRecovery, `$.${fieldName}`, { purpose, acceptedValues: limit, emptyBehavior: 'Missing, empty, zero, fractional, or negative values fail recovery-policy validation.', impact: 'Changes the backup schedule or the time window used to prove recoverability.', failure: 'An invalid individual value stops with `POSTGRES_RECOVERY_POLICY_INVALID`; an unsafe combination stops with `POSTGRES_RECOVERY_SCHEDULE_RPO_INVALID`.' });
+]) special(postgresqlRecovery, `$.${fieldName}`, { purpose, acceptedValues: limit, emptyBehavior: 'Missing, empty, zero, fractional, or negative values fail recovery-policy validation.', impact: 'Changes the backup schedule or the time window used to prove recoverability.', failure: 'An invalid individual value stops with `POSTGRES_RECOVERY_POLICY_INVALID`; an unsafe combination stops with `POSTGRES_RECOVERY_SCHEDULE_RPO_INVALID`.' }, { evidence: postgresqlRecoveryTimingContractEvidence, tokens: [fieldName, purpose, limit] });
 for (const [fieldName, subject] of [['maximumBackupBytes', 'one PostgreSQL backup'], ['maximumRetainedBytes', 'all retained PostgreSQL backup material']]) special(postgresqlRecovery, `$.${fieldName}`, { purpose: `Sets the byte ceiling for ${subject}.`, acceptedValues: 'A positive safe integer. The retained ceiling must exceed the per-backup ceiling by more than 64 MiB.', emptyBehavior: 'Missing, empty, zero, fractional, or negative values fail recovery-policy validation.', impact: `Changes the storage guard applied to ${subject}.`, failure: 'An invalid value stops with `POSTGRES_RECOVERY_POLICY_INVALID`; an unsafe relationship stops with `POSTGRES_RECOVERY_BUDGET_INVALID`.' });
 add(postgresqlRecovery, '$.persistence.size', 'pvcSize', { subject: 'retained PostgreSQL backup data' });
 special(postgresqlRecovery, '$.persistence.storageClass', { purpose: 'Selects the Kubernetes StorageClass for the PostgreSQL backup PVC.', acceptedValues: 'Null to use the cluster default, or a DNS-label StorageClass name.', emptyBehavior: 'An empty string is not accepted by the checked-in validator; use null for the cluster default.', impact: 'Changes the storage provider, binding behavior, and recovery availability of backup data.', failure: 'An invalid name stops rendering; an unavailable class leaves the backup PVC Pending.' });
@@ -594,23 +632,38 @@ const liteLLMProcessAuthorities = [
   ['$.spec.template.spec.containers[0].env[1].name', 'Names the LiteLLM environment switch that enables database-backed model storage.', 'Exactly `STORE_MODEL_IN_DB` for the selected LiteLLM image.', 'An empty or changed name leaves database-backed model storage at image default behavior.', 'Binds the following Boolean-like string to LiteLLM database storage behavior.', 'A wrong name can make LiteLLM ignore the setting and use a different model-storage mode.'],
   ['$.spec.template.spec.containers[0].env[1].value', 'Enables LiteLLM storage of model configuration in PostgreSQL.', 'The case-sensitive string `True` used by the selected LiteLLM configuration parser.', 'An empty or missing value does not enable the selected database-backed storage behavior.', 'Changes whether model configuration survives LiteLLM Pod replacement through PostgreSQL.', 'An unsupported value can disable persistence or make configuration loading fail.'],
 ];
+const liteLLMProcessContractEvidence = semanticRangeBetween(
+  'const liteLLMProcess' + 'Authorities = [',
+  'special(pathName, fieldPath, { purpose, acceptedValues' + ', emptyBehavior, impact, failure }',
+);
 for (const [pathName, digest] of [
   ['gitops/platform/litellm/resources.yaml', 'faf5a32f91568604ee1726ac60a58c7490fb95802d61a0019171006423474637'],
   ['my-values/infra/litellm-deployment.yaml', '21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab'],
 ]) {
   file(pathName, digest);
   for (const [fieldPath, purpose, acceptedValues, emptyBehavior, impact, failure] of liteLLMProcessAuthorities) {
-    special(pathName, fieldPath, { purpose, acceptedValues, emptyBehavior, impact, failure });
+    special(pathName, fieldPath, { purpose, acceptedValues, emptyBehavior, impact, failure }, {
+      evidence: liteLLMProcessContractEvidence,
+      tokens: [fieldPath, purpose, acceptedValues, emptyBehavior, impact, failure],
+    });
   }
 }
 
 const registryDeleteName = { purpose: 'Names the Distribution environment switch that permits registry blob deletion.', acceptedValues: 'Exactly `REGISTRY_STORAGE_DELETE_ENABLED` for Distribution 3.0.0.', emptyBehavior: 'An empty or changed name leaves deletion at the image configuration default.', impact: 'Binds the following value to registry deletion and garbage-collection preparation.', failure: 'A wrong name makes the registry ignore the setting and prevents the selected delete workflow.' };
 const registryDeleteValue = { purpose: 'Enables Distribution delete operations required before the documented offline garbage-collection procedure.', acceptedValues: 'The lower-case string `true` or `false`; this deployment selects `true`.', emptyBehavior: 'An empty or missing value returns behavior to the image configuration and does not prove delete support.', impact: 'Controls whether clients can delete manifests before offline garbage collection.', failure: 'A false or ignored value makes delete requests fail; unrestricted deletion without the maintenance procedure can remove required content.' };
+const registryDeleteNameContract = {
+  evidence: semanticRangeBetween('const registryDelete' + 'Name = {'),
+  tokens: Object.values(registryDeleteName),
+};
+const registryDeleteValueContract = {
+  evidence: semanticRangeBetween('const registryDelete' + 'Value = {'),
+  tokens: Object.values(registryDeleteValue),
+};
 
 const gitOpsRegistryLocal = 'gitops/platform/registry-local/resources.yaml';
 file(gitOpsRegistryLocal, 'f728da90b05f3185afce2d7de85484ff4bab8f29e7db88d797ce1dcbf78916a7');
-special(gitOpsRegistryLocal, '$.spec.template.spec.containers[0].env[0].name', registryDeleteName);
-special(gitOpsRegistryLocal, '$.spec.template.spec.containers[0].env[0].value', registryDeleteValue);
+special(gitOpsRegistryLocal, '$.spec.template.spec.containers[0].env[0].name', registryDeleteName, registryDeleteNameContract);
+special(gitOpsRegistryLocal, '$.spec.template.spec.containers[0].env[0].value', registryDeleteValue, registryDeleteValueContract);
 
 const registryLocalManifest = 'my-values/infra/registry-local.yaml';
 file(registryLocalManifest, '3fe00107c5ee2387313626219668bdc02d994a96c32776a7dd2138bdd16f10ae');
@@ -624,8 +677,8 @@ const registryMirrorManifest = 'my-values/infra/registry-mirror.yaml';
 file(registryMirrorManifest, '19673e314634c078740c21094e2de9a3db3fe9a5eaccc5be1b597f4454a11645');
 special(registryMirrorManifest, '$.spec.template.spec.containers[0].env[0].name', { purpose: 'Names the Distribution environment setting that selects a pull-through cache upstream.', acceptedValues: 'Exactly `REGISTRY_PROXY_REMOTEURL` for Distribution 3.0.0.', emptyBehavior: 'An empty or changed name leaves this registry without the selected proxy upstream.', impact: 'Binds the following URL to pull-through cache behavior.', failure: 'A wrong name makes the registry operate without the intended Docker Hub mirror contract.' });
 special(registryMirrorManifest, '$.spec.template.spec.containers[0].env[0].value', { purpose: 'Selects Docker Hub as the upstream registry for the pull-through cache.', acceptedValues: 'Exactly the HTTPS URL `https://registry-1.docker.io` for this mirror.', emptyBehavior: 'An empty or missing URL disables the selected upstream proxy contract.', impact: 'Changes the external registry contacted on a cache miss and the content namespace accepted by the mirror.', failure: 'A malformed or unreachable URL makes uncached pulls fail.' });
-special(registryMirrorManifest, '$.spec.template.spec.containers[0].env[1].name', registryDeleteName);
-special(registryMirrorManifest, '$.spec.template.spec.containers[0].env[1].value', registryDeleteValue);
+special(registryMirrorManifest, '$.spec.template.spec.containers[0].env[1].name', registryDeleteName, registryDeleteNameContract);
+special(registryMirrorManifest, '$.spec.template.spec.containers[0].env[1].value', registryDeleteValue, registryDeleteValueContract);
 
 export function yamlAuthorityFile(sourcePath) {
   return files.get(sourcePath) ?? null;
@@ -637,6 +690,7 @@ export function yamlFieldAuthority(sourcePath, fieldPath) {
   if (!declaration || !registered) return null;
   const expanded = registered.profile ? { ...profiles[registered.profile](registered), ...registered } : { ...registered };
   delete expanded.profile;
+  delete expanded.semanticContractProofTokens;
   return { ...expanded, sourceFileSha256: declaration.sourceSha256, externalChart: declaration.externalChart };
 }
 
@@ -666,6 +720,7 @@ export function assertYamlAuthorityRegistry(repositoryRoot = process.cwd(), { ve
   assert.deepEqual(Object.keys(charts).sort(), ['alloy', 'argocd', 'cilium', 'csi', 'loki', 'postgresql', 'postgresqlDirect', 'prometheus', 'promtail', 'redis', 'spire', 'tailscale'],
     'external Helm authority lock chart set changed');
   let externalFieldCount = 0;
+  let indirectContractCount = 0;
   for (const [key, entry] of fieldAuthorities) {
     const registration = entry.semanticAuthorityEvidence;
     const contractEvidence = entry.semanticContractEvidence;
@@ -678,6 +733,15 @@ export function assertYamlAuthorityRegistry(repositoryRoot = process.cwd(), { ve
     `${key}: semantic contract source range is missing`);
     assert.equal(crypto.createHash('sha256').update(semanticAuthorityLines.slice(contractEvidence.line - 1, contractEvidence.endLine).join('\n')).digest('hex'), contractEvidence.sourceRangeSha256,
       `${key}: semantic contract source range changed`);
+    if (entry.semanticContractBinding === 'indirect-field-contract') {
+      indirectContractCount += 1;
+      const contractText = semanticAuthorityLines.slice(contractEvidence.line - 1, contractEvidence.endLine).join('\n');
+      assert(entry.semanticContractProofTokens.length >= 2,
+        `${key}: indirect semantic contract has no field-specific proof tokens`);
+      for (const token of entry.semanticContractProofTokens) {
+        assert(contractText.includes(token), `${key}: indirect semantic contract no longer contains ${JSON.stringify(token)}`);
+      }
+    }
     for (const name of ['purpose', 'acceptedValues', 'emptyBehavior', 'impact', 'failure']) {
       const value = entry.profile ? profiles[entry.profile](entry)[name] : entry[name];
       const minimum = name === 'acceptedValues' ? 8 : 20;
@@ -709,6 +773,8 @@ export function assertYamlAuthorityRegistry(repositoryRoot = process.cwd(), { ve
   }
   assert.equal(Object.keys(externalSnapshots.fields).length, externalFieldCount,
     'external Helm extracted authority contains stale or missing field inputs');
+  assert.equal(indirectContractCount, 36,
+    'indirect YAML semantic contract coverage changed; bind every generated field to its contract definition range');
   for (const declaration of files.values()) {
     if (verifyBytes) {
       const absoluteSource = path.join(repositoryRoot, declaration.path);

@@ -105,7 +105,7 @@ function expectDetected(name, mutate, verifyPublication = null) {
       : runGenerator('--check');
     assert.notEqual(result.status, 0, `${name}: stale inventory was not detected`);
     const diagnostic = `${result.stdout}\n${result.stderr}`;
-    assert.match(diagnostic, /(?:Configuration documentation inventory is stale|CONFIG_SEMANTIC_GAP|CONFIG_YAML_AUTHORITY_DRIFT|CONFIG_YAML_(?:DOTTED_KEY|PATH_COLLISION|SEMANTIC_AUTHORITY|SEMANTIC_CONTRACT)|CONFIG_YAML_API_CONTRACT_GAP|CONFIG_YAML_LEAF_LINE_DRIFT|CONFIG_YAML_API_LEAF_(?:LINE|DIGEST)_DRIFT|CONFIG_PAYLOAD_(?:REQUEST_PATH|SWARM_READER)_BOUNDARY_CHANGED|schema logical regression|offline external Helm authority verification failed|external Helm authority lock bytes|external Helm extracted authority bytes|authority source bytes changed|cannot extract vendored CRD authority|exact consumer line changed|consumer context changed|downstream receiver changed|consumer proof is not bound to this exact leaf|selected-value proof does not bind the exact source field|compressed bytes changed|manifest bytes changed|deployed config payload .* is missing|deployed config payload discovery differs|expected .* containing|mutation token is missing)/u, `${name}: failure did not identify inventory drift or a semantic authority gap`);
+    assert.match(diagnostic, /(?:Configuration documentation inventory is stale|CONFIG_SEMANTIC_GAP|CONFIG_YAML_AUTHORITY_DRIFT|CONFIG_YAML_(?:DOTTED_KEY|PATH_COLLISION|SEMANTIC_AUTHORITY|SEMANTIC_CONTRACT)|CONFIG_YAML_API_CONTRACT_GAP|CONFIG_YAML_LEAF_LINE_DRIFT|CONFIG_YAML_API_LEAF_(?:LINE|DIGEST)_DRIFT|CONFIG_PAYLOAD_(?:REQUEST_PATH|SWARM_READER)_BOUNDARY_CHANGED|schema logical regression|offline external Helm authority verification failed|external Helm authority lock bytes|external Helm extracted authority bytes|authority source bytes changed|indirect semantic contract|cannot extract vendored CRD authority|exact consumer line changed|consumer context changed|downstream receiver changed|consumer proof is not bound to this exact leaf|selected-value proof does not bind the exact source field|compressed bytes changed|manifest bytes changed|deployed config payload .* is missing|deployed config payload discovery differs|expected .* containing|mutation token is missing)/u, `${name}: failure did not identify inventory drift or a semantic authority gap`);
     const semanticRejected = /CONFIG_SEMANTIC_GAP|CONFIG_YAML_AUTHORITY_DRIFT|authority source bytes changed/u.test(diagnostic);
     if (name === 'environment-setting:add') {
       assert.match(diagnostic, /AP98_MUTATION_ENV/u, `${name}: diagnostic did not identify the new operator environment input`);
@@ -447,6 +447,9 @@ try {
     ['yaml-authority:add', () => append('gitops/platform/values/alloy.yaml', 'ap98Mutation:\n  enableReporting: false')],
     ['yaml-authority:change', () => replaceOnce('gitops/platform/values/alloy.yaml', '  enableReporting: false', '  enableReporting: true')],
     ['yaml-authority:remove', () => replaceOnce('gitops/platform/values/alloy.yaml', '  enableReporting: false\n', '')],
+    ['yaml-indirect-contract:proof-token-change', () => replaceOnce('scripts/docs-yaml-field-authorities.mjs',
+      'tokens: [pathName, purpose, allowed]',
+      "tokens: [pathName, purpose, 'AP98_MISSING_CONTRACT_TOKEN']")],
     ['yaml-authority:same-token-collision', () => combineMutations(
       () => createFile('gitops/platform/values/ap98-shadow.yaml', 'alloy:\n  enableReporting: false'),
       () => createFile('gitops/platform/bootstrap/ap98-shadow.yaml', `apiVersion: argoproj.io/v1alpha1

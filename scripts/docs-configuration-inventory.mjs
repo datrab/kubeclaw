@@ -1609,6 +1609,7 @@ function yamlMeaning(context, exactPath, valueType, semantics, authority) {
     sourceFileSha256: authority.sourceFileSha256,
     semanticAuthorityEvidence: authority.semanticAuthorityEvidence,
     semanticContractEvidence: authority.semanticContractEvidence,
+    semanticContractBinding: authority.semanticContractBinding ?? null,
     externalChart: null,
     blockerOwner: receiverProved ? null : sourceOwner(context.sourcePath).component,
     closureCondition: receiverProved ? null : 'Add an exact checked-in reader or a pinned external image/controller contract for this payload.',
@@ -1666,6 +1667,7 @@ function yamlMeaning(context, exactPath, valueType, semantics, authority) {
     semanticGroup: authority.group ?? null,
     semanticAuthorityEvidence: authority.semanticAuthorityEvidence,
     semanticContractEvidence: authority.semanticContractEvidence,
+    semanticContractBinding: authority.semanticContractBinding ?? null,
     blockerOwner: null,
     closureCondition: null,
   };
