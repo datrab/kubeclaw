@@ -218,10 +218,10 @@ appendContract('kubeclaw.api-flow-document@1', flow, flowFile);
 
 lines.push('## Maintenance Rule', '',
   'Change a schema first. Then run `node scripts/generate-buster-provider-reference.mjs --write`.',
-  'Review the changed paths and limits as a contract change. The documentation check',
+  'Review the changed paths and limits as a contract change. The reference freshness gate',
   'rejects a stale file and rejects a provider that is absent from this inventory.', '');
 
-const output = `${lines.join('\n')}\n`;
+const output = `${lines.join('\n').trimEnd()}\n`;
 if (process.argv.includes('--write')) {
   fs.writeFileSync(target, output);
   console.log(`wrote ${path.relative(root, target)}`);
