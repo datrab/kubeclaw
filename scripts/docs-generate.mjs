@@ -27,7 +27,7 @@ if (!/^[0-9a-f]{40}$/u.test(sourceRevision)) {
   throw new Error(`documentation source revision must be a full Git commit SHA: ${sourceRevision}`);
 }
 try {
-  execFileSync('git', ['cat-file', '-e', `${sourceRevision}^{commit}`], { cwd: root, stdio: 'ignore' });
+  execFileSync('git', ['cat-file', '-e', `${sourceRevision}^{commit}`], { cwd: invocationRoot, stdio: 'ignore' });
 } catch {
   throw new Error(`documentation source revision does not exist locally: ${sourceRevision}`);
 }
