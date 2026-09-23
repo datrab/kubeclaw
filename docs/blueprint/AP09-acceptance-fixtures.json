@@ -61,12 +61,12 @@
       "acceptanceIds": ["A98-07", "A98-13", "A913-04", "A913-10", "A913-12"],
       "objective": "Decide whether a complete platform restore is currently supported, identify the exact source-backed blocker, and stop before an unsafe cutover.",
       "taskInput": "A clean checkout at reviewed_revision and an isolated empty target. Determine from docs/site whether a complete platform restore is supported now. If it is supported, follow the procedure. If it is not supported, identify the boundary and take the documented safe action. No author or first operator is present.",
-      "supportState": { "status": "unsupported-boundary", "declaredAtFixtureRevision": true, "authorities": ["docs/site/status/open-issues.md#ifr-01-001", "docs/site/status/open-issues.md#ifr-26-001"] },
-      "facilitatorSetup": "Keep this field hidden from the participant. Current source authority declares complete host and cross-service restore proof open as IFR-01-001 and IFR-26-001; score the participant against the hidden requiredOutcomes below.",
+      "supportState": { "status": "unsupported-boundary", "declaredAtFixtureRevision": true, "authorities": ["docs/site/status/open-issues.md#automated-host-bootstrap-and-restore-prerequisites-are-incomplete", "docs/site/status/open-issues.md#complete-independent-application-recovery-is-not-yet-demonstrated"] },
+      "facilitatorSetup": "Keep this field hidden from the participant. Current source authority declares the host bootstrap and restore prerequisites and complete independent application recovery open; score the participant against the hidden requiredOutcomes below.",
       "fixturePaths": [], "injectedFaultId": "RESTORE-CURRENT-PRODUCT-BOUNDARY",
       "requiredOutcomes": [
         { "id": "support-state-correct", "passCondition": "The participant concludes that a complete platform restore is not currently demonstrated and does not claim support from component-level checks." },
-        { "id": "blockers-identified", "passCondition": "The participant identifies IFR-01-001 and IFR-26-001, their source-backed limits, owners, and measurable closure conditions." },
+        { "id": "blockers-identified", "passCondition": "The participant identifies the host bootstrap and restore prerequisite gap and the independent application recovery gap, including their source-backed limits, owners, and measurable closure conditions." },
         { "id": "safe-stop-used", "passCondition": "The participant stops before cutover or destructive replacement and selects an isolated-target proof as the required next action." },
         { "id": "available-scope-separated", "passCondition": "The participant separates currently available component backup checks from the missing host and cross-service restore proof." }
       ],
