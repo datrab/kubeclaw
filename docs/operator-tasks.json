@@ -1,0 +1,400 @@
+{
+  "schemaVersion": "operator-task-registry-v1",
+  "authorityRule": "Each taskId has exactly one canonical page and anchor. Other pages may link to it but must not redefine the procedure.",
+  "scope": "docs/site/use",
+  "tasks": [
+    {
+      "taskId": "install-preflight",
+      "title": "Install and preflight",
+      "canonical": "docs/site/use/install.md#canonical-install-and-preflight-procedure",
+      "owner": "platform operations",
+      "implementationAuthorities": ["scripts/deploy.sh", "scripts/updates/materialize-release.mjs", "charts/kubeclaw"],
+      "supportedStartState": "Existing Kubernetes cluster with independently recoverable administration",
+      "productLimits": ["No host, K3s, CNI, or StorageClass installation", "Runtime mutation stops when releases/runtime-images.json is absent"],
+      "procedure": {
+        "supportedStartStateAndVersion": ["docs/site/use/install.md#canonical-install-and-preflight-procedure", "docs/site/use/install.md#supported-versions"],
+        "executionLocation": ["docs/site/use/install.md#execution-locations"],
+        "implementationAuthority": ["docs/site/use/install.md#supported-topology-and-limits"],
+        "preconditions": ["docs/site/use/install.md#prerequisites", "docs/site/use/install.md#preflight-without-mutation"],
+        "orderedSteps": ["docs/site/use/install.md#install-in-dependency-order"],
+        "expectedObservations": ["docs/site/use/install.md#install-in-dependency-order"],
+        "stopConditions": ["docs/site/use/install.md#failed-first-installation"],
+        "failureDistinction": ["docs/site/use/install.md#failed-first-installation"],
+        "recoveryRollback": ["docs/site/use/install.md#recovery-and-rollback"],
+        "cleanup": ["docs/site/use/install.md#cleanup"],
+        "evidence": ["docs/site/use/install.md#evidence-to-retain"]
+      }
+    },
+    {
+      "taskId": "start-readiness-observe",
+      "title": "Start, readiness, and observation",
+      "canonical": "docs/site/use/operate.md#canonical-start-readiness-and-observation-procedure",
+      "owner": "platform operations",
+      "implementationAuthorities": ["scripts/deploy.sh", "charts/kubeclaw/templates/deployment.yaml"],
+      "supportedStartState": "Installed source-bound release with an explicit context and namespace",
+      "productLimits": ["Resource readiness is not functional readiness"],
+      "procedure": {
+        "supportedStartStateAndVersion": ["docs/site/use/operate.md#canonical-start-readiness-and-observation-procedure", "docs/site/use/operate.md#supported-versions"],
+        "executionLocation": ["docs/site/use/operate.md#canonical-start-readiness-and-observation-procedure"],
+        "implementationAuthority": ["docs/site/use/operate.md#canonical-start-readiness-and-observation-procedure"],
+        "preconditions": ["docs/site/use/operate.md#canonical-start-readiness-and-observation-procedure"],
+        "orderedSteps": ["docs/site/use/operate.md#canonical-start-readiness-and-observation-procedure"],
+        "expectedObservations": ["docs/site/use/operate.md#canonical-start-readiness-and-observation-procedure"],
+        "stopConditions": ["docs/site/use/operate.md#canonical-start-readiness-and-observation-procedure"],
+        "failureDistinction": ["docs/site/use/operate.md#safe-retry-decision"],
+        "recoveryRollback": ["docs/site/use/operate.md#safe-retry-decision"],
+        "cleanup": ["docs/site/use/operate.md#canonical-start-readiness-and-observation-procedure"],
+        "evidence": ["docs/site/use/operate.md#evidence-to-retain"]
+      }
+    },
+    {
+      "taskId": "run-control",
+      "title": "Wait, signal, resume, interruption, and cancellation boundary",
+      "canonical": "docs/site/use/operate.md#canonical-run-control-procedure",
+      "owner": "Nova Core and platform operations",
+      "implementationAuthorities": ["skills/nova/core/cli.ts", "skills/nova/project/cli.ts", "skills/nova/project/recovery.ts", "skills/nova/project/delivery-manifest.ts", "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json"],
+      "supportedStartState": "Durable run created by the same graph and package snapshot",
+      "productLimits": ["Resume issuer is unsigned and self-asserted by the caller", "No supported operator cancel command"],
+      "recoveryOutcomes": [
+        {"code": "PROJECT_DELIVERY_MANIFEST_ENCODING_INVALID", "implementationAuthority": "skills/nova/project/delivery-manifest.ts", "variantId": "recovery-identity-mismatch", "documentation": "docs/site/use/operate.md#recover-after-interruption"},
+        {"code": "PROJECT_RECOVERY_DELIVERY_MANIFEST_ENCODING_INVALID", "implementationAuthority": "skills/nova/project/delivery-manifest.ts", "variantId": "recovery-identity-mismatch", "documentation": "docs/site/use/operate.md#recover-after-interruption"},
+        {"code": "PROJECT_RECOVERY_DELIVERY_SELECTOR_FOREIGN", "implementationAuthority": "skills/nova/project/delivery-manifest.ts", "variantId": "recovery-identity-mismatch", "documentation": "docs/site/use/operate.md#recover-after-interruption"},
+        {"code": "PROJECT_RECOVERY_REPORT_ENCODING_INVALID", "implementationAuthority": "skills/nova/project/recovery.ts", "variantId": "recovery-identity-mismatch", "documentation": "docs/site/use/operate.md#recover-after-interruption"},
+        {"code": "PROJECT_RECOVERY_REPORT_ENCODING_MIXED", "implementationAuthority": "skills/nova/project/recovery.ts", "variantId": "recovery-identity-mismatch", "documentation": "docs/site/use/operate.md#recover-after-interruption"},
+        {"code": "PROJECT_RECOVERY_REVIEW_NODES_MISMATCH", "implementationAuthority": "skills/nova/project/recovery.ts", "variantId": "recovery-identity-mismatch", "documentation": "docs/site/use/operate.md#recover-after-interruption"},
+        {"code": "PROJECT_RECOVERY_REVIEW_SEMANTICS_INVALID", "implementationAuthority": "skills/nova/project/recovery.ts", "variantId": "recovery-identity-mismatch", "documentation": "docs/site/use/operate.md#recover-after-interruption"},
+        {"code": "PROJECT_RECOVERY_REVIEW_SEMANTICS_MIXED", "implementationAuthority": "skills/nova/project/recovery.ts", "variantId": "recovery-identity-mismatch", "documentation": "docs/site/use/operate.md#recover-after-interruption"},
+        {"code": "PROJECT_RECOVERY_SOURCE_INVALID", "implementationAuthority": "skills/nova/project/recovery.ts", "variantId": "recovery-identity-mismatch", "documentation": "docs/site/use/operate.md#recover-after-interruption"},
+        {"code": "PROJECT_RECOVERY_SUMMARY_NODE_INVALID", "implementationAuthority": "skills/nova/project/delivery-manifest.ts", "variantId": "recovery-identity-mismatch", "documentation": "docs/site/use/operate.md#recover-after-interruption"}
+      ],
+      "variants": [
+        {
+          "variantId": "recover-project",
+          "supportState": "supported",
+          "startState": "Nonterminal project run with the original project file, platform file, package snapshot, runtime configuration, and recorded interruption state",
+          "steps": ["docs/site/use/operate.md#recover-after-interruption"],
+          "observations": ["docs/site/use/operate.md#recover-after-interruption"],
+          "stopConditions": ["docs/site/use/operate.md#recover-after-interruption", "docs/site/use/operate.md#safe-retry-decision"],
+          "cleanup": ["docs/site/use/operate.md#recover-after-interruption"],
+          "evidence": ["docs/site/use/operate.md#recover-after-interruption", "docs/site/use/operate.md#evidence-to-retain"]
+        },
+        {
+          "variantId": "recover-explicit-graph",
+          "supportState": "supported",
+          "startState": "Nonterminal explicit-graph run with the original graph, platform file, package snapshot, runtime configuration, and recorded interruption state",
+          "steps": ["docs/site/use/operate.md#recover-after-interruption"],
+          "observations": ["docs/site/use/operate.md#recover-after-interruption"],
+          "stopConditions": ["docs/site/use/operate.md#recover-after-interruption", "docs/site/use/operate.md#safe-retry-decision"],
+          "cleanup": ["docs/site/use/operate.md#recover-after-interruption"],
+          "evidence": ["docs/site/use/operate.md#recover-after-interruption", "docs/site/use/operate.md#evidence-to-retain"]
+        },
+        {
+          "variantId": "recovery-signal-required",
+          "supportState": "conditional",
+          "startState": "Recovery reports RECOVERY_SIGNAL_REQUIRED for an active wait",
+          "steps": ["docs/site/use/operate.md#recover-after-interruption"],
+          "observations": ["docs/site/use/operate.md#recover-after-interruption"],
+          "stopConditions": ["docs/site/use/operate.md#recover-after-interruption"],
+          "cleanup": ["docs/site/use/operate.md#recover-after-interruption"],
+          "evidence": ["docs/site/use/operate.md#recover-after-interruption"]
+        },
+        {
+          "variantId": "recovery-terminal-run",
+          "supportState": "unsupported",
+          "startState": "Recovery reports RECOVERY_RUN_TERMINAL for an already terminal run",
+          "steps": ["docs/site/use/operate.md#recover-after-interruption"],
+          "observations": ["docs/site/use/operate.md#recover-after-interruption"],
+          "stopConditions": ["docs/site/use/operate.md#recover-after-interruption"],
+          "cleanup": ["docs/site/use/operate.md#recover-after-interruption"],
+          "evidence": ["docs/site/use/operate.md#recover-after-interruption"]
+        },
+        {
+          "variantId": "recovery-cooldown-not-due",
+          "supportState": "conditional",
+          "startState": "Recovery reports RECOVERY_COOLDOWN_NOT_DUE before the recorded retry time",
+          "steps": ["docs/site/use/operate.md#recover-after-interruption"],
+          "observations": ["docs/site/use/operate.md#recover-after-interruption"],
+          "stopConditions": ["docs/site/use/operate.md#recover-after-interruption"],
+          "cleanup": ["docs/site/use/operate.md#recover-after-interruption"],
+          "evidence": ["docs/site/use/operate.md#recover-after-interruption"]
+        },
+        {
+          "variantId": "recovery-identity-mismatch",
+          "supportState": "conditional",
+          "startState": "Recovery reports a graph, pipeline, package, registry snapshot, runtime configuration, or dependency identity mismatch",
+          "steps": ["docs/site/use/operate.md#recover-after-interruption"],
+          "observations": ["docs/site/use/operate.md#recover-after-interruption"],
+          "stopConditions": ["docs/site/use/operate.md#recover-after-interruption", "docs/site/use/operate.md#safe-retry-decision"],
+          "cleanup": ["docs/site/use/operate.md#recover-after-interruption"],
+          "evidence": ["docs/site/use/operate.md#recover-after-interruption"]
+        },
+        {
+          "variantId": "recovery-unresolved-effect",
+          "supportState": "conditional",
+          "startState": "Recovery reports RECOVERY_EFFECT_OUTCOME_UNRESOLVED for an uncertain external effect",
+          "steps": ["docs/site/use/operate.md#recover-after-interruption"],
+          "observations": ["docs/site/use/operate.md#recover-after-interruption"],
+          "stopConditions": ["docs/site/use/operate.md#recover-after-interruption", "docs/site/use/operate.md#safe-retry-decision"],
+          "cleanup": ["docs/site/use/operate.md#recover-after-interruption"],
+          "evidence": ["docs/site/use/operate.md#recover-after-interruption"]
+        },
+        {
+          "variantId": "recovery-external-continuation",
+          "supportState": "conditional",
+          "startState": "Recovery reports RECOVERY_EXTERNAL_CONTINUATION_REQUIRED for owner-controlled continuation",
+          "steps": ["docs/site/use/operate.md#recover-after-interruption"],
+          "observations": ["docs/site/use/operate.md#recover-after-interruption"],
+          "stopConditions": ["docs/site/use/operate.md#recover-after-interruption", "docs/site/use/operate.md#safe-retry-decision"],
+          "cleanup": ["docs/site/use/operate.md#recover-after-interruption"],
+          "evidence": ["docs/site/use/operate.md#recover-after-interruption"]
+        }
+      ],
+      "procedure": {
+        "supportedStartStateAndVersion": ["docs/site/use/operate.md#canonical-run-control-procedure", "docs/site/use/operate.md#supported-versions"],
+        "executionLocation": ["docs/site/use/operate.md#canonical-run-control-procedure"],
+        "implementationAuthority": ["docs/site/use/operate.md#canonical-run-control-procedure"],
+        "preconditions": ["docs/site/use/operate.md#before-each-operation"],
+        "orderedSteps": ["docs/site/use/operate.md#validate-before-starting", "docs/site/use/operate.md#start-a-project-run", "docs/site/use/operate.md#inspect-a-run", "docs/site/use/operate.md#approve-or-resume-a-wait", "docs/site/use/operate.md#recover-after-interruption"],
+        "expectedObservations": ["docs/site/use/operate.md#start-a-project-run", "docs/site/use/operate.md#approve-or-resume-a-wait", "docs/site/use/operate.md#recover-after-interruption"],
+        "stopConditions": ["docs/site/use/operate.md#canonical-run-control-procedure", "docs/site/use/operate.md#cancellation-boundary"],
+        "failureDistinction": ["docs/site/use/operate.md#safe-retry-decision"],
+        "recoveryRollback": ["docs/site/use/operate.md#recover-after-interruption"],
+        "cleanup": ["docs/site/use/operate.md#canonical-run-control-procedure"],
+        "evidence": ["docs/site/use/operate.md#evidence-to-retain"]
+      }
+    },
+    {
+      "taskId": "symptom-diagnosis",
+      "title": "Symptom diagnosis",
+      "canonical": "docs/site/use/diagnose.md#canonical-symptom-diagnosis-procedure",
+      "owner": "incident response",
+      "implementationAuthorities": ["scripts/deploy.sh", "skills/nova/core/telemetry/audit.ts"],
+      "supportedStartState": "Observable symptom with an explicit target and evidence directory",
+      "productLimits": ["Controlled failure exercises are not live-environment evidence"],
+      "procedure": {
+        "supportedStartStateAndVersion": ["docs/site/use/diagnose.md#canonical-symptom-diagnosis-procedure", "docs/site/use/diagnose.md#supported-versions"],
+        "executionLocation": ["docs/site/use/diagnose.md#canonical-symptom-diagnosis-procedure"],
+        "implementationAuthority": ["docs/site/use/diagnose.md#canonical-symptom-diagnosis-procedure"],
+        "preconditions": ["docs/site/use/diagnose.md#start-an-incident-record"],
+        "orderedSteps": ["docs/site/use/diagnose.md#diagnosis-order"],
+        "expectedObservations": ["docs/site/use/diagnose.md#canonical-symptom-diagnosis-procedure"],
+        "stopConditions": ["docs/site/use/diagnose.md#escalation-conditions"],
+        "failureDistinction": ["docs/site/use/diagnose.md#symptom-index"],
+        "recoveryRollback": ["docs/site/use/diagnose.md#recovery-and-cleanup"],
+        "cleanup": ["docs/site/use/diagnose.md#recovery-and-cleanup"],
+        "evidence": ["docs/site/use/diagnose.md#start-an-incident-record"]
+      }
+    },
+    {
+      "taskId": "backup-restore",
+      "title": "Backup and restore",
+      "canonical": "docs/site/use/recovery.md#canonical-backup-and-restore-procedure",
+      "owner": "platform operations and data owners",
+      "implementationAuthorities": ["charts/prism/files/prism-backup.sh", "scripts/postgresql-recovery.sh"],
+      "supportedStartState": "Owned component, compatible target, verified media, isolated restore target",
+      "productLimits": ["No complete full-platform restore", "No self-contained isolated LiteLLM operator restore", "Prism repository proof uses the same PostgreSQL service and is not disaster recovery"],
+      "procedure": {
+        "supportedStartStateAndVersion": ["docs/site/use/recovery.md#canonical-backup-and-restore-procedure", "docs/site/use/recovery.md#supported-versions"],
+        "executionLocation": ["docs/site/use/recovery.md#canonical-backup-and-restore-procedure"],
+        "implementationAuthority": ["docs/site/use/recovery.md#canonical-backup-and-restore-procedure", "docs/site/use/recovery.md#state-inventory"],
+        "preconditions": ["docs/site/use/recovery.md#prerequisites"],
+        "orderedSteps": ["docs/site/use/recovery.md#procedure", "docs/site/use/recovery.md#litellm-postgresql-backup-and-restore-boundary"],
+        "expectedObservations": ["docs/site/use/recovery.md#expected-result", "docs/site/use/recovery.md#verification"],
+        "stopConditions": ["docs/site/use/recovery.md#canonical-backup-and-restore-procedure", "docs/site/use/recovery.md#nonnegotiable-rules"],
+        "failureDistinction": ["docs/site/use/recovery.md#common-failures"],
+        "recoveryRollback": ["docs/site/use/recovery.md#rollback-boundary"],
+        "cleanup": ["docs/site/use/recovery.md#prism-restore", "docs/site/use/recovery.md#litellm-postgresql-backup-and-restore-boundary"],
+        "evidence": ["docs/site/use/recovery.md#evidence-to-retain"]
+      }
+    },
+    {
+      "taskId": "upgrade-rollback",
+      "title": "Upgrade and rollback",
+      "canonical": "docs/site/use/maintenance.md#canonical-upgrade-and-rollback-procedure",
+      "owner": "release engineering and platform operations",
+      "implementationAuthorities": ["versions.json", "scripts/deploy.sh", "scripts/gitops-rollback.mjs"],
+      "supportedStartState": "Explicitly proven old/new compatibility pair with verified restore media",
+      "productLimits": ["No current general runtime upgrade pair is established", "Image rollback cannot downgrade incompatible data"],
+      "procedure": {
+        "supportedStartStateAndVersion": ["docs/site/use/maintenance.md#canonical-upgrade-and-rollback-procedure", "docs/site/use/maintenance.md#supported-versions"],
+        "executionLocation": ["docs/site/use/maintenance.md#canonical-upgrade-and-rollback-procedure"],
+        "implementationAuthority": ["docs/site/use/maintenance.md#version-authorities"],
+        "preconditions": ["docs/site/use/maintenance.md#change-plan"],
+        "orderedSteps": ["docs/site/use/maintenance.md#upgrade-order"],
+        "expectedObservations": ["docs/site/use/maintenance.md#canonical-upgrade-and-rollback-procedure"],
+        "stopConditions": ["docs/site/use/maintenance.md#canonical-upgrade-and-rollback-procedure"],
+        "failureDistinction": ["docs/site/use/maintenance.md#rollback-decision"],
+        "recoveryRollback": ["docs/site/use/maintenance.md#rollback-decision"],
+        "cleanup": ["docs/site/use/maintenance.md#canonical-upgrade-and-rollback-procedure"],
+        "evidence": ["docs/site/use/maintenance.md#evidence-to-retain"]
+      }
+    },
+    {
+      "taskId": "rotation",
+      "title": "Credential and trust rotation",
+      "canonical": "docs/site/use/maintenance.md#canonical-rotation-procedure",
+      "owner": "security operator and credential owners",
+      "implementationAuthorities": ["docs/site/reference/secrets.md", "skills/worker/core/worker/trust.ts"],
+      "supportedStartState": "Complete producer/consumer inventory and authority-specific issue/revoke mechanism",
+      "productLimits": ["No generic credential rotation command", "One-active-key source attestation requires a maintenance window"],
+      "procedure": {
+        "supportedStartStateAndVersion": ["docs/site/use/maintenance.md#canonical-rotation-procedure", "docs/site/use/maintenance.md#supported-versions"],
+        "executionLocation": ["docs/site/use/maintenance.md#canonical-rotation-procedure"],
+        "implementationAuthority": ["docs/site/use/maintenance.md#canonical-rotation-procedure"],
+        "preconditions": ["docs/site/use/maintenance.md#canonical-rotation-procedure"],
+        "orderedSteps": ["docs/site/use/maintenance.md#credential-rotation"],
+        "expectedObservations": ["docs/site/use/maintenance.md#canonical-rotation-procedure"],
+        "stopConditions": ["docs/site/use/maintenance.md#canonical-rotation-procedure"],
+        "failureDistinction": ["docs/site/use/maintenance.md#rotation-failure-distinction"],
+        "recoveryRollback": ["docs/site/use/maintenance.md#canonical-rotation-procedure"],
+        "cleanup": ["docs/site/use/maintenance.md#credential-rotation"],
+        "evidence": ["docs/site/use/maintenance.md#evidence-to-retain"]
+      }
+    },
+    {
+      "taskId": "capacity-retention",
+      "title": "Capacity and retention",
+      "canonical": "docs/site/use/capacity.md#canonical-capacity-and-retention-procedure",
+      "owner": "platform operations and data owners",
+      "implementationAuthorities": ["charts/prism/templates/backup.yaml", "charts/prism/files/prism-backup.sh", "skills/nova/core/state/read-run-evidence.ts"],
+      "supportedStartState": "Owned stores with native measurements and a prior observation point",
+      "productLimits": ["No general run, job, data, backup, cache, or telemetry deletion command", "Prism backup groups do not expire automatically"],
+      "procedure": {
+        "supportedStartStateAndVersion": ["docs/site/use/capacity.md#supported-start-state-version-location-and-authority"],
+        "executionLocation": ["docs/site/use/capacity.md#supported-start-state-version-location-and-authority"],
+        "implementationAuthority": ["docs/site/use/capacity.md#source-authority"],
+        "preconditions": ["docs/site/use/capacity.md#preconditions"],
+        "orderedSteps": ["docs/site/use/capacity.md#1-capture-the-cluster-side-inventory", "docs/site/use/capacity.md#2-measure-each-authority-and-calculate-growth", "docs/site/use/capacity.md#3-select-a-supported-response"],
+        "expectedObservations": ["docs/site/use/capacity.md#4-verify-and-close"],
+        "stopConditions": ["docs/site/use/capacity.md#3-select-a-supported-response"],
+        "failureDistinction": ["docs/site/use/capacity.md#4-verify-and-close"],
+        "recoveryRollback": ["docs/site/use/capacity.md#recovery-cleanup-and-evidence"],
+        "cleanup": ["docs/site/use/capacity.md#recovery-cleanup-and-evidence"],
+        "evidence": ["docs/site/use/capacity.md#recovery-cleanup-and-evidence"]
+      }
+    },
+    {
+      "taskId": "plugin-lifecycle",
+      "title": "Plugin lifecycle",
+      "canonical": "docs/site/use/plugins.md#canonical-plugin-lifecycle-procedure",
+      "owner": "platform configuration owner",
+      "implementationAuthorities": ["skills/common/plugin-runtime/foundation/config/platform.schema.json", "docs/generated/inventory/plugin-system.json"],
+      "supportedStartState": "pipeline-platform.v2 plus exact package and registration identities",
+      "productLimits": ["No general operator install or remove CLI", "Pinned runs require original packages and validators"],
+      "procedure": {
+        "supportedStartStateAndVersion": ["docs/site/use/plugins.md#supported-start-state-version-location-and-authority"],
+        "executionLocation": ["docs/site/use/plugins.md#supported-start-state-version-location-and-authority"],
+        "implementationAuthority": ["docs/site/use/plugins.md#source-authority"],
+        "preconditions": ["docs/site/use/plugins.md#preconditions"],
+        "orderedSteps": ["docs/site/use/plugins.md#1-discover-and-select", "docs/site/use/plugins.md#2-validate-a-candidate-configuration-without-starting-work", "docs/site/use/plugins.md#3-activate-and-prove-health", "docs/site/use/plugins.md#4-drain-and-disable", "docs/site/use/plugins.md#5-replace-or-remove"],
+        "expectedObservations": ["docs/site/use/plugins.md#3-activate-and-prove-health"],
+        "stopConditions": ["docs/site/use/plugins.md#preconditions", "docs/site/use/plugins.md#5-replace-or-remove"],
+        "failureDistinction": ["docs/site/use/plugins.md#2-validate-a-candidate-configuration-without-starting-work"],
+        "recoveryRollback": ["docs/site/use/plugins.md#recovery-cleanup-and-evidence"],
+        "cleanup": ["docs/site/use/plugins.md#recovery-cleanup-and-evidence"],
+        "evidence": ["docs/site/use/plugins.md#recovery-cleanup-and-evidence"]
+      }
+    },
+    {
+      "taskId": "decommission",
+      "title": "Decommission",
+      "canonical": "docs/site/use/maintenance.md#canonical-decommission-procedure",
+      "owner": "platform operations, security owners, and data owners",
+      "implementationAuthorities": ["scripts/deploy.sh"],
+      "supportedStartState": "Admission stopped, uncertain effects reconciled, final backups verified, exact owned resource inventory complete",
+      "productLimits": ["Broad teardown deletes every remaining application-namespace PVC", "External identity, DNS, registry, backup, and monitoring cleanup remains authority-specific"],
+      "procedure": {
+        "supportedStartStateAndVersion": ["docs/site/use/maintenance.md#canonical-decommission-procedure", "docs/site/use/maintenance.md#supported-versions"],
+        "executionLocation": ["docs/site/use/maintenance.md#canonical-decommission-procedure"],
+        "implementationAuthority": ["docs/site/use/maintenance.md#canonical-decommission-procedure"],
+        "preconditions": ["docs/site/use/maintenance.md#canonical-decommission-procedure"],
+        "orderedSteps": ["docs/site/use/maintenance.md#controlled-retirement"],
+        "expectedObservations": ["docs/site/use/maintenance.md#7-verify-retirement-and-cleanup"],
+        "stopConditions": ["docs/site/use/maintenance.md#canonical-decommission-procedure", "docs/site/use/maintenance.md#1-inventory-ownership-and-retained-evidence"],
+        "failureDistinction": ["docs/site/use/maintenance.md#7-verify-retirement-and-cleanup"],
+        "recoveryRollback": ["docs/site/use/maintenance.md#canonical-decommission-procedure", "docs/site/use/maintenance.md#7-verify-retirement-and-cleanup"],
+        "cleanup": ["docs/site/use/maintenance.md#7-verify-retirement-and-cleanup"],
+        "evidence": ["docs/site/use/maintenance.md#evidence-to-retain"]
+      }
+    },
+    {
+      "taskId": "prism-studio",
+      "title": "Prism and Studio lifecycle",
+      "canonical": "docs/site/use/prism-studio.md#canonical-prism-and-studio-procedure",
+      "owner": "Prism product and platform operations",
+      "implementationAuthorities": ["charts/prism", "skills/prism", "scripts/deploy.sh"],
+      "supportedStartState": "Selected Prism release and prepared cluster dependencies",
+      "productLimits": ["Current Prism deploy verification has an open stale assertion", "Same-server database proof is not external restore"],
+      "procedure": {
+        "supportedStartStateAndVersion": ["docs/site/use/prism-studio.md#canonical-prism-and-studio-procedure", "docs/site/use/prism-studio.md#before-you-start"],
+        "executionLocation": ["docs/site/use/prism-studio.md#canonical-prism-and-studio-procedure"],
+        "implementationAuthority": ["docs/site/use/prism-studio.md#know-the-running-parts"],
+        "preconditions": ["docs/site/use/prism-studio.md#before-you-start"],
+        "orderedSteps": ["docs/site/use/prism-studio.md#deploy-prism", "docs/site/use/prism-studio.md#the-complete-studio-journey"],
+        "expectedObservations": ["docs/site/use/prism-studio.md#completion-checklist"],
+        "stopConditions": ["docs/site/use/prism-studio.md#canonical-prism-and-studio-procedure"],
+        "failureDistinction": ["docs/site/use/prism-studio.md#diagnosis-map"],
+        "recoveryRollback": ["docs/site/use/prism-studio.md#safe-recovery-procedures"],
+        "cleanup": ["docs/site/use/prism-studio.md#canonical-prism-and-studio-procedure"],
+        "evidence": ["docs/site/use/prism-studio.md#completion-checklist"]
+      }
+    },
+    {
+      "taskId": "demo-delivery",
+      "title": "Demo delivery and separate human acceptance",
+      "canonical": "docs/site/use/demo-delivery.md#canonical-demo-delivery-procedure",
+      "owner": "product operations",
+      "implementationAuthorities": ["skills/nova/project/cli.ts", "skills/nova/plugins/demo-handoff"],
+      "supportedStartState": "Clean source-pinned checkout with Node.js, npm, Go, and OpenSSL for local contract rehearsal",
+      "productLimits": ["No complete live demo-delivery fixture or operator journey", "ready-for-acceptance is not human acceptance", "No generic exposure cleanup command"],
+      "procedure": {
+        "supportedStartStateAndVersion": ["docs/site/use/demo-delivery.md#supported-start-state-version-location-and-authority"],
+        "executionLocation": ["docs/site/use/demo-delivery.md#supported-start-state-version-location-and-authority"],
+        "implementationAuthority": ["docs/site/use/demo-delivery.md#source-authority"],
+        "preconditions": ["docs/site/use/demo-delivery.md#preconditions"],
+        "orderedSteps": ["docs/site/use/demo-delivery.md#1-compile-and-reject-invalid-demo-graphs", "docs/site/use/demo-delivery.md#2-exercise-delivery-rejection-and-reconciliation-contracts", "docs/site/use/demo-delivery.md#3-record-a-separate-human-decision", "docs/site/use/demo-delivery.md#4-cleanup"],
+        "expectedObservations": ["docs/site/use/demo-delivery.md#final-proof-and-evidence"],
+        "stopConditions": ["docs/site/use/demo-delivery.md#preconditions"],
+        "failureDistinction": ["docs/site/use/demo-delivery.md#failure-distinction-and-recovery"],
+        "recoveryRollback": ["docs/site/use/demo-delivery.md#failure-distinction-and-recovery"],
+        "cleanup": ["docs/site/use/demo-delivery.md#4-cleanup"],
+        "evidence": ["docs/site/use/demo-delivery.md#final-proof-and-evidence"]
+      }
+    },
+    {
+      "taskId": "worker-trust",
+      "title": "Worker trust",
+      "canonical": "docs/site/use/worker-trust.md#canonical-worker-trust-procedure",
+      "owner": "security operator",
+      "implementationAuthorities": ["skills/worker/core/worker/trust.ts", "scripts/deploy.sh"],
+      "supportedStartState": "SPIRE namespaces, server, agents, CSI, and selected workloads present",
+      "productLimits": ["Complete expiry and independent restore proof is not established"],
+      "procedure": {
+        "supportedStartStateAndVersion": ["docs/site/use/worker-trust.md#supported-start-state-version-location-and-authority"],
+        "executionLocation": ["docs/site/use/worker-trust.md#supported-start-state-version-location-and-authority"],
+        "implementationAuthority": ["docs/site/use/worker-trust.md#source-authority"],
+        "preconditions": ["docs/site/use/worker-trust.md#preconditions"],
+        "orderedSteps": ["docs/site/use/worker-trust.md#1-verify-source-before-cluster-execution", "docs/site/use/worker-trust.md#2-observe-the-installed-identity-chain", "docs/site/use/worker-trust.md#3-execute-positive-and-negative-paths"],
+        "expectedObservations": ["docs/site/use/worker-trust.md#3-execute-positive-and-negative-paths"],
+        "stopConditions": ["docs/site/use/worker-trust.md#1-verify-source-before-cluster-execution"],
+        "failureDistinction": ["docs/site/use/worker-trust.md#failure-distinction"],
+        "recoveryRollback": ["docs/site/use/worker-trust.md#recovery-rotation-boundary-and-evidence"],
+        "cleanup": ["docs/site/use/worker-trust.md#3-execute-positive-and-negative-paths", "docs/site/use/worker-trust.md#recovery-rotation-boundary-and-evidence"],
+        "evidence": ["docs/site/use/worker-trust.md#recovery-rotation-boundary-and-evidence"]
+      }
+    }
+  ],
+  "requiredProcedureFields": [
+    "supportedStartStateAndVersion",
+    "executionLocation",
+    "implementationAuthority",
+    "preconditions",
+    "orderedSteps",
+    "expectedObservations",
+    "stopConditions",
+    "failureDistinction",
+    "recoveryRollback",
+    "cleanup",
+    "evidence"
+  ]
+}

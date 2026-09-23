@@ -108,11 +108,12 @@ needs package-network access and host-administration authority. It is not a step
 to run on a workstation that you do not administer.
 
 Verify the clean checkout and exact minimum instead of relying on version output
-that nobody checks:
+that nobody checks. First complete the canonical
+[Locked Dependency Installation](../use/quickstart.md#locked-dependency-installation)
+in a disposable checkout and retain its sanitized evidence, then run:
 
 ```bash
 test -z "$(git status --porcelain)"
-npm ci --ignore-scripts
 test "$(node -p "process.versions.node.split('.')[0]")" = 24
 command -v shellcheck
 command -v shfmt

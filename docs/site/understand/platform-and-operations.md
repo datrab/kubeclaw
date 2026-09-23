@@ -6,7 +6,7 @@ Owner: platform architecture and operations
 Evidence: scripts/deploy.sh; scripts/platform-services.mjs; charts/ops-pod; gitops/platform; my-values/infra
 Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
 Applies to: current Kubernetes platform and its supported deployment paths
-Last verified: source inspection on 2026-09-21
+Last verified: 2026-09-21
 
 ## Purpose
 

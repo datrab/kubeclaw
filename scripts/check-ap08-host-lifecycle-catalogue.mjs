@@ -71,15 +71,16 @@ for (const [relative, source] of [
 const guidance = JSON.parse(read('docs/blueprint/AP08-catalogue-guidance.json'));
 const verification = JSON.parse(read('docs/blueprint/AP08-local-verification.json'));
 const inventory = JSON.parse(read('docs/blueprint/generated/ap08-extension-inventory.json'));
+const packageCount = inventory.packages.length;
 assert.equal(guidance.schemaVersion, 'ap08-catalogue-guidance.v1');
 assert.equal(guidance.evidenceRevision, revision);
-assert.equal(guidance.records.length, 51, 'catalogue guidance must contain 51 records');
-assert.equal(inventory.packages.length, 51, 'extension inventory must contain 51 packages');
-assert.equal(new Set(guidance.records.map((item) => item.id)).size, 51, 'catalogue guidance contains duplicate IDs');
+assert(packageCount > 0, 'extension inventory must contain at least one discovered package');
+assert.equal(guidance.records.length, packageCount, 'catalogue guidance must cover every discovered package');
+assert.equal(new Set(guidance.records.map((item) => item.id)).size, packageCount, 'catalogue guidance contains duplicate IDs');
 const verificationRecords = verification.groups.flatMap((group) =>
   group.packages.map((id) => ({ id, result: group.result, reason: group.reason })));
-assert.equal(verificationRecords.length, 51, 'local verification must contain 51 results');
-assert.equal(new Set(verificationRecords.map((item) => item.id)).size, 51, 'local verification contains duplicate IDs');
+assert.equal(verificationRecords.length, packageCount, 'local verification must cover every discovered package');
+assert.equal(new Set(verificationRecords.map((item) => item.id)).size, packageCount, 'local verification contains duplicate IDs');
 assert.deepEqual(verificationRecords.map((item) => item.id).sort(), inventory.packages.map((item) => item.id).sort(),
   'local verification and extension inventory differ');
 const verificationById = new Map(verificationRecords.map((item) => [item.id, item]));
@@ -116,7 +117,7 @@ const catalogueRoot = path.join(root, 'docs/site/extend/plugin-catalogue');
 const packagePages = fs.readdirSync(catalogueRoot)
   .filter((name) => name.endsWith('.md') && name !== 'README.md')
   .sort();
-assert.equal(packagePages.length, 51, 'published catalogue must contain 51 package pages');
+assert.equal(packagePages.length, packageCount, 'published catalogue must contain one page per discovered package');
 const expectedSections = [
   '## Authored Guidance', '## When To Use It', '## When Not To Use It',
   '## Most Important Limit', '## Generated Package Facts', '## Boundaries',
@@ -156,7 +157,7 @@ assert(prismCatalogue.includes('The Prism agent image copies this extension dire
 assert(![...auditStatuses.values()].includes('pending'), 'catalogue contains a pending package audit');
 
 const generatedIndex = read('docs/site/extend/plugin-catalogue/README.md');
-assert(generatedIndex.includes('The catalogue contains 51 packages.'));
+assert(generatedIndex.includes(`The catalogue contains ${packageCount} packages.`));
 assert(generatedIndex.includes('Maintainers write the practical'));
 
 const sourceTargets = new Set();

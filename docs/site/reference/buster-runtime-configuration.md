@@ -179,6 +179,39 @@ process, check readiness:
 curl --fail --show-error "http://127.0.0.1:8080/readyz"
 ```
 
+### Start one Nova remote-gate request
+
+The Buster service command above owns its `--config` option. Nova has a
+separate command that submits one prepared gate request to that service:
+
+```text
+node skills/nova/core/test-gates/remote-gate-cli.ts \
+  --config "<nova-runtime.json>" \
+  --job "<job.json>" \
+  --timeout-ms "300000"
+```
+
+The Nova command requires all three value-taking options. `--config` selects
+the Nova remote-gate runtime configuration. `--job` selects a JSON request
+that contains the source identity, resolved plan, grants, concurrency limit,
+and submission time. `--timeout-ms` sets the positive whole-number deadline
+passed to gate execution. A missing value, a missing option, zero, a negative
+number, or a fractional timeout fails before Nova loads the runtime.
+
+This command consumes an already prepared request. It does not resolve a test
+plan, add capabilities, or repair grants. A passed process exit means that the
+returned remote stage result has outcome `passed`; other outcomes set a
+non-zero exit status.
+
+> **Source evidence — Nova remote-gate command**
+>
+> **Claim:** The command requires the configuration, job, and positive timeout
+> values, then passes the parsed request and timeout to one gate execution.
+>
+> **Implementation:** [argument and request handling](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/remote-gate-cli.ts#L9-L37)
+>
+> **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`
+
 For the minimal file, the response must have HTTP 200, `ready: true`, and code
 `BUSTER_READY`. Use HTTPS and the deployed address when `tls` or a network
 service exposes Buster. Send `SIGTERM` or `SIGINT` to the foreground CLI for a
@@ -190,7 +223,7 @@ graceful stop. Preserve its final error output if shutdown fails.
 > it prints the ready record, waits for `SIGINT` or `SIGTERM`, and then invokes
 > graceful runtime shutdown.
 >
-> **Implementation:** [The Buster CLI owns the load, start, signal, and stop sequence](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/remote-plan-cli.ts#L1-L28).
+> **Implementation:** [The Buster CLI owns the load, start, signal, and stop sequence](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/remote-plan-cli.ts#L1-L27).
 >
 > **Contract or setting:** [The readiness route returns `BUSTER_READY` only when recovery and configured dependency readiness succeed](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/remote-plan-http.ts#L84-L103).
 >

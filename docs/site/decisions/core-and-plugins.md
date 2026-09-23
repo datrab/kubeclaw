@@ -10,13 +10,13 @@ Evidence: skills/common/plugin-runtime/foundation/registry/build.ts; packaging/r
 
 Applies to: canonical lifecycle, Worker Core and plugin system v2
 
-Last verified: 2026-09-17 (source inspection; no new runtime or live test execution)
+Last verified: 2026-09-17; no new runtime or live test result is available
 
 These records define ADR-001–ADR-014. They explain lasting constraints. The test-gate identifiers are `D-001`–`D-119`; they are distinct from product decisions `D01`–`D16`.
 
 Evidence baseline: `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`. The immutable source links below preserve the exact implementation evidence. A source that says it records “agreed decisions” supports agreement, but does not supply a missing date or named approver. This catalogue is not approval evidence. “Unconfirmed” is used where the source has no acceptance label.
 
-The original Plugin System Vision, Test-Gate Design, Runtime Packaging and Plugin Security Model were read completely. Implementation source was inspected selectively at the boundaries described below. Linked test definitions identify applicable checks; they were not all reread or run. Implementation status is assessed separately and is bounded by the stated subsystem. Source inspection and existing test definitions are not a fresh test execution, whole-system completion or live acceptance. Remaining implementation work belongs in the [canonical issue register](../status/open-issues.md); environment acceptance belongs in [acceptance gates](../status/acceptance.md). These records do not create another task register. [Acceptance policy](acceptance.md) preserves D12 and the distinction between local completion and live proof.
+The decisions below describe the current plugin boundaries and identify the evidence available for each subsystem. Linked test definitions identify applicable checks but do not represent a fresh execution. Remaining implementation work belongs in the [canonical issue register](../status/open-issues.md); environment acceptance belongs in [acceptance gates](../status/acceptance.md). [Acceptance policy](acceptance.md) preserves D12 and the distinction between local completion and live proof.
 
 The original provider decisions are preserved in [Test-gate decisions](test-gate.md), including accepted defaults, explicit non-goals and migration exceptions. ADR-015–ADR-022 and operational decisions are covered by the other decision pages.
 
@@ -32,7 +32,7 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Approval and provenance.** Test-Gate Design accepts D-001/D-002 on 2026-08-04 and D-087/D-091/D-096 on 2026-08-05. Plugin System Vision states agreement for its finer lifecycle rules. It gives no acceptance date or approver for those details.
 
-**Implementation.** Partial at the complete architectural scope. Current lifecycle reducer, recovery and repair-budget modules implement the canonical state path. This source inspection does not claim acceptance for all connected pipeline flows.
+**Implementation.** Partial at the complete architectural scope. Current lifecycle reducer, recovery and repair-budget modules implement the canonical state path. Connected pipeline flows still require their own acceptance evidence.
 
 **Evidence.** [skills/nova/core/lifecycle/reducer.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/lifecycle/reducer.ts), [skills/nova/core/lifecycle/recovery.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/lifecycle/recovery.ts), [skills/nova/core/lifecycle/repair-budget.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/lifecycle/repair-budget.ts), [tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs).
 
@@ -104,7 +104,7 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Approval and provenance.** Source-attested agreement in Plugin System Vision (date/approver unknown). Frozen provider selection and locked packages are explicitly accepted in Test-Gate Design D-067/D-069/D-081 on 2026-08-05.
 
-**Implementation.** Implemented for the inspected registry substrate. Source inspection does not certify end-to-end installation or every possible external-package deployment.
+**Implementation.** Implemented for the registry substrate described here. End-to-end installation and external-package deployment require separate evidence.
 
 **Evidence.** [skills/common/plugin-runtime/foundation/registry/README.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/README.md), [skills/common/plugin-runtime/foundation/registry/discovery.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/discovery.ts), [skills/common/plugin-runtime/foundation/registry/build.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/build.ts), [skills/common/plugin-runtime/foundation/registry/activation.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/activation.ts), [tests/verification/contracts/check-plugin-system-v2-registry.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-registry.mjs).
 
@@ -122,7 +122,7 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Approval and provenance.** Current contracts define the three foundational surfaces. The provider decisions add test providers and report adapters. The combined five-surface ADR records those established boundaries; it does not grant new authority.
 
-**Implementation.** Implemented in the inspected registry: build.ts defines and indexes all five surface types. This structural check does not verify all installed registrations or provider behavior.
+**Implementation.** Implemented in the registry: build.ts defines and indexes all five surface types. This structural check does not verify all installed registrations or provider behavior.
 
 **Evidence.** [skills/common/plugin-runtime/foundation/registry/build.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/build.ts), [skills/common/plugin-runtime/foundation/registry/types.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/types.ts), [skills/common/plugin-runtime/foundation/registry/README.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/README.md).
 
@@ -276,11 +276,11 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Context and decision.** Canonical JSON was ordered using localeCompare, so distinct locales could produce different bytes and digests. Composed and decomposed Unicode keys could also compare equal while remaining distinct keys. A global in-place serializer change would silently change existing effect, wait, artifact, worktree and review identities. Use explicit versioned portable encoding for new paths, preserve original historical bytes and select historical verification by recorded format. Never try several codecs until a digest happens to match, normalize distinct keys into one, or silently rehash accepted work.
 
-**Approval and supersession.** The SDK portability plan authorized read and design only. Its proposed new-run/storage epoch was not an approved migration instruction. Current implementation uses **kubeclaw-json.utf16.v1** and explicit encoding choices for new projects. It stores the selections for recovery. D12 records PCR-SDK-001 as locally complete. That closure does not approve every proposed step or authorize a new storage migration.
+**Approval and supersession.** The SDK portability plan authorized read and design only. Its proposed new-run/storage epoch was not an approved migration instruction. Current implementation uses **kubeclaw-json.utf16.v1** and explicit encoding choices for new projects. It stores the selections for recovery. D12 records the SDK portability work as locally complete. That closure does not approve every proposed step or authorize a new storage migration.
 
 **Actual alternatives and rationale.** Do not replace historical canonicalJson in place, rewrite journals/blobs/worktrees, or derive old semantic provenance from a guessed locale. UTF-16 code-unit ordering removes locale dependence without claiming full RFC 8785 compliance. Array order and ordinary JSON scalar spelling remain significant. Raw content hashes and independent observability/worker/signature codecs retain their own contracts and must not be resigned or migrated merely because an SDK helper changes. A digest is byte integrity, not an asymmetric signature.
 
-**Implementation and evidence limits.** Source inspection confirms portableJson and its named encoding, retained historical canonicalJson, explicit new-project choices, and original-byte verification before artifact consumption. Local checks cover semantic, historical-reader, and delivery consumers. They do not prove a complete model, browser, or cluster run. One parallel run failed two cases; later serial reruns passed. The initial failure cause remains unknown. Existing Unicode provenance that cannot be verified remains an explicit limitation.
+**Implementation and evidence limits.** The pinned implementation contains portableJson and its named encoding, retained historical canonicalJson, explicit new-project choices, and original-byte verification before artifact consumption. Local checks cover semantic, historical-reader, and delivery consumers. They do not prove a complete model, browser, or cluster run. One parallel run failed two cases; later serial reruns passed. The initial failure cause remains unknown. Existing Unicode provenance that cannot be verified remains an explicit limitation.
 
 **Pinned sources.** [Codec implementation](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/sdk/src/values.ts), [authenticated artifact bytes](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/sdk/src/artifact-json.ts), and [new-project selection](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/project/cli.ts). The [evidence policy](acceptance.md#d12--accepted-local-completion-policy) defines the verification limit.
 
@@ -288,6 +288,6 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 The two historical lint integration logs establish an interface-integration failure, not a separate accepted ADR. Git-based evidence partitioning must await the bounded asynchronous executor; its callers and tests must also await the result and preserve cancellation/failure. The first log fails Git enumeration. Despite its filename, lint-integration-fixed.log also fails: a test compares a Promise with a completed result. Neither is a passing integration proof.
 
-Current source awaits safeExec in evidence-file-partition.ts, and the empty-target test awaits adapter.run before asserting its result. This is a targeted source check, not a newly passing whole-lint run. The lasting consequence under ADR-008 is that moving execution behind an asynchronous bounded boundary requires updating all consumers; a renamed “fixed” log cannot establish completion. No new approval is inferred from these diagnostics.
+The current implementation awaits safeExec in evidence-file-partition.ts, and the empty-target test awaits adapter.run before asserting its result. This evidence does not establish a passing whole-lint run. The lasting consequence under ADR-008 is that moving execution behind an asynchronous bounded boundary requires updating all consumers; a renamed “fixed” log cannot establish completion. No new approval is inferred from these diagnostics.
 
 **Pinned sources.** first failed integration, second failed integration, [awaited Git execution](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/lint/src/engine/evidence-file-partition.ts), [awaited test consumer](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs).

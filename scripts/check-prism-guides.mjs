@@ -7,9 +7,6 @@ import { execFileSync } from 'node:child_process';
 import { parse as parseYaml } from 'yaml';
 
 const root = path.resolve(import.meta.dirname, '..');
-const revision = '4e52c72788ac002788bc036a497d76c13e6a35fd';
-const documentationInfrastructure = new Set(['package.json']);
-
 const specifications = [
   {
     file: 'docs/site/understand/prism.md', minimumLinks: 11,
@@ -85,8 +82,9 @@ const checkedSources = new Set();
 for (const specification of specifications) {
   const filePath = path.join(root, specification.file);
   const source = fs.readFileSync(filePath, 'utf8');
-  assert(source.includes(`Evidence revision: \`${revision}\``),
-    `${specification.file} lacks the inspected evidence revision`);
+  const revisionMatch = source.match(/^Evidence revision: `([0-9a-f]{40})`$/mu);
+  assert(revisionMatch, `${specification.file} lacks one explicit inspected evidence revision`);
+  const revision = revisionMatch[1];
   for (const marker of specification.required) {
     assert(source.includes(marker), `${specification.file} lacks required content: ${marker}`);
   }
@@ -114,10 +112,10 @@ for (const specification of specifications) {
     if (!checkedSources.has(repositoryPath)) {
       const currentPath = path.join(root, repositoryPath);
       assert(fs.existsSync(currentPath), `linked source is absent: ${repositoryPath}`);
-      if (!documentationInfrastructure.has(repositoryPath)) {
-        assert.equal(fs.readFileSync(currentPath, 'utf8'), pinned,
-          `${repositoryPath} changed after ${revision}; inspect and repin the Prism guides`);
-      }
+      assert.notEqual(repositoryPath, 'package.json',
+        `${specification.file} must not use mutable documentation command registration as pinned Prism evidence`);
+      assert.equal(fs.readFileSync(currentPath, 'utf8'), pinned,
+        `${repositoryPath} changed after ${revision}; inspect and repin the Prism guides`);
       checkedSources.add(repositoryPath);
     }
     if (!firstValue) continue;
@@ -204,7 +202,7 @@ const navigation = [
   ['docs/site/extend/README.md', 'platform/prism.md'],
 ];
 for (const [file, target] of navigation) {
-  assert(fs.readFileSync(path.join(root, file), 'utf8').includes(`](${target})`),
+  assert(fs.readFileSync(path.join(root, file), 'utf8').includes(`](${target}`),
     `${file} does not link to ${target}`);
 }
 

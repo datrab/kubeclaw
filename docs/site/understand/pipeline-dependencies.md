@@ -5,7 +5,7 @@ Audience: architecture reader, operator, maintainer, security reviewer
 Owner: platform architecture and pipeline owners
 Evidence: packaging/runtime/roles; skills/nova/core; skills/common/plugins/redis-transport; skills/buster/engine; charts/kubeclaw; charts/prism
 Applies to: current source, role declarations, charts, and selected infrastructure
-Last verified: source inspection on 2026-09-16
+Last verified: 2026-09-16
 
 ## Purpose
 

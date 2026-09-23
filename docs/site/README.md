@@ -23,6 +23,10 @@ Start with the task that you must complete. Each route has one primary reader an
 | Configure, start, or inspect a run | [Configure and Operate](use/operate.md) | Recorded command, run identity, and result boundary |
 | Diagnose an active problem | [Observe and Diagnose](use/diagnose.md) | Cause class, retained evidence, and safe next action |
 | Recover durable state | [Back Up and Recover](use/recovery.md) | Verified recovery or a declared missing prerequisite |
+| Plan capacity or retention | [Capacity and Retention](use/capacity.md) | Measured limits, owned cleanup, and retained recovery evidence |
+| Activate or remove a plugin | [Operate Plugins](use/plugins.md) | Verified package, registration, grant, activation, and removal boundaries |
+| Operate Prism and Studio | [Prism and Studio](use/prism-studio.md) | Source-backed setup, health, recovery, and cleanup procedures |
+| Deliver a demo for human acceptance | [Demo Delivery](use/demo-delivery.md) | Immutable technical handoff kept separate from human acceptance |
 | Create a first pipeline plugin | [First plugin](extend/first-plugin.md) | Tested package, activation proof, and removal proof |
 | Select or change an extension type | [Extension decision guide](extend/README.md) | Smallest supported change and its authority boundary |
 | Find an exact name or setting | [Reference](reference/README.md) | Source-backed command, setting, registration, or limit |

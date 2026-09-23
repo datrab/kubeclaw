@@ -197,7 +197,7 @@ function contract() {
   }
   const antiCheating = source.split('## 2. Nicht verhandelbare Regeln gegen Scheinabnahmen')[1]
     .split('## 3. Drei getrennte Beweisebenen')[0];
-  assert.equal([...antiCheating.matchAll(/^\d+\. \*\*/gmu)].length, 14, 'anti-cheating rules changed');
+  assert.equal([...antiCheating.matchAll(/^\d+\. \*\*/gmu)].length, 15, 'anti-cheating rules changed');
   assert(source.includes('261 Anforderungsbefunde') && source.includes('AP09-acceptance-fixtures.json'),
     'contract lacks individual findings or fixtures');
   assert(fs.readFileSync(p('docs/blueprint/AP09-execution-plan.md'), 'utf8').includes('(AP09-acceptance-contract.md)'),

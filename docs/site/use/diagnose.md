@@ -1,20 +1,54 @@
 # Observe and Diagnose
 
-Status: implemented source-backed diagnosis path; complete live alert delivery remains open
+Status: source-backed diagnosis path; controlled exercises are not live-environment evidence
 Audience: operator, incident responder
 Owner: platform operations
-Evidence: scripts/deploy.sh; skills/nova/core/telemetry/audit.ts; docs/operations/observability-retention.md
+Evidence: scripts/deploy.sh; skills/nova/core/telemetry/audit.ts
 Applies to: current runtime roles and durable pipeline state
-Last verified: 2026-09-16, source inspection and local documentation checks
+Last verified: 2026-09-21; no controlled failure result is available
 
 ## Objective
 
 Classify a failure without destroying its evidence or repeating an uncertain effect.
 Finish with one cause class, one safe next action, and retained evidence.
 
+## Canonical Symptom Diagnosis Procedure
+<!-- operator-task: symptom-diagnosis -->
+
+This page is the sole authority for `symptom-diagnosis`. Start with an
+observable symptom, explicit target and time window, independently reachable
+administration, and a new protected evidence directory. Use clients from the
+recorded release; an unaccepted client/server difference remains a possible
+cause. Run cluster checks from the administration machine and pipeline audit
+from `<repository-root>`. Kubernetes, the durable Nova audit, component-native
+state, and external provider receipts are the authorities in that order.
+
+Before any cluster command on this page, complete
+[Bind Cluster Authority](install.md#bind-cluster-authority). Keep the same bound
+shell for the whole incident. Every raw `kubectl`, Helm, or
+`scripts/deploy.sh` command below must inherit its exported read-only
+`KUBECONFIG`; every shown `<context>` must equal `EXPECTED_CONTEXT`. Run
+`assert_cluster_binding` immediately before each command block. Stop on any
+mismatch and preserve it as incident evidence; never fall back to the default
+kubeconfig.
+
+Complete [Start an Incident Record](#start-an-incident-record), take the
+[Cluster and Workload Snapshot](#cluster-and-workload-snapshot), and follow
+[Diagnosis Order](#diagnosis-order) from the reported symptom through the
+[Symptom Index](#symptom-index). Use a controlled exercise only in its named
+non-production environment and fault window.
+
+Stop before restart or retry when the target is uncertain, an external effect
+has no terminal receipt, durable evidence is corrupt, access depends on the
+failed workload, or cleanup ownership is absent. Expected completion is one
+distinguished cause class, the first safe action, a narrow recovery check, an
+end-consumer result, and verified cleanup. Retain commands, timestamps, output,
+identities, failed and successful observations, recovery, cleanup, and any
+remaining uncertainty without secret values.
+
 ## Supported Versions
 
-Use the [shared version rules](README.md#supported-versions-and-tools).
+Use the [shared version rules](README.md#version-and-tool-boundary).
 Diagnose with clients from the selected operator environment.
 When client and server versions differ from the recorded release inputs, preserve that fact as a possible cause instead of assuming compatibility.
 
@@ -53,6 +87,7 @@ Do not copy Secret values, bearer tokens, private keys, or confidential payloads
 Run from the administration machine:
 
 ```bash
+assert_cluster_binding
 kubectl config current-context
 kubectl get nodes -o wide
 ./scripts/deploy.sh status
@@ -72,6 +107,7 @@ Use the independent host or control-plane route from the installation record.
 Check one affected Pod before broad log collection:
 
 ```bash
+assert_cluster_binding
 kubectl -n "<namespace>" describe pod "<pod>"
 kubectl -n "<namespace>" logs "<pod>" -c "<container>" --since=30m --timestamps
 kubectl -n "<namespace>" logs "<pod>" -c "<container>" --previous --timestamps
@@ -83,6 +119,7 @@ Its absence does not prove a clean previous run.
 Use role smoke checks after capturing failure evidence:
 
 ```bash
+assert_cluster_binding
 ./scripts/deploy.sh smoke-agent nova
 ./scripts/deploy.sh smoke-agent buster
 kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- \
@@ -114,6 +151,7 @@ Manual edits break the recovery and audit boundary.
 Check scheduling and filesystem signals separately:
 
 ```bash
+assert_cluster_binding
 kubectl -n "<namespace>" get resourcequota,limitrange
 kubectl -n "<namespace>" get pvc
 kubectl -n "<namespace>" top pods --containers
@@ -127,10 +165,10 @@ For each durable root, record used bytes, free bytes, inode use, and growth rate
 Do not delete history merely because a filesystem is full.
 
 The current system lacks complete connected history retirement.
-[PCR-OBS-002](../status/open-issues.md#pcr-obs-002) tracks that implementation gap.
+[Complete connected retirement](../status/open-issues.md#confirmed-run-history-lacks-complete-connected-retirement) tracks that implementation gap.
 
-Use [Capacity and Retention](maintenance.md#capacity-and-retention) for supported narrow compaction paths.
-Those paths do not authorize broad run deletion.
+Use the [canonical capacity and retention procedure](capacity.md#canonical-capacity-and-retention-procedure).
+It does not authorize broad run deletion.
 
 ## Queue and Delivery Checks
 
@@ -167,6 +205,9 @@ Never submit a second request from absence of a UI update alone.
 | Observer message is missing | Canonical event, observer checkpoint, delivery attempts, receiver receipt | Replay only through the observer contract |
 | Disk grows after terminal jobs | Ownership and quiescence evidence | Retain data until safe cleanup authority exists |
 | Wrong configuration seems active | Rendered values, Pod spec, ConfigMap/Secret revision, persisted config | Correct the owned source and perform a targeted rollout |
+| Redis connection is refused or times out | Redis Pod, Service endpoint, network policy, DNS, and TCP error before authentication | Repair reachability; do not rotate credentials or delete data |
+| Redis reports `NOAUTH` or `WRONGPASS` | Endpoint remains reachable; compare Secret name/version and consumer mount without exposing the value | Correct credential distribution through its owner; do not change the data store |
+| Redis connects but expected stream or data is absent | Authenticated `PING`, exact key/stream identity, persistence mode, PVC identity, and application audit | Keep writers stopped if loss is possible; restore only from a verified owned backup |
 
 ## Hangs and Timeouts
 
@@ -183,7 +224,7 @@ If the deadline has passed without a terminal record, preserve all five facts.
 Do not create a synthetic result.
 
 For Buster, current ownership does not cover every capability child in production.
-[PCR-BUSTER-ENGINE-001](../status/open-issues.md#pcr-buster-engine-001) tracks the boundary.
+[Whole-attempt resource ownership](../status/open-issues.md#capability-work-is-missing-from-the-attempt-budget) tracks the boundary.
 
 ## Lost Responses and Uncertain Effects
 
@@ -218,9 +259,9 @@ Use a separate authorized connectivity check.
 
 ## Controlled Dependency Failure Exercises
 
-This section is the command authority for `EXEC-FAIL-REDIS`,
-`EXEC-FAIL-POSTGRESQL`, `EXEC-FAIL-REGISTRY-ENDPOINT`,
-`EXEC-FAIL-TAILSCALE`, `EXEC-FAIL-LITELLM`, and `EXEC-FAIL-GIT`.
+This section is the command authority for the controlled Redis, Prism
+PostgreSQL, registry/BuildKit, Tailscale, LiteLLM, and Git dependency-failure
+procedures below.
 These are operator exercises, not claims that the failures have already been
 run. Each exercise must produce its own failed observation, safe-stop decision,
 restoration record, end-consumer verification, and cleanup result.
@@ -238,6 +279,7 @@ file named below must be outside the repository and evidence directory, mode
 only for the Tailscale exercise; never copy it into evidence.
 
 ```bash
+assert_cluster_binding
 set -euo pipefail
 export NAMESPACE="<namespace>"
 export PRISM_NAMESPACE="<prism-namespace>"
@@ -263,7 +305,7 @@ so. Capture that status explicitly; `tee` can otherwise hide the status of the
 left-hand command in shells without `pipefail`. The examples below therefore
 write failure output to a file and record `$?` before displaying it.
 
-### Redis Unavailable: EXEC-FAIL-REDIS
+### Redis Unavailable
 
 Precondition: `statefulset/redis-master` has one ready replica, its PVC is
 bound, and both role smoke checks pass. Scaling to zero stops the process but
@@ -271,6 +313,7 @@ does not delete its PVC. Record the original replica count so restoration does
 not assume one.
 
 ```bash
+assert_cluster_binding
 ./scripts/deploy.sh smoke-agent nova
 ./scripts/deploy.sh smoke-agent buster
 kubectl -n "$NAMESPACE" get statefulset/redis-master \
@@ -318,6 +361,7 @@ role checks. The startup portion also exercises the bounded stream check; a Pod
 becoming Ready by itself is not functional recovery.
 
 ```bash
+assert_cluster_binding
 restore_redis
 kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- \
   node --input-type=module -e '
@@ -361,7 +405,7 @@ the failure output, and the successful new stream identity. If rollout or the
 functional checks fail, keep admission stopped and escalate; do not delete the
 PVC.
 
-### Prism PostgreSQL Unavailable: EXEC-FAIL-POSTGRESQL
+### Prism PostgreSQL Unavailable
 
 This exercise targets Prism PostgreSQL only. Precondition: `prism-smoke` passes,
 LiteLLM and its separate `statefulset/postgresql` are ready, and no Prism write
@@ -369,6 +413,7 @@ or database backup is in progress. Record the selected project and operation
 IDs before the fault.
 
 ```bash
+assert_cluster_binding
 ./scripts/deploy.sh prism-smoke
 kubectl -n "$NAMESPACE" rollout status statefulset/postgresql --timeout=120s
 kubectl -n "$PRISM_NAMESPACE" get statefulset/prism-postgresql \
@@ -425,6 +470,7 @@ project, revision, and artifact digest, compare the PVC identities and only
 then disarm it:
 
 ```bash
+assert_cluster_binding
 kubectl -n "$PRISM_NAMESPACE" get pvc -l app=prism-postgresql \
   -o jsonpath='{range .items[*]}{.metadata.name}{" "}{.metadata.uid}{"\n"}{end}' \
   | sort > "$EVIDENCE_DIR/prism-postgresql-pvc-after.txt"
@@ -436,12 +482,13 @@ trap - EXIT HUP INT TERM
 
 The two PostgreSQL domains must also be distinguishable in the opposite
 direction. As a separate window, run the healthy embedding command in
-[the LiteLLM exercise](#litellm-upstream-timeout-exec-fail-litellm), record the
+[the LiteLLM exercise](#litellm-upstream-timeout), record the
 LiteLLM database replica count, stop only that database, and restart LiteLLM so
 startup cannot hide behind an established pool. Prism must continue to pass its
 own smoke check.
 
 ```bash
+assert_cluster_binding
 litellm_embedding_probe() {
   probe_text="$1"
   kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- \
@@ -507,7 +554,7 @@ Pass this ownership check only when LiteLLM recovers, Prism stayed healthy, and
 both database PVC identities are unchanged. Never cross-restore or copy
 credentials between the two PostgreSQL releases.
 
-### Registry Endpoint Unavailable During BuildKit Push: EXEC-FAIL-REGISTRY-ENDPOINT
+### Registry Endpoint Unavailable During BuildKit Push
 
 This lab-profile exercise requires the selected writable Service to be
 `registry-local` and the mirror to be `registry-mirror`. For another production
@@ -516,6 +563,7 @@ command; do not translate the lab Service mutation below to a credential or TLS
 bypass. Preflight must prove the full Nova-to-Buster build path first.
 
 ```bash
+assert_cluster_binding
 ./scripts/deploy.sh nova-buildkit-preflight
 kubectl auth can-i patch services -n "$NAMESPACE" | grep -qx yes
 kubectl -n "$NAMESPACE" get service/registry-local -o json \
@@ -624,6 +672,7 @@ again. Its receipt must show `registryPushVerified`, `manifestVerified`,
 imported evidence, and one digest-qualified image.
 
 ```bash
+assert_cluster_binding
 restore_registry_selector
 kubectl -n "$NAMESPACE" get service/registry-local \
   -o jsonpath='{.spec.selector}' \
@@ -664,7 +713,7 @@ failure is an incident requiring immediate manual restoration through the
 independent administration route. Do not delete registry blobs or BuildKit
 cache as incident cleanup.
 
-### Tailscale Authentication Rejected: EXEC-FAIL-TAILSCALE
+### Tailscale Authentication Rejected
 
 Precondition: the official operator is ready, `IngressClass/tailscale` exists,
 the digest-pinned probe image is pullable, the secure OAuth source file is
@@ -673,6 +722,7 @@ continue on already-issued device state, so the failure check must allocate a
 new fixture route; inspecting an old route is not the intended fault.
 
 ```bash
+assert_cluster_binding
 test "$(stat -c '%a' "$TAILSCALE_OAUTH_ENV_FILE")" = 600
 ./scripts/deploy.sh nova-tailscale-preflight "$TAILSCALE_PROBE_IMAGE"
 kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" get deploy,pods -l \
@@ -833,6 +883,7 @@ objects to be absent and writes the cleanup result before the rollback trap can
 be disarmed. A same-name replacement is never a cleanup target.
 
 ```bash
+assert_cluster_binding
 restore_tailscale_oauth
 kubectl proxy --port=0 --api-prefix=/ \
   > "$EVIDENCE_DIR/tailscale-kubectl-proxy.txt" 2>&1 &
@@ -973,7 +1024,7 @@ receipt import, and its own cleanup. Keep both fixture identities, the recorded
 cleanup result, operator/device identity, and release result; remove the invalid
 credential from shell history if the local shell records commands.
 
-### LiteLLM Upstream Timeout: EXEC-FAIL-LITELLM
+### LiteLLM Upstream Timeout
 
 This exercise requires the secured Cilium profile. The temporary
 `CiliumNetworkPolicy` denies only world egress from the LiteLLM Pod; cluster
@@ -982,6 +1033,7 @@ maintained equivalent deny-and-restore command and demonstrate the same narrow
 boundary. First prove gateway readiness and a real embedding.
 
 ```bash
+assert_cluster_binding
 kubectl -n "$NAMESPACE" rollout status deployment/litellm --timeout=120s
 kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node -e '
 const r = await fetch(`${process.env.LITELLM_URL}/v1/embeddings`, {
@@ -1128,6 +1180,7 @@ Delete only the named denial policy, confirm its absence, and repeat one real
 embedding from the end consumer. Gateway readiness alone is not recovery.
 
 ```bash
+assert_cluster_binding
 restore_litellm_policy
 kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- node -e '
 const r = await fetch(`${process.env.LITELLM_URL}/v1/embeddings`, {
@@ -1144,7 +1197,7 @@ litellm_policy_restore_pending=0
 trap - EXIT HUP INT TERM
 ```
 
-### Git Revision Unavailable: EXEC-FAIL-GIT
+### Git Revision Unavailable
 
 Use a disposable registered `nova-project.v2` project whose repository and
 immutable release ref are owned by the acceptance operator. Its compact Buster

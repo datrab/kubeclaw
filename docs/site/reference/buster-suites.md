@@ -149,7 +149,7 @@ independent of how many suites were selected.
 >
 > [Suite merge, ID localization, exclusions, additions, and concurrency resolution](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/resolver.ts#L223-L393).
 >
-> [Coverage validates requirement mapping and every resolved matrix variation](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/src/coverage.ts#L1-L113).
+> [Coverage validates requirement mapping and every resolved matrix variation](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/src/coverage.ts#L1-L112).
 
 ## Suite Inventory
 
@@ -722,8 +722,10 @@ test scope, resolve it, and let Nova submit it as described in the
 [operator workflow](../use/workflows/buster-suite.md#supported-execution-paths).
 The platform operator must first enable the matching capability in the
 [Buster runtime configuration](buster-runtime-configuration.md#capability-blocks).
-For a repository proof, run the exact command from the repository root after
-`npm ci`. A command must exit zero and print its final success record. Keep the
+For a repository proof, first complete the canonical
+[Locked Dependency Installation](../use/quickstart.md#locked-dependency-installation),
+then run the exact command from the repository root. A command must exit zero
+and print its final success record. Keep the
 command, output, Git revision, and external target identity together.
 
 | Suite | Project configuration that makes work explicit | Executable repository proof | What to inspect first when it fails |

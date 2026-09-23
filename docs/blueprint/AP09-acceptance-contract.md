@@ -75,6 +75,21 @@ Die folgenden Regeln gelten für jeden Punkt `A97-*` bis `A913-*`.
     `FAIL`. Eine Produktlücke ist nur dann kein Dokumentationsbefund, wenn die
     aktuelle Grenze, Auswirkung, sichere Handlung und spätere Akzeptanz vollständig
     dokumentiert sind.
+15. **Englische und eindeutige Leserseiten:** Jede veröffentlichte Seite unter
+    `docs/site/` verwendet ausschließlich Englisch. Dies gilt auch für Titel,
+    Tabellen, Hinweise, Bildtexte und erzeugte Inhalte. Jede Seite besitzt
+    genau einen eindeutigen, beschreibenden Haupttitel und eine eindeutige
+    kanonische Identität. Interne Paketbezeichnungen wie `AP9`, `AP 09` oder
+    ähnliche Schreibweisen sowie Review-, Migrations- und temporäre
+    Arbeitssprache sind in der Leserdokumentation unzulässig. Produktbegriffe
+    wie ein Repository-Review oder eine Datenmigration bleiben zulässig, wenn
+    sie tatsächliches Produktverhalten bezeichnen.
+    Der endgültig verbleibende Dokumentationsbestand verwendet ausschließlich
+    Englisch. Anderssprachige Übergangsquellen sind nur außerhalb von
+    `docs/site/`, als nicht veröffentlichbar klassifiziert und bis zu ihrer
+    belegten Extraktion zulässig. Ein konventioneller Indexdateiname wie
+    `README.md` ist nur zulässig, wenn der sichtbare Haupttitel und der
+    vollständige kanonische Pfad eindeutig und beschreibend sind.
 
 ## 3. Drei getrennte Beweisebenen
 
@@ -253,6 +268,37 @@ Lifecycle, Konfiguration und produktbezogene Journeys getrennt geprüft.
 | A98-13 | Getrennte Fresh-Context-Operatoren führen den vollständigen erfolgreichen Installations-/Start-/Diagnoseweg, einen Preflight-Safe-Stop, den aktuell unterstützten isolierten Komponenten-Restore und die vollständige Plattform-Restore-Grenze ohne Chatwissen aus. Eine Grenze ersetzt keinen unterstützten Pflichtlauf. | Der Autor erklärt die Schritte, ein DNS-Safe-Stop ersetzt die erfolgreiche Installation, eine gelesene Produktgrenze ersetzt den unterstützten Restore, oder Reviewer lesen nur, ohne auszuführen. |
 | A98-14 | Mutationstests erkennen ein neues Helm-Feld, Environment-Setting, Secret, Scriptflag und `swarm.config.json`-Feld ohne Operator-Dokumentation. | Nur bekannte Feldzahlen werden geprüft oder ein neues Feld bleibt grün. |
 
+### Pflichtübergang zwischen AP09.8 und AP09.9
+
+AP09.9 darf erst abgenommen werden, wenn der Dokumentationsbaum eindeutig
+getrennt ist. `docs/site/` ist die einzige Leserdokumentation. Jede andere Datei
+unter `docs/` muss in einem maschinenlesbaren Inventar als notwendige interne
+Prüf- oder Generatoreingabe, vorübergehende Extraktionsquelle oder löschbarer
+Rest klassifiziert sein. Mehrdeutige oder nicht klassifizierte Dateien ergeben
+`FAIL`.
+
+Vorübergehende Extraktionsquellen müssen zusätzlich unter
+`docs/_legacy-source/` gesammelt sein. Ihr Pfad dort bewahrt den bisherigen
+relativen Pfad. Eine alte Leserdatei außerhalb dieses Quellbaums ergibt ebenso
+`FAIL` wie eine Generator-, Fixture- oder Prüfeingabe, die fälschlich als alte
+Leserdokumentation dorthin verschoben wurde. Damit sind die neue
+Leserdokumentation, interne Dokumentationswerkzeuge und die bisherige
+Leserstruktur nicht nur logisch, sondern auch physisch getrennt.
+
+Eine Paritätsmatrix muss jede weiterhin richtige Aussage und Entscheidung der
+Extraktionsquellen einem konkreten Abschnitt unter `docs/site/` zuordnen. Eine
+begründete Auslassung benötigt einen aktuellen Quellbeleg. Themenähnlichkeit,
+Dateiexistenz, Wortzahl und Linkanzahl sind keine Parität. Das Gate ergibt auch
+`FAIL`, wenn eine Site-Seite, Navigation, Suche oder Reader-Aufgabe eine
+Extraktionsquelle benötigt oder wenn `docs/site/` Review-, Migrations- oder
+AP-Arbeitssprache enthält.
+
+Die Matrix ist nur dann eine gültige AP10-Löschfreigabe, wenn es keine
+ungeklärten Inhalte gibt, alle Site-, Publication-, Link- und Readerchecks am
+selben Commit bestehen und ein unabhängiger Read-only-Reviewer jede
+Quellklassifikation sowie jede Paritätsentscheidung bestätigt. Vor diesem
+Nachweis darf keine Extraktionsquelle gelöscht werden.
+
 ## 7. AP09.9 — Pipeline und Workflows
 
 AP09.9 umfasst alle 17 zugeordneten IDs. Die Pipeline-Referenz und die
@@ -385,6 +431,8 @@ wertvoll“ ist nur zulässig, wenn gleichzeitig gilt:
 - alle 261 Katalog-IDs sind am selben finalen Commit vollständig abgenommen;
 - alle automatischen Checks und erforderlichen negativen Mutationen bestehen;
 - alle vorgeschriebenen Fresh-Context-Readerübungen bestehen;
+- der Pflichtübergang nach AP09.8 den Dokumentationsbaum und die vollständige
+  Inhaltsparität ohne ungeklärte Quelle nachweist;
 - kein materieller Dokumentationsbefund ist offen;
 - jede nicht gelaufene Live-Prüfung und jede Produktgrenze bleibt sichtbar; und
 - der Arbeitsbaum und der veröffentlichte Output sind frei von temporären,

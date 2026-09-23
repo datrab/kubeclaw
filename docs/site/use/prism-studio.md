@@ -1,18 +1,73 @@
 # Operate Prism: From Architecture to Approved Handoff
 
-Status: implemented with stated deployment and live-proof limits
+Status: source-backed journey; runtime selection is absent and the current Prism deploy verification fails, so no deploy success is claimed
 Audience: Prism operator, designer, incident responder, platform maintainer
 Owner: Prism maintainers
 Evidence: skills/prism; skills/nova/plugins/prism-design; charts/prism; scripts/deploy.sh
-Evidence revision: `4e52c72788ac002788bc036a497d76c13e6a35fd`
+Evidence revision: `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`
 Applies to: the current Prism Control, Studio, agent, native worker, ingestion service, and Nova Prism stage
-Last verified: source, contract, chart, and focused-test inspection on 2026-09-19
+Last verified: 2026-09-21; no fresh live journey result is available
 
 ## Purpose
 
 This guide gives an operator one complete Prism journey.
 It starts when Nova submits an architecture.
 It ends when Nova imports the exact Baseline Bundle that a human approved.
+
+## Canonical Prism and Studio Procedure
+<!-- operator-task: prism-studio -->
+
+This page is the sole authority for `prism-studio`. Start with an existing
+cluster that passed install preflight, an exact selected Prism service/agent
+release, prepared Secrets, SPIRE/CSI and native-worker dependencies, sufficient
+database/artifact/backup capacity, private Studio access, and a Nova run waiting
+for `prism.approval.resolved`. Run deployment commands from `<repository-root>`
+on the administration machine and Studio actions through the named human's
+private browser session. Release receipts, Prism Control state, immutable
+artifact bytes, Studio approval, Nova wait state, and Nova audit are the
+authorities.
+
+Before any cluster command on this page, complete
+[Bind Cluster Authority](install.md#bind-cluster-authority). Keep the same bound
+shell for the whole Prism task. Every raw `kubectl`, Helm, or
+`scripts/deploy.sh` command below must inherit its exported read-only
+`KUBECONFIG`; every shown `<context>` must equal `EXPECTED_CONTEXT`. Run
+`assert_cluster_binding` immediately before each command block. Stop on any
+mismatch and follow the binding section's recovery; never fall back to the
+default kubeconfig.
+
+Before cluster mutation, run:
+
+```bash
+assert_cluster_binding
+npm run verify:prism:deploy-script
+node scripts/updates/materialize-release.mjs --family=runtime --check
+./scripts/deploy.sh render prism
+```
+
+All three must exit zero. At source revision
+`1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`, the first command fails at the
+canonical-schema prompt assertion and the runtime selection is absent. Stop and
+retain those observations; do not run the deployment steps or claim Prism is
+installed from this source state.
+
+When a later selected source passes, complete [Before You Start](#before-you-start),
+[Deploy Prism](#deploy-prism), [The Complete Studio Journey](#the-complete-studio-journey),
+and [Completion Checklist](#completion-checklist) in order. Stop on an unknown
+identity/digest, failed readiness level, superseded architecture, uncertain
+agent job, revision conflict, blocking evaluation, stale approval, bundle
+verification failure, mismatched/expired wait, or incomplete cleanup. Do not
+create a replacement identity merely to clear a conflict.
+
+Recovery uses [Safe Recovery Procedures](#safe-recovery-procedures) for the
+same project and identities. Backup/restore uses the
+[canonical recovery procedure](recovery.md#canonical-backup-and-restore-procedure),
+upgrade uses the [canonical upgrade procedure](maintenance.md#canonical-upgrade-and-rollback-procedure),
+and removal uses the [canonical decommission procedure](maintenance.md#canonical-decommission-procedure).
+Retain release/configuration digests, commands and outputs, readiness, run and
+wait IDs, project/architecture/round/document/revision/approval/bundle IDs,
+preview/evaluation evidence, resume signal digest, final audit, recovery and
+cleanup. Never retain session cookies, tokens, passwords, or private keys.
 
 Use this page to:
 
@@ -32,10 +87,11 @@ The implementation pipeline remains responsible for production code.
 > **The important authority boundary**
 >
 > Studio approval publishes an immutable Baseline Bundle. It does not resume Nova.
-> A separately authenticated Nova signal resumes the run. Nova then asks Prism for
+> A separate operator-created Nova signal resumes the run. Its issuer is
+> caller-supplied and unsigned; CLI access is the effective authority. Nova then asks Prism for
 > the approved bundle and verifies all content before it accepts the handoff.
 >
-> [The Prism stage creates the wait, publishes the operator request, and validates the later approval signal](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/nova/plugins/prism-design/src/stage.ts#L8-L34).
+> [The Prism stage creates the wait, publishes the operator request, and validates the later approval signal](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/prism-design/src/stage.ts#L8-L34).
 
 ## Know the Running Parts
 
@@ -59,11 +115,13 @@ approved pipeline input.
 
 > **Source evidence — component flow**
 >
-> [Control accepts the Nova dispatch, stores the architecture request, and starts a design round](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L174-L240).
+> [Control authenticates and validates the Nova dispatch](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L174-L213).
 >
-> [The agent bridge claims only durable jobs and records the bounded OpenClaw outcome](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/agent-job-runner.mjs#L16-L46).
+> It then [stores the request and starts a design round or returns the approved baseline](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L214-L240).
 >
-> [The native worker host uses a deterministic provider; production model work stays in the managed Prism agent](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/native-worker-host.ts#L12-L33).
+> [The agent bridge claims only durable jobs and records the bounded OpenClaw outcome](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/agent-job-runner.mjs#L16-L46).
+>
+> [The native worker host uses a deterministic provider; production model work stays in the managed Prism agent](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/native-worker-host.ts#L12-L33).
 
 ## Before You Start
 
@@ -96,9 +154,9 @@ empty. The deploy script rejects an empty or invalid selected digest.
 
 > **Source evidence — release admission**
 >
-> [The deploy command requires both materialized values files and validates all four Prism image digests](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/scripts/deploy.sh#L1593-L1616).
+> [The deploy command requires both materialized values files and validates all four Prism image digests](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L1593-L1616).
 >
-> [The chart defaults deliberately leave the four image digests empty](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/values.yaml#L1-L7).
+> [The chart defaults deliberately leave the four image digests empty](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/values.yaml#L1-L7).
 
 ## Configuration Sources and Precedence
 
@@ -127,9 +185,9 @@ operator-supplied file adds private values but cannot replace selected release t
 
 > **Source evidence — precedence**
 >
-> [The deploy script captures private overlays and fixes the base files to materialized release values](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/scripts/deploy.sh#L100-L103).
+> [The deploy script captures private overlays and fixes the base files to materialized release values](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L100-L103).
 >
-> [Service release values, private overlay, fixed trust and Secret overrides are applied in that order](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/scripts/deploy.sh#L1725-L1744).
+> [Service release values, private overlay, fixed trust and Secret overrides are applied in that order](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L1725-L1744).
 
 ### Main Helm values
 
@@ -282,9 +340,11 @@ The schema also rejects several values before rendering:
 
 > **Source evidence — Helm values**
 >
-> [The maintained chart defaults define service, storage, backup, exposure, and trust values](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/values.yaml#L1-L92).
+> The maintained defaults define [service images and Control, Studio, and worker settings](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/values.yaml#L1-L43).
 >
-> [The chart schema closes the top level but leaves some nested objects open](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/prism/values.schema.json#L59-L531).
+> They also define [PostgreSQL, artifact storage, backup, exposure, and trust settings](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/values.yaml#L44-L92).
+>
+> [The chart schema requires its core groups and closes the image object](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/values.schema.json#L59-L108). It [leaves a nested resources object open while closing the chart's top-level object](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/values.schema.json#L510-L531).
 
 ### Runtime settings and defaults
 
@@ -341,13 +401,19 @@ permissive production fallbacks. Missing or invalid values stop startup.
 
 > **Source evidence — runtime configuration**
 >
-> [Control captures one immutable configuration snapshot and defines its service defaults](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-config.ts#L9-L72).
+> Control validates [its platform preference and trust boundary](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-config.ts#L9-L38).
 >
-> [Studio validates its port and Control timeout](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/studio-config.ts#L4-L17).
+> It [defines service defaults](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-config.ts#L40-L60) and [captures one immutable startup configuration](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-config.ts#L63-L72).
 >
-> [Worker ingress and shutdown defaults are validated as positive timer-safe integers](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/worker-config.ts#L1-L38).
+> [Studio validates its port and Control timeout](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/studio-config.ts#L4-L17).
 >
-> [The native supervisor defines resource, journal, path, identity, and timing settings](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/config/native-worker.ts#L4-L83).
+> [Worker ingress and shutdown defaults are validated as positive timer-safe integers](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/worker-config.ts#L1-L38).
+>
+> Native configuration validates [result size, dispatch timeout, engine digest, and resource policy](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/config/native-worker.ts#L4-L35).
+>
+> It checks [host scope, input size, and artifact authentication](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/config/native-worker.ts#L38-L47).
+>
+> It also checks [supervisor paths, identity, journal, and timing limits](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/config/native-worker.ts#L50-L83).
 
 The following settings are required when their feature is active. They have no
 safe implied identity:
@@ -368,9 +434,9 @@ separate from the Baseline Bundle approval flow.
 
 > **Source evidence — conditional configuration**
 >
-> [Control rejects an incomplete SPIFFE trust policy and otherwise requires the fallback secrets](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-config.ts#L16-L55).
+> [Control rejects an incomplete SPIFFE trust policy and otherwise requires the fallback secrets](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-config.ts#L16-L55).
 >
-> [Product authority is disabled unless explicitly selected and then requires HTTPS, an operator allowlist, and a dedicated Ed25519 key](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/control/product-decisions.ts#L20-L43).
+> [Product authority is disabled unless explicitly selected and then requires HTTPS, an operator allowlist, and a dedicated Ed25519 key](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/control/product-decisions.ts#L20-L43).
 
 ### Deploy-command settings
 
@@ -433,8 +499,8 @@ the precedence stated above.
 | `litellm.existingSecret`, `litellm.existingSecretKey` | `openclaw-shared-secrets`, `litellmApiKey` | Model-route credential reference. |
 | `discord.enabled` | `false` | Keep disabled until the dedicated Prism bot and channel are ready. |
 | `discord.existingSecret`, `existingSecretKey`, `channelId` | `openclaw-shared-secrets`, `discordToken-prism`, empty | Dedicated token reference and required channel selection. |
-| `commands.ownerAllowFrom` | `discord:849379821536804864` | Exact OpenClaw command owner allowlist. Review as authority data. |
-| `commands.allowFromDiscord` | `849379821536804864`, `user:849379821536804864` | Exact Discord caller allowlist. |
+| `commands.ownerAllowFrom` | `<redacted:authority-identity>` | OpenClaw command owner allowlist. Read the private deployment value at the execution location and verify it against the approved identity record. |
+| `commands.allowFromDiscord` | `<redacted:authority-identity>` | Discord caller allowlist. Read the private deployment values at the execution location and verify each one against the approved identity record. |
 | `agent.project` | `prism` | Stable OpenClaw project and session namespace. |
 | `agent.model.primary`, `agent.model.fallbacks` | `openai/gpt-5.6-sol`, `openai/gpt-5.5` | Managed primary and fallback routes. |
 | `agent.git.enabled`, `secretName`, `repoUrl` | `true`, `git-deploy-key-nova`, `git@github.com:datrab/kubeclaw.git` | Optional repository synchronization. Runtime contracts still come from the selected code bundle. |
@@ -462,11 +528,21 @@ chart supports them.
 
 > **Source evidence — agent configuration**
 >
-> [The common agent chart defines bundle, auth, trust, LiteLLM, Discord, model, and Git value families](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/charts/kubeclaw/values.yaml#L16-L220).
+> The common chart defines [role, image, bundle, and registry value families](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/kubeclaw/values.yaml#L16-L63).
 >
-> [The shipped Prism overlay fixes the complete role, bridge, model, workspace, and dependency-probe selection](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/my-values/prism-agent-values.yaml#L1-L103).
+> It defines [worker-trust values](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/kubeclaw/values.yaml#L132-L145).
 >
-> [The deploy command binds the selected Prism bundle and platform LiteLLM endpoint after the private agent overlay](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/scripts/deploy.sh#L1688-L1748).
+> It also defines [auth, LiteLLM, Stitch, and Discord values](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/kubeclaw/values.yaml#L147-L201) and [model and Git values](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/kubeclaw/values.yaml#L203-L220).
+>
+> The shipped overlay fixes [the role, image, code bundle, authentication, and model endpoint](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/my-values/prism-agent-values.yaml#L1-L40).
+>
+> It fixes [the agent, service, trust, and bridge selection](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/my-values/prism-agent-values.yaml#L45-L85) and [workspace and dependency probes](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/my-values/prism-agent-values.yaml#L87-L103).
+>
+> Private authority identities are deliberately excluded from these links.
+>
+> The deploy command [resolves and verifies the selected Prism bundle](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L1688-L1724).
+>
+> It then [applies the private overlay before binding the bundle and LiteLLM endpoint](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L1725-L1748).
 
 ### Nova Prism-stage configuration
 
@@ -485,7 +561,7 @@ namespaces, operator target, signal type, and issuer ID.
 
 > **Contract evidence — stage configuration**
 >
-> [The Prism stage configuration schema is closed and requires all four fields](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/nova/plugins/prism-design/schemas/config.schema.json#L1-L1).
+> [The Prism stage configuration schema is closed and requires all four fields](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/prism-design/schemas/config.schema.json#L1-L1).
 
 ### Secrets
 
@@ -510,7 +586,7 @@ component that owns the managed model route.
 
 > **Source evidence — Secret creation**
 >
-> [The deployment command creates missing values, verifies every required key, and does not print secret values](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/scripts/deploy.sh#L1639-L1681).
+> [The deployment command creates missing values, verifies every required key, and does not print secret values](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L1639-L1681).
 
 ## Deploy Prism
 
@@ -520,6 +596,7 @@ Run the repository's release materialization check first.
 Then render the selected Prism releases with the deployment script.
 
 ```bash
+assert_cluster_binding
 node scripts/updates/materialize-release.mjs --family=runtime --check
 ./scripts/deploy.sh render prism
 ```
@@ -540,6 +617,7 @@ native binding, an unexpected Secret, or an unexpected service account.
 ### 2. Prepare platform and Secrets
 
 ```bash
+assert_cluster_binding
 ./scripts/deploy.sh setup
 ./scripts/deploy.sh secrets
 ```
@@ -550,6 +628,7 @@ Confirm that `gatewayToken-prism` exists before deployment.
 ### 3. Deploy
 
 ```bash
+assert_cluster_binding
 ./scripts/deploy.sh prism
 ```
 
@@ -577,15 +656,22 @@ until the old workload can no longer return.
 
 > **Source evidence — deployment order**
 >
-> [The deploy command runs render checks, host preflight, Secret checks, migration-aware Helm install, and agent install](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/scripts/deploy.sh#L1684-L1795).
+> The deploy command [resolves and verifies the selected bundle](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L1684-L1724).
 >
-> [The maintained deploy waits for the chart-owned PostgreSQL StatefulSet, and smoke enters that StatefulSet](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/scripts/deploy.sh#L1793-L1811).
+> It [assembles overrides and renders both roles](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L1725-L1748).
 >
-> [Migrations take one advisory lock and commit each ordered migration name in one transaction](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L21-L75).
+> It then [runs host and trust preflight, Secret checks, and the Prism Helm install](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L1750-L1781).
+>
+> Finally, it [installs the agent and waits for every workload](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L1782-L1797).
+>
+> [The maintained deploy waits for the chart-owned PostgreSQL StatefulSet, and smoke enters that StatefulSet](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L1793-L1811).
+>
+> [Migrations take one advisory lock and commit each ordered migration name in one transaction](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/storage/index.ts#L21-L75).
 
 ### 4. Verify status and smoke behavior
 
 ```bash
+assert_cluster_binding
 ./scripts/deploy.sh prism-status
 ./scripts/deploy.sh prism-smoke
 ```
@@ -593,6 +679,7 @@ until the old workload can no longer return.
 Also inspect the expected workloads:
 
 ```bash
+assert_cluster_binding
 prism_namespace="${PRISM_NAMESPACE:-kubeclaw}"
 kubectl get deploy agent-prism prism-control prism-worker prism-studio -n "$prism_namespace"
 kubectl get statefulset prism-postgresql -n "$prism_namespace"
@@ -628,6 +715,7 @@ The active request and job have durable identities.
 Find the private Studio address:
 
 ```bash
+assert_cluster_binding
 prism_namespace="${PRISM_NAMESPACE:-kubeclaw}"
 kubectl get ingress prism-studio -n "$prism_namespace"
 ```
@@ -650,11 +738,11 @@ The governed Nova path is the supported operator journey.
 
 > **Source evidence — session and chooser**
 >
-> [Control validates the signed session and the separate CSRF cookie and header](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L108-L123).
+> [Control validates the signed session and the separate CSRF cookie and header](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L108-L123).
 >
-> [The session route returns the CSRF value and stable user identity](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L152-L172).
+> [The session route returns the CSRF value and stable user identity](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L152-L172).
 >
-> [Studio starts the session, lists projects, and loads the selected document](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/studio/app.tsx#L97-L149).
+> [Studio starts the session, lists projects, and loads the selected document](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/studio/app.tsx#L97-L149).
 
 ### Step 3: Wait for exactly three directions
 
@@ -677,9 +765,9 @@ the durable request can be abandoned.
 
 > **Source evidence — direction commit and reconnect**
 >
-> [Control validates and stores exactly three agent directions](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L243-L277).
+> [Control validates and stores exactly three agent directions](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L243-L277).
 >
-> [Studio retains the idempotency key and generation ID and rejects a superseded pending round](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/studio/design-round-client.ts#L3-L48).
+> [Studio retains the idempotency key and generation ID and rejects a superseded pending round](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/studio/design-round-client.ts#L3-L48).
 
 ### Step 4: Compare, select, and give feedback
 
@@ -704,9 +792,9 @@ Project content cannot select another person's subject.
 
 > **Source evidence — human direction authority**
 >
-> [Control accepts only the supported feedback actions and requires an idempotency key](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L346-L387).
+> [Control accepts only the supported feedback actions and requires an idempotency key](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L346-L387).
 >
-> [Studio retains one key for each uncertain direction mutation](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/studio/app.tsx#L277-L330).
+> [Studio retains one key for each uncertain direction mutation](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/studio/app.tsx#L277-L330).
 
 ### Step 5: Request another design round when needed
 
@@ -731,9 +819,9 @@ current direction set.
 
 > **Source evidence — round creation**
 >
-> [Control checks current project, architecture, parent, document, revision, and idempotency before it admits another round](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L346-L365).
+> [Control checks current project, architecture, parent, document, revision, and idempotency before it admits another round](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L346-L365).
 >
-> [Studio preserves the pending request and tells the operator to reconnect with the same key](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/studio/app.tsx#L332-L348).
+> [Studio preserves the pending request and tells the operator to reconnect with the same key](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/studio/app.tsx#L332-L348).
 
 ### Step 6: Edit the selected revision
 
@@ -769,11 +857,13 @@ replayed because the first launch can have produced an external effect.
 
 > **Source evidence — revisions**
 >
-> [The domain applies typed operations only at the expected base revision and then increments once](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/domain/index.ts#L67-L113).
+> [The domain applies typed operations only at the expected base revision and then increments once](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/domain/index.ts#L67-L113).
 >
-> [The repository commits a new revision with compare-and-swap on the previous revision ID](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L262-L330).
+> The repository [applies an operation and advances the current revision with compare-and-swap](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/storage/index.ts#L262-L293).
 >
-> [Studio retains and reconciles one natural-language revision request](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/studio/agent-revision-client.ts#L3-L35).
+> Whole-document replacement [checks the expected revision and uses the same compare-and-swap boundary](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/storage/index.ts#L294-L330).
+>
+> [Studio retains and reconciles one natural-language revision request](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/studio/agent-revision-client.ts#L3-L34).
 
 ### Step 7: Inspect or restore history
 
@@ -789,9 +879,9 @@ All prior warning acceptance and approval state is stale for the new revision.
 
 > **Source evidence — restore**
 >
-> [Control exposes history and a restore operation for one document](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L389-L421).
+> [Control exposes history and a restore operation for one document](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L389-L421).
 >
-> [Restore creates a new revision and records the source revision ID](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/index.ts#L211-L260).
+> [Restore creates a new revision and records the source revision ID](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/storage/index.ts#L211-L260).
 
 ### Step 8: Test the preview
 
@@ -816,9 +906,9 @@ Publication later creates independent worker-rendered screenshots and ARIA snaps
 
 > **Source evidence — preview boundary**
 >
-> [Studio builds the preview from the selected view, state, viewport, assets, components, and theme](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/studio/preview.ts#L1-L31).
+> [Studio builds the preview from the selected view, state, viewport, assets, components, and theme](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/studio/preview.ts#L1-L31).
 >
-> [Studio resolves only declared flow transitions from preview messages](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/studio/flows.ts#L1-L48).
+> [Studio resolves only declared flow transitions from preview messages](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/studio/flows.ts#L1-L47).
 
 ### Step 9: Evaluate the exact current revision
 
@@ -846,9 +936,15 @@ copied blindly to a later revision.
 
 > **Source evidence — quality gate**
 >
-> [The evaluator defines finding levels, gate families, stable IDs, and the final status rule](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/evaluation/index.ts#L4-L36).
+> [The evaluator defines finding levels, gate families, stable IDs, and the final status rule](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/evaluation/index.ts#L4-L36).
 >
-> [The evaluator checks document, node, asset, responsive, and flow references](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/evaluation/index.ts#L37-L235).
+> The evaluator checks [document structure and node references](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/evaluation/index.ts#L37-L96).
+>
+> It checks [asset references and alternative text](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/evaluation/index.ts#L97-L131) and [state and responsive references](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/evaluation/index.ts#L132-L160).
+>
+> It also checks [flow endpoints and transition coverage](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/evaluation/index.ts#L162-L197).
+>
+> Finally, it derives [transition validity, recovery coverage, and the final status](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/evaluation/index.ts#L198-L235).
 
 ### Step 10: Approve and publish
 
@@ -888,13 +984,21 @@ artifact store. Nova performs the governed handoff and imports the archive.
 
 > **Source evidence — approval and publication**
 >
-> [Control binds approval to the current document, quality findings, warnings, and active architecture](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L521-L565).
+> [Control binds approval to the current document, quality findings, warnings, and active architecture](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L521-L565).
 >
-> [Control rejects a stale approval or changed warning set before publication](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L567-L629).
+> Control [rejects a baseline with a mismatched project, document, approval, or revision](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L567-L607).
 >
-> [Control renders complete preview evidence and stores the assembled content-addressed bundle](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L630-L797).
+> It then [rejects stale digests, blocked quality, changed warnings, or a missing active direction](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L608-L629).
 >
-> [Studio calculates the document digest, creates the approval, publishes the baseline, and shows both identities](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/studio/app.tsx#L350-L405).
+> Control [assembles the specification and acceptance criteria](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L630-L662).
+>
+> It [collects bounded content-addressed assets](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L663-L692).
+>
+> It then [renders and validates every preview and its accessibility evidence](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L693-L752).
+>
+> Finally, it [stores the content-addressed bundle and baseline record](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L753-L797).
+>
+> [Studio calculates the document digest, creates the approval, publishes the baseline, and shows both identities](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/studio/app.tsx#L350-L405).
 
 ### Step 11: Resume Nova with the approved identities
 
@@ -916,8 +1020,12 @@ The resume payload must contain the values below:
 
 The complete resume signal also has the Nova-owned signal envelope fields:
 `schemaVersion`, `signalId`, `idempotencyKey`, `waitId`, `signalType`, and
-`issuedAt`. Use the wait and signal procedure in [Operate the Pipeline](operate.md);
+`issuedAt`. Use the [canonical run-control procedure](operate.md#canonical-run-control-procedure);
 do not construct an unvalidated journal record.
+
+The issuer is not authenticated by a signal signature. It is caller-supplied
+and compared with the active wait. Restrict signal-file creation and CLI access;
+do not describe issuer matching as proof of the human's identity.
 
 All identities must match:
 
@@ -942,9 +1050,11 @@ Do not reuse an approval after a new architecture or document revision.
 
 > **Source evidence — final handoff**
 >
-> [Control returns the approved artifact and archive only for a matching active baseline](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/server/control-server.ts#L226-L240).
+> [Control returns the approved artifact and archive only for a matching active baseline](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/server/control-server.ts#L226-L240).
 >
-> [Nova verifies the complete Baseline Bundle before it stores the handoff artifact](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/nova/plugins/prism-design/src/archive.ts#L6-L88).
+> Nova validates [archive objects, paths, encoding, manifests, file sets, and digests](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/prism-design/src/archive.ts#L6-L52).
+>
+> It checks [required members, document identity, previews, and the response artifact identity](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/prism-design/src/archive.ts#L54-L88) before storage.
 
 ## What Is in the Baseline Bundle
 
@@ -969,7 +1079,9 @@ was approved. The approval and active architecture binding supply that authority
 
 > **Contract evidence — archive format**
 >
-> [The archive assembler builds the manifest, checksum document, canonical JSON, and final bundle digest](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/src/baseline-archive.ts#L1-L92).
+> The archive contract defines [profiles, safe paths, and canonical checksum encoding](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/contracts/prism/v1/src/baseline-archive.ts#L1-L54).
+>
+> Its assembler [validates members, builds metadata, and returns the bundle digest and bytes](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/contracts/prism/v1/src/baseline-archive.ts#L56-L92).
 
 ## Safe Recovery Procedures
 
@@ -1046,9 +1158,9 @@ directory-sync steps before it acknowledges an object.
 
 > **Source evidence — durable artifacts**
 >
-> [The artifact store verifies regular files and content digests on every read](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/artifacts.ts#L20-L29).
+> [The artifact store verifies regular files and content digests on every read](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/storage/artifacts.ts#L20-L29).
 >
-> [Artifact publication uses a private pending file, file sync, non-replacing link, and directory sync](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/storage/artifacts.ts#L39-L67).
+> [Artifact publication uses a private pending file, file sync, non-replacing link, and directory sync](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/storage/artifacts.ts#L39-L67).
 
 ## Diagnosis Map
 
@@ -1078,32 +1190,11 @@ Do not claim metrics or trace coverage that is not present.
 
 ## Backup, Restore, and Removal
 
-The canonical recovery group contains at least:
-
-- PostgreSQL data;
-- the artifact PVC;
-- Prism runtime and database Secret values;
-- external OpenClaw, bundle-reader, and optional product-authority credentials;
-- native worker ownership and journal state required by the selected host policy.
-
-Database rows and artifact bytes must match.
-A database restore without its artifact generation can leave valid references to
-missing bytes. An artifact restore without its database generation can leave bytes
-that have no authoritative reference.
-
-The chart schedules local backup and proof jobs, but local PVC backups are not an
-independent off-host copy. Retention limits also do not create automatic expiry.
-The operator must provide and verify the off-host copy and credential recovery set.
-
-To remove only Prism workloads while retaining data and Secrets:
-
-```bash
-./scripts/deploy.sh teardown-prism
-```
-
-Use `teardown-all` only for a disposable environment and only after its destructive
-confirmation. The artifact and backup PVCs have Helm keep policy, but namespace
-deletion can still remove namespaced storage objects according to cluster policy.
+Use the [canonical backup and restore procedure](recovery.md#prism-restore) for
+the matched database-and-artifact group and its same-server-only proof boundary.
+Use the [canonical decommission procedure](maintenance.md#canonical-decommission-procedure)
+for workload, data, access, credential, and external-resource removal. This
+section defines no second backup, restore, retention, or teardown procedure.
 
 ## Local Development and Verification
 
@@ -1117,16 +1208,42 @@ Prepare these tools before you treat a local result as complete:
 | OpenSSL | Provider-cancellation and product-controller tests create temporary local certificates. |
 | Compatible Chromium binaries | Studio and the mobile-editor and preview-isolation spikes use Playwright. |
 
-Install the root and Prism spike dependencies with the maintained bootstrap:
+First complete the canonical
+[Locked Dependency Installation](quickstart.md#locked-dependency-installation).
+Use a disposable checkout in which the workspace owner permits replacement of
+all five dependency trees: root `node_modules` plus `node_modules` under
+`puck-adapter`, `mobile-editor`, `preview-isolation`, and `postgres-retrieval`.
+Set `PRISM_BOOTSTRAP_EVIDENCE_DIR` to the access-restricted evidence directory
+created by that procedure. Then install the root and Prism spike dependencies
+with the maintained bootstrap:
 
 ```bash
-npm run bootstrap:prism:tests
+sha256sum package-lock.json spikes/prism/*/package-lock.json \
+  > "$PRISM_BOOTSTRAP_EVIDENCE_DIR/prism-lockfiles-before.sha256"
+set +e
+npm run bootstrap:prism:tests \
+  > "$PRISM_BOOTSTRAP_EVIDENCE_DIR/prism-bootstrap.stdout.txt" \
+  2> "$PRISM_BOOTSTRAP_EVIDENCE_DIR/prism-bootstrap.stderr.txt"
+prism_bootstrap_status=$?
+set -e
+printf '%s\n' "$prism_bootstrap_status" \
+  > "$PRISM_BOOTSTRAP_EVIDENCE_DIR/prism-bootstrap.exit-status.txt"
+test "$prism_bootstrap_status" -eq 0
+sha256sum --check "$PRISM_BOOTSTRAP_EVIDENCE_DIR/prism-lockfiles-before.sha256"
+test -d node_modules
+for package in puck-adapter mobile-editor preview-isolation postgres-retrieval; do
+  test -d "spikes/prism/$package/node_modules"
+done
 ```
 
 The script uses `npm ci`, includes development dependencies, disables package
 scripts, and installs the four Prism spike packages. Because it uses
 `--ignore-scripts`, it does not install browser binaries. It also does not
 install Helm, OpenSSL, or operating-system browser libraries.
+Retain the five lockfile digests, sanitized bootstrap output, exit status, and
+directory observations. Apply the canonical checkout-owner cleanup to all five
+installed trees; never delete a path whose ownership or disposability is
+unproven.
 
 After the bootstrap, install Chromium through each package's local Playwright
 version if the machine does not already have the matching cached browser:
@@ -1169,11 +1286,12 @@ and retained output for each live acceptance.
 
 > **Test evidence**
 >
-> [Root scripts keep focused, repository, native, and live Prism gates separate](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/package.json#L28-L41).
+> [The bootstrap installs deterministic dependencies for the root and four spike packages](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/bootstrap-prism-tests.sh#L1-L8).
 >
-> [Deployment and production Prism checks remain separate from local package tests](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/package.json#L213-L226).
->
-> [The bootstrap installs deterministic dependencies for the root and four spike packages](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/scripts/bootstrap-prism-tests.sh#L1-L8).
+> The command table above is an operator invocation map, not pinned source
+> evidence. The guide deliberately does not cite `package.json`: documentation
+> command registration changes in the same change set, so using it as the
+> reviewed source revision would create a circular final-commit pin.
 
 ## Implemented, Environment-Dependent, and Not an Operator Surface
 
@@ -1188,7 +1306,7 @@ and retained output for each live acceptance.
 | Corpus public-web acquisition | Acquisition code exists, but Control rejects `public-web` until a source policy is approved | Do not present public-web ingestion as an enabled operator feature. |
 | Ingestion service | Implemented but disabled by default | Enable only with explicit resource sizing and source policy. |
 | Browser archive download in Studio | Not implemented as a user action | Use the Nova governed handoff or an authorized artifact client. |
-| Automatic Nova resume after Studio approval | Not implemented by design | Submit the separate authenticated signal. |
+| Automatic Nova resume after Studio approval | Not implemented by design | Submit the separate unsigned signal through the restricted Nova CLI path. |
 | `toBusterPlan` and `toForgeAssignments` handoff helpers | Implemented and tested as declarative conversion helpers; no maintained production caller is present | Do not claim that they apply Buster manifests, filesystem access, or module assignments. |
 | Dedicated Prism metrics and distributed tracing endpoint | Not implemented | Use probes, logs, durable state, journals, and artifacts. |
 | Horizontal Prism worker scaling | Not the current native deployment model | The current native worker is one Recreate replica bound to one host policy. |
@@ -1197,7 +1315,7 @@ The pipeline helper limit is important. The helpers return data structures only.
 Their tests prove conversion and rejection rules, not an installed downstream
 deployment.
 
-> [The handoff helpers create a visual-plan fragment and read-only assignment declarations](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/pipeline-adapter/index.ts#L1-L57).
+> [The handoff helpers create a visual-plan fragment and read-only assignment declarations](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/prism/pipeline-adapter/index.ts#L1-L57).
 
 ## Developer Routing
 

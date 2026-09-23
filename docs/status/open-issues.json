@@ -38,7 +38,7 @@
       "remaining_work": [
         "Integrate durable attempt/claim-bound local execution ownership across Core and Buster, including provider work, parent capability execution, browser/command children, adapters, evidence and finalization.",
         "Define aggregate measurement and hard budget enforcement. Distinguish cumulative CPU from CPU rate and processes from cgroup tasks. Required missing observations must fail. Declare remote BuildKit/Kubernetes work separately.",
-        "Preserve retained fixtures through durable ownership transfer, fences and crash recovery; coordinate with PCR-BUSTER-ENGINE-004.",
+        "Preserve retained fixtures through durable ownership transfer, fences and crash recovery; coordinate with the restarted-job workspace recovery issue in this register.",
         "Connect the actual Buster attempt host, restricted role-specific launch policy/broker and durable fixture lifetime to the runner. Keep broker and capability work inside the attempt scope. After the verified cutover remove the superseded executable runner, file-capability launch and sampling paths; retain no executable fallback."
       ],
       "reproduction": [
@@ -57,8 +57,8 @@
         "PCR-BUSTER-ENGINE-004"
       ],
       "evidence": {
-        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
-        "prior_verification": "No execution occurred during the recorded source inspection.",
+        "assessment": "The pinned implementation establishes the ownership gap. No test rerun or live environment result is available.",
+        "prior_verification": "No execution result is available for this evidence boundary.",
         "implementation_commit": null
       },
       "sources": [
@@ -156,8 +156,8 @@
         "PCR-BUSTER-ENGINE-001"
       ],
       "evidence": {
-        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
-        "prior_verification": "teilweise; Buster hält jetzt sowohl fehlgeschlagene dauerhafte Endstatusschreibung als auch tatsächliche Statuslesefehler als fatalen Dienstfehler fest; beide Ursachen bleiben erhalten. Shutdown wartet laufende Admission. Echte Quoten-, Sperr- und Korruptionsfälle unabhängig7/7; Root6/6 und Typprüfung bestanden. Daten bleiben unverändert erhalten.",
+        "assessment": "The pinned implementation establishes the remaining quiescence gap. Local checks cover only the bounded behavior described below; no live environment result is available.",
+        "prior_verification": "Partial. Buster records both a failed durable terminal-status write and an actual status-read failure as fatal service errors, preserving both causes. Shutdown waits for active admission work. The independent quota, lock and corruption cases passed 7 of 7 checks; the root cases passed 6 of 6 checks and the type check passed. Data remains unchanged.",
         "implementation_commit": "550eb948ec8766b38e8c8d4ccb88a1fdab28e61a",
         "superseded_results": [
           "Two original corrupt-status-store red runs produced SyntaxError while readiness stayed BUSTER_READY and shutdown fulfilled. Corrupt bytes were preserved; nativeProviderExecuted=false.",
@@ -248,7 +248,7 @@
       "live_validation": "Original local store/process tests can close this implementation scope. Cleanup of real user data remains a separate operational action.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
+        "assessment": "The pinned implementation establishes the remaining connected-retirement gap. No new test rerun or live environment result is available.",
         "prior_verification": "Partial: telemetry, admission and imported attempt-result copies were checked with actual quota release and preserved replay. Independent attempt-v2 checks: 19/19. Integrated root checks: 45/45, no skips. Complete retention across the remaining stores and references remains open.",
         "implementation_commit": "27315faad862f71df940ed32bc4e5a98eca72e0d"
       },
@@ -333,7 +333,7 @@
       "live_validation": "Complete isolated image/browser tests are required. Deployment of verified output digests and ARM64 live acceptance remain separate.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
+        "assessment": "The pinned build inputs establish the reproducibility gap. No test rerun or live environment result is available.",
         "prior_verification": "Partial fix locally verified; the complete finding remains open",
         "implementation_commit": "2ed91ef75e4c18b0a6b95b6d2850739b3c38ebf4"
       },
@@ -405,8 +405,8 @@
       "live_validation": "Configuration and documentation work remains. Approval of actual production configuration is separate.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
-        "prior_verification": "No execution occurred during the recorded source inspection.",
+        "assessment": "The pinned examples establish the configuration-separation gap. No test rerun or live environment result is available.",
+        "prior_verification": "No execution result is available for this evidence boundary.",
         "implementation_commit": null
       },
       "sources": [
@@ -463,8 +463,8 @@
       "live_validation": "Real Tailnet clients and actual external ACL/OAuth configuration are required. Rendering alone does not close this finding.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
-        "prior_verification": "No execution occurred during the recorded source inspection.",
+        "assessment": "The pinned implementation establishes the external-access and recovery gap. No test rerun or live environment result is available.",
+        "prior_verification": "No execution result is available for this evidence boundary.",
         "implementation_commit": null
       },
       "sources": [
@@ -528,8 +528,8 @@
       "live_validation": "Isolated native security tests on the pinned image are required; accept the actual host/container boundary separately.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
-        "prior_verification": "No execution occurred during the recorded source inspection.",
+        "assessment": "The pinned service definition establishes the process-boundary gap. No test rerun or live environment result is available.",
+        "prior_verification": "No execution result is available for this evidence boundary.",
         "implementation_commit": null
       },
       "sources": [
@@ -594,8 +594,8 @@
       "live_validation": "An isolated empty host and real restore media are required. The current repository does not provision this cluster; the future automation and restore exercise must provide the evidence.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
-        "prior_verification": "No execution occurred during the recorded source inspection.",
+        "assessment": "The pinned automation establishes the bootstrap and restore gap. No test rerun or live environment result is available.",
+        "prior_verification": "No execution result is available for this evidence boundary.",
         "implementation_commit": null
       },
       "sources": [
@@ -660,8 +660,8 @@
       "live_validation": "Actual CNI migration and negative network/recovery acceptance are pending. This register does not authorize CNI/policy changes.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
-        "prior_verification": "No execution occurred during the recorded source inspection.",
+        "assessment": "The pinned cluster configuration establishes the cutover and rollback gap. No test rerun or live environment result is available.",
+        "prior_verification": "No execution result is available for this evidence boundary.",
         "implementation_commit": null
       },
       "sources": [
@@ -725,8 +725,8 @@
       "live_validation": "Actual SPIRE/Envoy/worker execution across certificate expiry is required. Rendering alone does not close this finding.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
-        "prior_verification": "No execution occurred during the recorded source inspection.",
+        "assessment": "The pinned SPIRE configuration establishes the persistence and recovery gap. No test rerun or live environment result is available.",
+        "prior_verification": "No execution result is available for this evidence boundary.",
         "implementation_commit": null
       },
       "sources": [
@@ -791,8 +791,8 @@
       "live_validation": "Real scheduling, load and disk measurements are required. Requests alone do not prove free host resources.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
-        "prior_verification": "No execution occurred during the recorded source inspection.",
+        "assessment": "The pinned capacity inputs establish the combined-budget gap. No test rerun or live environment result is available.",
+        "prior_verification": "No execution result is available for this evidence boundary.",
         "implementation_commit": null
       },
       "sources": [
@@ -859,8 +859,8 @@
       "live_validation": "Real SQL/image/cross-store/host recovery remains pending. A weekly same-server SQL smoke check is not host-loss evidence.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
-        "prior_verification": "Teilfix lokal geprüft: 7 Dateisystem-/Prozess-/Helmtests; DB-Kommandos explizite Fixtures. Vollständige Recovery noch unvollständig.",
+        "assessment": "The pinned recovery paths establish the remaining application-recovery gap. Local checks cover only the bounded behavior described below; no live environment result is available.",
+        "prior_verification": "A partial fix was verified locally with seven filesystem, process and Helm tests. Database commands use explicit fixtures. Complete recovery remains unavailable.",
         "implementation_commit": null,
         "superseded_results": [
           "Initial ArtifactStore directory-fsync EIO occurred before backup behavior: four failures; only lock/deadline and Helm credential-isolation cases passed.",
@@ -954,8 +954,8 @@
       "live_validation": "Independent recovery and real Codex pairing remain pending; this documentation introduces no permission expansion.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Source inspection only; no test rerun and no live acceptance performed.",
-        "prior_verification": "No execution occurred during the recorded source inspection.",
+        "assessment": "The pinned recovery paths establish the independent-operator gap. No test rerun or live environment result is available.",
+        "prior_verification": "No execution result is available for this evidence boundary.",
         "implementation_commit": null
       },
       "sources": [
@@ -1003,7 +1003,7 @@
         "Selected runtime/Ops images",
         "Trivy"
       ],
-      "current_state": "Issue #7 is open (read 2026-09-15; updated 2026-09-15T10:28:49Z). Job 104344339828 of run 34957931173 used commit 22fa7cfa6a14cb9fed49a9eb2496d7ab3b64a9d5: versions check passed, scan step failed, release-security-reports upload passed. Source inspection did not include log or report contents. Vulnerability, scanner error, and missing release selection remain unresolved possibilities.",
+      "current_state": "Issue #7 is open (read 2026-09-15; updated 2026-09-15T10:28:49Z). Job 104344339828 of run 34957931173 used commit 22fa7cfa6a14cb9fed49a9eb2496d7ab3b64a9d5: versions check passed, scan step failed, and the release-security-reports upload passed. Log and scanner report contents are not available in this evidence set. Vulnerability, scanner error and missing release selection remain unresolved possibilities.",
       "remaining_work": [
         "Inspect the linked scan logs and uploaded release-security-reports artifact, then record the actual error and affected immutable image references.",
         "Fix the evidenced cause: complete release selection, scanner/registry error or reviewed dependency/image update. Do not weaken the gate to manufacture a pass."
@@ -1060,7 +1060,7 @@
         "charts/gitops/files/application-health.lua",
         "Runtime app-of-apps"
       ],
-      "current_state": "Source inspection identified the mismatch in integrated main. Existing health tests cover exact commit pins, stale-operation rejection and separate observed platform mode, but contain no positive continuous main-with-resolved-SHA case.",
+      "current_state": "The pinned implementation compares the configured branch name with resolved commit IDs. Existing health tests cover exact commit pins, stale-operation rejection and separate observed platform mode, but contain no positive continuous main-with-resolved-SHA case.",
       "remaining_work": [
         "Bind the selected and actually synchronized immutable revision consistently while continuous manifests track main.",
         "Preserve stale-operation, source-path, destination, error and drift checks. Removing revision comparisons or switching runtime children to observed mode is not sufficient."
@@ -1127,7 +1127,7 @@
       ],
       "reproduction": [
         "Inspect docs/architecture/prism-preference-learning-v1.md. V1 excludes automatic time decay in the opening scope and time-handling section. Compare skills/prism/preferences/index.ts projectPreferences and skills/prism/control/preference-snapshot.ts.",
-        "Use one valid selected event with a single trait and evaluate the original projector at its last evidence time and 180 days later. Current arithmetic yields score1/effectiveScore1, then score1/effectiveScore0.5. Preserve user and project context with all required event fields. The source inspection did not execute the probe.",
+        "Use one valid selected event with a single trait and evaluate the original projector at its last evidence time and 180 days later. Current arithmetic yields score1/effectiveScore1, then score1/effectiveScore0.5. Preserve user and project context with all required event fields. No executed probe is available in this evidence set.",
         "Existing regression entry points: skills/prism/tests/quality.test.mts (preference projections decay and remain retractable) and skills/prism/tests/control-generation-http.test.mts (persisted decay policy identity)."
       ],
       "acceptance_criteria": [
@@ -1188,7 +1188,7 @@
         "Prism agent prompt",
         "Prism installation preflight"
       ],
-      "current_state": "A documentation verification run reproduced the failure on 2026-09-16. The assertion reads agent-bridge.mjs directly and does not follow its AgentJobRunner and prompt-module boundary. The documentation reports the failed check and does not claim Prism preflight success.",
+      "current_state": "The deployment verification command failed on 2026-09-16. The assertion reads agent-bridge.mjs directly and does not follow its AgentJobRunner and prompt-module boundary. Prism preflight therefore remains unsuccessful.",
       "remaining_work": [
         "Update the source check to inspect the active prompt owner and its wiring from the bridge without duplicating production prompt text in the test.",
         "Keep the negative check that rejects project-checkout contract paths and preserve all unrelated deployment assertions.",
@@ -1206,7 +1206,7 @@
       "live_validation": "This check can close through source verification. It does not establish a successful Prism deployment or replace the separate live acceptance gates.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Reproduced during documentation verification; no product or test implementation changed.",
+        "assessment": "The deployment verification command reproduced the stale assertion. No successful Prism deployment is claimed.",
         "prior_verification": "npm run verify:prism:deploy-script exited with status 1 on 2026-09-16 at the canonical-schema assertion."
       },
       "sources": [
@@ -1263,7 +1263,7 @@
       "live_validation": "This source-boundary issue can close with local source and contract verification. It does not establish runtime activation or a live pipeline execution.",
       "dependencies": [],
       "evidence": {
-        "assessment": "A focused source inspection reproduced the issue. It compared documentation, source, and verification without changing product or test implementation.",
+        "assessment": "The boundary verification command reproduced the package-root import failure. No successful runtime activation is claimed.",
         "prior_verification": "The boundary command exited with status 1 on 2026-09-16 after the required generated OpenClaw contract became available."
       },
       "sources": [
@@ -1321,7 +1321,7 @@
       "dependencies": [],
       "evidence": {
         "assessment": "Independent source trace and local recovery exercises; no reconciliation implementation was added.",
-        "prior_verification": "The review confirmed that normal, retry and remediation paths preserve the recovery stop."
+        "prior_verification": "Normal, retry and remediation paths all preserve the recovery stop."
       },
       "sources": [
         {
@@ -1361,7 +1361,7 @@
       "reproduction": [
         "Run node tests/verification/contracts/check-pipeline-test-plan-runner.mts.",
         "Build the plugin sandbox, then run node tests/verification/contracts/check-pipeline-report-adapter-runtime.mts and npm run verify:runtime-packaging:isolation.",
-        "Run npm test --prefix skills/common/plugins/transport-publisher and compare the result with retained commands C023, C025, C029 and C079."
+        "Run npm test --prefix skills/common/plugins/transport-publisher and compare the result with the retained test-plan, report-adapter, runtime-isolation and transport-publisher outputs."
       ],
       "acceptance_criteria": [
         "Each command exits with status zero in its documented supported environment, or an approved host restriction replaces the unsupported expectation.",
@@ -1372,14 +1372,14 @@
       "dependencies": [],
       "evidence": {
         "assessment": "Independent command execution with exact output retained; root causes remain unconfirmed.",
-        "prior_verification": "Commands C023, C025, C029 and C079 exited with status 1 on the recorded verification host."
+        "prior_verification": "The test-plan, report-adapter, runtime-isolation and transport-publisher commands each exited with status 1 on the recorded host."
       },
       "sources": [
         {
           "path": "docs/blueprint/AP08.10-results.json",
           "commit": "4ccb21b79cd45d205163692f43e4940e60e28a19",
           "url": "https://github.com/datrab/kubeclaw/blob/4ccb21b79cd45d205163692f43e4940e60e28a19/docs/blueprint/AP08.10-results.json",
-          "scope": "Commands C023, C025, C029 and C079 preserve the exact failures, environment and duration."
+          "scope": "The record preserves the exact failures, environment and duration for all four commands."
         },
         {
           "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",

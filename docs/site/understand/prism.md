@@ -238,7 +238,7 @@ pgvector, artifact storage, service identities and secrets, Worker Core,
 browser support for render and Studio checks, and the selected provider or
 external source path.
 
-A local contract test proves the contract at the inspected source revision.
+A local contract test proves the contract at the pinned source revision.
 It does not prove database migration, browser isolation, cgroup behavior,
 cluster identity, backup recovery, or an external provider. Each guide names
 the environment that its stronger checks require.

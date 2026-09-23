@@ -9,7 +9,7 @@ Last verified: 2026-09-17
 
 ## Purpose
 
-KubeClaw uses different evidence for different claims. A source inspection can
+KubeClaw uses different evidence for different claims. Static implementation evidence can
 confirm that code exists. A local test can confirm behavior in its test scope.
 Only a live exercise can confirm behavior in the selected running environment.
 

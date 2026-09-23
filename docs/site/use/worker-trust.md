@@ -1,150 +1,159 @@
 # Operate Worker Trust
 
-Status: implemented; live cluster execution pending
+Status: source-backed procedure; current Prism deployment verification fails and no fresh live cluster proof is claimed
 Audience: Kubernetes operator, security operator
-Owner: platform operations
+Owner: platform operations and workload-identity owner
 Evidence: scripts/deploy.sh; tests/verification/live/worker-trust-cluster-e2e.sh
-Applies to: current supported release
-Last verified: source checks on 2026-08-29
+Applies to: the exact selected release, SPIRE trust domain, and recorded cluster
+Last verified: 2026-09-21; the Prism preflight failed and no live cluster result is available
 
-## Objective
+## Purpose
 
-Deploy Worker Trust and prove its security properties on a real cluster.
+Prove that intended workload identities can use protected paths and unintended
+identities cannot. This page is the only canonical Worker Trust procedure.
 
-## Prerequisites
+## Canonical Worker Trust Procedure
+<!-- operator-task: worker-trust -->
 
-- Use the intended Kubernetes context.
-- Install `helm`, `kubectl`, `node`, and `npm`.
-- Deploy Nova, Buster, and Prism.
-- Keep SPIRE and the CSI driver ready.
-- Use authority to create temporary Jobs and ServiceAccounts.
-- Use authority to execute commands in protected pods.
+### Supported start state, version, location, and authority
 
-## Source Verification
+Start after the [canonical installation](install.md#canonical-install-and-preflight-procedure)
+has created the application, `spire-server`, and `spire-system` namespaces and
+deployed the exact selected Nova, Buster, and Prism workloads. Run commands from
+`<repository-root>` on the independent administration machine. SPIRE owns SVID
+issuance, the CSI driver owns socket delivery, Envoy owns peer authentication,
+application allowlists own authorization, and the selected source owns the
+expected identities and test path.
 
-1. Run the Worker Trust contract checks.
+Before any cluster command on this page, complete
+[Bind Cluster Authority](install.md#bind-cluster-authority). Keep the same bound
+shell for the whole trust exercise. Every raw `kubectl`, Helm, or
+`scripts/deploy.sh` command below must inherit its exported read-only
+`KUBECONFIG`; every shown `<context>` must equal `EXPECTED_CONTEXT`. Run
+`assert_cluster_binding` immediately before each command block. Stop on any
+mismatch and follow the binding section's recovery; never fall back to the
+default kubeconfig.
+
+No broad Kubernetes/SPIRE compatibility range is established. Record actual
+cluster, SPIRE chart, Envoy image, workload image, code-bundle, and trust-domain
+identities.
+
+### Preconditions
+
+- The explicit context and namespaces match the install record.
+- Independent cluster access works without the protected workloads.
+- SPIRE server persistence, agents, CSI driver, workload ServiceAccounts,
+  Envoy sidecars, and NetworkPolicies are present.
+- The operator can inspect Pods and execute the registered live test's temporary
+  Jobs and ServiceAccounts.
+- A cleanup owner and deadline exist for every temporary live-test resource.
+
+Stop if the trust domain, ServiceAccount, selected image, registration, or
+allowlist differs from the recorded release. Do not disable mTLS or broaden an
+allowlist to make a check pass.
+
+### 1. Verify source before cluster execution
+
+First complete the canonical
+[Locked Dependency Installation](quickstart.md#locked-dependency-installation)
+in the disposable checkout and retain its sanitized evidence.
 
 ```bash
 npm run verify:worker-core:trust
-```
-
-2. Run the Prism deployment checks.
-
-```bash
 npm run verify:prism:deploy-script
-```
-
-3. Run the deployment truth check.
-
-```bash
 node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
 ```
 
-Expected result: each command exits with status `0`.
+Expected observation is zero from each command. At source revision
+`1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`, the Prism command instead fails at
+the canonical-schema prompt assertion. Stop there and retain the output; do not
+claim the source preflight or Worker Trust live procedure passed. The tracked
+status is [tracked as an open deployment-check issue](../status/open-issues.md#prism-deployment-source-check-is-stale-after-prompt-ownership-moved).
 
-## Deployment
+### 2. Observe the installed identity chain
 
-1. Prepare namespaces and Secrets.
+After all source checks pass at a later source revision, capture the chain:
 
 ```bash
-./scripts/deploy.sh setup
+assert_cluster_binding
+kubectl --context "<context>" -n spire-server get pods -o wide
+kubectl --context "<context>" -n spire-system get pods,daemonset -o wide
+kubectl --context "<context>" -n "<namespace>" get \
+  deploy,pods,svc,serviceaccount,networkpolicy -o wide
+./scripts/deploy.sh smoke-agent nova
+./scripts/deploy.sh smoke-agent buster
+./scripts/deploy.sh prism-smoke
 ```
 
-2. Deploy SPIRE and shared infrastructure.
+Expected observation: SPIRE server and agents are ready, CSI-backed workloads
+are ready, protected Services have endpoints, and component smoke exits zero.
+These observations prove dependencies, not peer authorization.
+
+### 3. Execute positive and negative paths
 
 ```bash
-./scripts/deploy.sh infra
-```
-
-3. Deploy Nova and Buster.
-
-```bash
-./scripts/deploy.sh agents
-```
-
-4. Deploy Prism.
-
-```bash
-./scripts/deploy.sh prism
-```
-
-Expected result: all protected Deployments become ready.
-
-## Live Proof
-
-1. Set the base namespace.
-
-```bash
-export NAMESPACE="kubeclaw"
-```
-
-2. Set the active Prism namespace.
-
-```bash
-export PRISM_NAMESPACE="kubeclaw"
-```
-
-3. Confirm the current context.
-
-```bash
-kubectl config current-context
-```
-
-4. Run the complete live proof.
-
-```bash
+assert_cluster_binding
+export NAMESPACE="<namespace>"
+export PRISM_NAMESPACE="<prism-namespace>"
+kubectl --context "<context>" config current-context
 npm run verify:worker-core:trust:live
 ```
 
-Expected result: the command exits with status `0` and prints final JSON evidence.
+Expected final output is JSON evidence and exit zero. It must contain successful
+Nova-to-Buster, Nova-to-Prism, Prism-Control-to-Worker,
+Prism-Worker-to-Control, and source-signing paths. It must also contain denied
+anonymous Buster and Prism requests, wrong-SVID requests, and forged
+forwarded-certificate headers. A positive result without its paired denial is
+incomplete.
 
-## Proven Positive Paths
+This command creates temporary live-test resources. Inspect its final cleanup
+result and verify no uniquely named test Job or ServiceAccount remains. If the
+command is interrupted, list the exact resources by its retained identity and
+remove only resources owned by that execution; do not use a broad label shared
+with production workloads.
 
-The command checks these real paths:
+### Failure distinction
 
-- Nova to Buster.
-- Nova to Prism control.
-- Prism control to Prism worker.
-- Prism worker to Prism control.
-- Nova source signing and Buster execution.
+Check in this order:
 
-## Proven Negative Paths
+1. context and namespace;
+2. SPIRE server persistence and agents;
+3. CSI socket mount;
+4. Envoy bootstrap, readiness, and loaded SVID;
+5. Service endpoint and target port;
+6. NetworkPolicy in both directions;
+7. application identity allowlist;
+8. source-signing key configuration;
+9. test cleanup.
 
-The command requires these attempts to fail:
+A timeout before TLS is reachability. A TLS/SVID error is identity issuance or
+peer verification. An authenticated denial is the application allowlist. A
+successful wrong-identity request is a security incident: restrict the owning
+Service, retain evidence, and stop admission.
 
-- Direct Buster access without a client SVID.
-- Direct Prism access without a client SVID.
-- Buster access with a wrong SVID.
-- Prism access with a wrong SVID.
-- Access with a forged forwarded-certificate header.
+### Recovery, rotation boundary, and evidence
 
-The live proof uses real SPIRE identities and real deployed proxies. It does not
-use a test-double server or fabricated completion result.
+Repair only the first failed layer, then rerun component readiness and both
+positive and negative paths. Restore the previous exact trust configuration
+before revocation when a planned change fails. Complete timed SVID/CA expiry and
+independent SPIRE restore are not established, and the source-attestation
+Secret supports one active keypair; its rotation requires a maintenance window.
+Use the [canonical rotation procedure](maintenance.md#canonical-rotation-procedure)
+and stop if an authority-specific issuance, overlap, revocation, or restore
+step is absent.
 
-## Failure Order
+Retain source and release identities, context, trust domain, ServiceAccounts and
+expected SPIFFE IDs, non-secret Secret metadata, source-check output, component
+readiness, positive and negative live JSON, failure-layer diagnosis, recovery,
+cleanup, and any open boundary. Never retain private keys, SVID key material, or
+Secret values.
 
-Check these layers in order:
+## Source Authority
 
-1. Kubernetes context.
-2. Namespace names.
-3. SPIFFE CSI driver.
-4. SPIRE server and agents.
-5. CSI socket mount.
-6. Envoy readiness.
-7. Loaded SVID.
-8. Service target port.
-9. NetworkPolicy in both directions.
-10. Application identity allowlist.
-11. Ed25519 source key configuration.
-
-## Important Limits
-
-- The live command does not wait for a timed SVID rotation.
-- Prism results do not have durable Ed25519 provenance today.
-- The source-attestation Secret supports one active keypair.
-- Ed25519 rotation needs a maintenance window.
-
-## Detailed Runbook
-
-Use `docs/operations/worker-trust-runbook.md` for exact commands, error codes,
-rotation steps, cleanup, and recovery.
+The live command is dispatched by
+[`cmd_worker_trust_e2e`](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/deploy.sh#L2672-L2687).
+The deployment health program checks the mounted code bundle, gateway, Redis,
+and drain/startup state
+([implementation](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/kubeclaw/templates/deployment.yaml#L880-L915)),
+while the workload defines separate startup, readiness, and liveness probes
+([probe wiring](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/kubeclaw/templates/deployment.yaml#L1479-L1513)).

@@ -62,9 +62,10 @@ Confirm these facts before either path:
 - Nova can authenticate to the Buster endpoint; and
 - Buster has enough state, result, archive, and evidence capacity.
 
-For a repository proof, also confirm that dependencies are installed with
-`npm ci`, the checkout is clean, and the current Node.js version satisfies
-`package.json`. The vertical proof also needs a C compiler, GNU `flock`,
+For a repository proof, first complete the canonical
+[Locked Dependency Installation](../quickstart.md#locked-dependency-installation),
+confirm the checkout is clean, and confirm that the current Node.js version
+satisfies `package.json`. The vertical proof also needs a C compiler, GNU `flock`,
 `/usr/bin/tar`, and permission to start child processes.
 
 Stop before submission when resolution fails, the source revision is not the
@@ -244,7 +245,8 @@ checks the Nova decision.
 npm run verify:test-gate:phase8
 ```
 
-Run this command from the repository root after `npm ci`. It creates its own
+Run this command from the repository root after completing the linked locked
+dependency installation. It creates its own
 temporary repository, ports, state, source keys, and service. It does not need
 a deployed Nova or Buster instance. Stop if `plugin-system:sandbox:build`
 fails. Do not treat a smaller registry or resolver check as execution evidence.
@@ -322,7 +324,7 @@ expiry. Retain the operation and job identities, plan and result digests,
 attempt errors, evidence receipts, cleanup result, and lease expiry. Do not call
 a test run complete while cleanup or retention is unknown.
 
-## Deployment Acceptance Exercise: EXEC-PLATFORM-SUCCESS
+## Deployment Success Exercise
 
 This is the maintained healthy deployment exercise. It executes one
 operator-supplied `nova-project.v2` descriptor through the project CLI. The
@@ -471,9 +473,14 @@ NODE
 
 Run deployment and dependency preflights before the project. They prove only
 their named boundaries. In particular, `prism-smoke` is not a stage in this
-project run.
+project run. Use the bound administration shell from
+[Bind Cluster Authority](../install.md#bind-cluster-authority); keep its
+read-only `KUBECONFIG`, expected context, API server, and kube-system UID in the
+same shell. Stop on a binding mismatch and never fall back to the default
+kubeconfig.
 
 ```bash
+assert_cluster_binding
 kubectl config current-context | tee "$EVIDENCE_DIR/context.txt"
 kubectl -n "$NAMESPACE" get deploy,statefulset,pods,svc,pvc -o wide \
   | tee "$EVIDENCE_DIR/platform-objects.txt"

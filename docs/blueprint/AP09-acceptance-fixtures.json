@@ -78,18 +78,18 @@
     {
       "id": "READER-OPERATOR-03", "persona": "operator", "startPath": "docs/site/README.md",
       "acceptanceIds": ["A98-07", "A98-13", "A913-04", "A913-05"],
-      "objective": "Create a Prism backup, restore its database proof into the documented isolated target, verify it through the documented reader, retain the evidence, and clean up only the temporary target.",
-      "taskInput": "A clean checkout at reviewed_revision and a deployed Prism test namespace with the registered backup fixture. The source service stays online, and the participant must use the supported component-level proof without claiming a complete platform restore.",
-      "supportState": { "status": "supported-component-scope", "declaredAtFixtureRevision": true, "authorities": ["docs/site/use/recovery.md#prism-restore"] },
-      "fixturePaths": [], "injectedFaultId": "RESTORE-PRISM-COMPONENT-PROOF",
+      "objective": "Distinguish executable LiteLLM and Prism backup checks from their missing isolated application-restore paths, retain the available evidence, and stop before unsupported restore or cutover.",
+      "taskInput": "A clean checkout at reviewed_revision and a deployed test namespace with the registered LiteLLM and Prism backup resources. The source services stay online. Determine exactly which backup, verification, native-test, and same-server proof steps are available and whether either component has a self-contained isolated operator restore.",
+      "supportState": { "status": "unsupported-boundary", "declaredAtFixtureRevision": true, "authorities": ["docs/site/use/recovery.md#single-service-restore", "docs/site/use/recovery.md#prism-restore"] },
+      "fixturePaths": [], "injectedFaultId": "RESTORE-COMPONENT-OPERATOR-BOUNDARY",
       "requiredOutcomes": [
-        { "id": "backup-group-verified", "passCondition": "The participant creates one matched immutable database-and-artifact backup group and verifies its recorded digests before restore." },
-        { "id": "isolated-restore-executed", "passCondition": "The documented restore-proof command exits zero against a temporary isolated database and never overwrites the source database." },
-        { "id": "application-reader-verifies", "passCondition": "The participant runs the documented Prism reader check against the restored target and records the observed project and revision identities." },
-        { "id": "scope-and-cleanup-correct", "passCondition": "The participant states the exact unproved platform scope, retains the required evidence, and removes only the temporary restore target after verification." }
+        { "id": "backup-checks-separated", "passCondition": "The participant identifies the executable LiteLLM backup/verify path and Prism matched-group backup/verification without treating either as application recovery." },
+        { "id": "litellm-boundary-correct", "passCondition": "The participant explains that the native LiteLLM test provisions both servers and roles itself and does not supply the operator target, immutable application launch, API/model/budget request checks, cutover, or rollback." },
+        { "id": "prism-boundary-correct", "passCondition": "The participant identifies the Prism database proof as a temporary database on the same PostgreSQL service, not an isolated target or original-application-reader proof." },
+        { "id": "safe-stop-and-evidence", "passCondition": "The participant stops before unsupported restore or cutover, retains source and backup identities plus logs and checksums, and removes only uniquely named manual Jobs." }
       ],
-      "allowedAssistance": "Only docs/site, the registered backup fixture, and tools named by the recovery page. The facilitator can reset the namespace but cannot select or explain a command.",
-      "failureThreshold": "FAIL after a missing digest check, mutation of the source database, absent reader verification, false platform-restore claim, unsafe cleanup, forbidden source, or 120 minutes without completion.",
+      "allowedAssistance": "Only docs/site, the registered backup resources, and tools named by the recovery page. The facilitator can reset the namespace but cannot select or explain a command.",
+      "failureThreshold": "FAIL after a false isolated-restore or application-reader claim, mutation of a source service, unsupported cutover, unsafe cleanup, forbidden source, or 120 minutes without completion.",
       "participantRequirements": { "freshContext": true, "priorContribution": false, "requiredRole": "operator" },
       "forbiddenSources": ["package-readme", "review-file", "migration-note", "chat-context"]
     },

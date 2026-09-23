@@ -6,7 +6,7 @@ Owner: platform security and runtime maintainers
 Evidence: my-values/infra/spire-values.yaml; charts/kubeclaw/templates/configmap-worker-trust.yaml; charts/prism/templates/networkpolicy.yaml; skills/nova/core/execution/authorization.ts; my-values/setup-secrets.sh; skills/nova/core/test-gates/source-snapshot.ts
 Evidence revision: `32b02816cc19cc8865a45b221b8b6ca28e99e8fb`
 Applies to: the current supported release and its documented lab deployment
-Last verified: source inspection on 2026-09-20
+Last verified: 2026-09-20
 
 ## Purpose
 

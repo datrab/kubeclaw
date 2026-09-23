@@ -5,7 +5,7 @@ Audience: operator, plugin author, architecture reader
 Owner: platform-architecture
 Evidence: packaging/runtime/roles/nova.json; packaging/runtime/roles/buster.json; packaging/runtime/roles/prism.json
 Applies to: current repository roles and documented product boundaries
-Last verified: 2026-09-17, source and documentation checks only
+Last verified: 2026-09-17; no live environment result is available
 
 ## Where to find current work
 

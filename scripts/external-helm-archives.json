@@ -1,0 +1,102 @@
+{
+  "charts": {
+    "alloy": {
+      "chart": "alloy",
+      "path": "scripts/vendor/external-helm-charts/cdd1ec39f99c3c506d5b521156d72236ea143c089f50da6b64398f831734829c.tgz",
+      "repository": "https://grafana.github.io/helm-charts",
+      "sha256": "cdd1ec39f99c3c506d5b521156d72236ea143c089f50da6b64398f831734829c",
+      "size": 32237,
+      "version": "1.12.1"
+    },
+    "argocd": {
+      "chart": "argo-cd",
+      "path": "scripts/vendor/external-helm-charts/8a62022c833d2c48d2a5dae12d2b0bb5da05ae983657d7441b7bd2726d28d473.tgz",
+      "repository": "https://argoproj.github.io/argo-helm",
+      "sha256": "8a62022c833d2c48d2a5dae12d2b0bb5da05ae983657d7441b7bd2726d28d473",
+      "size": 235805,
+      "version": "10.8.0"
+    },
+    "cilium": {
+      "chart": "cilium",
+      "path": "scripts/vendor/external-helm-charts/06210eef7c23d15f7699c79e2fe3a1ec9c389024c5c5c006ea04022d322449a2.tgz",
+      "repository": "https://helm.cilium.io/",
+      "sha256": "06210eef7c23d15f7699c79e2fe3a1ec9c389024c5c5c006ea04022d322449a2",
+      "size": 212159,
+      "version": "1.20.1"
+    },
+    "csi": {
+      "chart": "csi-driver-smb",
+      "path": "scripts/vendor/external-helm-charts/7ca21bd6ef911cdb3a13102e8a13eb8ba0ca8ede7cab08655b537c2da7f4b89f.tgz",
+      "repository": "https://kubernetes-csi.github.io/csi-driver-smb",
+      "sha256": "7ca21bd6ef911cdb3a13102e8a13eb8ba0ca8ede7cab08655b537c2da7f4b89f",
+      "size": 6246,
+      "version": "1.20.0"
+    },
+    "loki": {
+      "chart": "loki",
+      "path": "scripts/vendor/external-helm-charts/559201cb0542919206405caea864b33d4fa7426f35f47b2e2aca4b8a4aa93cd2.tgz",
+      "repository": "https://grafana-community.github.io/helm-charts",
+      "sha256": "559201cb0542919206405caea864b33d4fa7426f35f47b2e2aca4b8a4aa93cd2",
+      "size": 197469,
+      "version": "18.13.1"
+    },
+    "postgresql": {
+      "chart": "postgresql",
+      "path": "scripts/vendor/external-helm-charts/41214e361bb98acce40737ad4beba5d8294c94f9a19bcac98724aa427f1c5b32.tgz",
+      "repository": "registry-1.docker.io/bitnamicharts",
+      "sha256": "41214e361bb98acce40737ad4beba5d8294c94f9a19bcac98724aa427f1c5b32",
+      "size": 91043,
+      "version": "18.11.3"
+    },
+    "postgresqlDirect": {
+      "chart": "postgresql",
+      "path": "scripts/vendor/external-helm-charts/d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b.tgz",
+      "repository": "registry-1.docker.io/bitnamicharts",
+      "sha256": "d85028c045d06707a852d58be85b025ce338d6dc92751a9db31d26c28155be5b",
+      "size": 91047,
+      "version": "18.11.1"
+    },
+    "prometheus": {
+      "chart": "kube-prometheus-stack",
+      "path": "scripts/vendor/external-helm-charts/10d54f6984e5f97b2e96e64440c7c0c37af2ed1b17c1521fa6c0da3529bdeec1.tgz",
+      "repository": "https://prometheus-community.github.io/helm-charts",
+      "sha256": "10d54f6984e5f97b2e96e64440c7c0c37af2ed1b17c1521fa6c0da3529bdeec1",
+      "size": 932142,
+      "version": "91.4.0"
+    },
+    "promtail": {
+      "chart": "promtail",
+      "path": "scripts/vendor/external-helm-charts/12115103a3b94932473fb3873aa670a68da9504e2f323c03790257088b479d9f.tgz",
+      "repository": "https://grafana.github.io/helm-charts",
+      "sha256": "12115103a3b94932473fb3873aa670a68da9504e2f323c03790257088b479d9f",
+      "size": 17587,
+      "version": "6.17.1"
+    },
+    "redis": {
+      "chart": "redis",
+      "path": "scripts/vendor/external-helm-charts/74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386.tgz",
+      "repository": "registry-1.docker.io/bitnamicharts",
+      "sha256": "74bb9cfa3241fe401bd346c135427fe1e5a452483ffedf440038f0aae62ba386",
+      "size": 106156,
+      "version": "28.1.0"
+    },
+    "spire": {
+      "chart": "spire",
+      "path": "scripts/vendor/external-helm-charts/8e133a142915f4938328e2524f6262607e41f61e06f15cb06dc3d94f018be341.tgz",
+      "repository": "https://spiffe.github.io/helm-charts-hardened/",
+      "sha256": "8e133a142915f4938328e2524f6262607e41f61e06f15cb06dc3d94f018be341",
+      "size": 326483,
+      "version": "0.30.0"
+    },
+    "tailscale": {
+      "chart": "tailscale-operator",
+      "path": "scripts/vendor/external-helm-charts/c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a.tgz",
+      "repository": "https://pkgs.tailscale.com/helmcharts",
+      "sha256": "c2440014df04fdf1b67b53daa4290d7b878584cf4702f9b1b50f51ba64499a6a",
+      "size": 52585,
+      "version": "1.102.3"
+    }
+  },
+  "generatedBy": "scripts/vendor-external-helm-authorities.mjs --refresh",
+  "version": 1
+}

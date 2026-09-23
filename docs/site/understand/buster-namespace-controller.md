@@ -159,7 +159,7 @@ receive lease-local RBAC; the provider does not receive the controller token.
 > rejects an unlisted subject](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/cmd/buster-namespace-controller/main_test.go#L287-L304).
 > The linked test covers both outcomes. The command
 > `go test ./cmd/buster-namespace-controller/...` was unavailable during the
-> documentation verification on 2026-09-19 because this host has no `go`
+> on 2026-09-19 because this host has no `go`
 > executable.
 >
 > **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`

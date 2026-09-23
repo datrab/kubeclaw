@@ -11,8 +11,21 @@ import addFormats from 'ajv-formats';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const siteRoot = path.join(root, 'docs', 'site');
 const catalogueRoot = path.join(siteRoot, 'extend', 'plugin-catalogue');
+const operatorPluginPage = path.join(siteRoot, 'use', 'plugins.md');
+const operatorMatrixStart = '<!-- BEGIN GENERATED OPERATOR PLUGIN MATRIX -->';
+const operatorMatrixEnd = '<!-- END GENERATED OPERATOR PLUGIN MATRIX -->';
 const command = process.argv[2] ?? 'check';
 const errors = [];
+
+function markdownLinkTargets(text) {
+  return [...text.matchAll(/(?<!\\)\[(?:\\.|[^\]\\])*(?<!\\)]\(([^)]+)\)/g)]
+    .map((match) => match[1]);
+}
+
+if (JSON.stringify(markdownLinkTargets('[valid](target.md) and \\[a-z\\](?:not-a-link)'))
+  !== JSON.stringify(['target.md'])) {
+  throw new Error('publication link parser must retain valid links and ignore escaped schema regex syntax');
+}
 
 function walk(directory) {
   if (!fs.existsSync(directory)) return [];
@@ -351,6 +364,162 @@ function catalogueIndex() {
   return `${lines.join('\n')}\n`;
 }
 
+function markdownCell(value) {
+  return String(value).replaceAll('|', '\\|').replaceAll('\n', ' ').trim();
+}
+
+function schemaPropertyPaths(plugin, registration) {
+  const schemaPath = registration.configSchema;
+  const rootSchema = registration.configSchemaObject
+    ?? (schemaPath && fs.existsSync(path.join(plugin.directory, schemaPath))
+      ? readJson(path.join(plugin.directory, schemaPath))
+      : undefined);
+  if (!rootSchema) return [];
+  const found = new Set();
+  const active = new Set();
+  function visit(schema, prefix = '') {
+    if (!schema || typeof schema !== 'object' || active.has(schema)) return;
+    active.add(schema);
+    if (typeof schema.$ref === 'string' && schema.$ref.startsWith('#/')) {
+      const target = schema.$ref.slice(2).split('/').reduce((value, key) => value?.[key.replaceAll('~1', '/').replaceAll('~0', '~')], rootSchema);
+      visit(target, prefix);
+    }
+    for (const [name, child] of Object.entries(schema.properties ?? {})) {
+      const property = prefix ? `${prefix}.${name}` : name;
+      found.add(property);
+      visit(child, property);
+    }
+    visit(schema.items, `${prefix}[]`);
+    for (const keyword of ['allOf', 'anyOf', 'oneOf']) {
+      for (const child of schema[keyword] ?? []) visit(child, prefix);
+    }
+    visit(schema.if, prefix);
+    visit(schema.then, prefix);
+    visit(schema.else, prefix);
+    active.delete(schema);
+  }
+  visit(rootSchema);
+  return [...found].sort();
+}
+
+function registrationDependencyFacts(plugin, registration, paths) {
+  const endpointPaths = paths.filter((field) => /(?:^|\.)(?:endpoint|endpointName|url|baseUrl|origin|host|port|address)$/iu.test(field));
+  const secretPaths = paths.filter((field) => /(?:^|\.)(?:existingSecret(?:Key)?|secret(?:Name|Ref|Key)?|token(?:Path|Ref)?|password(?:Path|Ref)?|credential(?:Path|Ref)?|apiKey(?:Path|Ref)?|caPath|certPath|keyPath)$/iu.test(field));
+  const required = [...new Set(registration.requiredCapabilities ?? [])].sort();
+  const provided = [...new Set(registration.providesCapabilities ?? [])].sort();
+  const modulePath = registration.module ? path.join(plugin.directory, registration.module) : null;
+  const moduleIsFile = modulePath && fs.existsSync(modulePath) && fs.statSync(modulePath).isFile();
+  const implementation = moduleIsFile ? fs.readFileSync(modulePath, 'utf8') : '';
+  const implementationEvidence = moduleIsFile ? `\`${rel(modulePath)}\`` : `manifest \`${rel(plugin.file)}\``;
+  const identity = `${plugin.manifest.id} ${registration.id}`.toLowerCase();
+  const externalCapabilities = required.filter((capability) => /(?:network|browser|kubernetes|container\.build|runtime\.dispatch|operator\.request|secrets\.read)/u.test(capability));
+  let service = null;
+  if (/redis/u.test(identity) || /\bredis(?:s)?:\/\//iu.test(implementation)) service = 'Redis transport or telemetry service';
+  else if (/runtime-dispatch/u.test(identity)) service = 'configured runtime or OpenClaw dispatch target';
+  else if (/remote-test-gate/u.test(identity)) service = 'Buster remote-plan service';
+  else if (/transport/u.test(identity)) service = 'configured HTTP transport receiver';
+  else if (/tailscale/u.test(identity)) service = 'Kubernetes API and Tailscale ingress controller';
+  else if (/container-build/u.test(identity) || required.includes('container.build')) service = 'BuildKit service selected by the container.build capability';
+  else if (required.some((capability) => capability.startsWith('kubernetes.'))) service = 'Kubernetes API selected by the capability adapter';
+  else if (endpointPaths.length || required.includes('network.http') || required.some((capability) => capability.startsWith('browser.'))) service = 'operator/runtime supplied HTTP or browser target';
+  else if (required.includes('runtime.dispatch')) service = 'runtime target selected by the resolved execution plan';
+  else if (required.includes('operator.request')) service = 'operator messaging or approval channel';
+  else if (/prism/u.test(identity) && /fetch\s*\(/u.test(implementation)) service = 'Prism control service';
+
+  const noExternalProof = !service && endpointPaths.length === 0 && secretPaths.length === 0 && externalCapabilities.length === 0
+    && !/(?:fetch\s*\(|https?:\/\/|redis(?:s)?:\/\/|tailscale|BuildKit)/iu.test(implementation);
+  const serviceText = service
+    ? `${service}; authority: ${endpointPaths.length ? endpointPaths.map((field) => `\`${field}\``).join(', ') : required.length ? `capability ${required.join(', ')}` : implementationEvidence}`
+    : noExternalProof
+      ? `Not applicable: no endpoint, Secret, external capability, or network client is declared or detected in ${implementationEvidence}.`
+      : `Blocked external identity: ${implementationEvidence} contains an external signal without a declared endpoint authority. Source owner: \`${rel(plugin.file)}\`. Closure: add a schema field or manifest dependency declaration.`;
+  const endpoint = endpointPaths.length
+    ? `${endpointPaths.map((field) => `\`${field}\``).join('<br>')}<br>Runtime supplies the concrete instance.`
+    : service
+      ? `Capability or implementation authority: ${implementationEvidence}; no independent endpoint knob is declared.`
+      : 'Not applicable: no endpoint authority is required by this registration.';
+  const secret = secretPaths.length
+    ? `${secretPaths.map((field) => `\`${field}\``).join('<br>')}<br>${required.includes('secrets.read') ? 'Resolved through the secrets.read capability boundary.' : 'Supplied through the schema-declared path/reference; the plugin does not own the backing store.'}`
+    : required.includes('secrets.read')
+      ? 'The resolved execution plan supplies Secret authority through secrets.read; no plugin-local Secret field is declared.'
+      : 'Not applicable: no Secret field or secrets.read capability is declared.';
+  const dataOwner = service
+    ? `The target service owns remote state; ${plugin.manifest.id} owns only its bounded request/result or evidence record.`
+    : noExternalProof
+      ? `Not applicable to an external service; data remains with the declared artifact, state, repository, or host capability owner.`
+      : `Blocked until the external authority is declared; source owner is \`${rel(plugin.file)}\`.`;
+  const reachability = service
+    ? `${implementationEvidence} performs or delegates the call. A successful capability/provider result proves reachability; package discovery alone does not.`
+    : noExternalProof
+      ? 'Not applicable: this registration has no source-backed external reachability requirement.'
+      : `Blocked: add a bounded preflight for the declared endpoint after the authority gap closes.`;
+  return { endpointPaths, secretPaths, required, provided, serviceText, endpoint, secret, dataOwner, reachability };
+}
+
+function operatorPluginMatrix() {
+  const selectionRows = [...plugins].sort((a, b) => a.manifest.id.localeCompare(b.manifest.id)).map((plugin) => {
+    const authored = guidanceById.get(plugin.manifest.id);
+    const host = plugin.mechanical?.host ?? (plugin.pipeline ? 'pipeline-runtime' : plugin.openclaw ? 'openclaw' : 'codex');
+    const roles = plugin.mechanical?.includedRoles?.length ? plugin.mechanical.includedRoles.join(', ') : 'no shipped runtime role declared';
+    const surfaces = [...new Set(plugin.registrations.map((item) => item.kind))].sort().join(', ');
+    const required = [...new Set(plugin.registrations.flatMap((item) => item.requiredCapabilities ?? []))].sort();
+    const inputs = [...new Set(plugin.registrations.flatMap((item) => (item.inputs ?? []).map((input) => `${input.name}:${input.schemaId ?? input.kind}`)))].sort();
+    const dependencies = [
+      required.length ? `capabilities: ${required.join(', ')}` : 'no manifest-declared capability',
+      inputs.length ? `inputs: ${inputs.join(', ')}` : 'no manifest-declared input',
+    ].join('; ');
+    const purpose = authored?.purpose ?? `Blocked guidance: source owner \`${rel(plugin.file)}\` must add a maintained operator purpose before publication.`;
+    return `| [\`${plugin.manifest.id}\`](../extend/plugin-catalogue/${plugin.manifest.id}.md) | ${markdownCell(purpose)} | ${markdownCell(`${host}; roles: ${roles}; surfaces: ${surfaces}`)} | ${markdownCell(dependencies)} |`;
+  });
+  const dependencyRows = [...plugins].sort((a, b) => a.manifest.id.localeCompare(b.manifest.id)).flatMap((plugin) => {
+    const authored = guidanceById.get(plugin.manifest.id);
+    return plugin.registrations.map((registration) => {
+      const paths = schemaPropertyPaths(plugin, registration);
+      const facts = registrationDependencyFacts(plugin, registration, paths);
+      const capability = [
+        facts.required.length ? `requires: ${facts.required.join(', ')}` : 'requires: none declared',
+        facts.provided.length ? `provides: ${facts.provided.join(', ')}` : 'provides: none declared',
+      ].join('; ');
+      const failure = authored?.operationNote ?? `Blocked failure guidance: source owner \`${rel(plugin.file)}\` must describe the failure effect.`;
+      return `| [\`${plugin.manifest.id}:${registration.id}\`](../extend/plugin-catalogue/${plugin.manifest.id}.md#${registration.kind.replaceAll(' ', '-').toLowerCase()}-${String(registration.id).toLowerCase().replace(/[^a-z0-9-]/gu, '-')}) | ${markdownCell(facts.serviceText)} | ${markdownCell(facts.endpoint)} | ${markdownCell(capability)} | ${markdownCell(facts.secret)} | ${markdownCell(facts.dataOwner)} | ${markdownCell(facts.reachability)} | ${markdownCell(failure)} |`;
+    });
+  });
+  const registrationCount = plugins.reduce((sum, plugin) => sum + plugin.registrations.length, 0);
+  if (selectionRows.length !== plugins.length) throw new Error('operator plugin matrix lost a discovered package');
+  if (dependencyRows.length !== registrationCount) throw new Error('operator plugin matrix lost a discovered registration');
+  const matrixFacts = [...selectionRows, ...dependencyRows].join('\n');
+  if (/source-backed unknown/iu.test(matrixFacts)) throw new Error('operator plugin matrix contains an unexplained source-backed unknown');
+  for (const requiredSample of ['redis-transport', 'runtime-dispatch', 'remote-test-gate', 'tailscale-exposure', 'network-http']) {
+    if (!matrixFacts.includes(requiredSample)) throw new Error(`operator plugin matrix lacks required dependency sample ${requiredSample}`);
+  }
+  return [
+    operatorMatrixStart,
+    '',
+    '> Generated from every discovered plugin manifest, role inventory, recursive configuration schema, and maintained catalogue guidance. Do not edit these rows by hand.',
+    '',
+    '### All-package selection matrix',
+    '',
+    '| Package | Operator task | Host, role, and surface | Declared dependencies |',
+    '| --- | --- | --- | --- |',
+    ...selectionRows,
+    '',
+    '### Per-registration external dependency matrix',
+    '',
+    '| Package registration | External service | Endpoint authority fields | Capabilities | Secret-reference fields | Data owner | Reachability check | Failure effect |',
+    '| --- | --- | --- | --- | --- | --- | --- | --- | --- |',
+    ...dependencyRows,
+    '',
+    operatorMatrixEnd,
+  ].join('\n');
+}
+
+function replaceOperatorMatrix(text) {
+  const start = text.indexOf(operatorMatrixStart);
+  const end = text.indexOf(operatorMatrixEnd);
+  if (start < 0 || end < start) throw new Error(`${rel(operatorPluginPage)} lacks generated operator matrix markers`);
+  return `${text.slice(0, start)}${operatorPluginMatrix()}${text.slice(end + operatorMatrixEnd.length)}`;
+}
+
 function capabilityPage() {
   const vocabularyPath = path.join(root, 'skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts');
   const busterRuntimePath = path.join(root, 'skills/buster/engine/test-gates/remote-plan-service.ts');
@@ -432,6 +601,7 @@ function generate() {
     fs.mkdirSync(path.dirname(target), { recursive: true });
     fs.writeFileSync(target, content);
   }
+  fs.writeFileSync(operatorPluginPage, replaceOperatorMatrix(fs.readFileSync(operatorPluginPage, 'utf8')));
 }
 
 function compareGenerated() {
@@ -441,6 +611,10 @@ function compareGenerated() {
   const expected = new Set([...generated].map(([target]) => target));
   for (const target of walk(catalogueRoot).filter((file) => file.endsWith('.md'))) {
     if (!expected.has(target)) errors.push(`${rel(target)} has no installed plugin`);
+  }
+  if (fs.existsSync(operatorPluginPage)) {
+    const current = fs.readFileSync(operatorPluginPage, 'utf8');
+    if (replaceOperatorMatrix(current) !== current) errors.push(`${rel(operatorPluginPage)} operator plugin matrix is stale`);
   }
 }
 
@@ -541,9 +715,10 @@ function checkDecisionContracts() {
 function checkSite() {
   compareGenerated();
   checkDecisionContracts();
-  if (plugins.length !== 51) errors.push(`Catalogue expected 51 packages but found ${plugins.length}`);
   const pluginIds = new Set(plugins.map((plugin) => plugin.manifest.id));
-  if (guidance.records.length !== 51) errors.push(`Catalogue guidance expected 51 records but found ${guidance.records.length}`);
+  if (guidance.records.length !== plugins.length) {
+    errors.push(`Catalogue guidance has ${guidance.records.length} records for ${plugins.length} discovered packages`);
+  }
   for (const record of guidance.records) {
     if (!pluginIds.has(record.id)) errors.push(`Catalogue guidance contains unknown package: ${record.id}`);
     for (const field of ['purpose', 'useWhen', 'avoidWhen', 'criticalLimit']) {
@@ -551,7 +726,9 @@ function checkSite() {
     }
   }
   for (const plugin of plugins) if (!guidanceById.has(plugin.manifest.id)) errors.push(`Catalogue guidance is missing ${plugin.manifest.id}`);
-  if (localVerificationById.size !== 51) errors.push(`Local verification expected 51 results but found ${localVerificationById.size}`);
+  if (localVerificationById.size !== plugins.length) {
+    errors.push(`Local verification has ${localVerificationById.size} results for ${plugins.length} discovered packages`);
+  }
   for (const plugin of plugins) if (!localVerificationById.has(plugin.manifest.id)) errors.push(`Local verification is missing ${plugin.manifest.id}`);
   const pages = walk(siteRoot).filter((file) => file.endsWith('.md')).sort();
   for (const file of pages) {
@@ -565,8 +742,7 @@ function checkSite() {
       if (!fs.existsSync(path.join(root, item))) errors.push(`${rel(file)} cites missing evidence: ${item}`);
     }
     checkLanguage(file, text);
-    for (const match of text.replace(/`[^`\n]*`/gu, 'code').matchAll(/\[[^\]]+\]\(([^)]+)\)/gu)) {
-      const target = match[1];
+    for (const target of markdownLinkTargets(text.replace(/`[^`\n]*`/gu, 'code'))) {
       if (target.startsWith('http') || target.startsWith('#')) continue;
       const local = path.resolve(path.dirname(file), target.split('#')[0]);
       if (!fs.existsSync(local)) errors.push(`${rel(file)} links to missing page: ${target}`);
@@ -581,10 +757,26 @@ function checkSite() {
     'docs/site/use/README.md',
     'docs/site/use/quickstart.md',
     'docs/site/use/recovery.md',
+    'docs/site/use/capacity.md',
+    'docs/site/use/plugins.md',
+    'docs/site/use/demo-delivery.md',
     'docs/site/extend/README.md',
     'docs/site/extend/first-plugin.md',
     'docs/site/extend/testing.md',
     'docs/site/status/current.md',
+    'docs/site/reference/pipeline-platform.md',
+    'docs/site/reference/nova-project.md',
+    'docs/site/reference/pipeline-definition.md',
+    'docs/site/reference/pipeline-json.md',
+    'docs/site/reference/plugin-configuration.md',
+    'docs/site/reference/worker-profiles-and-roles.md',
+    'docs/site/reference/host-and-prism-configuration.md',
+    'docs/site/reference/endpoints.md',
+    'docs/site/reference/configuration-precedence.md',
+    'docs/site/reference/configuration-change-impact.md',
+    'docs/site/reference/configuration-errors.md',
+    'docs/site/reference/project-pipeline-publication.md',
+    'docs/site/reference/configuration-compatibility.md',
   ];
   for (const page of requiredPages) if (!fs.existsSync(path.join(root, page))) errors.push(`${page} is required by a reader journey`);
   const entry = fs.readFileSync(path.join(siteRoot, 'README.md'), 'utf8');
@@ -592,7 +784,11 @@ function checkSite() {
     'understand/README.md',
     'use/quickstart.md',
     'use/operate.md',
+    'use/capacity.md',
+    'use/plugins.md',
+    'use/demo-delivery.md',
     'extend/first-plugin.md',
+    'reference/README.md',
     'product-surfaces.md',
   ]) {
     if (!entry.includes(`](${route}`)) errors.push(`docs/site/README.md does not expose reader route ${route}`);

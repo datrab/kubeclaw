@@ -103,7 +103,7 @@ reason, v3 uses `maximumTasks`. It does not rename the v1
 
 > **Version evidence**
 >
-> [The v2 types add explicit capabilities, budgets, observations, and result binding without changing v1](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/resource-types-v2.ts#L1-L25).
+> [The v2 types add explicit capabilities, budgets, observations, and result binding without changing v1](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/resource-types-v2.ts#L1-L24).
 >
 > [The v3 types define measured native-tree metrics and Linux task units](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/contracts/pipeline-worker-core/v1/src/resource-types-v3.ts#L1-L31).
 >

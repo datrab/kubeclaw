@@ -37,6 +37,20 @@ Jeder AP09-Punkt benötigt:
    Abnahme;
 7. eine Zuordnung zu Owner, Generator und Change-to-check-Weg.
 
+Alle Seiten unter `docs/site/` verwenden ausschließlich Englisch. Jede Seite
+besitzt einen eindeutigen, beschreibenden Haupttitel und eine eindeutige
+kanonische Identität. AP-Bezeichnungen und sonstige interne Review-,
+Migrations- oder Arbeitssprache dürfen dort nicht erscheinen. Diese Grenze
+gilt auch für generierte Tabellen, Hinweise und Bildtexte.
+
+Der endgültig verbleibende Dokumentationsbestand verwendet ebenfalls nur
+Englisch. Anderssprachige Arbeits-, Review- und Extraktionstexte dürfen während
+der Bereinigung nur außerhalb von `docs/site/` bestehen bleiben. Sie müssen als
+nicht veröffentlichbare Übergangsquelle klassifiziert sein und werden nicht in
+den endgültigen Leserbestand übernommen. Konventionelle Indexdateinamen wie
+`README.md` sind zulässig, aber ihr sichtbarer Seitentitel und ihr vollständiger
+kanonischer Pfad müssen eindeutig und beschreibend sein.
+
 Eine Seite ist nicht vollständig, nur weil sie existiert oder auf ein Schema
 verweist. Ein Leser darf kein Package-README, Review-Dokument oder früheres
 Gespräch benötigen, um eine unterstützte Aufgabe auszuführen.
@@ -535,6 +549,73 @@ Registry- und Providerpfade bleiben ausdrücklich umgebungsabhängige Evidenz.
 
 **Gate:** Jeder Ablauf besitzt Zweck, Voraussetzungen, Schritte, erwartete
 Beobachtung, Fehler, Stop-Regel und Recovery.
+
+### Verbindlicher Übergang nach AP09.8 — Dokumentationsbäume trennen
+
+Dieser Zwischenschritt muss abgeschlossen sein, bevor AP09.9 inhaltlich
+abgenommen wird. `docs/site/` ist ab diesem Zeitpunkt der einzige
+veröffentlichbare und für Leser autoritative Dokumentationsbaum. Alle anderen
+Dokumentationsdateien unter `docs/` sind entweder notwendige Generator- und
+Prüfeingaben oder vorübergehende Extraktionsquellen. Sie sind keine zweite
+gültige Produktdokumentation.
+
+Der Übergang liefert ein maschinenlesbares Inventar jeder Datei unter `docs/`.
+Jede Datei erhält genau eine der folgenden Klassen:
+
+1. kanonische Leserdokumentation unter `docs/site/`;
+2. notwendige interne Generator-, Katalog-, Fixture- oder Prüfeingabe;
+3. vorübergehende Extraktionsquelle der bisherigen Struktur; oder
+4. löschbarer Rest ohne noch benötigten Inhalt.
+
+Die Klassifikation allein genügt nicht. Der Übergang verschiebt jede noch
+benötigte Extraktionsquelle in einen gemeinsamen, eindeutig benannten
+Quellbaum unter `docs/_legacy-source/`. Der Pfad unterhalb dieses Verzeichnisses
+bewahrt den bisherigen relativen Pfad, damit Herkunft und Git-Historie
+nachvollziehbar bleiben. Notwendige Generator-, Katalog-, Fixture- und
+Prüfeingaben bleiben dagegen in ihren zweckgebundenen Verzeichnissen. Sie
+dürfen nicht als alte Leserdokumentation in den Quellbaum verschoben werden.
+Damit gelten nach dem Übergang drei sichtbare Grenzen:
+
+1. `docs/site/` enthält ausschließlich die neue, veröffentlichbare
+   Produktdokumentation;
+2. zweckgebundene interne Verzeichnisse enthalten ausschließlich Werkzeuge und
+   Eingaben für Erzeugung und Prüfung; und
+3. `docs/_legacy-source/` enthält ausschließlich die noch nicht zur Löschung
+   freigegebenen Dokumente der bisherigen Leserstruktur.
+
+Für jede vorübergehende Extraktionsquelle muss eine Paritätszeile jeden
+weiterhin richtigen Fakt, jede Entscheidung, jeden Ablauf, jede
+Konfigurationsaussage und jeden noch gültigen Quellbeleg einem konkreten
+Abschnitt unter `docs/site/` zuordnen. Eine Auslassung ist nur mit einem
+Quellbeleg und einem eindeutigen Grund zulässig, zum Beispiel nachweislich
+veraltetes oder falsches Verhalten. Dateiname, Alter, Wortzahl oder eine
+ähnliche Seite sind kein Paritätsnachweis.
+
+Die alte Struktur darf erst gelöscht werden, wenn alle folgenden Bedingungen
+gleichzeitig erfüllt sind:
+
+- keine Extraktionsquelle besitzt einen ungeklärten oder nicht zugeordneten
+  Inhalt;
+- alle Entscheidungen und noch gültigen Belege besitzen einen kanonischen
+  Zielabschnitt;
+- `docs/site/` verlinkt keine alte Dokumentationsdatei und enthält keine
+  Review-, Migrations- oder AP-Arbeitssprache;
+- außerhalb von `docs/site/` und `docs/_legacy-source/` liegt keine zweite
+  Leser-Dokumentation;
+- Publication, Navigation, Suche, Quelllinks und Reader-Aufgaben verwenden nur
+  den kanonischen Baum;
+- alle Dokumentations- und Paritätschecks sind am selben Commit erfolgreich;
+- ein unabhängiger Read-only-Reviewer bestätigt Inventar und Parität; und
+- die Löschliste nennt für jede Datei Ziel, Redirectbedarf, Referenzsuche und
+  Wiederherstellungsweg aus Git.
+
+Dieser Übergang erstellt nur die belegte Löschfreigabe. AP10 führt die
+tatsächliche Entfernung aus. Bis zur Freigabe bleiben Extraktionsquellen
+erhalten und eindeutig als nicht veröffentlichbar klassifiziert.
+
+**Gate:** Jede Datei unter `docs/` ist eindeutig klassifiziert, jede relevante
+Aussage der bisherigen Struktur besitzt ein kanonisches Ziel oder eine belegte
+Ausnahme, und kein Leserweg hängt von einer Extraktionsquelle ab.
 
 ### AP09.9 — Pipeline und Workflows
 

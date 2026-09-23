@@ -2,7 +2,7 @@
   "schemaVersion": "kubeclaw.documented-request-trace.v1",
   "scenarioId": "complete-showcase-success",
   "status": "conceptual-reference-only-not-live-proof",
-  "scopeBoundary": "This document joins desired platform interactions into a conceptual 20-step reference. No maintained harness currently binds Prism Studio approval, a Nova project run, Discord, Redis, Cilium or Hubble, and Buster BuildKit/Tailscale work into one evidence chain. EXEC-PLATFORM-SUCCESS proves only its compiled Nova project and final Buster demo chain. Prism, human channels, Redis, Cilium, and Hubble require their separate maintained checks until a joined harness exists.",
+  "scopeBoundary": "This document joins desired platform interactions into a conceptual 20-step reference. No maintained harness currently binds Prism Studio approval, a Nova project run, Discord, Redis, Cilium or Hubble, and Buster BuildKit/Tailscale work into one evidence chain. The deployment success exercise proves only its compiled Nova project and final Buster demo chain. Prism, human channels, Redis, Cilium, and Hubble require their separate maintained checks until a joined harness exists.",
   "purpose": "Describe the intended complete-showcase sequence and the evidence a future joined acceptance harness must bind. It is not a record of an execution.",
   "startingConditions": [
     "The operator has selected one deployment profile and exact Git revision.",
@@ -249,7 +249,7 @@
   "completionCondition": "Reference target only: a future joined harness completes this trace when all 20 steps have live evidence bound to one deployment revision, source revision, Nova run, Prism request and approval, Buster job, channel identities, network-flow evidence, artifact digests, and cleanup identities. No current command in this document satisfies that condition.",
   "documentation": [
     "../../../understand/communication.md#complete-showcase-success-trace",
-    "../buster-suite.md#deployment-acceptance-exercise-exec-platform-success",
+    "../buster-suite.md#deployment-success-exercise",
     "../../../understand/deployment-and-trust.md#deployment-map"
   ]
 }

@@ -269,7 +269,7 @@ npm test --prefix skills/common/plugins/state-store
 npm test --prefix skills/nova/plugins/blueprint-sync
 ```
 
-The documentation check invokes the real Blueprint Sync stage with a controlled capability
+The focused effect check invokes the real Blueprint Sync stage with a controlled capability
 context. It verifies the capability order, duplicate suppression for one effect
 identity, and reuse of the resource after lock release. It also verifies that a
 recorded failure does not repeat the mutation. It creates an accepted effect without

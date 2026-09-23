@@ -6,7 +6,7 @@ Owner: buster
 Evidence: skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; contracts/pipeline-test-gate/v1/suites; skills/nova/core/test-gates/resolver.ts; skills/buster/engine/test-gates/provider-loader.ts; skills/buster/engine/test-gates/runner.ts; skills/buster/engine/test-gates/report-adapter-runtime.ts
 Evidence revision: `bcf032f241b432bf920baa9ee5f727947921447d`
 Applies to: Buster test providers, fixtures, suite templates, and report adapters
-Last verified: source inspection and focused local checks on 2026-09-19
+Last verified: 2026-09-19; focused local checks passed within the stated scope
 
 ## Objective
 
@@ -311,11 +311,13 @@ an operator's production allowlist.
 
 ### Start from a clean checkout
 
-Use Node.js 24, which is the version used by the repository workflows. Run the
+Use Node.js 24, which is the version used by the repository workflows. First
+complete the canonical
+[Locked Dependency Installation](../use/quickstart.md#locked-dependency-installation)
+in a disposable checkout and retain its sanitized evidence. Then run the
 following commands at the repository root:
 
 ```bash
-npm ci
 npm run verify:runtime-packaging:roles
 npm run verify:test-gate:provider-registry
 ```

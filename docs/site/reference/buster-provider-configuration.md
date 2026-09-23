@@ -595,6 +595,5 @@ not invent a default when the schema has none.
 ## Maintenance Rule
 
 Change a schema first. Then run `node scripts/generate-buster-provider-reference.mjs --write`.
-Review the changed paths and limits as a contract change. The documentation check
+Review the changed paths and limits as a contract change. The generated-reference check
 rejects a stale file and rejects a provider that is absent from this inventory.
-

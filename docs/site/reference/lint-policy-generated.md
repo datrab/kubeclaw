@@ -18,7 +18,7 @@ This page records repetitive facts from the shipped lint configuration. The
 [rule guide](lint-rules.md) explains triggers, exceptions, and remediation.
 
 Regenerate this page after a policy, baseline, pack, lint configuration, adapter,
-or fixed-code change. The documentation check compares the complete generated
+or fixed-code change. The generated-reference check compares the complete generated
 result with these sources.
 
 ## Tool Execution Settings

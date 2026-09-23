@@ -29,13 +29,18 @@ function activeMarkdownFiles() {
     .filter((filePath) => !rel(filePath).startsWith('docs/archive/'));
 }
 
+function markdownLinkTargets(text) {
+  // Match actual Markdown links, not escaped schema syntax such as
+  // `\[a-z\](?:...)` emitted by generated configuration references.
+  const linkRe = /(?<!\\)\[(?:\\.|[^\]\\])*(?<!\\)]\(([^)]+)\)/g;
+  return [...text.matchAll(linkRe)].map((match) => match[1]);
+}
+
 function checkLocalLinks(files) {
-  const linkRe = /\[[^\]]*]\(([^)]+)\)/g;
   for (const file of files) {
     const text = fs.readFileSync(file, 'utf8').replace(/`[^`\n]*`/gu, 'code');
-    let match;
-    while ((match = linkRe.exec(text))) {
-      let target = match[1].trim();
+    for (const rawTarget of markdownLinkTargets(text)) {
+      let target = rawTarget.trim();
       if (
         !target ||
         target.startsWith('#') ||
@@ -48,9 +53,14 @@ function checkLocalLinks(files) {
       if (!target) continue;
       const resolved = path.resolve(path.dirname(file), decodeURI(target));
       if (rel(resolved).startsWith('docs/archive/')) continue;
-      if (!fs.existsSync(resolved)) errors.push(`${rel(file)} links to missing path: ${match[1]}`);
+      if (!fs.existsSync(resolved)) errors.push(`${rel(file)} links to missing path: ${rawTarget}`);
     }
   }
+}
+
+if (JSON.stringify(markdownLinkTargets('[valid](target.md) and \\[a-z\\](?:not-a-link)'))
+  !== JSON.stringify(['target.md'])) {
+  throw new Error('Markdown link parser must retain valid links and ignore escaped schema regex syntax');
 }
 
 function checkGeneratedMarkers() {
@@ -258,7 +268,7 @@ function checkOperationsEvidence() {
   if (!quickstart.includes('npm run plugin-system:inventory:check')) errors.push('operator quickstart lacks the portable plugin inventory check');
 
   const install = fs.readFileSync(path.join(root, 'docs/site/use/install.md'), 'utf8');
-  if (!/KUBECLAW_RUN_SECRET_SETUP=true[\s\S]*KUBECLAW_SECRET_SETUP_MODE=noninteractive[\s\S]*\.\/scripts\/deploy\.sh setup/u.test(install)) {
+  if (!/KUBECLAW_RUN_SECRET_SETUP=true[\s\S]*KUBECLAW_SECRET_SETUP_MODE=noninteractive[\s\S]*(?:\.\/scripts\/deploy\.sh|bound_deploy) setup/u.test(install)) {
     errors.push('noninteractive installation does not run setup with secret setup enabled');
   }
 

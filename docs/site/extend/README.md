@@ -455,7 +455,7 @@ Review a Core, Foundation, engine, or role change instead.
 
 ## Current Verification Boundary
 
-The focused source inspection used the revision in this page metadata.
+The evidence on this page uses the revision in its metadata.
 
 | Check | Result on 2026-09-16 | Meaning |
 | --- | --- | --- |
@@ -470,7 +470,7 @@ The check rejects `@kubeclaw/pipeline-test-gate-contract` in `buster-quality-gat
 This result prevents a claim that the complete import-boundary suite passes.
 It does not change the narrower contract, registry, configuration, or role results above.
 
-The assessment did not use a target cluster, OpenClaw host, Codex host, or external package installation.
+These checks did not use a target cluster, OpenClaw host, Codex host, or external package installation.
 
 ## Continue With The Correct Guide
 
@@ -481,7 +481,7 @@ The assessment did not use a target cluster, OpenClaw host, Codex host, or exter
 - [Extend Nova](nova.md) covers stages, adapters, observers, role inclusion, and the lint authoring boundary.
 - [Extend Hosts, Worker Engines, And Runtime Roles](host-and-engine.md) covers OpenClaw, Codex, specialist engines, and deployable role identities.
 - [Test And Manage An Extension](testing.md) covers proof, diagnosis, update, replacement, disablement, removal, and remaining state.
-- [Plugin Catalogue](plugin-catalogue/README.md) joins audited guidance with generated facts and local results for all 51 packages.
+- [Plugin Catalogue](plugin-catalogue/README.md) joins maintained guidance with generated facts and local results for every discovered package.
 - [System Components And Authority](../understand/components-and-authority.md) explains how extensions fit the complete platform.
 - [Core And Plugin Decisions](../decisions/core-and-plugins.md) preserves the design reasons and their evidence limits.
 

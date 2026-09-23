@@ -60,7 +60,7 @@ typed result. An observer would only consume committed events. An adapter would
 provide external authority. A test provider would execute Buster test work.
 
 The canonical example remains outside `skills/nova/plugins` by default.
-This choice prevents documentation verification from changing the shipped Nova role.
+This choice prevents the tutorial exercise from changing the shipped Nova role.
 You copy the example into the Nova plugin root during the exercise.
 You then make role ownership explicit before packaging it.
 
@@ -77,10 +77,13 @@ project adds a dedicated development-only runtime role.
 
 ## Prerequisites
 
-- Start from a clean checkout of the current documentation branch.
-  The older evidence revision identifies production source, not the tutorial files.
+- Start from a clean checkout of the product revision that you plan to extend.
+  A pinned source link can show an earlier verified revision. Use that link as
+  evidence, but edit and test the files in your selected product revision.
 - Install Node.js major version 24.
-- Run `npm ci --ignore-scripts` if dependencies are not present.
+- Complete the canonical
+  [Locked Dependency Installation](../use/quickstart.md#locked-dependency-installation)
+  in a disposable checkout and retain its sanitized evidence.
 - Use a branch. The procedure changes one role manifest and creates one package copy.
 - Keep released package bytes for any nonterminal run that can still recover.
 - Do not use this tutorial package in a production deployment.
@@ -258,7 +261,7 @@ Expected output includes these fields:
 ```
 
 The journey check uses an in-memory event journal.
-The first recorded verification host used BusyBox `flock` without timeout support.
+The recorded local result came from a host with BusyBox `flock` and no timeout support.
 The persistent file journal requires `flock --timeout`. Registry, grants, activation, schema checks, `PipelineRunner`,
 stage execution, lifecycle reduction, and role validation use production code.
 Persistent file-lock and recovery verification remain outside this local result.

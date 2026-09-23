@@ -53,7 +53,7 @@
   "boundedRetryRule": "Retry only under the owning adapter deadline and deduplication window. Stop on authentication, protocol, no-eviction capacity, or repeated timeout failure. The OpenClaw agent-observability payload path has one write attempt and no replay source; its control path has three bounded attempts and one best-effort dead-letter write.",
   "completionCondition": "Redis accepts the bounded check and any permitted replay under the original identity, or the operator records the projection as unrecoverable. Nova and Buster authority records remain unchanged.",
   "documentation": [
-    "../../diagnose.md#redis-unavailable-exec-fail-redis",
+    "../../diagnose.md#redis-unavailable",
     "../../../understand/communication.md#dependency-failure-traces-to-an-operator-decision",
     "../../../understand/telemetry.md#openclaw-agent-observability-v1-path",
     "../../../understand/data-and-state.md#redis-durable-delivery-not-product-authority"

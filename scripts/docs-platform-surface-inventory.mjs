@@ -21,7 +21,7 @@ const root = path.resolve(sourceRootOverride ?? scriptRoot);
 assert(!isolatedMutation || (sourceRootOverride && root !== scriptRoot),
   'KUBECLAW_DOCS_ISOLATED_MUTATION requires an isolated KUBECLAW_DOCS_SOURCE_ROOT');
 const check = process.argv.includes('--check');
-const sourceRevision = '32b02816cc19cc8865a45b221b8b6ca28e99e8fb';
+const sourceRevision = '1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de';
 const busterReadyActivation = 'requires busterNamespaceBroker.controller.readiness.enabled=true; selected my-values/buster-values.yaml inherits the chart default false';
 const busterProductActivation = 'requires busterNamespaceBroker.controller.readiness.enabled=true and busterNamespaceBroker.controller.productDecisions.enabled=true (BUSTER_PRODUCT_ENABLED=true); selected my-values/buster-values.yaml inherits the chart default false for both';
 const jsonTarget = path.join(root, 'docs/generated/inventory/platform-surfaces.json');
@@ -199,6 +199,14 @@ function distinct(records) {
     if (!byIdentity.has(identity)) byIdentity.set(identity, record);
   }
   return [...byIdentity.values()].sort((a, b) => a.value.localeCompare(b.value) || a.source.localeCompare(b.source));
+}
+
+function redactPublishedIdentity(value) {
+  if (typeof value !== 'string') return value;
+  return value
+    .replace(/\b[0-9]{15,20}\b/gu, '<redacted-identity>')
+    .replace(/[a-z0-9._%+-]+@[a-z0-9.-]+?\.[a-z]{2,}(?=\.(?:email|mode|provider)=|[\]\s,;"')]|$)/giu, '<redacted-email>')
+    .replace(/([a-z][a-z0-9+.-]*:\/\/)[^/\s:@]+:[^/\s@]+@/giu, '$1<redacted-credentials>@');
 }
 
 function render(name, chart, namespace, values = [], sets = []) {
@@ -549,6 +557,56 @@ function statefulSetClaimStores(rendered) {
   });
 }
 
+function networkExposuresFrom(rendered) {
+  return rendered.flatMap(({ value, source, line, activationState = 'active', activationCondition }) => {
+    const namespace = value.metadata?.namespace ?? 'cluster';
+    if (value.kind === 'Service') {
+      const ports = value.spec?.ports ?? [];
+      const records = ports.length ? ports : [{}];
+      return records.map((port) => ({
+        value: `Service/${namespace}/${value.metadata.name}:${port.name ?? port.port ?? '<no-port>'}`,
+        kind: 'Service',
+        namespace,
+        name: value.metadata.name,
+        serviceType: value.spec?.type ?? 'ClusterIP',
+        clusterIP: value.spec?.clusterIP ?? '<assigned-by-cluster>',
+        portName: port.name ?? null,
+        protocol: port.protocol ?? 'TCP',
+        port: port.port ?? null,
+        targetPort: port.targetPort ?? null,
+        nodePort: port.nodePort ?? null,
+        selector: value.spec?.selector ?? {},
+        activationState,
+        ...(activationCondition ? { activationCondition } : {}),
+        source,
+        line,
+      }));
+    }
+    if (value.kind === 'Ingress') {
+      const paths = (value.spec?.rules ?? []).flatMap((rule) => (rule.http?.paths ?? []).map((route) => ({ rule, route })));
+      const records = paths.length ? paths : [{ rule: {}, route: {} }];
+      return records.map(({ rule, route }) => ({
+        value: `Ingress/${namespace}/${value.metadata.name}:${rule.host ?? '*'}${route.path ?? '/'}`,
+        kind: 'Ingress',
+        namespace,
+        name: value.metadata.name,
+        ingressClassName: value.spec?.ingressClassName ?? null,
+        host: rule.host ?? '*',
+        path: route.path ?? '/',
+        pathType: route.pathType ?? null,
+        backendService: route.backend?.service?.name ?? null,
+        backendPort: route.backend?.service?.port?.name ?? route.backend?.service?.port?.number ?? null,
+        tlsHosts: (value.spec?.tls ?? []).flatMap((tls) => tls.hosts ?? []),
+        activationState,
+        ...(activationCondition ? { activationCondition } : {}),
+        source,
+        line,
+      }));
+    }
+    return [];
+  });
+}
+
 function build() {
   const rendered = renderedObjects();
   const acceptanceIds = [...read(acceptanceContractSource).matchAll(/^\| (A97-[0-9]{2}) \|/gmu)].map((match) => match[1]);
@@ -599,6 +657,12 @@ function build() {
       assert.notEqual(resource.namespace, 'default',
         `${resource.origin} ${resource.kind}/${resource.name} was falsely materialized in the default namespace`);
     }
+  }
+  const networkExposures = networkExposuresFrom(rendered);
+  for (const resource of resources.filter((item) => item.kind === 'Service' || item.kind === 'Ingress')) {
+    assert(networkExposures.some((exposure) => exposure.kind === resource.kind
+      && exposure.namespace === resource.namespace && exposure.name === resource.name),
+    `${resource.kind}/${resource.namespace}/${resource.name} has no endpoint exposure record`);
   }
   const expectedHelmNamespaces = new Map([
     ['helm:nova', 'kubeclaw'], ['helm:buster', 'kubeclaw'], ['helm:prism-agent', 'kubeclaw'],
@@ -683,7 +747,7 @@ function build() {
     ...(item.excludedPrefixes ? { excludedPrefixes: item.excludedPrefixes } : {}),
     ...(item.exclusions ? { exclusions: item.exclusions } : {}),
     activationState: item.activationState,
-    activationCondition: item.activationCondition,
+    activationCondition: redactPublishedIdentity(item.activationCondition),
     ...(item.reason ? { reason: item.reason } : {}),
     };
   });
@@ -757,19 +821,24 @@ function build() {
     line: lineOf(litellmDatabaseText, litellmDatabaseIndex),
     evidenceLocation: 'exact-value',
   });
-  const dependencySignals = discoveredDependencySignals.map((item) => ({
-    value: `${item.consumer} -> ${item.dependencyIdentity} [${item.signal}]`,
-    consumer: item.consumer,
-    dependencyIdentity: item.dependencyIdentity,
+  const dependencySignals = discoveredDependencySignals.map((item) => {
+    const consumer = redactPublishedIdentity(item.consumer);
+    const dependencyIdentity = redactPublishedIdentity(item.dependencyIdentity);
+    const signal = redactPublishedIdentity(item.signal);
+    return ({
+    value: `${consumer} -> ${dependencyIdentity} [${signal}]`,
+    consumer,
+    dependencyIdentity,
     classification: item.classification,
     activationState: item.activationState,
-    activationCondition: item.activationCondition,
+    activationCondition: redactPublishedIdentity(item.activationCondition),
     profile: item.profile,
-    signal: item.signal,
+    signal,
     source: item.source ?? item.origin,
     line: item.line,
     evidenceLocation: item.evidenceLocation ?? 'rendered-output',
-  }));
+  });
+  });
   assert(dependencySignals.every((item) => !/[\r\n]/u.test(item.value) && !/[\r\n]/u.test(item.signal)),
     'dependency signal identities must remain single-line Markdown table values');
   const activeDependencyIdentities = new Set(dependencySignals
@@ -846,6 +915,7 @@ function build() {
       activationState: item.activationState,
       ...(item.activationCondition ? { activationCondition: item.activationCondition } : {}),
     }))),
+    networkExposures: distinct(networkExposures),
     secretReferences: distinct(secretReferences),
     endpoints: distinct(routeRecords),
     outboundConnections: distinct(outboundConnections),
@@ -859,6 +929,14 @@ function build() {
     events: distinct([...lifecycleEvents, ...domainEvents, ...ingressEvents]),
     opsTools: distinct(opsTools),
   };
+  const publishedInventory = JSON.stringify(inventory);
+  assert(!/\b[0-9]{15,20}\b/u.test(publishedInventory),
+    'published platform inventory contains an unredacted long-form identity');
+  const publishedEmail = publishedInventory.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/iu)?.[0];
+  const publishedEmailIndex = publishedEmail ? publishedInventory.indexOf(publishedEmail) : -1;
+  assert(!publishedEmail, `published platform inventory contains an unredacted email identity: ${publishedEmail ?? ''} near ${publishedInventory.slice(Math.max(0, publishedEmailIndex - 100), publishedEmailIndex + 180)}`);
+  assert(!/[a-z][a-z0-9+.-]*:\/\/[^/\s"@:]+:[^/\s"@]+@/iu.test(publishedInventory),
+    'published platform inventory contains a URL with embedded credentials');
   const maintainedSources = new Set(Object.values(inventory)
     .flatMap((value) => Array.isArray(value) ? value : [])
     .map((item) => item?.source)
@@ -932,7 +1010,7 @@ function sourceLink(item) {
       .replace(/[^a-z0-9\s-]/gu, '').trim().replace(/\s+/gu, '-');
     return `[${item.source}](${relativeTarget}${anchor ? `#${anchor}` : ''})`;
   }
-  return `[${item.source}:${item.line}](https://github.com/datrab/kubeclaw/blob/${sourceRevision}/${item.source}#L${item.line})`;
+  return `[${item.source}:${item.line}](https://github.com/datrab/kubeclaw/blob/${sourceRevision}/${item.source}#L${item.line}-L${item.line})`;
 }
 function pageLink(target) {
   const [file, anchor] = target.split('#');
@@ -992,6 +1070,7 @@ function markdown(inventory, mapping) {
     'Audience: platform operator, runtime maintainer, security maintainer',
     'Owner: platform maintainers',
     'Evidence: docs/generated/inventory/platform-surfaces.json; docs/config/platform-surface-map.json',
+    `Source revision: \`${inventory.sourceRevision}\``,
     'Applies to: dependencies, runtime resources, secret references, server endpoints, outbound connections, stores, events, and Ops MCP tools', '',
     'Last verified: 2026-09-21', '',
     'This reference lists platform surfaces and their activation state. A source link identifies the maintained declaration; it does not prove live availability.', '',

@@ -10,7 +10,7 @@ Evidence: .github/workflows/remediation-native.yaml; tests/verification/contract
 
 Applies to: KubeClaw source revision `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`
 
-Last verified: 2026-09-17 — source inspection; no live execution
+Last verified: 2026-09-17; no live execution is recorded
 
 This page defines the evidence required before KubeClaw can claim operational or
 production acceptance. **All complete gates on this page remain open.** Existing
@@ -21,15 +21,13 @@ operational pass. Current implementation gaps belong in the [open issue register
 
 Before execution, the operator selects an isolated environment, immutable repository commit, release/bundle commit and actual running image digests. Node/npm, database, browser and tool versions follow that revision's lockfiles and `versions.json`. Missing capacity, endpoints, identities, signing keys, cgroup delegation or a justified measurement threshold are missing prerequisites. Do not guess them or substitute test doubles.
 
-Each execution record includes gate and finding IDs, UTC timestamp, environment, and source commit. It also includes release, image, and browser identities. Record the exact command, nonsecret parameters, exit status, and executed or skipped counts. Preserve original outputs and result artifacts with digests. Mutating tests also record the test project or namespace, responsible operator, prior backup, injected failure, and verified cleanup. Secrets stay in the intended private access mechanism. Public evidence must not contain platform tokens.
+Each execution record names the acceptance area and requirement, UTC timestamp, environment, and source commit. It also includes release, image, and browser identities. Record the exact command, nonsecret parameters, exit status, and executed or skipped counts. Preserve original outputs and result artifacts with digests. Mutating tests also record the test project or namespace, responsible operator, prior backup, injected failure, and verified cleanup. Secrets stay in the intended private access mechanism. Public evidence must not contain platform tokens.
 
 Record **passed**, **failed**, **blocked** or **not executed** per gate. Exit code zero counts only when the intended scope actually ran. Zero cases, all-skipped suites, empty reports, file existence, schema validation, model-written reports and compiled graphs are not execution evidence. Preserve failed runs separately from successful retries. Changes to source, browser baseline, required scope or identity invalidate the affected acceptance result.
 
 The procedures below require an environment approved for their actual effects. D12 does not grant that environment approval. A passing subtest does not close an incomplete implementation finding. Commands requiring operator-selected values are not ready-to-run configurations.
 
-## G01
-
-### Contracts, SDK and installable packages
+## Contracts, SDK and installable packages
 
 **Scope:** contracts, SDK, package registration, startup, and observer builds.
 
@@ -39,9 +37,7 @@ The procedures below require an environment approved for their actual effects. D
 
 **Pass conditions:** Validation is bounded and fails controllably. Original data and producer/schema/profile identity survive without a hidden new legacy fallback. Equal content does not transfer producer authority. A selected SDK consumer test proves that consumer, not model execution or the whole product. Use only the legitimate test environment and original authorized consumers. A historical unavailable helper is not evidence that its test ran.
 
-## G02
-
-### Durable state, effects and recovery
+## Durable state, effects and recovery
 
 **Scope:** durable state, effects, replay, and uncertain external results.
 
@@ -49,15 +45,13 @@ The procedures below require an environment approved for their actual effects. D
 
 **Procedure:** Start concurrent mutations and SIGKILL processes at journal, effect and projection boundaries. Reopen valid journal prefixes; supply tampered, oversized and foreign references. Execute an external effect once, lose its response, then resume. Compare waits, artifacts, results and retention fences before and after restart.
 
-**Pass conditions:** One owner per critical section, no lost durable wait/artifact state and identity-bound deterministic replay. Reconcile an uncertain external effect instead of blindly repeating it. Release resources only after durable closure and proven owner termination. The incomplete broader retention finding PCR-OBS-002 remains explicitly open under G09.
+**Pass conditions:** One owner per critical section, no lost durable wait/artifact state and identity-bound deterministic replay. Reconcile an uncertain external effect instead of blindly repeating it. Release resources only after durable closure and proven owner termination. The broader connected-retirement work remains open under [observability, retention and operator delivery](#observability-retention-and-operator-delivery).
 
-## G03
-
-### Workers, kernel limits, supervisors and cancellation
+## Workers, kernel limits, supervisors and cancellation
 
 **Scope:** workers, supervisors, process ownership, cancellation, and resource release.
 
-**Prerequisites:** Original compiled sandbox; Linux with readable process-tree procfs, writable delegated cgroup v2, legitimate credential drop to nonprivileged UID/GID and measurable CPU/memory enforcement. A production acceptance run must use the actual runner integrated with the attempt host, including capability/broker work. PCR-BUSTER-ENGINE-001 and -004 remain incomplete.
+**Prerequisites:** Original compiled sandbox; Linux with readable process-tree procfs, writable delegated cgroup v2, legitimate credential drop to nonprivileged UID/GID and measurable CPU/memory enforcement. A production acceptance run must use the actual runner integrated with the attempt host, including capability/broker work. Whole-attempt resource ownership and restarted-job quiescence remain incomplete.
 
 **Procedure:** Run parallel attempts. Exercise early stdin closure, UTF-8 chunk boundaries, stalled downloads, lost submit responses, hanging children/grandchildren, TERM and host SIGKILL. Restart the supervisor; inject status-read and terminal-status-write errors and observe admission/queue drain. Measure kernel OOM, CPU/deadline limits and fixture teardown within the same attempt owner. After restart, require proven quiescence before deleting owned resources.
 
@@ -67,9 +61,7 @@ The procedures below require an environment approved for their actual effects. D
 
 **Pass conditions:** No surviving orphan work; parent PID alone is not ownership proof. Shared parent usage must not be charged repeatedly to concurrent attempts. Absolute deadlines include final work. Readback confirms enforced limits and memory exhaustion has kernel effect. Status errors remain visible; uncertain metadata never authorizes deletion. A supervisor start/lease test or terminal cleanup helper alone does not prove this gate.
 
-## G04
-
-### Approvals, repair budgets and risk acceptance
+## Approvals, repair budgets and risk acceptance
 
 **Scope:** approvals, waits, repair budgets, and escalation.
 
@@ -79,9 +71,7 @@ The procedures below require an environment approved for their actual effects. D
 
 **Pass conditions:** Separate monotonic budgets survive restart; pure rechecks do not consume repair rounds. Source changes invalidate affected approvals transitively. Exhaustion leads to Needs Nova; failed additional work leads to blocked. No autonomous reduction of mandatory scope. Success on the last permitted repair is not blocked merely because the counter reached its limit.
 
-## G05
-
-### Forge, Git concurrency and workspace ownership
+## Forge, Git concurrency and workspace ownership
 
 **Scope:** Git workspaces, locks, synchronization, and cleanup.
 
@@ -91,11 +81,9 @@ The procedures below require an environment approved for their actual effects. D
 
 **Pass conditions:** No work in another workspace, bounded cancellable lock waits, precise conflict causes, push reconciliation instead of blind duplication and ownership-bound cleanup. Branch consolidation and equal trees prove provenance, not execution of these product paths.
 
-## G06
+## Executed quality gates and eleven production receipts
 
-### Executed quality gates and eleven production receipts
-
-**Scope:** mandatory quality checks, Buster evidence, Echo policy, reports, and supervisor contracts. G15 covers separate model promotion. A deterministic contract check does not measure model quality.
+**Scope:** mandatory quality checks, Buster evidence, Echo policy, reports, and supervisor contracts. [Echo promotion](#echo-promotion-as-a-separate-product-decision) is a separate decision. A deterministic contract check does not measure model quality.
 
 **Prerequisites:** Registered Buster providers, attested source, authenticated Nova/Buster route and real suite dependencies. Install Chromium from the locked Playwright package and record its actual executable path/version. BuildKit, registry, Kubernetes, Tailnet, scanner database and target application must actually be available.
 
@@ -119,9 +107,7 @@ The procedures below require an environment approved for their actual effects. D
 
 **Pass conditions:** Every successful suite has its complete authenticated receipt and executed scope. Schema checks alone do not attest an executing worker. Expected defect cases remain failures in the specified result field. Stub tests must not hide missing Chromium, ESLint configuration, shell tools, or complete reports. `tests/verification/contracts/check-production-receipt-attestation.mjs` checks the local receipt contract. The actual production run supplies real signing and execution identity.
 
-## G07
-
-### Prism database, jobs, sessions and resources
+## Prism database, jobs, sessions and resources
 
 **Scope:** Prism databases, jobs, sessions, and resources.
 
@@ -133,9 +119,7 @@ The procedures below require an environment approved for their actual effects. D
 
 **Retrieval acceptance:** Use the declared 10,000-reference corpus, rights and status filters, hardware and labelled query set. Report precision at 10, recall at 20, false inclusions, result diversity and p95 latency. The spike specifies 250 ms; the implementation plan and server benchmark specify 300 ms. Report both limits. A result below 300 ms does not resolve the undocumented relaxation from 250 ms. Record a decision before treating either as the sole approved gate. The other recorded targets are precision at least 0.70, recall at least 0.80, and zero rights or status-filter false inclusions. The top ten must contain at least four product or source families when four are eligible. The same query, corpus snapshot, model and ranking version must return the same ordered IDs. Compare hybrid search with each individual search method: it must match or improve the better method on the labelled query set. Exact vector search must preserve full vector recall. Record query plans, scanned rows, duplicates and p50 as well as p95. The optional 100,000-row probe reports performance against one second; it does not block v1. See [retrieval decisions](../decisions/prism.md#retrieval-and-preferences).
 
-## G08
-
-### Prism browser, Studio, artifacts and retained memory
+## Prism browser, Studio, artifacts and retained memory
 
 **Scope:** Prism browser execution, Studio, artifacts, and retained memory.
 
@@ -143,25 +127,21 @@ The procedures below require an environment approved for their actual effects. D
 
 **Procedure:** Run `npm run test:studio-remediation --workspace @kubeclaw/prism` for iframe, navigation/pagination, actions, image decoding and errors. Use `node skills/prism/integration/worker-browser-cancellation.mts` for owned browser cancellation/drain. Run `npm run test:engine:native-retention --workspace @kubeclaw/prism -- --max-retained-growth-bytes=BYTES --captures-per-window=32` only after selecting a real BYTES value. Exercise descendant moves, recursive duplication, variants and state patches through the real UI; tamper with assets and restart Control.
 
-**Pass conditions:** Correct visible interactions, authenticated artifact bytes/digests/sizes and controlled failures. Native capture produces real PNG/ARIA output. Completed cache entries obey count/byte limits; coalescing preserves active ownership. Retained heap is distinct from browser child-process memory and complete Worker/Control persistence, which require G03/G07. Renderer or baseline-codec checks do not approve a new real browser baseline.
+**Pass conditions:** Correct visible interactions, authenticated artifact bytes/digests/sizes and controlled failures. Native capture produces real PNG/ARIA output. Completed cache entries obey count/byte limits; coalescing preserves active ownership. Retained heap is distinct from browser child-process memory and complete Worker/Control persistence, which require [worker ownership](#workers-kernel-limits-supervisors-and-cancellation) and [Prism service persistence](#prism-database-jobs-sessions-and-resources). Renderer or baseline-codec checks do not approve a new real browser baseline.
 
 **Device scope:** Browser automation does not prove the physical-device workflow. Record the actual desktop and mobile devices, viewport, input method and browser. Complete direction selection, editing without drag, undo/redo, review and publication. Reopen the exact approved baseline and verify its identity. Missing devices remain unexecuted prerequisites.
 
-## G09
-
-### Observability, retention and operator delivery
+## Observability, retention and operator delivery
 
 **Scope:** observability, retention, operator delivery, and dependency ownership.
 
-**Prerequisites:** Original state/artifact/telemetry stores, actual authorized Clawdeck/receiver route and verifiable delivery receipt. PCR-OBS-002 remains incomplete implementation work.
+**Prerequisites:** Original state/artifact/telemetry stores, actual authorized Clawdeck/receiver route and verifiable delivery receipt. Complete connected retirement remains incomplete implementation work.
 
 **Procedure:** Deliver large original outputs as linked artifacts. Restart observers and receivers during replay and lost acknowledgement. A retry must perform a new actual delivery attempt. Offer equal-looking foreign artifacts, changed parent/attempt identities and expired/forged receipts. Compare acknowledged history, active references, quotas, projection/admission fences, dispatch retirement and supported older codecs across restart.
 
 **Pass conditions:** No silent truncation of stored originals, lost causes, foreign receipt authority or premature resource release. Display truncation is explicitly labeled while the original remains complete. Only pipeline-generated demo credentials fall under the accepted private diagnostic exception; platform secrets remain protected. A local HTTP acknowledgement does not prove Clawdeck/Discord delivery or human receipt. Bounded projections are not a complete retention policy across all consumers.
 
-## G10
-
-### Demo, Kubernetes admission, Tailnet and human acceptance
+## Demo, Kubernetes admission, Tailnet and human acceptance
 
 **Scope:** demo namespaces, Kubernetes admission, Tailnet exposure, and human acceptance.
 
@@ -171,23 +151,19 @@ The procedures below require an environment approved for their actual effects. D
 
 **Pass conditions:** Ready means tested and delivered; accepted requires the human. Old acceptance remains historically valid but does not authorize a new version. Generation/UID/receipt bindings reject stale cleanup and Ready acknowledgements. Tailnet execution revision and cleanup proof come from independent authenticated receipts. Schema/CEL/CAS fixtures and 24 operation/status combinations do not prove a running controller. Historical 384-domain plus 384-extra-field checks must not be described indiscriminately as 768 negative live cases. Faulty historical stale-cleanup/expiry fixtures are not demonstrated product defects.
 
-## G11
-
-### Release identity, registry, mirrors and GitHub permissions
+## Release identity, registry, mirrors and GitHub permissions
 
 **Scope:** release identity, registry, mirrors, and GitHub permissions.
 
-**Prerequisites:** Controlled registry with actual PVC/CSI, BuildKit/CRI clients, configured CA/auth, immutable release bundle and reproducible builds. GitHub checks use actual PR/publication jobs. IFR-21-001 and IFR-29-001 remain incomplete.
+**Prerequisites:** Controlled registry with actual PVC/CSI, BuildKit/CRI clients, configured CA/auth, immutable release bundle and reproducible builds. GitHub checks use actual PR/publication jobs. Reproducible runtime-image inputs and separation of operator configuration from public examples remain incomplete.
 
 **Procedure:** Build from clean source and compare published OCI descriptor/platform digests, deployed pod imageIDs and active role bundle. Restart/move the registry pod; after planned offline garbage collection, pull referenced manifests/layers again and measure unreferenced storage release. Test cache misses and hits through both BuildKit and node CRI, then a defined upstream outage. Record cached hits and uncached misses during that outage separately; an online miss does not satisfy the inherited offline-miss requirement. Trigger stale scanner-database refusal. In actual GitHub jobs, check PR read permissions separately from publication privileges.
 
 **Pass conditions:** The exact tested release is used, without private or mutable substitute references. Data survives real storage/pod changes. Ephemeral-to-PVC changes are not silently accepted as safe upgrades. Offline GC follows an exclusive maintenance procedure. Mirror configuration works in every actual client. A timed-out GHCR call, YAML pin check or Helm render proves neither OCI availability nor effective GitHub permissions. The local Distribution 3.0.0 GC result releasing 65,536 unreferenced bytes is bounded evidence, not CSI/capacity acceptance.
 
-## G12
+## Networking, identities, Envoy and access boundaries
 
-### Networking, identities, Envoy and access boundaries
-
-**Scope:** networking, workload identity, Envoy, access boundaries, and Cilium coordination with G13.
+**Scope:** networking, workload identity, Envoy, access boundaries, and Cilium coordination with [GitOps, stateful services, restore and capacity](#gitops-stateful-services-restore-and-capacity).
 
 **Prerequisites:** Test cluster using the actual selected CNI, real SPIRE/Envoy identities, Tailnet route, namespace/secret RBAC and intended BuildKit isolation. Unresolved Tailnet/BuildKit decisions remain implementation issues.
 
@@ -195,9 +171,7 @@ The procedures below require an environment approved for their actual effects. D
 
 **Pass conditions:** Denial occurs at the real trust boundary, rollouts are selective and failures are bounded/observable. A local Envoy certificate rotation or self-probe does not prove the later live peer/alert chain. Default exec namespaces `[kubeclaw]` can expose token/kubeconfig to Codex: read-only MCP tools do not make a shared service account read-only. `execNamespaces: []` disables this exec access. `can-i` assesses authorization; it does not execute the operation.
 
-## G13
-
-### GitOps, stateful services, restore and capacity
+## GitOps, stateful services, restore and capacity
 
 **Scope:** GitOps, stateful services, restore, and capacity. The “main versus resolved SHA” health mismatch remains in the open register.
 
@@ -209,13 +183,11 @@ For Redis, PostgreSQL/pgvector, and LiteLLM, write data and execute the document
 
 **Pass conditions:** No success at the wrong revision, data loss or implicit database downgrade/restore. The current combination of `targetRevision: main` and literal comparison with resolved status SHAs is a source-confirmed technical gap, not a demonstrated live outage. Platform autosync and manual child/runtime sync are distinct. Application-server readiness does not establish Devbox pairing.
 
-Local GitOps evidence uses real Git/Helm/Lua/filesystem operations but fixture cluster responses, digests and SQL commands. Native Redis checks and PostgreSQL cryptographic restores retain their actual scope. Historical Qdrant snapshot evidence does not make the retired service part of the current gate. Real scheduling, installed CSI, complete cross-service restore and unresolved infrastructure prerequisites remain separate. IFR-26-001 stays incomplete until the platform has full recovery coverage.
+Local GitOps evidence uses real Git/Helm/Lua/filesystem operations but fixture cluster responses, digests and SQL commands. Native Redis checks and PostgreSQL cryptographic restores retain their actual scope. Historical Qdrant snapshot evidence does not make the retired service part of the current gate. Real scheduling, installed CSI, complete cross-service restore and unresolved infrastructure prerequisites remain separate. Complete application recovery stays open until the platform has full recovery coverage.
 
-## G14
+## Complete user journey and evidence-backed final report
 
-### Complete user journey and evidence-backed final report
-
-**Scope:** complete user journey and final evidence, integrating G01–G13.
+**Scope:** complete user journey and final evidence, integrating every preceding acceptance area.
 
 **Prerequisites:** Actual Nova→Forge→Buster→Prism/product/operator route, bound source, registered engines/providers and mandatory prechecks. Model/review functions use their intended real services. Echo defaults off; Buster defaults on. The separately optional test agent does not replace mandatory deterministic tests.
 
@@ -225,11 +197,9 @@ The first requires `PRISM_CONTROL_URL`, `PRISM_AGENT_URL`, `PRISM_E2E_INGRESS_SE
 
 **Pass conditions:** The final report uses the authoritative run/source/attempt-bound reader; model text remains a draft. Failed, cancelled and unexecuted work stays visible. No stale approval, foreign artifact identity or duplicated external effect after resume. Compiled graphs, offline materialization, plugin parity, local report readers and individual HTTP tests do not establish a full executed journey or human product acceptance.
 
-## G15
+## Echo promotion as a separate product decision
 
-### Echo promotion as a separate product decision
-
-**Scope:** Echo model promotion after the deterministic quality controls in G06.
+**Scope:** Echo model promotion after the [deterministic quality controls](#executed-quality-gates-and-eleven-production-receipts).
 
 **Prerequisites:** Use a corrected paired corpus of defective and proven final fixed revisions. Use stable model and transport execution with independent adjudication. Earlier results had incomplete pairs, defective controls, a rejected genuine P0, and a claim without source proof. Those data cannot establish a reliable promotion percentage.
 
@@ -237,54 +207,58 @@ The first requires `PRISM_CONTROL_URL`, `PRISM_AGENT_URL`, `PRISM_E2E_INGRESS_SE
 
 **Pass conditions:** Two complete batches show no new failure class, no false P0 on clean code and no missed seeded P0. Continue shadow evaluation until then. These checks do not enable Echo as a production blocker.
 
-## Outstanding Live Obligations
+## Outstanding live obligations
 
-The following obligations add precise environment proof to G01–G15. They do not
-claim that any listed test has run. The stable IDs connect each obligation to the
-current implementation issue or product boundary that requires the evidence.
+These obligations specify environment evidence that is still required. Their
+presence does not claim that an execution has occurred.
 
-| Original ID | Gate | Required evidence or preserved limit |
-| --- | --- | --- |
-| PCR-ISOLATION-002 | [G03](#g03) | Run the actual process tree with credential drop, host SIGKILL, readable procfs and delegated cgroups. A blocked kernel prerequisite is not a pass. |
-| PCR-ISOLATION-004 | [G03](#g03) | Cause a real cgroup memory limit failure and read the kernel result. Simulated memory counters are insufficient. |
-| PCR-NOVA-GATE-005 | [G03](#g03) | Restart the real remote process and read its state through the graph reader. A compiled graph is preparation only. |
-| PATH-T11-001 | [G06](#g06) | Run the actual sandbox and import its executed JUnit results. Preserve the historical EPIPE/exit-70 failure separately. |
-| PATH-T13-001 | [G06](#g06), [G14](#g14) | Execute cumulative pipeline checks and deliver the resulting Ready candidate. A final-module-only result is insufficient. |
-| PCR-CONTAINER-BUILD-001 | [G06](#g06) | Build through the actual BuildKit runner. Local HTTP protocol checks do not prove a container build. |
-| PCR-CONTAINER-BUILD-002 | [G06](#g06) | Exercise the real build deadline and final evidence path through BuildKit. Preserve timeout and failure results. |
-| PCR-DIRECT-COMMAND-001 | [G03](#g03), [G06](#g06) | Run the original native command runner and verify its executed result artifact and ownership. |
-| PCR-VISUAL-001 | [G06](#g06), [G08](#g08) | Approve a real browser baseline, detect a mismatch and perform an authorized refresh. Old blocked v1 checks do not prove this path. |
-| PATH-T02-002 | [G07](#g07), [G08](#g08) | Use native PostgreSQL, the real browser and the actual agent route together. |
-| PCR-PRISM-AGENT-BRIDGE-001 | [G07](#g07) | Restart the actual bound OpenClaw session and reconcile an uncertain external call without duplication. |
-| PCR-PRISM-AGENT-BRIDGE-002 | [G07](#g07) | Exercise session collision, restart and unknown response through the real agent service. |
-| PCR-PRISM-CONTROL-001 | [G07](#g07) | Verify commit and rollback through actual Control services and native PostgreSQL. |
-| PCR-PRISM-CONTROL-002 | [G07](#g07) | Use real pooled connections and lose a successful response. Confirm the committed result on retry. |
-| PCR-PRISM-CORPUS-001 | [G07](#g07) | Exercise multiple connections against native PostgreSQL. PGlite does not prove a server connection pool. |
-| PCR-PRISM-WORKER-001 | [G07](#g07) | Restart the actual Worker against a migrated PostgreSQL service. A TCP peer alone is not database readiness. |
-| PCR-PRISM-WORKER-003 | [G03](#g03), [G07](#g07), [G08](#g08) | Prove owned browser cleanup and native recovery. Already uploaded artifact bytes are not rolled back with a SQL transaction. |
-| PCR-PRISM-ENGINE-001 | [G08](#g08) | Measure sustained Chromium capture and retained heap; restart Control. Keep parent heap and child-process memory distinct. |
-| PCR-PRISM-RENDERER-002 | [G08](#g08) | Perform the real iframe click and verify the resulting action and visible state. |
-| PCR-PRISM-STUDIO-002 | [G08](#g08) | Decode actual image bytes under the intended content security policy and verify controlled error display. |
-| F-T14-01 | [G10](#g10), [G14](#g14) | Open the delivered application through the actual Tailnet route and log in with the intended recipient credentials. |
-| F-T14-02 | [G10](#g10), [G14](#g14) | Record authenticated human acceptance and extension for the exact delivered version. |
-| IFR-08-001 | [G11](#g11) | Push from BuildKit and pull through uncached CRI for a real pod using the registry storage. |
-| IFR-09-001 | [G11](#g11) | Test both BuildKit and CRI mirrors for a cache hit, miss and defined upstream outage. |
-| IFR-19-001 | [G11](#g11) | Compare the selected receipt, OCI descriptor, deployed imageID and bundle. Compare the correct digest types; they need not be identical strings. |
-| IFR-22-001 | [G11](#g11) | Verify effective token permissions in actual fork and internal PR jobs, separately from publication. |
-| PCR-SCAFFOLD-OPS-001 | [G03](#g03) | Run adopted pipeline status errors and durable whole-process ownership. The stale pre-closure subrecord does not reopen the locally closed finding. |
-| IFR-07-001 | [G12](#g12), [G13](#g13) | Exercise actual Envoy rollout and peer revocation. A local self-probe is bounded evidence only. |
-| IFR-12-001 | [G13](#g13) | Execute the [single-service recovery procedure](../use/recovery.md#single-service-restore) in an isolated real environment and verify restored state. |
-| IFR-14-001 | [G12](#g12), [G13](#g13) | Exercise Envoy peer failure, LiteLLM database faults and Prism active-write cross-node recovery. |
-| IFR-15-001 | [G13](#g13) | Execute the [Prism restore procedure](../use/recovery.md#prism-restore), including its failure and rollback limits. |
-| IFR-20-001 | [G03](#g03), [G13](#g13) | Measure combined host CPU, memory, disk and real-pod OOM behavior. Do not replace measurements with guessed capacity. |
-| IFR-20-002 | [G12](#g12), [G13](#g13) | Verify the real service and cross-node failure sequence also required by IFR-14-001. |
-| IFR-25-001 | [G12](#g12) | Exercise SPIRE gRPC/UDS failure, real database/BuildKit probes and actual alarm delivery. Keep the native Envoy 1.39 certificate checks at their measured scope. |
-| T01-F02 | [G10](#g10), [G14](#g14) | Complete the authenticated product delivery and human decision path also required by F-T14-01 and F-T14-02. |
-| T15-F01 | [G14](#g14) | Use actual OpenClaw/ACP writer tools, token configuration and model execution. Fixtures marked modelExecution:false cannot prove this journey. |
+### Worker and quality execution
+
+- Run the actual process tree with credential drop, host SIGKILL, readable procfs and delegated cgroups. A blocked kernel prerequisite is not a pass.
+- Cause a real cgroup memory-limit failure and read the kernel result. Simulated memory counters are insufficient.
+- Restart the real remote process and read its state through the graph reader. A compiled graph is preparation only.
+- Run the actual sandbox and import its executed JUnit results. Preserve the historical EPIPE/exit-70 failure separately.
+- Execute cumulative pipeline checks and deliver the resulting Ready candidate. A final-module-only result is insufficient.
+- Build through the actual BuildKit runner, exercise its real deadline, and preserve final evidence for success, timeout and failure. Local HTTP protocol checks do not prove a container build.
+- Run the original native command runner and verify its executed result artifact and ownership.
+- Approve a real browser baseline, detect a mismatch and perform an authorized refresh. Old blocked v1 checks do not prove this path.
+- Exercise adopted pipeline status errors and durable whole-process ownership. A stale pre-closure subrecord does not reopen locally closed work.
+
+### Prism services and browser
+
+- Use native PostgreSQL, the real browser and the actual agent route together.
+- Restart the actual bound OpenClaw session and reconcile an uncertain external call without duplication.
+- Exercise session collision, restart and unknown response through the real agent service.
+- Verify commit and rollback through actual Control services and native PostgreSQL.
+- Use real pooled connections and lose a successful response. Confirm the committed result on retry.
+- Exercise multiple connections against native PostgreSQL. PGlite does not prove a server connection pool.
+- Restart the actual Worker against a migrated PostgreSQL service. A TCP peer alone is not database readiness.
+- Prove owned browser cleanup and native recovery. Already uploaded artifact bytes are not rolled back with a SQL transaction.
+- Measure sustained Chromium capture and retained heap, then restart Control. Keep parent heap and child-process memory distinct.
+- Perform the real iframe click and verify the resulting action and visible state.
+- Decode actual image bytes under the intended content security policy and verify controlled error display.
+
+### Delivery, release and infrastructure
+
+- Open the delivered application through the actual Tailnet route and log in with the intended recipient credentials.
+- Record authenticated human acceptance and any extension for that exact delivered version.
+- Push from BuildKit and pull through uncached CRI for a real pod using the registry storage.
+- Test both BuildKit and CRI mirrors for a cache hit, miss and defined upstream outage.
+- Compare the selected receipt, OCI descriptor, deployed image ID and bundle. Compare the correct digest types; they need not be identical strings.
+- Verify effective token permissions in actual fork and internal pull-request jobs, separately from publication.
+- Exercise actual Envoy rollout and peer revocation. A local self-probe is bounded evidence only.
+- Execute the [single-service recovery procedure](../use/recovery.md#single-service-restore) in an isolated real environment and verify restored state.
+- Exercise Envoy peer failure, LiteLLM database faults and Prism active-write cross-node recovery.
+- Execute the [Prism restore procedure](../use/recovery.md#prism-restore), including its failure and rollback limits.
+- Measure combined host CPU, memory, disk and real-pod OOM behavior. Do not replace measurements with guessed capacity.
+- Verify the real service and cross-node failure sequence across the affected services.
+- Exercise SPIRE gRPC/UDS failure, real database and BuildKit probes, and actual alarm delivery. Keep the native Envoy 1.39 certificate checks at their measured scope.
+- Complete the authenticated product delivery and human decision path for the exact delivered version.
+- Use actual OpenClaw/ACP writer tools, token configuration and model execution. Fixtures marked `modelExecution: false` cannot prove this journey.
 
 ## Existing automation and its scope
 
-`.github/workflows/remediation-native.yaml` checks static Knip/integration types, isolated native PostgreSQL suites, Studio in a real browser and supervisor operations. PostgreSQL follows `versions.json` → `automation.prismTestPostgres`; the wrapper creates and cleans a fresh database per suite. These jobs do not replace cgroup/OOM tests, actual cloud/Tailnet/registry privileges or the full release/backup/operator journey. A green workflow is not a blanket pass for this page.
+`.github/workflows/remediation-native.yaml` checks static Knip/integration types, isolated native PostgreSQL suites, Studio in a real browser and supervisor operations. PostgreSQL follows `versions.json` → `automation.prismTestPostgres`; the wrapper creates and cleans a fresh database per suite. These jobs do not replace cgroup/OOM tests, actual cloud/Tailnet/registry privileges or the full release/backup/operator journey. A green workflow does not satisfy every acceptance area.
 
 ## Evidence Boundary
 

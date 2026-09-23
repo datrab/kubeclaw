@@ -5,13 +5,13 @@ Audience: maintainers, pipeline authors, provider authors
 Owner: KubeClaw maintainers
 Evidence: skills/buster/engine/test-gates/remote-plan-runtime.ts; contracts/pipeline-test-gate/v1/src/index.ts
 Applies to: pipeline test-gate architecture and provider contracts
-Last verified: 2026-09-15 (source inspection; no runtime or live tests)
+Last verified: 2026-09-15; no runtime or live test result is available
 
 These are the existing **D-001–D-119** decisions, not 119 new approvals. They are distinct from the review/remediation IDs D01–D16. The lasting rules and their reasons are retained here; the old design discussion and Testkube audit are not required reading. Broader ownership and security reasoning is in [Core and plugin decisions](core-and-plugins.md).
 
 Each record below gives the source's actual approval state/date. No individual approver is named in the original. D-110–D-113 have no explicit acceptance label and remain **unconfirmed**, even though their connected implementation exists. D-109's historical label combines accepted and implemented; acceptance is retained while current implementation proof is assessed separately.
 
-**Implementation and verification for every record.** Complete design implementation is **partial**; no blanket provider or cluster completion is asserted. ADR-001–ADR-014 identify inspected code for core, worker, registry, role, dispatch, and policy boundaries. Provider decisions define intended contracts. They do not certify that every provider implements each clause. No test, browser, native host, or cluster verification ran for this decision assessment. Current gaps belong in the [issue register](../status/open-issues.md). Environment proof belongs in [acceptance gates](../status/acceptance.md), under the [evidence policy](acceptance.md).
+**Implementation and verification for every record.** Complete design implementation is **partial**; no blanket provider or cluster completion is asserted. ADR-001–ADR-014 identify the core, worker, registry, role, dispatch, and policy boundaries. Provider decisions define intended contracts. They do not certify that every provider implements each clause. No current test, browser, native-host, or cluster result is available for these decisions. Current gaps belong in the [issue register](../status/open-issues.md). Environment proof belongs in [acceptance gates](../status/acceptance.md), under the [evidence policy](acceptance.md).
 
 **Alternatives and supersession.** Only alternatives actually described in the source are retained. Where a record states no competing design, none is invented. Later decisions narrow earlier choices. D-110 scopes the first transport without rejecting the D-098 distributed queue target. D-105 replaces the Common overlay. D-108/D-109 refine D-090. D-114–D-118 refine unit, report, and coverage behavior. D-083/D-095/D-112 permit a bounded unmigrated-suite bridge. They never permit dual authority for an already migrated successor. Unselected Testkube ideas are comparison material, not approvals. D-089, D-088, D-087, and D-094 reject or replace them. Future content stores, public catalog/approval platform, external visual baseline storage, stability gates, DeepSec and live attack testing remain deferred where stated.
 
@@ -963,6 +963,6 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Decision.** Every suite migration follows baseline, decision mapping, implementation, vertical/parity proof, comparison, cutover, deletion and closeout, with only one real gate authority.
 
-**Reason, consequences and actual alternatives.** Documentation must explain every field/default/limit/result/error/evidence/security/tradeoff/migration/troubleshooting rule with tested examples. A normal user must not need source inspection or maintainer help to understand use.
+**Reason, consequences and actual alternatives.** Documentation must explain every field/default/limit/result/error/evidence/security/tradeoff/migration/troubleshooting rule with tested examples. A normal user must not need repository access or maintainer help to understand use.
 
 **Approval/source.** Accepted, 2026-08-12; original D-119.

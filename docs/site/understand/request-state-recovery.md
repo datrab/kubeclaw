@@ -6,7 +6,7 @@ Owner: Nova Core
 Evidence: skills/nova/project/compiler.ts; skills/nova/core/execution; skills/nova/core/lifecycle
 Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
 Applies to: `nova-project.v2` and pipeline-plugin-v2
-Last verified: source inspection on 2026-09-15
+Last verified: 2026-09-15
 
 ## Purpose
 

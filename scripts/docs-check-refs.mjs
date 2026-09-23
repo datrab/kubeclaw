@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -40,8 +41,15 @@ const historicalRepoRefDocs = new Set([
   'docs/architecture/pipeline-test-gate-unit-baseline.md',
 ]);
 
+const plannedRepoRefs = new Map([
+  ['docs/blueprint/AP09-acceptance-contract.md', new Set(['docs/_legacy-source/'])],
+  ['docs/blueprint/AP09-execution-plan.md', new Set(['docs/_legacy-source/'])],
+]);
+
 const errors = [];
-const scanCounts = { markdownLinks: 0, repoRefs: 0 };
+const scanCounts = { markdownLinks: 0, markdownAnchors: 0, repoRefs: 0, pinnedSourceLinks: 0 };
+const anchorCache = new Map();
+const pinnedObjectCache = new Map();
 
 function rel(filePath) {
   return path.relative(root, filePath).split(path.sep).join('/');
@@ -70,6 +78,50 @@ function stripFencedCode(text) {
 
 function stripHtmlComments(text) {
   return text.replace(/<!--[\s\S]*?-->/g, '\n');
+}
+
+function markdownDestination(raw) {
+  const value = raw.trim();
+  if (value.startsWith('<')) {
+    const end = value.indexOf('>');
+    return end < 0 ? value : value.slice(1, end);
+  }
+  return value.split(/\s+["']/u, 1)[0];
+}
+
+function githubHeadingText(raw) {
+  return raw
+    .replace(/\s+#+\s*$/u, '')
+    .replace(/!\[([^\]]*)\]\([^)]*\)/gu, '$1')
+    .replace(/\[([^\]]+)\]\([^)]*\)/gu, '$1')
+    .replace(/<[^>]+>/gu, '')
+    .replace(/[`*_~]/gu, '')
+    .trim();
+}
+
+function githubSlug(value) {
+  return value.toLocaleLowerCase('en-US')
+    .replace(/[^\p{Letter}\p{Number}\p{Mark}\s_-]/gu, '')
+    .replace(/\s/gu, '-');
+}
+
+function markdownAnchors(filePath) {
+  if (anchorCache.has(filePath)) return anchorCache.get(filePath);
+  const source = stripFencedCode(stripHtmlComments(fs.readFileSync(filePath, 'utf8')));
+  const anchors = new Set();
+  const counts = new Map();
+  for (const match of source.matchAll(/^ {0,3}#{1,6}\s+(.+)$/gmu)) {
+    const base = githubSlug(githubHeadingText(match[1]));
+    if (!base) continue;
+    const count = counts.get(base) ?? 0;
+    counts.set(base, count + 1);
+    anchors.add(count === 0 ? base : `${base}-${count}`);
+  }
+  for (const match of source.matchAll(/<(?:a|[A-Za-z][A-Za-z0-9:-]*)\b[^>]*(?:id|name)=["']([^"']+)["'][^>]*>/gu)) {
+    anchors.add(match[1]);
+  }
+  anchorCache.set(filePath, anchors);
+  return anchors;
 }
 
 function normalizeReference(raw) {
@@ -115,16 +167,29 @@ function existsRepoReference(ref) {
 
 function checkMarkdownLinks(filePath, text) {
   text = text.replace(/`[^`\n]*`/gu, '');
-  const linkRe = /!?\[[^\]]*]\(([^)]+)\)/g;
-  let match;
-  while ((match = linkRe.exec(text))) {
-    const target = normalizeReference(match[1]);
+  const linkRe = /!?(?<!\\)\[(?:\\.|[^\]\\])*(?<!\\)]\(([^)]+)\)/g;
+  for (const match of text.matchAll(linkRe)) {
+    const destination = markdownDestination(match[1]);
+    if (/^(https?:|mailto:|tel:)/u.test(destination)) continue;
+    const [rawPath, rawFragment] = destination.split('#', 2);
+    const target = normalizeReference(rawPath || rel(filePath));
     if (!target) continue;
-    const resolved = path.resolve(path.dirname(filePath), decodeURI(target));
+    const resolved = rawPath
+      ? path.resolve(path.dirname(filePath), decodeURI(target))
+      : filePath;
     if (rel(resolved).startsWith('docs/archive/')) continue;
     scanCounts.markdownLinks += 1;
     if (!fs.existsSync(resolved)) {
       errors.push(`${rel(filePath)} links to missing local path: ${match[1]}`);
+      continue;
+    }
+    if (rawFragment && resolved.endsWith('.md') && rel(filePath).startsWith('docs/site/')) {
+      let fragment;
+      try { fragment = decodeURIComponent(rawFragment); } catch { fragment = rawFragment; }
+      scanCounts.markdownAnchors += 1;
+      if (!markdownAnchors(resolved).has(fragment)) {
+        errors.push(`${rel(filePath)} links to missing Markdown anchor: ${match[1]}`);
+      }
     }
   }
 }
@@ -148,6 +213,7 @@ function checkRepoRefs(filePath, text) {
   for (const raw of candidateRefs(text)) {
     const ref = normalizeReference(raw);
     if (!ref || !isRepoReference(ref) || shouldSkipRepoReference(ref)) continue;
+    if (plannedRepoRefs.get(rel(filePath))?.has(ref)) continue;
     scanCounts.repoRefs += 1;
     if (!existsRepoReference(ref)) {
       errors.push(`${rel(filePath)} cites missing repository path: ${ref}`);
@@ -155,11 +221,108 @@ function checkRepoRefs(filePath, text) {
   }
 }
 
+const linkParserProbe = '[valid](target.md) and \\[a-z\\](?:not-a-link)';
+const linkParserMatches = [...linkParserProbe.matchAll(
+  /!?(?<!\\)\[(?:\\.|[^\]\\])*(?<!\\)]\(([^)]+)\)/g,
+)].map((match) => match[1]);
+if (JSON.stringify(linkParserMatches) !== JSON.stringify(['target.md'])) {
+  throw new Error('reference link parser must retain valid links and ignore escaped schema regex syntax');
+}
+
+function checkSourceCalloutRevisions(filePath, text) {
+  const lines = text.split('\n');
+  for (let index = 0; index < lines.length; index += 1) {
+    if (!lines[index].startsWith('> **Source evidence')) continue;
+    const startLine = index + 1;
+    const block = [];
+    while (index < lines.length && (lines[index].startsWith('>') || !lines[index].trim())) {
+      block.push(lines[index]);
+      index += 1;
+    }
+    index -= 1;
+    const value = block.join('\n');
+    const declared = value.match(/\*\*Revision:\*\* `([0-9a-f]{40})`/u)?.[1];
+    if (!declared) continue;
+    const linked = [...value.matchAll(
+      /https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\//gu,
+    )].map((match) => match[1]);
+    const other = [...new Set(linked.filter((revision) => revision !== declared))];
+    if (other.length) {
+      errors.push(`${rel(filePath)}:${startLine} source callout declares ${declared} but links ${other.join(', ')}`);
+    }
+  }
+}
+
+function physicalLineCount(source) {
+  if (!source) return 0;
+  const lines = source.split('\n').length;
+  return source.endsWith('\n') ? lines - 1 : lines;
+}
+
+function pinnedObject(revision, sourcePath) {
+  const key = `${revision}:${sourcePath}`;
+  if (pinnedObjectCache.has(key)) return pinnedObjectCache.get(key);
+  try {
+    const source = execFileSync('git', ['show', key], {
+      cwd: root,
+      encoding: 'utf8',
+      maxBuffer: 64 * 1024 * 1024,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    const result = { exists: true, lines: physicalLineCount(source) };
+    pinnedObjectCache.set(key, result);
+    return result;
+  } catch {
+    const result = { exists: false, lines: 0 };
+    pinnedObjectCache.set(key, result);
+    return result;
+  }
+}
+
+function pinnedLinkErrors(text) {
+  const findings = [];
+  const linkPattern = /https:\/\/github\.com\/datrab\/kubeclaw\/blob\/([0-9a-f]{40})\/([^#)\s>"']+)(?:#L(\d+)(?:-L(\d+))?)?/gu;
+  for (const match of text.matchAll(linkPattern)) {
+    scanCounts.pinnedSourceLinks += 1;
+    const [, revision, encodedPath, rawStart, rawEnd] = match;
+    let sourcePath;
+    try { sourcePath = decodeURIComponent(encodedPath); } catch { sourcePath = encodedPath; }
+    const object = pinnedObject(revision, sourcePath);
+    if (!object.exists) {
+      findings.push(`pinned source object does not exist: ${revision}:${sourcePath}`);
+      continue;
+    }
+    if (!rawStart) continue;
+    const start = Number(rawStart);
+    const end = Number(rawEnd ?? rawStart);
+    if (start < 1 || end < start || end > object.lines) {
+      findings.push(`pinned source range L${start}-L${end} is outside ${revision}:${sourcePath} (1-${object.lines})`);
+    }
+  }
+  return findings;
+}
+
+const fixtureRevision = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
+const fixtureLineCount = pinnedObject(fixtureRevision, 'package.json').lines;
+const missingFixture = pinnedLinkErrors(`https://github.com/datrab/kubeclaw/blob/${fixtureRevision}/__missing-reference-fixture__.md#L1-L1`);
+if (!missingFixture.some((finding) => finding.includes('does not exist'))) {
+  throw new Error('pinned-reference fixture did not detect a missing object');
+}
+const rangeFixture = pinnedLinkErrors(`https://github.com/datrab/kubeclaw/blob/${fixtureRevision}/package.json#L${fixtureLineCount + 1}-L${fixtureLineCount + 1}`);
+if (!rangeFixture.some((finding) => finding.includes('is outside'))) {
+  throw new Error('pinned-reference fixture did not detect an out-of-bounds line range');
+}
+scanCounts.pinnedSourceLinks = 0;
+
 for (const filePath of docsToScan()) {
   const raw = fs.readFileSync(filePath, 'utf8');
   const text = stripHtmlComments(stripFencedCode(raw));
   checkMarkdownLinks(filePath, text);
   checkRepoRefs(filePath, text);
+  if (rel(filePath).startsWith('docs/site/')) {
+    checkSourceCalloutRevisions(filePath, raw);
+    for (const finding of pinnedLinkErrors(raw)) errors.push(`${rel(filePath)} ${finding}`);
+  }
 }
 
 if (errors.length) {
@@ -170,4 +333,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`docs reference check passed (${scanCounts.markdownLinks} local links, ${scanCounts.repoRefs} repository path refs)`);
+console.log(`docs reference check passed (${scanCounts.markdownLinks} local links, ${scanCounts.markdownAnchors} local anchors, ${scanCounts.repoRefs} repository path refs, ${scanCounts.pinnedSourceLinks} pinned source links)`);

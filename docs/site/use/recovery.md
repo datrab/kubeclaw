@@ -1,11 +1,11 @@
 # Back Up and Recover
 
-Status: partial implementation; complete independent environment recovery remains open
+Status: executable component backups and native restore primitives; no self-contained isolated LiteLLM, external Prism, or full-platform operator restore
 Audience: platform operator, database operator, incident responder
 Owner: platform operations and data owners
 Evidence: charts/prism/files/prism-backup.sh; scripts/postgresql-recovery.sh; docs/status/open-issues.json
 Applies to: current selected runtime and state formats
-Last verified: 2026-09-16, source inspection and local documentation checks
+Last verified: 2026-09-21; no fresh live restore result is available
 
 ## Objective
 
@@ -15,9 +15,43 @@ Finish only after application readers verify the restored data.
 This page does not declare an environment-wide RPO or RTO.
 Those targets lack complete measured evidence.
 
+## Canonical Backup and Restore Procedure
+<!-- operator-task: backup-restore -->
+
+This page is the sole authority for `backup-restore`. Start with an owned
+component, compatible source and target versions, complete independently held
+credentials and keys, checksum-valid media, an empty isolated target, enough
+capacity, and an unchanged source. Run cluster inspection from the independent
+administration machine and restore tooling from the isolated recovery
+environment named by the component procedure. Backup scripts, database-native
+tools, immutable group metadata, and the original application reader are the
+authorities.
+
+Before any cluster command on this page, complete
+[Bind Cluster Authority](install.md#bind-cluster-authority). Keep the same bound
+shell for the whole recovery task. Every raw `kubectl`, Helm, or
+`scripts/deploy.sh` command below must inherit its exported read-only
+`KUBECONFIG`; every shown `<context>` must equal `EXPECTED_CONTEXT`. Run
+`assert_cluster_binding` immediately before each command block. Stop on any
+mismatch, leave media and targets unchanged, and follow the binding section's
+recovery; never fall back to the default kubeconfig.
+
+Complete [State Inventory](#state-inventory), [Define a Backup Set](#define-a-backup-set),
+the six-step [Procedure](#procedure), [Choose Restore Scope](#choose-restore-scope),
+the applicable component path or documented boundary, and [Verification](#verification). Stop on
+a missing group member, checksum mismatch, wrong key or credential, unsupported
+version pair, nonempty target, same-server target where forbidden, unclear
+writer fence, or absent original application reader.
+
+Final proof is a native integrity result plus a successful read through the
+original application, with writers still fenced until cutover. Retain exact
+commands, tool and source versions, group identity and checksums, encryption
+and credential authorities, isolated target identity, native and application
+results, measured loss/time, cutover, cleanup, and every failed attempt.
+
 ## Supported Versions
 
-Use the [shared version rules](README.md#supported-versions-and-tools).
+Use the [shared version rules](README.md#version-and-tool-boundary).
 A restore supports only a source, application, schema, backup format, and database-client combination that the component procedure declares compatible.
 If that declaration is absent, restore into an isolated target and stop before cutover until the data owner accepts the tested combination.
 
@@ -40,6 +74,11 @@ If that declaration is absent, restore into an isolated target and stop before c
 - Restore into an isolated target before destructive replacement.
 - Preserve the old environment until application verification passes.
 - Never use the failed Ops Pod as the only recovery tool.
+- Repository-produced local Prism and LiteLLM archives are not encrypted by
+  these scripts. Mode `0600` and checksums provide access restriction and
+  integrity detection, not encryption. Store independent copies only in an
+  encryption-at-rest authority with separately recoverable keys and record that
+  authority with the group.
 
 ## State Inventory
 
@@ -54,7 +93,7 @@ Assign one owner and one protection method to every applicable row.
 | Nova run storage | Nova operator | Journals, effects, waits, snapshots, and observer checkpoints | Quiesced filesystem backup of the configured `storageRoot` | No repository-wide backup scheduler exists |
 | Buster job storage | Buster operator | Jobs, source archives, results, receipts, and evidence | Quiesced storage backup with ownership evidence | Orphan quiescence remains incomplete |
 | Redis | Platform owner | Selected transport and service data | AOF-aware migration or storage backup | Role and authority depend on actual configuration |
-| LiteLLM PostgreSQL | Database owner | LiteLLM relational state | Completed logical backup group plus credential authority | Off-node replication remains operator work |
+| LiteLLM PostgreSQL | Database owner | LiteLLM relational state | Completed logical backup group plus credential authority | Backup and native test exist; isolated operator restore, application verification, and cutover are not supplied |
 | Prism PostgreSQL and artifacts | Prism owner | Projects, designs, baselines, and referenced immutable objects | One matched database-and-artifact group | External failure-domain restore remains unproved |
 | Prism derived data | Prism owner | Embeddings, indexes, thumbnails, projections | Rebuild from restored authority | Rebuild time has no accepted RTO |
 | OpenClaw and role PVCs | Role owner | Gateway state, role configuration, and workspaces | Storage backup under a quiesced workload | Content and rebuildability differ by mount |
@@ -91,6 +130,7 @@ Use the next six steps for routine backups.
 Run from the administration machine:
 
 ```bash
+assert_cluster_binding
 kubectl config current-context
 kubectl -n "<namespace>" get pvc
 kubectl -n "<namespace>" get cronjob,job
@@ -112,7 +152,8 @@ Record the exact fence and its start time.
 
 Use the service-owned paths on this page:
 
-- [Single-Service Restore](#single-service-restore) for Redis and LiteLLM PostgreSQL.
+- [Single-Service Restore](#single-service-restore) for the LiteLLM PostgreSQL
+  backup/restore boundary and explicit Redis limit.
 - [Prism Restore](#prism-restore) for the Prism database and artifacts.
 - [Recover Administrative Access](#recover-administrative-access) for the optional Ops Pod and independent access.
 
@@ -166,6 +207,7 @@ The chart creates these scheduled resources:
 Inspect their last execution:
 
 ```bash
+assert_cluster_binding
 kubectl -n "<namespace>" get cronjob prism-backup prism-backup-verification prism-restore-proof
 kubectl -n "<namespace>" get jobs -l app=prism-backup --sort-by=.metadata.creationTimestamp
 ```
@@ -177,13 +219,18 @@ They remain in the same cluster failure domain until an operator copies them ext
 >
 > **Claim:** Prism protects one database snapshot and the immutable artifact superset as a single published group. Verification rebuilds the artifact index from the stored bytes.
 >
-> **Implementation:** [The backup script creates and verifies the immutable database-and-artifact group](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/files/prism-backup.sh#L44-L117). [The database proof restores a temporary database and queries core tables](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/files/prism-backup.sh#L126-L153).
+> **Implementation:** [The backup script verifies an immutable database-and-artifact archive](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/files/prism-backup.sh#L44-L64).
+> It then [creates and publishes a complete group without replacing an existing group](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/files/prism-backup.sh#L66-L117).
+> [The database proof restores a temporary database and queries core tables](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/files/prism-backup.sh#L126-L153).
 >
-> **Contract or setting:** [The chart runs separate backup, verification, and database-proof CronJobs against the backup PVC](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/charts/prism/templates/backup.yaml#L1-L80).
+> **Contract or setting:** [The chart defines the backup and verification schedules and commands](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/templates/backup.yaml#L9-L47).
+> It also defines [Secret inputs and separate writable/read-only backup mounts](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/templates/backup.yaml#L52-L79).
 >
-> **Test evidence:** [The backup test checks publication limits, rendered commands, read-only artifact access, and the database proof](https://github.com/datrab/kubeclaw/blob/85e73b1885f04a9494f388cf6622ad0bde2db447/tests/verification/deployment/prism-backup.test.mts#L100-L135). A documentation verification run executed it on 2026-09-16. It failed before positive backup proof because the host supplied BusyBox-incompatible utilities and the chart fixture failed its native-worker precondition. [IFR-26-001](../status/open-issues.md#ifr-26-001) retains the required independent recovery proof. No fresh backup success is claimed.
+> **Test evidence:** [Capacity failures do not publish partial groups](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/prism-backup.test.mts#L73-L84).
+> [The rendered jobs preserve commands, database separation, and read-only artifact access](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/prism-backup.test.mts#L109-L125).
+> [The SQL proof owns a new temporary database and cleans failed proof attempts](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/prism-backup.test.mts#L127-L150). The test failed on 2026-09-16 before positive backup proof because the host supplied BusyBox-incompatible utilities and the chart fixture failed its native-worker precondition. [Complete independent application recovery](../status/open-issues.md#complete-independent-application-recovery-is-not-yet-demonstrated) retains the required proof. No fresh backup success is claimed.
 >
-> **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
+> **Revision:** `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`.
 >
 > **Limit:** The proof uses the same database service. It does not restore an external target or verify the complete application path.
 
@@ -218,6 +265,11 @@ Do not widen restore scope because diagnosis is incomplete.
 
 ### Procedure
 
+The following list is a restore qualification checklist, not a general restore
+command or support claim. Continue only when the component subsection supplies
+every item with an owned executable path. The current LiteLLM and Redis
+subsections do not supply a complete isolated operator restore.
+
 1. Record source version, target version, and migration state.
 2. Create an empty isolated target.
 3. Restore with the documented component tool.
@@ -228,13 +280,107 @@ Do not widen restore scope because diagnosis is incomplete.
 8. Keep the restored target isolated until every check passes.
 9. Plan cutover and rollback as separate reviewed actions.
 
-Use the stateful guides linked above for exact tool commands.
 Do not substitute a filesystem copy for a database restore.
+
+### LiteLLM PostgreSQL Backup and Restore Boundary
+
+The selected installation can create `cronjob/litellm-postgresql-backup` and
+`pvc/litellm-postgresql-backup`. This is an executable backup and verification
+path, not a complete isolated operator restore. Start with the deployed source
+revision, its selected immutable LiteLLM image, externally owned master/salt
+keys, a healthy LiteLLM PostgreSQL service, and enough backup-PVC capacity. Run
+the following commands from the independently administered cluster context:
+
+```bash
+assert_cluster_binding
+kubectl --context "<context>" -n "<namespace>" create job \
+  --from=cronjob/litellm-postgresql-backup "litellm-backup-manual-<unique-id>"
+kubectl --context "<context>" -n "<namespace>" wait \
+  --for=condition=complete "job/litellm-backup-manual-<unique-id>" --timeout=1860s
+kubectl --context "<context>" -n "<namespace>" logs \
+  "job/litellm-backup-manual-<unique-id>"
+```
+
+Expected output is one completed `backup-*` directory. A failed Job, old group,
+or unavailable PVC is a stop, not permission to delete earlier media.
+
+Copy the complete group to encrypted independent storage with the storage
+owner's mechanism and verify its checksums there. Retain the Job log, backup
+directory identity, source server version, immutable application image,
+credential-authority reference, and destination receipt. Then remove only the
+uniquely named manual Job:
+
+```bash
+assert_cluster_binding
+kubectl --context "<context>" -n "<namespace>" delete job \
+  "litellm-backup-manual-<unique-id>"
+```
+
+The repository script is a restore primitive, not target provisioning. It
+requires an already provisioned empty database, every dumped owner role,
+compatible client/server versions, externally recovered database credentials,
+and the original LiteLLM master/salt keys. It rejects same-server, nonempty,
+wrong-version, wrong-key, stale, corrupt, and oversized inputs and restores in
+one transaction
+([configuration and identity gates](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/postgresql-recovery.sh#L8-L49);
+[archive verification](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/postgresql-recovery.sh#L100-L138);
+[restore gates](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/scripts/postgresql-recovery.sh#L150-L173)).
+
+The native test supplies two disposable PostgreSQL servers and creates target
+roles and databases itself
+([test prerequisites and provisioning](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/postgresql-recovery-native.mts#L18-L41)).
+It proves schema, model/key rows, ownership, transactional failure, SQL
+authentication, and legacy/AES credential decryption
+([restore and data checks](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/postgresql-recovery-native.mts#L111-L137)).
+It does not start the selected LiteLLM image, call LiteLLM readiness or model
+APIs, test valid and invalid API keys through LiteLLM, prove budgets, make a
+real model request, perform client cutover, or roll that cutover back.
+
+Therefore a self-contained isolated LiteLLM operator restore is not currently
+supported. Stop before `restore`, application start, or cutover unless the
+database and LiteLLM owners provide a versioned procedure that provisions the
+compatible target and all roles, wires secrets without exposing them, starts
+the recorded immutable image, performs the application checks listed above,
+defines one cutover and rollback boundary, and removes only the isolated target
+after retained proof. Until that product gap is closed, preserve the source,
+independent backup, keys, and native-test result; do not report application
+recovery from `POSTGRES_RECOVERY_RESTORED_APPLICATION_ACCEPTANCE_REQUIRED`.
+
+Redis has no repository-owned exact backup and isolated restore command. Use a
+Redis-owner procedure that matches the configured persistence mode or stop with
+that missing prerequisite. Do not call a PVC copy a verified Redis restore.
 
 ## Prism Restore
 
-Use one matched `<backup-group>`.
-Do not combine a database dump and artifacts from different groups.
+Use one matched `<backup-group>`. Do not combine a database dump and artifacts
+from different groups. The repository currently supports group creation,
+verification, and a same-PostgreSQL-server temporary-database proof:
+
+```bash
+assert_cluster_binding
+kubectl --context "<context>" -n "<namespace>" create job \
+  --from=cronjob/prism-backup "prism-backup-manual-<unique-id>"
+kubectl --context "<context>" -n "<namespace>" wait \
+  --for=condition=complete "job/prism-backup-manual-<unique-id>" --timeout=1860s
+kubectl --context "<context>" -n "<namespace>" create job \
+  --from=cronjob/prism-backup-verification "prism-verify-manual-<unique-id>"
+kubectl --context "<context>" -n "<namespace>" wait \
+  --for=condition=complete "job/prism-verify-manual-<unique-id>" --timeout=1860s
+kubectl --context "<context>" -n "<namespace>" create job \
+  --from=cronjob/prism-restore-proof "prism-proof-manual-<unique-id>"
+kubectl --context "<context>" -n "<namespace>" wait \
+  --for=condition=complete "job/prism-proof-manual-<unique-id>" --timeout=1860s
+kubectl --context "<context>" -n "<namespace>" logs \
+  "job/prism-proof-manual-<unique-id>"
+```
+
+Expected proof output starts with `PRISM_DATABASE_RESTORE_SMOKE_PASSED:`. Retain
+logs for all three Jobs, then delete only these uniquely named manual Jobs.
+Scheduled Job history and backup groups are not cleanup targets.
+
+The following sequence is the required design for external Prism recovery, but
+it is **not currently an executable supported restore** because no owned command
+restores the matched database-and-artifact group into an external target:
 
 1. Stop Prism writes and scheduled administrative jobs.
 2. Create an empty PostgreSQL target and empty artifact target.
@@ -249,8 +395,9 @@ Do not combine a database dump and artifacts from different groups.
 11. Open one real project and its exact baseline in Studio.
 12. Enable writes only after every check passes.
 
-The current same-server database proof is not a disaster-recovery proof.
-[IFR-26-001](../status/open-issues.md#ifr-26-001) tracks complete independent application recovery.
+The current same-server database proof is not a disaster-recovery proof. Stop
+after it; do not claim Prism recovery or application-reader acceptance.
+[Complete independent application recovery](../status/open-issues.md#complete-independent-application-recovery-is-not-yet-demonstrated) remains open.
 
 ## Pipeline State Recovery
 
@@ -289,7 +436,7 @@ Required order after platform recovery:
 10. Reopen admission only after verification.
 
 Stop when any prerequisite lacks an owned restore method.
-Document that point against [IFR-01-001](../status/open-issues.md#ifr-01-001).
+Record that point with the [host bootstrap and restore prerequisites](../status/open-issues.md#automated-host-bootstrap-and-restore-prerequisites-are-incomplete).
 
 ## Recover Administrative Access
 
@@ -306,7 +453,7 @@ After access returns:
 6. Remove temporary kubeconfig files and verify revocation.
 
 The repository documents this boundary but has not demonstrated the complete path.
-[IFR-28-001](../status/open-issues.md#ifr-28-001) remains open.
+[Independent recovery outside the Ops Pod](../status/open-issues.md#independent-recovery-outside-the-ops-pod-is-unproved) remains open.
 
 ## Expected Result
 

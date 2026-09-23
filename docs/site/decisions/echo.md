@@ -5,7 +5,7 @@ Audience: developers, operators, and architecture readers
 Owner: review-plugin maintainers
 Evidence: skills/nova/plugins/review/src/review-policy-profiles.ts; skills/nova/plugins/review/src/review-governor-decision.ts; skills/nova/plugins/review/src/repository-audit-stage.ts
 Applies to: source revision `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`
-Last verified: 2026-09-15; source inspection, not model execution
+Last verified: 2026-09-15; no model execution result is available
 
 ## Why these boundaries exist
 
@@ -28,11 +28,11 @@ removing its identity.
 
 | Decision group | Context and selected approach | Recorded alternatives | Consequences | Approval | Implementation and verification | Supersession |
 | --- | --- | --- | --- | --- | --- | --- |
-| Authority and policy | A model can propose findings but cannot own lifecycle truth. The plugin verifies evidence and applies one frozen policy. | Model-owned verdicts, partial policy merges, and configurable trust limits are rejected. | Missing required evidence stops or escalates the review. This costs execution time but prevents unsupported repair. | The retained source describes these as agreed rules but names no individual approver or approval date. | The policy, parser, reducer, and report sources implement inspected parts. This review did not execute a model or production path. | D-ER-009 and D-ER-029 replace D-ER-008. D-ER-034 clarifies D-ER-006 and D-ER-018. |
-| Evidence verification | Echo receives a bounded, immutable source bundle. Independent code verifies paths, revisions, scope, and cited evidence. | Unbounded repository access, model-supplied authoritative source, and repeated expansion are rejected. | Review input becomes reproducible. Limits can require orchestration when safe evidence does not fit. | The retained source gives no separate approver or approval date for this group. | Bundle construction and semantic verification exist in source. No complete production review was run for this page. | The hardened discovery rules qualify the earlier no-discovery rules. Large-change slicing qualifies the earlier single-expansion rule. |
+| Authority and policy | A model can propose findings but cannot own lifecycle truth. The plugin verifies evidence and applies one frozen policy. | Model-owned verdicts, partial policy merges, and configurable trust limits are rejected. | Missing required evidence stops or escalates the review. This costs execution time but prevents unsupported repair. | The retained source describes these as agreed rules but names no individual approver or approval date. | The policy, parser, reducer, and report implement the bounded paths described here. No model or production execution result is available. | D-ER-009 and D-ER-029 replace D-ER-008. D-ER-034 clarifies D-ER-006 and D-ER-018. |
+| Evidence verification | Echo receives a bounded, immutable source bundle. Independent code verifies paths, revisions, scope, and cited evidence. | Unbounded repository access, model-supplied authoritative source, and repeated expansion are rejected. | Review input becomes reproducible. Limits can require orchestration when safe evidence does not fit. | The retained source gives no separate approver or approval date for this group. | Bundle construction and semantic verification exist. A complete production review result is not available. | The hardened discovery rules qualify the earlier no-discovery rules. Large-change slicing qualifies the earlier single-expansion rule. |
 | Governor and repair | Only independently confirmed and eligible findings can request repair. Core retains lifecycle and repair-budget authority. | Trusting Echo's verdict, allowing a verifier to rewrite findings, and treating transport failure as rejection are rejected. | The proof chain is longer, but uncertainty cannot silently mutate source. | The retained source gives no separate approver or approval date for this group. | Governor, verification, reduction, and history source exist. Live model quality remains an acceptance gate. | D-ER4-016–022 replace the temporary repair prohibition and reconciliation blocks. |
 | Simplification and reporting | Optional simplification facts and grouped causes can improve a report but cannot create authority. | Automatic repair from advisory simplification and a second mutable report database are rejected. | Reports remain bounded and useful while every blocker still affects the result. | The retained source gives no separate approval event for this editorial group. | Current source implements inspected rule, grouping, and report paths. This page does not claim model-accuracy proof. | SIM001–SIM008 replace PT001–008. Current report identity rules replace earlier report-v1 assumptions where stated. |
-| Repair history | Core-certified remediation cycles and the immutable prior report control repair growth. | Attempt count as a repair counter and a fabricated replacement baseline are rejected. | A missing or corrupt history blocks instead of resetting the budget. | The source records the rule without a named approver or separate date. | Governor-history source was inspected. No live repair cycle ran for this documentation check. | Core-certified `remediationCyclesUsed` replaces plugin-owned cycle counting. |
+| Repair history | Core-certified remediation cycles and the immutable prior report control repair growth. | Attempt count as a repair counter and a fabricated replacement baseline are rejected. | A missing or corrupt history blocks instead of resetting the budget. | The source records the rule without a named approver or separate date. | The governor history contains the required state. No live repair-cycle result is available. | Core-certified `remediationCyclesUsed` replaces plugin-owned cycle counting. |
 | Large changes and audit | Large reviews use deterministic slices. Whole-repository audit is a separate non-repairing registration. | Silent file omission, arbitrary browsing, and audit-triggered repair are rejected. | Complete evidence needs more planning and can require orchestration for oversized connected groups. | The retained source gives no separate approver or approval date for this group. | Repository-audit source exists. Production model performance and completeness remain unverified. | The separate audit registration replaces the earlier implication that audit findings can request repair. |
 
 The records below preserve stable decision IDs and their current requirements.
@@ -216,7 +216,7 @@ Source evidence: [built-in governor profile](https://github.com/datrab/kubeclaw/
 sets the limits. [applyReviewGovernor](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/src/review-governor-decision.ts#L20-L35)
 keeps a result that does not request another repair when only the cycle limit is exhausted.
 It separately escalates scope breaches and blocks invalid state. These links support the source behavior;
-this documentation recheck did not execute a repair cycle.
+the available evidence does not include an executed repair cycle.
 
 ## Large changes and repository audits
 
@@ -255,9 +255,9 @@ The older final sentence that suggests P0 audit findings can request repair is s
 ## Evidence, implementation, and acceptance
 
 The source files below implement the inspected boundaries.
-This source inspection does not claim a new package-test run or complete production review execution.
+No new package-test run or complete production review execution is claimed.
 The historical local HTTP fixtures replace the external model service; they cannot establish model accuracy.
-Echo production promotion remains a separate [G15 acceptance gate](../status/acceptance.md#g15).
+Echo production promotion remains a separate [product decision](../status/acceptance.md#echo-promotion-as-a-separate-product-decision).
 The old biased clean samples and incomplete paired batches must not be used to claim a promotion percentage.
 
 - [review-policy-profiles.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/src/review-policy-profiles.ts)

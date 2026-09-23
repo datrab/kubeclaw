@@ -1802,7 +1802,7 @@
       "workPackage": "AP09.8",
       "owner": "platform operations",
       "canonicalTarget": "docs/site/use/capacity.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L269"
     },
     {
@@ -1828,7 +1828,7 @@
       "workPackage": "AP09.8",
       "owner": "plugin and platform operations",
       "canonicalTarget": "docs/site/use/plugins.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L271"
     },
     {
@@ -1841,7 +1841,7 @@
       "workPackage": "AP09.8",
       "owner": "plugin and platform operations",
       "canonicalTarget": "docs/site/use/plugins.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L272"
     },
     {
@@ -1854,7 +1854,7 @@
       "workPackage": "AP09.8",
       "owner": "plugin and platform operations",
       "canonicalTarget": "docs/site/use/plugins.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L273"
     },
     {
@@ -1867,7 +1867,7 @@
       "workPackage": "AP09.8",
       "owner": "plugin and platform operations",
       "canonicalTarget": "docs/site/use/plugins.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L274"
     },
     {
@@ -1880,7 +1880,7 @@
       "workPackage": "AP09.8",
       "owner": "plugin and platform operations",
       "canonicalTarget": "docs/site/use/plugins.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L275"
     },
     {
@@ -1906,7 +1906,7 @@
       "workPackage": "AP09.8",
       "owner": "configuration owners",
       "canonicalTarget": "docs/site/reference/pipeline-platform.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L277"
     },
     {
@@ -1919,7 +1919,7 @@
       "workPackage": "AP09.8",
       "owner": "configuration owners",
       "canonicalTarget": "docs/site/reference/nova-project.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L278"
     },
     {
@@ -1932,7 +1932,7 @@
       "workPackage": "AP09.8",
       "owner": "configuration owners",
       "canonicalTarget": "docs/site/reference/pipeline-definition.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L279"
     },
     {
@@ -1945,7 +1945,7 @@
       "workPackage": "AP09.8",
       "owner": "configuration owners",
       "canonicalTarget": "docs/site/reference/pipeline-json.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L280"
     },
     {
@@ -1971,7 +1971,7 @@
       "workPackage": "AP09.8",
       "owner": "configuration owners",
       "canonicalTarget": "docs/site/reference/plugin-configuration.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L282"
     },
     {
@@ -1984,7 +1984,7 @@
       "workPackage": "AP09.8",
       "owner": "configuration owners",
       "canonicalTarget": "docs/site/reference/worker-profiles-and-roles.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L283"
     },
     {
@@ -2010,7 +2010,7 @@
       "workPackage": "AP09.8",
       "owner": "configuration owners",
       "canonicalTarget": "docs/site/reference/host-and-prism-configuration.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L285"
     },
     {
@@ -2036,7 +2036,7 @@
       "workPackage": "AP09.8",
       "owner": "configuration owners",
       "canonicalTarget": "docs/site/reference/endpoints.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L287"
     },
     {
@@ -2049,7 +2049,7 @@
       "workPackage": "AP09.8",
       "owner": "configuration owners",
       "canonicalTarget": "docs/site/reference/configuration-precedence.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L288"
     },
     {
@@ -2062,7 +2062,7 @@
       "workPackage": "AP09.8",
       "owner": "configuration owners",
       "canonicalTarget": "docs/site/reference/configuration-change-impact.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L289"
     },
     {
@@ -2075,7 +2075,7 @@
       "workPackage": "AP09.8",
       "owner": "configuration owners",
       "canonicalTarget": "docs/site/reference/configuration-errors.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L290"
     },
     {
@@ -2101,7 +2101,7 @@
       "workPackage": "AP09.8",
       "owner": "configuration owners",
       "canonicalTarget": "docs/site/reference/project-pipeline-publication.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L292"
     },
     {
@@ -2114,7 +2114,7 @@
       "workPackage": "AP09.8",
       "owner": "configuration owners",
       "canonicalTarget": "docs/site/reference/configuration-compatibility.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L293"
     },
     {
@@ -2881,7 +2881,7 @@
       "workPackage": "AP09.11",
       "owner": "documentation automation",
       "canonicalTarget": "docs/site/reference/endpoints.md",
-      "targetState": "planned",
+      "targetState": "current",
       "source": "docs/blueprint/AP09-completeness-audit.md#L367"
     },
     {

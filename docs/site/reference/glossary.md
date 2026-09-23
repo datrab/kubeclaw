@@ -5,7 +5,7 @@ Audience: all readers
 Owner: documentation
 Evidence: docs/site/understand/components-and-authority.md; docs/site/understand/request-state-recovery.md; docs/site/understand/deployment-and-trust.md
 Applies to: current documentation
-Last verified: source inspection on 2026-09-15
+Last verified: 2026-09-15
 
 ## Purpose
 
@@ -41,7 +41,7 @@ The architecture pages use these meanings consistently.
 | Invocation | One call to an activated stage, observer, adapter, provider, or specialist. |
 | Lease | A short-lived contract that binds an attempt to its identity, deadline, grants, and limits. |
 | Lifecycle | The permitted movement from pending work to success, failure, blockage, cancellation, retry, or wait. |
-| Live acceptance | Evidence from the target running environment. Source inspection and local tests do not replace it. |
+| Live acceptance | Evidence from the target running environment. Static implementation evidence and local tests do not replace it. |
 | Mutual TLS | A protected connection in which both endpoints authenticate with certificates. |
 | Nova | The role and engine that compile and control the canonical pipeline lifecycle. |
 | Observer | A plugin registration that receives committed events for telemetry, notification, or another derived view. |

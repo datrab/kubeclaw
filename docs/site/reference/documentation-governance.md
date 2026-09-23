@@ -5,7 +5,7 @@ Audience: documentation contributor, maintainer, reviewer
 Owner: documentation
 Evidence: scripts/docs-governance.mjs; scripts/docs-publication.mjs; scripts/docs-status.mjs; docs/status/open-issues.json
 Applies to: all reader-facing files below docs/site
-Last verified: 2026-09-17; source inspection and local documentation checks
+Last verified: 2026-09-17
 
 ## Purpose
 
@@ -166,4 +166,4 @@ claimed by this documentation.
 7. Run the mapped checks and the complete publication gate.
 8. Record checks that need a live environment as pending.
 
-Do not change `Last verified` after a formatting-only edit. Do not claim a live result from source inspection.
+Do not change `Last verified` after a formatting-only edit. Do not claim a live result from static implementation evidence.

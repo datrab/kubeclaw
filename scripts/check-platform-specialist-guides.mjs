@@ -7,8 +7,6 @@ import { execFileSync } from 'node:child_process';
 import { generatedCodeInventory } from './docs-lint-policy-reference.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
-const revision = '32b02816cc19cc8865a45b221b8b6ca28e99e8fb';
-
 const specifications = [
   ['docs/site/reference/platform-surfaces-generated.md', 100, [
     '## Runtime Dependencies', '## Runtime Signals',
@@ -115,10 +113,11 @@ for (const [file, minimumLinks, markers] of specifications) {
   const absolute = path.join(root, file);
   assert(fs.existsSync(absolute), `${file} is missing`);
   const source = fs.readFileSync(absolute, 'utf8');
-  if (!file.endsWith('platform-surfaces-generated.md')) {
-    assert(source.includes(`Evidence revision: \`${revision}\``),
-      `${file} does not declare the inspected evidence revision`);
-  }
+  const revisionMatch = source.match(/^Evidence revision: `([0-9a-f]{40})`$/mu)
+    ?? source.match(/^Source revision: `([0-9a-f]{40})`$/mu)
+    ?? source.match(/^Last verified: generated from revision `([0-9a-f]{40})`$/mu);
+  assert(revisionMatch, `${file} does not declare one explicit inspected evidence revision`);
+  const revision = revisionMatch[1];
   for (const marker of markers) assert(source.includes(marker), `${file} lacks ${marker}`);
 
   if (file.startsWith('docs/site/understand/')) {
@@ -140,12 +139,13 @@ for (const [file, minimumLinks, markers] of specifications) {
     assert.equal(linkRevision, revision, `${file} uses another revision for ${repositoryPath}`);
     const pinned = execFileSync('git', ['-C', root, 'show', `${revision}:${repositoryPath}`],
       { encoding: 'utf8' });
-    if (!checkedSources.has(repositoryPath)) {
+    const checkedSourceId = `${revision}:${repositoryPath}`;
+    if (!checkedSources.has(checkedSourceId)) {
       const currentPath = path.join(root, repositoryPath);
       assert(fs.existsSync(currentPath), `linked source is absent: ${repositoryPath}`);
       assert.equal(fs.readFileSync(currentPath, 'utf8'), pinned,
         `${repositoryPath} changed after ${revision}; inspect and repin AP09.6/9.7`);
-      checkedSources.add(repositoryPath);
+      checkedSources.add(checkedSourceId);
     }
     if (!firstValue) continue;
     const first = Number(firstValue);
@@ -306,7 +306,7 @@ assert(!busterWorkflowGuide.includes('uses an operator-reviewed explicit pipelin
 
 const dependencyFailureGuide = fs.readFileSync(path.join(root, 'docs/site/use/diagnose.md'), 'utf8');
 for (const required of [
-  'EXEC-FAIL-REGISTRY-ENDPOINT',
+  '### Registry Endpoint Unavailable During BuildKit Push',
   "trap 'restore_redis' EXIT",
   "trap 'restore_prism_postgresql' EXIT",
   "trap 'restore_litellm_postgresql' EXIT",
@@ -331,8 +331,8 @@ for (const required of [
   'test "$litellm_fault_status" -eq 0',
 ]) assert(dependencyFailureGuide.includes(required),
   `dependency failure guide omits rollback or identity proof: ${required}`);
-assert(!dependencyFailureGuide.includes('EXEC-FAIL-REGISTRY-BUILDKIT'),
-  'dependency failure guide retains the misleading registry rejection identity');
+assert(!/EXEC-[A-Z0-9-]+/u.test(dependencyFailureGuide),
+  'dependency failure guide exposes internal fixture identifiers to readers');
 
 const referenceTrace = JSON.parse(fs.readFileSync(
   path.join(root, 'docs/site/use/workflows/examples/request-trace-success.json'), 'utf8'));

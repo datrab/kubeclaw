@@ -71,7 +71,7 @@ For each command, record these facts:
 - the boundary that the command did not reach.
 
 Do not change `unavailable` to `passed` without running the check.
-The first recorded verification host lacked timeout-capable `flock` and a C compiler.
+The recorded local result came from a host without timeout-capable `flock` or a C compiler.
 Check the current host before reusing that result.
 The catalogue pages state the current local result and its environment limit.
 

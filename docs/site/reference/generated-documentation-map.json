@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 131,
+  "pageCount": 147,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -68,7 +68,7 @@
       "audience": "maintainers, pipeline developers and plugin authors",
       "owner": "KubeClaw maintainers",
       "appliesTo": "canonical lifecycle, Worker Core and plugin system v2",
-      "lastVerified": "2026-09-17 (source inspection; no new runtime or live test execution)",
+      "lastVerified": "2026-09-17; no new runtime or live test result is available",
       "sourceDependencies": [
         "skills/common/plugin-runtime/foundation/registry/build.ts",
         "packaging/runtime/roles/nova.json"
@@ -87,7 +87,7 @@
       "audience": "developers, operators, and architecture readers",
       "owner": "review-plugin maintainers",
       "appliesTo": "source revision `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`",
-      "lastVerified": "2026-09-15; source inspection, not model execution",
+      "lastVerified": "2026-09-15; no model execution result is available",
       "sourceDependencies": [
         "skills/nova/plugins/review/src/review-policy-profiles.ts",
         "skills/nova/plugins/review/src/review-governor-decision.ts",
@@ -107,7 +107,7 @@
       "audience": "maintainers and architecture readers",
       "owner": "platform maintainers",
       "appliesTo": "source revision `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`",
-      "lastVerified": "2026-09-17; source inspection, no new runtime acceptance",
+      "lastVerified": "2026-09-17; no new runtime acceptance result is available",
       "sourceDependencies": [
         "skills/nova/core/execution/engine-snapshots.ts",
         "skills/worker/core/worker/native-worker-launcher.c",
@@ -127,7 +127,7 @@
       "audience": "architecture readers, developers, and operators",
       "owner": "Prism maintainers",
       "appliesTo": "source revision `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`",
-      "lastVerified": "2026-09-17; source inspection, no new live acceptance",
+      "lastVerified": "2026-09-17; no new live environment result is available",
       "sourceDependencies": [
         "skills/prism/domain/index.ts",
         "skills/prism/corpus/index.ts",
@@ -147,7 +147,7 @@
       "audience": "maintainer, operator, architecture reader",
       "owner": "platform maintainers",
       "appliesTo": "repository source at ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
-      "lastVerified": "2026-09-17; source inspection, no runtime or live acceptance executed",
+      "lastVerified": "2026-09-17; no runtime or live environment result is available",
       "sourceDependencies": [
         "skills/nova/core/execution/engine-snapshots.ts",
         "packaging/runtime/roles/prism.json",
@@ -167,7 +167,7 @@
       "audience": "maintainers, pipeline authors, provider authors",
       "owner": "KubeClaw maintainers",
       "appliesTo": "pipeline test-gate architecture and provider contracts",
-      "lastVerified": "2026-09-15 (source inspection; no runtime or live tests)",
+      "lastVerified": "2026-09-15; no runtime or live test result is available",
       "sourceDependencies": [
         "skills/buster/engine/test-gates/remote-plan-runtime.ts",
         "contracts/pipeline-test-gate/v1/src/index.ts"
@@ -208,7 +208,7 @@
       "audience": "test provider author, suite maintainer, report adapter author",
       "owner": "buster",
       "appliesTo": "Buster test providers, fixtures, suite templates, and report adapters",
-      "lastVerified": "source inspection and focused local checks on 2026-09-19",
+      "lastVerified": "2026-09-19; focused local checks passed within the stated scope",
       "sourceDependencies": [
         "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
         "contracts/pipeline-test-gate/v1/suites",
@@ -1580,11 +1580,102 @@
       "status": "generated reference",
       "audience": "reference reader, operator, developer",
       "owner": "platform-operations",
-      "appliesTo": "deployment command surface",
+      "appliesTo": "deployment commands and published operator/developer CLI definitions",
       "lastVerified": "generated from current inventory",
       "sourceDependencies": [
         "docs/generated/inventory/deploy-script.json",
+        "docs/generated/inventory/configuration-runtime-inputs.json",
         "scripts/docs-generate.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/configuration-change-impact.md",
+      "route": "/reference/configuration-change-impact/",
+      "contentKind": "authored",
+      "status": "current operational reference",
+      "audience": "operator, maintainer",
+      "owner": "platform operations",
+      "appliesTo": "current configuration families",
+      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "sourceDependencies": [
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/project/recovery.ts",
+        "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+        "skills/prism/server/control-config.ts",
+        "skills/prism/config/native-worker.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/configuration-compatibility.md",
+      "route": "/reference/configuration-compatibility/",
+      "contentKind": "authored",
+      "status": "current support reference",
+      "audience": "operator, maintainer, plugin author",
+      "owner": "configuration-owning components",
+      "appliesTo": "current readers and retained durable versions",
+      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/configuration-errors.md",
+      "route": "/reference/configuration-errors/",
+      "contentKind": "authored",
+      "status": "current diagnostic reference",
+      "audience": "operator, project author, plugin author",
+      "owner": "configuration-owning components",
+      "appliesTo": "current configuration loaders and compilers",
+      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/core/execution/graph-build.ts",
+        "skills/nova/core/test-gates/pipeline.ts",
+        "skills/nova/core/test-gates/resolver.ts",
+        "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+        "skills/prism/server/worker-config.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/configuration-precedence.md",
+      "route": "/reference/configuration-precedence/",
+      "contentKind": "authored",
+      "status": "current cross-component reference",
+      "audience": "operator, pipeline author, maintainer",
+      "owner": "platform operations",
+      "appliesTo": "current pipeline, project, chart, host, and Prism configuration",
+      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/test-gates/resolver.ts",
+        "tests/verification/e2e/support/platform-config.ts",
+        "charts/prism/templates/workloads.yaml"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -1600,12 +1691,31 @@
       "audience": "documentation contributor, maintainer, reviewer",
       "owner": "documentation",
       "appliesTo": "all reader-facing files below docs/site",
-      "lastVerified": "2026-09-17; source inspection and local documentation checks",
+      "lastVerified": "2026-09-17",
       "sourceDependencies": [
         "scripts/docs-governance.mjs",
         "scripts/docs-publication.mjs",
         "scripts/docs-status.mjs",
         "docs/status/open-issues.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/endpoints.md",
+      "route": "/reference/endpoints/",
+      "contentKind": "authored",
+      "status": "generated reference",
+      "audience": "operator, security operator, developer",
+      "owner": "the source component listed for each route or connection",
+      "appliesTo": "discovered inbound routes and outbound network calls in shipped runtime sources",
+      "lastVerified": "generated from revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "sourceDependencies": [
+        "docs/generated/inventory/platform-surfaces.json",
+        "scripts/docs-platform-surface-inventory.mjs"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -1620,11 +1730,11 @@
       "status": "generated reference",
       "audience": "reference reader, operator",
       "owner": "platform-operations",
-      "appliesTo": "deployment and secret-setup commands",
+      "appliesTo": "checked-in runtime, deployment, chart, GitOps, and skill sources",
       "lastVerified": "generated from current inventory",
       "sourceDependencies": [
-        "docs/generated/inventory/deploy-script.json",
-        "docs/generated/inventory/secret-setup.json",
+        "docs/generated/inventory/configuration-runtime-inputs.json",
+        "scripts/docs-configuration-inventory.mjs",
         "scripts/docs-generate.mjs"
       ],
       "checks": [
@@ -1641,7 +1751,7 @@
       "audience": "all readers",
       "owner": "documentation",
       "appliesTo": "current documentation",
-      "lastVerified": "source inspection on 2026-09-15",
+      "lastVerified": "2026-09-15",
       "sourceDependencies": [
         "docs/site/understand/components-and-authority.md",
         "docs/site/understand/request-state-recovery.md",
@@ -1660,11 +1770,36 @@
       "status": "generated reference",
       "audience": "reference reader, operator",
       "owner": "platform-operations",
-      "appliesTo": "checked-in Helm and infrastructure configuration",
+      "appliesTo": "checked-in Helm, GitOps, release, and infrastructure YAML configuration",
       "lastVerified": "generated from current inventory",
       "sourceDependencies": [
-        "docs/generated/inventory/helm-values.json",
+        "docs/generated/inventory/configuration-values.json",
+        "scripts/docs-configuration-inventory.mjs",
         "scripts/docs-generate.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/host-and-prism-configuration.md",
+      "route": "/reference/host-and-prism-configuration/",
+      "contentKind": "authored",
+      "status": "current configuration map with explicit consumer boundaries",
+      "audience": "platform operator, Prism operator, host administrator",
+      "owner": "platform operations and Prism",
+      "appliesTo": "current shipped chart configuration and Prism service loaders",
+      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "sourceDependencies": [
+        "charts/kubeclaw/files/config/swarm.config.json",
+        "tests/verification/e2e/support/platform-config.ts",
+        "charts/prism/values.yaml",
+        "charts/prism/values.schema.json",
+        "skills/prism/server/control-config.ts",
+        "skills/prism/server/worker-config.ts",
+        "skills/prism/config/native-worker.ts"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -1749,6 +1884,89 @@
       ]
     },
     {
+      "page": "docs/site/reference/nova-project.md",
+      "route": "/reference/nova-project/",
+      "contentKind": "authored",
+      "status": "current configuration reference",
+      "audience": "project operator, pipeline author",
+      "owner": "Nova project compiler",
+      "appliesTo": "`nova-project.v2`",
+      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "sourceDependencies": [
+        "skills/nova/project/compiler.ts",
+        "skills/nova/project/source.ts",
+        "skills/nova/project/coverage.ts",
+        "skills/nova/project/demo.ts",
+        "skills/nova/project/cli.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/pipeline-definition.md",
+      "route": "/reference/pipeline-definition/",
+      "contentKind": "authored",
+      "status": "current configuration reference",
+      "audience": "pipeline author, plugin author, operator",
+      "owner": "Nova Core",
+      "appliesTo": "`pipeline-definition.v2`",
+      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/nova/core/execution/graph-build.ts",
+        "skills/nova/core/execution/pipeline-loop.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/pipeline-json.md",
+      "route": "/reference/pipeline-json/",
+      "contentKind": "authored",
+      "status": "current configuration reference",
+      "audience": "project author, test-plan author, pipeline operator",
+      "owner": "Nova test-plan resolver and project setup",
+      "appliesTo": "current `.swarm/pipeline.json` project test declarations",
+      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "sourceDependencies": [
+        "skills/nova/core/test-gates/pipeline.ts",
+        "skills/nova/core/test-gates/types.ts",
+        "skills/nova/core/test-gates/resolver.ts",
+        "skills/common/plugin-runtime/foundation/config/published-pair.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/pipeline-platform.md",
+      "route": "/reference/pipeline-platform/",
+      "contentKind": "authored",
+      "status": "current configuration reference",
+      "audience": "platform operator, pipeline operator, plugin author",
+      "owner": "plugin runtime and Nova Core",
+      "appliesTo": "`pipeline-platform.v2`",
+      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/nova/core/execution/engine-runtime.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/reference/platform-surfaces-generated.md",
       "route": "/reference/platform-surfaces-generated/",
       "contentKind": "authored",
@@ -1768,16 +1986,57 @@
       ]
     },
     {
+      "page": "docs/site/reference/plugin-configuration.md",
+      "route": "/reference/plugin-configuration/",
+      "contentKind": "authored",
+      "status": "generated reference",
+      "audience": "operator, plugin maintainer, developer",
+      "owner": "configuration source owners listed for each schema",
+      "appliesTo": "every plugin-registered configuration schema, pipeline-platform.v2, and the compact swarm configuration",
+      "lastVerified": "generated from the current source inventory",
+      "sourceDependencies": [
+        "docs/generated/inventory/configuration-schemas.json",
+        "scripts/docs-configuration-inventory.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/project-pipeline-publication.md",
+      "route": "/reference/project-pipeline-publication/",
+      "contentKind": "authored",
+      "status": "current configuration reference",
+      "audience": "project author, pipeline operator, maintainer",
+      "owner": "Nova project setup",
+      "appliesTo": "coupled `.swarm/progress.json` and `.swarm/pipeline.json`",
+      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "sourceDependencies": [
+        "skills/nova/project_setup/tools/progress-scaffold.ts",
+        "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+        "skills/nova/core/test-gates/pipeline.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/reference/secrets.md",
       "route": "/reference/secrets/",
       "contentKind": "generated",
       "status": "generated reference",
       "audience": "reference reader, operator",
       "owner": "platform-security",
-      "appliesTo": "Kubernetes secret setup",
+      "appliesTo": "Kubernetes secret setup and checked-in Secret references",
       "lastVerified": "generated from current inventory",
       "sourceDependencies": [
         "docs/generated/inventory/secret-setup.json",
+        "docs/generated/inventory/configuration-runtime-inputs.json",
         "scripts/docs-generate.mjs"
       ],
       "checks": [
@@ -1798,6 +2057,28 @@
       "sourceDependencies": [
         "docs/generated/inventory/deploy-script.json",
         "scripts/docs-generate.mjs"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/worker-profiles-and-roles.md",
+      "route": "/reference/worker-profiles-and-roles/",
+      "contentKind": "authored",
+      "status": "current configuration and contract reference",
+      "audience": "platform operator, worker implementer, pipeline author",
+      "owner": "worker core and Prism",
+      "appliesTo": "worker protocol v1, profile v2/v3, and current Prism workers",
+      "lastVerified": "2026-09-21 at source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "sourceDependencies": [
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/native-pool-policy.ts",
+        "skills/prism/engine/worker-envelope.ts",
+        "skills/prism/server/agent-attempt.ts"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -1832,7 +2113,7 @@
       "audience": "operators and executing agents",
       "owner": "platform operator",
       "appliesTo": "KubeClaw source revision `ad67f9bb5c75cfa8cc1b926668aec1dd0168452c`",
-      "lastVerified": "2026-09-17 — source inspection; no live execution",
+      "lastVerified": "2026-09-17; no live execution is recorded",
       "sourceDependencies": [
         ".github/workflows/remediation-native.yaml",
         "tests/verification/contracts/check-production-receipt-attestation.mjs"
@@ -1851,7 +2132,7 @@
       "audience": "operator, plugin author, architecture reader",
       "owner": "platform-architecture",
       "appliesTo": "current repository roles and documented product boundaries",
-      "lastVerified": "2026-09-17, source and documentation checks only",
+      "lastVerified": "2026-09-17; no live environment result is available",
       "sourceDependencies": [
         "packaging/runtime/roles/nova.json",
         "packaging/runtime/roles/buster.json",
@@ -1871,7 +2152,7 @@
       "audience": "maintainer, operator, contributing agent",
       "owner": "platform-maintainers",
       "appliesTo": "source baseline ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
-      "lastVerified": "2026-09-16, source inspection only; see individual evidence",
+      "lastVerified": "2026-09-16; each issue states its available evidence and remaining validation",
       "sourceDependencies": [
         "docs/status/open-issues.json"
       ],
@@ -2089,7 +2370,7 @@
       "audience": "operator, architecture reader, security reviewer, maintainer",
       "owner": "platform architecture and operations",
       "appliesTo": "current Helm charts and runtime-role declarations",
-      "lastVerified": "source inspection on 2026-09-21",
+      "lastVerified": "2026-09-21",
       "sourceDependencies": [
         "packaging/runtime/roles",
         "charts/kubeclaw",
@@ -2213,7 +2494,7 @@
       "audience": "architecture reader, operator, maintainer, security reviewer",
       "owner": "platform architecture and pipeline owners",
       "appliesTo": "current source, role declarations, charts, and selected infrastructure",
-      "lastVerified": "source inspection on 2026-09-16",
+      "lastVerified": "2026-09-16",
       "sourceDependencies": [
         "packaging/runtime/roles",
         "skills/nova/core",
@@ -2236,7 +2517,7 @@
       "audience": "architecture reader, platform operator, maintainer, security reviewer",
       "owner": "platform architecture and operations",
       "appliesTo": "current Kubernetes platform and its supported deployment paths",
-      "lastVerified": "source inspection on 2026-09-21",
+      "lastVerified": "2026-09-21",
       "sourceDependencies": [
         "scripts/deploy.sh",
         "scripts/platform-services.mjs",
@@ -2343,7 +2624,7 @@
       "audience": "new reader, operator, maintainer, incident responder",
       "owner": "Nova Core",
       "appliesTo": "`nova-project.v2` and pipeline-plugin-v2",
-      "lastVerified": "source inspection on 2026-09-15",
+      "lastVerified": "2026-09-15",
       "sourceDependencies": [
         "skills/nova/project/compiler.ts",
         "skills/nova/core/execution",
@@ -2363,7 +2644,7 @@
       "audience": "architecture reader, maintainer, operator",
       "owner": "Nova Core",
       "appliesTo": "pipeline-plugin-v2",
-      "lastVerified": "source inspection on 2026-09-15",
+      "lastVerified": "2026-09-15",
       "sourceDependencies": [
         "docs/site/understand/request-state-recovery.md"
       ],
@@ -2381,7 +2662,7 @@
       "audience": "operator, security reviewer, architecture reader, maintainer",
       "owner": "platform security and runtime maintainers",
       "appliesTo": "the current supported release and its documented lab deployment",
-      "lastVerified": "source inspection on 2026-09-20",
+      "lastVerified": "2026-09-20",
       "sourceDependencies": [
         "my-values/infra/spire-values.yaml",
         "charts/kubeclaw/templates/configmap-worker-trust.yaml",
@@ -2466,15 +2747,53 @@
       "page": "docs/site/use/README.md",
       "route": "/use/",
       "contentKind": "authored",
-      "status": "implemented procedures with stated implementation and live-proof limits",
+      "status": "source-backed operator procedures; live results exist only where an evidence record is named",
       "audience": "platform operator, product operator, incident responder, release maintainer",
       "owner": "platform operations",
-      "appliesTo": "current repository and selected release manifests",
-      "lastVerified": "2026-09-16, source and local documentation checks",
+      "appliesTo": "the source revision, release receipts, cluster context, and private configuration recorded for the operation",
+      "lastVerified": "2026-09-21; no live environment result is available",
       "sourceDependencies": [
         "scripts/deploy.sh",
         "skills/nova/core/cli.ts",
-        "docs/status/open-issues.json"
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/capacity.md",
+      "route": "/use/capacity/",
+      "contentKind": "authored",
+      "status": "supported observation procedure; cleanup is limited to explicitly owned component controls",
+      "audience": "platform operator, data owner, incident responder",
+      "owner": "platform operations and each named data owner",
+      "appliesTo": "the recorded cluster, namespace, source revision, and storage products",
+      "lastVerified": "2026-09-21; no live capacity measurement or cleanup result is available",
+      "sourceDependencies": [
+        "charts/prism/files/prism-backup.sh",
+        "skills/nova/core/state/read-run-evidence.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/demo-delivery.md",
+      "route": "/use/demo-delivery/",
+      "contentKind": "authored",
+      "status": "reproducible local contract rehearsal; no complete live demo-delivery journey is supplied",
+      "audience": "product operator, acceptance participant, incident responder",
+      "owner": "product operations",
+      "appliesTo": "source revision `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`",
+      "lastVerified": "2026-09-21; compiler contract passed locally, full package test stopped because OpenSSL was absent; no live demo or human decision is claimed",
+      "sourceDependencies": [
+        "skills/nova/plugins/demo-handoff/tests",
+        "skills/nova/project/demo.ts"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -2486,15 +2805,14 @@
       "page": "docs/site/use/diagnose.md",
       "route": "/use/diagnose/",
       "contentKind": "authored",
-      "status": "implemented source-backed diagnosis path; complete live alert delivery remains open",
+      "status": "source-backed diagnosis path; controlled exercises are not live-environment evidence",
       "audience": "operator, incident responder",
       "owner": "platform operations",
       "appliesTo": "current runtime roles and durable pipeline state",
-      "lastVerified": "2026-09-16, source inspection and local documentation checks",
+      "lastVerified": "2026-09-21; no controlled failure result is available",
       "sourceDependencies": [
         "scripts/deploy.sh",
-        "skills/nova/core/telemetry/audit.ts",
-        "docs/operations/observability-retention.md"
+        "skills/nova/core/telemetry/audit.ts"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -2506,11 +2824,11 @@
       "page": "docs/site/use/install.md",
       "route": "/use/install/",
       "contentKind": "authored",
-      "status": "implemented repository deployment path; host bootstrap and complete live acceptance remain open",
+      "status": "source-backed deployment path; current runtime selection is absent, so a new runtime installation must stop before mutation",
       "audience": "Kubernetes platform operator, security operator",
       "owner": "platform operations",
       "appliesTo": "current selected runtime release",
-      "lastVerified": "2026-09-16, source inspection and local checks",
+      "lastVerified": "2026-09-21; no live cluster result is available",
       "sourceDependencies": [
         "scripts/deploy.sh",
         "docs/generated/inventory/deploy-script.json"
@@ -2525,15 +2843,15 @@
       "page": "docs/site/use/maintenance.md",
       "route": "/use/maintenance/",
       "contentKind": "authored",
-      "status": "implemented release and migration procedures with stated live-proof limits",
+      "status": "source-backed maintenance boundaries; no general runtime upgrade pair or generic rotation command is currently established",
       "audience": "release maintainer, platform operator, security operator",
       "owner": "release engineering and platform operations",
       "appliesTo": "current release-selection and deployment contracts",
-      "lastVerified": "2026-09-16, source inspection and local documentation checks",
+      "lastVerified": "2026-09-21; no fresh live upgrade, rotation or retirement result is available",
       "sourceDependencies": [
         "versions.json",
         "releases/ops-images.json",
-        "docs/operations/runtime-versions-and-images.md"
+        "scripts/deploy.sh"
       ],
       "checks": [
         "npm run docs:governance:check",
@@ -2545,11 +2863,11 @@
       "page": "docs/site/use/operate.md",
       "route": "/use/operate/",
       "contentKind": "authored",
-      "status": "implemented command paths with explicit missing operator controls",
+      "status": "source-backed command paths with explicit unauthenticated issuer and missing cancellation boundaries",
       "audience": "product operator, pipeline operator, Prism operator",
       "owner": "Nova Core and platform operations",
       "appliesTo": "pipeline-platform.v2 and current Prism deployment",
-      "lastVerified": "2026-09-17, source inspection, schema validation, and command-help execution",
+      "lastVerified": "2026-09-21; schema validation passed and no live cluster result is available",
       "sourceDependencies": [
         "skills/nova/project/cli.ts",
         "skills/nova/core/cli.ts",
@@ -2564,14 +2882,34 @@
       ]
     },
     {
+      "page": "docs/site/use/plugins.md",
+      "route": "/use/plugins/",
+      "contentKind": "authored",
+      "status": "supported configuration and activation procedure; no general operator install or remove CLI exists",
+      "audience": "platform operator, security operator, pipeline operator",
+      "owner": "platform configuration owner",
+      "appliesTo": "`pipeline-platform.v2` at the recorded source revision",
+      "lastVerified": "2026-09-21; the inventory check passed and no live external plugin result is available",
+      "sourceDependencies": [
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "skills/common/plugin-runtime/foundation/packages/install.ts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
       "page": "docs/site/use/prism-studio.md",
       "route": "/use/prism-studio/",
       "contentKind": "authored",
-      "status": "implemented with stated deployment and live-proof limits",
+      "status": "source-backed journey; runtime selection is absent and the current Prism deploy verification fails, so no deploy success is claimed",
       "audience": "Prism operator, designer, incident responder, platform maintainer",
       "owner": "Prism maintainers",
       "appliesTo": "the current Prism Control, Studio, agent, native worker, ingestion service, and Nova Prism stage",
-      "lastVerified": "source, contract, chart, and focused-test inspection on 2026-09-19",
+      "lastVerified": "2026-09-21; no fresh live journey result is available",
       "sourceDependencies": [
         "skills/prism",
         "skills/nova/plugins/prism-design",
@@ -2588,7 +2926,7 @@
       "page": "docs/site/use/quickstart.md",
       "route": "/use/quickstart/",
       "contentKind": "authored",
-      "status": "implemented local preflight; deployment and live execution require an operator environment",
+      "status": "convenience source check only; canonical install and run procedures own operator acceptance",
       "audience": "operator",
       "owner": "platform operations",
       "appliesTo": "current repository checkout",
@@ -2607,11 +2945,11 @@
       "page": "docs/site/use/recovery.md",
       "route": "/use/recovery/",
       "contentKind": "authored",
-      "status": "partial implementation; complete independent environment recovery remains open",
+      "status": "executable component backups and native restore primitives; no self-contained isolated LiteLLM, external Prism, or full-platform operator restore",
       "audience": "platform operator, database operator, incident responder",
       "owner": "platform operations and data owners",
       "appliesTo": "current selected runtime and state formats",
-      "lastVerified": "2026-09-16, source inspection and local documentation checks",
+      "lastVerified": "2026-09-21; no fresh live restore result is available",
       "sourceDependencies": [
         "charts/prism/files/prism-backup.sh",
         "scripts/postgresql-recovery.sh",
@@ -2627,11 +2965,11 @@
       "page": "docs/site/use/worker-trust.md",
       "route": "/use/worker-trust/",
       "contentKind": "authored",
-      "status": "implemented; live cluster execution pending",
+      "status": "source-backed procedure; current Prism deployment verification fails and no fresh live cluster proof is claimed",
       "audience": "Kubernetes operator, security operator",
-      "owner": "platform operations",
-      "appliesTo": "current supported release",
-      "lastVerified": "source checks on 2026-08-29",
+      "owner": "platform operations and workload-identity owner",
+      "appliesTo": "the exact selected release, SPIRE trust domain, and recorded cluster",
+      "lastVerified": "2026-09-21; the Prism preflight failed and no live cluster result is available",
       "sourceDependencies": [
         "scripts/deploy.sh",
         "tests/verification/live/worker-trust-cluster-e2e.sh"
