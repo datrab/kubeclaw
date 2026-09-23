@@ -552,11 +552,19 @@ Do not restart every role to hide one role-specific failure.
 | --- | --- |
 | Command failed before durable request acceptance | Correct the input and submit once |
 | Durable request exists with a terminal failure | Follow its declared retry or repair decision |
-| Request exists and provider outcome is absent | Reconcile the provider before any repeat |
-| Provider completed but local response was lost | Import or recover the existing result |
+| Request exists and provider outcome is absent | Inspect through a documented provider status operation; if the outcome remains uncertain, preserve evidence, stop, and escalate |
+| Provider completed but local response was lost | Use an exact provider-specific idempotent import operation only when its contract documents one; otherwise preserve evidence, stop, and escalate |
 | Wait remains active | Supply one matching authorized signal |
 | Graph, package, or policy digest changed | Start a new governed run |
 | Terminal run | Do not recover or resume it |
+
+There is no generic Core operation that reconciles an uncertain external
+effect and imports its result. See the
+[current reconciliation boundary](../status/open-issues.md#uncertain-external-effects-have-no-supported-reconciliation-and-result-import-operation).
+A provider-specific normal result import is safe only when that provider
+documents the request identity, result identity, idempotency rule, authority,
+and durable transition. External inspection alone does not authorize a retry,
+resume, journal edit, or result import.
 
 ## Evidence to Retain
 

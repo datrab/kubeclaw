@@ -192,10 +192,10 @@ Never submit a second request from absence of a UI update alone.
 | Symptom | Distinguishing checks | Safe next action |
 | --- | --- | --- |
 | Stage appears hung | Audit state, attempt deadline, plugin log, process owner | Wait for deadline or use approved containment; preserve attempt identity |
-| Job has no response | Job admission, provider status, receipt store, import journal | Reconcile provider and import existing result |
+| Job has no response | Job admission, provider status, receipt store, import journal | Use a documented provider-specific status or import operation only when it exists; otherwise preserve evidence, stop the run, and escalate |
 | Git operation conflicts | Worktree path, lock owner, branch, remote state | Resolve in the owned worktree; reconcile a possibly successful push |
 | Gate failed | Gate decision, original report, source digest, provider receipt | Repair the defect or follow the declared repair route |
-| External effect is uncertain | Effect request, idempotency key, external resource, receipt | Reconcile externally; never blind-retry |
+| External effect is uncertain | Effect request, idempotency key, external resource, receipt | Inspect the external state, preserve evidence, stop, and escalate; never blind-retry or edit the journal |
 | Resume fails | Active wait ID, signal type, issuer, expiry, graph digest | Create one matching current signal or start a new run |
 | Cancellation seems incomplete | Durable terminal event, process owner, child processes | Keep resources; escalate until quiescence is proven |
 | Plugin is unavailable | Registry validation, activation log, selected provider, grant | Correct platform configuration and start a new governed run |
@@ -208,6 +208,14 @@ Never submit a second request from absence of a UI update alone.
 | Redis connection is refused or times out | Redis Pod, Service endpoint, network policy, DNS, and TCP error before authentication | Repair reachability; do not rotate credentials or delete data |
 | Redis reports `NOAUTH` or `WRONGPASS` | Endpoint remains reachable; compare Secret name/version and consumer mount without exposing the value | Correct credential distribution through its owner; do not change the data store |
 | Redis connects but expected stream or data is absent | Authenticated `PING`, exact key/stream identity, persistence mode, PVC identity, and application audit | Keep writers stopped if loss is possible; restore only from a verified owned backup |
+
+KubeClaw does not currently provide a generic Core operation that reconciles an
+uncertain external effect and imports its result. The
+[open reconciliation boundary](../status/open-issues.md#uncertain-external-effects-have-no-supported-reconciliation-and-result-import-operation)
+is different from a provider-specific normal result import that has its own
+documented contract. If the selected provider has no such operation, retain the
+request identity, idempotency key, external evidence, and receipts. Stop and
+escalate instead of retrying, resuming, or editing durable state.
 
 ## Hangs and Timeouts
 
