@@ -9,6 +9,7 @@ import {
   renderSecrets,
   table,
 } from './docs-generate-core.mjs';
+import { yamlFieldPathTokens } from './yaml-field-path.mjs';
 
 const argv = process.argv.slice(2);
 const option = (name, fallback) => {
@@ -264,7 +265,7 @@ ${generatedEnd()}
 
 function renderHelmValues(configurationValues, configurationSchemas) {
   const valueFiles = configurationValues.files;
-  const sourceLink = (sourcePath, line = 1, label = `${sourcePath}:${line}`) => '[`' + label + '`](' + pinnedSourceUrl(sourcePath, line, line) + ')';
+  const sourceLink = (sourcePath, line = 1, label = `${sourcePath}:${line}`, endLine = line) => '[`' + label + '`](' + pinnedSourceUrl(sourcePath, line, endLine) + ')';
   const meaningEvidence = (evidence) => {
     const [source, ...details] = evidence.split('; ');
     const match = /^(.*):(\d+)$/u.exec(source);
@@ -275,7 +276,11 @@ function renderHelmValues(configurationValues, configurationSchemas) {
     if (field.meaning.status === 'inactive-profile') return `${field.meaning.text}<br>This file is not selected by a checked-in deployment path.`;
     if (/blocker/u.test(field.meaning.status)) return `${field.meaning.text}<br>This field is not ready for operator use because its receiving behavior is not yet proved.`;
     const authority = field.meaning.apiAuthority ? `<br>Behavior authority: ${field.meaning.apiAuthority}` : '';
-    return `${field.meaning.text}${authority}<br>Source evidence: ${meaningEvidence(field.meaning.evidence)}`;
+    const semantic = field.meaning.semanticContractEvidence;
+    const semanticAuthority = semantic
+      ? `<br>Semantic contract: ${sourceLink(semantic.path, semantic.line, `${semantic.path}:${semantic.line}-${semantic.endLine}`, semantic.endLine)}`
+      : '';
+    return `${field.meaning.text}${authority}<br>Source evidence: ${meaningEvidence(field.meaning.evidence)}${semanticAuthority}`;
   };
   const consumerText = (field) => field.consumers.map((consumer) => {
     if (consumer === 'unknown') return 'Unknown';
@@ -305,15 +310,18 @@ function renderHelmValues(configurationValues, configurationSchemas) {
     };
     return labels[field.required] ?? field.required.replaceAll('-', ' ');
   };
-  const literalKeyOverride = (field) => {
-    if (!field.path.includes('["')) return '';
-    const helmPath = field.path.replace(/^\$\./u, '')
-      .replace(/\["((?:\\.|[^"])*)"\]/gu, (_match, encoded) => {
-        const key = JSON.parse(`"${encoded}"`);
-        return `.${key.replaceAll('\\', '\\\\').replaceAll('.', '\\.')}`;
-      });
-    const literalKeys = [...field.path.matchAll(/\["((?:\\.|[^"])*)"\]/gu)]
-      .map((match) => JSON.parse(`"${match[1]}"`));
+  const literalKeyOverride = (field, sourceClass) => {
+    const tokens = yamlFieldPathTokens(field.path);
+    const literalKeys = tokens.filter((token) => typeof token === 'string' && token.includes('.'));
+    if (!literalKeys.length) return '';
+    const helmOverrideSource = ['gitops-values', 'helm-example', 'helm-overlay', 'helm-values', 'release-values'].includes(sourceClass);
+    if (!helmOverrideSource) {
+      return `<br>Literal YAML map key: ${literalKeys.map((key) => `\`${key}\``).join(', ')}. The bracket-quoted segment identifies one key; it does not identify nested maps.`;
+    }
+    const helmKey = (key) => key.replace(/[\\.,=\[\]]/gu, '\\$&');
+    const helmPath = tokens.map((token, index) => typeof token === 'number'
+      ? `[${token}]`
+      : `${index === 0 ? '' : '.'}${helmKey(token)}`).join('');
     return `<br>Literal YAML map key: ${literalKeys.map((key) => `\`${key}\``).join(', ')}. Keep the quoted bracket segment as one key. Prefer a values file. For a Helm CLI override, escape the key's dot, for example \`--set '${helmPath}=<value>'\`.`;
   };
   const novaValueFields = valueFiles.find((file) => file.path === 'my-values/nova-values.yaml')?.documents
@@ -334,7 +342,7 @@ function renderHelmValues(configurationValues, configurationSchemas) {
     const links = sourceRangeLinks(file.path);
     return `<details>\n<summary><code>${file.path}</code> — ${fields.length} discovered leaf fields</summary>\n\nSource evidence:\n\n${links}\n\n${table(['Field', 'Behavior', 'Type and selected value', 'Required state and limits', 'Source and runtime owner', 'Receiving source', 'Precedence and effective value', 'Change impact and failure'], fields.map((field) => [
       `\`${field.path}\``,
-      `${readerMeaning(field)}${literalKeyOverride(field)}`,
+      `${readerMeaning(field)}${literalKeyOverride(field, file.sourceClass)}`,
       `\`${field.type}\`<br>\`${String(field.value).replaceAll('`', '\\`')}\`<br>${selectedValueType(field)}`,
       `${requiredState(field)}: ${field.requiredReason}<br>${field.constraints.length ? field.constraints.join('<br>') : 'No additional repository constraint.'}`,
       `Source: ${field.ownerComponent} (\`${field.ownerEvidence}\`)<br>Runtime: ${field.runtimeOwner}`,

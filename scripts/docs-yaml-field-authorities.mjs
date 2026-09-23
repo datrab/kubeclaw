@@ -3,6 +3,45 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 
+const semanticAuthorityPath = 'scripts/docs-yaml-field-authorities.mjs';
+const semanticAuthorityLines = fs.readFileSync(new URL('./docs-yaml-field-authorities.mjs', import.meta.url), 'utf8').split('\n');
+function semanticRegistrationEvidence() {
+  const frame = String(new Error().stack).split('\n').find((line) => line.includes('docs-yaml-field-authorities.mjs:')
+    && !/at (?:semanticRegistrationEvidence|add|special)\b/u.test(line));
+  const line = Number(/docs-yaml-field-authorities\.mjs:(\d+):\d+/u.exec(frame ?? '')?.[1]);
+  assert(Number.isSafeInteger(line) && line > 1, `cannot bind YAML semantic authority registration: ${frame ?? '<no frame>'}`);
+  return {
+    path: semanticAuthorityPath,
+    line,
+    sourceLineSha256: crypto.createHash('sha256').update(semanticAuthorityLines[line - 1] ?? '').digest('hex'),
+  };
+}
+function semanticEvidenceRange(startLine, endLine) {
+  assert(startLine > 1 && endLine >= startLine && endLine <= semanticAuthorityLines.length,
+    `invalid YAML semantic authority range ${startLine}-${endLine}`);
+  return {
+    path: semanticAuthorityPath,
+    line: startLine,
+    endLine,
+    sourceRangeSha256: crypto.createHash('sha256').update(semanticAuthorityLines.slice(startLine - 1, endLine).join('\n')).digest('hex'),
+  };
+}
+function profileContractEvidence(profile) {
+  const start = semanticAuthorityLines.findIndex((line) => line.startsWith(`  ${profile}:`));
+  assert(start >= 0, `cannot find YAML semantic profile ${profile}`);
+  let end = semanticAuthorityLines.findIndex((line, index) => index > start && (/^  [A-Za-z][A-Za-z0-9]+:/u.test(line) || line === '};'));
+  if (end < 0) end = semanticAuthorityLines.length;
+  return semanticEvidenceRange(start + 1, end);
+}
+function specialContractEvidence(registration) {
+  let end = registration.line;
+  while (end < semanticAuthorityLines.length && end < registration.line + 40
+    && !/\);\s*$/u.test(semanticAuthorityLines[end - 1])) end += 1;
+  assert(/\);\s*$/u.test(semanticAuthorityLines[end - 1] ?? ''),
+    `cannot find end of YAML special authority at ${registration.line}`);
+  return semanticEvidenceRange(registration.line, end);
+}
+
 const externalChartLockBytes = fs.readFileSync(new URL('./docs-external-helm-authority-lock.json', import.meta.url));
 const externalChartLock = JSON.parse(externalChartLockBytes);
 const externalChartLockChecksum = fs.readFileSync(new URL('./docs-external-helm-authority-lock.sha256', import.meta.url), 'utf8').trim();
@@ -178,7 +217,10 @@ function add(path, fieldPath, profile, options = {}) {
   assert(!fieldAuthorities.has(key), `duplicate YAML field authority: ${key}`);
   assert(files.has(path), `YAML field authority has no file declaration: ${key}`);
   assert(profiles[profile], `unknown YAML semantic profile ${profile}: ${key}`);
-  fieldAuthorities.set(key, { profile, ...options });
+  const semanticAuthorityEvidence = semanticRegistrationEvidence();
+  fieldAuthorities.set(key, {
+    profile, ...options, semanticAuthorityEvidence, semanticContractEvidence: profileContractEvidence(profile),
+  });
 }
 
 function special(path, fieldPath, authority) {
@@ -189,7 +231,10 @@ function special(path, fieldPath, authority) {
     const minimum = name === 'acceptedValues' ? 8 : 20;
     assert(typeof authority[name] === 'string' && authority[name].length >= minimum, `incomplete ${name}: ${key}`);
   }
-  fieldAuthorities.set(key, authority);
+  const semanticAuthorityEvidence = semanticRegistrationEvidence();
+  fieldAuthorities.set(key, {
+    ...authority, semanticAuthorityEvidence, semanticContractEvidence: specialContractEvidence(semanticAuthorityEvidence),
+  });
 }
 
 function addResourceSet(path, prefix, subject) {
@@ -311,7 +356,7 @@ add(prometheus, '$.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spe
 const promtail = 'gitops/platform/values/promtail-retired.yaml';
 file(promtail, 'c4edda32fa411091e79a5bcc3bed0f22faa6d6d5de8ecd5144b3042840eb0160', charts.promtail);
 special(promtail, '$.config.clients[0].url', { purpose: 'Sets the Loki push endpoint used by the retired Promtail client.', acceptedValues: 'An absolute HTTP or HTTPS URL ending in the Loki push API path.', emptyBehavior: 'An empty URL leaves Promtail without a usable client destination.', impact: 'Changes where any remaining Promtail Pod sends logs.', failure: 'A malformed URL prevents configuration loading; an unreachable endpoint causes repeated send failures and buffered or lost logs.' });
-special(promtail, '$.nodeSelector.kubeclaw.io/log-collector', { purpose: 'Selects only nodes labeled for the retired Promtail collector.', acceptedValues: 'A Kubernetes label value. This retirement profile uses `promtail-retired` and expects no node to carry it.', emptyBehavior: 'Removing the selector permits normal chart scheduling and can restart Promtail.', impact: 'Keeps the retired DaemonSet at zero Pods while preserving its release for controlled handover.', failure: 'If a node gains the label, Promtail schedules there and can duplicate Alloy log collection.' });
+special(promtail, '$.nodeSelector["kubeclaw.io/log-collector"]', { purpose: 'Selects only nodes labeled for the retired Promtail collector.', acceptedValues: 'A Kubernetes label value. This retirement profile uses `promtail-retired` and expects no node to carry it.', emptyBehavior: 'Removing the selector permits normal chart scheduling and can restart Promtail.', impact: 'Keeps the retired DaemonSet at zero Pods while preserving its release for controlled handover.', failure: 'If a node gains the label, Promtail schedules there and can duplicate Alloy log collection.' });
 addResourceSet(promtail, '$.resources', 'each Promtail Pod if the retirement selector matches a node');
 
 const redis = 'gitops/platform/values/redis.yaml';
@@ -338,7 +383,7 @@ add(spire, '$.global.spire.namespaces.create', 'booleanFeature', { subject: 'the
 for (const [key, subject] of [['enabled', 'the SPIRE chart recommendation bundle is applied'], ['namespaceLayout', 'the recommended SPIRE namespace layout is applied'], ['namespacePSS', 'recommended Pod Security Standards are applied to SPIRE namespaces'], ['priorityClassName', 'recommended SPIRE priority classes are selected'], ['prometheus', 'SPIRE Prometheus exporters and monitoring integration are enabled'], ['securityContexts', 'recommended SPIRE Pod and container security contexts are applied'], ['strictMode', 'strict SPIRE recommendation validation is enforced']]) add(spire, `$.global.spire.recommendations.${key}`, 'booleanFeature', { subject });
 for (const [pathName, subject] of [['global.installAndUpgradeHooks.enabled', 'the SPIRE chart runs install and upgrade repair hooks'], ['global.deleteHooks.enabled', 'the SPIRE chart runs deletion hooks'], ['spiffe-oidc-discovery-provider.enabled', 'the SPIFFE OIDC discovery provider is deployed'], ['spire-server.controllerManager.identities.clusterSPIFFEIDs.default.enabled', 'the default workload ClusterSPIFFEID registration is active'], ['spire-server.controllerManager.identities.clusterSPIFFEIDs.oidc-discovery-provider.enabled', 'the OIDC discovery provider receives its dedicated ClusterSPIFFEID'], ['spire-server.controllerManager.identities.clusterSPIFFEIDs.test-keys.enabled', 'the test-key workload receives a ClusterSPIFFEID'], ['spire-server.controllerManager.installAndUpgradeHook.enabled', 'the SPIRE server subchart install and upgrade hook runs'], ['spire-server.jwtSVIDSupport', 'the SPIRE server issues JWT-SVID identities'], ['tornjak-frontend.enabled', 'the Tornjak administration frontend is deployed']]) add(spire, `$.${pathName}`, 'booleanFeature', { subject });
 special(spire, '$.spiffe-csi-driver.image.tag', { purpose: 'Selects the SPIFFE CSI driver image tag within the pinned SPIRE chart.', acceptedValues: 'A valid image tag. This profile pins `0.2.13`, which includes the selected security updates.', emptyBehavior: 'An empty tag produces an incomplete or chart-default image selection.', impact: 'Changes the CSI driver code that exposes the SPIRE agent socket to Pods.', failure: 'An unavailable tag causes ImagePullBackOff; an incompatible driver prevents workload identity mounts.' });
-special(spire, '$.spire-server.controllerManager.identities.clusterSPIFFEIDs.default.podSelector.matchLabels.kubeclaw.dev/worker-trust', { purpose: 'Selects only Pods labeled as KubeClaw trusted workers for the default SPIFFE ID registration.', acceptedValues: 'A Kubernetes label value. The platform contract uses the string `true`.', emptyBehavior: 'Removing this selector broadens identity issuance beyond explicitly labeled worker Pods.', impact: 'Changes which Pods can receive the default workload identity.', failure: 'A wrong value prevents trusted workers from receiving identities; a broader selector grants identities to unintended Pods.' });
+special(spire, '$.spire-server.controllerManager.identities.clusterSPIFFEIDs.default.podSelector.matchLabels["kubeclaw.dev/worker-trust"]', { purpose: 'Selects only Pods labeled as KubeClaw trusted workers for the default SPIFFE ID registration.', acceptedValues: 'A Kubernetes label value. The platform contract uses the string `true`.', emptyBehavior: 'Removing this selector broadens identity issuance beyond explicitly labeled worker Pods.', impact: 'Changes which Pods can receive the default workload identity.', failure: 'A wrong value prevents trusted workers from receiving identities; a broader selector grants identities to unintended Pods.' });
 special(spire, '$.spire-server.controllerManager.identities.clusterSPIFFEIDs.default.spiffeIDTemplate', { purpose: 'Builds each trusted worker SPIFFE ID from its namespace and ServiceAccount.', acceptedValues: 'A valid SPIRE Controller Manager SPIFFE ID template beginning with `spiffe://{{ .TrustDomain }}/`.', emptyBehavior: 'An empty template cannot issue the selected workload identity.', impact: 'Changes the identity string used by mTLS authorization at worker boundaries.', failure: 'An invalid template prevents registration. A changed path breaks authorization policies that expect the existing ID form.' });
 
 const tailscale = 'gitops/platform/values/tailscale-operator.yaml';
@@ -354,8 +399,8 @@ addResourceSet(tailscale, '$.operatorConfig.resources', 'the Tailscale operator 
 
 const argocd = 'my-values/infra/argocd-values.yaml';
 file(argocd, 'eb0a7cdadf4bab951724dafa6ec48f5d4e07152cb3d41929c59d3c2899247dac', charts.argocd);
-special(argocd, '$.configs.cm.application.resourceTrackingMethod', { purpose: 'Selects how Argo CD records ownership of Kubernetes resources.', acceptedValues: 'A tracking method supported by Argo CD 10.8.0; this profile uses `annotation`.', emptyBehavior: 'An empty or omitted value falls back to chart/application-controller defaults and is not the selected ownership contract.', impact: 'Changes how Argo CD identifies resources during diff, prune, and reconciliation.', failure: 'Changing the method without migration can make existing resources appear orphaned or shared and can cause incorrect pruning.' });
-special(argocd, '$.configs.params.server.insecure', { purpose: 'Runs the Argo CD API server without internal TLS because the private Tailscale ingress terminates TLS.', acceptedValues: '`true` or `false`; this topology requires `true` behind the selected TLS terminator.', emptyBehavior: 'An empty scalar is invalid. Removing it returns to chart defaults and changes the ingress-to-server protocol.', impact: 'Changes whether the Argo CD server listens for HTTP or HTTPS inside the cluster.', failure: 'A mismatch with the ingress backend protocol causes connection or TLS handshake failures.' });
+special(argocd, '$.configs.cm["application.resourceTrackingMethod"]', { purpose: 'Selects how Argo CD records ownership of Kubernetes resources.', acceptedValues: 'A tracking method supported by Argo CD 10.8.0; this profile uses `annotation`.', emptyBehavior: 'An empty or omitted value falls back to chart/application-controller defaults and is not the selected ownership contract.', impact: 'Changes how Argo CD identifies resources during diff, prune, and reconciliation.', failure: 'Changing the method without migration can make existing resources appear orphaned or shared and can cause incorrect pruning.' });
+special(argocd, '$.configs.params["server.insecure"]', { purpose: 'Runs the Argo CD API server without internal TLS because the private Tailscale ingress terminates TLS.', acceptedValues: '`true` or `false`; this topology requires `true` behind the selected TLS terminator.', emptyBehavior: 'An empty scalar is invalid. Removing it returns to chart defaults and changes the ingress-to-server protocol.', impact: 'Changes whether the Argo CD server listens for HTTP or HTTPS inside the cluster.', failure: 'A mismatch with the ingress backend protocol causes connection or TLS handshake failures.' });
 add(argocd, '$.server.ingress.enabled', 'booleanFeature', { subject: 'the Argo CD chart creates its own Ingress resource' });
 add(argocd, '$.server.service.type', 'serviceType', { subject: 'the Argo CD API server', allowed: '`ClusterIP`, `NodePort`, or `LoadBalancer`; this private-ingress topology uses `ClusterIP`' });
 
@@ -487,14 +532,14 @@ const childApplicationFiles = [
 ];
 for (const [pathName, digest] of childApplicationFiles) {
   file(pathName, digest);
-  special(pathName, '$.metadata.annotations.argocd.argoproj.io/ignore-healthcheck', {
+  special(pathName, '$.metadata.annotations["argocd.argoproj.io/ignore-healthcheck"]', {
     purpose: 'Tells Argo CD not to use this child Application as an implicit health dependency of its parent resource.',
     acceptedValues: 'The string `true` for this platform child-Application contract.',
     emptyBehavior: 'Removing or emptying the annotation restores the controller default and can make parent health depend on the child.',
     impact: 'Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.',
     failure: 'A different value can leave the parent waiting on child health or report a parent state that does not match the selected platform policy.',
   });
-  special(pathName, '$.metadata.annotations.kubeclaw.io/health-mode', {
+  special(pathName, '$.metadata.annotations["kubeclaw.io/health-mode"]', {
     purpose: 'Selects the observed-workload branch in the checked-in Argo CD Application health script.',
     acceptedValues: 'Exactly `observed` for platform child Applications; absence selects the strict selected-revision branch.',
     emptyBehavior: 'An empty or missing value does not select observed mode and therefore keeps the strict revision and sync checks.',
@@ -511,7 +556,7 @@ for (const [pathName, digest] of [
   ['gitops/platform/bootstrap/storage-drivers-project.yaml', '9e8f462b13b16a35a76e6c31d68941cf9d87f23d6d71751871bf2bd38e919d50'],
 ]) {
   file(pathName, digest);
-  special(pathName, '$.metadata.annotations.argocd.argoproj.io/sync-wave', {
+  special(pathName, '$.metadata.annotations["argocd.argoproj.io/sync-wave"]', {
     purpose: 'Places the Argo CD AppProject in the bootstrap wave that runs before Applications which reference that project.',
     acceptedValues: 'A base-10 integer encoded as a string; this contract uses `-1`.',
     emptyBehavior: 'An empty or missing annotation uses Argo CD wave zero and loses the required project-before-Application ordering.',
@@ -520,7 +565,7 @@ for (const [pathName, digest] of [
   });
 }
 
-special('gitops/platform/bootstrap/spire.yaml', '$.metadata.annotations.argocd.argoproj.io/compare-options', {
+special('gitops/platform/bootstrap/spire.yaml', '$.metadata.annotations["argocd.argoproj.io/compare-options"]', {
   purpose: 'Selects Argo CD server-side diff for the SPIRE Application so comparison uses Kubernetes field ownership and defaulting.',
   acceptedValues: 'Exactly `ServerSideDiff=true` for this checked-in SPIRE comparison contract.',
   emptyBehavior: 'Removing the annotation restores normal Argo CD diff behavior and can reintroduce false drift for server-defaulted fields.',
@@ -528,7 +573,7 @@ special('gitops/platform/bootstrap/spire.yaml', '$.metadata.annotations.argocd.a
   failure: 'An unsupported option is ignored or rejected by Argo CD and can leave persistent false OutOfSync reports.',
 });
 
-special('gitops/platform/bootstrap/argocd.yaml', '$.spec.sources[0].helm.valuesObject.configs.cm.resource.customizations.health.argoproj.io_Application', {
+special('gitops/platform/bootstrap/argocd.yaml', '$.spec.sources[0].helm.valuesObject.configs.cm["resource.customizations.health.argoproj.io_Application"]', {
   purpose: 'Installs the Lua health evaluator that separates observed platform children from runtime children that require selected-revision proof.',
   acceptedValues: 'Lua code accepted by Argo CD resource health customization and returning a status and message for an Application object.',
   emptyBehavior: 'Empty or missing code removes the platform-specific child health contract and leaves Argo CD default Application health behavior.',
@@ -569,7 +614,7 @@ special(gitOpsRegistryLocal, '$.spec.template.spec.containers[0].env[0].value', 
 
 const registryLocalManifest = 'my-values/infra/registry-local.yaml';
 file(registryLocalManifest, '3fe00107c5ee2387313626219668bdc02d994a96c32776a7dd2138bdd16f10ae');
-special(registryLocalManifest, '$.data.config.yml', { purpose: 'Defines the complete Distribution 3.0.0 configuration for the anonymous local HTTP lab registry.', acceptedValues: 'Valid Distribution YAML with filesystem storage, deletion and upload purging disabled, and the HTTP listener on port 5000.', emptyBehavior: 'Empty configuration makes the registry image fall back or fail and does not preserve this storage and maintenance contract.', impact: 'Controls the storage root, deletion behavior, upload cleanup, logging, and clear-text listener used by the local lab registry.', failure: 'Invalid YAML or unsupported settings prevent registry startup; unsafe deletion or purging settings can remove content outside the offline maintenance procedure.' });
+special(registryLocalManifest, '$.data["config.yml"]', { purpose: 'Defines the complete Distribution 3.0.0 configuration for the anonymous local HTTP lab registry.', acceptedValues: 'Valid Distribution YAML with filesystem storage, deletion and upload purging disabled, and the HTTP listener on port 5000.', emptyBehavior: 'Empty configuration makes the registry image fall back or fail and does not preserve this storage and maintenance contract.', impact: 'Controls the storage root, deletion behavior, upload cleanup, logging, and clear-text listener used by the local lab registry.', failure: 'Invalid YAML or unsupported settings prevent registry startup; unsafe deletion or purging settings can remove content outside the offline maintenance procedure.' });
 special(registryLocalManifest, '$.spec.template.spec.containers[0].args[0]', { purpose: 'Selects the Distribution subcommand that starts the registry server.', acceptedValues: 'Exactly `serve` for Distribution 3.0.0.', emptyBehavior: 'Removing it returns command selection to the image and no longer proves use of the mounted configuration.', impact: 'Starts the registry server rather than a maintenance subcommand.', failure: 'An unsupported subcommand makes the container exit.' });
 special(registryLocalManifest, '$.spec.template.spec.containers[0].args[1]', { purpose: 'Supplies the mounted Distribution configuration file to the serve subcommand.', acceptedValues: 'Exactly `/etc/kubeclaw-registry/config.yml`, matching the ConfigMap volume mount.', emptyBehavior: 'An empty or missing path leaves the serve command without this repository configuration.', impact: 'Selects the storage and listener configuration used by the local registry.', failure: 'A wrong or unreadable path makes the registry container exit.' });
 special(registryLocalManifest, '$.spec.template.spec.containers[0].env[0].name', { purpose: 'Names the OpenTelemetry exporter selector consumed by the Distribution image.', acceptedValues: 'Exactly `OTEL_TRACES_EXPORTER` for the selected image.', emptyBehavior: 'An empty or changed name does not disable the image tracing exporter.', impact: 'Binds the following value to trace-export behavior.', failure: 'A wrong name can make the image initialize an unwanted exporter and emit connection errors.' });
@@ -622,6 +667,17 @@ export function assertYamlAuthorityRegistry(repositoryRoot = process.cwd(), { ve
     'external Helm authority lock chart set changed');
   let externalFieldCount = 0;
   for (const [key, entry] of fieldAuthorities) {
+    const registration = entry.semanticAuthorityEvidence;
+    const contractEvidence = entry.semanticContractEvidence;
+    assert(registration?.path === semanticAuthorityPath && registration.line > 1,
+      `${key}: exact semantic authority registration line is missing`);
+    assert.equal(crypto.createHash('sha256').update(semanticAuthorityLines[registration.line - 1] ?? '').digest('hex'), registration.sourceLineSha256,
+      `${key}: semantic authority registration line changed`);
+    assert(contractEvidence?.path === semanticAuthorityPath && contractEvidence.line > 1
+      && contractEvidence.endLine >= contractEvidence.line,
+    `${key}: semantic contract source range is missing`);
+    assert.equal(crypto.createHash('sha256').update(semanticAuthorityLines.slice(contractEvidence.line - 1, contractEvidence.endLine).join('\n')).digest('hex'), contractEvidence.sourceRangeSha256,
+      `${key}: semantic contract source range changed`);
     for (const name of ['purpose', 'acceptedValues', 'emptyBehavior', 'impact', 'failure']) {
       const value = entry.profile ? profiles[entry.profile](entry)[name] : entry[name];
       const minimum = name === 'acceptedValues' ? 8 : 20;

@@ -8244,7 +8244,7 @@
         "valueSha256": "f5c3692770c84f0c3f08b96ceda8c2994cd9c0faee3b3e94de757352bce6e571"
       }
     },
-    "gitops/platform/values/promtail-retired.yaml#$.nodeSelector.kubeclaw.io/log-collector": {
+    "gitops/platform/values/promtail-retired.yaml#$.nodeSelector[\"kubeclaw.io/log-collector\"]": {
       "authorityMode": "extracted-template-and-values",
       "chartKey": "promtail",
       "schema": null,
@@ -9108,7 +9108,7 @@
         "valueSha256": "26b3426b2593763c96d0890b4a77a0bbf66d13fc512b0c6b138a23c290f30a2a"
       }
     },
-    "gitops/platform/values/spire.yaml#$.spire-server.controllerManager.identities.clusterSPIFFEIDs.default.podSelector.matchLabels.kubeclaw.dev/worker-trust": {
+    "gitops/platform/values/spire.yaml#$.spire-server.controllerManager.identities.clusterSPIFFEIDs.default.podSelector.matchLabels[\"kubeclaw.dev/worker-trust\"]": {
       "authorityMode": "extracted-values-nearest-ancestor",
       "chartKey": "spire",
       "schema": null,
@@ -9447,7 +9447,7 @@
         "valueSha256": "73d1662826b2ed3a52bb9b43c0a59fa31bd3c84d94f2f2a325b2198d1dd87141"
       }
     },
-    "my-values/infra/argocd-values.yaml#$.configs.cm.application.resourceTrackingMethod": {
+    "my-values/infra/argocd-values.yaml#$.configs.cm[\"application.resourceTrackingMethod\"]": {
       "authorityMode": "extracted-template-and-values",
       "chartKey": "argocd",
       "schema": null,
@@ -9504,7 +9504,7 @@
         "valueSha256": "98ed166c5dfa1d5750f49aba04f2963b322da75d979db806716110e69dd404a5"
       }
     },
-    "my-values/infra/argocd-values.yaml#$.configs.params.server.insecure": {
+    "my-values/infra/argocd-values.yaml#$.configs.params[\"server.insecure\"]": {
       "authorityMode": "extracted-template-and-values",
       "chartKey": "argocd",
       "schema": null,
@@ -11689,7 +11689,7 @@
         "valueSha256": "26b3426b2593763c96d0890b4a77a0bbf66d13fc512b0c6b138a23c290f30a2a"
       }
     },
-    "my-values/infra/spire-values.yaml#$.spire-server.controllerManager.identities.clusterSPIFFEIDs.default.podSelector.matchLabels.kubeclaw.dev/worker-trust": {
+    "my-values/infra/spire-values.yaml#$.spire-server.controllerManager.identities.clusterSPIFFEIDs.default.podSelector.matchLabels[\"kubeclaw.dev/worker-trust\"]": {
       "authorityMode": "extracted-values-nearest-ancestor",
       "chartKey": "spire",
       "schema": null,

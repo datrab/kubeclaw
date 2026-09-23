@@ -8,6 +8,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import YAML from 'yaml';
+import { yamlFieldPathWithoutRoot } from './yaml-field-path.mjs';
 
 const root = process.cwd();
 const checkOnly = process.argv.includes('--check');
@@ -174,11 +175,7 @@ const helperCallProof = (consumerPath, lines, consumerLine) => {
   callsFor(helper, []);
   return result;
 };
-const canonicalHelmPath = (value) => value.replace(/^\$\.?/u, '')
-  .replace(/\["((?:\\.|[^"])*)"\]/gu, (_match, key) => `.${JSON.parse(`"${key}"`)}`)
-  .replace(/\['((?:\\.|[^'])*)'\]/gu, (_match, key) => `.${key.replaceAll("\\'", "'").replaceAll('\\\\', '\\')}`)
-  .replace(/^\./u, '')
-  .replace(/\[[0-9]+\]/gu, '[]');
+const canonicalHelmPath = (value) => yamlFieldPathWithoutRoot(value, { arrayWildcard: true });
 const balancedArgument = (text, start) => {
   let quote = null;
   let depth = 0;
@@ -566,9 +563,8 @@ for (const field of local) {
   // One maintenance transition accepts the former ambiguous dotted spelling as
   // the semantic source.  The generated registry always writes the quoted key,
   // so normal check mode cannot keep or recreate the ambiguous form.
-  const legacyPath = `$.${canonicalHelmPath(field.path)}`;
   const approved = approvedRegistry.files?.[field.sourcePath]?.fields?.[field.path]
-    ?? approvedRegistry.files?.[field.sourcePath]?.fields?.[legacyPath];
+    ?? null;
   if (!approved) {
     throw new Error(`LOCAL_HELM_AUTHORITY_REQUIRED: ${field.sourcePath}#${field.path} has a render binding but no explicitly maintained semantic contract`);
   }

@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { gunzipSync, gzipSync } from 'node:zlib';
 import { spawnSync } from 'node:child_process';
 import YAML from 'yaml';
+import { yamlFieldPath, yamlFieldPathTokens } from './yaml-field-path.mjs';
 
 const sha256 = (value) => crypto.createHash('sha256').update(value).digest('hex');
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -169,13 +170,6 @@ function resolveReference(schema) {
   return current;
 }
 
-function tokens(fieldPath) {
-  return fieldPath.replace(/^\$\.?/u, '').split('.').flatMap((part) => {
-    const match = /^([^[]+)((?:\[[0-9]+\])*)$/u.exec(part);
-    return [match?.[1], ...[...(match?.[2] ?? '').matchAll(/\[([0-9]+)\]/gu)].map(() => '[]')].filter(Boolean);
-  });
-}
-
 export function apiFieldSchemaAuthority(apiVersion, kind, fieldPath) {
   if (fieldPath === 'apiVersion' || fieldPath === 'kind') return {
     authority: `Kubernetes ${manifest.kubernetes.version} object envelope plus ${apiVersion}/${kind} selected API contract`,
@@ -198,12 +192,12 @@ export function apiFieldSchemaAuthority(apiVersion, kind, fieldPath) {
   let schema;
   let authority;
   let authoritySha256;
-  let resolvedFieldPath = fieldPath;
-  if (fieldPath === 'metadata' || fieldPath.startsWith('metadata.')) {
+  let fieldTokens = yamlFieldPathTokens(fieldPath).map((token) => typeof token === 'number' ? '[]' : token);
+  if (fieldTokens[0] === 'metadata') {
     schema = kubernetesOpenApi.definitions['io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta'];
     authority = `Kubernetes ${manifest.kubernetes.version} OpenAPI io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta`;
     authoritySha256 = manifest.kubernetes.contentSha256;
-    resolvedFieldPath = fieldPath === 'metadata' ? '' : fieldPath.slice('metadata.'.length);
+    fieldTokens = fieldTokens.slice(1);
   } else if (builtin) {
     schema = kubernetesOpenApi.definitions[builtin];
     authority = `Kubernetes ${manifest.kubernetes.version} OpenAPI ${builtin}`;
@@ -218,7 +212,6 @@ export function apiFieldSchemaAuthority(apiVersion, kind, fieldPath) {
   let current = resolveReference(schema);
   const resolved = [];
   let requiredBySchema = false;
-  const fieldTokens = tokens(resolvedFieldPath);
   for (let index = 0; index < fieldTokens.length; index += 1) {
     const token = fieldTokens[index];
     current = resolveReference(current);
@@ -229,7 +222,7 @@ export function apiFieldSchemaAuthority(apiVersion, kind, fieldPath) {
     }
     else if (typeof current?.additionalProperties === 'object') {
       current = resolveReference(current.additionalProperties);
-      resolved.push(fieldTokens.slice(index).join('.'));
+      resolved.push(...fieldTokens.slice(index));
       index = fieldTokens.length;
       break;
     } else current = null;
@@ -242,7 +235,7 @@ export function apiFieldSchemaAuthority(apiVersion, kind, fieldPath) {
     apiVersion,
     kind,
     fieldPath,
-    resolvedPath: resolved.join('.').replaceAll('.[]', '[]'),
+    resolvedPath: yamlFieldPath(resolved, { root: false, arrayWildcard: true }),
     type: current.type ?? (current.properties ? 'object' : null),
     enum: current.enum ?? null,
     default: Object.hasOwn(current, 'default') ? current.default : '<no schema default>',

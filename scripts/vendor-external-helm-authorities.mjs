@@ -6,6 +6,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import YAML from 'yaml';
+import { yamlFieldPathTokens } from './yaml-field-path.mjs';
 
 const root = process.cwd();
 const refresh = process.argv.includes('--refresh');
@@ -23,11 +24,6 @@ function stable(value) {
   if (Array.isArray(value)) return value.map(stable);
   if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).sort(([left], [right]) => left.localeCompare(right)).map(([key, item]) => [key, stable(item)]));
   return value;
-}
-
-function fieldTokens(fieldPath) {
-  return [...fieldPath.replace(/^\$\.?/u, '').matchAll(/(?:^|\.)([A-Za-z0-9_-]+)|\[([0-9]+)\]/gu)]
-    .map((match) => match[1] ?? Number(match[2]));
 }
 
 function valueAt(value, tokens) {
@@ -166,7 +162,7 @@ function deriveArtifact(archiveManifest) {
       output.charts[key] = { ...chart, extractedValuesSha256: sha256(valuesBytes), extractedSchemaSha256: schemaBytes ? sha256(schemaBytes) : null };
       for (const field of fields.filter((item) => item.externalChart.chart === chart.chart && item.externalChart.version === chart.version
         && item.externalChart.archiveSha256 === chart.archiveSha256)) {
-        const tokens = fieldTokens(field.fieldPath);
+        const tokens = yamlFieldPathTokens(field.fieldPath);
         const upstream = nearestValue(values, tokens);
         const schemaContract = schemaAt(schema, tokens);
         const templates = templateEvidence(chartDirectory, tokens);

@@ -2,8 +2,47 @@ import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { yamlFieldPathWithoutRoot } from './yaml-field-path.mjs';
 
-const registry = JSON.parse(fs.readFileSync(new URL('./docs-local-helm-field-authorities.json', import.meta.url), 'utf8'));
+const registryUrl = new URL('./docs-local-helm-field-authorities.json', import.meta.url);
+const registryText = fs.readFileSync(registryUrl, 'utf8');
+const registryLines = registryText.split('\n');
+const registry = JSON.parse(registryText);
+const registryEvidenceCache = new Map();
+const registryEvidence = (sourcePath, fieldPath) => {
+  const cacheKey = `${sourcePath}#${fieldPath}`;
+  if (registryEvidenceCache.has(cacheKey)) return registryEvidenceCache.get(cacheKey);
+  const fileLine = registryLines.findIndex((line) => line === `    ${JSON.stringify(sourcePath)}: {`);
+  assert(fileLine >= 0, `${sourcePath}: local Helm authority file block has no exact JSON line`);
+  const nextFileLine = registryLines.findIndex((line, index) => index > fileLine && /^    "[^"]+": \{$/u.test(line));
+  const fieldLine = registryLines.findIndex((line, index) => index > fileLine
+    && (nextFileLine < 0 || index < nextFileLine)
+    && line === `        ${JSON.stringify(fieldPath)}: {`);
+  assert(fieldLine >= 0, `${sourcePath}#${fieldPath}: local Helm authority object has no exact JSON line`);
+  let objectEnd = registryLines.findIndex((line, index) => index > fieldLine
+    && ((nextFileLine < 0 || index < nextFileLine) && /^        "(?:\\.|[^"])+": \{$/u.test(line)));
+  const fieldsEnd = registryLines.findIndex((line, index) => index > fieldLine && line === '      }');
+  if (objectEnd < 0 || (fieldsEnd >= 0 && fieldsEnd < objectEnd)) objectEnd = fieldsEnd;
+  assert(objectEnd > fieldLine, `${sourcePath}#${fieldPath}: local Helm authority object range has no end`);
+  const failureLine = registryLines.findIndex((line, index) => index > fieldLine && index < objectEnd
+    && /^          "failure":/u.test(line));
+  assert(failureLine > fieldLine, `${sourcePath}#${fieldPath}: semantic contract has no exact failure line`);
+  const endLine = failureLine + 1;
+  const registration = {
+    path: 'scripts/docs-local-helm-field-authorities.json',
+    line: fieldLine + 1,
+    sourceLineSha256: crypto.createHash('sha256').update(registryLines[fieldLine]).digest('hex'),
+  };
+  const contract = {
+    path: registration.path,
+    line: registration.line,
+    endLine,
+    sourceRangeSha256: crypto.createHash('sha256').update(registryLines.slice(fieldLine, endLine).join('\n')).digest('hex'),
+  };
+  const result = { registration, contract };
+  registryEvidenceCache.set(cacheKey, result);
+  return result;
+};
 
 export function localHelmAuthorityFile(sourcePath) {
   return registry.files[sourcePath] ?? null;
@@ -12,7 +51,14 @@ export function localHelmAuthorityFile(sourcePath) {
 export function localHelmFieldAuthority(sourcePath, fieldPath) {
   const declaration = localHelmAuthorityFile(sourcePath);
   const authority = declaration?.fields[fieldPath];
-  return authority ? { ...authority, sourceFileSha256: declaration.sourceSha256, chartRoot: declaration.chartRoot } : null;
+  const evidence = authority ? registryEvidence(sourcePath, fieldPath) : null;
+  return authority ? {
+    ...authority,
+    sourceFileSha256: declaration.sourceSha256,
+    chartRoot: declaration.chartRoot,
+    semanticAuthorityEvidence: evidence.registration,
+    semanticContractEvidence: evidence.contract,
+  } : null;
 }
 
 export function localHelmAuthorityPaths(sourcePath) {
@@ -36,10 +82,7 @@ export function localHelmAuthorityStats() {
 }
 
 const sha256 = (value) => crypto.createHash('sha256').update(value).digest('hex');
-const canonicalHelmPath = (value) => value.replace(/^\$\.?/u, '')
-  .replace(/\["((?:\\.|[^"])*)"\]/gu, (_match, key) => `.${JSON.parse(`"${key}"`)}`)
-  .replace(/^\./u, '')
-  .replace(/\[[0-9]+\]/gu, '[]');
+const canonicalHelmPath = (value) => yamlFieldPathWithoutRoot(value, { arrayWildcard: true });
 
 export function assertLocalHelmAuthorityRegistry(repositoryRoot = process.cwd(), { verifyBytes = true } = {}) {
   assert.equal(registry.version, 2);
@@ -54,6 +97,14 @@ export function assertLocalHelmAuthorityRegistry(repositoryRoot = process.cwd(),
     }
     assert(registry.charts[declaration.chartRoot], `${sourcePath}: missing chart contract ${declaration.chartRoot}`);
     for (const [fieldPath, authority] of Object.entries(declaration.fields)) {
+      const { registration: semanticEvidence, contract: semanticContract } = registryEvidence(sourcePath, fieldPath);
+      assert(semanticEvidence.line > 1, `${sourcePath}#${fieldPath}: semantic authority points to line 1`);
+      assert.equal(sha256(registryLines[semanticEvidence.line - 1]), semanticEvidence.sourceLineSha256,
+        `${sourcePath}#${fieldPath}: semantic authority line digest changed`);
+      assert(semanticContract.endLine >= semanticContract.line,
+        `${sourcePath}#${fieldPath}: semantic authority object range is invalid`);
+      assert.equal(sha256(registryLines.slice(semanticContract.line - 1, semanticContract.endLine).join('\n')), semanticContract.sourceRangeSha256,
+        `${sourcePath}#${fieldPath}: semantic authority object range changed`);
       assert(fieldPath.startsWith('$.'), `${sourcePath}#${fieldPath}: field path is not exact`);
       assert(!['typed-rendered-value', 'bounded-integer', 'container-path', 'duration', 'kubernetes-or-runtime-name', 'network-or-source-url', 'numeric-security-mode', 'protocol-selector'].includes(authority.group),
         `${sourcePath}#${fieldPath}: mechanical or conflated fallback authority is forbidden`);

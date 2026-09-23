@@ -12,6 +12,9 @@ import {
   assertLocalHelmAuthorityRegistry, localHelmAuthorityFile, localHelmAuthorityPaths, localHelmFieldAuthority,
 } from './docs-local-helm-authorities.mjs';
 import { apiFieldSchemaAuthority } from './docs-api-schema-authorities.mjs';
+import {
+  yamlFieldChildPath, yamlFieldMatcherPath, yamlFieldPath, yamlFieldPathTokens, yamlFieldPathWithoutRoot,
+} from './yaml-field-path.mjs';
 
 const argv = process.argv.slice(2);
 const option = (name, fallback) => {
@@ -481,7 +484,9 @@ function typeOf(value) {
 }
 
 function redactValue(fieldPath, value) {
-  const lastSegment = fieldPath.split('.').at(-1)?.replace(/\[[0-9]+\]$/, '') ?? fieldPath;
+  let lastSegment;
+  try { lastSegment = String(yamlFieldPathTokens(fieldPath).at(-1) ?? fieldPath); }
+  catch { lastSegment = fieldPath.split('.').at(-1)?.replace(/\[[0-9]+\]$/u, '') ?? fieldPath; }
   if (SENSITIVE_VALUE_NAME.test(lastSegment)) return '<redacted:sensitive-field>';
   if (typeof value === 'string') {
     if (value.length > 160) return `<redacted:long-string:${value.length}>`;
@@ -566,23 +571,8 @@ function yamlSources() {
   return [...files].sort();
 }
 
-const HELM_DOTTED_KEY_SEPARATOR = '\u001f';
-function unquoteYamlLiteralKeys(value) {
-  return value.replace(/\["((?:\\.|[^"])*)"\]/gu, (_match, key) => `.${JSON.parse(`"${key}"`)}`)
-    .replace(/\['((?:\\.|[^'])*)'\]/gu, (_match, key) => `.${key.replaceAll("\\'", "'").replaceAll('\\\\', '\\')}`)
-    .replace(/^\./u, '');
-}
 function canonicalHelmPath(value) {
-  return unquoteYamlLiteralKeys(value.replace(/^\$\.?/u, ''))
-    .replace(/\[[0-9]+\]/gu, '[]')
-    .replaceAll(HELM_DOTTED_KEY_SEPARATOR, '.');
-}
-
-function yamlFieldChildPath(parent, key, quoteLiteralDots) {
-  if (quoteLiteralDots && key.includes('.')) {
-    return `${parent}[${JSON.stringify(key)}]`;
-  }
-  return parent === '$' ? `$.${key}` : `${parent}.${key}`;
+  return yamlFieldPathWithoutRoot(value, { arrayWildcard: true });
 }
 
 function helmValueLeafCatalog() {
@@ -592,25 +582,24 @@ function helmValueLeafCatalog() {
     if (sourcePath === 'my-values/prism-values.yaml') return 'charts/prism';
     return 'charts/kubeclaw';
   };
-  const visit = (value, current, leaves) => {
+  const visit = (value, tokens, leaves) => {
     if (Array.isArray(value)) {
-      value.forEach((item) => visit(item, `${current}[]`, leaves));
+      value.forEach((item) => visit(item, [...tokens, '[]'], leaves));
       return;
     }
     if (value && typeof value === 'object') {
       Object.entries(value).forEach(([key, item]) => {
-        const encodedKey = key.replaceAll('.', HELM_DOTTED_KEY_SEPARATOR);
-        visit(item, current ? `${current}.${encodedKey}` : encodedKey, leaves);
+        visit(item, [...tokens, key], leaves);
       });
       return;
     }
-    if (current) leaves.add(current);
+    if (tokens.length) leaves.add(yamlFieldPath(tokens, { root: false }));
   };
   for (const sourcePath of yamlSources().filter((item) => ['helm-values', 'helm-overlay', 'helm-example'].includes(yamlClass(item)))) {
     const chart = sourceChart(sourcePath);
     const leaves = result.get(chart) ?? new Set();
     for (const document of YAML.parseAllDocuments(read(sourcePath), { prettyErrors: false })) {
-      if (!document.errors.length) visit(document.toJS(), '', leaves);
+      if (!document.errors.length) visit(document.toJS(), [], leaves);
     }
     result.set(chart, leaves);
   }
@@ -804,13 +793,14 @@ function chartConsumers() {
         });
       }
     }
-    const patternRegex = (pattern, suffix = '') => new RegExp(`^${`${pattern}${suffix ? `.${suffix}` : ''}`
-      .replace(/[.+?^${}()|[\]\\]/gu, '\\$&').replaceAll('*', '[^.\\[\\]]+')}$`, 'u');
     const matchingLeaves = (pattern, suffix = '', descendants = false) => {
-      const exact = patternRegex(pattern, suffix);
-      const prefix = new RegExp(`^${`${pattern}${suffix ? `.${suffix}` : ''}`
-        .replace(/[.+?^${}()|[\]\\]/gu, '\\$&').replaceAll('*', '[^.\\[\\]]+')}(?:\\.|\\[\\])`, 'u');
-      return [...chartLeaves].filter((leafPath) => exact.test(leafPath) || (descendants && prefix.test(leafPath)));
+      const expected = yamlFieldPathTokens(`${pattern}${suffix ? `.${suffix}` : ''}`);
+      const matches = (leafPath) => {
+        const actual = yamlFieldPathTokens(leafPath);
+        if (actual.length < expected.length || (!descendants && actual.length !== expected.length)) return false;
+        return expected.every((token, index) => token === '*' ? typeof actual[index] === 'string' : token === actual[index]);
+      };
+      return [...chartLeaves].filter(matches);
     };
     const rangeEnd = (startIndex) => {
       let depth = 1;
@@ -1200,14 +1190,14 @@ function deploymentFieldBoundary(resource, exactPath) {
   if (['ConfigMap', 'Secret'].includes(resource.kind) && /^(?:data|stringData)\./u.test(exactPath)) {
     return { kind: 'opaque-object-payload', owner: `the workload that reads ${resource.kind}/${resource.name}` };
   }
-  if (resource.kind === 'Application' && /^spec\.sources?(?:\[[0-9]+\])?\.helm\.(?:valuesObject|values)(?:\.|$)/u.test(exactPath)) {
+  if (resource.kind === 'Application' && /^spec\.sources?(?:\[\])?\.helm\.(?:valuesObject|values)(?:\.|$)/u.test(exactPath)) {
     return { kind: 'embedded-helm-payload', owner: 'Argo CD Helm rendering and the selected chart' };
   }
   if (/^metadata\.annotations\./u.test(exactPath)) {
     return { kind: 'controller-annotation-payload', owner: 'the controller named by the annotation prefix' };
   }
-  if (/(?:^|\.)containers\[[0-9]+\]\.(?:args|command)\[[0-9]+\]$/u.test(exactPath)
-    || /(?:^|\.)containers\[[0-9]+\]\.env\[[0-9]+\]\.(?:name|value)$/u.test(exactPath)) {
+  if (/(?:^|\.)containers\[\]\.(?:args|command)\[\]$/u.test(exactPath)
+    || /(?:^|\.)containers\[\]\.env\[\]\.(?:name|value)$/u.test(exactPath)) {
     return { kind: 'workload-process-payload', owner: 'the selected container image and process entry point' };
   }
   return { kind: 'api-envelope', owner: null };
@@ -1215,6 +1205,7 @@ function deploymentFieldBoundary(resource, exactPath) {
 
 function embeddedPayloadConsumers(context, exactPath, boundary, valueType) {
   const exactLine = context.fieldLine ?? 1;
+  const semanticPath = yamlFieldMatcherPath(exactPath);
   if (boundary.kind === 'embedded-helm-payload') {
     const suffix = canonicalHelmPath(exactPath.replace(/^spec\.sources?(?:\[[0-9]+\])?\.helm\.(?:valuesObject|values)\.?/u, ''));
     const sources = context.documentValue?.spec?.sources ?? (context.documentValue?.spec?.source ? [context.documentValue.spec.source] : []);
@@ -1243,11 +1234,11 @@ function embeddedPayloadConsumers(context, exactPath, boundary, valueType) {
     }];
   }
   if (boundary.kind === 'controller-annotation-payload') {
-    if (exactPath === 'metadata.annotations.kubeclaw.io/health-mode') return [{
+    if (semanticPath === 'metadata.annotations.kubeclaw.io/health-mode') return [{
       path: 'gitops/platform/bootstrap/argocd.yaml', line: 40, kind: 'checked-in-controller-reader', direction: 'read',
       authority: 'the pinned Argo CD 10.8.0 Application health Lua code reads this exact annotation key',
     }];
-    if (/^metadata\.annotations\.argocd\.argoproj\.io\/(?:ignore-healthcheck|sync-wave|compare-options)$/u.test(exactPath)) return [{
+    if (/^metadata\.annotations\.argocd\.argoproj\.io\/(?:ignore-healthcheck|sync-wave|compare-options)$/u.test(semanticPath)) return [{
       path: 'gitops/platform/bootstrap/argocd.yaml', line: 15, kind: 'version-bound-external-controller-contract', direction: 'read',
       authority: 'the pinned Argo CD 10.8.0 chart selects the controller version that owns this exact argocd.argoproj.io annotation contract',
     }];
@@ -1265,7 +1256,7 @@ function embeddedPayloadConsumers(context, exactPath, boundary, valueType) {
   }
   if (boundary.kind === 'opaque-object-payload') {
     const objectName = context.resource.name;
-    const payloadKey = exactPath.replace(/^(?:data|stringData)\./u, '');
+    const payloadKey = yamlFieldPathTokens(exactPath).slice(1).join('.');
     if (context.resource.kind === 'ConfigMap' && objectName === 'registry-local-config' && payloadKey === 'config.yml'
       && context.sourcePath === 'my-values/infra/registry-local.yaml') {
       const lines = read(context.sourcePath).split('\n');
@@ -1293,7 +1284,7 @@ function embeddedPayloadConsumers(context, exactPath, boundary, valueType) {
 function yamlSemantics(context, exactPath, valueType) {
   if (context.resource) {
     const { kind, name, apiVersion } = context.resource;
-    const semanticExactPath = unquoteYamlLiteralKeys(exactPath);
+    const semanticExactPath = yamlFieldMatcherPath(exactPath);
     const apiOwner = kind === 'Application' ? 'Argo CD Application controller' : `Kubernetes ${kind} controller`;
     const boundary = deploymentFieldBoundary(context.resource, semanticExactPath);
     if (boundary.kind !== 'api-envelope') return {
@@ -1302,7 +1293,7 @@ function yamlSemantics(context, exactPath, valueType) {
       defaultKind: 'authored-embedded-payload',
       constraints: [`outer ${apiVersion}/${kind} API field type`, `inner contract owned by ${boundary.owner}`],
       runtimeOwner: boundary.owner,
-      consumers: embeddedPayloadConsumers(context, semanticExactPath, boundary, valueType),
+      consumers: embeddedPayloadConsumers(context, exactPath, boundary, valueType),
       precedence: ['authored manifest payload', `${apiVersion}/${kind} admission preserves the accepted payload`, `${boundary.owner} reads and interprets the payload`],
       effectiveValueProof: `${context.sourcePath} -> ${apiVersion}/${kind} field -> ${boundary.owner}`,
       changeImpact: `Changes the value delivered to ${boundary.owner}; it does not change Kubernetes API behavior by itself.`,
@@ -1322,7 +1313,7 @@ function yamlSemantics(context, exactPath, valueType) {
         line: context.fieldLine ?? 1,
         sourceLineSha256: sha256(read(context.sourcePath).split('\n')[(context.fieldLine ?? 1) - 1] ?? ''),
         kind: 'kubernetes-api',
-        authority: apiFieldSchemaAuthority(apiVersion, kind, unquoteYamlLiteralKeys(exactPath)).authority,
+        authority: apiFieldSchemaAuthority(apiVersion, kind, exactPath).authority,
       }],
       precedence: ['authored manifest', 'Kubernetes API defaulting and admission', `${apiOwner} reconciliation`],
       effectiveValueProof: `${context.sourcePath} -> ${apiVersion}/${kind} admission -> ${kind}/${name}`,
@@ -1473,7 +1464,7 @@ function exactYamlAuthority(context, fieldPath) {
 }
 
 function deploymentApiFieldContract(resource, exactPath) {
-  const normalized = unquoteYamlLiteralKeys(exactPath).replace(/\[[0-9]+\]/gu, '[]');
+  const normalized = yamlFieldMatcherPath(exactPath);
   const api = `${resource.apiVersion}/${resource.kind}`;
   const operational = (purpose, acceptedValues, emptyBehavior, impact, failure, controller = `${resource.kind} controller`) => ({
     status: 'deployment-operational-authority', purpose, acceptedValues, emptyBehavior, impact, failure,
@@ -1608,10 +1599,12 @@ function yamlMeaning(context, exactPath, valueType, semantics, authority) {
     return {
     status: receiverProved ? 'embedded-payload-authority' : 'embedded-payload-meaning-blocker',
     text: `${context.resource.apiVersion}/${context.resource.kind} stores this value as ${semantics.deploymentBoundary.replaceAll('-', ' ')}; Kubernetes validates only its outer type. ${authority.purpose} Accepted values: ${authority.acceptedValues} Selected default: the checked-in value in this row is the repository baseline. Empty or omitted value: ${authority.emptyBehavior}`,
-    evidence: 'scripts/docs-yaml-field-authorities.mjs',
+    evidence: `${context.sourcePath}:${context.fieldLine}; scripts/docs-yaml-field-authorities.mjs`,
     acceptedValues: authority.acceptedValues,
     emptyBehavior: authority.emptyBehavior,
     sourceFileSha256: authority.sourceFileSha256,
+    semanticAuthorityEvidence: authority.semanticAuthorityEvidence,
+    semanticContractEvidence: authority.semanticContractEvidence,
     externalChart: null,
     blockerOwner: receiverProved ? null : sourceOwner(context.sourcePath).component,
     closureCondition: receiverProved ? null : 'Add an exact checked-in reader or a pinned external image/controller contract for this payload.',
@@ -1629,7 +1622,7 @@ function yamlMeaning(context, exactPath, valueType, semantics, authority) {
   if (context.resource) {
     const contract = deploymentApiFieldContract(context.resource, exactPath);
     const schemaAuthority = {
-      ...apiFieldSchemaAuthority(context.resource.apiVersion, context.resource.kind, unquoteYamlLiteralKeys(exactPath)),
+      ...apiFieldSchemaAuthority(context.resource.apiVersion, context.resource.kind, exactPath),
       fieldPath: exactPath,
     };
     const schemaContract = versionedApiSchemaContract(schemaAuthority);
@@ -1657,14 +1650,18 @@ function yamlMeaning(context, exactPath, valueType, semantics, authority) {
         ? 'Selected example value: the checked-in value in this row is an example selection, not a chart default.'
         : 'Selected overlay value: the checked-in value in this row is an overlay selection, not a chart default.'} Empty or omitted value: ${authority.emptyBehavior}`,
     evidence: authority.externalChart
-      ? `scripts/docs-yaml-field-authorities.mjs; ${authority.externalChart.chart}@${authority.externalChart.version}; archive sha256:${authority.externalChart.archiveSha256}`
-      : authority.chartRoot ? 'scripts/docs-local-helm-field-authorities.json' : 'scripts/docs-yaml-field-authorities.mjs',
+      ? `${context.sourcePath}:${context.fieldLine}; scripts/docs-yaml-field-authorities.mjs; ${authority.externalChart.chart}@${authority.externalChart.version}; archive sha256:${authority.externalChart.archiveSha256}`
+      : authority.chartRoot
+        ? `${context.sourcePath}:${context.fieldLine}; ${semantics.consumers.map((consumer) => `${consumer.path}:${consumer.line}`).join('; ')}; scripts/docs-local-helm-field-authorities.json`
+        : `${context.sourcePath}:${context.fieldLine}; scripts/docs-yaml-field-authorities.mjs`,
     acceptedValues: authority.acceptedValues,
     emptyBehavior: authority.emptyBehavior,
     sourceFileSha256: authority.sourceFileSha256,
     externalChart: authority.externalChart ?? null,
     localHelmChart: authority.chartRoot ?? null,
     semanticGroup: authority.group ?? null,
+    semanticAuthorityEvidence: authority.semanticAuthorityEvidence,
+    semanticContractEvidence: authority.semanticContractEvidence,
     blockerOwner: null,
     closureCondition: null,
   };
@@ -1782,8 +1779,7 @@ function yamlFields(value, context, fieldPath = '$', result = [], pathSegments =
       // Capability identifiers are map keys, not object path segments.  Quote
       // dotted identifiers at the map boundary so runtime.dispatch and
       // test.plan.execute remain one key in every public field path.
-      const quoteLiteralDots = /\.capabilities$/u.test(fieldPath);
-      const next = yamlFieldChildPath(fieldPath, key, quoteLiteralDots);
+      const next = yamlFieldChildPath(fieldPath, key);
       yamlFields(value[key], context, next, result, [...pathSegments, key]);
     }
   }
@@ -1857,6 +1853,32 @@ function buildYamlInventory() {
     }
   }
   const leafFields = allFields.filter((field) => field.type !== 'object' && field.type !== 'array');
+  // A public path is an identity, not display prose. A literal key that contains
+  // a dot must therefore remain one bracket-quoted segment. This also proves
+  // that a literal `a.b` key cannot collide with nested `a: { b: ... }`.
+  assert.notEqual(yamlFieldPath(['collision', 'a.b']), yamlFieldPath(['collision', 'a', 'b']),
+    'CONFIG_YAML_PATH_COLLISION: literal dotted key and nested keys have the same identity');
+  const dottedKeyLeaves = leafFields.filter((field) => yamlFieldPathTokens(field.path)
+    .some((token) => typeof token === 'string' && token.includes('.')));
+  for (const field of dottedKeyLeaves) {
+    for (const token of yamlFieldPathTokens(field.path).filter((item) => typeof item === 'string' && item.includes('.'))) {
+      assert(field.path.includes(`[${JSON.stringify(token)}]`),
+        `CONFIG_YAML_DOTTED_KEY_FLATTENED: ${field.path} does not preserve literal key ${token}`);
+    }
+  }
+  assert.equal(dottedKeyLeaves.length, 112,
+    'CONFIG_YAML_DOTTED_KEY_COVERAGE: the checked-in dotted-key leaf set changed; inspect and classify every new or removed leaf');
+  for (const [sourcePath, exactPath] of [
+    ['my-values/infra/argocd-values.yaml', '$.configs.cm["application.resourceTrackingMethod"]'],
+    ['my-values/infra/argocd-values.yaml', '$.configs.params["server.insecure"]'],
+    ['examples/cilium/project-network-policy.yaml', '$.metadata.labels["pod-security.kubernetes.io/enforce"]'],
+    ['my-values/infra/registry-local.yaml', '$.data["config.yml"]'],
+    ['my-values/nova-values.yaml', '$.capabilityProviders.buster.capabilities["runtime.dispatch"].port'],
+    ['my-values/nova-values.yaml', '$.capabilityProviders.buster.capabilities["test.plan.execute"].port'],
+  ]) {
+    assert(files.find((file) => file.path === sourcePath)?.documents.some((document) => document.fields.some((field) => field.path === exactPath)),
+      `CONFIG_YAML_DOTTED_KEY_NAMED_REGRESSION: ${sourcePath}#${exactPath} is missing`);
+  }
   const apiLeafFields = leafFields.filter((field) => field.meaning.status.startsWith('deployment-'));
   const forbiddenApiPhrases = /where defined|states whether|uses pinned default|controller behavior|commonly/iu;
   for (const file of files) {
@@ -1876,6 +1898,36 @@ function buildYamlInventory() {
       }
     }
   }
+  const authoredAuthorityStatuses = new Set([
+    'embedded-payload-authority', 'external-chart-authority', 'implementation-authority', 'local-helm-field-authority',
+  ]);
+  let authoredAuthorityEvidenceCount = 0;
+  for (const file of files) for (const document of file.documents) {
+    for (const field of document.fields.filter((item) => authoredAuthorityStatuses.has(item.meaning.status))) {
+      assert(field.sourceLine >= 1 && field.meaning.evidence.includes(`${file.path}:${field.sourceLine}`),
+        `CONFIG_YAML_AUTHORITY_LINE_MISSING: ${file.path}#${field.path} has no exact supporting source line`);
+      if (field.meaning.status === 'local-helm-field-authority') {
+        assert(field.consumers.every((consumer) => consumer.line >= 1
+          && field.meaning.evidence.includes(`${consumer.path}:${consumer.line}`)),
+        `CONFIG_YAML_LOCAL_HELM_AUTHORITY_LINE_MISSING: ${file.path}#${field.path} has no exact template authority line`);
+      }
+      const registration = field.meaning.semanticAuthorityEvidence;
+      const contractEvidence = field.meaning.semanticContractEvidence;
+      assert(registration?.line > 1 && exists(registration.path),
+        `CONFIG_YAML_SEMANTIC_AUTHORITY_LINE_MISSING: ${file.path}#${field.path}`);
+      const authorityLines = read(registration.path).split('\n');
+      assert.equal(sha256(authorityLines[registration.line - 1] ?? ''), registration.sourceLineSha256,
+        `CONFIG_YAML_SEMANTIC_AUTHORITY_LINE_DRIFT: ${file.path}#${field.path}`);
+      assert(contractEvidence?.path === registration.path && contractEvidence.line > 1
+        && contractEvidence.endLine >= contractEvidence.line,
+      `CONFIG_YAML_SEMANTIC_CONTRACT_RANGE_MISSING: ${file.path}#${field.path}`);
+      assert.equal(sha256(authorityLines.slice(contractEvidence.line - 1, contractEvidence.endLine).join('\n')), contractEvidence.sourceRangeSha256,
+        `CONFIG_YAML_SEMANTIC_CONTRACT_RANGE_DRIFT: ${file.path}#${field.path}`);
+      authoredAuthorityEvidenceCount += 1;
+    }
+  }
+  assert.equal(authoredAuthorityEvidenceCount, 1223,
+    'CONFIG_YAML_SEMANTIC_AUTHORITY_COVERAGE: all 418 authored YAML and 805 local Helm authorities need exact semantic source ranges');
   assert.equal(apiLeafFields.length, leafFields.filter((field) => field.meaning.sourceLine !== undefined).length,
     'CONFIG_YAML_API_LEAF_LINE_DRIFT: every and only API leaves must carry an exact semantic source line');
   const unknownLeafConsumers = leafFields.filter((field) => field.consumers.some((consumer) => consumer === 'unknown')).length;
@@ -4357,7 +4409,7 @@ function secretFactsFromYaml(sourcePath, value, documentIndex, document, lineCou
       facts.push({ kind: 'declaration', name: item.metadata.name, keys: [...new Set([...Object.keys(item.data ?? {}), ...Object.keys(item.stringData ?? {})])].sort(), namespace: item.metadata?.namespace ?? '<runtime namespace>', path: sourcePath, document: documentIndex, fieldPath, line: exactLine([...segments, 'metadata', 'name']) ?? exactLine([...segments, 'kind']) });
     }
     for (const [key, child] of Object.entries(item)) {
-      const nextPath = `${fieldPath}.${key}`;
+      const nextPath = yamlFieldChildPath(fieldPath, key);
       if (key === 'secretKeyRef' && child && typeof child === 'object') {
         facts.push({ kind: 'key-reference', name: child.name ?? '<dynamic>', key: child.key ?? '<unknown>', namespace: resourceNamespace, optionalState: child.optional === true ? 'optional' : 'required unless enclosing field is conditional', path: sourcePath, document: documentIndex, fieldPath: nextPath, line: exactLine([...segments, key, 'name']) ?? exactLine([...segments, key]) });
       } else if (key === 'secretRef' && child && typeof child === 'object') {

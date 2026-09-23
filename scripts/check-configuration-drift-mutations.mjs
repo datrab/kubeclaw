@@ -105,7 +105,7 @@ function expectDetected(name, mutate, verifyPublication = null) {
       : runGenerator('--check');
     assert.notEqual(result.status, 0, `${name}: stale inventory was not detected`);
     const diagnostic = `${result.stdout}\n${result.stderr}`;
-    assert.match(diagnostic, /(?:Configuration documentation inventory is stale|CONFIG_SEMANTIC_GAP|CONFIG_YAML_AUTHORITY_DRIFT|CONFIG_YAML_API_CONTRACT_GAP|CONFIG_YAML_LEAF_LINE_DRIFT|CONFIG_YAML_API_LEAF_(?:LINE|DIGEST)_DRIFT|CONFIG_PAYLOAD_(?:REQUEST_PATH|SWARM_READER)_BOUNDARY_CHANGED|schema logical regression|offline external Helm authority verification failed|external Helm authority lock bytes|external Helm extracted authority bytes|authority source bytes changed|cannot extract vendored CRD authority|exact consumer line changed|consumer context changed|downstream receiver changed|consumer proof is not bound to this exact leaf|selected-value proof does not bind the exact source field|compressed bytes changed|manifest bytes changed|deployed config payload .* is missing|deployed config payload discovery differs|expected .* containing|mutation token is missing)/u, `${name}: failure did not identify inventory drift or a semantic authority gap`);
+    assert.match(diagnostic, /(?:Configuration documentation inventory is stale|CONFIG_SEMANTIC_GAP|CONFIG_YAML_AUTHORITY_DRIFT|CONFIG_YAML_(?:DOTTED_KEY|PATH_COLLISION|SEMANTIC_AUTHORITY|SEMANTIC_CONTRACT)|CONFIG_YAML_API_CONTRACT_GAP|CONFIG_YAML_LEAF_LINE_DRIFT|CONFIG_YAML_API_LEAF_(?:LINE|DIGEST)_DRIFT|CONFIG_PAYLOAD_(?:REQUEST_PATH|SWARM_READER)_BOUNDARY_CHANGED|schema logical regression|offline external Helm authority verification failed|external Helm authority lock bytes|external Helm extracted authority bytes|authority source bytes changed|cannot extract vendored CRD authority|exact consumer line changed|consumer context changed|downstream receiver changed|consumer proof is not bound to this exact leaf|selected-value proof does not bind the exact source field|compressed bytes changed|manifest bytes changed|deployed config payload .* is missing|deployed config payload discovery differs|expected .* containing|mutation token is missing)/u, `${name}: failure did not identify inventory drift or a semantic authority gap`);
     const semanticRejected = /CONFIG_SEMANTIC_GAP|CONFIG_YAML_AUTHORITY_DRIFT|authority source bytes changed/u.test(diagnostic);
     if (name === 'environment-setting:add') {
       assert.match(diagnostic, /AP98_MUTATION_ENV/u, `${name}: diagnostic did not identify the new operator environment input`);
@@ -297,6 +297,26 @@ try {
   assert.ok(baselineValues.totals.embeddedPayloadAuthorities > 0, 'embedded payload authority gate did not classify any checked-in payload');
   const yamlLeaves = baselineValues.files.flatMap((file) => file.documents.flatMap((document) => document.fields))
     .filter((field) => !['object', 'array'].includes(field.type));
+  const dottedKeyLeaves = yamlLeaves.filter((field) => /\["(?:\\.|[^"])*\.(?:\\.|[^"])*"\]/u.test(field.path));
+  assert.equal(dottedKeyLeaves.length, 112, 'literal dotted YAML key coverage changed');
+  for (const [sourcePath, fieldPath] of [
+    ['my-values/infra/argocd-values.yaml', '$.configs.cm["application.resourceTrackingMethod"]'],
+    ['my-values/infra/argocd-values.yaml', '$.configs.params["server.insecure"]'],
+    ['examples/cilium/project-network-policy.yaml', '$.metadata.labels["pod-security.kubernetes.io/enforce"]'],
+    ['my-values/infra/registry-local.yaml', '$.data["config.yml"]'],
+    ['my-values/nova-values.yaml', '$.capabilityProviders.buster.capabilities["runtime.dispatch"].port'],
+    ['my-values/nova-values.yaml', '$.capabilityProviders.buster.capabilities["test.plan.execute"].port'],
+  ]) assert(leavesFor(sourcePath).some((field) => field.path === fieldPath), `${sourcePath}#${fieldPath}: named literal dotted-key path is missing`);
+  const semanticAuthorities = yamlLeaves.filter((field) => [
+    'embedded-payload-authority', 'external-chart-authority', 'implementation-authority', 'local-helm-field-authority',
+  ].includes(field.meaning.status));
+  assert.equal(semanticAuthorities.length, 1223, 'semantic authority evidence coverage changed');
+  for (const field of semanticAuthorities) {
+    assert(field.meaning.semanticAuthorityEvidence?.line > 1, `${field.path}: semantic authority registration resolves to line 1`);
+    assert(field.meaning.semanticContractEvidence?.line > 1
+      && field.meaning.semanticContractEvidence.endLine >= field.meaning.semanticContractEvidence.line,
+    `${field.path}: semantic authority contract range is absent`);
+  }
   for (const field of yamlLeaves.filter((item) => item.meaning.status === 'embedded-payload-authority')) {
     assert.match(field.meaning.sourceFileSha256 ?? '', /^[a-f0-9]{64}$/u, `${field.path}: embedded payload lacks a pinned source digest`);
     assert.ok(field.meaning.acceptedValues?.length >= 8 && field.meaning.emptyBehavior?.length >= 20, `${field.path}: embedded payload contract is incomplete`);
@@ -410,6 +430,9 @@ try {
     ['local-helm-root-helper-transitive-call:argument-change', () => replaceOnce('charts/kubeclaw/templates/_demo-ready-client.tpl', 'include "kubeclaw.demoReadyClientValidate" . -', 'include "kubeclaw.demoReadyClientValidate" .Values.image -')],
     ['local-helm-default:nested-fallback-change', () => replaceOnce('charts/kubeclaw/templates/deployment.yaml', 'default (printf "git-deploy-key-%s" (.Values.agentRole | default "default"))', 'default (printf "git-deploy-key-%s" (.Values.agentRole | default "nova"))')],
     ['local-helm-dotted-key:shape-change', () => replaceOnce('my-values/nova-values.yaml', '      runtime.dispatch:\n', '      runtime:\n        dispatch:\n')],
+    ['yaml-dotted-key:generic-formatter-flatten', () => replaceOnce('scripts/yaml-field-path.mjs',
+      '      result += `[${JSON.stringify(token)}]`;',
+      '      result += `.${token}`;')],
     ['local-helm-dotted-key:authority-flatten', () => mutateJson('scripts/docs-local-helm-field-authorities.json', (value) => {
       const fields = value.files['my-values/nova-values.yaml'].fields;
       fields['$.capabilityProviders.buster.capabilities.runtime.dispatch.port'] = fields['$.capabilityProviders.buster.capabilities["runtime.dispatch"].port'];

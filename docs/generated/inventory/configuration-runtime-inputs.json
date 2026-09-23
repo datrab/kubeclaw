@@ -45,7 +45,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 29,
+          "line": 32,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -56,7 +56,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 29,
+      "line": 32,
       "name": "--allow-local-helm-authority-maintenance",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -83,7 +83,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 177,
+          "line": 228,
           "path": "scripts/docs-local-helm-authorities.mjs"
         }
       ],
@@ -94,7 +94,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 177,
+      "line": 228,
       "name": "--allow-local-helm-authority-maintenance",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-local-helm-authorities.mjs",
@@ -121,7 +121,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 24,
+          "line": 27,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -132,7 +132,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 24,
+      "line": 27,
       "name": "--allow-semantic-gaps",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -159,7 +159,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 23,
+          "line": 26,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -170,7 +170,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 23,
+      "line": 26,
       "name": "--allow-sensitivity-fixture",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -843,7 +843,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 22,
+          "line": 25,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -854,7 +854,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 22,
+      "line": 25,
       "name": "--check",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -881,7 +881,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 20,
+          "line": 21,
           "path": "scripts/docs-generate.mjs"
         }
       ],
@@ -892,7 +892,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 20,
+      "line": 21,
       "name": "--check",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-generate.mjs",
@@ -1147,7 +1147,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 13,
+          "line": 14,
           "path": "scripts/generate-local-helm-authorities.mjs"
         }
       ],
@@ -1158,7 +1158,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 13,
+      "line": 14,
       "name": "--check",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/generate-local-helm-authorities.mjs",
@@ -1717,7 +1717,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 5186,
+          "line": 5238,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -1728,7 +1728,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 5186,
+      "line": 5238,
       "name": "--check-payload-delivery-only",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -3009,7 +3009,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 11,
+          "line": 12,
           "path": "scripts/vendor-external-helm-authorities.mjs"
         }
       ],
@@ -3020,7 +3020,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 11,
+      "line": 12,
       "name": "--refresh",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/vendor-external-helm-authorities.mjs",
@@ -3047,7 +3047,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 25,
+          "line": 26,
           "path": "scripts/docs-api-schema-authorities.mjs"
         }
       ],
@@ -3058,7 +3058,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 25,
+      "line": 26,
       "name": "--refresh-api-authorities",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-schema-authorities.mjs",
