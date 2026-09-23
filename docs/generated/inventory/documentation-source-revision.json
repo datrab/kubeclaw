@@ -1,4 +1,4 @@
 {
-  "revision": "454099bd71f0c98ebdd748a6b98a3b2e8870ed87",
+  "revision": "7a1bc62f5dedafe78e2035317e1d0ceb6b16fb50",
   "purpose": "Pins generated reader evidence to the commit that contains all cited source and documentation authorities. Update this lock only after a source commit and before the separate generated-reference commit."
 }

@@ -134,7 +134,7 @@ function normalizeReference(raw) {
   ref = ref.split(/\s+/)[0];
   ref = ref.replace(/^git-repo\//, '');
   ref = ref.replace(/^\.\//, '');
-  ref = ref.replace(/:\d+(:\d+)?$/, '');
+  ref = ref.replace(/:\d+(?:-\d+)?(?::\d+)?$/, '');
   return ref || null;
 }
 
@@ -227,6 +227,16 @@ const linkParserMatches = [...linkParserProbe.matchAll(
 )].map((match) => match[1]);
 if (JSON.stringify(linkParserMatches) !== JSON.stringify(['target.md'])) {
   throw new Error('reference link parser must retain valid links and ignore escaped schema regex syntax');
+}
+
+for (const [reference, expected] of [
+  ['scripts/docs-check-refs.mjs:71', 'scripts/docs-check-refs.mjs'],
+  ['scripts/docs-check-refs.mjs:71-77', 'scripts/docs-check-refs.mjs'],
+  ['scripts/docs-check-refs.mjs:71:12', 'scripts/docs-check-refs.mjs'],
+]) {
+  if (normalizeReference(reference) !== expected) {
+    throw new Error(`reference line suffix parser failed for ${reference}`);
+  }
 }
 
 function checkSourceCalloutRevisions(filePath, text) {
