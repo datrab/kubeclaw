@@ -158,6 +158,22 @@ function expectDetected(name, mutate, verifyPublication = null) {
   console.log(`PASS ${name}`);
 }
 
+function expectLocalHelmMaintenanceDetected(name, mutate, expectedDiagnostic) {
+  const restore = mutate();
+  try {
+    const result = spawnSync(process.execPath, ['scripts/generate-local-helm-authorities.mjs', '--check'], {
+      cwd: temporaryRoot,
+      encoding: 'utf8',
+    });
+    assert.notEqual(result.status, 0, `${name}: local Helm semantic maintenance accepted the mutation`);
+    assert.match(`${result.stdout}\n${result.stderr}`, expectedDiagnostic,
+      `${name}: local Helm semantic maintenance did not explain the rejected mutation`);
+  } finally {
+    restore();
+  }
+  console.log(`PASS ${name}`);
+}
+
 try {
   ['charts', 'examples', 'gitops', 'my-values', 'releases', 'scripts', 'skills', 'docker', 'ops', 'tools', 'cmd', 'packaging', 'versions.json', 'docs/generated/inventory', 'docs/site'].forEach(copy);
   fs.symlinkSync(path.join(repositoryRoot, 'node_modules'), path.join(temporaryRoot, 'node_modules'), 'dir');
@@ -683,6 +699,13 @@ spec:
   const selectedCases = environmentSecretOnly
     ? cases.filter(([name]) => /^(?:environment-setting|embedded-node-heredoc|inline-node-environment|embedded-python-heredoc|embedded-yaml-javascript|secret-setting|helm-secret|yaml-secret|yaml-image-pull-secret)/u.test(name))
     : casePrefix ? cases.filter(([name]) => name.startsWith(casePrefix)) : cases;
+  if (!environmentSecretOnly && (!casePrefix || 'local-helm-boolean:baseline-type-change'.startsWith(casePrefix))) {
+    expectLocalHelmMaintenanceDetected('local-helm-boolean:baseline-type-change', () => replaceOnce(
+      'charts/kubeclaw/values.yaml',
+      'archviewer:\n  enabled: false',
+      'archviewer:\n  enabled: "false"',
+    ), /LOCAL_HELM_BOOLEAN_TYPE_DRIFT.*archviewer\.enabled/u);
+  }
   for (const [name, mutation] of selectedCases) expectDetected(name, mutation, semanticPublicationChecks.get(name));
 
   if (casePrefix) {

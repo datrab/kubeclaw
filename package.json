@@ -177,7 +177,7 @@
     "docs:inventory:config": "node scripts/docs-configuration-inventory.mjs",
     "docs:inventory:config:check": "node scripts/docs-configuration-inventory.mjs --check",
     "docs:inventory:local-helm": "node scripts/generate-local-helm-authorities.mjs",
-    "docs:inventory:local-helm:check": "node scripts/generate-local-helm-authorities.mjs --check",
+    "docs:inventory:local-helm:check": "node scripts/generate-local-helm-authorities.mjs --check && node scripts/check-local-helm-boolean-semantics.mjs",
     "docs:drift:config:check": "node scripts/docs-configuration-inventory.mjs --check",
     "docs:drift:cli:check": "node scripts/check-configuration-cli-drift.mjs",
     "docs:drift:config:mutations": "node scripts/check-configuration-drift-mutations.mjs",

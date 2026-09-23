@@ -58,6 +58,86 @@ const parsedSource = (sourcePath) => {
 const valueAtExactPath = (value, fieldPath) => {
   return fieldPathTokens(fieldPath).reduce((current, token) => current?.[token], value);
 };
+const chartSchemas = new Map();
+const chartSchema = (chartRoot) => {
+  if (chartSchemas.has(chartRoot)) return chartSchemas.get(chartRoot);
+  const schemaPath = path.join(root, chartRoot, 'values.schema.json');
+  const schema = fs.existsSync(schemaPath) ? JSON.parse(fs.readFileSync(schemaPath, 'utf8')) : null;
+  chartSchemas.set(chartRoot, schema);
+  return schema;
+};
+const resolveLocalSchemaReference = (rootSchema, node) => {
+  let current = node;
+  const visited = new Set();
+  while (current?.$ref?.startsWith('#/')) {
+    assert(!visited.has(current.$ref), `cyclic local schema reference ${current.$ref}`);
+    visited.add(current.$ref);
+    current = current.$ref.slice(2).split('/').reduce((value, token) => value?.[
+      token.replaceAll('~1', '/').replaceAll('~0', '~')
+    ], rootSchema);
+  }
+  return current;
+};
+const schemaAtField = (field) => {
+  const schema = chartSchema(chartRootFor(field.sourcePath));
+  if (!schema) return null;
+  let current = resolveLocalSchemaReference(schema, schema);
+  for (const token of fieldPathTokens(field.path)) {
+    current = resolveLocalSchemaReference(schema,
+      typeof token === 'number' ? current?.items : current?.properties?.[token]);
+    if (!current) return null;
+  }
+  return current;
+};
+const booleanInputContract = (field) => {
+  const schema = schemaAtField(field);
+  const schemaRequiresBoolean = schema?.type === 'boolean'
+    || (Array.isArray(schema?.enum) && schema.enum.length > 0 && schema.enum.every((value) => typeof value === 'boolean'));
+  const classifyReceiver = (expression) => {
+    if (/kindIs\s+"bool"|typeIs\s+"bool"/u.test(expression)) return 'explicit-boolean-type-guard';
+    if (/\bternary\b/u.test(expression)) return 'strict-boolean-function';
+    if (/\btoYaml\b|\btoJson\b/u.test(expression)) return 'structural-pass-through';
+    if (/\{\{-?\s*(?:if|else\s+if|with)\b/u.test(expression)
+      || /\{\{-?\s*\$[A-Za-z_][A-Za-z0-9_]*\s*:?=\s*(?:and|or|not)\b/u.test(expression)) return 'helm-truthiness';
+    if (/\|\s*(?:quote|squote)\b/u.test(expression)) return 'quoted-runtime-string';
+    return 'raw-scalar-pass-through';
+  };
+  const receiverSemantics = [...new Set(field.consumers
+    .map((consumer) => classifyReceiver(consumer.templateExpression ?? '')))].sort();
+  const hasTruthiness = receiverSemantics.includes('helm-truthiness');
+  const hasStrictBooleanFunction = receiverSemantics.includes('strict-boolean-function');
+  const hasExplicitGuard = receiverSemantics.includes('explicit-boolean-type-guard');
+  const hasQuotedReceiver = receiverSemantics.includes('quoted-runtime-string');
+  const hasRawReceiver = receiverSemantics.includes('raw-scalar-pass-through');
+  const hasStructuralReceiver = receiverSemantics.includes('structural-pass-through');
+  if (schemaRequiresBoolean) return {
+    validation: 'chart-schema-boolean',
+    receiverSemantics,
+    emptyBehavior: 'An omitted override keeps the selected values file or chart default. An explicit empty or null value fails Helm chart-schema validation because this field must be Boolean.',
+    invalidBehavior: 'Helm chart-schema validation rejects a non-Boolean value before template rendering.',
+  };
+  const invalidParts = ['This chart has no Boolean schema for this field.'];
+  if (hasTruthiness) invalidParts.push('Helm treats every non-empty string, including the string `"false"`, as true in its condition receiver.');
+  if (hasStrictBooleanFunction) invalidParts.push('Its `ternary` receiver requires a Boolean and stops rendering when it receives a string.');
+  if (hasExplicitGuard) invalidParts.push('Its exact template type guard admits only a Boolean to the guarded branch.');
+  if (hasQuotedReceiver) invalidParts.push('Its quoted receiver forwards text to the selected process, which owns the final parse.');
+  if (hasRawReceiver) invalidParts.push('Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted.');
+  if (hasStructuralReceiver) invalidParts.push('Its structural receiver preserves the supplied type for the receiving API or process.');
+  invalidParts.push('Use the YAML Boolean values `true` and `false`; do not quote them.');
+  const emptyParts = ['An omitted override keeps the selected values file or chart default.'];
+  if (hasTruthiness) emptyParts.push('Helm treats an explicit empty or null value as false in its condition receiver.');
+  if (hasStrictBooleanFunction) emptyParts.push('The strict Boolean function rejects an explicit empty, null, or string value.');
+  if (hasExplicitGuard) emptyParts.push('The exact type guard does not admit an empty or null value as a Boolean.');
+  if (hasQuotedReceiver || hasRawReceiver || hasStructuralReceiver) {
+    emptyParts.push('A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.');
+  }
+  return {
+    validation: hasExplicitGuard ? 'template-boolean-guard' : 'receiver-specific-without-schema',
+    receiverSemantics,
+    emptyBehavior: emptyParts.join(' '),
+    invalidBehavior: invalidParts.join(' '),
+  };
+};
 const environmentEntry = (field) => {
   const exactPath = field.path.replace(/^\$\.?/u, '');
   const match = exactPath.match(/^(.*env\[[0-9]+\])(?:\..*)?$/iu);
@@ -568,12 +648,31 @@ for (const field of local) {
   if (!approved) {
     throw new Error(`LOCAL_HELM_AUTHORITY_REQUIRED: ${field.sourcePath}#${field.path} has a render binding but no explicitly maintained semantic contract`);
   }
+  if (field.type !== 'boolean' && approved.booleanInputSemantics) {
+    throw new Error(`LOCAL_HELM_BOOLEAN_TYPE_DRIFT: ${field.sourcePath}#${field.path} changed from a Boolean baseline to ${field.type}; re-author its receiver contract`);
+  }
   const {
     selectedBaseline: _oldBaseline,
     consumerProof: _oldConsumerProof,
     runtimeConsumerProof: _oldRuntimeConsumerProof,
     ...approvedSemantics
   } = approved;
+  if (field.type === 'boolean') {
+    const inputContract = booleanInputContract(field);
+    const operationalFailure = approvedSemantics.booleanInputSemantics?.operationalFailure
+      ?? approvedSemantics.failure.replace(/^A non-Boolean value [^.]+\.\s*/u, '');
+    assert.notEqual(operationalFailure, approvedSemantics.failure,
+      `${field.sourcePath}#${field.path}: first Boolean maintenance pass must identify the old invalid-type sentence`);
+    assert.ok(operationalFailure.length >= 20,
+      `${field.sourcePath}#${field.path}: Boolean contract lacks its operational failure consequence`);
+    approvedSemantics.failure = `${inputContract.invalidBehavior} ${operationalFailure}`;
+    approvedSemantics.emptyBehavior = inputContract.emptyBehavior;
+    approvedSemantics.booleanInputSemantics = {
+      validation: inputContract.validation,
+      receivers: inputContract.receiverSemantics,
+      operationalFailure,
+    };
+  }
   const literalCapabilityKey = /\.capabilities\["([^"]+)"\]/u.exec(field.path)?.[1] ?? null;
   if (literalCapabilityKey) {
     const ambiguousPhrase = ` / ${literalCapabilityKey.split('.').join(' / ')}`;

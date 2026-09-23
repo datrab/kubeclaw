@@ -313,10 +313,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether agent / git is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -3682,10 +3689,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether archviewer is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact archviewer, deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -5491,10 +5505,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether buster namespace broker / controller / product decisions is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact buster-namespace-controller, demo-ready-service feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -5961,10 +5982,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether buster namespace broker / controller / readiness is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact buster-namespace-controller, demo-ready-service feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -6765,10 +6793,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether buster namespace broker is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact buster-namespace-controller, buster-namespace-fence, buster-namespace-lease-crd, demo-ready-service, rbac feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -7385,10 +7420,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether buster namespace broker / lease client is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact rbac feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -7446,10 +7488,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether buster namespace broker / lease client / verification read is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment, rbac feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -8003,10 +8052,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether buster namespace broker / ready client is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact _demo-ready-client feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -8393,10 +8449,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether buster runtime persistence is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact buster-runtime-pvc feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -8909,10 +8972,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether code bundle is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "quoted-runtime-string"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -9279,10 +9349,18 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether discord is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact configmap-gateway, deployment, secret feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness",
+              "raw-scalar-pass-through"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -11028,10 +11106,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether gateway / startup doctor is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -12684,10 +12769,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether persistence / config is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment, pvc feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -12998,10 +13090,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether persistence / workspace is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment, pvc feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -13393,10 +13492,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether probes / dependencies / gateway is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty or missing value is passed to, or omitted from, the linked rendered field; use it only when the receiving API or process accepts that state.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "quoted-runtime-string"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -13438,10 +13544,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether probes / dependencies / litellm is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "quoted-runtime-string"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -13492,10 +13605,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether probes / dependencies / redis is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty or missing value is passed to, or omitted from, the linked rendered field; use it only when the receiving API or process accepts that state.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "quoted-runtime-string"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -13537,10 +13657,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether probes / dependencies / redis stream is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "quoted-runtime-string"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -13723,10 +13850,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether probes / dependencies / registries is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "quoted-runtime-string"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -13885,10 +14019,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether probes / liveness is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -14155,10 +14296,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether probes / readiness is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -14478,10 +14626,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether probes / startup is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -15298,10 +15453,19 @@
           "group": "root-mode-control",
           "purpose": "Controls whether the chart selects its explicit root-execution path for charts/kubeclaw.",
           "acceptedValues": "`true` selects the chart root path. `false` selects the non-root path.",
-          "emptyBehavior": "An empty scalar is invalid; removing the field uses the chart default.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver. The strict Boolean function rejects an explicit empty, null, or string value. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes user identity, writable paths, and the security context rendered for the workload.",
-          "failure": "A non-Boolean value stops rendering. Root mode weakens isolation; non-root mode fails if the image or mounted paths require root.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its `ternary` receiver requires a Boolean and stops rendering when it receives a string. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Root mode weakens isolation; non-root mode fails if the image or mounted paths require root.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness",
+              "quoted-runtime-string",
+              "strict-boolean-function"
+            ],
+            "operationalFailure": "Root mode weakens isolation; non-root mode fails if the image or mounted paths require root."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -18106,10 +18270,17 @@
           "group": "service-bridge-control",
           "purpose": "Controls whether the Service exposes the additional bridge route for service.",
           "acceptedValues": "`true` renders the bridge port and route. `false` omits them.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether bridge traffic can reach the workload through the Kubernetes Service.",
-          "failure": "A non-Boolean value stops rendering. Enabling it without a matching listener creates a dead route; disabling it makes bridge clients fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Enabling it without a matching listener creates a dead route; disabling it makes bridge clients fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Enabling it without a matching listener creates a dead route; disabling it makes bridge clients fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -18752,10 +18923,17 @@
           "group": "service-account-token-automount",
           "purpose": "Controls automatic ServiceAccount token mounting for service account.",
           "acceptedValues": "`true` injects the default API token volume. `false` omits it unless another explicit projected token is configured.",
-          "emptyBehavior": "Removing the value delegates to the ServiceAccount or Pod default; an empty scalar is invalid.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the workload receives ambient Kubernetes API credentials.",
-          "failure": "A non-Boolean value fails admission. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
+          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "raw-scalar-pass-through"
+            ],
+            "operationalFailure": "Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -18871,10 +19049,17 @@
           "group": "service-account-creation",
           "purpose": "Controls whether the chart creates the ServiceAccount for service account.",
           "acceptedValues": "`true` renders a ServiceAccount. `false` requires the configured existing account to be present.",
-          "emptyBehavior": "An empty scalar is invalid; removing the field uses the chart default.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes ownership of the workload identity object between this release and the cluster operator.",
-          "failure": "A non-Boolean value stops rendering. Disabling creation without a valid existing account prevents Pod startup.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling creation without a valid existing account prevents Pod startup.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling creation without a valid existing account prevents Pod startup."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -19589,10 +19774,17 @@
           "group": "restart-content-overwrite",
           "purpose": "Controls whether startup replaces existing swarm config content with the checked-in chart content.",
           "acceptedValues": "`true` overwrites the managed file during restart. `false` preserves existing persisted content.",
-          "emptyBehavior": "An empty scalar is invalid; removing the field uses the chart default.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether operator or runtime edits survive the next Pod restart.",
-          "failure": "A non-Boolean value stops rendering. Enabling it can discard local edits; disabling it can retain stale or incompatible content.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Enabling it can discard local edits; disabling it can retain stale or incompatible content.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "quoted-runtime-string"
+            ],
+            "operationalFailure": "Enabling it can discard local edits; disabling it can retain stale or incompatible content."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -19804,10 +19996,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether worker trust / spiffe is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact configmap-worker-trust, deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -21033,10 +21232,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether workspace is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact NOTES, configmap-workspace, deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -21432,10 +21638,17 @@
           "group": "restart-content-overwrite",
           "purpose": "Controls whether startup replaces existing workspace content with the checked-in chart content.",
           "acceptedValues": "`true` overwrites the managed file during restart. `false` preserves existing persisted content.",
-          "emptyBehavior": "An empty scalar is invalid; removing the field uses the chart default.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether operator or runtime edits survive the next Pod restart.",
-          "failure": "A non-Boolean value stops rendering. Enabling it can discard local edits; disabling it can retain stale or incompatible content.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Enabling it can discard local edits; disabling it can retain stale or incompatible content.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "quoted-runtime-string"
+            ],
+            "operationalFailure": "Enabling it can discard local edits; disabling it can retain stale or incompatible content."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -22478,10 +22691,17 @@
           "group": "cilium-policy-mode",
           "purpose": "Controls whether network policy uses Cilium-specific policy features.",
           "acceptedValues": "`true` selects the Cilium policy branch. `false` keeps the portable Kubernetes NetworkPolicy branch.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes the policy API and features used to enforce network isolation.",
-          "failure": "A non-Boolean value stops rendering. Enabling it without Cilium leaves policy resources unsupported; disabling it removes Cilium-only enforcement.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Enabling it without Cilium leaves policy resources unsupported; disabling it removes Cilium-only enforcement.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Enabling it without Cilium leaves policy resources unsupported; disabling it removes Cilium-only enforcement."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -22540,10 +22760,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether network policy is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact network feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -23542,10 +23769,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether tailscale is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact network, tailscale-storage, workload feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -26358,10 +26592,18 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether control / product decisions is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. An explicit empty or null value fails Helm chart-schema validation because this field must be Boolean.",
           "impact": "Changes whether the exact _product-decisions, product-decisions-networkpolicy, workloads feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "Helm chart-schema validation rejects a non-Boolean value before template rendering. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "chart-schema-boolean",
+            "receivers": [
+              "helm-truthiness",
+              "structural-pass-through"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -28493,10 +28735,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether ingestion is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. An explicit empty or null value fails Helm chart-schema validation because this field must be Boolean.",
           "impact": "Changes whether the exact ingestion, networkpolicy, services feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "Helm chart-schema validation rejects a non-Boolean value before template rendering. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "chart-schema-boolean",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -28953,10 +29202,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether postgresql is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact backup-storage-check, backup, jobs, postgresql feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -30818,10 +31074,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether tailscale is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty or missing value stops Helm rendering through the linked required or fail guard.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact _product-decisions, services feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -32419,10 +32682,18 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether worker trust / spiffe is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. An explicit empty or null value fails Helm chart-schema validation because this field must be Boolean.",
           "impact": "Changes whether the exact configmap-worker-trust, networkpolicy, services, workloads feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "Helm chart-schema validation rejects a non-Boolean value before template rendering. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "chart-schema-boolean",
+            "receivers": [
+              "helm-truthiness",
+              "strict-boolean-function"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -34983,10 +35254,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether agent / git is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -38520,10 +38798,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether buster namespace broker is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact buster-namespace-controller, buster-namespace-fence, buster-namespace-lease-crd, demo-ready-service, rbac feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -38811,10 +39096,18 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether discord is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact configmap-gateway, deployment, secret feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness",
+              "raw-scalar-pass-through"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -40328,10 +40621,17 @@
           "group": "service-account-token-automount",
           "purpose": "Controls automatic ServiceAccount token mounting for service account.",
           "acceptedValues": "`true` injects the default API token volume. `false` omits it unless another explicit projected token is configured.",
-          "emptyBehavior": "Removing the value delegates to the ServiceAccount or Pod default; an empty scalar is invalid.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the workload receives ambient Kubernetes API credentials.",
-          "failure": "A non-Boolean value fails admission. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
+          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "raw-scalar-pass-through"
+            ],
+            "operationalFailure": "Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -40447,10 +40747,17 @@
           "group": "service-account-creation",
           "purpose": "Controls whether the chart creates the ServiceAccount for service account.",
           "acceptedValues": "`true` renders a ServiceAccount. `false` requires the configured existing account to be present.",
-          "emptyBehavior": "An empty scalar is invalid; removing the field uses the chart default.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes ownership of the workload identity object between this release and the cluster operator.",
-          "failure": "A non-Boolean value stops rendering. Disabling creation without a valid existing account prevents Pod startup.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling creation without a valid existing account prevents Pod startup.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling creation without a valid existing account prevents Pod startup."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -40736,10 +41043,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether workspace is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact NOTES, configmap-workspace, deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -40919,10 +41233,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether agent / git is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -44522,10 +44843,18 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether discord is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact configmap-gateway, deployment, secret feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness",
+              "raw-scalar-pass-through"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -46416,10 +46745,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether workspace is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact NOTES, configmap-workspace, deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -47043,10 +47379,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether agent / git is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -51935,10 +52278,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether buster namespace broker is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact buster-namespace-controller, buster-namespace-fence, buster-namespace-lease-crd, demo-ready-service, rbac feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -52214,10 +52564,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether buster runtime persistence is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact buster-runtime-pvc feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -52730,10 +53087,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether code bundle is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "quoted-runtime-string"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -53456,10 +53820,18 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether discord is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact configmap-gateway, deployment, secret feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness",
+              "raw-scalar-pass-through"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -58185,10 +58557,17 @@
           "group": "privilege-escalation-control",
           "purpose": "Controls whether the process in extra containers / security context can gain more Linux privileges than its parent.",
           "acceptedValues": "`false` prevents privilege escalation. `true` permits it when the runtime and other security controls allow it.",
-          "emptyBehavior": "Removing the field delegates to Kubernetes and runtime defaults; an empty scalar is invalid.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes the no-new-privileges boundary for the container process.",
-          "failure": "A non-Boolean value fails admission. Enabling it weakens isolation; disabling it can break software that requires setuid or file capabilities.",
+          "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. Enabling it weakens isolation; disabling it can break software that requires setuid or file capabilities.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "structural-pass-through"
+            ],
+            "operationalFailure": "Enabling it weakens isolation; disabling it can break software that requires setuid or file capabilities."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -58619,10 +58998,17 @@
           "group": "privileged-container-control",
           "purpose": "Controls privileged execution for extra containers / security context.",
           "acceptedValues": "`false` keeps the normal container isolation boundary. `true` grants broad host-level device and kernel access.",
-          "emptyBehavior": "Removing the field uses the Kubernetes default `false`; an empty scalar is invalid.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes the container from restricted isolation to broad host authority.",
-          "failure": "A non-Boolean value fails admission. Enabling it can bypass isolation; disabling it breaks workloads that incorrectly depend on host authority.",
+          "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. Enabling it can bypass isolation; disabling it breaks workloads that incorrectly depend on host authority.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "structural-pass-through"
+            ],
+            "operationalFailure": "Enabling it can bypass isolation; disabling it breaks workloads that incorrectly depend on host authority."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -58743,10 +59129,17 @@
           "group": "non-root-enforcement",
           "purpose": "Requires Kubernetes to verify a non-root user for extra containers / security context.",
           "acceptedValues": "`true` rejects an image or user selection that resolves to UID 0. `false` removes this check.",
-          "emptyBehavior": "Removing the field delegates to the Pod-level context or runtime default; an empty scalar is invalid.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes startup enforcement of the non-root identity boundary.",
-          "failure": "A non-Boolean value fails admission. `true` with a root image prevents startup; `false` can permit unintended root execution.",
+          "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. `true` with a root image prevents startup; `false` can permit unintended root execution.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "structural-pass-through"
+            ],
+            "operationalFailure": "`true` with a root image prevents startup; `false` can permit unintended root execution."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -59673,10 +60066,17 @@
           "group": "read-only-volume-mount",
           "purpose": "Controls whether extra containers / volume mounts can write through this volume mount.",
           "acceptedValues": "`true` mounts the selected volume read-only. `false` permits writes subject to the volume and filesystem.",
-          "emptyBehavior": "Removing the field uses the Kubernetes default `false`; an empty scalar is invalid.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether this container can modify the mounted data.",
-          "failure": "A non-Boolean value fails admission. Read-only mode breaks required writes; writable mode can expose shared or credential data to modification.",
+          "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. Read-only mode breaks required writes; writable mode can expose shared or credential data to modification.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "structural-pass-through"
+            ],
+            "operationalFailure": "Read-only mode breaks required writes; writable mode can expose shared or credential data to modification."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -60993,10 +61393,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether gateway / startup doctor is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -63012,10 +63419,17 @@
           "group": "service-account-token-automount",
           "purpose": "Controls automatic ServiceAccount token mounting for service account.",
           "acceptedValues": "`true` injects the default API token volume. `false` omits it unless another explicit projected token is configured.",
-          "emptyBehavior": "Removing the value delegates to the ServiceAccount or Pod default; an empty scalar is invalid.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the workload receives ambient Kubernetes API credentials.",
-          "failure": "A non-Boolean value fails admission. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
+          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "raw-scalar-pass-through"
+            ],
+            "operationalFailure": "Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -63131,10 +63545,17 @@
           "group": "service-account-creation",
           "purpose": "Controls whether the chart creates the ServiceAccount for service account.",
           "acceptedValues": "`true` renders a ServiceAccount. `false` requires the configured existing account to be present.",
-          "emptyBehavior": "An empty scalar is invalid; removing the field uses the chart default.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes ownership of the workload identity object between this release and the cluster operator.",
-          "failure": "A non-Boolean value stops rendering. Disabling creation without a valid existing account prevents Pod startup.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling creation without a valid existing account prevents Pod startup.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling creation without a valid existing account prevents Pod startup."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -63420,10 +63841,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether worker trust / spiffe is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact configmap-worker-trust, deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -63900,10 +64328,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether workspace is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact NOTES, configmap-workspace, deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -64305,10 +64740,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether agent / git is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -67534,10 +67976,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether archviewer is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact archviewer, deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -68099,10 +68548,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether buster namespace broker is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact buster-namespace-controller, buster-namespace-fence, buster-namespace-lease-crd, demo-ready-service, rbac feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -68324,10 +68780,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether buster namespace broker / lease client is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact rbac feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -68385,10 +68848,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether buster namespace broker / lease client / verification read is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment, rbac feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -70826,10 +71296,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether code bundle is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "quoted-runtime-string"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -71552,10 +72029,18 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether discord is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact configmap-gateway, deployment, secret feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness",
+              "raw-scalar-pass-through"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -74039,10 +74524,17 @@
           "group": "read-only-volume-mount",
           "purpose": "Controls whether extra containers / volume mounts can write through this volume mount.",
           "acceptedValues": "`true` mounts the selected volume read-only. `false` permits writes subject to the volume and filesystem.",
-          "emptyBehavior": "Removing the field uses the Kubernetes default `false`; an empty scalar is invalid.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether this container can modify the mounted data.",
-          "failure": "A non-Boolean value fails admission. Read-only mode breaks required writes; writable mode can expose shared or credential data to modification.",
+          "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. Read-only mode breaks required writes; writable mode can expose shared or credential data to modification.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "structural-pass-through"
+            ],
+            "operationalFailure": "Read-only mode breaks required writes; writable mode can expose shared or credential data to modification."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -74225,10 +74717,17 @@
           "group": "read-only-volume-mount",
           "purpose": "Controls whether extra containers / volume mounts can write through this volume mount.",
           "acceptedValues": "`true` mounts the selected volume read-only. `false` permits writes subject to the volume and filesystem.",
-          "emptyBehavior": "Removing the field uses the Kubernetes default `false`; an empty scalar is invalid.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether this container can modify the mounted data.",
-          "failure": "A non-Boolean value fails admission. Read-only mode breaks required writes; writable mode can expose shared or credential data to modification.",
+          "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. Read-only mode breaks required writes; writable mode can expose shared or credential data to modification.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "structural-pass-through"
+            ],
+            "operationalFailure": "Read-only mode breaks required writes; writable mode can expose shared or credential data to modification."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -75031,10 +75530,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether gateway / startup doctor is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -76629,10 +77135,17 @@
           "group": "service-account-token-automount",
           "purpose": "Controls automatic ServiceAccount token mounting for service account.",
           "acceptedValues": "`true` injects the default API token volume. `false` omits it unless another explicit projected token is configured.",
-          "emptyBehavior": "Removing the value delegates to the ServiceAccount or Pod default; an empty scalar is invalid.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the workload receives ambient Kubernetes API credentials.",
-          "failure": "A non-Boolean value fails admission. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
+          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "raw-scalar-pass-through"
+            ],
+            "operationalFailure": "Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -76748,10 +77261,17 @@
           "group": "service-account-creation",
           "purpose": "Controls whether the chart creates the ServiceAccount for service account.",
           "acceptedValues": "`true` renders a ServiceAccount. `false` requires the configured existing account to be present.",
-          "emptyBehavior": "An empty scalar is invalid; removing the field uses the chart default.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes ownership of the workload identity object between this release and the cluster operator.",
-          "failure": "A non-Boolean value stops rendering. Disabling creation without a valid existing account prevents Pod startup.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling creation without a valid existing account prevents Pod startup.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling creation without a valid existing account prevents Pod startup."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -77268,10 +77788,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether worker trust / spiffe is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact configmap-worker-trust, deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -77970,10 +78497,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether workspace is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact NOTES, configmap-workspace, deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -78597,10 +79131,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether agent / git is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -82620,10 +83161,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether code bundle is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "quoted-runtime-string"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -83346,10 +83894,18 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether discord is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact configmap-gateway, deployment, secret feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness",
+              "raw-scalar-pass-through"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -85790,10 +86346,17 @@
           "group": "privilege-escalation-control",
           "purpose": "Controls whether the process in extra containers / security context can gain more Linux privileges than its parent.",
           "acceptedValues": "`false` prevents privilege escalation. `true` permits it when the runtime and other security controls allow it.",
-          "emptyBehavior": "Removing the field delegates to Kubernetes and runtime defaults; an empty scalar is invalid.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes the no-new-privileges boundary for the container process.",
-          "failure": "A non-Boolean value fails admission. Enabling it weakens isolation; disabling it can break software that requires setuid or file capabilities.",
+          "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. Enabling it weakens isolation; disabling it can break software that requires setuid or file capabilities.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "structural-pass-through"
+            ],
+            "operationalFailure": "Enabling it weakens isolation; disabling it can break software that requires setuid or file capabilities."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -85914,10 +86477,17 @@
           "group": "read-only-root-filesystem",
           "purpose": "Controls whether extra containers / security context can write to the container image filesystem.",
           "acceptedValues": "`true` makes the image root filesystem read-only. `false` permits writes.",
-          "emptyBehavior": "Removing the field uses the Kubernetes default `false`; an empty scalar is invalid.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether runtime writes must use explicit writable volumes.",
-          "failure": "A non-Boolean value fails admission. Enabling it without writable mounts causes application errors; disabling it weakens immutability.",
+          "failure": "This chart has no Boolean schema for this field. Its structural receiver preserves the supplied type for the receiving API or process. Use the YAML Boolean values `true` and `false`; do not quote them. Enabling it without writable mounts causes application errors; disabling it weakens immutability.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "structural-pass-through"
+            ],
+            "operationalFailure": "Enabling it without writable mounts causes application errors; disabling it weakens immutability."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -87439,10 +88009,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether probes / dependencies / redis is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty or missing value is passed to, or omitted from, the linked rendered field; use it only when the receiving API or process accepts that state.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "quoted-runtime-string"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -87484,10 +88061,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether probes / dependencies / registries is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the exact deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "quoted-runtime-string"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -87538,10 +88122,19 @@
           "group": "root-mode-control",
           "purpose": "Controls whether the chart selects its explicit root-execution path for charts/kubeclaw.",
           "acceptedValues": "`true` selects the chart root path. `false` selects the non-root path.",
-          "emptyBehavior": "An empty scalar is invalid; removing the field uses the chart default.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver. The strict Boolean function rejects an explicit empty, null, or string value. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes user identity, writable paths, and the security context rendered for the workload.",
-          "failure": "A non-Boolean value stops rendering. Root mode weakens isolation; non-root mode fails if the image or mounted paths require root.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Its `ternary` receiver requires a Boolean and stops rendering when it receives a string. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Root mode weakens isolation; non-root mode fails if the image or mounted paths require root.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness",
+              "quoted-runtime-string",
+              "strict-boolean-function"
+            ],
+            "operationalFailure": "Root mode weakens isolation; non-root mode fails if the image or mounted paths require root."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -88010,10 +88603,17 @@
           "group": "service-bridge-control",
           "purpose": "Controls whether the Service exposes the additional bridge route for service.",
           "acceptedValues": "`true` renders the bridge port and route. `false` omits them.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether bridge traffic can reach the workload through the Kubernetes Service.",
-          "failure": "A non-Boolean value stops rendering. Enabling it without a matching listener creates a dead route; disabling it makes bridge clients fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Enabling it without a matching listener creates a dead route; disabling it makes bridge clients fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Enabling it without a matching listener creates a dead route; disabling it makes bridge clients fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -88163,10 +88763,17 @@
           "group": "service-account-token-automount",
           "purpose": "Controls automatic ServiceAccount token mounting for service account.",
           "acceptedValues": "`true` injects the default API token volume. `false` omits it unless another explicit projected token is configured.",
-          "emptyBehavior": "Removing the value delegates to the ServiceAccount or Pod default; an empty scalar is invalid.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether the workload receives ambient Kubernetes API credentials.",
-          "failure": "A non-Boolean value fails admission. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
+          "failure": "This chart has no Boolean schema for this field. Its raw scalar receiver is parsed again as YAML or JSON, so the receiving format or API decides whether another type is accepted. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "raw-scalar-pass-through"
+            ],
+            "operationalFailure": "Disabling it breaks clients that rely on ambient tokens; enabling it adds credentials that the process might not need."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -88282,10 +88889,17 @@
           "group": "service-account-creation",
           "purpose": "Controls whether the chart creates the ServiceAccount for service account.",
           "acceptedValues": "`true` renders a ServiceAccount. `false` requires the configured existing account to be present.",
-          "emptyBehavior": "An empty scalar is invalid; removing the field uses the chart default.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes ownership of the workload identity object between this release and the cluster operator.",
-          "failure": "A non-Boolean value stops rendering. Disabling creation without a valid existing account prevents Pod startup.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling creation without a valid existing account prevents Pod startup.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling creation without a valid existing account prevents Pod startup."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -88571,10 +89185,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether worker trust / spiffe is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact configmap-worker-trust, deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -89051,10 +89672,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether workspace is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact NOTES, configmap-workspace, deployment feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -89228,10 +89856,17 @@
           "group": "restart-content-overwrite",
           "purpose": "Controls whether startup replaces existing workspace content with the checked-in chart content.",
           "acceptedValues": "`true` overwrites the managed file during restart. `false` preserves existing persisted content.",
-          "emptyBehavior": "An empty scalar is invalid; removing the field uses the chart default.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. A pass-through receiver can preserve, replace, reject, or reinterpret that empty value as stated by its exact expression and downstream contract.",
           "impact": "Changes whether operator or runtime edits survive the next Pod restart.",
-          "failure": "A non-Boolean value stops rendering. Enabling it can discard local edits; disabling it can retain stale or incompatible content.",
+          "failure": "This chart has no Boolean schema for this field. Its quoted receiver forwards text to the selected process, which owns the final parse. Use the YAML Boolean values `true` and `false`; do not quote them. Enabling it can discard local edits; disabling it can retain stale or incompatible content.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "quoted-runtime-string"
+            ],
+            "operationalFailure": "Enabling it can discard local edits; disabling it can retain stale or incompatible content."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -91201,10 +91836,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether ingestion is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. An explicit empty or null value fails Helm chart-schema validation because this field must be Boolean.",
           "impact": "Changes whether the exact ingestion, networkpolicy, services feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "Helm chart-schema validation rejects a non-Boolean value before template rendering. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "chart-schema-boolean",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": false,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -91391,10 +92033,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether postgresql is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact backup-storage-check, backup, jobs, postgresql feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -93256,10 +93905,17 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether tailscale is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty or missing value stops Helm rendering through the linked required or fail guard.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. Helm treats an explicit empty or null value as false in its condition receiver.",
           "impact": "Changes whether the exact _product-decisions, services feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "This chart has no Boolean schema for this field. Helm treats every non-empty string, including the string `\"false\"`, as true in its condition receiver. Use the YAML Boolean values `true` and `false`; do not quote them. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "receiver-specific-without-schema",
+            "receivers": [
+              "helm-truthiness"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
@@ -94218,10 +94874,18 @@
           "group": "feature-enable-control",
           "purpose": "Controls whether worker trust / spiffe is active and rendered.",
           "acceptedValues": "`true` enables the named feature. `false` disables or omits its linked resources and process settings.",
-          "emptyBehavior": "An empty, false, or missing value omits or disables the linked rendered behavior, as shown by the exact template condition.",
+          "emptyBehavior": "An omitted override keeps the selected values file or chart default. An explicit empty or null value fails Helm chart-schema validation because this field must be Boolean.",
           "impact": "Changes whether the exact configmap-worker-trust, networkpolicy, services, workloads feature branch and its resources are present.",
-          "failure": "A non-Boolean value stops rendering or API processing. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
+          "failure": "Helm chart-schema validation rejects a non-Boolean value before template rendering. Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail.",
           "semanticAuthority": "explicit-field-contract",
+          "booleanInputSemantics": {
+            "validation": "chart-schema-boolean",
+            "receivers": [
+              "helm-truthiness",
+              "strict-boolean-function"
+            ],
+            "operationalFailure": "Disabling a required dependency makes its consumers unready; enabling it without prerequisites makes startup or reconciliation fail."
+          },
           "selectedBaseline": true,
           "runtimeConsumerProof": [],
           "consumerProof": [
