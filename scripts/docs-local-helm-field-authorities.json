@@ -52972,7 +52972,7 @@
           "impact": "Changes who can use Discord direct messages, commands, and configured guild channels.",
           "failure": "A malformed identity never matches; the wrong snowflake denies the intended user or authorizes another account.",
           "semanticAuthority": "explicit-field-contract",
-          "selectedBaseline": "<redacted:identity-number>",
+          "selectedBaseline": "<redacted:sensitive-field>",
           "runtimeConsumerProof": [],
           "consumerProof": [
             {
@@ -53156,7 +53156,7 @@
           "impact": "Changes who can use Discord direct messages, commands, and configured guild channels.",
           "failure": "A malformed identity never matches; the wrong snowflake denies the intended user or authorizes another account.",
           "semanticAuthority": "explicit-field-contract",
-          "selectedBaseline": "user:849379821536804864",
+          "selectedBaseline": "<redacted:sensitive-field>",
           "runtimeConsumerProof": [],
           "consumerProof": [
             {
@@ -53340,7 +53340,7 @@
           "impact": "Changes who can invoke commands reserved for the OpenClaw owner.",
           "failure": "A malformed identity never matches; the wrong identity denies the operator or grants owner authority to another sender.",
           "semanticAuthority": "explicit-field-contract",
-          "selectedBaseline": "discord:849379821536804864",
+          "selectedBaseline": "<redacted:sensitive-field>",
           "runtimeConsumerProof": [],
           "consumerProof": [
             {
@@ -53799,7 +53799,7 @@
           "impact": "Changes who can approve protected execution requests.",
           "failure": "A malformed identity never matches; the wrong identity blocks approvals or grants approval authority to another user.",
           "semanticAuthority": "explicit-field-contract",
-          "selectedBaseline": "user:849379821536804864",
+          "selectedBaseline": "<redacted:sensitive-field>",
           "runtimeConsumerProof": [],
           "consumerProof": [
             {
@@ -71068,7 +71068,7 @@
           "impact": "Changes who can use Discord direct messages, commands, and configured guild channels.",
           "failure": "A malformed identity never matches; the wrong snowflake denies the intended user or authorizes another account.",
           "semanticAuthority": "explicit-field-contract",
-          "selectedBaseline": "<redacted:identity-number>",
+          "selectedBaseline": "<redacted:sensitive-field>",
           "runtimeConsumerProof": [],
           "consumerProof": [
             {
@@ -71252,7 +71252,7 @@
           "impact": "Changes who can use Discord direct messages, commands, and configured guild channels.",
           "failure": "A malformed identity never matches; the wrong snowflake denies the intended user or authorizes another account.",
           "semanticAuthority": "explicit-field-contract",
-          "selectedBaseline": "user:849379821536804864",
+          "selectedBaseline": "<redacted:sensitive-field>",
           "runtimeConsumerProof": [],
           "consumerProof": [
             {
@@ -71436,7 +71436,7 @@
           "impact": "Changes who can invoke commands reserved for the OpenClaw owner.",
           "failure": "A malformed identity never matches; the wrong identity denies the operator or grants owner authority to another sender.",
           "semanticAuthority": "explicit-field-contract",
-          "selectedBaseline": "discord:849379821536804864",
+          "selectedBaseline": "<redacted:sensitive-field>",
           "runtimeConsumerProof": [],
           "consumerProof": [
             {
@@ -82862,7 +82862,7 @@
           "impact": "Changes who can use Discord direct messages, commands, and configured guild channels.",
           "failure": "A malformed identity never matches; the wrong snowflake denies the intended user or authorizes another account.",
           "semanticAuthority": "explicit-field-contract",
-          "selectedBaseline": "<redacted:identity-number>",
+          "selectedBaseline": "<redacted:sensitive-field>",
           "runtimeConsumerProof": [],
           "consumerProof": [
             {
@@ -83046,7 +83046,7 @@
           "impact": "Changes who can use Discord direct messages, commands, and configured guild channels.",
           "failure": "A malformed identity never matches; the wrong snowflake denies the intended user or authorizes another account.",
           "semanticAuthority": "explicit-field-contract",
-          "selectedBaseline": "user:849379821536804864",
+          "selectedBaseline": "<redacted:sensitive-field>",
           "runtimeConsumerProof": [],
           "consumerProof": [
             {
@@ -83230,7 +83230,7 @@
           "impact": "Changes who can invoke commands reserved for the OpenClaw owner.",
           "failure": "A malformed identity never matches; the wrong identity denies the operator or grants owner authority to another sender.",
           "semanticAuthority": "explicit-field-contract",
-          "selectedBaseline": "discord:849379821536804864",
+          "selectedBaseline": "<redacted:sensitive-field>",
           "runtimeConsumerProof": [],
           "consumerProof": [
             {
