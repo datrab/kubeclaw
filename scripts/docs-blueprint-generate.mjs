@@ -209,6 +209,7 @@ const oldDocFiles = walk(path.join(root, 'docs'))
 
 function migration(filePath) {
   const name = path.basename(filePath);
+  if (filePath === 'docs/operator-tasks.json') return ['internal-machine-authority', 'documentation build pipeline', 'Keep the operator-task registry outside the published reader site; publish only the validated task procedures and reference views.'];
   if (filePath.startsWith('docs/diagrams/') && filePath.endsWith('.svg')) return ['replace-then-delete', '/architecture/interactive', 'Extract topology, labels, flows, and accessibility text; implement as responsive HTML.'];
   if (filePath.startsWith('docs/generated/inventory/')) return ['regenerate-internal', '/reference/generated', 'Keep source data in build output; publish rendered reference pages, not raw internal inventory navigation.'];
   if (filePath.startsWith('docs/generated/reference/')) return ['internal-only', 'documentation build pipeline', 'Retain generator documentation outside the published site.'];
