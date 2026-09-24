@@ -45,6 +45,44 @@
       "consumers": [
         {
           "kind": "argument-parser",
+          "line": 22,
+          "path": "scripts/docs-generate.mjs"
+        }
+      ],
+      "default": "false/not selected",
+      "documentationAuthority": null,
+      "documentationReason": "This definition is not part of the operator-runtime surface.",
+      "documentationStatus": "not-required-in-operator-handbook",
+      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
+      "evidence": "argument membership check",
+      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
+      "line": 22,
+      "name": "--allow-detached-source-root",
+      "occurrenceCount": 1,
+      "ownerComponent": "operator script scripts/docs-generate.mjs",
+      "ownerEvidence": "scripts/docs-generate.mjs",
+      "path": "scripts/docs-generate.mjs",
+      "precedence": [
+        "explicit command-line flag",
+        "parser-specific duplicate handling",
+        "environment or source default when the consumer declares one",
+        "built-in behavior"
+      ],
+      "required": "conditional",
+      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
+      "runtimeOwner": "operator script scripts/docs-generate.mjs",
+      "surface": "documentation-internal",
+      "type": "boolean switch or command selector",
+      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
+      "valueTaking": false
+    },
+    {
+      "aliasFor": null,
+      "changeImpact": "Selects the parser branch or value used by this command.",
+      "classification": "definition",
+      "consumers": [
+        {
+          "kind": "argument-parser",
           "line": 32,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
@@ -1717,7 +1755,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 5534,
+          "line": 5821,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -1728,7 +1766,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 5534,
+      "line": 5821,
       "name": "--check-payload-delivery-only",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -2819,7 +2857,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 1107,
+          "line": 1111,
           "path": "scripts/docs-platform-surface-inventory.mjs"
         }
       ],
@@ -2830,7 +2868,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 1107,
+      "line": 1111,
       "name": "--print-inventory",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-platform-surface-inventory.mjs",
@@ -3541,7 +3579,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 1112,
+          "line": 1116,
           "path": "scripts/docs-platform-surface-inventory.mjs"
         }
       ],
@@ -3552,7 +3590,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 1112,
+      "line": 1116,
       "name": "--sync-map-identities",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-platform-surface-inventory.mjs",
@@ -9833,9 +9871,9 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "Varies by receiving process; see the consumer-specific contracts.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changes only the processes that receive the variable, according to each listed consumer contract.",
       "closureCondition": null,
       "consumerContracts": [
         {
@@ -9850,6 +9888,20 @@
           "path": "cmd/buster-namespace-controller/main.go",
           "precedence": "The process value is split, trimmed, and validated; no other controller source adds names.",
           "purpose": "Lists the Secret object names that a Buster lease may copy from its approved source namespace.",
+          "required": "conditional"
+        },
+        {
+          "acceptedForm": "A comma-separated list with at most 32 non-empty items. This reader does not trim items; each retained name must contain only letters, digits, dot, underscore, or hyphen. Duplicate names collapse in the downstream set.",
+          "access": "shell-parameter",
+          "defaultBehavior": "Uses an empty list, which denies every source-Secret request.",
+          "emptyBehavior": "An absent or empty value becomes an empty list.",
+          "failure": "Startup or first invoker construction fails for invalid policy, or the individual request is denied.",
+          "impact": "Changing it changes which named Secrets a fixture request may ask the controller to copy.",
+          "invalidBehavior": "More than 32 items fails runtime configuration. Invalid names fail invoker construction. A valid but unapproved request reports `KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED`.",
+          "line": 148,
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "precedence": "The process value wholly replaces the empty runtime default. Copy succeeds only when this runtime list and the controller list both allow the name.",
+          "purpose": "Defines the source Secret names that a `kubernetes.fixture` request may ask the namespace controller to copy.",
           "required": "conditional"
         }
       ],
@@ -9880,14 +9932,14 @@
           "path": "my-values/buster-values.yaml"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "Varies by receiving process; no merged default is valid.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_ALLOWED_SOURCE_SECRETS. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:209",
-      "meaningStatus": "classified-non-operator-boundary",
+      "emptyBehavior": "Varies by receiving process; an empty string can be rejected, retained, or converted to a value.",
+      "failureMeaning": "Use the exact consumer failure below; a single merged symptom would be incorrect.",
+      "invalidBehavior": "Varies by receiving process; use the exact reader validation below.",
+      "meaning": "The meaning of BUSTER_ALLOWED_SOURCE_SECRETS differs by receiving process. Use the contract attached to the exact consumer source.",
+      "meaningEvidence": "cmd/buster-namespace-controller/main.go:184",
+      "meaningStatus": "authored-consumer-specific-contracts",
       "name": "BUSTER_ALLOWED_SOURCE_SECRETS",
       "precedence": [
         {
@@ -9910,7 +9962,7 @@
           "value": ""
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "Each receiving process captures and interprets its own environment. No consumer contract overrides another consumer.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -9940,7 +9992,7 @@
           "path": "docker/buster-runtime-entrypoint.sh"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "varies by receiving process",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw; maintained deployment profile",
       "sensitive": false,
       "sensitivityClass": "secret-object-name-list",
@@ -10035,11 +10087,26 @@
       "surface": "runtime-process-boundary"
     },
     {
-      "acceptedForm": "filesystem path available to the linked process",
+      "acceptedForm": "The non-empty path must exist, resolve exactly to `/var/run/kubeclaw-browser-cgroup`, expose `pids`, `memory`, and `cpu` controllers, contain no host processes, and permit those controllers to be delegated.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes the kernel resource-control boundary for browser processes.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "The non-empty path must exist, resolve exactly to `/var/run/kubeclaw-browser-cgroup`, expose `pids`, `memory`, and `cpu` controllers, contain no host processes, and permit those controllers to be delegated.",
+          "access": "embedded-node-process-env",
+          "defaultBehavior": "No default.",
+          "emptyBehavior": "An absent or empty value stops the entrypoint before the Buster runtime starts.",
+          "failure": "The container stops before serving work, or runtime policy construction rejects an unusable cgroup root.",
+          "impact": "Changing it changes the kernel resource-control boundary for browser processes.",
+          "invalidBehavior": "Missing files stop the strict shell. An unsafe path, missing controller, existing host process, or failed delegation produces the matching explicit cgroup error.",
+          "line": 292,
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "precedence": "The environment path is the only source; the checked canonical path is copied into the generated runtime configuration.",
+          "purpose": "Selects the delegated cgroup-v2 subtree that enforces process, memory, and CPU limits for Playwright browser work.",
+          "required": "required"
+        }
+      ],
       "consumers": [
         {
           "access": "embedded-node-process-env",
@@ -10052,14 +10119,14 @@
           "path": "my-values/buster-values.yaml"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "No default.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "emptyBehavior": "An absent or empty value stops the entrypoint before the Buster runtime starts.",
+      "failureMeaning": "The container stops before serving work, or runtime policy construction rejects an unusable cgroup root.",
+      "invalidBehavior": "Missing files stop the strict shell. An unsafe path, missing controller, existing host process, or failed delegation produces the matching explicit cgroup error.",
+      "meaning": "Selects the delegated cgroup-v2 subtree that enforces process, memory, and CPU limits for Playwright browser work.",
       "meaningEvidence": "docker/buster-runtime-entrypoint.sh:292",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT",
       "precedence": [
         {
@@ -10069,7 +10136,7 @@
           "source": "process environment or injected Kubernetes env"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "The environment path is the only source; the checked canonical path is copied into the generated runtime configuration.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -10084,7 +10151,7 @@
           "path": "docker/buster-runtime-entrypoint.sh"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "required",
       "runtimeOwner": "kubeclaw; maintained deployment profile",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
@@ -11216,9 +11283,9 @@
       "surface": "runtime-process-boundary"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "Varies by receiving process; see the consumer-specific contracts.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changes only the processes that receive the variable, according to each listed consumer contract.",
       "closureCondition": null,
       "consumerContracts": [
         {
@@ -11233,6 +11300,20 @@
           "path": "cmd/buster-namespace-controller/main.go",
           "precedence": "A trimmed non-empty process value wins; otherwise the checked-in group applies.",
           "purpose": "Selects the API group used in Buster lease request paths and the controller finalizer.",
+          "required": "conditional"
+        },
+        {
+          "acceptedForm": "With the shipped capabilities enabled, lowercase alphanumeric at both ends, with lowercase alphanumeric, dot, or hyphen internally.",
+          "access": "embedded-node-process-env",
+          "defaultBehavior": "Uses `kubeclaw.forgestack.ai`.",
+          "emptyBehavior": "An empty value selects `kubeclaw.forgestack.ai`.",
+          "failure": "Capability construction or later Kubernetes requests fail against an invalid or unavailable group.",
+          "impact": "Changing it changes CRD API versions, kubectl resource names, and runtime-security lookups.",
+          "invalidBehavior": "The generator does not validate syntax; the first applicable job fails with `KUBERNETES_FIXTURE_API_GROUP_INVALID` or `TAILSCALE_EXPOSURE_API_INVALID`.",
+          "line": 223,
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "precedence": "A truthy process string wins; otherwise the built-in group applies.",
+          "purpose": "Selects the lease CRD API group used by fixture, Tailscale exposure, and Kubernetes runtime-security capabilities.",
           "required": "conditional"
         }
       ],
@@ -11263,14 +11344,14 @@
           "path": "docker/buster-runtime-entrypoint.sh"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "Varies by receiving process; no merged default is valid.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_LEASE_API_GROUP. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:211",
-      "meaningStatus": "classified-non-operator-boundary",
+      "emptyBehavior": "Varies by receiving process; an empty string can be rejected, retained, or converted to a value.",
+      "failureMeaning": "Use the exact consumer failure below; a single merged symptom would be incorrect.",
+      "invalidBehavior": "Varies by receiving process; use the exact reader validation below.",
+      "meaning": "The meaning of BUSTER_LEASE_API_GROUP differs by receiving process. Use the contract attached to the exact consumer source.",
+      "meaningEvidence": "cmd/buster-namespace-controller/main.go:141",
+      "meaningStatus": "authored-consumer-specific-contracts",
       "name": "BUSTER_LEASE_API_GROUP",
       "precedence": [
         {
@@ -11287,7 +11368,7 @@
           "value": "kubeclaw.forgestack.ai"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "Each receiving process captures and interprets its own environment. No consumer contract overrides another consumer.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -11317,7 +11398,7 @@
           "path": "docker/buster-runtime-entrypoint.sh"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "varies by receiving process",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
@@ -11336,9 +11417,9 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "Varies by receiving process; see the consumer-specific contracts.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changes only the processes that receive the variable, according to each listed consumer contract.",
       "closureCondition": null,
       "consumerContracts": [
         {
@@ -11353,6 +11434,20 @@
           "path": "cmd/buster-namespace-controller/main.go",
           "precedence": "A trimmed non-empty process value wins; otherwise the checked-in version applies.",
           "purpose": "Selects the API version used in Buster lease request paths.",
+          "required": "conditional"
+        },
+        {
+          "acceptedForm": "With the shipped capabilities enabled, a value matching `^v[0-9]+(?:alpha|beta)?[0-9]*$`.",
+          "access": "embedded-node-process-env",
+          "defaultBehavior": "Uses `v1alpha1`.",
+          "emptyBehavior": "An empty value selects `v1alpha1`.",
+          "failure": "Capability construction or later Kubernetes requests fail against an invalid or unavailable version.",
+          "impact": "Changing it changes generated lease `apiVersion` values and the selected Kubernetes API endpoint.",
+          "invalidBehavior": "The generator does not validate syntax; the first applicable job fails with `KUBERNETES_FIXTURE_API_VERSION_INVALID` or `TAILSCALE_EXPOSURE_API_INVALID`.",
+          "line": 224,
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "precedence": "A truthy process string wins; otherwise `v1alpha1` applies.",
+          "purpose": "Selects the lease CRD version used by fixture and Tailscale exposure operations.",
           "required": "conditional"
         }
       ],
@@ -11378,14 +11473,14 @@
           "path": "docker/buster-runtime-entrypoint.sh"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "Varies by receiving process; no merged default is valid.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_LEASE_API_VERSION. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:213",
-      "meaningStatus": "classified-non-operator-boundary",
+      "emptyBehavior": "Varies by receiving process; an empty string can be rejected, retained, or converted to a value.",
+      "failureMeaning": "Use the exact consumer failure below; a single merged symptom would be incorrect.",
+      "invalidBehavior": "Varies by receiving process; use the exact reader validation below.",
+      "meaning": "The meaning of BUSTER_LEASE_API_VERSION differs by receiving process. Use the contract attached to the exact consumer source.",
+      "meaningEvidence": "cmd/buster-namespace-controller/main.go:142",
+      "meaningStatus": "authored-consumer-specific-contracts",
       "name": "BUSTER_LEASE_API_VERSION",
       "precedence": [
         {
@@ -11402,7 +11497,7 @@
           "value": "v1alpha1"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "Each receiving process captures and interprets its own environment. No consumer contract overrides another consumer.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -11427,7 +11522,7 @@
           "path": "docker/buster-runtime-entrypoint.sh"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "varies by receiving process",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
@@ -11736,11 +11831,26 @@
       "surface": "runtime-process-boundary"
     },
     {
-      "acceptedForm": "integer TCP/UDP port accepted by the linked consumer",
+      "acceptedForm": "A string converted by JavaScript `Number` to a safe integer from 0 through 65535. Zero requests an operating-system-selected port; whitespace converts to zero.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it moves the plan, health, bootstrap, and readiness endpoints and must agree with container and Service routing.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A string converted by JavaScript `Number` to a safe integer from 0 through 65535. Zero requests an operating-system-selected port; whitespace converts to zero.",
+          "access": "embedded-node-process-env",
+          "defaultBehavior": "Uses `18891` when absent.",
+          "emptyBehavior": "An exact empty string selects `18891`.",
+          "failure": "The remote-plan server does not start.",
+          "impact": "Changing it moves the plan, health, bootstrap, and readiness endpoints and must agree with container and Service routing.",
+          "invalidBehavior": "Negative, fractional, nonnumeric, infinite, or unsafe values fail configuration; values above 65535 fail port validation; a busy valid port returns the listener error.",
+          "line": 173,
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "precedence": "A non-empty process value wins; otherwise `18891` applies.",
+          "purpose": "Selects the TCP port for the Buster remote-plan HTTP server on fixed host `0.0.0.0`.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "embedded-node-process-env",
@@ -11753,14 +11863,14 @@
           "path": "my-values/buster-values.yaml"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "Uses `18891` when absent.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_PLAN_PORT. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "emptyBehavior": "An exact empty string selects `18891`.",
+      "failureMeaning": "The remote-plan server does not start.",
+      "invalidBehavior": "Negative, fractional, nonnumeric, infinite, or unsafe values fail configuration; values above 65535 fail port validation; a busy valid port returns the listener error.",
+      "meaning": "Selects the TCP port for the Buster remote-plan HTTP server on fixed host `0.0.0.0`.",
       "meaningEvidence": "docker/buster-runtime-entrypoint.sh:173",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_PLAN_PORT",
       "precedence": [
         {
@@ -11770,7 +11880,7 @@
           "source": "process environment or injected Kubernetes env"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A non-empty process value wins; otherwise `18891` applies.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -11785,7 +11895,7 @@
           "path": "docker/buster-runtime-entrypoint.sh"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "conditional",
       "runtimeOwner": "kubeclaw; maintained deployment profile",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
@@ -11804,11 +11914,26 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "filesystem path available to the linked process",
+      "acceptedForm": "A non-empty writable directory path. Use an absolute path because the shell and runtime resolve relative paths from different directories.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it moves the area in which untrusted snapshots are extracted and suites create working data.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty writable directory path. Use an absolute path because the shell and runtime resolve relative paths from different directories.",
+          "access": "shell-parameter",
+          "defaultBehavior": "Uses `/var/lib/buster-v2/runs`.",
+          "emptyBehavior": "An empty value selects `/var/lib/buster-v2/runs`.",
+          "failure": "The container fails at setup or a job fails when it cannot create or use its working directory.",
+          "impact": "Changing it moves the area in which untrusted snapshots are extracted and suites create working data.",
+          "invalidBehavior": "Directory creation or ownership failure stops the entrypoint; later permission or filesystem errors fail affected jobs.",
+          "line": 40,
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "precedence": "A non-empty process value wins; otherwise the fixed run directory applies.",
+          "purpose": "Selects the working root for repository extraction, suite workspaces, artifacts, and observability files of remote-plan jobs.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "shell-parameter",
@@ -11821,14 +11946,14 @@
           "path": "my-values/buster-values.yaml"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "Uses `/var/lib/buster-v2/runs`.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_PLAN_RUN_DIR. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "emptyBehavior": "An empty value selects `/var/lib/buster-v2/runs`.",
+      "failureMeaning": "The container fails at setup or a job fails when it cannot create or use its working directory.",
+      "invalidBehavior": "Directory creation or ownership failure stops the entrypoint; later permission or filesystem errors fail affected jobs.",
+      "meaning": "Selects the working root for repository extraction, suite workspaces, artifacts, and observability files of remote-plan jobs.",
       "meaningEvidence": "docker/buster-runtime-entrypoint.sh:40",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_PLAN_RUN_DIR",
       "precedence": [
         {
@@ -11845,7 +11970,7 @@
           "value": "/var/lib/buster-v2/runs"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A non-empty process value wins; otherwise the fixed run directory applies.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -11860,7 +11985,7 @@
           "path": "docker/buster-runtime-entrypoint.sh"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "conditional",
       "runtimeOwner": "kubeclaw; maintained deployment profile",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
@@ -11879,11 +12004,26 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "filesystem path available to the linked process",
+      "acceptedForm": "A non-empty writable directory path. Use an absolute path because the shell and runtime resolve relative paths from different directories.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it moves durable job state; an ephemeral or wrong location can lose recovery data or prevent admission.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty writable directory path. Use an absolute path because the shell and runtime resolve relative paths from different directories.",
+          "access": "shell-parameter",
+          "defaultBehavior": "Uses `/var/lib/buster-v2/plan-jobs`.",
+          "emptyBehavior": "An empty value selects `/var/lib/buster-v2/plan-jobs`.",
+          "failure": "The container or state operation fails at the first inaccessible or inconsistent path.",
+          "impact": "Changing it moves durable job state; an ephemeral or wrong location can lose recovery data or prevent admission.",
+          "invalidBehavior": "Directory creation or ownership failure stops the entrypoint; later permission, filesystem, or recovery errors stop runtime startup or state operations.",
+          "line": 39,
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "precedence": "A non-empty process value wins; otherwise the fixed state directory applies.",
+          "purpose": "Selects durable plan-job state, stored results, recovery records, and the admission lock.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "shell-parameter",
@@ -11896,14 +12036,14 @@
           "path": "my-values/buster-values.yaml"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "Uses `/var/lib/buster-v2/plan-jobs`.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_PLAN_STATE_DIR. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "emptyBehavior": "An empty value selects `/var/lib/buster-v2/plan-jobs`.",
+      "failureMeaning": "The container or state operation fails at the first inaccessible or inconsistent path.",
+      "invalidBehavior": "Directory creation or ownership failure stops the entrypoint; later permission, filesystem, or recovery errors stop runtime startup or state operations.",
+      "meaning": "Selects durable plan-job state, stored results, recovery records, and the admission lock.",
       "meaningEvidence": "docker/buster-runtime-entrypoint.sh:39",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_PLAN_STATE_DIR",
       "precedence": [
         {
@@ -11920,7 +12060,7 @@
           "value": "/var/lib/buster-v2/plan-jobs"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A non-empty process value wins; otherwise the fixed state directory applies.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -11935,7 +12075,7 @@
           "path": "docker/buster-runtime-entrypoint.sh"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "conditional",
       "runtimeOwner": "kubeclaw; maintained deployment profile",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
@@ -12007,11 +12147,26 @@
       "surface": "runtime-process-boundary"
     },
     {
-      "acceptedForm": "valid JSON with the shape enforced by the linked consumer",
+      "acceptedForm": "A JSON array with at least one unique string. Every string must contain 1 through 1024 bytes and no NUL, carriage-return, or line-feed byte.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes the actor allowlist applied after signature verification.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A JSON array with at least one unique string. Every string must contain 1 through 1024 bytes and no NUL, carriage-return, or line-feed byte.",
+          "access": "go-process-env",
+          "defaultBehavior": "No default; ignored while product decisions are disabled.",
+          "emptyBehavior": "An absent or empty value is invalid JSON and is rejected when enabled; it is ignored when disabled.",
+          "failure": "Enabled controller startup stops, or a validly signed decision from an unlisted actor returns HTTP 409.",
+          "impact": "Changing it changes the actor allowlist applied after signature verification.",
+          "invalidBehavior": "Malformed JSON, `null`, an empty array, a non-string member, invalid actor text, or a duplicate actor returns `DEMO_PRODUCT_CONFIG_INVALID`. An unlisted signed actor later returns `DEMO_PRODUCT_REQUEST_INVALID`.",
+          "line": 70,
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "precedence": "The exact process value is the only source and is decoded only after exact `true` enables the feature.",
+          "purpose": "Defines the actor identifiers that signed product decisions may name.",
+          "required": "required when `BUSTER_PRODUCT_ENABLED=true`"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
@@ -12024,14 +12179,14 @@
           "path": "cmd/buster-namespace-controller/demo-product.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "No default; ignored while product decisions are disabled.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_PRODUCT_ACTORS_JSON. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:249",
-      "meaningStatus": "classified-non-operator-boundary",
+      "emptyBehavior": "An absent or empty value is invalid JSON and is rejected when enabled; it is ignored when disabled.",
+      "failureMeaning": "Enabled controller startup stops, or a validly signed decision from an unlisted actor returns HTTP 409.",
+      "invalidBehavior": "Malformed JSON, `null`, an empty array, a non-string member, invalid actor text, or a duplicate actor returns `DEMO_PRODUCT_CONFIG_INVALID`. An unlisted signed actor later returns `DEMO_PRODUCT_REQUEST_INVALID`.",
+      "meaning": "Defines the actor identifiers that signed product decisions may name.",
+      "meaningEvidence": "cmd/buster-namespace-controller/demo-product.go:70",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_PRODUCT_ACTORS_JSON",
       "precedence": [
         {
@@ -12041,7 +12196,7 @@
           "source": "process environment"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "The exact process value is the only source and is decoded only after exact `true` enables the feature.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -12056,7 +12211,7 @@
           "path": "cmd/buster-namespace-controller/demo-product.go"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "required when `BUSTER_PRODUCT_ENABLED=true`",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
@@ -12075,11 +12230,26 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "From 1 through 1024 bytes with no NUL, carriage-return, or line-feed byte. Whitespace-only text is accepted by startup validation.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes which audience a product-decision caller token must prove.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "From 1 through 1024 bytes with no NUL, carriage-return, or line-feed byte. Whitespace-only text is accepted by startup validation.",
+          "access": "go-process-env",
+          "defaultBehavior": "No default; ignored while product decisions are disabled.",
+          "emptyBehavior": "Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.",
+          "failure": "Enabled controller startup stops, or callers with a different audience are denied.",
+          "impact": "Changing it changes which audience a product-decision caller token must prove.",
+          "invalidBehavior": "Invalid text returns `DEMO_PRODUCT_CONFIG_INVALID`. A valid audience not proved by TokenReview makes requests return HTTP 401 with `DEMO_PRODUCT_UNAUTHORIZED`.",
+          "line": 68,
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "precedence": "The exact process value is the only source and is read only after exact `true` enables the feature.",
+          "purpose": "Sets the Kubernetes TokenReview audience required from callers of the product-decision API.",
+          "required": "required when `BUSTER_PRODUCT_ENABLED=true`"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
@@ -12092,14 +12262,14 @@
           "path": "cmd/buster-namespace-controller/demo-product.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "No default; ignored while product decisions are disabled.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_PRODUCT_AUDIENCE. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:241",
-      "meaningStatus": "classified-non-operator-boundary",
+      "emptyBehavior": "Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.",
+      "failureMeaning": "Enabled controller startup stops, or callers with a different audience are denied.",
+      "invalidBehavior": "Invalid text returns `DEMO_PRODUCT_CONFIG_INVALID`. A valid audience not proved by TokenReview makes requests return HTTP 401 with `DEMO_PRODUCT_UNAUTHORIZED`.",
+      "meaning": "Sets the Kubernetes TokenReview audience required from callers of the product-decision API.",
+      "meaningEvidence": "cmd/buster-namespace-controller/demo-product.go:68",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_PRODUCT_AUDIENCE",
       "precedence": [
         {
@@ -12109,7 +12279,7 @@
           "source": "process environment"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "The exact process value is the only source and is read only after exact `true` enables the feature.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -12124,7 +12294,7 @@
           "path": "cmd/buster-namespace-controller/demo-product.go"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "required when `BUSTER_PRODUCT_ENABLED=true`",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "identity-reference",
@@ -12145,11 +12315,26 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "`true` or `false` unless the linked consumer states a narrower form",
+      "acceptedForm": "Only exact `true`, exact `false`, or an empty value. Exact `true` enables the feature; exact `false` and empty disable it.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Enabling it makes the five companion inputs mandatory and activates the signed product-decision routes; readiness must already be enabled.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "Only exact `true`, exact `false`, or an empty value. Exact `true` enables the feature; exact `false` and empty disable it.",
+          "access": "go-process-env",
+          "defaultBehavior": "Disabled when the variable is absent.",
+          "emptyBehavior": "Disables product decisions and ignores all five companion inputs.",
+          "failure": "Controller startup stops for an invalid value, missing readiness, or an invalid companion input. Disabled product routes return HTTP 404 with `DEMO_PRODUCT_DISABLED_OR_ROUTE_INVALID`.",
+          "impact": "Enabling it makes the five companion inputs mandatory and activates the signed product-decision routes; readiness must already be enabled.",
+          "invalidBehavior": "Any other value, including case changes, whitespace, `0`, or `1`, returns `DEMO_PRODUCT_CONFIG_INVALID`.",
+          "line": 59,
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "precedence": "The exact process value is the only source. No trimming or Boolean coercion occurs.",
+          "purpose": "Enables validation and use of signed product decisions after the readiness authority is configured.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
@@ -12162,14 +12347,14 @@
           "path": "cmd/buster-namespace-controller/demo-product.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "Disabled when the variable is absent.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_PRODUCT_ENABLED. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:239",
-      "meaningStatus": "classified-non-operator-boundary",
+      "emptyBehavior": "Disables product decisions and ignores all five companion inputs.",
+      "failureMeaning": "Controller startup stops for an invalid value, missing readiness, or an invalid companion input. Disabled product routes return HTTP 404 with `DEMO_PRODUCT_DISABLED_OR_ROUTE_INVALID`.",
+      "invalidBehavior": "Any other value, including case changes, whitespace, `0`, or `1`, returns `DEMO_PRODUCT_CONFIG_INVALID`.",
+      "meaning": "Enables validation and use of signed product decisions after the readiness authority is configured.",
+      "meaningEvidence": "cmd/buster-namespace-controller/demo-product.go:59",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_PRODUCT_ENABLED",
       "precedence": [
         {
@@ -12179,7 +12364,7 @@
           "source": "process environment"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "The exact process value is the only source. No trimming or Boolean coercion occurs.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -12194,7 +12379,7 @@
           "path": "cmd/buster-namespace-controller/demo-product.go"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "conditional",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
@@ -12213,11 +12398,26 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "From 1 through 1024 bytes with no NUL, carriage-return, or line-feed byte. Whitespace-only text is accepted by startup validation.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it invalidates otherwise valid decisions that name the previous issuer.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "From 1 through 1024 bytes with no NUL, carriage-return, or line-feed byte. Whitespace-only text is accepted by startup validation.",
+          "access": "go-process-env",
+          "defaultBehavior": "No default; ignored while product decisions are disabled.",
+          "emptyBehavior": "Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.",
+          "failure": "Enabled controller startup stops, or a decision from a different issuer is rejected.",
+          "impact": "Changing it invalidates otherwise valid decisions that name the previous issuer.",
+          "invalidBehavior": "Invalid text returns `DEMO_PRODUCT_CONFIG_INVALID`; a signed decision with another issuer returns HTTP 409 with `DEMO_PRODUCT_REQUEST_INVALID`.",
+          "line": 68,
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "precedence": "The exact process value is the only source and is read only after exact `true` enables the feature.",
+          "purpose": "Sets the issuer text that every verified signed product decision must contain.",
+          "required": "required when `BUSTER_PRODUCT_ENABLED=true`"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
@@ -12230,14 +12430,14 @@
           "path": "cmd/buster-namespace-controller/demo-product.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "No default; ignored while product decisions are disabled.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_PRODUCT_ISSUER. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:245",
-      "meaningStatus": "classified-non-operator-boundary",
+      "emptyBehavior": "Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.",
+      "failureMeaning": "Enabled controller startup stops, or a decision from a different issuer is rejected.",
+      "invalidBehavior": "Invalid text returns `DEMO_PRODUCT_CONFIG_INVALID`; a signed decision with another issuer returns HTTP 409 with `DEMO_PRODUCT_REQUEST_INVALID`.",
+      "meaning": "Sets the issuer text that every verified signed product decision must contain.",
+      "meaningEvidence": "cmd/buster-namespace-controller/demo-product.go:68",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_PRODUCT_ISSUER",
       "precedence": [
         {
@@ -12247,7 +12447,7 @@
           "source": "process environment"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "The exact process value is the only source and is read only after exact `true` enables the feature.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -12262,7 +12462,7 @@
           "path": "cmd/buster-namespace-controller/demo-product.go"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "required when `BUSTER_PRODUCT_ENABLED=true`",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "identity-reference",
@@ -12283,11 +12483,26 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "Exactly `system:serviceaccount:<namespace>:<name>`, with both final parts matching `^[a-z0-9][a-z0-9.-]{0,252}$`, and different from `BUSTER_READY_PRODUCER`.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it transfers product-decision submission authority while keeping that authority separate from readiness publication.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "Exactly `system:serviceaccount:<namespace>:<name>`, with both final parts matching `^[a-z0-9][a-z0-9.-]{0,252}$`, and different from `BUSTER_READY_PRODUCER`.",
+          "access": "go-process-env",
+          "defaultBehavior": "No default; ignored while product decisions are disabled.",
+          "emptyBehavior": "Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.",
+          "failure": "Enabled controller startup stops, or an unauthorized caller is denied.",
+          "impact": "Changing it transfers product-decision submission authority while keeping that authority separate from readiness publication.",
+          "invalidBehavior": "Malformed input or reuse of the readiness producer returns `DEMO_PRODUCT_CONFIG_INVALID`; another valid caller identity receives HTTP 401.",
+          "line": 68,
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "precedence": "The exact process value is the only source and is read only after exact `true` enables the feature.",
+          "purpose": "Selects the Kubernetes ServiceAccount identity allowed to submit signed product decisions.",
+          "required": "required when `BUSTER_PRODUCT_ENABLED=true`"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
@@ -12300,14 +12515,14 @@
           "path": "cmd/buster-namespace-controller/demo-product.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "No default; ignored while product decisions are disabled.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_PRODUCT_PRODUCER. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:243",
-      "meaningStatus": "classified-non-operator-boundary",
+      "emptyBehavior": "Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.",
+      "failureMeaning": "Enabled controller startup stops, or an unauthorized caller is denied.",
+      "invalidBehavior": "Malformed input or reuse of the readiness producer returns `DEMO_PRODUCT_CONFIG_INVALID`; another valid caller identity receives HTTP 401.",
+      "meaning": "Selects the Kubernetes ServiceAccount identity allowed to submit signed product decisions.",
+      "meaningEvidence": "cmd/buster-namespace-controller/demo-product.go:68",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_PRODUCT_PRODUCER",
       "precedence": [
         {
@@ -12317,7 +12532,7 @@
           "source": "process environment"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "The exact process value is the only source and is read only after exact `true` enables the feature.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -12332,7 +12547,7 @@
           "path": "cmd/buster-namespace-controller/demo-product.go"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "required when `BUSTER_PRODUCT_ENABLED=true`",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "identity-reference",
@@ -12353,11 +12568,26 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "Strict standard Base64 that decodes to exactly 32 bytes, the Ed25519 public-key size.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it rotates the public signature authority for product decisions; it is verification material, not a signing secret.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "Strict standard Base64 that decodes to exactly 32 bytes, the Ed25519 public-key size.",
+          "access": "go-process-env",
+          "defaultBehavior": "No default; ignored while product decisions are disabled.",
+          "emptyBehavior": "Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.",
+          "failure": "Enabled controller startup stops, or decisions signed by a nonmatching key return HTTP 409.",
+          "impact": "Changing it rotates the public signature authority for product decisions; it is verification material, not a signing secret.",
+          "invalidBehavior": "Malformed Base64 or the wrong decoded length returns `DEMO_PRODUCT_CONFIG_INVALID`. A different valid key starts successfully but rejects signatures from the old signer with `DEMO_PRODUCT_SIGNATURE_INVALID`.",
+          "line": 66,
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "precedence": "The exact process value is the only source and is read only after exact `true` enables the feature.",
+          "purpose": "Supplies the Ed25519 public key used to verify signed product-decision payloads.",
+          "required": "required when `BUSTER_PRODUCT_ENABLED=true`"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
@@ -12370,14 +12600,14 @@
           "path": "cmd/buster-namespace-controller/demo-product.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "No default; ignored while product decisions are disabled.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_PRODUCT_VERIFY_KEY. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:247",
-      "meaningStatus": "classified-non-operator-boundary",
+      "emptyBehavior": "Rejected when `BUSTER_PRODUCT_ENABLED=true`; ignored when the feature is disabled.",
+      "failureMeaning": "Enabled controller startup stops, or decisions signed by a nonmatching key return HTTP 409.",
+      "invalidBehavior": "Malformed Base64 or the wrong decoded length returns `DEMO_PRODUCT_CONFIG_INVALID`. A different valid key starts successfully but rejects signatures from the old signer with `DEMO_PRODUCT_SIGNATURE_INVALID`.",
+      "meaning": "Supplies the Ed25519 public key used to verify signed product-decision payloads.",
+      "meaningEvidence": "cmd/buster-namespace-controller/demo-product.go:66",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_PRODUCT_VERIFY_KEY",
       "precedence": [
         {
@@ -12387,7 +12617,7 @@
           "source": "process environment"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "The exact process value is the only source and is read only after exact `true` enables the feature.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -12402,7 +12632,7 @@
           "path": "cmd/buster-namespace-controller/demo-product.go"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "required when `BUSTER_PRODUCT_ENABLED=true`",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "public-verification-material",
@@ -12423,11 +12653,26 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "From 1 through 1024 bytes with no NUL, carriage-return, or line-feed byte. Whitespace-only text is accepted by startup validation.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes which audience a caller token must prove.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "From 1 through 1024 bytes with no NUL, carriage-return, or line-feed byte. Whitespace-only text is accepted by startup validation.",
+          "access": "go-process-env",
+          "defaultBehavior": "No default; required only when `BUSTER_READY_LISTEN` is non-empty.",
+          "emptyBehavior": "Rejected when readiness is enabled; ignored when readiness is disabled.",
+          "failure": "Enabled startup fails for invalid configuration, or callers with a different audience are denied.",
+          "impact": "Changing it changes which audience a caller token must prove.",
+          "invalidBehavior": "Invalid text stops startup. A valid value that is absent from a caller TokenReview result makes the request return HTTP 401 with `DEMO_READY_UNAUTHORIZED`.",
+          "line": 21,
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "precedence": "The exact process value is the only source and is checked only after the listen gate enables readiness.",
+          "purpose": "Sets the Kubernetes TokenReview audience required from callers of the readiness API.",
+          "required": "required when `BUSTER_READY_LISTEN` is non-empty"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
@@ -12440,14 +12685,14 @@
           "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "No default; required only when `BUSTER_READY_LISTEN` is non-empty.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_READY_AUDIENCE. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:226",
-      "meaningStatus": "classified-non-operator-boundary",
+      "emptyBehavior": "Rejected when readiness is enabled; ignored when readiness is disabled.",
+      "failureMeaning": "Enabled startup fails for invalid configuration, or callers with a different audience are denied.",
+      "invalidBehavior": "Invalid text stops startup. A valid value that is absent from a caller TokenReview result makes the request return HTTP 401 with `DEMO_READY_UNAUTHORIZED`.",
+      "meaning": "Sets the Kubernetes TokenReview audience required from callers of the readiness API.",
+      "meaningEvidence": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go:21",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_READY_AUDIENCE",
       "precedence": [
         {
@@ -12457,7 +12702,7 @@
           "source": "process environment"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "The exact process value is the only source and is checked only after the listen gate enables readiness.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -12472,7 +12717,7 @@
           "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "required when `BUSTER_READY_LISTEN` is non-empty",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "identity-reference",
@@ -12493,11 +12738,26 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "A non-empty host-and-port or colon-and-port string accepted by `net.SplitHostPort`; the chart supplies `:8443`. The address must also be available to `tls.Listen` at startup.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it enables, disables, or moves the readiness API. Product decisions cannot be enabled unless readiness is enabled.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty host-and-port or colon-and-port string accepted by `net.SplitHostPort`; the chart supplies `:8443`. The address must also be available to `tls.Listen` at startup.",
+          "access": "go-process-env",
+          "defaultBehavior": "No address default. An absent value disables the complete readiness server.",
+          "emptyBehavior": "An empty value disables readiness, skips the four companion-input checks, and makes readiness server startup a no-op.",
+          "failure": "Controller startup stops before reconciliation when configuration or listener creation fails.",
+          "impact": "Changing it enables, disables, or moves the readiness API. Product decisions cannot be enabled unless readiness is enabled.",
+          "invalidBehavior": "An invalid address returns `invalid Ready listen address`. A valid but unavailable address returns the listener error when the server starts.",
+          "line": 18,
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "precedence": "The exact process value is the only runtime source. No trimming or fallback occurs.",
+          "purpose": "Enables the demo-readiness HTTPS server and selects the TCP address on which it listens.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
@@ -12515,14 +12775,14 @@
           "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "No address default. An absent value disables the complete readiness server.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_READY_LISTEN. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:224",
-      "meaningStatus": "classified-non-operator-boundary",
+      "emptyBehavior": "An empty value disables readiness, skips the four companion-input checks, and makes readiness server startup a no-op.",
+      "failureMeaning": "Controller startup stops before reconciliation when configuration or listener creation fails.",
+      "invalidBehavior": "An invalid address returns `invalid Ready listen address`. A valid but unavailable address returns the listener error when the server starts.",
+      "meaning": "Enables the demo-readiness HTTPS server and selects the TCP address on which it listens.",
+      "meaningEvidence": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go:18",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_READY_LISTEN",
       "precedence": [
         {
@@ -12538,7 +12798,7 @@
           "source": "process environment"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "The exact process value is the only runtime source. No trimming or fallback occurs.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -12558,7 +12818,7 @@
           "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "conditional",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
@@ -12577,11 +12837,26 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "Exactly `system:serviceaccount:<namespace>:<name>`. Namespace and name must match `^[a-z0-9][a-z0-9.-]{0,252}$`; this is the implemented check, not full Kubernetes DNS validation.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it transfers readiness-call authority to another ServiceAccount and also changes the identity that the product producer must differ from.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "Exactly `system:serviceaccount:<namespace>:<name>`. Namespace and name must match `^[a-z0-9][a-z0-9.-]{0,252}$`; this is the implemented check, not full Kubernetes DNS validation.",
+          "access": "go-process-env",
+          "defaultBehavior": "No default; required only when `BUSTER_READY_LISTEN` is non-empty.",
+          "emptyBehavior": "Rejected when readiness is enabled; ignored when readiness is disabled.",
+          "failure": "Enabled startup fails for malformed configuration, or a different caller identity is denied.",
+          "impact": "Changing it transfers readiness-call authority to another ServiceAccount and also changes the identity that the product producer must differ from.",
+          "invalidBehavior": "A malformed identity stops startup. A well-formed identity that differs from TokenReview `status.user.username` makes the request return HTTP 401.",
+          "line": 21,
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "precedence": "The exact process value is the only source and is checked only after the listen gate enables readiness.",
+          "purpose": "Selects the one Kubernetes ServiceAccount identity allowed to call the readiness API.",
+          "required": "required when `BUSTER_READY_LISTEN` is non-empty"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
@@ -12594,14 +12869,14 @@
           "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "No default; required only when `BUSTER_READY_LISTEN` is non-empty.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_READY_PRODUCER. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:228",
-      "meaningStatus": "classified-non-operator-boundary",
+      "emptyBehavior": "Rejected when readiness is enabled; ignored when readiness is disabled.",
+      "failureMeaning": "Enabled startup fails for malformed configuration, or a different caller identity is denied.",
+      "invalidBehavior": "A malformed identity stops startup. A well-formed identity that differs from TokenReview `status.user.username` makes the request return HTTP 401.",
+      "meaning": "Selects the one Kubernetes ServiceAccount identity allowed to call the readiness API.",
+      "meaningEvidence": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go:21",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_READY_PRODUCER",
       "precedence": [
         {
@@ -12611,7 +12886,7 @@
           "source": "process environment"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "The exact process value is the only source and is checked only after the listen gate enables readiness.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -12626,7 +12901,7 @@
           "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "required when `BUSTER_READY_LISTEN` is non-empty",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "identity-reference",
@@ -12647,11 +12922,26 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "A non-empty file path whose PEM certificate can be loaded with the selected private key. The chart supplies `/var/run/kubeclaw/ready-server/tls.crt`.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes the certificate chain that readiness clients authenticate.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty file path whose PEM certificate can be loaded with the selected private key. The chart supplies `/var/run/kubeclaw/ready-server/tls.crt`.",
+          "access": "go-process-env",
+          "defaultBehavior": "No default; required only when `BUSTER_READY_LISTEN` is non-empty.",
+          "emptyBehavior": "Rejected when readiness is enabled; ignored when readiness is disabled.",
+          "failure": "The readiness listener does not start and controller startup stops.",
+          "impact": "Changing it changes the certificate chain that readiness clients authenticate.",
+          "invalidBehavior": "An unreadable or malformed certificate, or one that does not match the key, stops startup with `Ready TLS certificate unavailable`.",
+          "line": 21,
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "precedence": "The exact process path is the only source. The file is opened when the readiness server starts.",
+          "purpose": "Selects the PEM certificate chain presented by the readiness HTTPS listener.",
+          "required": "required when `BUSTER_READY_LISTEN` is non-empty"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
@@ -12664,14 +12954,14 @@
           "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "No default; required only when `BUSTER_READY_LISTEN` is non-empty.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_READY_TLS_CERT. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:230",
-      "meaningStatus": "classified-non-operator-boundary",
+      "emptyBehavior": "Rejected when readiness is enabled; ignored when readiness is disabled.",
+      "failureMeaning": "The readiness listener does not start and controller startup stops.",
+      "invalidBehavior": "An unreadable or malformed certificate, or one that does not match the key, stops startup with `Ready TLS certificate unavailable`.",
+      "meaning": "Selects the PEM certificate chain presented by the readiness HTTPS listener.",
+      "meaningEvidence": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go:21",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_READY_TLS_CERT",
       "precedence": [
         {
@@ -12681,7 +12971,7 @@
           "source": "process environment"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "The exact process path is the only source. The file is opened when the readiness server starts.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -12696,7 +12986,7 @@
           "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "required when `BUSTER_READY_LISTEN` is non-empty",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "public-verification-file-path",
@@ -12717,11 +13007,26 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "A non-empty file path containing a private key that matches the selected certificate. The chart supplies `/var/run/kubeclaw/ready-server/tls.key`.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes the private key used for the readiness TLS identity.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty file path containing a private key that matches the selected certificate. The chart supplies `/var/run/kubeclaw/ready-server/tls.key`.",
+          "access": "go-process-env",
+          "defaultBehavior": "No default; required only when `BUSTER_READY_LISTEN` is non-empty.",
+          "emptyBehavior": "Rejected when readiness is enabled; ignored when readiness is disabled.",
+          "failure": "The readiness listener does not start and controller startup stops.",
+          "impact": "Changing it changes the private key used for the readiness TLS identity.",
+          "invalidBehavior": "An unreadable, malformed, or nonmatching key stops startup with `Ready TLS certificate unavailable`.",
+          "line": 21,
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "precedence": "The exact process path is the only source. The file is opened when the readiness server starts.",
+          "purpose": "Selects the private-key PEM file used by the readiness HTTPS listener.",
+          "required": "required when `BUSTER_READY_LISTEN` is non-empty"
+        }
+      ],
       "consumers": [
         {
           "access": "kubernetes-env",
@@ -12734,14 +13039,14 @@
           "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "No default; required only when `BUSTER_READY_LISTEN` is non-empty.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_READY_TLS_KEY. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-      "meaningEvidence": "charts/kubeclaw/templates/buster-namespace-controller.yaml:232",
-      "meaningStatus": "classified-non-operator-boundary",
+      "emptyBehavior": "Rejected when readiness is enabled; ignored when readiness is disabled.",
+      "failureMeaning": "The readiness listener does not start and controller startup stops.",
+      "invalidBehavior": "An unreadable, malformed, or nonmatching key stops startup with `Ready TLS certificate unavailable`.",
+      "meaning": "Selects the private-key PEM file used by the readiness HTTPS listener.",
+      "meaningEvidence": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go:21",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_READY_TLS_KEY",
       "precedence": [
         {
@@ -12751,7 +13056,7 @@
           "source": "process environment"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "The exact process path is the only source. The file is opened when the readiness server starts.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -12766,7 +13071,7 @@
           "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "required when `BUSTER_READY_LISTEN` is non-empty",
       "runtimeOwner": "Helm chart charts/kubeclaw; kubeclaw",
       "sensitive": false,
       "sensitivityClass": "secret-file-path",
@@ -12934,11 +13239,26 @@
       "surface": "kubernetes-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "A non-empty Node-readable Ed25519 public key; this environment path normally carries PEM text.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it rotates the source-signature authority and requires the matching Nova signing key.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty Node-readable Ed25519 public key; this environment path normally carries PEM text.",
+          "access": "shell-parameter",
+          "defaultBehavior": "No default.",
+          "emptyBehavior": "An absent or empty value stops the entrypoint.",
+          "failure": "Runtime startup stops for bad key material, or new jobs are rejected when signature verification fails.",
+          "impact": "Changing it rotates the source-signature authority and requires the matching Nova signing key.",
+          "invalidBehavior": "Missing material reports the required or missing-key error. Unparseable or non-Ed25519 material reports `BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID`; a nonmatching valid key causes `BUSTER_SOURCE_ATTESTATION_INVALID`.",
+          "line": 107,
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "precedence": "The generated configuration fixes this environment-variable name; its process value is the only key source.",
+          "purpose": "Supplies the Ed25519 public trust anchor used to verify Nova-signed repository snapshots.",
+          "required": "required"
+        }
+      ],
       "consumers": [
         {
           "access": "shell-parameter",
@@ -12951,14 +13271,14 @@
           "path": "my-values/buster-values.yaml"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "No default.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "The consumer stops with its source-defined missing-value error.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "emptyBehavior": "An absent or empty value stops the entrypoint.",
+      "failureMeaning": "Runtime startup stops for bad key material, or new jobs are rejected when signature verification fails.",
+      "invalidBehavior": "Missing material reports the required or missing-key error. Unparseable or non-Ed25519 material reports `BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID`; a nonmatching valid key causes `BUSTER_SOURCE_ATTESTATION_INVALID`.",
+      "meaning": "Supplies the Ed25519 public trust anchor used to verify Nova-signed repository snapshots.",
       "meaningEvidence": "docker/buster-runtime-entrypoint.sh:107",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY",
       "precedence": [
         {
@@ -12975,7 +13295,7 @@
           "value": "<no default; expansion stops when the requirement is not met>"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "The generated configuration fixes this environment-variable name; its process value is the only key source.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -13101,11 +13421,26 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "A non-empty SPIFFE ID matching `spiffe://[a-z0-9.-]+/<path>` for successful authorization.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it switches the remote-plan authentication boundary and the only accepted workload identity.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty SPIFFE ID matching `spiffe://[a-z0-9.-]+/<path>` for successful authorization.",
+          "access": "embedded-node-process-env",
+          "defaultBehavior": "An absent value selects bearer-token authentication.",
+          "emptyBehavior": "An empty value selects bearer-token authentication.",
+          "failure": "Requests that do not arrive through the trusted loopback proxy with the exact valid identity return HTTP 401.",
+          "impact": "Changing it switches the remote-plan authentication boundary and the only accepted workload identity.",
+          "invalidBehavior": "Malformed non-empty text reaches the allow policy; request authorization catches the policy error and returns HTTP 401.",
+          "line": 174,
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "precedence": "A non-empty value selects SPIFFE instead of token use. The current entrypoint still requires `BUSTER_V2_TOKEN` at startup even when SPIFFE is selected.",
+          "purpose": "Selects SPIFFE/XFCC authentication and names the one Nova SPIFFE identity allowed to submit remote-plan requests.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "embedded-node-process-env",
@@ -13123,14 +13458,14 @@
           "path": "my-values/buster-values.yaml"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "An absent value selects bearer-token authentication.",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_TRUSTED_PEER_SPIFFE_ID. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "emptyBehavior": "An empty value selects bearer-token authentication.",
+      "failureMeaning": "Requests that do not arrive through the trusted loopback proxy with the exact valid identity return HTTP 401.",
+      "invalidBehavior": "Malformed non-empty text reaches the allow policy; request authorization catches the policy error and returns HTTP 401.",
+      "meaning": "Selects SPIFFE/XFCC authentication and names the one Nova SPIFFE identity allowed to submit remote-plan requests.",
       "meaningEvidence": "docker/buster-runtime-entrypoint.sh:174",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_TRUSTED_PEER_SPIFFE_ID",
       "precedence": [
         {
@@ -13140,7 +13475,7 @@
           "source": "process environment or injected Kubernetes env"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A non-empty value selects SPIFFE instead of token use. The current entrypoint still requires `BUSTER_V2_TOKEN` at startup even when SPIFFE is selected.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -13160,7 +13495,7 @@
           "path": "docker/buster-runtime-entrypoint.sh"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "conditional",
       "runtimeOwner": "kubeclaw; maintained deployment profile",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
@@ -13285,11 +13620,26 @@
       "surface": "runtime-process-boundary"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "A non-empty string converted by JavaScript `Number` to a positive safe integer in bytes.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes the largest compressed source snapshot admitted into storage.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty string converted by JavaScript `Number` to a positive safe integer in bytes.",
+          "access": "embedded-node-process-env",
+          "defaultBehavior": "Uses `67108864` bytes (64 MiB).",
+          "emptyBehavior": "An empty value selects 64 MiB.",
+          "failure": "Invalid configuration stops startup; an oversized job is rejected before extraction.",
+          "impact": "Changing it changes the largest compressed source snapshot admitted into storage.",
+          "invalidBehavior": "Zero, negative, fractional, nonnumeric, infinite, or unsafe values fail startup; an oversized request reports `BUSTER_REMOTE_ARCHIVE_SIZE_EXCEEDED`.",
+          "line": 183,
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "precedence": "A non-empty process value wins; otherwise 64 MiB applies.",
+          "purpose": "Caps the compressed repository archive accepted in one remote-plan request.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "embedded-node-process-env",
@@ -13302,14 +13652,14 @@
           "path": "my-values/buster-values.yaml"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "Uses `67108864` bytes (64 MiB).",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_V2_MAX_ARCHIVE_BYTES. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "emptyBehavior": "An empty value selects 64 MiB.",
+      "failureMeaning": "Invalid configuration stops startup; an oversized job is rejected before extraction.",
+      "invalidBehavior": "Zero, negative, fractional, nonnumeric, infinite, or unsafe values fail startup; an oversized request reports `BUSTER_REMOTE_ARCHIVE_SIZE_EXCEEDED`.",
+      "meaning": "Caps the compressed repository archive accepted in one remote-plan request.",
       "meaningEvidence": "docker/buster-runtime-entrypoint.sh:183",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_V2_MAX_ARCHIVE_BYTES",
       "precedence": [
         {
@@ -13319,7 +13669,7 @@
           "source": "process environment or injected Kubernetes env"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A non-empty process value wins; otherwise 64 MiB applies.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -13334,7 +13684,7 @@
           "path": "docker/buster-runtime-entrypoint.sh"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "conditional",
       "runtimeOwner": "kubeclaw; maintained deployment profile",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
@@ -13406,11 +13756,26 @@
       "surface": "runtime-process-boundary"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
+      "acceptedForm": "A non-empty string converted by JavaScript `Number` to a positive safe integer in bytes.",
       "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
+      "changeImpact": "Changing it changes the expansion limit applied during archive inspection before extraction.",
       "closureCondition": null,
-      "consumerContracts": [],
+      "consumerContracts": [
+        {
+          "acceptedForm": "A non-empty string converted by JavaScript `Number` to a positive safe integer in bytes.",
+          "access": "embedded-node-process-env",
+          "defaultBehavior": "Uses `536870912` bytes (512 MiB).",
+          "emptyBehavior": "An empty value selects 512 MiB.",
+          "failure": "Invalid configuration stops startup; an oversized job is rejected before extraction.",
+          "impact": "Changing it changes the expansion limit applied during archive inspection before extraction.",
+          "invalidBehavior": "Zero, negative, fractional, nonnumeric, infinite, or unsafe values fail startup; an oversized archive reports `BUSTER_REMOTE_ARCHIVE_EXPANDED_SIZE_EXCEEDED`.",
+          "line": 187,
+          "path": "docker/buster-runtime-entrypoint.sh",
+          "precedence": "A non-empty process value wins; otherwise 512 MiB applies.",
+          "purpose": "Caps the accumulated declared uncompressed size of regular files and directories in a submitted source archive.",
+          "required": "conditional"
+        }
+      ],
       "consumers": [
         {
           "access": "embedded-node-process-env",
@@ -13423,14 +13788,14 @@
           "path": "my-values/buster-values.yaml"
         }
       ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
+      "defaultBehavior": "Uses `536870912` bytes (512 MiB).",
       "direction": "injected by checked-in manifest and read by checked-in runtime source",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "Checked-in deployment sources inject BUSTER_V2_MAX_EXTRACTED_BYTES. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
+      "emptyBehavior": "An empty value selects 512 MiB.",
+      "failureMeaning": "Invalid configuration stops startup; an oversized job is rejected before extraction.",
+      "invalidBehavior": "Zero, negative, fractional, nonnumeric, infinite, or unsafe values fail startup; an oversized archive reports `BUSTER_REMOTE_ARCHIVE_EXPANDED_SIZE_EXCEEDED`.",
+      "meaning": "Caps the accumulated declared uncompressed size of regular files and directories in a submitted source archive.",
       "meaningEvidence": "docker/buster-runtime-entrypoint.sh:187",
-      "meaningStatus": "classified-non-operator-boundary",
+      "meaningStatus": "authored-consumer-specific-contract",
       "name": "BUSTER_V2_MAX_EXTRACTED_BYTES",
       "precedence": [
         {
@@ -13440,7 +13805,7 @@
           "source": "process environment or injected Kubernetes env"
         }
       ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
+      "precedenceExplanation": "A non-empty process value wins; otherwise 512 MiB applies.",
       "producers": [
         {
           "access": "kubernetes-env",
@@ -13455,7 +13820,7 @@
           "path": "docker/buster-runtime-entrypoint.sh"
         }
       ],
-      "required": "conditional-or-external",
+      "required": "conditional",
       "runtimeOwner": "kubeclaw; maintained deployment profile",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
@@ -17763,165 +18128,6 @@
       "surface": "checked-in-injected-transport"
     },
     {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
-      "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
-      "closureCondition": null,
-      "consumerContracts": [],
-      "consumers": [
-        {
-          "access": "go-process-env",
-          "line": 78,
-          "path": "cmd/buster-namespace-controller/demo-auth-credentials_test.go"
-        }
-      ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "read as process input; producer is the operator, CI host, or external runtime",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "A checked-in process reads KUBECLAW_DEMO_AUTH_TEST_OUTPUT, but this surface is runtime-process-boundary and is not a supported direct operator option. Use the owning runtime, CI, or maintainer interface.",
-      "meaningEvidence": "cmd/buster-namespace-controller/demo-auth-credentials_test.go:78",
-      "meaningStatus": "classified-non-operator-boundary",
-      "name": "KUBECLAW_DEMO_AUTH_TEST_OUTPUT",
-      "precedence": [
-        {
-          "condition": "reader is called",
-          "evidence": "cmd/buster-namespace-controller/demo-auth-credentials_test.go:78",
-          "order": 1,
-          "source": "process environment"
-        }
-      ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
-      "producers": [],
-      "readers": [
-        {
-          "access": "go-process-env",
-          "line": 78,
-          "path": "cmd/buster-namespace-controller/demo-auth-credentials_test.go"
-        }
-      ],
-      "required": "conditional-or-external",
-      "runtimeOwner": "kubeclaw",
-      "sensitive": false,
-      "sensitivityClass": "ordinary-value",
-      "sensitivityReasons": [],
-      "setDirectly": false,
-      "sourceOwners": [
-        {
-          "component": "kubeclaw",
-          "evidence": "package.json"
-        }
-      ],
-      "surface": "runtime-process-boundary"
-    },
-    {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
-      "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
-      "closureCondition": null,
-      "consumerContracts": [],
-      "consumers": [
-        {
-          "access": "go-process-env",
-          "line": 19,
-          "path": "cmd/buster-namespace-controller/demo-producer-interop_test.go"
-        }
-      ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "read as process input; producer is the operator, CI host, or external runtime",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "A checked-in process reads KUBECLAW_DEMO_HANDOFF_INTEROP_INPUT, but this surface is runtime-process-boundary and is not a supported direct operator option. Use the owning runtime, CI, or maintainer interface.",
-      "meaningEvidence": "cmd/buster-namespace-controller/demo-producer-interop_test.go:19",
-      "meaningStatus": "classified-non-operator-boundary",
-      "name": "KUBECLAW_DEMO_HANDOFF_INTEROP_INPUT",
-      "precedence": [
-        {
-          "condition": "reader is called",
-          "evidence": "cmd/buster-namespace-controller/demo-producer-interop_test.go:19",
-          "order": 1,
-          "source": "process environment"
-        }
-      ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
-      "producers": [],
-      "readers": [
-        {
-          "access": "go-process-env",
-          "line": 19,
-          "path": "cmd/buster-namespace-controller/demo-producer-interop_test.go"
-        }
-      ],
-      "required": "conditional-or-external",
-      "runtimeOwner": "kubeclaw",
-      "sensitive": false,
-      "sensitivityClass": "ordinary-value",
-      "sensitivityReasons": [],
-      "setDirectly": false,
-      "sourceOwners": [
-        {
-          "component": "kubeclaw",
-          "evidence": "package.json"
-        }
-      ],
-      "surface": "runtime-process-boundary"
-    },
-    {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
-      "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
-      "closureCondition": null,
-      "consumerContracts": [],
-      "consumers": [
-        {
-          "access": "go-process-env",
-          "line": 90,
-          "path": "cmd/buster-namespace-controller/demo-producer-interop_test.go"
-        }
-      ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "read as process input; producer is the operator, CI host, or external runtime",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "A checked-in process reads KUBECLAW_DEMO_HANDOFF_INTEROP_OUTPUT, but this surface is runtime-process-boundary and is not a supported direct operator option. Use the owning runtime, CI, or maintainer interface.",
-      "meaningEvidence": "cmd/buster-namespace-controller/demo-producer-interop_test.go:90",
-      "meaningStatus": "classified-non-operator-boundary",
-      "name": "KUBECLAW_DEMO_HANDOFF_INTEROP_OUTPUT",
-      "precedence": [
-        {
-          "condition": "reader is called",
-          "evidence": "cmd/buster-namespace-controller/demo-producer-interop_test.go:90",
-          "order": 1,
-          "source": "process environment"
-        }
-      ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
-      "producers": [],
-      "readers": [
-        {
-          "access": "go-process-env",
-          "line": 90,
-          "path": "cmd/buster-namespace-controller/demo-producer-interop_test.go"
-        }
-      ],
-      "required": "conditional-or-external",
-      "runtimeOwner": "kubeclaw",
-      "sensitive": false,
-      "sensitivityClass": "ordinary-value",
-      "sensitivityReasons": [],
-      "setDirectly": false,
-      "sourceOwners": [
-        {
-          "component": "kubeclaw",
-          "evidence": "package.json"
-        }
-      ],
-      "surface": "runtime-process-boundary"
-    },
-    {
       "acceptedForm": "Exactly `true` or `false`.",
       "blockerOwner": null,
       "changeImpact": "When enabled, deployment applies the lab mirror resources. It does not make the service production-ready or HTTPS-authenticated.",
@@ -18344,6 +18550,11 @@
       "consumers": [
         {
           "access": "node-process-env",
+          "line": 40,
+          "path": "scripts/docs-generate.mjs"
+        },
+        {
+          "access": "node-process-env",
           "line": 19,
           "path": "scripts/docs-platform-surface-inventory.mjs"
         }
@@ -18354,7 +18565,7 @@
       "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
       "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
       "meaning": "A checked-in process reads KUBECLAW_DOCS_ISOLATED_MUTATION, but this surface is maintainer-verification-input and is not a supported direct operator option. Use the owning runtime, CI, or maintainer interface.",
-      "meaningEvidence": "scripts/docs-platform-surface-inventory.mjs:19",
+      "meaningEvidence": "scripts/docs-generate.mjs:40",
       "meaningStatus": "classified-non-operator-boundary",
       "name": "KUBECLAW_DOCS_ISOLATED_MUTATION",
       "precedence": [
@@ -18370,17 +18581,26 @@
       "readers": [
         {
           "access": "node-process-env",
+          "line": 40,
+          "path": "scripts/docs-generate.mjs"
+        },
+        {
+          "access": "node-process-env",
           "line": 19,
           "path": "scripts/docs-platform-surface-inventory.mjs"
         }
       ],
       "required": "conditional-or-external",
-      "runtimeOwner": "operator script scripts/docs-platform-surface-inventory.mjs",
+      "runtimeOwner": "operator script scripts/docs-generate.mjs; operator script scripts/docs-platform-surface-inventory.mjs",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
       "sensitivityReasons": [],
       "setDirectly": false,
       "sourceOwners": [
+        {
+          "component": "operator script scripts/docs-generate.mjs",
+          "evidence": "scripts/docs-generate.mjs"
+        },
         {
           "component": "operator script scripts/docs-platform-surface-inventory.mjs",
           "evidence": "scripts/docs-platform-surface-inventory.mjs"
@@ -20039,59 +20259,6 @@
         {
           "component": "@kubeclaw/worker-core",
           "evidence": "skills/worker/core/package.json"
-        }
-      ],
-      "surface": "runtime-process-boundary"
-    },
-    {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
-      "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
-      "closureCondition": null,
-      "consumerContracts": [],
-      "consumers": [
-        {
-          "access": "go-process-env",
-          "line": 30,
-          "path": "cmd/buster-namespace-controller/demo-product-native_test.go"
-        }
-      ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "read as process input; producer is the operator, CI host, or external runtime",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "A checked-in process reads KUBECLAW_NATIVE_TEST_CONFIG, but this surface is runtime-process-boundary and is not a supported direct operator option. Use the owning runtime, CI, or maintainer interface.",
-      "meaningEvidence": "cmd/buster-namespace-controller/demo-product-native_test.go:30",
-      "meaningStatus": "classified-non-operator-boundary",
-      "name": "KUBECLAW_NATIVE_TEST_CONFIG",
-      "precedence": [
-        {
-          "condition": "reader is called",
-          "evidence": "cmd/buster-namespace-controller/demo-product-native_test.go:30",
-          "order": 1,
-          "source": "process environment"
-        }
-      ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
-      "producers": [],
-      "readers": [
-        {
-          "access": "go-process-env",
-          "line": 30,
-          "path": "cmd/buster-namespace-controller/demo-product-native_test.go"
-        }
-      ],
-      "required": "conditional-or-external",
-      "runtimeOwner": "kubeclaw",
-      "sensitive": false,
-      "sensitivityClass": "ordinary-value",
-      "sensitivityReasons": [],
-      "setDirectly": false,
-      "sourceOwners": [
-        {
-          "component": "kubeclaw",
-          "evidence": "package.json"
         }
       ],
       "surface": "runtime-process-boundary"
@@ -35288,59 +35455,6 @@
       "consumerContracts": [],
       "consumers": [
         {
-          "access": "go-process-env",
-          "line": 202,
-          "path": "cmd/buster-namespace-controller/demo-product_test.go"
-        }
-      ],
-      "defaultBehavior": "Use the producer or external authority named by the surface classification.",
-      "direction": "read as process input; producer is the operator, CI host, or external runtime",
-      "emptyBehavior": "The owning producer or runtime defines empty-value behavior.",
-      "failureMeaning": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
-      "invalidBehavior": "The owning producer or runtime reports invalid input; this inventory does not invent that external contract.",
-      "meaning": "A checked-in process reads PRODUCT_TS_EXPORTER, but this surface is runtime-process-boundary and is not a supported direct operator option. Use the owning runtime, CI, or maintainer interface.",
-      "meaningEvidence": "cmd/buster-namespace-controller/demo-product_test.go:202",
-      "meaningStatus": "classified-non-operator-boundary",
-      "name": "PRODUCT_TS_EXPORTER",
-      "precedence": [
-        {
-          "condition": "reader is called",
-          "evidence": "cmd/buster-namespace-controller/demo-product_test.go:202",
-          "order": 1,
-          "source": "process environment"
-        }
-      ],
-      "precedenceExplanation": "Use the listed producer or owning interface. Direct operator setting is not supported from this reference.",
-      "producers": [],
-      "readers": [
-        {
-          "access": "go-process-env",
-          "line": 202,
-          "path": "cmd/buster-namespace-controller/demo-product_test.go"
-        }
-      ],
-      "required": "conditional-or-external",
-      "runtimeOwner": "kubeclaw",
-      "sensitive": false,
-      "sensitivityClass": "ordinary-value",
-      "sensitivityReasons": [],
-      "setDirectly": false,
-      "sourceOwners": [
-        {
-          "component": "kubeclaw",
-          "evidence": "package.json"
-        }
-      ],
-      "surface": "runtime-process-boundary"
-    },
-    {
-      "acceptedForm": "string accepted by the linked consumer; use its source validation and listed default",
-      "blockerOwner": null,
-      "changeImpact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
-      "closureCondition": null,
-      "consumerContracts": [],
-      "consumers": [
-        {
           "access": "shell-parameter",
           "line": 134,
           "path": "charts/prism/files/prism-backup.sh"
@@ -50458,15 +50572,15 @@
     }
   ],
   "totals": {
-    "cliDefinitions": 107,
-    "cliFlags": 107,
+    "cliDefinitions": 108,
+    "cliFlags": 108,
     "cliInvocations": 0,
-    "cliOccurrences": 124,
+    "cliOccurrences": 125,
     "configurationConsumerSources": 274,
     "derivedValues": 47,
-    "environmentConsumers": 855,
+    "environmentConsumers": 851,
     "environmentMeaningBlockers": 0,
-    "environmentVariables": 437,
+    "environmentVariables": 432,
     "injectionOnlyEnvironmentVariables": 41,
     "operatorAuthoredEnvironmentInputs": 157,
     "operatorAuthoredMeaningBlockers": 0,

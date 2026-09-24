@@ -43931,9 +43931,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -43992,9 +43992,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -45718,9 +45718,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -45779,9 +45779,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -46628,9 +46628,9 @@
               "value": "$values/my-values/infra/argocd-values.yaml"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes the value delivered to Argo CD Helm rendering and the selected chart; it does not change Kubernetes API behavior by itself.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart"
@@ -46671,9 +46671,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes the value delivered to Argo CD Helm rendering and the selected chart; it does not change Kubernetes API behavior by itself.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart"
@@ -46714,9 +46714,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes the value delivered to Argo CD Helm rendering and the selected chart; it does not change Kubernetes API behavior by itself.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart"
@@ -46757,9 +46757,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Controls parent and child health reporting, including degraded comparison errors, observed workload health, and strict revision matching.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart",
@@ -47804,9 +47804,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -47865,9 +47865,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -48496,9 +48496,9 @@
               "value": "codex-ops"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes the value delivered to Argo CD Helm rendering and the selected chart; it does not change Kubernetes API behavior by itself.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart"
@@ -48539,9 +48539,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes the exact executable bytes for the Codex Ops container; explicit command-line overrides win after this file.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart",
@@ -48623,9 +48623,9 @@
               "value": "ghcr.io/datrab/kubeclaw-codex-ops@sha256:607b51291c8f6952be903d81f760d8eb893474b47bb419b1b67526f38c7589c0"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes the exact executable bytes for the Ops MCP container; explicit command-line overrides win after this file.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart",
@@ -48707,9 +48707,9 @@
               "value": "ghcr.io/datrab/kubeclaw-ops-mcp@sha256:a9aa21492d046ba5929c0bca7cc0991bd8d52a25f69e8a824ca286c8aa23f855"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes the value delivered to Argo CD Helm rendering and the selected chart; it does not change Kubernetes API behavior by itself.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart"
@@ -48750,9 +48750,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes the value delivered to Argo CD Helm rendering and the selected chart; it does not change Kubernetes API behavior by itself.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart"
@@ -48793,9 +48793,9 @@
               "value": "<array>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes the destination addresses reachable on the configured Kubernetes API port.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart",
@@ -48861,9 +48861,9 @@
               "value": "10.43.0.1/32"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes the destination addresses reachable on the configured Kubernetes API port.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart",
@@ -48929,9 +48929,9 @@
               "value": "100.97.157.101/32"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes the only API-server port the Ops containers can reach.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart",
@@ -49011,9 +49011,9 @@
               "value": 6443
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes only the Cilium-specific policy when the parent policy remains enabled; disabling the parent removes all policy isolation.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart",
@@ -49079,9 +49079,9 @@
               "value": false
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes the value delivered to Argo CD Helm rendering and the selected chart; it does not change Kubernetes API behavior by itself.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart"
@@ -49122,9 +49122,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes the value delivered to Argo CD Helm rendering and the selected chart; it does not change Kubernetes API behavior by itself.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart"
@@ -49165,9 +49165,9 @@
               "value": "<array>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes namespace-scoped Roles, RoleBindings, and the set available to Ops tooling.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart",
@@ -49247,9 +49247,9 @@
               "value": "kubeclaw-ops"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes namespace-scoped Roles, RoleBindings, and the set available to Ops tooling.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart",
@@ -49329,9 +49329,9 @@
               "value": "kubeclaw"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes namespace-scoped Roles, RoleBindings, and the set available to Ops tooling.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart",
@@ -49411,9 +49411,9 @@
               "value": "argocd"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes namespace-scoped Roles, RoleBindings, and the set available to Ops tooling.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart",
@@ -49493,9 +49493,9 @@
               "value": "kube-system"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes namespace-scoped Roles, RoleBindings, and the set available to Ops tooling.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart",
@@ -49575,9 +49575,9 @@
               "value": "tailscale"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes namespace-scoped Roles, RoleBindings, and the set available to Ops tooling.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart",
@@ -49657,9 +49657,9 @@
               "value": "spire-server"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes namespace-scoped Roles, RoleBindings, and the set available to Ops tooling.",
-              "closureCondition": "Link the exact Argo CD Helm rendering and the selected chart contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by Argo CD Helm rendering and the selected chart",
@@ -50373,9 +50373,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -50434,9 +50434,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -52227,9 +52227,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Controls bootstrap ordering, not Kubernetes admission or the order of later workload reconciliation.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/AppProject API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -53467,9 +53467,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Controls bootstrap ordering, not Kubernetes admission or the order of later workload reconciliation.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/AppProject API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -56115,9 +56115,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Controls bootstrap ordering, not Kubernetes admission or the order of later workload reconciliation.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/AppProject API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -59182,9 +59182,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -59243,9 +59243,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -60508,9 +60508,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -60569,9 +60569,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -62295,9 +62295,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Controls bootstrap ordering, not Kubernetes admission or the order of later workload reconciliation.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/AppProject API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -64725,9 +64725,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -64786,9 +64786,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -66445,9 +66445,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -66506,9 +66506,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -68232,9 +68232,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -68293,9 +68293,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -70019,9 +70019,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -70080,9 +70080,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -71739,9 +71739,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -71800,9 +71800,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -73132,9 +73132,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -73193,9 +73193,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -74525,9 +74525,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -74586,9 +74586,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -76379,9 +76379,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes how Argo CD calculates SPIRE drift; it does not change the manifest applied to the cluster by itself.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -76440,9 +76440,9 @@
               "value": "ServerSideDiff=true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -76501,9 +76501,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -79308,9 +79308,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Controls bootstrap ordering, not Kubernetes admission or the order of later workload reconciliation.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/AppProject API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -81076,9 +81076,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Separates parent reconciliation health from the child workload-health decision made by the installed Application health script.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -81137,9 +81137,9 @@
               "value": "true"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Makes the child report its observed workload health independently of manual sync status while comparison and sync errors remain degraded.",
-              "closureCondition": "Link the exact the controller named by the annotation prefix contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer argoproj.io/v1alpha1/Application API field type",
                 "inner contract owned by the controller named by the annotation prefix",
@@ -83794,9 +83794,9 @@
               "value": "<array>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Controls whether LiteLLM loads the mounted platform configuration.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -83855,9 +83855,9 @@
               "value": "--config"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Selects the model, database, and provider configuration loaded by LiteLLM.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -83916,9 +83916,9 @@
               "value": "/app/config.yaml"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Controls whether the declared container and Service port match the LiteLLM listener.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -83977,9 +83977,9 @@
               "value": "--port"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes the process listener and must stay equal to the declared container and Service target port.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -84122,9 +84122,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Binds the following file path to Google Vertex AI authentication.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -84183,9 +84183,9 @@
               "value": "GOOGLE_APPLICATION_CREDENTIALS"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Selects the credential file used for Vertex AI requests.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -84286,9 +84286,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Binds the following Boolean-like string to LiteLLM database storage behavior.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -84347,9 +84347,9 @@
               "value": "STORE_MODEL_IN_DB"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Changes whether model configuration survives LiteLLM Pod replacement through PostgreSQL.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -90150,9 +90150,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Binds the following value to registry deletion and garbage-collection preparation.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -90211,9 +90211,9 @@
               "value": "REGISTRY_STORAGE_DELETE_ENABLED"
             },
             {
-              "blockerOwner": "GitOps platform configuration",
+              "blockerOwner": null,
               "changeImpact": "Controls whether clients can delete manifests before offline garbage collection.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -152216,9 +152216,9 @@
               "value": "<array>"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Controls whether LiteLLM loads the mounted platform configuration.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -152277,9 +152277,9 @@
               "value": "--config"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Selects the model, database, and provider configuration loaded by LiteLLM.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -152338,9 +152338,9 @@
               "value": "/app/config.yaml"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Controls whether the declared container and Service port match the LiteLLM listener.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -152399,9 +152399,9 @@
               "value": "--port"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Changes the process listener and must stay equal to the declared container and Service target port.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -152544,9 +152544,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Binds the following file path to Google Vertex AI authentication.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -152605,9 +152605,9 @@
               "value": "GOOGLE_APPLICATION_CREDENTIALS"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Selects the credential file used for Vertex AI requests.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -152708,9 +152708,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Binds the following Boolean-like string to LiteLLM database storage behavior.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -152769,9 +152769,9 @@
               "value": "STORE_MODEL_IN_DB"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Changes whether model configuration survives LiteLLM Pod replacement through PostgreSQL.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -192307,9 +192307,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Controls the storage root, deletion behavior, upload cleanup, logging, and clear-text listener used by the local lab registry.",
-              "closureCondition": "Link the exact the workload that reads ConfigMap/registry-local-config contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer v1/ConfigMap API field type",
                 "inner contract owned by the workload that reads ConfigMap/registry-local-config",
@@ -193717,9 +193717,9 @@
               "value": "<array>"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Starts the registry server rather than a maintenance subcommand.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -193778,9 +193778,9 @@
               "value": "serve"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Selects the storage and listener configuration used by the local registry.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -193923,9 +193923,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Binds the following value to trace-export behavior.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -193984,9 +193984,9 @@
               "value": "OTEL_TRACES_EXPORTER"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Prevents the lab registry from attempting to send traces to an undeclared collector.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -198866,9 +198866,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Binds the following URL to pull-through cache behavior.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -198927,9 +198927,9 @@
               "value": "REGISTRY_PROXY_REMOTEURL"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Changes the external registry contacted on a cache miss and the content namespace accepted by the mirror.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -199030,9 +199030,9 @@
               "value": "<object>"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Binds the following value to registry deletion and garbage-collection preparation.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
@@ -199091,9 +199091,9 @@
               "value": "REGISTRY_STORAGE_DELETE_ENABLED"
             },
             {
-              "blockerOwner": "maintained deployment profile",
+              "blockerOwner": null,
               "changeImpact": "Controls whether clients can delete manifests before offline garbage collection.",
-              "closureCondition": "Link the exact the selected container image and process entry point contract before presenting this embedded payload as a direct operator option.",
+              "closureCondition": null,
               "constraints": [
                 "outer apps/v1/Deployment API field type",
                 "inner contract owned by the selected container image and process entry point",
