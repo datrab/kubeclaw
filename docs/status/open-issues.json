@@ -643,7 +643,7 @@
         "Paperless",
         "Host/CRI rollback"
       ],
-      "current_state": "Cilium files are present in the current checkout. Their presence does not prove that a cluster migration or live policy enforcement occurred.",
+      "current_state": "The repository contains checked-in Cilium configuration. This does not prove that a cluster migration or live policy enforcement occurred.",
       "remaining_work": [
         "Inventory actual namespaces, pod/DaemonSet/storage/network dependencies, maintenance window and offline images/manifests.",
         "Prepare staged independent host rollback and saved CNI/K3s/network configuration before cutover."

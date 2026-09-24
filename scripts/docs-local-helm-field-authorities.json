@@ -13,7 +13,7 @@
         "charts/kubeclaw/templates/NOTES.txt": "9beb978bc26b4432f319992574860cce2fa041e5d3d5554415a59e2b6091a3cc",
         "charts/kubeclaw/templates/_demo-ready-client.tpl": "ac285eb2f3f3527bada6abc5338cf9b2d7c73b0518215281a8cbb614babe6536",
         "charts/kubeclaw/templates/_helpers.tpl": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103",
-        "charts/kubeclaw/templates/_registry-clients.tpl": "dc91957992207dca9fd5f49a9a8cb77740312dba5f3f33c1cedd61b10b05a86b",
+        "charts/kubeclaw/templates/_registry-clients.tpl": "7419b2dc94cacf93f15867249ce82fe02f62b6ea2b7df504103d527b561f2b46",
         "charts/kubeclaw/templates/_worker-trust-readiness.tpl": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c",
         "charts/kubeclaw/templates/archviewer.yaml": "ea2fd837e83597186582de852decb8f7163b48185965334d8366b061e1b4f391",
         "charts/kubeclaw/templates/buster-namespace-controller.yaml": "760a82838ffce8fbf2a29f17914a1395b5dbaac61b71742155e378f962ccaee3",
@@ -16143,7 +16143,7 @@
               "kind": "helm-template",
               "templateExpression": "{{- if and (empty $settings.dockerHubMirror.endpoint) (or $settings.dockerHubMirror.transport $settings.dockerHubMirror.caSecretName $settings.dockerHubMirror.nodeCaFile) -}}{{- fail \"disabled Docker Hub mirror requires empty endpoint, tran",
               "sourceLineSha256": "5676730831772bfc5a2456a551ec6ef769232474d8abffad94b8cde9050c797b",
-              "contextSha256": "3cffab52874cd6af05f3c58f1323a9af31511054366621c81a24656c86c6d0a0",
+              "contextSha256": "d564c8b936c5f4dc0f94007e370fd47a2b00e8b540ce282653445a8c2de8a8de",
               "receiver": "charts/kubeclaw/templates/deployment.yaml:1525 exact call site for Helm helper kubeclaw.registryContainer with root-context argument (dict \"root\" $ \"container\" .)",
               "receiverProof": [
                 {
@@ -16449,7 +16449,7 @@
               "kind": "helm-template",
               "templateExpression": "{{- if and (empty $settings.dockerHubMirror.endpoint) (or $settings.dockerHubMirror.transport $settings.dockerHubMirror.caSecretName $settings.dockerHubMirror.nodeCaFile) -}}{{- fail \"disabled Docker Hub mirror requires empty endpoint, tran",
               "sourceLineSha256": "5676730831772bfc5a2456a551ec6ef769232474d8abffad94b8cde9050c797b",
-              "contextSha256": "3cffab52874cd6af05f3c58f1323a9af31511054366621c81a24656c86c6d0a0",
+              "contextSha256": "d564c8b936c5f4dc0f94007e370fd47a2b00e8b540ce282653445a8c2de8a8de",
               "receiver": "charts/kubeclaw/templates/deployment.yaml:1525 exact call site for Helm helper kubeclaw.registryContainer with root-context argument (dict \"root\" $ \"container\" .)",
               "receiverProof": [
                 {
@@ -16690,7 +16690,7 @@
               "kind": "helm-template",
               "templateExpression": "{{- if and (empty $settings.dockerHubMirror.endpoint) (or $settings.dockerHubMirror.transport $settings.dockerHubMirror.caSecretName $settings.dockerHubMirror.nodeCaFile) -}}{{- fail \"disabled Docker Hub mirror requires empty endpoint, tran",
               "sourceLineSha256": "5676730831772bfc5a2456a551ec6ef769232474d8abffad94b8cde9050c797b",
-              "contextSha256": "3cffab52874cd6af05f3c58f1323a9af31511054366621c81a24656c86c6d0a0",
+              "contextSha256": "d564c8b936c5f4dc0f94007e370fd47a2b00e8b540ce282653445a8c2de8a8de",
               "receiver": "charts/kubeclaw/templates/deployment.yaml:1525 exact call site for Helm helper kubeclaw.registryContainer with root-context argument (dict \"root\" $ \"container\" .)",
               "receiverProof": [
                 {
@@ -16927,7 +16927,7 @@
               "kind": "helm-template",
               "templateExpression": "{{- if and (empty $settings.dockerHubMirror.endpoint) (or $settings.dockerHubMirror.transport $settings.dockerHubMirror.caSecretName $settings.dockerHubMirror.nodeCaFile) -}}{{- fail \"disabled Docker Hub mirror requires empty endpoint, tran",
               "sourceLineSha256": "5676730831772bfc5a2456a551ec6ef769232474d8abffad94b8cde9050c797b",
-              "contextSha256": "3cffab52874cd6af05f3c58f1323a9af31511054366621c81a24656c86c6d0a0",
+              "contextSha256": "d564c8b936c5f4dc0f94007e370fd47a2b00e8b540ce282653445a8c2de8a8de",
               "receiver": "charts/kubeclaw/templates/deployment.yaml:1525 exact call site for Helm helper kubeclaw.registryContainer with root-context argument (dict \"root\" $ \"container\" .)",
               "receiverProof": [
                 {
@@ -47579,7 +47579,7 @@
       }
     },
     "my-values/buster-values.yaml": {
-      "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1",
+      "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622",
       "chartRoot": "charts/kubeclaw",
       "fields": {
         "$.agent.git.enabled": {
@@ -47638,7 +47638,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agent.git.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -47679,7 +47679,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agent.git.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -47720,7 +47720,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agent.git.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -47761,7 +47761,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agent.git.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -47802,7 +47802,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agent.git.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -47843,7 +47843,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agent.git.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -47884,7 +47884,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agent.git.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -47925,7 +47925,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agent.git.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -47966,7 +47966,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agent.git.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -48020,7 +48020,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agent.git.repoUrl",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -48061,7 +48061,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agent.git.repoUrl",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -48127,7 +48127,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agent.git.secretName",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -48181,7 +48181,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agent.project",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -48222,7 +48222,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agent.project",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -48298,7 +48298,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -48505,7 +48505,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -48712,7 +48712,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49215,7 +49215,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49264,7 +49264,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49305,7 +49305,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49346,7 +49346,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49387,7 +49387,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49428,7 +49428,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49481,7 +49481,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49534,7 +49534,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49587,7 +49587,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49640,7 +49640,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49689,7 +49689,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49738,7 +49738,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49779,7 +49779,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49828,7 +49828,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49877,7 +49877,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49926,7 +49926,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -49975,7 +49975,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50016,7 +50016,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50069,7 +50069,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50122,7 +50122,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50175,7 +50175,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50228,7 +50228,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50281,7 +50281,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50334,7 +50334,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50375,7 +50375,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50416,7 +50416,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50465,7 +50465,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50514,7 +50514,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50573,7 +50573,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50626,7 +50626,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50667,7 +50667,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50716,7 +50716,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50765,7 +50765,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50813,7 +50813,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.agentRole",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -50874,7 +50874,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.auth.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50922,7 +50922,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.auth.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -50970,7 +50970,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.auth.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -51019,7 +51019,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.auth.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -51060,7 +51060,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.auth.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -51121,7 +51121,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.auth.existingSecretKey",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -51183,7 +51183,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedAccess[0].modes[0]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -51259,7 +51259,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedAccess[0].subject",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -51316,7 +51316,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedAccess[0].subject",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -51373,7 +51373,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedAccess[0].subject",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -51422,7 +51422,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedAccess[0].subject",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -51484,7 +51484,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedAccess[1].modes[0]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -51546,7 +51546,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedAccess[1].modes[1]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -51622,7 +51622,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedAccess[1].subject",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -51679,7 +51679,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedAccess[1].subject",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -51736,7 +51736,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedAccess[1].subject",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -51785,7 +51785,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedAccess[1].subject",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -51847,7 +51847,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedSourceSecrets[0]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -51888,7 +51888,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedSourceSecrets[0]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -51950,7 +51950,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedSourceSecrets[1]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -51991,7 +51991,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedSourceSecrets[1]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -52053,7 +52053,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedSourceSecrets[2]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -52094,7 +52094,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedSourceSecrets[2]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -52156,7 +52156,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedSourceSecrets[3]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -52197,7 +52197,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedSourceSecrets[3]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -52259,7 +52259,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedSourceSecrets[4]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -52300,7 +52300,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.allowedSourceSecrets[4]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -52354,7 +52354,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.image.pullPolicy",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -52399,7 +52399,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.image.repository",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -52431,7 +52431,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.image.repository",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -52476,7 +52476,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.controller.image.tag",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -52537,7 +52537,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -52578,7 +52578,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -52619,7 +52619,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -52660,7 +52660,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -52708,7 +52708,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterNamespaceBroker.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -52762,7 +52762,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterRuntimePersistence.claimName",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -52823,7 +52823,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterRuntimePersistence.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -52877,7 +52877,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterRuntimePersistence.size",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -52939,7 +52939,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.busterRuntimePersistence.storageClass",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -53005,7 +53005,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.codeBundle.archiveUrl",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -53059,7 +53059,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.codeBundle.auth.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -53100,7 +53100,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.codeBundle.auth.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -53166,7 +53166,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.codeBundle.auth.existingSecretKey",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -53232,7 +53232,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.codeBundle.contractVersion",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -53285,7 +53285,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.codeBundle.contractVersion",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -53374,7 +53374,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.codeBundle.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -53427,7 +53427,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.codeBundle.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -53493,7 +53493,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.codeBundle.expectedCommit",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -53546,7 +53546,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.codeBundle.expectedCommit",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -53600,7 +53600,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.commands.allowFromDiscord[0]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -53641,7 +53641,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.commands.allowFromDiscord[0]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -53682,7 +53682,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.commands.allowFromDiscord[0]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -53730,7 +53730,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.commands.allowFromDiscord[0]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -53784,7 +53784,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.commands.allowFromDiscord[1]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -53825,7 +53825,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.commands.allowFromDiscord[1]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -53866,7 +53866,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.commands.allowFromDiscord[1]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -53914,7 +53914,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.commands.allowFromDiscord[1]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -53968,7 +53968,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.commands.ownerAllowFrom[0]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -54034,7 +54034,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.channelId",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -54112,7 +54112,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -54144,7 +54144,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -54176,7 +54176,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -54217,7 +54217,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -54258,7 +54258,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -54307,7 +54307,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -54356,7 +54356,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -54397,7 +54397,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -54451,7 +54451,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.execApprovers[0]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -54519,7 +54519,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -54574,7 +54574,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -54629,7 +54629,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -54678,7 +54678,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -54719,7 +54719,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -54787,7 +54787,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discord.existingSecretKey",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -54853,7 +54853,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discordWebhook.secretKey",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -54906,7 +54906,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discordWebhook.secretKey",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -54960,7 +54960,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discordWebhook.secretName",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -55001,7 +55001,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discordWebhook.secretName",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -55042,7 +55042,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discordWebhook.secretName",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -55083,7 +55083,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.discordWebhook.secretName",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -55099,11 +55099,11 @@
           "selectedBaseline": "BUSTER_V2_TOKEN",
           "runtimeConsumerProof": [
             {
-              "path": "my-values/buster-values.yaml",
-              "line": 91,
-              "kind": "selected-image-runtime-boundary",
-              "environment": "BUSTER_V2_TOKEN",
-              "authority": "The repository proves injection but contains no non-Kubernetes reader. The selected container image owns parsing and validation."
+              "path": "docker/buster-runtime-entrypoint.sh",
+              "line": 4,
+              "kind": "checked-in-runtime-reader",
+              "access": "shell-parameter",
+              "environment": "BUSTER_V2_TOKEN"
             }
           ],
           "consumerProof": [
@@ -55145,7 +55145,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[0].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -55161,11 +55161,11 @@
           "selectedBaseline": "busterV2Token",
           "runtimeConsumerProof": [
             {
-              "path": "my-values/buster-values.yaml",
-              "line": 95,
-              "kind": "selected-image-runtime-boundary",
-              "environment": "BUSTER_V2_TOKEN",
-              "authority": "The repository proves injection but contains no non-Kubernetes reader. The selected container image owns parsing and validation."
+              "path": "docker/buster-runtime-entrypoint.sh",
+              "line": 4,
+              "kind": "checked-in-runtime-reader",
+              "access": "shell-parameter",
+              "environment": "BUSTER_V2_TOKEN"
             }
           ],
           "consumerProof": [
@@ -55207,7 +55207,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[0].valueFrom.secretKeyRef.key",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -55223,11 +55223,11 @@
           "selectedBaseline": "openclaw-shared-secrets",
           "runtimeConsumerProof": [
             {
-              "path": "my-values/buster-values.yaml",
-              "line": 94,
-              "kind": "selected-image-runtime-boundary",
-              "environment": "BUSTER_V2_TOKEN",
-              "authority": "The repository proves injection but contains no non-Kubernetes reader. The selected container image owns parsing and validation."
+              "path": "docker/buster-runtime-entrypoint.sh",
+              "line": 4,
+              "kind": "checked-in-runtime-reader",
+              "access": "shell-parameter",
+              "environment": "BUSTER_V2_TOKEN"
             }
           ],
           "consumerProof": [
@@ -55269,7 +55269,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[0].valueFrom.secretKeyRef.name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -55331,7 +55331,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[1].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -55393,7 +55393,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[1].valueFrom.secretKeyRef.key",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -55455,7 +55455,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[1].valueFrom.secretKeyRef.name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -55470,6 +55470,13 @@
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "BUSTER_TRUSTED_PEER_SPIFFE_ID",
           "runtimeConsumerProof": [
+            {
+              "path": "docker/buster-runtime-entrypoint.sh",
+              "line": 5,
+              "kind": "checked-in-runtime-reader",
+              "access": "shell-parameter",
+              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID"
+            },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
               "line": 174,
@@ -55524,7 +55531,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[2].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -55539,6 +55546,13 @@
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "spiffe://kubeclaw.internal/ns/kubeclaw/sa/agent-nova",
           "runtimeConsumerProof": [
+            {
+              "path": "docker/buster-runtime-entrypoint.sh",
+              "line": 5,
+              "kind": "checked-in-runtime-reader",
+              "access": "shell-parameter",
+              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID"
+            },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
               "line": 174,
@@ -55593,7 +55607,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[2].value",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -55655,7 +55669,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[3].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -55717,7 +55731,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[3].value",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -55779,7 +55793,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[4].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -55841,7 +55855,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[4].value",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -55903,7 +55917,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[5].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -55965,7 +55979,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[5].value",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56027,7 +56041,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[6].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56089,7 +56103,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[6].value",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56151,7 +56165,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[7].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56213,7 +56227,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[7].value",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56275,7 +56289,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[8].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56337,7 +56351,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[8].value",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56399,7 +56413,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[9].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56461,7 +56475,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[9].value",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56537,7 +56551,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[10].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56613,7 +56627,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[10].value",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56675,7 +56689,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[11].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56737,7 +56751,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[11].value",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56752,6 +56766,13 @@
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT",
           "runtimeConsumerProof": [
+            {
+              "path": "docker/buster-runtime-entrypoint.sh",
+              "line": 41,
+              "kind": "checked-in-runtime-reader",
+              "access": "shell-parameter",
+              "environment": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT"
+            },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
               "line": 292,
@@ -56799,7 +56820,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[12].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56814,6 +56835,13 @@
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "/var/run/kubeclaw-browser-cgroup",
           "runtimeConsumerProof": [
+            {
+              "path": "docker/buster-runtime-entrypoint.sh",
+              "line": 41,
+              "kind": "checked-in-runtime-reader",
+              "access": "shell-parameter",
+              "environment": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT"
+            },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
               "line": 292,
@@ -56861,7 +56889,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].env[12].value",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56915,7 +56943,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].image",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -56969,7 +56997,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].imagePullPolicy",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57023,7 +57051,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].livenessProbe.failureThreshold",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57077,7 +57105,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].livenessProbe.httpGet.path",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57131,7 +57159,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].livenessProbe.httpGet.port",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57185,7 +57213,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].livenessProbe.httpGet.scheme",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57239,7 +57267,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].livenessProbe.initialDelaySeconds",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57293,7 +57321,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].livenessProbe.periodSeconds",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57347,7 +57375,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].livenessProbe.timeoutSeconds",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57401,7 +57429,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -57442,7 +57470,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -57491,7 +57519,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57545,7 +57573,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].ports[0].containerPort",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57599,7 +57627,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].ports[0].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57653,7 +57681,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].ports[0].protocol",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57707,7 +57735,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].readinessProbe.failureThreshold",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57761,7 +57789,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].readinessProbe.httpGet.path",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57815,7 +57843,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].readinessProbe.httpGet.port",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57869,7 +57897,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].readinessProbe.httpGet.scheme",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57923,7 +57951,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].readinessProbe.initialDelaySeconds",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -57977,7 +58005,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].readinessProbe.periodSeconds",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58031,7 +58059,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].readinessProbe.timeoutSeconds",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58085,7 +58113,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].resources.limits.cpu",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58139,7 +58167,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].resources.limits.ephemeral-storage",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58193,7 +58221,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].resources.limits.memory",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58247,7 +58275,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].resources.requests.cpu",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58301,7 +58329,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].resources.requests.ephemeral-storage",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58355,7 +58383,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].resources.requests.memory",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58417,7 +58445,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].securityContext.allowPrivilegeEscalation",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58471,7 +58499,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].securityContext.appArmorProfile.type",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58525,7 +58553,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].securityContext.capabilities.add[0]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58579,7 +58607,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].securityContext.capabilities.add[1]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58633,7 +58661,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].securityContext.capabilities.add[2]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58687,7 +58715,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].securityContext.capabilities.add[3]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58741,7 +58769,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].securityContext.capabilities.drop[0]",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58803,7 +58831,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].securityContext.privileged",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58857,7 +58885,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].securityContext.runAsGroup",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58919,7 +58947,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].securityContext.runAsNonRoot",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -58973,7 +59001,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].securityContext.runAsUser",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59027,7 +59055,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].securityContext.seccompProfile.type",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59081,7 +59109,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].startupProbe.failureThreshold",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59135,7 +59163,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].startupProbe.httpGet.path",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59189,7 +59217,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].startupProbe.httpGet.port",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59243,7 +59271,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].startupProbe.httpGet.scheme",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59297,7 +59325,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].startupProbe.periodSeconds",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59351,7 +59379,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].startupProbe.timeoutSeconds",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59405,7 +59433,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].volumeMounts[0].mountPath",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59459,7 +59487,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].volumeMounts[0].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59513,7 +59541,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].volumeMounts[1].mountPath",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59567,7 +59595,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].volumeMounts[1].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59621,7 +59649,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].volumeMounts[2].mountPath",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59675,7 +59703,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].volumeMounts[2].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59737,7 +59765,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].volumeMounts[2].readOnly",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59791,7 +59819,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].volumeMounts[3].mountPath",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59845,7 +59873,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraContainers[0].volumeMounts[3].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59899,7 +59927,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[0].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -59953,7 +59981,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[0].persistentVolumeClaim.claimName",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60007,7 +60035,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[1].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60061,7 +60089,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[1].projected.defaultMode",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60115,7 +60143,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[1].projected.sources[0].serviceAccountToken.expirationSeconds",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60169,7 +60197,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[1].projected.sources[0].serviceAccountToken.path",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60223,7 +60251,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[1].projected.sources[1].configMap.items[0].key",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60277,7 +60305,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[1].projected.sources[1].configMap.items[0].path",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60331,7 +60359,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[1].projected.sources[1].configMap.name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60385,7 +60413,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[1].projected.sources[2].downwardAPI.items[0].fieldRef.apiVersion",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60439,7 +60467,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[1].projected.sources[2].downwardAPI.items[0].fieldRef.fieldPath",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60493,7 +60521,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[1].projected.sources[2].downwardAPI.items[0].path",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60547,7 +60575,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[2].hostPath.path",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60601,7 +60629,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[2].hostPath.type",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60655,7 +60683,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.extraVolumes[2].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60709,7 +60737,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.gateway.resources.limits.cpu",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60763,7 +60791,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.gateway.resources.limits.ephemeral-storage",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60817,7 +60845,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.gateway.resources.limits.memory",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60871,7 +60899,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.gateway.resources.requests.cpu",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60925,7 +60953,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.gateway.resources.requests.ephemeral-storage",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -60979,7 +61007,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.gateway.resources.requests.memory",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61040,7 +61068,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.gateway.startupDoctor.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -61081,7 +61109,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.gateway.startupDoctor.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61135,7 +61163,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.gateway.startupDoctor.nodeOptions",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61189,7 +61217,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.gateway.startupDoctor.resources.limits.cpu",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61243,7 +61271,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.gateway.startupDoctor.resources.limits.memory",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61297,7 +61325,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.gateway.startupDoctor.resources.requests.cpu",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61351,7 +61379,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.gateway.startupDoctor.resources.requests.memory",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61405,7 +61433,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.image.pullPolicy",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -61437,7 +61465,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.image.pullPolicy",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -61478,7 +61506,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.image.pullPolicy",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -61519,7 +61547,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.image.pullPolicy",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61564,7 +61592,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.image.repository",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -61596,7 +61624,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.image.repository",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61641,7 +61669,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.image.tag",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61703,7 +61731,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.imagePullSecrets[0].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -61744,7 +61772,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.imagePullSecrets[0].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61789,7 +61817,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.initSetup.resources.limits.cpu",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61834,7 +61862,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.initSetup.resources.limits.memory",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61879,7 +61907,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.initSetup.resources.requests.cpu",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61924,7 +61952,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.initSetup.resources.requests.memory",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -61992,7 +62020,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.litellm.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -62047,7 +62075,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.litellm.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -62102,7 +62130,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.litellm.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -62151,7 +62179,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.litellm.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -62192,7 +62220,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.litellm.existingSecret",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -62260,7 +62288,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.litellm.existingSecretKey",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -62314,7 +62342,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.resources.limits.cpu",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -62368,7 +62396,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.resources.limits.memory",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -62422,7 +62450,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.resources.requests.cpu",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -62476,7 +62504,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.resources.requests.memory",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -62546,7 +62574,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.service.extraPorts[0].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -62595,7 +62623,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.service.extraPorts[0].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -62644,7 +62672,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.service.extraPorts[0].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -62685,7 +62713,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.service.extraPorts[0].name",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -62755,7 +62783,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.service.extraPorts[0].port",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -62804,7 +62832,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.service.extraPorts[0].port",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -62845,7 +62873,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.service.extraPorts[0].port",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -62915,7 +62943,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.service.extraPorts[0].targetPort",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -62964,7 +62992,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.service.extraPorts[0].targetPort",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -63005,7 +63033,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.service.extraPorts[0].targetPort",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -63079,7 +63107,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.serviceAccount.automount",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -63132,7 +63160,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.serviceAccount.automount",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -63215,7 +63243,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.serviceAccount.create",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -63264,7 +63292,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.serviceAccount.create",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -63305,7 +63333,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.serviceAccount.create",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -63346,7 +63374,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.serviceAccount.create",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -63387,7 +63415,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.serviceAccount.create",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -63428,7 +63456,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.serviceAccount.create",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -63489,7 +63517,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workerTrust.spiffe.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -63538,7 +63566,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workerTrust.spiffe.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -63579,7 +63607,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workerTrust.spiffe.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -63620,7 +63648,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workerTrust.spiffe.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -63661,7 +63689,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workerTrust.spiffe.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -63702,7 +63730,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workerTrust.spiffe.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -63743,7 +63771,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workerTrust.spiffe.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -63784,7 +63812,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workerTrust.spiffe.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -63915,7 +63943,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workerTrust.spiffe.trustDomain",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -63976,7 +64004,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workspace.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -64017,7 +64045,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workspace.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -64058,7 +64086,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workspace.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -64099,7 +64127,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workspace.enabled",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -64161,7 +64189,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workspace.identity",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -64210,7 +64238,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workspace.identity",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -64272,7 +64300,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workspace.soul",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             },
             {
@@ -64321,7 +64349,7 @@
                 "path": "my-values/buster-values.yaml",
                 "fieldPath": "$.workspace.soul",
                 "kind": "overlay-selected-value",
-                "sourceSha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1"
+                "sourceSha256": "1daa6731298dbccdac67436925986ca5e919b9ff94c411118713db09507eb622"
               }
             }
           ]
@@ -74485,11 +74513,11 @@
           "selectedBaseline": "BUSTER_V2_TOKEN",
           "runtimeConsumerProof": [
             {
-              "path": "my-values/nova-values.yaml",
-              "line": 120,
-              "kind": "selected-image-runtime-boundary",
-              "environment": "BUSTER_V2_TOKEN",
-              "authority": "The repository proves injection but contains no non-Kubernetes reader. The selected container image owns parsing and validation."
+              "path": "docker/buster-runtime-entrypoint.sh",
+              "line": 4,
+              "kind": "checked-in-runtime-reader",
+              "access": "shell-parameter",
+              "environment": "BUSTER_V2_TOKEN"
             }
           ],
           "consumerProof": [
@@ -74547,11 +74575,11 @@
           "selectedBaseline": "busterV2Token",
           "runtimeConsumerProof": [
             {
-              "path": "my-values/nova-values.yaml",
-              "line": 124,
-              "kind": "selected-image-runtime-boundary",
-              "environment": "BUSTER_V2_TOKEN",
-              "authority": "The repository proves injection but contains no non-Kubernetes reader. The selected container image owns parsing and validation."
+              "path": "docker/buster-runtime-entrypoint.sh",
+              "line": 4,
+              "kind": "checked-in-runtime-reader",
+              "access": "shell-parameter",
+              "environment": "BUSTER_V2_TOKEN"
             }
           ],
           "consumerProof": [
@@ -74609,11 +74637,11 @@
           "selectedBaseline": "openclaw-shared-secrets",
           "runtimeConsumerProof": [
             {
-              "path": "my-values/nova-values.yaml",
-              "line": 123,
-              "kind": "selected-image-runtime-boundary",
-              "environment": "BUSTER_V2_TOKEN",
-              "authority": "The repository proves injection but contains no non-Kubernetes reader. The selected container image owns parsing and validation."
+              "path": "docker/buster-runtime-entrypoint.sh",
+              "line": 4,
+              "kind": "checked-in-runtime-reader",
+              "access": "shell-parameter",
+              "environment": "BUSTER_V2_TOKEN"
             }
           ],
           "consumerProof": [
