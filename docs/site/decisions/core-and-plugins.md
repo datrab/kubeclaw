@@ -160,7 +160,7 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Implementation.** Partial for the deployed guarantee. The isolated runner and native supervisor implementation exist. Kernel/resource containment remains conditional on a provisioned host and acceptance evidence.
 
-**Evidence.** [skills/common/plugin-runtime/foundation/isolation/runner.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/isolation/runner.ts), docs/architecture/security-model.md, [tests/verification/contracts/check-plugin-system-v2-isolation.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-isolation.mjs), [tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs).
+**Evidence.** [skills/common/plugin-runtime/foundation/isolation/runner.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/isolation/runner.ts), [security and trust architecture](../understand/security-and-trust.md), [tests/verification/contracts/check-plugin-system-v2-isolation.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-isolation.mjs), [tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs).
 
 **Supersession and related decisions.** A configured isolated runner can execute supported external packages. This does not permit arbitrary external code in-process. ADR-007 grants still apply inside isolation.
 
@@ -216,7 +216,7 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Evidence.** [skills/nova/core/telemetry/observer-delivery.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/telemetry/observer-delivery.ts), [skills/nova/core/telemetry/observers.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/telemetry/observers.ts), [skills/common/plugins/notification-observer/README.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugins/notification-observer/README.md), [tests/verification/contracts/check-plugin-system-v2-phase11.mts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-phase11.mts).
 
-**Supersession and related decisions.** The old requirement for a separate audit observer is retired; journal-derived audit is its replacement. The optional required-sink contract remains distinct from a mandate to reinstall that removed observer.
+**Supersession and related decisions.** The requirement for a separate audit observer is retired; journal-derived audit replaces it. The optional required-sink contract remains distinct from a mandate to reinstall that removed observer.
 
 ## ADR-012: Assemble exact role-specific runtime bundles
 

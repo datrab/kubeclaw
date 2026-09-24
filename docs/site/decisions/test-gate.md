@@ -7,7 +7,7 @@ Evidence: skills/buster/engine/test-gates/remote-plan-runtime.ts; contracts/pipe
 Applies to: pipeline test-gate architecture and provider contracts
 Last verified: 2026-09-15; no runtime or live test result is available
 
-These are the existing **D-001–D-119** decisions, not 119 new approvals. They are distinct from the review/remediation IDs D01–D16. The lasting rules and their reasons are retained here; the old design discussion and Testkube audit are not required reading. Broader ownership and security reasoning is in [Core and plugin decisions](core-and-plugins.md).
+These are the existing **D-001–D-119** decisions, not 119 new approvals. They are distinct from the review/remediation IDs D01–D16. This page contains the current rules, their reasons, and their recorded authority. Broader ownership and security reasoning is in [Core and plugin decisions](core-and-plugins.md).
 
 Each record below gives the source's actual approval state/date. No individual approver is named in the original. D-110–D-113 have no explicit acceptance label and remain **unconfirmed**, even though their connected implementation exists. D-109's historical label combines accepted and implemented; acceptance is retained while current implementation proof is assessed separately.
 

@@ -106,6 +106,10 @@ anonymous Buster and Prism requests, wrong-SVID requests, and forged
 forwarded-certificate headers. A positive result without its paired denial is
 incomplete.
 
+The registered live command does not use a test-double server or fabricated
+completion result. It creates cluster resources, waits for real SVID delivery,
+and sends requests through the deployed Envoy and application processes.
+
 This command creates temporary live-test resources. Inspect its final cleanup
 result and verify no uniquely named test Job or ServiceAccount remains. If the
 command is interrupted, list the exact resources by its retained identity and
@@ -130,6 +134,36 @@ A timeout before TLS is reachability. A TLS/SVID error is identity issuance or
 peer verification. An authenticated denial is the application allowlist. A
 successful wrong-identity request is a security incident: restrict the owning
 Service, retain evidence, and stop admission.
+
+Use the exact error code to select the first repair. Do not weaken a trust rule
+to remove an error.
+
+| Error code | Meaning | First repair |
+| --- | --- | --- |
+| `WORKER_TRUST_PEER_MISSING` | The verified forwarded-certificate header is absent or contains more than one certificate entry. | Inspect the destination Envoy ingress and confirm that traffic enters through it. |
+| `WORKER_TRUST_PEER_INVALID` | The header does not contain exactly one valid SPIFFE URI. | Inspect the verified certificate URI SAN and Envoy `SANITIZE_SET` output. |
+| `WORKER_TRUST_POLICY_INVALID` | The application allowlist is empty or contains an invalid SPIFFE ID. | Restore the exact expected identities before restarting the workload. |
+| `WORKER_TRUST_PEER_FORBIDDEN` | The authenticated SPIFFE ID is not in the application allowlist. | Compare the caller namespace and ServiceAccount with the configured identity. |
+| `WORKER_TRUST_PROXY_REQUIRED` | Worker Core received forwarded identity from a non-loopback address. | Route the request through the colocated Envoy listener. |
+| `REMOTE_TEST_GATE_SPIFFE_PROXY_NOT_LOOPBACK` | A remote-suite provider selected SPIFFE proxy authentication with a non-loopback endpoint. | Set that provider endpoint to its Nova loopback Envoy listener. |
+| `NOVA_REMOTE_PLAN_SPIFFE_PROXY_NOT_LOOPBACK` | The Nova remote-plan transport selected SPIFFE proxy authentication with a non-loopback endpoint. | Use `http://127.0.0.1:28891` for the Buster plan route. |
+| `BUSTER_REMOTE_SPIFFE_POLICY_INVALID` | Buster has no valid trusted Nova SPIFFE ID. | Restore the exact Nova identity in the Buster policy. |
+| `NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_MISSING` | Nova did not receive the source-attestation private key. | Inspect the `pipeline-test-gate-source-attestation` Secret reference and its `privateKey` key. |
+| `NOVA_SOURCE_ATTESTATION_PRIVATE_KEY_INVALID` | Nova cannot parse the private key or the key is not Ed25519. | Replace the complete Ed25519 keypair and restart both key consumers in the maintenance window. |
+| `BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY_MISSING` | Buster did not receive the source-attestation public key. | Inspect the same Secret reference and its `publicKey` key. |
+| `BUSTER_SOURCE_ATTESTATION_CONFIG_INVALID` | Buster cannot parse an Ed25519 public key, or its trusted source authority is invalid. | Compare the public key and authority with Nova's active signer configuration. |
+| `BUSTER_SOURCE_ATTESTATION_INVALID` | The received source snapshot does not pass signature, authority, or content verification. | Stop execution. Compare the selected revisions, authority, archive digest, and active keypair before retrying. |
+
+The two loopback errors are separate because the plugin adapter and the Nova
+transport validate different configuration boundaries. Both reject a remote
+URL before any request can claim SPIFFE proxy authentication.
+
+> **Source evidence — failures are deliberate admission stops**
+>
+> **Implementation:** [Worker Core identity failures](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/worker/core/worker/trust.ts#L17-L51) ·
+> [remote-suite endpoint check](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/nova/plugins/remote-test-gate/src/adapter.ts#L46-L61) ·
+> [Nova transport endpoint check](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/nova/core/test-gates/remote-dispatch.ts#L109-L132) ·
+> [Nova private-key checks](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/nova/core/test-gates/runtime-config.ts#L51-L68).
 
 ### Recovery, rotation boundary, and evidence
 

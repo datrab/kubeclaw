@@ -35,6 +35,7 @@ Generated pages can be committed afterward, so their commit is intentionally dif
 | `platform-surfaces.json` | Charts, manifests, runtime source, deployment profiles, and platform configuration | Components, endpoints, stores, events, telemetry, dependencies, ingress routes, runtime services, and optional platform systems | Endpoint, configuration-source, architecture, and operator guidance |
 | `plugin-system.json` | Installed plugin manifests, registrations, schemas, and maintained plugin guidance | Plugin packages, registrations, roles, capabilities, schemas, and catalogue ownership | Plugin catalogue and operator plugin guide |
 | `operator-tasks.json` | Published operator pages and their maintained command contracts | Task prerequisites, commands, success checks, failure paths, rollback, and safety links | Operator navigation and task validation |
+| `documentation-tree.json` | Every file below `docs/`, its location, and executable consumers | Canonical reader, internal input, legacy extraction, or deletable-remainder classification | Documentation-tree boundary and AP10 deletion preparation |
 
 ## Generate And Check
 
@@ -46,6 +47,7 @@ npm run docs:inventory:config
 npm run docs:inventory:local-helm
 npm run docs:ap09:platform-inventory
 npm run docs:operator-tasks:generate
+npm run docs:tree:generate
 npm run docs:generate
 npm run docs:publication:generate
 ```
@@ -58,6 +60,7 @@ npm run docs:inventory:config:check
 npm run docs:inventory:local-helm:check
 npm run docs:ap09:platform-inventory:check
 npm run docs:operator-tasks:check
+npm run docs:tree:check
 npm run docs:generate:check
 npm run docs:publication:check
 npm run docs:check:refs

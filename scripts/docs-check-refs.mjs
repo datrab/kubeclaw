@@ -35,7 +35,7 @@ const historicalRepoRefDocs = new Set([
   'docs/DOCUMENTATION_PLAN.md',
   'docs/DOCUMENTATION_REBUILD_PLAN.md',
   'docs/DOCUMENTATION_TARGET_PAGE_LIST.md',
-  'docs/ROADMAP.md',
+  'docs/_legacy-source/ROADMAP.md',
   'docs/future-implementation-ideas.md',
   'docs/open-issues.md',
   'docs/architecture/pipeline-test-gate-unit-baseline.md',
@@ -68,7 +68,8 @@ function walk(dir, predicate = () => true) {
 
 function docsToScan() {
   return walk(docsRoot, (filePath) => filePath.endsWith('.md')).filter((filePath) => {
-    return !rel(filePath).startsWith('docs/archive/');
+    return !rel(filePath).startsWith('docs/archive/')
+      && !rel(filePath).startsWith('docs/_legacy-source/');
   });
 }
 
@@ -339,7 +340,7 @@ if (errors.length) {
   console.error('docs reference check failed:');
   for (const error of errors) console.error(`- ${error}`);
   console.error('');
-  console.error('Intentional exclusions: docs/archive/**, fenced code blocks, external URLs, globs, placeholders, and generated example data are not treated as source-path claims.');
+  console.error('Intentional exclusions: docs/archive/**, docs/_legacy-source/**, fenced code blocks, external URLs, globs, placeholders, and generated example data are not treated as source-path claims.');
   process.exit(1);
 }
 

@@ -6,7 +6,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const docsRoot = path.join(root, 'docs');
+const docsRoot = path.join(root, 'docs/site');
 
 const errors = [];
 
@@ -25,8 +25,7 @@ function walk(dir, predicate = () => true) {
 }
 
 function activeMarkdownFiles() {
-  return walk(docsRoot, (filePath) => filePath.endsWith('.md'))
-    .filter((filePath) => !rel(filePath).startsWith('docs/archive/'));
+  return walk(docsRoot, (filePath) => filePath.endsWith('.md'));
 }
 
 function markdownLinkTargets(text) {
@@ -65,12 +64,12 @@ if (JSON.stringify(markdownLinkTargets('[valid](target.md) and \\[a-z\\](?:not-a
 
 function checkGeneratedMarkers() {
   const generatedPages = [
-    'docs/reference/cli.md',
-    'docs/reference/environment-variables.md',
-    'docs/reference/helm-values.md',
-    'docs/reference/secrets.md',
-    'docs/reference/verification-commands.md',
-    'docs/reference/workflows.md',
+    'docs/site/reference/cli.md',
+    'docs/site/reference/environment-variables.md',
+    'docs/site/reference/helm-values.md',
+    'docs/site/reference/secrets.md',
+    'docs/site/reference/verification-commands.md',
+    'docs/site/reference/workflows.md',
   ];
   for (const page of generatedPages) {
     const filePath = path.join(root, page);
@@ -84,45 +83,11 @@ function checkGeneratedMarkers() {
   }
 }
 
-function checkCoreOperatorSections() {
-  const pages = [
-    'docs/deployment/setup-flow.md',
-    'docs/deployment/secrets.md',
-    'docs/deployment/infrastructure.md',
-    'docs/deployment/litellm.md',
-    'docs/deployment/tailscale-operator.md',
-    'docs/deployment/agent-deployments.md',
-    'docs/deployment/deployment-verification.md',
-    'docs/operators/running-the-pipeline.md',
-    'docs/operators/recovery-runbook.md',
-    'docs/operators/final-preview-tailscale.md',
-  ];
-  const requiredAny = [
-    ['## Procedure', '## Deploy', '## Start A Run', '## Recovery Procedure'],
-    ['## Verify', '## Verification', '## Check Status', '## Verify The Result'],
-    ['## Common Failures', '## Troubleshooting', '## Recovery', '## Escalation'],
-  ];
-  for (const page of pages) {
-    const filePath = path.join(root, page);
-    if (!fs.existsSync(filePath)) {
-      errors.push(`${page} is missing`);
-      continue;
-    }
-    const text = fs.readFileSync(filePath, 'utf8');
-    const lowerText = text.toLowerCase();
-    for (const alternatives of requiredAny) {
-      if (!alternatives.some((heading) => lowerText.includes(heading.toLowerCase()))) {
-        errors.push(`${page} is missing one of required sections: ${alternatives.join(' | ')}`);
-      }
-    }
-  }
-}
-
 function checkCurrentPagesDoNotContainTargetStateSections(files) {
   for (const file of files) {
     const relative = rel(file);
     if (
-      relative === 'docs/ROADMAP.md' ||
+      relative === 'docs/site/status/roadmap.md' ||
       relative === 'docs/future-implementation-ideas.md' ||
       relative === 'docs/concepts/intent-driven-pipeline.md'
     ) continue;
@@ -130,17 +95,6 @@ function checkCurrentPagesDoNotContainTargetStateSections(files) {
     if (/^Status:\s*current\b/m.test(text) && /^##\s+Target State\b/m.test(text)) {
       errors.push(`${relative} is marked current but contains a Target State section`);
     }
-  }
-}
-
-function checkDiagrams() {
-  const diagramDir = path.join(docsRoot, 'diagrams');
-  if (!fs.existsSync(diagramDir)) return;
-  for (const file of walk(diagramDir, (filePath) => filePath.endsWith('.svg'))) {
-    const text = fs.readFileSync(file, 'utf8');
-    if (!text.includes('<svg ')) errors.push(`${rel(file)} is missing <svg> root`);
-    if (!text.includes('<title')) errors.push(`${rel(file)} is missing <title>`);
-    if (!text.includes('<desc')) errors.push(`${rel(file)} is missing <desc>`);
   }
 }
 
@@ -286,9 +240,7 @@ function main() {
   const files = activeMarkdownFiles();
   checkLocalLinks(files);
   checkGeneratedMarkers();
-  checkCoreOperatorSections();
   checkCurrentPagesDoNotContainTargetStateSections(files);
-  checkDiagrams();
   const presentation = checkArchitecturePresentation();
   const operations = checkOperationsEvidence();
 

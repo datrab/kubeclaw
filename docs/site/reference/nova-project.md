@@ -287,6 +287,21 @@ contracts and grants only. A successful run is not by itself human acceptance.
 | `PROJECT_DEMO_*` | Demo fields or the required provider-link chain are invalid. |
 | `PROJECT_BASELINE_CHANGED`, `PROJECT_REPOSITORY_DIRTY` | New-run source no longer matches the declared clean baseline. |
 | `PROJECT_RECOVERY_*`, `RECOVERY_GRAPH_DIGEST_MISMATCH` | Supplied project cannot reconstruct the pinned graph. Use the original input. |
+| `LEGACY_A11Y_THRESHOLDS_RETIRED` | A project uses numeric accessibility thresholds instead of explicit rule, route, selector, reason, and expiry acceptances. Replace the threshold with the required acceptance records. |
+| `LEGACY_A11Y_TIMEOUT_INVALID` | The earlier accessibility timeout is not a positive integer. Move the supported timeout to the provider node and use a valid bounded value. |
+| `LEGACY_PERF_CONFIGURATION_RETIRED` | A project uses the earlier performance block or has no explicit `kubeclaw.lighthouse@1` node. Define named Lighthouse profiles and budgets in `.swarm/pipeline.json`. |
+| `LEGACY_VISUAL_CONFIGURATION_RETIRED` | A project uses the earlier visual block or has no explicit `kubeclaw.visual@1` node. Define reviewed baseline, profile, and provider nodes in `.swarm/pipeline.json`. |
+| `LEGACY_E2E_CONFIGURATION_RETIRED` | A project uses the earlier end-to-end block or has no explicit `kubeclaw.playwright@1` node. Add a project-owned Playwright configuration and an explicit provider node. |
+| `LEGACY_SECURITY_CONFIGURATION_RETIRED` | A project uses one combined security block. Define the five explicit security provider nodes so each decision has its own evidence and policy. |
+
+These diagnostics stop project scaffolding before provider execution. Repeating
+the command with unchanged input produces the same stop. Correct the project
+definition; do not disable the check.
+
+> **Source evidence — unsupported project shapes fail at discovery**
+>
+> **Implementation:** [accessibility and performance guards](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L269-L403) ·
+> [visual, end-to-end, and security guards](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/skills/nova/project_setup/tools/progress-scaffold-discovery.ts#L403-L413).
 
 > **Source evidence — compiler contract**
 >

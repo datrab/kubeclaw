@@ -4,12 +4,13 @@
   "provider":"kubeclaw.tailscale-exposure@1",
   "projectSchema":"skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
   "canonicalConfigurationReferences":["docs/site/reference/buster-provider-configuration.md","docs/site/reference/buster-runtime-configuration.md"],
+  "suiteSection":"5. Tailscale Exposure Suite",
   "documents":{
-    "userGuide":"docs/architecture/pipeline-test-gate-tailscale-exposure-user-guide.md",
-    "operatorGuide":"docs/architecture/pipeline-test-gate-tailscale-exposure-operator-guide.md",
-    "configurationReference":"docs/architecture/pipeline-test-gate-tailscale-exposure-configuration-reference.md",
-    "errorReference":"docs/architecture/pipeline-test-gate-tailscale-exposure-error-reference.md",
-    "securityModel":"docs/architecture/pipeline-test-gate-tailscale-exposure-security-model.md"
+    "userGuide":"docs/site/reference/buster-suites.md",
+    "operatorGuide":"docs/site/reference/buster-suites.md",
+    "configurationReference":"docs/site/reference/buster-provider-configuration.md",
+    "errorReference":"docs/site/reference/buster-error-codes.md",
+    "securityModel":"docs/site/reference/buster-suites.md"
   },
   "operatorFields":["kubectlExecutable","controllerNamespace","leaseApiGroup","leaseApiVersion","allowedNamespacePrefixes","allowedHostSuffixes","maximumExecutionMs","pollIntervalMs"],
   "sourceFilesWithErrors":["skills/buster/plugins/tailscale-exposure/src/provider.js","skills/buster/engine/test-gates/tailscale-exposure-runtime.ts"],

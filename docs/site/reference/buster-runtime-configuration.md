@@ -353,19 +353,24 @@ production credential path.
 ### HTTP and shared network: `network.http`
 
 `networkHttp` is required when `network.http` is allowed.
+Its nested field names are `allowedOrigins[]`, `allowedHostSuffixes[]`,
+`allowedPorts[]`, `allowedMethods[]`, `allowedRequestHeaders[]`,
+`maximumRequestBytes`, `maximumResponseBytes`, `maximumExecutionMs`,
+`allowWebSocket`, and `registryHealth`. The table uses fully qualified names so
+that a reader cannot confuse these fields with fields in another policy object.
 
 | Field | Required/default | Meaning |
 | --- | --- | --- |
-| `allowedOrigins[]` | Default empty; maximum 32 | Exact direct origins permitted by operator policy. |
-| `allowedHostSuffixes[]` | Default empty; maximum 32 | Permitted target suffixes, normally for internal services. |
-| `allowedPorts[]` | Required; 1–32 unique integers, range 1–65535 | Target ports. |
-| `allowedMethods[]` | Default `GET`, `HEAD`; when present 1–32 strings | Methods exposed by the capability. The runtime rejects names outside its supported method set. |
-| `allowedRequestHeaders[]` | Optional; 1–32 strings | Request headers that providers can send. |
-| `maximumRequestBytes` | Defaults to `maximumResponseBytes` | Request body and WebSocket message limit. |
-| `maximumResponseBytes` | Required | Response-body limit. |
-| `maximumExecutionMs` | Required | One network operation limit. |
-| `allowWebSocket` | Default `false` | Enables WebSocket operations for providers such as API flow. |
-| `registryHealth` | Optional; exact `true` | Adds the configured container registry as a health target. It requires `containerBuild`. |
+| `networkHttp.allowedOrigins[]` | Default empty; maximum 32 | Exact direct origins permitted by operator policy. |
+| `networkHttp.allowedHostSuffixes[]` | Default empty; maximum 32 | Permitted target suffixes, normally for internal services. |
+| `networkHttp.allowedPorts[]` | Required; 1–32 unique integers, range 1–65535 | Target ports. |
+| `networkHttp.allowedMethods[]` | Default `GET`, `HEAD`; when present 1–32 strings | Methods exposed by the capability. The runtime rejects names outside its supported method set. |
+| `networkHttp.allowedRequestHeaders[]` | Optional; 1–32 strings | Request headers that providers can send. |
+| `networkHttp.maximumRequestBytes` | Defaults to `maximumResponseBytes` | Request body and WebSocket message limit. |
+| `networkHttp.maximumResponseBytes` | Required | Response-body limit. |
+| `networkHttp.maximumExecutionMs` | Required | One network operation limit. |
+| `networkHttp.allowWebSocket` | Default `false` | Enables WebSocket operations for providers such as API flow. |
+| `networkHttp.registryHealth` | Optional; exact `true` | Adds the configured container registry as a health target. It requires `containerBuild`. |
 
 An empty origin and suffix policy does not mean open network access. A target
 can also arrive through a typed fixture input whose authority the runner checks.

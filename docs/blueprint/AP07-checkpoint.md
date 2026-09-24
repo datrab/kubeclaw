@@ -140,7 +140,7 @@ This follow-up made these corrections:
 - The retirement procedure treats teardown commands as alternative scopes. It states that broad `teardown` deletes every remaining application-namespace PVC.
 - The operations entry records current tool inputs and states that Kubernetes and K3s have no accepted compatibility range.
 - Every operations evidence box uses the required evidence fields. The checker now rejects missing fields and the four corrected command hazards.
-- [IFR-01-001](../site/status/open-issues.md#ifr-01-001) and the [roadmap](../ROADMAP.md#automated-host-bootstrap-and-recovery) now require automated, idempotent host bootstrap and recovery preparation from an empty supported host.
+- [IFR-01-001](../site/status/open-issues.md#ifr-01-001) and the [roadmap](../site/status/roadmap.md#automated-host-bootstrap-and-recovery) now require automated, idempotent host bootstrap and recovery preparation from an empty supported host.
 
 The follow-up ran the project compiler, platform configuration, and deployment truth checks successfully.
 The Prism command check failed because its canonical-schema assertion does not match the current source.

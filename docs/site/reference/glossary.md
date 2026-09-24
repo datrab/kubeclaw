@@ -4,7 +4,7 @@ Status: implemented for the architecture track
 Audience: all readers
 Owner: documentation
 Evidence: docs/site/understand/components-and-authority.md; docs/site/understand/request-state-recovery.md; docs/site/understand/deployment-and-trust.md
-Applies to: current documentation
+Applies to: KubeClaw platform terminology
 Last verified: 2026-09-15
 
 ## Purpose

@@ -129,7 +129,7 @@ failure run that proves exact rollback and leaves no unidentified resource.
 
 ## Promotion Rule
 
-Move an item into current documentation only when implementation exists. At least
+Move an item from planned to delivered status only when implementation exists. At least
 one proof from the following list must also exist:
 
 - source and tests prove the behavior;

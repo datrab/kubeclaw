@@ -7,7 +7,7 @@ conditions.
 
 Use `kubeclaw.visual-baselines.v2`; v1 requires an explicitly reviewed recapture.
 The exact browser version must match before pixel comparison. See the
-[upgrade procedure](../../../../docs/architecture/pipeline-test-gate-visual-operator-guide.md).
+[Visual suite reference](../../../../docs/site/reference/buster-suites.md#9-visual-suite).
 
 The provider uses the brokered `browser.visual` capability. It cannot start a
 browser or access the network directly. Operator policy controls origins,

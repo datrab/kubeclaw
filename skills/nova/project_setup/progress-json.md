@@ -329,7 +329,7 @@ Without `thresholds` → informational (always PASS). With `thresholds` → enfo
 Security configuration is not accepted through `test_suites` or `test_config`.
 Declare the header, dependency, image, static Kubernetes, and runtime Kubernetes
 providers explicitly. See
-`docs/architecture/pipeline-test-gate-security-user-guide.md`.
+`docs/site/reference/buster-suites.md#11-security-suite`.
 
 Bundle limits are not a current legacy suite configuration. Project setup
 migrates an existing `bundle` selection only when `bundle.www_dir` names the
@@ -338,7 +338,7 @@ build output. It writes a direct-command archive producer and a
 
 Unit tests are not a legacy `test_suites` value. Declare them as normal test
 nodes in `.swarm/pipeline.json`. See
-`docs/architecture/pipeline-test-gate-unit-user-guide.md` for complete JUnit,
+`docs/site/reference/buster-suites.md#1-unit-suite` for complete JUnit,
 exit-code, multi-instance, advisory, and coverage examples.
 
 Visual-reg baseline files are not configured by path. Buster derives them from module identity at `.swarm/modules/<module-dir>/baselines/`; place Prism `preview.html`, generated `paths.json`, and baseline PNGs there.
@@ -359,7 +359,7 @@ the retained namespace when its bounded retention period expires.
 Secret references must appear in both operator allowlists. The provider and the
 namespace controller reject other Secret names.
 
-See `docs/architecture/pipeline-test-gate-kubernetes-fixture-configuration-reference.md`
+See `docs/site/reference/buster-suites.md#3-kubernetes-fixture-suite`
 for the complete configuration and typed input contract. Preview exposure is a
 separate suite concern. Do not put preview settings in the fixture node.
 

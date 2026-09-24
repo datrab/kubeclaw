@@ -141,9 +141,9 @@ Seit diesem Punkt betreffen main-Änderungen neun Dokumentationspfade:
 
 | Änderung | Pfade |
 | --- | --- |
-| Geändert | `README.md`, `docs/architecture/ops-pod.md`, `docs/deployment/README.md`, `docs/generated/inventory/workflows.json`, `docs/ops/ops-pod.md`, `docs/reference/workflows.md` |
+| Geändert | `README.md`, `docs/_legacy-source/architecture/ops-pod.md`, `docs/_legacy-source/deployment/README.md`, `docs/generated/inventory/workflows.json`, `docs/_legacy-source/ops/ops-pod.md`, `docs/_legacy-source/reference/workflows.md` |
 | Entfernt | [Historische ChatGPT-Ops-Anleitung](https://github.com/datrab/kubeclaw/blob/6979bced8e5bbca90568276256e7328d93a1e072/docs/ops/chatgpt-ops-bootstrap.md) |
-| Neu | `docs/deployment/continuous-gitops.md`, `gitops/platform/README.md` |
+| Neu | `docs/_legacy-source/deployment/continuous-gitops.md`, `gitops/platform/README.md` |
 
 Hinzu kommen geänderte technische Belege: Ops-Pod-Supervisor/RBAC/Kubeconfig,
 GitOps-Installation/Promote/Rollback, Workflow-/Versionsquellen und neue

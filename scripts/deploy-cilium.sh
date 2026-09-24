@@ -8,7 +8,7 @@ for command in helm kubectl python3; do command -v "$command" >/dev/null || { ec
 case "$MODE" in
   install)
     # Check on EVERY attempt, including retries after a failed Helm release.
-    [[ "${CILIUM_K3S_READY:-false}" == true ]] || { echo 'Complete the host preflight in docs/ops/cilium-networking.md; set CILIUM_K3S_READY=true.' >&2; exit 2; }
+    [[ "${CILIUM_K3S_READY:-false}" == true ]] || { echo 'Complete the host and CNI preflight in docs/site/use/install.md; set CILIUM_K3S_READY=true.' >&2; exit 2; }
     command -v k3s >/dev/null || { echo 'Run the initial cutover on the K3s host with CRI access.' >&2; exit 2; }
     kubectl get nodes -o json | python3 -c 'import json,sys; n=json.load(sys.stdin)["items"]; assert len(n)==1 and n[0]["spec"].get("unschedulable"), "Initial cutover requires exactly one cordoned node"'
     # Network namespace mode NODE=2 is hostNetwork. No old ready ordinary sandbox
@@ -49,7 +49,7 @@ The node is still cordoned. Before uncordon:
   * Verify agent policy import and endpoint realization; run the migration verifier.
   * Paperless alone has an owner-approved temporary baseline exemption.
 Then uncordon deliberately, check all recreated pods and run the pipeline/Paperless
-and negative connectivity checks in docs/ops/cilium-networking.md. Check Relay/UI
+and negative connectivity checks described in docs/site/use/install.md. Check Relay/UI
 readiness only after scheduling resumes. Create the cutover marker only after
 those tests and legacy cleanup have passed. A failed run leaves the node cordoned.
 MSG

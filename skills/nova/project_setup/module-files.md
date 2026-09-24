@@ -130,7 +130,7 @@ File names, cleanup rules, dev dependencies.
 
 ## test-spec.json
 
-> **Current format:** The legacy format shown later in this section is retained only to explain rejected input. New and migrated projects must use `kubeclaw.api-flow.v1`. Project setup stops with `LEGACY_API_SPEC_VERSION_RETIRED` when it reads the historical format. See the [API user guide](../../../docs/architecture/pipeline-test-gate-api-user-guide.md) and [configuration reference](../../../docs/architecture/pipeline-test-gate-api-configuration-reference.md).
+> **Current format:** The legacy format shown later in this section is retained only to explain rejected input. New and migrated projects must use `kubeclaw.api-flow.v1`. Project setup stops with `LEGACY_API_SPEC_VERSION_RETIRED` when it reads the historical format. See the [API suite](../../../docs/site/reference/buster-suites.md#6-api-suite) and [provider configuration](../../../docs/site/reference/buster-provider-configuration.md#kubeclawapi-flow1).
 
 ```json
 {
@@ -246,7 +246,7 @@ Do not put `visual-reg` in `test_suites` or `test_config`. Those fields are reti
 
 The node requires a reviewed `kubeclaw.visual-baselines.v2` manifest, a shared `kubeclaw.browser-profiles.v1` profile file, and digest-bound PNG images. Select each route/profile pair by its manifest ID. The provider rejects missing files, path escape, digest mismatch, and capture identity mismatch.
 
-Baseline generation is a separate trusted workflow. Test execution never updates baseline files. Review a candidate and its difference evidence, approve it through the durable human gate, then apply all PNG and manifest digest changes in one commit. See the [visual user guide](../../../docs/architecture/pipeline-test-gate-visual-user-guide.md).
+Baseline generation is a separate trusted workflow. Test execution never updates baseline files. Review a candidate and its difference evidence, approve it through the durable human gate, then apply all PNG and manifest digest changes in one commit. See the [Visual suite reference](../../../docs/site/reference/buster-suites.md#9-visual-suite).
 
 Authentication belongs in the typed deployment contract. Do not add query-string bypasses or credentials to visual URLs.
 

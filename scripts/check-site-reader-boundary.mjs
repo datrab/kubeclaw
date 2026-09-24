@@ -52,6 +52,12 @@ const forbiddenText = [
   [/\bA9(?:7|8|9|10|11|12|13)-\d+\b/gu, 'internal acceptance identifier'],
   [/\bEXEC-[A-Z0-9-]+\b/gu, 'internal execution-fixture identifier'],
   [/\bcurrent documentation branch\b/giu, 'temporary documentation-branch language'],
+  [/\bthe retained source\b|\b(?:original|old|legacy) documentation\b|\bthe old design discussion\b/giu, 'documentation provenance language'],
+  [/\b(?:earlier|previous) branch(?:-only)? (?:evidence|status)\b/giu, 'temporary branch-history language'],
+  [/\breplace(?:s|d)? older candidate shapes\b/giu, 'documentation transformation language'],
+  [/\b(?:old|older) (?:candidate list|requirement|repository production verifier|startup\/runbook statements|prose)\b/giu, 'historical transformation language'],
+  [/\bpast task counts\b|\b\d+ remaining\b/giu, 'temporary task-tracking language'],
+  [/\b(?:review said|as per (?:the )?review|according to (?:the )?review)\b/giu, 'review-provenance language'],
   [/\b(?:documentation|source) migration\b/giu, 'documentation migration language'],
   [/\bdocumentation (?:review|verification|recheck|check)s?\b/giu, 'documentation-workflow language'],
   [/\bsource inspection\b/giu, 'source-inspection bookkeeping'],
@@ -105,6 +111,13 @@ function assertNegativeFixtures() {
     ['ledger ID', 'Commands C023 and C079 failed.', 'internal command-ledger identifier'],
     ['workflow prose', 'A documentation verification run passed.', 'documentation-workflow language'],
     ['inspection prose', 'Source inspection only.', 'source-inspection bookkeeping'],
+    ['retained source prose', 'The retained source gives no approval date.', 'documentation provenance language'],
+    ['old design prose', 'The old design discussion is not required.', 'documentation provenance language'],
+    ['branch-history prose', 'Earlier branch-only status no longer applies.', 'temporary branch-history language'],
+    ['shape-replacement prose', 'This replaces older candidate shapes.', 'documentation transformation language'],
+    ['historical transformation prose', 'The old candidate list is obsolete.', 'historical transformation language'],
+    ['task-count prose', 'Past task counts are not authoritative.', 'temporary task-tracking language'],
+    ['review-provenance prose', 'As per the review, use this value.', 'review-provenance language'],
   ];
   for (const [name, text, expected] of fixtures) {
     if (!findViolations(text).some(item => item.description === expected)) {

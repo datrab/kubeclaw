@@ -25,7 +25,7 @@ and linked source.
 ## Preserve history without retaining parallel implementations
 
 Integrate intended changes into the primary branch even when live acceptance remains open.
-Inspect each conflict and keep the current intended implementation. Git parents preserve the earlier branch evidence.
+Inspect each conflict and keep the current intended implementation. Git parents preserve the integrated history.
 A backup branch is not proof that its changes are integrated.
 
 Before remote deletion, read the current ref SHA and prove reachability from published main.

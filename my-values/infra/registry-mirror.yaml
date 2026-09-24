@@ -5,7 +5,7 @@
 # Set runtimeInfrastructure.dockerHubMirror explicitly for BuildKit and generate
 # node configuration separately. GHCR/private registries are not mirrored here.
 # Cache hits/misses and upstream availability need actual client verification.
-# See docs/operations/registry-clients.md.
+# See docs/site/understand/platform-and-operations.md#writable-local-oci-registry.
 #
 # Deploy: kubectl apply -n kubeclaw -f registry-mirror.yaml
 # =============================================================================

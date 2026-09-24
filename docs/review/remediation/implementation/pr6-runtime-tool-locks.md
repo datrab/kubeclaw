@@ -54,5 +54,5 @@ The attempted Playwright CDN downloads returned 195-byte HTML error pages.
 They were not accepted as browser binaries or committed as archive identities.
 The experimental browser download wrapper was removed. No complete Docker image,
 browser launch, ARM64 runtime or deployed acceptance is claimed here. The
-[operating contract](../../../operations/runtime-versions-and-images.md#rebuild-contract-and-remaining-inputs)
+[historical operating contract](../../../_legacy-source/operations/runtime-versions-and-images.md#rebuild-contract-and-remaining-inputs)
 describes those remaining inputs and the exact local reproduction commands.

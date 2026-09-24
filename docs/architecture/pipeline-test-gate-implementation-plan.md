@@ -2,7 +2,7 @@
 
 Status: approved sequence; Phase 7 complete after corrected implementation, full verification, and clean Terra review
 Design source: `docs/architecture/pipeline-test-gate-design.md`
-Roadmap source: `docs/architecture/pipeline-test-gate-roadmap.md`
+Roadmap source: `docs/_legacy-source/architecture/pipeline-test-gate-roadmap.md`
 
 ## Objective
 
@@ -90,7 +90,7 @@ Proof: `npm run verify:test-gate:contracts`.
 
 Audit:
 
-- `docs/architecture/pipeline-test-gate-phase-2-audit.md`
+- `docs/_legacy-source/architecture/pipeline-test-gate-phase-2-audit.md`
 
 ### Phase 3: Create the Provider Registry
 
@@ -114,7 +114,7 @@ Output:
 
 Proof: `npm run verify:test-gate:provider-registry`.
 
-Audit: `docs/architecture/pipeline-test-gate-phase-3-audit.md`.
+Audit: `docs/_legacy-source/architecture/pipeline-test-gate-phase-3-audit.md`.
 
 ### Phase 4: Create the Suite Resolver
 
@@ -142,7 +142,7 @@ Output:
 
 Proof: `npm run verify:test-gate:suite-resolver`.
 
-Audit: `docs/architecture/pipeline-test-gate-phase-4-audit.md`.
+Audit: `docs/_legacy-source/architecture/pipeline-test-gate-phase-4-audit.md`.
 
 ### Phase 5: Create the Test-Plan Runner
 
@@ -170,12 +170,12 @@ Output:
 
 Proof: `npm run verify:test-gate:plan-runner`.
 
-Audit: `docs/architecture/pipeline-test-gate-phase-5-audit.md`.
+Audit: `docs/_legacy-source/architecture/pipeline-test-gate-phase-5-audit.md`.
 
 ### Phase 5.5: Extract the Neutral Worker Core
 
 Status: complete. See
-[pipeline-worker-core-phase-5-5-audit.md](pipeline-worker-core-phase-5-5-audit.md).
+[pipeline-worker-core-phase-5-5-audit.md](../_legacy-source/architecture/pipeline-worker-core-phase-5-5-audit.md).
 
 #### Goal
 
@@ -282,7 +282,7 @@ Output:
 
 Proof: `npm run verify:worker-core:contracts`.
 
-Audit: `docs/architecture/pipeline-worker-core-phase-5-5-a-audit.md`.
+Audit: `docs/_legacy-source/architecture/pipeline-worker-core-phase-5-5-a-audit.md`.
 
 #### Step 5.5-B: Extract One Attempt Executor
 
@@ -324,12 +324,12 @@ Implementation:
 
 Proof: `npm run verify:worker-core:attempt-executor`.
 
-Audit: `docs/architecture/pipeline-worker-core-phase-5-5-b-audit.md`.
+Audit: `docs/_legacy-source/architecture/pipeline-worker-core-phase-5-5-b-audit.md`.
 
 #### Step 5.5-C: Adapt the Local Buster Runner
 
 Status: complete. See
-[pipeline-worker-core-phase-5-5-c-audit.md](pipeline-worker-core-phase-5-5-c-audit.md).
+[pipeline-worker-core-phase-5-5-c-audit.md](../_legacy-source/architecture/pipeline-worker-core-phase-5-5-c-audit.md).
 
 Keep the current local scheduling behavior.
 
@@ -349,7 +349,7 @@ No provider or suite contract changes in this step.
 #### Step 5.5-D: Add the Local Worker Lifecycle
 
 Status: complete. See
-[pipeline-worker-core-phase-5-5-d-audit.md](pipeline-worker-core-phase-5-5-d-audit.md).
+[pipeline-worker-core-phase-5-5-d-audit.md](../_legacy-source/architecture/pipeline-worker-core-phase-5-5-d-audit.md).
 
 Implement the local states:
 
@@ -377,7 +377,7 @@ and performs cleanup.
 #### Step 5.5-E: Prove No Behavior Change
 
 Status: complete. See
-[pipeline-worker-core-phase-5-5-audit.md](pipeline-worker-core-phase-5-5-audit.md).
+[pipeline-worker-core-phase-5-5-audit.md](../_legacy-source/architecture/pipeline-worker-core-phase-5-5-audit.md).
 
 Run:
 
@@ -416,7 +416,7 @@ Define explicit runtime export surfaces:
 
 These surfaces are the first step for D-105. Phase 5.6 replaced the broad
 Common overlay with role dependency-set assembly. See
-[pipeline-runtime-packaging.md](pipeline-runtime-packaging.md).
+[pipeline-runtime-packaging.md](../_legacy-source/architecture/pipeline-runtime-packaging.md).
 
 Implementation and proof:
 
@@ -505,7 +505,7 @@ Purpose: make the pipeline side ready for ClawDeck, worker replicas, restart
 recovery, and high telemetry volume without making Nova the telemetry proxy.
 
 The target architecture is defined in
-`docs/architecture/pipeline-observability-foundation.md`.
+`docs/_legacy-source/architecture/pipeline-observability-foundation.md`.
 
 #### Phase 5.7-A: Inventory and Coverage Ledger
 

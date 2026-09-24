@@ -3,12 +3,13 @@
   "suite": "k8s",
   "provider": "kubeclaw.kubernetes-fixture@1",
   "projectSchema": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+  "suiteSection": "3. Kubernetes Fixture Suite",
   "documents": {
-    "userGuide": "docs/architecture/pipeline-test-gate-kubernetes-fixture-user-guide.md",
-    "operatorGuide": "docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
-    "configurationReference": "docs/architecture/pipeline-test-gate-kubernetes-fixture-configuration-reference.md",
-    "errorReference": "docs/architecture/pipeline-test-gate-kubernetes-fixture-error-reference.md",
-    "securityModel": "docs/architecture/pipeline-test-gate-kubernetes-fixture-security-model.md"
+    "userGuide": "docs/site/reference/buster-suites.md",
+    "operatorGuide": "docs/site/reference/buster-suites.md",
+    "configurationReference": "docs/site/reference/buster-provider-configuration.md",
+    "errorReference": "docs/site/reference/buster-error-codes.md",
+    "securityModel": "docs/site/reference/buster-suites.md"
   },
   "operatorFields": [
     "kubectlExecutable",

@@ -79,8 +79,8 @@ phases must also check relations between objects. Examples include unique node
 IDs, valid graph links, matching provider contracts, capability limits, digest
 verification, and receipt creation.
 
-See `docs/architecture/pipeline-test-gate-phase-2-audit.md` for the complete
-handoff list.
+See `docs/site/understand/request-to-result.md` for the current request,
+execution, result, evidence, and authority handoff.
 
 ## Decision coverage
 

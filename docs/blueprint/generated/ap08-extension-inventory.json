@@ -2186,7 +2186,7 @@
         "buster"
       ],
       "authoredGuide": "skills/buster/plugins/visual/README.md",
-      "authoredGuideWords": 133,
+      "authoredGuideWords": 135,
       "testScript": "node tests/live-function.test.ts",
       "testFiles": [
         "skills/buster/plugins/visual/tests/browser-identity.test.mjs",

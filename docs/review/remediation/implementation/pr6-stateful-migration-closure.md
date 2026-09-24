@@ -29,7 +29,7 @@ stale, incomplete, same-server, nonempty and incorrectly bound inputs fail.
 Scheduled recovery derives its Service and workload selector from that actual
 chart render. The runbook covers global roles/extensions/locale, fenced final
 dump, fresh PVC, source shutdown, canary/client switch and the no-new-writes
-rollback boundary. See [PostgreSQL migration](../../../operations/postgresql-migration.md).
+rollback boundary. See the [historical PostgreSQL migration](../../../_legacy-source/operations/postgresql-migration.md).
 
 ## Qdrant
 

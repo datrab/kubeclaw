@@ -1,6 +1,6 @@
 # No registry or mirror is selected by this file.
 # Generate an operator-owned node config from the same registry-clients.v1
-# contract used by Buster; see docs/operations/registry-clients.md.
+# contract used by Buster; see docs/site/understand/platform-and-operations.md#writable-local-oci-registry.
 # Generated JSON is valid YAML for k3s. Generation does not install the file,
 # provision DNS/TLS/auth, or prove uncached CRI pull reachability.
 mirrors: {}

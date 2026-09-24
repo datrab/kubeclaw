@@ -14,9 +14,9 @@ Related documents:
 
 - [Prism implementation plan](prism-implementation-plan.md)
 - [Prism final foundation audit](prism/phase-10-final-audit.md)
-- [Prism Design Engine contract](../architecture/prism-design-engine-contract-v1.md)
-- [Prism Baseline Bundle contract](../architecture/prism-baseline-bundle-v1.md)
-- [Worker Core architecture](../architecture/pipeline-worker-core-phase-5-5-audit.md)
+- [Prism Design Engine contract](../_legacy-source/architecture/prism-design-engine-contract-v1.md)
+- [Prism Baseline Bundle contract](../_legacy-source/architecture/prism-baseline-bundle-v1.md)
+- [Worker Core architecture](../_legacy-source/architecture/pipeline-worker-core-phase-5-5-audit.md)
 
 ## 1. Required result
 

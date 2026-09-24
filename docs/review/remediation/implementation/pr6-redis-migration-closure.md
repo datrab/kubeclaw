@@ -11,7 +11,7 @@ AOF-only restart before publishing the receipt/checksums. It never overwrites
 the source or an existing destination. Temporary server access is authenticated
 and loopback-only, with bounded execution and private temporary files.
 
-The [complete maintenance procedure](../../../operations/redis-migration.md)
+The [historical maintenance procedure](../../../_legacy-source/operations/redis-migration.md)
 specifies source writer fencing, bounded snapshot capture, source shutdown,
 independent backup, fresh volume population, checksum verification on that
 volume, exact chart/image first install, canary acceptance, endpoint switch and

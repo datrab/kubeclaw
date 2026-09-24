@@ -906,7 +906,7 @@ cmd_setup() {
   info "Next: ./deploy.sh infra && ./deploy.sh agents"
 
   header "Node Registry Configuration"
-  info "Configure Buster runtimeInfrastructure.registry explicitly; see docs/operations/registry-clients.md."
+  info "Configure Buster runtimeInfrastructure.registry explicitly; see docs/site/understand/platform-and-operations.md#writable-local-oci-registry."
   info "Generate and review node config separately; deployment does not install host registry configuration."
   warn "A registry Service or hostname in registries.yaml does not prove an uncached CRI pull."
 

@@ -16,7 +16,7 @@ group. The detailed sections retain the exact constraints and measurable limits.
 | Decision group | Context and decision | Alternatives and reason | Consequences | Approval | Implementation and verification | Supersession |
 | --- | --- | --- | --- | --- | --- | --- |
 | Product and data ownership | Nova owns product architecture. Prism owns design exploration, revisions, approval evidence, and publication inside that boundary. | A second orchestrator and one undifferentiated data store are rejected because they obscure authority and recovery. | Design Document, PostgreSQL, and immutable artifacts have separate recovery and retention duties. | The original architecture marks the boundary accepted. It does not record one approver and date for every clause. | Domain and storage source were inspected. Deployment and human product acceptance remain separate. | Later native-host and recovery decisions refine deployment and storage details without moving product authority. |
-| Design Document and editor | A typed operation model changes canonical design state. Editor frameworks and previews remain replaceable clients. | Whole-state replacement, arbitrary expressions, executable terminal content, and same-origin preview trust are rejected. | The adapter requires more work, but mobile, undo, recovery, and preview messages use one controlled model. | The August schema review records acceptance. Individual clause approvers are not recorded. | Current domain code and fixtures implement the bounded paths described here. Browser and physical-device proof remain open. | The typed schema and current node catalogue replace older candidate shapes. A future deferred node needs a new contract and capability proof. |
+| Design Document and editor | A typed operation model changes canonical design state. Editor frameworks and previews remain replaceable clients. | Whole-state replacement, arbitrary expressions, executable terminal content, and same-origin preview trust are rejected. | The adapter requires more work, but mobile, undo, recovery, and preview messages use one controlled model. | The schema decision was accepted in August. Individual clause approvers are not recorded. | Current domain code and fixtures implement the bounded paths described here. Browser and physical-device proof remain open. | The typed schema and current node catalogue are authoritative. A future deferred node needs a new contract and capability proof. |
 | Retrieval and preferences | Start with PostgreSQL full-text search and exact vectors. Preserve explicit preference provenance and project override. | A separate vector service, approximate indexes, automatic decay, and passive taste evidence need measured or approved justification. | The first system stays operationally small. Exact search can cost more at larger scale. | The architecture accepts the no-decay preference contract. No approval establishes the implemented 180-day decay or the relaxed latency target. | Local retrieval evidence exists. Native PostgreSQL, production scale, and preference reconciliation remain open. | The accepted no-decay contract conflicts with current decay and remains tracked. A measured limit can later justify an index or service. |
 | Durable operations and publication | Bind replay, approval, publication, and worker evidence to exact identities and digests. | Header-derived identity, reusable approval after edits, and a separate Prism orchestration platform are rejected. | Retries become safe and publication stays auditable, with stricter storage and cleanup duties. | Accepted architecture and recovery sources govern the boundary; not every refinement has a named approver. | Source and local contract evidence exist. Native services, browsers, delivery, recovery and the complete project journey still require live proof. | The accepted recovery contract qualifies unconditional PITR wording. Native host-pool decisions qualify the earlier workload-only direction. |
 
@@ -39,7 +39,7 @@ Provider-specific response formats stay behind adapters. External provider candi
 
 ## Design Document and editor
 
-The accepted August 12 schema review keeps meta, theme, assets, components, views, and flows.
+The schema decision accepted on August 12 keeps meta, theme, assets, components, views, and flows.
 Nodes keep id, type, props, and children.
 Token, data, asset, and action references use explicit objects so validation does not depend on magic string prefixes.
 Transition identity is separate from its triggering action: one action can have success and failure outcomes.
@@ -50,7 +50,7 @@ Views own responsive patches; theme breakpoints do not create a second responsiv
 Simple tables remain limited. Rich rows use a list and reusable component instead of arbitrary render functions.
 Terminal commands are display-only. Declared transitions change mock state without executing a shell.
 A deferred node type needs a strict schema and capability proof before it is supported.
-The current catalog and fixtures, rather than an old candidate list, determine available nodes.
+The current catalog and fixtures are the authority for available nodes.
 
 The Puck decision is provisional adapt: use it behind a typed adapter and keep it replaceable.
 Convert editor actions into Prism operations. Never accept complete editor state as canonical replacement.
@@ -118,7 +118,7 @@ Completion in one area does not certify every deployed path.
 
 ## Evidence and remaining proof
 
-The old repository production verifier did not prove production execution.
+The repository-only production verifier did not prove production execution.
 Later protected manifests bind the source, four image identities, and gate artifacts.
 That HMAC receipt is distinct from other suites' external Ed25519 receipts.
 Neither a service-level end-to-end test nor a schema/CEL matrix proves the complete Nova–Forge–Buster–human journey.
@@ -127,7 +127,7 @@ An August controller failure is historical evidence, not a current cluster diagn
 Use the acceptance areas for [native PostgreSQL and service state](../status/acceptance.md#prism-database-jobs-sessions-and-resources) and [browser and mobile behaviour](../status/acceptance.md#prism-browser-studio-artifacts-and-retained-memory).
 Separate areas cover [human and controller authority](../status/acceptance.md#demo-kubernetes-admission-tailnet-and-human-acceptance), [recovery](../status/acceptance.md#gitops-stateful-services-restore-and-capacity), and the [complete project journey](../status/acceptance.md#complete-user-journey-and-evidence-backed-final-report).
 Physical-device, real database, clean namespace, failure recovery, and protected receipt checks retain their actual prerequisites.
-The current issue register contains remaining implementation work. Past task counts do not change current product status.
+The current issue register contains the remaining implementation work and its present status.
 
 - [index.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/domain/index.ts)
 - [index.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/corpus/index.ts)

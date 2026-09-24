@@ -522,7 +522,7 @@ Incorrect namespace assumptions, missed DaemonSets or cluster-dependent admin ac
 - Paperless
 - Host/CRI rollback
 
-Cilium files are present in the current checkout. Earlier branch-only status no longer applies. Integration does not imply that migration or live policy enforcement occurred.
+Cilium files are present in the current checkout. Their presence does not prove that a cluster migration or live policy enforcement occurred.
 
 ### Remaining work
 

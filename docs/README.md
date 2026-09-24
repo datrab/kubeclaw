@@ -26,17 +26,13 @@ The build resolves evidence to the exact Git revision. It also emits a digest an
 
 The approved [documentation blueprint](blueprint/README.md) classifies existing documentation and defines the publication workflow.
 
-## Operations Infrastructure Sources
+## Current Platform Guidance
 
-- [Codex Ops Pod architecture](architecture/ops-pod.md): authority, runtime, networking, persistence and failure domains.
-- [Codex Ops Pod operations](ops/ops-pod.md): deployment, acceptance, diagnosis, upgrades, credential rotation and recovery.
+- [Platform and operations architecture](site/understand/platform-and-operations.md): Ops, GitOps, networking, persistence, telemetry, and optional infrastructure.
+- [Operate KubeClaw](site/use/operate.md): configuration, startup, run inspection, signals, cancellation, and recovery boundaries.
+- [Maintain KubeClaw](site/use/maintenance.md): version authority, image selection, upgrades, rollback, rotation, and retirement.
 
-These are repository source documents; adding them here does not add them to the
-published site's explicit allowlist.
-
-## Runtime Image Operations
-
-- [Runtime versions and role images](operations/runtime-versions-and-images.md): central version authority, Nova/Prism separation, image acceptance and upgrades.
+The old reader sources are isolated below `docs/_legacy-source/`. They are extraction inputs, not an alternative documentation route.
 
 ## Current work and decisions
 

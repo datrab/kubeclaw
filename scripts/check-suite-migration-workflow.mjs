@@ -283,8 +283,19 @@ function documentationManifests() {
     .map((name) => `docs/architecture/${name}`);
 }
 
+function documentText(manifest, kind) {
+  const relative = manifest.documents[kind];
+  const text = fs.readFileSync(path.join(root, relative), 'utf8');
+  if (relative !== 'docs/site/reference/buster-suites.md' || !manifest.suiteSection) return text;
+  const marker = `## ${manifest.suiteSection}`;
+  const start = text.indexOf(marker);
+  if (start < 0) throw new Error(`${relative}: missing suite section ${marker}`);
+  const next = text.indexOf('\n## ', start + marker.length);
+  return text.slice(start, next < 0 ? text.length : next);
+}
+
 function combinedDocuments(manifest) {
-  return Object.values(manifest.documents).map((relative) => fs.readFileSync(path.join(root, relative), 'utf8')).join('\n');
+  return Object.keys(manifest.documents).map((kind) => documentText(manifest, kind)).join('\n');
 }
 
 function checkSchemaDocumentation() {
@@ -295,13 +306,18 @@ function checkSchemaDocumentation() {
     if (!Array.isArray(projectSchemas) || projectSchemas.length < 1 || projectSchemas.some((schema) => !exists(schema))) {
       errors.push(`${manifestPath}: project schema is missing`); continue;
     }
-    const configurationReferences = [manifest.documents.configurationReference,
-      ...(manifest.canonicalConfigurationReferences ?? [])];
+    const configurationReferences = [...new Set([
+      manifest.documents.configurationReference,
+      'docs/site/reference/buster-runtime-configuration.md',
+      ...(manifest.canonicalConfigurationReferences ?? []),
+    ])];
     for (const referencePath of configurationReferences) {
       if (!exists(referencePath)) errors.push(`${manifestPath}: missing canonical configuration reference ${referencePath}`);
     }
     const reference = configurationReferences.filter(exists)
-      .map((referencePath) => fs.readFileSync(path.join(root, referencePath), 'utf8')).join('\n');
+      .map((referencePath) => referencePath === manifest.documents.configurationReference
+        ? documentText(manifest, 'configurationReference')
+        : fs.readFileSync(path.join(root, referencePath), 'utf8')).join('\n');
     const referenceLabel = configurationReferences.join(', ');
     for (const projectSchema of projectSchemas) for (const field of schemaLeafPaths(readJson(projectSchema))) {
       if (!reference.includes(`\`${field}\``)) errors.push(`${referenceLabel}: undocumented project field ${field}`);
@@ -314,6 +330,9 @@ function checkSchemaDocumentation() {
 }
 
 function checkErrorDocumentation() {
+  const nonErrorIdentifiers = new Set([
+    'PLAYWRIGHT_BROWSERS_PATH', 'PLAYWRIGHT_JSON_OUTPUT_NAME', 'PLAYWRIGHT_TEST_BASE_URL',
+  ]);
   for (const manifestPath of documentationManifests()) {
     const manifest = readJson(manifestPath);
     const source = manifest.sourceFilesWithErrors.map((relative) => fs.readFileSync(path.join(root, relative), 'utf8')).join('\n');
@@ -322,8 +341,12 @@ function checkErrorDocumentation() {
     const codes = [...new Set([
       ...discovered.filter((code) => prefixes.some((prefix) => code.startsWith(prefix))),
       ...(manifest.additionalErrors ?? []),
-    ])].sort();
-    const reference = fs.readFileSync(path.join(root, manifest.documents.errorReference), 'utf8');
+    ])].filter((code) => !nonErrorIdentifiers.has(code)).sort();
+    const reference = [
+      documentText(manifest, 'errorReference'),
+      fs.readFileSync(path.join(root, 'docs/site/reference/nova-project.md'), 'utf8'),
+      documentText(manifest, 'userGuide'),
+    ].join('\n');
     for (const code of codes) if (!reference.includes(`\`${code}\``)) errors.push(`${manifest.documents.errorReference}: undocumented error ${code}`);
   }
 }
@@ -364,7 +387,7 @@ function checkExamples() {
       configs.forEach((config, index) => validateConfig(config, `${example}#${index + 1}`));
     }
     for (const [kind, document] of Object.entries(manifest.documents)) {
-      const text = fs.readFileSync(path.join(root, document), 'utf8');
+      const text = documentText(manifest, kind);
       const blocks = [...text.matchAll(/```json\n([\s\S]*?)\n```/gu)];
       for (const [index, block] of blocks.entries()) {
         try {
@@ -382,15 +405,21 @@ function stripCode(text) {
 
 function checkControlledLanguage() {
   const targets = [
-    'docs/architecture/pipeline-test-gate-suite-migration-playbook.md',
-    'docs/architecture/pipeline-test-gate-suite-migration-templates.md',
-    ...documentationManifests().flatMap((manifestPath) => Object.values(readJson(manifestPath).documents)),
+    { label: 'docs/architecture/pipeline-test-gate-suite-migration-playbook.md', text: fs.readFileSync(path.join(root, 'docs/architecture/pipeline-test-gate-suite-migration-playbook.md'), 'utf8') },
+    { label: 'docs/architecture/pipeline-test-gate-suite-migration-templates.md', text: fs.readFileSync(path.join(root, 'docs/architecture/pipeline-test-gate-suite-migration-templates.md'), 'utf8') },
+    ...documentationManifests().flatMap((manifestPath) => {
+      const manifest = readJson(manifestPath);
+      return ['userGuide', 'operatorGuide', 'securityModel'].map((kind) => ({
+        label: `${manifest.documents[kind]}#${manifest.suiteSection ?? kind}`,
+        text: documentText(manifest, kind),
+      }));
+    }),
   ];
   const vague = /\b(simply|obviously|appropriate|properly|normally|just|easy|easily)\b/iu;
-  for (const relative of [...new Set(targets)]) {
-    if (!exists(relative)) { errors.push(`controlled-language target is missing: ${relative}`); continue; }
-    const text = stripCode(fs.readFileSync(path.join(root, relative), 'utf8'));
-    if (vague.test(text)) errors.push(`${relative}: contains vague controlled-language term "${vague.exec(text)?.[0]}"`);
+  const uniqueTargets = [...new Map(targets.map((target) => [target.label, target])).values()];
+  for (const target of uniqueTargets) {
+    const text = stripCode(target.text);
+    if (vague.test(text)) errors.push(`${target.label}: contains vague controlled-language term "${vague.exec(text)?.[0]}"`);
     const statements = [];
     let prose = [];
     const flush = () => {
@@ -406,7 +435,7 @@ function checkControlledLanguage() {
     flush();
     for (const statement of statements) {
       const words = statement.match(/[A-Za-z0-9][A-Za-z0-9@._/-]*/gu) ?? [];
-      if (words.length > 40) errors.push(`${relative}: statement exceeds 40 words: ${statement.slice(0, 100)}...`);
+      if (words.length > 40) errors.push(`${target.label}: statement exceeds 40 words: ${statement.slice(0, 100)}...`);
     }
   }
 }

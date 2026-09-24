@@ -18,12 +18,13 @@
     "CONTAINER_BUILD_TIME_LIMIT_INVALID",
     "CONTAINER_BUILD_MANIFEST_LIMIT_INVALID"
   ],
+  "suiteSection": "2. Container Build Suite",
   "documents": {
-    "userGuide": "docs/architecture/pipeline-test-gate-container-build-user-guide.md",
-    "operatorGuide": "docs/architecture/pipeline-test-gate-container-build-operator-guide.md",
-    "configurationReference": "docs/architecture/pipeline-test-gate-container-build-configuration-reference.md",
-    "errorReference": "docs/architecture/pipeline-test-gate-container-build-error-reference.md",
-    "securityModel": "docs/architecture/pipeline-test-gate-container-build-security-model.md"
+    "userGuide": "docs/site/reference/buster-suites.md",
+    "operatorGuide": "docs/site/reference/buster-suites.md",
+    "configurationReference": "docs/site/reference/buster-provider-configuration.md",
+    "errorReference": "docs/site/reference/buster-error-codes.md",
+    "securityModel": "docs/site/reference/buster-suites.md"
   },
   "operatorFields": [
     "buildctlExecutable",

@@ -207,6 +207,11 @@ const oldDocFiles = walk(path.join(root, 'docs'))
   .filter((filePath) => !filePath.startsWith('docs/blueprint/') && !filePath.startsWith('docs/site/'))
   .sort();
 
+function originalDocumentationPath(filePath) {
+  const prefix = 'docs/_legacy-source/';
+  return filePath.startsWith(prefix) ? `docs/${filePath.slice(prefix.length)}` : filePath;
+}
+
 function migration(filePath) {
   const name = path.basename(filePath);
   if (filePath === 'docs/operator-tasks.json') return ['internal-machine-authority', 'documentation build pipeline', 'Keep the operator-task registry outside the published reader site; publish only the validated task procedures and reference views.'];
@@ -244,7 +249,7 @@ function migration(filePath) {
 }
 
 const ledgerRows = oldDocFiles.map((filePath) => {
-  const [disposition, destination, extraction] = migration(filePath);
+  const [disposition, destination, extraction] = migration(originalDocumentationPath(filePath));
   return { source: filePath, disposition, destination, extraction, proof: 'pending rewrite; source path existence verified' };
 });
 const ledgerHeader = ['source', 'disposition', 'destination', 'required extraction', 'completion proof'];
