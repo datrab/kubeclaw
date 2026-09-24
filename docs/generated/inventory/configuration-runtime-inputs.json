@@ -1755,7 +1755,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 5949,
+          "line": 5950,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -1766,7 +1766,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 5949,
+      "line": 5950,
       "name": "--check-payload-delivery-only",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",

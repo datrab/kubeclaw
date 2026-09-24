@@ -11040,7 +11040,7 @@
             "acceptedValues": "integer with minimum=1000, maximum=120000",
             "authorityKey": "skills/buster/plugins/axe/schemas/config.schema.json::$.timeoutMs",
             "blockerOwner": null,
-            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one browser accessibility scan next loads it: Limits the complete one browser accessibility scan operation before it is stopped or reported as timed out.",
+            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one browser accessibility scan next loads it: Limits how long one browser accessibility scan can run before it is stopped or reported as timed out.",
             "closureCondition": null,
             "defaultBehavior": "The plugin registry clones the supplied configuration and inserts the schema default 30000 before it invokes the registration.",
             "emptyBehavior": "A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint.",
@@ -11051,7 +11051,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/axe/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Limits the complete one browser accessibility scan operation before it is stopped or reported as timed out. Accepted values: integer with minimum=1000, maximum=120000. Omission: The plugin registry clones the supplied configuration and inserts the schema default 30000 before it invokes the registration. Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one browser accessibility scan next loads it: Limits the complete one browser accessibility scan operation before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1000, maximum=120000. The linked consumer at skills/buster/plugins/axe/src/provider.js:76 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Limits how long one browser accessibility scan can run before it is stopped or reported as timed out. Accepted values: integer with minimum=1000, maximum=120000. Omission: The plugin registry clones the supplied configuration and inserts the schema default 30000 before it invokes the registration. Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one browser accessibility scan next loads it: Limits how long one browser accessibility scan can run before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1000, maximum=120000. The linked consumer at skills/buster/plugins/axe/src/provider.js:76 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/axe/package.json",
@@ -16256,7 +16256,7 @@
             "acceptedValues": "integer with minimum=10000, maximum=180000",
             "authorityKey": "skills/buster/plugins/lighthouse/schemas/config.schema.json::$.timeoutMs",
             "blockerOwner": null,
-            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one Lighthouse measurement set next loads it: Limits the complete one Lighthouse measurement set operation before it is stopped or reported as timed out.",
+            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one Lighthouse measurement set next loads it: Limits how long one Lighthouse measurement set can run before it is stopped or reported as timed out.",
             "closureCondition": null,
             "defaultBehavior": "The plugin registry clones the supplied configuration and inserts the schema default 120000 before it invokes the registration.",
             "emptyBehavior": "A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint.",
@@ -16267,7 +16267,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Limits the complete one Lighthouse measurement set operation before it is stopped or reported as timed out. Accepted values: integer with minimum=10000, maximum=180000. Omission: The plugin registry clones the supplied configuration and inserts the schema default 120000 before it invokes the registration. Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one Lighthouse measurement set next loads it: Limits the complete one Lighthouse measurement set operation before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=10000, maximum=180000. The linked consumer at skills/buster/plugins/lighthouse/src/provider.js:90 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Limits how long one Lighthouse measurement set can run before it is stopped or reported as timed out. Accepted values: integer with minimum=10000, maximum=180000. Omission: The plugin registry clones the supplied configuration and inserts the schema default 120000 before it invokes the registration. Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one Lighthouse measurement set next loads it: Limits how long one Lighthouse measurement set can run before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=10000, maximum=180000. The linked consumer at skills/buster/plugins/lighthouse/src/provider.js:90 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/lighthouse/package.json",
@@ -18286,7 +18286,7 @@
             "acceptedValues": "integer with minimum=1000, maximum=3600000",
             "authorityKey": "skills/buster/plugins/playwright/schemas/config.schema.json::$.timeoutMs",
             "blockerOwner": null,
-            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one Playwright test invocation next loads it: Limits the complete one Playwright test invocation operation before it is stopped or reported as timed out.",
+            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one Playwright test invocation next loads it: Limits how long one Playwright test invocation can run before it is stopped or reported as timed out.",
             "closureCondition": null,
             "defaultBehavior": "The plugin registry clones the supplied configuration and inserts the schema default 600000 before it invokes the registration.",
             "emptyBehavior": "A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint.",
@@ -18297,7 +18297,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/playwright/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Limits the complete one Playwright test invocation operation before it is stopped or reported as timed out. Accepted values: integer with minimum=1000, maximum=3600000. Omission: The plugin registry clones the supplied configuration and inserts the schema default 600000 before it invokes the registration. Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one Playwright test invocation next loads it: Limits the complete one Playwright test invocation operation before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1000, maximum=3600000. The linked consumer at skills/buster/plugins/playwright/src/provider.js:70 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Limits how long one Playwright test invocation can run before it is stopped or reported as timed out. Accepted values: integer with minimum=1000, maximum=3600000. Omission: The plugin registry clones the supplied configuration and inserts the schema default 600000 before it invokes the registration. Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one Playwright test invocation next loads it: Limits how long one Playwright test invocation can run before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1000, maximum=3600000. The linked consumer at skills/buster/plugins/playwright/src/provider.js:70 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/playwright/package.json",
@@ -18607,7 +18607,7 @@
             "changeImpact": "Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one dependency vulnerability scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one dependency vulnerability scan.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/src/common.js:31",
             "failureMeaning": "Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/buster/plugins/security-providers/src/common.js:31",
@@ -18615,7 +18615,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one dependency vulnerability scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason. Change effect: Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one dependency vulnerability scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one dependency vulnerability scan. Failure: Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one dependency vulnerability scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format. Change effect: Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one dependency vulnerability scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one dependency vulnerability scan. Failure: Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -18850,7 +18850,7 @@
             "acceptedValues": "integer with minimum=1000, maximum=900000",
             "authorityKey": "skills/buster/plugins/security-providers/schemas/dependency.schema.json::$.timeoutMs",
             "blockerOwner": null,
-            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one dependency vulnerability scan next loads it: Limits the complete one dependency vulnerability scan operation before it is stopped or reported as timed out.",
+            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one dependency vulnerability scan next loads it: Limits how long one dependency vulnerability scan can run before it is stopped or reported as timed out.",
             "closureCondition": null,
             "defaultBehavior": "The schema has no default. When the field is absent, the linked runtime uses \"300000\" (skills/buster/plugins/security-providers/src/dependency.js:12).",
             "emptyBehavior": "A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint.",
@@ -18861,7 +18861,7 @@
             "runtimeDefaultEvidence": "skills/buster/plugins/security-providers/src/dependency.js:12",
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Limits the complete one dependency vulnerability scan operation before it is stopped or reported as timed out. Accepted values: integer with minimum=1000, maximum=900000. Omission: The schema has no default. When the field is absent, the linked runtime uses \"300000\" (skills/buster/plugins/security-providers/src/dependency.js:12). Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one dependency vulnerability scan next loads it: Limits the complete one dependency vulnerability scan operation before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1000, maximum=900000. The linked consumer at skills/buster/plugins/security-providers/src/dependency.js:12 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Limits how long one dependency vulnerability scan can run before it is stopped or reported as timed out. Accepted values: integer with minimum=1000, maximum=900000. Omission: The schema has no default. When the field is absent, the linked runtime uses \"300000\" (skills/buster/plugins/security-providers/src/dependency.js:12). Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one dependency vulnerability scan next loads it: Limits how long one dependency vulnerability scan can run before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1000, maximum=900000. The linked consumer at skills/buster/plugins/security-providers/src/dependency.js:12 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -18936,7 +18936,7 @@
               "skills/buster/plugins/security-providers/plugin.json"
             ],
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
             "failureMeaning": "Schema validation behavior is known; downstream runtime behavior is not proved.",
             "implementationEvidence": null,
@@ -18944,7 +18944,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
             "status": "schema-meaning-blocker",
-            "text": "The schema accepts defs.acceptance.expiresAt, but the repository does not yet prove its complete operator meaning. Missing authority: path-specific runtime data flow. Accepted values: string with format=\"date-time\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason."
+            "text": "The schema accepts defs.acceptance.expiresAt, but the repository does not yet prove its complete operator meaning. Missing authority: path-specific runtime data flow. Accepted values: string with format=\"date-time\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -19204,7 +19204,7 @@
             "changeImpact": "Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one dependency vulnerability scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one dependency vulnerability scan.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/src/common.js:85",
             "failureMeaning": "Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/buster/plugins/security-providers/src/common.js:85",
@@ -19212,7 +19212,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one dependency vulnerability scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason. Change effect: Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one dependency vulnerability scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one dependency vulnerability scan. Failure: Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one dependency vulnerability scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format. Change effect: Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one dependency vulnerability scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one dependency vulnerability scan. Failure: Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -19679,7 +19679,7 @@
             "changeImpact": "Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one HTTP security-header check next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one HTTP security-header check.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/src/common.js:31",
             "failureMeaning": "Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/buster/plugins/security-providers/src/common.js:31",
@@ -19687,7 +19687,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one HTTP security-header check. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason. Change effect: Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one HTTP security-header check next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one HTTP security-header check. Failure: Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one HTTP security-header check. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format. Change effect: Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one HTTP security-header check next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one HTTP security-header check. Failure: Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -20784,7 +20784,7 @@
               "skills/buster/plugins/security-providers/plugin.json"
             ],
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
             "failureMeaning": "Schema validation behavior is known; downstream runtime behavior is not proved.",
             "implementationEvidence": null,
@@ -20792,7 +20792,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
             "status": "schema-meaning-blocker",
-            "text": "The schema accepts defs.acceptance.expiresAt, but the repository does not yet prove its complete operator meaning. Missing authority: path-specific runtime data flow. Accepted values: string with format=\"date-time\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason."
+            "text": "The schema accepts defs.acceptance.expiresAt, but the repository does not yet prove its complete operator meaning. Missing authority: path-specific runtime data flow. Accepted values: string with format=\"date-time\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -21052,7 +21052,7 @@
             "changeImpact": "Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one HTTP security-header check next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one HTTP security-header check.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/src/common.js:85",
             "failureMeaning": "Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/buster/plugins/security-providers/src/common.js:85",
@@ -21060,7 +21060,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one HTTP security-header check. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason. Change effect: Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one HTTP security-header check next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one HTTP security-header check. Failure: Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one HTTP security-header check. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format. Change effect: Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one HTTP security-header check next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one HTTP security-header check. Failure: Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -21718,7 +21718,7 @@
             "changeImpact": "Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one container-image vulnerability scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one container-image vulnerability scan.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/src/common.js:31",
             "failureMeaning": "Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/buster/plugins/security-providers/src/common.js:31",
@@ -21726,7 +21726,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/image.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one container-image vulnerability scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason. Change effect: Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one container-image vulnerability scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one container-image vulnerability scan. Failure: Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one container-image vulnerability scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format. Change effect: Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one container-image vulnerability scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one container-image vulnerability scan. Failure: Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -21918,7 +21918,7 @@
             "acceptedValues": "integer with minimum=1000, maximum=900000",
             "authorityKey": "skills/buster/plugins/security-providers/schemas/image.schema.json::$.timeoutMs",
             "blockerOwner": null,
-            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one container-image vulnerability scan next loads it: Limits the complete one container-image vulnerability scan operation before it is stopped or reported as timed out.",
+            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one container-image vulnerability scan next loads it: Limits how long one container-image vulnerability scan can run before it is stopped or reported as timed out.",
             "closureCondition": null,
             "defaultBehavior": "The schema has no default. When the field is absent, the linked runtime uses \"300000\" (skills/buster/plugins/security-providers/src/image.js:16).",
             "emptyBehavior": "A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint.",
@@ -21929,7 +21929,7 @@
             "runtimeDefaultEvidence": "skills/buster/plugins/security-providers/src/image.js:16",
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/image.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Limits the complete one container-image vulnerability scan operation before it is stopped or reported as timed out. Accepted values: integer with minimum=1000, maximum=900000. Omission: The schema has no default. When the field is absent, the linked runtime uses \"300000\" (skills/buster/plugins/security-providers/src/image.js:16). Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one container-image vulnerability scan next loads it: Limits the complete one container-image vulnerability scan operation before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1000, maximum=900000. The linked consumer at skills/buster/plugins/security-providers/src/image.js:35 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Limits how long one container-image vulnerability scan can run before it is stopped or reported as timed out. Accepted values: integer with minimum=1000, maximum=900000. Omission: The schema has no default. When the field is absent, the linked runtime uses \"300000\" (skills/buster/plugins/security-providers/src/image.js:16). Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one container-image vulnerability scan next loads it: Limits how long one container-image vulnerability scan can run before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1000, maximum=900000. The linked consumer at skills/buster/plugins/security-providers/src/image.js:35 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -22004,7 +22004,7 @@
               "skills/buster/plugins/security-providers/plugin.json"
             ],
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/schemas/image.schema.json",
             "failureMeaning": "Schema validation behavior is known; downstream runtime behavior is not proved.",
             "implementationEvidence": null,
@@ -22012,7 +22012,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/image.schema.json",
             "status": "schema-meaning-blocker",
-            "text": "The schema accepts defs.acceptance.expiresAt, but the repository does not yet prove its complete operator meaning. Missing authority: path-specific runtime data flow. Accepted values: string with format=\"date-time\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason."
+            "text": "The schema accepts defs.acceptance.expiresAt, but the repository does not yet prove its complete operator meaning. Missing authority: path-specific runtime data flow. Accepted values: string with format=\"date-time\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -22272,7 +22272,7 @@
             "changeImpact": "Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one container-image vulnerability scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one container-image vulnerability scan.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/src/common.js:85",
             "failureMeaning": "Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/buster/plugins/security-providers/src/common.js:85",
@@ -22280,7 +22280,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/image.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one container-image vulnerability scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason. Change effect: Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one container-image vulnerability scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one container-image vulnerability scan. Failure: Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one container-image vulnerability scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format. Change effect: Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one container-image vulnerability scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one container-image vulnerability scan. Failure: Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -22659,7 +22659,7 @@
             "changeImpact": "Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one static Kubernetes-policy scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one static Kubernetes-policy scan.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/src/common.js:31",
             "failureMeaning": "Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/buster/plugins/security-providers/src/common.js:31",
@@ -22667,7 +22667,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one static Kubernetes-policy scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason. Change effect: Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one static Kubernetes-policy scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one static Kubernetes-policy scan. Failure: Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one static Kubernetes-policy scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format. Change effect: Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one static Kubernetes-policy scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one static Kubernetes-policy scan. Failure: Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -22859,7 +22859,7 @@
             "acceptedValues": "integer with minimum=1000, maximum=300000",
             "authorityKey": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json::$.timeoutMs",
             "blockerOwner": null,
-            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one static Kubernetes-policy scan next loads it: Limits the complete one static Kubernetes-policy scan operation before it is stopped or reported as timed out.",
+            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one static Kubernetes-policy scan next loads it: Limits how long one static Kubernetes-policy scan can run before it is stopped or reported as timed out.",
             "closureCondition": null,
             "defaultBehavior": "The schema has no default. When the field is absent, the linked runtime uses \"120000\" (skills/buster/plugins/security-providers/src/kubernetes-policy.js:20).",
             "emptyBehavior": "A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint.",
@@ -22870,7 +22870,7 @@
             "runtimeDefaultEvidence": "skills/buster/plugins/security-providers/src/kubernetes-policy.js:20",
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Limits the complete one static Kubernetes-policy scan operation before it is stopped or reported as timed out. Accepted values: integer with minimum=1000, maximum=300000. Omission: The schema has no default. When the field is absent, the linked runtime uses \"120000\" (skills/buster/plugins/security-providers/src/kubernetes-policy.js:20). Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one static Kubernetes-policy scan next loads it: Limits the complete one static Kubernetes-policy scan operation before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1000, maximum=300000. The linked consumer at skills/buster/plugins/security-providers/src/kubernetes-policy.js:39 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Limits how long one static Kubernetes-policy scan can run before it is stopped or reported as timed out. Accepted values: integer with minimum=1000, maximum=300000. Omission: The schema has no default. When the field is absent, the linked runtime uses \"120000\" (skills/buster/plugins/security-providers/src/kubernetes-policy.js:20). Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one static Kubernetes-policy scan next loads it: Limits how long one static Kubernetes-policy scan can run before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1000, maximum=300000. The linked consumer at skills/buster/plugins/security-providers/src/kubernetes-policy.js:39 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -22945,7 +22945,7 @@
               "skills/buster/plugins/security-providers/plugin.json"
             ],
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
             "failureMeaning": "Schema validation behavior is known; downstream runtime behavior is not proved.",
             "implementationEvidence": null,
@@ -22953,7 +22953,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
             "status": "schema-meaning-blocker",
-            "text": "The schema accepts defs.acceptance.expiresAt, but the repository does not yet prove its complete operator meaning. Missing authority: path-specific runtime data flow. Accepted values: string with format=\"date-time\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason."
+            "text": "The schema accepts defs.acceptance.expiresAt, but the repository does not yet prove its complete operator meaning. Missing authority: path-specific runtime data flow. Accepted values: string with format=\"date-time\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -23213,7 +23213,7 @@
             "changeImpact": "Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one static Kubernetes-policy scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one static Kubernetes-policy scan.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/src/common.js:85",
             "failureMeaning": "Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/buster/plugins/security-providers/src/common.js:85",
@@ -23221,7 +23221,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one static Kubernetes-policy scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason. Change effect: Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one static Kubernetes-policy scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one static Kubernetes-policy scan. Failure: Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one static Kubernetes-policy scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format. Change effect: Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one static Kubernetes-policy scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one static Kubernetes-policy scan. Failure: Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -23600,7 +23600,7 @@
             "changeImpact": "Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one live Kubernetes runtime-security scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one live Kubernetes runtime-security scan.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/src/common.js:31",
             "failureMeaning": "Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/buster/plugins/security-providers/src/common.js:31",
@@ -23608,7 +23608,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one live Kubernetes runtime-security scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason. Change effect: Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one live Kubernetes runtime-security scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one live Kubernetes runtime-security scan. Failure: Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one live Kubernetes runtime-security scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format. Change effect: Changing $.policy.acceptances[].expiresAt changes this exact configured behavior when one live Kubernetes runtime-security scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one live Kubernetes runtime-security scan. Failure: Schema validation rejects $.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/policy\", $ref=\"#/$defs/acceptance\". The linked consumer at skills/buster/plugins/security-providers/src/common.js:31 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -23800,7 +23800,7 @@
             "acceptedValues": "integer with minimum=1000, maximum=300000",
             "authorityKey": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json::$.timeoutMs",
             "blockerOwner": null,
-            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one live Kubernetes runtime-security scan next loads it: Limits the complete one live Kubernetes runtime-security scan operation before it is stopped or reported as timed out.",
+            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one live Kubernetes runtime-security scan next loads it: Limits how long one live Kubernetes runtime-security scan can run before it is stopped or reported as timed out.",
             "closureCondition": null,
             "defaultBehavior": "The schema has no default. When the field is absent, the linked runtime uses \"120000\" (skills/buster/plugins/security-providers/src/kubernetes-runtime.js:27).",
             "emptyBehavior": "A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint.",
@@ -23811,7 +23811,7 @@
             "runtimeDefaultEvidence": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js:27",
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Limits the complete one live Kubernetes runtime-security scan operation before it is stopped or reported as timed out. Accepted values: integer with minimum=1000, maximum=300000. Omission: The schema has no default. When the field is absent, the linked runtime uses \"120000\" (skills/buster/plugins/security-providers/src/kubernetes-runtime.js:27). Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one live Kubernetes runtime-security scan next loads it: Limits the complete one live Kubernetes runtime-security scan operation before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1000, maximum=300000. The linked consumer at skills/buster/plugins/security-providers/src/kubernetes-runtime.js:47 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Limits how long one live Kubernetes runtime-security scan can run before it is stopped or reported as timed out. Accepted values: integer with minimum=1000, maximum=300000. Omission: The schema has no default. When the field is absent, the linked runtime uses \"120000\" (skills/buster/plugins/security-providers/src/kubernetes-runtime.js:27). Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one live Kubernetes runtime-security scan next loads it: Limits how long one live Kubernetes runtime-security scan can run before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1000, maximum=300000. The linked consumer at skills/buster/plugins/security-providers/src/kubernetes-runtime.js:47 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -23886,7 +23886,7 @@
               "skills/buster/plugins/security-providers/plugin.json"
             ],
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
             "failureMeaning": "Schema validation behavior is known; downstream runtime behavior is not proved.",
             "implementationEvidence": null,
@@ -23894,7 +23894,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
             "status": "schema-meaning-blocker",
-            "text": "The schema accepts defs.acceptance.expiresAt, but the repository does not yet prove its complete operator meaning. Missing authority: path-specific runtime data flow. Accepted values: string with format=\"date-time\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason."
+            "text": "The schema accepts defs.acceptance.expiresAt, but the repository does not yet prove its complete operator meaning. Missing authority: path-specific runtime data flow. Accepted values: string with format=\"date-time\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -24154,7 +24154,7 @@
             "changeImpact": "Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one live Kubernetes runtime-security scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one live Kubernetes runtime-security scan.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required date-time format.",
             "evidence": "skills/buster/plugins/security-providers/src/common.js:85",
             "failureMeaning": "Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/buster/plugins/security-providers/src/common.js:85",
@@ -24162,7 +24162,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one live Kubernetes runtime-security scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason. Change effect: Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one live Kubernetes runtime-security scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one live Kubernetes runtime-security scan. Failure: Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the instant after which one security-policy acceptance no longer suppresses its finding in one live Kubernetes runtime-security scan. Accepted values: string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required date-time format. Change effect: Changing $defs.policy.acceptances[].expiresAt changes this exact configured behavior when one live Kubernetes runtime-security scan next loads it: Sets the instant after which one security-policy acceptance no longer suppresses its finding in one live Kubernetes runtime-security scan. Failure: Schema validation rejects $defs.policy.acceptances[].expiresAt when it violates string with format=\"date-time\", $ref=\"#/$defs/acceptance\"; branch definition. The linked consumer at skills/buster/plugins/security-providers/src/common.js:85 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/security-providers/package.json",
@@ -25936,7 +25936,7 @@
             "acceptedValues": "integer with minimum=1000, maximum=120000",
             "authorityKey": "skills/buster/plugins/visual/schemas/config.schema.json::$.timeoutMs",
             "blockerOwner": null,
-            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one browser screenshot comparison next loads it: Limits the complete one browser screenshot comparison operation before it is stopped or reported as timed out.",
+            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when one browser screenshot comparison next loads it: Limits how long one browser screenshot comparison can run before it is stopped or reported as timed out.",
             "closureCondition": null,
             "defaultBehavior": "The plugin registry clones the supplied configuration and inserts the schema default 30000 before it invokes the registration.",
             "emptyBehavior": "A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint.",
@@ -25947,7 +25947,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/buster/plugins/visual/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Limits the complete one browser screenshot comparison operation before it is stopped or reported as timed out. Accepted values: integer with minimum=1000, maximum=120000. Omission: The plugin registry clones the supplied configuration and inserts the schema default 30000 before it invokes the registration. Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one browser screenshot comparison next loads it: Limits the complete one browser screenshot comparison operation before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1000, maximum=120000. The linked consumer at skills/buster/plugins/visual/src/provider.js:143 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Limits how long one browser screenshot comparison can run before it is stopped or reported as timed out. Accepted values: integer with minimum=1000, maximum=120000. Omission: The plugin registry clones the supplied configuration and inserts the schema default 30000 before it invokes the registration. Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when one browser screenshot comparison next loads it: Limits how long one browser screenshot comparison can run before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1000, maximum=120000. The linked consumer at skills/buster/plugins/visual/src/provider.js:143 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/buster/plugins/visual/package.json",
@@ -28731,7 +28731,7 @@
             "changeImpact": "Changing $.allowedOrigins[] changes this exact configured behavior when the bounded HTTP capability adapter next loads it: Lists the exact URL origins that the bounded HTTP capability adapter can contact.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required uri format.",
             "evidence": "skills/common/plugins/network-http/src/adapter.ts:19",
             "failureMeaning": "Schema validation rejects $.allowedOrigins[] when it violates string with format=\"uri\". The linked consumer at skills/common/plugins/network-http/src/adapter.ts:19 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/common/plugins/network-http/src/adapter.ts:19",
@@ -28739,7 +28739,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugins/network-http/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Lists the exact URL origins that the bounded HTTP capability adapter can contact. Accepted values: string with format=\"uri\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason. Change effect: Changing $.allowedOrigins[] changes this exact configured behavior when the bounded HTTP capability adapter next loads it: Lists the exact URL origins that the bounded HTTP capability adapter can contact. Failure: Schema validation rejects $.allowedOrigins[] when it violates string with format=\"uri\". The linked consumer at skills/common/plugins/network-http/src/adapter.ts:19 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Lists the exact URL origins that the bounded HTTP capability adapter can contact. Accepted values: string with format=\"uri\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required uri format. Change effect: Changing $.allowedOrigins[] changes this exact configured behavior when the bounded HTTP capability adapter next loads it: Lists the exact URL origins that the bounded HTTP capability adapter can contact. Failure: Schema validation rejects $.allowedOrigins[] when it violates string with format=\"uri\". The linked consumer at skills/common/plugins/network-http/src/adapter.ts:19 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugins/network-http/package.json",
@@ -28845,7 +28845,7 @@
             "acceptedValues": "integer with minimum=1",
             "authorityKey": "skills/common/plugins/network-http/schemas/config.schema.json::$.timeoutMs",
             "blockerOwner": null,
-            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when the bounded HTTP capability adapter next loads it: Limits the complete the bounded HTTP capability adapter operation before it is stopped or reported as timed out.",
+            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when the bounded HTTP capability adapter next loads it: Limits how long the bounded HTTP capability adapter can run before it is stopped or reported as timed out.",
             "closureCondition": null,
             "defaultBehavior": "The plugin registry clones the supplied configuration and inserts the schema default 30000 before it invokes the registration.",
             "emptyBehavior": "A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint.",
@@ -28856,7 +28856,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugins/network-http/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Limits the complete the bounded HTTP capability adapter operation before it is stopped or reported as timed out. Accepted values: integer with minimum=1. Omission: The plugin registry clones the supplied configuration and inserts the schema default 30000 before it invokes the registration. Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when the bounded HTTP capability adapter next loads it: Limits the complete the bounded HTTP capability adapter operation before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1. The linked consumer at skills/common/plugins/network-http/src/adapter.ts:33 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Limits how long the bounded HTTP capability adapter can run before it is stopped or reported as timed out. Accepted values: integer with minimum=1. Omission: The plugin registry clones the supplied configuration and inserts the schema default 30000 before it invokes the registration. Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when the bounded HTTP capability adapter next loads it: Limits how long the bounded HTTP capability adapter can run before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1. The linked consumer at skills/common/plugins/network-http/src/adapter.ts:33 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugins/network-http/package.json",
@@ -30430,7 +30430,7 @@
             "changeImpact": "Changing $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpoint changes this exact configured behavior when the durable operator-message sender next loads it: Sets the exact network endpoint contacted by the durable operator-message sender.",
             "closureCondition": null,
             "defaultBehavior": "The schema declares no default. When the field is omitted, it remains absent unless the linked runtime explicitly derives a value.",
-            "emptyBehavior": "An empty string does not match the required pattern.",
+            "emptyBehavior": "An empty string does not match the required uri format.",
             "evidence": "skills/common/plugins/operator-messaging/src/adapter.ts:17",
             "failureMeaning": "Schema validation rejects $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpoint when it violates string with format=\"uri\", pattern=\"^https?://\". The linked consumer at skills/common/plugins/operator-messaging/src/adapter.ts:17 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/common/plugins/operator-messaging/src/adapter.ts:17",
@@ -30438,7 +30438,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the exact network endpoint contacted by the durable operator-message sender. Accepted values: string with format=\"uri\", pattern=\"^https?://\". Omission: The schema declares no default. When the field is omitted, it remains absent unless the linked runtime explicitly derives a value. Empty value: An empty string does not match the required pattern. Change effect: Changing $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpoint changes this exact configured behavior when the durable operator-message sender next loads it: Sets the exact network endpoint contacted by the durable operator-message sender. Failure: Schema validation rejects $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpoint when it violates string with format=\"uri\", pattern=\"^https?://\". The linked consumer at skills/common/plugins/operator-messaging/src/adapter.ts:17 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the exact network endpoint contacted by the durable operator-message sender. Accepted values: string with format=\"uri\", pattern=\"^https?://\". Omission: The schema declares no default. When the field is omitted, it remains absent unless the linked runtime explicitly derives a value. Empty value: An empty string does not match the required uri format. Change effect: Changing $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpoint changes this exact configured behavior when the durable operator-message sender next loads it: Sets the exact network endpoint contacted by the durable operator-message sender. Failure: Schema validation rejects $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpoint when it violates string with format=\"uri\", pattern=\"^https?://\". The linked consumer at skills/common/plugins/operator-messaging/src/adapter.ts:17 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugins/operator-messaging/package.json",
@@ -30473,7 +30473,7 @@
             "changeImpact": "Changing $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpointOrigin changes this exact configured behavior when the durable operator-message sender next loads it: Restricts the durable operator-message sender to the expected endpoint origin.",
             "closureCondition": null,
             "defaultBehavior": "The schema declares no default. When the field is omitted, it remains absent unless the linked runtime explicitly derives a value.",
-            "emptyBehavior": "An empty string does not match the required pattern.",
+            "emptyBehavior": "An empty string does not match the required uri format.",
             "evidence": "skills/common/plugins/operator-messaging/src/adapter.ts:22",
             "failureMeaning": "Schema validation rejects $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpointOrigin when it violates string with format=\"uri\", pattern=\"^https?://[^/?#]+/?$\". The linked consumer at skills/common/plugins/operator-messaging/src/adapter.ts:22 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/common/plugins/operator-messaging/src/adapter.ts:22",
@@ -30481,7 +30481,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Restricts the durable operator-message sender to the expected endpoint origin. Accepted values: string with format=\"uri\", pattern=\"^https?://[^/?#]+/?$\". Omission: The schema declares no default. When the field is omitted, it remains absent unless the linked runtime explicitly derives a value. Empty value: An empty string does not match the required pattern. Change effect: Changing $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpointOrigin changes this exact configured behavior when the durable operator-message sender next loads it: Restricts the durable operator-message sender to the expected endpoint origin. Failure: Schema validation rejects $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpointOrigin when it violates string with format=\"uri\", pattern=\"^https?://[^/?#]+/?$\". The linked consumer at skills/common/plugins/operator-messaging/src/adapter.ts:22 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Restricts the durable operator-message sender to the expected endpoint origin. Accepted values: string with format=\"uri\", pattern=\"^https?://[^/?#]+/?$\". Omission: The schema declares no default. When the field is omitted, it remains absent unless the linked runtime explicitly derives a value. Empty value: An empty string does not match the required uri format. Change effect: Changing $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpointOrigin changes this exact configured behavior when the durable operator-message sender next loads it: Restricts the durable operator-message sender to the expected endpoint origin. Failure: Schema validation rejects $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.endpointOrigin when it violates string with format=\"uri\", pattern=\"^https?://[^/?#]+/?$\". The linked consumer at skills/common/plugins/operator-messaging/src/adapter.ts:22 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugins/operator-messaging/package.json",
@@ -30640,7 +30640,7 @@
             "changeImpact": "Changing $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.receiptEndpoint changes this exact configured behavior when the durable operator-message sender next loads it: Sets the same-origin endpoint that the durable operator-message sender queries to reconcile an uncertain delivery without sending it again.",
             "closureCondition": null,
             "defaultBehavior": "The schema declares no default. When the field is omitted, it remains absent unless the linked runtime explicitly derives a value.",
-            "emptyBehavior": "An empty string does not match the required pattern.",
+            "emptyBehavior": "An empty string does not match the required uri format.",
             "evidence": "skills/common/plugins/operator-messaging/src/config.ts:53",
             "failureMeaning": "Schema validation rejects $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.receiptEndpoint when it violates string with format=\"uri\", pattern=\"^https?://\". The linked consumer at skills/common/plugins/operator-messaging/src/config.ts:53 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/common/plugins/operator-messaging/src/config.ts:53",
@@ -30648,7 +30648,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the same-origin endpoint that the durable operator-message sender queries to reconcile an uncertain delivery without sending it again. Accepted values: string with format=\"uri\", pattern=\"^https?://\". Omission: The schema declares no default. When the field is omitted, it remains absent unless the linked runtime explicitly derives a value. Empty value: An empty string does not match the required pattern. Change effect: Changing $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.receiptEndpoint changes this exact configured behavior when the durable operator-message sender next loads it: Sets the same-origin endpoint that the durable operator-message sender queries to reconcile an uncertain delivery without sending it again. Failure: Schema validation rejects $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.receiptEndpoint when it violates string with format=\"uri\", pattern=\"^https?://\". The linked consumer at skills/common/plugins/operator-messaging/src/config.ts:53 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the same-origin endpoint that the durable operator-message sender queries to reconcile an uncertain delivery without sending it again. Accepted values: string with format=\"uri\", pattern=\"^https?://\". Omission: The schema declares no default. When the field is omitted, it remains absent unless the linked runtime explicitly derives a value. Empty value: An empty string does not match the required uri format. Change effect: Changing $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.receiptEndpoint changes this exact configured behavior when the durable operator-message sender next loads it: Sets the same-origin endpoint that the durable operator-message sender queries to reconcile an uncertain delivery without sending it again. Failure: Schema validation rejects $.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.receiptEndpoint when it violates string with format=\"uri\", pattern=\"^https?://\". The linked consumer at skills/common/plugins/operator-messaging/src/config.ts:53 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugins/operator-messaging/package.json",
@@ -31146,7 +31146,7 @@
             "acceptedValues": "integer with minimum=1, maximum=300000",
             "authorityKey": "skills/common/plugins/redis-transport/schemas/config.schema.json::$.timeoutMs",
             "blockerOwner": null,
-            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when the Redis Streams transport next loads it: Limits the complete the Redis Streams transport operation before it is stopped or reported as timed out.",
+            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when the Redis Streams transport next loads it: Limits how long the Redis Streams transport can run before it is stopped or reported as timed out.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
             "emptyBehavior": "A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint.",
@@ -31157,7 +31157,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugins/redis-transport/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Limits the complete the Redis Streams transport operation before it is stopped or reported as timed out. Accepted values: integer with minimum=1, maximum=300000. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when the Redis Streams transport next loads it: Limits the complete the Redis Streams transport operation before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1, maximum=300000. The linked consumer at skills/common/plugins/redis-transport/src/adapter.ts:46 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Limits how long the Redis Streams transport can run before it is stopped or reported as timed out. Accepted values: integer with minimum=1, maximum=300000. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when the Redis Streams transport next loads it: Limits how long the Redis Streams transport can run before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=1, maximum=300000. The linked consumer at skills/common/plugins/redis-transport/src/adapter.ts:46 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugins/redis-transport/package.json",
@@ -31406,7 +31406,7 @@
             "changeImpact": "Changing $.targets.{*}.endpoint changes this exact configured behavior when the generic remote-runtime dispatcher next loads it: Sets the exact network endpoint used for one named target in the generic remote-runtime dispatcher.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required uri format.",
             "evidence": "skills/common/plugins/runtime-dispatch/src/adapter.ts:125",
             "failureMeaning": "Schema validation rejects $.targets.{*}.endpoint when it violates string with format=\"uri\". The linked consumer at skills/common/plugins/runtime-dispatch/src/adapter.ts:125 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/common/plugins/runtime-dispatch/src/adapter.ts:125",
@@ -31414,7 +31414,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the exact network endpoint used for one named target in the generic remote-runtime dispatcher. Accepted values: string with format=\"uri\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason. Change effect: Changing $.targets.{*}.endpoint changes this exact configured behavior when the generic remote-runtime dispatcher next loads it: Sets the exact network endpoint used for one named target in the generic remote-runtime dispatcher. Failure: Schema validation rejects $.targets.{*}.endpoint when it violates string with format=\"uri\". The linked consumer at skills/common/plugins/runtime-dispatch/src/adapter.ts:125 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the exact network endpoint used for one named target in the generic remote-runtime dispatcher. Accepted values: string with format=\"uri\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required uri format. Change effect: Changing $.targets.{*}.endpoint changes this exact configured behavior when the generic remote-runtime dispatcher next loads it: Sets the exact network endpoint used for one named target in the generic remote-runtime dispatcher. Failure: Schema validation rejects $.targets.{*}.endpoint when it violates string with format=\"uri\". The linked consumer at skills/common/plugins/runtime-dispatch/src/adapter.ts:125 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugins/runtime-dispatch/package.json",
@@ -32229,7 +32229,7 @@
             "changeImpact": "Changing $.targets.{*}.endpoint changes this exact configured behavior when the OpenClaw runtime dispatcher next loads it: Sets the exact network endpoint used for one named target in the OpenClaw runtime dispatcher.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required uri format.",
             "evidence": "skills/common/plugins/runtime-dispatch/src/adapter.ts:125",
             "failureMeaning": "Schema validation rejects $.targets.{*}.endpoint when it violates string with format=\"uri\". The linked consumer at skills/common/plugins/runtime-dispatch/src/adapter.ts:125 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/common/plugins/runtime-dispatch/src/adapter.ts:125",
@@ -32237,7 +32237,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the exact network endpoint used for one named target in the OpenClaw runtime dispatcher. Accepted values: string with format=\"uri\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason. Change effect: Changing $.targets.{*}.endpoint changes this exact configured behavior when the OpenClaw runtime dispatcher next loads it: Sets the exact network endpoint used for one named target in the OpenClaw runtime dispatcher. Failure: Schema validation rejects $.targets.{*}.endpoint when it violates string with format=\"uri\". The linked consumer at skills/common/plugins/runtime-dispatch/src/adapter.ts:125 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the exact network endpoint used for one named target in the OpenClaw runtime dispatcher. Accepted values: string with format=\"uri\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required uri format. Change effect: Changing $.targets.{*}.endpoint changes this exact configured behavior when the OpenClaw runtime dispatcher next loads it: Sets the exact network endpoint used for one named target in the OpenClaw runtime dispatcher. Failure: Schema validation rejects $.targets.{*}.endpoint when it violates string with format=\"uri\". The linked consumer at skills/common/plugins/runtime-dispatch/src/adapter.ts:125 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugins/runtime-dispatch/package.json",
@@ -32619,7 +32619,7 @@
             "changeImpact": "Changing $.targets.{*}.resultEndpoint changes this exact configured behavior when the OpenClaw runtime dispatcher next loads it: Sets the endpoint from which the OpenClaw runtime dispatcher imports the durable result for one named target.",
             "closureCondition": null,
             "defaultBehavior": "The schema declares no default. When the field is omitted, it remains absent unless the linked runtime explicitly derives a value.",
-            "emptyBehavior": "The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.",
+            "emptyBehavior": "An empty string does not match the required uri format.",
             "evidence": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:35",
             "failureMeaning": "Schema validation rejects $.targets.{*}.resultEndpoint when it violates string with format=\"uri\". The linked consumer at skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:35 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:35",
@@ -32627,7 +32627,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the endpoint from which the OpenClaw runtime dispatcher imports the durable result for one named target. Accepted values: string with format=\"uri\". Omission: The schema declares no default. When the field is omitted, it remains absent unless the linked runtime explicitly derives a value. Empty value: The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason. Change effect: Changing $.targets.{*}.resultEndpoint changes this exact configured behavior when the OpenClaw runtime dispatcher next loads it: Sets the endpoint from which the OpenClaw runtime dispatcher imports the durable result for one named target. Failure: Schema validation rejects $.targets.{*}.resultEndpoint when it violates string with format=\"uri\". The linked consumer at skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:35 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the endpoint from which the OpenClaw runtime dispatcher imports the durable result for one named target. Accepted values: string with format=\"uri\". Omission: The schema declares no default. When the field is omitted, it remains absent unless the linked runtime explicitly derives a value. Empty value: An empty string does not match the required uri format. Change effect: Changing $.targets.{*}.resultEndpoint changes this exact configured behavior when the OpenClaw runtime dispatcher next loads it: Sets the endpoint from which the OpenClaw runtime dispatcher imports the durable result for one named target. Failure: Schema validation rejects $.targets.{*}.resultEndpoint when it violates string with format=\"uri\". The linked consumer at skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:35 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugins/runtime-dispatch/package.json",
@@ -33866,7 +33866,7 @@
             "changeImpact": "Changing $.targets.{*}.endpoint changes this exact configured behavior when the durable signed transport publisher next loads it: Sets the exact network endpoint used for one named target in the durable signed transport publisher.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "An empty string does not match the required pattern.",
+            "emptyBehavior": "An empty string does not match the required uri format.",
             "evidence": "skills/common/plugins/transport-publisher/src/adapter.ts:265",
             "failureMeaning": "Schema validation rejects $.targets.{*}.endpoint when it violates string with format=\"uri\", pattern=\"^https?://\". The linked consumer at skills/common/plugins/transport-publisher/src/adapter.ts:265 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/common/plugins/transport-publisher/src/adapter.ts:265",
@@ -33874,7 +33874,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the exact network endpoint used for one named target in the durable signed transport publisher. Accepted values: string with format=\"uri\", pattern=\"^https?://\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required pattern. Change effect: Changing $.targets.{*}.endpoint changes this exact configured behavior when the durable signed transport publisher next loads it: Sets the exact network endpoint used for one named target in the durable signed transport publisher. Failure: Schema validation rejects $.targets.{*}.endpoint when it violates string with format=\"uri\", pattern=\"^https?://\". The linked consumer at skills/common/plugins/transport-publisher/src/adapter.ts:265 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the exact network endpoint used for one named target in the durable signed transport publisher. Accepted values: string with format=\"uri\", pattern=\"^https?://\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required uri format. Change effect: Changing $.targets.{*}.endpoint changes this exact configured behavior when the durable signed transport publisher next loads it: Sets the exact network endpoint used for one named target in the durable signed transport publisher. Failure: Schema validation rejects $.targets.{*}.endpoint when it violates string with format=\"uri\", pattern=\"^https?://\". The linked consumer at skills/common/plugins/transport-publisher/src/adapter.ts:265 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/common/plugins/transport-publisher/package.json",
@@ -35070,7 +35070,7 @@
             "acceptedValues": "integer with minimum=100, maximum=60000",
             "authorityKey": "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json::$.timeoutMs",
             "blockerOwner": null,
-            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when the authenticated demo-readiness handoff next loads it: Limits the complete the authenticated demo-readiness handoff operation before it is stopped or reported as timed out.",
+            "changeImpact": "Changing $.timeoutMs changes this exact configured behavior when the authenticated demo-readiness handoff next loads it: Limits how long the authenticated demo-readiness handoff can run before it is stopped or reported as timed out.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
             "emptyBehavior": "A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint.",
@@ -35081,7 +35081,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Limits the complete the authenticated demo-readiness handoff operation before it is stopped or reported as timed out. Accepted values: integer with minimum=100, maximum=60000. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when the authenticated demo-readiness handoff next loads it: Limits the complete the authenticated demo-readiness handoff operation before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=100, maximum=60000. The linked consumer at skills/nova/plugins/demo-handoff/src/adapter.ts:13 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Limits how long the authenticated demo-readiness handoff can run before it is stopped or reported as timed out. Accepted values: integer with minimum=100, maximum=60000. Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: A JSON empty string has the wrong type. Use a value of the declared type and satisfy every listed constraint. Change effect: Changing $.timeoutMs changes this exact configured behavior when the authenticated demo-readiness handoff next loads it: Limits how long the authenticated demo-readiness handoff can run before it is stopped or reported as timed out. Failure: Schema validation rejects $.timeoutMs when it violates integer with minimum=100, maximum=60000. The linked consumer at skills/nova/plugins/demo-handoff/src/adapter.ts:13 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/nova/plugins/demo-handoff/package.json",
@@ -36894,7 +36894,7 @@
             "changeImpact": "Changing $.endpoint changes this exact configured behavior when the authenticated Nova-to-Buster test gate next loads it: Sets the exact network endpoint contacted by the authenticated Nova-to-Buster test gate.",
             "closureCondition": null,
             "defaultBehavior": "The immediate parent requires this field. Omitting it is invalid.",
-            "emptyBehavior": "An empty string does not match the required pattern.",
+            "emptyBehavior": "An empty string does not match the required uri format.",
             "evidence": "skills/nova/plugins/remote-test-gate/src/adapter.ts:47",
             "failureMeaning": "Schema validation rejects $.endpoint when it violates string with format=\"uri\", pattern=\"^https?://\". The linked consumer at skills/nova/plugins/remote-test-gate/src/adapter.ts:47 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.",
             "implementationEvidence": "skills/nova/plugins/remote-test-gate/src/adapter.ts:47",
@@ -36902,7 +36902,7 @@
             "runtimeDefaultEvidence": null,
             "schemaEvidence": "skills/nova/plugins/remote-test-gate/schemas/config.schema.json",
             "status": "qualified-runtime-authority",
-            "text": "Sets the exact network endpoint contacted by the authenticated Nova-to-Buster test gate. Accepted values: string with format=\"uri\", pattern=\"^https?://\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required pattern. Change effect: Changing $.endpoint changes this exact configured behavior when the authenticated Nova-to-Buster test gate next loads it: Sets the exact network endpoint contacted by the authenticated Nova-to-Buster test gate. Failure: Schema validation rejects $.endpoint when it violates string with format=\"uri\", pattern=\"^https?://\". The linked consumer at skills/nova/plugins/remote-test-gate/src/adapter.ts:47 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
+            "text": "Sets the exact network endpoint contacted by the authenticated Nova-to-Buster test gate. Accepted values: string with format=\"uri\", pattern=\"^https?://\". Omission: The immediate parent requires this field. Omitting it is invalid. Empty value: An empty string does not match the required uri format. Change effect: Changing $.endpoint changes this exact configured behavior when the authenticated Nova-to-Buster test gate next loads it: Sets the exact network endpoint contacted by the authenticated Nova-to-Buster test gate. Failure: Schema validation rejects $.endpoint when it violates string with format=\"uri\", pattern=\"^https?://\". The linked consumer at skills/nova/plugins/remote-test-gate/src/adapter.ts:47 owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred."
           },
           "negated": false,
           "ownerEvidence": "skills/nova/plugins/remote-test-gate/package.json",
