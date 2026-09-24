@@ -781,7 +781,7 @@ for (const field of local) {
       }))
       : [{
         path: field.sourcePath,
-        line: field.consumers[0]?.line ?? 1,
+        line: field.sourceLine ?? 1,
         kind: 'selected-image-runtime-boundary',
         environment: environment.entry.name,
         authority: 'The repository proves injection but contains no non-Kubernetes reader. The selected container image owns parsing and validation.',
