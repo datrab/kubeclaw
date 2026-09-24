@@ -1126,7 +1126,7 @@
         "Align implementation, policyVersion, documentation and regression expectations with that decision. Preserve event provenance, retraction, referenceTime, project-over-personal behavior and deterministic snapshot replay; do not silently reinterpret historical snapshots."
       ],
       "reproduction": [
-        "Inspect docs/architecture/prism-preference-learning-v1.md. V1 excludes automatic time decay in the opening scope and time-handling section. Compare skills/prism/preferences/index.ts projectPreferences and skills/prism/control/preference-snapshot.ts.",
+        "Inspect docs/site/decisions/prism.md#retrieval-and-preferences. The accepted contract excludes automatic time decay. Compare skills/prism/preferences/index.ts projectPreferences and skills/prism/control/preference-snapshot.ts.",
         "Use one valid selected event with a single trait and evaluate the original projector at its last evidence time and 180 days later. Current arithmetic yields score1/effectiveScore1, then score1/effectiveScore0.5. Preserve user and project context with all required event fields. No executed probe is available in this evidence set.",
         "Existing regression entry points: skills/prism/tests/quality.test.mts (preference projections decay and remain retractable) and skills/prism/tests/control-generation-http.test.mts (persisted decay policy identity)."
       ],

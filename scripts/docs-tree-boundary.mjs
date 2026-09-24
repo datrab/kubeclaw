@@ -111,7 +111,9 @@ function executableConsumers(values) {
 }
 
 function historicalReferenceConsumer(sourcePath) {
-  return sourcePath.startsWith('docs/blueprint/')
+  return sourcePath === baselinePath
+    || sourcePath === classificationPath
+    || sourcePath.startsWith('docs/blueprint/')
     || sourcePath.startsWith('docs/architecture/')
     || sourcePath.startsWith('docs/review/')
     || sourcePath.startsWith('docs/implementation/')
